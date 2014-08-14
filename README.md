@@ -5,6 +5,7 @@ A library of extension and helper modules for Python's data analysis and machine
 
 Those tools are intentionally not (yet) submitted to the main projects to avoid cluttering up the core libraries.
 
+
 <br>
 <br>
 
@@ -13,6 +14,7 @@ Those tools are intentionally not (yet) submitted to the main projects to avoid 
 - [scikit-learn utilities](#scikit-learn-utilities)
 	- [FeatureSelector](#featureselector) 
 - [Installation](#installation)
+- [Changelog](./docs/CHANGELOG.txt)
 
 
 

@@ -1,15 +1,15 @@
 from distutils.core import setup
 
 setup(name='mlxtend',
-      version='0.1',
+      version='0.1.0',
       description='Machine Learning Library Extensions',
       author='Sebastian Raschka',
       author_email='se.raschka@gmail.com',
       url='https://github.com/rasbt/mlxtend',
-      packages=['mlxtend'],
-      data_files = [('docs', ['LICENSE.txt']),
-                    ('docs', ['README.html']),
-                    ('docs', ['CHANGELOG.txt']),
+      packages=['mlxtend', 'mlxtend.sklearn'],
+      data_files = [('', ['LICENSE']),
+                    ('', ['docs/README.html']),
+                    ('', ['docs/CHANGELOG.txt']),
                    ],
       requires = ['numpy'],
       license='GPLv3',
@@ -31,6 +31,8 @@ A library of extension modules for Python's data analysis and machine learning l
 If you have any questions or comments about PyPrind, please feel free to contact me via
 eMail: se.raschka@gmail.com
 or Twitter: https://twitter.com/rasbt
+
+This project is hosted at https://github.com/rasbt/mlxtend
 
 """,
     )

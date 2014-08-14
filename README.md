@@ -12,7 +12,7 @@ Those tools are intentionally not (yet) submitted to the main projects to avoid 
 ## Overview
 
 - [scikit-learn utilities](#scikit-learn-utilities)
-	- [FeatureSelector](#featureselector) 
+	- [ColumnSelector for custom feature selection](#columnselector-for-custom-feature-selection) 
 - [Installation](#installation)
 - [Changelog](./docs/CHANGELOG.txt)
 
@@ -34,28 +34,27 @@ The `scikit-learn utilities` can be imported via
 
 <br>
 <br>
-### FeatureSelector
+### ColumnSelector for custom feature selection
 
 [[back to top](overview)]
 
 A feature selector for scikit-learn's Pipeline class that returns specified columns from a NumPy array; extremely useful in combination with scikit-learn's `Pipeline` in cross-validation.
 
 
-
 Example in `Pipeline`:
 
-	from mlxtend.sklearn import FeatureSelector
+	from mlxtend.sklearn import ColumnSelector
 	from sklearn.pipeline import Pipeline
 	from sklearn.naive_bayes import GaussianNB
 	from sklearn.preprocessing import StandardScaler
 
 	clf_2col = Pipeline(steps=[
 	    ('scaler', StandardScaler()),
-    	('reduce_dim', FeatureSelector(cols=(1,3))),    # extracts column 2 and 4
+    	('reduce_dim', ColumnSelector(cols=(1,3))),    # extracts column 2 and 4
     	('classifier', GaussianNB())   
     	]) 
 
-`FeatureSelector` has a `transform` method that is used to select and return columns (features) from a NumPy array so that it can be used in the `Pipeline` like other `transformation` classes. 
+`ColumnSelector` has a `transform` method that is used to select and return columns (features) from a NumPy array so that it can be used in the `Pipeline` like other `transformation` classes. 
 
     ### original data
     

@@ -321,7 +321,7 @@ sup {
 <li><a href="#scikit-learn-utilities">scikit-learn utilities</a>
 
 <ul>
-<li><a href="#featureselector">FeatureSelector</a></li>
+<li><a href="#columnselector-for-custom-feature-selection">ColumnSelector for custom feature selection</a></li>
 </ul>
 </li>
 <li><a href="#installation">Installation</a></li>
@@ -346,31 +346,40 @@ sup {
 <p><br>
 <br></p>
 
-<h3>FeatureSelector</h3>
+<h3>ColumnSelector for custom feature selection</h3>
 
 <p>[<a href="overview">back to top</a>]</p>
 
-<p>A feature selector for scikit-learn's Pipeline class that returns specified columns from a NumPy array; extremely useful in combination with scikit-learn's <code>Pipeline</code>.</p>
+<p>A feature selector for scikit-learn's Pipeline class that returns specified columns from a NumPy array; extremely useful in combination with scikit-learn's <code>Pipeline</code> in cross-validation.</p>
 
 <p>Example in <code>Pipeline</code>:</p>
 
-<pre><code>from mlxtend.sklearn import FeatureSelector
+<pre><code>from mlxtend.sklearn import ColumnSelector
 from sklearn.pipeline import Pipeline
 from sklearn.naive_bayes import GaussianNB
 from sklearn.preprocessing import StandardScaler
 
-clf = Pipeline(steps=[
+clf_2col = Pipeline(steps=[
     ('scaler', StandardScaler()),
-    ('reduce_dim', FeatureSelector(cols=(1,3))),    # extracts column 2 and 4
+    ('reduce_dim', ColumnSelector(cols=(1,3))),    # extracts column 2 and 4
     ('classifier', GaussianNB())   
     ]) 
 </code></pre>
 
-<p><code>FeatureSelector</code> has a <code>transform</code> method that is used to select and return columns (features) from a NumPy array so that it can be used in the <code>Pipeline</code> like other <code>transformation</code> classes.</p>
+<p><code>ColumnSelector</code> has a <code>transform</code> method that is used to select and return columns (features) from a NumPy array so that it can be used in the <code>Pipeline</code> like other <code>transformation</code> classes.</p>
 
-<pre><code>cols = ColumnExtractor(cols=(1,3)).transform(X_train)
+<pre><code>### original data
+
+print('First 3 rows before:\n', X_train[:3,:])
+First 3 rows before:
+[[ 4.5  2.3  1.3  0.3]
+[ 6.7  3.3  5.7  2.1]
+[ 5.7  3.   4.2  1.2]]
+
+### after selection
+
+cols = ColumnExtractor(cols=(1,3)).transform(X_train)
 print('First 3 rows:\n', cols[:3,:])
-
 
 First 3 rows:
 [[ 2.3  0.3]

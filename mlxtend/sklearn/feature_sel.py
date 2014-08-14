@@ -2,9 +2,7 @@
 # mlxtend Machine Learning Library Extensions
 # scikit-learn utilities for feature selection
 
-import numpy as np
-
-class FeatureSelector(object):
+class ColumnSelector(object):
     """ A feature selector for scikit-learn's Pipeline class that returns
         specified columns from a numpy array.
     
@@ -14,10 +12,7 @@ class FeatureSelector(object):
         self.cols = cols
         
     def transform(self, X, y=None):
-        col_list = []
-        for c in self.cols:
-            col_list.append(X[:, c:c+1])
-        return np.concatenate(col_list, axis=1)
+        return X[:, self.cols]
 
     def fit(self, X, y=None):
         return self

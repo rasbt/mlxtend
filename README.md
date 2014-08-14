@@ -38,19 +38,18 @@ The `scikit-learn utilities` can be imported via
 
 [[back to top](overview)]
 
-A feature selector for scikit-learn's Pipeline class that returns specified columns from a NumPy array; extremely useful in combination with scikit-learn's `Pipeline`.
+A feature selector for scikit-learn's Pipeline class that returns specified columns from a NumPy array; extremely useful in combination with scikit-learn's `Pipeline` in cross-validation.
 
 
 
 Example in `Pipeline`:
-
 
 	from mlxtend.sklearn import FeatureSelector
 	from sklearn.pipeline import Pipeline
 	from sklearn.naive_bayes import GaussianNB
 	from sklearn.preprocessing import StandardScaler
 
-	clf = Pipeline(steps=[
+	clf_2col = Pipeline(steps=[
 	    ('scaler', StandardScaler()),
     	('reduce_dim', FeatureSelector(cols=(1,3))),    # extracts column 2 and 4
     	('classifier', GaussianNB())   
@@ -58,9 +57,18 @@ Example in `Pipeline`:
 
 `FeatureSelector` has a `transform` method that is used to select and return columns (features) from a NumPy array so that it can be used in the `Pipeline` like other `transformation` classes. 
 
+    ### original data
+    
+	print('First 3 rows before:\n', X_train[:3,:])
+    First 3 rows before:
+ 	[[ 4.5  2.3  1.3  0.3]
+ 	[ 6.7  3.3  5.7  2.1]
+ 	[ 5.7  3.   4.2  1.2]]
+	
+	### after selection
+
 	cols = ColumnExtractor(cols=(1,3)).transform(X_train)
 	print('First 3 rows:\n', cols[:3,:])
-	
 	
 	First 3 rows:
  	[[ 2.3  0.3]

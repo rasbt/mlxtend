@@ -13,7 +13,7 @@ class FeatureSelector(object):
     def __init__(self, cols):
         self.cols = cols
         
-    def transform(self, X):
+    def transform(self, X, y=None):
         col_list = []
         for c in self.cols:
             col_list.append(X[:, c:c+1])

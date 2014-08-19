@@ -1,4 +1,10 @@
+0.1.2
+=======
+
+- Added `matplotlib` utilities and `remove_borders` function.
+
+
 0.1.1
 =======
 
-- simplified code for ColumnSelector
+- Simplified code for ColumnSelector.

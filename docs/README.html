@@ -312,6 +312,8 @@ sup {
 
 <p>Those tools are intentionally not (yet) submitted to the main projects to avoid cluttering up the core libraries.</p>
 
+<p>Link to the <code>mlxtend</code> repository on GitHub: <a href="https://github.com/rasbt/mlxtend">https://github.com/rasbt/mlxtend</a>.</p>
+
 <p><br>
 <br></p>
 
@@ -324,12 +326,20 @@ sup {
 <li><a href="#columnselector-for-custom-feature-selection">ColumnSelector for custom feature selection</a></li>
 </ul>
 </li>
+<li><a href="#matplotlib-utilities">matplotlib utilities</a>
+
+<ul>
+<li><a href="#remove_borders">remove_borders</a></li>
+</ul>
+</li>
 <li><a href="#installation">Installation</a></li>
 <li><a href="./docs/CHANGELOG.txt">Changelog</a></li>
 </ul>
 
 
 <p><br>
+<br>
+<br>
 <br></p>
 
 <h2>scikit-learn utilities</h2>
@@ -351,6 +361,11 @@ sup {
 <p>[<a href="overview">back to top</a>]</p>
 
 <p>A feature selector for scikit-learn's Pipeline class that returns specified columns from a NumPy array; extremely useful in combination with scikit-learn's <code>Pipeline</code> in cross-validation.</p>
+
+<ul>
+<li><a href="http://nbviewer.ipython.org/github/rasbt/pattern_classification/blob/master/machine_learning/scikit-learn/scikit-pipeline.ipynb#Cross-Validation-and-Pipelines">An example usage</a> of the <code>ColumnSelector</code> used in a pipeline for cross-validation on the Iris dataset.</li>
+</ul>
+
 
 <p>Example in <code>Pipeline</code>:</p>
 
@@ -386,6 +401,47 @@ First 3 rows:
 [ 3.3  2.1]
 [ 3.   1.2]]
 </code></pre>
+
+<p><br>
+<br>      <br/>
+<br>
+<br></p>
+
+<h2>matplotlib utilities</h2>
+
+<p>[<a href="overview">back to top</a>]</p>
+
+<p><br></p>
+
+<p>The <code>matplotlib utilities</code> can be imported via</p>
+
+<pre><code>from mxtend.matplotlib import ...
+</code></pre>
+
+<p><br>
+<br></p>
+
+<h3>remove_borders</h3>
+
+<p>[<a href="overview">back to top</a>]</p>
+
+<p>A function to remove borders from <code>matplotlib</code> plots.</p>
+
+<pre><code>def remove_borders(axes, left=False, bottom=False, right=True, top=True):
+    """ 
+    A function to remove chartchunk from matplotlib plots, such as axes
+        spines, ticks, and labels.
+
+        Keyword arguments:
+            axes: An iterable containing plt.gca() or plt.subplot() objects, e.g. [plt.gca()].
+            left, bottom, right, top: Boolean to specify which plot axes to hide.
+
+    """
+</code></pre>
+
+<p><strong>Example</strong></p>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/remove_borders_3.png" alt="" /></p>
 
 <p><br>
 <br></p>

@@ -5,6 +5,7 @@ A library of extension and helper modules for Python's data analysis and machine
 
 Those tools are intentionally not (yet) submitted to the main projects to avoid cluttering up the core libraries.
 
+Link to the `mlxtend` repository on GitHub: [https://github.com/rasbt/mlxtend](https://github.com/rasbt/mlxtend).
 
 <br>
 <br>
@@ -21,6 +22,8 @@ Those tools are intentionally not (yet) submitted to the main projects to avoid 
 
 
 
+<br>
+<br>
 <br>
 <br>
 
@@ -76,7 +79,9 @@ Example in `Pipeline`:
  	[[ 2.3  0.3]
  	[ 3.3  2.1]
  	[ 3.   1.2]]
-        
+
+<br>
+<br>        
 <br>
 <br>
 
@@ -110,6 +115,8 @@ A function to remove borders from `matplotlib` plots.
     	"""
 
 **Example**
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/remove_borders_3.png)
 
 <br>
 <br>

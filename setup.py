@@ -14,7 +14,6 @@ setup(name='mlxtend',
                     ('', ['docs/README.html']),
                     ('', ['docs/CHANGELOG.txt']),
                    ],
-      requires = ['numpy', 'matplotlib', 'scikit-learn'],
       license='GPLv3',
       platforms='any',
       classifiers=[

@@ -12,6 +12,8 @@ Link to the `mlxtend` repository on GitHub: [https://github.com/rasbt/mlxtend](h
 
 ## Overview
 
+- [preprocessing](#preprocessing)
+	- [mean_centering](#mean_centering) 
 - [scikit-learn utilities](#scikit-learn-utilities)
 	- [ColumnSelector for custom feature selection](#columnselector-for-custom-feature-selection) 
 - [matplotlib utilities](#matplotlib-utilities)
@@ -20,7 +22,78 @@ Link to the `mlxtend` repository on GitHub: [https://github.com/rasbt/mlxtend](h
 - [Changelog](./docs/CHANGELOG.txt)
 
 
+<br>
+<br>
+<br>
+<br>
 
+## preprocessing
+
+[[back to top](overview)]
+
+A collection of different functions for various data preprocessing procedures.
+
+The `preprocessing utilities` can be imported via
+
+	from mxtend.preprocessing import ...
+	
+<br>
+<br>
+### mean_centering
+
+[[back to top](overview)]
+
+	def mean_centering(X, copy=True):
+    	"""
+    	Function that performs column centering.
+    	Keyword arguments:
+        	X: NumPy array object where each attribute/variable is
+           		stored in an individual column. 
+           		Also accepts 1-dimensional Python list objects.
+        	copy: Returns a copy of the input array if True, otherwise
+              	performs operation in-place.
+              
+    	"""
+    
+**Examples:**
+
+	>> X
+	array([[1, 2, 3],
+       [4, 5, 6],
+       [7, 8, 9]])
+    >> mean_centering(X)
+    array([[-3, -3, -3],
+       [ 0,  0,  0],
+       [ 3,  3,  3]])   
+    
+
+<br>
+
+	>> X
+	[1, 2, 3]
+	>> mean_centering(X)
+	array([-1,  0,  1])
+
+
+<br>
+
+	import matplotlib.pyplot as plt
+	import numpy as np
+
+	X = 2 * np.random.randn(100,2) + 5
+
+	plt.scatter(X[:,0], X[:,1])
+	plt.grid()
+	plt.title('Random Gaussian data w. mean=5, sigma=2')
+	plt.show()
+
+	Y = mean_centering(X)
+	plt.scatter(Y[:,0], Y[:,1])
+	plt.grid()
+	plt.title('Data after mean centering')
+	plt.show()
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/mean_centering_3.png)
 
 <br>
 <br>

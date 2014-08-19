@@ -13,6 +13,8 @@ Those tools are intentionally not (yet) submitted to the main projects to avoid 
 
 - [scikit-learn utilities](#scikit-learn-utilities)
 	- [ColumnSelector for custom feature selection](#columnselector-for-custom-feature-selection) 
+- [matplotlib utilities](#matplotlib-utilities)
+	- [remove_borders](#remove_borders) 
 - [Installation](#installation)
 - [Changelog](./docs/CHANGELOG.txt)
 
@@ -75,6 +77,40 @@ Example in `Pipeline`:
  	[ 3.3  2.1]
  	[ 3.   1.2]]
         
+<br>
+<br>
+
+## matplotlib utilities
+
+[[back to top](overview)]
+
+<br>
+
+The `matplotlib utilities` can be imported via
+
+	from mxtend.matplotlib import ...
+
+<br>
+<br>
+### remove_borders
+
+[[back to top](overview)]
+
+A function to remove borders from `matplotlib` plots.
+
+	def remove_borders(axes, left=False, bottom=False, right=True, top=True):
+    	""" 
+    	A function to remove chartchunk from matplotlib plots, such as axes
+        	spines, ticks, and labels.
+        
+        	Keyword arguments:
+            	axes: An iterable containing plt.gca() or plt.subplot() objects, e.g. [plt.gca()].
+            	left, bottom, right, top: Boolean to specify which plot axes to hide.
+            
+    	"""
+
+**Example**
+
 <br>
 <br>
 

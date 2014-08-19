@@ -1,17 +1,20 @@
 from distutils.core import setup
 
 setup(name='mlxtend',
-      version='0.1.1',
+      version='0.1.2',
       description='Machine Learning Library Extensions',
       author='Sebastian Raschka',
       author_email='se.raschka@gmail.com',
       url='https://github.com/rasbt/mlxtend',
-      packages=['mlxtend', 'mlxtend.sklearn'],
+      packages=['mlxtend', 
+                'mlxtend.sklearn',
+                'mlxtend.matplotlib',
+                ],
       data_files = [('', ['LICENSE']),
                     ('', ['docs/README.html']),
                     ('', ['docs/CHANGELOG.txt']),
                    ],
-      requires = ['numpy'],
+      requires = ['numpy', 'matplotlib', 'scikit-learn'],
       license='GPLv3',
       platforms='any',
       classifiers=[

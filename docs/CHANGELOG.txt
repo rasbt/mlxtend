@@ -1,3 +1,11 @@
+0.1.4
+=======
+
+- `mean_centering` function is now a Class that creates `MeanCenterer` objects
+  that can be used to fit data via the `fit` method, and center data at the column
+  means via the `transform` and `fit_transform` method.
+
+
 0.1.3
 =======
 

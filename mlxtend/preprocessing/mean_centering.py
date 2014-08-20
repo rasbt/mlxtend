@@ -1,26 +1,42 @@
-# Sebastian Raschka 08/13/2014
+# Sebastian Raschka 08/20/2014
 # mlxtend Machine Learning Library Extensions
 
-def mean_centering(X, copy=True):
+import numpy as np
+from .transformer import TransformerObj
+
+class MeanCenterer(TransformerObj):
     """
-    Function that performs column centering.
+    Class for column centering of vectors and matrices.
+    
     Keyword arguments:
         X: NumPy array object where each attribute/variable is
            stored in an individual column. 
            Also accepts 1-dimensional Python list objects.
-        copy: Returns a copy of the input array if True, otherwise
-              performs operation in-place.
-              
+    
+    Class methods:
+        fit: Fits column means to MeanCenterer object.
+        transform: Uses column means from `fit` for mean centering.
+        fit_transform: Fits column means and performs mean centering.
+    
+    The class methods `transform` and `fit_transform` return a new numpy array
+    object where the attributes are centered at the column means.
+    
     """
-    if copy:
-        mat = np.copy(X)
-    else:
-        mat = X
-    if isinstance(X, list):
-        mat = np.asarray(mat)
+    def __init__(self):
+        self.col_means = None
+
+    def transform(self, X):
+        self._get_array(X)
+        # centering
+        for i in range(self.ary.shape[0]):
+            self.ary[i] -= self.col_means
+        return self.ary
+    
+    def fit(self, X):
+        self._get_array(X)
+        self.col_means = self.ary.mean(axis=0)
+        return self
         
-    # centering
-    col_means = mat.mean(axis=0)
-    for i in range(mat.shape[0]):
-        mat[i] -= col_means
-    return mat
+    def fit_transform(self, X):
+        self.fit(X)
+        return self.transform(X)

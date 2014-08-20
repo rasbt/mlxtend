@@ -13,7 +13,7 @@ Link to the `mlxtend` repository on GitHub: [https://github.com/rasbt/mlxtend](h
 ## Overview
 
 - [preprocessing](#preprocessing)
-	- [mean_centering](#mean_centering) 
+	- [MeanCenterer](#meancenterer) 
 - [scikit-learn utilities](#scikit-learn-utilities)
 	- [ColumnSelector for custom feature selection](#columnselector-for-custom-feature-selection) 
 - [matplotlib utilities](#matplotlib-utilities)
@@ -39,39 +39,64 @@ The `preprocessing utilities` can be imported via
 	
 <br>
 <br>
-### mean_centering
+### MeanCenterer
 
 [[back to top](overview)]
 
-	def mean_centering(X, copy=True):
-    	"""
-    	Function that performs column centering.
-    	Keyword arguments:
-        	X: NumPy array object where each attribute/variable is
-           		stored in an individual column. 
-           		Also accepts 1-dimensional Python list objects.
-        	copy: Returns a copy of the input array if True, otherwise
-              	performs operation in-place.
-              
-    	"""
+	class MeanCenterer(TransformerObj):
+    """
+    Class for column centering of vectors and matrices.
+    
+    Keyword arguments:
+        X: NumPy array object where each attribute/variable is
+           stored in an individual column. 
+           Also accepts 1-dimensional Python list objects.
+    
+    Class methods:
+        fit: Fits column means to MeanCenterer object.
+        transform: Uses column means from `fit` for mean centering.
+        fit_transform: Fits column means and performs mean centering.
+    
+    The class methods `transform` and `fit_transform` return a new numpy array
+    object where the attributes are centered at the column means.
+    
+    """
+<br>
     
 **Examples:**
 
-	>> X
+Use the `fit` method to fit the column means of a dataset (e.g., the training dataset) to a new MeanCenterer object. Then, call the `transform` method on the same dataset to center it at the sample mean.
+
+	>> X_train
 	array([[1, 2, 3],
        [4, 5, 6],
        [7, 8, 9]])
-    >> mean_centering(X)
+    >> mc = MeanCenterer().fit(X_train)
+	>> mc.transform(X_train)
     array([[-3, -3, -3],
        [ 0,  0,  0],
-       [ 3,  3,  3]])   
-    
+       [ 3,  3,  3]])
 
 <br>
 
-	>> X
+To use the same parameters that were used to center the training dataset, simply call the `transform` method of the MeanCenterer instance on a new dataset (e.g., test dataset).
+    
+    >> X_test 
+    array([[1, 1, 1],
+       [1, 1, 1],
+       [1, 1, 1]])
+    >> mc.transform(X_test)  
+    array([[-3, -4, -5],
+       [-3, -4, -5],
+       [-3, -4, -5]])
+
+<br>
+
+The `MeanCenterer` also supports Python list objects, and the `fit_transform` method allows you to directly fit and center the dataset.
+
+	>> Z
 	[1, 2, 3]
-	>> mean_centering(X)
+	>> MeanCenterer().fit_transform(Z)
 	array([-1,  0,  1])
 
 

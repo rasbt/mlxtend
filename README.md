@@ -112,7 +112,7 @@ The `MeanCenterer` also supports Python list objects, and the `fit_transform` me
 	plt.title('Random Gaussian data w. mean=5, sigma=2')
 	plt.show()
 
-	Y = mean_centering(X)
+	Y = MeanCenterer.fit_transform(X)
 	plt.scatter(Y[:,0], Y[:,1])
 	plt.grid()
 	plt.title('Data after mean centering')

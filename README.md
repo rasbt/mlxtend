@@ -16,6 +16,7 @@ Link to the `mlxtend` repository on GitHub: [https://github.com/rasbt/mlxtend](h
 	- [MeanCenterer](#meancenterer) 
 - [scikit-learn utilities](#scikit-learn-utilities)
 	- [ColumnSelector for custom feature selection](#columnselector-for-custom-feature-selection) 
+	- [DenseTransformer for pipelines and GridSearch](#densetransformer-for-pipelines-and-gridsearch)
 - [matplotlib utilities](#matplotlib-utilities)
 	- [remove_borders](#remove_borders) 
 - [Installation](#installation)
@@ -177,6 +178,61 @@ Example in `Pipeline`:
  	[[ 2.3  0.3]
  	[ 3.3  2.1]
  	[ 3.   1.2]]
+
+
+<br>
+<br>
+### DenseTransformer for pipelines and GridSearch
+
+[[back to top](overview)]
+
+A simple transformer that converts a sparse into a dense numpy array, e.g., required for scikit-learn's `Pipeline` when e.g,. `CountVectorizers` are used in combination with `RandomForest`s.
+
+
+Example in `Pipeline`:
+
+	from sklearn.pipeline import Pipeline
+	from sklearn import metrics
+	from sklearn.grid_search import GridSearchCV
+	from sklearn.ensemble import RandomForestClassifier
+	from sklearn.feature_extraction.text import CountVectorizer
+
+	from mlxtend.sklearn import DenseTransformer
+
+
+	pipe_1 = Pipeline([
+	    ('vect', CountVectorizer(analyzer='word',
+	                      decode_error='replace',
+	                      preprocessor=lambda text: re.sub('[^a-zA-Z]', ' ', text.lower()), 
+	                      stop_words=stopwords,) ),
+	    ('to_dense', DenseTransformer()),
+	    ('clf', RandomForestClassifier())
+	])
+
+	parameters_1 = dict(
+	    clf__n_estimators=[50, 100, 200],
+	    clf__max_features=['sqrt', 'log2', None],)
+
+	grid_search_1 = GridSearchCV(pipe_1, 
+	                           parameters_1, 
+	                           n_jobs=1, 
+	                           verbose=1,
+	                           scoring=f1_scorer,
+	                           cv=10)
+
+
+	print("Performing grid search...")
+	print("pipeline:", [name for name, _ in pipe_1.steps])
+	print("parameters:")
+	grid_search_1.fit(X_train, y_train)
+	print("Best score: %0.3f" % grid_search_1.best_score_)
+	print("Best parameters set:")
+	best_parameters_1 = grid_search_1.best_estimator_.get_params()
+	for param_name in sorted(parameters_1.keys()):
+	    print("\t%s: %r" % (param_name, best_parameters_1[param_name]))
+
+
+
 
 <br>
 <br>        

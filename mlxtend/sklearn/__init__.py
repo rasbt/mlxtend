@@ -3,5 +3,5 @@
 # Submodules with scikit-learn utilities
 
 from .feature_sel import ColumnSelector
-
+from .dense_transformer import DenseTransformer
 

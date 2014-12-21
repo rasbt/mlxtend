@@ -17,6 +17,8 @@ Link to the `mlxtend` repository on GitHub: [https://github.com/rasbt/mlxtend](h
 - [scikit-learn utilities](#scikit-learn-utilities)
 	- [ColumnSelector for custom feature selection](#columnselector-for-custom-feature-selection) 
 	- [DenseTransformer for pipelines and GridSearch](#densetransformer-for-pipelines-and-gridsearch)
+- [math utilities](#math-utilities)
+	- [Combinations and permutations](#combinations-and-permutations)
 - [matplotlib utilities](#matplotlib-utilities)
 	- [remove_borders](#remove_borders) 
 - [Installation](#installation)
@@ -232,8 +234,47 @@ Example in `Pipeline`:
 	    print("\t%s: %r" % (param_name, best_parameters_1[param_name]))
 
 
+<br>
+<br>        
+<br>
+<br>
 
+## math utilities
 
+[[back to top](overview)]
+
+<br>
+
+The `math utilities` can be imported via
+
+	from mxtend.math import ...
+
+<br>
+<br>
+
+### Combinations and permuations
+
+[[back to top](overview)]
+
+Functions to calculate the number of combinations and permutations for creating subsequences of *r* elements out of a sequence with *n* elements.
+
+	from mlxtend.math import num_combinations
+	from mlxtend.math import num_permutations
+
+	c = num_combinations(n=20, r=8, with_replacement=False)
+	print('Number of ways to combine 20 elements into 8 subelements: %d' % c)
+
+	d = num_permutations(n=20, r=8, with_replacement=False)
+	print('Number of ways to permute 20 elements into 8 subelements: %d' % d)
+
+Output:	
+
+	Number of ways to combine 20 elements into 8 subelements: 125970
+	Number of ways to permute 20 elements into 8 subelements: 5079110400
+
+This is especially useful in combination with [`itertools`](https://docs.python.org/3/library/itertools.html), e.g., in order to estimate the progress via [`pyprind`](https://github.com/rasbt/pyprind).
+
+![](./images/combinations_pyprind.png)
 <br>
 <br>        
 <br>

@@ -252,7 +252,7 @@ The `math utilities` can be imported via
 <br>
 <br>
 
-### Combinations and permuations
+### Combinations and permutations
 
 [[back to top](overview)]
 

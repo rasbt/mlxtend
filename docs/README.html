@@ -330,6 +330,13 @@ sup {
 
 <ul>
 <li><a href="#columnselector-for-custom-feature-selection">ColumnSelector for custom feature selection</a></li>
+<li><a href="#densetransformer-for-pipelines-and-gridsearch">DenseTransformer for pipelines and GridSearch</a></li>
+</ul>
+</li>
+<li><a href="#math-utilities">math utilities</a>
+
+<ul>
+<li><a href="#combinations-and-permutations">Combinations and permutations</a></li>
 </ul>
 </li>
 <li><a href="#matplotlib-utilities">matplotlib utilities</a>
@@ -514,6 +521,102 @@ First 3 rows:
 </code></pre>
 
 <p><br>
+<br></p>
+
+<h3>DenseTransformer for pipelines and GridSearch</h3>
+
+<p>[<a href="overview">back to top</a>]</p>
+
+<p>A simple transformer that converts a sparse into a dense numpy array, e.g., required for scikit-learn's <code>Pipeline</code> when e.g,. <code>CountVectorizers</code> are used in combination with <code>RandomForest</code>s.</p>
+
+<p>Example in <code>Pipeline</code>:</p>
+
+<pre><code>from sklearn.pipeline import Pipeline
+from sklearn import metrics
+from sklearn.grid_search import GridSearchCV
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_extraction.text import CountVectorizer
+
+from mlxtend.sklearn import DenseTransformer
+
+
+pipe_1 = Pipeline([
+    ('vect', CountVectorizer(analyzer='word',
+                      decode_error='replace',
+                      preprocessor=lambda text: re.sub('[^a-zA-Z]', ' ', text.lower()), 
+                      stop_words=stopwords,) ),
+    ('to_dense', DenseTransformer()),
+    ('clf', RandomForestClassifier())
+])
+
+parameters_1 = dict(
+    clf__n_estimators=[50, 100, 200],
+    clf__max_features=['sqrt', 'log2', None],)
+
+grid_search_1 = GridSearchCV(pipe_1, 
+                           parameters_1, 
+                           n_jobs=1, 
+                           verbose=1,
+                           scoring=f1_scorer,
+                           cv=10)
+
+
+print("Performing grid search...")
+print("pipeline:", [name for name, _ in pipe_1.steps])
+print("parameters:")
+grid_search_1.fit(X_train, y_train)
+print("Best score: %0.3f" % grid_search_1.best_score_)
+print("Best parameters set:")
+best_parameters_1 = grid_search_1.best_estimator_.get_params()
+for param_name in sorted(parameters_1.keys()):
+    print("\t%s: %r" % (param_name, best_parameters_1[param_name]))
+</code></pre>
+
+<p><br>
+<br>      <br/>
+<br>
+<br></p>
+
+<h2>math utilities</h2>
+
+<p>[<a href="overview">back to top</a>]</p>
+
+<p><br></p>
+
+<p>The <code>math utilities</code> can be imported via</p>
+
+<pre><code>from mxtend.math import ...
+</code></pre>
+
+<p><br>
+<br></p>
+
+<h3>Combinations and permuations</h3>
+
+<p>[<a href="overview">back to top</a>]</p>
+
+<p>Functions to calculate the number of combinations and permutations for creating subsequences of <em>r</em> elements out of a sequence with <em>n</em> elements.</p>
+
+<pre><code>from mlxtend.math import num_combinations
+from mlxtend.math import num_permutations
+
+c = num_combinations(n=20, r=8, with_replacement=False)
+print('Number of ways to combine 20 elements into 8 subelements: %d' % c)
+
+d = num_permutations(n=20, r=8, with_replacement=False)
+print('Number of ways to permute 20 elements into 8 subelements: %d' % d)
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>Number of ways to combine 20 elements into 8 subelements: 125970
+Number of ways to permute 20 elements into 8 subelements: 5079110400
+</code></pre>
+
+<p>This is especially useful in combination with <a href="https://docs.python.org/3/library/itertools.html"><code>itertools</code></a>, e.g., in order to estimate the progress via <a href="https://github.com/rasbt/pyprind"><code>pyprind</code></a>.</p>
+
+<p><img src="./images/combinations_pyprind.png" alt="" />
+<br>
 <br>      <br/>
 <br>
 <br></p>

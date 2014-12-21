@@ -1,3 +1,8 @@
+0.1.6
+=======
+
+- Added combinations and permutations estimators.
+
 0.1.5
 =======
 

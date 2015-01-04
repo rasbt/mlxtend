@@ -2,6 +2,7 @@ build/
 dist/
 MANIFEST
 
+.ipynb_checkpoints
 
 *.txt
 *.sqlite

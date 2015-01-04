@@ -1,0 +1,1 @@
+from .names import generalize_names

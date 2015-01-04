@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(name='mlxtend',
-      version='0.1.6',
+      version='0.1.7',
       description='Machine Learning Library Extensions',
       author='Sebastian Raschka',
       author_email='se.raschka@gmail.com',
@@ -11,10 +11,12 @@ setup(name='mlxtend',
                 'mlxtend.matplotlib',
                 'mlxtend.preprocessing',
                 'mlxtend.math',
+                'mlxtend.text',
+                'mlxtend.file_io',
                 ],
       data_files = [('', ['LICENSE']),
                     ('', ['docs/README.html']),
-                    ('', ['CHANGELOG.txt']),
+                    ('', ['docs/CHANGELOG.txt']),
                    ],
       license='GPLv3',
       platforms='any',
@@ -25,13 +27,13 @@ setup(name='mlxtend',
       ],
       long_description="""
 
-A library of extension modules for Python's data analysis and machine learning libraries.
+A library of Python tools and extensions for data science.
 
 
  Contact
 =============
 
-If you have any questions or comments about PyPrind, please feel free to contact me via
+If you have any questions or comments about mlxtend, please feel free to contact me via
 eMail: se.raschka@gmail.com
 or Twitter: https://twitter.com/rasbt
 

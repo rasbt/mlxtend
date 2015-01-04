@@ -1,19 +1,26 @@
-mlxtend
-===========================
+# mlxtend
 
-A library of extension and helper modules for Python's data analysis and machine learning libraries.
 
-Those tools are intentionally not (yet) submitted to the main projects to avoid cluttering up the core libraries.
+A library of Python tools and extensions for data science.
 
 Link to the `mlxtend` repository on GitHub: [https://github.com/rasbt/mlxtend](https://github.com/rasbt/mlxtend).
 
 <br>
+
+Sebastian Raschka 2014
+
+<br>
 <br>
 
+<a id='overview'></a>
 ## Overview
 
 - [preprocessing](#preprocessing)
 	- [MeanCenterer](#meancenterer) 
+- [text utilities](#text-utilities)
+	- [name generalization](#name-generelization)
+- [file io utilities](#file-io-utilities)
+	- [find files](#find-files)
 - [scikit-learn utilities](#scikit-learn-utilities)
 	- [ColumnSelector for custom feature selection](#columnselector-for-custom-feature-selection) 
 	- [DenseTransformer for pipelines and GridSearch](#densetransformer-for-pipelines-and-gridsearch)
@@ -22,7 +29,7 @@ Link to the `mlxtend` repository on GitHub: [https://github.com/rasbt/mlxtend](h
 - [matplotlib utilities](#matplotlib-utilities)
 	- [remove_borders](#remove_borders) 
 - [Installation](#installation)
-- [Changelog](./docs/CHANGELOG.txt)
+- [Changelog](https://github.com/rasbt/mlxtend/blob/master/docs/CHANGELOG.txt)
 
 
 <br>
@@ -30,9 +37,10 @@ Link to the `mlxtend` repository on GitHub: [https://github.com/rasbt/mlxtend](h
 <br>
 <br>
 
+<a id='preprocessing'></a>
 ## preprocessing
 
-[[back to top](overview)]
+[[back to top](#overview)]
 
 A collection of different functions for various data preprocessing procedures.
 
@@ -42,9 +50,10 @@ The `preprocessing utilities` can be imported via
 	
 <br>
 <br>
+<a id='meancenterer'></a>
 ### MeanCenterer
 
-[[back to top](overview)]
+[[back to top](#overview)]
 
 	class MeanCenterer(TransformerObj):
     """
@@ -70,12 +79,12 @@ The `preprocessing utilities` can be imported via
 
 Use the `fit` method to fit the column means of a dataset (e.g., the training dataset) to a new MeanCenterer object. Then, call the `transform` method on the same dataset to center it at the sample mean.
 
-	>> X_train
+	>>> X_train
 	array([[1, 2, 3],
        [4, 5, 6],
        [7, 8, 9]])
-    >> mc = MeanCenterer().fit(X_train)
-	>> mc.transform(X_train)
+    >>> mc = MeanCenterer().fit(X_train)
+	>>> mc.transform(X_train)
     array([[-3, -3, -3],
        [ 0,  0,  0],
        [ 3,  3,  3]])
@@ -84,11 +93,11 @@ Use the `fit` method to fit the column means of a dataset (e.g., the training da
 
 To use the same parameters that were used to center the training dataset, simply call the `transform` method of the MeanCenterer instance on a new dataset (e.g., test dataset).
     
-    >> X_test 
+    >>> X_test 
     array([[1, 1, 1],
        [1, 1, 1],
        [1, 1, 1]])
-    >> mc.transform(X_test)  
+    >>> mc.transform(X_test)  
     array([[-3, -4, -5],
        [-3, -4, -5],
        [-3, -4, -5]])
@@ -97,9 +106,9 @@ To use the same parameters that were used to center the training dataset, simply
 
 The `MeanCenterer` also supports Python list objects, and the `fit_transform` method allows you to directly fit and center the dataset.
 
-	>> Z
+	>>> Z
 	[1, 2, 3]
-	>> MeanCenterer().fit_transform(Z)
+	>>> MeanCenterer().fit_transform(Z)
 	array([-1,  0,  1])
 
 
@@ -123,14 +132,153 @@ The `MeanCenterer` also supports Python list objects, and the `fit_transform` me
 
 ![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/mean_centering_3.png)
 
+
 <br>
 <br>
 <br>
 <br>
+
+
+
+
+<a id='text-utilities'></a>
+
+## text utilities
+
+[[back to top](#overview)]
+
+<br>
+
+The `text utilities` can be imported via
+
+	from mxtend.text import ...
+
+<br>
+<br>
+
+<a id='name-generalization'></a>
+### name generalization
+
+[[back to top](#overview)]
+
+##### Description
+
+A function that converts a name into a general format ` <last_name><separator><firstname letter(s)> (all lowercase)`, which is useful if data is collected from different sources and is supposed to be compared or merged based on name identifiers. E.g., if names are stored in a pandas `DataFrame` column, the apply function can be used to generalize names: `df['name'] = df['name'].apply(generalize_names)`
+
+##### Examples
+
+	from mlxtend.text import generalize_names
+
+    # defaults
+    >>> generalize_names('Pozo, José Ángel')
+    'pozo j'
+    >>> generalize_names('Pozo, José Ángel') 
+    'pozo j'
+    >>> assert(generalize_names('José Ángel Pozo') 
+    'pozo j' 
+    >>> generalize_names('José Pozo')
+    'pozo j' 
+    
+    # optional parameters
+    >>> generalize_names("Eto'o, Samuel", firstname_output_letters=2)
+    'etoo sa'
+    >>> generalize_names("Eto'o, Samuel", firstname_output_letters=0)
+    'etoo'
+    >>> generalize_names("Eto'o, Samuel", output_sep=', ')
+    'etoo, s' 
+
+##### Default parameters
+
+	def generalize_names(name, output_sep=' ', firstname_output_letters=1):
+	    """
+	    Function that outputs a person's name in the format 
+	    <last_name><separator><firstname letter(s)> (all lowercase)
+	        
+	    Parameters
+	    ----------
+	    name : `str`
+	      Name of the player
+	    output_sep : `str` (default: ' ')
+	      String for separating last name and first name in the output.
+	    firstname_output_letters : `int`
+	      Number of letters in the abbreviated first name.
+	      
+	    Returns
+	    ----------
+	    gen_name : `str`
+	      The generalized name.
+	        
+	    """
+
+
+<br>
+<br>
+<br>
+<br>
+
+<a id='file-io-utilities'></a>
+## file io utilities
+
+[[back to top](#overview)]
+
+<br>
+
+The `file_io utilities` can be imported via
+
+	from mxtend.file_io import ...
+
+<br>
+<br>
+<a id='find-files'></a>
+### find files
+
+[[back to top](#overview)]
+
+##### Description
+
+A function that finds files in a given directory based on substring matches and returns a list of the file names found.
+
+##### Examples
+
+	from mlxtend.file_io import find_files
+
+    >>> find_files('mlxtend', '/Users/sebastian/Desktop')
+	['/Users/sebastian/Desktop/mlxtend-0.1.6.tar.gz', 
+	'/Users/sebastian/Desktop/mlxtend-0.1.7.tar.gz'] 
+    
+
+##### Default parameters
+
+    """
+    Function that finds files in a directory based on substring matching.
+        
+    Parameters
+    ----------
+    substring : `str`
+      Substring of the file to be matched.
+    path : `str` 
+      Path where to look.
+      
+    Returns
+    ----------
+    results : `list`
+      List of the matched files.
+        
+    """
+
+
+<br>
+<br>
+<br>
+<br>
+
+
+
+<a id='scikit-learn-utilities'></a>
 
 ## scikit-learn utilities
 
-[[back to top](overview)]
+[[back to top](#overview)]
 
 <br>
 
@@ -140,9 +288,11 @@ The `scikit-learn utilities` can be imported via
 
 <br>
 <br>
+
+<a id='columnselector-for-custom-feature-selection'></a>
 ### ColumnSelector for custom feature selection
 
-[[back to top](overview)]
+[[back to top](#overview)]
 
 A feature selector for scikit-learn's Pipeline class that returns specified columns from a NumPy array; extremely useful in combination with scikit-learn's `Pipeline` in cross-validation.
 
@@ -184,9 +334,11 @@ Example in `Pipeline`:
 
 <br>
 <br>
+
+<a id='densetransformer-for-pipelines-and-gridsearch'></a>
 ### DenseTransformer for pipelines and GridSearch
 
-[[back to top](overview)]
+[[back to top](#overview)]
 
 A simple transformer that converts a sparse into a dense numpy array, e.g., required for scikit-learn's `Pipeline` when e.g,. `CountVectorizers` are used in combination with `RandomForest`s.
 
@@ -238,10 +390,10 @@ Example in `Pipeline`:
 <br>        
 <br>
 <br>
-
+<a id='math-utilities'></a>
 ## math utilities
 
-[[back to top](overview)]
+[[back to top](#overview)]
 
 <br>
 
@@ -251,10 +403,10 @@ The `math utilities` can be imported via
 
 <br>
 <br>
-
+<a id='combinations-and-permutations'></a>
 ### Combinations and permutations
 
-[[back to top](overview)]
+[[back to top](#overview)]
 
 Functions to calculate the number of combinations and permutations for creating subsequences of *r* elements out of a sequence with *n* elements.
 
@@ -279,10 +431,10 @@ This is especially useful in combination with [`itertools`](https://docs.python.
 <br>        
 <br>
 <br>
-
+<a id='matplotlib-utilities'></a>
 ## matplotlib utilities
 
-[[back to top](overview)]
+[[back to top](#overview)]
 
 <br>
 
@@ -292,9 +444,10 @@ The `matplotlib utilities` can be imported via
 
 <br>
 <br>
+<a id='remove_borders'></a>
 ### remove_borders
 
-[[back to top](overview)]
+[[back to top](#overview)]
 
 A function to remove borders from `matplotlib` plots.
 
@@ -316,9 +469,10 @@ A function to remove borders from `matplotlib` plots.
 <br>
 <br>
 
+<a id='installation'></a>
 ## Installation
 
-[[back to top](overview)]
+[[back to top](#overview)]
 
 You can use the following command to install `mlxtend`:  
 `pip install mlxtend`  

@@ -26,9 +26,12 @@ def generalize_names(name, output_sep=' ', firstname_output_letters=1):
     last, first = 'last', 'first'
     last_pos = -1
     
-    for n in ('van der ', 'de ', 'van ', 'von '):
+    name = name.lower()
+    
+    for n in ('van der ', 'de ', 'van ', 'von ', 'ben '):
         if n in name:
             name = name.replace(n, n.replace(' ', ''))
+            break
     
     if ',' in name:
         last, first = first, last   
@@ -49,5 +52,5 @@ def generalize_names(name, output_sep=' ', firstname_output_letters=1):
     else:
         output = name
         
-    gen_name = output.lower().strip()
+    gen_name = output.strip()
     return gen_name

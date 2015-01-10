@@ -25,6 +25,7 @@ Sebastian Raschka 2014
 - [Scikit-learn Utilities](#scikit-learn-utilities)
 	- [ColumnSelector for custom feature selection](#columnselector-for-custom-feature-selection) 
 	- [DenseTransformer for Pipelines and GridSearch](#densetransformer-for-pipelines-and-gridsearch)
+	- [EnsembleClassifier](#ensembleclassifier) 
 - [Math Utilities](#math-utilities)
 	- [Combinations and permutations](#combinations-and-permutations)
 - [Matplotlib Utilities](#matplotlib-utilities)
@@ -426,6 +427,55 @@ Example in `Pipeline`:
 	best_parameters_1 = grid_search_1.best_estimator_.get_params()
 	for param_name in sorted(parameters_1.keys()):
 	    print("\t%s: %r" % (param_name, best_parameters_1[param_name]))
+
+
+<br>
+<br>
+
+<a id='ensembleclassifier'></a>
+### EnsembleClassifier
+
+[[back to top](#overview)]
+
+And ensemble classifier that predicts class labels based on a majority voting rule
+
+
+
+##### Examples
+
+	from sklearn import cross_validation
+	from sklearn.linear_model import LogisticRegression
+	from sklearn.naive_bayes import GaussianNB 
+	from sklearn.ensemble import RandomForestClassifier
+	import numpy as np
+	from sklearn import datasets
+
+	iris = datasets.load_iris()
+	X, y = iris.data[:, 1:3], iris.target
+
+	np.random.seed(123)
+
+	clf1 = LogisticRegression()
+	clf2 = RandomForestClassifier()
+	clf3 = GaussianNB()
+
+	eclf = EnsembleClassifier(clfs=[clf1, clf2, clf3])
+
+	for clf, label in zip([clf1, clf2, clf3, eclf], ['Logistic Regression', 'Random Forest', 'naive Bayes', 'Ensemble']):
+
+	    scores = cross_validation.cross_val_score(clf, X, y, cv=5, scoring='accuracy')
+	    print("Accuracy: %0.2f (+/- %0.2f) [%s]" % (scores.mean(), scores.std(), label))
+    
+Output:
+    
+	Accuracy: 0.90 (+/- 0.05) [Logistic Regression]
+	Accuracy: 0.92 (+/- 0.05) [Random Forest]
+	Accuracy: 0.91 (+/- 0.04) [naive Bayes]
+	Accuracy: 0.95 (+/- 0.05) [Ensemble]
+
+
+
+
 
 
 <br>

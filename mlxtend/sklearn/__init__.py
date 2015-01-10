@@ -4,4 +4,4 @@
 
 from .feature_sel import ColumnSelector
 from .dense_transformer import DenseTransformer
-
+from .ensemble import EnsembleClassifier

@@ -15,18 +15,19 @@ Sebastian Raschka 2014
 <a id='overview'></a>
 ## Overview
 
-- [preprocessing](#preprocessing)
+- [Preprocessing](#preprocessing)
 	- [MeanCenterer](#meancenterer) 
-- [text utilities](#text-utilities)
-	- [name generalization](#name-generelization)
-- [file io utilities](#file-io-utilities)
-	- [find files](#find-files)
-- [scikit-learn utilities](#scikit-learn-utilities)
+- [Text Utilities](#text-utilities)
+	- [Name Generalization](#name-generelization)
+	[Name Generalization and Duplicates](#name-generalization-and-duplicates)
+- [File IO Utilities](#file-io-utilities)
+	- [Find Files](#find-files)
+- [Scikit-learn Utilities](#scikit-learn-utilities)
 	- [ColumnSelector for custom feature selection](#columnselector-for-custom-feature-selection) 
-	- [DenseTransformer for pipelines and GridSearch](#densetransformer-for-pipelines-and-gridsearch)
-- [math utilities](#math-utilities)
+	- [DenseTransformer for Pipelines and GridSearch](#densetransformer-for-pipelines-and-gridsearch)
+- [Math Utilities](#math-utilities)
 	- [Combinations and permutations](#combinations-and-permutations)
-- [matplotlib utilities](#matplotlib-utilities)
+- [Matplotlib Utilities](#matplotlib-utilities)
 	- [remove_borders](#remove_borders) 
 - [Installation](#installation)
 - [Changelog](https://github.com/rasbt/mlxtend/blob/master/docs/CHANGELOG.txt)
@@ -38,7 +39,7 @@ Sebastian Raschka 2014
 <br>
 
 <a id='preprocessing'></a>
-## preprocessing
+## Preprocessing
 
 [[back to top](#overview)]
 
@@ -143,7 +144,7 @@ The `MeanCenterer` also supports Python list objects, and the `fit_transform` me
 
 <a id='text-utilities'></a>
 
-## text utilities
+## Text Utilities
 
 [[back to top](#overview)]
 
@@ -157,7 +158,7 @@ The `text utilities` can be imported via
 <br>
 
 <a id='name-generalization'></a>
-### name generalization
+### Name Generalization
 
 [[back to top](#overview)]
 
@@ -187,7 +188,7 @@ A function that converts a name into a general format ` <last_name><separator><f
     >>> generalize_names("Eto'o, Samuel", output_sep=', ')
     'etoo, s' 
 
-##### Default parameters
+##### Default Parameters
 
 	def generalize_names(name, output_sep=' ', firstname_output_letters=1):
 	    """
@@ -210,6 +211,47 @@ A function that converts a name into a general format ` <last_name><separator><f
 	        
 	    """
 
+<br>
+<br>
+
+<a id='name-generalization-and-duplicates'></a>
+### Name Generalization and Duplicates
+
+[[back to top](#overview)]
+
+**Note** that using [`generalize_names`](#name-generalization) with few `firstname_output_letters` can result in duplicate entries. E.g., if your dataset contains the names "Adam Johnson" and "Andrew Johnson", the default setting (i.e., 1 first name letter) will produce the generalized name "johnson a" in both cases.
+
+One solution is to increase the number of first name letters in the output by setting the parameter `firstname_output_letters` to a value larger than 1. 
+
+An alternative solution is to use the `generalize_names_duplcheck` function if you are working with pandas DataFrames. 
+
+The  `generalize_names_duplcheck` function can be imported via
+
+	from mlxtend.text import generalize_names_duplcheck
+
+By default,  `generalize_names_duplcheck` will apply  `generalize_names` to a pandas DataFrame column with the minimum number of first name letters and append as many first name letters as necessary until no duplicates are present in the given DataFrame column. An example dataset column that contains the names  
+
+
+##### Examples
+
+
+
+Reading in a CSV file that has column `Name` for which we want to generalize the names:
+
+- Samuel Eto'o
+- Adam Johnson
+- Andrew Johnson
+
+
+	df = pd.read_csv(path)
+
+
+Applying `generalize_names_duplcheck` to generate a new DataFrame with the generalized names without duplicates:	      
+
+    df_new = generalize_names_duplcheck(df=df, col_name='Name')
+- etoo s
+- johnson ad
+- jonson an
 
 <br>
 <br>
@@ -217,7 +259,7 @@ A function that converts a name into a general format ` <last_name><separator><f
 <br>
 
 <a id='file-io-utilities'></a>
-## file io utilities
+## File IO Utilities
 
 [[back to top](#overview)]
 
@@ -230,7 +272,7 @@ The `file_io utilities` can be imported via
 <br>
 <br>
 <a id='find-files'></a>
-### find files
+### Find Files
 
 [[back to top](#overview)]
 
@@ -247,7 +289,7 @@ A function that finds files in a given directory based on substring matches and 
 	'/Users/sebastian/Desktop/mlxtend-0.1.7.tar.gz'] 
     
 
-##### Default parameters
+##### Default Parameters
 
     """
     Function that finds files in a directory based on substring matching.
@@ -276,7 +318,7 @@ A function that finds files in a given directory based on substring matches and 
 
 <a id='scikit-learn-utilities'></a>
 
-## scikit-learn utilities
+## Scikit-learn Utilities
 
 [[back to top](#overview)]
 
@@ -290,7 +332,7 @@ The `scikit-learn utilities` can be imported via
 <br>
 
 <a id='columnselector-for-custom-feature-selection'></a>
-### ColumnSelector for custom feature selection
+### ColumnSelector for Custom Feature Selection
 
 [[back to top](#overview)]
 
@@ -336,7 +378,7 @@ Example in `Pipeline`:
 <br>
 
 <a id='densetransformer-for-pipelines-and-gridsearch'></a>
-### DenseTransformer for pipelines and GridSearch
+### DenseTransformer for Pipelines and GridSearch
 
 [[back to top](#overview)]
 
@@ -391,7 +433,7 @@ Example in `Pipeline`:
 <br>
 <br>
 <a id='math-utilities'></a>
-## math utilities
+## Math Utilities
 
 [[back to top](#overview)]
 
@@ -404,7 +446,7 @@ The `math utilities` can be imported via
 <br>
 <br>
 <a id='combinations-and-permutations'></a>
-### Combinations and permutations
+### Combinations and Permutations
 
 [[back to top](#overview)]
 
@@ -432,7 +474,7 @@ This is especially useful in combination with [`itertools`](https://docs.python.
 <br>
 <br>
 <a id='matplotlib-utilities'></a>
-## matplotlib utilities
+## Matplotlib Utilities
 
 [[back to top](#overview)]
 

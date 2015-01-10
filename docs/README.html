@@ -324,38 +324,39 @@ sup {
 <h2>Overview</h2>
 
 <ul>
-<li><a href="#preprocessing">preprocessing</a>
+<li><a href="#preprocessing">Preprocessing</a>
 
 <ul>
 <li><a href="#meancenterer">MeanCenterer</a></li>
 </ul>
 </li>
-<li><a href="#text-utilities">text utilities</a>
+<li><a href="#text-utilities">Text Utilities</a>
 
 <ul>
-<li><a href="#name-generelization">name generalization</a></li>
+<li><a href="#name-generelization">Name Generalization</a>
+<a href="#name-generalization-and-duplicates">Name Generalization and Duplicates</a></li>
 </ul>
 </li>
-<li><a href="#file-io-utilities">file io utilities</a>
+<li><a href="#file-io-utilities">File IO Utilities</a>
 
 <ul>
-<li><a href="#find-files">find files</a></li>
+<li><a href="#find-files">Find Files</a></li>
 </ul>
 </li>
-<li><a href="#scikit-learn-utilities">scikit-learn utilities</a>
+<li><a href="#scikit-learn-utilities">Scikit-learn Utilities</a>
 
 <ul>
 <li><a href="#columnselector-for-custom-feature-selection">ColumnSelector for custom feature selection</a></li>
-<li><a href="#densetransformer-for-pipelines-and-gridsearch">DenseTransformer for pipelines and GridSearch</a></li>
+<li><a href="#densetransformer-for-pipelines-and-gridsearch">DenseTransformer for Pipelines and GridSearch</a></li>
 </ul>
 </li>
-<li><a href="#math-utilities">math utilities</a>
+<li><a href="#math-utilities">Math Utilities</a>
 
 <ul>
 <li><a href="#combinations-and-permutations">Combinations and permutations</a></li>
 </ul>
 </li>
-<li><a href="#matplotlib-utilities">matplotlib utilities</a>
+<li><a href="#matplotlib-utilities">Matplotlib Utilities</a>
 
 <ul>
 <li><a href="#remove_borders">remove_borders</a></li>
@@ -373,7 +374,7 @@ sup {
 
 <p><a id='preprocessing'></a></p>
 
-<h2>preprocessing</h2>
+<h2>Preprocessing</h2>
 
 <p>[<a href="#overview">back to top</a>]</p>
 
@@ -481,7 +482,7 @@ plt.show()
 
 <p><a id='text-utilities'></a></p>
 
-<h2>text utilities</h2>
+<h2>Text Utilities</h2>
 
 <p>[<a href="#overview">back to top</a>]</p>
 
@@ -497,7 +498,7 @@ plt.show()
 
 <p><a id='name-generalization'></a></p>
 
-<h3>name generalization</h3>
+<h3>Name Generalization</h3>
 
 <p>[<a href="#overview">back to top</a>]</p>
 
@@ -528,7 +529,7 @@ plt.show()
 'etoo, s' 
 </code></pre>
 
-<h5>Default parameters</h5>
+<h5>Default Parameters</h5>
 
 <pre><code>def generalize_names(name, output_sep=' ', firstname_output_letters=1):
     """
@@ -553,13 +554,60 @@ plt.show()
 </code></pre>
 
 <p><br>
+<br></p>
+
+<p><a id='name-generalization-and-duplicates'></a></p>
+
+<h3>Name Generalization and Duplicates</h3>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p><strong>Note</strong> that using <a href="#name-generalization"><code>generalize_names</code></a> with few <code>firstname_output_letters</code> can result in duplicate entries. E.g., if your dataset contains the names "Adam Johnson" and "Andrew Johnson", the default setting (i.e., 1 first name letter) will produce the generalized name "johnson a" in both cases.</p>
+
+<p>One solution is to increase the number of first name letters in the output by setting the parameter <code>firstname_output_letters</code> to a value larger than 1.</p>
+
+<p>An alternative solution is to use the <code>generalize_names_duplcheck</code> function if you are working with pandas DataFrames.</p>
+
+<p>The  <code>generalize_names_duplcheck</code> function can be imported via</p>
+
+<pre><code>from mlxtend.text import generalize_names_duplcheck
+</code></pre>
+
+<p>By default,  <code>generalize_names_duplcheck</code> will apply  <code>generalize_names</code> to a pandas DataFrame column with the minimum number of first name letters and append as many first name letters as necessary until no duplicates are present in the given DataFrame column. An example dataset column that contains the names</p>
+
+<h5>Examples</h5>
+
+<p>Reading in a CSV file that has column <code>Name</code> for which we want to generalize the names:</p>
+
+<ul>
+<li>Samuel Eto'o</li>
+<li>Adam Johnson</li>
+<li><p>Andrew Johnson</p>
+
+<p>  df = pd.read_csv(path)</p></li>
+</ul>
+
+
+<p>Applying <code>generalize_names_duplcheck</code> to generate a new DataFrame with the generalized names without duplicates:</p>
+
+<pre><code>df_new = generalize_names_duplcheck(df=df, col_name='Name')
+</code></pre>
+
+<ul>
+<li>etoo s</li>
+<li>johnson ad</li>
+<li>jonson an</li>
+</ul>
+
+
+<p><br>
 <br>
 <br>
 <br></p>
 
 <p><a id='file-io-utilities'></a></p>
 
-<h2>file io utilities</h2>
+<h2>File IO Utilities</h2>
 
 <p>[<a href="#overview">back to top</a>]</p>
 
@@ -574,7 +622,7 @@ plt.show()
 <br>
 <a id='find-files'></a></p>
 
-<h3>find files</h3>
+<h3>Find Files</h3>
 
 <p>[<a href="#overview">back to top</a>]</p>
 
@@ -591,7 +639,7 @@ plt.show()
 '/Users/sebastian/Desktop/mlxtend-0.1.7.tar.gz'] 
 </code></pre>
 
-<h5>Default parameters</h5>
+<h5>Default Parameters</h5>
 
 <pre><code>"""
 Function that finds files in a directory based on substring matching.
@@ -618,7 +666,7 @@ results : `list`
 
 <p><a id='scikit-learn-utilities'></a></p>
 
-<h2>scikit-learn utilities</h2>
+<h2>Scikit-learn Utilities</h2>
 
 <p>[<a href="#overview">back to top</a>]</p>
 
@@ -634,7 +682,7 @@ results : `list`
 
 <p><a id='columnselector-for-custom-feature-selection'></a></p>
 
-<h3>ColumnSelector for custom feature selection</h3>
+<h3>ColumnSelector for Custom Feature Selection</h3>
 
 <p>[<a href="#overview">back to top</a>]</p>
 
@@ -685,7 +733,7 @@ First 3 rows:
 
 <p><a id='densetransformer-for-pipelines-and-gridsearch'></a></p>
 
-<h3>DenseTransformer for pipelines and GridSearch</h3>
+<h3>DenseTransformer for Pipelines and GridSearch</h3>
 
 <p>[<a href="#overview">back to top</a>]</p>
 
@@ -740,7 +788,7 @@ for param_name in sorted(parameters_1.keys()):
 <br>
 <a id='math-utilities'></a></p>
 
-<h2>math utilities</h2>
+<h2>Math Utilities</h2>
 
 <p>[<a href="#overview">back to top</a>]</p>
 
@@ -755,7 +803,7 @@ for param_name in sorted(parameters_1.keys()):
 <br>
 <a id='combinations-and-permutations'></a></p>
 
-<h3>Combinations and permutations</h3>
+<h3>Combinations and Permutations</h3>
 
 <p>[<a href="#overview">back to top</a>]</p>
 
@@ -786,7 +834,7 @@ Number of ways to permute 20 elements into 8 subelements: 5079110400
 <br>
 <a id='matplotlib-utilities'></a></p>
 
-<h2>matplotlib utilities</h2>
+<h2>Matplotlib Utilities</h2>
 
 <p>[<a href="#overview">back to top</a>]</p>
 

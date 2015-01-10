@@ -11,8 +11,10 @@ def generalize_names(name, output_sep=' ', firstname_output_letters=1):
     ----------
     name : `str`
       Name of the player
+    
     output_sep : `str` (default: ' ')
       String for separating last name and first name in the output.
+    
     firstname_output_letters : `int`
       Number of letters in the abbreviated first name.
       
@@ -54,3 +56,41 @@ def generalize_names(name, output_sep=' ', firstname_output_letters=1):
         
     gen_name = output.strip()
     return gen_name
+    
+    
+    
+def generalize_names_duplcheck(df, col_name):
+    """
+    Applies mlxtend.text.generalize_names to a DataFrame with 1 first name letter
+    by default and uses more first name letters if duplicates are detected.
+        
+    Parameters
+    ----------
+    df : `pandas.DataFrame`
+      DataFrame that contains a column where generalize_names should be applied.
+    
+    col_name : `str` 
+      Name of the DataFrame column where `generalize_names` function should be applied to.
+    
+    Returns
+    ----------
+    df_new : `str`
+      New DataFrame object where generalize_names function has been applied without duplicates.
+        
+    """
+    df_new = df.copy()
+    
+    df_new[col_name] = df_new[col_name].apply(generalize_names)
+    
+    dupl = list(df_new[df_new.duplicated(subset=col_name, take_last=True)].index) + \
+       list(df_new[df_new.duplicated(subset=col_name, take_last=False)].index)
+        
+    firstname_letters = 2
+    while len(dupl) > 0:
+        for idx in dupl:
+            df_new.loc[idx, col_name] = generalize_names(df.loc[idx, col_name], 
+                                                  firstname_output_letters=firstname_letters)
+        dupl = list(df_new[df_new.duplicated(subset=col_name, take_last=True)].index) + \
+               list(df_new[df_new.duplicated(subset=col_name, take_last=False)].index)
+        firstname_letters += 1
+    return df_new

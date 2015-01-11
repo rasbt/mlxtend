@@ -19,17 +19,17 @@ Sebastian Raschka 2014
 	- [MeanCenterer](#meancenterer) 
 - [Text Utilities](#text-utilities)
 	- [Name Generalization](#name-generelization)
-	[Name Generalization and Duplicates](#name-generalization-and-duplicates)
+	- [Name Generalization and Duplicates](#name-generalization-and-duplicates)
 - [File IO Utilities](#file-io-utilities)
 	- [Find Files](#find-files)
 - [Scikit-learn Utilities](#scikit-learn-utilities)
-	- [ColumnSelector for custom feature selection](#columnselector-for-custom-feature-selection) 
+	- [ColumnSelector for Custom Feature Selection](#columnselector-for-custom-feature-selection) 
 	- [DenseTransformer for Pipelines and GridSearch](#densetransformer-for-pipelines-and-gridsearch)
-	- [EnsembleClassifier](#ensembleclassifier) 
+	- [EnsembleClassifier to Combine Classification Models](#ensembleclassifier) 
 - [Math Utilities](#math-utilities)
-	- [Combinations and permutations](#combinations-and-permutations)
+	- [Combinations and Permutations](#combinations-and-permutations)
 - [Matplotlib Utilities](#matplotlib-utilities)
-	- [remove_borders](#remove_borders) 
+	- [Removing Borders](#remove_borders) 
 - [Installation](#installation)
 - [Changelog](https://github.com/rasbt/mlxtend/blob/master/docs/CHANGELOG.txt)
 
@@ -79,7 +79,7 @@ The `preprocessing utilities` can be imported via
     
 **Examples:**
 
-Use the `fit` method to fit the column means of a dataset (e.g., the training dataset) to a new MeanCenterer object. Then, call the `transform` method on the same dataset to center it at the sample mean.
+Use the `fit` method to fit the column means of a dataset (e.g., the training dataset) to a new `MeanCenterer` object. Then, call the `transform` method on the same dataset to center it at the sample mean.
 
 	>>> X_train
 	array([[1, 2, 3],
@@ -93,7 +93,7 @@ Use the `fit` method to fit the column means of a dataset (e.g., the training da
 
 <br>
 
-To use the same parameters that were used to center the training dataset, simply call the `transform` method of the MeanCenterer instance on a new dataset (e.g., test dataset).
+To use the same parameters that were used to center the training dataset, simply call the `transform` method of the `MeanCenterer` instance on a new dataset (e.g., test dataset).
     
     >>> X_test 
     array([[1, 1, 1],
@@ -243,8 +243,9 @@ Reading in a CSV file that has column `Name` for which we want to generalize the
 - Adam Johnson
 - Andrew Johnson
 
+<br>
 
-	df = pd.read_csv(path)
+    df = pd.read_csv(path)
 
 
 Applying `generalize_names_duplcheck` to generate a new DataFrame with the generalized names without duplicates:	      
@@ -502,6 +503,10 @@ The `math utilities` can be imported via
 
 Functions to calculate the number of combinations and permutations for creating subsequences of *r* elements out of a sequence with *n* elements.
 
+##### Examples
+
+In:
+
 	from mlxtend.math import num_combinations
 	from mlxtend.math import num_permutations
 
@@ -511,7 +516,7 @@ Functions to calculate the number of combinations and permutations for creating 
 	d = num_permutations(n=20, r=8, with_replacement=False)
 	print('Number of ways to permute 20 elements into 8 subelements: %d' % d)
 
-Output:	
+Out:	
 
 	Number of ways to combine 20 elements into 8 subelements: 125970
 	Number of ways to permute 20 elements into 8 subelements: 5079110400
@@ -537,11 +542,16 @@ The `matplotlib utilities` can be imported via
 <br>
 <br>
 <a id='remove_borders'></a>
-### remove_borders
+### Removing Borders
 
 [[back to top](#overview)]
 
-A function to remove borders from `matplotlib` plots.
+A function to remove borders from `matplotlib` plots. Import `remove_borders` via
+
+    from mlxtend.matplotlib import remove_borders
+
+
+
 
 	def remove_borders(axes, left=False, bottom=False, right=True, top=True):
     	""" 
@@ -554,7 +564,7 @@ A function to remove borders from `matplotlib` plots.
             
     	"""
 
-**Example**
+##### Examples
 
 ![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/remove_borders_3.png)
 

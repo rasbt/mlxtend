@@ -1,0 +1,52 @@
+0.1.9
+=======
+
+- Implemented scikit-learn EnsembleClassifier (majority voting rule) class.
+
+0.1.8
+=======
+
+- Improvements to mlxtend.text.generalize_names to handle certain Dutch last name prefixes (van, van der, de, etc.).
+- Added mlxtend.text.generalize_name_duplcheck function to apply mlxtend.text.generalize_names function to a pandas DataFrame without creating duplicates.
+
+0.1.7
+=======
+
+- Added text utilities with name generalization function.
+- Added  and file_io utilities.
+
+0.1.6
+=======
+
+- Added combinations and permutations estimators.
+
+0.1.5
+=======
+
+- Added `DenseTransformer` for pipelines and grid search.
+
+
+0.1.4
+=======
+
+- `mean_centering` function is now a Class that creates `MeanCenterer` objects
+  that can be used to fit data via the `fit` method, and center data at the column
+  means via the `transform` and `fit_transform` method.
+
+
+0.1.3
+=======
+
+- Added `preprocessing` module and `mean_centering` function.
+
+
+0.1.2
+=======
+
+- Added `matplotlib` utilities and `remove_borders` function.
+
+
+0.1.1
+=======
+
+- Simplified code for ColumnSelector.

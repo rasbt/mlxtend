@@ -80,6 +80,8 @@ def generalize_names_duplcheck(df, col_name):
     """
     df_new = df.copy()
     
+    df_new.drop_duplicates(subset=[col_name], inplace=True)
+    
     df_new[col_name] = df_new[col_name].apply(generalize_names)
     
     dupl = list(df_new[df_new.duplicated(subset=col_name, take_last=True)].index) + \

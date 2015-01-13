@@ -293,22 +293,32 @@ A function that finds files in a given directory based on substring matches and 
 
 ##### Default Parameters
 
-    """
-    Function that finds files in a directory based on substring matching.
+    def find_files(substring, path, recursive=False, check_ext=None): 
+        """
+        Function that finds files in a directory based on substring matching.
         
-    Parameters
-    ----------
-    substring : `str`
-      Substring of the file to be matched.
-    path : `str` 
-      Path where to look.
+        Parameters
+        ----------
+    
+        substring : `str`
+          Substring of the file to be matched.
+    
+        path : `str` 
+          Path where to look.
+    
+        recursive: `bool`
+          If true, searches subdirectories recursively.
       
-    Returns
-    ----------
-    results : `list`
-      List of the matched files.
+        check_ext: `str`
+          If string (e.g., '.txt'), only returns files that
+            match the specified file extension.
+      
+        Returns
+        ----------
+        results : `list`
+          List of the matched files.
         
-    """
+        """
 
 
 <br>

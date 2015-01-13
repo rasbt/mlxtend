@@ -1,6 +1,6 @@
 import os
 
-def find_files(substring, path, recursive=False): 
+def find_files(substring, path, recursive=False, check_ext=None): 
     """
     Function that finds files in a directory based on substring matching.
         
@@ -15,6 +15,10 @@ def find_files(substring, path, recursive=False):
     
     recursive: `bool`
       If true, searches subdirectories recursively.
+      
+    check_ext: `str`
+      If string (e.g., '.txt'), only returns files that
+        match the specified file extension.
       
     Returns
     ----------
@@ -43,4 +47,8 @@ def find_files(substring, path, recursive=False):
             fn = check_file(f, path)
             if fn:
                 results.append(fn)
+                
+    if check_ext:
+        results = [r for r in results if os.path.splitext(r)[-1] == check_ext]
+    
     return results

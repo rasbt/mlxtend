@@ -2,7 +2,8 @@
 =======
 
 - Improved mlxtend.text.generalize_duplcheck to remove duplicates and prevent endless looping issue.
-- Added recursive search parameter to mlxtend.file_io.find_files.
+- Added `recursive` search parameter to mlxtend.file_io.find_files.
+- Added `check_ext` parameter mlxtend.file_io.find_files to search based on file extensions.
 
 0.1.9
 =======

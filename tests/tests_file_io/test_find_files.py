@@ -7,5 +7,11 @@ def test_find_files():
     expect = [os.path.join(os.getcwd(),'tests','tests_file_io', 'test_find_files.py')]
 
     assert(find_files(substring='test_find_files', path=path) == expect)
-    assert(find_files(substring='test_find_files.py', path=path, recursive=True) == expect)
+    
+    # find recursive
     assert(find_files(substring='test_find_files.py', path=os.getcwd(), recursive=True) == expect)
+    
+    # find files and check extension
+    assert(find_files(substring='test_find_files.py', path=path, check_ext='.py') == expect)
+    assert(find_files(substring='test_find_files.py', path=path, check_ext='.txt') == [])
+    

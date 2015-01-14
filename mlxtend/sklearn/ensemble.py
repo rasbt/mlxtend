@@ -16,9 +16,11 @@ class EnsembleClassifier(BaseEstimator, ClassifierMixin):
     
     clf : `iterable`
       A list of scikit-learn classifier objects.
-    weights : `list`
-      Weights for the individual classifiers for `.predict_proba`. 
-      Using equal weight by default.
+    
+    weights : `list` (default: `None`)
+      If `None`, the majority rule voting will be applied to the predicted class labels.
+      If a list of weights (`float` or `int`) is provided, the averaged raw probabilities (via `predict_proba`)
+      will be used to determine the most confident class label.
       
     """
     def __init__(self, clfs=None, weights=None):

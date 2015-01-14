@@ -448,11 +448,13 @@ Example in `Pipeline`:
 
 [[back to top](#overview)]
 
-And ensemble classifier that predicts class labels based on a majority voting rule
+And ensemble classifier that predicts class labels based on a majority voting rule.
 
-
+Please see the [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_ensemble_ensembleclassifier.ipynb) for a detailed explanation and examples.
 
 ##### Examples
+
+Input:
 
 	from sklearn import cross_validation
 	from sklearn.linear_model import LogisticRegression
@@ -466,11 +468,23 @@ And ensemble classifier that predicts class labels based on a majority voting ru
 
 	np.random.seed(123)
 
+    ################################
+    # Initialize classifiers
+    ################################
+    
 	clf1 = LogisticRegression()
 	clf2 = RandomForestClassifier()
 	clf3 = GaussianNB()
+	
+    ################################
+    # Initialize EnsembleClassifier
+    ################################
+    
+	eclf = EnsembleClassifier(clfs=[clf1, clf2, clf3], weights=[1,1,1])
 
-	eclf = EnsembleClassifier(clfs=[clf1, clf2, clf3])
+    ################################
+    # 5-fold Cross-Validation
+    ################################
 
 	for clf, label in zip([clf1, clf2, clf3, eclf], ['Logistic Regression', 'Random Forest', 'naive Bayes', 'Ensemble']):
 

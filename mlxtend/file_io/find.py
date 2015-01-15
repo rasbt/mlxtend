@@ -104,7 +104,7 @@ def find_filegroups(paths, substring='', extensions=None, validity_check=True):
         for f in r:
             basename, ext = os.path.splitext(os.path.basename(f))
             try:
-                if extensions[idx] == '' or ext == extensions[idx]:
+                if extensions[idx+1] == '' or ext == extensions[idx+1]:
                     groups[basename].append(f)
             except KeyError:
                 pass

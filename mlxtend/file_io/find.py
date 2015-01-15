@@ -47,7 +47,7 @@ def find_files(substring, path, recursive=False, check_ext=None, ignore_invisibl
     
     else:
         for f in os.listdir(path):
-            if invisible and f.startswith('.'):
+            if ignore_invisible and f.startswith('.'):
                 continue
             fn = check_file(f, path)
             if fn:

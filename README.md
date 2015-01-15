@@ -312,6 +312,9 @@ A function that finds files in a given directory based on substring matches and 
         check_ext: `str`
           If string (e.g., '.txt'), only returns files that
             match the specified file extension.
+            
+        ignore_invisible : `bool`
+      	  If `True`, ignores invisible files (i.e., files starting with a period).
       
         Returns
         ----------

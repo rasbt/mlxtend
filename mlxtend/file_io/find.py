@@ -1,6 +1,6 @@
 import os
 
-def find_files(substring, path, recursive=False, check_ext=None): 
+def find_files(substring, path, recursive=False, check_ext=None, ignore_invisible=True): 
     """
     Function that finds files in a directory based on substring matching.
         
@@ -19,6 +19,9 @@ def find_files(substring, path, recursive=False, check_ext=None):
     check_ext: `str`
       If string (e.g., '.txt'), only returns files that
         match the specified file extension.
+      
+    ignore_invisible : `bool`
+      If `True`, ignores invisible files (i.e., files starting with a period).
       
     Returns
     ----------
@@ -44,6 +47,8 @@ def find_files(substring, path, recursive=False, check_ext=None):
     
     else:
         for f in os.listdir(path):
+            if invisible and f.startswith('.'):
+                continue
             fn = check_file(f, path)
             if fn:
                 results.append(fn)
@@ -56,7 +61,7 @@ def find_files(substring, path, recursive=False, check_ext=None):
     
     
 
-def find_filegroups(paths, substring='', extensions=None, validity_check=True):
+def find_filegroups(paths, substring='', extensions=None, validity_check=True, ignore_invisible=True):
     """
     Function that finds and groups files from different directories in a python dictionary.
         
@@ -78,6 +83,8 @@ def find_filegroups(paths, substring='', extensions=None, validity_check=True):
       If `True`, checks if all dictionary values have the same number of file paths. Prints
         a warning and returns an empty dictionary if the validity check failed.
 
+    ignore_invisible : `bool`
+      If `True`, ignores invisible files (i.e., files starting with a period).
 
     Returns
     ----------
@@ -95,8 +102,8 @@ def find_filegroups(paths, substring='', extensions=None, validity_check=True):
     else:
         extensions = ['' for i in range(n)]
     
-    base = find_files(path=paths[0],  substring=substring, check_ext=extensions[0])
-    rest = [find_files(path=paths[i],  substring=substring, check_ext=extensions[i]) for i in range(1,n)] 
+    base = find_files(path=paths[0],  substring=substring, check_ext=extensions[0], ignore_invisible=ignore_invisible)
+    rest = [find_files(path=paths[i],  substring=substring, check_ext=extensions[i], ignore_invisible=ignore_invisible) for i in range(1,n)] 
     
     groups = {os.path.splitext(os.path.basename(f))[0]:[f] for f in base}
     

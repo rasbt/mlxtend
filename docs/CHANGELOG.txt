@@ -4,7 +4,9 @@
 - Improved mlxtend.text.generalize_duplcheck to remove duplicates and prevent endless looping issue.
 - Added `recursive` search parameter to mlxtend.file_io.find_files.
 - Added `check_ext` parameter mlxtend.file_io.find_files to search based on file extensions.
-- Default parameter to ignore invisible files for mlxtend.file_io.find
+- Default parameter to ignore invisible files for mlxtend.file_io.find.
+- Added `transform` and `fit_transform` to the `EnsembleClassifier`.
+- Added mlxtend.file_io.find_filegroups function.
 
 0.1.9
 =======

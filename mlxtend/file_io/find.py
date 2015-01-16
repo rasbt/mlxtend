@@ -3,31 +3,31 @@ import os
 def find_files(substring, path, recursive=False, check_ext=None, ignore_invisible=True): 
     """
     Function that finds files in a directory based on substring matching.
-        
+    
     Parameters
     ----------
-    
+
     substring : `str`
       Substring of the file to be matched.
-    
+
     path : `str` 
       Path where to look.
-    
-    recursive: `bool`
+
+    recursive: `bool`, optional, (default=`False`)
       If true, searches subdirectories recursively.
-      
-    check_ext: `str`
+  
+    check_ext: `str`, optional, (default=`None`)
       If string (e.g., '.txt'), only returns files that
-        match the specified file extension.
-      
-    ignore_invisible : `bool`
+      match the specified file extension.
+  
+    ignore_invisible : `bool`, optional, (default=`True`)
       If `True`, ignores invisible files (i.e., files starting with a period).
-      
+  
     Returns
     ----------
     results : `list`
       List of the matched files.
-        
+    
     """
     def check_file(f, path):
         if substring in f:
@@ -64,34 +64,33 @@ def find_files(substring, path, recursive=False, check_ext=None, ignore_invisibl
 def find_filegroups(paths, substring='', extensions=None, validity_check=True, ignore_invisible=True):
     """
     Function that finds and groups files from different directories in a python dictionary.
-        
+    
     Parameters
     ----------
-    
     paths : `list` 
       Paths of the directories to be searched. Dictionary keys are build from
-        the first directory.
-    
-    substring : `str`
-      Substring that all files have to contain to be considered.
-    
-    extensions : `list`
-      `None` or `list` of allowed file extensions for each path. If provided, the number
-        of extensions must match the number of `paths`.
-         
-    validity_check : `bool`
-      If `True`, checks if all dictionary values have the same number of file paths. Prints
-        a warning and returns an empty dictionary if the validity check failed.
+      the first directory.
 
-    ignore_invisible : `bool`
+    substring : `str`, optional, (default=`''`)
+      Substring that all files have to contain to be considered.
+
+    extensions : `list`, optional, (default=`None`)
+      `None` or `list` of allowed file extensions for each path. If provided, the number
+      of extensions must match the number of `paths`.
+     
+    validity_check : `bool`, optional, (default=`True`)
+      If `True`, checks if all dictionary values have the same number of file paths. Prints
+      a warning and returns an empty dictionary if the validity check failed.
+
+    ignore_invisible : `bool`, optional, (default=`True`)
       If `True`, ignores invisible files (i.e., files starting with a period).
 
     Returns
     ----------
     groups : `dict`
       Dictionary of files paths. Keys are the file names found in the first directory listed
-        in `paths` (without file extension).
-        
+      in `paths` (without file extension).
+    
     """
     n = len(paths)
     

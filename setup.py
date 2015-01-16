@@ -30,7 +30,7 @@ setup(name='mlxtend',
 A library of Python tools and extensions for data science.
 
 
- Contact
+Contact
 =============
 
 If you have any questions or comments about mlxtend, please feel free to contact me via

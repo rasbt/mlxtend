@@ -333,34 +333,35 @@ sup {
 <li><a href="#text-utilities">Text Utilities</a>
 
 <ul>
-<li><a href="#name-generelization">Name Generalization</a>
-<a href="#name-generalization-and-duplicates">Name Generalization and Duplicates</a></li>
+<li><a href="#name-generelization">Name Generalization</a></li>
+<li><a href="#name-generalization-and-duplicates">Name Generalization and Duplicates</a></li>
 </ul>
 </li>
 <li><a href="#file-io-utilities">File IO Utilities</a>
 
 <ul>
 <li><a href="#find-files">Find Files</a></li>
+<li><a href="#find-file-groups">Find File Groups</a></li>
 </ul>
 </li>
 <li><a href="#scikit-learn-utilities">Scikit-learn Utilities</a>
 
 <ul>
-<li><a href="#columnselector-for-custom-feature-selection">ColumnSelector for custom feature selection</a></li>
+<li><a href="#columnselector-for-custom-feature-selection">ColumnSelector for Custom Feature Selection</a></li>
 <li><a href="#densetransformer-for-pipelines-and-gridsearch">DenseTransformer for Pipelines and GridSearch</a></li>
-<li><a href="#ensembleclassifier">EnsembleClassifier</a></li>
+<li><a href="#ensembleclassifier">EnsembleClassifier to Combine Classification Models</a></li>
 </ul>
 </li>
 <li><a href="#math-utilities">Math Utilities</a>
 
 <ul>
-<li><a href="#combinations-and-permutations">Combinations and permutations</a></li>
+<li><a href="#combinations-and-permutations">Combinations and Permutations</a></li>
 </ul>
 </li>
 <li><a href="#matplotlib-utilities">Matplotlib Utilities</a>
 
 <ul>
-<li><a href="#remove_borders">remove_borders</a></li>
+<li><a href="#remove_borders">Removing Borders</a></li>
 </ul>
 </li>
 <li><a href="#installation">Installation</a></li>
@@ -418,7 +419,7 @@ object where the attributes are centered at the column means.
 
 <p><strong>Examples:</strong></p>
 
-<p>Use the <code>fit</code> method to fit the column means of a dataset (e.g., the training dataset) to a new MeanCenterer object. Then, call the <code>transform</code> method on the same dataset to center it at the sample mean.</p>
+<p>Use the <code>fit</code> method to fit the column means of a dataset (e.g., the training dataset) to a new <code>MeanCenterer</code> object. Then, call the <code>transform</code> method on the same dataset to center it at the sample mean.</p>
 
 <pre><code>&gt;&gt;&gt; X_train
 array([[1, 2, 3],
@@ -433,7 +434,7 @@ array([[-3, -3, -3],
 
 <p><br></p>
 
-<p>To use the same parameters that were used to center the training dataset, simply call the <code>transform</code> method of the MeanCenterer instance on a new dataset (e.g., test dataset).</p>
+<p>To use the same parameters that were used to center the training dataset, simply call the <code>transform</code> method of the <code>MeanCenterer</code> instance on a new dataset (e.g., test dataset).</p>
 
 <pre><code>&gt;&gt;&gt; X_test 
 array([[1, 1, 1],
@@ -583,11 +584,14 @@ plt.show()
 <ul>
 <li>Samuel Eto'o</li>
 <li>Adam Johnson</li>
-<li><p>Andrew Johnson</p>
-
-<p>  df = pd.read_csv(path)</p></li>
+<li>Andrew Johnson</li>
 </ul>
 
+
+<p><br></p>
+
+<pre><code>df = pd.read_csv(path)
+</code></pre>
 
 <p>Applying <code>generalize_names_duplcheck</code> to generate a new DataFrame with the generalized names without duplicates:</p>
 
@@ -642,22 +646,102 @@ plt.show()
 
 <h5>Default Parameters</h5>
 
-<pre><code>"""
-Function that finds files in a directory based on substring matching.
+<pre><code>def find_files(substring, path, recursive=False, check_ext=None, ignore_invisible=True): 
+    """
+    Function that finds files in a directory based on substring matching.
 
-Parameters
-----------
-substring : `str`
-  Substring of the file to be matched.
-path : `str` 
-  Path where to look.
+    Parameters
+    ----------
 
-Returns
-----------
-results : `list`
-  List of the matched files.
+    substring : `str`
+      Substring of the file to be matched.
 
-"""
+    path : `str` 
+      Path where to look.
+
+    recursive: `bool`, optional, (default=`False`)
+      If true, searches subdirectories recursively.
+
+    check_ext: `str`, optional, (default=`None`)
+      If string (e.g., '.txt'), only returns files that
+      match the specified file extension.
+
+    ignore_invisible : `bool`, optional, (default=`True`)
+      If `True`, ignores invisible files (i.e., files starting with a period).
+
+    Returns
+    ----------
+    results : `list`
+      List of the matched files.
+
+    """
+</code></pre>
+
+<p><br>
+<br></p>
+
+<p><a id='find-file-groups'></a></p>
+
+<h3>Find File Groups</h3>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<h5>Description</h5>
+
+<p>A function that finds files that belong together (i.e., differ only by file extension) in different directories and collects them in a Python dictionary for further processing tasks.</p>
+
+<h5>Examples</h5>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/file_io_find_find_filegroups_1.png" alt="" /></p>
+
+<pre><code>d1 = os.path.join(master_path, 'dir_1')
+d2 = os.path.join(master_path, 'dir_2')
+d3 = os.path.join(master_path, 'dir_3')
+
+find_filegroups(paths=[d1,d2,d3], substring='file_1')
+# Returns:
+# {'file_1': ['/Users/sebastian/github/mlxtend/tests/data/find_filegroups/dir_1/file_1.log', 
+#             '/Users/sebastian/github/mlxtend/tests/data/find_filegroups/dir_2/file_1.csv', 
+#             '/Users/sebastian/github/mlxtend/tests/data/find_filegroups/dir_3/file_1.txt']}
+#
+# Note: Setting `substring=''` would return a 
+# dictionary of all file paths for 
+# file_1.*, file_2.*, file_3.*
+</code></pre>
+
+<h5>Default Parameters</h5>
+
+<pre><code>def find_filegroups(paths, substring='', extensions=None, validity_check=True, ignore_invisible=True):
+    """
+    Function that finds and groups files from different directories in a python dictionary.
+
+    Parameters
+    ----------
+    paths : `list` 
+      Paths of the directories to be searched. Dictionary keys are build from
+      the first directory.
+
+    substring : `str`, optional, (default=`''`)
+      Substring that all files have to contain to be considered.
+
+    extensions : `list`, optional, (default=`None`)
+      `None` or `list` of allowed file extensions for each path. If provided, the number
+      of extensions must match the number of `paths`.
+
+    validity_check : `bool`, optional, (default=`True`)
+      If `True`, checks if all dictionary values have the same number of file paths. Prints
+      a warning and returns an empty dictionary if the validity check failed.
+
+    ignore_invisible : `bool`, optional, (default=`True`)
+      If `True`, ignores invisible files (i.e., files starting with a period).
+
+    Returns
+    ----------
+    groups : `dict`
+      Dictionary of files paths. Keys are the file names found in the first directory listed
+      in `paths` (without file extension).
+
+    """
 </code></pre>
 
 <p><br>
@@ -792,9 +876,13 @@ for param_name in sorted(parameters_1.keys()):
 
 <p>[<a href="#overview">back to top</a>]</p>
 
-<p>And ensemble classifier that predicts class labels based on a majority voting rule</p>
+<p>And ensemble classifier that predicts class labels based on a majority voting rule.</p>
+
+<p>Please see the <a href="http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_ensemble_ensembleclassifier.ipynb">IPython Notebook</a> for a detailed explanation and examples.</p>
 
 <h5>Examples</h5>
+
+<p>Input:</p>
 
 <pre><code>from sklearn import cross_validation
 from sklearn.linear_model import LogisticRegression
@@ -808,11 +896,23 @@ X, y = iris.data[:, 1:3], iris.target
 
 np.random.seed(123)
 
+################################
+# Initialize classifiers
+################################
+
 clf1 = LogisticRegression()
 clf2 = RandomForestClassifier()
 clf3 = GaussianNB()
 
-eclf = EnsembleClassifier(clfs=[clf1, clf2, clf3])
+################################
+# Initialize EnsembleClassifier
+################################
+
+eclf = EnsembleClassifier(clfs=[clf1, clf2, clf3], weights=[1,1,1])
+
+################################
+# 5-fold Cross-Validation
+################################
 
 for clf, label in zip([clf1, clf2, clf3, eclf], ['Logistic Regression', 'Random Forest', 'naive Bayes', 'Ensemble']):
 
@@ -855,6 +955,10 @@ Accuracy: 0.95 (+/- 0.05) [Ensemble]
 
 <p>Functions to calculate the number of combinations and permutations for creating subsequences of <em>r</em> elements out of a sequence with <em>n</em> elements.</p>
 
+<h5>Examples</h5>
+
+<p>In:</p>
+
 <pre><code>from mlxtend.math import num_combinations
 from mlxtend.math import num_permutations
 
@@ -865,7 +969,7 @@ d = num_permutations(n=20, r=8, with_replacement=False)
 print('Number of ways to permute 20 elements into 8 subelements: %d' % d)
 </code></pre>
 
-<p>Output:</p>
+<p>Out:</p>
 
 <pre><code>Number of ways to combine 20 elements into 8 subelements: 125970
 Number of ways to permute 20 elements into 8 subelements: 5079110400
@@ -873,8 +977,57 @@ Number of ways to permute 20 elements into 8 subelements: 5079110400
 
 <p>This is especially useful in combination with <a href="https://docs.python.org/3/library/itertools.html"><code>itertools</code></a>, e.g., in order to estimate the progress via <a href="https://github.com/rasbt/pyprind"><code>pyprind</code></a>.</p>
 
-<p><img src="./images/combinations_pyprind.png" alt="" />
-<br>
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/combinations_pyprind.png" alt="" /></p>
+
+<h5>Default Parameters</h5>
+
+<pre><code>def num_combinations(n, r, with_replacement=False):
+    """ 
+    Function to calculate the number of possible combinations.
+
+    Parameters
+    ----------
+    n : `int`
+      Total number of items.
+
+    r : `int`
+      Number of elements of the target itemset.
+
+    with_replacement : `bool`, optional, (default=False)
+      Allows repeated elements if True.
+
+    Returns
+    ----------
+    comb : `int`
+      Number of possible combinations.
+
+    """
+
+
+def num_permutations(n, r, with_replacement=False):
+    """ 
+    Function to calculate the number of possible permutations.
+
+    Parameters
+    ----------
+    n : `int`
+      Total number of items.
+
+    r : `int`
+      Number of elements of the target itemset.
+
+    with_replacement : `bool`, optional, (default=False)
+      Allows repeated elements if True.
+
+    Returns
+    ----------
+    permut : `int`
+      Number of possible permutations.
+
+    """
+</code></pre>
+
+<p><br>
 <br>      <br/>
 <br>
 <br>
@@ -895,13 +1048,18 @@ Number of ways to permute 20 elements into 8 subelements: 5079110400
 <br>
 <a id='remove_borders'></a></p>
 
-<h3>remove_borders</h3>
+<h3>Removing Borders</h3>
 
 <p>[<a href="#overview">back to top</a>]</p>
 
-<p>A function to remove borders from <code>matplotlib</code> plots.</p>
+<p>A function to remove borders from <code>matplotlib</code> plots. Import <code>remove_borders</code> via</p>
 
-<pre><code>def remove_borders(axes, left=False, bottom=False, right=True, top=True):
+<pre><code>from mlxtend.matplotlib import remove_borders
+
+
+
+
+def remove_borders(axes, left=False, bottom=False, right=True, top=True):
     """ 
     A function to remove chartchunk from matplotlib plots, such as axes
         spines, ticks, and labels.
@@ -913,7 +1071,7 @@ Number of ways to permute 20 elements into 8 subelements: 5079110400
     """
 </code></pre>
 
-<p><strong>Example</strong></p>
+<h5>Examples</h5>
 
 <p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/remove_borders_3.png" alt="" /></p>
 

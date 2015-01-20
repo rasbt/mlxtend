@@ -19,7 +19,6 @@ build
 dist
 lib/test
 doc/_build
-*.log
 *env
 *ENV
 .DS_store

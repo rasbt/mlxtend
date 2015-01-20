@@ -20,6 +20,8 @@ Sebastian Raschka 2014
 - [Text Utilities](#text-utilities)
 	- [Name Generalization](#name-generelization)
 	- [Name Generalization and Duplicates](#name-generalization-and-duplicates)
+- [Pandas Utilities](#pandas-utilities)
+	- [Minmax Scaling](#minmax-scaling)
 - [File IO Utilities](#file-io-utilities)
 	- [Find Files](#find-files)
 	- [Find File Groups](#find-file-groups)
@@ -256,6 +258,73 @@ Applying `generalize_names_duplcheck` to generate a new DataFrame with the gener
 - johnson ad
 - jonson an
 
+<br>
+<br>
+<br>
+<br>
+
+<a id='pandas-utilities'></a>
+## Pandas Utilities
+
+[[back to top](#overview)]
+
+The `pandas utilities` can be imported via
+
+	from mxtend.pandas import ...
+
+
+<br>
+<br>
+<a id='minmax-scaling'></a>
+### Minmax Scaling
+
+[[back to top](#overview)]
+
+##### Description
+
+A function that applies minmax scaling to pandas DataFrame columns.
+
+##### Examples
+
+	from mlxtend.pandas import minmax_scaling
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/pandas_scaling_minmax_scaling.png)
+    
+
+##### Default Parameters
+
+    def minmax_scaling(df, columns, min_val=0, max_val=1):
+        """ 
+        Min max scaling for pandas DataFrames
+        
+        Parameters
+        ----------
+        df : pandas DataFrame object.
+      
+        columns : array-like, shape = [n_columns]
+          Array-like with pandas DataFrame column names, e.g., ['col1', 'col2', ...]
+        
+        min_val : `int` or `float`, optional (default=`0`)
+          minimum value after rescaling.
+    
+        min_val : `int` or `float`, optional (default=`1`)
+          maximum value after rescaling.
+      
+        Returns
+        ----------
+    
+        df_new: pandas DataFrame object. 
+          Copy of the DataFrame with rescaled columns.
+      
+        """
+
+
+
+
+
+
+
+	
 <br>
 <br>
 <br>

@@ -30,7 +30,7 @@ def generalize_names(name, output_sep=' ', firstname_output_letters=1):
     
     name = name.lower()
     
-    for n in ('van der ', 'de ', 'van ', 'von ', 'ben '):
+    for n in ('van der ', 'de ', 'van ', 'von ',):
         if n in name:
             name = name.replace(n, n.replace(' ', ''))
             break

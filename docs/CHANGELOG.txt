@@ -1,3 +1,8 @@
+0.2.1
+=======
+
+- Added mlxtend.pandas.minmax_scaling - a function to rescale pandas DataFrame columns.
+
 0.2.0
 =======
 

@@ -30,14 +30,21 @@ def generalize_names(name, output_sep=' ', firstname_output_letters=1):
     
     name = name.lower()
     
-    for n in ('van der ', 'de ', 'van ', 'von ',):
-        if n in name:
-            name = name.replace(n, n.replace(' ', ''))
-            break
-    
+    # fix primarily Dutch names
+    exc = ['van der ', 'de ', 'van ', 'von ']
+    for e in exc:
+        if name.startswith(e):
+            repl = e.replace(' ','')
+            name = (repl + name[len(e)-1:].strip())
+            
+    exc = [' van der ', ' de', ' van ', ' von ', ', van der ', ', de', ', van ', ', von ']
+    for e in exc:
+        name = name.replace(e, ' '+e.replace(' ', ''))
+            
+        
     if ',' in name:
         last, first = first, last   
-        name = name.replace(',', ' ')
+        name = name.replace(',', '')
         last_pos = 1
         
     spl = name.split()
@@ -56,7 +63,6 @@ def generalize_names(name, output_sep=' ', firstname_output_letters=1):
         
     gen_name = output.strip()
     return gen_name
-    
     
     
 def generalize_names_duplcheck(df, col_name):

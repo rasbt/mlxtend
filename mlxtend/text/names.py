@@ -31,13 +31,15 @@ def generalize_names(name, output_sep=' ', firstname_output_letters=1):
     name = name.lower()
     
     # fix primarily Dutch names
-    exc = ['van der ', 'de ', 'van ', 'von ']
+    exc = ['van der ', 'de ', 'van ', 'von ', 'di ']
     for e in exc:
         if name.startswith(e):
             repl = e.replace(' ','')
             name = (repl + name[len(e)-1:].strip())
             
-    exc = [' van der ', ' de', ' van ', ' von ', ', van der ', ', de', ', van ', ', von ']
+    exc = [' van der ', ' de ', ' van ', ' von ', ' di ',
+    ', van der ', ', de', ', van ', ', von ', ', di ']
+    
     for e in exc:
         name = name.replace(e, ' '+e.replace(' ', ''))
             

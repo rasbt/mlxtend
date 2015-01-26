@@ -19,7 +19,7 @@ def test_EnsembleClassifier():
     clf1 = LogisticRegression()
     clf2 = RandomForestClassifier()
     clf3 = GaussianNB()
-    eclf = EnsembleClassifier(clfs=[clf1, clf2, clf3])
+    eclf = EnsembleClassifier(clfs=[clf1, clf2, clf3], voting='hard')
 
     scores = cross_validation.cross_val_score(eclf, X, y, cv=5, scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
@@ -32,7 +32,7 @@ def test_EnsembleClassifier_weights():
     clf1 = LogisticRegression()
     clf2 = RandomForestClassifier()
     clf3 = GaussianNB()
-    eclf = EnsembleClassifier(clfs=[clf1, clf2, clf3], weights=[1,2,10])
+    eclf = EnsembleClassifier(clfs=[clf1, clf2, clf3], voting='soft', weights=[1,2,10])
 
     scores = cross_validation.cross_val_score(eclf, X, y, cv=5, scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))

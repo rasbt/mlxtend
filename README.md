@@ -591,7 +591,7 @@ Example in `Pipeline`:
 
 [[back to top](#overview)]
 
-And ensemble classifier that predicts class labels based on a majority voting rule.
+And ensemble classifier that predicts class labels based on a majority voting rule (hard voting) or average predicted probabilities (soft voting).
 
 Please see the [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_ensemble_ensembleclassifier.ipynb) for a detailed explanation and examples.
 
@@ -622,8 +622,17 @@ Input:
     ################################
     # Initialize EnsembleClassifier
     ################################
-    
-	eclf = EnsembleClassifier(clfs=[clf1, clf2, clf3], weights=[1,1,1])
+
+    # hard voting    
+	eclf = EnsembleClassifier(clfs=[clf1, clf2, clf3], voting='hard')
+
+    # soft voting (uniform weights)
+    # eclf = EnsembleClassifier(clfs=[clf1, clf2, clf3], voting='soft')
+
+    # soft voting with different weights
+    # eclf = EnsembleClassifier(clfs=[clf1, clf2, clf3], voting='soft', weights=[1,2,10])
+
+
 
     ################################
     # 5-fold Cross-Validation

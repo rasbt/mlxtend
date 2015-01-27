@@ -3,6 +3,8 @@
 
 - Added mlxtend.pandas.minmax_scaling - a function to rescale pandas DataFrame columns.
 - Slight update to the EnsembleClassifier interface (additional `voting` parameter)
+- Fixed EnsembleClassifier to return correct class labels if class labels are not
+  integers from 0 to n.
 
 0.2.0
 =======

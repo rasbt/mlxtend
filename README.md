@@ -32,6 +32,7 @@ Sebastian Raschka 2014
 - [Math Utilities](#math-utilities)
 	- [Combinations and Permutations](#combinations-and-permutations)
 - [Matplotlib Utilities](#matplotlib-utilities)
+	- [Plotting Decision Regions](#plotting_decision_regions) 
 	- [Removing Borders](#remove_borders) 
 - [Installation](#installation)
 - [Changelog](https://github.com/rasbt/mlxtend/blob/master/docs/CHANGELOG.txt)
@@ -766,6 +767,85 @@ This is especially useful in combination with [`itertools`](https://docs.python.
 The `matplotlib utilities` can be imported via
 
 	from mxtend.matplotlib import ...
+
+<br>
+<br>
+<a id='plotting_decision_regions'></a>
+### Plotting Decision Regions
+
+[[back to top](#overview)]
+
+
+##### Description
+
+<br>
+<br>
+
+A function plot decision regions of classifiers.  Import `plot_decision_regions` via
+
+    from mlxtend.matplotlib import plot_decision_regions
+
+<br>
+<br>
+
+##### Examples
+
+For more examples, please see thos [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/matplotlib_decision_regions.ipynb).
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_plot_decision_regions.png)
+
+    from mlxtend.matplotlib import plot_decision_regions
+    import matplotlib.pyplot as plt
+    from sklearn import datasets
+    from sklearn.svm import SVC
+
+    # Loading some example data
+    iris = datasets.load_iris()
+    X = iris.data[:, [0,2]]
+    y = iris.target
+
+    # Training a classifier
+    svm = SVC(C=0.5, kernel='linear')
+    svm.fit(X,y)
+
+    # Plotting decision regions
+    plot_decision_regions(X, y, clf=svm, res=0.02)
+
+    # Adding axes annotations
+    plt.xlabel('sepal length [cm]')
+    plt.ylabel('petal length [cm]')
+    plt.title('SVM on Iris')
+    plt.show()
+
+<br>
+<br>
+##### Default Parameters
+
+def plot_decision_regions(X, y, clf, res=0.02):
+    """
+    Plots decision regions of a classifier.
+    
+    Parameters
+    ----------
+    X : array-like, shape = [n_samples, n_features]
+      Feature Matrix.
+      
+    y : array-like, shape = [n_samples]
+      True class labels.
+    
+    clf : Classifier object. Must have a .predict method.
+        
+    res : float (default: 0.02)
+      Grid width. Lower values increase the resolution but
+        slow down the plotting.
+        
+    Returns
+    ---------
+    None
+    
+    """
+
+
 
 <br>
 <br>

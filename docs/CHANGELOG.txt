@@ -5,6 +5,7 @@
 - Slight update to the EnsembleClassifier interface (additional `voting` parameter)
 - Fixed EnsembleClassifier to return correct class labels if class labels are not
   integers from 0 to n.
+- Added new matplotlib function to plot decision regions of classifiers.
 
 0.2.0
 =======

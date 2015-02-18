@@ -790,7 +790,7 @@ A function plot decision regions of classifiers.  Import `plot_decision_regions`
 
 ##### Examples
 
-For more examples, please see thos [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/matplotlib_decision_regions.ipynb).
+For more examples, please see this [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/matplotlib_decision_regions.ipynb).
 
 ![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_plot_decision_regions.png)
 
@@ -821,30 +821,30 @@ For more examples, please see thos [IPython Notebook](http://nbviewer.ipython.or
 <br>
 ##### Default Parameters
 
-def plot_decision_regions(X, y, clf, res=0.02):
-    """
-    Plots decision regions of a classifier.
+    def plot_decision_regions(X, y, clf, res=0.02, cmap=None, edgecolors=None):
+        """
+        Plots decision regions of a classifier.
     
-    Parameters
-    ----------
-    X : array-like, shape = [n_samples, n_features]
-      Feature Matrix.
+        Parameters
+        ----------
+        X : array-like, shape = [n_samples, n_features]
+          Feature Matrix.
       
-    y : array-like, shape = [n_samples]
-      True class labels.
+        y : array-like, shape = [n_samples]
+          True class labels.
     
-    clf : Classifier object. Must have a .predict method.
+        clf : Classifier object. Must have a .predict method.
         
-    res : float (default: 0.02)
-      Grid width. Lower values increase the resolution but
-        slow down the plotting.
+        res : float (default: 0.02)
+          Grid width. Lower values increase the resolution but
+            slow down the plotting.
         
-    Returns
-    ---------
-    None
-    
-    """
-
+        cmap : Custom colormap object.
+          Uses matplotlib.cm.rainbow if None.
+        
+        Returns
+        ---------
+        None
 
 
 <br>

@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(name='mlxtend',
-      version='0.2.1',
+      version='0.2.2',
       description='Machine Learning Library Extensions',
       author='Sebastian Raschka',
       author_email='se.raschka@gmail.com',

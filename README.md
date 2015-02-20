@@ -61,24 +61,8 @@ The `preprocessing utilities` can be imported via
 
 [[back to top](#overview)]
 
-	class MeanCenterer(TransformerObj):
-    """
-    Class for column centering of vectors and matrices.
-    
-    Keyword arguments:
-        X: NumPy array object where each attribute/variable is
-           stored in an individual column. 
-           Also accepts 1-dimensional Python list objects.
-    
-    Class methods:
-        fit: Fits column means to MeanCenterer object.
-        transform: Uses column means from `fit` for mean centering.
-        fit_transform: Fits column means and performs mean centering.
-    
-    The class methods `transform` and `fit_transform` return a new numpy array
-    object where the attributes are centered at the column means.
-    
-    """
+A transformer class that performs column-based mean centering on a NumPy array.
+
 <br>
     
 **Examples:**
@@ -257,7 +241,7 @@ Applying `generalize_names_duplcheck` to generate a new DataFrame with the gener
     df_new = generalize_names_duplcheck(df=df, col_name='Name')
 - etoo s
 - johnson ad
-- jonson an
+- johnson an
 
 <br>
 <br>

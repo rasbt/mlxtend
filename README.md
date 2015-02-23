@@ -635,8 +635,10 @@ Output:
 	Accuracy: 0.91 (+/- 0.04) [naive Bayes]
 	Accuracy: 0.95 (+/- 0.05) [Ensemble]
 
+<br>
+The following example illustrates how the weighting of different classifiers affects the calculated average probability:
 
-
+![](./images/sklean_ensemble_probas.png)
 
 
 

@@ -1,7 +1,7 @@
 """
 Soft Voting/Majority Rule classifier
 
-This module contains a Soft Voting/Majority Rule classifier for 
+This module contains a Soft Voting/Majority Rule classifier for
 classification clfs.
 
 
@@ -14,40 +14,31 @@ import numpy as np
 import operator
 
 class EnsembleClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
-    """ 
+    """
     Soft Voting/Majority Rule classifier for classification clfs.
-        
     Parameters
     ----------
     clfs : array-like, shape = [n_classifiers]
       A list of clfs for classification.
-      
     voting : str, {'hard', 'soft'} (default='hard')
       If 'hard', uses predicted class labels for majority rule voting.
-      Else if 'soft', predicts the class label based on the argmax of 
-      the sums of predict probalities.
-    
+      Else if 'soft', predicts the class label based on the argmax of
+      the sums of the predicted probalities.
     weights : array-like, shape = [n_classifiers], optional (default=`None`)
-      Sequence of weights (`float` or `int`) that are multiplied with the 
-      predicted class probabilities before averaging if `voting='soft'` 
-      Uses uniform weights if `None`.
-        
+      Sequence of weights (`float` or `int`) to weight the occurances of
+      predicted class labels (`hard` voting) or class probabilities
+      before averaging (`soft` voting). Uses uniform weights if `None`.
     Attributes
     ----------
-    classes_ : array-like, shape = [n_class_labels]
-       
-    probas_ : array, shape = [n_probabilities, n_classifiers]
-        Predicted probabilities by each classifier if `weights=array-like`.
-        
+    classes_ : array-like, shape = [n_predictions]
     Examples
     --------
     >>> import numpy as np
     >>> from sklearn.linear_model import LogisticRegression
-    >>> from sklearn.naive_bayes import GaussianNB 
+    >>> from sklearn.naive_bayes import GaussianNB
     >>> from sklearn.ensemble import RandomForestClassifier
-    >>> np.random.seed(123)
-    >>> clf1 = LogisticRegression()
-    >>> clf2 = RandomForestClassifier()
+    >>> clf1 = LogisticRegression(random_state=1)
+    >>> clf2 = RandomForestClassifier(random_state=1)
     >>> clf3 = GaussianNB()
     >>> X = np.array([[-1, -1], [-2, -1], [-3, -2], [1, 1], [2, 1], [3, 2]])
     >>> y = np.array([1, 1, 1, 2, 2, 2])
@@ -59,142 +50,142 @@ class EnsembleClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     >>> eclf2 = eclf2.fit(X, y)
     >>> print(eclf2.predict(X))
     [1 1 1 2 2 2]
-    >>> eclf3 = EnsembleClassifier(clfs=[clf1, clf2, clf3], voting='soft', weights=[2,1,1])
+    >>> eclf3 = EnsembleClassifier(clfs=[clf1, clf2, clf3],
+    ...                          voting='soft', weights=[2,1,1])
     >>> eclf3 = eclf3.fit(X, y)
     >>> print(eclf3.predict(X))
     [1 1 1 2 2 2]
     >>>
-      
     """
     def __init__(self, clfs, voting='hard', weights=None):
         self.clfs = clfs
-        
-        if voting not in ('soft', 'hard'):
-            raise ValueError("voting must be 'soft' or 'hard'; got (voting=%r)"
-                             % voting)
-
         self.voting = voting
-        
-        if weights and len(weights) != len(clfs):
-            raise ValueError('Number of classifiers and weights must be equal')      
-        
         self.weights = weights
-        self.le = LabelEncoder()
-        self.classes_ = None
-
 
     def fit(self, X, y):
-        """ 
+        """
         Fits the clfs.
-        
         Parameters
         ----------
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
-            
         y : array-like, shape = [n_samples]
             Target values.
-      
         Returns
         -------
         self : object
-
         """
+
+        if isinstance(y, np.ndarray) and len(y.shape) > 1 and y.shape[1] > 1:
+            raise NotImplementedError('Multilabel classification'
+                                      ' not implemented, yet.')
+
+        if self.voting not in ('soft', 'hard'):
+            raise ValueError("Voting must be 'soft' or 'hard'; got (voting=%r)"
+                             % voting)
+
+        if self.weights and len(self.weights) != len(self.clfs):
+            raise ValueError('Number of classifiers and weights must be equal'
+                             '; got %d weights, %d clfs'
+                             % (len(self.weights), len(self.clfs)))
+
+        self.le_ = LabelEncoder()
+        self.le_.fit(y)
+        self.classes_ = self.le_.classes_
+
         for clf in self.clfs:
-            clf.fit(X, y)
-        
-        self.le.fit(y)
-        self.classes_ = np.unique(y)
-                
+            clf.fit(X, self.le_.transform(y))
+
         return self
-            
+
     def predict(self, X):
         """
+        Predict class labels for X.
+
         Parameters
         ----------
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
-        
+
         Returns
         ----------
-        maj : array-like, shape = [n_class_labels]
-            Predicted class labels by majority rule.
-        
+        maj : array-like, shape = [n_samples]
+            Predicted class labels.
+
         """
         if self.voting == 'soft':
-            avg = self.predict_proba(X)
-            maj = self.le.inverse_transform(np.argmax(avg, axis=1))
-        
-        else: # 'hard' voting
-            self.classes_ = self._predict(X)
-            
-            # arange class labels as [n_class_labels, n_classifier_predictions]
-            self.classes_ = np.asarray([self.classes_[:,c] for c in range(self.classes_.shape[1])])
-            
-            # duplicate class labels if weights are provided for argmax majority rule
-            if self.weights:
-                self.classes_ = np.concatenate([np.tile(self.classes_[:,c,None], w)
-                                        for w,c in zip(self.weights, range(self.classes_.shape[1]))], axis=1)
 
-            maj = np.apply_along_axis(lambda x: np.argmax(np.bincount(x)), axis=1, arr=self.classes_)
-        
+            maj = np.argmax(self.predict_proba(X), axis=1)
+
+        else:  # 'hard' voting
+            predictions = self._predict(X)
+
+            maj = np.apply_along_axis(lambda x:
+                                      np.argmax(np.bincount(x, weights=self.weights)),
+                                      axis=1,
+                                      arr=predictions)
+
+        maj = self.le_.inverse_transform(maj)
+
         return maj
-            
-    
+
     def predict_proba(self, X):
         """
+        Predict class probabilities for X.
+
         Parameters
         ----------
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
-        
+
         Returns
         ----------
-        avg : array-like, shape = [n_samples, n_probabilities]
+        avg : array-like, shape = [n_samples, n_classes]
             Weighted average probability for each class per sample.
-        
+
         """
-        self.probas_ = self._predict_probas(X)
-        avg = np.average(self.probas_, axis=0, weights=self.weights)
-        
+        avg = np.average(self._predict_probas(X), axis=0, weights=self.weights)
+
         return avg
 
-  
     def transform(self, X):
-        """         
+        """
+        Return class labels or probabilities for X for each estimator.
+
         Parameters
         ----------
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
-      
+
         Returns
         -------
-        If not `weights=None`:
-          array-like = [n_classifier_results, n_class_proba, n_class]
+        If `voting='soft'`:
+          array-like = [n_classifiers, n_samples, n_classes]
             Class probabilties calculated by each classifier.
-        
-        Else:
-          array-like = [n_classifier_results, n_class_label]
+        If `voting='hard'`:
+          array-like = [n_classifiers, n_samples]
             Class labels predicted by each classifier.
-        
+
         """
-        if self.weights:
+        if self.voting == 'soft':
             return self._predict_probas(X)
         else:
-            return self._predict(X)  
-    
+            return self._predict(X)
+
     def _predict(self, X):
         """ Collects results from clf.predict calls. """
-        return np.asarray([clf.predict(X) for clf in self.clfs])
-        
+
+        return np.asarray([clf.predict(X) for clf in self.clfs]).T
+
     def _predict_probas(self, X):
         """ Collects results from clf.predict calls. """
+
         return np.asarray([clf.predict_proba(X) for clf in self.clfs])
-        
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()

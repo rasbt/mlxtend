@@ -638,8 +638,12 @@ Output:
 <br>
 The following example illustrates how the weighting of different classifiers affects the calculated average probability:
 
-![](./images/sklean_ensemble_probas.png)
+![](./images/sklearn_ensemble_probas.png)
 
+And here are the decision regions plotted for 4 different classifiers. More details can be found in the [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_ensemble_ensembleclassifier.ipynb).
+
+
+![](./images/sklean_ensemble_probas.png)
 
 
 <br>

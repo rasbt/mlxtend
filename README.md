@@ -578,6 +578,10 @@ Example in `Pipeline`:
 
 And ensemble classifier that predicts class labels based on a majority voting rule (hard voting) or average predicted probabilities (soft voting).
 
+Decision regions plotted for 4 different classifiers:   
+
+![](./images/sklearn_ensemble_decsion_regions.png)
+
 Please see the [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_ensemble_ensembleclassifier.ipynb) for a detailed explanation and examples.
 
 ##### Examples
@@ -640,10 +644,8 @@ The following example illustrates how the weighting of different classifiers aff
 
 ![](./images/sklearn_ensemble_probas.png)
 
-And here are the decision regions plotted for 4 different classifiers. More details can be found in the [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_ensemble_ensembleclassifier.ipynb).
 
 
-![](./images/sklean_ensemble_probas.png)
 
 
 <br>

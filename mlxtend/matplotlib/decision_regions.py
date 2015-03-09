@@ -3,6 +3,7 @@
 # matplotlib utilities for removing chartchunk
 
 from itertools import cycle
+import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib import cm
 import numpy as np
@@ -60,9 +61,15 @@ def plot_decision_regions(X, y, clf, res=0.02, cycle_marker=True, legend=1):
     plt.show()
 
     """
-    marker_gen = cycle('sxo^')
-    color_gen = cycle('bgrcmk')
+    marker_gen = cycle('sxo^v')
 
+    # make color map
+    colors = ['red', 'blue', 'lightgreen', 'gray', 'cyan']
+    classes = np.unique(y)
+    n_classes = len(np.unique(y))
+    if n_classes > 5:
+        raise NotImplementedError('Does not support more than 5 classes.')
+    cmap = matplotlib.colors.ListedColormap(colors[:n_classes])
 
     # plot the decision surface
 
@@ -88,13 +95,12 @@ def plot_decision_regions(X, y, clf, res=0.02, cycle_marker=True, legend=1):
         Z = clf.predict(np.array([xx.ravel()]).T)
 
     Z = Z.reshape(xx.shape)
-    plt.contourf(xx, yy, Z, alpha=0.4)
-
+    plt.contourf(xx, yy, Z, alpha=0.4, cmap=cmap)
     plt.xlim(xx.min(), xx.max())
     plt.ylim(yy.min(), yy.max())
 
     # plot class samples
-    for c in set(y):
+    for c in np.unique(y):
 
         if len(X.shape) == 2 and X.shape[1] > 1:
             dim = X[y==c, 1]
@@ -104,7 +110,7 @@ def plot_decision_regions(X, y, clf, res=0.02, cycle_marker=True, legend=1):
         plt.scatter(X[y==c, 0],
                     dim,
                     alpha=0.8,
-                    c=next(color_gen),
+                    c=cmap(c),
                     marker=next(marker_gen),
                     label=c)
 

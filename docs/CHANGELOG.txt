@@ -1,8 +1,8 @@
 0.2.2
 =======
 
-- Added optional cmap parameter to plot_decision_regions (default changed to cm.rainbow).
 - Improved robustness of EnsembleClassifier.
+- Extended plot_decision_regions() functionality for plotting 1D decision boundaries.
 
 0.2.1
 =======

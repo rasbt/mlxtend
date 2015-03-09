@@ -784,59 +784,101 @@ A function plot decision regions of classifiers.  Import `plot_decision_regions`
 
 For more examples, please see this [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/matplotlib_decision_regions.ipynb).
 
-![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_plot_decision_regions.png)
 
-    from mlxtend.matplotlib import plot_decision_regions
-    import matplotlib.pyplot as plt
-    from sklearn import datasets
-    from sklearn.svm import SVC
 
-    # Loading some example data
-    iris = datasets.load_iris()
-    X = iris.data[:, [0,2]]
-    y = iris.target
 
-    # Training a classifier
-    svm = SVC(C=0.5, kernel='linear')
-    svm.fit(X,y)
+## 2D example
 
-    # Plotting decision regions
-    plot_decision_regions(X, y, clf=svm, res=0.02)
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_plot_decision_regions_2d.png)
 
-    # Adding axes annotations
-    plt.xlabel('sepal length [cm]')
-    plt.ylabel('petal length [cm]')
-    plt.title('SVM on Iris')
-    plt.show()
+	from mlxtend.matplotlib import plot_decision_regions
+	import matplotlib.pyplot as plt
+	from sklearn import datasets
+	from sklearn.svm import SVC
+
+	# Loading some example data
+	iris = datasets.load_iris()
+	X = iris.data[:, [0,2]]
+	y = iris.target
+
+	# Training a classifier
+	svm = SVC(C=0.5, kernel='linear')
+	svm.fit(X,y)
+
+	# Plotting decision regions
+	plot_decision_regions(X, y, clf=svm, res=0.02, legend=2)
+
+	# Adding axes annotations
+	plt.xlabel('sepal length [cm]')
+	plt.ylabel('petal length [cm]')
+	plt.title('SVM on Iris')
+	plt.show()
+
+## 1D example
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_plot_decision_regions_1d.png)
+
+	from mlxtend.matplotlib import plot_decision_regions
+	import matplotlib.pyplot as plt
+	from sklearn import datasets
+	from sklearn.svm import SVC
+
+	# Loading some example data
+	iris = datasets.load_iris()
+	X = iris.data[:, 2]
+	X = X[:, None]
+	y = iris.target
+
+	# Training a classifier
+	svm = SVC(C=0.5, kernel='linear')
+	svm.fit(X,y)
+
+	# Plotting decision regions
+	plot_decision_regions(X, y, clf=svm, res=0.02, legend=2)
+
+	# Adding axes annotations
+	plt.xlabel('sepal length [cm]')
+	plt.ylabel('petal length [cm]')
+	plt.title('SVM on Iris')
+	plt.show()
+
 
 <br>
 <br>
 ##### Default Parameters
 
-    def plot_decision_regions(X, y, clf, res=0.02, cmap=None, edgecolors=None):
-        """
-        Plots decision regions of a classifier.
+	def plot_decision_regions(X, y, clf, res=0.02, cycle_marker=True, legend=1):
+	    """
+	    Plots decision regions of a classifier.
     
-        Parameters
-        ----------
-        X : array-like, shape = [n_samples, n_features]
-          Feature Matrix.
+	    Parameters
+	    ----------
+	    X : array-like, shape = [n_samples, n_features]
+	      Feature Matrix.
       
-        y : array-like, shape = [n_samples]
-          True class labels.
+	    y : array-like, shape = [n_samples]
+	      True class labels.
     
-        clf : Classifier object. Must have a .predict method.
+	    clf : Classifier object. Must have a .predict method.
         
-        res : float (default: 0.02)
-          Grid width. Lower values increase the resolution but
-            slow down the plotting.
+	    res : float (default: 0.02)
+	      Grid width. Lower values increase the resolution but
+	        slow down the plotting.
         
-        cmap : Custom colormap object.
-          Uses matplotlib.cm.rainbow if None.
+	    cycle_marker : bool
+	      Use different marker for each class.
+      
+	    legend : int
+	      Integer to specify the legend location. 
+	      No legend if legend is 0.
         
-        Returns
-        ---------
-        None
+	    cmap : Custom colormap object.
+	      Uses matplotlib.cm.rainbow if None.
+        
+	    Returns
+	    ---------
+	    None
+	    """
 
 
 <br>

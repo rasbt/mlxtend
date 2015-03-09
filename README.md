@@ -787,7 +787,7 @@ For more examples, please see this [IPython Notebook](http://nbviewer.ipython.or
 
 
 
-## 2D example
+#### 2D example
 
 ![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_plot_decision_regions_2d.png)
 
@@ -814,7 +814,7 @@ For more examples, please see this [IPython Notebook](http://nbviewer.ipython.or
 	plt.title('SVM on Iris')
 	plt.show()
 
-## 1D example
+#### 1D example
 
 ![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_plot_decision_regions_1d.png)
 

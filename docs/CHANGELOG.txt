@@ -5,6 +5,7 @@
 - Extended plot_decision_regions() functionality for plotting 1D decision boundaries.
 - Function matplotlib.plot_decision_regions was reorganized  to evaluate.plot_decision_regions .
 - evaluate.plot_learning_curves() function added.
+- Added Rosenblatt, gradient descent, and stochastic gradient descent perceptrons.
 
 0.2.1
 =======

@@ -20,6 +20,8 @@ Sebastian Raschka 2014-2015
 	- [Plotting Learning Curves](#plotting_learning_curves)
 - [Preprocessing](#preprocessing)
 	- [MeanCenterer](#meancenterer) 
+- [Classifier](#classifier)
+	- [Perceptron](#perceptron) 
 - [Text Utilities](#text-utilities)
 	- [Name Generalization](#name-generelization)
 	- [Name Generalization and Duplicates](#name-generalization-and-duplicates)
@@ -73,7 +75,7 @@ For more examples, please see this [IPython Notebook](http://nbviewer.ipython.or
 
 
 
-#### 2D example
+##### 2D example
 
 ![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/evaluate_plot_decision_regions_2d.png)
 
@@ -100,7 +102,7 @@ For more examples, please see this [IPython Notebook](http://nbviewer.ipython.or
 	plt.title('SVM on Iris')
 	plt.show()
 
-#### 1D example
+##### 1D example
 
 ![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/evaluate_plot_decision_regions_1d.png)
 
@@ -348,6 +350,304 @@ The `MeanCenterer` also supports Python list objects, and the `fit_transform` me
 <br>
 <br>
 <br>
+
+
+
+
+
+
+<a id='classifier'></a>
+## Classifier
+
+[[back to top](#overview)]
+
+Algorithms for classification.
+
+The `preprocessing utilities` can be imported via
+
+	from mxtend.classifier import ...
+	
+<br>
+<br>
+<a id='perceptron'></a>
+### Perceptron
+
+[[back to top](#overview)]
+
+Implementation of a Perceptron (single-layer artificial neural network) with different learning rules: Rosenblatt Perceptron Rule, gradient descent (Widrow Rule), and stochastic gradient descent.
+
+For more usage examples please see the [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/classifier_perceptron.ipynb).
+
+A more detailed article about the algorithms is in preparation.
+
+<br>
+<br>
+##### Example
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_percepron_gd_1.png)
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_percepron_gd_2.png)
+
+	from mlxtend.data import iris_data
+	from mlxtend.evaluate import plot_decision_regions
+	from mlxtend.classifier import Perceptron
+	import matplotlib.pyplot as plt
+
+	# Loading Data
+
+	X, y = iris_data()
+	X = X[:, [0, 3]] # sepal length and petal width
+	X = X[0:100] # class 0 and class 1
+	y = y[0:100] # class 0 and class 1
+
+	# standardize
+	X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
+	X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
+
+
+
+	# Rosenblatt Perceptron
+
+	ppn = Perceptron(epochs=15, eta=0.01, learning='perceptron')
+	ppn.fit(X, y)
+
+	plot_decision_regions(X, y, clf=ppn)
+	plt.title('Perceptron - Rosenblatt Perceptron Rule')
+	plt.show()
+
+	print(ppn.w_)
+
+	plt.plot(range(len(ppn.cost_)), ppn.cost_)
+	plt.xlabel('Iterations')
+	plt.ylabel('Missclassifications')
+	plt.show()
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_percepron_ros_1.png)
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_percepron_ros_2.png)
+
+	# Gradient Descent (Widrow Rule)
+
+	ppn = Perceptron(epochs=15, eta=0.01, learning='gd')
+	ppn.fit(X, y)
+
+	plot_decision_regions(X, y, clf=ppn, )
+	plt.title('Perceptron - Gradient Descent')
+	plt.show()
+
+	print(ppn.w_)
+
+	plt.plot(range(len(ppn.cost_)), ppn.cost_)
+	plt.xlabel('Iterations')
+	plt.ylabel('Sum-squared-error')
+
+
+
+<br>
+<br>
+##### Default Parameters
+
+    class Perceptron(object):
+        """Perceptron Classifier.
+    
+        Parameters
+        ------------
+        eta : float
+          Learning rate (between >0.0 and <1.0)
+      
+        epochs : int
+          Passes over the training dataset.
+      
+        learning : str (default: sgd)
+          Learning rule, sgd (stochastic gradient descent),
+          gd (gradient descent) or perceptron (Rosenblatt's perceptron rule).
+    
+        Attributes
+        -----------
+        w_ : 1d-array
+          Weights after fitting.
+    
+        cost_ : list
+          List of floats with sum of squared error cost (sgd or gd)
+          or number of misclassifications (perceptron) for every
+          epoch.
+    
+        """
+
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+<br>
+<br>
+<br>
+<a id='preprocessing'></a>
+## Preprocessing
+
+[[back to top](#overview)]
+
+A collection of different functions for various data preprocessing procedures.
+
+The `preprocessing utilities` can be imported via
+
+	from mxtend.preprocessing import ...
+	
+<br>
+<br>
+<a id='meancenterer'></a>
+### MeanCenterer
+
+[[back to top](#overview)]
+
+A transformer class that performs column-based mean centering on a NumPy array.
+
+<br>
+    
+**Examples:**
+
+Use the `fit` method to fit the column means of a dataset (e.g., the training dataset) to a new `MeanCenterer` object. Then, call the `transform` method on the same dataset to center it at the sample mean.
+
+	>>> X_train
+	array([[1, 2, 3],
+       [4, 5, 6],
+       [7, 8, 9]])
+    >>> mc = MeanCenterer().fit(X_train)
+	>>> mc.transform(X_train)
+    array([[-3, -3, -3],
+       [ 0,  0,  0],
+       [ 3,  3,  3]])
+
+<br>
+
+To use the same parameters that were used to center the training dataset, simply call the `transform` method of the `MeanCenterer` instance on a new dataset (e.g., test dataset).
+    
+    >>> X_test 
+    array([[1, 1, 1],
+       [1, 1, 1],
+       [1, 1, 1]])
+    >>> mc.transform(X_test)  
+    array([[-3, -4, -5],
+       [-3, -4, -5],
+       [-3, -4, -5]])
+
+<br>
+
+The `MeanCenterer` also supports Python list objects, and the `fit_transform` method allows you to directly fit and center the dataset.
+
+	>>> Z
+	[1, 2, 3]
+	>>> MeanCenterer().fit_transform(Z)
+	array([-1,  0,  1])
+
+
+<br>
+
+	import matplotlib.pyplot as plt
+	import numpy as np
+
+	X = 2 * np.random.randn(100,2) + 5
+
+	plt.scatter(X[:,0], X[:,1])
+	plt.grid()
+	plt.title('Random Gaussian data w. mean=5, sigma=2')
+	plt.show()
+
+	Y = MeanCenterer.fit_transform(X)
+	plt.scatter(Y[:,0], Y[:,1])
+	plt.grid()
+	plt.title('Data after mean centering')
+	plt.show()
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/mean_centering_3.png)
+
+
+<br>
+<br>
+<br>
+<br>
+
+**Examples:**
+
+Use the `fit` method to fit the column means of a dataset (e.g., the training dataset) to a new `MeanCenterer` object. Then, call the `transform` method on the same dataset to center it at the sample mean.
+
+	>>> X_train
+	array([[1, 2, 3],
+       [4, 5, 6],
+       [7, 8, 9]])
+    >>> mc = MeanCenterer().fit(X_train)
+	>>> mc.transform(X_train)
+    array([[-3, -3, -3],
+       [ 0,  0,  0],
+       [ 3,  3,  3]])
+
+<br>
+
+To use the same parameters that were used to center the training dataset, simply call the `transform` method of the `MeanCenterer` instance on a new dataset (e.g., test dataset).
+    
+    >>> X_test 
+    array([[1, 1, 1],
+       [1, 1, 1],
+       [1, 1, 1]])
+    >>> mc.transform(X_test)  
+    array([[-3, -4, -5],
+       [-3, -4, -5],
+       [-3, -4, -5]])
+
+<br>
+
+The `MeanCenterer` also supports Python list objects, and the `fit_transform` method allows you to directly fit and center the dataset.
+
+	>>> Z
+	[1, 2, 3]
+	>>> MeanCenterer().fit_transform(Z)
+	array([-1,  0,  1])
+
+
+<br>
+
+	import matplotlib.pyplot as plt
+	import numpy as np
+
+	X = 2 * np.random.randn(100,2) + 5
+
+	plt.scatter(X[:,0], X[:,1])
+	plt.grid()
+	plt.title('Random Gaussian data w. mean=5, sigma=2')
+	plt.show()
+
+	Y = MeanCenterer.fit_transform(X)
+	plt.scatter(Y[:,0], Y[:,1])
+	plt.grid()
+	plt.title('Data after mean centering')
+	plt.show()
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/mean_centering_3.png)
+
+
+<br>
+<br>
+<br>
+<br>
+
+
+
+
+
+
+
 
 
 

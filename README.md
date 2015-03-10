@@ -186,8 +186,7 @@ A function to plot learning curves for classifiers. Learning curves are extremel
 
 ##### Examples
 
-For more examples, please see this [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/evaluate_learning_curves.ipynb).
-
+For more examples, please see this [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/evaluate_learning_curves.ipynb)
 
 
 

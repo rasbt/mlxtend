@@ -218,7 +218,7 @@ For more examples, please see this [IPython Notebook](http://nbviewer.ipython.or
 
 	plot_learning_curves(X_train, y_train, X_test, y_test, clf, kind='n_features')
 	plt.show()
-#### 1D example
+
 
 <br>
 <br>

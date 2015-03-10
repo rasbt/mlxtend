@@ -7,7 +7,7 @@ Link to the `mlxtend` repository on GitHub: [https://github.com/rasbt/mlxtend](h
 
 <br>
 
-Sebastian Raschka 2014
+Sebastian Raschka 2014-2015
 
 <br>
 <br>
@@ -15,6 +15,9 @@ Sebastian Raschka 2014
 <a id='overview'></a>
 ## Overview
 
+- [Evaluate](#evaluate)
+	- [Plotting Decision Regions](#plotting_decision_regions) 
+	- [Plotting Learning Curves](#plotting_learning_curves)
 - [Preprocessing](#preprocessing)
 	- [MeanCenterer](#meancenterer) 
 - [Text Utilities](#text-utilities)
@@ -32,7 +35,6 @@ Sebastian Raschka 2014
 - [Math Utilities](#math-utilities)
 	- [Combinations and Permutations](#combinations-and-permutations)
 - [Matplotlib Utilities](#matplotlib-utilities)
-	- [Plotting Decision Regions](#plotting_decision_regions) 
 	- [Removing Borders](#remove_borders) 
 - [Installation](#installation)
 - [Changelog](https://github.com/rasbt/mlxtend/blob/master/docs/CHANGELOG.txt)
@@ -42,6 +44,226 @@ Sebastian Raschka 2014
 <br>
 <br>
 <br>
+
+<a id='evaluate'></a>
+## Evaluate
+
+<br>
+<br>
+<a id='plotting_decision_regions'></a>
+### Plotting Decision Regions
+
+[[back to top](#overview)]
+
+
+##### Description
+
+
+A function to plot decision regions of classifiers.  Import `plot_decision_regions` via
+
+    from mlxtend.evaluate import plot_decision_regions
+
+<br>
+<br>
+
+##### Examples
+
+For more examples, please see this [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/evaluate_decision_regions.ipynb).
+
+
+
+
+#### 2D example
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/evaluate_plot_decision_regions_2d.png)
+
+	from mlxtend.evaluate import plot_decision_regions
+	import matplotlib.pyplot as plt
+	from sklearn import datasets
+	from sklearn.svm import SVC
+
+	# Loading some example data
+	iris = datasets.load_iris()
+	X = iris.data[:, [0,2]]
+	y = iris.target
+
+	# Training a classifier
+	svm = SVC(C=0.5, kernel='linear')
+	svm.fit(X,y)
+
+	# Plotting decision regions
+	plot_decision_regions(X, y, clf=svm, res=0.02, legend=2)
+
+	# Adding axes annotations
+	plt.xlabel('sepal length [cm]')
+	plt.ylabel('petal length [cm]')
+	plt.title('SVM on Iris')
+	plt.show()
+
+#### 1D example
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/evaluate_plot_decision_regions_1d.png)
+
+	from mlxtend.evaluate import plot_decision_regions
+	import matplotlib.pyplot as plt
+	from sklearn import datasets
+	from sklearn.svm import SVC
+
+	# Loading some example data
+	iris = datasets.load_iris()
+	X = iris.data[:, 2]
+	X = X[:, None]
+	y = iris.target
+
+	# Training a classifier
+	svm = SVC(C=0.5, kernel='linear')
+	svm.fit(X,y)
+
+	# Plotting decision regions
+	plot_decision_regions(X, y, clf=svm, res=0.02, legend=2)
+
+	# Adding axes annotations
+	plt.xlabel('sepal length [cm]')
+	plt.ylabel('petal length [cm]')
+	plt.title('SVM on Iris')
+	plt.show()
+
+
+<br>
+<br>
+##### Default Parameters
+
+	def plot_decision_regions(X, y, clf, res=0.02, cycle_marker=True, legend=1):
+	    """
+	    Plots decision regions of a classifier.
+    
+	    Parameters
+	    ----------
+	    X : array-like, shape = [n_samples, n_features]
+	      Feature Matrix.
+      
+	    y : array-like, shape = [n_samples]
+	      True class labels.
+    
+	    clf : Classifier object. Must have a .predict method.
+        
+	    res : float (default: 0.02)
+	      Grid width. Lower values increase the resolution but
+	        slow down the plotting.
+        
+	    cycle_marker : bool
+	      Use different marker for each class.
+      
+	    legend : int
+	      Integer to specify the legend location. 
+	      No legend if legend is 0.
+        
+	    cmap : Custom colormap object.
+	      Uses matplotlib.cm.rainbow if None.
+        
+	    Returns
+	    ---------
+	    None
+	    """
+
+<br>
+<br>
+
+
+<a id='plotting_learning_curves'></a>
+### Plotting Learning Curves
+[[back to top](#overview)]
+
+
+##### Description
+
+
+A function to plot learning curves for classifiers. Learning curves are extremely useful to analyze if a model is suffering from over- or underfitting (high variance or high bias). The function can be imported via
+
+    from mlxtend.evaluate import plot_learning_curves
+<br>
+<br>
+
+##### Examples
+
+For more examples, please see this [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/evaluate_learning_curves.ipynb).
+
+
+
+
+#### Example
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/evaluate_plot_learning_curves_1.png)
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/evaluate_plot_learning_curves_2.png)
+
+	from mlxtend.evaluate import plot_learning_curves
+	from sklearn import datasets
+	from sklearn.cross_validation import train_test_split
+
+	# Loading some example data
+	iris = datasets.load_iris()
+	X = iris.data
+	y = iris.target
+
+	X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.6, random_state=2)
+
+	from sklearn.tree import DecisionTreeClassifier
+	import numpy as np
+
+	clf = DecisionTreeClassifier(max_depth=1)
+
+	plot_learning_curves(X_train, y_train, X_test, y_test, clf, kind='training_size')
+	plt.show()
+
+	plot_learning_curves(X_train, y_train, X_test, y_test, clf, kind='n_features')
+	plt.show()
+#### 1D example
+
+<br>
+<br>
+##### Default Parameters
+
+    def plot_learning_curves(X_train, y_train, X_test, y_test, clf, kind='training_size', marker='o'):
+        """
+        Plots learning curves of a classifier.
+
+        Parameters
+        ----------
+        X_train : array-like, shape = [n_samples, n_features]
+          Feature matrix of the training dataset.
+
+        y_train : array-like, shape = [n_samples]
+          True class labels of the training dataset.
+
+        X_test : array-like, shape = [n_samples, n_features]
+          Feature matrix of the test dataset.
+
+        y_test : array-like, shape = [n_samples]
+          True class labels of the test dataset.
+
+        clf : Classifier object. Must have a .predict .fit method.
+
+        kind : str (default: 'training_size')
+          'training_size' or 'n_features'
+          Plots missclassifications vs. training size or number of features.
+
+        marker : str (default: 'o')
+          Marker for the line plot.
+
+        Returns
+        ---------
+        (training_error, test_error): tuple of lists
+        """
+<br>
+<br>
+
+
+
+
+
+
+
 
 <a id='preprocessing'></a>
 ## Preprocessing
@@ -759,126 +981,6 @@ This is especially useful in combination with [`itertools`](https://docs.python.
 The `matplotlib utilities` can be imported via
 
 	from mxtend.matplotlib import ...
-
-<br>
-<br>
-<a id='plotting_decision_regions'></a>
-### Plotting Decision Regions
-
-[[back to top](#overview)]
-
-
-##### Description
-
-<br>
-<br>
-
-A function plot decision regions of classifiers.  Import `plot_decision_regions` via
-
-    from mlxtend.matplotlib import plot_decision_regions
-
-<br>
-<br>
-
-##### Examples
-
-For more examples, please see this [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/matplotlib_decision_regions.ipynb).
-
-
-
-
-#### 2D example
-
-![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_plot_decision_regions_2d.png)
-
-	from mlxtend.matplotlib import plot_decision_regions
-	import matplotlib.pyplot as plt
-	from sklearn import datasets
-	from sklearn.svm import SVC
-
-	# Loading some example data
-	iris = datasets.load_iris()
-	X = iris.data[:, [0,2]]
-	y = iris.target
-
-	# Training a classifier
-	svm = SVC(C=0.5, kernel='linear')
-	svm.fit(X,y)
-
-	# Plotting decision regions
-	plot_decision_regions(X, y, clf=svm, res=0.02, legend=2)
-
-	# Adding axes annotations
-	plt.xlabel('sepal length [cm]')
-	plt.ylabel('petal length [cm]')
-	plt.title('SVM on Iris')
-	plt.show()
-
-#### 1D example
-
-![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_plot_decision_regions_1d.png)
-
-	from mlxtend.matplotlib import plot_decision_regions
-	import matplotlib.pyplot as plt
-	from sklearn import datasets
-	from sklearn.svm import SVC
-
-	# Loading some example data
-	iris = datasets.load_iris()
-	X = iris.data[:, 2]
-	X = X[:, None]
-	y = iris.target
-
-	# Training a classifier
-	svm = SVC(C=0.5, kernel='linear')
-	svm.fit(X,y)
-
-	# Plotting decision regions
-	plot_decision_regions(X, y, clf=svm, res=0.02, legend=2)
-
-	# Adding axes annotations
-	plt.xlabel('sepal length [cm]')
-	plt.ylabel('petal length [cm]')
-	plt.title('SVM on Iris')
-	plt.show()
-
-
-<br>
-<br>
-##### Default Parameters
-
-	def plot_decision_regions(X, y, clf, res=0.02, cycle_marker=True, legend=1):
-	    """
-	    Plots decision regions of a classifier.
-    
-	    Parameters
-	    ----------
-	    X : array-like, shape = [n_samples, n_features]
-	      Feature Matrix.
-      
-	    y : array-like, shape = [n_samples]
-	      True class labels.
-    
-	    clf : Classifier object. Must have a .predict method.
-        
-	    res : float (default: 0.02)
-	      Grid width. Lower values increase the resolution but
-	        slow down the plotting.
-        
-	    cycle_marker : bool
-	      Use different marker for each class.
-      
-	    legend : int
-	      Integer to specify the legend location. 
-	      No legend if legend is 0.
-        
-	    cmap : Custom colormap object.
-	      Uses matplotlib.cm.rainbow if None.
-        
-	    Returns
-	    ---------
-	    None
-	    """
 
 
 <br>

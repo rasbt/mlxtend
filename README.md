@@ -384,9 +384,9 @@ A more detailed article about the algorithms is in preparation.
 <br>
 ##### Example
 
-![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_percepron_gd_1.png)
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_perceptron_gd_1.png)
 
-![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_percepron_gd_2.png)
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_perceptron_gd_2.png)
 
 	from mlxtend.data import iris_data
 	from mlxtend.evaluate import plot_decision_regions
@@ -422,9 +422,9 @@ A more detailed article about the algorithms is in preparation.
 	plt.ylabel('Missclassifications')
 	plt.show()
 
-![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_percepron_ros_1.png)
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_perceptron_ros_1.png)
 
-![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_percepron_ros_2.png)
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_perceptron_ros_2.png)
 
 	# Gradient Descent (Widrow Rule)
 

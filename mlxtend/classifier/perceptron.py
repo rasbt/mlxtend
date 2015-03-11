@@ -19,6 +19,7 @@ class Perceptron(object):
       Learning rule, sgd (stochastic gradient descent),
       gd (gradient descent) or perceptron (Rosenblatt's perceptron rule).
 
+
     Attributes
     -----------
     w_ : 1d-array
@@ -40,7 +41,26 @@ class Perceptron(object):
 
 
     def fit(self, X, y, init_weights=None):
+        """ Fit training data.
 
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+
+        y : array-like, shape = [n_samples]
+            Target values.
+
+        init_weights : array-like, shape = [n_features + 1]
+            Initial weights for the classifier. If None, weights
+            are initialized to 0.
+
+        Returns
+        -------
+        self : object
+
+        """
         if not len(X.shape) == 2:
             raise ValueError('X must be a 2D array. Try X[:,np.newaxis]')
 
@@ -95,7 +115,37 @@ class Perceptron(object):
         return self
 
     def activate(self, X):
+        """
+        Predict class labels for X.
+
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+
+        Returns
+        ----------
+        int
+          Raw value that can be thresholded to predict the class label.
+
+        """
         return np.dot(X, self.w_[1:]) + self.w_[0]
 
     def predict(self, X):
+        """
+        Predict class labels for X.
+
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+
+        Returns
+        ----------
+        class : int
+          Predicted class label.
+
+        """
         return np.where(self.activate(X) >= self.t_, self.c2_, self.c1_)

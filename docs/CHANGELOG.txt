@@ -1,3 +1,10 @@
+0.2.3
+=======
+
+- Added Logistic regression
+- Added Support Vector Machine
+
+
 0.2.2
 =======
 

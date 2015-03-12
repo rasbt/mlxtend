@@ -22,6 +22,8 @@ Sebastian Raschka 2014-2015
 	- [MeanCenterer](#meancenterer) 
 - [Classifier](#classifier)
 	- [Perceptron](#perceptron) 
+	- [Logistic Regression](#logistic-regression) 
+	- [Support Vector Machine](#support-vector-machine) 
 - [Text Utilities](#text-utilities)
 	- [Name Generalization](#name-generelization)
 	- [Name Generalization and Duplicates](#name-generalization-and-duplicates)
@@ -479,6 +481,111 @@ A more detailed article about the algorithms is in preparation.
 
 <br>
 <br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+<br>
+<a id='logistic-regression'></a>
+### Logistic Regression
+
+[[back to top](#overview)]
+
+Implementation of Logistic Regression  with different learning rules: Gradient descent and stochastic gradient descent.
+
+For more usage examples please see the [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/classifier_logistic_regression.ipynb).
+
+A more detailed article about the algorithms is in preparation.
+
+<br>
+<br>
+##### Example
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_logistic_regression_sgd_1.png)
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_logistic_regression_sgd_2.png)
+
+	from mlxtend.data import iris_data
+	from mlxtend.evaluate import plot_decision_regions
+	from mlxtend.classifier import LogisticRegression
+	import matplotlib.pyplot as plt
+
+	# Loading Data
+
+	X, y = iris_data()
+	X = X[:, [0, 3]] # sepal length and petal width
+	X = X[0:100] # class 0 and class 1
+	y = y[0:100] # class 0 and class 1
+
+	# standardize
+	X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
+	X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
+
+
+
+	lr = LogisticRegression(eta=0.01, epochs=100, learning='sgd')
+	lr.fit(X, y)
+
+	plot_decision_regions(X, y, clf=lr)
+	plt.title('Logistic Regression - Stochastic Gradient Descent')
+	plt.show()
+
+	print(lr.w_)
+
+	plt.plot(range(len(lr.cost_)), lr.cost_)
+	plt.xlabel('Iterations')
+	plt.ylabel('Missclassifications')
+	plt.show()
+
+
+<br>
+<br>
+##### Default Parameters
+
+    class LogisticRegression(object):
+        """Logistic regression classifier.
+
+        Parameters
+        ------------
+        eta : float
+          Learning rate (between 0.0 and 1.0)
+
+        epochs : int
+          Passes over the training dataset.
+
+        learning : str (default: sgd)
+          Learning rule, sgd (stochastic gradient descent)
+          or gd (gradient descent).
+
+        lambda_ : float
+          Regularization parameter for L2 regularization.
+          No regularization if lambda_=0.0.
+
+        Attributes
+        -----------
+        w_ : 1d-array
+          Weights after fitting.
+
+        cost_ : list
+          List of floats with sum of squared error cost (sgd or gd) for every
+          epoch.
+
+        """
+
+<br>
+<br>
+
+
 
 
 

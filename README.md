@@ -382,6 +382,8 @@ Implementation of a Perceptron (single-layer artificial neural network) using th
 
 [1] F. Rosenblatt. The perceptron, a perceiving and recognizing automaton Project Para. Cornell Aeronautical Laboratory, 1957.
 
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_perceptron_schematic.png)
+
 For more usage examples please see the [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/classifier_perceptron.ipynb).
 
 
@@ -471,7 +473,11 @@ For more usage examples please see the [IPython Notebook](http://nbviewer.ipytho
 
 Implementation of Adaline (Adaptive Linear Neuron; a single-layer artificial neural network) using the Widrow-Hoff delta rule. [2].
 
-[2] B. Widrow, M. E. Hoff, et al. Adaptive switching circuits. 1960.
+[2] B. Widrow, M. E. Hoff, et al. Adaptive switching circuits. 1960.
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_adaline_schematic.png)
+
+
 
 For more usage examples please see the [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/classifier_adaline.ipynb).
 
@@ -563,6 +569,8 @@ For more usage examples please see the [IPython Notebook](http://nbviewer.ipytho
 [[back to top](#overview)]
 
 Implementation of Logistic Regression  with different learning rules: Gradient descent and stochastic gradient descent.
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_logistic_regression_schematic.png)
 
 For more usage examples please see the [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/classifier_logistic_regression.ipynb).
 

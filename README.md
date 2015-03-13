@@ -9,6 +9,8 @@ Link to the `mlxtend` repository on GitHub: [https://github.com/rasbt/mlxtend](h
 
 Sebastian Raschka 2014-2015
 
+Current version: 0.2.3
+
 <br>
 <br>
 
@@ -22,8 +24,8 @@ Sebastian Raschka 2014-2015
 	- [MeanCenterer](#meancenterer) 
 - [Classifier](#classifier)
 	- [Perceptron](#perceptron) 
+	- [Adaline](#adaline) 
 	- [Logistic Regression](#logistic-regression) 
-	- [Support Vector Machine](#support-vector-machine) 
 - [Text Utilities](#text-utilities)
 	- [Name Generalization](#name-generelization)
 	- [Name Generalization and Duplicates](#name-generalization-and-duplicates)
@@ -376,11 +378,12 @@ The `preprocessing utilities` can be imported via
 
 [[back to top](#overview)]
 
-Implementation of a Perceptron (single-layer artificial neural network) with different learning rules: Rosenblatt Perceptron Rule, gradient descent (Widrow Rule), and stochastic gradient descent.
+Implementation of a Perceptron (single-layer artificial neural network) using the Rosenblatt Perceptron Rule [1].
+
+[1] F. Rosenblatt. The perceptron, a perceiving and recognizing automaton Project Para. Cornell Aeronautical Laboratory, 1957.
 
 For more usage examples please see the [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/classifier_perceptron.ipynb).
 
-A more detailed article about the algorithms is in preparation.
 
 <br>
 <br>
@@ -407,10 +410,9 @@ A more detailed article about the algorithms is in preparation.
 	X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
 
 
-
 	# Rosenblatt Perceptron
 
-	ppn = Perceptron(epochs=15, eta=0.01, learning='perceptron')
+	ppn = Perceptron(epochs=15, eta=0.01, random_state=1)
 	ppn.fit(X, y)
 
 	plot_decision_regions(X, y, clf=ppn)
@@ -426,25 +428,89 @@ A more detailed article about the algorithms is in preparation.
 
 
 
-![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_perceptron_gd_1.png)
+<br>
+<br>
+##### Default Parameters
 
-![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_perceptron_gd_2.png)
+	class Perceptron(object):
+	    """Perceptron classifier.
+	    Parameters
+	    ------------
+	    eta : float
+	      Learning rate (between 0.0 and 1.0)
+    
+	    epochs : int
+	      Passes over the training dataset.
+
+	    random_state : int
+	      Random state for initializing random weights.
+    
+	    Attributes
+	    -----------
+	    w_ : 1d-array
+	      Weights after fitting.
+    
+	    cost_ : list
+	      Number of misclassifications in each epoch.
+    
+	    """
 
 
-	# Gradient Descent (Widrow Rule)
+<br>
+<br>
 
-	ppn = Perceptron(epochs=15, eta=0.01, learning='gd')
-	ppn.fit(X, y)
 
-	plot_decision_regions(X, y, clf=ppn, )
-	plt.title('Perceptron - Gradient Descent')
+
+
+
+
+<a id='adeline'></a>
+### Adaline
+
+[[back to top](#overview)]
+
+Implementation of Adaline (Adaptive Linear Neuron; a single-layer artificial neural network) using the Widrow-Hoff delta rule. [2].
+
+[2] B. Widrow, M. E. Hoff, et al. Adaptive switching circuits. 1960.
+
+For more usage examples please see the [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/classifier_adaline.ipynb).
+
+
+<br>
+<br>
+##### Example
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_adaline_sgd_1.png)
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_adaline_sgd_2.png)
+
+	from mlxtend.data import iris_data
+	from mlxtend.evaluate import plot_decision_regions
+	from mlxtend.classifier import Adeline
+	import matplotlib.pyplot as plt
+
+	# Loading Data
+
+	X, y = iris_data()
+	X = X[:, [0, 3]] # sepal length and petal width
+	X = X[0:100] # class 0 and class 1
+	y = y[0:100] # class 0 and class 1
+
+	# standardize
+	X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
+	X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
+
+
+	ada = Adaline(epochs=30, eta=0.01, learning='sgd', random_state=1)
+	ada.fit(X, y)
+	plot_decision_regions(X, y, clf=ada)
+	plt.title('Adaline - Stochastic Gradient Descent')
 	plt.show()
 
-	print(ppn.w_)
-
-	plt.plot(range(len(ppn.cost_)), ppn.cost_)
+	plt.plot(range(len(ada.cost_)), ada.cost_, marker='o')
 	plt.xlabel('Iterations')
-	plt.ylabel('Sum-squared-error')
+	plt.ylabel('Cost')
+	plt.show()
 
 
 
@@ -452,41 +518,36 @@ A more detailed article about the algorithms is in preparation.
 <br>
 ##### Default Parameters
 
-    class Perceptron(object):
-        """Perceptron Classifier.
-    
+    class Adaline(object):
+        """ ADAptive LInear NEuron classifier.
+
         Parameters
         ------------
         eta : float
-          Learning rate (between >0.0 and <1.0)
-      
+          Learning rate (between 0.0 and 1.0)
+
         epochs : int
           Passes over the training dataset.
-      
+
+        random_state : int
+          Random state for initializing random weights.
+
         learning : str (default: sgd)
-          Learning rule, sgd (stochastic gradient descent),
-          gd (gradient descent) or perceptron (Rosenblatt's perceptron rule).
-    
+          Gradient decent (gd) or stochastic gradient descent (sgd)
+
         Attributes
         -----------
         w_ : 1d-array
           Weights after fitting.
-    
+
         cost_ : list
-          List of floats with sum of squared error cost (sgd or gd)
-          or number of misclassifications (perceptron) for every
-          epoch.
-    
+          Sum of squared errors after each epoch.
+
         """
 
+
 <br>
 <br>
-
-
-
-
-
-
 
 
 

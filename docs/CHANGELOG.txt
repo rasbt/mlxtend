@@ -2,8 +2,8 @@
 =======
 
 - Added Logistic regression
-- Added Support Vector Machine
-
+- Gradient descent and stochastic gradient descent perceptron was changed
+  to Adaline (Adaptive Linear Neuron)
 
 0.2.2
 =======

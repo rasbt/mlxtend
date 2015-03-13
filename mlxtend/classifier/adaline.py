@@ -1,11 +1,11 @@
 # Sebastian Raschka 2015
 # mlxtend Machine Learning Library Extensions
 
-
 import numpy as np
 
-class Perceptron(object):
-    """Perceptron classifier.
+class Adaline(object):
+    """ ADAptive LInear NEuron classifier.
+
     Parameters
     ------------
     eta : float
@@ -17,20 +17,27 @@ class Perceptron(object):
     random_state : int
       Random state for initializing random weights.
 
+    learning : str (default: sgd)
+      Gradient decent (gd) or stochastic gradient descent (sgd)
+
     Attributes
     -----------
     w_ : 1d-array
       Weights after fitting.
 
     cost_ : list
-      Number of misclassifications in every epoch.
+      Sum of squared errors after each epoch.
 
     """
-    def __init__(self, eta=0.01, epochs=50, random_state=1):
+    def __init__(self, eta=0.01, epochs=50, random_state=1, learning='sgd'):
 
         np.random.seed(random_state)
         self.eta = eta
         self.epochs = epochs
+
+        if not learning in ('gd', 'sgd'):
+            raise ValueError('learning must be gd or sgd')
+        self.learning = learning
 
     def fit(self, X, y, init_weights=None):
         """ Fit training data.
@@ -66,32 +73,48 @@ class Perceptron(object):
         self.cost_ = []
 
         for i in range(self.epochs):
-            errors = 0
-            for xi, yi in zip(X, y):
-                yi_pred = self.predict(xi)
-                error = (yi - yi_pred)
-                self.w_[1:] += self.eta * xi.dot(error)
-                self.w_[0] += self.eta * error
-                errors += int(yi != yi_pred)
-            self.cost_.append(errors)
+
+            if self.learning == 'gd':
+                y_val = self.net_input(X)
+                errors = (y - y_val)
+                self.w_[1:] += self.eta * X.T.dot(errors)
+                self.w_[0] += self.eta * errors.sum()
+                cost = (errors**2).sum() / 2.0
+
+            elif self.learning == 'sgd':
+                cost = 0.0
+                for xi, yi in zip(X, y):
+                    yi_val = self.net_input(xi)
+                    error = (yi - yi_val)
+                    self.w_[1:] += self.eta * xi.dot(error)
+                    self.w_[0] += self.eta * error
+                    cost += error**2 / 2.0
+            self.cost_.append(cost)
+
         return self
 
     def net_input(self, X):
         """ Net input function """
         return np.dot(X, self.w_[1:]) + self.w_[0]
 
+    def activation(self, X):
+        """Activation function """
+        return self.net_input(X)
+
     def predict(self, X):
         """
         Predict class labels for X.
+
         Parameters
         ----------
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
+
         Returns
         ----------
         class : int
           Predicted class label.
+
         """
-        net_input = self.net_input(X)
-        return np.where(net_input >= 0.0, 1, -1)
+        return np.where(self.activation(X) >= 0.0, 1, -1)

@@ -386,6 +386,8 @@ Implementation of a Perceptron (single-layer artificial neural network) using th
 
 For more usage examples please see the [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/classifier_perceptron.ipynb).
 
+A detailed explanation about the perceptron learning algorithm can be found here [Artificial Neurons and Single-Layer Neural Networks
+- How Machine Learning Algorithms Work Part 1] (http://sebastianraschka.com/Articles/2015_singlelayer_neurons.html).
 
 <br>
 <br>
@@ -481,6 +483,9 @@ Implementation of Adaline (Adaptive Linear Neuron; a single-layer artificial neu
 
 For more usage examples please see the [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/classifier_adaline.ipynb).
 
+
+A detailed explanation about the Adeline learning algorithm can be found here [Artificial Neurons and Single-Layer Neural Networks
+- How Machine Learning Algorithms Work Part 1] (http://sebastianraschka.com/Articles/2015_singlelayer_neurons.html).
 
 <br>
 <br>

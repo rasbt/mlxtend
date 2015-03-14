@@ -72,7 +72,7 @@ class Adaline(object):
 
         self.cost_ = []
 
-        for i in range(self.epochs):
+        for _ in range(self.epochs):
 
             if self.learning == 'gd':
                 y_val = self.net_input(X)

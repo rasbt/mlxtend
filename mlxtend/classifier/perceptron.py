@@ -65,14 +65,14 @@ class Perceptron(object):
 
         self.cost_ = []
 
-        for i in range(self.epochs):
+        for _ in range(self.epochs):
             errors = 0
-            for xi, yi in zip(X, y):
-                yi_pred = self.predict(xi)
-                error = (yi - yi_pred)
-                self.w_[1:] += self.eta * xi.dot(error)
-                self.w_[0] += self.eta * error
-                errors += int(yi != yi_pred)
+            for xi, target in zip(X, y):
+                update = self.eta * (target - self.predict(xi))
+                self.w_[1:] += update * xi
+                self.w_[0] += update
+                errors += int(update != 0.0)
+
             self.cost_.append(errors)
         return self
 

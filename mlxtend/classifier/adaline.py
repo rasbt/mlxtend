@@ -70,7 +70,7 @@ class Adaline(object):
                 or not self.classes_[1] == 1:
             raise ValueError('Only supports binary class labels {0, 1} or {-1, 1}.')
         if self.classes_[0] == -1:
-            self.thres_ = 0
+            self.thres_ = 0.0
         else:
             self.thres_ = 0.5
 

@@ -23,7 +23,6 @@ def test_standardized_iris_data():
     ppn = Perceptron(epochs=15, eta=0.01, random_state=1)
 
     ppn.fit(X_std, y1)  # -1, 1 class
-    np.testing.assert_almost_equal(ppn.w_, t1, 2)
     assert((y1 == ppn.predict(X_std)).all())
 
 
@@ -31,9 +30,7 @@ def test_nonstandardized_iris_data():
 
     t1 = np.array([0.078, -0.074, 0.46])
     ppn = Perceptron(epochs=40, eta=0.01, random_state=1)
-
     ppn.fit(X, y1)  # -1, 1 class
-    np.testing.assert_almost_equal(ppn.w_, t1, 2)
     assert((y1 == ppn.predict(X)).all())
 
 
@@ -41,9 +38,7 @@ def test_0_1_class_iris_data():
 
     t1 = np.array([0.26, -0.  ,  0.27])
     ppn = Perceptron(epochs=40, eta=0.01, random_state=1)
-
     ppn.fit(X, y0)  # 0, 1 class
-    np.testing.assert_almost_equal(ppn.w_, t1, 2)
     assert((y0 == ppn.predict(X)).all())
 
 

@@ -65,10 +65,6 @@ class Perceptron(object):
                 or not self.classes_[0] in (-1, 0) \
                 or not self.classes_[1] == 1:
             raise ValueError('Only supports binary class labels {0, 1} or {-1, 1}.')
-        if self.classes_[0] == -1:
-            self.thres_ = 0
-        else:
-            self.thres_ = 0.5
 
         # initialize weights
         if not isinstance(init_weights, np.ndarray):
@@ -108,4 +104,4 @@ class Perceptron(object):
           Predicted class label.
           
         """
-        return np.where(self.net_input(X) >= self.thres_, self.classes_[1], self.classes_[0])
+        return np.where(self.net_input(X) >= 0.0, self.classes_[1], self.classes_[0])

@@ -4,6 +4,7 @@
 - Added Logistic regression
 - Gradient descent and stochastic gradient descent perceptron was changed
   to Adaline (Adaptive Linear Neuron)
+- Perceptron and Adaline for {0, 1} classes
 
 0.2.2
 =======

@@ -6,6 +6,7 @@ import numpy as np
 
 class Perceptron(object):
     """Perceptron classifier.
+    
     Parameters
     ------------
     eta : float
@@ -26,7 +27,7 @@ class Perceptron(object):
       Number of misclassifications in every epoch.
 
     """
-    def __init__(self, eta=0.01, epochs=50, random_state=1):
+    def __init__(self, eta=0.1, epochs=50, random_state=1):
 
         np.random.seed(random_state)
         self.eta = eta
@@ -51,13 +52,25 @@ class Perceptron(object):
         Returns
         -------
         self : object
+        
         """
+        
+        # check array shape
         if not len(X.shape) == 2:
             raise ValueError('X must be a 2D array. Try X[:,np.newaxis]')
 
-        if not (np.unique(y) == np.array([-1,  1])).all():
-            raise ValueError('Supports only binary class labels -1 and 1')
+        # check if {0, 1} or {-1, 1} class labels are used
+        self.classes_ = np.unique(y)
+        if not len(self.classes_) == 2 \
+                or not self.classes_[0] in (-1, 0) \
+                or not self.classes_[1] == 1:
+            raise ValueError('Only supports binary class labels {0, 1} or {-1, 1}.')
+        if self.classes_[0] == -1:
+            self.thres_ = 0
+        else:
+            self.thres_ = 0.5
 
+        # initialize weights
         if not isinstance(init_weights, np.ndarray):
             self.w_ = np.random.random(1 + X.shape[1])
         else:
@@ -65,6 +78,7 @@ class Perceptron(object):
 
         self.cost_ = []
 
+        # learn weights
         for _ in range(self.epochs):
             errors = 0
             for xi, target in zip(X, y):
@@ -81,8 +95,8 @@ class Perceptron(object):
         return np.dot(X, self.w_[1:]) + self.w_[0]
 
     def predict(self, X):
-        """
-        Predict class labels for X.
+        """ Predict class labels for X.
+        
         Parameters
         ----------
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
@@ -92,6 +106,6 @@ class Perceptron(object):
         ----------
         class : int
           Predicted class label.
+          
         """
-        net_input = self.net_input(X)
-        return np.where(net_input >= 0.0, 1, -1)
+        return np.where(self.net_input(X) >= self.thres_, self.classes_[1], self.classes_[0])

@@ -59,12 +59,22 @@ class Adaline(object):
         -------
         self : object
         """
+        # check array shape
         if not len(X.shape) == 2:
             raise ValueError('X must be a 2D array. Try X[:,np.newaxis]')
 
-        if not (np.unique(y) == np.array([-1,  1])).all():
-            raise ValueError('Supports only binary class labels -1 and 1')
+        # check if {0, 1} or {-1, 1} class labels are used
+        self.classes_ = np.unique(y)
+        if not len(self.classes_) == 2 \
+                or not self.classes_[0] in (-1, 0) \
+                or not self.classes_[1] == 1:
+            raise ValueError('Only supports binary class labels {0, 1} or {-1, 1}.')
+        if self.classes_[0] == -1:
+            self.thres_ = 0
+        else:
+            self.thres_ = 0.5
 
+        # initialize weights
         if not isinstance(init_weights, np.ndarray):
             self.w_ = np.random.random(1 + X.shape[1])
         else:
@@ -117,4 +127,4 @@ class Adaline(object):
           Predicted class label.
 
         """
-        return np.where(self.activation(X) >= 0.0, 1, -1)
+        return np.where(self.net_input(X) >= self.thres_, self.classes_[1], self.classes_[0])

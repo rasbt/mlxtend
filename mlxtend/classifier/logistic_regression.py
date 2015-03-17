@@ -81,7 +81,7 @@ class LogisticRegression(object):
         for i in range(self.epochs):
 
             if self.learning == 'gd':
-                y_val = self.activate(X)
+                y_val = self.activation(X)
                 errors = (y - y_val)
                 regularize = self.lambda_ * self.w_[1:]
                 self.w_[1:] += self.eta * X.T.dot(errors)
@@ -91,15 +91,16 @@ class LogisticRegression(object):
             elif self.learning == 'sgd':
                 cost = 0.0
                 for xi, yi in zip(X, y):
-                    yi_val = self.activate(xi)
+                    yi_val = self.activation(xi)
                     error = (yi - yi_val)
                     regularize = self.lambda_ * self.w_[1:]
                     self.w_[1:] += self.eta * xi.dot(error)
                     self.w_[1:] += regularize
                     self.w_[0] += self.eta * error
 
-            self.cost_.append(self._logit_cost(y, self.activate(X)))
+            self.cost_.append(self._logit_cost(y, self.activation(X)))
         return self
+
 
     def predict(self, X):
         """
@@ -117,11 +118,18 @@ class LogisticRegression(object):
           Predicted class label.
 
         """
-        return np.where(self.activate(X) >= 0.5, 1, 0)
+        # equivalent to np.where(self.activation(X) >= 0.5, 1, 0)
+        return np.where(self.net_input(X) >= 0.0, 1, 0)
 
-    def activate(self, X):
+
+    def net_input(self, X):
+        """ Net input function. """
+        return X.dot(self.w_[1:]) + self.w_[0]
+
+
+    def activation(self, X):
         """
-        Predict class labels for X.
+        Predict class probabilities for X.
 
         Parameters
         ----------
@@ -135,13 +143,15 @@ class LogisticRegression(object):
           Class probability.
 
         """
-        z = X.dot(self.w_[1:]) + self.w_[0]
+        z = self.net_input(X)
         return self._sigmoid(z)
+
 
     def _logit_cost(self, y, y_val):
         logit = -y.dot(np.log(y_val)) - ((1 - y).dot(np.log(1 - y_val)))
         regularize = (self.lambda_ / 2) * self.w_[1:].dot(self.w_[1:])
         return logit + regularize
+
 
     def _sigmoid(self, z):
          return 1.0 / (1.0 + np.exp(-z))

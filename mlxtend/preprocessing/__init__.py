@@ -3,3 +3,4 @@
 # Submodules with preprocessing functions.
 
 from .mean_centering import MeanCenterer
+from .shuffle import shuffle_arrays_unison

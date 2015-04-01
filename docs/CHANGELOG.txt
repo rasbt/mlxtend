@@ -5,6 +5,8 @@
 - Gradient descent and stochastic gradient descent perceptron was changed
   to Adaline (Adaptive Linear Neuron)
 - Perceptron and Adaline for {0, 1} classes
+- Added mlxtend.preprocessing.shuffle_arrays_unison function to 
+  shuffle one or more NumPy arrays.
 
 0.2.2
 =======

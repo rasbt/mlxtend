@@ -16,21 +16,26 @@ import operator
 class EnsembleClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     """
     Soft Voting/Majority Rule classifier for classification clfs.
+
     Parameters
     ----------
     clfs : array-like, shape = [n_classifiers]
       A list of clfs for classification.
+
     voting : str, {'hard', 'soft'} (default='hard')
       If 'hard', uses predicted class labels for majority rule voting.
       Else if 'soft', predicts the class label based on the argmax of
       the sums of the predicted probalities.
+
     weights : array-like, shape = [n_classifiers], optional (default=`None`)
       Sequence of weights (`float` or `int`) to weight the occurances of
       predicted class labels (`hard` voting) or class probabilities
       before averaging (`soft` voting). Uses uniform weights if `None`.
+
     Attributes
     ----------
     classes_ : array-like, shape = [n_predictions]
+
     Examples
     --------
     >>> import numpy as np

@@ -14,11 +14,15 @@ class Adaline(object):
     epochs : int
       Passes over the training dataset.
 
-    random_state : int
-      Random state for initializing random weights.
-
     learning : str (default: sgd)
       Gradient decent (gd) or stochastic gradient descent (sgd)
+      
+    shuffle : bool (default: False)
+        Shuffles training data every epoch if True to prevent circles.
+        
+    random_seed : int (default: None)
+        Set random state for shuffling and initializing the weights.
+    
 
     Attributes
     -----------
@@ -29,17 +33,18 @@ class Adaline(object):
       Sum of squared errors after each epoch.
 
     """
-    def __init__(self, eta=0.01, epochs=50, random_state=1, learning='sgd'):
+    def __init__(self, eta=0.01, epochs=50,  learning='sgd', random_seed=None, shuffle=False):
 
-        np.random.seed(random_state)
+        np.random.seed(random_seed)
         self.eta = eta
         self.epochs = epochs
+        self.shuffle = shuffle
 
         if not learning in ('gd', 'sgd'):
             raise ValueError('learning must be gd or sgd')
         self.learning = learning
 
-    def fit(self, X, y, init_weights=None):
+    def fit(self, X, y, init_weights=True):
         """ Fit training data.
 
         Parameters
@@ -51,9 +56,8 @@ class Adaline(object):
         y : array-like, shape = [n_samples]
             Target values.
 
-        init_weights : array-like, shape = [n_features + 1]
-            Initial weights for the classifier. If None, weights
-            are initialized to 0.
+        init_weights : bool (default: True)
+            (Re)initializes weights to small random floats if True.
 
         Returns
         -------
@@ -75,14 +79,15 @@ class Adaline(object):
             self.thres_ = 0.5
 
         # initialize weights
-        if not isinstance(init_weights, np.ndarray):
+        if init_weights:
             self.w_ = np.random.random(1 + X.shape[1])
-        else:
-            self.w_ = init_weights
 
         self.cost_ = []
 
         for _ in range(self.epochs):
+            
+            if self.shuffle:
+                X, y = self._shuffle(X, y)
 
             if self.learning == 'gd':
                 y_val = self.net_input(X)
@@ -102,6 +107,11 @@ class Adaline(object):
             self.cost_.append(cost)
 
         return self
+
+    def _shuffle(self, X, y):
+        """ Unison shuffling """
+        r = np.random.permutation(len(y))
+        return X[r], y[r]
 
     def net_input(self, X):
         """ Net input function """

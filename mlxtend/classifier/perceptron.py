@@ -27,13 +27,14 @@ class Perceptron(object):
       Number of misclassifications in every epoch.
 
     """
-    def __init__(self, eta=0.1, epochs=50, random_state=1):
+    def __init__(self, eta=0.1, epochs=50, shuffle=False, random_seed=None):
 
-        np.random.seed(random_state)
+        np.random.seed(random_seed)
         self.eta = eta
         self.epochs = epochs
+        self.shuffle = shuffle
 
-    def fit(self, X, y, init_weights=None):
+    def fit(self, X, y, init_weights=True):
         """ Fit training data.
 
         Parameters
@@ -45,9 +46,14 @@ class Perceptron(object):
         y : array-like, shape = [n_samples]
             Target values.
 
-        init_weights : array-like, shape = [n_features + 1]
-            Initial weights for the classifier. If None, weights
-            are initialized to 0.
+        init_weights : bool (default: True)
+            (Re)initializes weights to small random floats if True.
+            
+        shuffle : bool (default: False)
+            Shuffles training data every epoch if True to prevent circles.
+            
+        random_seed : int (default: None)
+            Set random state for shuffling and initializing the weights.
 
         Returns
         -------
@@ -67,15 +73,15 @@ class Perceptron(object):
             raise ValueError('Only supports binary class labels {0, 1} or {-1, 1}.')
 
         # initialize weights
-        if not isinstance(init_weights, np.ndarray):
+        if init_weights:
             self.w_ = np.random.random(1 + X.shape[1])
-        else:
-            self.w_ = init_weights
 
         self.cost_ = []
 
         # learn weights
         for _ in range(self.epochs):
+            if self.shuffle:
+                X, y = self._shuffle(X, y)
             errors = 0
             for xi, target in zip(X, y):
                 update = self.eta * (target - self.predict(xi))
@@ -85,6 +91,11 @@ class Perceptron(object):
 
             self.cost_.append(errors)
         return self
+
+    def _shuffle(self, X, y):
+        """ Unison shuffling """
+        r = np.random.permutation(len(y))
+        return X[r], y[r]
 
     def net_input(self, X):
         """ Net input function """

@@ -23,6 +23,12 @@ class LogisticRegression(object):
       Regularization parameter for L2 regularization.
       No regularization if lambda_=0.0.
 
+    shuffle : bool (default: False)
+        Shuffles training data every epoch if True to prevent circles.
+        
+    random_seed : int (default: None)
+        Set random state for shuffling and initializing the weights.
+
     Attributes
     -----------
     w_ : 1d-array
@@ -33,17 +39,20 @@ class LogisticRegression(object):
       epoch.
 
     """
-    def __init__(self, eta=0.01, epochs=50, lambda_=0.0, learning='sgd'):
+    def __init__(self, eta=0.01, epochs=50, lambda_=0.0, learning='sgd', random_seed=None, shuffle=False):
+        
+        np.random.seed(random_seed)
         self.eta = eta
         self.epochs = epochs
         self.lambda_ = lambda_
+        self.shuffle = shuffle
 
         if not learning in ('sgd', 'gd'):
             raise ValueError('learning must be sgd or gd')
         self.learning = learning
 
 
-    def fit(self, X, y, init_weights=None):
+    def fit(self, X, y, init_weights=True):
         """ Fit training data.
 
         Parameters
@@ -55,9 +64,8 @@ class LogisticRegression(object):
         y : array-like, shape = [n_samples]
             Target values.
 
-        init_weights : array-like, shape = [n_features + 1]
-            Initial weights for the classifier. If None, weights
-            are initialized to 0.
+        init_weights : bool (default: True)
+            (Re)initializes weights to small random floats if True.
 
         Returns
         -------
@@ -78,7 +86,10 @@ class LogisticRegression(object):
 
         self.cost_ = []
 
-        for i in range(self.epochs):
+        for _ in range(self.epochs):
+            
+            if self.shuffle:
+                X, y = self._shuffle(X, y)
 
             if self.learning == 'gd':
                 y_val = self.activation(X)
@@ -139,13 +150,16 @@ class LogisticRegression(object):
 
         Returns
         ----------
-        int
-          Class probability.
+          Class 1 probability : float
 
         """
         z = self.net_input(X)
         return self._sigmoid(z)
 
+    def _shuffle(self, X, y):
+        """ Unison shuffling """
+        r = np.random.permutation(len(y))
+        return X[r], y[r]
 
     def _logit_cost(self, y, y_val):
         logit = -y.dot(np.log(y_val)) - ((1 - y).dot(np.log(1 - y_val)))

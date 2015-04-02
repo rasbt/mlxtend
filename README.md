@@ -212,7 +212,7 @@ For more examples, please see this [IPython Notebook](http://nbviewer.ipython.or
 	X = iris.data
 	y = iris.target
 
-	X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.6, random_state=2)
+	X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.6, random_seed=2)
 
 	from sklearn.tree import DecisionTreeClassifier
 	import numpy as np
@@ -417,7 +417,7 @@ A detailed explanation about the perceptron learning algorithm can be found here
 
 	# Rosenblatt Perceptron
 
-	ppn = Perceptron(epochs=15, eta=0.01, random_state=1)
+	ppn = Perceptron(epochs=15, eta=0.01, random_seed=1)
 	ppn.fit(X, y)
 
 	plot_decision_regions(X, y, clf=ppn)
@@ -437,28 +437,41 @@ A detailed explanation about the perceptron learning algorithm can be found here
 <br>
 ##### Default Parameters
 
-	class Perceptron(object):
-	    """Perceptron classifier.
-	    Parameters
-	    ------------
-	    eta : float
-	      Learning rate (between 0.0 and 1.0)
-    
-	    epochs : int
-	      Passes over the training dataset.
+    class LogisticRegression(object):
+        """Logistic regression classifier.
 
-	    random_state : int
-	      Random state for initializing random weights.
-    
-	    Attributes
-	    -----------
-	    w_ : 1d-array
-	      Weights after fitting.
-    
-	    cost_ : list
-	      Number of misclassifications in each epoch.
-    
-	    """
+        Parameters
+        ------------
+        eta : float
+          Learning rate (between 0.0 and 1.0)
+
+        epochs : int
+          Passes over the training dataset.
+
+        learning : str (default: sgd)
+          Learning rule, sgd (stochastic gradient descent)
+          or gd (gradient descent).
+
+        lambda_ : float
+          Regularization parameter for L2 regularization.
+          No regularization if lambda_=0.0.
+
+        shuffle : bool (default: False)
+            Shuffles training data every epoch if True to prevent circles.
+        
+        random_seed : int (default: None)
+            Set random state for shuffling and initializing the weights.
+
+        Attributes
+        -----------
+        w_ : 1d-array
+          Weights after fitting.
+
+        cost_ : list
+          List of floats with sum of squared error cost (sgd or gd) for every
+          epoch.
+
+        """
 
 
 <br>
@@ -513,7 +526,7 @@ A detailed explanation about the Adeline learning algorithm can be found here [A
 	X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
 
 
-	ada = Adaline(epochs=30, eta=0.01, learning='sgd', random_state=1)
+	ada = Adaline(epochs=30, eta=0.01, learning='sgd', random_seed=1)
 	ada.fit(X, y)
 	plot_decision_regions(X, y, clf=ada)
 	plt.title('Adaline - Stochastic Gradient Descent')
@@ -541,11 +554,15 @@ A detailed explanation about the Adeline learning algorithm can be found here [A
         epochs : int
           Passes over the training dataset.
 
-        random_state : int
-          Random state for initializing random weights.
-
         learning : str (default: sgd)
           Gradient decent (gd) or stochastic gradient descent (sgd)
+      
+        shuffle : bool (default: False)
+            Shuffles training data every epoch if True to prevent circles.
+        
+        random_seed : int (default: None)
+            Set random state for shuffling and initializing the weights.
+    
 
         Attributes
         -----------
@@ -784,7 +801,7 @@ A function that shuffles 2 or more NumPy arrays in unison.
     [7 8 9]]    
     >>> print(y1)
     [1 2 3]
-    >>> X2, y2 = shuffle_arrays_unison(arrays=[X1, y1], random_state=3)
+    >>> X2, y2 = shuffle_arrays_unison(arrays=[X1, y1], random_seed=3)
     >>> print(X2)
     [[4 5 6]
     [1 2 3]

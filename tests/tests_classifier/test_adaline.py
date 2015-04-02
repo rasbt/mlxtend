@@ -19,7 +19,7 @@ X_std[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
 def test_gradient_descent():
 
     t1 = np.array([-5.21e-16,  -7.86e-02,   1.02e+00])
-    ada = Adaline(epochs=30, eta=0.01, learning='gd', random_state=1)
+    ada = Adaline(epochs=30, eta=0.01, learning='gd', random_seed=1)
     ada.fit(X_std, y1)
     np.testing.assert_almost_equal(ada.w_, t1, 2)
     assert((y1 == ada.predict(X_std)).all())
@@ -28,7 +28,7 @@ def test_gradient_descent():
 def test_stochastic_gradient_descent():
 
     t1 = np.array([0.03, -0.09, 1.02])
-    ada = Adaline(epochs=30, eta=0.01, learning='sgd', random_state=1)
+    ada = Adaline(epochs=30, eta=0.01, learning='sgd', random_seed=1)
     ada.fit(X_std, y1)
     np.testing.assert_almost_equal(ada.w_, t1, 2)
     assert((y1 == ada.predict(X_std)).all())
@@ -37,7 +37,7 @@ def test_stochastic_gradient_descent():
 def test_0_1_class():
 
     t1 = np.array([0.51, -0.04,  0.51])
-    ada = Adaline(epochs=30, eta=0.01, learning='sgd', random_state=1)
+    ada = Adaline(epochs=30, eta=0.01, learning='sgd', random_seed=1)
     ada.fit(X_std, y0)
     np.testing.assert_almost_equal(ada.w_, t1, 2)
     assert((y0 == ada.predict(X_std)).all())
@@ -45,7 +45,7 @@ def test_0_1_class():
 
 def test_invalid_class():
 
-    ada = Adaline(epochs=40, eta=0.01, random_state=1)
+    ada = Adaline(epochs=40, eta=0.01, random_seed=1)
     try:
         ada.fit(X, y2)  # 0, 1 class
         assert(1==2)

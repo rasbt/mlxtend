@@ -61,7 +61,7 @@ def find_files(substring, path, recursive=False, check_ext=None, ignore_invisibl
     
     
 
-def find_filegroups(paths, substring='', extensions=None, validity_check=True, ignore_invisible=True):
+def find_filegroups(paths, substring='', extensions=None, validity_check=True, ignore_invisible=True, rstrip=''):
     """
     Function that finds and groups files from different directories in a python dictionary.
         
@@ -85,7 +85,12 @@ def find_filegroups(paths, substring='', extensions=None, validity_check=True, i
 
     ignore_invisible : `bool`
       If `True`, ignores invisible files (i.e., files starting with a period).
-
+      
+    rstrip : `str` (default: "")
+      If provided, strips characters from right side of the file base names after splitting
+      the extension. Useful to trim different filenames to a common stem. E.g,.
+      "abc_d.txt" and "abc_d_.csv" would share the stem "abc_d" if rstrip is set to "_".
+      
     Returns
     ----------
     groups : `dict`
@@ -101,15 +106,17 @@ def find_filegroups(paths, substring='', extensions=None, validity_check=True, i
         assert(len(extensions) == n)
     else:
         extensions = ['' for i in range(n)]
-    
+        
+            
     base = find_files(path=paths[0],  substring=substring, check_ext=extensions[0], ignore_invisible=ignore_invisible)
     rest = [find_files(path=paths[i],  substring=substring, check_ext=extensions[i], ignore_invisible=ignore_invisible) for i in range(1,n)] 
     
-    groups = {os.path.splitext(os.path.basename(f))[0]:[f] for f in base}
+    groups = {os.path.splitext(os.path.basename(f))[0].rstrip(rstrip):[f] for f in base}
     
     for idx,r in enumerate(rest):
         for f in r:
             basename, ext = os.path.splitext(os.path.basename(f))
+            basename = basename.rstrip(rstrip)
             try:
                 if extensions[idx+1] == '' or ext == extensions[idx+1]:
                     groups[basename].append(f)

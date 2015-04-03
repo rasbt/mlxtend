@@ -8,6 +8,7 @@
 - Added mlxtend.preprocessing.shuffle_arrays_unison function to 
   shuffle one or more NumPy arrays.
 - Added shuffle and random seed parameter to stochastic gradient descent classifier.
+- Added `rstrip` parameter to `find_filegroups` to allow trimming of base names.
 
 0.2.2
 =======

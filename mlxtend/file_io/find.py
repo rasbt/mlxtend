@@ -1,4 +1,5 @@
 import os
+import re
 
 def find_files(substring, path, recursive=False, check_ext=None, ignore_invisible=True, ignore_substring=None): 
     """
@@ -65,7 +66,7 @@ def find_files(substring, path, recursive=False, check_ext=None, ignore_invisibl
     
     
 
-def find_filegroups(paths, substring='', extensions=None, validity_check=True, ignore_invisible=True, rstrip='', ignore_substring=None):
+def find_filegroups(paths, substring='', extensions=None, validity_check=True, ignore_invisible=True, rstrip='', rsplit='', ignore_substring=None):
     """
     Function that finds and groups files from different directories in a python dictionary.
         
@@ -95,6 +96,8 @@ def find_filegroups(paths, substring='', extensions=None, validity_check=True, i
       the extension. Useful to trim different filenames to a common stem. E.g,.
       "abc_d.txt" and "abc_d_.csv" would share the stem "abc_d" if rstrip is set to "_".
       
+      
+      
     ignore_substring : `str`
       Ignores files that contain the specified substring.
       
@@ -118,12 +121,18 @@ def find_filegroups(paths, substring='', extensions=None, validity_check=True, i
     base = find_files(path=paths[0],  substring=substring, check_ext=extensions[0], ignore_invisible=ignore_invisible, ignore_substring=ignore_substring)
     rest = [find_files(path=paths[i],  substring=substring, check_ext=extensions[i], ignore_invisible=ignore_invisible, ignore_substring=ignore_substring) for i in range(1,n)] 
     
-    groups = {os.path.splitext(os.path.basename(f))[0].rstrip(rstrip):[f] for f in base}
+    groups = {}
+    for f in base:
+        basename = os.path.splitext(os.path.basename(f))[0]
+        basename = re.sub('\%s$' % rstrip, '', basename)
+        groups[basename] = [f]
+    
+    #groups = {os.path.splitext(os.path.basename(f))[0].rstrip(rstrip):[f] for f in base}
     
     for idx,r in enumerate(rest):
         for f in r:
             basename, ext = os.path.splitext(os.path.basename(f))
-            basename = basename.rstrip(rstrip)
+            basename = re.sub('\%s$' % rstrip, '', basename)
             try:
                 if extensions[idx+1] == '' or ext == extensions[idx+1]:
                     groups[basename].append(f)
@@ -131,10 +140,8 @@ def find_filegroups(paths, substring='', extensions=None, validity_check=True, i
                 pass
     
     if validity_check:
-        num = sorted([(len(v),k) for k,v in groups.items()])
-        for i in num[1:]:
-            if i[0] < num[0][0]:
-                print('Warning, key "%s" has less values than "key" %s.' % (i[1], num[0][1]))
-                groups = {}
+        lens = [len(groups[k]) for k in groups.keys()]
+        if len(set(lens)) > 1:
+            raise ValueError('Warning, some keys have more/less values than others. Set validity_check=False to ignore this warning.')
 
     return groups

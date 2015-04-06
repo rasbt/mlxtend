@@ -1,6 +1,6 @@
 import os
 
-def find_files(substring, path, recursive=False, check_ext=None, ignore_invisible=True): 
+def find_files(substring, path, recursive=False, check_ext=None, ignore_invisible=True, ignore_substring=None): 
     """
     Function that finds files in a directory based on substring matching.
         
@@ -23,6 +23,9 @@ def find_files(substring, path, recursive=False, check_ext=None, ignore_invisibl
     ignore_invisible : `bool`
       If `True`, ignores invisible files (i.e., files starting with a period).
       
+    ignore_substring : `str`
+      Ignores files that contain the specified substring.
+      
     Returns
     ----------
     results : `list`
@@ -30,10 +33,11 @@ def find_files(substring, path, recursive=False, check_ext=None, ignore_invisibl
         
     """
     def check_file(f, path):
-        if substring in f:
-            compl_path = os.path.join(path, f)
-            if os.path.isfile(compl_path):
-                return compl_path
+        if not (ignore_substring and ignore_substring in f):
+            if substring in f:
+                compl_path = os.path.join(path, f)
+                if os.path.isfile(compl_path):
+                    return compl_path
         return False 
         
     results = []
@@ -61,7 +65,7 @@ def find_files(substring, path, recursive=False, check_ext=None, ignore_invisibl
     
     
 
-def find_filegroups(paths, substring='', extensions=None, validity_check=True, ignore_invisible=True, rstrip=''):
+def find_filegroups(paths, substring='', extensions=None, validity_check=True, ignore_invisible=True, rstrip='', ignore_substring=None):
     """
     Function that finds and groups files from different directories in a python dictionary.
         
@@ -91,6 +95,9 @@ def find_filegroups(paths, substring='', extensions=None, validity_check=True, i
       the extension. Useful to trim different filenames to a common stem. E.g,.
       "abc_d.txt" and "abc_d_.csv" would share the stem "abc_d" if rstrip is set to "_".
       
+    ignore_substring : `str`
+      Ignores files that contain the specified substring.
+      
     Returns
     ----------
     groups : `dict`
@@ -108,8 +115,8 @@ def find_filegroups(paths, substring='', extensions=None, validity_check=True, i
         extensions = ['' for i in range(n)]
         
             
-    base = find_files(path=paths[0],  substring=substring, check_ext=extensions[0], ignore_invisible=ignore_invisible)
-    rest = [find_files(path=paths[i],  substring=substring, check_ext=extensions[i], ignore_invisible=ignore_invisible) for i in range(1,n)] 
+    base = find_files(path=paths[0],  substring=substring, check_ext=extensions[0], ignore_invisible=ignore_invisible, ignore_substring=ignore_substring)
+    rest = [find_files(path=paths[i],  substring=substring, check_ext=extensions[i], ignore_invisible=ignore_invisible, ignore_substring=ignore_substring) for i in range(1,n)] 
     
     groups = {os.path.splitext(os.path.basename(f))[0].rstrip(rstrip):[f] for f in base}
     

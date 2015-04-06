@@ -15,3 +15,6 @@ def test_find_files():
     assert(find_files(substring='test_find_files.py', path=path, check_ext='.py') == expect)
     assert(find_files(substring='test_find_files.py', path=path, check_ext='.txt') == [])
     
+def test_ignore_substring():
+    path = os.path.join(os.getcwd(),'tests','tests_file_io')
+    assert(find_files(substring='test_find_files', path=path, ignore_substring='test_find') == [])

@@ -5,12 +5,13 @@
 - Gradient descent and stochastic gradient descent perceptron was changed
   to Adaline (Adaptive Linear Neuron)
 - Perceptron and Adaline for {0, 1} classes
-- Added mlxtend.preprocessing.shuffle_arrays_unison function to 
+- Added `mlxtend.preprocessing.shuffle_arrays_unison` function to 
   shuffle one or more NumPy arrays.
 - Added shuffle and random seed parameter to stochastic gradient descent classifier.
-- Added `rstrip` parameter to `find_filegroups` to allow trimming of base names.
-- Added `ignore_substring` parameter to `find_filegroups` and `find_files`.
-- Replaced .rstrip in `find_filegroups` with more robust regex.
+- Added `rstrip` parameter to `mlxtend.file_io.find_filegroups` to allow trimming of base names.
+- Added `ignore_substring` parameter to `mlxtend.file_io.find_filegroups` and `find_files`.
+- Replaced .rstrip in `mlxtend.file_io.find_filegroups` with more robust regex.
+- Gridsearch support for `mlxtend.sklearn.EnsembleClassifier`
 
 0.2.2
 =======

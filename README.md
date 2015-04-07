@@ -1280,6 +1280,12 @@ Decision regions plotted for 4 different classifiers:
 
 Please see the [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_ensemble_ensembleclassifier.ipynb) for a detailed explanation and examples.
 
+##### Documentation
+
+For more information about the parameters, please see the [`mlxtend.sklearn.EnsembleClassifier`](./mlxtend/sklearn/ensemble.py#L20-44) class documentation.
+
+The `EnsembleClassifier` will likely be included in the scikit-learn library as `VotingClassifier` at some point, and during this implementation process, the `EnsembleClassifier` has been slightly improved based on valuable feedback from the scikit-learn community.
+
 ##### Examples
 
 Input:
@@ -1336,11 +1342,36 @@ Output:
 	Accuracy: 0.95 (+/- 0.05) [Ensemble]
 
 <br>
-The following example illustrates how the weighting of different classifiers affects the calculated average probability:
+<br>
 
-![](./images/sklearn_ensemble_probas.png)
+#####  GridSearch Example
+
+The `EnsembleClassifier` van also be used in combination with scikit-learns gridsearch module:
 
 
+	from sklearn.grid_search import GridSearchCV
+
+	clf1 = LogisticRegression(random_state=1)
+	clf2 = RandomForestClassifier(random_state=1)
+	clf3 = GaussianNB()
+	eclf = EnsembleClassifier(clfs=[clf1, clf2, clf3], voting='soft')
+
+	params = {'logisticregression__C': [1.0, 100.0],
+          'randomforestclassifier__n_estimators': [20, 200],}
+
+	grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
+	grid.fit(iris.data, iris.target)
+
+	for params, mean_score, scores in grid.grid_scores_:
+    	print("%0.3f (+/-%0.03f) for %r"
+            % (mean_score, scores.std() / 2, params))
+
+Output:
+
+	0.953 (+/-0.013) for {'randomforestclassifier__n_estimators': 20, 'logisticregression__C': 1.0}
+	0.960 (+/-0.012) for {'randomforestclassifier__n_estimators': 200, 'logisticregression__C': 1.0}
+	0.960 (+/-0.012) for {'randomforestclassifier__n_estimators': 20, 'logisticregression__C': 100.0}
+	0.953 (+/-0.017) for {'randomforestclassifier__n_estimators': 200, 'logisticregression__C': 100.0}
 
 
 

@@ -71,7 +71,7 @@ def plot_learning_curves(X_train, y_train, X_test, y_test, clf, kind='training_s
     if kind == 'training_size':
         rng = [int(i) for i in np.linspace(0, X_train.shape[0], 11)][1:][::-1]
         for r in rng:
-            clf.fit(X_train[:r], y_train[:r])
+            model = clf.fit(X_train[:r], y_train[:r])
 
             if predict_proba == True:
                 y_train_predict = clf.predict_proba(X_train[:r])
@@ -93,7 +93,7 @@ def plot_learning_curves(X_train, y_train, X_test, y_test, clf, kind='training_s
     elif kind == 'n_features':
         rng = np.arange(1, X_train.shape[1]+1)
         for r in rng:
-            clf.fit(X_train.ix[:, 0:r], y_train)
+            model = clf.fit(X_train.ix[:, 0:r], y_train)
             if predict_proba == True:
                 y_train_predict = clf.predict_proba(X_train.ix[:, 0:r])
                 y_test_predict = clf.predict_proba(X_test.ix[:, 0:r])
@@ -112,7 +112,7 @@ def plot_learning_curves(X_train, y_train, X_test, y_test, clf, kind='training_s
         plt.xlabel('number of features')
 
     plt.ylabel('missclassification error ({})'.format(scoring))
-    plt.title('Learning Curves')
+    plt.title('Learning Curves\n\n{}\n'.format(model))
     plt.xlim([0, 110])
     plt.legend(loc='best')
     return (training_errors, test_errors)

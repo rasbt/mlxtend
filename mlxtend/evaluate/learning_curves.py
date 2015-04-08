@@ -4,8 +4,9 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn import metrics
 
-def plot_learning_curves(X_train, y_train, X_test, y_test, clf, kind='training_size', marker='o'):
+def plot_learning_curves(X_train, y_train, X_test, y_test, clf, kind='training_size', marker='o', predict_proba=False, scoring='accuracy'):
     """
     Plots learning curves of a classifier.
 
@@ -32,10 +33,35 @@ def plot_learning_curves(X_train, y_train, X_test, y_test, clf, kind='training_s
     marker : str (default: 'o')
       Marker for the line plot.
 
+    predict_proba : bool (default: False)
+      Predict probabilities.
+
+    scoring : str (default: 'accuracy')
+      Model evaluation.
+
     Returns
     ---------
     (training_error, test_error): tuple of lists
     """
+
+    scoring_func = {
+        'accuracy': metrics.accuracy_score,
+        'average_precision': metrics.average_precision_score,
+        'f1': metrics.f1_score,
+        'f1_micro': metrics.f1_score,
+        'f1_macro': metrics.f1_score,
+        'f1_weighted': metrics.f1_score,
+        'f1_samples': metrics.f1_score,
+        'log_loss': metrics.log_loss,
+        'precision': metrics.precision_score,
+        'recall': metrics.recall_score,
+        'roc_auc': metrics.roc_auc_score,
+        'adjusted_rand_score': metrics.adjusted_rand_score,
+        'mean_absolute_error': metrics.mean_absolute_error,
+        'mean_squared_error': metrics.mean_squared_error,
+        'median_absolute_error': metrics.median_absolute_error,
+        'r2': metrics.r2_score
+        }
     training_errors = []
     test_errors = []
 
@@ -47,13 +73,18 @@ def plot_learning_curves(X_train, y_train, X_test, y_test, clf, kind='training_s
         for r in rng:
             clf.fit(X_train[:r], y_train[:r])
 
-            y_train_predict = clf.predict(X_train[:r])
-            train_misclf = (y_train_predict != y_train[:r]).sum()
-            training_errors.append(train_misclf / X_train[:r].shape[0])
+            if predict_proba == True:
+                y_train_predict = clf.predict_proba(X_train[:r])
+                y_test_predict = clf.predict_proba(X_test)
+            else:
+                y_train_predict = clf.predict(X_train[:r])
+                y_test_predict = clf.predict(X_test)
+            
+            train_misclf = scoring_func[scoring](y_train[:r], y_train_predict)
+            training_errors.append(train_misclf)
 
-            y_test_predict = clf.predict(X_test)
-            test_misclf = (y_test_predict != y_test).sum()
-            test_errors.append(test_misclf / X_test.shape[0])
+            test_misclf = scoring_func[scoring](y_test, y_test_predict)
+            test_errors.append(test_misclf)
 
         plt.plot(np.arange(10,101,10), training_errors, label='training error', marker=marker)
         plt.plot(np.arange(10,101,10), test_errors, label='test error', marker=marker)
@@ -62,20 +93,26 @@ def plot_learning_curves(X_train, y_train, X_test, y_test, clf, kind='training_s
     elif kind == 'n_features':
         rng = np.arange(1, X_train.shape[1]+1)
         for r in rng:
-            clf.fit(X_train[:, 0:r], y_train)
-            y_train_predict = clf.predict(X_train[:, 0:r])
-            train_misclf = (y_train_predict != y_train).sum()
-            training_errors.append(train_misclf / X_train.shape[0])
+            clf.fit(X_train.ix[:, 0:r], y_train)
+            if predict_proba == True:
+                y_train_predict = clf.predict_proba(X_train.ix[:, 0:r])
+                y_test_predict = clf.predict_proba(X_test.ix[:, 0:r])
+            else:
+                y_train_predict = clf.predict(X_train.ix[:, 0:r])
+                y_test_predict = clf.predict(X_test.ix[:, 0:r])
+            
+            train_misclf = scoring_func[scoring](y_train, y_train_predict)
+            training_errors.append(train_misclf)
+            
+            test_misclf = scoring_func[scoring](y_test, y_test_predict)
+            test_errors.append(test_misclf)
 
-            y_test_predict = clf.predict(X_test[:, 0:r])
-            test_misclf = (y_test_predict != y_test).sum()
-            test_errors.append(test_misclf / X_test.shape[0])
         plt.plot(rng, training_errors, label='training error', marker=marker)
         plt.plot(rng, test_errors, label='test error', marker=marker)
         plt.xlabel('number of features')
 
-    plt.ylabel('missclassification error')
+    plt.ylabel('missclassification error ({})'.format(scoring))
     plt.title('Learning Curves')
-    plt.ylim([0,1])
-    plt.legend(loc=1)
+    plt.xlim([0, 110])
+    plt.legend(loc='best')
     return (training_errors, test_errors)

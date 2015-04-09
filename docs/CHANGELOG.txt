@@ -1,3 +1,8 @@
+0.2.4
+=======
+
+- Added `scoring` to `mlxtend.evaluate.learning_curves` (by user pfsq)
+
 0.2.3
 =======
 

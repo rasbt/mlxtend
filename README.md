@@ -197,7 +197,7 @@ Please see the implementation for the [default parameters](./mlxtend/evaluate/le
 
 ##### Examples
 
-For more examples, please see this [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/evaluate_learning_curves.ipynb)
+For more examples, please see this [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/evaluate_plot_learning_curves.ipynb)
 
 
 

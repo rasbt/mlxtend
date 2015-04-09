@@ -185,11 +185,15 @@ For more examples, please see this [IPython Notebook](http://nbviewer.ipython.or
 ##### Description
 
 
-A function to plot learning curves for classifiers. Learning curves are extremely useful to analyze if a model is suffering from over- or underfitting (high variance or high bias). The function can be imported via
+A function to plot learning curves for classifiers. Learning curves are extremely useful to analyze if a model is suffering from over- or under-fitting (high variance or high bias). The function can be imported via
 
     from mlxtend.evaluate import plot_learning_curves
+
+Please see the implementation for the [default parameters](./mlxtend/evaluate/learning_curves.py#L7-53).
+
 <br>
 <br>
+
 
 ##### Examples
 
@@ -225,42 +229,6 @@ For more examples, please see this [IPython Notebook](http://nbviewer.ipython.or
 	plot_learning_curves(X_train, y_train, X_test, y_test, clf, kind='n_features')
 	plt.show()
 
-
-<br>
-<br>
-##### Default Parameters
-
-    def plot_learning_curves(X_train, y_train, X_test, y_test, clf, kind='training_size', marker='o'):
-        """
-        Plots learning curves of a classifier.
-
-        Parameters
-        ----------
-        X_train : array-like, shape = [n_samples, n_features]
-          Feature matrix of the training dataset.
-
-        y_train : array-like, shape = [n_samples]
-          True class labels of the training dataset.
-
-        X_test : array-like, shape = [n_samples, n_features]
-          Feature matrix of the test dataset.
-
-        y_test : array-like, shape = [n_samples]
-          True class labels of the test dataset.
-
-        clf : Classifier object. Must have a .predict .fit method.
-
-        kind : str (default: 'training_size')
-          'training_size' or 'n_features'
-          Plots missclassifications vs. training size or number of features.
-
-        marker : str (default: 'o')
-          Marker for the line plot.
-
-        Returns
-        ---------
-        (training_error, test_error): tuple of lists
-        """
 <br>
 <br>
 

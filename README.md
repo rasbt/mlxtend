@@ -28,7 +28,7 @@ Current version: 0.2.4
 	- [Adaline](#adaline) 
 	- [Logistic Regression](#logistic-regression) 
 - [Text Utilities](#text-utilities)
-	- [Name Generalization](#name-generelization)
+	- [Name Generalization](#name-generalization)
 	- [Name Generalization and Duplicates](#name-generalization-and-duplicates)
 - [Pandas Utilities](#pandas-utilities)
 	- [Minmax Scaling](#minmax-scaling)
@@ -42,7 +42,8 @@ Current version: 0.2.4
 - [Math Utilities](#math-utilities)
 	- [Combinations and Permutations](#combinations-and-permutations)
 - [Matplotlib Utilities](#matplotlib-utilities)
-	- [Removing Borders](#remove_borders) 
+	- [Category Scatter](#category-scatter) 
+	- [Removing Borders](#removing-borders) 
 - [Installation](#installation)
 - [Changelog](https://github.com/rasbt/mlxtend/blob/master/docs/CHANGELOG.txt)
 
@@ -1458,7 +1459,7 @@ The `matplotlib utilities` can be imported via
 
 <br>
 <br>
-<a id='remove_borders'></a>
+<a id='category-scatter'></a>
 ### Category Scatter
 
 A function to quickly produce a scatter plot colored by categories from a pandas `DataFrame` or NumPy `ndarray` object.
@@ -1513,7 +1514,7 @@ Where the `x`, `y`, and `label_col` refer to the respective column indices in th
 
 <br>
 <br>
-<a id='remove_borders'></a>
+<a id='removing-borders'></a>
 ### Removing Borders
 
 [[back to top](#overview)]

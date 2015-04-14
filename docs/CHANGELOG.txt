@@ -2,6 +2,8 @@
 =======
 
 - Added `scoring` to `mlxtend.evaluate.learning_curves` (by user pfsq)
+- Fixed setup.py bug caused by the missing README.html file
+- matplotlib.category_scatter for pandas DataFrames and Numpy arrays
 
 0.2.3
 =======

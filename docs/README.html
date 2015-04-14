@@ -1,0 +1,1836 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+}
+</style>
+<title>mlxtend</title>
+
+</head>
+<body>
+<h1>mlxtend</h1>
+
+<p>A library of Python tools and extensions for data science.</p>
+
+<p>Link to the <code>mlxtend</code> repository on GitHub: <a href="https://github.com/rasbt/mlxtend">https://github.com/rasbt/mlxtend</a>.</p>
+
+<p><br></p>
+
+<p>Sebastian Raschka 2014-2015</p>
+
+<p>Current version: 0.2.3</p>
+
+<p><br>
+<br></p>
+
+<p><a id='overview'></a></p>
+
+<h2>Overview</h2>
+
+<ul>
+<li><a href="#evaluate">Evaluate</a>
+
+<ul>
+<li><a href="#plotting_decision_regions">Plotting Decision Regions</a></li>
+<li><a href="#plotting_learning_curves">Plotting Learning Curves</a></li>
+</ul>
+</li>
+<li><a href="#preprocessing">Preprocessing</a>
+
+<ul>
+<li><a href="#meancenterer">MeanCenterer</a></li>
+<li><a href="#array-unison-shuffling">Array Unison Shuffling</a></li>
+</ul>
+</li>
+<li><a href="#classifier">Classifier</a>
+
+<ul>
+<li><a href="#perceptron">Perceptron</a></li>
+<li><a href="#adaline">Adaline</a></li>
+<li><a href="#logistic-regression">Logistic Regression</a></li>
+</ul>
+</li>
+<li><a href="#text-utilities">Text Utilities</a>
+
+<ul>
+<li><a href="#name-generelization">Name Generalization</a></li>
+<li><a href="#name-generalization-and-duplicates">Name Generalization and Duplicates</a></li>
+</ul>
+</li>
+<li><a href="#pandas-utilities">Pandas Utilities</a>
+
+<ul>
+<li><a href="#minmax-scaling">Minmax Scaling</a></li>
+</ul>
+</li>
+<li><a href="#file-io-utilities">File IO Utilities</a>
+
+<ul>
+<li><a href="#find-files">Find Files</a></li>
+<li><a href="#find-file-groups">Find File Groups</a></li>
+</ul>
+</li>
+<li><a href="#scikit-learn-utilities">Scikit-learn Utilities</a>
+
+<ul>
+<li><a href="#columnselector-for-custom-feature-selection">ColumnSelector for Custom Feature Selection</a></li>
+<li><a href="#densetransformer-for-pipelines-and-gridsearch">DenseTransformer for Pipelines and GridSearch</a></li>
+<li><a href="#ensembleclassifier">EnsembleClassifier to Combine Classification Models</a></li>
+</ul>
+</li>
+<li><a href="#math-utilities">Math Utilities</a>
+
+<ul>
+<li><a href="#combinations-and-permutations">Combinations and Permutations</a></li>
+</ul>
+</li>
+<li><a href="#matplotlib-utilities">Matplotlib Utilities</a>
+
+<ul>
+<li><a href="#remove_borders">Removing Borders</a></li>
+</ul>
+</li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/blob/master/docs/CHANGELOG.txt">Changelog</a></li>
+</ul>
+
+
+<p><br>
+<br>
+<br>
+<br></p>
+
+<p><a id='evaluate'></a></p>
+
+<h2>Evaluate</h2>
+
+<p><br>
+<br>
+<a id='plotting_decision_regions'></a></p>
+
+<h3>Plotting Decision Regions</h3>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<h5>Description</h5>
+
+<p>A function to plot decision regions of classifiers.  Import <code>plot_decision_regions</code> via</p>
+
+<pre><code>from mlxtend.evaluate import plot_decision_regions
+</code></pre>
+
+<p><br>
+<br></p>
+
+<h5>Examples</h5>
+
+<p>For more examples, please see this <a href="http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/evaluate_decision_regions.ipynb">IPython Notebook</a>.</p>
+
+<h5>2D example</h5>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/evaluate_plot_decision_regions_2d.png" alt="" /></p>
+
+<pre><code>from mlxtend.evaluate import plot_decision_regions
+import matplotlib.pyplot as plt
+from sklearn import datasets
+from sklearn.svm import SVC
+
+# Loading some example data
+iris = datasets.load_iris()
+X = iris.data[:, [0,2]]
+y = iris.target
+
+# Training a classifier
+svm = SVC(C=0.5, kernel='linear')
+svm.fit(X,y)
+
+# Plotting decision regions
+plot_decision_regions(X, y, clf=svm, res=0.02, legend=2)
+
+# Adding axes annotations
+plt.xlabel('sepal length [cm]')
+plt.ylabel('petal length [cm]')
+plt.title('SVM on Iris')
+plt.show()
+</code></pre>
+
+<h5>1D example</h5>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/evaluate_plot_decision_regions_1d.png" alt="" /></p>
+
+<pre><code>from mlxtend.evaluate import plot_decision_regions
+import matplotlib.pyplot as plt
+from sklearn import datasets
+from sklearn.svm import SVC
+
+# Loading some example data
+iris = datasets.load_iris()
+X = iris.data[:, 2]
+X = X[:, None]
+y = iris.target
+
+# Training a classifier
+svm = SVC(C=0.5, kernel='linear')
+svm.fit(X,y)
+
+# Plotting decision regions
+plot_decision_regions(X, y, clf=svm, res=0.02, legend=2)
+
+# Adding axes annotations
+plt.xlabel('sepal length [cm]')
+plt.ylabel('petal length [cm]')
+plt.title('SVM on Iris')
+plt.show()
+</code></pre>
+
+<p><br>
+<br></p>
+
+<h5>Default Parameters</h5>
+
+<pre><code>def plot_decision_regions(X, y, clf, res=0.02, cycle_marker=True, legend=1):
+    """
+    Plots decision regions of a classifier.
+
+    Parameters
+    ----------
+    X : array-like, shape = [n_samples, n_features]
+      Feature Matrix.
+
+    y : array-like, shape = [n_samples]
+      True class labels.
+
+    clf : Classifier object. Must have a .predict method.
+
+    res : float (default: 0.02)
+      Grid width. Lower values increase the resolution but
+        slow down the plotting.
+
+    cycle_marker : bool
+      Use different marker for each class.
+
+    legend : int
+      Integer to specify the legend location. 
+      No legend if legend is 0.
+
+    cmap : Custom colormap object.
+      Uses matplotlib.cm.rainbow if None.
+
+    Returns
+    ---------
+    None
+    """
+</code></pre>
+
+<p><br>
+<br></p>
+
+<p><a id='plotting_learning_curves'></a></p>
+
+<h3>Plotting Learning Curves</h3>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<h5>Description</h5>
+
+<p>A function to plot learning curves for classifiers. Learning curves are extremely useful to analyze if a model is suffering from over- or under-fitting (high variance or high bias). The function can be imported via</p>
+
+<pre><code>from mlxtend.evaluate import plot_learning_curves
+</code></pre>
+
+<p>Please see the implementation for the <a href="./mlxtend/evaluate/learning_curves.py#L7-53">default parameters</a>.</p>
+
+<p><br>
+<br></p>
+
+<h5>Examples</h5>
+
+<p>For more examples, please see this <a href="http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/evaluate_plot_learning_curves.ipynb">IPython Notebook</a></p>
+
+<h4>Example</h4>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/evaluate_plot_learning_curves_1.png" alt="" /></p>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/evaluate_plot_learning_curves_2.png" alt="" /></p>
+
+<pre><code>from mlxtend.evaluate import plot_learning_curves
+from sklearn import datasets
+from sklearn.cross_validation import train_test_split
+
+# Loading some example data
+iris = datasets.load_iris()
+X = iris.data
+y = iris.target
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.6, random_seed=2)
+
+from sklearn.tree import DecisionTreeClassifier
+import numpy as np
+
+clf = DecisionTreeClassifier(max_depth=1)
+
+plot_learning_curves(X_train, y_train, X_test, y_test, clf, kind='training_size')
+plt.show()
+
+plot_learning_curves(X_train, y_train, X_test, y_test, clf, kind='n_features')
+plt.show()
+</code></pre>
+
+<p><br>
+<br></p>
+
+<p><a id='preprocessing'></a></p>
+
+<h2>Preprocessing</h2>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p>A collection of different functions for various data preprocessing procedures.</p>
+
+<p>The <code>preprocessing utilities</code> can be imported via</p>
+
+<pre><code>from mxtend.preprocessing import ...
+</code></pre>
+
+<p><br>
+<br>
+<a id='meancenterer'></a></p>
+
+<h3>MeanCenterer</h3>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p>A transformer class that performs column-based mean centering on a NumPy array.</p>
+
+<p><br></p>
+
+<p><strong>Examples:</strong></p>
+
+<p>Use the <code>fit</code> method to fit the column means of a dataset (e.g., the training dataset) to a new <code>MeanCenterer</code> object. Then, call the <code>transform</code> method on the same dataset to center it at the sample mean.</p>
+
+<pre><code>&gt;&gt;&gt; X_train
+array([[1, 2, 3],
+   [4, 5, 6],
+   [7, 8, 9]])
+&gt;&gt;&gt; mc = MeanCenterer().fit(X_train)
+&gt;&gt;&gt; mc.transform(X_train)
+array([[-3, -3, -3],
+   [ 0,  0,  0],
+   [ 3,  3,  3]])
+</code></pre>
+
+<p><br></p>
+
+<p>To use the same parameters that were used to center the training dataset, simply call the <code>transform</code> method of the <code>MeanCenterer</code> instance on a new dataset (e.g., test dataset).</p>
+
+<pre><code>&gt;&gt;&gt; X_test 
+array([[1, 1, 1],
+   [1, 1, 1],
+   [1, 1, 1]])
+&gt;&gt;&gt; mc.transform(X_test)  
+array([[-3, -4, -5],
+   [-3, -4, -5],
+   [-3, -4, -5]])
+</code></pre>
+
+<p><br></p>
+
+<p>The <code>MeanCenterer</code> also supports Python list objects, and the <code>fit_transform</code> method allows you to directly fit and center the dataset.</p>
+
+<pre><code>&gt;&gt;&gt; Z
+[1, 2, 3]
+&gt;&gt;&gt; MeanCenterer().fit_transform(Z)
+array([-1,  0,  1])
+</code></pre>
+
+<p><br></p>
+
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+X = 2 * np.random.randn(100,2) + 5
+
+plt.scatter(X[:,0], X[:,1])
+plt.grid()
+plt.title('Random Gaussian data w. mean=5, sigma=2')
+plt.show()
+
+Y = MeanCenterer.fit_transform(X)
+plt.scatter(Y[:,0], Y[:,1])
+plt.grid()
+plt.title('Data after mean centering')
+plt.show()
+</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/mean_centering_3.png" alt="" /></p>
+
+<p><br>
+<br>
+<br>
+<br></p>
+
+<p><a id='classifier'></a></p>
+
+<h2>Classifier</h2>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p>Algorithms for classification.</p>
+
+<p>The <code>preprocessing utilities</code> can be imported via</p>
+
+<pre><code>from mxtend.classifier import ...
+</code></pre>
+
+<p><br>
+<br>
+<a id='perceptron'></a></p>
+
+<h3>Perceptron</h3>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p>Implementation of a Perceptron (single-layer artificial neural network) using the Rosenblatt Perceptron Rule [1].</p>
+
+<p>[1] F. Rosenblatt. The perceptron, a perceiving and recognizing automaton Project Para. Cornell Aeronautical Laboratory, 1957.</p>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_perceptron_schematic.png" alt="" /></p>
+
+<p>For more usage examples please see the <a href="http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/classifier_perceptron.ipynb">IPython Notebook</a>.</p>
+
+<p>A detailed explanation about the perceptron learning algorithm can be found here [Artificial Neurons and Single-Layer Neural Networks
+- How Machine Learning Algorithms Work Part 1] (http://sebastianraschka.com/Articles/2015_singlelayer_neurons.html).</p>
+
+<p><br>
+<br></p>
+
+<h5>Example</h5>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_perceptron_ros_1.png" alt="" /></p>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_perceptron_ros_2.png" alt="" /></p>
+
+<pre><code>from mlxtend.data import iris_data
+from mlxtend.evaluate import plot_decision_regions
+from mlxtend.classifier import Perceptron
+import matplotlib.pyplot as plt
+
+# Loading Data
+
+X, y = iris_data()
+X = X[:, [0, 3]] # sepal length and petal width
+X = X[0:100] # class 0 and class 1
+y = y[0:100] # class 0 and class 1
+
+# standardize
+X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
+X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
+
+
+# Rosenblatt Perceptron
+
+ppn = Perceptron(epochs=15, eta=0.01, random_seed=1)
+ppn.fit(X, y)
+
+plot_decision_regions(X, y, clf=ppn)
+plt.title('Perceptron - Rosenblatt Perceptron Rule')
+plt.show()
+
+print(ppn.w_)
+
+plt.plot(range(len(ppn.cost_)), ppn.cost_)
+plt.xlabel('Iterations')
+plt.ylabel('Missclassifications')
+plt.show()
+</code></pre>
+
+<p><br>
+<br></p>
+
+<h5>Default Parameters</h5>
+
+<pre><code>class LogisticRegression(object):
+    """Logistic regression classifier.
+
+    Parameters
+    ------------
+    eta : float
+      Learning rate (between 0.0 and 1.0)
+
+    epochs : int
+      Passes over the training dataset.
+
+    learning : str (default: sgd)
+      Learning rule, sgd (stochastic gradient descent)
+      or gd (gradient descent).
+
+    lambda_ : float
+      Regularization parameter for L2 regularization.
+      No regularization if lambda_=0.0.
+
+    shuffle : bool (default: False)
+        Shuffles training data every epoch if True to prevent circles.
+
+    random_seed : int (default: None)
+        Set random state for shuffling and initializing the weights.
+
+    Attributes
+    -----------
+    w_ : 1d-array
+      Weights after fitting.
+
+    cost_ : list
+      List of floats with sum of squared error cost (sgd or gd) for every
+      epoch.
+
+    """
+</code></pre>
+
+<p><br>
+<br></p>
+
+<p><a id='adeline'></a></p>
+
+<h3>Adaline</h3>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p>Implementation of Adaline (Adaptive Linear Neuron; a single-layer artificial neural network) using the Widrow-Hoff delta rule. [2].</p>
+
+<p>[2] B. Widrow, M. E. Hoff, et al. Adaptive switching circuits. 1960.</p>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_adaline_schematic.png" alt="" /></p>
+
+<p>For more usage examples please see the <a href="http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/classifier_adaline.ipynb">IPython Notebook</a>.</p>
+
+<p>A detailed explanation about the Adeline learning algorithm can be found here [Artificial Neurons and Single-Layer Neural Networks
+- How Machine Learning Algorithms Work Part 1] (http://sebastianraschka.com/Articles/2015_singlelayer_neurons.html).</p>
+
+<p><br>
+<br></p>
+
+<h5>Example</h5>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_adaline_sgd_1.png" alt="" /></p>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_adaline_sgd_2.png" alt="" /></p>
+
+<pre><code>from mlxtend.data import iris_data
+from mlxtend.evaluate import plot_decision_regions
+from mlxtend.classifier import Adeline
+import matplotlib.pyplot as plt
+
+# Loading Data
+
+X, y = iris_data()
+X = X[:, [0, 3]] # sepal length and petal width
+X = X[0:100] # class 0 and class 1
+y = y[0:100] # class 0 and class 1
+
+# standardize
+X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
+X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
+
+
+ada = Adaline(epochs=30, eta=0.01, learning='sgd', random_seed=1)
+ada.fit(X, y)
+plot_decision_regions(X, y, clf=ada)
+plt.title('Adaline - Stochastic Gradient Descent')
+plt.show()
+
+plt.plot(range(len(ada.cost_)), ada.cost_, marker='o')
+plt.xlabel('Iterations')
+plt.ylabel('Cost')
+plt.show()
+</code></pre>
+
+<p><br>
+<br></p>
+
+<h5>Default Parameters</h5>
+
+<pre><code>class Adaline(object):
+    """ ADAptive LInear NEuron classifier.
+
+    Parameters
+    ------------
+    eta : float
+      Learning rate (between 0.0 and 1.0)
+
+    epochs : int
+      Passes over the training dataset.
+
+    learning : str (default: sgd)
+      Gradient decent (gd) or stochastic gradient descent (sgd)
+
+    shuffle : bool (default: False)
+        Shuffles training data every epoch if True to prevent circles.
+
+    random_seed : int (default: None)
+        Set random state for shuffling and initializing the weights.
+
+
+    Attributes
+    -----------
+    w_ : 1d-array
+      Weights after fitting.
+
+    cost_ : list
+      Sum of squared errors after each epoch.
+
+    """
+</code></pre>
+
+<p><br>
+<br></p>
+
+<p><br>
+<br>
+<a id='logistic-regression'></a></p>
+
+<h3>Logistic Regression</h3>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p>Implementation of Logistic Regression  with different learning rules: Gradient descent and stochastic gradient descent.</p>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_logistic_regression_schematic.png" alt="" /></p>
+
+<p>For more usage examples please see the <a href="http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/classifier_logistic_regression.ipynb">IPython Notebook</a>.</p>
+
+<p>A more detailed article about the algorithms is in preparation.</p>
+
+<p><br>
+<br></p>
+
+<h5>Example</h5>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_logistic_regression_sgd_1.png" alt="" /></p>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/classifier_logistic_regression_sgd_2.png" alt="" /></p>
+
+<pre><code>from mlxtend.data import iris_data
+from mlxtend.evaluate import plot_decision_regions
+from mlxtend.classifier import LogisticRegression
+import matplotlib.pyplot as plt
+
+# Loading Data
+
+X, y = iris_data()
+X = X[:, [0, 3]] # sepal length and petal width
+X = X[0:100] # class 0 and class 1
+y = y[0:100] # class 0 and class 1
+
+# standardize
+X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
+X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
+
+
+
+lr = LogisticRegression(eta=0.01, epochs=100, learning='sgd')
+lr.fit(X, y)
+
+plot_decision_regions(X, y, clf=lr)
+plt.title('Logistic Regression - Stochastic Gradient Descent')
+plt.show()
+
+print(lr.w_)
+
+plt.plot(range(len(lr.cost_)), lr.cost_)
+plt.xlabel('Iterations')
+plt.ylabel('Missclassifications')
+plt.show()
+</code></pre>
+
+<p><br>
+<br></p>
+
+<h5>Default Parameters</h5>
+
+<pre><code>class LogisticRegression(object):
+    """Logistic regression classifier.
+
+    Parameters
+    ------------
+    eta : float
+      Learning rate (between 0.0 and 1.0)
+
+    epochs : int
+      Passes over the training dataset.
+
+    learning : str (default: sgd)
+      Learning rule, sgd (stochastic gradient descent)
+      or gd (gradient descent).
+
+    lambda_ : float
+      Regularization parameter for L2 regularization.
+      No regularization if lambda_=0.0.
+
+    Attributes
+    -----------
+    w_ : 1d-array
+      Weights after fitting.
+
+    cost_ : list
+      List of floats with sum of squared error cost (sgd or gd) for every
+      epoch.
+
+    """
+</code></pre>
+
+<p><br>
+<br></p>
+
+<p><br>
+<br>
+<br>
+<br>
+<a id='preprocessing'></a></p>
+
+<h2>Preprocessing</h2>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p>A collection of different functions for various data preprocessing procedures.</p>
+
+<p>The <code>preprocessing utilities</code> can be imported via</p>
+
+<pre><code>from mxtend.preprocessing import ...
+</code></pre>
+
+<p><br>
+<br>
+<a id='meancenterer'></a></p>
+
+<h3>MeanCenterer</h3>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p>A transformer class that performs column-based mean centering on a NumPy array.</p>
+
+<p><br></p>
+
+<p><strong>Examples:</strong></p>
+
+<p>Use the <code>fit</code> method to fit the column means of a dataset (e.g., the training dataset) to a new <code>MeanCenterer</code> object. Then, call the <code>transform</code> method on the same dataset to center it at the sample mean.</p>
+
+<pre><code>&gt;&gt;&gt; from mlxtend.preprocessing import MeanCenterer
+&gt;&gt;&gt; X_train
+array([[1, 2, 3],
+   [4, 5, 6],
+   [7, 8, 9]])
+&gt;&gt;&gt; mc = MeanCenterer().fit(X_train)
+&gt;&gt;&gt; mc.transform(X_train)
+array([[-3, -3, -3],
+   [ 0,  0,  0],
+   [ 3,  3,  3]])
+</code></pre>
+
+<p><br></p>
+
+<p>To use the same parameters that were used to center the training dataset, simply call the <code>transform</code> method of the <code>MeanCenterer</code> instance on a new dataset (e.g., test dataset).</p>
+
+<pre><code>&gt;&gt;&gt; X_test 
+array([[1, 1, 1],
+   [1, 1, 1],
+   [1, 1, 1]])
+&gt;&gt;&gt; mc.transform(X_test)  
+array([[-3, -4, -5],
+   [-3, -4, -5],
+   [-3, -4, -5]])
+</code></pre>
+
+<p><br></p>
+
+<p>The <code>MeanCenterer</code> also supports Python list objects, and the <code>fit_transform</code> method allows you to directly fit and center the dataset.</p>
+
+<pre><code>&gt;&gt;&gt; Z
+[1, 2, 3]
+&gt;&gt;&gt; MeanCenterer().fit_transform(Z)
+array([-1,  0,  1])
+</code></pre>
+
+<p><br></p>
+
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+X = 2 * np.random.randn(100,2) + 5
+
+plt.scatter(X[:,0], X[:,1])
+plt.grid()
+plt.title('Random Gaussian data w. mean=5, sigma=2')
+plt.show()
+
+Y = MeanCenterer.fit_transform(X)
+plt.scatter(Y[:,0], Y[:,1])
+plt.grid()
+plt.title('Data after mean centering')
+plt.show()
+</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/mean_centering_3.png" alt="" /></p>
+
+<p><br>
+<br>
+<a id='array-unison-shuffling'></a></p>
+
+<h3>Array Unison Shuffling</h3>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p>A function that shuffles 2 or more NumPy arrays in unison.</p>
+
+<p><br></p>
+
+<p><strong>Examples:</strong></p>
+
+<pre><code>&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; from mlxtend.preprocessing import shuffle_arrays_unison
+&gt;&gt;&gt; X1 = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+&gt;&gt;&gt; y1 = np.array([1, 2, 3])
+&gt;&gt;&gt; print(X1)
+[[1 2 3]
+[4 5 6]
+[7 8 9]]    
+&gt;&gt;&gt; print(y1)
+[1 2 3]
+&gt;&gt;&gt; X2, y2 = shuffle_arrays_unison(arrays=[X1, y1], random_seed=3)
+&gt;&gt;&gt; print(X2)
+[[4 5 6]
+[1 2 3]
+[7 8 9]]
+&gt;&gt;&gt; print(y1)
+[2 1 3]
+</code></pre>
+
+<p><br>
+<br>
+<br>
+<br></p>
+
+<p><a id='text-utilities'></a></p>
+
+<h2>Text Utilities</h2>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p><br></p>
+
+<p>The <code>text utilities</code> can be imported via</p>
+
+<pre><code>from mxtend.text import ...
+</code></pre>
+
+<p><br>
+<br></p>
+
+<p><a id='name-generalization'></a></p>
+
+<h3>Name Generalization</h3>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<h5>Description</h5>
+
+<p>A function that converts a name into a general format <code>&lt;last_name&gt;&lt;separator&gt;&lt;firstname letter(s)&gt; (all lowercase)</code>, which is useful if data is collected from different sources and is supposed to be compared or merged based on name identifiers. E.g., if names are stored in a pandas <code>DataFrame</code> column, the apply function can be used to generalize names: <code>df['name'] = df['name'].apply(generalize_names)</code></p>
+
+<h5>Examples</h5>
+
+<pre><code>from mlxtend.text import generalize_names
+
+# defaults
+&gt;&gt;&gt; generalize_names('Pozo, José Ángel')
+'pozo j'
+&gt;&gt;&gt; generalize_names('Pozo, José Ángel') 
+'pozo j'
+&gt;&gt;&gt; assert(generalize_names('José Ángel Pozo') 
+'pozo j' 
+&gt;&gt;&gt; generalize_names('José Pozo')
+'pozo j' 
+
+# optional parameters
+&gt;&gt;&gt; generalize_names("Eto'o, Samuel", firstname_output_letters=2)
+'etoo sa'
+&gt;&gt;&gt; generalize_names("Eto'o, Samuel", firstname_output_letters=0)
+'etoo'
+&gt;&gt;&gt; generalize_names("Eto'o, Samuel", output_sep=', ')
+'etoo, s' 
+</code></pre>
+
+<h5>Default Parameters</h5>
+
+<pre><code>def generalize_names(name, output_sep=' ', firstname_output_letters=1):
+    """
+    Function that outputs a person's name in the format 
+    &lt;last_name&gt;&lt;separator&gt;&lt;firstname letter(s)&gt; (all lowercase)
+
+    Parameters
+    ----------
+    name : `str`
+      Name of the player
+    output_sep : `str` (default: ' ')
+      String for separating last name and first name in the output.
+    firstname_output_letters : `int`
+      Number of letters in the abbreviated first name.
+
+    Returns
+    ----------
+    gen_name : `str`
+      The generalized name.
+
+    """
+</code></pre>
+
+<p><br>
+<br></p>
+
+<p><a id='name-generalization-and-duplicates'></a></p>
+
+<h3>Name Generalization and Duplicates</h3>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p><strong>Note</strong> that using <a href="#name-generalization"><code>generalize_names</code></a> with few <code>firstname_output_letters</code> can result in duplicate entries. E.g., if your dataset contains the names "Adam Johnson" and "Andrew Johnson", the default setting (i.e., 1 first name letter) will produce the generalized name "johnson a" in both cases.</p>
+
+<p>One solution is to increase the number of first name letters in the output by setting the parameter <code>firstname_output_letters</code> to a value larger than 1.</p>
+
+<p>An alternative solution is to use the <code>generalize_names_duplcheck</code> function if you are working with pandas DataFrames.</p>
+
+<p>The  <code>generalize_names_duplcheck</code> function can be imported via</p>
+
+<pre><code>from mlxtend.text import generalize_names_duplcheck
+</code></pre>
+
+<p>By default,  <code>generalize_names_duplcheck</code> will apply  <code>generalize_names</code> to a pandas DataFrame column with the minimum number of first name letters and append as many first name letters as necessary until no duplicates are present in the given DataFrame column. An example dataset column that contains the names</p>
+
+<h5>Examples</h5>
+
+<p>Reading in a CSV file that has column <code>Name</code> for which we want to generalize the names:</p>
+
+<ul>
+<li>Samuel Eto'o</li>
+<li>Adam Johnson</li>
+<li>Andrew Johnson</li>
+</ul>
+
+
+<p><br></p>
+
+<pre><code>df = pd.read_csv(path)
+</code></pre>
+
+<p>Applying <code>generalize_names_duplcheck</code> to generate a new DataFrame with the generalized names without duplicates:</p>
+
+<pre><code>df_new = generalize_names_duplcheck(df=df, col_name='Name')
+</code></pre>
+
+<ul>
+<li>etoo s</li>
+<li>johnson ad</li>
+<li>johnson an</li>
+</ul>
+
+
+<p><br>
+<br>
+<br>
+<br></p>
+
+<p><a id='pandas-utilities'></a></p>
+
+<h2>Pandas Utilities</h2>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p>The <code>pandas utilities</code> can be imported via</p>
+
+<pre><code>from mxtend.pandas import ...
+</code></pre>
+
+<p><br>
+<br>
+<a id='minmax-scaling'></a></p>
+
+<h3>Minmax Scaling</h3>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<h5>Description</h5>
+
+<p>A function that applies minmax scaling to pandas DataFrame columns.</p>
+
+<h5>Examples</h5>
+
+<pre><code>from mlxtend.pandas import minmax_scaling
+</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/pandas_scaling_minmax_scaling.png" alt="" /></p>
+
+<h5>Default Parameters</h5>
+
+<pre><code>def minmax_scaling(df, columns, min_val=0, max_val=1):
+    """ 
+    Min max scaling for pandas DataFrames
+
+    Parameters
+    ----------
+    df : pandas DataFrame object.
+
+    columns : array-like, shape = [n_columns]
+      Array-like with pandas DataFrame column names, e.g., ['col1', 'col2', ...]
+
+    min_val : `int` or `float`, optional (default=`0`)
+      minimum value after rescaling.
+
+    min_val : `int` or `float`, optional (default=`1`)
+      maximum value after rescaling.
+
+    Returns
+    ----------
+
+    df_new: pandas DataFrame object. 
+      Copy of the DataFrame with rescaled columns.
+
+    """
+</code></pre>
+
+<p><br>
+<br>
+<br>
+<br></p>
+
+<p><a id='file-io-utilities'></a></p>
+
+<h2>File IO Utilities</h2>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p><br></p>
+
+<p>The <code>file_io utilities</code> can be imported via</p>
+
+<pre><code>from mxtend.file_io import ...
+</code></pre>
+
+<p><br>
+<br>
+<a id='find-files'></a></p>
+
+<h3>Find Files</h3>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<h5>Description</h5>
+
+<p>A function that finds files in a given directory based on substring matches and returns a list of the file names found.</p>
+
+<h5>Examples</h5>
+
+<pre><code>from mlxtend.file_io import find_files
+
+&gt;&gt;&gt; find_files('mlxtend', '/Users/sebastian/Desktop')
+['/Users/sebastian/Desktop/mlxtend-0.1.6.tar.gz', 
+'/Users/sebastian/Desktop/mlxtend-0.1.7.tar.gz'] 
+</code></pre>
+
+<h5>Default Parameters</h5>
+
+<pre><code>def find_files(substring, path, recursive=False, check_ext=None, ignore_invisible=True): 
+    """
+    Function that finds files in a directory based on substring matching.
+
+    Parameters
+    ----------
+
+    substring : `str`
+      Substring of the file to be matched.
+
+    path : `str` 
+      Path where to look.
+
+    recursive: `bool`, optional, (default=`False`)
+      If true, searches subdirectories recursively.
+
+    check_ext: `str`, optional, (default=`None`)
+      If string (e.g., '.txt'), only returns files that
+      match the specified file extension.
+
+    ignore_invisible : `bool`, optional, (default=`True`)
+      If `True`, ignores invisible files (i.e., files starting with a period).
+
+    Returns
+    ----------
+    results : `list`
+      List of the matched files.
+
+    """
+</code></pre>
+
+<p><br>
+<br></p>
+
+<p><a id='find-file-groups'></a></p>
+
+<h3>Find File Groups</h3>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<h5>Description</h5>
+
+<p>A function that finds files that belong together (i.e., differ only by file extension) in different directories and collects them in a Python dictionary for further processing tasks.</p>
+
+<h5>Examples</h5>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/file_io_find_find_filegroups_1.png" alt="" /></p>
+
+<pre><code>d1 = os.path.join(master_path, 'dir_1')
+d2 = os.path.join(master_path, 'dir_2')
+d3 = os.path.join(master_path, 'dir_3')
+
+find_filegroups(paths=[d1,d2,d3], substring='file_1')
+# Returns:
+# {'file_1': ['/Users/sebastian/github/mlxtend/tests/data/find_filegroups/dir_1/file_1.log', 
+#             '/Users/sebastian/github/mlxtend/tests/data/find_filegroups/dir_2/file_1.csv', 
+#             '/Users/sebastian/github/mlxtend/tests/data/find_filegroups/dir_3/file_1.txt']}
+#
+# Note: Setting `substring=''` would return a 
+# dictionary of all file paths for 
+# file_1.*, file_2.*, file_3.*
+</code></pre>
+
+<h5>Default Parameters</h5>
+
+<pre><code>def find_filegroups(paths, substring='', extensions=None, validity_check=True, ignore_invisible=True):
+    """
+    Function that finds and groups files from different directories in a python dictionary.
+
+    Parameters
+    ----------
+    paths : `list` 
+      Paths of the directories to be searched. Dictionary keys are build from
+      the first directory.
+
+    substring : `str`, optional, (default=`''`)
+      Substring that all files have to contain to be considered.
+
+    extensions : `list`, optional, (default=`None`)
+      `None` or `list` of allowed file extensions for each path. If provided, the number
+      of extensions must match the number of `paths`.
+
+    validity_check : `bool`, optional, (default=`True`)
+      If `True`, checks if all dictionary values have the same number of file paths. Prints
+      a warning and returns an empty dictionary if the validity check failed.
+
+    ignore_invisible : `bool`, optional, (default=`True`)
+      If `True`, ignores invisible files (i.e., files starting with a period).
+
+    Returns
+    ----------
+    groups : `dict`
+      Dictionary of files paths. Keys are the file names found in the first directory listed
+      in `paths` (without file extension).
+
+    """
+</code></pre>
+
+<p><br>
+<br>
+<br>
+<br></p>
+
+<p><a id='scikit-learn-utilities'></a></p>
+
+<h2>Scikit-learn Utilities</h2>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p><br></p>
+
+<p>The <code>scikit-learn utilities</code> can be imported via</p>
+
+<pre><code>from mxtend.scikit-learn import ...
+</code></pre>
+
+<p><br>
+<br></p>
+
+<p><a id='columnselector-for-custom-feature-selection'></a></p>
+
+<h3>ColumnSelector for Custom Feature Selection</h3>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p>A feature selector for scikit-learn's Pipeline class that returns specified columns from a NumPy array; extremely useful in combination with scikit-learn's <code>Pipeline</code> in cross-validation.</p>
+
+<ul>
+<li><a href="http://nbviewer.ipython.org/github/rasbt/pattern_classification/blob/master/machine_learning/scikit-learn/scikit-pipeline.ipynb#Cross-Validation-and-Pipelines">An example usage</a> of the <code>ColumnSelector</code> used in a pipeline for cross-validation on the Iris dataset.</li>
+</ul>
+
+
+<p>Example in <code>Pipeline</code>:</p>
+
+<pre><code>from mlxtend.sklearn import ColumnSelector
+from sklearn.pipeline import Pipeline
+from sklearn.naive_bayes import GaussianNB
+from sklearn.preprocessing import StandardScaler
+
+clf_2col = Pipeline(steps=[
+    ('scaler', StandardScaler()),
+    ('reduce_dim', ColumnSelector(cols=(1,3))),    # extracts column 2 and 4
+    ('classifier', GaussianNB())   
+    ]) 
+</code></pre>
+
+<p><code>ColumnSelector</code> has a <code>transform</code> method that is used to select and return columns (features) from a NumPy array so that it can be used in the <code>Pipeline</code> like other <code>transformation</code> classes.</p>
+
+<pre><code>### original data
+
+print('First 3 rows before:\n', X_train[:3,:])
+First 3 rows before:
+[[ 4.5  2.3  1.3  0.3]
+[ 6.7  3.3  5.7  2.1]
+[ 5.7  3.   4.2  1.2]]
+
+### after selection
+
+cols = ColumnExtractor(cols=(1,3)).transform(X_train)
+print('First 3 rows:\n', cols[:3,:])
+
+First 3 rows:
+[[ 2.3  0.3]
+[ 3.3  2.1]
+[ 3.   1.2]]
+</code></pre>
+
+<p><br>
+<br></p>
+
+<p><a id='densetransformer-for-pipelines-and-gridsearch'></a></p>
+
+<h3>DenseTransformer for Pipelines and GridSearch</h3>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p>A simple transformer that converts a sparse into a dense numpy array, e.g., required for scikit-learn's <code>Pipeline</code> when e.g,. <code>CountVectorizers</code> are used in combination with <code>RandomForest</code>s.</p>
+
+<p>Example in <code>Pipeline</code>:</p>
+
+<pre><code>from sklearn.pipeline import Pipeline
+from sklearn import metrics
+from sklearn.grid_search import GridSearchCV
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_extraction.text import CountVectorizer
+
+from mlxtend.sklearn import DenseTransformer
+
+
+pipe_1 = Pipeline([
+    ('vect', CountVectorizer(analyzer='word',
+                      decode_error='replace',
+                      preprocessor=lambda text: re.sub('[^a-zA-Z]', ' ', text.lower()), 
+                      stop_words=stopwords,) ),
+    ('to_dense', DenseTransformer()),
+    ('clf', RandomForestClassifier())
+])
+
+parameters_1 = dict(
+    clf__n_estimators=[50, 100, 200],
+    clf__max_features=['sqrt', 'log2', None],)
+
+grid_search_1 = GridSearchCV(pipe_1, 
+                           parameters_1, 
+                           n_jobs=1, 
+                           verbose=1,
+                           scoring=f1_scorer,
+                           cv=10)
+
+
+print("Performing grid search...")
+print("pipeline:", [name for name, _ in pipe_1.steps])
+print("parameters:")
+grid_search_1.fit(X_train, y_train)
+print("Best score: %0.3f" % grid_search_1.best_score_)
+print("Best parameters set:")
+best_parameters_1 = grid_search_1.best_estimator_.get_params()
+for param_name in sorted(parameters_1.keys()):
+    print("\t%s: %r" % (param_name, best_parameters_1[param_name]))
+</code></pre>
+
+<p><br>
+<br></p>
+
+<p><a id='ensembleclassifier'></a></p>
+
+<h3>EnsembleClassifier</h3>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p>And ensemble classifier that predicts class labels based on a majority voting rule (hard voting) or average predicted probabilities (soft voting).</p>
+
+<p>Decision regions plotted for 4 different classifiers:</p>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/sklearn_ensemble_decsion_regions.png" alt="" /></p>
+
+<p>Please see the <a href="http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_ensemble_ensembleclassifier.ipynb">IPython Notebook</a> for a detailed explanation and examples.</p>
+
+<h5>Documentation</h5>
+
+<p>For more information about the parameters, please see the <a href="./mlxtend/sklearn/ensemble.py#L20-44"><code>mlxtend.sklearn.EnsembleClassifier</code></a> class documentation.</p>
+
+<p>The <code>EnsembleClassifier</code> will likely be included in the scikit-learn library as <code>VotingClassifier</code> at some point, and during this implementation process, the <code>EnsembleClassifier</code> has been slightly improved based on valuable feedback from the scikit-learn community.</p>
+
+<h5>Examples</h5>
+
+<p>Input:</p>
+
+<pre><code>from sklearn import cross_validation
+from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import GaussianNB 
+from sklearn.ensemble import RandomForestClassifier
+import numpy as np
+from sklearn import datasets
+
+iris = datasets.load_iris()
+X, y = iris.data[:, 1:3], iris.target
+
+np.random.seed(123)
+
+################################
+# Initialize classifiers
+################################
+
+clf1 = LogisticRegression()
+clf2 = RandomForestClassifier()
+clf3 = GaussianNB()
+
+################################
+# Initialize EnsembleClassifier
+################################
+
+# hard voting    
+eclf = EnsembleClassifier(clfs=[clf1, clf2, clf3], voting='hard')
+
+# soft voting (uniform weights)
+# eclf = EnsembleClassifier(clfs=[clf1, clf2, clf3], voting='soft')
+
+# soft voting with different weights
+# eclf = EnsembleClassifier(clfs=[clf1, clf2, clf3], voting='soft', weights=[1,2,10])
+
+
+
+################################
+# 5-fold Cross-Validation
+################################
+
+for clf, label in zip([clf1, clf2, clf3, eclf], ['Logistic Regression', 'Random Forest', 'naive Bayes', 'Ensemble']):
+
+    scores = cross_validation.cross_val_score(clf, X, y, cv=5, scoring='accuracy')
+    print("Accuracy: %0.2f (+/- %0.2f) [%s]" % (scores.mean(), scores.std(), label))
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>Accuracy: 0.90 (+/- 0.05) [Logistic Regression]
+Accuracy: 0.92 (+/- 0.05) [Random Forest]
+Accuracy: 0.91 (+/- 0.04) [naive Bayes]
+Accuracy: 0.95 (+/- 0.05) [Ensemble]
+</code></pre>
+
+<p><br>
+<br></p>
+
+<h5>GridSearch Example</h5>
+
+<p>The <code>EnsembleClassifier</code> van also be used in combination with scikit-learns gridsearch module:</p>
+
+<pre><code>from sklearn.grid_search import GridSearchCV
+
+clf1 = LogisticRegression(random_state=1)
+clf2 = RandomForestClassifier(random_state=1)
+clf3 = GaussianNB()
+eclf = EnsembleClassifier(clfs=[clf1, clf2, clf3], voting='soft')
+
+params = {'logisticregression__C': [1.0, 100.0],
+      'randomforestclassifier__n_estimators': [20, 200],}
+
+grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
+grid.fit(iris.data, iris.target)
+
+for params, mean_score, scores in grid.grid_scores_:
+    print("%0.3f (+/-%0.03f) for %r"
+        % (mean_score, scores.std() / 2, params))
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>0.953 (+/-0.013) for {'randomforestclassifier__n_estimators': 20, 'logisticregression__C': 1.0}
+0.960 (+/-0.012) for {'randomforestclassifier__n_estimators': 200, 'logisticregression__C': 1.0}
+0.960 (+/-0.012) for {'randomforestclassifier__n_estimators': 20, 'logisticregression__C': 100.0}
+0.953 (+/-0.017) for {'randomforestclassifier__n_estimators': 200, 'logisticregression__C': 100.0}
+</code></pre>
+
+<p><br>
+<br>      <br/>
+<br>
+<br>
+<a id='math-utilities'></a></p>
+
+<h2>Math Utilities</h2>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p><br></p>
+
+<p>The <code>math utilities</code> can be imported via</p>
+
+<pre><code>from mxtend.math import ...
+</code></pre>
+
+<p><br>
+<br>
+<a id='combinations-and-permutations'></a></p>
+
+<h3>Combinations and Permutations</h3>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p>Functions to calculate the number of combinations and permutations for creating subsequences of <em>r</em> elements out of a sequence with <em>n</em> elements.</p>
+
+<h5>Examples</h5>
+
+<p>In:</p>
+
+<pre><code>from mlxtend.math import num_combinations
+from mlxtend.math import num_permutations
+
+c = num_combinations(n=20, r=8, with_replacement=False)
+print('Number of ways to combine 20 elements into 8 subelements: %d' % c)
+
+d = num_permutations(n=20, r=8, with_replacement=False)
+print('Number of ways to permute 20 elements into 8 subelements: %d' % d)
+</code></pre>
+
+<p>Out:</p>
+
+<pre><code>Number of ways to combine 20 elements into 8 subelements: 125970
+Number of ways to permute 20 elements into 8 subelements: 5079110400
+</code></pre>
+
+<p>This is especially useful in combination with <a href="https://docs.python.org/3/library/itertools.html"><code>itertools</code></a>, e.g., in order to estimate the progress via <a href="https://github.com/rasbt/pyprind"><code>pyprind</code></a>.</p>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/combinations_pyprind.png" alt="" /></p>
+
+<h5>Default Parameters</h5>
+
+<pre><code>def num_combinations(n, r, with_replacement=False):
+    """ 
+    Function to calculate the number of possible combinations.
+
+    Parameters
+    ----------
+    n : `int`
+      Total number of items.
+
+    r : `int`
+      Number of elements of the target itemset.
+
+    with_replacement : `bool`, optional, (default=False)
+      Allows repeated elements if True.
+
+    Returns
+    ----------
+    comb : `int`
+      Number of possible combinations.
+
+    """
+
+
+def num_permutations(n, r, with_replacement=False):
+    """ 
+    Function to calculate the number of possible permutations.
+
+    Parameters
+    ----------
+    n : `int`
+      Total number of items.
+
+    r : `int`
+      Number of elements of the target itemset.
+
+    with_replacement : `bool`, optional, (default=False)
+      Allows repeated elements if True.
+
+    Returns
+    ----------
+    permut : `int`
+      Number of possible permutations.
+
+    """
+</code></pre>
+
+<p><br>
+<br>      <br/>
+<br>
+<br>
+<a id='matplotlib-utilities'></a></p>
+
+<h2>Matplotlib Utilities</h2>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p><br></p>
+
+<p>The <code>matplotlib utilities</code> can be imported via</p>
+
+<pre><code>from mxtend.matplotlib import ...
+</code></pre>
+
+<p><br>
+<br>
+<a id='remove_borders'></a></p>
+
+<h3>Removing Borders</h3>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p>A function to remove borders from <code>matplotlib</code> plots. Import <code>remove_borders</code> via</p>
+
+<pre><code>from mlxtend.matplotlib import remove_borders
+
+
+
+
+def remove_borders(axes, left=False, bottom=False, right=True, top=True):
+    """ 
+    A function to remove chartchunk from matplotlib plots, such as axes
+        spines, ticks, and labels.
+
+        Keyword arguments:
+            axes: An iterable containing plt.gca() or plt.subplot() objects, e.g. [plt.gca()].
+            left, bottom, right, top: Boolean to specify which plot axes to hide.
+
+    """
+</code></pre>
+
+<h5>Examples</h5>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/remove_borders_3.png" alt="" /></p>
+
+<p><br>
+<br></p>
+
+<p><a id='installation'></a></p>
+
+<h2>Installation</h2>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p>You can use the following command to install <code>mlxtend</code>:<br/>
+<code>pip install mlxtend</code><br/>
+ or  <br/>
+<code>easy_install mlxtend</code></p>
+
+<p>Alternatively, you download the package manually from the Python Package Index <a href="https://pypi.python.org/pypi/mlxtend">https://pypi.python.org/pypi/mlxtend</a>, unzip it, navigate into the package, and use the command:</p>
+
+<p><code>python setup.py install</code></p>
+</body>
+</html>

@@ -9,7 +9,7 @@ Link to the `mlxtend` repository on GitHub: [https://github.com/rasbt/mlxtend](h
 
 Sebastian Raschka 2014-2015
 
-Current version: 0.2.3
+Current version: 0.2.4
 
 <br>
 <br>
@@ -1244,7 +1244,7 @@ And ensemble classifier that predicts class labels based on a majority voting ru
 
 Decision regions plotted for 4 different classifiers:   
 
-![](./images/sklearn_ensemble_decsion_regions.png)
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/sklearn_ensemble_decsion_regions.png)
 
 Please see the [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_ensemble_ensembleclassifier.ipynb) for a detailed explanation and examples.
 
@@ -1455,6 +1455,61 @@ The `matplotlib utilities` can be imported via
 
 	from mxtend.matplotlib import ...
 
+
+<br>
+<br>
+<a id='remove_borders'></a>
+### Category Scatter
+
+A function to quickly produce a scatter plot colored by categories from a pandas `DataFrame` or NumPy `ndarray` object.
+
+Please see the implementation for the [default parameters](./mlxtend/matplotlib/scatter.py#L6-42).
+
+<br>
+#### Example
+
+Loading an example dataset as pandas `DataFrame`:	
+	
+	import pandas as pd
+
+	df = pd.read_csv('/Users/sebastian/Desktop/data.csv')
+	df.head()
+	
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_categorical_scatter_1.png)
+	
+Plotting the data where the categories are determined by the unique values in the label column `label_col`. The `x` and `y` values are simply the column names of the DataFrame that we want to plot.
+
+	import matplotlib.pyplot as plt
+	from mlxtend.matplotlib import category_scatter
+
+	category_scatter(x='x', y='y', label_col='label', data=df)
+           
+	plt.legend(loc='best')
+	
+	
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_categorical_scatter_2.png)
+	
+
+Similarly, we can also use NumPy arrays. E.g.,
+
+	X = 
+
+	array([['class1', 10.0, 8.04],
+       ['class1', 8.0, 6.95],
+       ['class1', 13.2, 7.58],
+       ['class1', 9.0, 8.81],
+		...
+       ['class4', 8.0, 5.56],
+       ['class4', 8.0, 7.91],
+       ['class4', 8.0, 6.89]], dtype=object)
+       
+Where the `x`, `y`, and `label_col` refer to the respective column indices in the array:
+
+	category_scatter(x=1, y=2, label_col=0, data=df.values)
+           
+	plt.legend(loc='best')
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_categorical_scatter_2.png)
 
 <br>
 <br>

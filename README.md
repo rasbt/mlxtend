@@ -9,7 +9,7 @@ Link to the `mlxtend` repository on GitHub: [https://github.com/rasbt/mlxtend](h
 
 Sebastian Raschka 2014-2015
 
-Current version: 0.2.4
+Current version: 0.2.5
 
 <br>
 <br>
@@ -67,9 +67,16 @@ Current version: 0.2.4
 ##### Description
 
 
-A function to plot decision regions of classifiers.  Import `plot_decision_regions` via
+- A function to plot decision regions of classifiers.  
+
+- Import `plot_decision_regions` via
 
     from mlxtend.evaluate import plot_decision_regions
+
+- Please see the implementation for the [default parameters](./mlxtend/evaluate/decision_regions.py#L11-64).
+
+
+
 
 <br>
 <br>
@@ -136,44 +143,31 @@ For more examples, please see this [IPython Notebook](http://nbviewer.ipython.or
 	plt.title('SVM on Iris')
 	plt.show()
 
+##### Highlighting Test Data Points
 
-<br>
-<br>
-##### Default Parameters
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/evaluate_plot_decision_regions_highlight.png)
 
-	def plot_decision_regions(X, y, clf, res=0.02, cycle_marker=True, legend=1):
-	    """
-	    Plots decision regions of a classifier.
-    
-	    Parameters
-	    ----------
-	    X : array-like, shape = [n_samples, n_features]
-	      Feature Matrix.
-      
-	    y : array-like, shape = [n_samples]
-	      True class labels.
-    
-	    clf : Classifier object. Must have a .predict method.
-        
-	    res : float (default: 0.02)
-	      Grid width. Lower values increase the resolution but
-	        slow down the plotting.
-        
-	    cycle_marker : bool
-	      Use different marker for each class.
-      
-	    legend : int
-	      Integer to specify the legend location. 
-	      No legend if legend is 0.
-        
-	    cmap : Custom colormap object.
-	      Uses matplotlib.cm.rainbow if None.
-        
-	    Returns
-	    ---------
-	    None
-	    """
+Via the `X_highlight`, a second dataset can be provided to highlight particular points in the dataset via a circle.
 
+	from sklearn.cross_validation import train_test_split
+
+	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=0) 
+
+	# Training a classifier
+	svm = SVC(C=0.5, kernel='linear')
+	svm.fit(X_train, y_train)
+
+	# Plotting decision regions
+
+	plot_decision_regions(X, y, clf=svm, 
+                      X_highlight=X_test, 
+                      res=0.02, legend=2)
+
+	# Adding axes annotations
+	plt.xlabel('sepal length [standardized]')
+	plt.ylabel('petal length [standardized]')
+	plt.title('SVM on Iris')
+	plt.show()
 <br>
 <br>
 

@@ -1,3 +1,8 @@
+0.2.5
+=======
+
+- Added `X_highlight` parameter to `mlxtend.evaluate.plot_decision_regions` for highlighting test data points.
+
 0.2.4
 =======
 

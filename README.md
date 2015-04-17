@@ -739,7 +739,7 @@ Please see the [code description](./mlxtend/regression/lin_regplot.py#L12-42) fo
 
 	intercept, slope, corr_coeff = lin_regplot(X[:,np.newaxis], y,)
 
-![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/regression_lin_regplot_1.png)
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/regression_linregplot_1.png)
 	
 
 <br>

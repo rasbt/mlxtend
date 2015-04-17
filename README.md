@@ -20,13 +20,15 @@ Current version: 0.2.5
 - [Evaluate](#evaluate)
 	- [Plotting Decision Regions](#plotting_decision_regions) 
 	- [Plotting Learning Curves](#plotting_learning_curves)
-- [Preprocessing](#preprocessing)
-	- [MeanCenterer](#meancenterer) 
-	- [Array Unison Shuffling](#array-unison-shuffling)
 - [Classifier](#classifier)
 	- [Perceptron](#perceptron) 
 	- [Adaline](#adaline) 
 	- [Logistic Regression](#logistic-regression) 
+- [Preprocessing](#preprocessing)
+	- [MeanCenterer](#meancenterer) 
+	- [Array Unison Shuffling](#array-unison-shuffling)
+- [Regression](#regression)
+	- [Plotting Linear Regression Fits](plotting-linear-regression-fits)
 - [Text Utilities](#text-utilities)
 	- [Name Generalization](#name-generalization)
 	- [Name Generalization and Duplicates](#name-generalization-and-duplicates)
@@ -231,93 +233,6 @@ For more examples, please see this [IPython Notebook](http://nbviewer.ipython.or
 
 
 
-
-
-
-<a id='preprocessing'></a>
-## Preprocessing
-
-[[back to top](#overview)]
-
-A collection of different functions for various data preprocessing procedures.
-
-The `preprocessing utilities` can be imported via
-
-	from mxtend.preprocessing import ...
-	
-<br>
-<br>
-<a id='meancenterer'></a>
-### MeanCenterer
-
-[[back to top](#overview)]
-
-A transformer class that performs column-based mean centering on a NumPy array.
-
-<br>
-    
-**Examples:**
-
-Use the `fit` method to fit the column means of a dataset (e.g., the training dataset) to a new `MeanCenterer` object. Then, call the `transform` method on the same dataset to center it at the sample mean.
-
-	>>> X_train
-	array([[1, 2, 3],
-       [4, 5, 6],
-       [7, 8, 9]])
-    >>> mc = MeanCenterer().fit(X_train)
-	>>> mc.transform(X_train)
-    array([[-3, -3, -3],
-       [ 0,  0,  0],
-       [ 3,  3,  3]])
-
-<br>
-
-To use the same parameters that were used to center the training dataset, simply call the `transform` method of the `MeanCenterer` instance on a new dataset (e.g., test dataset).
-    
-    >>> X_test 
-    array([[1, 1, 1],
-       [1, 1, 1],
-       [1, 1, 1]])
-    >>> mc.transform(X_test)  
-    array([[-3, -4, -5],
-       [-3, -4, -5],
-       [-3, -4, -5]])
-
-<br>
-
-The `MeanCenterer` also supports Python list objects, and the `fit_transform` method allows you to directly fit and center the dataset.
-
-	>>> Z
-	[1, 2, 3]
-	>>> MeanCenterer().fit_transform(Z)
-	array([-1,  0,  1])
-
-
-<br>
-
-	import matplotlib.pyplot as plt
-	import numpy as np
-
-	X = 2 * np.random.randn(100,2) + 5
-
-	plt.scatter(X[:,0], X[:,1])
-	plt.grid()
-	plt.title('Random Gaussian data w. mean=5, sigma=2')
-	plt.show()
-
-	Y = MeanCenterer.fit_transform(X)
-	plt.scatter(Y[:,0], Y[:,1])
-	plt.grid()
-	plt.title('Data after mean centering')
-	plt.show()
-
-![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/mean_centering_3.png)
-
-
-<br>
-<br>
-<br>
-<br>
 
 
 
@@ -782,10 +697,55 @@ A function that shuffles 2 or more NumPy arrays in unison.
 
 
 
+<a id='regression'></a>
+
+## Regression
+
+[[back to top](#overview)]
+
+<br>
+
+The `text utilities` can be imported via
+
+	from mxtend.text import ...
+
+<br>
+<br>
+
+<a id='plotting-linear-regression-fits'></a>
+### Plotting Linear Regression Fits
+[[back to top](#overview)]
+
+`lin_regplot` is a function to plot linear regression fits. 
+Uses scikit-learn's `linear_model.LinearRegression` to fit the model by default, and SciPy's `stats.pearsonr` to calculate the correlation coefficient. 
+
+##### Default parameters:
+
+	lin_regplot(X, y, model=LinearRegression(), corr_func=pearsonr, scattercolor='blue', fit_style='k--', legend=True, xlim='auto')
+
+Please see the [code description](./mlxtend/regression/lin_regplot.py#L12-42) for more information.
+
+##### Example
 
 
+	from mlxtend.regression import lin_regplot
+	import numpy as np
 
+	X = np.array([4, 8, 13, 26, 31, 10, 8, 30, 18, 12, 20, 5, 28, 18, 6, 31, 12,
+       12, 27, 11, 6, 14, 25, 7, 13,4, 15, 21, 15])
 
+	y = np.array([14, 24, 22, 59, 66, 25, 18, 60, 39, 32, 53, 18, 55, 41, 28, 61, 35,
+       36, 52, 23, 19, 25, 73, 16, 32, 14, 31, 43, 34])
+
+	intercept, slope, corr_coeff = lin_regplot(X[:,np.newaxis], y,)
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/regression_lin_regplot_1.png)
+	
+
+<br>
+<br>
+<br>
+<br>
 
 
 

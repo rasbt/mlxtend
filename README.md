@@ -28,7 +28,7 @@ Current version: 0.2.5
 	- [MeanCenterer](#meancenterer) 
 	- [Array Unison Shuffling](#array-unison-shuffling)
 - [Regression](#regression)
-	- [Plotting Linear Regression Fits](plotting-linear-regression-fits)
+	- [Plotting Linear Regression Fits](#plotting-linear-regression-fits)
 - [Text Utilities](#text-utilities)
 	- [Name Generalization](#name-generalization)
 	- [Name Generalization and Duplicates](#name-generalization-and-duplicates)
@@ -717,7 +717,7 @@ The `text utilities` can be imported via
 [[back to top](#overview)]
 
 `lin_regplot` is a function to plot linear regression fits. 
-Uses scikit-learn's `linear_model.LinearRegression` to fit the model by default, and SciPy's `stats.pearsonr` to calculate the correlation coefficient. 
+By default `lin_regplot` uses scikit-learn's `linear_model.LinearRegression` to fit the model and SciPy's `stats.pearsonr` to calculate the correlation coefficient. 
 
 ##### Default parameters:
 

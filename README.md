@@ -44,7 +44,7 @@ Current version: 0.2.5
 - [Math Utilities](#math-utilities)
 	- [Combinations and Permutations](#combinations-and-permutations)
 - [Matplotlib Utilities](#matplotlib-utilities)
-	- [Stacked Barplot](#stacked_barplot) 
+	- [Stacked Barplot](#stacked-barplot) 
 	- [Category Scatter](#category-scatter) 
 	- [Removing Borders](#removing-borders) 
 - [Installation](#installation)

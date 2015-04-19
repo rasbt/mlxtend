@@ -44,6 +44,7 @@ Current version: 0.2.5
 - [Math Utilities](#math-utilities)
 	- [Combinations and Permutations](#combinations-and-permutations)
 - [Matplotlib Utilities](#matplotlib-utilities)
+	- [Stacked Barplot](#stacked_barplot) 
 	- [Category Scatter](#category-scatter) 
 	- [Removing Borders](#removing-borders) 
 - [Installation](#installation)
@@ -1409,6 +1410,50 @@ This is especially useful in combination with [`itertools`](https://docs.python.
 The `matplotlib utilities` can be imported via
 
 	from mxtend.matplotlib import ...
+
+<br>
+<br>
+<a id='stacked-barplot'></a>
+### Stacked Barplot
+
+A function to conveniently plot stacked bar plots in matplotlib using pandas `DataFrame`s. 
+
+Please see the code implementation for the [default parameters](./mlxtend/matplotlib/stacked_barplot.py#L5-38).
+
+<br>
+#### Example
+
+Creating an example  `DataFrame`:	
+	
+    import pandas as pd
+
+    s1 = [1.0, 2.0, 3.0, 4.0]
+	s2 = [1.4, 2.1, 2.9, 5.1]
+	s3 = [1.9, 2.2, 3.5, 4.1]
+	s4 = [1.4, 2.5, 3.5, 4.2]
+	data = [s1, s2, s3, s4]
+	
+	df = pd.DataFrame(data, columns=['X1', 'X2', 'X3', 'X4'])
+	df.columns = ['X1', 'X2', 'X3', 'X4']
+	df.index = ['Sample1', 'Sample2', 'Sample3', 'Sample4']
+	df
+	
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_stacked_barplot_1.png)
+	
+Plotting the stacked barplot. By default, the index of the `DataFrame` is used as column labels, and the `DataFrame` columns are used for the plot legend.
+
+	import sys
+	sys.path = ['/Users/sebastian/github/mlxtend/'] + sys.path
+	from mlxtend.matplotlib import stacked_barplot
+
+	stacked_barplot(df, rotation=45)
+	
+	
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_stacked_barplot_2.png)
+	
+
+
+
 
 
 <br>

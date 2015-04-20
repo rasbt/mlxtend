@@ -58,16 +58,16 @@ def enrichment_plot(df, colors='bgrkcy', alpha=0.5, lw=2,
     for lab in labels:
         plt.step(sorted(df_temp[lab]), r, where=where, label=lab, color=next(color_gen), alpha=alpha, lw=lw)
 
-    if xlim == 'auto':
-        plt.xlim([np.min(r)-1, np.max(r)+1])
-    else:
-        plt.xlim(xlim)
-
     if ylim == 'auto':
-        df_min, df_max = np.min(df_temp.min()), np.max(df_temp.max())
-        plt.ylim([df_min-1, df_max+1])
+        plt.ylim([np.min(r)-1, np.max(r)+1])
     else:
         plt.ylim(ylim)
+
+    if xlim == 'auto':
+        df_min, df_max = np.min(df_temp.min()), np.max(df_temp.max())
+        plt.xlim([df_min-1, df_max+1])
+    else:
+        plt.xlim(xlim)
 
     if legend:
         plt.legend(loc='best')

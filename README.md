@@ -45,6 +45,7 @@ Current version: 0.2.5
 	- [Combinations and Permutations](#combinations-and-permutations)
 - [Matplotlib Utilities](#matplotlib-utilities)
 	- [Stacked Barplot](#stacked-barplot) 
+	- [Enrichment Plot](#enrichment-plot) 
 	- [Category Scatter](#category-scatter) 
 	- [Removing Borders](#removing-borders) 
 - [Installation](#installation)
@@ -1442,8 +1443,6 @@ Creating an example  `DataFrame`:
 	
 Plotting the stacked barplot. By default, the index of the `DataFrame` is used as column labels, and the `DataFrame` columns are used for the plot legend.
 
-	import sys
-	sys.path = ['/Users/sebastian/github/mlxtend/'] + sys.path
 	from mlxtend.matplotlib import stacked_barplot
 
 	stacked_barplot(df, rotation=45)
@@ -1453,6 +1452,39 @@ Plotting the stacked barplot. By default, the index of the `DataFrame` is used a
 	
 
 
+<br>
+<br>
+<a id='enrichment-plot'></a>
+### Enrichment Plot
+
+A function to plot step plots of cumulative counts.
+
+Please see the code implementation for the [default parameters](./mlxtend/matplotlib/enrichment_plot.py#L5-48).
+
+<br>
+#### Example
+
+Creating an example  `DataFrame`:	
+	
+    import pandas as pd
+    s1 = [1.1, 1.5]
+    s2 = [2.1, 1.8]
+    s3 = [3.1, 2.1]
+    s4 = [3.9, 2.5]
+    data = [s1, s2, s3, s4]
+    df = pd.DataFrame(data, columns=['X1', 'X2'])
+    df
+	
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_enrichment_plot_1.png)
+	
+Plotting the enrichment plot. The y-axis can be interpreted as "how many samples are less or equal to the corresponding x-axis label."
+
+    from mlxtend.matplotlib import enrichment_plot
+    enrichment_plot(df)
+	
+	
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_enrichment_plot_2.png)
+	
 
 
 

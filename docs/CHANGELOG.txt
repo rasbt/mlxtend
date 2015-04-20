@@ -4,6 +4,7 @@
 - Added `X_highlight` parameter to `mlxtend.evaluate.plot_decision_regions` for highlighting test data points.
 - Added mlxtend.regression.lin_regplot to plot the fitted line from linear regression.
 - Added mlxtend.matplotlib.stacked_barplot to conveniently produce stacked barplots using pandas `DataFrame`s.
+- Added mlxtend.matplotlib.enrichment_plot
 
 0.2.4
 =======

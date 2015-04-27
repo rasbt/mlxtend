@@ -38,6 +38,7 @@ Current version: 0.2.5
 	- [Find Files](#find-files)
 	- [Find File Groups](#find-file-groups)
 - [Scikit-learn Utilities](#scikit-learn-utilities)
+	- [Sequential Backward Selection](#sequential-backward-selection) 
 	- [ColumnSelector for Custom Feature Selection](#columnselector-for-custom-feature-selection) 
 	- [DenseTransformer for Pipelines and GridSearch](#densetransformer-for-pipelines-and-gridsearch)
 	- [EnsembleClassifier to Combine Classification Models](#ensembleclassifier) 
@@ -1089,6 +1090,86 @@ The `scikit-learn utilities` can be imported via
 
 	from mxtend.scikit-learn import ...
 
+<br>
+<br>
+
+<a id='sequential-backward-selection'></a>
+### Sequential Backward Selection
+
+[[back to top](#overview)]
+
+Sequential Backward Selection (SBS) is  a classic feature selection algorithm that has been developed as a suboptimal solution to the computationally often not feasible exhaustive search. In a nutshell, SBS removes one feature at the time based on the classifier performance until a feature subset of the desired size *k* is reached. 
+
+More detailed explanations about the algorithms and examples can be found in [this IPython notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_sequential_feature_select_sbs.ipynb) .
+
+
+##### Documentation
+
+For more information about the parameters, please see the [mlxtend.sklearn.SBS](./mlxtend/sklearn/sequential_feature_select.py#L20-44) class documentation.
+
+
+##### Examples
+
+Input:
+
+<pre>from mlxtend.sklearn import SBS
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.datasets import load_iris
+
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+knn = KNeighborsClassifier(n_neighbors=4)
+
+sbs = SBS(knn, k_features=2, scoring='accuracy', cv=5)
+sbs.fit(X, y)
+
+print('Indices of selected features:', sbs.indices_)
+print('CV score of selected subset:', sbs.k_score_)
+print('New feature subset:')
+sbs.transform(X)[0:5]</pre>
+
+Output:
+
+<pre>Indices of selected features: (0, 3)
+CV score of selected subset: 0.96
+New feature subset:
+Out[9]:
+array([[ 5.1,  0.2],
+       [ 4.9,  0.2],
+       [ 4.7,  0.2],
+       [ 4.6,  0.2],
+       [ 5. ,  0.2]])</pre>
+ 
+<br>
+<br>
+
+As demonstrated below, the SBS algorithm can be a useful alternative to dimensionality reduction techniques to reduce overfitting and where the original features need to be preserved:
+
+<pre> import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data', header=None)
+
+X = df.iloc[:, 1:].values
+y = df.iloc[:, 0].values
+
+knn = KNeighborsClassifier(n_neighbors=4)
+
+# selecting features
+sbs = SBS(knn, k_features=1, scoring='accuracy', cv=5)
+sbs.fit(X, y)
+
+# plotting performance of feature subsets
+k_feat = [len(k) for k in sbs.subsets_]
+
+plt.bar(k_feat, sbs.scores_, align='center', alpha=0.5)
+plt.ylabel('Accuracy')
+plt.xlabel('Number of features')
+plt.show()</pre>
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/sklearn_sequential_feature_select_sbs_wine_1.png)
 <br>
 <br>
 

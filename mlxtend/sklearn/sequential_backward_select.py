@@ -4,11 +4,13 @@
 # mlxtend Machine Learning Library Extensions
 
 from sklearn.base import clone
+from sklearn.base import BaseEstimator
+from sklearn.base import MetaEstimatorMixin
 from itertools import combinations
 from sklearn.cross_validation import cross_val_score
 import numpy as np
 
-class SBS():
+class SBS(BaseEstimator, MetaEstimatorMixin):
     """ Sequential Backward Selection for feature selection.
 
     Parameters
@@ -101,8 +103,8 @@ class SBS():
         return X[:, self.indices_]
 
     def fit_transform(self, X, y):
-        sbs.fit(X, y)
-        return sbs.transform(X)
+        self.fit(X, y)
+        return self.transform(X)
 
     def _calc_score(self, X, y, indices):
         cv_score = cross_val_score(self.estimator,

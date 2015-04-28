@@ -1146,27 +1146,25 @@ Output:
 
 As demonstrated below, the SBS algorithm can be a useful alternative to dimensionality reduction techniques to reduce overfitting and where the original features need to be preserved:
 
-    import pandas as pd
     import matplotlib.pyplot as plt
+    from sklearn.preprocessing import StandardScaler
 
-    df = pd.read_csv('https://archive.ics.uci.edu/ml/machine-learning-  databases/wine/wine.data', header=None)
-
-    X = df.iloc[:, 1:].values
-    y = df.iloc[:, 0].values
-
+    scr = StandardScaler()
+    X_std = scr.fit_transform(X)
+ 
     knn = KNeighborsClassifier(n_neighbors=4)
-
+ 
     # selecting features
     sbs = SBS(knn, k_features=1, scoring='accuracy', cv=5)
-    sbs.fit(X, y)
+    sbs.fit(X_std, y)
 
     # plotting performance of feature subsets
     k_feat = [len(k) for k in sbs.subsets_]
 
-    plt.bar(k_feat, sbs.scores_, align='center', alpha=0.5)
+    plt.plot(k_feat, sbs.scores_, marker='o')
     plt.ylabel('Accuracy')
     plt.xlabel('Number of features')
-    plt.show()</pre>
+    plt.show()
 
 ![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/sklearn_sequential_feature_select_sbs_wine_1.png)
 

@@ -1100,7 +1100,8 @@ The `scikit-learn utilities` can be imported via
 
 Sequential Backward Selection (SBS) is  a classic feature selection algorithm -- a greedy search algorithm -- that has been developed as a suboptimal solution to the computationally often not feasible exhaustive search. In a nutshell, SBS removes one feature at the time based on the classifier performance until a feature subset of the desired size *k* is reached. 
 
-More detailed explanations about the algorithms and examples can be found in [this IPython notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_sequential_feature_select_sbs.ipynb) .
+**Note that SBS is different from the [recursive feature elimination (RFE)](http://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.RFE.html#sklearn.feature_selection.RFE) that is implemented in scikit-learn.** RFE sequentially removes features based on the feature weights whereas SBS removes features based on the model performance.
+More detailed explanations about the algorithms and examples can be found in [this IPython notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_sequential_feature_select_sbs.ipynb).
 
 
 ##### Documentation
@@ -1169,6 +1170,8 @@ As demonstrated below, the SBS algorithm can be a useful alternative to dimensio
 ![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/sklearn_sequential_feature_select_sbs_wine_1.png)
 
 
+<br>
+More examples -- including how to use `SBS` in scikit-learn's `GridSearch` can be found in [this IPython notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_sequential_feature_select_sbs.ipynb).
 
 
 

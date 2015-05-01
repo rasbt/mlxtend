@@ -64,7 +64,7 @@ Current version: 0.2.5
 	- [Category Scatter](#category-scatter) 
 	- [Removing Borders](#removing-borders) 
 - [Installation](#installation)
-- [Contributing](https://github.com/rasbt/mlxtend/blob/dev/CONTRIBUTING.md)
+- [Contributing](https://github.com/rasbt/mlxtend/blob/master/CONTRIBUTING.md)
 - [Changelog](https://github.com/rasbt/mlxtend/blob/master/docs/CHANGELOG.txt)
 
 

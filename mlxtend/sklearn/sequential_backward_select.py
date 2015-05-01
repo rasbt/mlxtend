@@ -27,7 +27,7 @@ class SBS(BaseEstimator, MetaEstimatorMixin):
       Number of folds in StratifiedKFold.
 
     n_jobs : int (default: 1)
-      The number of CPUs to use for cross validation. -1 means ‘all CPUs’.
+      The number of CPUs to use for cross validation. -1 means 'all CPUs'.
 
     Attributes
     ----------

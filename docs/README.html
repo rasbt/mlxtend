@@ -306,17 +306,33 @@ sup {
 
 </head>
 <body>
+<p><a href="https://travis-ci.org/rasbt/mlxtend"><img src="https://travis-ci.org/rasbt/mlxtend.svg?branch=dev" alt="Build Status" /></a>
+<a href="http://badge.fury.io/py/mlxtend"><img src="https://badge.fury.io/py/mlxtend.svg" alt="PyPI version" /></a>
+<img src="https://img.shields.io/badge/Python-2.7-blue.svg" alt="Python 2.7" />
+<img src="https://img.shields.io/badge/Python-3.4-blue.svg" alt="Python 3.4" />
+<img src="https://img.shields.io/badge/License-BSD-blue.svg" alt="License" /></p>
+
 <h1>mlxtend</h1>
 
-<p>A library of Python tools and extensions for data science.</p>
-
-<p>Link to the <code>mlxtend</code> repository on GitHub: <a href="https://github.com/rasbt/mlxtend">https://github.com/rasbt/mlxtend</a>.</p>
+<p><strong>A library consisting of useful tools and extensions for the day-to-day data science tasks.</strong></p>
 
 <p><br></p>
 
 <p>Sebastian Raschka 2014-2015</p>
 
-<p>Current version: 0.2.3</p>
+<p>Current version: 0.2.5</p>
+
+<p><br></p>
+
+<h2>Links</h2>
+
+<ul>
+<li>Source code repository: <a href="https://github.com/rasbt/mlxtend">https://github.com/rasbt/mlxtend</a></li>
+<li>PyPI: <a href="https://pypi.python.org/pypi/mlxtend">https://pypi.python.org/pypi/mlxtend</a></li>
+</ul>
+
+
+<p><br></p>
 
 <p><br>
 <br></p>
@@ -333,13 +349,6 @@ sup {
 <li><a href="#plotting_learning_curves">Plotting Learning Curves</a></li>
 </ul>
 </li>
-<li><a href="#preprocessing">Preprocessing</a>
-
-<ul>
-<li><a href="#meancenterer">MeanCenterer</a></li>
-<li><a href="#array-unison-shuffling">Array Unison Shuffling</a></li>
-</ul>
-</li>
 <li><a href="#classifier">Classifier</a>
 
 <ul>
@@ -348,10 +357,23 @@ sup {
 <li><a href="#logistic-regression">Logistic Regression</a></li>
 </ul>
 </li>
+<li><a href="#preprocessing">Preprocessing</a>
+
+<ul>
+<li><a href="#meancenterer">MeanCenterer</a></li>
+<li><a href="#array-unison-shuffling">Array Unison Shuffling</a></li>
+</ul>
+</li>
+<li><a href="#regression">Regression</a>
+
+<ul>
+<li><a href="#plotting-linear-regression-fits">Plotting Linear Regression Fits</a></li>
+</ul>
+</li>
 <li><a href="#text-utilities">Text Utilities</a>
 
 <ul>
-<li><a href="#name-generelization">Name Generalization</a></li>
+<li><a href="#name-generalization">Name Generalization</a></li>
 <li><a href="#name-generalization-and-duplicates">Name Generalization and Duplicates</a></li>
 </ul>
 </li>
@@ -371,6 +393,7 @@ sup {
 <li><a href="#scikit-learn-utilities">Scikit-learn Utilities</a>
 
 <ul>
+<li><a href="#sequential-backward-selection">Sequential Backward Selection</a></li>
 <li><a href="#columnselector-for-custom-feature-selection">ColumnSelector for Custom Feature Selection</a></li>
 <li><a href="#densetransformer-for-pipelines-and-gridsearch">DenseTransformer for Pipelines and GridSearch</a></li>
 <li><a href="#ensembleclassifier">EnsembleClassifier to Combine Classification Models</a></li>
@@ -385,10 +408,14 @@ sup {
 <li><a href="#matplotlib-utilities">Matplotlib Utilities</a>
 
 <ul>
-<li><a href="#remove_borders">Removing Borders</a></li>
+<li><a href="#stacked-barplot">Stacked Barplot</a></li>
+<li><a href="#enrichment-plot">Enrichment Plot</a></li>
+<li><a href="#category-scatter">Category Scatter</a></li>
+<li><a href="#removing-borders">Removing Borders</a></li>
 </ul>
 </li>
 <li><a href="#installation">Installation</a></li>
+<li><a href="#https://github.com/rasbt/mlxtend/blob/dev/CONTRIBUTING.md">Contributing</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/blob/master/docs/CHANGELOG.txt">Changelog</a></li>
 </ul>
 
@@ -412,10 +439,14 @@ sup {
 
 <h5>Description</h5>
 
-<p>A function to plot decision regions of classifiers.  Import <code>plot_decision_regions</code> via</p>
+<ul>
+<li><p>A function to plot decision regions of classifiers.</p></li>
+<li><p>Import <code>plot_decision_regions</code> via</p>
 
-<pre><code>from mlxtend.evaluate import plot_decision_regions
-</code></pre>
+<p>  from mlxtend.evaluate import plot_decision_regions</p></li>
+<li><p>Please see the implementation for the <a href="./mlxtend/evaluate/decision_regions.py#L11-64">default parameters</a>.</p></li>
+</ul>
+
 
 <p><br>
 <br></p>
@@ -481,43 +512,31 @@ plt.title('SVM on Iris')
 plt.show()
 </code></pre>
 
-<p><br>
-<br></p>
+<h5>Highlighting Test Data Points</h5>
 
-<h5>Default Parameters</h5>
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/evaluate_plot_decision_regions_highlight.png" alt="" /></p>
 
-<pre><code>def plot_decision_regions(X, y, clf, res=0.02, cycle_marker=True, legend=1):
-    """
-    Plots decision regions of a classifier.
+<p>Via the <code>X_highlight</code>, a second dataset can be provided to highlight particular points in the dataset via a circle.</p>
 
-    Parameters
-    ----------
-    X : array-like, shape = [n_samples, n_features]
-      Feature Matrix.
+<pre><code>from sklearn.cross_validation import train_test_split
 
-    y : array-like, shape = [n_samples]
-      True class labels.
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=0) 
 
-    clf : Classifier object. Must have a .predict method.
+# Training a classifier
+svm = SVC(C=0.5, kernel='linear')
+svm.fit(X_train, y_train)
 
-    res : float (default: 0.02)
-      Grid width. Lower values increase the resolution but
-        slow down the plotting.
+# Plotting decision regions
 
-    cycle_marker : bool
-      Use different marker for each class.
+plot_decision_regions(X, y, clf=svm, 
+                  X_highlight=X_test, 
+                  res=0.02, legend=2)
 
-    legend : int
-      Integer to specify the legend location. 
-      No legend if legend is 0.
-
-    cmap : Custom colormap object.
-      Uses matplotlib.cm.rainbow if None.
-
-    Returns
-    ---------
-    None
-    """
+# Adding axes annotations
+plt.xlabel('sepal length [standardized]')
+plt.ylabel('petal length [standardized]')
+plt.title('SVM on Iris')
+plt.show()
 </code></pre>
 
 <p><br>
@@ -575,96 +594,6 @@ plt.show()
 </code></pre>
 
 <p><br>
-<br></p>
-
-<p><a id='preprocessing'></a></p>
-
-<h2>Preprocessing</h2>
-
-<p>[<a href="#overview">back to top</a>]</p>
-
-<p>A collection of different functions for various data preprocessing procedures.</p>
-
-<p>The <code>preprocessing utilities</code> can be imported via</p>
-
-<pre><code>from mxtend.preprocessing import ...
-</code></pre>
-
-<p><br>
-<br>
-<a id='meancenterer'></a></p>
-
-<h3>MeanCenterer</h3>
-
-<p>[<a href="#overview">back to top</a>]</p>
-
-<p>A transformer class that performs column-based mean centering on a NumPy array.</p>
-
-<p><br></p>
-
-<p><strong>Examples:</strong></p>
-
-<p>Use the <code>fit</code> method to fit the column means of a dataset (e.g., the training dataset) to a new <code>MeanCenterer</code> object. Then, call the <code>transform</code> method on the same dataset to center it at the sample mean.</p>
-
-<pre><code>&gt;&gt;&gt; X_train
-array([[1, 2, 3],
-   [4, 5, 6],
-   [7, 8, 9]])
-&gt;&gt;&gt; mc = MeanCenterer().fit(X_train)
-&gt;&gt;&gt; mc.transform(X_train)
-array([[-3, -3, -3],
-   [ 0,  0,  0],
-   [ 3,  3,  3]])
-</code></pre>
-
-<p><br></p>
-
-<p>To use the same parameters that were used to center the training dataset, simply call the <code>transform</code> method of the <code>MeanCenterer</code> instance on a new dataset (e.g., test dataset).</p>
-
-<pre><code>&gt;&gt;&gt; X_test 
-array([[1, 1, 1],
-   [1, 1, 1],
-   [1, 1, 1]])
-&gt;&gt;&gt; mc.transform(X_test)  
-array([[-3, -4, -5],
-   [-3, -4, -5],
-   [-3, -4, -5]])
-</code></pre>
-
-<p><br></p>
-
-<p>The <code>MeanCenterer</code> also supports Python list objects, and the <code>fit_transform</code> method allows you to directly fit and center the dataset.</p>
-
-<pre><code>&gt;&gt;&gt; Z
-[1, 2, 3]
-&gt;&gt;&gt; MeanCenterer().fit_transform(Z)
-array([-1,  0,  1])
-</code></pre>
-
-<p><br></p>
-
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-
-X = 2 * np.random.randn(100,2) + 5
-
-plt.scatter(X[:,0], X[:,1])
-plt.grid()
-plt.title('Random Gaussian data w. mean=5, sigma=2')
-plt.show()
-
-Y = MeanCenterer.fit_transform(X)
-plt.scatter(Y[:,0], Y[:,1])
-plt.grid()
-plt.title('Data after mean centering')
-plt.show()
-</code></pre>
-
-<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/mean_centering_3.png" alt="" /></p>
-
-<p><br>
-<br>
-<br>
 <br></p>
 
 <p><a id='classifier'></a></p>
@@ -1107,6 +1036,59 @@ plt.show()
 <br>
 <br></p>
 
+<p><a id='regression'></a></p>
+
+<h2>Regression</h2>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p><br></p>
+
+<p>The <code>text utilities</code> can be imported via</p>
+
+<pre><code>from mxtend.text import ...
+</code></pre>
+
+<p><br>
+<br></p>
+
+<p><a id='plotting-linear-regression-fits'></a></p>
+
+<h3>Plotting Linear Regression Fits</h3>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p><code>lin_regplot</code> is a function to plot linear regression fits.
+By default <code>lin_regplot</code> uses scikit-learn's <code>linear_model.LinearRegression</code> to fit the model and SciPy's <code>stats.pearsonr</code> to calculate the correlation coefficient.</p>
+
+<h5>Default parameters:</h5>
+
+<pre><code>lin_regplot(X, y, model=LinearRegression(), corr_func=pearsonr, scattercolor='blue', fit_style='k--', legend=True, xlim='auto')
+</code></pre>
+
+<p>Please see the <a href="./mlxtend/regression/lin_regplot.py#L12-42">code description</a> for more information.</p>
+
+<h5>Example</h5>
+
+<pre><code>from mlxtend.regression import lin_regplot
+import numpy as np
+
+X = np.array([4, 8, 13, 26, 31, 10, 8, 30, 18, 12, 20, 5, 28, 18, 6, 31, 12,
+   12, 27, 11, 6, 14, 25, 7, 13,4, 15, 21, 15])
+
+y = np.array([14, 24, 22, 59, 66, 25, 18, 60, 39, 32, 53, 18, 55, 41, 28, 61, 35,
+   36, 52, 23, 19, 25, 73, 16, 32, 14, 31, 43, 34])
+
+intercept, slope, corr_coeff = lin_regplot(X[:,np.newaxis], y,)
+</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/regression_linregplot_1.png" alt="" /></p>
+
+<p><br>
+<br>
+<br>
+<br></p>
+
 <p><a id='text-utilities'></a></p>
 
 <h2>Text Utilities</h2>
@@ -1453,6 +1435,92 @@ find_filegroups(paths=[d1,d2,d3], substring='file_1')
 <p><br>
 <br></p>
 
+<p><a id='sequential-backward-selection'></a></p>
+
+<h3>Sequential Backward Selection</h3>
+
+<p>[<a href="#overview">back to top</a>]</p>
+
+<p>Sequential Backward Selection (SBS) is  a classic feature selection algorithm -- a greedy search algorithm -- that has been developed as a suboptimal solution to the computationally often not feasible exhaustive search. In a nutshell, SBS removes one feature at the time based on the classifier performance until a feature subset of the desired size <em>k</em> is reached.</p>
+
+<p><strong>Note that SBS is different from the <a href="http://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.RFE.html#sklearn.feature_selection.RFE">recursive feature elimination (RFE)</a> that is implemented in scikit-learn.</strong> RFE sequentially removes features based on the feature weights whereas SBS removes features based on the model performance.
+More detailed explanations about the algorithms and examples can be found in <a href="http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_sequential_feature_select_sbs.ipynb">this IPython notebook</a>.</p>
+
+<h5>Documentation</h5>
+
+<p>For more information about the parameters, please see the <a href="./mlxtend/sklearn/sequential_backward_select.py#L11-42">mlxtend.sklearn.SBS</a> class documentation.</p>
+
+<h5>Examples</h5>
+
+<p>Input:</p>
+
+<pre><code>from mlxtend.sklearn import SBS
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.datasets import load_iris
+
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+knn = KNeighborsClassifier(n_neighbors=4)
+
+sbs = SBS(knn, k_features=2, scoring='accuracy', cv=5)
+sbs.fit(X, y)
+
+print('Indices of selected features:', sbs.indices_)
+print('CV score of selected subset:', sbs.k_score_)
+print('New feature subset:')
+sbs.transform(X)[0:5]
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>Indices of selected features: (0, 3)
+CV score of selected subset: 0.96
+New feature subset:
+array([[ 5.1,  0.2],
+   [ 4.9,  0.2],
+   [ 4.7,  0.2],
+   [ 4.6,  0.2],
+   [ 5. ,  0.2]])
+</code></pre>
+
+<p><br>
+<br></p>
+
+<p>As demonstrated below, the SBS algorithm can be a useful alternative to dimensionality reduction techniques to reduce overfitting and where the original features need to be preserved:</p>
+
+<pre><code>import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+
+scr = StandardScaler()
+X_std = scr.fit_transform(X)
+
+knn = KNeighborsClassifier(n_neighbors=4)
+
+# selecting features
+sbs = SBS(knn, k_features=1, scoring='accuracy', cv=5)
+sbs.fit(X_std, y)
+
+# plotting performance of feature subsets
+k_feat = [len(k) for k in sbs.subsets_]
+
+plt.plot(k_feat, sbs.scores_, marker='o')
+plt.ylabel('Accuracy')
+plt.xlabel('Number of features')
+plt.show()
+</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/sklearn_sequential_feature_select_sbs_wine_1.png" alt="" /></p>
+
+<p><br>
+More examples -- including how to use <code>SBS</code> in scikit-learn's <code>GridSearch</code> can be found in <a href="http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_sequential_feature_select_sbs.ipynb">this IPython notebook</a>.</p>
+
+<p><br>
+<br>
+<br>
+<br></p>
+
 <p><a id='columnselector-for-custom-feature-selection'></a></p>
 
 <h3>ColumnSelector for Custom Feature Selection</h3>
@@ -1786,7 +1854,143 @@ def num_permutations(n, r, with_replacement=False):
 
 <p><br>
 <br>
-<a id='remove_borders'></a></p>
+<a id='stacked-barplot'></a></p>
+
+<h3>Stacked Barplot</h3>
+
+<p>A function to conveniently plot stacked bar plots in matplotlib using pandas <code>DataFrame</code>s.</p>
+
+<p>Please see the code implementation for the <a href="./mlxtend/matplotlib/stacked_barplot.py#L5-38">default parameters</a>.</p>
+
+<p><br></p>
+
+<h4>Example</h4>
+
+<p>Creating an example  <code>DataFrame</code>:</p>
+
+<pre><code>import pandas as pd
+
+s1 = [1.0, 2.0, 3.0, 4.0]
+s2 = [1.4, 2.1, 2.9, 5.1]
+s3 = [1.9, 2.2, 3.5, 4.1]
+s4 = [1.4, 2.5, 3.5, 4.2]
+data = [s1, s2, s3, s4]
+
+df = pd.DataFrame(data, columns=['X1', 'X2', 'X3', 'X4'])
+df.columns = ['X1', 'X2', 'X3', 'X4']
+df.index = ['Sample1', 'Sample2', 'Sample3', 'Sample4']
+df
+</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_stacked_barplot_1.png" alt="" /></p>
+
+<p>Plotting the stacked barplot. By default, the index of the <code>DataFrame</code> is used as column labels, and the <code>DataFrame</code> columns are used for the plot legend.</p>
+
+<pre><code>from mlxtend.matplotlib import stacked_barplot
+
+stacked_barplot(df, rotation=45)
+</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_stacked_barplot_2.png" alt="" /></p>
+
+<p><br>
+<br>
+<a id='enrichment-plot'></a></p>
+
+<h3>Enrichment Plot</h3>
+
+<p>A function to plot step plots of cumulative counts.</p>
+
+<p>Please see the code implementation for the <a href="./mlxtend/matplotlib/enrichment_plot.py#L5-48">default parameters</a>.</p>
+
+<p><br></p>
+
+<h4>Example</h4>
+
+<p>Creating an example  <code>DataFrame</code>:</p>
+
+<pre><code>import pandas as pd
+s1 = [1.1, 1.5]
+s2 = [2.1, 1.8]
+s3 = [3.1, 2.1]
+s4 = [3.9, 2.5]
+data = [s1, s2, s3, s4]
+df = pd.DataFrame(data, columns=['X1', 'X2'])
+df
+</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_enrichment_plot_1.png" alt="" /></p>
+
+<p>Plotting the enrichment plot. The y-axis can be interpreted as "how many samples are less or equal to the corresponding x-axis label."</p>
+
+<pre><code>from mlxtend.matplotlib import enrichment_plot
+enrichment_plot(df)
+</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_enrichment_plot_2.png" alt="" /></p>
+
+<p><br>
+<br>
+<a id='category-scatter'></a></p>
+
+<h3>Category Scatter</h3>
+
+<p>A function to quickly produce a scatter plot colored by categories from a pandas <code>DataFrame</code> or NumPy <code>ndarray</code> object.</p>
+
+<p>Please see the implementation for the <a href="./mlxtend/matplotlib/scatter.py#L6-42">default parameters</a>.</p>
+
+<p><br></p>
+
+<h4>Example</h4>
+
+<p>Loading an example dataset as pandas <code>DataFrame</code>:</p>
+
+<pre><code>import pandas as pd
+
+df = pd.read_csv('/Users/sebastian/Desktop/data.csv')
+df.head()
+</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_categorical_scatter_1.png" alt="" /></p>
+
+<p>Plotting the data where the categories are determined by the unique values in the label column <code>label_col</code>. The <code>x</code> and <code>y</code> values are simply the column names of the DataFrame that we want to plot.</p>
+
+<pre><code>import matplotlib.pyplot as plt
+from mlxtend.matplotlib import category_scatter
+
+category_scatter(x='x', y='y', label_col='label', data=df)
+
+plt.legend(loc='best')
+</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_categorical_scatter_2.png" alt="" /></p>
+
+<p>Similarly, we can also use NumPy arrays. E.g.,</p>
+
+<pre><code>X = 
+
+array([['class1', 10.0, 8.04],
+   ['class1', 8.0, 6.95],
+   ['class1', 13.2, 7.58],
+   ['class1', 9.0, 8.81],
+    ...
+   ['class4', 8.0, 5.56],
+   ['class4', 8.0, 7.91],
+   ['class4', 8.0, 6.89]], dtype=object)
+</code></pre>
+
+<p>Where the <code>x</code>, <code>y</code>, and <code>label_col</code> refer to the respective column indices in the array:</p>
+
+<pre><code>category_scatter(x=1, y=2, label_col=0, data=df.values)
+
+plt.legend(loc='best')
+</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/rasbt/mlxtend/master/images/matplotlib_categorical_scatter_2.png" alt="" /></p>
+
+<p><br>
+<br>
+<a id='removing-borders'></a></p>
 
 <h3>Removing Borders</h3>
 

@@ -78,7 +78,7 @@ def plot_learning_curves(X_train, y_train, X_test, y_test, clf, kind='training_s
 
     else:
         def misclf_err(y_predict, y):
-            return  (y_predict != y).sum() / len(y)
+            return  (y_predict != y).sum() / float(len(y))
 
         scoring_func = {
             'misclassification error': misclf_err}

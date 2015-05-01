@@ -1,15 +1,29 @@
+[![Build Status](https://travis-ci.org/rasbt/mlxtend.svg?branch=dev)](https://travis-ci.org/rasbt/mlxtend)
+[![PyPI version](https://badge.fury.io/py/mlxtend.svg)](http://badge.fury.io/py/mlxtend)
+![Python 2.7](https://img.shields.io/badge/Python-2.7-blue.svg)
+![Python 3.4](https://img.shields.io/badge/Python-3.4-blue.svg)
+![License](https://img.shields.io/badge/License-BSD-blue.svg)
+
 # mlxtend
 
-
-A library of Python tools and extensions for data science.
-
-Link to the `mlxtend` repository on GitHub: [https://github.com/rasbt/mlxtend](https://github.com/rasbt/mlxtend).
+**A library consisting of useful tools and extensions for the day-to-day data science tasks.**
 
 <br>
 
 Sebastian Raschka 2014-2015
 
 Current version: 0.2.5
+
+<br>
+
+
+## Links
+- Source code repository: [https://github.com/rasbt/mlxtend](https://github.com/rasbt/mlxtend)
+- PyPI: [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend)
+
+<br>
+
+
 
 <br>
 <br>
@@ -50,6 +64,7 @@ Current version: 0.2.5
 	- [Category Scatter](#category-scatter) 
 	- [Removing Borders](#removing-borders) 
 - [Installation](#installation)
+- [Contributing](#https://github.com/rasbt/mlxtend/blob/dev/CONTRIBUTING.md)
 - [Changelog](https://github.com/rasbt/mlxtend/blob/master/docs/CHANGELOG.txt)
 
 

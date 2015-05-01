@@ -1,8 +1,8 @@
 [![Build Status](https://travis-ci.org/rasbt/mlxtend.svg?branch=dev)](https://travis-ci.org/rasbt/mlxtend)
 [![PyPI version](https://badge.fury.io/py/mlxtend.svg)](http://badge.fury.io/py/mlxtend)
-![Python 2.7](https://img.shields.io/badge/Python-2.7-blue.svg)
-![Python 3.4](https://img.shields.io/badge/Python-3.4-blue.svg)
-![License](https://img.shields.io/badge/License-BSD-blue.svg)
+![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)
+![Python 3.4](https://img.shields.io/badge/python-3.4-blue.svg)
+![License](https://img.shields.io/badge/license-BSD-blue.svg)
 
 # mlxtend
 
@@ -64,7 +64,7 @@ Current version: 0.2.5
 	- [Category Scatter](#category-scatter) 
 	- [Removing Borders](#removing-borders) 
 - [Installation](#installation)
-- [Contributing](#https://github.com/rasbt/mlxtend/blob/dev/CONTRIBUTING.md)
+- [Contributing](https://github.com/rasbt/mlxtend/blob/dev/CONTRIBUTING.md)
 - [Changelog](https://github.com/rasbt/mlxtend/blob/master/docs/CHANGELOG.txt)
 
 

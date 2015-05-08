@@ -1,3 +1,9 @@
+0.2.6
+=======
+
+- Added parameters `linestyles` and `markers` to `mlxtend.matplotlib.enrichment_plot`
+
+
 0.2.5
 =======
 

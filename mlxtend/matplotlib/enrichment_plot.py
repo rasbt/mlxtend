@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from itertools import cycle
 
-def enrichment_plot(df, colors='bgrkcy', alpha=0.5, lw=2,
+def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-', alpha=0.5, lw=2,
                     legend=True, where='post', grid=True, ylabel='Count',
                     xlim='auto', ylim='auto'):
     """
@@ -16,6 +16,15 @@ def enrichment_plot(df, colors='bgrkcy', alpha=0.5, lw=2,
 
     colors: str (default: 'bgrcky')
       The colors of the bars.
+      
+    markers: str (default: ' ')
+      Matplotlib markerstyles, e.g,
+      'sov' for square,circle, and triangle markers.
+
+    linestyles: str (default: '-')
+      Matplotlib linestyles, e.g., 
+      '-,--' to cycle normal and dashed lines. Note
+      that the different linestyles need to be separated by commas.
 
     alpha: float (default: 0.5)
       Transparency level from 0.0 to 1.0.
@@ -52,11 +61,21 @@ def enrichment_plot(df, colors='bgrkcy', alpha=0.5, lw=2,
         df_temp = df
 
     color_gen = cycle(colors)
+    marker_gen = cycle(markers)
+    linestyle_gen = cycle(linestyles.split(','))
     r = range(1, len(df_temp.index)+1)
     labels = df_temp.columns
 
     for lab in labels:
-        plt.step(sorted(df_temp[lab]), r, where=where, label=lab, color=next(color_gen), alpha=alpha, lw=lw)
+        plt.step(sorted(df_temp[lab]), 
+                 r, 
+                 where=where, 
+                 label=lab, 
+                 color=next(color_gen), 
+                 alpha=alpha, 
+                 lw=lw, 
+                 marker=next(marker_gen),
+                 linestyle=next(linestyle_gen))
 
     if ylim == 'auto':
         plt.ylim([np.min(r)-1, np.max(r)+1])
@@ -70,10 +89,11 @@ def enrichment_plot(df, colors='bgrkcy', alpha=0.5, lw=2,
         plt.xlim(xlim)
 
     if legend:
-        plt.legend(loc='best')
+        plt.legend(loc='best', numpoints=1)
 
     if grid:
         plt.grid()
 
     if ylabel:
         plt.ylabel('Count')
+

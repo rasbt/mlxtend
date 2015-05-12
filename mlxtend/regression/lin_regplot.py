@@ -2,7 +2,8 @@ from sklearn.linear_model import LinearRegression
 from scipy.stats import pearsonr
 import matplotlib.pyplot as plt
 
-def lin_regplot(X, y, 
+def lin_regplot(X, 
+             y, 
              model=LinearRegression(), 
              corr_func=pearsonr,
              scattercolor='blue', 
@@ -14,6 +15,12 @@ def lin_regplot(X, y,
     
     Parameters
     ----------
+    X : {array-like, sparse matrix}, shape = (n_samples, n_features)
+      Samples.
+                
+    y : numpy array, shape (n_samples,)
+      Target values
+    
     model: object (default: sklearn.linear_model.LinearRegression)
       Estimator object for regression. Must implement
       a .fit() and .predict() method.

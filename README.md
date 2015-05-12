@@ -745,7 +745,7 @@ Please see the [code description](./mlxtend/regression/lin_regplot.py#L12-42) fo
 
 ##### Example
 
-
+	import matplotlib.pyplot as plt
 	from mlxtend.regression import lin_regplot
 	import numpy as np
 
@@ -756,6 +756,7 @@ Please see the [code description](./mlxtend/regression/lin_regplot.py#L12-42) fo
        36, 52, 23, 19, 25, 73, 16, 32, 14, 31, 43, 34])
 
 	intercept, slope, corr_coeff = lin_regplot(X[:,np.newaxis], y,)
+	plt.show()
 
 ![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/regression_linregplot_1.png)
 	

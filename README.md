@@ -755,7 +755,7 @@ Please see the [code description](./mlxtend/regression/lin_regplot.py#L12-42) fo
 	y = np.array([14, 24, 22, 59, 66, 25, 18, 60, 39, 32, 53, 18, 55, 41, 28, 61, 35,
        36, 52, 23, 19, 25, 73, 16, 32, 14, 31, 43, 34])
 
-	intercept, slope, corr_coeff = lin_regplot(X[:,np.newaxis], y,)
+	intercept, slope, corr_coeff = lin_regplot(X, y,)
 	plt.show()
 
 ![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/regression_linregplot_1.png)

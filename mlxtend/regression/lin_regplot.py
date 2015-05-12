@@ -1,6 +1,7 @@
 from sklearn.linear_model import LinearRegression
 from scipy.stats import pearsonr
 import matplotlib.pyplot as plt
+import numpy as np
 
 def lin_regplot(X, 
              y, 
@@ -15,7 +16,7 @@ def lin_regplot(X,
     
     Parameters
     ----------
-    X : {array-like, sparse matrix}, shape = (n_samples, n_features)
+    X : numpy array, shape (n_samples,)
       Samples.
                 
     y : numpy array, shape (n_samples,)
@@ -47,6 +48,14 @@ def lin_regplot(X,
     intercept, slope, corr_coeff: float, float, float
             
     """
+
+    if isinstance(X, list):
+        X = np.asarray(X, dtype=np.float)
+    if isinstance(y, list):
+        y = np.asarray(y, dtype=np.float)
+    if len(X.shape) == 1:
+        X = X[:, np.newaxis]
+    
     model.fit(X, y)
 
     plt.scatter(X, y, c=scattercolor)

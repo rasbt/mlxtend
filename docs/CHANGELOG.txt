@@ -2,6 +2,7 @@
 =======
 
 - Added parameters `linestyles` and `markers` to `mlxtend.matplotlib.enrichment_plot`
+- `mlxtend.regression.lin_regplot` automatically adds np.newaxis and works w. python lists
 
 
 0.2.5

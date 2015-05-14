@@ -3,3 +3,4 @@
 # Submodules with pandas utilities
 
 from .scaling import minmax_scaling
+from .scaling import standardizing

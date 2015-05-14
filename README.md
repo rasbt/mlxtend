@@ -48,6 +48,7 @@ Current version: 0.2.5
 	- [Name Generalization and Duplicates](#name-generalization-and-duplicates)
 - [Pandas Utilities](#pandas-utilities)
 	- [Minmax Scaling](#minmax-scaling)
+	- [Standardizing](#standardizing)
 - [File IO Utilities](#file-io-utilities)
 	- [Find Files](#find-files)
 	- [Find File Groups](#find-file-groups)
@@ -907,6 +908,8 @@ The `pandas utilities` can be imported via
 
 A function that applies minmax scaling to pandas DataFrame columns.
 
+- More information about the default parameters and additional options can be found [here](https://github.com/rasbt/mlxtend/blob/master/mlxtend/pandas/scaling.py#L5-28).
+
 ##### Examples
 
 	from mlxtend.pandas import minmax_scaling
@@ -914,38 +917,29 @@ A function that applies minmax scaling to pandas DataFrame columns.
 ![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/pandas_scaling_minmax_scaling.png)
     
 
-##### Default Parameters
 
-    def minmax_scaling(df, columns, min_val=0, max_val=1):
-        """ 
-        Min max scaling for pandas DataFrames
-        
-        Parameters
-        ----------
-        df : pandas DataFrame object.
-      
-        columns : array-like, shape = [n_columns]
-          Array-like with pandas DataFrame column names, e.g., ['col1', 'col2', ...]
-        
-        min_val : `int` or `float`, optional (default=`0`)
-          minimum value after rescaling.
+
+
+
+<br>
+<br>
+<a id='standardizing'></a>
+### Standardizing
+
+[[back to top](#overview)]
+
+##### Description
+
+A function to standardize columns in pandas DataFrames so that they have properties of a standard normal distribution (mean=0, standard deviation=1).
+
+- More information about the default parameters and additional options can be found [here](https://github.com/rasbt/mlxtend/blob/master/mlxtend/pandas/scaling.py#L40-57).
+
+##### Examples
+
+	from mlxtend.pandas import standardizing
+
+![](https://raw.githubusercontent.com/rasbt/mlxtend/master/images/pandas_scaling_standardizing.png)
     
-        min_val : `int` or `float`, optional (default=`1`)
-          maximum value after rescaling.
-      
-        Returns
-        ----------
-    
-        df_new: pandas DataFrame object. 
-          Copy of the DataFrame with rescaled columns.
-      
-        """
-
-
-
-
-
-
 
 	
 <br>

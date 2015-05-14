@@ -1,6 +1,17 @@
-# Sebastian Raschka 01/20/2015
-# mlxtend Machine Learning Library Extensions
-# pandas utilities for data scaling
+"""
+Created on 29 July 2012
+@author: Lisa Simpson
+"""
+
+class DatabaseManager(object):
+    """
+    Create and manage a new sqlite database.
+    """
+
+"""
+Created: 01/20/2015
+Author: Sebastian Raschka
+"""
 
 def minmax_scaling(df, columns, min_val=0, max_val=1):
     """

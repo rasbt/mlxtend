@@ -1,0 +1,27 @@
+site_name: mlxtend
+site_url:
+site_description: Documentation for fast and lightweight Docker container based virtualization framework.
+include_search: true
+docs_dir: sources
+pages:
+
+- ['index.md', 'Home']
+
+# API
+- ['examples/classifier.md', 'Examples', 'mlxtend.classifier']
+- ['examples/data.md', 'Examples', 'mlxtend.data']
+- ['examples/evaluate.md', 'Examples', 'mlxtend.evaluate']
+- ['examples/file_io.md', 'Examples', 'mlxtend.file_io']
+- ['examples/math.md', 'Examples', 'mlxtend.math']
+- ['examples/matplotlib.md', 'Examples', 'mlxtend.matplotlib']
+- ['examples/pandas.md', 'Examples', 'mlxtend.pandas']
+- ['examples/preprocessing.md', 'Examples', 'mlxtend.preprocessing']
+- ['examples/regression.md', 'Examples', 'mlxtend.regression']
+- ['examples/sklearn.md', 'Examples', 'mlxtend.sklearn']
+- ['examples/text.md', 'Examples', 'mlxtend.text']
+
+- ['contributing.md', 'How to Contribute']
+- ['changelog.md', 'Changelog']
+- ['installation.md', 'Installation']
+
+

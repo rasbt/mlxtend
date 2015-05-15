@@ -1,10 +1,11 @@
 mlxtend  
-Sebastian Raschka, 05/14/2015
+Sebastian Raschka, last updated: 05/14/2015
 
 
 <hr>
 # Plotting Decision Regions
 
+> from mlxtend.evaluate import plot_decision_regions
 
 <hr>
 ## 2D example

@@ -1,11 +1,12 @@
 mlxtend  
-Sebastian Raschka, 05/14/2015
+Sebastian Raschka, last updated: 05/14/2015
 
 
 
 <hr>
 # Logistic Regression
 
+> from mlxtend.classifier import LogisticRegression
 
 Implementation of Logistic Regression  with different learning rules: Gradient descent and stochastic gradient descent.
 

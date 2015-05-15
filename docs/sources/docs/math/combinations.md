@@ -5,6 +5,8 @@ Sebastian Raschka, last updated: 05/14/2015
 <hr>
 # Combinations
 
+> from mlxtend.math import num_combinations
+
 Functions to calculate the number of combinations for creating subsequences of *r* elements out of a sequence with *n* elements.
 
 ## Example

@@ -1,10 +1,12 @@
 mlxtend  
-Sebastian Raschka, 05/14/2015
+Sebastian Raschka, last updated: 05/14/2015
 
 
 <hr>
 
 # Standardizing
+
+> from mlxtend.pandas import standardizing
 
 A function to standardize columns in pandas DataFrames so that they have properties of a standard normal distribution (mean=0, standard deviation=1).
 

@@ -1,9 +1,11 @@
 mlxtend  
-Sebastian Raschka, 05/14/2015
+Sebastian Raschka, last updated: 05/14/2015
 
 
 <hr>
 # Array Unison Shuffling
+
+> from mlxtend.preprocessing import shuffle_arrays_unison
 
 A function that shuffles 2 or more NumPy arrays in unison.
 

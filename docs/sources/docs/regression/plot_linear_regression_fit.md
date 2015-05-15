@@ -1,5 +1,5 @@
 mlxtend  
-Sebastian Raschka, 05/14/2015
+Sebastian Raschka, last updated: 05/14/2015
 
 
 
@@ -7,6 +7,8 @@ Sebastian Raschka, 05/14/2015
 <hr>
 
 # Plotting Linear Regression Fits
+
+> from mlxtend.regression import lin_regplot
 
 `lin_regplot` is a function to plot linear regression fits. 
 By default `lin_regplot` uses scikit-learn's `linear_model.LinearRegression` to fit the model and SciPy's `stats.pearsonr` to calculate the correlation coefficient. 

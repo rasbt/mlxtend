@@ -5,8 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        
-        
+        <meta name="author" content="Sebastian Raschka">
+        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/text/generalize_names_duplcheck/">
         <link rel="shortcut icon" href="../../../img/favicon.ico">
 
 	<title>Generalize names duplcheck - mlxtend</title>
@@ -307,6 +307,12 @@
                     </li>
                 
                 
+                
+                    <li >
+                        <a href="../../../contributing/">Contributing</a>
+                    </li>
+                
+                
                 </ul>
             
 
@@ -328,6 +334,15 @@
                         </a>
                     </li>
                 
+                
+                    <li>
+                        <a href="https://github.com/rasbt/mlxtend">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
                 
             </ul>
         </div>
@@ -351,10 +366,13 @@
                 <div class="col-md-9" role="main">
 
 <p>mlxtend<br />
-Sebastian Raschka, 05/14/2015</p>
+Sebastian Raschka, last updated: 05/14/2015</p>
 <hr>
 
 <h1 id="name-generalization-and-duplicates">Name Generalization and Duplicates</h1>
+<blockquote>
+<p>from mlxtend.text import generalize_names_duplcheck</p>
+</blockquote>
 <p><strong>Note</strong> that using <a href="#name-generalization"><code>generalize_names</code></a> with few <code>firstname_output_letters</code> can result in duplicate entries. E.g., if your dataset contains the names "Adam Johnson" and "Andrew Johnson", the default setting (i.e., 1 first name letter) will produce the generalized name "johnson a" in both cases.</p>
 <p>One solution is to increase the number of first name letters in the output by setting the parameter <code>firstname_output_letters</code> to a value larger than 1. </p>
 <p>An alternative solution is to use the <code>generalize_names_duplcheck</code> function if you are working with pandas DataFrames. </p>

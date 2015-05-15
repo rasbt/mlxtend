@@ -6,6 +6,8 @@ Sebastian Raschka, last updated: 05/14/2015
 
 # Enrichment Plot
 
+> from mlxtend.matplotlib import enrichment_plot
+
 A function to plot step plots of cumulative counts.
 
 

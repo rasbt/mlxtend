@@ -7,6 +7,7 @@ Sebastian Raschka, last updated: 05/14/2015
 
 # Majority Rule Ensemble Classifier
 
+> from mlxtend.sklearn import EnsembleClassifier
 
 And ensemble classifier that predicts class labels based on a majority voting rule (hard voting) or average predicted probabilities (soft voting).
 

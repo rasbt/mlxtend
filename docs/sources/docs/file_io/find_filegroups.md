@@ -6,6 +6,7 @@ Sebastian Raschka, 05/14/2015
 
 # Find File Groups
 
+> from mlxtend.file_io import find_filegroups
 
 A function that finds files that belong together (i.e., differ only by file extension) in different directories and collects them in a Python dictionary for further processing tasks. 
 

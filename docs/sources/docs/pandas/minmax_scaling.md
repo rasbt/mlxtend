@@ -1,11 +1,12 @@
 mlxtend  
-Sebastian Raschka, 05/14/2015
+Sebastian Raschka, last updated: 05/14/2015
 
 
 <hr>
 
 # Minmax Scaling
 
+> from mlxtend.pandas import minmax_scaling
 
 A function that applies minmax scaling to pandas DataFrame columns.
 

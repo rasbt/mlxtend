@@ -6,6 +6,8 @@ Sebastian Raschka, last updated: 05/14/2015
 
 # MeanCenterer
 
+> from mlxtend.preprocessing import MeanCenterer
+
 A transformer class that performs column-based mean centering on a NumPy array.
 
 <hr>

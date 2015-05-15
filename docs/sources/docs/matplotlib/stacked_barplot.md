@@ -6,6 +6,8 @@ Sebastian Raschka, last updated: 05/14/2015
 
 # Stacked Barplot
 
+> from mlxtend.matplotlib import stacked_barplot
+
 A function to conveniently plot stacked bar plots in matplotlib using pandas `DataFrame`s. 
 
 <hr>

@@ -1,9 +1,11 @@
 mlxtend  
-Sebastian Raschka, 05/14/2015
+Sebastian Raschka, last updated: 05/14/2015
 
 
 <hr>
 # Plotting Learning Curves
+
+> from mlxtend.evaluate import plot_learning_curves
 
 A function to plot learning curves for classifiers. Learning curves are extremely useful to analyze if a model is suffering from over- or under-fitting (high variance or high bias). The function can be imported via
 

@@ -1,10 +1,12 @@
 mlxtend  
-Sebastian Raschka, 05/14/2015
+Sebastian Raschka, last updated: 05/14/2015
 
 
 <hr>
 
 # Perceptron
+
+> from mlxtend.classifier import Perceptron
 
 Implementation of a Perceptron (single-layer artificial neural network) using the Rosenblatt Perceptron Rule [1].
 

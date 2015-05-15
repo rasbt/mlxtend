@@ -1,12 +1,12 @@
 mlxtend  
-Sebastian Raschka, 05/14/2015
+Sebastian Raschka, last updated: 05/14/2015
 
 
 <hr>
 
 # ColumnSelector for Custom Feature Selection
 
-
+> from mlxtend.sklearn import ColumnSelector
 
 A feature selector for scikit-learn's Pipeline class that returns specified columns from a NumPy array; extremely useful in combination with scikit-learn's `Pipeline` in cross-validation.
 

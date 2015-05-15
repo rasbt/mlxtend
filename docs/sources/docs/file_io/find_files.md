@@ -1,12 +1,12 @@
 mlxtend  
-Sebastian Raschka, 05/14/2015
+Sebastian Raschka, last updated: 05/14/2015
 
 
 <hr>
 
 # Find Files
 
-
+> from mlxtend.file_io import find_files
 
 A function that finds files in a given directory based on substring matches and returns a list of the file names found.
 
@@ -14,7 +14,7 @@ A function that finds files in a given directory based on substring matches and 
 
 ## Example
 
-	from mlxtend.file_io import find_files
+	>>> from mlxtend.file_io import find_files
 
     >>> find_files('mlxtend', '/Users/sebastian/Desktop')
 	['/Users/sebastian/Desktop/mlxtend-0.1.6.tar.gz', 

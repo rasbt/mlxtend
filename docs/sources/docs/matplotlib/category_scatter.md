@@ -6,6 +6,8 @@ Sebastian Raschka, last updated: 05/14/2015
 
 # Category Scatter
 
+> from mlxtend.matplotlib import category_scatter
+
 A function to quickly produce a scatter plot colored by categories from a pandas `DataFrame` or NumPy `ndarray` object.
 
 

@@ -5,7 +5,7 @@ Sebastian Raschka, last updated: 05/14/2015
 <hr>
 # Permutations
 
-
+> from mlxtend.math import num_permutations
 
 Functions to calculate the number of permutations for creating subsequences of *r* elements out of a sequence with *n* elements.
 

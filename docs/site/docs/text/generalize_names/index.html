@@ -5,8 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        
-        
+        <meta name="author" content="Sebastian Raschka">
+        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/text/generalize_names/">
         <link rel="shortcut icon" href="../../../img/favicon.ico">
 
 	<title>Generalize names - mlxtend</title>
@@ -307,6 +307,12 @@
                     </li>
                 
                 
+                
+                    <li >
+                        <a href="../../../contributing/">Contributing</a>
+                    </li>
+                
+                
                 </ul>
             
 
@@ -328,6 +334,15 @@
                         </a>
                     </li>
                 
+                
+                    <li>
+                        <a href="https://github.com/rasbt/mlxtend">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
                 
             </ul>
         </div>
@@ -351,10 +366,13 @@
                 <div class="col-md-9" role="main">
 
 <p>mlxtend<br />
-Sebastian Raschka, 05/14/2015</p>
+Sebastian Raschka, last updated: 05/14/2015</p>
 <hr>
 
 <h1 id="name-generalization">Name Generalization</h1>
+<blockquote>
+<p>from mlxtend.text import generalize_names</p>
+</blockquote>
 <p>A function that converts a name into a general format <code>&lt;last_name&gt;&lt;separator&gt;&lt;firstname letter(s)&gt; (all lowercase)</code>, which is useful if data is collected from different sources and is supposed to be compared or merged based on name identifiers. E.g., if names are stored in a pandas <code>DataFrame</code> column, the apply function can be used to generalize names: <code>df['name'] = df['name'].apply(generalize_names)</code></p>
 <hr>
 

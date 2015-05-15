@@ -1,2 +1,0 @@
-mlxtend.classifier.adaline module
-=================================

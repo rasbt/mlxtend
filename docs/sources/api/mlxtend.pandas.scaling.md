@@ -1,2 +1,0 @@
-mlxtend.pandas.scaling module
-=============================

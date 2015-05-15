@@ -57,7 +57,7 @@ Current version: 0.2.6
 	plt.title('SVM on Iris')
 	plt.show()</pre>
 
-![](./docs/evaluate/img/evaluate_plot_decision_regions_2d.png)
+![](./docs/sources/img/evaluate_plot_decision_regions_2d.png)
 
 
 

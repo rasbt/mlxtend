@@ -5,8 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        
-        
+        <meta name="author" content="Sebastian Raschka">
+        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/sklearn/sequential_backward_selection/">
         <link rel="shortcut icon" href="../../../img/favicon.ico">
 
 	<title>Sequential backward selection - mlxtend</title>
@@ -307,6 +307,12 @@
                     </li>
                 
                 
+                
+                    <li >
+                        <a href="../../../contributing/">Contributing</a>
+                    </li>
+                
+                
                 </ul>
             
 
@@ -328,6 +334,15 @@
                         </a>
                     </li>
                 
+                
+                    <li>
+                        <a href="https://github.com/rasbt/mlxtend">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
                 
             </ul>
         </div>
@@ -351,10 +366,13 @@
                 <div class="col-md-9" role="main">
 
 <p>mlxtend<br />
-Sebastian Raschka, 05/14/2015</p>
+Sebastian Raschka, last updated: 05/14/2015</p>
 <hr>
 
 <h1 id="sequential-backward-selection">Sequential Backward Selection</h1>
+<blockquote>
+<p>from mlxtend.sklearn import SBS</p>
+</blockquote>
 <p>Sequential Backward Selection (SBS) is  a classic feature selection algorithm -- a greedy search algorithm -- that has been developed as a suboptimal solution to the computationally often not feasible exhaustive search. In a nutshell, SBS removes one feature at the time based on the classifier performance until a feature subset of the desired size <em>k</em> is reached. </p>
 <p><strong>Note that SBS is different from the <a href="http://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.RFE.html#sklearn.feature_selection.RFE">recursive feature elimination (RFE)</a> that is implemented in scikit-learn.</strong> RFE sequentially removes features based on the feature weights whereas SBS removes features based on the model performance.
 More detailed explanations about the algorithms and examples can be found in <a href="http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_sequential_feature_select_sbs.ipynb">this IPython notebook</a>.</p>

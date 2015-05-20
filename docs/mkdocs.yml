@@ -9,7 +9,7 @@ docs_dir: sources
 pages:
 - Home: index.md
 
-- Documentation: 
+- Documentation:
     - classifier:
         - docs/classifier/adaline.md
         - docs/classifier/perceptron.md
@@ -43,6 +43,8 @@ pages:
     - text:
         - docs/text/generalize_names.md
         - docs/text/generalize_names_duplcheck.md
+        - tokenizer
+            - docs/text/tokenizer.md
 
 - Changelog: changelog.md
 - Installation: installation.md

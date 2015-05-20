@@ -3,6 +3,7 @@
 - Added `mlxtend.pandas.standardizing` to standardize columns in a Pandas DataFrame
 - Added parameters `linestyles` and `markers` to `mlxtend.matplotlib.enrichment_plot`
 - `mlxtend.regression.lin_regplot` automatically adds np.newaxis and works w. python lists
+- Added tokenizers: `mlxtend.text.extract_emoticons` and `mlxtend.text.extract_words_and_emoticons`
 
 
 ### 0.2.5

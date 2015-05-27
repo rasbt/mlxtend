@@ -58,3 +58,17 @@ def test_EnsembleClassifier_gridsearch():
     for params, mean_score, scores in grid.grid_scores_:
         mean_scores.append(round(mean_score, 2))
     assert(mean_scores == [0.95, 0.96, 0.96, 0.95])
+
+    
+def test_EnsembleClassifier_gridsearch_enumerate_names():
+
+    clf1 = LogisticRegression(random_state=1)
+    clf2 = RandomForestClassifier(random_state=1)
+    eclf = EnsembleClassifier(clfs=[clf1, clf1, clf2], voting='soft')
+
+    params = {'logisticregression-1__C': [1.0, 100.0],
+              'logisticregression-2__C': [1.0, 100.0],
+              'randomforestclassifier__n_estimators': [5, 20],}
+
+    grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
+    gs = grid.fit(iris.data, iris.target)

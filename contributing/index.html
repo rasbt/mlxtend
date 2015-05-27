@@ -287,6 +287,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../docs/text/tokenizer/">Tokenizer</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -360,6 +366,8 @@
         
             <li><a href="#making-changes">Making Changes</a></li>
         
+            <li><a href="#notes-for-developers">Notes for Developers</a></li>
+        
     
     </ul>
 </div></div>
@@ -409,7 +417,20 @@
 </li>
 <li>Submit a <code>pull request</code> from your forked repository via the GitHub web interface.
 <img alt="" src="../img/contributing/pull_request.png" /></li>
-</ul></div>
+</ul>
+<p><br>
+<br></p>
+<h2 id="notes-for-developers">Notes for Developers</h2>
+<h3 id="building-the-documentation">Building the documentation</h3>
+<p>The documentation is build using <a href="http://www.mkdocs.org">mkdocs</a>. 
+If you are adding a new document, please add it to the <code>~/github/mlxtend/docs/mkdocs.yml</code> file.</p>
+<p>In order to view the documentation locally, execute <code>mkdocs serve</code> from the <code>mlxtend/docs</code> directory.</p>
+<p>For example,</p>
+<pre><code>~/github/mlxtend/docs &gt;mkdocs serve
+</code></pre>
+<p>If everything looks fine, the documentation can be build by executing</p>
+<pre><code>~/github/mlxtend/docs &gt;mkdocs build
+</code></pre></div>
             
         </div>
 

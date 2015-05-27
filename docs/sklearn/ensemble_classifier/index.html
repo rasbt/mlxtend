@@ -287,6 +287,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../text/tokenizer/">Tokenizer</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -463,6 +469,19 @@ for params, mean_score, scores in grid.grid_scores_:
 0.960 (+/-0.012) for {'randomforestclassifier__n_estimators': 200, 'logisticregression__C': 1.0}
 0.960 (+/-0.012) for {'randomforestclassifier__n_estimators': 20, 'logisticregression__C': 100.0}
 0.953 (+/-0.017) for {'randomforestclassifier__n_estimators': 200, 'logisticregression__C': 100.0}
+</code></pre>
+<p><strong>Note</strong>:</p>
+<p>If the <code>EnsembleClassifier</code> is initialized with multiple similar estimator objects, the estimator names are modified with consecutive integer indices, for example:</p>
+<pre><code>clf1 = LogisticRegression(random_state=1)
+clf2 = RandomForestClassifier(random_state=1)
+eclf = EnsembleClassifier(clfs=[clf1, clf1, clf2], voting='soft')
+
+params = {'logisticregression-1__C': [1.0, 100.0],
+          'logisticregression-2__C': [1.0, 100.0],
+          'randomforestclassifier__n_estimators': [20, 200],}
+
+grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
+grid.fit(iris.data, iris.target)
 </code></pre>
 <hr>
 

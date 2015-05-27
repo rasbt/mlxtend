@@ -39,3 +39,24 @@ I would be very happy about any kind of contributions that help to improve and e
 	- `git push -u origin my_feature`
 - Submit a `pull request` from your forked repository via the GitHub web interface.
 ![](img/contributing/pull_request.png)
+
+<br>
+<br>
+
+## Notes for Developers
+
+### Building the documentation
+
+The documentation is build using [mkdocs](http://www.mkdocs.org). 
+If you are adding a new document, please add it to the `~/github/mlxtend/docs/mkdocs.yml` file.
+
+In order to view the documentation locally, execute `mkdocs serve` from the `mlxtend/docs` directory.
+
+For example,
+	
+	~/github/mlxtend/docs >mkdocs serve
+
+	
+If everything looks fine, the documentation can be build by executing
+
+	~/github/mlxtend/docs >mkdocs build

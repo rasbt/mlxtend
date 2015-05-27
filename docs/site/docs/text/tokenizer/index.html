@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Sebastian Raschka">
-        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/text/generalize_names/">
+        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/text/tokenizer/">
         <link rel="shortcut icon" href="../../../img/favicon.ico">
 
-	<title>Generalize names - mlxtend</title>
+	<title>Tokenizer - mlxtend</title>
 
         <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -276,8 +276,8 @@
     <ul class="dropdown-menu">
         
             
-<li class="active">
-    <a href="./">Generalize names</a>
+<li >
+    <a href="../generalize_names/">Generalize names</a>
 </li>
 
         
@@ -288,8 +288,8 @@
 
         
             
-<li >
-    <a href="../tokenizer/">Tokenizer</a>
+<li class="active">
+    <a href="./">Tokenizer</a>
 </li>
 
         
@@ -330,12 +330,12 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../../math/permutations/">
+                        <a rel="next" href="../generalize_names_duplcheck/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../generalize_names_duplcheck/">
+                        <a rel="prev" href="../../../changelog/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -360,11 +360,11 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#name-generalization">Name Generalization</a></li>
+        <li class="main active"><a href="#tokenizer">Tokenizer</a></li>
         
-            <li><a href="#examples">Examples</a></li>
+            <li><a href="#emoticons">Emoticons</a></li>
         
-            <li><a href="#default-parameters">Default Parameters</a></li>
+            <li><a href="#words-and-emoticons">Words and Emoticons</a></li>
         
     
     </ul>
@@ -372,62 +372,26 @@
                 <div class="col-md-9" role="main">
 
 <p>mlxtend<br />
-Sebastian Raschka, last updated: 05/14/2015</p>
-<hr>
-
-<h1 id="name-generalization">Name Generalization</h1>
+Sebastian Raschka, last updated: 05/20/2015</p>
+<h1 id="tokenizer">Tokenizer</h1>
+<h2 id="emoticons">Emoticons</h2>
 <blockquote>
-<p>from mlxtend.text import generalize_names</p>
+<p>from mlxtend.text import extract_emoticons</p>
 </blockquote>
-<p>A function that converts a name into a general format <code>&lt;last_name&gt;&lt;separator&gt;&lt;firstname letter(s)&gt; (all lowercase)</code>, which is useful if data is collected from different sources and is supposed to be compared or merged based on name identifiers. E.g., if names are stored in a pandas <code>DataFrame</code> column, the apply function can be used to generalize names: <code>df['name'] = df['name'].apply(generalize_names)</code></p>
-<hr>
-
-<h2 id="examples">Examples</h2>
-<pre><code>from mlxtend.text import generalize_names
-
-# defaults
-&gt;&gt;&gt; generalize_names('Pozo, José Ángel')
-'pozo j'
-&gt;&gt;&gt; generalize_names('Pozo, José Ángel') 
-'pozo j'
-&gt;&gt;&gt; assert(generalize_names('José Ángel Pozo') 
-'pozo j' 
-&gt;&gt;&gt; generalize_names('José Pozo')
-'pozo j'
-
-# optional parameters
-&gt;&gt;&gt; generalize_names("Eto'o, Samuel", firstname_output_letters=2)
-'etoo sa'
-&gt;&gt;&gt; generalize_names("Eto'o, Samuel", firstname_output_letters=0)
-'etoo'
-&gt;&gt;&gt; generalize_names("Eto'o, Samuel", output_sep=', ')
-'etoo, s'
+<p>A function that uses regular expressions to return a list ofemoticons from a text.</p>
+<p>Example:</p>
+<pre><code>&gt;&gt;&gt; extract_emoticons('&lt;/a&gt;This :) is :( a test :-)!')
+[':)', ':(', ':-)']
 </code></pre>
-<hr>
-
-<h2 id="default-parameters">Default Parameters</h2>
-<pre>def generalize_names(name, output_sep=' ', firstname_output_letters=1):
-    """
-    Function that outputs a person's name in the format
-    <last_name><separator><firstname letter(s)> (all lowercase)
-
-    Parameters
-    ----------
-    name : `str`
-      Name of the player
-
-    output_sep : `str` (default: ' ')
-      String for separating last name and first name in the output.
-
-    firstname_output_letters : `int`
-      Number of letters in the abbreviated first name.
-
-    Returns
-    ----------
-    gen_name : `str`
-      The generalized name.
-
-    """</pre></div>
+<h2 id="words-and-emoticons">Words and Emoticons</h2>
+<blockquote>
+<p>from mlxtend.text import extract_words_and_emoticons</p>
+</blockquote>
+<p>A function that uses regular expressions to return a list of words and emoticons from a text.</p>
+<p>Example:</p>
+<pre><code>&gt;&gt;&gt; extract_words_and_emoticons('&lt;/a&gt;This :) is :( a test :-)!')
+['this', 'is', 'a', 'test', ':)', ':(', ':-)']
+</code></pre></div>
             
         </div>
 

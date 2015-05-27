@@ -43,8 +43,7 @@ pages:
     - text:
         - docs/text/generalize_names.md
         - docs/text/generalize_names_duplcheck.md
-        - tokenizer
-            - docs/text/tokenizer.md
+        - docs/text/tokenizer.md
 
 - Changelog: changelog.md
 - Installation: installation.md

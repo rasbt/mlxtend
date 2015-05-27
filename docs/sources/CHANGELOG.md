@@ -1,3 +1,7 @@
+### 0.2.7
+
+- /
+
 ### 0.2.6
 
 - Added `mlxtend.pandas.standardizing` to standardize columns in a Pandas DataFrame

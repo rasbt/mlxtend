@@ -111,6 +111,22 @@ Output:
 	0.953 (+/-0.017) for {'randomforestclassifier__n_estimators': 200, 'logisticregression__C': 100.0}
 
 
+**Note**:
+
+If the `EnsembleClassifier` is initialized with multiple similar estimator objects, the estimator names are modified with consecutive integer indices, for example:
+
+
+    clf1 = LogisticRegression(random_state=1)
+    clf2 = RandomForestClassifier(random_state=1)
+    eclf = EnsembleClassifier(clfs=[clf1, clf1, clf2], voting='soft')
+
+    params = {'logisticregression-1__C': [1.0, 100.0],
+              'logisticregression-2__C': [1.0, 100.0],
+              'randomforestclassifier__n_estimators': [20, 200],}
+ 
+    grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
+    grid.fit(iris.data, iris.target)
+
 
 <hr>
 

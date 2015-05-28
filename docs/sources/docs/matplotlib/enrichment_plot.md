@@ -41,8 +41,8 @@ Plotting the enrichment plot. The y-axis can be interpreted as "how many samples
 
 <pre>
 def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-', alpha=0.5, lw=2,
-                    legend=True, where='post', grid=True, ylabel='Count',
-                    xlim='auto', ylim='auto'):
+                    legend=True, where='post', grid=True, count_label='Count',
+                    xlim='auto', ylim='auto', invert_axes=False, ax=None):
     """
     Function to plot stacked barplots
 
@@ -78,8 +78,8 @@ def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-', alpha=0.5,
     grid: bool (default: True)
       Plots a grid if True.
 
-    ylabel: str (default: 'Count')
-      y-axis label.
+    count_label: str (default: 'Count')
+      Label for the "Count"-axis.
 
     xlim: 'auto' or array-like [min, max]
       Min and maximum position of the x-axis range.
@@ -87,9 +87,15 @@ def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-', alpha=0.5,
     ylim: 'auto' or array-like [min, max]
       Min and maximum position of the y-axis range.
 
+    invert_axes: bool (default: False)
+      Plots count on the x-axis if True.
+
+    ax: matplotlib axis, optional (default: None)
+      Use this axis for plotting or make a new one otherwise
+
     Returns
     ----------
-    None
+    ax: matplotlib axis
 
     """
 </pre>

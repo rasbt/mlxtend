@@ -1,6 +1,7 @@
 
 ### 0.2.6
 
+- Added `invert_axes` parameter `mlxtend.matplotlib.enrichtment_plot` to optionally plot the "Count" on the x-axis
 - New `verbose` parameter for `mlxtend.sklearn.EnsembleClassifier` by [Alejandro C. Bahnsen](https://github.com/albahnsen)
 - Added `mlxtend.pandas.standardizing` to standardize columns in a Pandas DataFrame
 - Added parameters `linestyles` and `markers` to `mlxtend.matplotlib.enrichment_plot`

@@ -4,8 +4,8 @@ import numpy as np
 from itertools import cycle
 
 def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-', alpha=0.5, lw=2,
-                    legend=True, where='post', grid=True, ylabel='Count',
-                    xlim='auto', ylim='auto'):
+                    legend=True, where='post', grid=True, count_label='Count',
+                    xlim='auto', ylim='auto', invert_axes=False, ax=None):
     """
     Function to plot stacked barplots
 
@@ -41,8 +41,8 @@ def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-', alpha=0.5,
     grid: bool (default: True)
       Plots a grid if True.
 
-    ylabel: str (default: 'Count')
-      y-axis label.
+    count_label: str (default: 'Count')
+      Label for the "Count"-axis.
 
     xlim: 'auto' or array-like [min, max]
       Min and maximum position of the x-axis range.
@@ -50,9 +50,15 @@ def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-', alpha=0.5,
     ylim: 'auto' or array-like [min, max]
       Min and maximum position of the y-axis range.
 
+    invert_axes: bool (default: False)
+      Plots count on the x-axis if True.
+
+    ax: matplotlib axis, optional (default: None)
+      Use this axis for plotting or make a new one otherwise
+
     Returns
     ----------
-    None
+    ax: matplotlib axis
 
     """
     if isinstance(df, pd.Series):
@@ -60,33 +66,43 @@ def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-', alpha=0.5,
     else:
         df_temp = df
 
+    if ax is None:
+        ax = plt.gca()
+        
     color_gen = cycle(colors)
     marker_gen = cycle(markers)
     linestyle_gen = cycle(linestyles.split(','))
     r = range(1, len(df_temp.index)+1)
     labels = df_temp.columns
+    
+    x_data = df_temp 
+    y_data = r
 
     for lab in labels:
-        plt.step(sorted(df_temp[lab]), 
-                 r, 
-                 where=where, 
-                 label=lab, 
-                 color=next(color_gen), 
-                 alpha=alpha, 
-                 lw=lw, 
-                 marker=next(marker_gen),
-                 linestyle=next(linestyle_gen))
+        x, y = sorted(x_data[lab]), y_data 
+        if invert_axes:
+            x, y = y, x
+        
+        ax.step(x,
+                y, 
+                where=where, 
+                label=lab, 
+                color=next(color_gen), 
+                alpha=alpha, 
+                lw=lw, 
+                marker=next(marker_gen),
+                linestyle=next(linestyle_gen))
 
     if ylim == 'auto':
-        plt.ylim([np.min(r)-1, np.max(r)+1])
+        ax.set_ylim([np.min(y_data)-1, np.max(y_data)+1])
     else:
-        plt.ylim(ylim)
+        ax.set_ylim(ylim)
 
     if xlim == 'auto':
-        df_min, df_max = np.min(df_temp.min()), np.max(df_temp.max())
-        plt.xlim([df_min-1, df_max+1])
+        df_min, df_max = np.min(x_data.min()), np.max(x_data.max())
+        ax.set_xlim([df_min-1, df_max+1])
     else:
-        plt.xlim(xlim)
+        ax.set_xlim(xlim)
 
     if legend:
         plt.legend(loc='best', numpoints=1)
@@ -94,6 +110,10 @@ def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-', alpha=0.5,
     if grid:
         plt.grid()
 
-    if ylabel:
-        plt.ylabel('Count')
+    if count_label:
+        if invert_axes:
+            plt.xlabel(count_label) 
+        else:
+            plt.ylabel(count_label)
+           
 

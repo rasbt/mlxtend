@@ -39,6 +39,9 @@ class EnsembleClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
       predicted class labels (`hard` voting) or class probabilities
       before averaging (`soft` voting). Uses uniform weights if `None`.
 
+    verbose : int, optional (default=0)
+        Controls the verbosity of the building process.
+
     Attributes
     ----------
     classes_ : array-like, shape = [n_predictions]
@@ -49,32 +52,34 @@ class EnsembleClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     >>> from sklearn.linear_model import LogisticRegression
     >>> from sklearn.naive_bayes import GaussianNB
     >>> from sklearn.ensemble import RandomForestClassifier
+    >>> from mlxtend.sklearn import EnsembleClassifier
     >>> clf1 = LogisticRegression(random_state=1)
     >>> clf2 = RandomForestClassifier(random_state=1)
     >>> clf3 = GaussianNB()
     >>> X = np.array([[-1, -1], [-2, -1], [-3, -2], [1, 1], [2, 1], [3, 2]])
     >>> y = np.array([1, 1, 1, 2, 2, 2])
-    >>> eclf1 = VotingClassifier(clfs=[clf1, clf2, clf3], voting='hard')
+    >>> eclf1 = EnsembleClassifier(clfs=[clf1, clf2, clf3], voting='hard', verbose=1)
     >>> eclf1 = eclf1.fit(X, y)
     >>> print(eclf1.predict(X))
     [1 1 1 2 2 2]
-    >>> eclf2 = VotingClassifier(clfs=[clf1, clf2, clf3], voting='soft')
+    >>> eclf2 = EnsembleClassifier(clfs=[clf1, clf2, clf3], voting='soft')
     >>> eclf2 = eclf2.fit(X, y)
     >>> print(eclf2.predict(X))
     [1 1 1 2 2 2]
-    >>> eclf3 = VotingClassifier(clfs=[clf1, clf2, clf3],
+    >>> eclf3 = EnsembleClassifier(clfs=[clf1, clf2, clf3],
     ...                          voting='soft', weights=[2,1,1])
     >>> eclf3 = eclf3.fit(X, y)
     >>> print(eclf3.predict(X))
     [1 1 1 2 2 2]
     >>>
     """
-    def __init__(self, clfs, voting='hard', weights=None):
+    def __init__(self, clfs, voting='hard', weights=None, verbose=0):
         
         self.clfs = clfs
         self.named_clfs = {key:value for key,value in _name_estimators(clfs)}
         self.voting = voting
         self.weights = weights
+        self.verbose = verbose
         
 
     def fit(self, X, y):
@@ -110,7 +115,22 @@ class EnsembleClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.le_.fit(y)
         self.classes_ = self.le_.classes_
         self.clfs_ = []
+
+        if self.verbose > 0:
+            print("Fitting %d classifiers..." % (len(self.clfs)))
+
         for clf in self.clfs:
+
+            if self.verbose > 0:
+                i = self.clfs.index(clf) + 1
+                print("Fitting clf%d: %s (%d/%d)" % (i, _name_estimators((clf,))[0][0], i, len(self.clfs)))
+            if self.verbose > 1:
+                print(_name_estimators((clf,))[0][1])
+            if self.verbose > 2:
+                if hasattr(clf, 'verbose'):
+                    if clf.verbose != 0:
+                        clf.set_params(verbose=self.verbose - 2)
+
             fitted_clf = clone(clf).fit(X, self.le_.transform(y))
             self.clfs_.append(fitted_clf)
         return self

@@ -152,10 +152,23 @@ If the `EnsembleClassifier` is initialized with multiple similar estimator objec
       Sequence of weights (`float` or `int`) to weight the occurances of
       predicted class labels (`hard` voting) or class probabilities
       before averaging (`soft` voting). Uses uniform weights if `None`.
-
+    
+    verbose : int, optional (default=0)
+      Controls the verbosity of the building process.
+        `verbose=0` (default): Prints nothing
+        `verbose=1`: Prints the number & name of the clf being fitted
+        `verbose=2`: Prints info about the parameters of the clf being fitted
+        `verbose>2`: Changes `verbose` param of the underlying clf to self.verbose - 2
+    
     Attributes
     ----------
     classes_ : array-like, shape = [n_predictions]
+    
+    clf : array-like, shape = [n_predictions]
+      The unmodified input classifiers
+      
+    clf_ : array-like, shape = [n_predictions]
+      Fitted clones of the input classifiers
 
     Examples
     --------

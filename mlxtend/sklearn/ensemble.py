@@ -40,11 +40,21 @@ class EnsembleClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
       before averaging (`soft` voting). Uses uniform weights if `None`.
 
     verbose : int, optional (default=0)
-        Controls the verbosity of the building process.
+      Controls the verbosity of the building process.
+        `verbose=0` (default): Prints nothing
+        `verbose=1`: Prints the number & name of the clf being fitted
+        `verbose=2`: Prints info about the parameters of the clf being fitted
+        `verbose>2`: Changes `verbose` param of the underlying clf to self.verbose - 2
 
     Attributes
     ----------
     classes_ : array-like, shape = [n_predictions]
+    
+    clf : array-like, shape = [n_predictions]
+      The unmodified input classifiers
+      
+    clf_ : array-like, shape = [n_predictions]
+      Fitted clones of the input classifiers
 
     Examples
     --------
@@ -114,25 +124,25 @@ class EnsembleClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.le_ = LabelEncoder()
         self.le_.fit(y)
         self.classes_ = self.le_.classes_
-        self.clfs_ = []
+        self.clfs_ = [clone(clf) for clf in self.clfs]
 
         if self.verbose > 0:
             print("Fitting %d classifiers..." % (len(self.clfs)))
 
-        for clf in self.clfs:
+        for clf in self.clfs_:
 
             if self.verbose > 0:
-                i = self.clfs.index(clf) + 1
-                print("Fitting clf%d: %s (%d/%d)" % (i, _name_estimators((clf,))[0][0], i, len(self.clfs)))
-            if self.verbose > 1:
-                print(_name_estimators((clf,))[0][1])
+                i = self.clfs_.index(clf) + 1
+                print("Fitting clf%d: %s (%d/%d)" % (i, _name_estimators((clf,))[0][0], i, len(self.clfs_)))
+            
             if self.verbose > 2:
                 if hasattr(clf, 'verbose'):
-                    if clf.verbose != 0:
-                        clf.set_params(verbose=self.verbose - 2)
+                    clf.set_params(verbose=self.verbose - 2)
 
-            fitted_clf = clone(clf).fit(X, self.le_.transform(y))
-            self.clfs_.append(fitted_clf)
+            if self.verbose > 1:
+                print(_name_estimators((clf,))[0][1])
+
+            fitted_clf = clf.fit(X, self.le_.transform(y))
         return self
 
     def predict(self, X):

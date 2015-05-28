@@ -1,6 +1,7 @@
 
 ### 0.2.6
 
+- New `verbose` parameter for `mlxtend.sklearn.EnsembleClassifier` by [Alejandro C. Bahnsen](https://github.com/albahnsen)
 - Added `mlxtend.pandas.standardizing` to standardize columns in a Pandas DataFrame
 - Added parameters `linestyles` and `markers` to `mlxtend.matplotlib.enrichment_plot`
 - `mlxtend.regression.lin_regplot` automatically adds np.newaxis and works w. python lists

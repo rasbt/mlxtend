@@ -125,10 +125,11 @@ class EnsembleClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                 i = self.clfs.index(clf) + 1
                 print("Fitting clf%d: %s (%d/%d)" % (i, _name_estimators((clf,))[0][0], i, len(self.clfs)))
             if self.verbose > 1:
-                print _name_estimators((clf,))[0][1]
+                print(_name_estimators((clf,))[0][1])
             if self.verbose > 2:
                 if hasattr(clf, 'verbose'):
-                    clf.set_params(verbose=self.verbose - 2)
+                    if clf.verbose != 0:
+                        clf.set_params(verbose=self.verbose - 2)
 
             fitted_clf = clone(clf).fit(X, self.le_.transform(y))
             self.clfs_.append(fitted_clf)

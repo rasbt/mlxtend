@@ -93,6 +93,9 @@ def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-', alpha=0.5,
                 marker=next(marker_gen),
                 linestyle=next(linestyle_gen))
 
+    if invert_axes:
+        ax.set_ylim, ax.set_xlim = ax.set_xlim, ax.set_ylim
+    
     if ylim == 'auto':
         ax.set_ylim([np.min(y_data)-1, np.max(y_data)+1])
     else:
@@ -101,6 +104,7 @@ def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-', alpha=0.5,
     if xlim == 'auto':
         df_min, df_max = np.min(x_data.min()), np.max(x_data.max())
         ax.set_xlim([df_min-1, df_max+1])
+    
     else:
         ax.set_xlim(xlim)
 
@@ -116,4 +120,5 @@ def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-', alpha=0.5,
         else:
             plt.ylabel(count_label)
            
+
 

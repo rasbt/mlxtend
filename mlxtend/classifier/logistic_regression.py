@@ -47,7 +47,7 @@ class LogisticRegression(object):
         self.lambda_ = lambda_
         self.shuffle = shuffle
 
-        if not learning in ('sgd', 'gd'):
+        if learning not in ('sgd', 'gd'):
             raise ValueError('learning must be sgd or gd')
         self.learning = learning
 
@@ -79,7 +79,6 @@ class LogisticRegression(object):
             raise ValueError('Supports only binary class labels 0 and 1')
 
         if not isinstance(init_weights, np.ndarray):
-        # Initialize weights to 0
             self.w_ = np.zeros(1 + X.shape[1])
         else:
             self.w_ = init_weights
@@ -167,4 +166,4 @@ class LogisticRegression(object):
 
 
     def _sigmoid(self, z):
-         return 1.0 / (1.0 + np.exp(-z))
+        return 1.0 / (1.0 + np.exp(-z))

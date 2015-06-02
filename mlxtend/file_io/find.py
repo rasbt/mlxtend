@@ -118,8 +118,10 @@ def find_filegroups(paths, substring='', extensions=None, validity_check=True, i
         extensions = ['' for i in range(n)]
 
 
-    base = find_files(path=paths[0],  substring=substring, check_ext=extensions[0], ignore_invisible=ignore_invisible, ignore_substring=ignore_substring)
-    rest = [find_files(path=paths[i],  substring=substring, check_ext=extensions[i], ignore_invisible=ignore_invisible, ignore_substring=ignore_substring) for i in range(1,n)]
+    base = find_files(path=paths[0],  substring=substring, check_ext=extensions[0],
+                      ignore_invisible=ignore_invisible, ignore_substring=ignore_substring)
+    rest = [find_files(path=paths[i],  substring=substring, check_ext=extensions[i],
+            ignore_invisible=ignore_invisible, ignore_substring=ignore_substring) for i in range(1,n)]
 
     groups = {}
     for f in base:

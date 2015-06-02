@@ -72,7 +72,7 @@ def plot_learning_curves(X_train, y_train, X_test, y_test, clf, kind='training_s
             'median_absolute_error': metrics.median_absolute_error,
             'r2': metrics.r2_score}
 
-        if not scoring in scoring_func.keys():
+        if scoring not in scoring_func.keys():
             raise AttributeError('scoring must be in', scoring_func.keys())
 
 

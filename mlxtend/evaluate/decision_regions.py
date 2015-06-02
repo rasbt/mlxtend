@@ -70,7 +70,7 @@ def plot_decision_regions(X, y, clf, X_highlight=None, res=0.02, cycle_marker=Tr
     # check if test data is provided
     plot_testdata = True
     if not isinstance(X_highlight, np.ndarray):
-        if not X_highlight == None:
+        if X_highlight is not None:
             raise ValueError('X_test must be a NumPy array or None')
         else:
             plot_testdata = False
@@ -118,17 +118,17 @@ def plot_decision_regions(X, y, clf, X_highlight=None, res=0.02, cycle_marker=Tr
     # plot class samples
 
     for c in np.unique(y):
-            if dim == '2d':
-                y_data = X[y==c, 1]
-            else:
-                y_data = [0 for i in X[y==c]]
+        if dim == '2d':
+            y_data = X[y==c, 1]
+        else:
+            y_data = [0 for i in X[y==c]]
 
-            plt.scatter(x=X[y==c, 0],
-                        y=y_data,
-                        alpha=0.8,
-                        c=cmap(c),
-                        marker=next(marker_gen),
-                        label=c)
+        plt.scatter(x=X[y==c, 0],
+                    y=y_data,
+                    alpha=0.8,
+                    c=cmap(c),
+                    marker=next(marker_gen),
+                    label=c)
 
     if legend:
         plt.legend(loc=legend, fancybox=True, framealpha=0.5)

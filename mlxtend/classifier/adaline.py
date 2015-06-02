@@ -16,13 +16,13 @@ class Adaline(object):
 
     learning : str (default: sgd)
       Gradient decent (gd) or stochastic gradient descent (sgd)
-      
+
     shuffle : bool (default: False)
         Shuffles training data every epoch if True to prevent circles.
-        
+
     random_seed : int (default: None)
         Set random state for shuffling and initializing the weights.
-    
+
 
     Attributes
     -----------
@@ -40,7 +40,7 @@ class Adaline(object):
         self.epochs = epochs
         self.shuffle = shuffle
 
-        if not learning in ('gd', 'sgd'):
+        if learning not in ('gd', 'sgd'):
             raise ValueError('learning must be gd or sgd')
         self.learning = learning
 
@@ -85,7 +85,7 @@ class Adaline(object):
         self.cost_ = []
 
         for _ in range(self.epochs):
-            
+
             if self.shuffle:
                 X, y = self._shuffle(X, y)
 

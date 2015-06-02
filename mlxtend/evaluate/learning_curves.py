@@ -73,7 +73,7 @@ def plot_learning_curves(X_train, y_train, X_test, y_test, clf, kind='training_s
             'r2': metrics.r2_score}
 
         if not scoring in scoring_func.keys():
-            raise ArgumentError('scoring must be in', scoring_func.keys())
+            raise AttributeError('scoring must be in', scoring_func.keys())
 
 
     else:
@@ -87,7 +87,7 @@ def plot_learning_curves(X_train, y_train, X_test, y_test, clf, kind='training_s
     test_errors = []
 
     if kind not in ('training_size', 'n_features'):
-        raise ArgumentError('kind must be training_size or n_features')
+        raise AttributeError('kind must be training_size or n_features')
 
     if kind == 'training_size':
         rng = [int(i) for i in np.linspace(0, X_train.shape[0], 11)][1:][::-1]

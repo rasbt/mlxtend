@@ -67,7 +67,7 @@ class SBS(BaseEstimator, MetaEstimatorMixin):
     """
     def __init__(self, estimator, k_features, scoring='accuracy', cv=5, n_jobs=1):
         self.scoring = scoring
-        self.estimator = estimator
+        self.estimator = clone(estimator)
         self.cv = cv
         self.k_features = k_features
         self.n_jobs = n_jobs

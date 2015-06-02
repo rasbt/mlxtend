@@ -14,7 +14,6 @@ from sklearn.externals import six
 from sklearn.base import clone
 from sklearn.pipeline import _name_estimators
 import numpy as np
-import operator
 
 
 class EnsembleClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
@@ -49,10 +48,10 @@ class EnsembleClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     Attributes
     ----------
     classes_ : array-like, shape = [n_predictions]
-    
+
     clf : array-like, shape = [n_predictions]
       The unmodified input classifiers
-      
+
     clf_ : array-like, shape = [n_predictions]
       Fitted clones of the input classifiers
 
@@ -84,13 +83,13 @@ class EnsembleClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     >>>
     """
     def __init__(self, clfs, voting='hard', weights=None, verbose=0):
-        
+
         self.clfs = clfs
         self.named_clfs = {key:value for key,value in _name_estimators(clfs)}
         self.voting = voting
         self.weights = weights
         self.verbose = verbose
-        
+
 
     def fit(self, X, y):
         """ Fit the clfs.
@@ -114,7 +113,7 @@ class EnsembleClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         if self.voting not in ('soft', 'hard'):
             raise ValueError("Voting must be 'soft' or 'hard'; got (voting=%r)"
-                             % voting)
+                             % self.voting)
 
         if self.weights and len(self.weights) != len(self.clfs):
             raise ValueError('Number of classifiers and weights must be equal'
@@ -134,7 +133,7 @@ class EnsembleClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             if self.verbose > 0:
                 i = self.clfs_.index(clf) + 1
                 print("Fitting clf%d: %s (%d/%d)" % (i, _name_estimators((clf,))[0][0], i, len(self.clfs_)))
-            
+
             if self.verbose > 2:
                 if hasattr(clf, 'verbose'):
                     clf.set_params(verbose=self.verbose - 2)
@@ -142,7 +141,7 @@ class EnsembleClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             if self.verbose > 1:
                 print(_name_estimators((clf,))[0][1])
 
-            fitted_clf = clf.fit(X, self.le_.transform(y))
+            clf.fit(X, self.le_.transform(y))
         return self
 
     def predict(self, X):

@@ -101,7 +101,7 @@ For more examples, please see this [IPython Notebook](http://nbviewer.ipython.or
 <hr>
 ## Default Parameters
 
-<pre>def plot_decision_regions(X, y, clf, X_highlight=None, res=0.02, cycle_marker=True, legend=1):
+<pre>def plot_decision_regions(X, y, clf, X_highlight=None, res=0.02, cycle_marker=True, legend=1, cmap=None):
     """
     Plots decision regions of a classifier.
 
@@ -129,8 +129,7 @@ For more examples, please see this [IPython Notebook](http://nbviewer.ipython.or
       Integer to specify the legend location.
       No legend if legend is 0.
 
-    cmap : Custom colormap object.
-      Uses matplotlib.cm.rainbow if None.
+    cmap : Custom colormap object .
 
     Returns
     ---------

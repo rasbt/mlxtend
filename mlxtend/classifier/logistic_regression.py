@@ -25,7 +25,7 @@ class LogisticRegression(object):
 
     shuffle : bool (default: False)
         Shuffles training data every epoch if True to prevent circles.
-        
+
     random_seed : int (default: None)
         Set random state for shuffling and initializing the weights.
 
@@ -40,7 +40,7 @@ class LogisticRegression(object):
 
     """
     def __init__(self, eta=0.01, epochs=50, lambda_=0.0, learning='sgd', random_seed=None, shuffle=False):
-        
+
         np.random.seed(random_seed)
         self.eta = eta
         self.epochs = epochs
@@ -87,7 +87,7 @@ class LogisticRegression(object):
         self.cost_ = []
 
         for _ in range(self.epochs):
-            
+
             if self.shuffle:
                 X, y = self._shuffle(X, y)
 
@@ -100,7 +100,6 @@ class LogisticRegression(object):
                 self.w_[0] += self.eta * errors.sum()
 
             elif self.learning == 'sgd':
-                cost = 0.0
                 for xi, yi in zip(X, y):
                     yi_val = self.activation(xi)
                     error = (yi - yi_val)

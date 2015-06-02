@@ -5,10 +5,9 @@
 from itertools import cycle
 import matplotlib
 import matplotlib.pyplot as plt
-from matplotlib import cm
 import numpy as np
 
-def plot_decision_regions(X, y, clf, X_highlight=None, res=0.02, cycle_marker=True, legend=1):
+def plot_decision_regions(X, y, clf, X_highlight=None, res=0.02, cycle_marker=True, legend=1, cmap=None):
     """
     Plots decision regions of a classifier.
 
@@ -36,8 +35,7 @@ def plot_decision_regions(X, y, clf, X_highlight=None, res=0.02, cycle_marker=Tr
       Integer to specify the legend location.
       No legend if legend is 0.
 
-    cmap : Custom colormap object.
-      Uses matplotlib.cm.rainbow if None.
+    cmap : Custom colormap object .
 
     Returns
     ---------
@@ -87,11 +85,12 @@ def plot_decision_regions(X, y, clf, X_highlight=None, res=0.02, cycle_marker=Tr
 
     # make color map
     colors = ['red', 'blue', 'lightgreen', 'gray', 'cyan']
-    classes = np.unique(y)
     n_classes = len(np.unique(y))
     if n_classes > 5:
         raise NotImplementedError('Does not support more than 5 classes.')
-    cmap = matplotlib.colors.ListedColormap(colors[:n_classes])
+
+    if not cmap:
+        cmap = matplotlib.colors.ListedColormap(colors[:n_classes])
 
     # plot the decision surface
 

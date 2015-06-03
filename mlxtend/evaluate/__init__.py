@@ -4,3 +4,4 @@
 
 from .decision_regions import plot_decision_regions
 from .learning_curves import plot_learning_curves
+__all__ = ["plot_decision_regions", "plot_learning_curves"]

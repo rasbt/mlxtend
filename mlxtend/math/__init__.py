@@ -5,4 +5,6 @@
 from .counting import num_combinations
 from .counting import num_permutations
 from .counting import factorial
+__all__ = ["num_combinations", "num_permutations",
+        "factorial"]
 

@@ -3,3 +3,4 @@
 # Submodules with preprocessing functions.
 
 from .iris import iris_data
+__all__ = ["iris_data"]

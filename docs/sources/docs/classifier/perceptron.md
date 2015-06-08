@@ -1,4 +1,4 @@
-mlxtend  
+mlxtend
 Sebastian Raschka, last updated: 05/14/2015
 
 
@@ -69,7 +69,7 @@ A detailed explanation about the perceptron learning algorithm can be found here
 
 <pre>class Perceptron(object):
     """Perceptron classifier.
-    
+
     Parameters
     ------------
     eta : float
@@ -80,6 +80,10 @@ A detailed explanation about the perceptron learning algorithm can be found here
 
     random_state : int
       Random state for initializing random weights.
+
+    zero_init_weight : bool (default: False)
+        If True, weights are initialized to zero instead of small random
+        numbers in the interval [0,1]
 
     Attributes
     -----------
@@ -109,24 +113,24 @@ A detailed explanation about the perceptron learning algorithm can be found here
 
         init_weights : bool (default: True)
             (Re)initializes weights to small random floats if True.
-            
+
         shuffle : bool (default: False)
             Shuffles training data every epoch if True to prevent circles.
-            
+
         random_seed : int (default: None)
             Set random state for shuffling and initializing the weights.
 
         Returns
         -------
         self : object
-        
+
         """</pre>
-        
-        
-        
+
+
+
 <pre>    def predict(self, X):
         """ Predict class labels for X.
-        
+
         Parameters
         ----------
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
@@ -136,6 +140,6 @@ A detailed explanation about the perceptron learning algorithm can be found here
         ----------
         class : int
           Predicted class label.
-          
+
         """ </pre>
 

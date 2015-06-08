@@ -23,6 +23,9 @@ class Adaline(object):
     random_seed : int (default: None)
         Set random state for shuffling and initializing the weights.
 
+    zero_init_weight : bool (default: False)
+        If True, weights are initialized to zero instead of small random
+        numbers in the interval [0,1]
 
     Attributes
     -----------
@@ -33,7 +36,8 @@ class Adaline(object):
       Sum of squared errors after each epoch.
 
     """
-    def __init__(self, eta=0.01, epochs=50,  learning='sgd', random_seed=None, shuffle=False):
+    def __init__(self, eta=0.01, epochs=50,  learning='sgd',
+                 random_seed=None, shuffle=False, zero_init_weight=False):
 
         np.random.seed(random_seed)
         self.eta = eta
@@ -43,6 +47,7 @@ class Adaline(object):
         if learning not in ('gd', 'sgd'):
             raise ValueError('learning must be gd or sgd')
         self.learning = learning
+        self.zero_init_weight = zero_init_weight
 
     def fit(self, X, y, init_weights=True):
         """ Fit training data.
@@ -79,8 +84,14 @@ class Adaline(object):
             self.thres_ = 0.5
 
         # initialize weights
-        if init_weights:
-            self.w_ = np.random.random(1 + X.shape[1])
+        if not isinstance(init_weights, np.ndarray):
+            if self.zero_init_weight:
+                self.w_ = np.zeros(1 + X.shape[1])
+            else:
+                self.w_ = np.random.ranf(1 + X.shape[1])
+        else:
+            self.w_ = init_weights
+        self.w_.astype('int64')
 
         self.cost_ = []
 

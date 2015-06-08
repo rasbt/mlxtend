@@ -1,6 +1,8 @@
 
 ### 0.2.6
 
+- Added option for random weight initialization to logistic regression classifier and updated l2 regularization
+- Added `wine` dataset to `mlxtend.data` 
 - Added `invert_axes` parameter `mlxtend.matplotlib.enrichtment_plot` to optionally plot the "Count" on the x-axis
 - New `verbose` parameter for `mlxtend.sklearn.EnsembleClassifier` by [Alejandro C. Bahnsen](https://github.com/albahnsen)
 - Added `mlxtend.pandas.standardizing` to standardize columns in a Pandas DataFrame

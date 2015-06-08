@@ -44,6 +44,9 @@ pages:
         - docs/text/generalize_names.md
         - docs/text/generalize_names_duplcheck.md
         - docs/text/tokenizer.md
+    - data:
+        - docs/data/iris.md
+        - docs/data/wine.md
 
 - Changelog: changelog.md
 - Installation: installation.md

@@ -78,16 +78,24 @@ A more detailed article about the algorithms is in preparation.
     learning : str (default: sgd)
       Learning rule, sgd (stochastic gradient descent)
       or gd (gradient descent).
-
+      
+    regularization : {None, 'l2'} (default: None)
+      Type of regularization. No regularization if
+      `regularization=None`.
+      
     lambda_ : float
       Regularization parameter for L2 regularization.
-      No regularization if lambda_=0.0.
+      No regularization if `regularization=None`.
 
     shuffle : bool (default: False)
         Shuffles training data every epoch if True to prevent circles.
-        
+
     random_seed : int (default: None)
         Set random state for shuffling and initializing the weights.
+        
+    zero_init_weight : bool (default: False)
+        If True, weights are initialized to zero instead of small random
+        numbers in the interval [0,1]
 
     Attributes
     -----------

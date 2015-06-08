@@ -6,7 +6,7 @@ import numpy as np
 
 class Perceptron(object):
     """Perceptron classifier.
-    
+
     Parameters
     ------------
     eta : float
@@ -18,6 +18,10 @@ class Perceptron(object):
     random_state : int
       Random state for initializing random weights.
 
+    zero_init_weight : bool (default: False)
+        If True, weights are initialized to zero instead of small random
+        numbers in the interval [0,1]
+
     Attributes
     -----------
     w_ : 1d-array
@@ -27,12 +31,14 @@ class Perceptron(object):
       Number of misclassifications in every epoch.
 
     """
-    def __init__(self, eta=0.1, epochs=50, shuffle=False, random_seed=None):
+    def __init__(self, eta=0.1, epochs=50, shuffle=False,
+                 random_seed=None, zero_init_weight=False):
 
         np.random.seed(random_seed)
         self.eta = eta
         self.epochs = epochs
         self.shuffle = shuffle
+        self.zero_init_weight = zero_init_weight
 
     def fit(self, X, y, init_weights=True):
         """ Fit training data.
@@ -48,19 +54,19 @@ class Perceptron(object):
 
         init_weights : bool (default: True)
             (Re)initializes weights to small random floats if True.
-            
+
         shuffle : bool (default: False)
             Shuffles training data every epoch if True to prevent circles.
-            
+
         random_seed : int (default: None)
             Set random state for shuffling and initializing the weights.
 
         Returns
         -------
         self : object
-        
+
         """
-        
+
         # check array shape
         if not len(X.shape) == 2:
             raise ValueError('X must be a 2D array. Try X[:,np.newaxis]')
@@ -73,8 +79,14 @@ class Perceptron(object):
             raise ValueError('Only supports binary class labels {0, 1} or {-1, 1}.')
 
         # initialize weights
-        if init_weights:
-            self.w_ = np.random.random(1 + X.shape[1])
+        if not isinstance(init_weights, np.ndarray):
+            if self.zero_init_weight:
+                self.w_ = np.zeros(1 + X.shape[1])
+            else:
+                self.w_ = np.random.ranf(1 + X.shape[1])
+        else:
+            self.w_ = init_weights
+        self.w_.astype('int64')
 
         self.cost_ = []
 
@@ -103,7 +115,7 @@ class Perceptron(object):
 
     def predict(self, X):
         """ Predict class labels for X.
-        
+
         Parameters
         ----------
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
@@ -113,6 +125,6 @@ class Perceptron(object):
         ----------
         class : int
           Predicted class label.
-          
+
         """
         return np.where(self.net_input(X) >= 0.0, self.classes_[1], self.classes_[0])

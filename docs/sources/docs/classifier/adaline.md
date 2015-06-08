@@ -1,4 +1,4 @@
-mlxtend  
+mlxtend
 Sebastian Raschka, last updated: 05/14/2015
 
 
@@ -75,13 +75,16 @@ A detailed explanation about the Adaline learning algorithm can be found here [A
 
     learning : str (default: sgd)
       Gradient decent (gd) or stochastic gradient descent (sgd)
-      
+
     shuffle : bool (default: False)
         Shuffles training data every epoch if True to prevent circles.
-        
+
     random_seed : int (default: None)
         Set random state for shuffling and initializing the weights.
-    
+
+    zero_init_weight : bool (default: False)
+        If True, weights are initialized to zero instead of small random
+        numbers in the interval [0,1]
 
     Attributes
     -----------

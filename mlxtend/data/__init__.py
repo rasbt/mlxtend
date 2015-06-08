@@ -3,4 +3,5 @@
 # Submodules with preprocessing functions.
 
 from .iris import iris_data
-__all__ = ["iris_data"]
+from .wine import wine_data
+__all__ = ["iris_data", "wine_data"]

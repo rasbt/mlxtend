@@ -203,6 +203,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../regression/linear_regression/">Linear regression</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -290,6 +296,33 @@
             
 <li >
     <a href="../../text/tokenizer/">Tokenizer</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">data</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../data/iris/">Iris</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/wine/">Wine</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/autompg/">Autompg</a>
 </li>
 
         
@@ -507,9 +540,22 @@ weights : array-like, shape = [n_classifiers], optional (default=`None`)
   predicted class labels (`hard` voting) or class probabilities
   before averaging (`soft` voting). Uses uniform weights if `None`.
 
+verbose : int, optional (default=0)
+  Controls the verbosity of the building process.
+    `verbose=0` (default): Prints nothing
+    `verbose=1`: Prints the number &amp; name of the clf being fitted
+    `verbose=2`: Prints info about the parameters of the clf being fitted
+    `verbose&gt;2`: Changes `verbose` param of the underlying clf to self.verbose - 2
+
 Attributes
 ----------
 classes_ : array-like, shape = [n_predictions]
+
+clf : array-like, shape = [n_predictions]
+  The unmodified input classifiers
+
+clf_ : array-like, shape = [n_predictions]
+  Fitted clones of the input classifiers
 
 Examples
 --------

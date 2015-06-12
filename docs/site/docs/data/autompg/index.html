@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Sebastian Raschka">
-        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/pandas/standardizing/">
+        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/data/autompg/">
         <link rel="shortcut icon" href="../../../img/favicon.ico">
 
-	<title>Standardizing - mlxtend</title>
+	<title>Autompg - mlxtend</title>
 
         <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -97,13 +97,13 @@
         
             
 <li >
-    <a href="../minmax_scaling/">Minmax scaling</a>
+    <a href="../../pandas/minmax_scaling/">Minmax scaling</a>
 </li>
 
         
             
-<li class="active">
-    <a href="./">Standardizing</a>
+<li >
+    <a href="../../pandas/standardizing/">Standardizing</a>
 </li>
 
         
@@ -310,19 +310,19 @@
         
             
 <li >
-    <a href="../../data/iris/">Iris</a>
+    <a href="../iris/">Iris</a>
 </li>
 
         
             
 <li >
-    <a href="../../data/wine/">Wine</a>
+    <a href="../wine/">Wine</a>
 </li>
 
         
             
-<li >
-    <a href="../../data/autompg/">Autompg</a>
+<li class="active">
+    <a href="./">Autompg</a>
 </li>
 
         
@@ -363,12 +363,12 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../minmax_scaling/">
+                        <a rel="next" href="../wine/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../../sklearn/sequential_backward_selection/">
+                        <a rel="prev" href="../../../changelog/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -393,7 +393,7 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#standardizing">Standardizing</a></li>
+        <li class="main active"><a href="#auto-mpg">Auto MPG</a></li>
         
             <li><a href="#example">Example</a></li>
         
@@ -405,37 +405,48 @@
                 <div class="col-md-9" role="main">
 
 <p>mlxtend<br />
-Sebastian Raschka, last updated: 05/14/2015</p>
+Sebastian Raschka, last updated: 06/07/2015</p>
 <hr>
 
-<h1 id="standardizing">Standardizing</h1>
+<h1 id="auto-mpg">Auto MPG</h1>
 <blockquote>
-<p>from mlxtend.pandas import standardizing</p>
+<p>from mlxtend.data import autompg_data</p>
 </blockquote>
-<p>A function to standardize columns in pandas DataFrames so that they have properties of a standard normal distribution (mean=0, standard deviation=1).</p>
+<p>A function that loads the autompg dataset into NumPy arrays.</p>
+<p>Source: <a href="https://archive.ics.uci.edu/ml/datasets/Auto+MPG">https://archive.ics.uci.edu/ml/datasets/Auto+MPG</a></p>
+<p>The Auto-MPG dataset for regression analysis. The target (<code>y</code>) is defined as the miles per gallon (mpg) for 392 automobiles (6 rows containing "NaN"s have been removed. The 8 feature columns are:</p>
+<ol>
+<li>cylinders: multi-valued discrete </li>
+<li>displacement: continuous </li>
+<li>horsepower: continuous </li>
+<li>weight: continuous </li>
+<li>acceleration: continuous </li>
+<li>model year: multi-valued discrete </li>
+<li>origin: multi-valued discrete </li>
+<li>car name: string (unique for each instance)</li>
+</ol>
+<blockquote>
+<p>Quinlan,R. (1993). Combining Instance-Based and Model-Based Learning. In Proceedings on the Tenth International Conference of Machine Learning, 236-243, University of Massachusetts, Amherst. Morgan Kaufmann.</p>
+</blockquote>
 <hr>
 
 <h2 id="example">Example</h2>
-<pre><code>from mlxtend.pandas import standardizing
+<pre><code>&gt;&gt;&gt; from mlxtend.data import autompg_data
+&gt;&gt;&gt; X, y = autompg_data()
 </code></pre>
-<p><img alt="" src=".././img/pandas_scaling_standardizing.png" /></p>
+<hr>
+
 <h2 id="default-parameters">Default Parameters</h2>
-<pre>def standardizing(df, columns):
-    """
-    Standardizing columns in pandas DataFrames.
-
-    Parameters
-    ----------
-    df : pandas DataFrame object.
-
-    columns : array-like, shape = [n_columns]
-      Array-like with pandas DataFrame column names, e.g., ['col1', 'col2', ...]
+<pre>def autompg_data():
+    """Auto MPG dataset.
 
     Returns
-    ----------
-
-    df_new: pandas DataFrame object.
-      Copy of the DataFrame with standardized columns.
+    --------
+    X, y : [n_samples, n_features], [n_targets]
+      X is the feature matrix with 392 auto samples as rows
+      and 8 feature columns (6 rows with NaNs removed).
+      y is a 1-dimensional array of the target MPG values.
+      Source: https://archive.ics.uci.edu/ml/datasets/Auto+MPG
 
     """</pre></div>
             

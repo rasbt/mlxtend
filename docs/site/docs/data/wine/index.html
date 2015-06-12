@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Sebastian Raschka">
-        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/pandas/standardizing/">
+        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/data/wine/">
         <link rel="shortcut icon" href="../../../img/favicon.ico">
 
-	<title>Standardizing - mlxtend</title>
+	<title>Wine - mlxtend</title>
 
         <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -97,13 +97,13 @@
         
             
 <li >
-    <a href="../minmax_scaling/">Minmax scaling</a>
+    <a href="../../pandas/minmax_scaling/">Minmax scaling</a>
 </li>
 
         
             
-<li class="active">
-    <a href="./">Standardizing</a>
+<li >
+    <a href="../../pandas/standardizing/">Standardizing</a>
 </li>
 
         
@@ -310,19 +310,19 @@
         
             
 <li >
-    <a href="../../data/iris/">Iris</a>
+    <a href="../iris/">Iris</a>
+</li>
+
+        
+            
+<li class="active">
+    <a href="./">Wine</a>
 </li>
 
         
             
 <li >
-    <a href="../../data/wine/">Wine</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../data/autompg/">Autompg</a>
+    <a href="../autompg/">Autompg</a>
 </li>
 
         
@@ -363,12 +363,12 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../minmax_scaling/">
+                        <a rel="next" href="../iris/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../../sklearn/sequential_backward_selection/">
+                        <a rel="prev" href="../autompg/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -393,7 +393,7 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#standardizing">Standardizing</a></li>
+        <li class="main active"><a href="#wine">wine</a></li>
         
             <li><a href="#example">Example</a></li>
         
@@ -405,37 +405,170 @@
                 <div class="col-md-9" role="main">
 
 <p>mlxtend<br />
-Sebastian Raschka, last updated: 05/14/2015</p>
+Sebastian Raschka, last updated: 06/07/2015</p>
 <hr>
 
-<h1 id="standardizing">Standardizing</h1>
+<h1 id="wine">wine</h1>
 <blockquote>
-<p>from mlxtend.pandas import standardizing</p>
+<p>from mlxtend.data import wine_data</p>
 </blockquote>
-<p>A function to standardize columns in pandas DataFrames so that they have properties of a standard normal distribution (mean=0, standard deviation=1).</p>
+<p>A function that loads the wine dataset into NumPy arrays.</p>
+<p>Source: <a href="https://archive.ics.uci.edu/ml/datasets/Wine">https://archive.ics.uci.edu/ml/datasets/Wine</a></p>
+<blockquote>
+<p>Bache, K. &amp; Lichman, M. (2013). UCI Machine Learning Repository. Irvine, CA: University of California, School of Information and Computer Science.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>wine.csv.csv</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Samples</td>
+<td>178</td>
+</tr>
+<tr>
+<td>Features</td>
+<td>13</td>
+</tr>
+<tr>
+<td>Classes</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Data Set Characteristics:</td>
+<td>Multivariate</td>
+</tr>
+<tr>
+<td>Attribute Characteristics:</td>
+<td>Integer, Real</td>
+</tr>
+<tr>
+<td>Associated Tasks:</td>
+<td>Classification</td>
+</tr>
+<tr>
+<td>Missing Values</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>column</th>
+<th>attribute</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1)</td>
+<td>Class Label</td>
+</tr>
+<tr>
+<td>2)</td>
+<td>Alcohol</td>
+</tr>
+<tr>
+<td>3)</td>
+<td>Malic acid</td>
+</tr>
+<tr>
+<td>4)</td>
+<td>Ash</td>
+</tr>
+<tr>
+<td>5)</td>
+<td>Alcalinity of ash</td>
+</tr>
+<tr>
+<td>6)</td>
+<td>Magnesium</td>
+</tr>
+<tr>
+<td>7)</td>
+<td>Total phenols</td>
+</tr>
+<tr>
+<td>8)</td>
+<td>Flavanoids</td>
+</tr>
+<tr>
+<td>9)</td>
+<td>Nonflavanoid phenols</td>
+</tr>
+<tr>
+<td>10)</td>
+<td>Proanthocyanins</td>
+</tr>
+<tr>
+<td>11)</td>
+<td>intensity</td>
+</tr>
+<tr>
+<td>12)</td>
+<td>Hue</td>
+</tr>
+<tr>
+<td>13)</td>
+<td>OD280/OD315 of diluted wines</td>
+</tr>
+<tr>
+<td>14)</td>
+<td>Proline</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>class</th>
+<th>samples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>59</td>
+</tr>
+<tr>
+<td>1</td>
+<td>71</td>
+</tr>
+<tr>
+<td>2</td>
+<td>48</td>
+</tr>
+</tbody>
+</table>
+<p>Original Owners: </p>
+<blockquote>
+<p>Forina, M. et al, PARVUS - 
+An Extendible Package for Data Exploration, Classification and Correlation. 
+Institute of Pharmaceutical and Food Analysis and Technologies, Via Brigata Salerno, 
+16147 Genoa, Italy. </p>
+</blockquote>
 <hr>
 
 <h2 id="example">Example</h2>
-<pre><code>from mlxtend.pandas import standardizing
+<pre><code>&gt;&gt;&gt; from mlxtend.data import wine_data
+&gt;&gt;&gt; X, y = wine_data()
 </code></pre>
-<p><img alt="" src=".././img/pandas_scaling_standardizing.png" /></p>
+<hr>
+
 <h2 id="default-parameters">Default Parameters</h2>
-<pre>def standardizing(df, columns):
-    """
-    Standardizing columns in pandas DataFrames.
-
-    Parameters
-    ----------
-    df : pandas DataFrame object.
-
-    columns : array-like, shape = [n_columns]
-      Array-like with pandas DataFrame column names, e.g., ['col1', 'col2', ...]
+<pre>def wine_data():
+    """Iris flower dataset.
 
     Returns
-    ----------
-
-    df_new: pandas DataFrame object.
-      Copy of the DataFrame with standardized columns.
+    --------
+    X, y : [n_samples, n_features], [n_class_labels]
+      X is the feature matrix with 178 wine samples as rows
+      and 13 feature columns.
+      y is a 1-dimensional array of the 3 class labels 0, 1, 2
+      Source: https://archive.ics.uci.edu/ml/datasets/Wine
 
     """</pre></div>
             

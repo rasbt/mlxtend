@@ -203,6 +203,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../docs/regression/linear_regression/">Linear regression</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -297,6 +303,33 @@
   </li>
 
                         
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">data</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../docs/data/iris/">Iris</a>
+</li>
+
+        
+            
+<li >
+    <a href="../docs/data/wine/">Wine</a>
+</li>
+
+        
+            
+<li >
+    <a href="../docs/data/autompg/">Autompg</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
                         </ul>
                     </li>
                 
@@ -330,7 +363,7 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../docs/text/tokenizer/">
+                        <a rel="next" href="../docs/data/autompg/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
@@ -360,10 +393,7 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#027">0.2.7</a></li>
-        
-    
-        <li class="main "><a href="#026">0.2.6</a></li>
+        <li class="main active"><a href="#026">0.2.6</a></li>
         
     
         <li class="main "><a href="#025">0.2.5</a></li>
@@ -415,12 +445,13 @@
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h3 id="027">0.2.7</h3>
-<ul>
-<li>/</li>
-</ul>
 <h3 id="026">0.2.6</h3>
 <ul>
+<li>Added ordinary least square regression using different solvers (gradient and stochastic gradient descent, and the closed form solution (normal equation)</li>
+<li>Added option for random weight initialization to logistic regression classifier and updated l2 regularization</li>
+<li>Added <code>wine</code> dataset to <code>mlxtend.data</code> </li>
+<li>Added <code>invert_axes</code> parameter <code>mlxtend.matplotlib.enrichtment_plot</code> to optionally plot the "Count" on the x-axis</li>
+<li>New <code>verbose</code> parameter for <code>mlxtend.sklearn.EnsembleClassifier</code> by <a href="https://github.com/albahnsen">Alejandro C. Bahnsen</a></li>
 <li>Added <code>mlxtend.pandas.standardizing</code> to standardize columns in a Pandas DataFrame</li>
 <li>Added parameters <code>linestyles</code> and <code>markers</code> to <code>mlxtend.matplotlib.enrichment_plot</code></li>
 <li><code>mlxtend.regression.lin_regplot</code> automatically adds np.newaxis and works w. python lists</li>

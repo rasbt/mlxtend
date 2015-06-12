@@ -1,6 +1,7 @@
 
 ### 0.2.6
 
+- Added ordinary least square regression using different solvers (gradient and stochastic gradient descent, and the closed form solution (normal equation)
 - Added option for random weight initialization to logistic regression classifier and updated l2 regularization
 - Added `wine` dataset to `mlxtend.data` 
 - Added `invert_axes` parameter `mlxtend.matplotlib.enrichtment_plot` to optionally plot the "Count" on the x-axis

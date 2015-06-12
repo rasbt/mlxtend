@@ -17,7 +17,6 @@ def test_generalize_names():
     assert(generalize_names("Eto'o, Samuel", output_sep=', ') == 'etoo, s')
     assert(generalize_names("Eto'o, Samuel", output_sep=', ') == 'etoo, s')
 
-    print(generalize_names("van Persie, Robin", output_sep=', '))
     assert(generalize_names("van Persie, Robin", output_sep=', ') == 'vanpersie, r')
     assert(generalize_names("Robin van Persie", output_sep=', ') == 'vanpersie, r')
     assert(generalize_names("Rafael van der Vaart", output_sep=', ') == 'vandervaart, r')

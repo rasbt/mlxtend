@@ -1,5 +1,5 @@
 
-![](./img/logo_gray.png)
+![](./img/logo_gray_small.png)
 
 **A library consisting of useful tools and extensions for the day-to-day data science tasks.**
 

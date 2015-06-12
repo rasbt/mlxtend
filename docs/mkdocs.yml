@@ -31,6 +31,7 @@ pages:
         - docs/matplotlib/stacked_barplot.md
     - regression:
         - docs/regression/plot_linear_regression_fit.md
+        - docs/regression/linear_regression.md
     - preprocessing:
         - docs/preprocessing/mean_centerer.md
         - docs/preprocessing/shuffle_arrays_unison.md

@@ -23,7 +23,7 @@ Current version: 0.2.6
 
 
 ## Links
-- Documentation: [http://rasbt.github.io/mlxtend/](http://rasbt.github.io/mlxtend/)
+- **Documentation:** [http://rasbt.github.io/mlxtend/](http://rasbt.github.io/mlxtend/)
 - Source code repository: [https://github.com/rasbt/mlxtend](https://github.com/rasbt/mlxtend)
 - PyPI: [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend)
 - Changelog: [http://rasbt.github.io/mlxtend/changelog](http://rasbt.github.io/mlxtend/changelog)
@@ -40,23 +40,23 @@ Current version: 0.2.6
 	from sklearn import datasets
 	from sklearn.svm import SVC
 
-	# Loading some example data
+	### Loading some example data
 	iris = datasets.load_iris()
 	X = iris.data[:, [0,2]]
 	y = iris.target
 
-	# Training a classifier
+	### Training a classifier
 	svm = SVC(C=0.5, kernel='linear')
 	svm.fit(X,y)
 
-	# Plotting decision regions
+	### Plotting decision regions
 	plot_decision_regions(X, y, clf=svm, res=0.02, legend=2)
 
-	# Adding axes annotations
+	### Adding axes annotations
 	plt.xlabel('sepal length [cm]')
 	plt.ylabel('petal length [cm]')
 	plt.title('SVM on Iris')
-	plt.show()</pre>
+	plt.show()
 
 ![](./docs/sources/img/evaluate_plot_decision_regions_2d.png)
 

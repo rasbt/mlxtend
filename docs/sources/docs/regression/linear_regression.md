@@ -1,12 +1,16 @@
 mlxtend
-Sebastian Raschka, last updated: 06/10/2015
+Sebastian Raschka, last updated: 06/18/2015
 
 
 # Linear Regression
 
 > from mlxtend.regression import LinearRegression
 
-Implementation of ordinary least squares regression.
+Implementation of a linear regression model for performing ordinary least squares regression using one of the following three approaches:
+
+- normal equation (closed-form solution)
+- gradient descent
+- stochastic gradient descent 
 
 
 
@@ -17,19 +21,27 @@ For more usage examples please see the [IPython Notebook](http://nbviewer.ipytho
 
 
 <hr>
+
+<br>
 ### Example 1 - Normal Equation
 
-Fitting a linear regression model
+The closed-form solution should be preferred for "smaller" datasets where calculating (a "costly") is not a concern. For very large datasets, or datasets where the inverse of [**X**^T **X**] may not exist (the matrix is non-invertible or singular, e.g., in case of perfect multicollinearity), the gradient descent or stochastic gradient descent approaches are to be preferred.
+
+The linear function (linear regression model) is defined as:
 
 ![](./img/regression_ols_linreg_1.png)
 
-using the closed-form solution (normal equation)
+where *y* is the response variable, ***x*** is an *m*-dimensional sample vector, and ***w*** is the weight vector (vector of coefficients). Note that *w_0* represents the y-axis intercept of the model and therefore *x_0*=1.  
+
+Using the closed-form solution (normal equation), we can calculate the weights of the model as follows:
 	
 ![](./img/regression_ols_linreg_2.png)
 	
-and the intercept is calculated as
+where ***X*** is the matrix of the data samples. After obtaining the weight, the intercept (w_0) can be calculated from the difference of the true and predicted average responses: 
 
 ![](./img/regression_ols_linreg_3.png)
+
+
 
 
     >>> import numpy as np
@@ -55,9 +67,11 @@ and the intercept is calculated as
 ![](./img/regression_ols_linreg_4.png)
 
 
-
+<br>
 
 ### Example 2 - Gradient Descent
+
+Using the gradient decent optimization algorithm, the weights are updated incrementally after each epoch (= pass over the training dataset).
 
 ![](./img/regression_ols_linreg_5.png)
 
@@ -97,11 +111,15 @@ Visualizing the cost to check for convergence and plotting the linear model:
     Slope: 1.00
     
     
-
+<br>
+<br>
+<br>
  
 ### Example 3 - Stochastic Gradient Descent
  
-In gradient descent the cost function is minimized based on the complete training data set; stochastic gradient descent updates the weights incrementally after each individual training sample.
+Example 2 explained "batch" gradient descent learning. The "batch" updates refers to the fact that the cost function is minimized based on the complete training data set. In contrast, stochastic gradient descent performs the weight update incrementally after each individual training sample.
+
+The process of incrementally updating the weights is also called "stochastic" gradient descent since it approximates the minimization of the cost function. Although the stochastic gradient descent approach might sound inferior to gradient descent due its "stochastic" nature and the "approximated" direction (gradient), it can have certain advantages in practice. Often, stochastic gradient descent converges much faster than gradient descent since the updates are applied immediately after each training sample; stochastic gradient descent is computationally more efficient, especially for very large datasets. 
 
     >>> sgd_lr = LinearRegression(solver='sgd', eta=0.1, epochs=10, random_seed=0)
     >>> sgd_lr.fit(X_std, y_std)
@@ -116,8 +134,15 @@ In gradient descent the cost function is minimized based on the complete trainin
     >>> plt.tight_layout()
     >>> plt.show()
 
- ![](./img/regression_ols_linreg_8.png)
+<br>
 
+    >>> plt.plot(range(1, sgd_lr.epochs+1), sgd_lr.cost_)
+    >>> plt.xlabel('Epochs')
+    >>> plt.ylabel('Cost')
+    >>> plt.tight_layout()
+    >>> plt.show()    
+    
+   ![](./img/regression_ols_linreg_9.png) 
    
 <hr>
 ### Default Parameters

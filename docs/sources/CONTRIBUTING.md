@@ -5,6 +5,19 @@ I would be very happy about any kind of contributions that help to improve and e
 <br>
 <br>
 
+### Quick contributor checklist
+
+[ ]  Open a new "issue" on GitHub to discuss the new feature / bugfix  
+[ ]  Create and checkout a new topic branch   
+[ ]  Implement new feature or apply bugfix  
+[ ]  Add appropriate unit test functions  
+[ ]  Run `nosetests -sv` and make sure that all unit tests pass  
+[ ]  Add a note about the change to the `./docs/sources/CHANGELOG.md` file  
+[ ]  Modify documentation in `./docs/sources/` if appropriate  
+[ ]  Push the topic branch to the server and create a pull request
+
+<br>
+
 
 ## Getting Started
 
@@ -60,3 +73,6 @@ For example,
 If everything looks fine, the documentation can be build by executing
 
 	~/github/mlxtend/docs >mkdocs build
+	
+<br>
+	

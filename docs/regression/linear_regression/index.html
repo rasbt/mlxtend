@@ -411,21 +411,29 @@
                 <div class="col-md-9" role="main">
 
 <p>mlxtend
-Sebastian Raschka, last updated: 06/10/2015</p>
+Sebastian Raschka, last updated: 06/18/2015</p>
 <h1 id="linear-regression">Linear Regression</h1>
 <blockquote>
 <p>from mlxtend.regression import LinearRegression</p>
 </blockquote>
-<p>Implementation of ordinary least squares regression.</p>
+<p>Implementation of a linear regression model for performing ordinary least squares regression using one of the following three approaches:</p>
+<ul>
+<li>normal equation (closed-form solution)</li>
+<li>gradient descent</li>
+<li>stochastic gradient descent </li>
+</ul>
 <p>For more usage examples please see the <a href="http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/regression__linear_regression.ipynb">IPython Notebook</a>.</p>
 <hr>
 
+<p><br></p>
 <h3 id="example-1-normal-equation">Example 1 - Normal Equation</h3>
-<p>Fitting a linear regression model</p>
+<p>The closed-form solution should be preferred for "smaller" datasets where calculating (a "costly") is not a concern. For very large datasets, or datasets where the inverse of [<strong>X</strong>^T <strong>X</strong>] may not exist (the matrix is non-invertible or singular, e.g., in case of perfect multicollinearity), the gradient descent or stochastic gradient descent approaches are to be preferred.</p>
+<p>The linear function (linear regression model) is defined as:</p>
 <p><img alt="" src=".././img/regression_ols_linreg_1.png" /></p>
-<p>using the closed-form solution (normal equation)</p>
+<p>where <em>y</em> is the response variable, <strong><em>x</em></strong> is an <em>m</em>-dimensional sample vector, and <strong><em>w</em></strong> is the weight vector (vector of coefficients). Note that <em>w_0</em> represents the y-axis intercept of the model and therefore <em>x_0</em>=1.  </p>
+<p>Using the closed-form solution (normal equation), we can calculate the weights of the model as follows:</p>
 <p><img alt="" src=".././img/regression_ols_linreg_2.png" /></p>
-<p>and the intercept is calculated as</p>
+<p>where <strong><em>X</em></strong> is the matrix of the data samples. After obtaining the weight, the intercept (w_0) can be calculated from the difference of the true and predicted average responses: </p>
 <p><img alt="" src=".././img/regression_ols_linreg_3.png" /></p>
 <pre><code>&gt;&gt;&gt; import numpy as np
 &gt;&gt;&gt; X = np.array([ 1, 2, 3, 4, 5])[:, np.newaxis]
@@ -448,7 +456,9 @@ lin_regplot(X, y, ne_lr)
 plt.show()
 </code></pre>
 <p><img alt="" src=".././img/regression_ols_linreg_4.png" /></p>
+<p><br></p>
 <h3 id="example-2-gradient-descent">Example 2 - Gradient Descent</h3>
+<p>Using the gradient decent optimization algorithm, the weights are updated incrementally after each epoch (= pass over the training dataset).</p>
 <p><img alt="" src=".././img/regression_ols_linreg_5.png" /></p>
 <pre><code>&gt;&gt;&gt; gd_lr = LinearRegression(solver='gd', eta=0.005, epochs=1500, random_seed=0)
 &gt;&gt;&gt; gd_lr.fit(X, y)
@@ -480,8 +490,12 @@ Intercept: 0.00
 &gt;&gt;&gt; print('Slope: %.2f' % gd_lr.w_[1])
 Slope: 1.00
 </code></pre>
+<p><br>
+<br>
+<br></p>
 <h3 id="example-3-stochastic-gradient-descent">Example 3 - Stochastic Gradient Descent</h3>
-<p>In gradient descent the cost function is minimized based on the complete training data set; stochastic gradient descent updates the weights incrementally after each individual training sample.</p>
+<p>Example 2 explained "batch" gradient descent learning. The "batch" updates refers to the fact that the cost function is minimized based on the complete training data set. In contrast, stochastic gradient descent performs the weight update incrementally after each individual training sample.</p>
+<p>The process of incrementally updating the weights is also called "stochastic" gradient descent since it approximates the minimization of the cost function. Although the stochastic gradient descent approach might sound inferior to gradient descent due its "stochastic" nature and the "approximated" direction (gradient), it can have certain advantages in practice. Often, stochastic gradient descent converges much faster than gradient descent since the updates are applied immediately after each training sample; stochastic gradient descent is computationally more efficient, especially for very large datasets. </p>
 <pre><code>&gt;&gt;&gt; sgd_lr = LinearRegression(solver='sgd', eta=0.1, epochs=10, random_seed=0)
 &gt;&gt;&gt; sgd_lr.fit(X_std, y_std)
 &gt;&gt;&gt; print('Intercept: %.2f' % sgd_lr.w_[0])
@@ -495,7 +509,14 @@ Slope: 1.00
 &gt;&gt;&gt; plt.tight_layout()
 &gt;&gt;&gt; plt.show()
 </code></pre>
-<p><img alt="" src=".././img/regression_ols_linreg_8.png" /></p>
+<p><br></p>
+<pre><code>&gt;&gt;&gt; plt.plot(range(1, sgd_lr.epochs+1), sgd_lr.cost_)
+&gt;&gt;&gt; plt.xlabel('Epochs')
+&gt;&gt;&gt; plt.ylabel('Cost')
+&gt;&gt;&gt; plt.tight_layout()
+&gt;&gt;&gt; plt.show()
+</code></pre>
+<p><img alt="" src=".././img/regression_ols_linreg_9.png" /> </p>
 <hr>
 
 <h3 id="default-parameters">Default Parameters</h3>

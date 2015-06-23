@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Sebastian Raschka">
+        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/sklearn/ensemble_classifier/">
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+
+	<title>Ensemble classifier - mlxtend</title>
+
+        <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../../css/highlight.css">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../../..">mlxtend</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">classifier</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../classifier/adaline/">Adaline</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/perceptron/">Perceptron</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/logistic_regression/">Logistic regression</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">pandas</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../pandas/minmax_scaling/">Minmax scaling</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../pandas/standardizing/">Standardizing</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">sklearn</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../sequential_backward_selection/">Sequential backward selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../column_selector/">Column selector</a>
+</li>
+
+        
+            
+<li class="active">
+    <a href="./">Ensemble classifier</a>
+</li>
+
+        
+            
+<li >
+    <a href="../dense_transformer/">Dense transformer</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">evaluate</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../evaluate/plot_decision_regions/">Plot decision regions</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/plot_learning_curves/">Plot learning curves</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">matplotlib</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../matplotlib/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../matplotlib/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../matplotlib/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">regression</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../regression/plot_linear_regression_fit/">Plot linear regression fit</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../regression/linear_regression/">Linear regression</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">preprocessing</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../preprocessing/mean_centerer/">Mean centerer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">file_io</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../file_io/find_files/">Find files</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../file_io/find_filegroups/">Find filegroups</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">math</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../math/combinations/">Combinations</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/permutations/">Permutations</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">text</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../text/generalize_names/">Generalize names</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../text/generalize_names_duplcheck/">Generalize names duplcheck</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../text/tokenizer/">Tokenizer</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">data</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../data/iris/">Iris</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/wine/">Wine</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/autompg/">Autompg</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../changelog/">Changelog</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../installation/">Installation</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../contributing/">Contributing</a>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../column_selector/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../dense_transformer/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a href="https://github.com/rasbt/mlxtend">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#majority-rule-ensemble-classifier">Majority Rule Ensemble Classifier</a></li>
+        
+            <li><a href="#cross-validation-example">Cross-validation Example</a></li>
+        
+            <li><a href="#gridsearch-example">GridSearch Example</a></li>
+        
+            <li><a href="#default-parameters">Default Parameters</a></li>
+        
+            <li><a href="#methods">Methods</a></li>
+        
+    
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<p>mlxtend<br />
+Sebastian Raschka, last updated: 05/14/2015</p>
+<hr>
+
+<h1 id="majority-rule-ensemble-classifier">Majority Rule Ensemble Classifier</h1>
+<blockquote>
+<p>from mlxtend.sklearn import EnsembleClassifier</p>
+</blockquote>
+<p>And ensemble classifier that predicts class labels based on a majority voting rule (hard voting) or average predicted probabilities (soft voting).</p>
+<p>Decision regions plotted for 4 different classifiers:   </p>
+<p><img alt="" src=".././img/sklearn_ensemble_decsion_regions.png" /></p>
+<p>Please see the <a href="http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_ensemble_ensembleclassifier.ipynb">IPython Notebook</a> for a detailed explanation and examples.</p>
+<p>The <code>EnsembleClassifier</code> will likely be included in the scikit-learn library as <code>VotingClassifier</code> at some point, and during this implementation process, the <code>EnsembleClassifier</code> has been slightly improved based on valuable feedback from the scikit-learn community.</p>
+<hr>
+
+<h2 id="cross-validation-example">Cross-validation Example</h2>
+<p>Input:</p>
+<pre><code>from mlxtend.sklearn import EnsembleClassifier
+from sklearn import cross_validation
+from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import GaussianNB 
+from sklearn.ensemble import RandomForestClassifier
+import numpy as np
+from sklearn import datasets
+
+iris = datasets.load_iris()
+X, y = iris.data[:, 1:3], iris.target
+
+np.random.seed(123)
+
+################################
+# Initialize classifiers
+################################
+
+clf1 = LogisticRegression()
+clf2 = RandomForestClassifier()
+clf3 = GaussianNB()
+
+################################
+# Initialize EnsembleClassifier
+################################
+
+# hard voting    
+eclf = EnsembleClassifier(clfs=[clf1, clf2, clf3], voting='hard')
+
+# soft voting (uniform weights)
+# eclf = EnsembleClassifier(clfs=[clf1, clf2, clf3], voting='soft')
+
+# soft voting with different weights
+# eclf = EnsembleClassifier(clfs=[clf1, clf2, clf3], voting='soft', weights=[1,2,10])
+
+
+
+################################
+# 5-fold Cross-Validation
+################################
+
+for clf, label in zip([clf1, clf2, clf3, eclf], ['Logistic Regression', 'Random Forest', 'naive Bayes', 'Ensemble']):
+
+    scores = cross_validation.cross_val_score(clf, X, y, cv=5, scoring='accuracy')
+    print("Accuracy: %0.2f (+/- %0.2f) [%s]" % (scores.mean(), scores.std(), label))
+</code></pre>
+<p>Output:</p>
+<pre><code>Accuracy: 0.90 (+/- 0.05) [Logistic Regression]
+Accuracy: 0.92 (+/- 0.05) [Random Forest]
+Accuracy: 0.91 (+/- 0.04) [naive Bayes]
+Accuracy: 0.95 (+/- 0.05) [Ensemble]
+</code></pre>
+<p><br>
+<br></p>
+<h2 id="gridsearch-example">GridSearch Example</h2>
+<p>The <code>EnsembleClassifier</code> van also be used in combination with scikit-learns gridsearch module:</p>
+<pre><code>from sklearn.grid_search import GridSearchCV
+
+clf1 = LogisticRegression(random_state=1)
+clf2 = RandomForestClassifier(random_state=1)
+clf3 = GaussianNB()
+eclf = EnsembleClassifier(clfs=[clf1, clf2, clf3], voting='soft')
+
+params = {'logisticregression__C': [1.0, 100.0],
+      'randomforestclassifier__n_estimators': [20, 200],}
+
+grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
+grid.fit(iris.data, iris.target)
+
+for params, mean_score, scores in grid.grid_scores_:
+    print("%0.3f (+/-%0.03f) for %r"
+        % (mean_score, scores.std() / 2, params))
+</code></pre>
+<p>Output:</p>
+<pre><code>0.953 (+/-0.013) for {'randomforestclassifier__n_estimators': 20, 'logisticregression__C': 1.0}
+0.960 (+/-0.012) for {'randomforestclassifier__n_estimators': 200, 'logisticregression__C': 1.0}
+0.960 (+/-0.012) for {'randomforestclassifier__n_estimators': 20, 'logisticregression__C': 100.0}
+0.953 (+/-0.017) for {'randomforestclassifier__n_estimators': 200, 'logisticregression__C': 100.0}
+</code></pre>
+<p><strong>Note</strong>:</p>
+<p>If the <code>EnsembleClassifier</code> is initialized with multiple similar estimator objects, the estimator names are modified with consecutive integer indices, for example:</p>
+<pre><code>clf1 = LogisticRegression(random_state=1)
+clf2 = RandomForestClassifier(random_state=1)
+eclf = EnsembleClassifier(clfs=[clf1, clf1, clf2], voting='soft')
+
+params = {'logisticregression-1__C': [1.0, 100.0],
+          'logisticregression-2__C': [1.0, 100.0],
+          'randomforestclassifier__n_estimators': [20, 200],}
+
+grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
+grid.fit(iris.data, iris.target)
+</code></pre>
+<hr>
+
+<h2 id="default-parameters">Default Parameters</h2>
+<p><pre>class EnsembleClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
+    """ Soft Voting/Majority Rule classifier for unfitted clfs.</p>
+<pre><code>Parameters
+----------
+clfs : array-like, shape = [n_classifiers]
+  A list of classifiers.
+  Invoking the `fit` method on the `VotingClassifier` will fit clones
+  of those original classifiers that will be stored in the class attribute
+  `self.clfs_`.
+
+voting : str, {'hard', 'soft'} (default='hard')
+  If 'hard', uses predicted class labels for majority rule voting.
+  Else if 'soft', predicts the class label based on the argmax of
+  the sums of the predicted probalities, which is recommended for
+  an ensemble of well-calibrated classifiers.
+
+weights : array-like, shape = [n_classifiers], optional (default=`None`)
+  Sequence of weights (`float` or `int`) to weight the occurances of
+  predicted class labels (`hard` voting) or class probabilities
+  before averaging (`soft` voting). Uses uniform weights if `None`.
+
+verbose : int, optional (default=0)
+  Controls the verbosity of the building process.
+    `verbose=0` (default): Prints nothing
+    `verbose=1`: Prints the number &amp; name of the clf being fitted
+    `verbose=2`: Prints info about the parameters of the clf being fitted
+    `verbose&gt;2`: Changes `verbose` param of the underlying clf to self.verbose - 2
+
+Attributes
+----------
+classes_ : array-like, shape = [n_predictions]
+
+clf : array-like, shape = [n_predictions]
+  The unmodified input classifiers
+
+clf_ : array-like, shape = [n_predictions]
+  Fitted clones of the input classifiers
+
+Examples
+--------
+&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; from sklearn.linear_model import LogisticRegression
+&gt;&gt;&gt; from sklearn.naive_bayes import GaussianNB
+&gt;&gt;&gt; from sklearn.ensemble import RandomForestClassifier
+&gt;&gt;&gt; clf1 = LogisticRegression(random_state=1)
+&gt;&gt;&gt; clf2 = RandomForestClassifier(random_state=1)
+&gt;&gt;&gt; clf3 = GaussianNB()
+&gt;&gt;&gt; X = np.array([[-1, -1], [-2, -1], [-3, -2], [1, 1], [2, 1], [3, 2]])
+&gt;&gt;&gt; y = np.array([1, 1, 1, 2, 2, 2])
+&gt;&gt;&gt; eclf1 = VotingClassifier(clfs=[clf1, clf2, clf3], voting='hard')
+&gt;&gt;&gt; eclf1 = eclf1.fit(X, y)
+&gt;&gt;&gt; print(eclf1.predict(X))
+[1 1 1 2 2 2]
+&gt;&gt;&gt; eclf2 = VotingClassifier(clfs=[clf1, clf2, clf3], voting='soft')
+&gt;&gt;&gt; eclf2 = eclf2.fit(X, y)
+&gt;&gt;&gt; print(eclf2.predict(X))
+[1 1 1 2 2 2]
+&gt;&gt;&gt; eclf3 = VotingClassifier(clfs=[clf1, clf2, clf3],
+...                          voting='soft', weights=[2,1,1])
+&gt;&gt;&gt; eclf3 = eclf3.fit(X, y)
+&gt;&gt;&gt; print(eclf3.predict(X))
+[1 1 1 2 2 2]
+&gt;&gt;&gt;
+"""&lt;/pre&gt;
+</code></pre>
+<hr>
+
+<h2 id="methods">Methods</h2>
+<pre>    def fit(self, X, y):
+        """ Fit the clfs.
+
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+
+        y : array-like, shape = [n_samples]
+            Target values.
+
+        Returns
+        -------
+        self : object
+        """</pre>
+
+<pre>    def predict(self, X):
+        """ Predict class labels for X.
+
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+
+        Returns
+        ----------
+        maj : array-like, shape = [n_samples]
+            Predicted class labels.
+        """</pre>
+
+<pre>predict_proba(self, X):
+        """ Predict class probabilities for X.
+
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+
+        Returns
+        ----------
+        avg : array-like, shape = [n_samples, n_classes]
+            Weighted average probability for each class per sample.
+        """</pre>
+
+<pre>    def transform(self, X):
+        """ Return class labels or probabilities for X for each estimator.
+
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+
+        Returns
+        -------
+        If `voting='soft'`:
+          array-like = [n_classifiers, n_samples, n_classes]
+            Class probabilties calculated by each classifier.
+        If `voting='hard'`:
+          array-like = [n_classifiers, n_samples]
+            Class labels predicted by each classifier.
+        """</pre></div>
+            
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        <script src="../../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../../js/highlight.pack.js"></script>
+        <script>var base_url = '../../..';</script>
+        <script data-main="../../../mkdocs/js/search.js" src="../../../mkdocs/js/require.js"></script>
+        <script src="../../../js/base.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            From here you can search these documents. Enter
+                            your search terms below.
+                        </p>
+                        <form role="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                            </div>
+                        </form>
+                        <div id="mkdocs-search-results"></div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

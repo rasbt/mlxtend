@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Sebastian Raschka">
+        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/data/wine/">
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+
+	<title>Wine - mlxtend</title>
+
+        <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../../css/highlight.css">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../../..">mlxtend</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">classifier</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../classifier/adaline/">Adaline</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/perceptron/">Perceptron</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/logistic_regression/">Logistic regression</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">pandas</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../pandas/minmax_scaling/">Minmax scaling</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../pandas/standardizing/">Standardizing</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">sklearn</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../sklearn/sequential_backward_selection/">Sequential backward selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../sklearn/column_selector/">Column selector</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../sklearn/ensemble_classifier/">Ensemble classifier</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../sklearn/dense_transformer/">Dense transformer</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">evaluate</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../evaluate/plot_decision_regions/">Plot decision regions</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/plot_learning_curves/">Plot learning curves</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">matplotlib</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../matplotlib/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../matplotlib/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../matplotlib/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">regression</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../regression/plot_linear_regression_fit/">Plot linear regression fit</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../regression/linear_regression/">Linear regression</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">preprocessing</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../preprocessing/mean_centerer/">Mean centerer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">file_io</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../file_io/find_files/">Find files</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../file_io/find_filegroups/">Find filegroups</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">math</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../math/combinations/">Combinations</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/permutations/">Permutations</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">text</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../text/generalize_names/">Generalize names</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../text/generalize_names_duplcheck/">Generalize names duplcheck</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../text/tokenizer/">Tokenizer</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">data</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../iris/">Iris</a>
+</li>
+
+        
+            
+<li class="active">
+    <a href="./">Wine</a>
+</li>
+
+        
+            
+<li >
+    <a href="../autompg/">Autompg</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../changelog/">Changelog</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../installation/">Installation</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../contributing/">Contributing</a>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../iris/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../autompg/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a href="https://github.com/rasbt/mlxtend">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#wine">wine</a></li>
+        
+            <li><a href="#example">Example</a></li>
+        
+            <li><a href="#default-parameters">Default Parameters</a></li>
+        
+    
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<p>mlxtend<br />
+Sebastian Raschka, last updated: 06/07/2015</p>
+<hr>
+
+<h1 id="wine">wine</h1>
+<blockquote>
+<p>from mlxtend.data import wine_data</p>
+</blockquote>
+<p>A function that loads the wine dataset into NumPy arrays.</p>
+<p>Source: <a href="https://archive.ics.uci.edu/ml/datasets/Wine">https://archive.ics.uci.edu/ml/datasets/Wine</a></p>
+<blockquote>
+<p>Bache, K. &amp; Lichman, M. (2013). UCI Machine Learning Repository. Irvine, CA: University of California, School of Information and Computer Science.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>wine.csv.csv</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Samples</td>
+<td>178</td>
+</tr>
+<tr>
+<td>Features</td>
+<td>13</td>
+</tr>
+<tr>
+<td>Classes</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Data Set Characteristics:</td>
+<td>Multivariate</td>
+</tr>
+<tr>
+<td>Attribute Characteristics:</td>
+<td>Integer, Real</td>
+</tr>
+<tr>
+<td>Associated Tasks:</td>
+<td>Classification</td>
+</tr>
+<tr>
+<td>Missing Values</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>column</th>
+<th>attribute</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1)</td>
+<td>Class Label</td>
+</tr>
+<tr>
+<td>2)</td>
+<td>Alcohol</td>
+</tr>
+<tr>
+<td>3)</td>
+<td>Malic acid</td>
+</tr>
+<tr>
+<td>4)</td>
+<td>Ash</td>
+</tr>
+<tr>
+<td>5)</td>
+<td>Alcalinity of ash</td>
+</tr>
+<tr>
+<td>6)</td>
+<td>Magnesium</td>
+</tr>
+<tr>
+<td>7)</td>
+<td>Total phenols</td>
+</tr>
+<tr>
+<td>8)</td>
+<td>Flavanoids</td>
+</tr>
+<tr>
+<td>9)</td>
+<td>Nonflavanoid phenols</td>
+</tr>
+<tr>
+<td>10)</td>
+<td>Proanthocyanins</td>
+</tr>
+<tr>
+<td>11)</td>
+<td>intensity</td>
+</tr>
+<tr>
+<td>12)</td>
+<td>Hue</td>
+</tr>
+<tr>
+<td>13)</td>
+<td>OD280/OD315 of diluted wines</td>
+</tr>
+<tr>
+<td>14)</td>
+<td>Proline</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>class</th>
+<th>samples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>59</td>
+</tr>
+<tr>
+<td>1</td>
+<td>71</td>
+</tr>
+<tr>
+<td>2</td>
+<td>48</td>
+</tr>
+</tbody>
+</table>
+<p>Original Owners: </p>
+<blockquote>
+<p>Forina, M. et al, PARVUS - 
+An Extendible Package for Data Exploration, Classification and Correlation. 
+Institute of Pharmaceutical and Food Analysis and Technologies, Via Brigata Salerno, 
+16147 Genoa, Italy. </p>
+</blockquote>
+<hr>
+
+<h2 id="example">Example</h2>
+<pre><code>&gt;&gt;&gt; from mlxtend.data import wine_data
+&gt;&gt;&gt; X, y = wine_data()
+</code></pre>
+<hr>
+
+<h2 id="default-parameters">Default Parameters</h2>
+<pre>def wine_data():
+    """Iris flower dataset.
+
+    Returns
+    --------
+    X, y : [n_samples, n_features], [n_class_labels]
+      X is the feature matrix with 178 wine samples as rows
+      and 13 feature columns.
+      y is a 1-dimensional array of the 3 class labels 0, 1, 2
+      Source: https://archive.ics.uci.edu/ml/datasets/Wine
+
+    """</pre></div>
+            
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        <script src="../../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../../js/highlight.pack.js"></script>
+        <script>var base_url = '../../..';</script>
+        <script data-main="../../../mkdocs/js/search.js" src="../../../mkdocs/js/require.js"></script>
+        <script src="../../../js/base.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            From here you can search these documents. Enter
+                            your search terms below.
+                        </p>
+                        <form role="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                            </div>
+                        </form>
+                        <div id="mkdocs-search-results"></div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

@@ -1,3 +1,7 @@
+### 0.2.7
+
+- Added 5000 labeled trainingsamples from the MNIST handwritten digits dataset to `mlxtend.data`
+
 
 ### 0.2.6
 

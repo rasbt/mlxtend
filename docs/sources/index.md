@@ -9,7 +9,7 @@
 
 Sebastian Raschka 2014-2015
 
-Current version: 0.2.6
+Current version: 0.2.7
 
 <br>
 <hr>
@@ -43,7 +43,7 @@ Current version: 0.2.6
 	plt.xlabel('sepal length [cm]')
 	plt.ylabel('petal length [cm]')
 	plt.title('SVM on Iris')
-	plt.show()</pre>
+	plt.show()
 
 ![](./docs/evaluate/img/evaluate_plot_decision_regions_2d.png)
 

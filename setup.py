@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(name='mlxtend',
-      version='0.2.6',
+      version='0.2.7',
       description='Machine Learning Library Extensions',
       author='Sebastian Raschka',
       author_email='se.raschka@gmail.com',
@@ -38,7 +38,7 @@ Contact
 =============
 
 If you have any questions or comments about mlxtend, please feel free to contact me via
-eMail: se.raschka@gmail.com
+eMail: mail@sebastianraschka.com
 or Twitter: https://twitter.com/rasbt
 
 This project is hosted at https://github.com/rasbt/mlxtend

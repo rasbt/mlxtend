@@ -49,7 +49,7 @@ pages:
         - docs/data/iris.md
         - docs/data/wine.md
         - docs/data/autompg.md
-
+        - docs/data/mnist.md
 
 - Changelog: changelog.md
 - Installation: installation.md

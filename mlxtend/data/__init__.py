@@ -5,4 +5,5 @@
 from .iris import iris_data
 from .wine import wine_data
 from .autompg import autompg_data
-__all__ = ["iris_data", "wine_data", "autompg_data"]
+from .mnist import mnist_data
+__all__ = ["iris_data", "wine_data", "autompg_data", "mnist_data"]

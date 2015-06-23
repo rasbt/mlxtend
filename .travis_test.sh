@@ -16,7 +16,14 @@ python -c "import pandas; print('pandas %s' % pandas.__version__)"
 python -c "import matplotlib; print('matplotlib %s' % matplotlib.__version__)"
 
 if [[ "$COVERAGE" == "true" ]]; then
-    nosetests -s -v --with-coverage --cover-package=mlxtend
+    nosetests -s -v --with-coverage --cover-package=mlxtend.classifier
+    nosetests -s -v --with-coverage --cover-package=mlxtend.evaluate
+    nosetests -s -v --with-coverage --cover-package=mlxtend.math
+    nosetests -s -v --with-coverage --cover-package=mlxtend.pandas
+    nosetests -s -v --with-coverage --cover-package=mlxtend.preprocessing
+    nosetests -s -v --with-coverage --cover-package=mlxtend.regression
+    nosetests -s -v --with-coverage --cover-package=mlxtend.sklearn
+    nosetests -s -v --with-coverage --cover-package=mlxtend.text
 else
     nosetests -s -v mlxtend
 fi

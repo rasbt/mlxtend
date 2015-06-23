@@ -8,10 +8,10 @@ env:
     - PYTHON_VERSION="3.4" LATEST="true"
 install: source ./.travis_install.sh
 script: bash ./.travis_test.sh
-after_success:
+after_success: coveralls
     # Ignore coveralls failures as the coveralls server is not very reliable
     # but we don't want travis to report a failure in the github UI just
     # because the coverage report failed to be published.
     #- if [[ "$COVERAGE" == "true" ]]; then coveralls || echo "failed"; fi
-	- if [[ "$COVERAGE" == "true" ]]; then coveralls; fi
+	#- if [[ "$COVERAGE" == "true" ]]; then coveralls; fi
 cache: apt

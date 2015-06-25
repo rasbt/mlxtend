@@ -1,5 +1,6 @@
 ### 0.2.7
 
+- Added multilayer perceptron (feedforward artificial neural network) classifier as `mlxtend.classifier.NeuralNetMLP`.
 - Added 5000 labeled trainingsamples from the MNIST handwritten digits dataset to `mlxtend.data`
 
 

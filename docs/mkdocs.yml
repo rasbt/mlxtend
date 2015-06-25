@@ -11,6 +11,7 @@ pages:
 
 - Documentation:
     - classifier:
+        - docs/classifier/neuralnet_mlp.md
         - docs/classifier/adaline.md
         - docs/classifier/perceptron.md
         - docs/classifier/logistic_regression.md

@@ -9,7 +9,7 @@ Sebastian Raschka, last updated: 06/24/2015
 Implementation of a feedforward artificial neural network (multilayer perceptron, MLP).
 Although the code is fully working and can be used for common classification tasks, this implementation is not geared towards efficiency but clarity -- the original code was written for demonstration purposes (a more detailed blog article and step by step walkthrough is going to follow).
 
-![](./img/neuralnet_mlp_1.png)
+![](./img/neuralnet_mlp_1.png)  
 [Note: *x*<sub>0</sub> and *a*<sub>0</sub> are the bias units ( *x*<sub>0</sub>=1, *a*<sub>0</sub>=1); the activation is calculated as   *sigmoid(z) = g(z) = 1 / (1+exp(-z))*,   where the net input ***z*** of the first layer is defined as  ***z***<sup>(2)</sup> = **w**<sup>(1)</sup>***a***<sup>(1)</sup><sup>T</sup>, and the net input of the second layer is defined as  ***z***<sup>(3)</sup> = ***w***<sup>(2)</sup>***a***<sup>(2)</sup>, respectively; ***w***<sup>(k)</sup> are the weight matrices of the corresponding layers; ***a***<sup>(1)</sup> is equal to the input features plus bias unit, ***a***<sup>(1)</sup> = [1,  ***x*** ]]
 
 <br>

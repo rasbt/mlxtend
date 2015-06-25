@@ -26,7 +26,7 @@ def test_gradient_descent():
 
     nn.fit(X_std, y)
     y_pred = nn.predict(X_std)
-    acc = np.sum(y == y_pred, axis=0) / X_std.shape[0]
+    acc = np.sum(y == y_pred, axis=0) / float(X_std.shape[0])
     assert(round(acc, 2) == 0.97)
 
 
@@ -45,7 +45,7 @@ def test_minibatch():
 
     nn.fit(X_std, y)
     y_pred = nn.predict(X_std)
-    acc = np.sum(y == y_pred, axis=0) / X_std.shape[0]
+    acc = np.sum(y == y_pred, axis=0) / float(X_std.shape[0])
     assert(round(acc, 2) == 0.97)
     
     
@@ -65,5 +65,5 @@ def test_binary():
              random_state=1)
     nn.fit(X0, y0)
     y_pred = nn.predict(X0)
-    acc = np.sum(y0 == y_pred, axis=0) / X0.shape[0]
+    acc = np.sum(y0 == y_pred, axis=0) / float(X0.shape[0])
     assert(round(acc, 2) == 1.0)

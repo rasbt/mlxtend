@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Sebastian Raschka">
+        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/classifier/neuralnet_mlp/">
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+
+	<title>Neuralnet mlp - mlxtend</title>
+
+        <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../../css/highlight.css">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../../..">mlxtend</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">classifier</a>
+    <ul class="dropdown-menu">
+        
+            
+<li class="active">
+    <a href="./">Neuralnet mlp</a>
+</li>
+
+        
+            
+<li >
+    <a href="../adaline/">Adaline</a>
+</li>
+
+        
+            
+<li >
+    <a href="../perceptron/">Perceptron</a>
+</li>
+
+        
+            
+<li >
+    <a href="../logistic_regression/">Logistic regression</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">pandas</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../pandas/minmax_scaling/">Minmax scaling</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../pandas/standardizing/">Standardizing</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">sklearn</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../sklearn/sequential_backward_selection/">Sequential backward selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../sklearn/column_selector/">Column selector</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../sklearn/ensemble_classifier/">Ensemble classifier</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../sklearn/dense_transformer/">Dense transformer</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">evaluate</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../evaluate/plot_decision_regions/">Plot decision regions</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/plot_learning_curves/">Plot learning curves</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">matplotlib</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../matplotlib/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../matplotlib/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../matplotlib/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">regression</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../regression/plot_linear_regression_fit/">Plot linear regression fit</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../regression/linear_regression/">Linear regression</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">preprocessing</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../preprocessing/mean_centerer/">Mean centerer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">file_io</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../file_io/find_files/">Find files</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../file_io/find_filegroups/">Find filegroups</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">math</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../math/combinations/">Combinations</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/permutations/">Permutations</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">text</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../text/generalize_names/">Generalize names</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../text/generalize_names_duplcheck/">Generalize names duplcheck</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../text/tokenizer/">Tokenizer</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">data</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../data/iris/">Iris</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/wine/">Wine</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/autompg/">Autompg</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/mnist/">Mnist</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../changelog/">Changelog</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../installation/">Installation</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../contributing/">Contributing</a>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../../..">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../adaline/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a href="https://github.com/rasbt/mlxtend">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#neural-network-multilayer-perceptron">Neural Network - Multilayer Perceptron</a></li>
+        
+            <li><a href="#example-1-classify-iris">Example 1 - Classify Iris</a></li>
+        
+            <li><a href="#example-2-classify-handwritten-digits-from-mnist">Example 2 - Classify handwritten digits from MNIST</a></li>
+        
+            <li><a href="#default-parameters">Default Parameters</a></li>
+        
+            <li><a href="#methods">Methods</a></li>
+        
+    
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<p>mlxtend
+Sebastian Raschka, last updated: 06/24/2015</p>
+<h1 id="neural-network-multilayer-perceptron">Neural Network - Multilayer Perceptron</h1>
+<blockquote>
+<p>from mlxtend.classifier import NeuralNetMLP</p>
+</blockquote>
+<p>Implementation of a feedforward artificial neural network (multilayer perceptron, MLP).
+Although the code is fully working and can be used for common classification tasks, this implementation is not geared towards efficiency but clarity -- the original code was written for demonstration purposes (a more detailed blog article and step by step walkthrough is going to follow).</p>
+<p><img alt="" src="../img/neuralnet_mlp_1.png" /><br />
+[Note: <em>x</em><sub>0</sub> and <em>a</em><sub>0</sub> are the bias units ( <em>x</em><sub>0</sub>=1, <em>a</em><sub>0</sub>=1); the activation is calculated as   <em>sigmoid(z) = g(z) = 1 / (1+exp(-z))</em>,   where the net input <strong><em>z</em></strong> of the first layer is defined as  <strong><em>z</em></strong><sup>(2)</sup> = <strong>w</strong><sup>(1)</sup><strong><em>a</em></strong><sup>(1)</sup><sup>T</sup>, and the net input of the second layer is defined as  <strong><em>z</em></strong><sup>(3)</sup> = <strong><em>w</em></strong><sup>(2)</sup><strong><em>a</em></strong><sup>(2)</sup>, respectively; <strong><em>w</em></strong><sup>(k)</sup> are the weight matrices of the corresponding layers; <strong><em>a</em></strong><sup>(1)</sup> is equal to the input features plus bias unit, <strong><em>a</em></strong><sup>(1)</sup> = [1,  <strong><em>x</em></strong> ]]</p>
+<p><br>
+<strong>A fact sheet of the current implementation:</strong></p>
+<ul>
+<li>Binary and multi-class classification</li>
+<li>1 input layer, 1 hidden layer, 1 output layer</li>
+<li>logistic (sigmoid) activation functions (see the activation function <a href="http://nbviewer.ipython.org/github/rasbt/pattern_classification/blob/master/machine_learning/neural_networks/ipynb/activation_functions.ipynb">cheatsheet</a>)</li>
+<li>learning via batch gradient descent or mini-batch gradient descent using the <a href="https://en.wikipedia.org/?title=Backpropagation">backpropagation</a> algorithm</li>
+<li>optional L1 and/or L2 regularization (penalty)</li>
+<li>Currently only constant learning rate </li>
+</ul>
+<p><strong>For more details, please see the <a href="https://github.com/rasbt/mlxtend/blob/master/mlxtend/classifier/neuralnet_mlp.py">source code</a>.</strong></p>
+<p><br>
+<br>
+<hr></p>
+<h3 id="example-1-classify-iris">Example 1 - Classify Iris</h3>
+<p>[An IPython notebook to execute those examples can be found <a href="http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/classifier_nn_mlp.ipynb">here</a>]</p>
+<p>Load 2 features from Iris (petal length and petal width) for visualization purposes.</p>
+<pre><code>from mlxtend.data import iris_data
+X, y = iris_data()
+X = X[:, 2:]
+</code></pre>
+<p>Train neural network for 3 output flower classes ('Setosa', 'Versicolor', 'Virginica'), regular gradient decent (minibatches=1), 30 hidden units, and no regularization.</p>
+<pre><code>&gt;&gt;&gt; from mlxtend.classifier import NeuralNetMLP
+&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; nn1 = NeuralNetMLP(n_output=3, 
+...     n_features=X.shape[1], 
+...     n_hidden=30, 
+...     l2=0.0, 
+...     l1=0.0, 
+ ...     epochs=5000, 
+...     eta=0.001, 
+...     minibatches=1, 
+...     shuffle=True,
+...     random_state=1)
+&gt;&gt;&gt; nn1.fit(X, y)
+&gt;&gt;&gt; y_pred = nn1.predict(X)
+&gt;&gt;&gt; acc = np.sum(y == y_pred, axis=0) / X.shape[0]
+&gt;&gt;&gt; print('Accuracy: %.2f%%' % (acc * 100))
+Accuracy: 96.00%
+</code></pre>
+<p>Now, check if the gradient descent converged after 5000 epochs, and choose smaller learning rate (<code>eta</code>) otherwise.</p>
+<pre><code>&gt;&gt;&gt; import matplotlib.pyplot as plt
+&gt;&gt;&gt; plt.plot(range(len(nn1.cost_)), nn1.cost_)
+&gt;&gt;&gt; plt.ylim([0, 300])
+&gt;&gt;&gt; plt.ylabel('Cost')
+&gt;&gt;&gt; plt.xlabel('Epochs')
+&gt;&gt;&gt; plt.show()
+</code></pre>
+<p><img alt="" src="../img/neuralnet_mlp_2.png" /></p>
+<p><strong>Note:</strong> In practice, it is recommended to standardize the features for faster and smoother convergence.</p>
+<pre><code>&gt;&gt;&gt; X_std = np.copy(X)
+&gt;&gt;&gt; for i in range(2):
+    &gt;&gt;&gt; X_std[:,i] = (X[:,i] - X[:,i].mean()) / X[:,i].std()
+</code></pre>
+<p>Visualize the decision regions:</p>
+<pre><code>&gt;&gt;&gt; from mlxtend.evaluate import plot_decision_regions
+&gt;&gt;&gt; plot_decision_regions(X, y, clf=nn1)
+&gt;&gt;&gt; plt.xlabel('petal length [cm]')
+&gt;&gt;&gt; plt.ylabel('petal width [cm]')
+&gt;&gt;&gt; plt.show()
+</code></pre>
+<p><img alt="" src="../img/neuralnet_mlp_3.png" /></p>
+<p><br>
+<br>
+<hr></p>
+<h3 id="example-2-classify-handwritten-digits-from-mnist">Example 2 - Classify handwritten digits from MNIST</h3>
+<p>[An IPython notebook to execute those examples can be found <a href="http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/classifier_nn_mlp.ipynb">here</a>]</p>
+<p>Load a 5000-sample subset of the <a href="http://rasbt.github.io/mlxtend/docs/data/mnist/">MNIST dataset</a> (please see <a href="http://nbviewer.ipython.org/github/rasbt/pattern_classification/blob/master/data_collecting/reading_mnist.ipynb">this tutorial</a> if you want to download and read in the complete MNIST dataset).</p>
+<pre><code>&gt;&gt;&gt; from mlxtend.data import mnist_data
+&gt;&gt;&gt; X, y = mnist_data()
+</code></pre>
+<p>Visualize a sample from the MNIST dataset to check if it was loaded correctly.</p>
+<pre><code>&gt;&gt;&gt; def plot_digit(X, y, idx):
+...     img = X[idx].reshape(28,28)
+...     plt.imshow(img, cmap='Greys',  interpolation='nearest')
+...     plt.title('true label: %d' % y[idx])
+...     plt.show()
+&gt;&gt;&gt; plot_digit(X, y, 4)
+</code></pre>
+<p><img alt="" src="../img/neuralnet_mlp_4.png" /></p>
+<p>Initialize the neural network to recognize the 10 different digits (0-10) using 300 epochs and mini-batch learning.</p>
+<pre><code>&gt;&gt;&gt; nn = NeuralNetMLP(n_output=10, n_features=X.shape[1], 
+...         n_hidden=100, 
+...         l2=0.0, 
+...         l1=0.0, 
+...         epochs=300, 
+...         eta=0.0005, 
+...         minibatches=50, 
+...         random_state=1)
+</code></pre>
+<p>Learn the features while printing the progress to get an idea about how long it may take.</p>
+<pre><code>&gt;&gt;&gt; nn.fit(X, y, print_progress=True)
+Epoch: 300/300
+&gt;&gt;&gt; y_pred = nn.predict(X)
+&gt;&gt;&gt; print('Accuracy: %.2f%%' % (acc * 100))
+Accuracy: 94.86%
+</code></pre>
+<p>Check for convergence.</p>
+<pre><code>&gt;&gt;&gt; plt.plot(range(len(nn.cost_)), nn.cost_)
+&gt;&gt;&gt; plt.ylim([0, 500])
+&gt;&gt;&gt; plt.ylabel('Cost')
+&gt;&gt;&gt; plt.xlabel('Mini-batches * Epochs')
+&gt;&gt;&gt; plt.show()
+</code></pre>
+<p><img alt="" src="../img/neuralnet_mlp_5.png" /></p>
+<pre><code>&gt;&gt;&gt; plt.plot(range(len(nn.cost_)//50), nn.cost_[::50], color='red')
+&gt;&gt;&gt; plt.ylim([0, 500])
+&gt;&gt;&gt; plt.ylabel('Cost')
+&gt;&gt;&gt; plt.xlabel('Epochs')
+&gt;&gt;&gt; plt.show()
+</code></pre>
+<p><img alt="" src="../img/neuralnet_mlp_6.png" /></p>
+<p><br>
+<br>
+<hr></p>
+<h3 id="default-parameters">Default Parameters</h3>
+<pre>class NeuralNetMLP(object):
+    """ Feedforward neural network / Multi-layer perceptron classifier.
+
+    Parameters
+    ------------
+    n_output : int
+      Number of output units, should be equal to the
+      number of unique class labels.
+
+    n_features : int
+      Number of features (dimensions) in the target dataset.
+      Should be equal to the number of columns in the X array.
+
+    n_hidden : int (default: 30)
+      Number of hidden units.
+
+    l1 : float (default: 0.0)
+      Lambda value for L1-regularization.
+      No regularization if l1=0.0 (default)
+
+    l2 : float (default: 0.0)
+      Lambda value for L2-regularization.
+      No regularization if l2=0.0 (default)
+
+    epochs : int (default: 500)
+      Number of passes over the training set.
+
+    eta : float (default: 0.01)
+      Learning rate.
+
+    shuffle : bool (default: False)
+      Shuffles training data every epoch if True to prevent circles.
+
+    minibatches : int (default: 1)
+      Divides training data into k minibatches for efficiency.
+      Normal gradient descent learning if k=1 (default).
+
+    random_state : int (default: None)
+      Set random state for shuffling and initializing the weights.
+
+    Attributes
+    -----------
+    cost_ : list
+      Sum of squared errors after each epoch.
+
+    """</pre>
+
+<hr>
+
+<h3 id="methods">Methods</h3>
+<pre>def fit(self, X, y, print_progress=False):
+    """ Learn weights from training data.
+
+    Parameters
+    -----------
+    X : array, shape = [n_samples, n_features]
+      Input layer with original features.
+
+    y : array, shape = [n_samples]
+      Target class labels.
+
+    print_progress : bool (default: False)
+      Prints progress as the number of epochs
+      to stderr.
+
+    Returns:
+    ----------
+    self
+
+    """</pre>
+
+<pre>def predict(self, X):
+    """Predict class labels
+
+    Parameters
+    -----------
+    X : array, shape = [n_samples, n_features]
+      Input layer with original features.
+
+    Returns:
+    ----------
+    y_pred : array, shape = [n_samples]
+      Predicted class labels.
+
+    """</pre></div>
+            
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        <script src="../../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../../js/highlight.pack.js"></script>
+        <script>var base_url = '../../..';</script>
+        <script data-main="../../../mkdocs/js/search.js" src="../../../mkdocs/js/require.js"></script>
+        <script src="../../../js/base.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            From here you can search these documents. Enter
+                            your search terms below.
+                        </p>
+                        <form role="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                            </div>
+                        </form>
+                        <div id="mkdocs-search-results"></div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

@@ -25,6 +25,13 @@ if [[ "$COVERAGE" == "true" ]]; then
     nosetests -s -v --with-coverage --cover-package=mlxtend.sklearn
     nosetests -s -v --with-coverage --cover-package=mlxtend.text
 else
-    nosetests -s -v mlxtend
+    nosetests -s -v mlxtend.classifier
+    nosetests -s -v mlxtend.evaluate
+    nosetests -s -v mlxtend.math
+    nosetests -s -v mlxtend.pandas
+    nosetests -s -v mlxtend.preprocessing
+    nosetests -s -v mlxtend.regression
+    nosetests -s -v mlxtend.sklearn
+    nosetests -s -v mlxtend.text
 fi
 #make test-doc test-sphinxext

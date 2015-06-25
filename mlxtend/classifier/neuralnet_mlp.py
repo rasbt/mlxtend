@@ -169,7 +169,7 @@ class NeuralNetMLP(object):
         """Compute L1-regularization cost"""
         return (lambda_/2.0) * (np.abs(w1).sum() + np.abs(w2).sum())
 
-    def _get_cost(self, y_enc, output, w1, w2, l1_lambda, l2_lambda):
+    def _get_cost(self, y_enc, output, w1, w2):
         """Compute cost function.
 
         y_enc : array, shape = (n_labels, n_samples)
@@ -184,12 +184,6 @@ class NeuralNetMLP(object):
         w2 : array, shape = [n_output_units, n_hidden_units]
           Weight matrix for hidden layer -> output layer.
 
-        l1_lambda : float
-          Lambda value for L1-regularization.
-
-        l2_lambda : float
-          Lambda value for L2-regularization.
-
         Returns
         ---------
         cost : float
@@ -199,21 +193,30 @@ class NeuralNetMLP(object):
         term1 = -y_enc * (np.log(output))
         term2 = (1 - y_enc) * np.log(1 - output)
         cost = np.sum(term1 - term2)
-        L1_term = self._L1_reg(l1_lambda, w1, w2)
-        L2_term = self._L2_reg(l2_lambda, w1, w2)
+        L1_term = self._L1_reg(self.l1, w1, w2)
+        L2_term = self._L2_reg(self.l2, w1, w2)
         cost = cost + L1_term + L2_term
         return cost
 
-    def _get_gradient(self, X, y, w1, w2, l1_lambda, l2_lambda):
+    def _get_gradient(self, a1, a2, a3, z2, y_enc, w1, w2):
         """ Compute gradient step using backpropagation.
 
         Parameters
         ------------
-        X : array, shape = [n_samples, n_features]
-          Input layer with original features.
+        a1 : array, shape = [n_samples, n_features+1]
+          Input values with bias unit.
 
-        y : array, shape = [n_samples]
-          Target values.
+        a2 : array, shape = [n_hidden+1, n_samples]
+          Activation of hidden layer.
+
+        a3 : array, shape = [n_output_units, n_samples]
+          Activation of output layer.
+
+        z2 : array, shape = [n_hidden, n_samples]
+          Net input of hidden layer.
+
+        y_enc : array, shape = (n_labels, n_samples)
+          one-hot encoded class labels.
 
         w1 : array, shape = [n_hidden_units, n_features]
           Weight matrix for input layer -> hidden layer.
@@ -221,16 +224,8 @@ class NeuralNetMLP(object):
         w2 : array, shape = [n_output_units, n_hidden_units]
           Weight matrix for hidden layer -> output layer.
 
-        l1_lambda : float
-          Lambda value for L1-regularization.
-
-        l2_lambda : float
-          Lambda value for L2-regularization.
-
         Returns
         ---------
-        cost : float
-          Regularized cost.
 
         grad1 : array, shape = [n_hidden_units, n_features]
           Gradient of the weight matrix w1.
@@ -239,11 +234,6 @@ class NeuralNetMLP(object):
             Gradient of the weight matrix w2.
 
         """
-        # feedforward
-        a1, z2, a2, z3, a3 = self._feedforward(X, w1, w2)
-        y_enc = self._encode_labels(y, self.n_output)
-        cost = self._get_cost(y_enc, a3, w1, w2, l1_lambda, l2_lambda)
-
         # backpropagation
         sigma3 = a3 - y_enc
         z2 = self._add_bias_unit(z2, how='row')
@@ -253,12 +243,12 @@ class NeuralNetMLP(object):
         grad2 = sigma3.dot(a2.T)
 
         # regularize
-        grad1[:, 1:] += (w1[:, 1:] * (l1_lambda + l2_lambda))
-        grad2[:, 1:] += (w2[:, 1:] * (l1_lambda + l2_lambda))
+        grad1[:, 1:] += (w1[:, 1:] * (self.l1 + self.l2))
+        grad2[:, 1:] += (w2[:, 1:] * (self.l1 + self.l2))
 
-        return cost, grad1, grad2
+        return grad1, grad2
 
-    def _gradient_checking(self, X, y, w1, w2, l1_lambda, l2_lambda, epsilon):
+    def _gradient_checking(self, X, y_enc, w1, w2, epsilon, grad1, grad2):
         """ Apply gradient checking (for debugging only)
 
         Returns
@@ -268,19 +258,15 @@ class NeuralNetMLP(object):
           approximated gradients and the backpropagated gradients.
 
         """
-        y_enc = self._encode_labels(y, self.n_output)
-
         num_grad1 = np.zeros(np.shape(w1))
         epsilon_ary1 = np.zeros(np.shape(w1))
         for i in range(w1.shape[0]):
             for j in range(w1.shape[1]):
                 epsilon_ary1[i, j] = epsilon
                 a1, z2, a2, z3, a3 = self._feedforward(X, w1 - epsilon_ary1, w2)
-                cost1 = self._get_cost(y_enc, a3, w1-epsilon_ary1,
-                                       w2, l1_lambda, l2_lambda)
+                cost1 = self._get_cost(y_enc, a3, w1-epsilon_ary1, w2)
                 a1, z2, a2, z3, a3 = self._feedforward(X, w1 + epsilon_ary1, w2)
-                cost2 = self._get_cost(y_enc, a3, w1 + epsilon_ary1,
-                                       w2, l1_lambda, l2_lambda)
+                cost2 = self._get_cost(y_enc, a3, w1 + epsilon_ary1, w2)
                 num_grad1[i, j] = (cost2 - cost1) / (2 * epsilon)
                 epsilon_ary1[i, j] = 0
 
@@ -290,16 +276,11 @@ class NeuralNetMLP(object):
             for j in range(w2.shape[1]):
                 epsilon_ary2[i, j] = epsilon
                 a1, z2, a2, z3, a3 = self._feedforward(X, w1, w2 - epsilon_ary2)
-                cost1 = self._get_cost(y_enc, a3, w1, w2 - epsilon_ary2,
-                                       l1_lambda, l2_lambda)
+                cost1 = self._get_cost(y_enc, a3, w1, w2 - epsilon_ary2)
                 a1, z2, a2, z3, a3 = self._feedforward(X, w1, w2 + epsilon_ary2)
-                cost2 = self._get_cost(y_enc, a3, w1, w2 + epsilon_ary2,
-                                       l1_lambda, l2_lambda)
+                cost2 = self._get_cost(y_enc, a3, w1, w2 + epsilon_ary2,)
                 num_grad2[i, j] = (cost2 - cost1) / (2 * epsilon)
                 epsilon_ary2[i, j] = 0
-
-        cost, grad1, grad2 = self._get_gradient(X, y, w1, w2,
-                                                l1_lambda, l2_lambda)
 
         num_grad = np.hstack((num_grad1.flatten(), num_grad2.flatten()))
         grad = np.hstack((grad1.flatten(), grad2.flatten()))
@@ -325,9 +306,7 @@ class NeuralNetMLP(object):
                                  'Use X[:,None] for 1-feature classification,'
                                  '\nor X[[i]] for 1-sample classification')
 
-        Xt = X.copy()
-
-        a1, z2, a2, z3, a3 = self._feedforward(Xt, self.w1, self.w2)
+        a1, z2, a2, z3, a3 = self._feedforward(X, self.w1, self.w2)
         y_pred = np.argmax(z3, axis=0)
         return y_pred
 
@@ -353,34 +332,46 @@ class NeuralNetMLP(object):
         """
         self.cost_ = []
         X_data, y_data = X.copy(), y.copy()
-        for i in range(self.epochs):
+        y_enc = self._encode_labels(y, self.n_output)
 
+        for i in range(self.epochs):
             if print_progress:
                 sys.stderr.write('\rEpoch: %d/%d' % (i+1, self.epochs))
                 sys.stderr.flush()
 
             if self.shuffle:
-                idx = idx = np.random.permutation(y_data.shape[0])
+                idx = np.random.permutation(y_data.shape[0])
                 X_data, y_data = X_data[idx], y_data[idx]
 
-            X_mb = np.array_split(X_data, self.minibatches)
-            y_mb = np.array_split(y_data, self.minibatches)
+            mini = np.array_split(range(X_data.shape[0]), self.minibatches)
+            for idx in mini:
 
-            for Xi, yi in zip(X_mb, y_mb):
+                # feedforward
+                a1, z2, a2, z3, a3 = self._feedforward(X[idx], self.w1, self.w2)
+                cost = self._get_cost(y_enc=y_enc[:, idx],
+                                      output=a3,
+                                      w1=self.w1,
+                                      w2=self.w2)
+                self.cost_.append(cost)
+
+                # compute gradient via backpropagation
+                grad1, grad2 = self._get_gradient(a1=a1, a2=a2,
+                                                  a3=a3, z2=z2,
+                                                  y_enc=y_enc[:, idx],
+                                                  w1=self.w1,
+                                                  w2=self.w2)
 
                 ## gradient checking
                 ## Used for debugging; now turned off for efficiency
-                # num_grad = self._gradient_checking(Xi, yi,
-                #             self.w1, self.w2, self.l1, self.l2, epsilon=1e-5)
-                # if num_grad > 1e-7:
+                # grad_diff = self._gradient_checking(X=X[idx], y_enc=y_enc[:, idx],
+                #                                   w1=self.w1, w2=self.w2,
+                #                                   epsilon=1e-5,
+                #                                   grad1=grad1, grad2=grad2)
+                # if grad_diff > 1e-7:
                 #     warn = print('Warning !!! ', end='')
-                # print(num_grad)
+                # print(grad_diff)
 
                 # update weights
-                cost, grad1, grad2 = self._get_gradient(Xi, yi, self.w1,
-                                                        self.w2, self.l1,
-                                                        self.l2)
-                self.cost_.append(cost)
                 self.w1 -= (self.eta * grad1)
                 self.w2 -= (self.eta * grad2)
 

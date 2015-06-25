@@ -124,7 +124,7 @@ Learn the features while printing the progress to get an idea about how long it 
     Epoch: 300/300
     >>> y_pred = nn.predict(X)
     >>> print('Accuracy: %.2f%%' % (acc * 100))
-    Accuracy: 94.86%
+    Accuracy: 95.00%
 
 Check for convergence.
 

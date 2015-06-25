@@ -7,10 +7,12 @@ Sebastian Raschka, last updated: 06/24/2015
 > from mlxtend.classifier import NeuralNetMLP
 
 Implementation of a feedforward artificial neural network (multilayer perceptron, MLP).
-Although the code is fully working and can be used for common classification tasks, this implementation is not geared towards efficiency but clarity -- the original code was written for demonstration purposes.
+Although the code is fully working and can be used for common classification tasks, this implementation is not geared towards efficiency but clarity -- the original code was written for demonstration purposes (a more detailed blog article and step by step walkthrough is going to follow).
 
 ![](./img/neuralnet_mlp_1.png)
+[Note: *x*<sub>0</sub> and *a*<sub>0</sub> are the bias units ( *x*<sub>0</sub>=1, *a*<sub>0</sub>=1); the activation is calculated as   *sigmoid(z) = g(z) = 1 / (1+exp(-z))*,   where the net input ***z*** of the first layer is defined as  ***z***<sup>(2)</sup> = **w**<sup>(1)</sup>***a***<sup>(1)</sup><sup>T</sup>, and the net input of the second layer is defined as  ***z***<sup>(3)</sup> = ***w***<sup>(2)</sup>***a***<sup>(2)</sup>, respectively; ***w***<sup>(k)</sup> are the weight matrices of the corresponding layers; ***a***<sup>(1)</sup> is equal to the input features plus bias unit, ***a***<sup>(1)</sup> = [1,  ***x*** ]]
 
+<br>
 **A fact sheet of the current implementation:**
 
 - Binary and multi-class classification
@@ -27,6 +29,7 @@ Although the code is fully working and can be used for common classification tas
 <br>
 <hr>
 ### Example 1 - Classify Iris
+[An IPython notebook to execute those examples can be found [here](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/classifier_nn_mlp.ipynb)]
 
 Load 2 features from Iris (petal length and petal width) for visualization purposes.
 
@@ -39,15 +42,15 @@ Train neural network for 3 output flower classes ('Setosa', 'Versicolor', 'Virgi
     >>> from mlxtend.classifier import NeuralNetMLP
     >>> import numpy as np
     >>> nn1 = NeuralNetMLP(n_output=3, 
-         ... n_features=X.shape[1], 
-         ... n_hidden=30, 
-         ... l2=0.0, 
-         ... l1=0.0, 
-         ... epochs=5000, 
-         ... eta=0.001, 
-         ... minibatches=1, 
-         ... shuffle=True,
-         ... random_state=1)
+    ...     n_features=X.shape[1], 
+    ...     n_hidden=30, 
+    ...     l2=0.0, 
+    ...     l1=0.0, 
+     ...     epochs=5000, 
+    ...     eta=0.001, 
+    ...     minibatches=1, 
+    ...     shuffle=True,
+    ...     random_state=1)
     >>> nn1.fit(X, y)
     >>> y_pred = nn1.predict(X)
     >>> acc = np.sum(y == y_pred, axis=0) / X.shape[0]
@@ -86,6 +89,7 @@ Visualize the decision regions:
 <br>
 <hr>
 ### Example 2 - Classify handwritten digits from MNIST
+[An IPython notebook to execute those examples can be found [here](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/classifier_nn_mlp.ipynb)]
 
 Load a 5000-sample subset of the [MNIST dataset](http://rasbt.github.io/mlxtend/docs/data/mnist/) (please see [this tutorial](http://nbviewer.ipython.org/github/rasbt/pattern_classification/blob/master/data_collecting/reading_mnist.ipynb) if you want to download and read in the complete MNIST dataset).
 
@@ -120,7 +124,7 @@ Learn the features while printing the progress to get an idea about how long it 
     Epoch: 300/300
     >>> y_pred = nn.predict(X)
     >>> print('Accuracy: %.2f%%' % (acc * 100))
-    ... Accuracy: 94.86%
+    Accuracy: 94.86%
 
 Check for convergence.
 

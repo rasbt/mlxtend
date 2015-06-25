@@ -11,7 +11,9 @@ Sebastian Raschka 2014-2015
 
 Current version: 0.2.7
 
+
 <br>
+
 <hr>
 
 ## Links
@@ -19,7 +21,18 @@ Current version: 0.2.7
 - Source code repository: [https://github.com/rasbt/mlxtend](https://github.com/rasbt/mlxtend)
 - PyPI: [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend)
 
+<br>
+
 <hr>
+**Recently added**
+
+- [Neural Network / Multilayer Perceptron classifier](http://rasbt.github.io/mlxtend/docs/classifier/neuralnet_mlp/)
+- [5000 labeled training samples](http://rasbt.github.io/mlxtend/docs/data/mnist/) from the MNIST handwritten digits dataset
+- [Ordinary least square regression](http://rasbt.github.io/mlxtend/docs/regression/linear_regression/) using different solvers (gradient and stochastic gradient descent, and the closed form solution)
+
+<hr>
+<br>
+
 ## Examples
 
 	from mlxtend.evaluate import plot_decision_regions

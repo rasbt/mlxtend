@@ -37,8 +37,14 @@ class NeuralNetMLP(object):
       Learning rate.
 
     alpha : float (default: 0.0)
-      Momentum constant. Adds a fraction of the t-1 gradient
-      to the delta rule for faster convergence
+      Momentum constant. Factor multiplied with the
+      gradient of the previous epoch t-1 to improve
+      learning speed
+      w(t) := w(t) - (grad(t) + alpha*grad(t-1))
+
+    decrease_const : float (default: 0.0)
+      Decrease constant. Shrinks the learning rate
+      after each epoch via eta / (1 + epoch*decrease_const)
 
     shuffle : bool (default: False)
       Shuffles training data every epoch if True to prevent circles.
@@ -57,8 +63,9 @@ class NeuralNetMLP(object):
 
     """
     def __init__(self, n_output, n_features, n_hidden=30,
-                 l1=0.0, l2=0.0, epochs=500, eta=0.001, alpha=0.0,
-                 shuffle=True, minibatches=1, random_state=None):
+                 l1=0.0, l2=0.0, epochs=500, eta=0.001,
+                 alpha=0.0, decrease_const=0.0, shuffle=True,
+                 minibatches=1, random_state=None):
 
         np.random.seed(random_state)
         self.n_output = n_output
@@ -70,6 +77,7 @@ class NeuralNetMLP(object):
         self.epochs = epochs
         self.eta = eta
         self.alpha = alpha
+        self.decrease_const = decrease_const
         self.shuffle = shuffle
         self.minibatches = minibatches
 
@@ -343,6 +351,9 @@ class NeuralNetMLP(object):
         delta_w2_prev = np.zeros(self.w2.shape)
 
         for i in range(self.epochs):
+
+            # adaptive learning rate
+            self.eta /= (1 + self.decrease_const*i)
 
             if print_progress:
                 sys.stderr.write('\rEpoch: %d/%d' % (i+1, self.epochs))

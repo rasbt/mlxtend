@@ -21,6 +21,7 @@ Although the code is fully working and can be used for common classification tas
 - learning via batch gradient descent or mini-batch gradient descent using the [backpropagation](https://en.wikipedia.org/?title=Backpropagation) algorithm
 - optional L1 and/or L2 regularization (penalty)
 - Momentum learning: &Delta;**w**<sub>t</sub>= -&eta;  &nabla;<sub>**w**</sub>E(**w**) + &alpha; &Delta;**w**<sub>t-1</sub> (where &alpha; and &eta;  are the momentum constant and  the learning rate, respectively)
+- Adaptive learning rate: &eta; / (1 + *t* &times; *d*), where *d* is the decrease constant. 
 
 **For more details, please see the [source code](https://github.com/rasbt/mlxtend/blob/master/mlxtend/classifier/neuralnet_mlp.py).**
 
@@ -202,6 +203,16 @@ Check for convergence.
 
     eta : float (default: 0.01)
       Learning rate.
+
+    alpha : float (default: 0.0)
+      Momentum constant. Factor multiplied with the
+      gradient of the previous epoch t-1 to improve
+      learning speed
+      w(t) := w(t) - (grad(t) + alpha*grad(t-1))
+    
+    decrease_const : float (default: 0.0)
+      Decrease constant. Shrinks the learning rate
+      after each epoch via eta / (1 + epoch*decrease_const)
 
     shuffle : bool (default: False)
       Shuffles training data every epoch if True to prevent circles.

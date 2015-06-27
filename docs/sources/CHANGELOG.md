@@ -1,5 +1,6 @@
 ### 0.2.8
-- Added momentum learning parameter (alpha coefficient) to multilayer perceptron (feedforward artificial neural network) `mlxtend.classifier.NeuralNetMLP`.
+- Added momentum learning parameter (alpha coefficient) to `mlxtend.classifier.NeuralNetMLP`.
+- Added adaptive learning rate (decrease constant) to `mlxtend.classifier.NeuralNetMLP`.
 
 ### 0.2.7
 

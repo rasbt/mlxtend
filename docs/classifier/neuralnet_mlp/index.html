@@ -438,7 +438,7 @@ Although the code is fully working and can be used for common classification tas
 <li>logistic (sigmoid) activation functions (see the activation function <a href="http://nbviewer.ipython.org/github/rasbt/pattern_classification/blob/master/machine_learning/neural_networks/ipynb/activation_functions.ipynb">cheatsheet</a>)</li>
 <li>learning via batch gradient descent or mini-batch gradient descent using the <a href="https://en.wikipedia.org/?title=Backpropagation">backpropagation</a> algorithm</li>
 <li>optional L1 and/or L2 regularization (penalty)</li>
-<li>Currently only constant learning rate </li>
+<li>Momentum learning: &Delta;<strong>w</strong><sub>t</sub>= -&eta;  &nabla;<sub><strong>w</strong></sub>E(<strong>w</strong>) + &alpha; &Delta;<strong>w</strong><sub>t-1</sub> (where &alpha; and &eta;  are the momentum constant and  the learning rate, respectively)</li>
 </ul>
 <p><strong>For more details, please see the <a href="https://github.com/rasbt/mlxtend/blob/master/mlxtend/classifier/neuralnet_mlp.py">source code</a>.</strong></p>
 <p><br>
@@ -459,8 +459,9 @@ X = X[:, 2:]
 ...     n_hidden=30, 
 ...     l2=0.0, 
 ...     l1=0.0, 
- ...     epochs=5000, 
+...     epochs=5000, 
 ...     eta=0.001, 
+...     alpha=0.1,
 ...     minibatches=1, 
 ...     shuffle=True,
 ...     random_state=1)
@@ -482,8 +483,28 @@ Accuracy: 96.00%
 <p><strong>Note:</strong> In practice, it is recommended to standardize the features for faster and smoother convergence.</p>
 <pre><code>&gt;&gt;&gt; X_std = np.copy(X)
 &gt;&gt;&gt; for i in range(2):
-    &gt;&gt;&gt; X_std[:,i] = (X[:,i] - X[:,i].mean()) / X[:,i].std()
+...     X_std[:,i] = (X[:,i] - X[:,i].mean()) / X[:,i].std()
+
+&gt;&gt;&gt; nn2 = NeuralNetMLP(n_output=3, 
+...     n_features=X_std.shape[1], 
+...     n_hidden=30, 
+...     l2=0.0, 
+...     l1=0.0, 
+...     epochs=1000, 
+...     eta=0.05,
+...     alpha=0.1,
+...     minibatches=1, 
+...     shuffle=True,
+...     random_state=1)
 </code></pre>
+<p><br></p>
+<pre><code>&gt;&gt;&gt; nn2.fit(X_std, y)
+&gt;&gt;&gt; y_pred = nn2.predict(X_std)
+&gt;&gt;&gt; acc = np.sum(y == y_pred, axis=0) / X_std.shape[0]
+&gt;&gt;&gt; print('Accuracy: %.2f%%' % (acc * 100))
+Accuracy: 96.00%
+</code></pre>
+<p><img alt="" src="../img/neuralnet_mlp_7.png" /></p>
 <p>Visualize the decision regions:</p>
 <pre><code>&gt;&gt;&gt; from mlxtend.evaluate import plot_decision_regions
 &gt;&gt;&gt; plot_decision_regions(X, y, clf=nn1)
@@ -525,7 +546,7 @@ Accuracy: 96.00%
 Epoch: 300/300
 &gt;&gt;&gt; y_pred = nn.predict(X)
 &gt;&gt;&gt; print('Accuracy: %.2f%%' % (acc * 100))
-Accuracy: 95.00%
+Accuracy: 95.48%
 </code></pre>
 <p>Check for convergence.</p>
 <pre><code>&gt;&gt;&gt; plt.plot(range(len(nn.cost_)), nn.cost_)

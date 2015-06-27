@@ -56,7 +56,7 @@ def test_binary():
     X0 = X_std[0:100] # class 0 and class 1
     y0 = y[0:100] # class 0 and class 1
 
-    nn = NeuralNetMLP(n_output=3,
+    nn = NeuralNetMLP(n_output=1,
              n_features=X0.shape[1],
              n_hidden=10,
              l2=0.0,
@@ -69,5 +69,5 @@ def test_binary():
     nn.fit(X0, y0)
     y_pred = nn.predict(X0)
     acc = np.sum(y0 == y_pred, axis=0) / float(X0.shape[0])
-    #print(acc)
+    #print(y_pred)
     assert(round(acc, 2) == 1.0)

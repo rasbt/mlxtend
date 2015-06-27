@@ -69,6 +69,8 @@ class NeuralNetMLP(object):
 
         np.random.seed(random_state)
         self.n_output = n_output
+        if self.n_output == 1: # use onehot for binary classif.
+            self.n_output = 2
         self.n_features = n_features
         self.n_hidden = n_hidden
         self.w1, self.w2 = self._initialize_weights()

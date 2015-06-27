@@ -20,7 +20,7 @@ Although the code is fully working and can be used for common classification tas
 - logistic (sigmoid) activation functions (see the activation function [cheatsheet](http://nbviewer.ipython.org/github/rasbt/pattern_classification/blob/master/machine_learning/neural_networks/ipynb/activation_functions.ipynb))
 - learning via batch gradient descent or mini-batch gradient descent using the [backpropagation](https://en.wikipedia.org/?title=Backpropagation) algorithm
 - optional L1 and/or L2 regularization (penalty)
-- Currently only constant learning rate 
+- Momentum learning: &Delta;**w**<sub>t</sub>= -&eta;  &nabla;<sub>**w**</sub>E(**w**) + &alpha; &Delta;**w**<sub>t-1</sub> (where &alpha; and &eta;  are the momentum constant and  the learning rate, respectively)
 
 **For more details, please see the [source code](https://github.com/rasbt/mlxtend/blob/master/mlxtend/classifier/neuralnet_mlp.py).**
 
@@ -46,8 +46,9 @@ Train neural network for 3 output flower classes ('Setosa', 'Versicolor', 'Virgi
     ...     n_hidden=30, 
     ...     l2=0.0, 
     ...     l1=0.0, 
-     ...     epochs=5000, 
+    ...     epochs=5000, 
     ...     eta=0.001, 
+    ...     alpha=0.1,
     ...     minibatches=1, 
     ...     shuffle=True,
     ...     random_state=1)
@@ -72,7 +73,30 @@ Now, check if the gradient descent converged after 5000 epochs, and choose small
     
     >>> X_std = np.copy(X)
     >>> for i in range(2):
-        >>> X_std[:,i] = (X[:,i] - X[:,i].mean()) / X[:,i].std()
+    ...     X_std[:,i] = (X[:,i] - X[:,i].mean()) / X[:,i].std()
+
+    >>> nn2 = NeuralNetMLP(n_output=3, 
+    ...     n_features=X_std.shape[1], 
+    ...     n_hidden=30, 
+    ...     l2=0.0, 
+    ...     l1=0.0, 
+    ...     epochs=1000, 
+    ...     eta=0.05,
+    ...     alpha=0.1,
+    ...     minibatches=1, 
+    ...     shuffle=True,
+    ...     random_state=1)
+
+<br>
+
+    >>> nn2.fit(X_std, y)
+    >>> y_pred = nn2.predict(X_std)
+    >>> acc = np.sum(y == y_pred, axis=0) / X_std.shape[0]
+    >>> print('Accuracy: %.2f%%' % (acc * 100))
+    Accuracy: 96.00%
+
+
+![](./img/neuralnet_mlp_7.png)
 
 Visualize the decision regions:
 
@@ -124,7 +148,7 @@ Learn the features while printing the progress to get an idea about how long it 
     Epoch: 300/300
     >>> y_pred = nn.predict(X)
     >>> print('Accuracy: %.2f%%' % (acc * 100))
-    Accuracy: 95.00%
+    Accuracy: 95.48%
 
 Check for convergence.
 

@@ -17,7 +17,7 @@
 
 Sebastian Raschka 2014-2015
 
-Current version: 0.2.7
+Current version: 0.2.8
 
 <br>
 

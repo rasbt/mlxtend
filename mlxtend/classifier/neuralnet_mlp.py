@@ -33,8 +33,12 @@ class NeuralNetMLP(object):
     epochs : int (default: 500)
       Number of passes over the training set.
 
-    eta : float (default: 0.01)
+    eta : float (default: 0.001)
       Learning rate.
+
+    alpha : float (default: 0.0)
+      Momentum constant. Adds a fraction of the t-1 gradient
+      to the delta rule for faster convergence
 
     shuffle : bool (default: False)
       Shuffles training data every epoch if True to prevent circles.
@@ -53,7 +57,7 @@ class NeuralNetMLP(object):
 
     """
     def __init__(self, n_output, n_features, n_hidden=30,
-                 l1=0.0, l2=0.0, epochs=500, eta=0.01,
+                 l1=0.0, l2=0.0, epochs=500, eta=0.001, alpha=0.0,
                  shuffle=True, minibatches=1, random_state=None):
 
         np.random.seed(random_state)
@@ -65,6 +69,7 @@ class NeuralNetMLP(object):
         self.l2 = l2
         self.epochs = epochs
         self.eta = eta
+        self.alpha = alpha
         self.shuffle = shuffle
         self.minibatches = minibatches
 
@@ -278,7 +283,7 @@ class NeuralNetMLP(object):
                 a1, z2, a2, z3, a3 = self._feedforward(X, w1, w2 - epsilon_ary2)
                 cost1 = self._get_cost(y_enc, a3, w1, w2 - epsilon_ary2)
                 a1, z2, a2, z3, a3 = self._feedforward(X, w1, w2 + epsilon_ary2)
-                cost2 = self._get_cost(y_enc, a3, w1, w2 + epsilon_ary2,)
+                cost2 = self._get_cost(y_enc, a3, w1, w2 + epsilon_ary2)
                 num_grad2[i, j] = (cost2 - cost1) / (2 * epsilon)
                 epsilon_ary2[i, j] = 0
 
@@ -334,7 +339,11 @@ class NeuralNetMLP(object):
         X_data, y_data = X.copy(), y.copy()
         y_enc = self._encode_labels(y, self.n_output)
 
+        delta_w1_prev = np.zeros(self.w1.shape)
+        delta_w2_prev = np.zeros(self.w2.shape)
+
         for i in range(self.epochs):
+
             if print_progress:
                 sys.stderr.write('\rEpoch: %d/%d' % (i+1, self.epochs))
                 sys.stderr.flush()
@@ -343,7 +352,7 @@ class NeuralNetMLP(object):
                 idx = np.random.permutation(y_data.shape[0])
                 X_data, y_data = X_data[idx], y_data[idx]
 
-            mini = np.array_split(range(X_data.shape[0]), self.minibatches)
+            mini = np.array_split(range(y_data.shape[0]), self.minibatches)
             for idx in mini:
 
                 # feedforward
@@ -371,8 +380,10 @@ class NeuralNetMLP(object):
                 #     warn = print('Warning !!! ', end='')
                 # print(grad_diff)
 
-                # update weights
-                self.w1 -= (self.eta * grad1)
-                self.w2 -= (self.eta * grad2)
+                # update weights; [alpha * delta_w_prev] for momentum learning
+                delta_w1, delta_w2 = self.eta * grad1, self.eta * grad2
+                self.w1 -= (delta_w1 + (self.alpha * delta_w1_prev))
+                self.w2 -= (delta_w2 + (self.alpha * delta_w2_prev))
+                delta_w1_prev, delta_w2_prev = delta_w1, delta_w2
 
         return self

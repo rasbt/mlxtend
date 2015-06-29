@@ -24,7 +24,7 @@ Current version: 0.2.8
 
 ## Links
 
-- ### Documentation: [http://rasbt.github.io/mlxtend/](http://rasbt.github.io/mlxtend/)
+- **Documentation:** [http://rasbt.github.io/mlxtend/](http://rasbt.github.io/mlxtend/)
 - Source code repository: [https://github.com/rasbt/mlxtend](https://github.com/rasbt/mlxtend)
 - PyPI: [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend)
 - Changelog: [http://rasbt.github.io/mlxtend/changelog](http://rasbt.github.io/mlxtend/changelog)

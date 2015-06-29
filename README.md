@@ -23,22 +23,46 @@ Current version: 0.2.8
 
 
 ## Links
-- **Documentation:** [http://rasbt.github.io/mlxtend/](http://rasbt.github.io/mlxtend/)
+
+- ### Documentation: [http://rasbt.github.io/mlxtend/](http://rasbt.github.io/mlxtend/)
 - Source code repository: [https://github.com/rasbt/mlxtend](https://github.com/rasbt/mlxtend)
 - PyPI: [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend)
 - Changelog: [http://rasbt.github.io/mlxtend/changelog](http://rasbt.github.io/mlxtend/changelog)
 - Contributing: [http://rasbt.github.io/mlxtend/contributing](http://rasbt.github.io/mlxtend/contributing)
 
 <br>
-<hr>
-**Recently added**
+<br>
+
+## Recent changes
 
 - [Neural Network / Multilayer Perceptron classifier](http://rasbt.github.io/mlxtend/docs/classifier/neuralnet_mlp/)
 - [5000 labeled training samples](http://rasbt.github.io/mlxtend/docs/data/mnist/) from the MNIST handwritten digits dataset
 - [Ordinary least square regression](http://rasbt.github.io/mlxtend/docs/regression/linear_regression/) using different solvers (gradient and stochastic gradient descent, and the closed form solution)
 
-<hr>
+
 <br>
+<br>
+
+
+## Installing mlxtend
+
+To install `mlxtend`, just execute  
+
+    pip install mlxtend  
+
+
+The `mlxtend` version on PyPI may always one step behind; you can install the latest development version from this GitHub repository by executing
+
+    pip install git+git://github.com/rasbt/mlxtend.git#egg=mlxtend
+
+Alternatively, you download the package manually from the Python Package Index [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend), unzip it, navigate into the package, and use the command:
+
+    python setup.py install 
+
+
+<br>
+<br>
+
 
 ## Examples
 
@@ -69,15 +93,4 @@ Current version: 0.2.8
 
 
 
-<hr>
 
-## Installing mlxtend
-
-You can use the following command to install `mlxtend`:  
-`pip install mlxtend`  
- or    
-`easy_install mlxtend`  
-
-Alternatively, you download the package manually from the Python Package Index [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend), unzip it, navigate into the package, and use the command:
-
-`python setup.py install`  

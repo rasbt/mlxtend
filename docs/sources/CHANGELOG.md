@@ -1,6 +1,8 @@
 ### 0.2.8
 - Added momentum learning parameter (alpha coefficient) to `mlxtend.classifier.NeuralNetMLP`.
 - Added adaptive learning rate (decrease constant) to `mlxtend.classifier.NeuralNetMLP`.
+- `mlxtend.pandas.minmax_scaling` became `mlxtend.preprocessing.minmax_scaling`  and also supports NumPy arrays now
+- `mlxtend.pandas.standardizing` became `mlxtend.preprocessing.standardizing` and now supports both NumPy arrays and pandas DataFrames; also, now `ddof` parameters to set the degrees of freedom when calculating the standard deviation
 
 ### 0.2.7
 

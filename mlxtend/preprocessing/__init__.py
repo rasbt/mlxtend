@@ -4,4 +4,8 @@
 
 from .mean_centering import MeanCenterer
 from .shuffle import shuffle_arrays_unison
-__all__ = ["MeanCenterer", "shuffle_arrays_unison"]
+from .scaling import minmax_scaling
+from .scaling import standardizing
+
+__all__ = ["MeanCenterer", "shuffle_arrays_unison",
+           "minmax_scaling", "standardizing"]

@@ -1,5 +1,5 @@
 
-![](./img/logo_gray_small.png)
+![](./img/logo.png)
 
 **A library consisting of useful tools and extensions for the day-to-day data science tasks.**
 
@@ -20,6 +20,7 @@ Current version: 0.2.8
 - Documentation: [http://rasbt.github.io/mlxtend/](http://rasbt.github.io/mlxtend/)
 - Source code repository: [https://github.com/rasbt/mlxtend](https://github.com/rasbt/mlxtend)
 - PyPI: [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend)
+- Questions? Check out the [Google Groups mailing list](https://groups.google.com/forum/#!forum/mlxtend)
 
 <br>
 

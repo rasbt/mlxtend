@@ -7,7 +7,7 @@
 ![Python 3.4](https://img.shields.io/badge/python-3.4-blue.svg)
 ![License](https://img.shields.io/badge/license-BSD-blue.svg)
 
-![](./docs/sources/img/logo_small.png)
+![](./docs/sources/img/logo.png)
 
 
 
@@ -29,6 +29,7 @@ Current version: 0.2.8
 - PyPI: [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend)
 - Changelog: [http://rasbt.github.io/mlxtend/changelog](http://rasbt.github.io/mlxtend/changelog)
 - Contributing: [http://rasbt.github.io/mlxtend/contributing](http://rasbt.github.io/mlxtend/contributing)
+- Questions? Check out the [Google Groups mailing list](https://groups.google.com/forum/#!forum/mlxtend)
 
 <br>
 <br>

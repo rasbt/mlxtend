@@ -15,9 +15,6 @@ pages:
         - docs/classifier/adaline.md
         - docs/classifier/perceptron.md
         - docs/classifier/logistic_regression.md
-    - pandas:
-        - docs/pandas/minmax_scaling.md
-        - docs/pandas/standardizing.md
     - sklearn:
         - docs/sklearn/sequential_backward_selection.md
         - docs/sklearn/column_selector.md
@@ -34,6 +31,8 @@ pages:
         - docs/regression/plot_linear_regression_fit.md
         - docs/regression/linear_regression.md
     - preprocessing:
+        - docs/preprocessing/standardizing.md
+        - docs/preprocessing/minmax_scaling.md
         - docs/preprocessing/mean_centerer.md
         - docs/preprocessing/shuffle_arrays_unison.md
     - file_io:

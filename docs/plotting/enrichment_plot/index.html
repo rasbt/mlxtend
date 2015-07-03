@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Sebastian Raschka">
-        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/sklearn/sequential_backward_selection/">
+        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/plotting/enrichment_plot/">
         <link rel="shortcut icon" href="../../../img/favicon.ico">
 
-	<title>Sequential backward selection - mlxtend</title>
+	<title>Enrichment plot - mlxtend</title>
 
         <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -92,24 +92,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">pandas</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../../pandas/minmax_scaling/">Minmax scaling</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../pandas/standardizing/">Standardizing</a>
+    <a href="../../classifier/scikit-learn_ensemble_classifier/">Scikit learn ensemble classifier</a>
 </li>
 
         
@@ -119,30 +104,18 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">sklearn</a>
+    <a tabindex="-1" href="">feature selection</a>
     <ul class="dropdown-menu">
         
             
-<li class="active">
-    <a href="./">Sequential backward selection</a>
+<li >
+    <a href="../../feature_selection/sequential_backward_selection/">Sequential backward selection</a>
 </li>
 
         
             
 <li >
-    <a href="../column_selector/">Column selector</a>
-</li>
-
-        
-            
-<li >
-    <a href="../ensemble_classifier/">Ensemble classifier</a>
-</li>
-
-        
-            
-<li >
-    <a href="../dense_transformer/">Dense transformer</a>
+    <a href="../../feature_selection/column_selector/">Column selector</a>
 </li>
 
         
@@ -173,24 +146,24 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">matplotlib</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../matplotlib/category_scatter/">Category scatter</a>
+    <a href="../category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li class="active">
+    <a href="./">Enrichment plot</a>
 </li>
 
         
             
 <li >
-    <a href="../../matplotlib/enrichment_plot/">Enrichment plot</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../matplotlib/stacked_barplot/">Stacked barplot</a>
+    <a href="../stacked_barplot/">Stacked barplot</a>
 </li>
 
         
@@ -226,6 +199,18 @@
         
             
 <li >
+    <a href="../../preprocessing/standardizing/">Standardizing</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/minmax_scaling/">Minmax scaling</a>
+</li>
+
+        
+            
+<li >
     <a href="../../preprocessing/mean_centerer/">Mean centerer</a>
 </li>
 
@@ -233,6 +218,12 @@
             
 <li >
     <a href="../../preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/scikit-learn_dense_transformer/">Scikit learn dense transformer</a>
 </li>
 
         
@@ -375,12 +366,12 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../../pandas/standardizing/">
+                        <a rel="next" href="../category_scatter/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../column_selector/">
+                        <a rel="prev" href="../stacked_barplot/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -405,7 +396,7 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#sequential-backward-selection">Sequential Backward Selection</a></li>
+        <li class="main active"><a href="#enrichment-plot">Enrichment Plot</a></li>
         
             <li><a href="#example">Example</a></li>
         
@@ -420,129 +411,93 @@
 Sebastian Raschka, last updated: 05/14/2015</p>
 <hr>
 
-<h1 id="sequential-backward-selection">Sequential Backward Selection</h1>
+<h1 id="enrichment-plot">Enrichment Plot</h1>
 <blockquote>
-<p>from mlxtend.sklearn import SBS</p>
+<p>from mlxtend.plotting import enrichment_plot</p>
 </blockquote>
-<p>Sequential Backward Selection (SBS) is  a classic feature selection algorithm -- a greedy search algorithm -- that has been developed as a suboptimal solution to the computationally often not feasible exhaustive search. In a nutshell, SBS removes one feature at the time based on the classifier performance until a feature subset of the desired size <em>k</em> is reached. </p>
-<p><strong>Note that SBS is different from the <a href="http://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.RFE.html#sklearn.feature_selection.RFE">recursive feature elimination (RFE)</a> that is implemented in scikit-learn.</strong> RFE sequentially removes features based on the feature weights whereas SBS removes features based on the model performance.
-More detailed explanations about the algorithms and examples can be found in <a href="http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_sequential_feature_select_sbs.ipynb">this IPython notebook</a>.</p>
+<p>A function to plot step plots of cumulative counts.</p>
 <hr>
 
-<h3 id="example">Example</h3>
-<p>Input:</p>
-<pre><code>from mlxtend.sklearn import SBS
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.datasets import load_iris
-
-iris = load_iris()
-X = iris.data
-y = iris.target
-
-knn = KNeighborsClassifier(n_neighbors=4)
-
-sbs = SBS(knn, k_features=2, scoring='accuracy', cv=5)
-sbs.fit(X, y)
-
-print('Indices of selected features:', sbs.indices_)
-print('CV score of selected subset:', sbs.k_score_)
-print('New feature subset:')
-sbs.transform(X)[0:5]
+<h2 id="example">Example</h2>
+<p>Creating an example  <code>DataFrame</code>:   </p>
+<pre><code>import pandas as pd
+s1 = [1.1, 1.5]
+s2 = [2.1, 1.8]
+s3 = [3.1, 2.1]
+s4 = [3.9, 2.5]
+data = [s1, s2, s3, s4]
+df = pd.DataFrame(data, columns=['X1', 'X2'])
+df
 </code></pre>
-<p>Output:</p>
-<pre><code>Indices of selected features: (0, 3)
-CV score of selected subset: 0.96
-New feature subset:
-array([[ 5.1,  0.2],
-   [ 4.9,  0.2],
-   [ 4.7,  0.2],
-   [ 4.6,  0.2],
-   [ 5. ,  0.2]])
+<p><img alt="" src="../img/matplotlib_enrichment_plot_1.png" /></p>
+<p>Plotting the enrichment plot. The y-axis can be interpreted as "how many samples are less or equal to the corresponding x-axis label."</p>
+<pre><code>from mlxtend.plotting import enrichment_plot
+enrichment_plot(df)
 </code></pre>
-<p><br>
-<br></p>
-<p>As demonstrated below, the SBS algorithm can be a useful alternative to dimensionality reduction techniques to reduce overfitting and where the original features need to be preserved:</p>
-<pre><code>import matplotlib.pyplot as plt
-from sklearn.preprocessing import StandardScaler
-
-scr = StandardScaler()
-X_std = scr.fit_transform(X)
-
-knn = KNeighborsClassifier(n_neighbors=4)
-
-# selecting features
-sbs = SBS(knn, k_features=1, scoring='accuracy', cv=5)
-sbs.fit(X_std, y)
-
-# plotting performance of feature subsets
-k_feat = [len(k) for k in sbs.subsets_]
-
-plt.plot(k_feat, sbs.scores_, marker='o')
-plt.ylabel('Accuracy')
-plt.xlabel('Number of features')
-plt.show()
-</code></pre>
-<p><img alt="" src="../img/sklearn_sequential_feature_select_sbs_wine_1.png" /></p>
-<p><hr>
-More examples -- including how to use <code>SBS</code> in scikit-learn's <code>GridSearch</code> can be found in <a href="http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_sequential_feature_select_sbs.ipynb">this IPython notebook</a>.</p>
+<p><img alt="" src="../img/matplotlib_enrichment_plot_2.png" /></p>
 <hr>
 
 <h2 id="default-parameters">Default Parameters</h2>
-<pre>class SBS(BaseEstimator, MetaEstimatorMixin):
-    """ Sequential Backward Selection for feature selection.
+<pre>
+def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-', alpha=0.5, lw=2,
+                    legend=True, where='post', grid=True, count_label='Count',
+                    xlim='auto', ylim='auto', invert_axes=False, ax=None):
+    """
+    Function to plot stacked barplots
 
     Parameters
     ----------
-    clfs : scikit-learn estimator object
+    df : pandas.DataFrame
+      A pandas DataFrame where columns represent the different categories.
 
-    k_features : int
-      Number of features to select where k_features.
+    colors: str (default: 'bgrcky')
+      The colors of the bars.
 
-    scoring : str, (default='accuracy')
-      Scoring metric for the cross validation scorer.
+    markers: str (default: ' ')
+      Matplotlib markerstyles, e.g,
+      'sov' for square,circle, and triangle markers.
 
-    cv : int (default: 5)
-      Number of folds in StratifiedKFold.
+    linestyles: str (default: '-')
+      Matplotlib linestyles, e.g., 
+      '-,--' to cycle normal and dashed lines. Note
+      that the different linestyles need to be separated by commas.
 
-    n_jobs : int (default: 1)
-      The number of CPUs to use for cross validation. -1 means 'all CPUs'.
+    alpha: float (default: 0.5)
+      Transparency level from 0.0 to 1.0.
 
-    Attributes
+    lw: int or float (default: 2)
+      Linewidth parameter.
+
+    legend: bool (default: True)
+      Plots legend if True.
+
+    where: {'post', 'pre', 'mid'} (default: 'post')
+      Starting location of the steps.
+
+    grid: bool (default: True)
+      Plots a grid if True.
+
+    count_label: str (default: 'Count')
+      Label for the "Count"-axis.
+
+    xlim: 'auto' or array-like [min, max]
+      Min and maximum position of the x-axis range.
+
+    ylim: 'auto' or array-like [min, max]
+      Min and maximum position of the y-axis range.
+
+    invert_axes: bool (default: False)
+      Plots count on the x-axis if True.
+
+    ax: matplotlib axis, optional (default: None)
+      Use this axis for plotting or make a new one otherwise
+
+    Returns
     ----------
-    indices_ : array-like, shape = [n_predictions]
-      Indices of the selected subsets.
+    ax: matplotlib axis
 
-    k_score_ : float
-      Cross validation mean scores of the selected subset
-
-    subsets_ : list of tuples
-      Indices of the sequentially selected subsets.
-
-    scores_ : list
-      Cross validation mean scores of the sequentially selected subsets.
-
-    Examples
-    --------
-    >>> from sklearn.neighbors import KNeighborsClassifier
-    >>> from sklearn.datasets import load_iris
-    >>> iris = load_iris()
-    >>> X = iris.data
-    >>> y = iris.target
-    >>> knn = KNeighborsClassifier(n_neighbors=4)
-    >>> sbs = SBS(knn, k_features=2, scoring='accuracy', cv=5)
-    >>> sbs = sbs.fit(X, y)
-    >>> sbs.indices_
-    (0, 3)
-    >>> sbs.k_score_
-    0.96
-    >>> sbs.transform(X)
-    array([[ 5.1,  0.2],
-       [ 4.9,  0.2],
-       [ 4.7,  0.2],
-       [ 4.6,  0.2],
-       [ 5. ,  0.2]])
-
-    """</pre></div>
+    """
+</pre></div>
             
         </div>
 

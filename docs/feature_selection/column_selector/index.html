@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Sebastian Raschka">
-        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/sklearn/dense_transformer/">
+        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/feature_selection/column_selector/">
         <link rel="shortcut icon" href="../../../img/favicon.ico">
 
-	<title>Dense transformer - mlxtend</title>
+	<title>Column selector - mlxtend</title>
 
         <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -92,24 +92,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">pandas</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../../pandas/minmax_scaling/">Minmax scaling</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../pandas/standardizing/">Standardizing</a>
+    <a href="../../classifier/scikit-learn_ensemble_classifier/">Scikit learn ensemble classifier</a>
 </li>
 
         
@@ -119,7 +104,7 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">sklearn</a>
+    <a tabindex="-1" href="">feature selection</a>
     <ul class="dropdown-menu">
         
             
@@ -129,20 +114,8 @@
 
         
             
-<li >
-    <a href="../column_selector/">Column selector</a>
-</li>
-
-        
-            
-<li >
-    <a href="../ensemble_classifier/">Ensemble classifier</a>
-</li>
-
-        
-            
 <li class="active">
-    <a href="./">Dense transformer</a>
+    <a href="./">Column selector</a>
 </li>
 
         
@@ -173,24 +146,24 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">matplotlib</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../matplotlib/category_scatter/">Category scatter</a>
+    <a href="../../plotting/category_scatter/">Category scatter</a>
 </li>
 
         
             
 <li >
-    <a href="../../matplotlib/enrichment_plot/">Enrichment plot</a>
+    <a href="../../plotting/enrichment_plot/">Enrichment plot</a>
 </li>
 
         
             
 <li >
-    <a href="../../matplotlib/stacked_barplot/">Stacked barplot</a>
+    <a href="../../plotting/stacked_barplot/">Stacked barplot</a>
 </li>
 
         
@@ -226,6 +199,18 @@
         
             
 <li >
+    <a href="../../preprocessing/standardizing/">Standardizing</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/minmax_scaling/">Minmax scaling</a>
+</li>
+
+        
+            
+<li >
     <a href="../../preprocessing/mean_centerer/">Mean centerer</a>
 </li>
 
@@ -233,6 +218,12 @@
             
 <li >
     <a href="../../preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/scikit-learn_dense_transformer/">Scikit learn dense transformer</a>
 </li>
 
         
@@ -375,7 +366,7 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../ensemble_classifier/">
+                        <a rel="next" href="../sequential_backward_selection/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
@@ -405,9 +396,7 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#dense-transformer">Dense Transformer</a></li>
-        
-            <li><a href="#example">Example</a></li>
+        <li class="main active"><a href="#columnselector-for-custom-feature-selection">ColumnSelector for Custom Feature Selection</a></li>
         
             <li><a href="#default-parameters">Default Parameters</a></li>
         
@@ -420,54 +409,49 @@
 Sebastian Raschka, last updated: 05/14/2015</p>
 <hr>
 
-<h1 id="dense-transformer">Dense Transformer</h1>
+<h1 id="columnselector-for-custom-feature-selection">ColumnSelector for Custom Feature Selection</h1>
 <blockquote>
-<p>from mlxtend.sklearn import DenseTransformer</p>
+<p>from mlxtend.feature_selection import ColumnSelector</p>
 </blockquote>
-<p>A simple transformer that converts a sparse into a dense numpy array, e.g., required for scikit-learn's <code>Pipeline</code> when e.g,. <code>CountVectorizers</code> are used in combination with <code>RandomForest</code>s.</p>
+<p>A feature selector for scikit-learn's Pipeline class that returns specified columns from a NumPy array; extremely useful in combination with scikit-learn's <code>Pipeline</code> in cross-validation.</p>
+<ul>
+<li><a href="http://nbviewer.ipython.org/github/rasbt/pattern_classification/blob/master/machine_learning/scikit-learn/scikit-pipeline.ipynb#Cross-Validation-and-Pipelines">An example usage</a> of the <code>ColumnSelector</code> used in a pipeline for cross-validation on the Iris dataset.</li>
+</ul>
 <hr>
 
-<h2 id="example">Example</h2>
-<pre><code>from sklearn.pipeline import Pipeline
-from sklearn import metrics
-from sklearn.grid_search import GridSearchCV
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.feature_extraction.text import CountVectorizer
+<p>Example in <code>Pipeline</code>:</p>
+<pre><code>from mlxtend.feature_selection import ColumnSelector
+from sklearn.pipeline import Pipeline
+from sklearn.naive_bayes import GaussianNB
+from sklearn.preprocessing import StandardScaler
 
-from mlxtend.sklearn import DenseTransformer
-
-
-pipe_1 = Pipeline([
-    ('vect', CountVectorizer(analyzer='word',
-                      decode_error='replace',
-                      preprocessor=lambda text: re.sub('[^a-zA-Z]', ' ', text.lower()), 
-                      stop_words=stopwords,) ),
-    ('to_dense', DenseTransformer()),
-    ('clf', RandomForestClassifier())
-])
-
-parameters_1 = dict(
-    clf__n_estimators=[50, 100, 200],
-    clf__max_features=['sqrt', 'log2', None],)
-
-grid_search_1 = GridSearchCV(pipe_1, 
-                           parameters_1, 
-                           n_jobs=1, 
-                           verbose=1,
-                           scoring=f1_scorer,
-                           cv=10)
-
-
-print("Performing grid search...")
-print("pipeline:", [name for name, _ in pipe_1.steps])
-print("parameters:")
-grid_search_1.fit(X_train, y_train)
-print("Best score: %0.3f" % grid_search_1.best_score_)
-print("Best parameters set:")
-best_parameters_1 = grid_search_1.best_estimator_.get_params()
-for param_name in sorted(parameters_1.keys()):
-    print("\t%s: %r" % (param_name, best_parameters_1[param_name]))
+clf_2col = Pipeline(steps=[
+    ('scaler', StandardScaler()),
+    ('reduce_dim', ColumnSelector(cols=(1,3))),    # extracts column 2 and 4
+    ('classifier', GaussianNB())   
+    ])
 </code></pre>
+<p><code>ColumnSelector</code> has a <code>transform</code> method that is used to select and return columns (features) from a NumPy array so that it can be used in the <code>Pipeline</code> like other <code>transformation</code> classes. </p>
+<pre><code>### original data
+
+print('First 3 rows before:\n', X_train[:3,:])
+First 3 rows before:
+[[ 4.5  2.3  1.3  0.3]
+[ 6.7  3.3  5.7  2.1]
+[ 5.7  3.   4.2  1.2]]
+
+### after selection
+
+cols = ColumnExtractor(cols=(1,3)).transform(X_train)
+print('First 3 rows:\n', cols[:3,:])
+
+First 3 rows:
+[[ 2.3  0.3]
+[ 3.3  2.1]
+[ 3.   1.2]]
+</code></pre>
+<hr>
+
 <h2 id="default-parameters">Default Parameters</h2></div>
             
         </div>

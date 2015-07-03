@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Sebastian Raschka">
-        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/pandas/standardizing/">
+        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/preprocessing/scikit-learn_dense_transformer/">
         <link rel="shortcut icon" href="../../../img/favicon.ico">
 
-	<title>Standardizing - mlxtend</title>
+	<title>Scikit learn dense transformer - mlxtend</title>
 
         <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -92,24 +92,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">pandas</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../minmax_scaling/">Minmax scaling</a>
-</li>
-
-        
-            
-<li class="active">
-    <a href="./">Standardizing</a>
+    <a href="../../classifier/scikit-learn_ensemble_classifier/">Scikit learn ensemble classifier</a>
 </li>
 
         
@@ -119,30 +104,18 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">sklearn</a>
+    <a tabindex="-1" href="">feature selection</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../sklearn/sequential_backward_selection/">Sequential backward selection</a>
+    <a href="../../feature_selection/sequential_backward_selection/">Sequential backward selection</a>
 </li>
 
         
             
 <li >
-    <a href="../../sklearn/column_selector/">Column selector</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../sklearn/ensemble_classifier/">Ensemble classifier</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../sklearn/dense_transformer/">Dense transformer</a>
+    <a href="../../feature_selection/column_selector/">Column selector</a>
 </li>
 
         
@@ -173,24 +146,24 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">matplotlib</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../matplotlib/category_scatter/">Category scatter</a>
+    <a href="../../plotting/category_scatter/">Category scatter</a>
 </li>
 
         
             
 <li >
-    <a href="../../matplotlib/enrichment_plot/">Enrichment plot</a>
+    <a href="../../plotting/enrichment_plot/">Enrichment plot</a>
 </li>
 
         
             
 <li >
-    <a href="../../matplotlib/stacked_barplot/">Stacked barplot</a>
+    <a href="../../plotting/stacked_barplot/">Stacked barplot</a>
 </li>
 
         
@@ -226,13 +199,31 @@
         
             
 <li >
-    <a href="../../preprocessing/mean_centerer/">Mean centerer</a>
+    <a href="../standardizing/">Standardizing</a>
 </li>
 
         
             
 <li >
-    <a href="../../preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
+    <a href="../minmax_scaling/">Minmax scaling</a>
+</li>
+
+        
+            
+<li >
+    <a href="../mean_centerer/">Mean centerer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../shuffle_arrays_unison/">Shuffle arrays unison</a>
+</li>
+
+        
+            
+<li class="active">
+    <a href="./">Scikit learn dense transformer</a>
 </li>
 
         
@@ -375,12 +366,12 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../minmax_scaling/">
+                        <a rel="next" href="../shuffle_arrays_unison/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../../sklearn/sequential_backward_selection/">
+                        <a rel="prev" href="../../file_io/find_files/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -405,7 +396,7 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#standardizing">Standardizing</a></li>
+        <li class="main active"><a href="#dense-transformer">Dense Transformer</a></li>
         
             <li><a href="#example">Example</a></li>
         
@@ -420,36 +411,55 @@
 Sebastian Raschka, last updated: 05/14/2015</p>
 <hr>
 
-<h1 id="standardizing">Standardizing</h1>
+<h1 id="dense-transformer">Dense Transformer</h1>
 <blockquote>
-<p>from mlxtend.pandas import standardizing</p>
+<p>from mlxtend.preprocessing import DenseTransformer</p>
 </blockquote>
-<p>A function to standardize columns in pandas DataFrames so that they have properties of a standard normal distribution (mean=0, standard deviation=1).</p>
+<p>A simple transformer that converts a sparse into a dense numpy array, e.g., required for scikit-learn's <code>Pipeline</code> when e.g,. <code>CountVectorizers</code> are used in combination with <code>RandomForest</code>s.</p>
 <hr>
 
 <h2 id="example">Example</h2>
-<pre><code>from mlxtend.pandas import standardizing
+<pre><code>from sklearn.pipeline import Pipeline
+from sklearn import metrics
+from sklearn.grid_search import GridSearchCV
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_extraction.text import CountVectorizer
+
+from mlxtend.preprocessing import DenseTransformer
+
+
+pipe_1 = Pipeline([
+    ('vect', CountVectorizer(analyzer='word',
+                      decode_error='replace',
+                      preprocessor=lambda text: re.sub('[^a-zA-Z]', ' ', text.lower()), 
+                      stop_words=stopwords,) ),
+    ('to_dense', DenseTransformer()),
+    ('clf', RandomForestClassifier())
+])
+
+parameters_1 = dict(
+    clf__n_estimators=[50, 100, 200],
+    clf__max_features=['sqrt', 'log2', None],)
+
+grid_search_1 = GridSearchCV(pipe_1, 
+                           parameters_1, 
+                           n_jobs=1, 
+                           verbose=1,
+                           scoring=f1_scorer,
+                           cv=10)
+
+
+print("Performing grid search...")
+print("pipeline:", [name for name, _ in pipe_1.steps])
+print("parameters:")
+grid_search_1.fit(X_train, y_train)
+print("Best score: %0.3f" % grid_search_1.best_score_)
+print("Best parameters set:")
+best_parameters_1 = grid_search_1.best_estimator_.get_params()
+for param_name in sorted(parameters_1.keys()):
+    print("\t%s: %r" % (param_name, best_parameters_1[param_name]))
 </code></pre>
-<p><img alt="" src="../img/pandas_scaling_standardizing.png" /></p>
-<h2 id="default-parameters">Default Parameters</h2>
-<pre>def standardizing(df, columns):
-    """
-    Standardizing columns in pandas DataFrames.
-
-    Parameters
-    ----------
-    df : pandas DataFrame object.
-
-    columns : array-like, shape = [n_columns]
-      Array-like with pandas DataFrame column names, e.g., ['col1', 'col2', ...]
-
-    Returns
-    ----------
-
-    df_new: pandas DataFrame object.
-      Copy of the DataFrame with standardized columns.
-
-    """</pre></div>
+<h2 id="default-parameters">Default Parameters</h2></div>
             
         </div>
 

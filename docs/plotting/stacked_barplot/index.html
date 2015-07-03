@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Sebastian Raschka">
-        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/sklearn/column_selector/">
+        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/plotting/stacked_barplot/">
         <link rel="shortcut icon" href="../../../img/favicon.ico">
 
-	<title>Column selector - mlxtend</title>
+	<title>Stacked barplot - mlxtend</title>
 
         <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -92,24 +92,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">pandas</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../../pandas/minmax_scaling/">Minmax scaling</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../pandas/standardizing/">Standardizing</a>
+    <a href="../../classifier/scikit-learn_ensemble_classifier/">Scikit learn ensemble classifier</a>
 </li>
 
         
@@ -119,30 +104,18 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">sklearn</a>
+    <a tabindex="-1" href="">feature selection</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../sequential_backward_selection/">Sequential backward selection</a>
-</li>
-
-        
-            
-<li class="active">
-    <a href="./">Column selector</a>
+    <a href="../../feature_selection/sequential_backward_selection/">Sequential backward selection</a>
 </li>
 
         
             
 <li >
-    <a href="../ensemble_classifier/">Ensemble classifier</a>
-</li>
-
-        
-            
-<li >
-    <a href="../dense_transformer/">Dense transformer</a>
+    <a href="../../feature_selection/column_selector/">Column selector</a>
 </li>
 
         
@@ -173,24 +146,24 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">matplotlib</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../matplotlib/category_scatter/">Category scatter</a>
+    <a href="../category_scatter/">Category scatter</a>
 </li>
 
         
             
 <li >
-    <a href="../../matplotlib/enrichment_plot/">Enrichment plot</a>
+    <a href="../enrichment_plot/">Enrichment plot</a>
 </li>
 
         
             
-<li >
-    <a href="../../matplotlib/stacked_barplot/">Stacked barplot</a>
+<li class="active">
+    <a href="./">Stacked barplot</a>
 </li>
 
         
@@ -226,6 +199,18 @@
         
             
 <li >
+    <a href="../../preprocessing/standardizing/">Standardizing</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/minmax_scaling/">Minmax scaling</a>
+</li>
+
+        
+            
+<li >
     <a href="../../preprocessing/mean_centerer/">Mean centerer</a>
 </li>
 
@@ -233,6 +218,12 @@
             
 <li >
     <a href="../../preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/scikit-learn_dense_transformer/">Scikit learn dense transformer</a>
 </li>
 
         
@@ -375,12 +366,12 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../sequential_backward_selection/">
+                        <a rel="next" href="../enrichment_plot/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../ensemble_classifier/">
+                        <a rel="prev" href="../../regression/plot_linear_regression_fit/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -405,7 +396,9 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#columnselector-for-custom-feature-selection">ColumnSelector for Custom Feature Selection</a></li>
+        <li class="main active"><a href="#stacked-barplot">Stacked Barplot</a></li>
+        
+            <li><a href="#example">Example</a></li>
         
             <li><a href="#default-parameters">Default Parameters</a></li>
         
@@ -418,50 +411,70 @@
 Sebastian Raschka, last updated: 05/14/2015</p>
 <hr>
 
-<h1 id="columnselector-for-custom-feature-selection">ColumnSelector for Custom Feature Selection</h1>
+<h1 id="stacked-barplot">Stacked Barplot</h1>
 <blockquote>
-<p>from mlxtend.sklearn import ColumnSelector</p>
+<p>from mlxtend.plotting import stacked_barplot</p>
 </blockquote>
-<p>A feature selector for scikit-learn's Pipeline class that returns specified columns from a NumPy array; extremely useful in combination with scikit-learn's <code>Pipeline</code> in cross-validation.</p>
-<ul>
-<li><a href="http://nbviewer.ipython.org/github/rasbt/pattern_classification/blob/master/machine_learning/scikit-learn/scikit-pipeline.ipynb#Cross-Validation-and-Pipelines">An example usage</a> of the <code>ColumnSelector</code> used in a pipeline for cross-validation on the Iris dataset.</li>
-</ul>
+<p>A function to conveniently plot stacked bar plots in matplotlib using pandas <code>DataFrame</code>s. </p>
 <hr>
 
-<p>Example in <code>Pipeline</code>:</p>
-<pre><code>from mlxtend.sklearn import ColumnSelector
-from sklearn.pipeline import Pipeline
-from sklearn.naive_bayes import GaussianNB
-from sklearn.preprocessing import StandardScaler
+<h2 id="example">Example</h2>
+<p>Creating an example  <code>DataFrame</code>:   </p>
+<pre><code>import pandas as pd
 
-clf_2col = Pipeline(steps=[
-    ('scaler', StandardScaler()),
-    ('reduce_dim', ColumnSelector(cols=(1,3))),    # extracts column 2 and 4
-    ('classifier', GaussianNB())   
-    ])
+s1 = [1.0, 2.0, 3.0, 4.0]
+s2 = [1.4, 2.1, 2.9, 5.1]
+s3 = [1.9, 2.2, 3.5, 4.1]
+s4 = [1.4, 2.5, 3.5, 4.2]
+data = [s1, s2, s3, s4]
+
+df = pd.DataFrame(data, columns=['X1', 'X2', 'X3', 'X4'])
+df.columns = ['X1', 'X2', 'X3', 'X4']
+df.index = ['Sample1', 'Sample2', 'Sample3', 'Sample4']
+df
 </code></pre>
-<p><code>ColumnSelector</code> has a <code>transform</code> method that is used to select and return columns (features) from a NumPy array so that it can be used in the <code>Pipeline</code> like other <code>transformation</code> classes. </p>
-<pre><code>### original data
+<p><img alt="" src="../img/matplotlib_stacked_barplot_1.png" /></p>
+<p>Plotting the stacked barplot. By default, the index of the <code>DataFrame</code> is used as column labels, and the <code>DataFrame</code> columns are used for the plot legend.</p>
+<pre><code>from mlxtend.plotting import stacked_barplot
 
-print('First 3 rows before:\n', X_train[:3,:])
-First 3 rows before:
-[[ 4.5  2.3  1.3  0.3]
-[ 6.7  3.3  5.7  2.1]
-[ 5.7  3.   4.2  1.2]]
-
-### after selection
-
-cols = ColumnExtractor(cols=(1,3)).transform(X_train)
-print('First 3 rows:\n', cols[:3,:])
-
-First 3 rows:
-[[ 2.3  0.3]
-[ 3.3  2.1]
-[ 3.   1.2]]
+stacked_barplot(df, rotation=45)
 </code></pre>
-<hr>
+<p><img alt="" src="../img/matplotlib_stacked_barplot_2.png" /></p>
+<h2 id="default-parameters">Default Parameters</h2>
+<pre>def stacked_barplot(df, bar_width='auto', colors='bgrcky', labels='index', rotation=90, legend=True):
+    """
+    Function to plot stacked barplots
 
-<h2 id="default-parameters">Default Parameters</h2></div>
+    Parameters
+    ----------
+    df : pandas.DataFrame
+      A pandas DataFrame where the index denotes the
+      x-axis labels, and the columns contain the different
+      measurements for each row.
+
+    bar_width: 'auto' or float (default: 'auto')
+      Parameter to set the widths of the bars. if
+      'auto', the width is automatically determined by
+      the number of columns in the dataset.
+
+    colors: str (default: 'bgrcky')
+      The colors of the bars.
+
+    labels: 'index' or iterable (default: 'index')
+      If 'index', the DataFrame index will be used as
+      x-tick labels.
+
+    rotation: int (default: 90)
+      Parameter to rotate the x-axis labels.
+
+    legend: bool (default: True)
+      Parameter to plot the legend.
+
+    Returns
+    ----------
+    None
+
+    """</pre></div>
             
         </div>
 

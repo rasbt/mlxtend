@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Sebastian Raschka">
-        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/matplotlib/stacked_barplot/">
+        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/preprocessing/standardizing/">
         <link rel="shortcut icon" href="../../../img/favicon.ico">
 
-	<title>Stacked barplot - mlxtend</title>
+	<title>Standardizing - mlxtend</title>
 
         <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -92,24 +92,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">pandas</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../../pandas/minmax_scaling/">Minmax scaling</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../pandas/standardizing/">Standardizing</a>
+    <a href="../../classifier/scikit-learn_ensemble_classifier/">Scikit learn ensemble classifier</a>
 </li>
 
         
@@ -119,30 +104,18 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">sklearn</a>
+    <a tabindex="-1" href="">feature selection</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../sklearn/sequential_backward_selection/">Sequential backward selection</a>
+    <a href="../../feature_selection/sequential_backward_selection/">Sequential backward selection</a>
 </li>
 
         
             
 <li >
-    <a href="../../sklearn/column_selector/">Column selector</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../sklearn/ensemble_classifier/">Ensemble classifier</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../sklearn/dense_transformer/">Dense transformer</a>
+    <a href="../../feature_selection/column_selector/">Column selector</a>
 </li>
 
         
@@ -173,24 +146,24 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">matplotlib</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../category_scatter/">Category scatter</a>
+    <a href="../../plotting/category_scatter/">Category scatter</a>
 </li>
 
         
             
 <li >
-    <a href="../enrichment_plot/">Enrichment plot</a>
+    <a href="../../plotting/enrichment_plot/">Enrichment plot</a>
 </li>
 
         
             
-<li class="active">
-    <a href="./">Stacked barplot</a>
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked barplot</a>
 </li>
 
         
@@ -225,14 +198,32 @@
     <ul class="dropdown-menu">
         
             
-<li >
-    <a href="../../preprocessing/mean_centerer/">Mean centerer</a>
+<li class="active">
+    <a href="./">Standardizing</a>
 </li>
 
         
             
 <li >
-    <a href="../../preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
+    <a href="../minmax_scaling/">Minmax scaling</a>
+</li>
+
+        
+            
+<li >
+    <a href="../mean_centerer/">Mean centerer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../shuffle_arrays_unison/">Shuffle arrays unison</a>
+</li>
+
+        
+            
+<li >
+    <a href="../scikit-learn_dense_transformer/">Scikit learn dense transformer</a>
 </li>
 
         
@@ -375,12 +366,12 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../enrichment_plot/">
+                        <a rel="next" href="../../regression/linear_regression/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../../regression/plot_linear_regression_fit/">
+                        <a rel="prev" href="../minmax_scaling/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -405,7 +396,7 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#stacked-barplot">Stacked Barplot</a></li>
+        <li class="main active"><a href="#standardizing">Standardizing</a></li>
         
             <li><a href="#example">Example</a></li>
         
@@ -417,71 +408,41 @@
                 <div class="col-md-9" role="main">
 
 <p>mlxtend<br />
-Sebastian Raschka, last updated: 05/14/2015</p>
+Sebastian Raschka, last updated: 06/02/2015</p>
 <hr>
 
-<h1 id="stacked-barplot">Stacked Barplot</h1>
+<h1 id="standardizing">Standardizing</h1>
 <blockquote>
-<p>from mlxtend.matplotlib import stacked_barplot</p>
+<p>from mlxtend.preprocessing import standardizing</p>
 </blockquote>
-<p>A function to conveniently plot stacked bar plots in matplotlib using pandas <code>DataFrame</code>s. </p>
+<p>A function to standardize columns in pandas DataFrames (or NumPy arrays) so that they have properties of a standard normal distribution (mean=0, standard deviation=1).</p>
 <hr>
 
 <h2 id="example">Example</h2>
-<p>Creating an example  <code>DataFrame</code>:   </p>
-<pre><code>import pandas as pd
-
-s1 = [1.0, 2.0, 3.0, 4.0]
-s2 = [1.4, 2.1, 2.9, 5.1]
-s3 = [1.9, 2.2, 3.5, 4.1]
-s4 = [1.4, 2.5, 3.5, 4.2]
-data = [s1, s2, s3, s4]
-
-df = pd.DataFrame(data, columns=['X1', 'X2', 'X3', 'X4'])
-df.columns = ['X1', 'X2', 'X3', 'X4']
-df.index = ['Sample1', 'Sample2', 'Sample3', 'Sample4']
-df
+<pre><code>from mlxtend.pandas import standardizing
 </code></pre>
-<p><img alt="" src="../img/matplotlib_stacked_barplot_1.png" /></p>
-<p>Plotting the stacked barplot. By default, the index of the <code>DataFrame</code> is used as column labels, and the <code>DataFrame</code> columns are used for the plot legend.</p>
-<pre><code>from mlxtend.matplotlib import stacked_barplot
-
-stacked_barplot(df, rotation=45)
-</code></pre>
-<p><img alt="" src="../img/matplotlib_stacked_barplot_2.png" /></p>
+<p><img alt="" src="../img/scaling_standardizing.png" /></p>
 <h2 id="default-parameters">Default Parameters</h2>
-<pre>def stacked_barplot(df, bar_width='auto', colors='bgrcky', labels='index', rotation=90, legend=True):
+<pre>def standardizing(array, columns, ddof=0):
     """
-    Function to plot stacked barplots
+    Standardizing columns in pandas DataFrames.
 
     Parameters
     ----------
-    df : pandas.DataFrame
-      A pandas DataFrame where the index denotes the
-      x-axis labels, and the columns contain the different
-      measurements for each row.
+    array : pandas DataFrame or NumPy ndarray, shape = [n_rows, n_columns].
 
-    bar_width: 'auto' or float (default: 'auto')
-      Parameter to set the widths of the bars. if
-      'auto', the width is automatically determined by
-      the number of columns in the dataset.
+    columns : array-like, shape = [n_columns]
+      Array-like with column names, e.g., ['col1', 'col2', ...]
+      or column indices [0, 2, 4, ...]
 
-    colors: str (default: 'bgrcky')
-      The colors of the bars.
-
-    labels: 'index' or iterable (default: 'index')
-      If 'index', the DataFrame index will be used as
-      x-tick labels.
-
-    rotation: int (default: 90)
-      Parameter to rotate the x-axis labels.
-
-    legend: bool (default: True)
-      Parameter to plot the legend.
+    ddof : int (default: 0)
+      Delta Degrees of Freedom. The divisor used in calculations 
+      is N - ddof, where N represents the number of elements.
 
     Returns
     ----------
-    None
+    df_new: pandas DataFrame object.
+      Copy of the array or DataFrame with standardized columns.
 
     """</pre></div>
             

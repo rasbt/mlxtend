@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Sebastian Raschka">
-        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/sklearn/ensemble_classifier/">
+        <link rel="canonical" href="http://rasbt.github.io/mlxtend/docs/classifier/scikit-learn_ensemble_classifier/">
         <link rel="shortcut icon" href="../../../img/favicon.ico">
 
-	<title>Ensemble classifier - mlxtend</title>
+	<title>Scikit learn ensemble classifier - mlxtend</title>
 
         <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -70,79 +70,52 @@
         
             
 <li >
-    <a href="../../classifier/neuralnet_mlp/">Neuralnet mlp</a>
+    <a href="../neuralnet_mlp/">Neuralnet mlp</a>
 </li>
 
         
             
 <li >
-    <a href="../../classifier/adaline/">Adaline</a>
+    <a href="../adaline/">Adaline</a>
 </li>
 
         
             
 <li >
-    <a href="../../classifier/perceptron/">Perceptron</a>
+    <a href="../perceptron/">Perceptron</a>
 </li>
 
         
             
 <li >
-    <a href="../../classifier/logistic_regression/">Logistic regression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">pandas</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../pandas/minmax_scaling/">Minmax scaling</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../pandas/standardizing/">Standardizing</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">sklearn</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../sequential_backward_selection/">Sequential backward selection</a>
-</li>
-
-        
-            
-<li >
-    <a href="../column_selector/">Column selector</a>
+    <a href="../logistic_regression/">Logistic regression</a>
 </li>
 
         
             
 <li class="active">
-    <a href="./">Ensemble classifier</a>
+    <a href="./">Scikit learn ensemble classifier</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">feature selection</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../feature_selection/sequential_backward_selection/">Sequential backward selection</a>
 </li>
 
         
             
 <li >
-    <a href="../dense_transformer/">Dense transformer</a>
+    <a href="../../feature_selection/column_selector/">Column selector</a>
 </li>
 
         
@@ -173,24 +146,24 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">matplotlib</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../matplotlib/category_scatter/">Category scatter</a>
+    <a href="../../plotting/category_scatter/">Category scatter</a>
 </li>
 
         
             
 <li >
-    <a href="../../matplotlib/enrichment_plot/">Enrichment plot</a>
+    <a href="../../plotting/enrichment_plot/">Enrichment plot</a>
 </li>
 
         
             
 <li >
-    <a href="../../matplotlib/stacked_barplot/">Stacked barplot</a>
+    <a href="../../plotting/stacked_barplot/">Stacked barplot</a>
 </li>
 
         
@@ -226,6 +199,18 @@
         
             
 <li >
+    <a href="../../preprocessing/standardizing/">Standardizing</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/minmax_scaling/">Minmax scaling</a>
+</li>
+
+        
+            
+<li >
     <a href="../../preprocessing/mean_centerer/">Mean centerer</a>
 </li>
 
@@ -233,6 +218,12 @@
             
 <li >
     <a href="../../preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/scikit-learn_dense_transformer/">Scikit learn dense transformer</a>
 </li>
 
         
@@ -375,12 +366,12 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../column_selector/">
+                        <a rel="next" href="../logistic_regression/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../dense_transformer/">
+                        <a rel="prev" href="../../feature_selection/sequential_backward_selection/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -426,18 +417,18 @@ Sebastian Raschka, last updated: 05/14/2015</p>
 
 <h1 id="majority-rule-ensemble-classifier">Majority Rule Ensemble Classifier</h1>
 <blockquote>
-<p>from mlxtend.sklearn import EnsembleClassifier</p>
+<p>from mlxtend.classifier import EnsembleClassifier</p>
 </blockquote>
-<p>And ensemble classifier that predicts class labels based on a majority voting rule (hard voting) or average predicted probabilities (soft voting).</p>
+<p>And ensemble classifier (for scikit-learn estimators) that predicts class labels based on a majority voting rule (hard voting) or average predicted probabilities (soft voting).</p>
 <p>Decision regions plotted for 4 different classifiers:   </p>
-<p><img alt="" src="../img/sklearn_ensemble_decsion_regions.png" /></p>
+<p><img alt="" src="../img/classifier_ensemble_decsion_regions.png" /></p>
 <p>Please see the <a href="http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_ensemble_ensembleclassifier.ipynb">IPython Notebook</a> for a detailed explanation and examples.</p>
 <p>The <code>EnsembleClassifier</code> will likely be included in the scikit-learn library as <code>VotingClassifier</code> at some point, and during this implementation process, the <code>EnsembleClassifier</code> has been slightly improved based on valuable feedback from the scikit-learn community.</p>
 <hr>
 
 <h2 id="cross-validation-example">Cross-validation Example</h2>
 <p>Input:</p>
-<pre><code>from mlxtend.sklearn import EnsembleClassifier
+<pre><code>from mlxtend.classifier import EnsembleClassifier
 from sklearn import cross_validation
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB 

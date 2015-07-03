@@ -6,7 +6,7 @@ Sebastian Raschka, last updated: 05/14/2015
 
 # Category Scatter
 
-> from mlxtend.matplotlib import category_scatter
+> from mlxtend.plotting import category_scatter
 
 A function to quickly produce a scatter plot colored by categories from a pandas `DataFrame` or NumPy `ndarray` object.
 
@@ -27,7 +27,7 @@ Loading an example dataset as pandas `DataFrame`:
 Plotting the data where the categories are determined by the unique values in the label column `label_col`. The `x` and `y` values are simply the column names of the DataFrame that we want to plot.
 
 	import matplotlib.pyplot as plt
-	from mlxtend.matplotlib import category_scatter
+	from mlxtend.plotting import category_scatter
 
 	category_scatter(x='x', y='y', label_col='label', data=df)
            

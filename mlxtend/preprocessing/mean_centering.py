@@ -3,6 +3,7 @@
 
 from .transformer import TransformerObj
 
+
 class MeanCenterer(TransformerObj):
     """
     Class for column centering of vectors and matrices.

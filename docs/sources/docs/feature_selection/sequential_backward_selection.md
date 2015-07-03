@@ -6,7 +6,7 @@ Sebastian Raschka, last updated: 05/14/2015
 
 # Sequential Backward Selection
 
-> from mlxtend.sklearn import SBS
+> from mlxtend.feature_selection import SBS
 
 Sequential Backward Selection (SBS) is  a classic feature selection algorithm -- a greedy search algorithm -- that has been developed as a suboptimal solution to the computationally often not feasible exhaustive search. In a nutshell, SBS removes one feature at the time based on the classifier performance until a feature subset of the desired size *k* is reached. 
 
@@ -20,7 +20,7 @@ More detailed explanations about the algorithms and examples can be found in [th
 
 Input:
 
-    from mlxtend.sklearn import SBS
+    from mlxtend.feature_selection import SBS
     from sklearn.neighbors import KNeighborsClassifier
     from sklearn.datasets import load_iris
 

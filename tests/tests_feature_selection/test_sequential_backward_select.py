@@ -1,5 +1,6 @@
 import numpy as np
-from mlxtend.sklearn import SBS
+from mlxtend.feature_selection import SBS
+
 
 def test_Iris():
     from sklearn.neighbors import KNeighborsClassifier
@@ -16,6 +17,3 @@ def test_Iris():
 
     assert(sbs.indices_ == (0, 3))
     assert(sbs.k_score_ == 0.96)
-
-
-

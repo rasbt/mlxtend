@@ -6,7 +6,7 @@ Sebastian Raschka, last updated: 05/14/2015
 
 # Stacked Barplot
 
-> from mlxtend.matplotlib import stacked_barplot
+> from mlxtend.plotting import stacked_barplot
 
 A function to conveniently plot stacked bar plots in matplotlib using pandas `DataFrame`s. 
 
@@ -33,7 +33,7 @@ Creating an example  `DataFrame`:
 	
 Plotting the stacked barplot. By default, the index of the `DataFrame` is used as column labels, and the `DataFrame` columns are used for the plot legend.
 
-	from mlxtend.matplotlib import stacked_barplot
+	from mlxtend.plotting import stacked_barplot
 
 	stacked_barplot(df, rotation=45)
 	

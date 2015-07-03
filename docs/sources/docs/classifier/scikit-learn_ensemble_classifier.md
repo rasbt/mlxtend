@@ -7,13 +7,13 @@ Sebastian Raschka, last updated: 05/14/2015
 
 # Majority Rule Ensemble Classifier
 
-> from mlxtend.sklearn import EnsembleClassifier
+> from mlxtend.classifier import EnsembleClassifier
 
-And ensemble classifier that predicts class labels based on a majority voting rule (hard voting) or average predicted probabilities (soft voting).
+And ensemble classifier (for scikit-learn estimators) that predicts class labels based on a majority voting rule (hard voting) or average predicted probabilities (soft voting).
 
 Decision regions plotted for 4 different classifiers:   
 
-![](./img/sklearn_ensemble_decsion_regions.png)
+![](./img/classifier_ensemble_decsion_regions.png)
 
 Please see the [IPython Notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_ensemble_ensembleclassifier.ipynb) for a detailed explanation and examples.
 
@@ -26,7 +26,7 @@ The `EnsembleClassifier` will likely be included in the scikit-learn library as 
 
 Input:
 
-	from mlxtend.sklearn import EnsembleClassifier
+	from mlxtend.classifier import EnsembleClassifier
 	from sklearn import cross_validation
 	from sklearn.linear_model import LogisticRegression
 	from sklearn.naive_bayes import GaussianNB 

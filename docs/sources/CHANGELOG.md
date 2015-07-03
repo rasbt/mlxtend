@@ -1,4 +1,11 @@
 ### 0.2.8
+- API changes:
+    - `mlxtend.sklearn.EnsembleClassifier` -> `mlxtend.classifier.EnsembleClassifier`
+    -  `mlxtend.sklearn.ColumnSelector` -> `mlxtend.feature_selection.ColumnSelector`
+    -  `mlxtend.sklearn.DenseTransformer` -> `mlxtend.preprocessing.DenseTransformer`
+    - `mlxtend.pandas.standardizing` ->  `mlxtend.preprocessing.standardizing` 
+    - `mlxtend.pandas.minmax_scaling` ->  `mlxtend.preprocessing.minmax_scaling`
+    -  `mlxtend.matplotlib` -> `mlxtend.plotting` 
 - Added momentum learning parameter (alpha coefficient) to `mlxtend.classifier.NeuralNetMLP`.
 - Added adaptive learning rate (decrease constant) to `mlxtend.classifier.NeuralNetMLP`.
 - `mlxtend.pandas.minmax_scaling` became `mlxtend.preprocessing.minmax_scaling`  and also supports NumPy arrays now

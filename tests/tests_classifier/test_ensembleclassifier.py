@@ -1,11 +1,11 @@
 import numpy as np
-from mlxtend.sklearn import EnsembleClassifier
+from mlxtend.classifier import EnsembleClassifier
 
 
 from sklearn.grid_search import GridSearchCV
 from sklearn import cross_validation
 from sklearn.linear_model import LogisticRegression
-from sklearn.naive_bayes import GaussianNB 
+from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 from sklearn import datasets
@@ -17,7 +17,7 @@ X, y = iris.data[:, 1:3], iris.target
 
 def test_EnsembleClassifier():
 
-    np.random.seed(123)    
+    np.random.seed(123)
     clf1 = LogisticRegression()
     clf2 = RandomForestClassifier()
     clf3 = GaussianNB()
@@ -30,7 +30,7 @@ def test_EnsembleClassifier():
 
 def test_EnsembleClassifier_weights():
 
-    np.random.seed(123)    
+    np.random.seed(123)
     clf1 = LogisticRegression()
     clf2 = RandomForestClassifier()
     clf3 = GaussianNB()
@@ -38,9 +38,9 @@ def test_EnsembleClassifier_weights():
 
     scores = cross_validation.cross_val_score(eclf, X, y, cv=5, scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
-    assert(scores_mean == 0.93)   
+    assert(scores_mean == 0.93)
 
-	
+
 def test_EnsembleClassifier_gridsearch():
 
     clf1 = LogisticRegression(random_state=1)
@@ -59,7 +59,7 @@ def test_EnsembleClassifier_gridsearch():
         mean_scores.append(round(mean_score, 2))
     assert(mean_scores == [0.95, 0.96, 0.96, 0.95])
 
-    
+
 def test_EnsembleClassifier_gridsearch_enumerate_names():
 
     clf1 = LogisticRegression(random_state=1)

@@ -3,6 +3,7 @@
 # scikit-learn utilities for transforming a sparse
 # numpy array into a dense numpy array
 
+
 class DenseTransformer(object):
     """
     A transformer for scikit-learn's Pipeline class that converts
@@ -23,4 +24,4 @@ class DenseTransformer(object):
         return X.toarray()
 
     def get_params(self, deep=True):
-        return {'some_param':True}
+        return {'some_param': True}

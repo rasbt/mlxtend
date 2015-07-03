@@ -6,7 +6,7 @@ Sebastian Raschka, last updated: 05/14/2015
 
 # Enrichment Plot
 
-> from mlxtend.matplotlib import enrichment_plot
+> from mlxtend.plotting import enrichment_plot
 
 A function to plot step plots of cumulative counts.
 
@@ -29,7 +29,7 @@ Creating an example  `DataFrame`:
 	
 Plotting the enrichment plot. The y-axis can be interpreted as "how many samples are less or equal to the corresponding x-axis label."
 
-    from mlxtend.matplotlib import enrichment_plot
+    from mlxtend.plotting import enrichment_plot
     enrichment_plot(df)
 	
 	

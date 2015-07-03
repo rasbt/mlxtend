@@ -3,6 +3,7 @@
 
 import numpy as np
 
+
 def shuffle_arrays_unison(arrays, random_state=None):
     """
     Shuffle NumPy arrays in unison.

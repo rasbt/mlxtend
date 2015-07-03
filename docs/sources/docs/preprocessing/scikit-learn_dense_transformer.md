@@ -6,7 +6,7 @@ Sebastian Raschka, last updated: 05/14/2015
 
 # Dense Transformer
 
-> from mlxtend.sklearn import DenseTransformer
+> from mlxtend.preprocessing import DenseTransformer
 
 A simple transformer that converts a sparse into a dense numpy array, e.g., required for scikit-learn's `Pipeline` when e.g,. `CountVectorizers` are used in combination with `RandomForest`s.
 
@@ -20,7 +20,7 @@ A simple transformer that converts a sparse into a dense numpy array, e.g., requ
 	from sklearn.ensemble import RandomForestClassifier
 	from sklearn.feature_extraction.text import CountVectorizer
 
-	from mlxtend.sklearn import DenseTransformer
+	from mlxtend.preprocessing import DenseTransformer
 
 
 	pipe_1 = Pipeline([

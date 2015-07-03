@@ -43,7 +43,8 @@ class EnsembleClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         `verbose=0` (default): Prints nothing
         `verbose=1`: Prints the number & name of the clf being fitted
         `verbose=2`: Prints info about the parameters of the clf being fitted
-        `verbose>2`: Changes `verbose` param of the underlying clf to self.verbose - 2
+        `verbose>2`: Changes `verbose` param of the underlying clf to
+                     self.verbose - 2
 
     Attributes
     ----------
@@ -67,7 +68,8 @@ class EnsembleClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     >>> clf3 = GaussianNB()
     >>> X = np.array([[-1, -1], [-2, -1], [-3, -2], [1, 1], [2, 1], [3, 2]])
     >>> y = np.array([1, 1, 1, 2, 2, 2])
-    >>> eclf1 = EnsembleClassifier(clfs=[clf1, clf2, clf3], voting='hard', verbose=1)
+    >>> eclf1 = EnsembleClassifier(clfs=[clf1, clf2, clf3],
+    ... voting='hard', verbose=1)
     >>> eclf1 = eclf1.fit(X, y)
     >>> print(eclf1.predict(X))
     [1 1 1 2 2 2]
@@ -85,11 +87,10 @@ class EnsembleClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     def __init__(self, clfs, voting='hard', weights=None, verbose=0):
 
         self.clfs = clfs
-        self.named_clfs = {key:value for key,value in _name_estimators(clfs)}
+        self.named_clfs = {key: value for key, value in _name_estimators(clfs)}
         self.voting = voting
         self.weights = weights
         self.verbose = verbose
-
 
     def fit(self, X, y):
         """ Fit the clfs.
@@ -108,7 +109,7 @@ class EnsembleClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self : object
         """
         if isinstance(y, np.ndarray) and len(y.shape) > 1 and y.shape[1] > 1:
-            raise NotImplementedError('Multilabel and multi-output'\
+            raise NotImplementedError('Multilabel and multi-output'
                                       ' classification is not supported.')
 
         if self.voting not in ('soft', 'hard'):
@@ -132,7 +133,8 @@ class EnsembleClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
             if self.verbose > 0:
                 i = self.clfs_.index(clf) + 1
-                print("Fitting clf%d: %s (%d/%d)" % (i, _name_estimators((clf,))[0][0], i, len(self.clfs_)))
+                print("Fitting clf%d: %s (%d/%d)" %
+                      (i, _name_estimators((clf,))[0][0], i, len(self.clfs_)))
 
             if self.verbose > 2:
                 if hasattr(clf, 'verbose'):

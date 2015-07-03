@@ -10,6 +10,7 @@ from itertools import combinations
 from sklearn.cross_validation import cross_val_score
 import numpy as np
 
+
 class SBS(BaseEstimator, MetaEstimatorMixin):
     """ Sequential Backward Selection for feature selection.
 
@@ -65,7 +66,8 @@ class SBS(BaseEstimator, MetaEstimatorMixin):
        [ 5. ,  0.2]])
 
     """
-    def __init__(self, estimator, k_features, scoring='accuracy', cv=5, n_jobs=1):
+    def __init__(self, estimator, k_features,
+                 scoring='accuracy', cv=5, n_jobs=1):
         self.scoring = scoring
         self.estimator = clone(estimator)
         self.cv = cv
@@ -111,5 +113,5 @@ class SBS(BaseEstimator, MetaEstimatorMixin):
                                    X[:, indices], y,
                                    cv=self.cv,
                                    scoring=self.scoring,
-                                   n_jobs = self.n_jobs)
+                                   n_jobs=self.n_jobs)
         return cv_score

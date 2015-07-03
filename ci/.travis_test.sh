@@ -21,7 +21,6 @@ if [[ "$COVERAGE" == "true" ]]; then
     nosetests -s -v --with-coverage --cover-package=mlxtend.math
     nosetests -s -v --with-coverage --cover-package=mlxtend.preprocessing
     nosetests -s -v --with-coverage --cover-package=mlxtend.regression
-    nosetests -s -v --with-coverage --cover-package=mlxtend.sklearn
     nosetests -s -v --with-coverage --cover-package=mlxtend.text
     nosetests -s -v --with-coverage --cover-package=mlxtend.feature_selection
 else
@@ -30,7 +29,6 @@ else
     nosetests -s -v mlxtend.math
     nosetests -s -v mlxtend.preprocessing
     nosetests -s -v mlxtend.regression
-    nosetests -s -v mlxtend.sklearn
     nosetests -s -v mlxtend.text
 	nosetests -s -v mlxtend.feature_selection
 fi

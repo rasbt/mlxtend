@@ -1,5 +1,5 @@
 mlxtend  
-Sebastian Raschka, last updated: 05/14/2015
+Sebastian Raschka, last updated: 07/14/2015
 
 
 
@@ -78,33 +78,24 @@ A more detailed article about the algorithms is in preparation.
     learning : str (default: sgd)
       Learning rule, sgd (stochastic gradient descent)
       or gd (gradient descent).
-      
+
     regularization : {None, 'l2'} (default: None)
       Type of regularization. No regularization if
       `regularization=None`.
-      
-    lambda_ : float
+
+    l2_lambda : float
       Regularization parameter for L2 regularization.
-      No regularization if `regularization=None`.
+      No regularization if ls_lambda_=0.0.
 
     shuffle : bool (default: False)
         Shuffles training data every epoch if True to prevent circles.
 
     random_seed : int (default: None)
         Set random state for shuffling and initializing the weights.
-        
+
     zero_init_weight : bool (default: False)
         If True, weights are initialized to zero instead of small random
         numbers in the interval [0,1]
-
-    Attributes
-    -----------
-    w_ : 1d-array
-      Weights after fitting.
-
-    cost_ : list
-      List of floats with sum of squared error cost (sgd or gd) for every
-      epoch.
 
     """</pre>
 

@@ -1,3 +1,6 @@
+### 0.2.9
+- Changed `regularization` & `lambda` parameters in `LogisticRegression` to single parameter `l2_lambda`
+
 ### 0.2.8
 - API changes:
     - `mlxtend.sklearn.EnsembleClassifier` -> `mlxtend.classifier.EnsembleClassifier`

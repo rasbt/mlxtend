@@ -23,9 +23,9 @@ class LogisticRegression(object):
       Type of regularization. No regularization if
       `regularization=None`.
 
-    lambda_ : float
+    l2_lambda : float
       Regularization parameter for L2 regularization.
-      No regularization if `regularization=None`.
+      No regularization if l2_lambda=0.0.
 
     shuffle : bool (default: False)
         Shuffles training data every epoch if True to prevent circles.
@@ -48,13 +48,13 @@ class LogisticRegression(object):
 
     """
     def __init__(self, eta=0.01, epochs=50, regularization=None,
-                 lambda_=1.0, learning='sgd', shuffle=False,
+                 l2_lambda=0.0, learning='sgd', shuffle=False,
                  random_seed=None, zero_init_weight=False):
 
         np.random.seed(random_seed)
         self.eta = eta
         self.epochs = epochs
-        self.lambda_ = lambda_
+        self.l2_lambda = l2_lambda
         self.shuffle = shuffle
         self.regularization = regularization
         self.zero_init_weight = zero_init_weight
@@ -110,17 +110,21 @@ class LogisticRegression(object):
 
             if self.learning == 'gd':
                 y_val = self.activation(X)
-                errors = (y_val - y)
-                self.lambda_ * self.w_[1:]
-                self.w_[1:] = self._regularize() - self.eta * X.T.dot(errors)
-                self.w_[0] -= self.eta * errors.sum()
+                errors = (y - y_val)
+                neg_grad = X.T.dot(errors)
+                l2_reg = self.l2_lambda * self.w_[1:]
+                self.w_[1:] += self.eta * (neg_grad - l2_reg)
+                self.w_[0] += self.eta * errors.sum()
 
             elif self.learning == 'sgd':
                 for xi, yi in zip(X, y):
                     yi_val = self.activation(xi)
-                    error = (yi_val - yi)
-                    self.w_[1:] = self._regularize() - self.eta * xi.dot(error)
-                    self.w_[0] -= self.eta * error
+                    error = (yi - yi_val)
+                    neg_grad = xi.dot(error)
+                    l2_reg = self.l2_lambda * self.w_[1:]
+                    self.w_[1:] += self.eta * (neg_grad - l2_reg)
+                    self.w_[0] += self.eta * error
+
             self.cost_.append(self._logit_cost(y, self.activation(X)))
         return self
 
@@ -179,17 +183,9 @@ class LogisticRegression(object):
     def _sigmoid(self, z):
         return 1.0 / (1.0 + np.exp(-z))
 
-    def _regularize(self):
-        if self.regularization == 'l2':
-            regularize = self.w_[1:] * (1 - self.eta * self.lambda_)
-        else:
-            regularize = self.w_[1:]
-        return regularize
-
     def _regularize_cost(self):
-        if self.regularization == 'l2':
-            regularize = self.lambda_ * np.array([w**2 for w in self.w_[1:]], dtype='int64')
-        else:
-            regularize = np.zeros(self.m_ - 1)
-        regularize + 0.5 * np.sum(regularize)
+        #if self.regularization == 'l2':
+        #    regularize = self.l2_lambda / 2.0 * np.sum(self.w_[1:]**2)
+        #else:
+        regularize = 0.0
         return regularize

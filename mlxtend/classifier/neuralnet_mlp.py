@@ -182,7 +182,7 @@ class NeuralNetMLP(object):
 
     def _L1_reg(self, lambda_, w1, w2):
         """Compute L1-regularization cost"""
-        return (lambda_/2.0) * (np.abs(w1).sum() + np.abs(w2).sum())
+        return (lambda_/2.0) * (np.abs(w1[:, 1:]).sum() + np.abs(w2[:, 1:]).sum())
 
     def _get_cost(self, y_enc, output, w1, w2):
         """Compute cost function.

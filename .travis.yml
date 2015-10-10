@@ -15,3 +15,4 @@ after_success:
     # because the coverage report failed to be published.
     - if [[ "$COVERAGE" == "true" ]]; then coveralls || echo "failed"; fi
 cache: apt
+sudo: false

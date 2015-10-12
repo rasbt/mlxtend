@@ -510,21 +510,17 @@ sffs.transform(X)[0:5]
 <pre><code class="python">Indices of selected features: (2, 3)
 CV score of selected subset: 0.966666666667
 New feature subset:
-Out[7]:
 array([[ 1.4,  0.2],
        [ 1.4,  0.2],
        [ 1.3,  0.2],
        [ 1.5,  0.2],
        [ 1.4,  0.2]])
- ```
+</code></pre>
 
-&lt;br&gt;
-&lt;br&gt;
-
-As demonstrated below, the SFFS algorithm can be a useful alternative to dimensionality reduction techniques to reduce overfitting and when the original features need to be preserved:
-
-```python
-import matplotlib.pyplot as plt
+<p><br>
+<br></p>
+<p>As demonstrated below, the SFFS algorithm can be a useful alternative to dimensionality reduction techniques to reduce overfitting and when the original features need to be preserved:</p>
+<pre><code class="python">import matplotlib.pyplot as plt
 from mlxtend.data import wine_data
 from sklearn.preprocessing import StandardScaler
 

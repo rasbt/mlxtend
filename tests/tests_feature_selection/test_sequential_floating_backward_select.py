@@ -1,5 +1,5 @@
 import numpy as np
-from mlxtend.feature_selection import SBS
+from mlxtend.feature_selection import SFBS
 
 
 def test_Iris():
@@ -12,11 +12,11 @@ def test_Iris():
 
     knn = KNeighborsClassifier(n_neighbors=4)
 
-    sbs = SBS(knn, k_features=2, scoring='accuracy', cv=5, print_progress=False)
-    sbs.fit(X, y)
+    sfbs = SFBS(knn, k_features=2, scoring='accuracy', cv=5, print_progress=False)
+    sfbs.fit(X, y)
 
-    assert(sbs.indices_ == (0, 3))
-    assert(round(sbs.k_score_, 2) == 0.96)
+    assert(sfbs.indices_ == (0, 3))
+    assert(round(sfbs.k_score_, 2) == 0.96)
 
 
 def test_selects_all():
@@ -25,6 +25,6 @@ def test_selects_all():
 
     X, y = wine_data()
     knn = KNeighborsClassifier(n_neighbors=4)
-    sbs = SBS(knn, k_features=13, scoring='accuracy', cv=3, print_progress=False)
-    sbs.fit(X, y)
-    assert(len(sbs.indices_) == 13)
+    sfbs = SFBS(knn, k_features=13, scoring='accuracy', cv=3, print_progress=False)
+    sfbs.fit(X, y)
+    assert(len(sfbs.indices_) == 13)

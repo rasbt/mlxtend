@@ -1,6 +1,6 @@
 # Sebastian Raschka, 2015
 # Function for sequential feature selection via
-# Sequential Forward Selection (SFS)
+# Sequential Floating Forward Selection (SFFS)
 # mlxtend Machine Learning Library Extensions
 
 from sklearn.base import clone
@@ -9,11 +9,11 @@ from sklearn.base import MetaEstimatorMixin
 from itertools import combinations
 from sklearn.cross_validation import cross_val_score
 import numpy as np
+from collections import deque
 import sys
 
-
-class SFS(BaseEstimator, MetaEstimatorMixin):
-    """ Sequential Forward Selection for feature selection.
+class SFFS(BaseEstimator, MetaEstimatorMixin):
+    """ Sequential Floating Forward Selection for feature selection.
 
     Parameters
     ----------
@@ -31,6 +31,12 @@ class SFS(BaseEstimator, MetaEstimatorMixin):
 
     cv : int (default: 5)
       Number of folds in StratifiedKFold.
+
+    max_iter: int (default: -1)
+      Terminate early if number of `max_iter` is reached.
+
+    skip_if_stuck: bool (default: True)
+      If `True`, skips conditional exclusion step if stuck.
 
     n_jobs : int (default: 1)
       The number of CPUs to use for cross validation. -1 means 'all CPUs'.
@@ -57,59 +63,92 @@ class SFS(BaseEstimator, MetaEstimatorMixin):
     >>> X = iris.data
     >>> y = iris.target
     >>> knn = KNeighborsClassifier(n_neighbors=4)
-    >>> sfs = SFS(knn, k_features=2, scoring='accuracy', cv=5)
-    >>> sfs = sfs.fit(X, y)
-    >>> sfs.indices_
+    >>> sffs = SFFS(knn, k_features=2, scoring='accuracy', cv=5)
+    >>> sffs = sffs.fit(X, y)
+    >>> sffs.indices_
     (2, 3)
-    >>> sfs.transform(X[:5])
+    >>> sffs.transform(X[:5])
     array([[ 1.4,  0.2],
            [ 1.4,  0.2],
            [ 1.3,  0.2],
            [ 1.5,  0.2],
            [ 1.4,  0.2]])
 
-    >>> print('best score: %.2f' % sfs.k_score_)
+    >>> print('best score: %.2f' % sffs.k_score_)
     best score: 0.97
 
     """
     def __init__(self, estimator, k_features, print_progress=True,
-                 scoring='accuracy', cv=5, n_jobs=1):
+                 scoring='accuracy', max_iter=-1, cv=5,
+                 skip_if_stuck=True, n_jobs=1):
         self.scoring = scoring
         self.estimator = estimator #clone(estimator)
         self.cv = cv
         self.k_features = k_features
+        self.max_iter = max_iter
+        self.skip_if_stuck = skip_if_stuck
         self.print_progress = print_progress
         self.n_jobs = n_jobs
 
     def fit(self, X, y):
-
         dim = 0
         orig_set = set(range(X.shape[1]))
         self.indices_ = []
         self.subsets_ = []
         self.scores_ = []
 
-        while dim < self.k_features:
-            scores = []
-            subsets = []
+        if self.skip_if_stuck:
+            sdq = deque(maxlen=4)
+        else:
+            sdq = deque(maxlen=0)
 
+        cnt = 0
+        while dim < self.k_features and cnt != self.max_iter:
+            scores_1, scores_2 = [], []
+            subsets_1, subsets_2 = [], []
+
+            # step 1: inclusion
             set_indices = set(self.indices_)
             for i in orig_set - set_indices:
                 test_subset = tuple(sorted(set_indices | {i}))
                 cv_score = self._calc_score(X, y, test_subset)
-                scores.append(cv_score.mean())
-                subsets.append(test_subset)
+                scores_1.append(cv_score.mean())
+                subsets_1.append(test_subset)
 
-            best = np.argmax(scores)
-            self.indices_ = subsets[best]
-            self.subsets_.append(self.indices_)
-            self.scores_.append(scores[best])
+            best_1 = np.argmax(scores_1)
+            new_indices = subsets_1[best_1]
+            (new_feature,) = set(new_indices) - set_indices
             dim += 1
+
+            # step 2: conditional exclusion
+            best_2_score = -1.0
+            if not len(sdq) == 4 or (sdq[0] != sdq[2] or sdq[1] != sdq[3]):
+                for p in combinations(new_indices, r=dim-1):
+                    #print(new_indices, new_feature, p)
+                    #print(new_feature in p)
+                    if p and new_feature in p:
+
+                        #print(p, new_feature)
+                        cv_score = self._calc_score(X, y, p)
+                        scores_2.append(cv_score.mean())
+                        subsets_2.append(p)
+                        best_2 = np.argmax(scores_2)
+                        best_2_score = scores_2[best_2]
+
+            if best_2_score > scores_1[best_1]:
+                self.indices_ = subsets_2[best_2]
+                dim -= 1
+            else:
+                self.indices_ = subsets_1[best_1]
+                self.subsets_.append(self.indices_)
+                self.scores_.append(scores_1[best_1])
+
+            sdq.append(self.indices_)
+            cnt += 1
 
             if self.print_progress:
                 sys.stderr.write('\rFeatures: %d/%d' % (len(self.indices_), self.k_features))
                 sys.stderr.flush()
-
 
         self.k_score_ = self.scores_[-1]
         return self

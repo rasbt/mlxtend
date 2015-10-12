@@ -1,0 +1,5 @@
+- [] mlxtend implement SFS
+- [] mlxtend implement SFFS
+- [] mlxtend implement SBFS
+- [] fix mlxtend doc images
+- [] adjust SBS ipython notebook

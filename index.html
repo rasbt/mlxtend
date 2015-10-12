@@ -115,6 +115,24 @@
         
             
 <li >
+    <a href="docs/feature_selection/sequential_forward_selection/">Sequential forward selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="docs/feature_selection/sequential_floating_backward_selection/">Sequential floating backward selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="docs/feature_selection/sequential_floating_forward_selection/">Sequential floating forward selection</a>
+</li>
+
+        
+            
+<li >
     <a href="docs/feature_selection/column_selector/">Column selector</a>
 </li>
 
@@ -399,6 +417,12 @@
         <li class="main active"><a href="#links">Links</a></li>
         
     
+        <li class="main "><a href="#recent-changes">Recent changes</a></li>
+        
+    
+        <li class="main "><a href="#quick-install">Quick Install</a></li>
+        
+    
         <li class="main "><a href="#examples">Examples</a></li>
         
     
@@ -409,10 +433,11 @@
 <p><img alt="" src="./img/logo.png" /></p>
 <p><strong>A library consisting of useful tools and extensions for the day-to-day data science tasks.</strong></p>
 <p><img alt="Python 2.7" src="https://img.shields.io/badge/python-2.7-blue.svg" />
-<img alt="Python 3.4" src="https://img.shields.io/badge/python-3.4-blue.svg" />
+<img alt="Python 3.5" src="https://img.shields.io/badge/python-3.5-blue.svg" />
 <img alt="License" src="https://img.shields.io/badge/license-BSD-blue.svg" /></p>
 <p>Sebastian Raschka 2014-2015</p>
-<p>Current version: 0.2.8</p>
+<p>Current PyPI version: <a href="http://badge.fury.io/py/mlxtend"><img alt="PyPI version" src="https://badge.fury.io/py/mlxtend.svg" /></a>
+Current GitHub version: 0.2.9</p>
 <p><br></p>
 <hr>
 
@@ -424,18 +449,25 @@
 <li>Questions? Check out the <a href="https://groups.google.com/forum/#!forum/mlxtend">Google Groups mailing list</a></li>
 </ul>
 <p><br></p>
-<p><hr>
-<strong>Recently added</strong></p>
+<hr>
+
+<h2 id="recent-changes">Recent changes</h2>
 <ul>
-<li>Some API changes for clarity, please see the <a href="http://rasbt.github.io/mlxtend/changelog/">Changelog</a> for details</li>
+<li>Sequential Feature Selection algorithms: <a href="http://rasbt.github.io/mlxtend/docs/feature_selection/sequential_forward_selection/">SFS</a>, <a href="http://rasbt.github.io/mlxtend/docs/feature_selection/sequential_floating_forward_selection/">SFFS</a>, and <a href="http://rasbt.github.io/mlxtend/docs/feature_selection/sequential_floating_backward_selection/">SFBS</a></li>
 <li><a href="http://rasbt.github.io/mlxtend/docs/classifier/neuralnet_mlp/">Neural Network / Multilayer Perceptron classifier</a></li>
-<li><a href="http://rasbt.github.io/mlxtend/docs/data/mnist/">5000 labeled training samples</a> from the MNIST handwritten digits dataset</li>
 <li><a href="http://rasbt.github.io/mlxtend/docs/regression/linear_regression/">Ordinary least square regression</a> using different solvers (gradient and stochastic gradient descent, and the closed form solution)</li>
 </ul>
 <p><hr>
 <br></p>
+<h2 id="quick-install">Quick Install</h2>
+<ul>
+<li>latest version (from GitHub): <code>pip install git+git://github.com/rasbt/mlxtend.git#egg=mlxtend</code></li>
+<li>latest PyPI version: <code>pip install mlxtend</code></li>
+</ul>
+<p><hr>
+<br></p>
 <h2 id="examples">Examples</h2>
-<pre><code>from mlxtend.evaluate import plot_decision_regions
+<pre><code class="python">from mlxtend.evaluate import plot_decision_regions
 import matplotlib.pyplot as plt
 from sklearn import datasets
 from sklearn.svm import SVC
@@ -458,6 +490,7 @@ plt.ylabel('petal length [cm]')
 plt.title('SVM on Iris')
 plt.show()
 </code></pre>
+
 <p><img alt="" src="./docs/evaluate/img/evaluate_plot_decision_regions_2d.png" /></p></div>
             
         </div>
@@ -474,6 +507,8 @@ plt.show()
         <script>var base_url = '.';</script>
         <script data-main="./mkdocs/js/search.js" src="./mkdocs/js/require.js"></script>
         <script src="./js/base.js"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+        <script src="./mathjaxhelper.js"></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
             <div class="modal-dialog">
@@ -505,5 +540,5 @@ plt.show()
 
 <!--
 MkDocs version : 0.15.0.dev
-Build Date UTC : 2015-07-03 06:04:42.530825
+Build Date UTC : 2015-10-12 12:30:00.476902
 -->

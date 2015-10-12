@@ -115,6 +115,24 @@
         
             
 <li >
+    <a href="../../feature_selection/sequential_forward_selection/">Sequential forward selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../feature_selection/sequential_floating_backward_selection/">Sequential floating backward selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../feature_selection/sequential_floating_forward_selection/">Sequential floating forward selection</a>
+</li>
+
+        
+            
+<li >
     <a href="../../feature_selection/column_selector/">Column selector</a>
 </li>
 
@@ -410,7 +428,7 @@
                 <div class="col-md-9" role="main">
 
 <p>mlxtend<br />
-Sebastian Raschka, last updated: 05/14/2015</p>
+Sebastian Raschka, last updated: 07/14/2015</p>
 <hr>
 
 <h1 id="logistic-regression">Logistic Regression</h1>
@@ -480,9 +498,9 @@ plt.show()
       Type of regularization. No regularization if
       `regularization=None`.
 
-    lambda_ : float
+    l2_lambda : float
       Regularization parameter for L2 regularization.
-      No regularization if `regularization=None`.
+      No regularization if ls_lambda_=0.0.
 
     shuffle : bool (default: False)
         Shuffles training data every epoch if True to prevent circles.
@@ -493,15 +511,6 @@ plt.show()
     zero_init_weight : bool (default: False)
         If True, weights are initialized to zero instead of small random
         numbers in the interval [0,1]
-
-    Attributes
-    -----------
-    w_ : 1d-array
-      Weights after fitting.
-
-    cost_ : list
-      List of floats with sum of squared error cost (sgd or gd) for every
-      epoch.
 
     """</pre>
 
@@ -578,6 +587,8 @@ plt.show()
         <script>var base_url = '../../..';</script>
         <script data-main="../../../mkdocs/js/search.js" src="../../../mkdocs/js/require.js"></script>
         <script src="../../../js/base.js"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+        <script src="../../../mathjaxhelper.js"></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
             <div class="modal-dialog">

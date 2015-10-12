@@ -174,7 +174,6 @@ Output:
 
 ## Gridsearch Example 2
 
-Tuning the estimator used for feature selection. Note that the current implementation requires to search for the weights in both the classifier and the SBS transformer separately.
 
 	import pandas as pd
 	from sklearn.pipeline import Pipeline
@@ -251,7 +250,7 @@ Output:
 
     Parameters
     ----------
-    clfs : scikit-learn estimator object
+    estimator : scikit-learn estimator object
 
     k_features : int
       Number of features to select where k_features.

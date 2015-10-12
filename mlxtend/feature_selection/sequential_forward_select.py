@@ -1,6 +1,6 @@
 # Sebastian Raschka, 2015
 # Function for sequential feature selection via
-# Sequential Backward Selection (SBS)
+# Sequential Forward Selection (SFS)
 # mlxtend Machine Learning Library Extensions
 
 from sklearn.base import clone
@@ -11,8 +11,8 @@ from sklearn.cross_validation import cross_val_score
 import numpy as np
 
 
-class SBS(BaseEstimator, MetaEstimatorMixin):
-    """ Sequential Backward Selection for feature selection.
+class SFS(BaseEstimator, MetaEstimatorMixin):
+    """ Sequential Forward Selection for feature selection.
 
     Parameters
     ----------
@@ -38,7 +38,7 @@ class SBS(BaseEstimator, MetaEstimatorMixin):
     k_score_ : float
       Cross validation mean score of the selected subset
 
-    subsets_ : list of lists
+    subsets_ : list of tuples
       Indices of the sequentially selected subsets.
 
     scores_ : list
@@ -52,54 +52,55 @@ class SBS(BaseEstimator, MetaEstimatorMixin):
     >>> X = iris.data
     >>> y = iris.target
     >>> knn = KNeighborsClassifier(n_neighbors=4)
-    >>> sbs = SBS(knn, k_features=2, scoring='accuracy', cv=5)
-    >>> sbs = sbs.fit(X, y)
-    >>> sbs.indices_
-    (0, 3)
-    >>> sbs.transform(X[:5])
-    array([[ 5.1,  0.2],
-           [ 4.9,  0.2],
-           [ 4.7,  0.2],
-           [ 4.6,  0.2],
-           [ 5. ,  0.2]])
+    >>> sfs = SFS(knn, k_features=2, scoring='accuracy', cv=5)
+    >>> sfs = sfs.fit(X, y)
+    >>> sfs.indices_
+    (2, 3)
+    >>> sfs.transform(X[:5])
+    array([[ 1.4,  0.2],
+           [ 1.4,  0.2],
+           [ 1.3,  0.2],
+           [ 1.5,  0.2],
+           [ 1.4,  0.2]])
 
-    >>> print('best score: %.2f' % sbs.k_score_)
-    best score: 0.96
+    >>> print('best score: %.2f' % sfs.k_score_)
+    best score: 0.97
 
     """
     def __init__(self, estimator, k_features,
                  scoring='accuracy', cv=5, n_jobs=1):
         self.scoring = scoring
-        self.estimator = estimator#clone(estimator)
+        self.estimator = estimator #clone(estimator)
         self.cv = cv
         self.k_features = k_features
         self.n_jobs = n_jobs
 
     def fit(self, X, y):
 
-        dim = X.shape[1]
-        self.indices_ = tuple(range(dim))
-        self.subsets_ = [self.indices_]
-        cv_score = self._calc_score(X, y, self.indices_)
-        self.scores_ = [cv_score.mean()]
+        dim = 0
+        orig_set = set(range(X.shape[1]))
+        self.indices_ = []
+        self.subsets_ = []
+        self.scores_ = []
 
-        while dim > self.k_features:
+        while dim < self.k_features:
             scores = []
             subsets = []
 
-            for p in combinations(self.indices_, r=dim-1):
-                cv_score = self._calc_score(X, y, p)
+            set_indices = set(self.indices_)
+            for i in orig_set - set_indices:
+                test_subset = tuple(sorted(set_indices | {i}))
+                cv_score = self._calc_score(X, y, test_subset)
                 scores.append(cv_score.mean())
-                subsets.append(p)
+                subsets.append(test_subset)
 
             best = np.argmax(scores)
             self.indices_ = subsets[best]
             self.subsets_.append(self.indices_)
-            dim -= 1
-
             self.scores_.append(scores[best])
-        self.k_score_ = self.scores_[-1]
+            dim += 1
 
+        self.k_score_ = self.scores_[-1]
         return self
 
     def transform(self, X):

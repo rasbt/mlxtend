@@ -1,5 +1,5 @@
 import numpy as np
-from mlxtend.feature_selection import SBS
+from mlxtend.feature_selection import SFS
 
 
 def test_Iris():
@@ -12,8 +12,8 @@ def test_Iris():
 
     knn = KNeighborsClassifier(n_neighbors=4)
 
-    sbs = SBS(knn, k_features=2, scoring='accuracy', cv=5)
-    sbs.fit(X, y)
+    sfs = SFS(knn, k_features=2, scoring='accuracy', cv=5)
+    sfs.fit(X, y)
 
-    assert(sbs.indices_ == (0, 3))
-    assert(round(sbs.k_score_, 2) == 0.96)
+    assert(sfs.indices_ == (2, 3))
+    assert(round(sfs.k_score_, 2) == 0.97 )

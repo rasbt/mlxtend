@@ -4,12 +4,12 @@
 **A library consisting of useful tools and extensions for the day-to-day data science tasks.**
 
 ![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)
-![Python 3.4](https://img.shields.io/badge/python-3.4-blue.svg)
+![Python 3.5](https://img.shields.io/badge/python-3.5-blue.svg)
 ![License](https://img.shields.io/badge/license-BSD-blue.svg)
 
 Sebastian Raschka 2014-2015
 
-Current version: 0.2.9
+Current version: 0.3.0
 
 
 <br>
@@ -27,9 +27,8 @@ Current version: 0.2.9
 <hr>
 **Recently added**
 
-- Some API changes for clarity, please see the [Changelog](http://rasbt.github.io/mlxtend/changelog/) for details
+- Sequential Feature Selection algorithms: [SFS](http://rasbt.github.io/mlxtend/docs/feature_selection/sequential_forward_selection/), [SFFS](http://rasbt.github.io/mlxtend/docs/feature_selection/sequential_floating_forward_selection/), and [SFBS](http://rasbt.github.io/mlxtend/docs/feature_selection/sequential_floating_backward_selection/)
 - [Neural Network / Multilayer Perceptron classifier](http://rasbt.github.io/mlxtend/docs/classifier/neuralnet_mlp/)
-- [5000 labeled training samples](http://rasbt.github.io/mlxtend/docs/data/mnist/) from the MNIST handwritten digits dataset
 - [Ordinary least square regression](http://rasbt.github.io/mlxtend/docs/regression/linear_regression/) using different solvers (gradient and stochastic gradient descent, and the closed form solution)
 
 <hr>

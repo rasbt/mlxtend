@@ -1,20 +1,59 @@
 mlxtend  
-Sebastian Raschka, last updated: 05/14/2015
+Sebastian Raschka, last updated: 10/11/2015
 
 
 <hr>
+
 
 # Sequential Backward Selection
 
 > from mlxtend.feature_selection import SBS
 
-Sequential Backward Selection (SBS) is  a classic feature selection algorithm -- a greedy search algorithm -- that has been developed as a suboptimal solution to the computationally often not feasible exhaustive search. In a nutshell, SBS removes one feature at the time based on the classifier performance until a feature subset of the desired size *k* is reached. 
-
-**Note that SBS is different from the [recursive feature elimination (RFE)](http://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.RFE.html#sklearn.feature_selection.RFE) that is implemented in scikit-learn.** RFE sequentially removes features based on the feature weights whereas SBS removes features based on the model performance.
-More detailed explanations about the algorithms and examples can be found in [this IPython notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_sequential_feature_select_sbs.ipynb).
+Sequential Backward Selection (SBS) is  a classic feature selection algorithm -- a greedy search algorithm -- that has been developed as a suboptimal solution to the computationally often not feasible exhaustive search. In a nutshell, SBS removes one feature at the time based on the classifier performance until a feature subset of the desired size *k* is reached.
 
 
-<hr>
+Related topics:
+
+- [Sequential Forward Selection](./sequential_forward_selection.md)
+- [Sequential Floating Forward Selection](./sequential_floating_forward_selection.md)
+- [Sequential Floating Backward Selection](./sequential_floating_backward_selection.md)
+
+
+### The SBS Algorithm
+
+---
+
+**Input:** the set of all features, $Y = \{y_1, y_2, ..., y_d\}$  
+
+- The SBS algorithm takes the whole feature set as input.
+
+**Output:** $X_k = \{x_j \; | \;j = 1, 2, ..., k; \; x_j \in Y\}$, where $k = (0, 1, 2, ..., d)$
+
+- SBS returns a subset of features; the number of selected features $k$, where $k < d$, has to be specified *a priori*.
+
+**Initialization:** $X_0 = Y$, $k = d$
+
+- We initialize the algorithm with the given feature set so that the $k = d$.
+
+
+**Step 1 (Exclusion):**  
+
+$x^- = \text{ arg max } J(x_k - x), \text{  where } x \in X_k$  
+$X_k-1 = X_k - x^-$  
+$k = k - 1$  
+*Go to Step 1*  
+
+- in this step, we remove a feature, $x^-$ from our feature subset $X_k$
+- $x^-$ is the feature that maximizes our criterion function upon re,oval, that is, the feature that is associated with the best classifier performance if it is removed from $X_k$
+- we repeat this procedure until the termination criterion is satisfied
+
+
+**Termination:** $k = p$
+
+- We add features from the feature subset $X_k$ until the feature subset of size $k$ contains the number of desired features $p$ that we specified *a priori*.
+
+
+---
 
 ### Example
 
@@ -48,20 +87,20 @@ Output:
        [ 4.7,  0.2],
        [ 4.6,  0.2],
        [ 5. ,  0.2]])
- 
+
 <br>
 <br>
 
-As demonstrated below, the SBS algorithm can be a useful alternative to dimensionality reduction techniques to reduce overfitting and where the original features need to be preserved:
+As demonstrated below, the SBS algorithm can be a useful alternative to dimensionality reduction techniques to reduce overfitting and when the original features need to be preserved:
 
     import matplotlib.pyplot as plt
     from sklearn.preprocessing import StandardScaler
 
     scr = StandardScaler()
     X_std = scr.fit_transform(X)
- 
+
     knn = KNeighborsClassifier(n_neighbors=4)
- 
+
     # selecting features
     sbs = SBS(knn, k_features=1, scoring='accuracy', cv=5)
     sbs.fit(X_std, y)
@@ -74,14 +113,136 @@ As demonstrated below, the SBS algorithm can be a useful alternative to dimensio
     plt.xlabel('Number of features')
     plt.show()
 
-![](./img/sklearn_sequential_feature_select_sbs_wine_1.png)
+![](./img/sbs_wine_example_1.png)
 
 
-<hr>
-More examples -- including how to use `SBS` in scikit-learn's `GridSearch` can be found in [this IPython notebook](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/sklearn_sequential_feature_select_sbs.ipynb).
+## Gridsearch Example 1
+
+Selecting the number of features in a pipeline.
+
+	import pandas as pd
+	from sklearn.pipeline import Pipeline
+	from sklearn.grid_search import GridSearchCV
+	from mlxtend.sklearn import SBS
+	from sklearn.neighbors import KNeighborsClassifier
+	from sklearn.preprocessing import StandardScaler
+	from sklearn.datasets import load_iris
+
+	##########################
+	### Loading data
+	##########################
+
+	iris = load_iris()
+	X = iris.data
+	y = iris.target
+
+	##########################
+	### Setting up pipeline
+	##########################
+	knn = KNeighborsClassifier(n_neighbors=4)
+
+	sbs = SBS(estimator=knn, k_features=2, scoring='accuracy', cv=5)
+
+	pipeline = Pipeline([
+	            ('scr', StandardScaler()),
+	            ('sel', sbs),
+	            ('clf', knn)])
+
+	parameters = {'sel__k_features': [1,2,3,4]}
+
+	grid_search = GridSearchCV(pipeline, parameters, n_jobs=1, verbose=1)
+
+	##########################
+	### Running GridSearch
+	##########################
+	grid_search.fit(X, y)
+
+	print("Best score: %0.3f" % grid_search.best_score_)
+	print("Best parameters set:")
+	best_parameters = grid_search.best_estimator_.get_params()
+	for param_name in sorted(parameters.keys()):
+	    print("\t%s: %r" % (param_name, best_parameters[param_name]))
+
+Output:
+
+	[Parallel(n_jobs=1)]: Done   1 jobs       | elapsed:    0.1s
+	[Parallel(n_jobs=1)]: Done  12 out of  12 | elapsed:    0.7s finished
+	Fitting 3 folds for each of 4 candidates, totalling 12 fits
+	Best score: 0.960
+	Best parameters set:
+		sel__k_features: 1
+
+## Gridsearch Example 2
+
+Tuning the estimator used for feature selection. Note that the current implementation requires to search for the weights in both the classifier and the SBS transformer separately.
+
+	import pandas as pd
+	from sklearn.pipeline import Pipeline
+	from sklearn.grid_search import GridSearchCV
+	from mlxtend.sklearn import SBS
+	from sklearn.neighbors import KNeighborsClassifier
+	from sklearn.preprocessing import StandardScaler
+	from sklearn.datasets import load_iris
+
+	##########################
+	### Loading data
+	##########################
+
+	iris = load_iris()
+	X = iris.data
+	y = iris.target
+
+	##########################
+	### Setting up pipeline
+	##########################
+	knn = KNeighborsClassifier(n_neighbors=4)
+
+	sbs = SBS(estimator=knn, k_features=2, scoring='accuracy', cv=5)
+
+	pipeline = Pipeline([
+	            ('scr', StandardScaler()),
+	            ('sel', sbs),
+	            ('clf', knn)])
+
+	parameters = {'sel__k_features': [1, 2, 3, 4],
+	              'sel__estimator__n_neighbors': [4, 5, 6],
+	              'clf__n_neighbors': [4, 5, 6]}
+
+	grid_search = GridSearchCV(pipeline, parameters, n_jobs=1, verbose=1)
+
+	##########################
+	### Running GridSearch
+	##########################
+	grid_search.fit(X, y)
+
+	print("Best score: %0.3f" % grid_search.best_score_)
+	print("Best parameters set:")
+	best_parameters = grid_search.best_estimator_.get_params()
+	for param_name in sorted(parameters.keys()):
+	    print("\t%s: %r" % (param_name, best_parameters[param_name]))
+
+Output:
 
 
-<hr>
+	[Parallel(n_jobs=1)]: Done   1 jobs       | elapsed:    0.1s
+	[Parallel(n_jobs=1)]: Done  50 jobs       | elapsed:    2.9s
+	Fitting 3 folds for each of 36 candidates, totalling 108 fits
+	Best score: 0.973
+	Best parameters set:
+		clf__n_neighbors: 5
+		sel__estimator__n_neighbors: 5
+		sel__k_features: 2
+
+
+The final feature subset can then be obtained as follows:
+
+	print('Best feature subset:')
+	grid_search.best_estimator_.steps[1][1].indices_
+
+Output:
+
+	Best feature subset:
+	(2, 3)
 
 ## Default Parameters
 
@@ -140,5 +301,3 @@ More examples -- including how to use `SBS` in scikit-learn's `GridSearch` can b
        [ 5. ,  0.2]])
 
     """</pre>
-    
-  

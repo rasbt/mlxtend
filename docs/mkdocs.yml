@@ -6,6 +6,15 @@ site_description: A library consisting of useful tools and extensions for the da
 #include_search: true
 docs_dir: sources
 #theme: readthedocs
+
+markdown_extensions:
+  - extra
+  - tables
+  - fenced_code
+extra_javascript:
+  - https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML
+  - mathjaxhelper.js
+
 pages:
 - Home: index.md
 
@@ -18,6 +27,9 @@ pages:
         - docs/classifier/scikit-learn_ensemble_classifier.md
     - feature selection:
         - docs/feature_selection/sequential_backward_selection.md
+        - docs/feature_selection/sequential_forward_selection.md
+        - docs/feature_selection/sequential_floating_backward_selection.md
+        - docs/feature_selection/sequential_floating_forward_selection.md
         - docs/feature_selection/column_selector.md
     - evaluate:
         - docs/evaluate/plot_decision_regions.md

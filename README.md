@@ -4,7 +4,7 @@
 [![Code Health](https://landscape.io/github/rasbt/mlxtend/master/landscape.svg?style=flat)](https://landscape.io/github/rasbt/mlxtend/master)
 [![PyPI version](https://badge.fury.io/py/mlxtend.svg)](http://badge.fury.io/py/mlxtend)
 ![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)
-![Python 3.4](https://img.shields.io/badge/python-3.4-blue.svg)
+![Python 3.5](https://img.shields.io/badge/python-3.5-blue.svg)
 ![License](https://img.shields.io/badge/license-BSD-blue.svg)
 
 ![](./docs/sources/img/logo.png)

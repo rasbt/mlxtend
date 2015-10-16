@@ -6,11 +6,12 @@
 ![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)
 ![Python 3.5](https://img.shields.io/badge/python-3.5-blue.svg)
 ![License](https://img.shields.io/badge/license-BSD-blue.svg)
+[![PyPI version](https://badge.fury.io/py/mlxtend.svg)](http://badge.fury.io/py/mlxtend)
 
 Sebastian Raschka 2014-2015
 
-Current PyPI version: [![PyPI version](https://badge.fury.io/py/mlxtend.svg)](http://badge.fury.io/py/mlxtend)
-Current GitHub version: 0.2.9
+Current PyPI version: 0.2.9
+Current GitHub version: 0.3.0dev
 
 
 <br>
@@ -74,4 +75,3 @@ plt.show()
 ```
 
 ![](./docs/evaluate/img/evaluate_plot_decision_regions_2d.png)
-

@@ -15,14 +15,15 @@ python -c "import sklearn; print('sklearn %s' % sklearn.__version__)"
 python -c "import pandas; print('pandas %s' % pandas.__version__)"
 python -c "import matplotlib; print('matplotlib %s' % matplotlib.__version__)"
 
-if [[ "$COVERAGE" == "true" ]]; then
-    nosetests -s -v --with-coverage --cover-package=mlxtend.classifier
-    nosetests -s -v --with-coverage --cover-package=mlxtend.evaluate
-    nosetests -s -v --with-coverage --cover-package=mlxtend.math
-    nosetests -s -v --with-coverage --cover-package=mlxtend.preprocessing
-    nosetests -s -v --with-coverage --cover-package=mlxtend.regression
-    nosetests -s -v --with-coverage --cover-package=mlxtend.text
-    nosetests -s -v --with-coverage --cover-package=mlxtend.feature_selection
+#if [[ "$COVERAGE" == "true" ]]; then
+#    nosetests -s -v --with-coverage --cover-package=mlxtend.classifier
+#    nosetests -s -v --with-coverage --cover-package=mlxtend.evaluate
+#    nosetests -s -v --with-coverage --cover-package=mlxtend.math
+#    nosetests -s -v --with-coverage --cover-package=mlxtend.preprocessing
+#    nosetests -s -v --with-coverage --cover-package=mlxtend.regression
+#    nosetests -s -v --with-coverage --cover-package=mlxtend.text
+#    nosetests -s -v --with-coverage --cover-package=mlxtend.feature_selection
+
 else
     nosetests -s -v mlxtend.classifier
     nosetests -s -v mlxtend.evaluate

@@ -3,10 +3,10 @@ virtualenv:
   system_site_packages: true
 env:
   matrix:
-    - PYTHON_VERSION="2.7" COVERAGE="true" LATEST="true"
-    - PYTHON_VERSION="2.7" NUMPY_VERSION="1.9.2" SCIPY_VERSION="0.15.1" SKLEARN_VERSION="0.16.1" PANDAS_VERSION="0.16.0" MATPLOTLIB_VERSION="1.4.3"
+    - PYTHON_VERSION="2.7 LATEST="true"
     - PYTHON_VERSION="3.4" LATEST="true"
     - PYTHON_VERSION="3.5" LATEST="true"
+    - PYTHON_VERSION="3.5" COVERAGE="true" LATEST="true"
 install: source ./ci/.travis_install.sh
 script: bash ./ci/.travis_test.sh
 after_success:

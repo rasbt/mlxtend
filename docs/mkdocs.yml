@@ -20,48 +20,48 @@ pages:
 
 - Documentation:
     - classifier:
-        - docs/classifier/neuralnet_mlp.md
-        - docs/classifier/adaline.md
-        - docs/classifier/perceptron.md
-        - docs/classifier/logistic_regression.md
-        - docs/classifier/scikit-learn_ensemble_classifier.md
+        - md/classifier/neuralnet_mlp.md
+        - md/classifier/adaline.md
+        - md/classifier/perceptron.md
+        - md/classifier/logistic_regression.md
+        - md/classifier/scikit-learn_ensemble_classifier.md
     - feature selection:
-        - docs/feature_selection/sequential_backward_selection.md
-        - docs/feature_selection/sequential_forward_selection.md
-        - docs/feature_selection/sequential_floating_backward_selection.md
-        - docs/feature_selection/sequential_floating_forward_selection.md
-        - docs/feature_selection/column_selector.md
+        - md/feature_selection/sequential_backward_selection.md
+        - md/feature_selection/sequential_forward_selection.md
+        - md/feature_selection/sequential_floating_backward_selection.md
+        - md/feature_selection/sequential_floating_forward_selection.md
+        - md/feature_selection/column_selector.md
     - evaluate:
-        - docs/evaluate/plot_decision_regions.md
-        - docs/evaluate/plot_learning_curves.md
+        - md/evaluate/plot_decision_regions.md
+        - md/evaluate/plot_learning_curves.md
     - plotting:
-        - docs/plotting/category_scatter.md
-        - docs/plotting/enrichment_plot.md
-        - docs/plotting/stacked_barplot.md
+        - md/plotting/category_scatter.md
+        - md/plotting/enrichment_plot.md
+        - md/plotting/stacked_barplot.md
     - regression:
-        - docs/regression/plot_linear_regression_fit.md
-        - docs/regression/linear_regression.md
+        - md/regression/plot_linear_regression_fit.md
+        - md/regression/linear_regression.md
     - preprocessing:
-        - docs/preprocessing/standardizing.md
-        - docs/preprocessing/minmax_scaling.md
-        - docs/preprocessing/mean_centerer.md
-        - docs/preprocessing/shuffle_arrays_unison.md
-        - docs/preprocessing/scikit-learn_dense_transformer.md
+        - md/preprocessing/standardizing.md
+        - md/preprocessing/minmax_scaling.md
+        - md/preprocessing/mean_centerer.md
+        - md/preprocessing/shuffle_arrays_unison.md
+        - md/preprocessing/scikit-learn_dense_transformer.md
     - file_io:
-        - docs/file_io/find_files.md
-        - docs/file_io/find_filegroups.md
+        - md/file_io/find_files.md
+        - md/file_io/find_filegroups.md
     - math:
-        - docs/math/combinations.md
-        - docs/math/permutations.md
+        - md/math/combinations.md
+        - md/math/permutations.md
     - text:
-        - docs/text/generalize_names.md
-        - docs/text/generalize_names_duplcheck.md
-        - docs/text/tokenizer.md
+        - md/text/generalize_names.md
+        - md/text/generalize_names_duplcheck.md
+        - md/text/tokenizer.md
     - data:
-        - docs/data/iris.md
-        - docs/data/wine.md
-        - docs/data/autompg.md
-        - docs/data/mnist.md
+        - md/data/iris.md
+        - md/data/wine.md
+        - md/data/autompg.md
+        - md/data/mnist.md
 
 - Changelog: changelog.md
 - Installation: installation.md

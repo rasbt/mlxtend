@@ -8,18 +8,18 @@ class LinearRegression(object):
 
     Parameters
     ------------
-    
+
     solver : {'gd', 'sgd', 'normal_equation'} (default: 'normal_equation')
-      Method for solving the cost function. 'gd' for gradient descent, 
+      Method for solving the cost function. 'gd' for gradient descent,
       'sgd' for stochastic gradient descent, or 'normal_equation' (default)
       to solve the cost function analytically.
-    
+
     eta : float (default: 0.1)
-      Learning rate (between 0.0 and 1.0); 
+      Learning rate (between 0.0 and 1.0);
       ignored if solver='normal_equation'.
 
     epochs : int (default: 50)
-      Passes over the training dataset; 
+      Passes over the training dataset;
       ignored if solver='normal_equation'.
 
     shuffle : bool (default: False)
@@ -45,8 +45,8 @@ class LinearRegression(object):
       ignored if solver='normal_equation'
 
     """
-    def __init__(self, solver='normal_equation', eta=0.01, 
-                 epochs=50, random_seed=None, shuffle=False, 
+    def __init__(self, solver='normal_equation', eta=0.01,
+                 epochs=50, random_seed=None, shuffle=False,
                  zero_init_weight=False):
 
         np.random.seed(random_seed)
@@ -54,7 +54,7 @@ class LinearRegression(object):
         self.epochs = epochs
         self.shuffle = shuffle
         if solver not in ('normal_equation', 'gd', 'sgd'):
-            raise ValueError('learning must be gd or sgd') 
+            raise ValueError('learning must be gd or sgd')
         self.solver = solver
         self.zero_init_weight = zero_init_weight
 
@@ -76,7 +76,7 @@ class LinearRegression(object):
         Returns
         -------
         self : object
-        
+
         """
         # check array shape
         if not len(X.shape) == 2:
@@ -84,7 +84,7 @@ class LinearRegression(object):
 
         if self.solver == 'normal_equation':
             self.w_ = self._normal_equation(X, y)
-            
+
         # Gradient descent or stochastic gradient descent learning
         else:
             # initialize weights
@@ -122,16 +122,13 @@ class LinearRegression(object):
                 self.cost_.append(cost)
 
         return self
-    
+
     def _normal_equation(self, X, y):
         """Solve linear regression analytically"""
-        w = np.zeros(X.shape[1] + 1)
-        z = np.linalg.inv(np.dot(X.T, X))
-        w[1:] = np.dot(np.dot(z, X.T), y)
-
-        # intercept
-        y_pred = np.dot(X, w[1:])
-        w[0] = np.mean(y) - np.mean(y_pred)
+        Xb = np.hstack((np.ones((X.shape[0], 1)), X))
+        w = np.zeros(X.shape[1])
+        z = np.linalg.inv(np.dot(Xb.T, Xb))
+        w = np.dot(z, np.dot(Xb.T, y))
         return w
 
     def _shuffle(self, X, y):

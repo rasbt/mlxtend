@@ -7,14 +7,14 @@ I would be very happy about any kind of contributions that help to improve and e
 
 ### Quick contributor checklist
 
-[ ]  Open a new "issue" on GitHub to discuss the new feature / bugfix  
-[ ]  Create and checkout a new topic branch   
-[ ]  Implement new feature or apply bugfix  
-[ ]  Add appropriate unit test functions  
-[ ]  Run `nosetests -sv` and make sure that all unit tests pass  
-[ ]  Add a note about the change to the `./docs/sources/CHANGELOG.md` file  
-[ ]  Modify documentation in `./docs/sources/` if appropriate  
-[ ]  Push the topic branch to the server and create a pull request
+- [ ]  Open a new "issue" on GitHub to discuss the new feature / bugfix  
+- [ ]  Create and checkout a new topic branch   
+- [ ]  Implement new feature or apply bugfix  
+- [ ]  Add appropriate unit test functions  
+- [ ]  Run `nosetests -sv` and make sure that all unit tests pass  
+- [ ]  Add a note about the change to the `./docs/sources/CHANGELOG.md` file  
+- [ ]  Modify documentation in `./docs/examples/` and `./docs/sources/`  
+- [ ]  Push the topic branch to the server and create a pull request
 
 <br>
 
@@ -60,19 +60,22 @@ I would be very happy about any kind of contributions that help to improve and e
 
 ### Building the documentation
 
-The documentation is build using [mkdocs](http://www.mkdocs.org). 
-If you are adding a new document, please add it to the `~/github/mlxtend/docs/mkdocs.yml` file.
+Please note that documents containing code examples are generated from IPython Notebook files located in `mlxtend/docs/examples` and converted to markdown via 
 
-In order to view the documentation locally, execute `mkdocs serve` from the `mlxtend/docs` directory.
+    $bash ~/github/mlxtend/docs/examples$ nbconvert --to markdown <file.ipynb>
+    
+The markdown file should be placed into the documentation directory at `mlxtend/docs/doc` to build the documentation via  [mkdocs](http://www.mkdocs.org).
+If you are adding a new document, please also include it in the pages section in the `mlxtend/docs/mkdocs.yml` file.
+
+To ensure that the documentation is rendered correctly, you can view the documentation locally by executing `mkdocs serve` from the `mlxtend/docs` directory.
 
 For example,
 	
-	~/github/mlxtend/docs >mkdocs serve
+	$bash ~/github/mlxtend/docs$ mkdocs serve
 
-	
-If everything looks fine, the documentation can be build by executing
+The HTML files of the documentation are then build by executing
 
-	~/github/mlxtend/docs >mkdocs build
+	$bash ~/github/mlxtend/docs$ mkdocs build
 	
 <br>
 	

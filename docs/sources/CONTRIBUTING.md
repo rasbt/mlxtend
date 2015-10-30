@@ -60,11 +60,11 @@ I would be very happy about any kind of contributions that help to improve and e
 
 ### Building the documentation
 
-Please note that documents containing code examples are generated from IPython Notebook files located in `mlxtend/docs/examples` and converted to markdown via 
+Please note that documents containing code examples are generated from IPython Notebook files located in `mlxtend/docs/sources/ipynb` and converted to markdown via 
 
     $bash ~/github/mlxtend/docs/examples$ nbconvert --to markdown <file.ipynb>
     
-The markdown file should be placed into the documentation directory at `mlxtend/docs/doc` to build the documentation via  [mkdocs](http://www.mkdocs.org).
+The markdown file should be placed into the documentation directory at `mlxtend/docs/sources` to build the documentation via  [mkdocs](http://www.mkdocs.org).
 If you are adding a new document, please also include it in the pages section in the `mlxtend/docs/mkdocs.yml` file.
 
 To ensure that the documentation is rendered correctly, you can view the documentation locally by executing `mkdocs serve` from the `mlxtend/docs` directory.

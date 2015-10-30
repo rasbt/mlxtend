@@ -1,5 +1,8 @@
 ### 0.3.0dev
 
+- added boston [housing dataset](./data/boston_housing.md)
+- moved mlxtend.regression.lin_regplot to [mlxtend.plotting.linear_regression](./plotting/linear_regression.md)
+
 ### 0.2.9
 - Sequential Feature Selection algorithms: [SFS](http://rasbt.github.io/mlxtend/docs/feature_selection/sequential_forward_selection/), [SFFS](http://rasbt.github.io/mlxtend/docs/feature_selection/sequential_floating_forward_selection/), and [SFBS](http://rasbt.github.io/mlxtend/docs/feature_selection/sequential_floating_backward_selection/)
 - Changed `regularization` & `lambda` parameters in `LogisticRegression` to single parameter `l2_lambda`

@@ -3,6 +3,11 @@ import string
 import re
 import sys
 
+if sys.version_info <= (3, 0):
+    raise ImportError("Sorry, the text.names module is incompatible"
+                      " with Python 2.x,"
+                      " due to its unicode intricacies")
+
 def generalize_names(name, output_sep=' ', firstname_output_letters=1):
     """
     Function that outputs a person's name in the format

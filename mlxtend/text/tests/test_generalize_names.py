@@ -1,3 +1,9 @@
+import sys
+
+if sys.version_info < (3, 0):
+    from nose.plugins.skip import SkipTest
+    raise SkipTest
+
 from mlxtend.text import generalize_names
 
 def test_generalize_names():

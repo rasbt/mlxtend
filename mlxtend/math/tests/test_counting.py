@@ -13,4 +13,3 @@ def test_num_combinations():
 def test_num_permutations():
     assert(num_permutations(n=20, r=8, with_replacement=False) == 5079110400)
     assert(num_permutations(n=20, r=8, with_replacement=True) == 25600000000)
-

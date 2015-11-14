@@ -1,17 +1,3 @@
-Skip to content
-This repository  
-Pull requests
-Issues
-Gist
- @rasbt
- Unwatch 22
-  Star 204
-  Fork 63 rasbt/mlxtend
- Tree: 0ef4dfd46c mlxtend/ci/.travis_install.sh
-0ef4dfd  on Jul 2
-@rasbt rasbt ci
-1 contributor
-RawBlameHistory     Executable File  55 lines (46 sloc)  1.9 KB
 #!/bin/bash
 # This script is meant to be called by the "install" step defined in
 # .travis.yml. See http://docs.travis-ci.com/ for more details.

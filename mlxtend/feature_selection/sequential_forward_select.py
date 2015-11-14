@@ -27,10 +27,13 @@ class SFS(BaseEstimator, MetaEstimatorMixin):
       Number of features to select where k_features.
 
     scoring : str, (default='accuracy')
-      Scoring metric for the cross validation scorer.
+      Scoring metric {accuracy, f1, precision, recall, roc_auc}.
 
     cv : int (default: 5)
-      Number of folds in StratifiedKFold.
+      Scikit-learn cross-validation generator or `int`.
+      If estimator is a classifier (or y consists of integer class labels),
+      stratified k-fold is performed, and regular k-fold cross-validation
+      otherwise. If None, cv is set to 3.
 
     n_jobs : int (default: 1)
       The number of CPUs to use for cross validation. -1 means 'all CPUs'.

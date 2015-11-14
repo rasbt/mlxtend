@@ -1,10 +1,15 @@
 ### 0.3.0dev
 
+- New `NeuralNetMLP` parameters: `random_weights`, `shuffle_init`, `shuffle_epoch` 
+- Sequential Feature Selection algorithms were unified into a single [SFS](http://rasbt.github.io/mlxtend/docs/feature_selection/sequential_feature_selection/) object with parameters to enable floating selection and toggle between forward and backward selction.
+- New `SFS` features such as the generation of pandas `DataFrame` results tables and plotting functions (with confidence intervals, standard deviaton, and standard error bars)
+- Added support for regression estimators in `SFS`
 - added boston [housing dataset](./data/boston_housing.md)
+- shuffle fix and new shuffle parameter for classifier.NeuralNetMLP
 - moved mlxtend.regression.lin_regplot to [mlxtend.plotting.linear_regression](./plotting/linear_regression.md)
 
 ### 0.2.9
-- Sequential Feature Selection algorithms: [SFS](http://rasbt.github.io/mlxtend/docs/feature_selection/sequential_forward_selection/), [SFFS](http://rasbt.github.io/mlxtend/docs/feature_selection/sequential_floating_forward_selection/), and [SFBS](http://rasbt.github.io/mlxtend/docs/feature_selection/sequential_floating_backward_selection/)
+- Sequential Feature Selection algorithms: SFS, SFFS, SBS, and SFBS
 - Changed `regularization` & `lambda` parameters in `LogisticRegression` to single parameter `l2_lambda`
 
 ### 0.2.8
@@ -12,9 +17,9 @@
     - `mlxtend.sklearn.EnsembleClassifier` -> `mlxtend.classifier.EnsembleClassifier`
     -  `mlxtend.sklearn.ColumnSelector` -> `mlxtend.feature_selection.ColumnSelector`
     -  `mlxtend.sklearn.DenseTransformer` -> `mlxtend.preprocessing.DenseTransformer`
-    - `mlxtend.pandas.standardizing` ->  `mlxtend.preprocessing.standardizing` 
+    - `mlxtend.pandas.standardizing` ->  `mlxtend.preprocessing.standardizing`
     - `mlxtend.pandas.minmax_scaling` ->  `mlxtend.preprocessing.minmax_scaling`
-    -  `mlxtend.matplotlib` -> `mlxtend.plotting` 
+    -  `mlxtend.matplotlib` -> `mlxtend.plotting`
 - Added momentum learning parameter (alpha coefficient) to `mlxtend.classifier.NeuralNetMLP`.
 - Added adaptive learning rate (decrease constant) to `mlxtend.classifier.NeuralNetMLP`.
 - `mlxtend.pandas.minmax_scaling` became `mlxtend.preprocessing.minmax_scaling`  and also supports NumPy arrays now
@@ -30,7 +35,7 @@
 
 - Added ordinary least square regression using different solvers (gradient and stochastic gradient descent, and the closed form solution (normal equation)
 - Added option for random weight initialization to logistic regression classifier and updated l2 regularization
-- Added `wine` dataset to `mlxtend.data` 
+- Added `wine` dataset to `mlxtend.data`
 - Added `invert_axes` parameter `mlxtend.matplotlib.enrichtment_plot` to optionally plot the "Count" on the x-axis
 - New `verbose` parameter for `mlxtend.sklearn.EnsembleClassifier` by [Alejandro C. Bahnsen](https://github.com/albahnsen)
 - Added `mlxtend.pandas.standardizing` to standardize columns in a Pandas DataFrame
@@ -59,7 +64,7 @@
 - Gradient descent and stochastic gradient descent perceptron was changed
   to Adaline (Adaptive Linear Neuron)
 - Perceptron and Adaline for {0, 1} classes
-- Added `mlxtend.preprocessing.shuffle_arrays_unison` function to 
+- Added `mlxtend.preprocessing.shuffle_arrays_unison` function to
   shuffle one or more NumPy arrays.
 - Added shuffle and random seed parameter to stochastic gradient descent classifier.
 - Added `rstrip` parameter to `mlxtend.file_io.find_filegroups` to allow trimming of base names.

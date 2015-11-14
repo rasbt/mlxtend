@@ -1,0 +1,8 @@
+body {
+    background-image: none;
+    background-color: #ffffff;
+}
+
+div.col-md-9 img {
+    border: none;
+}

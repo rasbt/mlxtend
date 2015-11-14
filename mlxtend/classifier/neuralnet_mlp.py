@@ -46,8 +46,15 @@ class NeuralNetMLP(object):
       Decrease constant. Shrinks the learning rate
       after each epoch via eta / (1 + epoch*decrease_const)
 
-    shuffle : bool (default: False)
-      Shuffles training data every epoch if True to prevent circles.
+    random_weights : list (default: [-1.0, 1.0])
+      Min and max values for initializing the random weights.
+      Initializes weights to 0 if None or False.
+
+    shuffle_init : bool (default: True)
+      Shuffles (a copy of the) training data before training.
+
+    shuffle_epoch : bool (default: True)
+      Shuffles training data before every epoch if True to prevent circles.
 
     minibatches : int (default: 1)
       Divides training data into k minibatches for efficiency.
@@ -64,15 +71,16 @@ class NeuralNetMLP(object):
     """
     def __init__(self, n_output, n_features, n_hidden=30,
                  l1=0.0, l2=0.0, epochs=500, eta=0.001,
-                 alpha=0.0, decrease_const=0.0, shuffle=True,
+                 alpha=0.0, decrease_const=0.0,
+                 random_weights=[-1.0, 1.0],
+                 shuffle_init=True, shuffle_epoch=True,
                  minibatches=1, random_state=None):
 
-        np.random.seed(random_state)
         self.n_output = n_output
-        if self.n_output == 1: # use onehot for binary classif.
-            self.n_output = 2
         self.n_features = n_features
         self.n_hidden = n_hidden
+        self.random_state = random_state
+        self.random_weights = random_weights
         self.w1, self.w2 = self._initialize_weights()
         self.l1 = l1
         self.l2 = l2
@@ -80,8 +88,10 @@ class NeuralNetMLP(object):
         self.eta = eta
         self.alpha = alpha
         self.decrease_const = decrease_const
-        self.shuffle = shuffle
+        self.shuffle_init = shuffle_init
+        self.shuffle_epoch = shuffle_epoch
         self.minibatches = minibatches
+
 
     def _encode_labels(self, y, k):
         """Encode labels into one-hot representation
@@ -103,10 +113,17 @@ class NeuralNetMLP(object):
 
     def _initialize_weights(self):
         """Initialize weights with small random numbers."""
-        w1 = np.random.uniform(-1.0, 1.0, size=self.n_hidden*(self.n_features + 1))
-        w1 = w1.reshape(self.n_hidden, self.n_features + 1)
-        w2 = np.random.uniform(-1.0, 1.0, size=self.n_output*(self.n_hidden + 1))
-        w2 = w2.reshape(self.n_output, self.n_hidden + 1)
+        if self.random_weights:
+            np.random.seed(self.random_state)
+            w1 = np.random.uniform(self.random_weights[0], self.random_weights[1],
+                                    size=self.n_hidden*(self.n_features + 1))
+            w1 = w1.reshape(self.n_hidden, self.n_features + 1)
+            w2 = np.random.uniform(self.random_weights[0], self.random_weights[1],
+                                   size=self.n_output*(self.n_hidden + 1))
+            w2 = w2.reshape(self.n_output, self.n_hidden + 1)
+        else:
+            w1 = np.zeros((self.n_hidden, self.n_features + 1))
+            w2 = np.zeros((self.n_output, self.n_hidden + 1))
         return w1, w2
 
     def _sigmoid(self, z):
@@ -345,9 +362,15 @@ class NeuralNetMLP(object):
         self
 
         """
+        np.random.seed(self.random_state)
         self.cost_ = []
         X_data, y_data = X.copy(), y.copy()
-        y_enc = self._encode_labels(y, self.n_output)
+
+        if self.shuffle_init:
+            idx = np.random.permutation(y_data.shape[0])
+            X_data, y_data = X_data[idx], y_data[idx]
+
+        y_enc = self._encode_labels(y_data, self.n_output)
 
         delta_w1_prev = np.zeros(self.w1.shape)
         delta_w2_prev = np.zeros(self.w2.shape)
@@ -361,15 +384,15 @@ class NeuralNetMLP(object):
                 sys.stderr.write('\rEpoch: %d/%d' % (i+1, self.epochs))
                 sys.stderr.flush()
 
-            if self.shuffle:
-                idx = np.random.permutation(y_data.shape[0])
-                X_data, y_data = X_data[idx], y_data[idx]
+            if self.shuffle_epoch:
+                idx = np.random.permutation(y_enc.shape[1])
+                X_data, y_enc = X_data[idx], y_enc[: ,idx]
 
             mini = np.array_split(range(y_data.shape[0]), self.minibatches)
             for idx in mini:
 
                 # feedforward
-                a1, z2, a2, z3, a3 = self._feedforward(X[idx], self.w1, self.w2)
+                a1, z2, a2, z3, a3 = self._feedforward(X_data[idx], self.w1, self.w2)
                 cost = self._get_cost(y_enc=y_enc[:, idx],
                                       output=a3,
                                       w1=self.w1,

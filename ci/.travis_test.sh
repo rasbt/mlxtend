@@ -30,6 +30,6 @@ else
     nosetests -s -v mlxtend.preprocessing
     nosetests -s -v mlxtend.regression
     nosetests -s -v mlxtend.text
-  	nosetests -s -v mlxtend.feature_selection
+    nosetests -s -v mlxtend.feature_selection
 fi
 #make test-doc test-sphinxext

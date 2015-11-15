@@ -1,12 +1,14 @@
 ### 0.3.0dev
 
-- New `NeuralNetMLP` parameters: `random_weights`, `shuffle_init`, `shuffle_epoch` 
+- Added `loadlocal_mnist` to `mlxtend.data` for streaming MNIST from a local byte files into numpy arrays
+- New `NeuralNetMLP` parameters: `random_weights`, `shuffle_init`, `shuffle_epoch`
 - Sequential Feature Selection algorithms were unified into a single [SFS](http://rasbt.github.io/mlxtend/docs/feature_selection/sequential_feature_selection/) object with parameters to enable floating selection and toggle between forward and backward selction.
 - New `SFS` features such as the generation of pandas `DataFrame` results tables and plotting functions (with confidence intervals, standard deviaton, and standard error bars)
 - Added support for regression estimators in `SFS`
-- added boston [housing dataset](./data/boston_housing.md)
-- shuffle fix and new shuffle parameter for classifier.NeuralNetMLP
-- moved mlxtend.regression.lin_regplot to [mlxtend.plotting.linear_regression](./plotting/linear_regression.md)
+- Stratified sampling of MNIST (now 500x samples from each of the 10 digits)
+- Added boston [housing dataset](./data/boston_housing.md)
+- Shuffle fix and new shuffle parameter for classifier.NeuralNetMLP
+- Moved mlxtend.regression.lin_regplot to [mlxtend.plotting.linear_regression](./plotting/linear_regression.md)
 
 ### 0.2.9
 - Sequential Feature Selection algorithms: SFS, SFFS, SBS, and SFBS

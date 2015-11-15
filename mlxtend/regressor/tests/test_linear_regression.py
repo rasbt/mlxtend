@@ -1,4 +1,4 @@
-from mlxtend.regression import LinearRegression
+from mlxtend.regressor import LinearRegression
 from mlxtend.data import boston_housing_data
 import numpy as np
 from numpy.testing import assert_almost_equal

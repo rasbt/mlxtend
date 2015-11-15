@@ -8,7 +8,7 @@ Sebastian Raschka, last updated: 06/23/2015
 
 > from mlxtend.data import mnist_data
 
-A function that loads 5000 shuffled and labeled training samples from the MNIST (handwritten digits) dataset into NumPy arrays. 
+A function that loads 5000 shuffled and labeled training samples from the MNIST (handwritten digits) dataset into NumPy arrays.
 
 The feature matrix `X` consists of 5000 rows where each row represents the unrolled 784 pixel feature vector of the 28x28 pixel images.  
 The unique class labels in `y` are the integers 0-9 corresponding to the respective digits in the feature matrix.
@@ -23,9 +23,9 @@ Dataset source: [http://yann.lecun.com/exdb/mnist/](http://yann.lecun.com/exdb/m
 
 	>>> from mlxtend.data import mnist_data
     >>> X, y = mnist_data()
-    
+
 Visualizing the images:
-    
+
     >>> import matplotlib.pyplot as plt
     >>> def plot_digit(X, y, idx):
     ...    img = X[idx].reshape(28,28)
@@ -33,9 +33,9 @@ Visualizing the images:
     ...    plt.title('true label: %d' % y[idx])
     ...    plt.show()
     >>> plot_digit(X, y, 4)   
-    
+
 ![](./img/mnist_1.png)
-	
+
 <hr>    
 
 ##Default Parameters
@@ -52,7 +52,5 @@ Visualizing the images:
       each row consists of 28x28 pixels that were unrolled into
       784 pixel feature vectors.
       y contains the 10 unique class labels 0-9.
-      
+
     """</pre>
-
-

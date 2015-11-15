@@ -16,3 +16,10 @@ after_success:
     - if [[ "$COVERAGE" == "true" ]]; then coveralls || echo "failed"; fi
 cache: apt
 sudo: false
+notifications:
+  email:
+    recipients:
+      - mail@sebastianraschka.com
+      - other@example.com
+    on_success: always
+    on_failure: always

@@ -49,6 +49,7 @@ def plot_learning_curves(X_train, y_train, X_test, y_test, clf, kind='training_s
     Returns
     ---------
     (training_error, test_error): tuple of lists
+    
     """
 
     if scoring != 'misclassification error':

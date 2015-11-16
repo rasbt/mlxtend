@@ -4,5 +4,6 @@ source = mlxtend
 include = */mlxtend/*
 omit =
     */mlxtend/data/*
-    */mlxtend/plotting/*
+    */mlxtend/general_plotting/*
     */setup.py
+

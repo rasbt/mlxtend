@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from itertools import cycle
 
-def stacked_barplot(df, bar_width='auto', colors='bgrcky', labels='index', rotation=90, legend=True):
+def stacked_barplot(df, bar_width='auto', colors='bgrcky', labels='index', rotation=90, legend_loc='best'):
     """
     Function to plot stacked barplots
 
@@ -28,15 +28,16 @@ def stacked_barplot(df, bar_width='auto', colors='bgrcky', labels='index', rotat
     rotation: int (default: 90)
       Parameter to rotate the x-axis labels.
 
-    legend: bool (default: True)
-      Parameter to plot the legend.
+    legend_loc : str (default: 'best')
+      Location of the plot legend
+      {best, upper left, upper right, lower left, lower right}
+      No legend if legend_loc=False
 
     Returns
-    ----------
-    None
+    ---------
+    pyplot figure object
 
     """
-
     # Setting the positions and width for the bars
     pos = np.array(range(len(df.index)))
 
@@ -79,5 +80,6 @@ def stacked_barplot(df, bar_width='auto', colors='bgrcky', labels='index', rotat
     # Setting the x-axis and y-axis limits
     plt.xlim(min(pos)-width, max(pos) + width*7)
 
-    if legend:
-        plt.legend(loc='best')
+    if legend_loc:
+        plt.legend(loc=legend_loc, scatterpoints=1)
+    return fig

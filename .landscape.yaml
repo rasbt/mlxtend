@@ -5,3 +5,8 @@ ignore-patterns:
 
 ignore-paths:
   - mlxtend/data
+
+user:
+  - mail@sebastianraschka.com
+
+repo:status

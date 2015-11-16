@@ -1,1 +1,7 @@
 doc-warnings: yes
+
+ignore-patterns:
+  - __init__.py
+
+ignore-paths:
+  - mlxtend/data

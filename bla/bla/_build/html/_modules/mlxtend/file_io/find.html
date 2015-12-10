@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mlxtend.file_io.find &mdash; mlxtend --maxdepth=7 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '--maxdepth=7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="mlxtend --maxdepth=7 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for mlxtend.file_io.find</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<div class="viewcode-block" id="find_files"><a class="viewcode-back" href="../../../mlxtend.file_io.html#mlxtend.file_io.find.find_files">[docs]</a><span class="k">def</span> <span class="nf">find_files</span><span class="p">(</span><span class="n">substring</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">check_ext</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">ignore_invisible</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">ignore_substring</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function that finds files in a directory based on substring matching.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    substring : `str`</span>
+<span class="sd">      Substring of the file to be matched.</span>
+
+<span class="sd">    path : `str`</span>
+<span class="sd">      Path where to look.</span>
+
+<span class="sd">    recursive: `bool`</span>
+<span class="sd">      If true, searches subdirectories recursively.</span>
+
+<span class="sd">    check_ext: `str`</span>
+<span class="sd">      If string (e.g., &#39;.txt&#39;), only returns files that</span>
+<span class="sd">        match the specified file extension.</span>
+
+<span class="sd">    ignore_invisible : `bool`</span>
+<span class="sd">      If `True`, ignores invisible files (i.e., files starting with a period).</span>
+
+<span class="sd">    ignore_substring : `str`</span>
+<span class="sd">      Ignores files that contain the specified substring.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    ----------</span>
+<span class="sd">    results : `list`</span>
+<span class="sd">      List of the matched files.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">check_file</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">ignore_substring</span> <span class="ow">and</span> <span class="n">ignore_substring</span> <span class="ow">in</span> <span class="n">f</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">substring</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">compl_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">compl_path</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">compl_path</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="n">recursive</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">par</span><span class="p">,</span> <span class="n">nxt</span><span class="p">,</span> <span class="n">fnames</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fnames</span><span class="p">:</span>
+                <span class="n">fn</span> <span class="o">=</span> <span class="n">check_file</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">par</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">fn</span><span class="p">:</span>
+                    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">ignore_invisible</span> <span class="ow">and</span> <span class="n">f</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="n">fn</span> <span class="o">=</span> <span class="n">check_file</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">fn</span><span class="p">:</span>
+                <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">check_ext</span><span class="p">:</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">r</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">check_ext</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">results</span>
+
+
+
+</div>
+<div class="viewcode-block" id="find_filegroups"><a class="viewcode-back" href="../../../mlxtend.file_io.html#mlxtend.file_io.find.find_filegroups">[docs]</a><span class="k">def</span> <span class="nf">find_filegroups</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="n">substring</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">extensions</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">validity_check</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">ignore_invisible</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">rstrip</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">ignore_substring</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function that finds and groups files from different directories in a python dictionary.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    paths : `list`</span>
+<span class="sd">      Paths of the directories to be searched. Dictionary keys are build from</span>
+<span class="sd">        the first directory.</span>
+
+<span class="sd">    substring : `str`</span>
+<span class="sd">      Substring that all files have to contain to be considered.</span>
+
+<span class="sd">    extensions : `list`</span>
+<span class="sd">      `None` or `list` of allowed file extensions for each path. If provided, the number</span>
+<span class="sd">        of extensions must match the number of `paths`.</span>
+
+<span class="sd">    validity_check : `bool`</span>
+<span class="sd">      If `True`, checks if all dictionary values have the same number of file paths. Prints</span>
+<span class="sd">        a warning and returns an empty dictionary if the validity check failed.</span>
+
+<span class="sd">    ignore_invisible : `bool`</span>
+<span class="sd">      If `True`, ignores invisible files (i.e., files starting with a period).</span>
+
+<span class="sd">    rstrip : `str` (default: &quot;&quot;)</span>
+<span class="sd">      If provided, strips characters from right side of the file base names after splitting</span>
+<span class="sd">      the extension. Useful to trim different filenames to a common stem. E.g,.</span>
+<span class="sd">      &quot;abc_d.txt&quot; and &quot;abc_d_.csv&quot; would share the stem &quot;abc_d&quot; if rstrip is set to &quot;_&quot;.</span>
+
+
+
+<span class="sd">    ignore_substring : `str`</span>
+<span class="sd">      Ignores files that contain the specified substring.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    ----------</span>
+<span class="sd">    groups : `dict`</span>
+<span class="sd">      Dictionary of files paths. Keys are the file names found in the first directory listed</span>
+<span class="sd">        in `paths` (without file extension).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
+
+    <span class="c"># must have same number of paths and extensions</span>
+    <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">extensions</span><span class="p">:</span>
+        <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">extensions</span><span class="p">)</span> <span class="o">==</span> <span class="n">n</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+
+
+    <span class="n">base</span> <span class="o">=</span> <span class="n">find_files</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">paths</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="n">substring</span><span class="o">=</span><span class="n">substring</span><span class="p">,</span> <span class="n">check_ext</span><span class="o">=</span><span class="n">extensions</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                      <span class="n">ignore_invisible</span><span class="o">=</span><span class="n">ignore_invisible</span><span class="p">,</span> <span class="n">ignore_substring</span><span class="o">=</span><span class="n">ignore_substring</span><span class="p">)</span>
+    <span class="n">rest</span> <span class="o">=</span> <span class="p">[</span><span class="n">find_files</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">paths</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>  <span class="n">substring</span><span class="o">=</span><span class="n">substring</span><span class="p">,</span> <span class="n">check_ext</span><span class="o">=</span><span class="n">extensions</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="n">ignore_invisible</span><span class="o">=</span><span class="n">ignore_invisible</span><span class="p">,</span> <span class="n">ignore_substring</span><span class="o">=</span><span class="n">ignore_substring</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)]</span>
+
+    <span class="n">groups</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">base</span><span class="p">:</span>
+        <span class="n">basename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">f</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">basename</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;\</span><span class="si">%s</span><span class="s">$&#39;</span> <span class="o">%</span> <span class="n">rstrip</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">basename</span><span class="p">)</span>
+        <span class="n">groups</span><span class="p">[</span><span class="n">basename</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">]</span>
+
+    <span class="c">#groups = {os.path.splitext(os.path.basename(f))[0].rstrip(rstrip):[f] for f in base}</span>
+
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">r</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">rest</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">r</span><span class="p">:</span>
+            <span class="n">basename</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+            <span class="n">basename</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;\</span><span class="si">%s</span><span class="s">$&#39;</span> <span class="o">%</span> <span class="n">rstrip</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">basename</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">extensions</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;&#39;</span> <span class="ow">or</span> <span class="n">ext</span> <span class="o">==</span> <span class="n">extensions</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">groups</span><span class="p">[</span><span class="n">basename</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+    <span class="k">if</span> <span class="n">validity_check</span><span class="p">:</span>
+        <span class="n">lens</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">groups</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">lens</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Warning, some keys have more/less values than others. Set validity_check=False to ignore this warning.&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">groups</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Author.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

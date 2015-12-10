@@ -19,35 +19,30 @@ X_std[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
 
 def test_standardized_iris_data():
 
-    t1 = np.array([0.18, 0.41, 0.50])
-    ppn = Perceptron(epochs=15, eta=0.01, random_seed=1)
-
+    ppn = Perceptron(epochs=15, eta=0.01, random_state=1)
     ppn.fit(X_std, y1)  # -1, 1 class
     assert((y1 == ppn.predict(X_std)).all())
 
 
 def test_nonstandardized_iris_data():
 
-    t1 = np.array([0.078, -0.074, 0.46])
-    ppn = Perceptron(epochs=40, eta=0.01, random_seed=1)
+    ppn = Perceptron(epochs=40, eta=0.01, random_state=1)
     ppn.fit(X, y1)  # -1, 1 class
     assert((y1 == ppn.predict(X)).all())
 
 
 def test_0_1_class_iris_data():
 
-    t1 = np.array([0.26, -0.  ,  0.27])
-    ppn = Perceptron(epochs=40, eta=0.01, random_seed=1)
+    ppn = Perceptron(epochs=40, eta=0.01, random_state=1)
     ppn.fit(X, y0)  # 0, 1 class
     assert((y0 == ppn.predict(X)).all())
 
 
 def test_invalid_class():
 
-    ppn = Perceptron(epochs=40, eta=0.01, random_seed=1)
+    ppn = Perceptron(epochs=40, eta=0.01, random_state=1)
     try:
         ppn.fit(X, y2)  # -2, 1 class
         assert(1==2)
     except ValueError:
         pass
-        

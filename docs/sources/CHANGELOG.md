@@ -1,5 +1,7 @@
 ### 0.3.0dev
 
+- New style parameter and improved axis scaling in `mlxtend.evaluate.plot_learning_curves`
+- Hide y-axis labels in `mlxtend.evaluate.plot_decision_regions` in 1 dimensional evaluations
 - Added `loadlocal_mnist` to `mlxtend.data` for streaming MNIST from a local byte files into numpy arrays
 - New `NeuralNetMLP` parameters: `random_weights`, `shuffle_init`, `shuffle_epoch`
 - Sequential Feature Selection algorithms were unified into a single [SFS](http://rasbt.github.io/mlxtend/docs/feature_selection/sequential_feature_selection/) object with parameters to enable floating selection and toggle between forward and backward selction.

@@ -53,9 +53,9 @@ def minmax_scaling(array, columns, min_val=0, max_val=1):
 
     return ary_newt[:, columns]
 
-def standardizing(array, columns, ddof=0):
+def standardize(array, columns, ddof=0):
     """
-    Standardizing columns in pandas DataFrames.
+    standardize columns in pandas DataFrames.
 
     Parameters
     ----------

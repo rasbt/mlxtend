@@ -9,31 +9,31 @@ class LinearRegression(object):
     Parameters
     ------------
 
-    solver : {'gd', 'sgd', 'normal_equation'} (default: 'normal_equation')
+    solver : {'gd', 'sgd', 'normal equation'} (default: 'normal equation')
       Method for solving the cost function. 'gd' for gradient descent,
-      'sgd' for stochastic gradient descent, or 'normal_equation' (default)
+      'sgd' for stochastic gradient descent, or 'normal equation' (default)
       to solve the cost function analytically.
 
     eta : float (default: 0.1)
       Learning rate (between 0.0 and 1.0);
-      ignored if solver='normal_equation'.
+      ignored if solver='normal equation'.
 
     epochs : int (default: 50)
       Passes over the training dataset;
-      ignored if solver='normal_equation'.
+      ignored if solver='normal equation'.
 
     shuffle : bool (default: False)
         Shuffles training data every epoch if True to prevent circles;
-        ignored if solver='normal_equation'.
+        ignored if solver='normal equation'.
 
     random_seed : int (default: None)
         Set random state for shuffling and initializing the weights;
-        ignored if solver='normal_equation'.
+        ignored if solver='normal equation'.
 
     zero_init_weight : bool (default: False)
         If True, weights are initialized to zero instead of small random
         numbers in the interval [0,1];
-        ignored if solver='normal_equation'
+        ignored if solver='normal equation'
 
     Attributes
     -----------
@@ -42,10 +42,10 @@ class LinearRegression(object):
 
     cost_ : list
       Sum of squared errors after each epoch;
-      ignored if solver='normal_equation'
+      ignored if solver='normal equation'
 
     """
-    def __init__(self, solver='normal_equation', eta=0.01,
+    def __init__(self, solver='normal equation', eta=0.01,
                  epochs=50, random_seed=None, shuffle=False,
                  zero_init_weight=False):
 
@@ -53,8 +53,8 @@ class LinearRegression(object):
         self.eta = eta
         self.epochs = epochs
         self.shuffle = shuffle
-        if solver not in ('normal_equation', 'gd', 'sgd'):
-            raise ValueError('learning must be gd or sgd')
+        if solver not in ('normal equation', 'gd', 'sgd'):
+            raise ValueError('learning must be "normal equation", "gd", or "sgd"')
         self.solver = solver
         self.zero_init_weight = zero_init_weight
 
@@ -82,7 +82,7 @@ class LinearRegression(object):
         if not len(X.shape) == 2:
             raise ValueError('X must be a 2D array. Try X[:,np.newaxis]')
 
-        if self.solver == 'normal_equation':
+        if self.solver == 'normal equation':
             self.w_ = self._normal_equation(X, y)
 
         # Gradient descent or stochastic gradient descent learning

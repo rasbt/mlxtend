@@ -1,5 +1,5 @@
 # Sebastian Raschka 2015
-# mlxtend Machine Learning Library Extensions
+# mlxtend Machine solver Library Extensions
 
 import numpy as np
 
@@ -9,13 +9,15 @@ class Adaline(object):
     Parameters
     ------------
     eta : float
-      Learning rate (between 0.0 and 1.0)
+      solver rate (between 0.0 and 1.0)
 
     epochs : int
       Passes over the training dataset.
 
-    learning : str (default: sgd)
-      Gradient decent (gd) or stochastic gradient descent (sgd)
+    solver : {'gd', 'sgd', 'normal equation'} (default: 'normal equation')
+      Method for solving the cost function. 'gd' for gradient descent,
+      'sgd' for stochastic gradient descent, or 'normal equation' (default)
+      to solve the cost function analytically.
 
     shuffle : bool (default: False)
         Shuffles training data every epoch if True to prevent circles.
@@ -36,17 +38,16 @@ class Adaline(object):
       Sum of squared errors after each epoch.
 
     """
-    def __init__(self, eta=0.01, epochs=50,  learning='sgd',
+    def __init__(self, eta=0.01, epochs=50,  solver='sgd',
                  random_seed=None, shuffle=False, zero_init_weight=False):
 
         np.random.seed(random_seed)
         self.eta = eta
         self.epochs = epochs
         self.shuffle = shuffle
-
-        if learning not in ('gd', 'sgd'):
-            raise ValueError('learning must be gd or sgd')
-        self.learning = learning
+        if solver not in ('normal equation', 'gd', 'sgd'):
+            raise ValueError('learning must be "normal equation", "gd", or "sgd')
+        self.solver = solver
         self.zero_init_weight = zero_init_weight
 
     def fit(self, X, y, init_weights=True):
@@ -95,27 +96,32 @@ class Adaline(object):
 
         self.cost_ = []
 
-        for _ in range(self.epochs):
+        if self.solver == 'normal equation':
+            self.w_ = self._normal_equation(X, y)
 
-            if self.shuffle:
-                X, y = self._shuffle(X, y)
+        # Gradient descent or stochastic gradient descent learning
+        else:
+            for _ in range(self.epochs):
 
-            if self.learning == 'gd':
-                y_val = self.net_input(X)
-                errors = (y - y_val)
-                self.w_[1:] += self.eta * X.T.dot(errors)
-                self.w_[0] += self.eta * errors.sum()
-                cost = (errors**2).sum() / 2.0
+                if self.shuffle:
+                    X, y = self._shuffle(X, y)
 
-            elif self.learning == 'sgd':
-                cost = 0.0
-                for xi, yi in zip(X, y):
-                    yi_val = self.net_input(xi)
-                    error = (yi - yi_val)
-                    self.w_[1:] += self.eta * xi.dot(error)
-                    self.w_[0] += self.eta * error
-                    cost += error**2 / 2.0
-            self.cost_.append(cost)
+                if self.solver == 'gd':
+                    y_val = self.net_input(X)
+                    errors = (y - y_val)
+                    self.w_[1:] += self.eta * X.T.dot(errors)
+                    self.w_[0] += self.eta * errors.sum()
+                    cost = (errors**2).sum() / 2.0
+
+                elif self.solver == 'sgd':
+                    cost = 0.0
+                    for xi, yi in zip(X, y):
+                        yi_val = self.net_input(xi)
+                        error = (yi - yi_val)
+                        self.w_[1:] += self.eta * xi.dot(error)
+                        self.w_[0] += self.eta * error
+                        cost += error**2 / 2.0
+                self.cost_.append(cost)
 
         return self
 
@@ -123,6 +129,14 @@ class Adaline(object):
         """ Unison shuffling """
         r = np.random.permutation(len(y))
         return X[r], y[r]
+
+    def _normal_equation(self, X, y):
+        """Solve linear regression analytically"""
+        Xb = np.hstack((np.ones((X.shape[0], 1)), X))
+        w = np.zeros(X.shape[1])
+        z = np.linalg.inv(np.dot(Xb.T, Xb))
+        w = np.dot(z, np.dot(Xb.T, y))
+        return w
 
     def net_input(self, X):
         """ Net input function """

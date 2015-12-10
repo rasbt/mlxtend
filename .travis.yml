@@ -20,6 +20,5 @@ notifications:
   email:
     recipients:
       - mail@sebastianraschka.com
-      - other@example.com
     on_success: always
     on_failure: always

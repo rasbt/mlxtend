@@ -21,7 +21,7 @@ setup(name='mlxtend',
       data_files = [('', ['LICENSE']),
                     ('', ['README.md']),
                    ],
-      license='GPLv3',
+      license='BSD3',
       platforms='any',
       classifiers=[
              'License :: OSI Approved :: BSD License',

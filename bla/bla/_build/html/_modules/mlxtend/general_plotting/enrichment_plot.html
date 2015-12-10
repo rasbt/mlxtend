@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mlxtend.general_plotting.enrichment_plot &mdash; mlxtend --maxdepth=7 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '--maxdepth=7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="mlxtend --maxdepth=7 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for mlxtend.general_plotting.enrichment_plot</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">cycle</span>
+
+<div class="viewcode-block" id="enrichment_plot"><a class="viewcode-back" href="../../../mlxtend.general_plotting.html#mlxtend.general_plotting.enrichment_plot.enrichment_plot">[docs]</a><span class="k">def</span> <span class="nf">enrichment_plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s">&#39;bgrkcy&#39;</span><span class="p">,</span> <span class="n">markers</span><span class="o">=</span><span class="s">&#39; &#39;</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                    <span class="n">legend</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="s">&#39;post&#39;</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">count_label</span><span class="o">=</span><span class="s">&#39;Count&#39;</span><span class="p">,</span>
+                    <span class="n">xlim</span><span class="o">=</span><span class="s">&#39;auto&#39;</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="s">&#39;auto&#39;</span><span class="p">,</span> <span class="n">invert_axes</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                    <span class="n">legend_loc</span><span class="o">=</span><span class="s">&#39;best&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to plot stacked barplots</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pandas.DataFrame</span>
+<span class="sd">      A pandas DataFrame where columns represent the different categories.</span>
+
+<span class="sd">    colors: str (default: &#39;bgrcky&#39;)</span>
+<span class="sd">      The colors of the bars.</span>
+
+<span class="sd">    markers: str (default: &#39; &#39;)</span>
+<span class="sd">      Matplotlib markerstyles, e.g,</span>
+<span class="sd">      &#39;sov&#39; for square,circle, and triangle markers.</span>
+
+<span class="sd">    linestyles: str (default: &#39;-&#39;)</span>
+<span class="sd">      Matplotlib linestyles, e.g.,</span>
+<span class="sd">      &#39;-,--&#39; to cycle normal and dashed lines. Note</span>
+<span class="sd">      that the different linestyles need to be separated by commas.</span>
+
+<span class="sd">    alpha: float (default: 0.5)</span>
+<span class="sd">      Transparency level from 0.0 to 1.0.</span>
+
+<span class="sd">    lw: int or float (default: 2)</span>
+<span class="sd">      Linewidth parameter.</span>
+
+<span class="sd">    legend: bool (default: True)</span>
+<span class="sd">      Plots legend if True.</span>
+
+<span class="sd">    where: {&#39;post&#39;, &#39;pre&#39;, &#39;mid&#39;} (default: &#39;post&#39;)</span>
+<span class="sd">      Starting location of the steps.</span>
+
+<span class="sd">    grid: bool (default: True)</span>
+<span class="sd">      Plots a grid if True.</span>
+
+<span class="sd">    count_label: str (default: &#39;Count&#39;)</span>
+<span class="sd">      Label for the &quot;Count&quot;-axis.</span>
+
+<span class="sd">    xlim: &#39;auto&#39; or array-like [min, max]</span>
+<span class="sd">      Min and maximum position of the x-axis range.</span>
+
+<span class="sd">    ylim: &#39;auto&#39; or array-like [min, max]</span>
+<span class="sd">      Min and maximum position of the y-axis range.</span>
+
+<span class="sd">    invert_axes: bool (default: False)</span>
+<span class="sd">      Plots count on the x-axis if True.</span>
+
+<span class="sd">    legend_loc : str (default: &#39;best&#39;)</span>
+<span class="sd">      Location of the plot legend</span>
+<span class="sd">      {best, upper left, upper right, lower left, lower right}</span>
+<span class="sd">      No legend if legend_loc=False</span>
+
+<span class="sd">    ax: matplotlib axis, optional (default: None)</span>
+<span class="sd">      Use this axis for plotting or make a new one otherwise</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ax: matplotlib axis</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+        <span class="n">df_temp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">df_temp</span> <span class="o">=</span> <span class="n">df</span>
+
+    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+
+    <span class="n">color_gen</span> <span class="o">=</span> <span class="n">cycle</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span>
+    <span class="n">marker_gen</span> <span class="o">=</span> <span class="n">cycle</span><span class="p">(</span><span class="n">markers</span><span class="p">)</span>
+    <span class="n">linestyle_gen</span> <span class="o">=</span> <span class="n">cycle</span><span class="p">(</span><span class="n">linestyles</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">))</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_temp</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">df_temp</span><span class="o">.</span><span class="n">columns</span>
+
+    <span class="n">x_data</span> <span class="o">=</span> <span class="n">df_temp</span>
+    <span class="n">y_data</span> <span class="o">=</span> <span class="n">r</span>
+
+    <span class="k">for</span> <span class="n">lab</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">:</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">x_data</span><span class="p">[</span><span class="n">lab</span><span class="p">]),</span> <span class="n">y_data</span>
+        <span class="k">if</span> <span class="n">invert_axes</span><span class="p">:</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span>
+
+        <span class="n">ax</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">x</span><span class="p">,</span>
+                <span class="n">y</span><span class="p">,</span>
+                <span class="n">where</span><span class="o">=</span><span class="n">where</span><span class="p">,</span>
+                <span class="n">label</span><span class="o">=</span><span class="n">lab</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="nb">next</span><span class="p">(</span><span class="n">color_gen</span><span class="p">),</span>
+                <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span>
+                <span class="n">lw</span><span class="o">=</span><span class="n">lw</span><span class="p">,</span>
+                <span class="n">marker</span><span class="o">=</span><span class="nb">next</span><span class="p">(</span><span class="n">marker_gen</span><span class="p">),</span>
+                <span class="n">linestyle</span><span class="o">=</span><span class="nb">next</span><span class="p">(</span><span class="n">linestyle_gen</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">invert_axes</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">,</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">,</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span>
+
+    <span class="k">if</span> <span class="n">ylim</span> <span class="o">==</span> <span class="s">&#39;auto&#39;</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">y_data</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">y_data</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ylim</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">xlim</span> <span class="o">==</span> <span class="s">&#39;auto&#39;</span><span class="p">:</span>
+        <span class="n">df_min</span><span class="p">,</span> <span class="n">df_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">x_data</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x_data</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="n">df_min</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">df_max</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xlim</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">legend_loc</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">legend_loc</span><span class="p">,</span> <span class="n">scatterpoints</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">grid</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">count_label</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">invert_axes</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">count_label</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">count_label</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ax</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Author.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

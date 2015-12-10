@@ -4,6 +4,8 @@ Sebastian Raschka, last updated: 05/14/2015
 
 <hr>
 
+<div style="width:500px;height:70px;border:1px solid #000;padding:10px;background-color:#e5ffe5;"><p>If you are interested in using the <code>EnsembleClassifier</code>, please note that it is now also available through scikit learn (>0.17) as <a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.VotingClassifier.html"><code>VotingClassifier</code></a>.</p></div>
+
 
 # Majority Rule Ensemble Classifier
 
@@ -29,7 +31,7 @@ Input:
 	from mlxtend.classifier import EnsembleClassifier
 	from sklearn import cross_validation
 	from sklearn.linear_model import LogisticRegression
-	from sklearn.naive_bayes import GaussianNB 
+	from sklearn.naive_bayes import GaussianNB
 	from sklearn.ensemble import RandomForestClassifier
 	import numpy as np
 	from sklearn import datasets
@@ -42,11 +44,11 @@ Input:
     ################################
     # Initialize classifiers
     ################################
-    
+
 	clf1 = LogisticRegression()
 	clf2 = RandomForestClassifier()
 	clf3 = GaussianNB()
-	
+
     ################################
     # Initialize EnsembleClassifier
     ################################
@@ -70,9 +72,9 @@ Input:
 
 	    scores = cross_validation.cross_val_score(clf, X, y, cv=5, scoring='accuracy')
 	    print("Accuracy: %0.2f (+/- %0.2f) [%s]" % (scores.mean(), scores.std(), label))
-    
+
 Output:
-    
+
 	Accuracy: 0.90 (+/- 0.05) [Logistic Regression]
 	Accuracy: 0.92 (+/- 0.05) [Random Forest]
 	Accuracy: 0.91 (+/- 0.04) [naive Bayes]
@@ -123,7 +125,7 @@ If the `EnsembleClassifier` is initialized with multiple similar estimator objec
     params = {'logisticregression-1__C': [1.0, 100.0],
               'logisticregression-2__C': [1.0, 100.0],
               'randomforestclassifier__n_estimators': [20, 200],}
- 
+
     grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
     grid.fit(iris.data, iris.target)
 
@@ -152,21 +154,21 @@ If the `EnsembleClassifier` is initialized with multiple similar estimator objec
       Sequence of weights (`float` or `int`) to weight the occurances of
       predicted class labels (`hard` voting) or class probabilities
       before averaging (`soft` voting). Uses uniform weights if `None`.
-    
+
     verbose : int, optional (default=0)
       Controls the verbosity of the building process.
         `verbose=0` (default): Prints nothing
         `verbose=1`: Prints the number & name of the clf being fitted
         `verbose=2`: Prints info about the parameters of the clf being fitted
         `verbose>2`: Changes `verbose` param of the underlying clf to self.verbose - 2
-    
+
     Attributes
     ----------
     classes_ : array-like, shape = [n_predictions]
-    
+
     clf : array-like, shape = [n_predictions]
       The unmodified input classifiers
-      
+
     clf_ : array-like, shape = [n_predictions]
       Fitted clones of the input classifiers
 
@@ -196,8 +198,8 @@ If the `EnsembleClassifier` is initialized with multiple similar estimator objec
     [1 1 1 2 2 2]
     >>>
     """</pre>
- 
-  
+
+
 <hr>
 ## Methods
 
@@ -217,8 +219,8 @@ If the `EnsembleClassifier` is initialized with multiple similar estimator objec
         -------
         self : object
         """</pre>
-        
-        
+
+
 <pre>    def predict(self, X):
         """ Predict class labels for X.
 
@@ -233,7 +235,7 @@ If the `EnsembleClassifier` is initialized with multiple similar estimator objec
         maj : array-like, shape = [n_samples]
             Predicted class labels.
         """</pre>
-        
+
 <pre>predict_proba(self, X):
         """ Predict class probabilities for X.
 
@@ -248,8 +250,8 @@ If the `EnsembleClassifier` is initialized with multiple similar estimator objec
         avg : array-like, shape = [n_samples, n_classes]
             Weighted average probability for each class per sample.
         """</pre>
-        
-        
+
+
 <pre>    def transform(self, X):
         """ Return class labels or probabilities for X for each estimator.
 

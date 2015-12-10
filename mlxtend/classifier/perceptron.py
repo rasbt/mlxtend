@@ -10,35 +10,35 @@ class Perceptron(object):
     Parameters
     ------------
     eta : float
-      Learning rate (between 0.0 and 1.0)
+        Learning rate (between 0.0 and 1.0)
 
     epochs : int
-      Passes over the training dataset.
+        Passes over the training dataset.
 
     random_state : int
-      Random state for initializing random weights.
+        Random state for initializing random weights.
 
-    zero_init_weight : bool (default: False)
-        If True, weights are initialized to zero instead of small random
-        numbers in the interval [0,1]
+    random_weights : list (default: [-0.5, 0.5])
+        Min and max values for initializing the random weights.
+        Initializes weights to 0 if None or False.
 
     Attributes
     -----------
     w_ : 1d-array
-      Weights after fitting.
+        Weights after fitting.
 
     cost_ : list
-      Number of misclassifications in every epoch.
+        Number of misclassifications in every epoch.
 
     """
     def __init__(self, eta=0.1, epochs=50, shuffle=False,
-                 random_seed=None, zero_init_weight=False):
+                 random_state=None, random_weights=False):
 
-        np.random.seed(random_seed)
+        np.random.seed(random_state)
         self.eta = eta
         self.epochs = epochs
         self.shuffle = shuffle
-        self.zero_init_weight = zero_init_weight
+        self.random_weights = random_weights
 
     def fit(self, X, y, init_weights=True):
         """ Fit training data.
@@ -52,41 +52,30 @@ class Perceptron(object):
         y : array-like, shape = [n_samples]
             Target values.
 
-        init_weights : bool (default: True)
-            (Re)initializes weights to small random floats if True.
-
         shuffle : bool (default: False)
             Shuffles training data every epoch if True to prevent circles.
 
-        random_seed : int (default: None)
-            Set random state for shuffling and initializing the weights.
+        init_weights : bool (default: True)
+            Re-initializes weights prior to fitting. Set False to continue
+            training with weights from a previous fitting.
 
         Returns
         -------
         self : object
 
         """
-
         # check array shape
         if not len(X.shape) == 2:
             raise ValueError('X must be a 2D array. Try X[:,np.newaxis]')
 
         # check if {0, 1} or {-1, 1} class labels are used
         self.classes_ = np.unique(y)
-        if not len(self.classes_) == 2 \
-                or not self.classes_[0] in (-1, 0) \
-                or not self.classes_[1] == 1:
+        if not (np.all(np.array([0, 1]) == self.classes_) or
+                    np.all(np.array([-1, 1]) == self.classes_)):
             raise ValueError('Only supports binary class labels {0, 1} or {-1, 1}.')
 
-        # initialize weights
-        if not isinstance(init_weights, np.ndarray):
-            if self.zero_init_weight:
-                self.w_ = np.zeros(1 + X.shape[1])
-            else:
-                self.w_ = np.random.ranf(1 + X.shape[1])
-        else:
-            self.w_ = init_weights
-        self.w_.astype('int64')
+        if init_weights:
+            self.w_ = self._initialize_weights(size=X.shape[1]+1)
 
         self.cost_ = []
 
@@ -103,6 +92,16 @@ class Perceptron(object):
 
             self.cost_.append(errors)
         return self
+
+    def _initialize_weights(self, size):
+        """Initialize weights with small random numbers."""
+        if self.random_weights:
+            w = np.random.uniform(self.random_weights[0],
+                                  self.random_weights[1],
+                                  size=size)
+        else:
+            w = np.zeros(size)
+        return w
 
     def _shuffle(self, X, y):
         """ Unison shuffling """
@@ -121,6 +120,7 @@ class Perceptron(object):
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
+
         Returns
         ----------
         class : int

@@ -39,7 +39,7 @@ def plot_decision_regions(X, y, clf, X_highlight=None, res=0.02, cycle_marker=Tr
 
     Returns
     ---------
-    None
+    matplotlib.pyplot.figure object
 
     Examples
     --------
@@ -63,6 +63,7 @@ def plot_decision_regions(X, y, clf, X_highlight=None, res=0.02, cycle_marker=Tr
 
     """
     # check if data is numpy array
+    fig = plt.figure()
     for a in (X, y):
         if not isinstance(a, np.ndarray):
             raise ValueError('%s must be a NumPy array.' % a.__name__)
@@ -79,7 +80,6 @@ def plot_decision_regions(X, y, clf, X_highlight=None, res=0.02, cycle_marker=Tr
         dim = '2d'
     else:
         dim = '1d'
-
 
     marker_gen = cycle('sxo^v')
 
@@ -129,6 +129,8 @@ def plot_decision_regions(X, y, clf, X_highlight=None, res=0.02, cycle_marker=Tr
                     c=cmap(c),
                     marker=next(marker_gen),
                     label=c)
+    if not dim == '2D':
+        plt.gca().yaxis.set_major_locator(plt.NullLocator())
 
     if legend:
         plt.legend(loc=legend, fancybox=True, framealpha=0.5)
@@ -138,3 +140,5 @@ def plot_decision_regions(X, y, clf, X_highlight=None, res=0.02, cycle_marker=Tr
             plt.scatter(X_highlight[:,0], X_highlight[:,1], c='', alpha=1.0, linewidth=1, marker='o', s=80)
         else:
             plt.scatter(X_highlight, [0 for i in X_highlight], c='', alpha=1.0, linewidth=1, marker='o', s=80)
+
+    return fig

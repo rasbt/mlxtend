@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mlxtend.file_io package &mdash; mlxtend --maxdepth=7 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '--maxdepth=7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="mlxtend --maxdepth=7 documentation" href="index.html" />
+    <link rel="up" title="mlxtend package" href="mlxtend.html" />
+    <link rel="next" title="mlxtend.general_plotting package" href="mlxtend.general_plotting.html" />
+    <link rel="prev" title="mlxtend.feature_selection package" href="mlxtend.feature_selection.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mlxtend-file-io-package">
+<h1>mlxtend.file_io package<a class="headerlink" href="#mlxtend-file-io-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-mlxtend.file_io.find">
+<span id="mlxtend-file-io-find-module"></span><h2>mlxtend.file_io.find module<a class="headerlink" href="#module-mlxtend.file_io.find" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mlxtend.file_io.find.find_filegroups">
+<code class="descclassname">mlxtend.file_io.find.</code><code class="descname">find_filegroups</code><span class="sig-paren">(</span><em>paths</em>, <em>substring=''</em>, <em>extensions=None</em>, <em>validity_check=True</em>, <em>ignore_invisible=True</em>, <em>rstrip=''</em>, <em>ignore_substring=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlxtend/file_io/find.html#find_filegroups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mlxtend.file_io.find.find_filegroups" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that finds and groups files from different directories in a python dictionary.</p>
+<dl class="docutils">
+<dt>paths <span class="classifier-delimiter">:</span> <span class="classifier"><cite>list</cite></span></dt>
+<dd><dl class="first last docutils">
+<dt>Paths of the directories to be searched. Dictionary keys are build from</dt>
+<dd>the first directory.</dd>
+</dl>
+</dd>
+<dt>substring <span class="classifier-delimiter">:</span> <span class="classifier"><cite>str</cite></span></dt>
+<dd>Substring that all files have to contain to be considered.</dd>
+<dt>extensions <span class="classifier-delimiter">:</span> <span class="classifier"><cite>list</cite></span></dt>
+<dd><dl class="first last docutils">
+<dt><cite>None</cite> or <cite>list</cite> of allowed file extensions for each path. If provided, the number</dt>
+<dd>of extensions must match the number of <cite>paths</cite>.</dd>
+</dl>
+</dd>
+<dt>validity_check <span class="classifier-delimiter">:</span> <span class="classifier"><cite>bool</cite></span></dt>
+<dd><dl class="first last docutils">
+<dt>If <cite>True</cite>, checks if all dictionary values have the same number of file paths. Prints</dt>
+<dd>a warning and returns an empty dictionary if the validity check failed.</dd>
+</dl>
+</dd>
+<dt>ignore_invisible <span class="classifier-delimiter">:</span> <span class="classifier"><cite>bool</cite></span></dt>
+<dd>If <cite>True</cite>, ignores invisible files (i.e., files starting with a period).</dd>
+<dt>rstrip <span class="classifier-delimiter">:</span> <span class="classifier"><cite>str</cite> (default: &#8220;&#8221;)</span></dt>
+<dd>If provided, strips characters from right side of the file base names after splitting
+the extension. Useful to trim different filenames to a common stem. E.g,.
+&#8220;abc_d.txt&#8221; and &#8220;<a href="#id1"><span class="problematic" id="id2">abc_d_</span></a>.csv&#8221; would share the stem &#8220;abc_d&#8221; if rstrip is set to &#8220;_&#8221;.</dd>
+<dt>ignore_substring <span class="classifier-delimiter">:</span> <span class="classifier"><cite>str</cite></span></dt>
+<dd>Ignores files that contain the specified substring.</dd>
+</dl>
+<dl class="docutils">
+<dt>groups <span class="classifier-delimiter">:</span> <span class="classifier"><cite>dict</cite></span></dt>
+<dd><dl class="first last docutils">
+<dt>Dictionary of files paths. Keys are the file names found in the first directory listed</dt>
+<dd>in <cite>paths</cite> (without file extension).</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="mlxtend.file_io.find.find_files">
+<code class="descclassname">mlxtend.file_io.find.</code><code class="descname">find_files</code><span class="sig-paren">(</span><em>substring</em>, <em>path</em>, <em>recursive=False</em>, <em>check_ext=None</em>, <em>ignore_invisible=True</em>, <em>ignore_substring=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlxtend/file_io/find.html#find_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mlxtend.file_io.find.find_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that finds files in a directory based on substring matching.</p>
+<dl class="docutils">
+<dt>substring <span class="classifier-delimiter">:</span> <span class="classifier"><cite>str</cite></span></dt>
+<dd>Substring of the file to be matched.</dd>
+<dt>path <span class="classifier-delimiter">:</span> <span class="classifier"><cite>str</cite></span></dt>
+<dd>Path where to look.</dd>
+<dt>recursive: <cite>bool</cite></dt>
+<dd>If true, searches subdirectories recursively.</dd>
+<dt>check_ext: <cite>str</cite></dt>
+<dd><dl class="first last docutils">
+<dt>If string (e.g., &#8216;.txt&#8217;), only returns files that</dt>
+<dd>match the specified file extension.</dd>
+</dl>
+</dd>
+<dt>ignore_invisible <span class="classifier-delimiter">:</span> <span class="classifier"><cite>bool</cite></span></dt>
+<dd>If <cite>True</cite>, ignores invisible files (i.e., files starting with a period).</dd>
+<dt>ignore_substring <span class="classifier-delimiter">:</span> <span class="classifier"><cite>str</cite></span></dt>
+<dd>Ignores files that contain the specified substring.</dd>
+</dl>
+<dl class="docutils">
+<dt>results <span class="classifier-delimiter">:</span> <span class="classifier"><cite>list</cite></span></dt>
+<dd>List of the matched files.</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mlxtend.file_io">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mlxtend.file_io" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mlxtend.file_io.find_files">
+<code class="descclassname">mlxtend.file_io.</code><code class="descname">find_files</code><span class="sig-paren">(</span><em>substring</em>, <em>path</em>, <em>recursive=False</em>, <em>check_ext=None</em>, <em>ignore_invisible=True</em>, <em>ignore_substring=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlxtend/file_io/find.html#find_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mlxtend.file_io.find_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that finds files in a directory based on substring matching.</p>
+<dl class="docutils">
+<dt>substring <span class="classifier-delimiter">:</span> <span class="classifier"><cite>str</cite></span></dt>
+<dd>Substring of the file to be matched.</dd>
+<dt>path <span class="classifier-delimiter">:</span> <span class="classifier"><cite>str</cite></span></dt>
+<dd>Path where to look.</dd>
+<dt>recursive: <cite>bool</cite></dt>
+<dd>If true, searches subdirectories recursively.</dd>
+<dt>check_ext: <cite>str</cite></dt>
+<dd><dl class="first last docutils">
+<dt>If string (e.g., &#8216;.txt&#8217;), only returns files that</dt>
+<dd>match the specified file extension.</dd>
+</dl>
+</dd>
+<dt>ignore_invisible <span class="classifier-delimiter">:</span> <span class="classifier"><cite>bool</cite></span></dt>
+<dd>If <cite>True</cite>, ignores invisible files (i.e., files starting with a period).</dd>
+<dt>ignore_substring <span class="classifier-delimiter">:</span> <span class="classifier"><cite>str</cite></span></dt>
+<dd>Ignores files that contain the specified substring.</dd>
+</dl>
+<dl class="docutils">
+<dt>results <span class="classifier-delimiter">:</span> <span class="classifier"><cite>list</cite></span></dt>
+<dd>List of the matched files.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="mlxtend.file_io.find_filegroups">
+<code class="descclassname">mlxtend.file_io.</code><code class="descname">find_filegroups</code><span class="sig-paren">(</span><em>paths</em>, <em>substring=''</em>, <em>extensions=None</em>, <em>validity_check=True</em>, <em>ignore_invisible=True</em>, <em>rstrip=''</em>, <em>ignore_substring=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlxtend/file_io/find.html#find_filegroups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mlxtend.file_io.find_filegroups" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that finds and groups files from different directories in a python dictionary.</p>
+<dl class="docutils">
+<dt>paths <span class="classifier-delimiter">:</span> <span class="classifier"><cite>list</cite></span></dt>
+<dd><dl class="first last docutils">
+<dt>Paths of the directories to be searched. Dictionary keys are build from</dt>
+<dd>the first directory.</dd>
+</dl>
+</dd>
+<dt>substring <span class="classifier-delimiter">:</span> <span class="classifier"><cite>str</cite></span></dt>
+<dd>Substring that all files have to contain to be considered.</dd>
+<dt>extensions <span class="classifier-delimiter">:</span> <span class="classifier"><cite>list</cite></span></dt>
+<dd><dl class="first last docutils">
+<dt><cite>None</cite> or <cite>list</cite> of allowed file extensions for each path. If provided, the number</dt>
+<dd>of extensions must match the number of <cite>paths</cite>.</dd>
+</dl>
+</dd>
+<dt>validity_check <span class="classifier-delimiter">:</span> <span class="classifier"><cite>bool</cite></span></dt>
+<dd><dl class="first last docutils">
+<dt>If <cite>True</cite>, checks if all dictionary values have the same number of file paths. Prints</dt>
+<dd>a warning and returns an empty dictionary if the validity check failed.</dd>
+</dl>
+</dd>
+<dt>ignore_invisible <span class="classifier-delimiter">:</span> <span class="classifier"><cite>bool</cite></span></dt>
+<dd>If <cite>True</cite>, ignores invisible files (i.e., files starting with a period).</dd>
+<dt>rstrip <span class="classifier-delimiter">:</span> <span class="classifier"><cite>str</cite> (default: &#8220;&#8221;)</span></dt>
+<dd>If provided, strips characters from right side of the file base names after splitting
+the extension. Useful to trim different filenames to a common stem. E.g,.
+&#8220;abc_d.txt&#8221; and &#8220;<a href="#id3"><span class="problematic" id="id4">abc_d_</span></a>.csv&#8221; would share the stem &#8220;abc_d&#8221; if rstrip is set to &#8220;_&#8221;.</dd>
+<dt>ignore_substring <span class="classifier-delimiter">:</span> <span class="classifier"><cite>str</cite></span></dt>
+<dd>Ignores files that contain the specified substring.</dd>
+</dl>
+<dl class="docutils">
+<dt>groups <span class="classifier-delimiter">:</span> <span class="classifier"><cite>dict</cite></span></dt>
+<dd><dl class="first last docutils">
+<dt>Dictionary of files paths. Keys are the file names found in the first directory listed</dt>
+<dd>in <cite>paths</cite> (without file extension).</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">mlxtend.file_io package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-mlxtend.file_io.find">mlxtend.file_io.find module</a></li>
+<li><a class="reference internal" href="#module-mlxtend.file_io">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="mlxtend.html">mlxtend package</a><ul>
+      <li>Previous: <a href="mlxtend.feature_selection.html" title="previous chapter">mlxtend.feature_selection package</a></li>
+      <li>Next: <a href="mlxtend.general_plotting.html" title="next chapter">mlxtend.general_plotting package</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/mlxtend.file_io.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Author.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/mlxtend.file_io.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

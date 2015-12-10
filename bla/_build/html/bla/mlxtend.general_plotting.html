@@ -1,0 +1,354 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mlxtend.general_plotting package &mdash; classifier --maxdepth=7 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '--maxdepth=7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="classifier --maxdepth=7 documentation" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mlxtend-general-plotting-package">
+<h1>mlxtend.general_plotting package<a class="headerlink" href="#mlxtend-general-plotting-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-mlxtend.general_plotting.enrichment_plot">
+<span id="mlxtend-general-plotting-enrichment-plot-module"></span><h2>mlxtend.general_plotting.enrichment_plot module<a class="headerlink" href="#module-mlxtend.general_plotting.enrichment_plot" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mlxtend.general_plotting.enrichment_plot.enrichment_plot">
+<code class="descclassname">mlxtend.general_plotting.enrichment_plot.</code><code class="descname">enrichment_plot</code><span class="sig-paren">(</span><em>df</em>, <em>colors='bgrkcy'</em>, <em>markers=' '</em>, <em>linestyles='-'</em>, <em>alpha=0.5</em>, <em>lw=2</em>, <em>legend=True</em>, <em>where='post'</em>, <em>grid=True</em>, <em>count_label='Count'</em>, <em>xlim='auto'</em>, <em>ylim='auto'</em>, <em>invert_axes=False</em>, <em>legend_loc='best'</em>, <em>ax=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlxtend/general_plotting/enrichment_plot.html#enrichment_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mlxtend.general_plotting.enrichment_plot.enrichment_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to plot stacked barplots</p>
+<dl class="docutils">
+<dt>df <span class="classifier-delimiter">:</span> <span class="classifier">pandas.DataFrame</span></dt>
+<dd>A pandas DataFrame where columns represent the different categories.</dd>
+<dt>colors: str (default: &#8216;bgrcky&#8217;)</dt>
+<dd>The colors of the bars.</dd>
+<dt>markers: str (default: &#8216; &#8216;)</dt>
+<dd>Matplotlib markerstyles, e.g,
+&#8216;sov&#8217; for square,circle, and triangle markers.</dd>
+<dt>linestyles: str (default: &#8216;-&#8216;)</dt>
+<dd>Matplotlib linestyles, e.g.,
+&#8216;-,&#8211;&#8217; to cycle normal and dashed lines. Note
+that the different linestyles need to be separated by commas.</dd>
+<dt>alpha: float (default: 0.5)</dt>
+<dd>Transparency level from 0.0 to 1.0.</dd>
+<dt>lw: int or float (default: 2)</dt>
+<dd>Linewidth parameter.</dd>
+<dt>legend: bool (default: True)</dt>
+<dd>Plots legend if True.</dd>
+<dt>where: {&#8216;post&#8217;, &#8216;pre&#8217;, &#8216;mid&#8217;} (default: &#8216;post&#8217;)</dt>
+<dd>Starting location of the steps.</dd>
+<dt>grid: bool (default: True)</dt>
+<dd>Plots a grid if True.</dd>
+<dt>count_label: str (default: &#8216;Count&#8217;)</dt>
+<dd>Label for the &#8220;Count&#8221;-axis.</dd>
+<dt>xlim: &#8216;auto&#8217; or array-like [min, max]</dt>
+<dd>Min and maximum position of the x-axis range.</dd>
+<dt>ylim: &#8216;auto&#8217; or array-like [min, max]</dt>
+<dd>Min and maximum position of the y-axis range.</dd>
+<dt>invert_axes: bool (default: False)</dt>
+<dd>Plots count on the x-axis if True.</dd>
+<dt>legend_loc <span class="classifier-delimiter">:</span> <span class="classifier">str (default: &#8216;best&#8217;)</span></dt>
+<dd>Location of the plot legend
+{best, upper left, upper right, lower left, lower right}
+No legend if legend_loc=False</dd>
+<dt>ax: matplotlib axis, optional (default: None)</dt>
+<dd>Use this axis for plotting or make a new one otherwise</dd>
+</dl>
+<p>ax: matplotlib axis</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mlxtend.general_plotting.remove_chartchunk">
+<span id="mlxtend-general-plotting-remove-chartchunk-module"></span><h2>mlxtend.general_plotting.remove_chartchunk module<a class="headerlink" href="#module-mlxtend.general_plotting.remove_chartchunk" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mlxtend.general_plotting.remove_chartchunk.remove_borders">
+<code class="descclassname">mlxtend.general_plotting.remove_chartchunk.</code><code class="descname">remove_borders</code><span class="sig-paren">(</span><em>axes</em>, <em>left=False</em>, <em>bottom=False</em>, <em>right=True</em>, <em>top=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlxtend/general_plotting/remove_chartchunk.html#remove_borders"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mlxtend.general_plotting.remove_chartchunk.remove_borders" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function to remove chartchunk from matplotlib plots, such as axes
+spines, ticks, and labels.</p>
+<dl class="docutils">
+<dt>Keyword arguments:</dt>
+<dd>axes: An iterable containing plt.gca() or plt.subplot() objects, e.g. [plt.gca()].
+left, bottom, right, top: Boolean to specify which plot axes to hide.</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mlxtend.general_plotting.scatter">
+<span id="mlxtend-general-plotting-scatter-module"></span><h2>mlxtend.general_plotting.scatter module<a class="headerlink" href="#module-mlxtend.general_plotting.scatter" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mlxtend.general_plotting.scatter.category_scatter">
+<code class="descclassname">mlxtend.general_plotting.scatter.</code><code class="descname">category_scatter</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>label_col</em>, <em>data</em>, <em>markers='sxo^v'</em>, <em>colors=('blue'</em>, <em>'green'</em>, <em>'red'</em>, <em>'purple'</em>, <em>'gray'</em>, <em>'cyan')</em>, <em>alpha=0.7</em>, <em>markersize=20.0</em>, <em>legend_loc='best'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlxtend/general_plotting/scatter.html#category_scatter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mlxtend.general_plotting.scatter.category_scatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scatter plot to plot categories in different colors/markerstyles.</p>
+<dl class="docutils">
+<dt>x <span class="classifier-delimiter">:</span> <span class="classifier">str or int</span></dt>
+<dd>DataFrame column name of the x-axis values or
+integer for the numpy ndarray column index.</dd>
+<dt>y <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>DataFrame column name of the y-axis values or
+integer for the numpy ndarray column index</dd>
+</dl>
+<p>data : Pandas DataFrame object or NumPy ndarray.</p>
+<dl class="docutils">
+<dt>markers <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>Markers that are cycled through the label category.</dd>
+<dt>colors <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd>Colors that are cycled through the label category.</dd>
+<dt>alpha <span class="classifier-delimiter">:</span> <span class="classifier">float (default: 0.7)</span></dt>
+<dd>Parameter to control the transparency.</dd>
+<dt>markersize <span class="classifier-delimiter">:</span> <span class="classifier">float (default</span> <span class="classifier-delimiter">:</span> <span class="classifier">20.0)</span></dt>
+<dd>Parameter to control the marker size.</dd>
+<dt>legend_loc <span class="classifier-delimiter">:</span> <span class="classifier">str (default: &#8216;best&#8217;)</span></dt>
+<dd>Location of the plot legend
+{best, upper left, upper right, lower left, lower right}
+No legend if legend_loc=False</dd>
+</dl>
+<p>pyplot figure object</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mlxtend.general_plotting.stacked_barplot">
+<span id="mlxtend-general-plotting-stacked-barplot-module"></span><h2>mlxtend.general_plotting.stacked_barplot module<a class="headerlink" href="#module-mlxtend.general_plotting.stacked_barplot" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mlxtend.general_plotting.stacked_barplot.stacked_barplot">
+<code class="descclassname">mlxtend.general_plotting.stacked_barplot.</code><code class="descname">stacked_barplot</code><span class="sig-paren">(</span><em>df</em>, <em>bar_width='auto'</em>, <em>colors='bgrcky'</em>, <em>labels='index'</em>, <em>rotation=90</em>, <em>legend_loc='best'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlxtend/general_plotting/stacked_barplot.html#stacked_barplot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mlxtend.general_plotting.stacked_barplot.stacked_barplot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to plot stacked barplots</p>
+<dl class="docutils">
+<dt>df <span class="classifier-delimiter">:</span> <span class="classifier">pandas.DataFrame</span></dt>
+<dd>A pandas DataFrame where the index denotes the
+x-axis labels, and the columns contain the different
+measurements for each row.</dd>
+<dt>bar_width: &#8216;auto&#8217; or float (default: &#8216;auto&#8217;)</dt>
+<dd>Parameter to set the widths of the bars. if
+&#8216;auto&#8217;, the width is automatically determined by
+the number of columns in the dataset.</dd>
+<dt>colors: str (default: &#8216;bgrcky&#8217;)</dt>
+<dd>The colors of the bars.</dd>
+<dt>labels: &#8216;index&#8217; or iterable (default: &#8216;index&#8217;)</dt>
+<dd>If &#8216;index&#8217;, the DataFrame index will be used as
+x-tick labels.</dd>
+<dt>rotation: int (default: 90)</dt>
+<dd>Parameter to rotate the x-axis labels.</dd>
+<dt>legend_loc <span class="classifier-delimiter">:</span> <span class="classifier">str (default: &#8216;best&#8217;)</span></dt>
+<dd>Location of the plot legend
+{best, upper left, upper right, lower left, lower right}
+No legend if legend_loc=False</dd>
+</dl>
+<p>pyplot figure object</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mlxtend.general_plotting">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mlxtend.general_plotting" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mlxtend.general_plotting.remove_borders">
+<code class="descclassname">mlxtend.general_plotting.</code><code class="descname">remove_borders</code><span class="sig-paren">(</span><em>axes</em>, <em>left=False</em>, <em>bottom=False</em>, <em>right=True</em>, <em>top=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlxtend/general_plotting/remove_chartchunk.html#remove_borders"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mlxtend.general_plotting.remove_borders" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function to remove chartchunk from matplotlib plots, such as axes
+spines, ticks, and labels.</p>
+<dl class="docutils">
+<dt>Keyword arguments:</dt>
+<dd>axes: An iterable containing plt.gca() or plt.subplot() objects, e.g. [plt.gca()].
+left, bottom, right, top: Boolean to specify which plot axes to hide.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="mlxtend.general_plotting.category_scatter">
+<code class="descclassname">mlxtend.general_plotting.</code><code class="descname">category_scatter</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>label_col</em>, <em>data</em>, <em>markers='sxo^v'</em>, <em>colors=('blue'</em>, <em>'green'</em>, <em>'red'</em>, <em>'purple'</em>, <em>'gray'</em>, <em>'cyan')</em>, <em>alpha=0.7</em>, <em>markersize=20.0</em>, <em>legend_loc='best'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlxtend/general_plotting/scatter.html#category_scatter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mlxtend.general_plotting.category_scatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scatter plot to plot categories in different colors/markerstyles.</p>
+<dl class="docutils">
+<dt>x <span class="classifier-delimiter">:</span> <span class="classifier">str or int</span></dt>
+<dd>DataFrame column name of the x-axis values or
+integer for the numpy ndarray column index.</dd>
+<dt>y <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>DataFrame column name of the y-axis values or
+integer for the numpy ndarray column index</dd>
+</dl>
+<p>data : Pandas DataFrame object or NumPy ndarray.</p>
+<dl class="docutils">
+<dt>markers <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>Markers that are cycled through the label category.</dd>
+<dt>colors <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd>Colors that are cycled through the label category.</dd>
+<dt>alpha <span class="classifier-delimiter">:</span> <span class="classifier">float (default: 0.7)</span></dt>
+<dd>Parameter to control the transparency.</dd>
+<dt>markersize <span class="classifier-delimiter">:</span> <span class="classifier">float (default</span> <span class="classifier-delimiter">:</span> <span class="classifier">20.0)</span></dt>
+<dd>Parameter to control the marker size.</dd>
+<dt>legend_loc <span class="classifier-delimiter">:</span> <span class="classifier">str (default: &#8216;best&#8217;)</span></dt>
+<dd>Location of the plot legend
+{best, upper left, upper right, lower left, lower right}
+No legend if legend_loc=False</dd>
+</dl>
+<p>pyplot figure object</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mlxtend.general_plotting.stacked_barplot">
+<code class="descclassname">mlxtend.general_plotting.</code><code class="descname">stacked_barplot</code><span class="sig-paren">(</span><em>df</em>, <em>bar_width='auto'</em>, <em>colors='bgrcky'</em>, <em>labels='index'</em>, <em>rotation=90</em>, <em>legend_loc='best'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlxtend/general_plotting/stacked_barplot.html#stacked_barplot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mlxtend.general_plotting.stacked_barplot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to plot stacked barplots</p>
+<dl class="docutils">
+<dt>df <span class="classifier-delimiter">:</span> <span class="classifier">pandas.DataFrame</span></dt>
+<dd>A pandas DataFrame where the index denotes the
+x-axis labels, and the columns contain the different
+measurements for each row.</dd>
+<dt>bar_width: &#8216;auto&#8217; or float (default: &#8216;auto&#8217;)</dt>
+<dd>Parameter to set the widths of the bars. if
+&#8216;auto&#8217;, the width is automatically determined by
+the number of columns in the dataset.</dd>
+<dt>colors: str (default: &#8216;bgrcky&#8217;)</dt>
+<dd>The colors of the bars.</dd>
+<dt>labels: &#8216;index&#8217; or iterable (default: &#8216;index&#8217;)</dt>
+<dd>If &#8216;index&#8217;, the DataFrame index will be used as
+x-tick labels.</dd>
+<dt>rotation: int (default: 90)</dt>
+<dd>Parameter to rotate the x-axis labels.</dd>
+<dt>legend_loc <span class="classifier-delimiter">:</span> <span class="classifier">str (default: &#8216;best&#8217;)</span></dt>
+<dd>Location of the plot legend
+{best, upper left, upper right, lower left, lower right}
+No legend if legend_loc=False</dd>
+</dl>
+<p>pyplot figure object</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mlxtend.general_plotting.enrichment_plot">
+<code class="descclassname">mlxtend.general_plotting.</code><code class="descname">enrichment_plot</code><span class="sig-paren">(</span><em>df</em>, <em>colors='bgrkcy'</em>, <em>markers=' '</em>, <em>linestyles='-'</em>, <em>alpha=0.5</em>, <em>lw=2</em>, <em>legend=True</em>, <em>where='post'</em>, <em>grid=True</em>, <em>count_label='Count'</em>, <em>xlim='auto'</em>, <em>ylim='auto'</em>, <em>invert_axes=False</em>, <em>legend_loc='best'</em>, <em>ax=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mlxtend/general_plotting/enrichment_plot.html#enrichment_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mlxtend.general_plotting.enrichment_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to plot stacked barplots</p>
+<dl class="docutils">
+<dt>df <span class="classifier-delimiter">:</span> <span class="classifier">pandas.DataFrame</span></dt>
+<dd>A pandas DataFrame where columns represent the different categories.</dd>
+<dt>colors: str (default: &#8216;bgrcky&#8217;)</dt>
+<dd>The colors of the bars.</dd>
+<dt>markers: str (default: &#8216; &#8216;)</dt>
+<dd>Matplotlib markerstyles, e.g,
+&#8216;sov&#8217; for square,circle, and triangle markers.</dd>
+<dt>linestyles: str (default: &#8216;-&#8216;)</dt>
+<dd>Matplotlib linestyles, e.g.,
+&#8216;-,&#8211;&#8217; to cycle normal and dashed lines. Note
+that the different linestyles need to be separated by commas.</dd>
+<dt>alpha: float (default: 0.5)</dt>
+<dd>Transparency level from 0.0 to 1.0.</dd>
+<dt>lw: int or float (default: 2)</dt>
+<dd>Linewidth parameter.</dd>
+<dt>legend: bool (default: True)</dt>
+<dd>Plots legend if True.</dd>
+<dt>where: {&#8216;post&#8217;, &#8216;pre&#8217;, &#8216;mid&#8217;} (default: &#8216;post&#8217;)</dt>
+<dd>Starting location of the steps.</dd>
+<dt>grid: bool (default: True)</dt>
+<dd>Plots a grid if True.</dd>
+<dt>count_label: str (default: &#8216;Count&#8217;)</dt>
+<dd>Label for the &#8220;Count&#8221;-axis.</dd>
+<dt>xlim: &#8216;auto&#8217; or array-like [min, max]</dt>
+<dd>Min and maximum position of the x-axis range.</dd>
+<dt>ylim: &#8216;auto&#8217; or array-like [min, max]</dt>
+<dd>Min and maximum position of the y-axis range.</dd>
+<dt>invert_axes: bool (default: False)</dt>
+<dd>Plots count on the x-axis if True.</dd>
+<dt>legend_loc <span class="classifier-delimiter">:</span> <span class="classifier">str (default: &#8216;best&#8217;)</span></dt>
+<dd>Location of the plot legend
+{best, upper left, upper right, lower left, lower right}
+No legend if legend_loc=False</dd>
+<dt>ax: matplotlib axis, optional (default: None)</dt>
+<dd>Use this axis for plotting or make a new one otherwise</dd>
+</dl>
+<p>ax: matplotlib axis</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">mlxtend.general_plotting package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-mlxtend.general_plotting.enrichment_plot">mlxtend.general_plotting.enrichment_plot module</a></li>
+<li><a class="reference internal" href="#module-mlxtend.general_plotting.remove_chartchunk">mlxtend.general_plotting.remove_chartchunk module</a></li>
+<li><a class="reference internal" href="#module-mlxtend.general_plotting.scatter">mlxtend.general_plotting.scatter module</a></li>
+<li><a class="reference internal" href="#module-mlxtend.general_plotting.stacked_barplot">mlxtend.general_plotting.stacked_barplot module</a></li>
+<li><a class="reference internal" href="#module-mlxtend.general_plotting">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/bla/mlxtend.general_plotting.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Author.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="../_sources/bla/mlxtend.general_plotting.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

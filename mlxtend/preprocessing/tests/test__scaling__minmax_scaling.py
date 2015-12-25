@@ -1,3 +1,10 @@
+# Sebastian Raschka 2014-2016
+# mlxtend Machine Learning Library Extensions
+# Author: Sebastian Raschka <sebastianraschka.com>
+#
+# License: BSD 3 clause
+
+
 from mlxtend.preprocessing import minmax_scaling
 import pandas as pd
 import numpy as np

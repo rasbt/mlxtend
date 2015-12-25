@@ -1,41 +1,45 @@
-# Sebastian Raschka 08/13/2014
+# Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
-# matplotlib utilities for removing chartchunk
+# Author: Sebastian Raschka <sebastianraschka.com>
+#
+# License: BSD 3 clause
 
 from itertools import cycle
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib import colors as mcolors
 
-def plot_decision_regions(X, y, clf, X_highlight=None, res=0.02, cycle_marker=True, legend=1, cmap=None):
+def plot_decision_regions(X, y, clf, X_highlight=None,
+                          res=0.02, legend=1,
+                          hide_spines=True,
+                          markers = 's^oxv<>',
+                          colors=['red', 'blue', 'limegreen', 'gray', 'cyan']):
     """
     Plots decision regions of a classifier.
 
     Parameters
     ----------
     X : array-like, shape = [n_samples, n_features]
-      Feature Matrix.
-
+        Feature Matrix.
     y : array-like, shape = [n_samples]
-      True class labels.
-
-    clf : Classifier object. Must have a .predict method.
-
+        True class labels.
+    clf : Classifier object.
+        Must have a .predict method.
     X_highlight : array-like, shape = [n_samples, n_features] (default: None)
-      An array with data points that are used to highlight samples in `X`.
-
+        An array with data points that are used to highlight samples in `X`.
     res : float (default: 0.02)
-      Grid width. Lower values increase the resolution but
-      slow down the plotting.
-
-    cycle_marker : bool
-      Use different marker for each class.
-
-    legend : int
-      Integer to specify the legend location.
-      No legend if legend is 0.
-
-    cmap : Custom colormap object .
+        Grid width. Lower values increase the resolution but
+        slow down the plotting.
+    hide_spines : bool (default: True)
+        Hide axis spines if True.
+    legend : int (default: 1)
+        Integer to specify the legend location.
+        No legend if legend is 0.
+    markers : list
+        Scatterplot markers.
+    colors : list
+        Colors.
 
     Returns
     ---------
@@ -63,7 +67,7 @@ def plot_decision_regions(X, y, clf, X_highlight=None, res=0.02, cycle_marker=Tr
 
     """
     # check if data is numpy array
-    fig = plt.figure()
+    fig = plt.gca()
     for a in (X, y):
         if not isinstance(a, np.ndarray):
             raise ValueError('%s must be a NumPy array.' % a.__name__)
@@ -81,16 +85,13 @@ def plot_decision_regions(X, y, clf, X_highlight=None, res=0.02, cycle_marker=Tr
     else:
         dim = '1d'
 
-    marker_gen = cycle('sxo^v')
+    marker_gen = cycle(['s', '^', 'o', 'x', 'v', '<','>'])
 
     # make color map
-    colors = ['red', 'blue', 'lightgreen', 'gray', 'cyan']
     n_classes = len(np.unique(y))
-    if n_classes > 5:
-        raise NotImplementedError('Does not support more than 5 classes.')
+    colors = ['red', 'blue', 'limegreen', 'gray', 'cyan']
+    cmap = matplotlib.colors.ListedColormap(colors[:n_classes])
 
-    if not cmap:
-        cmap = matplotlib.colors.ListedColormap(colors[:n_classes])
 
     # plot the decision surface
 
@@ -111,7 +112,7 @@ def plot_decision_regions(X, y, clf, X_highlight=None, res=0.02, cycle_marker=Tr
         Z = clf.predict(np.array([xx.ravel()]).T)
 
     Z = Z.reshape(xx.shape)
-    plt.contourf(xx, yy, Z, alpha=0.4, cmap=cmap)
+    plt.contourf(xx, yy, Z, alpha=0.3, cmap=cmap)
     plt.xlim(xx.min(), xx.max())
     plt.ylim(yy.min(), yy.max())
 
@@ -129,8 +130,16 @@ def plot_decision_regions(X, y, clf, X_highlight=None, res=0.02, cycle_marker=Tr
                     c=cmap(c),
                     marker=next(marker_gen),
                     label=c)
-    if not dim == '2D':
-        plt.gca().yaxis.set_major_locator(plt.NullLocator())
+
+    if hide_spines:
+        fig.spines['right'].set_visible(False)
+        fig.spines['top'].set_visible(False)
+        fig.spines['left'].set_visible(False)
+        fig.spines['bottom'].set_visible(False)
+    fig.yaxis.set_ticks_position('left')
+    fig.xaxis.set_ticks_position('bottom')
+    if not dim == '2d':
+        fig.axes.get_yaxis().set_ticks([])
 
     if legend:
         plt.legend(loc=legend, fancybox=True, framealpha=0.5)

@@ -1,10 +1,11 @@
-# Sebastian Raschka 12/21/2014
+# Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
-# Submodules with math and statistics utilities
+# Author: Sebastian Raschka <sebastianraschka.com>
+#
+# License: BSD 3 clause
 
 from .counting import num_combinations
 from .counting import num_permutations
 from .counting import factorial
 __all__ = ["num_combinations", "num_permutations",
         "factorial"]
-

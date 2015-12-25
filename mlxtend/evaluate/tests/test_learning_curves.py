@@ -1,10 +1,14 @@
+# Sebastian Raschka 2014-2016
+# mlxtend Machine Learning Library Extensions
+# Author: Sebastian Raschka <sebastianraschka.com>
+#
+# License: BSD 3 clause
+
 from mlxtend.evaluate import plot_learning_curves
 from sklearn import datasets
 from sklearn.cross_validation import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 import numpy as np
-
-
 
 def test_training_size():
 
@@ -23,10 +27,7 @@ def test_training_size():
     np.testing.assert_almost_equal(test_errors, desired2, decimal=2)
 
 
-
-
 def test_scikit_metrics():
-
     iris = datasets.load_iris()
     X = iris.data
     y = iris.target
@@ -41,10 +42,7 @@ def test_scikit_metrics():
     np.testing.assert_almost_equal(training_errors, desired1, decimal=2)
     np.testing.assert_almost_equal(test_errors, desired2, decimal=2)
 
-
-
 def test_n_features():
-
     iris = datasets.load_iris()
     X = iris.data
     y = iris.target

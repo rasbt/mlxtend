@@ -1,14 +1,20 @@
+# Sebastian Raschka 2014-2016
+# mlxtend Machine Learning Library Extensions
+# Author: Sebastian Raschka <sebastianraschka.com>
+#
+# License: BSD 3 clause
+
 from setuptools import setup
 
 setup(name='mlxtend',
-      version='0.3.0dev',
+      version='0.3.0',
       description='Machine Learning Library Extensions',
       author='Sebastian Raschka',
       author_email='se.raschka@gmail.com',
       url='https://github.com/rasbt/mlxtend',
       packages=['mlxtend',
                 'mlxtend.feature_selection',
-                'mlxtend.plotting',
+                'mlxtend.general_plotting',
                 'mlxtend.classifier',
                 'mlxtend.regression',
                 'mlxtend.evaluate',

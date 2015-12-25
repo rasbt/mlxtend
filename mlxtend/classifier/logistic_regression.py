@@ -1,5 +1,9 @@
-# Sebastian Raschka 2015
+# Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
+# Author: Sebastian Raschka <sebastianraschka.com>
+#
+# License: BSD 3 clause
+
 
 
 import numpy as np
@@ -30,12 +34,13 @@ class LogisticRegression(object):
     shuffle : bool (default: False)
         Shuffles training data every epoch if True to prevent circles.
 
-    random_seed : int (default: None)
+    random_state : int (default: None)
         Set random state for shuffling and initializing the weights.
 
     zero_init_weight : bool (default: False)
         If True, weights are initialized to zero instead of small random
-        numbers in the interval [0,1]
+        numbers in the interval [-0.1, 0.1];
+        ignored if solver='normal equation'
 
     Attributes
     -----------
@@ -49,9 +54,9 @@ class LogisticRegression(object):
     """
     def __init__(self, eta=0.01, epochs=50, regularization=None,
                  l2_lambda=0.0, learning='sgd', shuffle=False,
-                 random_seed=None, zero_init_weight=False):
+                 random_state=None, zero_init_weight=False):
 
-        np.random.seed(random_seed)
+        np.random.seed(random_state)
         self.eta = eta
         self.epochs = epochs
         self.l2_lambda = l2_lambda
@@ -92,14 +97,12 @@ class LogisticRegression(object):
         if (np.unique(y) != np.array([0, 1])).all():
             raise ValueError('Supports only binary class labels 0 and 1')
 
+        # initialize weights
         if not isinstance(init_weights, np.ndarray):
-            if self.zero_init_weight:
-                self.w_ = np.zeros(1 + X.shape[1])
-            else:
-                self.w_ = np.random.ranf(1 + X.shape[1])
+            self._init_weights(shape=1 + X.shape[1])
         else:
             self.w_ = init_weights
-        self.w_.astype('int64')
+
         self.m_ = len(self.w_)
         self.cost_ = []
 
@@ -178,14 +181,18 @@ class LogisticRegression(object):
 
     def _logit_cost(self, y, y_val):
         logit = -y.dot(np.log(y_val)) - ((1 - y).dot(np.log(1 - y_val)))
-        return logit + self._regularize_cost()
+        if self.l2_lambda:
+            l2 = self.l2_lambda / 2.0 * np.sum(self.w_[1:]**2)
+            logit += l2
+        return logit
 
     def _sigmoid(self, z):
         return 1.0 / (1.0 + np.exp(-z))
 
-    def _regularize_cost(self):
-        #if self.regularization == 'l2':
-        #    regularize = self.l2_lambda / 2.0 * np.sum(self.w_[1:]**2)
-        #else:
-        regularize = 0.0
-        return regularize
+    def _init_weights(self, shape):
+        """Initialize weights"""
+        if self.zero_init_weight:
+            self.w_ = np.zeros(shape)
+        else:
+            self.w_ = 0.2 * np.random.ranf(shape) - 0.5
+        self.w_.astype('float64')

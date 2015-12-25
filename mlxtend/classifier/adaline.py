@@ -1,5 +1,8 @@
-# Sebastian Raschka 2015
-# mlxtend Machine solver Library Extensions
+# Sebastian Raschka 2014-2016
+# mlxtend Machine Learning Library Extensions
+# Author: Sebastian Raschka <sebastianraschka.com>
+#
+# License: BSD 3 clause
 
 import numpy as np
 
@@ -27,7 +30,8 @@ class Adaline(object):
 
     zero_init_weight : bool (default: False)
         If True, weights are initialized to zero instead of small random
-        numbers in the interval [0,1]
+        numbers in the interval [-0.1, 0.1];
+        ignored if solver='normal equation'
 
     Attributes
     -----------
@@ -63,7 +67,8 @@ class Adaline(object):
             Target values.
 
         init_weights : bool (default: True)
-            (Re)initializes weights to small random floats if True.
+            Re-initializes weights prior to fitting. Set False to continue
+            training with weights from a previous fitting.
 
         Returns
         -------
@@ -86,13 +91,9 @@ class Adaline(object):
 
         # initialize weights
         if not isinstance(init_weights, np.ndarray):
-            if self.zero_init_weight:
-                self.w_ = np.zeros(1 + X.shape[1])
-            else:
-                self.w_ = np.random.ranf(1 + X.shape[1])
+            self._init_weights(shape=1 + X.shape[1])
         else:
             self.w_ = init_weights
-        self.w_.astype('int64')
 
         self.cost_ = []
 
@@ -137,6 +138,14 @@ class Adaline(object):
         z = np.linalg.inv(np.dot(Xb.T, Xb))
         w = np.dot(z, np.dot(Xb.T, y))
         return w
+
+    def _init_weights(self, shape):
+        """Initialize weights"""
+        if self.zero_init_weight:
+            self.w_ = np.zeros(shape)
+        else:
+            self.w_ = 0.2 * np.random.ranf(shape) - 0.5
+        self.w_.astype('float64')
 
     def net_input(self, X):
         """ Net input function """

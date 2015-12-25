@@ -1,3 +1,9 @@
+# Sebastian Raschka 2014-2016
+# mlxtend Machine Learning Library Extensions
+# Author: Sebastian Raschka <sebastianraschka.com>
+#
+# License: BSD 3 clause
+
 from mlxtend.classifier import Adaline
 from mlxtend.data import iris_data
 import numpy as np
@@ -20,7 +26,7 @@ X_std[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
 def test_normal_equation():
 
     t1 = np.array([-5.21e-16,  -7.86e-02,   1.02e+00])
-    ada = Adaline(epochs=30, eta=0.01, solver='normal_equation', random_seed=1)
+    ada = Adaline(epochs=30, eta=0.01, solver='normal equation', random_seed=1)
     ada.fit(X_std, y1)
     np.testing.assert_almost_equal(ada.w_, t1, 2)
     assert((y1 == ada.predict(X_std)).all())

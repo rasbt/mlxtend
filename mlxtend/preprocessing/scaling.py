@@ -1,7 +1,9 @@
-"""
-Created: 01/20/2015
-Author: Sebastian Raschka
-"""
+# Sebastian Raschka 2014-2016
+# mlxtend Machine Learning Library Extensions
+# Author: Sebastian Raschka <sebastianraschka.com>
+#
+# License: BSD 3 clause
+
 import pandas as pd
 import numpy as np
 

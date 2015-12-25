@@ -1,11 +1,11 @@
-# Sebastian Raschka 08/19/2014
+# Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
-# Submodules with preprocessing functions.
+# Author: Sebastian Raschka <sebastianraschka.com>
+#
+# License: BSD 3 clause
 
-from .feature_sel import ColumnSelector
-from .sequential_backward_select import SBS
-from .sequential_forward_select import SFS
-from .sequential_floating_backward_select import SFBS
-from .sequential_floating_forward_select import SFFS
+from .column_selector import ColumnSelector
+from .sequential_feature_selector import SequentialFeatureSelector
 
-__all__ = ["ColumnSelector", "SBS", "SFS", "SFBS", "SFFS"]
+
+__all__ = ["ColumnSelector", "SequentialFeatureSelector"]

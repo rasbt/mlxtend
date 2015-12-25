@@ -47,31 +47,42 @@ Current GitHub version: 0.3.0dev
 <br>
 
 
-## Examples
+## Example
 
 ```python
-from mlxtend.evaluate import plot_decision_regions
+import numpy as np
 import matplotlib.pyplot as plt
-from sklearn import datasets
+import matplotlib.gridspec as gridspec
+import itertools
+from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
+from mlxtend.classifier import EnsembleVoteClassifier
+from mlxtend.data import iris_data
+from mlxtend.evaluate import plot_decision_regions
+
+# Initializing Classifiers
+clf1 = LogisticRegression(random_state=0)
+clf2 = RandomForestClassifier(random_state=0)
+clf3 = SVC(random_state=0, probability=True)
+eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], weights=[2, 1, 1], voting='soft')
 
 # Loading some example data
-iris = datasets.load_iris()
-X = iris.data[:, [0,2]]
-y = iris.target
+X, y = iris_data()
+X = X[:,[0, 2]]
 
-# Training a classifier
-svm = SVC(C=0.5, kernel='linear')
-svm.fit(X,y)
+# Plotting Decision Regions
+gs = gridspec.GridSpec(2, 2)
+fig = plt.figure(figsize=(10, 8))
 
-# Plotting decision regions
-plot_decision_regions(X, y, clf=svm, res=0.02, legend=2)
-
-# Adding axes annotations
-plt.xlabel('sepal length [cm]')
-plt.ylabel('petal length [cm]')
-plt.title('SVM on Iris')
+for clf, lab, grd in zip([clf1, clf2, clf3, eclf],
+                         ['Logistic Regression', 'Random Forest', 'Naive Bayes', 'Ensemble'],
+                         itertools.product([0, 1], repeat=2)):
+    clf.fit(X, y)
+    ax = plt.subplot(gs[grd[0], grd[1]])
+    fig = plot_decision_regions(X=X, y=y, clf=clf, legend=2)
+    plt.title(lab)
 plt.show()
 ```
 
-![](./docs/evaluate/img/evaluate_plot_decision_regions_2d.png)
+![](./img/ensemble_decision_regions_2d.png)

@@ -1,3 +1,9 @@
+# Sebastian Raschka 2014-2016
+# mlxtend Machine Learning Library Extensions
+# Author: Sebastian Raschka <sebastianraschka.com>
+#
+# License: BSD 3 clause
+
 from mlxtend.classifier import Perceptron
 from mlxtend.data import iris_data
 import numpy as np
@@ -18,28 +24,26 @@ X_std[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
 
 
 def test_standardized_iris_data():
-
     ppn = Perceptron(epochs=15, eta=0.01, random_state=1)
-    ppn.fit(X_std, y1)  # -1, 1 class
+    ppn = ppn.fit(X_std, y1)  # -1, 1 class
     assert((y1 == ppn.predict(X_std)).all())
 
 
 def test_nonstandardized_iris_data():
-
-    ppn = Perceptron(epochs=40, eta=0.01, random_state=1)
-    ppn.fit(X, y1)  # -1, 1 class
+    ppn = Perceptron(epochs=100, eta=0.01, random_state=1)
+    ppn = ppn.fit(X, y1)  # -1, 1 class
     assert((y1 == ppn.predict(X)).all())
 
 
 def test_0_1_class_iris_data():
-
-    ppn = Perceptron(epochs=40, eta=0.01, random_state=1)
-    ppn.fit(X, y0)  # 0, 1 class
+    ppn = Perceptron(epochs=40, eta=0.05, random_state=1)
+    ppn = ppn.fit(X, y0)  # 0, 1 class
+    print(y0)
+    print(ppn.predict(X))
     assert((y0 == ppn.predict(X)).all())
 
 
 def test_invalid_class():
-
     ppn = Perceptron(epochs=40, eta=0.01, random_state=1)
     try:
         ppn.fit(X, y2)  # -2, 1 class

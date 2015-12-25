@@ -1,6 +1,8 @@
-# Sebastian Raschka 2014-2015
+# Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
-# Submodules with preprocessing functions.
+# Author: Sebastian Raschka <sebastianraschka.com>
+#
+# License: BSD 3 clause
 
 from .iris import iris_data
 from .wine import wine_data

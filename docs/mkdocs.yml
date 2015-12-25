@@ -8,19 +8,23 @@ repo_url: https://github.com/rasbt/mlxtend
 include_search: true
 docs_dir: sources
 theme: mkdocs
-theme_dir: 'custom_theme'
+theme_dir: cinder
+#theme_dir: 'custom_theme'
+
+site_favicon: favicon.ico
 
 markdown_extensions:
   - extra
   - tables
   - fenced_code
+  - mathjax
 extra_javascript:
   - https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML
   - mathjaxhelper.js
-extra_css:
-  - extra.css
+#extra_css:
+#  - extra.css
 
-copyright: Copyright &copy; 2014-2015 <a href="http://sebastianraschka.com">Sebastian Raschka</a>
+copyright: Copyright &copy; 2014-2016 <a href="http://sebastianraschka.com">Sebastian Raschka</a>
 google_analytics: ['UA-38457794-2', 'rasbt.github.io/mlxtend/']
 
 pages:

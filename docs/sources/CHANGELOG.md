@@ -1,5 +1,13 @@
-### 0.3.0dev
+### 0.3.1dev
 
+- -
+
+### 0.3.0
+
+- Cosmetic improvements in the `evaluate.plot_decision_regions` function such as hiding plot axes
+- Renaming of `classifier.EnsembleClassfier` to `classifier.EnsembleVoteClassifier`
+- Improved random weight initialization in `Perceptron`, `Adaline`, `LinearRegression`, and `LogisticRegression`
+- Changed `learning` parameter of `mlxtend.classifier.Adaline` to solver and added "normal equation" as closed-form solution solver
 - New style parameter and improved axis scaling in `mlxtend.evaluate.plot_learning_curves`
 - Hide y-axis labels in `mlxtend.evaluate.plot_decision_regions` in 1 dimensional evaluations
 - Added `loadlocal_mnist` to `mlxtend.data` for streaming MNIST from a local byte files into numpy arrays

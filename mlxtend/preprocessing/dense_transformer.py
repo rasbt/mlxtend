@@ -1,8 +1,8 @@
-# Sebastian Raschka 08/13/2014
+# Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
-# scikit-learn utilities for transforming a sparse
-# numpy array into a dense numpy array
-
+# Author: Sebastian Raschka <sebastianraschka.com>
+#
+# License: BSD 3 clause
 
 class DenseTransformer(object):
     """

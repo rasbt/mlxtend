@@ -1,3 +1,9 @@
+# Sebastian Raschka 2014-2016
+# mlxtend Machine Learning Library Extensions
+# Author: Sebastian Raschka <sebastianraschka.com>
+#
+# License: BSD 3 clause
+
 from mlxtend.classifier import LogisticRegression
 from mlxtend.data import iris_data
 import numpy as np

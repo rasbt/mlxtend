@@ -1,6 +1,8 @@
-# Sebastian Raschka 2014-2015
+# Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
-# Submodules with matplotlib utilities
+# Author: Sebastian Raschka <sebastianraschka.com>
+#
+# License: BSD 3 clause
 
 from .remove_chartchunk import remove_borders
 from .scatter import category_scatter

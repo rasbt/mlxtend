@@ -1,6 +1,8 @@
-# Sebastian Raschka 2015
+# Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
-
+# Author: Sebastian Raschka <sebastianraschka.com>
+#
+# License: BSD 3 clause
 
 import numpy as np
 
@@ -18,9 +20,10 @@ class Perceptron(object):
     random_state : int
         Random state for initializing random weights.
 
-    random_weights : list (default: [-0.5, 0.5])
-        Min and max values for initializing the random weights.
-        Initializes weights to 0 if None or False.
+    zero_init_weight : bool (default: False)
+        If True, weights are initialized to zero instead of small random
+        numbers in the interval [-0.1, 0.1];
+        ignored if solver='normal equation'
 
     Attributes
     -----------
@@ -32,13 +35,13 @@ class Perceptron(object):
 
     """
     def __init__(self, eta=0.1, epochs=50, shuffle=False,
-                 random_state=None, random_weights=False):
+                 random_state=None, zero_init_weight=False):
 
         np.random.seed(random_state)
         self.eta = eta
         self.epochs = epochs
         self.shuffle = shuffle
-        self.random_weights = random_weights
+        self.zero_init_weight = zero_init_weight
 
     def fit(self, X, y, init_weights=True):
         """ Fit training data.
@@ -75,7 +78,8 @@ class Perceptron(object):
             raise ValueError('Only supports binary class labels {0, 1} or {-1, 1}.')
 
         if init_weights:
-            self.w_ = self._initialize_weights(size=X.shape[1]+1)
+            self._init_weights(shape=X.shape[1]+1)
+            print(self.w_)
 
         self.cost_ = []
 
@@ -93,15 +97,13 @@ class Perceptron(object):
             self.cost_.append(errors)
         return self
 
-    def _initialize_weights(self, size):
-        """Initialize weights with small random numbers."""
-        if self.random_weights:
-            w = np.random.uniform(self.random_weights[0],
-                                  self.random_weights[1],
-                                  size=size)
+    def _init_weights(self, shape):
+        """Initialize weights"""
+        if self.zero_init_weight:
+            self.w_ = np.zeros(shape)
         else:
-            w = np.zeros(size)
-        return w
+            self.w_ = 0.2 * np.random.ranf(shape) - 0.5
+        self.w_.astype('float64')
 
     def _shuffle(self, X, y):
         """ Unison shuffling """

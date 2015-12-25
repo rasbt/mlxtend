@@ -1,6 +1,8 @@
-# Sebastian Raschka 08/19/2014
+# Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
-# Submodules with preprocessing functions.
+# Author: Sebastian Raschka <sebastianraschka.com>
+#
+# License: BSD 3 clause
 
 from .transformer import TransformerObj
 from .mean_centering import MeanCenterer

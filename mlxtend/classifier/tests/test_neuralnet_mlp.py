@@ -17,6 +17,27 @@ X_std = np.copy(X)
 for i in range(4):
     X_std[:,i] = (X[:,i] - X[:,i].mean()) / X[:,i].std()
 
+def test_gradient_checking():
+    nn3 = NeuralNetMLP(n_output=len(np.unique(y)),
+                       n_features=X_std.shape[1],
+                       n_hidden=25,
+                       l2=0.0,
+                       l1=0.0,
+                       epochs=1,
+                       eta=0.01,
+                       alpha=0.0,
+                       decrease_const=0.0,
+                       minibatches=1,
+                       shuffle_init=False,
+                       shuffle_epoch=False,
+                       random_state=1)
+
+    for epoch in range(10):
+        eucldist = nn3._gradient_checking(X=X_std, y=y)
+        assert eucldist < 1e-07, 'Gradient difference is %s' % eucldist
+
+
+
 def test_gradient_descent():
 
     nn = NeuralNetMLP(n_output=3,

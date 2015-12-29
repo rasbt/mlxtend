@@ -76,7 +76,8 @@ class NeuralNetMLP(object):
                  l1=0.0, l2=0.0, epochs=500, eta=0.001,
                  alpha=0.0, decrease_const=0.0,
                  random_weights=[-1.0, 1.0],
-                 shuffle_init=True, shuffle_epoch=True,
+                 shuffle_init=True,
+                 shuffle_epoch=True,
                  minibatches=1, random_state=None):
 
         self.n_output = n_output
@@ -283,45 +284,6 @@ class NeuralNetMLP(object):
 
         return grad1, grad2
 
-    def _gradient_checking(self, X, y_enc, w1, w2, epsilon, grad1, grad2):
-        """ Apply gradient checking (for debugging only)
-
-        Returns
-        ---------
-        eucl_dist : float
-          Euclidean distance (L2) between the numerically
-          approximated gradients and the backpropagated gradients.
-
-        """
-        num_grad1 = np.zeros(np.shape(w1))
-        epsilon_ary1 = np.zeros(np.shape(w1))
-        for i in range(w1.shape[0]):
-            for j in range(w1.shape[1]):
-                epsilon_ary1[i, j] = epsilon
-                a1, z2, a2, z3, a3 = self._feedforward(X, w1 - epsilon_ary1, w2)
-                cost1 = self._get_cost(y_enc, a3, w1-epsilon_ary1, w2)
-                a1, z2, a2, z3, a3 = self._feedforward(X, w1 + epsilon_ary1, w2)
-                cost2 = self._get_cost(y_enc, a3, w1 + epsilon_ary1, w2)
-                num_grad1[i, j] = (cost2 - cost1) / (2 * epsilon)
-                epsilon_ary1[i, j] = 0
-
-        num_grad2 = np.zeros(np.shape(w2))
-        epsilon_ary2 = np.zeros(np.shape(w2))
-        for i in range(w2.shape[0]):
-            for j in range(w2.shape[1]):
-                epsilon_ary2[i, j] = epsilon
-                a1, z2, a2, z3, a3 = self._feedforward(X, w1, w2 - epsilon_ary2)
-                cost1 = self._get_cost(y_enc, a3, w1, w2 - epsilon_ary2)
-                a1, z2, a2, z3, a3 = self._feedforward(X, w1, w2 + epsilon_ary2)
-                cost2 = self._get_cost(y_enc, a3, w1, w2 + epsilon_ary2)
-                num_grad2[i, j] = (cost2 - cost1) / (2 * epsilon)
-                epsilon_ary2[i, j] = 0
-
-        num_grad = np.hstack((num_grad1.flatten(), num_grad2.flatten()))
-        grad = np.hstack((grad1.flatten(), grad2.flatten()))
-        eucl_dist = np.linalg.norm(num_grad - grad)
-        return eucl_dist
-
     def predict(self, X):
         """Predict class labels
 
@@ -367,6 +329,7 @@ class NeuralNetMLP(object):
         """
         np.random.seed(self.random_state)
         self.cost_ = []
+        self.gradient_ = np.array([])
         X_data, y_data = X.copy(), y.copy()
 
         if self.shuffle_init:
@@ -409,15 +372,8 @@ class NeuralNetMLP(object):
                                                   w1=self.w1,
                                                   w2=self.w2)
 
-                ## gradient checking
-                ## Used for debugging; now turned off for efficiency
-                # grad_diff = self._gradient_checking(X=X[idx], y_enc=y_enc[:, idx],
-                #                                   w1=self.w1, w2=self.w2,
-                #                                   epsilon=1e-5,
-                #                                   grad1=grad1, grad2=grad2)
-                # if grad_diff > 1e-7:
-                #     warn = print('Warning !!! ', end='')
-                # print(grad_diff)
+                # gradient_ attribute used for gradient checking
+                self.gradient_ = np.hstack((grad1.flatten(), grad2.flatten()))
 
                 # update weights; [alpha * delta_w_prev] for momentum learning
                 delta_w1, delta_w2 = self.eta * grad1, self.eta * grad2
@@ -426,3 +382,59 @@ class NeuralNetMLP(object):
                 delta_w1_prev, delta_w2_prev = delta_w1, delta_w2
 
         return self
+
+    def _numerically_approximated_gradient(self, X, y, w1, w2, epsilon):
+        """Numerically approx. gradient for gradient checking (debugging only)
+
+        Returns
+        ---------
+        num_grad : array-like, shape = [n_weights]
+            Numerical gradient enrolled as row vector.
+
+        """
+        y_enc = self._encode_labels(y, self.n_output)
+        num_grad1 = np.zeros(np.shape(w1))
+        epsilon_ary1 = np.zeros(np.shape(w1))
+        for i in range(w1.shape[0]):
+            for j in range(w1.shape[1]):
+                epsilon_ary1[i, j] = epsilon
+                a1, z2, a2, z3, a3 = self._feedforward(X, w1 - epsilon_ary1, w2)
+                cost1 = self._get_cost(y_enc, a3, w1-epsilon_ary1, w2)
+                a1, z2, a2, z3, a3 = self._feedforward(X, w1 + epsilon_ary1, w2)
+                cost2 = self._get_cost(y_enc, a3, w1 + epsilon_ary1, w2)
+                num_grad1[i, j] = (cost2 - cost1) / (2 * epsilon)
+                epsilon_ary1[i, j] = 0
+
+        num_grad2 = np.zeros(np.shape(w2))
+        epsilon_ary2 = np.zeros(np.shape(w2))
+        for i in range(w2.shape[0]):
+            for j in range(w2.shape[1]):
+                epsilon_ary2[i, j] = epsilon
+                a1, z2, a2, z3, a3 = self._feedforward(X, w1, w2 - epsilon_ary2)
+                cost1 = self._get_cost(y_enc, a3, w1, w2 - epsilon_ary2)
+                a1, z2, a2, z3, a3 = self._feedforward(X, w1, w2 + epsilon_ary2)
+                cost2 = self._get_cost(y_enc, a3, w1, w2 + epsilon_ary2)
+                num_grad2[i, j] = (cost2 - cost1) / (2 * epsilon)
+                epsilon_ary2[i, j] = 0
+
+        num_grad = np.hstack((num_grad1.flatten(), num_grad2.flatten()))
+        return num_grad
+
+    def _gradient_checking(self, X, y, epsilon=1e-5):
+        """ Apply gradient checking (for debugging only)
+
+        Returns
+        ---------
+        eucl_dist : float
+          Euclidean distance (L2) between the numerically
+          approximated gradients and the backpropagated gradients.
+
+        """
+        num_grad = self._numerically_approximated_gradient(X=X,
+                                                           y=y,
+                                                           w1=self.w1,
+                                                           w2=self.w2,
+                                                           epsilon=epsilon)
+        self.fit(X=X, y=y)
+        eucl_dist = np.linalg.norm(num_grad - self.gradient_)
+        return eucl_dist

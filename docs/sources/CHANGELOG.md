@@ -4,7 +4,9 @@
 
 ### 0.3.0
 
-- Cosmetic improvements in the `evaluate.plot_decision_regions` function such as hiding plot axes
+- New scoring function `evaluate.scoring`
+- New confusion matrix functions `evaluate.confusion_matrix` and  `evaluate.plot_confusion_matrix`
+- Cosmetic improvements to the `evaluate.plot_decision_regions` function such as hiding plot axes
 - Renaming of `classifier.EnsembleClassfier` to `classifier.EnsembleVoteClassifier`
 - Improved random weight initialization in `Perceptron`, `Adaline`, `LinearRegression`, and `LogisticRegression`
 - Changed `learning` parameter of `mlxtend.classifier.Adaline` to solver and added "normal equation" as closed-form solution solver

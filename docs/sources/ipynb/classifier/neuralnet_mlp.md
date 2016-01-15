@@ -45,7 +45,7 @@ Train neural network for 3 output flower classes ('Setosa', 'Versicolor', 'Virgi
     ...     n_features=X.shape[1],
     ...     n_hidden=30,
     ...     l2=0.0,
-    ...     l1=0.0, 
+    ...     l1=0.0,
     ...     epochs=5000,
     ...     eta=0.001,
     ...     alpha=0.1,
@@ -112,6 +112,7 @@ Visualize the decision regions:
 <br>
 <br>
 <hr>
+
 ### Example 2 - Classify handwritten digits from MNIST
 [An IPython notebook to execute those examples can be found [here](http://nbviewer.ipython.org/github/rasbt/mlxtend/blob/master/docs/examples/classifier_nn_mlp.ipynb)]
 

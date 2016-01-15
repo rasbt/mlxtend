@@ -17,44 +17,39 @@ import numpy as np
 
 
 class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
-    """ Soft Voting/Majority Rule classifier for unfitted clfs.
+    """Soft Voting/Majority Rule classifier for scikit-learn estimators.
 
     Parameters
     ----------
     clfs : array-like, shape = [n_classifiers]
-      A list of classifiers.
-      Invoking the `fit` method on the `VotingClassifier` will fit clones
-      of those original classifiers that will be stored in the class attribute
-      `self.clfs_`.
-
+        A list of classifiers.
+        Invoking the `fit` method on the `VotingClassifier` will fit clones
+        of those original classifiers that will be stored in the class attribute
+        `self.clfs_`.
     voting : str, {'hard', 'soft'} (default='hard')
-      If 'hard', uses predicted class labels for majority rule voting.
-      Else if 'soft', predicts the class label based on the argmax of
-      the sums of the predicted probalities, which is recommended for
-      an ensemble of well-calibrated classifiers.
-
+        If 'hard', uses predicted class labels for majority rule voting.
+        Else if 'soft', predicts the class label based on the argmax of
+        the sums of the predicted probalities, which is recommended for
+        an ensemble of well-calibrated classifiers.
     weights : array-like, shape = [n_classifiers], optional (default=`None`)
-      Sequence of weights (`float` or `int`) to weight the occurances of
-      predicted class labels (`hard` voting) or class probabilities
-      before averaging (`soft` voting). Uses uniform weights if `None`.
-
+        Sequence of weights (`float` or `int`) to weight the occurances of
+        predicted class labels (`hard` voting) or class probabilities
+        before averaging (`soft` voting). Uses uniform weights if `None`.
     verbose : int, optional (default=0)
-      Controls the verbosity of the building process.
-        `verbose=0` (default): Prints nothing
-        `verbose=1`: Prints the number & name of the clf being fitted
-        `verbose=2`: Prints info about the parameters of the clf being fitted
-        `verbose>2`: Changes `verbose` param of the underlying clf to
-                     self.verbose - 2
+        Controls the verbosity of the building process.
+        - `verbose=0` (default): Prints nothing
+        - `verbose=1`: Prints the number & name of the clf being fitted
+        - `verbose=2`: Prints info about the parameters of the clf being fitted
+        - `verbose>2`: Changes `verbose` param of the underlying clf to
+           self.verbose - 2
 
     Attributes
     ----------
     classes_ : array-like, shape = [n_predictions]
-
     clf : array-like, shape = [n_predictions]
-      The unmodified input classifiers
-
+        The unmodified input classifiers
     clf_ : array-like, shape = [n_predictions]
-      Fitted clones of the input classifiers
+        Fitted clones of the input classifiers
 
     Examples
     --------
@@ -93,7 +88,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.verbose = verbose
 
     def fit(self, X, y):
-        """ Fit the clfs.
+        """Learn weight coefficients from training data for each classifier.
 
         Parameters
         ----------
@@ -218,7 +213,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             return self._predict(X)
 
     def get_params(self, deep=True):
-        """ Return estimator parameter names for GridSearch support"""
+        """Return estimator parameter names for GridSearch support."""
         if not deep:
             return super(EnsembleVoteClassifier, self).get_params(deep=False)
         else:
@@ -229,14 +224,9 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             return out
 
     def _predict(self, X):
-        """ Collect results from clf.predict calls. """
+        """Collect results from clf.predict calls."""
         return np.asarray([clf.predict(X) for clf in self.clfs_]).T
 
     def _predict_probas(self, X):
-        """ Collect results from clf.predict calls. """
+        """Collect results from clf.predict_proba calls."""
         return np.asarray([clf.predict_proba(X) for clf in self.clfs_])
-
-
-if __name__ == "__main__":
-    import doctest
-    doctest.testmod()

@@ -7,6 +7,7 @@
 import numpy as np
 from scipy.special import expit
 import sys
+import time
 
 
 class NeuralNetMLP(object):
@@ -66,6 +67,13 @@ class NeuralNetMLP(object):
     random_state : int (default: None)
       Set random state for shuffling and initializing the weights.
 
+    print_progress : int (default: 0)
+      Prints progress in fitting to stderr.
+      0: No output
+      1: Epochs elapsed
+      2: 1 plus time elapsed
+      3: 2 plus estimated time until completion
+
     Attributes
     -----------
     cost_ : list
@@ -78,7 +86,8 @@ class NeuralNetMLP(object):
                  random_weights=[-1.0, 1.0],
                  shuffle_init=True,
                  shuffle_epoch=True,
-                 minibatches=1, random_state=None):
+                 minibatches=1, random_state=None,
+                 print_progress=0):
 
         self.n_output = n_output
         self.n_features = n_features
@@ -95,6 +104,7 @@ class NeuralNetMLP(object):
         self.shuffle_init = shuffle_init
         self.shuffle_epoch = shuffle_epoch
         self.minibatches = minibatches
+        self.print_progress = print_progress
 
 
     def _encode_labels(self, y, k):
@@ -143,7 +153,7 @@ class NeuralNetMLP(object):
     def _sigmoid_gradient(self, z):
         """Compute gradient of the logistic function"""
         sg = self._sigmoid(z)
-        return sg * (1 - sg)
+        return sg * (1.0 - sg)
 
     def _add_bias_unit(self, X, how='column'):
         """Add bias unit (column or row of 1s) to array at index 0"""
@@ -227,7 +237,7 @@ class NeuralNetMLP(object):
 
         """
         term1 = -y_enc * (np.log(output))
-        term2 = (1 - y_enc) * np.log(1 - output)
+        term2 = (1.0 - y_enc) * np.log(1.0 - output)
         cost = np.sum(term1 - term2)
         L1_term = self._L1_reg(self.l1, w1, w2)
         L2_term = self._L2_reg(self.l2, w1, w2)
@@ -307,8 +317,8 @@ class NeuralNetMLP(object):
         y_pred = np.argmax(z3, axis=0)
         return y_pred
 
-    def fit(self, X, y, print_progress=False):
-        """ Learn weights from training data.
+    def fit(self, X, y):
+        """Learn weight coefficients from training data.
 
         Parameters
         -----------
@@ -317,10 +327,6 @@ class NeuralNetMLP(object):
 
         y : array, shape = [n_samples]
           Target class labels.
-
-        print_progress : bool (default: False)
-          Prints progress as the number of epochs
-          to stderr.
 
         Returns:
         ----------
@@ -331,6 +337,7 @@ class NeuralNetMLP(object):
         self.cost_ = []
         self.gradient_ = np.array([])
         X_data, y_data = X.copy(), y.copy()
+        self._init_time = time.time()
 
         if self.shuffle_init:
             idx = np.random.permutation(y_data.shape[0])
@@ -346,9 +353,8 @@ class NeuralNetMLP(object):
             # adaptive learning rate
             self.eta /= (1 + self.decrease_const*i)
 
-            if print_progress:
-                sys.stderr.write('\rEpoch: %d/%d' % (i+1, self.epochs))
-                sys.stderr.flush()
+            if self.print_progress:
+                self._print_progress(epoch=i+1)
 
             if self.shuffle_epoch:
                 idx = np.random.permutation(y_enc.shape[1])
@@ -382,6 +388,23 @@ class NeuralNetMLP(object):
                 delta_w1_prev, delta_w2_prev = delta_w1, delta_w2
 
         return self
+
+    def _to_hhmmss(self, sec):
+        m, s = divmod(sec, 60)
+        h, m = divmod(m, 60)
+        return "%d:%02d:%02d" % (h, m, s)
+
+    def _print_progress(self, epoch):
+        if self.print_progress > 0:
+            sys.stderr.write('\rEpoch: %d/%d' % (epoch, self.epochs))
+            if self.print_progress > 1:
+                ela_sec = time.time() - self._init_time
+                ela_str = self._to_hhmmss(ela_sec)
+                sys.stderr.write(', Elapsed: %s' % ela_str)
+                if self.print_progress > 2:
+                    eta_sec = (ela_sec / epoch) * self.epochs - ela_sec
+                    sys.stderr.write(', ETA: %s' % self._to_hhmmss(eta_sec))
+            sys.stderr.flush()
 
     def _numerically_approximated_gradient(self, X, y, w1, w2, epsilon):
         """Numerically approx. gradient for gradient checking (debugging only)

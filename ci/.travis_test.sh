@@ -23,6 +23,7 @@ if [[ "$COVERAGE" == "true" ]]; then
     nosetests -s -v --with-coverage --cover-package=mlxtend.regressor
     nosetests -s -v --with-coverage --cover-package=mlxtend.text
     nosetests -s -v --with-coverage --cover-package=mlxtend.feature_selection
+    nosetests -s -v --with-coverage --cover-package=mlxtend.utils
 else
     nosetests -s -v mlxtend.classifier
     nosetests -s -v mlxtend.evaluate
@@ -32,5 +33,6 @@ else
     nosetests -s -v mlxtend.regression_utils
     nosetests -s -v mlxtend.text
     nosetests -s -v mlxtend.feature_selection
+    nosetests -s -v mlxtend.utils
 fi
 #make test-doc test-sphinxext

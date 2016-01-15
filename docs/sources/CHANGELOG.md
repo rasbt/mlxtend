@@ -4,6 +4,7 @@
 
 ### 0.3.0
 
+- Added progress report to `classifier.NeuralNetMLP` 
 - New scoring function `evaluate.scoring`
 - New confusion matrix functions `evaluate.confusion_matrix` and  `evaluate.plot_confusion_matrix`
 - Cosmetic improvements to the `evaluate.plot_decision_regions` function such as hiding plot axes

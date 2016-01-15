@@ -7,27 +7,22 @@
 import numpy as np
 
 class Adaline(object):
-    """ ADAptive LInear NEuron classifier.
+    """ADAptive LInear NEuron classifier.
 
     Parameters
     ------------
-    eta : float
-      solver rate (between 0.0 and 1.0)
-
-    epochs : int
-      Passes over the training dataset.
-
-    solver : {'gd', 'sgd', 'normal equation'} (default: 'normal equation')
-      Method for solving the cost function. 'gd' for gradient descent,
-      'sgd' for stochastic gradient descent, or 'normal equation' (default)
-      to solve the cost function analytically.
-
+    eta : float (default: 0.01)
+        solver rate (between 0.0 and 1.0)
+    epochs : int (default: 50)
+         Passes over the training dataset.
+    solver : {'gd', 'sgd', 'normal equation'} (default: 'sgd')
+         Method for solving the cost function. 'gd' for gradient descent,
+         'sgd' for stochastic gradient descent, or 'normal equation' (default)
+         to solve the cost function analytically.
     shuffle : bool (default: False)
-        Shuffles training data every epoch if True to prevent circles.
-
+         Shuffles training data every epoch if True to prevent circles.
     random_seed : int (default: None)
         Set random state for shuffling and initializing the weights.
-
     zero_init_weight : bool (default: False)
         If True, weights are initialized to zero instead of small random
         numbers in the interval [-0.1, 0.1];
@@ -37,14 +32,11 @@ class Adaline(object):
     -----------
     w_ : 1d-array
       Weights after fitting.
-
     cost_ : list
       Sum of squared errors after each epoch.
-
     """
     def __init__(self, eta=0.01, epochs=50,  solver='sgd',
                  random_seed=None, shuffle=False, zero_init_weight=False):
-
         np.random.seed(random_seed)
         self.eta = eta
         self.epochs = epochs
@@ -55,17 +47,15 @@ class Adaline(object):
         self.zero_init_weight = zero_init_weight
 
     def fit(self, X, y, init_weights=True):
-        """ Fit training data.
+        """Learn weight coefficients from training data.
 
         Parameters
         ----------
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
-
         y : array-like, shape = [n_samples]
             Target values.
-
         init_weights : bool (default: True)
             Re-initializes weights prior to fitting. Set False to continue
             training with weights from a previous fitting.
@@ -127,12 +117,12 @@ class Adaline(object):
         return self
 
     def _shuffle(self, X, y):
-        """ Unison shuffling """
+        """Shuffle arrays in unison."""
         r = np.random.permutation(len(y))
         return X[r], y[r]
 
     def _normal_equation(self, X, y):
-        """Solve linear regression analytically"""
+        """Solve linear regression analytically."""
         Xb = np.hstack((np.ones((X.shape[0], 1)), X))
         w = np.zeros(X.shape[1])
         z = np.linalg.inv(np.dot(Xb.T, Xb))
@@ -140,7 +130,7 @@ class Adaline(object):
         return w
 
     def _init_weights(self, shape):
-        """Initialize weights"""
+        """Initialize weight coefficients."""
         if self.zero_init_weight:
             self.w_ = np.zeros(shape)
         else:
@@ -148,16 +138,15 @@ class Adaline(object):
         self.w_.astype('float64')
 
     def net_input(self, X):
-        """ Net input function """
+        """Compute the linear net input."""
         return np.dot(X, self.w_[1:]) + self.w_[0]
 
     def activation(self, X):
-        """Activation function """
+        """Compute the linear activation from the net input."""
         return self.net_input(X)
 
     def predict(self, X):
-        """
-        Predict class labels for X.
+        """Predict class labels of X.
 
         Parameters
         ----------
@@ -169,6 +158,5 @@ class Adaline(object):
         ----------
         class : int
           Predicted class label.
-
         """
         return np.where(self.net_input(X) >= self.thres_, self.classes_[1], self.classes_[0])

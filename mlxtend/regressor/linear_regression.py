@@ -62,7 +62,7 @@ class LinearRegression(object):
         self.zero_init_weight = zero_init_weight
 
     def fit(self, X, y, init_weights=True):
-        """ Fit training data.
+        """Learn weight coefficients from training data.
 
         Parameters
         ----------

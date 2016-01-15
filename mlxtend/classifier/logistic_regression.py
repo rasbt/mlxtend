@@ -4,8 +4,6 @@
 #
 # License: BSD 3 clause
 
-
-
 import numpy as np
 
 class LogisticRegression(object):
@@ -13,30 +11,23 @@ class LogisticRegression(object):
 
     Parameters
     ------------
-    eta : float
-      Learning rate (between 0.0 and 1.0)
-
-    epochs : int
-      Passes over the training dataset.
-
+    eta : float (default: 0.01)
+        Learning rate (between 0.0 and 1.0)
+    epochs : int (default: 50)
+        Passes over the training dataset.
     learning : str (default: sgd)
-      Learning rule, sgd (stochastic gradient descent)
-      or gd (gradient descent).
-
+        Learning rule, sgd (stochastic gradient descent)
+        or gd (gradient descent).
     regularization : {None, 'l2'} (default: None)
-      Type of regularization. No regularization if
-      `regularization=None`.
-
+        Type of regularization. No regularization if
+        `regularization=None`.
     l2_lambda : float
-      Regularization parameter for L2 regularization.
-      No regularization if l2_lambda=0.0.
-
+        Regularization parameter for L2 regularization.
+        No regularization if l2_lambda=0.0.
     shuffle : bool (default: False)
         Shuffles training data every epoch if True to prevent circles.
-
-    random_state : int (default: None)
+    random_seed : int (default: None)
         Set random state for shuffling and initializing the weights.
-
     zero_init_weight : bool (default: False)
         If True, weights are initialized to zero instead of small random
         numbers in the interval [-0.1, 0.1];
@@ -45,16 +36,15 @@ class LogisticRegression(object):
     Attributes
     -----------
     w_ : 1d-array
-      Weights after fitting.
+        Weights after fitting.
 
     cost_ : list
-      List of floats with sum of squared error cost (sgd or gd) for every
-      epoch.
-
+        List of floats with sum of squared error cost (sgd or gd) for every
+        epoch.
     """
     def __init__(self, eta=0.01, epochs=50, regularization=None,
                  l2_lambda=0.0, learning='sgd', shuffle=False,
-                 random_state=None, zero_init_weight=False):
+                 random_seed=None, zero_init_weight=False):
 
         np.random.seed(random_state)
         self.eta = eta
@@ -72,24 +62,21 @@ class LogisticRegression(object):
             raise AttributeError('regularization must be None or "l2"')
 
     def fit(self, X, y, init_weights=True):
-        """ Fit training data.
+        """Learn weight coefficients from training data.
 
         Parameters
         ----------
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
-
         y : array-like, shape = [n_samples]
             Target values.
-
         init_weights : bool (default: True)
             (Re)initializes weights to small random floats if True.
 
         Returns
         -------
         self : object
-
         """
         if not len(X.shape) == 2:
             raise ValueError('X must be a 2D array. Try X[:,np.newaxis]')
@@ -132,8 +119,7 @@ class LogisticRegression(object):
         return self
 
     def predict(self, X):
-        """
-        Predict class labels for X.
+        """Predict class labels of X.
 
         Parameters
         ----------
@@ -144,21 +130,19 @@ class LogisticRegression(object):
         Returns
         ----------
         class : int
-          Predicted class label.
-
+            Predicted class label(s).
         """
         # equivalent to np.where(self.activation(X) >= 0.5, 1, 0)
         return np.where(self.net_input(X) >= 0.0, 1, 0)
 
 
     def net_input(self, X):
-        """ Net input function. """
+        """Compute the linear net input."""
         return X.dot(self.w_[1:]) + self.w_[0]
 
 
     def activation(self, X):
-        """
-        Predict class probabilities for X.
+        """Predict class probabilities of X from the net input.
 
         Parameters
         ----------
@@ -169,13 +153,12 @@ class LogisticRegression(object):
         Returns
         ----------
           Class 1 probability : float
-
         """
         z = self.net_input(X)
         return self._sigmoid(z)
 
     def _shuffle(self, X, y):
-        """ Unison shuffling """
+        """Shuffle arrays in unison."""
         r = np.random.permutation(len(y))
         return X[r], y[r]
 
@@ -187,10 +170,11 @@ class LogisticRegression(object):
         return logit
 
     def _sigmoid(self, z):
+        """Compute the output of the logistic sigmoid function."""
         return 1.0 / (1.0 + np.exp(-z))
 
     def _init_weights(self, shape):
-        """Initialize weights"""
+        """Initialize weight coefficients of the model."""
         if self.zero_init_weight:
             self.w_ = np.zeros(shape)
         else:

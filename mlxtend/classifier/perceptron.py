@@ -44,7 +44,7 @@ class Perceptron(object):
         self.zero_init_weight = zero_init_weight
 
     def fit(self, X, y, init_weights=True):
-        """ Fit training data.
+        """Learn weight coefficients from training data.
 
         Parameters
         ----------
@@ -106,7 +106,7 @@ class Perceptron(object):
         self.w_.astype('float64')
 
     def _shuffle(self, X, y):
-        """ Unison shuffling """
+        """Shuffle arrays in unison."""
         r = np.random.permutation(len(y))
         return X[r], y[r]
 

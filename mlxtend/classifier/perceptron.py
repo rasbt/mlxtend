@@ -11,15 +11,12 @@ class Perceptron(object):
 
     Parameters
     ------------
-    eta : float
+    eta : float (default: 0.1)
         Learning rate (between 0.0 and 1.0)
-
-    epochs : int
-        Passes over the training dataset.
-
-    random_state : int
+    epochs : int (default: 50)
+        Number of passes over the training dataset.
+    random_seed : int
         Random state for initializing random weights.
-
     zero_init_weight : bool (default: False)
         If True, weights are initialized to zero instead of small random
         numbers in the interval [-0.1, 0.1];
@@ -29,15 +26,13 @@ class Perceptron(object):
     -----------
     w_ : 1d-array
         Weights after fitting.
-
     cost_ : list
         Number of misclassifications in every epoch.
-
     """
     def __init__(self, eta=0.1, epochs=50, shuffle=False,
-                 random_state=None, zero_init_weight=False):
+                 random_seed=None, zero_init_weight=False):
 
-        np.random.seed(random_state)
+        np.random.seed(random_seed)
         self.eta = eta
         self.epochs = epochs
         self.shuffle = shuffle

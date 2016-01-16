@@ -14,8 +14,7 @@ def plot_learning_curves(X_train, y_train, X_test, y_test, clf,
             suppress_plot=False, print_model=True,
             style='fivethirtyeight',
             legend_loc='best'):
-    """
-    Plots learning curves of a classifier.
+    """Plots learning curves of a classifier.
 
     Parameters
     ----------
@@ -53,7 +52,6 @@ def plot_learning_curves(X_train, y_train, X_test, y_test, clf,
     Returns
     ---------
     (training_error, test_error): tuple of lists
-
     """
 
     if scoring != 'misclassification error':

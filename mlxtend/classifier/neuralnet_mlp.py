@@ -16,69 +16,54 @@ class NeuralNetMLP(object):
     Parameters
     ------------
     n_output : int
-      Number of output units, should be equal to the
-      number of unique class labels.
-
+        Number of output units, should be equal to the
+        number of unique class labels.
     n_features : int
-      Number of features (dimensions) in the target dataset.
-      Should be equal to the number of columns in the X array.
-
+        Number of features (dimensions) in the target dataset.
+        Should be equal to the number of columns in the X array.
     n_hidden : int (default: 30)
-      Number of hidden units.
-
+        Number of hidden units.
     l1 : float (default: 0.0)
-      Lambda value for L1-regularization.
-      No regularization if l1=0.0 (default)
-
+        Lambda value for L1-regularization.
+        No regularization if l1=0.0 (default)
     l2 : float (default: 0.0)
-      Lambda value for L2-regularization.
-      No regularization if l2=0.0 (default)
-
+        Lambda value for L2-regularization.
+        No regularization if l2=0.0 (default)
     epochs : int (default: 500)
-      Number of passes over the training set.
-
+        Number of passes over the training set.
     eta : float (default: 0.001)
-      Learning rate.
-
+        Learning rate.
     alpha : float (default: 0.0)
-      Momentum constant. Factor multiplied with the
-      gradient of the previous epoch t-1 to improve
-      learning speed
-      w(t) := w(t) - (grad(t) + alpha*grad(t-1))
-
+        Momentum constant. Factor multiplied with the
+        gradient of the previous epoch t-1 to improve
+        learning speed
+        w(t) := w(t) - (grad(t) + alpha*grad(t-1))
     decrease_const : float (default: 0.0)
-      Decrease constant. Shrinks the learning rate
-      after each epoch via eta / (1 + epoch*decrease_const)
-
+        Decrease constant. Shrinks the learning rate
+        after each epoch via eta / (1 + epoch*decrease_const)
     random_weights : list (default: [-1.0, 1.0])
-      Min and max values for initializing the random weights.
-      Initializes weights to 0 if None or False.
-
+        Min and max values for initializing the random weights.
+        Initializes weights to 0 if None or False.
     shuffle_init : bool (default: True)
-      Shuffles (a copy of the) training data before training.
-
+        Shuffles (a copy of the) training data before training.
     shuffle_epoch : bool (default: True)
-      Shuffles training data before every epoch if True to prevent circles.
-
+        Shuffles training data before every epoch if True to prevent circles.
     minibatches : int (default: 1)
-      Divides training data into k minibatches for efficiency.
-      Normal gradient descent learning if k=1 (default).
-
-    random_state : int (default: None)
-      Set random state for shuffling and initializing the weights.
-
+        Divides training data into k minibatches for efficiency.
+        Normal gradient descent learning if k=1 (default).
+    random_seed : int (default: None)
+        Set random seed for shuffling and initializing the weights.
     print_progress : int (default: 0)
-      Prints progress in fitting to stderr.
-      0: No output
-      1: Epochs elapsed
-      2: 1 plus time elapsed
-      3: 2 plus estimated time until completion
+        Prints progress in fitting to stderr.
+        0: No output
+        1: Epochs elapsed
+        2: 1 plus time elapsed
+        3: 2 plus estimated time until completion
 
     Attributes
     -----------
     cost_ : list
-      Sum of squared errors after each epoch.
-
+        Sum of squared errors after each epoch.
     """
     def __init__(self, n_output, n_features, n_hidden=30,
                  l1=0.0, l2=0.0, epochs=500, eta=0.001,
@@ -86,13 +71,13 @@ class NeuralNetMLP(object):
                  random_weights=[-1.0, 1.0],
                  shuffle_init=True,
                  shuffle_epoch=True,
-                 minibatches=1, random_state=None,
+                 minibatches=1, random_seed=None,
                  print_progress=0):
 
         self.n_output = n_output
         self.n_features = n_features
         self.n_hidden = n_hidden
-        self.random_state = random_state
+        self.random_seed = random_seed
         self.random_weights = random_weights
         self.w1, self.w2 = self._initialize_weights()
         self.l1 = l1
@@ -108,7 +93,7 @@ class NeuralNetMLP(object):
 
 
     def _encode_labels(self, y, k):
-        """Encode labels into one-hot representation
+        """Encode labels into one-hot representation.
 
         Parameters
         ------------
@@ -118,7 +103,7 @@ class NeuralNetMLP(object):
         Returns
         -----------
         onehot : array, shape = (n_labels, n_samples)
-
+            One-hot encoded class labels.
         """
         onehot = np.zeros((k, y.shape[0]))
         for idx, val in enumerate(y):
@@ -128,7 +113,7 @@ class NeuralNetMLP(object):
     def _initialize_weights(self):
         """Initialize weights with small random numbers."""
         if self.random_weights:
-            np.random.seed(self.random_state)
+            np.random.seed(self.random_seed)
             w1 = np.random.uniform(self.random_weights[0], self.random_weights[1],
                                     size=self.n_hidden*(self.n_features + 1))
             w1 = w1.reshape(self.n_hidden, self.n_features + 1)
@@ -141,22 +126,20 @@ class NeuralNetMLP(object):
         return w1, w2
 
     def _sigmoid(self, z):
-        """Compute logistic function (sigmoid)
-
+        """Compute logistic function (sigmoid).
         Uses scipy.special.expit to avoid overflow
         error for very small input values z.
-
         """
         # return 1.0 / (1.0 + np.exp(-z))
         return expit(z)
 
     def _sigmoid_gradient(self, z):
-        """Compute gradient of the logistic function"""
+        """Compute gradient of the logistic function."""
         sg = self._sigmoid(z)
         return sg * (1.0 - sg)
 
     def _add_bias_unit(self, X, how='column'):
-        """Add bias unit (column or row of 1s) to array at index 0"""
+        """Add bias unit (column or row of 1s) to array at index 0."""
         if how == 'column':
             X_new = np.ones((X.shape[0], X.shape[1]+1))
             X_new[:, 1:] = X
@@ -173,31 +156,24 @@ class NeuralNetMLP(object):
         Parameters
         -----------
         X : array, shape = [n_samples, n_features]
-          Input layer with original features.
-
+            Input layer with original features.
         w1 : array, shape = [n_hidden_units, n_features]
-          Weight matrix for input layer -> hidden layer.
-
+            Weight matrix for input layer -> hidden layer.
         w2 : array, shape = [n_output_units, n_hidden_units]
-          Weight matrix for hidden layer -> output layer.
+            Weight matrix for hidden layer -> output layer.
 
         Returns
         ----------
         a1 : array, shape = [n_samples, n_features+1]
-          Input values with bias unit.
-
+            Input values with bias unit.
         z2 : array, shape = [n_hidden, n_samples]
-          Net input of hidden layer.
-
+            Net input of hidden layer.
         a2 : array, shape = [n_hidden+1, n_samples]
-          Activation of hidden layer.
-
+            Activation of hidden layer.
         z3 : array, shape = [n_output_units, n_samples]
-          Net input of output layer.
-
+            Net input of output layer.
         a3 : array, shape = [n_output_units, n_samples]
-          Activation of output layer.
-
+            Activation of output layer.
         """
         a1 = self._add_bias_unit(X, how='column')
         z2 = w1.dot(a1.T)
@@ -208,33 +184,29 @@ class NeuralNetMLP(object):
         return a1, z2, a2, z3, a3
 
     def _L2_reg(self, lambda_, w1, w2):
-        """Compute L2-regularization cost"""
+        """Compute L2-regularization cost."""
         return (lambda_/2.0) * (np.sum(w1[:, 1:] ** 2) + np.sum(w2[:, 1:] ** 2))
 
     def _L1_reg(self, lambda_, w1, w2):
-        """Compute L1-regularization cost"""
+        """Compute L1-regularization cost."""
         return (lambda_/2.0) * (np.abs(w1[:, 1:]).sum() + np.abs(w2[:, 1:]).sum())
 
     def _get_cost(self, y_enc, output, w1, w2):
         """Compute cost function.
 
         y_enc : array, shape = (n_labels, n_samples)
-          one-hot encoded class labels.
-
+            one-hot encoded class labels.
         output : array, shape = [n_output_units, n_samples]
-          Activation of the output layer (feedforward)
-
+            Activation of the output layer (feedforward)
         w1 : array, shape = [n_hidden_units, n_features]
-          Weight matrix for input layer -> hidden layer.
-
+            Weight matrix for input layer -> hidden layer.
         w2 : array, shape = [n_output_units, n_hidden_units]
-          Weight matrix for hidden layer -> output layer.
+            Weight matrix for hidden layer -> output layer.
 
         Returns
         ---------
         cost : float
-          Regularized cost.
-
+            Regularized cost.
         """
         term1 = -y_enc * (np.log(output))
         term2 = (1.0 - y_enc) * np.log(1.0 - output)
@@ -245,40 +217,31 @@ class NeuralNetMLP(object):
         return cost
 
     def _get_gradient(self, a1, a2, a3, z2, y_enc, w1, w2):
-        """ Compute gradient step using backpropagation.
+        """Compute gradient step using backpropagation.
 
         Parameters
         ------------
         a1 : array, shape = [n_samples, n_features+1]
-          Input values with bias unit.
-
+            Input values with bias unit.
         a2 : array, shape = [n_hidden+1, n_samples]
-          Activation of hidden layer.
-
+            Activation of hidden layer.
         a3 : array, shape = [n_output_units, n_samples]
-          Activation of output layer.
-
+            Activation of output layer.
         z2 : array, shape = [n_hidden, n_samples]
-          Net input of hidden layer.
-
+            Net input of hidden layer.=
         y_enc : array, shape = (n_labels, n_samples)
-          one-hot encoded class labels.
-
+            one-hot encoded class labels.
         w1 : array, shape = [n_hidden_units, n_features]
-          Weight matrix for input layer -> hidden layer.
-
+            Weight matrix for input layer -> hidden layer.
         w2 : array, shape = [n_output_units, n_hidden_units]
-          Weight matrix for hidden layer -> output layer.
+            Weight matrix for hidden layer -> output layer.
 
         Returns
         ---------
-
         grad1 : array, shape = [n_hidden_units, n_features]
-          Gradient of the weight matrix w1.
-
+            Gradient of the weight matrix w1.
         grad2 : array, shape = [n_output_units, n_hidden_units]
             Gradient of the weight matrix w2.
-
         """
         # backpropagation
         sigma3 = a3 - y_enc
@@ -300,13 +263,12 @@ class NeuralNetMLP(object):
         Parameters
         -----------
         X : array, shape = [n_samples, n_features]
-          Input layer with original features.
+            Input layer with original features.
 
         Returns:
         ----------
         y_pred : array, shape = [n_samples]
-          Predicted class labels.
-
+            Predicted class labels.
         """
         if len(X.shape) != 2:
             raise AttributeError('X must be a [n_samples, n_features] array.\n'
@@ -323,17 +285,15 @@ class NeuralNetMLP(object):
         Parameters
         -----------
         X : array, shape = [n_samples, n_features]
-          Input layer with original features.
-
+            Input layer with original features.
         y : array, shape = [n_samples]
-          Target class labels.
+            Target class labels.
 
         Returns:
         ----------
         self
-
         """
-        np.random.seed(self.random_state)
+        np.random.seed(self.random_seed)
         self.cost_ = []
         self.gradient_ = np.array([])
         X_data, y_data = X.copy(), y.copy()
@@ -407,13 +367,12 @@ class NeuralNetMLP(object):
             sys.stderr.flush()
 
     def _numerically_approximated_gradient(self, X, y, w1, w2, epsilon):
-        """Numerically approx. gradient for gradient checking (debugging only)
+        """Numerically approx. gradient for gradient checking (debugging only).
 
         Returns
         ---------
         num_grad : array-like, shape = [n_weights]
             Numerical gradient enrolled as row vector.
-
         """
         y_enc = self._encode_labels(y, self.n_output)
         num_grad1 = np.zeros(np.shape(w1))
@@ -444,14 +403,13 @@ class NeuralNetMLP(object):
         return num_grad
 
     def _gradient_checking(self, X, y, epsilon=1e-5):
-        """ Apply gradient checking (for debugging only)
+        """ Apply gradient checking (for debugging only).
 
         Returns
         ---------
         eucl_dist : float
-          Euclidean distance (L2) between the numerically
-          approximated gradients and the backpropagated gradients.
-
+            Euclidean distance (L2) between the numerically
+            approximated gradients and the backpropagated gradients.
         """
         num_grad = self._numerically_approximated_gradient(X=X,
                                                            y=y,

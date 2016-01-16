@@ -15,8 +15,7 @@ def plot_decision_regions(X, y, clf, X_highlight=None,
                           hide_spines=True,
                           markers = 's^oxv<>',
                           colors=['red', 'blue', 'limegreen', 'gray', 'cyan']):
-    """
-    Plots decision regions of a classifier.
+    """Plot decision regions of a classifier.
 
     Parameters
     ----------
@@ -44,27 +43,6 @@ def plot_decision_regions(X, y, clf, X_highlight=None,
     Returns
     ---------
     matplotlib.pyplot.figure object
-
-    Examples
-    --------
-
-    from sklearn import datasets
-    from sklearn.svm import SVC
-
-    iris = datasets.load_iris()
-    X = iris.data[:, [0,2]]
-    y = iris.target
-
-    svm = SVC(C=1.0, kernel='linear')
-    svm.fit(X,y)
-
-    plot_decision_region(X, y, clf=svm, res=0.02, cycle_marker=True, legend=1)
-
-    plt.xlabel('sepal length [cm]')
-    plt.ylabel('petal length [cm]')
-    plt.title('SVM on Iris')
-    plt.show()
-
     """
     # check if data is numpy array
     fig = plt.gca()

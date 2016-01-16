@@ -8,7 +8,7 @@ import numpy as np
 from .confusion_matrix import confusion_matrix
 
 def scoring(y_target, y_predicted, metric='error', positive_label=1):
-    """
+    """Compute a scoring metric for supervised learning.
 
     Parameters
     ------------

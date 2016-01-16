@@ -14,7 +14,7 @@ def iris_data():
     Class labels: {0, 1, 2}, distribution: [50, 50, 50]
         0 = setosa, 1 = versicolor, 2 = virginica.
 
-    Attributes:
+    Dataset Attributes:
     1) sepal length [cm]
     2) sepal width [cm]
     3) petal length [cm]
@@ -23,12 +23,10 @@ def iris_data():
     Returns
     --------
     X, y : [n_samples, n_features], [n_class_labels]
-      X is the feature matrix with 150 flower samples as rows,
-      and 4 feature columns sepal length, sepal width,
-      petal length, and petal width.
-      y is a 1-dimensional array of the class labels {0, 1, 2}
-
-
+        X is the feature matrix with 150 flower samples as rows,
+        and 4 feature columns sepal length, sepal width,
+        petal length, and petal width.
+        y is a 1-dimensional array of the class labels {0, 1, 2}
     """
     X = np.array([[ 5.1,  3.5,  1.4,  0.2],
        [ 4.9,  3. ,  1.4,  0.2],

@@ -10,7 +10,7 @@ import numpy as np
 
 
 def loadlocal_mnist(images_path, labels_path):
-    """ Read MNIST from ubyte files
+    """ Read MNIST from ubyte files.
 
     Parameters
     ----------
@@ -22,8 +22,9 @@ def loadlocal_mnist(images_path, labels_path):
     Returns
     --------
     images: [n_samples, n_pixels] numpy.array
+        Pixel values of the images.
     labels: [n_samples] numpy array
-
+        Target class labels
     """
     with open(labels_path, 'rb') as lbpath:
         magic, n = struct.unpack('>II',

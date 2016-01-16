@@ -11,8 +11,7 @@ def plot_confusion_matrix(conf_mat,
                           hide_spines=False, hide_ticks=False,
                           figsize=(2.5, 2.5),
                           cmap=None, alpha=0.3):
-    """
-    Plots a confusion matrix via matplotlib.
+    """Plot a confusion matrix via matplotlib.
 
     Parameters
     -----------
@@ -31,9 +30,7 @@ def plot_confusion_matrix(conf_mat,
     -----------
     fig, ax : matplotlib.pyplot subplot objects
         Figure and axis elements of the subplot.
-
     """
-
     fig, ax = plt.subplots(figsize=figsize)
     if cmap is None:
         cmap=plt.cm.Blues

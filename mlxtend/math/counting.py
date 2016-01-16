@@ -17,17 +17,16 @@ def num_combinations(n, k, with_replacement=False):
     Parameters
     ----------
     n : `int`
-      Total number of items.
+        Total number of items.
     k : `int`
-      Number of elements of the target itemset.
-    with_replacement : `bool`
-      Allows repeated elements if True.
+        Number of elements of the target itemset.
+    with_replacement : `bool` (default: False)
+        Allows repeated elements if True.
 
     Returns
     ----------
     comb : `int`
-      Number of possible combinations.
-
+        Number of possible combinations.
     """
     if with_replacement:
         numerator = factorial(n + k - 1)

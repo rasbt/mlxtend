@@ -8,8 +8,7 @@ from itertools import product
 import numpy as np
 
 def confusion_matrix(y_target, y_predicted, binary=False, positive_label=1):
-    """
-    Compute a confusion matrix/contingency table.
+    """Compute a confusion matrix/contingency table.
 
     Parameters
     -----------
@@ -25,7 +24,6 @@ def confusion_matrix(y_target, y_predicted, binary=False, positive_label=1):
     positive_label : int (default: 1)
         Class label of the positive class.
     """
-
     if not isinstance(y_target, np.ndarray):
         targ_tmp = np.asarray(y_target)
     else:

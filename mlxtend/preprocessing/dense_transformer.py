@@ -5,11 +5,7 @@
 # License: BSD 3 clause
 
 class DenseTransformer(object):
-    """
-    A transformer for scikit-learn's Pipeline class that converts
-    a sparse matrix into a dense matrix.
-
-    """
+    """ Convert a sparse matrix into a dense matrix."""
 
     def __init__(self, some_param=True):
         pass

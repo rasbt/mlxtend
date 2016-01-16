@@ -11,28 +11,22 @@ class LinearRegression(object):
 
     Parameters
     ------------
-
     solver : {'gd', 'sgd', 'normal equation'} (default: 'normal equation')
-      Method for solving the cost function. 'gd' for gradient descent,
-      'sgd' for stochastic gradient descent, or 'normal equation' (default)
-      to solve the cost function analytically.
-
+        Method for solving the cost function. 'gd' for gradient descent,
+        'sgd' for stochastic gradient descent, or 'normal equation' (default)
+        to solve the cost function analytically.
     eta : float (default: 0.1)
-      Learning rate (between 0.0 and 1.0);
-      ignored if solver='normal equation'.
-
+        Learning rate (between 0.0 and 1.0);
+        ignored if solver='normal equation'.
     epochs : int (default: 50)
-      Passes over the training dataset;
-      ignored if solver='normal equation'.
-
+        Passes over the training dataset;
+        ignored if solver='normal equation'.
     shuffle : bool (default: False)
         Shuffles training data every epoch if True to prevent circles;
         ignored if solver='normal equation'.
-
     random_seed : int (default: None)
         Set random state for shuffling and initializing the weights;
         ignored if solver='normal equation'.
-
     zero_init_weight : bool (default: False)
         If True, weights are initialized to zero instead of small random
         numbers in the interval [-0.1, 0.1];
@@ -41,12 +35,10 @@ class LinearRegression(object):
     Attributes
     -----------
     w_ : 1d-array
-      Weights after fitting.
-
+        Weights after fitting.
     cost_ : list
-      Sum of squared errors after each epoch;
-      ignored if solver='normal equation'
-
+        Sum of squared errors after each epoch;
+        ignored if solver='normal equation'
     """
     def __init__(self, solver='normal equation', eta=0.01,
                  epochs=50, random_seed=None, shuffle=False,
@@ -69,10 +61,8 @@ class LinearRegression(object):
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
-
         y : array-like, shape = [n_samples]
             Target values.
-
         init_weights : bool (default: True)
             Re-initializes weights prior to fitting. Set False to continue
             training with weights from a previous fitting.
@@ -80,7 +70,6 @@ class LinearRegression(object):
         Returns
         -------
         self : object
-
         """
         # check array shape
         if not len(X.shape) == 2:
@@ -124,7 +113,7 @@ class LinearRegression(object):
         return self
 
     def _init_weights(self, shape):
-        """Initialize weights"""
+        """Initialize weight coefficients."""
         if self.zero_init_weight:
             self.w_ = np.zeros(shape)
         else:
@@ -132,7 +121,7 @@ class LinearRegression(object):
         self.w_.astype('float64')
 
     def _normal_equation(self, X, y):
-        """Solve linear regression analytically"""
+        """Solve linear regression analytically."""
         Xb = np.hstack((np.ones((X.shape[0], 1)), X))
         w = np.zeros(X.shape[1])
         z = np.linalg.inv(np.dot(Xb.T, Xb))
@@ -140,17 +129,16 @@ class LinearRegression(object):
         return w
 
     def _shuffle(self, X, y):
-        """ Unison shuffling """
+        """Unison shuffling."""
         r = np.random.permutation(len(y))
         return X[r], y[r]
 
     def net_input(self, X):
-        """ Net input function """
+        """Compute the linear net input."""
         return np.dot(X, self.w_[1:]) + self.w_[0]
 
     def predict(self, X):
-        """
-        Predict target values for X.
+        """Predict class labels of X.
 
         Parameters
         ----------
@@ -161,6 +149,5 @@ class LinearRegression(object):
         Returns
         ----------
         float : Predicted target value.
-
         """
         return self.net_input(X)

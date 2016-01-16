@@ -10,7 +10,7 @@ Functions to tokenize text.
 import re
 
 def tokenizer_words_and_emoticons(text):
-    """Funtion that returns lowercase words and emoticons from text
+    """Convert text to lowercase words and emoticons.
 
     Example:
     >>> tokenizer_words_and_emoticons('</a>This :) is :( a test :-)!')
@@ -23,7 +23,7 @@ def tokenizer_words_and_emoticons(text):
 
 
 def tokenizer_emoticons(text):
-    """Funtion that returns emoticons from text
+    """Return emoticons from text
 
     Example:
     >>> tokenizer_emoticons('</a>This :) is :( a test :-)!')

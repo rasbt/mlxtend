@@ -7,7 +7,6 @@
 class ColumnSelector(object):
     """ A feature selector for scikit-learn's Pipeline class that returns
         specified columns from a numpy array.
-
     """
     def __init__(self, cols):
         self.cols = cols

@@ -20,7 +20,7 @@ X[:, 1] = (X[:, 1] - X[:, 1].mean()) / X[:, 1].std()
 
 
 def test_logistic_regression_gd():
-    t = np.array([0.55, 1.29, 4.39])
+    t = np.array([0.51, 1.18, 4.40])
     lr = LogisticRegression(epochs=100, eta=0.01, learning='gd', random_seed=0)
 
     lr.fit(X, y)  # 0, 1 class
@@ -29,7 +29,7 @@ def test_logistic_regression_gd():
 
 
 def test_logistic_regression_sgd():
-    t = np.array([0.55, 1.26, 4.39])
+    t = np.array([0.50, 1.16, 4.38])
     lr = LogisticRegression(epochs=100, eta=0.01,
                             learning='sgd', random_seed=0)
 
@@ -47,7 +47,7 @@ def test_l2_regularization_gd():
                             random_seed=0)
     lr.fit(X, y)
     y_pred = lr.predict(X)
-    expect_weights = np.array([0.252, 1.186, 2.296])
+    expect_weights = np.array([0.115, 1.032, 2.272])
 
     np.testing.assert_almost_equal(lr.w_, expect_weights, 3)
     acc = sum(y_pred == y) / len(y)
@@ -62,8 +62,8 @@ def test_l2_regularization_sgd():
                             random_seed=0)
     lr.fit(X, y)
     y_pred = lr.predict(X)
-    expect_weights = np.array([0.100,  0.232,  0.346])
+    expect_weights = np.array([0.09,  0.232,  0.35])
 
-    np.testing.assert_almost_equal(lr.w_, expect_weights, 3)
+    np.testing.assert_almost_equal(lr.w_, expect_weights, 2)
     acc = sum(y_pred == y) / len(y)
     assert(acc == 1.0)

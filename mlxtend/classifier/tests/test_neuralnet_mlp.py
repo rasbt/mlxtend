@@ -30,7 +30,7 @@ def test_gradient_checking():
                        minibatches=1,
                        shuffle_init=False,
                        shuffle_epoch=False,
-                       random_state=1)
+                       random_seed=1)
 
     for epoch in range(10):
         eucldist = nn3._gradient_checking(X=X_std, y=y)
@@ -51,7 +51,7 @@ def test_gradient_descent():
              minibatches=1,
              shuffle_init=False,
              shuffle_epoch=False,
-             random_state=1)
+             random_seed=1)
 
     nn.fit(X_std, y)
     y_pred = nn.predict(X_std)
@@ -72,7 +72,7 @@ def test_shuffle():
              minibatches=1,
              shuffle_init=True,
              shuffle_epoch=False,
-             random_state=1)
+             random_seed=1)
 
     nn.fit(X_std, y)
     y_pred = nn.predict(X_std)
@@ -91,7 +91,7 @@ def test_shuffle():
              minibatches=1,
              shuffle_init=True,
              shuffle_epoch=True,
-             random_state=1)
+             random_seed=1)
 
     nn.fit(X_std, y)
     y_pred = nn.predict(X_std)
@@ -111,7 +111,7 @@ def test_minibatch():
              minibatches=10,
              shuffle_init=True,
              shuffle_epoch=False,
-             random_state=1)
+             random_seed=1)
 
     nn.fit(X_std, y)
     y_pred = nn.predict(X_std)
@@ -134,7 +134,7 @@ def test_binary():
              minibatches=10,
              shuffle_init=True,
              shuffle_epoch=True,
-             random_state=1)
+             random_seed=1)
     nn.fit(X0, y0)
     y_pred = nn.predict(X0)
     print(y_pred)

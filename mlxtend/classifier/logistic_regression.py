@@ -48,7 +48,7 @@ class LogisticRegression(object):
                  l2_lambda=0.0, learning='sgd', shuffle=False,
                  random_seed=None, zero_init_weight=False):
 
-        np.random.seed(random_state)
+        np.random.seed(random_seed)
         self.eta = eta
         self.epochs = epochs
         self.l2_lambda = l2_lambda

@@ -12,7 +12,7 @@ from sklearn.grid_search import GridSearchCV
 from sklearn import cross_validation
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB
-from sklearn.MajorityVote import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 from sklearn import datasets
 

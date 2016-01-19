@@ -60,8 +60,8 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     >>> from sklearn.naive_bayes import GaussianNB
     >>> from sklearn.ensemble import RandomForestClassifier
     >>> from mlxtend.sklearn import EnsembleVoteClassifier
-    >>> clf1 = LogisticRegression(random_state=1)
-    >>> clf2 = RandomForestClassifier(random_state=1)
+    >>> clf1 = LogisticRegression(random_seed=1)
+    >>> clf2 = RandomForestClassifier(random_seed=1)
     >>> clf3 = GaussianNB()
     >>> X = np.array([[-1, -1], [-2, -1], [-3, -2], [1, 1], [2, 1], [3, 2]])
     >>> y = np.array([1, 1, 1, 2, 2, 2])

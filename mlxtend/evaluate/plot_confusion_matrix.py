@@ -2,6 +2,7 @@
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
+# A function for plotting a confusion matrix.
 # License: BSD 3 clause
 
 import matplotlib.pyplot as plt

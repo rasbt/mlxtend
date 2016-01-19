@@ -1,5 +1,7 @@
 # Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
+#
+# Implementation of Rosenblatt's perceptron algorithm for classification.
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause

@@ -1,5 +1,7 @@
 # Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
+#
+# A function for loading the open-source Boston Housing dataset. 
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause

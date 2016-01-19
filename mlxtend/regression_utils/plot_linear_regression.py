@@ -1,5 +1,7 @@
 # Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
+#
+# Function for plotting linear regression fits via scikit-learn and matplotlib.
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause

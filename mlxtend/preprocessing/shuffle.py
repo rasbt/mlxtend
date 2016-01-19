@@ -14,7 +14,7 @@ def shuffle_arrays_unison(arrays, random_state=None):
     ----------
     arrays : array-like, shape = [n_arrays]
         A list of NumPy arrays.
-    random_seed : int (default: None)
+    random_state : int (default: None)
         Sets the random seed.
 
     Returns
@@ -32,8 +32,8 @@ def shuffle_arrays_unison(arrays, random_state=None):
     >>> assert(y2.all() == np.array([2, 1, 3]).all())
     >>>
     """
-    if random_seed:
-        np.random.seed(random_seed)
+    if random_state:
+        np.random.seed(random_state)
     n = len(arrays[0])
     for a in arrays:
         assert(len(a) == n)

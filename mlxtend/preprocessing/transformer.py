@@ -1,5 +1,7 @@
 # Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
+#
+# A Class that returns a copy of a dataset in a scikit-learn pipeline. 
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause

@@ -4,7 +4,7 @@
 #
 # License: BSD 3 clause
 
-from .remove_chartchunk import remove_borders
+from .remove_chartjunk import remove_borders
 from .scatter import category_scatter
 from .stacked_barplot import stacked_barplot
 from .enrichment_plot import enrichment_plot

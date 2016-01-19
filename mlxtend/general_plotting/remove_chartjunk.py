@@ -1,11 +1,13 @@
 # Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
+#
+# A function for removing chart junk from matplotlib plots
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
 
 def remove_borders(axes, left=False, bottom=False, right=True, top=True):
-    """Remove chartchunk from matplotlib plots.
+    """Remove chart junk from matplotlib plots.
 
     Parameters
     ----------

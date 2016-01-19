@@ -1,5 +1,7 @@
 # Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
+#
+# A class for transforming sparse numpy arrays into dense arrays.
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause

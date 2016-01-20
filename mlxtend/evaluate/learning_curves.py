@@ -111,7 +111,6 @@ def plot_learning_curves(X_train, y_train, X_test, y_test, clf,
             plt.plot(np.arange(10,101,10), test_errors, label='test set', marker=test_marker)
             plt.xlabel('Training set size in percent')
 
-
     if not suppress_plot:
         with plt.style.context(style):
             plt.ylabel('Performance ({})'.format(scoring))

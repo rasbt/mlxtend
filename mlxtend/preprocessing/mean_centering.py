@@ -36,5 +36,8 @@ class MeanCenterer(TransformerObj):
         return self.transform(X)
 
     def _get_array(self, X):
-        X_fl = X.astype('float64')
+        if isinstance(X, list):
+            X_fl = np.asarray(X, dtype='float')[:, None]
+        else:
+            X_fl = X.astype('float')
         return X_fl

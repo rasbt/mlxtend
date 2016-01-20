@@ -1,12 +1,12 @@
-doc-warnings: yes
+max-line-length: 120
 
-ignore-patterns:
-  - __init__.py
+doc-warnings: yes
 
 ignore-paths:
   - mlxtend/data
 
-user:
-  - mail@sebastianraschka.com
+ignore-patterns:
+    - ^example/doc_.*\.py$
+    - (^|/)docs(/|$)
+    - __init__.py
 
-repo:status

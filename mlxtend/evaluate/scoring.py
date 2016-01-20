@@ -73,7 +73,7 @@ def scoring(y_target, y_predicted, metric='error', positive_label=1):
 
     # multi-class metrics
     if metric in {'accuracy', 'error'}:
-        res = (targ_tmp == pred_tmp).sum() / pred_tmp.shape[0]
+        res = float((targ_tmp == pred_tmp).sum()) / pred_tmp.shape[0]
         if metric == 'error':
             res = 1.0 - res
 

@@ -69,7 +69,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             to avoid delays due to on-demand spawning of the jobs
         An int, giving the exact number of total jobs that are spawned
         A string, giving an expression as a function
-            of n_jobs, as in ‘2*n_jobs’
+            of n_jobs, as in `2*n_jobs`
 
     Attributes
     ----------

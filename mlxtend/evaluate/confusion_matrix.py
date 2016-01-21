@@ -1,13 +1,14 @@
 # Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
 #
-# A function for generating a confusion matrix. 
+# A function for generating a confusion matrix.
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
 
 from itertools import product
 import numpy as np
+
 
 def confusion_matrix(y_target, y_predicted, binary=False, positive_label=1):
     """Compute a confusion matrix/contingency table.

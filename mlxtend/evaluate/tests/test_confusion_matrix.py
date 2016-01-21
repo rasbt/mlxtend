@@ -8,6 +8,7 @@ import numpy as np
 from mlxtend.evaluate import confusion_matrix
 from numpy.testing import assert_array_equal
 
+
 def test_multiclass():
     y_targ = [1, 1, 1, 0, 0, 2, 0, 3]
     y_pred = [1, 0, 1, 0, 0, 2, 1, 3]

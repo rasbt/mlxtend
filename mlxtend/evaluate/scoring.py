@@ -9,6 +9,7 @@
 import numpy as np
 from .confusion_matrix import confusion_matrix
 
+
 def scoring(y_target, y_predicted, metric='error', positive_label=1):
     """Compute a scoring metric for supervised learning.
 
@@ -53,8 +54,7 @@ def scoring(y_target, y_predicted, metric='error', positive_label=1):
                    'sensitivity',
                    'specificity',
                    'matthews_corr_coef',
-                   'f1',
-                  }
+                   'f1'}
     if metric not in implemented:
         raise AttributeError('`metric` not in %s' % implemented)
 
@@ -80,7 +80,8 @@ def scoring(y_target, y_predicted, metric='error', positive_label=1):
     # binary classification metrics
     else:
         if len(np.unique(targ_tmp)) > 2 or len(np.unique(pred_tmp)) > 2:
-            raise AttributeError('Metrics precision, recall, and f1 only support binary'
+            raise AttributeError('Metrics precision, '
+                                 'recall, and f1 only support binary'
                                  ' class labels')
 
         # `binary=True` makes sure

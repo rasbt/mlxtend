@@ -34,7 +34,7 @@ def plot_confusion_matrix(conf_mat,
     """
     fig, ax = plt.subplots(figsize=figsize)
     if cmap is None:
-        cmap=plt.cm.Blues
+        cmap = plt.cm.Blues
     ax.matshow(conf_mat, cmap=cmap, alpha=alpha)
     for i in range(conf_mat.shape[0]):
         for j in range(conf_mat.shape[1]):

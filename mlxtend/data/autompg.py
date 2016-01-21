@@ -1,12 +1,13 @@
 # Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
 #
-# A function for loading the open-source AutoMPG dataset. 
+# A function for loading the open-source AutoMPG dataset.
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
 
 import numpy as np
+
 
 def autompg_data():
     """Auto MPG dataset.

@@ -1,7 +1,7 @@
 # Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
 #
-# A function for plotting decision regions of classifiers. 
+# A function for plotting decision regions of classifiers.
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
@@ -12,10 +12,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import colors as mcolors
 
+
 def plot_decision_regions(X, y, clf, X_highlight=None,
                           res=0.02, legend=1,
                           hide_spines=True,
-                          markers = 's^oxv<>',
+                          markers='s^oxv<>',
                           colors=['red', 'blue', 'limegreen', 'gray', 'cyan']):
     """Plot decision regions of a classifier.
 
@@ -65,16 +66,14 @@ def plot_decision_regions(X, y, clf, X_highlight=None,
     else:
         dim = '1d'
 
-    marker_gen = cycle(['s', '^', 'o', 'x', 'v', '<','>'])
+    marker_gen = cycle(['s', '^', 'o', 'x', 'v', '<', '>'])
 
     # make color map
     n_classes = len(np.unique(y))
     colors = ['red', 'blue', 'limegreen', 'gray', 'cyan']
     cmap = matplotlib.colors.ListedColormap(colors[:n_classes])
 
-
     # plot the decision surface
-
     if dim == '2d':
         y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
     else:
@@ -100,11 +99,11 @@ def plot_decision_regions(X, y, clf, X_highlight=None,
 
     for c in np.unique(y):
         if dim == '2d':
-            y_data = X[y==c, 1]
+            y_data = X[y == c, 1]
         else:
-            y_data = [0 for i in X[y==c]]
+            y_data = [0 for i in X[y == c]]
 
-        plt.scatter(x=X[y==c, 0],
+        plt.scatter(x=X[y == c, 0],
                     y=y_data,
                     alpha=0.8,
                     c=cmap(c),
@@ -126,8 +125,20 @@ def plot_decision_regions(X, y, clf, X_highlight=None,
 
     if plot_testdata:
         if dim == '2d':
-            plt.scatter(X_highlight[:,0], X_highlight[:,1], c='', alpha=1.0, linewidth=1, marker='o', s=80)
+            plt.scatter(X_highlight[:, 0],
+                        X_highlight[:, 1],
+                        c='',
+                        alpha=1.0,
+                        linewidth=1,
+                        marker='o',
+                        s=80)
         else:
-            plt.scatter(X_highlight, [0 for i in X_highlight], c='', alpha=1.0, linewidth=1, marker='o', s=80)
+            plt.scatter(X_highlight,
+                        [0 for i in X_highlight],
+                        c='',
+                        alpha=1.0,
+                        linewidth=1,
+                        marker='o',
+                        s=80)
 
     return fig

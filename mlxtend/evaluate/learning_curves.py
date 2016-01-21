@@ -9,13 +9,16 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def plot_learning_curves(X_train, y_train, X_test, y_test, clf,
-            train_marker='o',
-            test_marker='^',
-            scoring='misclassification error',
-            suppress_plot=False, print_model=True,
-            style='fivethirtyeight',
-            legend_loc='best'):
+
+def plot_learning_curves(X_train, y_train,
+                         X_test, y_test,
+                         clf,
+                         train_marker='o',
+                         test_marker='^',
+                         scoring='misclassification error',
+                         suppress_plot=False, print_model=True,
+                         style='fivethirtyeight',
+                         legend_loc='best'):
     """Plots learning curves of a classifier.
 
     Parameters
@@ -37,7 +40,8 @@ def plot_learning_curves(X_train, y_train, X_test, y_test, clf,
         If not 'misclassification error', accepts the following metrics
         (from scikit-learn):
         {'accuracy', 'average_precision', 'f1_micro', 'f1_macro',
-        'f1_weighted', 'f1_samples', 'log_loss', 'precision', 'recall', 'roc_auc',
+        'f1_weighted', 'f1_samples', 'log_loss',
+        'precision', 'recall', 'roc_auc',
         'adjusted_rand_score', 'mean_absolute_error', 'mean_squared_error',
         'median_absolute_error', 'r2'}
     suppress_plot=False : bool (default: False)
@@ -80,17 +84,15 @@ def plot_learning_curves(X_train, y_train, X_test, y_test, clf,
         if scoring not in scoring_func.keys():
             raise AttributeError('scoring must be in', scoring_func.keys())
 
-
     else:
         def misclf_err(y_predict, y):
-            return  (y_predict != y).sum() / float(len(y))
+            return (y_predict != y).sum() / float(len(y))
 
         scoring_func = {
             'misclassification error': misclf_err}
 
     training_errors = []
     test_errors = []
-
 
     rng = [int(i) for i in np.linspace(0, X_train.shape[0], 11)][1:][::-1]
     for r in rng:
@@ -107,8 +109,10 @@ def plot_learning_curves(X_train, y_train, X_test, y_test, clf,
 
     if not suppress_plot:
         with plt.style.context(style):
-            plt.plot(np.arange(10,101,10), training_errors, label='training set', marker=train_marker)
-            plt.plot(np.arange(10,101,10), test_errors, label='test set', marker=test_marker)
+            plt.plot(np.arange(10, 101, 10), training_errors,
+                     label='training set', marker=train_marker)
+            plt.plot(np.arange(10, 101, 10), test_errors,
+                     label='test set', marker=test_marker)
             plt.xlabel('Training set size in percent')
 
     if not suppress_plot:

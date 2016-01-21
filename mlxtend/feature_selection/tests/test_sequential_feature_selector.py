@@ -46,13 +46,13 @@ def test_knn_wo_cv():
                print_progress=False)
     sfs1 = sfs1.fit(X, y)
     expect = {1: {'avg_score': 0.95999999999999996,
-                  'cv_scores': np.array([ 0.96]),
+                  'cv_scores': np.array([0.96]),
                   'feature_idx': (3,)},
               2: {'avg_score': 0.97333333333333338,
-                  'cv_scores': np.array([ 0.97333333]),
+                  'cv_scores': np.array([0.97333333]),
                   'feature_idx': (2, 3)},
               3: {'avg_score': 0.97333333333333338,
-                  'cv_scores': np.array([ 0.97333333]),
+                  'cv_scores': np.array([0.97333333]),
                   'feature_idx': (1, 2, 3)}}
     dict_compare_utility(d1=expect, d2=sfs1.subsets_)
 
@@ -79,10 +79,10 @@ def test_knn_cv3():
                                          1.0]),
                   'feature_idx': (3,)},
               2: {'avg_score': 0.95993589743589736,
-                  'cv_scores': np.array([ 0.97435897,
-                                          0.94871795,
-                                          0.91666667,
-                                          1.0]),
+                  'cv_scores': np.array([0.97435897,
+                                         0.94871795,
+                                         0.91666667,
+                                         1.0]),
                   'feature_idx': (2, 3)},
               3: {'avg_score': 0.97275641025641035,
                   'cv_scores': np.array([0.97435897,

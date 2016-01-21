@@ -8,6 +8,7 @@
 
 import matplotlib.pyplot as plt
 
+
 def plot_sequential_feature_selection(metric_dict,
                                       kind='std_dev',
                                       color='blue',
@@ -57,10 +58,10 @@ def plot_sequential_feature_selection(metric_dict,
             kind = 'ci_bound'
 
         for k in k_feat:
-            upper.append(metric_dict[k]['avg_score']
-                         + metric_dict[k][kind])
-            lower.append(metric_dict[k]['avg_score']
-                         - metric_dict[k][kind])
+            upper.append(metric_dict[k]['avg_score'] +
+                         metric_dict[k][kind])
+            lower.append(metric_dict[k]['avg_score'] -
+                         metric_dict[k][kind])
 
         plt.fill_between(k_feat,
                          upper,

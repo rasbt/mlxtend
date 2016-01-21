@@ -6,11 +6,12 @@
 #
 # License: BSD 3 clause
 
-
 import os
-import re
 
-def find_files(substring, path, recursive=False, check_ext=None, ignore_invisible=True, ignore_substring=None):
+
+def find_files(substring, path, recursive=False,
+               check_ext=None, ignore_invisible=True,
+               ignore_substring=None):
     """Find files in a directory based on substring matching.
 
     Parameters
@@ -25,7 +26,8 @@ def find_files(substring, path, recursive=False, check_ext=None, ignore_invisibl
         If string (e.g., '.txt'), only returns files that
         match the specified file extension.
     ignore_invisible : `bool`
-        If `True`, ignores invisible files (i.e., files starting with a period).
+        If `True`, ignores invisible files
+        (i.e., files starting with a period).
     ignore_substring : `str`
         Ignores files that contain the specified substring.
 

@@ -18,7 +18,6 @@ from sklearn.metrics import get_scorer
 from sklearn.base import clone
 from sklearn.base import BaseEstimator
 from sklearn.base import MetaEstimatorMixin
-from sklearn.base import clone
 from sklearn.cross_validation import cross_val_score
 
 
@@ -59,8 +58,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     n_jobs : int (default: 1)
         The number of CPUs to use for cross validation. -1 means 'all CPUs'.
     pre_dispatch : int, or string
-        Controls the number of jobs that get dispatched during parallel execution
-        in cross_val_score.
+        Controls the number of jobs that get dispatched
+        during parallel execution in cross_val_score.
         Reducing this number can be useful to avoid an explosion of
         memory consumption when more jobs get dispatched than CPUs can process.
         This parameter can be:
@@ -94,7 +93,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     >>> X = iris.data
     >>> y = iris.target
     >>> knn = KNeighborsClassifier(n_neighbors=4)
-    >>> sfs = SequentialFeatureSelector(knn, k_features=2, scoring='accuracy', cv=5)
+    >>> sfs = SequentialFeatureSelector(knn, k_features=2,
+    ...                                 scoring='accuracy', cv=5)
     >>> sfs = sfs.fit(X, y)
     >>> sfs.indices_
     (2, 3)
@@ -176,7 +176,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
             k = len(k_idx)
             # floating can lead to multiple same-sized subsets
-            if k not in self.subsets_ or self.subsets_[k]['avg_score'] > k_score:
+            if k not in self.subsets_ or (self.subsets_[k]['avg_score'] >
+                                          k_score):
                 self.subsets_[k] = {'feature_idx': k_idx,
                                     'cv_scores': cv_scores,
                                     'avg_score': k_score}
@@ -225,7 +226,9 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 all_cv_scores.append(cv_scores)
                 all_subsets.append(new_subset)
             best = np.argmax(all_avg_scores)
-            res = (all_subsets[best], all_avg_scores[best], all_cv_scores[best])
+            res = (all_subsets[best],
+                   all_avg_scores[best],
+                   all_cv_scores[best])
         return res
 
     def _exclusion(self, feature_set, X, y, fixed_feature=None):
@@ -243,7 +246,9 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 all_cv_scores.append(cv_scores)
                 all_subsets.append(p)
             best = np.argmax(all_avg_scores)
-            res = (all_subsets[best], all_avg_scores[best], all_cv_scores[best])
+            res = (all_subsets[best],
+                   all_avg_scores[best],
+                   all_cv_scores[best])
         return res
 
     def transform(self, X):
@@ -257,8 +262,9 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         fdict = deepcopy(self.subsets_)
         for k in fdict:
             std_dev = np.std(self.subsets_[k]['cv_scores'])
-            bound, std_err = self._calc_confidence(self.subsets_[k]['cv_scores'],
-                                                   confidence=confidence_interval)
+            bound, std_err = self._calc_confidence(
+                self.subsets_[k]['cv_scores'],
+                confidence=confidence_interval)
             fdict[k]['ci_bound'] = bound
             fdict[k]['std_dev'] = std_dev
             fdict[k]['std_err'] = std_err

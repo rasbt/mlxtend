@@ -8,6 +8,7 @@
 
 import numpy as np
 
+
 class Perceptron(object):
     """Perceptron classifier.
 
@@ -71,8 +72,9 @@ class Perceptron(object):
         # check if {0, 1} or {-1, 1} class labels are used
         self.classes_ = np.unique(y)
         if not (np.all(np.array([0, 1]) == self.classes_) or
-                    np.all(np.array([-1, 1]) == self.classes_)):
-            raise ValueError('Only supports binary class labels {0, 1} or {-1, 1}.')
+                np.all(np.array([-1, 1]) == self.classes_)):
+            raise ValueError('Only supports binary'
+                             ' class labels {0, 1} or {-1, 1}.')
 
         if init_weights:
             self._init_weights(shape=X.shape[1]+1)
@@ -126,4 +128,5 @@ class Perceptron(object):
           Predicted class label.
 
         """
-        return np.where(self.net_input(X) >= 0.0, self.classes_[1], self.classes_[0])
+        return np.where(self.net_input(X) >= 0.0,
+                        self.classes_[1], self.classes_[0])

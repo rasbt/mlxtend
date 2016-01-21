@@ -26,7 +26,8 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     clfs : array-like, shape = [n_classifiers]
         A list of classifiers.
         Invoking the `fit` method on the `VotingClassifier` will fit clones
-        of those original classifiers that will be stored in the class attribute
+        of those original classifiers that will
+        be stored in the class attribute
         `self.clfs_`.
     voting : str, {'hard', 'soft'} (default='hard')
         If 'hard', uses predicted class labels for majority rule voting.

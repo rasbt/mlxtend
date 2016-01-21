@@ -4,10 +4,7 @@
 #
 # License: BSD 3 clause
 
-import numpy as np
 from mlxtend.classifier import EnsembleVoteClassifier
-
-
 from sklearn.grid_search import GridSearchCV
 from sklearn import cross_validation
 from sklearn.linear_model import LogisticRegression
@@ -29,7 +26,11 @@ def test_EnsembleVoteClassifier():
     clf3 = GaussianNB()
     eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting='hard')
 
-    scores = cross_validation.cross_val_score(eclf, X, y, cv=5, scoring='accuracy')
+    scores = cross_validation.cross_val_score(eclf,
+                                              X,
+                                              y,
+                                              cv=5,
+                                              scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
     assert(scores_mean == 0.94)
 
@@ -40,9 +41,15 @@ def test_EnsembleVoteClassifier_weights():
     clf1 = LogisticRegression()
     clf2 = RandomForestClassifier()
     clf3 = GaussianNB()
-    eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting='soft', weights=[1,2,10])
+    eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
+                                  voting='soft',
+                                  weights=[1, 2, 10])
 
-    scores = cross_validation.cross_val_score(eclf, X, y, cv=5, scoring='accuracy')
+    scores = cross_validation.cross_val_score(eclf,
+                                              X,
+                                              y,
+                                              cv=5,
+                                              scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
     assert(scores_mean == 0.93)
 
@@ -55,7 +62,7 @@ def test_EnsembleVoteClassifier_gridsearch():
     eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting='soft')
 
     params = {'logisticregression__C': [1.0, 100.0],
-              'randomforestclassifier__n_estimators': [20, 200],}
+              'randomforestclassifier__n_estimators': [20, 200]}
 
     grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
     grid.fit(iris.data, iris.target)
@@ -74,7 +81,7 @@ def test_EnsembleVoteClassifier_gridsearch_enumerate_names():
 
     params = {'logisticregression-1__C': [1.0, 100.0],
               'logisticregression-2__C': [1.0, 100.0],
-              'randomforestclassifier__n_estimators': [5, 20],}
+              'randomforestclassifier__n_estimators': [5, 20]}
 
     grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
-    gs = grid.fit(iris.data, iris.target)
+    grid = grid.fit(iris.data, iris.target)

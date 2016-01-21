@@ -8,6 +8,7 @@
 
 import numpy as np
 
+
 class Adaline(object):
     """ADAptive LInear NEuron classifier.
 
@@ -44,7 +45,8 @@ class Adaline(object):
         self.epochs = epochs
         self.shuffle = shuffle
         if solver not in ('normal equation', 'gd', 'sgd'):
-            raise ValueError('learning must be "normal equation", "gd", or "sgd')
+            raise ValueError('learning must be "normal equation", '
+                             '"gd", or "sgd')
         self.solver = solver
         self.zero_init_weight = zero_init_weight
 
@@ -75,7 +77,8 @@ class Adaline(object):
         if not len(self.classes_) == 2 \
                 or not self.classes_[0] in (-1, 0) \
                 or not self.classes_[1] == 1:
-            raise ValueError('Only supports binary class labels {0, 1} or {-1, 1}.')
+            raise ValueError('Only supports binary class'
+                             ' labels {0, 1} or {-1, 1}.')
         if self.classes_[0] == -1:
             self.thres_ = 0.0
         else:
@@ -161,4 +164,5 @@ class Adaline(object):
         class : int
           Predicted class label.
         """
-        return np.where(self.net_input(X) >= self.thres_, self.classes_[1], self.classes_[0])
+        return np.where(self.net_input(X) >= self.thres_,
+                        self.classes_[1], self.classes_[0])

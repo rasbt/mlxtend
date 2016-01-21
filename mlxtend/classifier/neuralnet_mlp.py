@@ -93,7 +93,6 @@ class NeuralNetMLP(object):
         self.minibatches = minibatches
         self.print_progress = print_progress
 
-
     def _encode_labels(self, y, k):
         """Encode labels into one-hot representation.
 
@@ -116,10 +115,12 @@ class NeuralNetMLP(object):
         """Initialize weights with small random numbers."""
         if self.random_weights:
             np.random.seed(self.random_seed)
-            w1 = np.random.uniform(self.random_weights[0], self.random_weights[1],
-                                    size=self.n_hidden*(self.n_features + 1))
+            w1 = np.random.uniform(self.random_weights[0],
+                                   self.random_weights[1],
+                                   size=self.n_hidden*(self.n_features + 1))
             w1 = w1.reshape(self.n_hidden, self.n_features + 1)
-            w2 = np.random.uniform(self.random_weights[0], self.random_weights[1],
+            w2 = np.random.uniform(self.random_weights[0],
+                                   self.random_weights[1],
                                    size=self.n_output*(self.n_hidden + 1))
             w2 = w2.reshape(self.n_output, self.n_hidden + 1)
         else:
@@ -187,11 +188,13 @@ class NeuralNetMLP(object):
 
     def _L2_reg(self, lambda_, w1, w2):
         """Compute L2-regularization cost."""
-        return (lambda_/2.0) * (np.sum(w1[:, 1:] ** 2) + np.sum(w2[:, 1:] ** 2))
+        return ((lambda_/2.0) * (np.sum(w1[:, 1:] ** 2) +
+                np.sum(w2[:, 1:] ** 2)))
 
     def _L1_reg(self, lambda_, w1, w2):
         """Compute L1-regularization cost."""
-        return (lambda_/2.0) * (np.abs(w1[:, 1:]).sum() + np.abs(w2[:, 1:]).sum())
+        return ((lambda_/2.0) * (np.abs(w1[:, 1:]).sum() +
+                np.abs(w2[:, 1:]).sum()))
 
     def _get_cost(self, y_enc, output, w1, w2):
         """Compute cost function.
@@ -320,13 +323,15 @@ class NeuralNetMLP(object):
 
             if self.shuffle_epoch:
                 idx = np.random.permutation(y_enc.shape[1])
-                X_data, y_enc = X_data[idx], y_enc[: ,idx]
+                X_data, y_enc = X_data[idx], y_enc[:, idx]
 
             mini = np.array_split(range(y_data.shape[0]), self.minibatches)
             for idx in mini:
 
                 # feedforward
-                a1, z2, a2, z3, a3 = self._feedforward(X_data[idx], self.w1, self.w2)
+                a1, z2, a2, z3, a3 = self._feedforward(X_data[idx],
+                                                       self.w1,
+                                                       self.w2)
                 cost = self._get_cost(y_enc=y_enc[:, idx],
                                       output=a3,
                                       w1=self.w1,
@@ -382,9 +387,13 @@ class NeuralNetMLP(object):
         for i in range(w1.shape[0]):
             for j in range(w1.shape[1]):
                 epsilon_ary1[i, j] = epsilon
-                a1, z2, a2, z3, a3 = self._feedforward(X, w1 - epsilon_ary1, w2)
+                a1, z2, a2, z3, a3 = self._feedforward(X,
+                                                       w1 - epsilon_ary1,
+                                                       w2)
                 cost1 = self._get_cost(y_enc, a3, w1-epsilon_ary1, w2)
-                a1, z2, a2, z3, a3 = self._feedforward(X, w1 + epsilon_ary1, w2)
+                a1, z2, a2, z3, a3 = self._feedforward(X,
+                                                       w1 + epsilon_ary1,
+                                                       w2)
                 cost2 = self._get_cost(y_enc, a3, w1 + epsilon_ary1, w2)
                 num_grad1[i, j] = (cost2 - cost1) / (2 * epsilon)
                 epsilon_ary1[i, j] = 0
@@ -394,9 +403,13 @@ class NeuralNetMLP(object):
         for i in range(w2.shape[0]):
             for j in range(w2.shape[1]):
                 epsilon_ary2[i, j] = epsilon
-                a1, z2, a2, z3, a3 = self._feedforward(X, w1, w2 - epsilon_ary2)
+                a1, z2, a2, z3, a3 = self._feedforward(X,
+                                                       w1,
+                                                       w2 - epsilon_ary2)
                 cost1 = self._get_cost(y_enc, a3, w1, w2 - epsilon_ary2)
-                a1, z2, a2, z3, a3 = self._feedforward(X, w1, w2 + epsilon_ary2)
+                a1, z2, a2, z3, a3 = self._feedforward(X,
+                                                       w1,
+                                                       w2 + epsilon_ary2)
                 cost2 = self._get_cost(y_enc, a3, w1, w2 + epsilon_ary2)
                 num_grad2[i, j] = (cost2 - cost1) / (2 * epsilon)
                 epsilon_ary2[i, j] = 0

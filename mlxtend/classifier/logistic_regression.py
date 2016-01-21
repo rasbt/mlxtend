@@ -8,6 +8,7 @@
 
 import numpy as np
 
+
 class LogisticRegression(object):
     """Logistic regression classifier.
 
@@ -137,11 +138,9 @@ class LogisticRegression(object):
         # equivalent to np.where(self.activation(X) >= 0.5, 1, 0)
         return np.where(self.net_input(X) >= 0.0, 1, 0)
 
-
     def net_input(self, X):
         """Compute the linear net input."""
         return X.dot(self.w_[1:]) + self.w_[0]
-
 
     def activation(self, X):
         """Predict class probabilities of X from the net input.

@@ -4,8 +4,8 @@
 #
 # License: BSD 3 clause
 
-
 from mlxtend.utils import Counter
+
 
 def test_counter():
     cnt = Counter()

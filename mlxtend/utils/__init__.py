@@ -6,4 +6,4 @@
 
 from .counter import Counter
 
-__all__ = ["Counter",]
+__all__ = ["Counter"]

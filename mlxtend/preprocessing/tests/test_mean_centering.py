@@ -15,6 +15,7 @@ def test_array_mean_centering():
     mc = MeanCenterer()
     assert(mc.fit_transform(X1).all() == X1_out.all())
 
+
 def test_list_mean_centering():
     X2 = [1.0, 2.0, 3.0]
     X2_out = np.array([-1.0, 0.0, 1.0])

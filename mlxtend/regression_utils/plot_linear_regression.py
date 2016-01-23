@@ -12,9 +12,10 @@ from scipy.stats import pearsonr
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 def plot_linear_regression(X, y, model=LinearRegression(), corr_func=pearsonr,
-                      scattercolor='blue', fit_style='k--', legend=True,
-                      xlim='auto'):
+                           scattercolor='blue', fit_style='k--', legend=True,
+                           xlim='auto'):
     """Plot a linear regression line fit.
 
     Parameters
@@ -55,10 +56,10 @@ def plot_linear_regression(X, y, model=LinearRegression(), corr_func=pearsonr,
 
     plt.scatter(X, y, c=scattercolor)
 
-    if xlim=='auto':
-        x_min, x_max = X[:,0].min(), X[:,0].max()
-        x_min -= 0.2*x_min
-        x_max += 0.2*x_max
+    if xlim == 'auto':
+        x_min, x_max = X[:, 0].min(), X[:, 0].max()
+        x_min -= 0.2 * x_min
+        x_max += 0.2 * x_max
 
     else:
         x_min, x_max = xlim
@@ -69,7 +70,7 @@ def plot_linear_regression(X, y, model=LinearRegression(), corr_func=pearsonr,
     plt.plot([x_min, x_max], [y_min, y_max], fit_style, lw=1)
 
     if corr_func:
-        corr_coeff, p = corr_func(X[:,0], y)
+        corr_coeff, p = corr_func(X[:, 0], y)
         intercept, slope = model.intercept_, model.coef_[0]
 
     if legend:

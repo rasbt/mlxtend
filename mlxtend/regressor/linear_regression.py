@@ -8,6 +8,7 @@
 
 import numpy as np
 
+
 class LinearRegression(object):
     """ Ordinary least squares linear regression.
 
@@ -51,7 +52,8 @@ class LinearRegression(object):
         self.epochs = epochs
         self.shuffle = shuffle
         if solver not in ('normal equation', 'gd', 'sgd'):
-            raise ValueError('learning must be "normal equation", "gd", or "sgd"')
+            raise ValueError('learning must be "normal equation", '
+                             '"gd", or "sgd"')
         self.solver = solver
         self.zero_init_weight = zero_init_weight
 

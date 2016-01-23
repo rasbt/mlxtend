@@ -9,6 +9,7 @@
 import pandas as pd
 import numpy as np
 
+
 def minmax_scaling(array, columns, min_val=0, max_val=1):
     """Min max scaling of pandas' DataFrames.
 
@@ -28,10 +29,6 @@ def minmax_scaling(array, columns, min_val=0, max_val=1):
     df_new: pandas DataFrame object.
         Copy of the array or DataFrame with rescaled columns.
     """
-    if not (all([isinstance(c, str) for c in columns]) == True
-            or all([isinstance(c, int) for c in columns]) == True):
-        raise AttributeError('Columns must be of equal type str or int')
-
     ary_new = array.astype(float)
     if len(ary_new.shape) == 1:
         ary_new = ary_new[:, np.newaxis]
@@ -41,15 +38,20 @@ def minmax_scaling(array, columns, min_val=0, max_val=1):
     elif isinstance(ary_new, np.ndarray):
         ary_newt = ary_new
     else:
-        raise AttributeError('Input array must be a pandas DataFrame or NumPy array')
+        raise AttributeError('Input array must be a pandas'
+                             'DataFrame or NumPy array')
 
-    ary_newt[:, columns] = (ary_newt[:, columns] - ary_newt[:, columns].min(axis=0)) / \
-                     (ary_newt[:, columns].max(axis=0) - ary_newt[:, columns].min(axis=0))
+    numerator = ary_newt[:, columns] - ary_newt[:, columns].min(axis=0)
+    denominator = (ary_newt[:, columns].max(axis=0) -
+                   ary_newt[:, columns].min(axis=0))
+    ary_newt[:, columns] = numerator / denominator
 
     if not min_val == 0 and not max_val == 1:
-            ary_newt[:, columns] = ary_newt[:, columns] * (max_val - min_val) + min_val
+            ary_newt[:, columns] = (ary_newt[:, columns] *
+                                    (max_val - min_val) + min_val)
 
     return ary_newt[:, columns]
+
 
 def standardize(array, columns, ddof=0):
     """
@@ -73,10 +75,6 @@ def standardize(array, columns, ddof=0):
       Copy of the array or DataFrame with standardized columns.
 
     """
-    if not (all([isinstance(c, str) for c in columns]) == True
-            or all([isinstance(c, int) for c in columns]) == True):
-        raise AttributeError('Columns must be of equal type str or int')
-
     ary_new = array.astype(float)
     if len(ary_new.shape) == 1:
         ary_new = ary_new[:, np.newaxis]
@@ -86,9 +84,11 @@ def standardize(array, columns, ddof=0):
     elif isinstance(ary_new, np.ndarray):
         ary_newt = ary_new
     else:
-        raise AttributeError('Input array must be a pandas DataFrame or NumPy array')
+        raise AttributeError('Input array must be a pandas '
+                             'DataFrame or NumPy array')
 
-    ary_newt[:, columns] = (ary_newt[:, columns] - ary_newt[:, columns].mean(axis=0)) /\
-                       ary_newt[:, columns].std(axis=0, ddof=ddof)
+    numerator = ary_newt[:, columns] - ary_newt[:, columns].mean(axis=0)
+    denominator = ary_newt[:, columns].std(axis=0, ddof=ddof)
+    ary_newt[:, columns] = numerator / denominator
 
     return ary_newt[:, columns]

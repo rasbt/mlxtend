@@ -12,6 +12,7 @@ import pandas as pd
 import numpy as np
 from itertools import cycle
 
+
 def category_scatter(x, y, label_col, data,
                      markers='sxo^v',
                      colors=('blue', 'green', 'red', 'purple', 'gray', 'cyan'),
@@ -73,12 +74,12 @@ def category_scatter(x, y, label_col, data,
             y_dat = data[data[:, label_col] == lab, y]
 
         plt.scatter(x_dat,
-                y_dat,
-                c=next(color_gen),
-                marker=next(marker_gen),
-                label=lab,
-                alpha=alpha,
-                s=markersize)
+                    y_dat,
+                    c=next(color_gen),
+                    marker=next(marker_gen),
+                    label=lab,
+                    alpha=alpha,
+                    s=markersize)
 
     if legend_loc:
         plt.legend(loc=legend_loc, scatterpoints=1)

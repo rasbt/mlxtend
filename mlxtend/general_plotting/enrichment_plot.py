@@ -12,8 +12,10 @@ import pandas as pd
 import numpy as np
 from itertools import cycle
 
-def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-', alpha=0.5, lw=2,
-                    legend=True, where='post', grid=True, count_label='Count',
+
+def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-',
+                    alpha=0.5, lw=2, legend=True, where='post', grid=True,
+                    count_label='Count',
                     xlim='auto', ylim='auto', invert_axes=False,
                     legend_loc='best', ax=None):
     """Plot stacked barplots

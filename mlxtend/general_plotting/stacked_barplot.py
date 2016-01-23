@@ -11,7 +11,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from itertools import cycle
 
-def stacked_barplot(df, bar_width='auto', colors='bgrcky', labels='index', rotation=90, legend_loc='best'):
+
+def stacked_barplot(df, bar_width='auto', colors='bgrcky',
+                    labels='index', rotation=90, legend_loc='best'):
     """
     Function to plot stacked barplots
 
@@ -57,21 +59,25 @@ def stacked_barplot(df, bar_width='auto', colors='bgrcky', labels='index', rotat
     label_pos = [pos]
 
     # Plotting the bars
-    fig, ax = plt.subplots(figsize=(12,6))
+    fig, ax = plt.subplots(figsize=(12, 6))
 
-    plt.bar(pos, df.iloc[:, 0], width,
-                 alpha=0.8,
-                 color=next(color_gen),
-                 label=df.columns[0])
+    plt.bar(pos,
+            df.iloc[:, 0],
+            width,
+            alpha=0.8,
+            color=next(color_gen),
+            label=df.columns[0])
 
     for i, c in enumerate(df.columns[1:]):
 
         bar_pos = [p + width*(i+1) for p in pos]
         label_pos.append(bar_pos)
-        plt.bar(bar_pos, df.iloc[:, i+1], width,
-                 alpha=0.5,
-                 color=next(color_gen),
-                 label=c)
+        plt.bar(bar_pos,
+                df.iloc[:, i+1],
+                width,
+                alpha=0.5,
+                color=next(color_gen),
+                label=c)
 
     # Setting axis labels and ticks
 

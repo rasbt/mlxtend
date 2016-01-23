@@ -10,26 +10,6 @@ import pandas as pd
 import numpy as np
 
 
-def test_standardize_columnerror():
-    try:
-        ary = np.array([[1, 2], [3, 4]])
-        out = standardize(ary, [1, 's2'])
-    except AttributeError:
-        pass
-    else:
-        raise AssertionError
-
-
-def test_standardize_arrayerror():
-    try:
-        ary = [[1, 2], [3, 4]]
-        out = standardize(ary, [1, 's2'])
-    except AttributeError:
-        pass
-    else:
-        raise AssertionError
-
-
 def test_pandas_standardize():
     s1 = pd.Series([1, 2, 3, 4, 5, 6], index=(range(6)))
     s2 = pd.Series([10, 9, 8, 7, 6, 5], index=(range(6)))

@@ -6,11 +6,13 @@
 #
 # License: BSD 3 clause
 
+
 def factorial(n):
     if n == 0:
         return 1
     else:
         return n * factorial(n-1)
+
 
 def num_combinations(n, k, with_replacement=False):
     """

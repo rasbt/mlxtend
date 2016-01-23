@@ -6,6 +6,7 @@
 #
 # License: BSD 3 clause
 
+
 def remove_borders(axes, left=False, bottom=False, right=True, top=True):
     """Remove chart junk from matplotlib plots.
 

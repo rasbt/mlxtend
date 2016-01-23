@@ -13,7 +13,7 @@ import numpy as np
 def test_minmax_scaling_arrayerror():
     try:
         ary = [[1, 2], [3, 4]]
-        out = minmax_scaling(ary, [1, 's2'])
+        minmax_scaling(ary, [1, 's2'])
     except AttributeError:
         pass
     else:

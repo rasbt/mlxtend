@@ -24,7 +24,8 @@ class MeanCenterer(TransformerObj):
 
     def transform(self, X):
         X_tr = np.copy(self._get_array(X))
-        X_tr = np.apply_along_axis(func1d=lambda x: x - self.col_means, axis=1, arr=X_tr)
+        X_tr = np.apply_along_axis(func1d=lambda x: x - self.col_means,
+                                   axis=1, arr=X_tr)
         return X_tr
 
     def fit(self, X):

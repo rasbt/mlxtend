@@ -9,6 +9,7 @@
 import time
 import sys
 
+
 class Counter():
     """Class to display the progress of for-loop iterators.
 
@@ -40,7 +41,7 @@ class Counter():
     def update(self):
         """Print current iteration and time elapsed."""
         self.curr_iter += 1
-        out = '%d iter | %d sec' % (self.curr_iter, time.time() \
-                                    - self.start_time)
+        out = '%d iter | %d sec' % (self.curr_iter, time.time() -
+                                    self.start_time)
         self.stream.write('\r%s' % out)
         self.stream.flush()

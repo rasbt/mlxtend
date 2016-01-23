@@ -7,7 +7,7 @@
 from mlxtend.classifier import Perceptron
 from mlxtend.data import iris_data
 import numpy as np
-
+from nose.tools import *
 
 # Iris Data
 X, y = iris_data()
@@ -23,8 +23,26 @@ X_std[:, 0] = (X[:, 0] - X[:, 0].mean()) / X[:, 0].std()
 X_std[:, 1] = (X[:, 1] - X[:, 1].mean()) / X[:, 1].std()
 
 
+@raises(Exception)
+def test_array_dimensions():
+    ppn = Perceptron(epochs=15, eta=0.01, random_seed=1)
+    ppn = ppn.fit(np.array([1, 2, 3]), [-1])
+
+
 def test_standardized_iris_data():
     ppn = Perceptron(epochs=15, eta=0.01, random_seed=1)
+    ppn = ppn.fit(X_std, y1)  # -1, 1 class
+    assert((y1 == ppn.predict(X_std)).all())
+
+
+def test_standardized_iris_data_with_shuffle():
+    ppn = Perceptron(epochs=15, eta=0.01, random_seed=1, shuffle=True)
+    ppn = ppn.fit(X_std, y1)  # -1, 1 class
+    assert((y1 == ppn.predict(X_std)).all())
+
+
+def test_standardized_iris_data_with_zero_weights():
+    ppn = Perceptron(epochs=15, eta=0.01, random_seed=1, zero_init_weight=True)
     ppn = ppn.fit(X_std, y1)  # -1, 1 class
     assert((y1 == ppn.predict(X_std)).all())
 

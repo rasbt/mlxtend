@@ -18,6 +18,8 @@ class Perceptron(object):
         Learning rate (between 0.0 and 1.0)
     epochs : int (default: 50)
         Number of passes over the training dataset.
+    shuffle : bool (default: False)
+        Fits the estimator on a shuffled training set.
     random_seed : int
         Random state for initializing random weights.
     zero_init_weight : bool (default: False)
@@ -49,13 +51,8 @@ class Perceptron(object):
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
-
         y : array-like, shape = [n_samples]
             Target values.
-
-        shuffle : bool (default: False)
-            Shuffles training data every epoch if True to prevent circles.
-
         init_weights : bool (default: True)
             Re-initializes weights prior to fitting. Set False to continue
             training with weights from a previous fitting.
@@ -63,7 +60,6 @@ class Perceptron(object):
         Returns
         -------
         self : object
-
         """
         # check array shape
         if not len(X.shape) == 2:

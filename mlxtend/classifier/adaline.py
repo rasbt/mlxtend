@@ -38,7 +38,7 @@ class Adaline(object):
     cost_ : list
       Sum of squared errors after each epoch.
     """
-    def __init__(self, eta=0.01, epochs=50,  solver='sgd',
+    def __init__(self, eta=0.01, epochs=50, solver='sgd',
                  random_seed=None, shuffle=False, zero_init_weight=False):
         np.random.seed(random_seed)
         self.eta = eta

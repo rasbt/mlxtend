@@ -12,5 +12,5 @@ from .scaling import standardize
 from .dense_transformer import DenseTransformer
 
 
-__all__ = ["MeanCenterer", "shuffle_arrays_unison", "TransformerObj"
+__all__ = ["MeanCenterer", "shuffle_arrays_unison", "TransformerObj",
            "minmax_scaling", "standardize", "DenseTransformer"]

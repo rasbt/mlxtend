@@ -29,13 +29,7 @@ google_analytics: ['UA-38457794-2', 'rasbt.github.io/mlxtend/']
 
 pages:
 - Home: index.md
-
-- Documentation:
-    - data:
-        - ./data/iris.md
-        - ./data/autompg.md
-        - ./data/boston_housing_data.md
-
+    
 - Changelog: changelog.md
 - Installation: installation.md
 - Contributing: contributing.md

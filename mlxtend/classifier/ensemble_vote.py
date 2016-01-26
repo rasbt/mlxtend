@@ -204,10 +204,10 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         Returns
         -------
         If `voting='soft'`:
-          array-like = [n_classifiers, n_samples, n_classes]
+            array-like = [n_classifiers, n_samples, n_classes]
             Class probabilties calculated by each classifier.
         If `voting='hard'`:
-          array-like = [n_classifiers, n_samples]
+            array-like = [n_classifiers, n_samples]
             Class labels predicted by each classifier.
         """
         if self.voting == 'soft':

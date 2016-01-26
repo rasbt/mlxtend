@@ -6,3 +6,19 @@ body {
 div.col-md-9 img {
     border: none;
 }
+
+
+h1, h2 {
+  margin-top:80px;
+  margin-bottom:30px;
+}
+
+ h3, h4 {
+   margin-top:50px;
+   margin-bottom:10px;
+ }
+
+h5, h6{
+   margin-top:30px;
+   margin-bottom:10px;
+ }

@@ -19,7 +19,7 @@ class Perceptron(object):
     epochs : int (default: 50)
         Number of passes over the training dataset.
     shuffle : bool (default: False)
-        Fits the estimator on a shuffled training set.
+         Shuffles training data every epoch if True to prevent circles.
     random_seed : int
         Random state for initializing random weights.
     zero_init_weight : bool (default: False)

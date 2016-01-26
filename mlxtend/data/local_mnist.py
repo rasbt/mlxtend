@@ -1,7 +1,7 @@
 # Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
 #
-# A function for fetching the open-source MNIST dataset. 
+# A function for fetching the open-source MNIST dataset.
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
@@ -16,16 +16,16 @@ def loadlocal_mnist(images_path, labels_path):
 
     Parameters
     ----------
-    images_path: str
+    images_path : str
         path to the test or train MNIST ubyte file
-    labels_path: str
+    labels_path : str
         path to the test or train MNIST class labels file
 
     Returns
     --------
-    images: [n_samples, n_pixels] numpy.array
+    images : [n_samples, n_pixels] numpy.array
         Pixel values of the images.
-    labels: [n_samples] numpy array
+    labels : [n_samples] numpy array
         Target class labels
     """
     with open(labels_path, 'rb') as lbpath:

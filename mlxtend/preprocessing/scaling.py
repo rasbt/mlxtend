@@ -26,7 +26,7 @@ def minmax_scaling(array, columns, min_val=0, max_val=1):
 
     Returns
     ----------
-    df_new: pandas DataFrame object.
+    df_new : pandas DataFrame object.
         Copy of the array or DataFrame with rescaled columns.
     """
     ary_new = array.astype(float)
@@ -71,7 +71,7 @@ def standardize(array, columns, ddof=0):
 
     Returns
     ----------
-    df_new: pandas DataFrame object.
+    df_new : pandas DataFrame object.
       Copy of the array or DataFrame with standardized columns.
 
     """

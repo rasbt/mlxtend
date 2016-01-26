@@ -41,7 +41,7 @@ def stacked_barplot(df, bar_width='auto', colors='bgrcky',
 
     Returns
     ---------
-    pyplot figure object
+    fig : matplotlib.pyplot figure object
     """
     # Setting the positions and width for the bars
     pos = np.array(range(len(df.index)))

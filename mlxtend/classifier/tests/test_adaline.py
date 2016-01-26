@@ -7,6 +7,7 @@
 from mlxtend.classifier import Adaline
 from mlxtend.data import iris_data
 import numpy as np
+from nose.tools import *
 
 
 # Iris Data
@@ -23,6 +24,19 @@ X_std[:, 0] = (X[:, 0] - X[:, 0].mean()) / X[:, 0].std()
 X_std[:, 1] = (X[:, 1] - X[:, 1].mean()) / X[:, 1].std()
 
 
+@raises(Exception)
+def test_invalid_solver():
+    t1 = np.array([-5.21e-16,  -7.86e-02,   1.02e+00])
+    ada = Adaline(epochs=30, eta=0.01, solver='bla', random_seed=1)
+    ada.fit(X_std, y1)
+
+
+@raises(Exception)
+def test_array_dimensions():
+    ada = Adaline(epochs=15, eta=0.01, random_seed=1)
+    ada = ada.fit(np.array([1, 2, 3]), [-1])
+
+
 def test_normal_equation():
     t1 = np.array([-5.21e-16,  -7.86e-02,   1.02e+00])
     ada = Adaline(epochs=30, eta=0.01, solver='normal equation', random_seed=1)
@@ -34,6 +48,39 @@ def test_normal_equation():
 def test_gradient_descent():
     t1 = np.array([-5.21e-16,  -7.86e-02,   1.02e+00])
     ada = Adaline(epochs=30, eta=0.01, solver='gd', random_seed=1)
+    ada.fit(X_std, y1)
+    np.testing.assert_almost_equal(ada.w_, t1, 2)
+    assert((y1 == ada.predict(X_std)).all())
+
+
+def test_refit_weights():
+    t1 = np.array([-5.21e-16,  -7.86e-02,   1.02e+00])
+    ada = Adaline(epochs=15, eta=0.01, solver='gd', random_seed=1)
+    ada.fit(X_std, y1, init_weights=True)
+    ada.fit(X_std, y1, init_weights=False)
+    np.testing.assert_almost_equal(ada.w_, t1, 2)
+    assert((y1 == ada.predict(X_std)).all())
+
+
+def test_standardized_iris_data_with_shuffle():
+    t1 = np.array([-5.21e-16,  -7.86e-02,   1.02e+00])
+    ada = Adaline(epochs=30,
+                  eta=0.01,
+                  solver='gd',
+                  random_seed=1,
+                  shuffle=True)
+    ada.fit(X_std, y1)
+    np.testing.assert_almost_equal(ada.w_, t1, 2)
+    assert((y1 == ada.predict(X_std)).all())
+
+
+def test_standardized_iris_data_with_zero_weights():
+    t1 = np.array([-5.21e-16,  -7.86e-02,   1.02e+00])
+    ada = Adaline(epochs=30,
+                  eta=0.01,
+                  solver='gd',
+                  random_seed=1,
+                  zero_init_weight=True)
     ada.fit(X_std, y1)
     np.testing.assert_almost_equal(ada.w_, t1, 2)
     assert((y1 == ada.predict(X_std)).all())

@@ -43,7 +43,7 @@ def category_scatter(x, y, label_col, data,
 
     Returns
     ---------
-    pyplot figure object
+    fig : matplotlig.pyplot figure object
     """
     fig = plt.figure()
     color_gen = cycle(colors)

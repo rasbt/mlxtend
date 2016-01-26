@@ -57,9 +57,8 @@ def plot_learning_curves(X_train, y_train,
 
     Returns
     ---------
-    (training_error, test_error): tuple of lists
+    errors : (training_error, test_error): tuple of lists
     """
-
     if scoring != 'misclassification error':
         from sklearn import metrics
 
@@ -125,4 +124,5 @@ def plot_learning_curves(X_train, y_train,
             max_y = max(max(test_errors), max(training_errors))
             min_y = min(min(test_errors), min(training_errors))
             plt.ylim([min_y - min_y * 0.15, max_y + max_y * 0.15])
-    return (training_errors, test_errors)
+    errors = (training_errors, test_errors)
+    return errors

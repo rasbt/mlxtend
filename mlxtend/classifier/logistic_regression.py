@@ -153,7 +153,7 @@ class LogisticRegression(object):
 
         Returns
         ----------
-          Class 1 probability : float
+            Class 1 probability : float
         """
         z = self.net_input(X)
         return self._sigmoid(z)

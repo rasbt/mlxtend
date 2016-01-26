@@ -12,19 +12,21 @@ import numpy as np
 def autompg_data():
     """Auto MPG dataset.
 
-    Source: https://archive.ics.uci.edu/ml/datasets/Auto+MPG
-    Number of samples: 392
-    Continuous target variable: mpg
+
+    Source : https://archive.ics.uci.edu/ml/datasets/Auto+MPG
+    Number of samples : 392
+    Continuous target variable : mpg
 
     Dataset Attributes:
-    1) cylinders: multi-valued discrete
-    2) displacement: continuous
-    3) horsepower: continuous
-    4) weight: continuous
-    5) acceleration: continuous
-    6) model year: multi-valued discrete
-    7) origin: multi-valued discrete
-    8) car name: string (unique for each instance)
+
+        - 1) cylinders:  multi-valued discrete
+        - 2) displacement: continuous
+        - 3) horsepower: continuous
+        - 4) weight: continuous
+        - 5) acceleration: continuous
+        - 6) model year: multi-valued discrete
+        - 7) origin: multi-valued discrete
+        - 8) car name: string (unique for each instance)
 
     Returns
     --------

@@ -21,7 +21,7 @@ def plot_sequential_feature_selection(metric_dict,
 
     Parameters
     ----------
-    metric_dict :
+    metric_dict : mlxtend.SequentialFeatureSelector.get_metric_dict() object
     kind : str (default: "std_dev")
         The kind of error bar or confidence interval in
         {'std_dev', 'std_err', 'ci', None}.

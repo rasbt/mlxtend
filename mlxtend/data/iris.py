@@ -1,7 +1,7 @@
 # Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
 #
-# A function for loading the open-source Iris Flower dataset. 
+# A function for loading the open-source Iris Flower dataset.
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
@@ -11,16 +11,17 @@ import numpy as np
 def iris_data():
     """Iris flower dataset.
 
-    Source: https://archive.ics.uci.edu/ml/datasets/Iris
-    Number of samples: 150
-    Class labels: {0, 1, 2}, distribution: [50, 50, 50]
+    Source : https://archive.ics.uci.edu/ml/datasets/Iris
+    Number of samples : 150
+    Class labels : {0, 1, 2}, distribution: [50, 50, 50]
         0 = setosa, 1 = versicolor, 2 = virginica.
 
     Dataset Attributes:
-    1) sepal length [cm]
-    2) sepal width [cm]
-    3) petal length [cm]
-    4) petal width [cm]
+    
+        - 1) sepal length [cm]
+        - 2) sepal width [cm]
+        - 3) petal length [cm]
+        - 4) petal width [cm]
 
     Returns
     --------

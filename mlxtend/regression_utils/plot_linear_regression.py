@@ -42,7 +42,8 @@ def plot_linear_regression(X, y, model=LinearRegression(), corr_func=pearsonr,
 
     Returns
     ----------
-    intercept, slope, corr_coeff: float, float, float
+    regression_fit : tuple
+        intercept, slope, corr_coeff (float, float, float)
     """
 
     if isinstance(X, list):
@@ -78,5 +79,5 @@ def plot_linear_regression(X, y, model=LinearRegression(), corr_func=pearsonr,
         if corr_func:
             leg_text += '\ncorr_coeff: %.2f' % corr_coeff
         plt.legend([leg_text], loc='best')
-
-    return intercept, slope, corr_coeff
+    regression_fit = (intercept, slope, corr_coeff)
+    return regression_fit

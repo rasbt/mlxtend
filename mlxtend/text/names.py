@@ -20,8 +20,8 @@ if sys.version_info <= (3, 0):
 def generalize_names(name, output_sep=' ', firstname_output_letters=1):
     """Generalize a person's first and last name.
 
-    Returns a person's name in the format
-    <last_name><separator><firstname letter(s)> (all lowercase)
+    Description : Returns a person's name in the format
+    `<last_name><separator><firstname letter(s)> (all lowercase)`
 
     Parameters
     ----------
@@ -84,8 +84,9 @@ def generalize_names(name, output_sep=' ', firstname_output_letters=1):
 
 
 def generalize_names_duplcheck(df, col_name):
-    """
-    Applies mlxtend.text.generalize_names to a DataFrame with 1 first name letter
+    """ Generalizes names and removes duplicates.
+    
+    Description : Applies mlxtend.text.generalize_names to a DataFrame with 1 first name letter
     by default and uses more first name letters if duplicates are detected.
 
     Parameters

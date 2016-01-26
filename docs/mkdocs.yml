@@ -29,7 +29,18 @@ google_analytics: ['UA-38457794-2', 'rasbt.github.io/mlxtend/']
 
 pages:
 - Home: index.md
-    
+- API:
+  - api/mlxtend.classifier.md
+  - api/mlxtend.data.md
+  - api/mlxtend.evaluate.md
+  - api/mlxtend.feature_selection.md
+  - api/mlxtend.file_io.md
+  - api/mlxtend.general_plotting.md
+  - api/mlxtend.preprocessing.md
+  - api/mlxtend.regression_utils.md
+  - api/mlxtend.regressor.md
+  - api/mlxtend.text.md
+  - api/mlxtend.utils.md  
 - Changelog: changelog.md
 - Installation: installation.md
 - Contributing: contributing.md

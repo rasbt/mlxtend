@@ -85,10 +85,8 @@ class Adaline(object):
             self.thres_ = 0.5
 
         # initialize weights
-        if not isinstance(init_weights, np.ndarray):
+        if init_weights:
             self._init_weights(shape=1 + X.shape[1])
-        else:
-            self.w_ = init_weights
 
         self.cost_ = []
 
@@ -103,7 +101,7 @@ class Adaline(object):
                     X, y = self._shuffle(X, y)
 
                 if self.solver == 'gd':
-                    y_val = self.net_input(X)
+                    y_val = self.activation(X)
                     errors = (y - y_val)
                     self.w_[1:] += self.eta * X.T.dot(errors)
                     self.w_[0] += self.eta * errors.sum()

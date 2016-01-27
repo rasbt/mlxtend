@@ -158,50 +158,30 @@ Soft Voting/Majority Rule classifier for scikit-learn estimators.
 **Examples**
 
     >>> import numpy as np
-
     >>> from sklearn.linear_model import LogisticRegression
-
     >>> from sklearn.naive_bayes import GaussianNB
-
     >>> from sklearn.ensemble import RandomForestClassifier
-
     >>> from mlxtend.sklearn import EnsembleVoteClassifier
-
     >>> clf1 = LogisticRegression(random_seed=1)
-
     >>> clf2 = RandomForestClassifier(random_seed=1)
-
     >>> clf3 = GaussianNB()
-
     >>> X = np.array([[-1, -1], [-2, -1], [-3, -2], [1, 1], [2, 1], [3, 2]])
-
     >>> y = np.array([1, 1, 1, 2, 2, 2])
-
     >>> eclf1 = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
-
     ... voting='hard', verbose=1)
     >>> eclf1 = eclf1.fit(X, y)
-
     >>> print(eclf1.predict(X))
-
     [1 1 1 2 2 2]
     >>> eclf2 = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting='soft')
-
     >>> eclf2 = eclf2.fit(X, y)
-
     >>> print(eclf2.predict(X))
-
     [1 1 1 2 2 2]
     >>> eclf3 = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
-
     ...                          voting='soft', weights=[2,1,1])
     >>> eclf3 = eclf3.fit(X, y)
-
     >>> print(eclf3.predict(X))
-
     [1 1 1 2 2 2]
     >>>
-
 
 ### Methods
 

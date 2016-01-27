@@ -6,6 +6,5 @@ Return emoticons from text
 
     Example:
     >>> tokenizer_emoticons('</a>This :) is :( a test :-)!')
-
     [':)', ':(', ':-)']
 

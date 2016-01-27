@@ -61,7 +61,6 @@ Return emoticons from text
 
     Example:
     >>> tokenizer_emoticons('</a>This :) is :( a test :-)!')
-
     [':)', ':(', ':-)']
 
 ## tokenizer_words_and_emoticons
@@ -72,6 +71,5 @@ Convert text to lowercase words and emoticons.
 
     Example:
     >>> tokenizer_words_and_emoticons('</a>This :) is :( a test :-)!')
-
     ['this', 'is', 'a', 'test', ':)', ':(', ':-)']
 

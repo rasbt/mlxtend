@@ -7,6 +7,9 @@ div.col-md-9 img {
     border: none;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  line-height: 120%;
+}
 
 h1, h2 {
   margin-top:80px;
@@ -14,8 +17,8 @@ h1, h2 {
 }
 
  h3, h4 {
-   margin-top:50px;
-   margin-bottom:10px;
+   margin-top:40px;
+   margin-bottom:20px;
  }
 
 h5, h6{

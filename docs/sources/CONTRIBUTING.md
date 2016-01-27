@@ -1,30 +1,35 @@
 # How to Contribute
 
+---
+
 I would be very happy about any kind of contributions that help to improve and extend the functionality of mlxtend.
 
 
-### Quick Contributor Checklist
+## Quick Contributor Checklist
 
-This is a quick checklist about the different steps of a typical contribution to mlxtend and
-other open source projects. Consider copying this list to a local text file (or the issue tracker)
+This is a quick checklist about the different steps of a typical contribution to mlxtend (and
+other open source projects). Consider copying this list to a local text file (or the issue tracker)
 and checking off items as you go.
 
 1. [ ]  Open a new "issue" on GitHub to discuss the new feature / bug fix  
 2. [ ]  Fork the mlxtend repository from GitHub (if not already done earlier)
-3. [ ]  Create and checkout a new topic branch   
+3. [ ]  Create and check out a new topic branch   
 4. [ ]  Implement a new feature or apply the bug-fix  
 5. [ ]  Add appropriate unit test functions  
-6. [ ]  Run `nosetests -sv` and make sure that all unit tests pass  
-7. [ ]  Check/improve the test coverage by running `nosetests --with-coverage`
-8. [ ]  Add a note about the change to the `./docs/sources/changelog.md` file  
+6. [ ]  Run `nosetests ./mlxtend -sv` and make sure that all unit tests pass  
+7. [ ]  Check/improve the test coverage by running `nosetests ./mlxtend --with-coverage`
+8. [ ]  Check for style issues by running `flake8 ./mlxtend` (you may want to run `nosetests` again after you made modifications to the code)
+8. [ ]  Add a note about the modification/contribution to the `./docs/sources/changelog.md` file  
 9. [ ]  Modify documentation in the appropriate location under `mlxtend/docs/sources/`  
 10. [ ]  Push the topic branch to the server and create a pull request
 11. [ ]  Check the Travis-CI build passed at [https://travis-ci.org/rasbt/mlxtend](https://travis-ci.org/rasbt/mlxtend)
 12. [ ]  Check/improve the unit test coverage at [https://coveralls.io/github/rasbt/mlxtend](https://coveralls.io/github/rasbt/mlxtend)
 13. [ ]  Check/improve the code health at [https://landscape.io/github/rasbt/mlxtend](https://landscape.io/github/rasbt/mlxtend)
-14. [ ]  Squash many small commits to a larger commit
+14. [ ]  Squash (many small) commits to a larger commit
 
-<br>
+<hr>
+
+# Tips for Contributors
 
 
 ## Getting Started - Creating a New Issue and Forking the Repository
@@ -38,8 +43,8 @@ and checking off items as you go.
 
 ![](img/contributing/fork.png)
 
-- Clone the `mlxtend` repository to your local machine
-	- `git clone https://github.com/<your_username>/mlxtend.git`
+- Clone the `mlxtend` repository to your local machine by executing 
+ ```git clone https://github.com/<your_username>/mlxtend.git```
 
 ## Syncing an Existing Fork
 
@@ -48,7 +53,7 @@ with the master branch as follows:
 
 #### 1. Configuring a remote that points to the upstream repository on GitHub
 
-List the current configured remote repository for your fork by executing
+List the current configured remote repository of your fork by executing
 
 ```bash
 $ git remote -v
@@ -127,9 +132,17 @@ SOME FILE2                    |    10 +++++++
 ```
 
 
-## Making Changes in a New Topic Branch
+## *The Main Workflow - Making Changes in a New Topic Branch
 
-#### 1. Creating a new feature branch
+Listed below are the 9 typical steps of a contribution.
+
+#### 1. Discussing the Feature or Modification
+
+Before you start coding, please discuss the new feature, bugfix, or other modification to the project
+on the project's [issue tracker](https://github.com/rasbt/mlxtend/issues). Before you open a "new issue," please
+do a quick search to see if a similar issue has been submitted already.
+
+#### 2. Creating a new feature branch
 
 Please avoid working directly on the master branch but create a new feature branch:
 
@@ -143,27 +156,31 @@ Switch to the new feature branch by executing
 $ git checkout <new_feature>
 ```
 
-#### 2. Developing the new feature / bug fix
+#### 3. Developing the new feature / bug fix
 
-#### 3. Testing your code
+Now it's time to modify existing code or to contribute new code to the project.
 
-Adding/modifying the unit tests and check if they pass:
+#### 4. Testing your code
+
+Add the respective unit tests and check if they pass:
 
 ```bash
 $ nosetests -sv
 ```
 
+Use the `--with-coverage` flag to ensure that all code is being covered in the unit tests:
+
 ```bash
 $ nosetests --with-coverage
 ```
 
-#### 4. Documenting the changes
+#### 5. Documenting changes
 
 Please add an entry to the `mlxtend/docs/sources/changelog.md` file.
 If it is a new feature, it would also be nice if you could update the documentation in appropriate location in `mlxtend/sources`.
 
 
-#### 5. Committing the changes
+#### 6. Committing changes
 
 When you are ready to commit the changes, please provide a meaningful `commit` message:
 
@@ -172,7 +189,7 @@ $ git add <modifies_files> # or `git add .`
 $ git commit -m '<meaningful commit message>'
 ```
 
-#### 6. Optional: squashing commits
+#### 7. Optional: squashing commits
 
 If you made multiple smaller commits, it would be nice if you could group them into a larger, summarizing commit. First, list your recent commit via
 
@@ -229,7 +246,7 @@ squash 046e3af fixed setup.py
 Now, save the changes in your editor. Now, quitting the editor will apply the `rebase` changes, and the editor will open a second time, prompting you to enter a new commit message. In this case, we could enter `support for feature x` to summarize the contributions.
 
 
-#### 7. Uploading the changes
+#### 8. Uploading changes
 
 Push your changes to a topic branch to the git server by executing:
 
@@ -237,7 +254,7 @@ Push your changes to a topic branch to the git server by executing:
 $ git push origin <feature_branch>
 ```
 
-#### 8. Submitting a `pull request`
+#### 9. Submitting a `pull request`
 
 Go to your GitHub repository online, select the new feature branch, and submit a new pull request:
 
@@ -245,9 +262,13 @@ Go to your GitHub repository online, select the new feature branch, and submit a
 ![](img/contributing/pull_request.png)
 
 
-## Notes for the Developers
+<hr>
 
-### Building the documentation
+# Notes for Developers
+
+
+
+## Building the documentation
 
 The documentation is built via [MkDocs](http://www.mkdocs.org); to ensure that the documentation is rendered correctly, you can view the documentation locally by executing `mkdocs serve` from the `mlxtend/docs` directory.
 
@@ -257,7 +278,7 @@ For example,
 ~/github/mlxtend/docs$ mkdocs serve
 ```
 
-#### 1.  Editing the Tutorials
+### 1.  Editing the Tutorials
 
 Please note that documents containing code examples are generated from IPython Notebook files and converted to markdown via
 
@@ -269,7 +290,7 @@ The markdown file should be placed into the documentation directory at `mlxtend/
 If you are adding a new document, please also include it in the pages section in the `mlxtend/docs/mkdocs.yml` file.
 
 
-#### 2. Building the API documentation
+### 2. Building the API documentation
 
 To build the API documentation, navigate to `mlxtend/docs` and execute the `make_api.py` file from this directory via
 
@@ -279,7 +300,7 @@ To build the API documentation, navigate to `mlxtend/docs` and execute the `make
 
 This should place the API documentation into the correct directories in `mlxtend/docs/sources/api`.
 
-#### 3. Building static HTML files of the documentation
+### 3. Building static HTML files of the documentation
 
 Build the static HTML files of the mlxtend documentation via
 
@@ -293,9 +314,9 @@ To deploy the documentation, execute
 ~/github/mlxtend/docs$ mkdocs gh-deploy --clean
 ```
 
-### Uploading a new version to PyPI
+## Uploading a new version to PyPI
 
-#### 1. Creating a new testing environment
+### 1. Creating a new testing environment
 
 Assuming we are using `conda`, create a new python environment via
 
@@ -309,7 +330,7 @@ Next, activate the environment by executing
 $ source activate mlxtend-testing
 ```
 
-#### 2. Installing the package from local files
+### 2. Installing the package from local files
 
 Test the installation by executing
 
@@ -344,7 +365,7 @@ and uninstall it again
 $ pip uninstall mlxtend
 ```
 
-#### 3. Deploying the package
+### 3. Deploying the package
 
 Consider deploying the package to the PyPI test server first. The setup instructions can be found [here](https://wiki.python.org/moin/TestPyPI).
 
@@ -370,7 +391,7 @@ After this dry-run succeeded, repeat this process using the "real" PyPI:
 $ python setup.py sdist upload
 ```
 
-#### 4. Removing the virtual environment
+### 4. Removing the virtual environment
 
 Finally, to cleanup our local drive, remove the virtual testing environment via
 

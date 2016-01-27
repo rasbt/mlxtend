@@ -1,7 +1,0 @@
-## factorial
-
-
-
-*factorial(n)*
-
-None

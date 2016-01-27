@@ -22,6 +22,18 @@ def _obj_name(obj):
 
 
 def docstring_to_markdown(docstring):
+    """Convert a Python object's docstring to markdown
+
+    Parameters
+    ----------
+    docstring : str
+        The docstring body.
+
+    Returns
+    ----------
+    clean_lst : list
+        The markdown formatted docstring as lines (str) in a Python list.
+    """
     new_docstring_lst = []
 
     for idx, line in enumerate(docstring.split('\n')):
@@ -51,7 +63,22 @@ def docstring_to_markdown(docstring):
 
 
 def object_to_markdownpage(obj_name, obj, s=''):
+    """Generate the markdown documentation of a Python object.
 
+    Parameters
+    ----------
+    obj_name : str
+        Name of the Python object.
+    obj : object
+        Python object (class, method, function, ...)
+    s : str (default: '')
+        A string to which the documentation will be appended to.
+
+    Returns
+    ---------
+    s : str
+        The markdown page.
+    """
     # header
     s += '## %s\n' % obj_name
 
@@ -79,6 +106,20 @@ def object_to_markdownpage(obj_name, obj, s=''):
 
 
 def import_package(rel_path_to_package, package_name):
+    """Imports a python package into the current namespace.
+
+    Parameters
+    ----------
+    rel_path_to_package : str
+        Path to the package containing director relative from this script's
+        directory.
+    package_name : str
+        The name of the package to be imported.
+
+    Returns
+    ---------
+    package : The imported package object.
+    """
     try:
         curr_dir = os.path.dirname(os.path.realpath(__file__))
     except NameError:
@@ -91,16 +132,47 @@ def import_package(rel_path_to_package, package_name):
 
 
 def get_subpackages(package):
-    "importer, subpackage_name"
+    """Return subpackages of a package.
+
+    Parameters
+    ----------
+    package : python package object
+
+    Returns
+    --------
+    list : list containing (importer, subpackage_name) tuples
+
+    """
     return [i for i in pkgutil.iter_modules(package.__path__) if i[2]]
 
 
 def get_modules(package):
-    "importer, subpackage_name"
+    """Return modules of a package.
+
+    Parameters
+    ----------
+    package : python package object
+
+    Returns
+    --------
+    list : list containing (importer, subpackage_name) tuples
+
+    """
     return [i for i in pkgutil.iter_modules(package.__path__)]
 
 
 def get_functions_and_classes(package):
+    """Retun lists of functions and classes from a package.
+
+    Parameters
+    ----------
+    package : python package object
+
+    Returns
+    --------
+    list, list : list of classes and functions
+        Each sublist consists of [name, member] sublists.
+    """
     classes, functions = [], []
     for name, member in inspect.getmembers(package):
         if not name.startswith('_'):
@@ -112,7 +184,24 @@ def get_functions_and_classes(package):
 
 
 def generate_api_docs(package, api_dir, clean=False, printlog=True):
+    """Generate a module level API documentation of a python package.
 
+    Description
+    -----------
+    Generates markdown API files for each module in a Python package whereas
+    the structure is as follows:
+    `package/package.subpackage/package.subpackage.module.md`
+
+    Parameters
+    -----------
+    package : Python package object
+    api_dir : str
+        Output directory path for the top-level package directory
+    clean : bool (default: False)
+        Removes previously existing API directory if True.
+    printlog : bool (default: True)
+        Prints a progress log to the standard output screen if True.
+    """
     if printlog:
         print('\n\nGenerating Module Files\n%s\n' % (50 * '='))
 
@@ -147,9 +236,14 @@ def generate_api_docs(package, api_dir, clean=False, printlog=True):
             for obj in classes + functions:
                 md_path = os.path.join(target_dir, obj[0]) + '.md'
                 if md_path not in api_docs:
-                    api_docs[md_path] = object_to_markdownpage(obj_name=obj[0], obj=obj[1], s='')
+                    api_docs[md_path] = object_to_markdownpage(obj_name=obj[0],
+                                                               obj=obj[1],
+                                                               s='')
                 else:
-                    api_docs[md_path] += object_to_markdownpage(obj_name=obj[0], obj=obj[1], s='')
+                    api_docs[md_path] += object_to_markdownpage(obj_name=(
+                                                                obj[0]),
+                                                                obj=obj[1],
+                                                                s='')
 
     # write to files
     for d in sorted(api_docs):
@@ -172,8 +266,29 @@ def generate_api_docs(package, api_dir, clean=False, printlog=True):
             print('%s %s' % (msg, d))
 
 
-def summarize_methdods_and_functions(api_modules, out_dir, printlog=False, clean=True):
+def summarize_methdods_and_functions(api_modules, out_dir,
+                                     printlog=False, clean=True):
+    """Generates subpacke-level summary files.
 
+    Description
+    -----------
+    A function to generate subpacke-level summary markdown API files from
+    a module-level API documentation previously created via the
+    `generate_api_docs` function.
+    The output structure is:
+        package/package.subpackage.md
+
+    Parameters
+    ----------
+    api_modules : str
+        Path to the API documentation crated via `generate_api_docs`
+    out_dir : str
+        Path to the desired output directory for the new markdown files.
+    clean : bool (default: False)
+        Removes previously existing API directory if True.
+    printlog : bool (default: True)
+        Prints a progress log to the standard output screen if True.
+    """
     if printlog:
         print('\n\nGenerating Subpackage Files\n%s\n' % (50 * '='))
 
@@ -230,16 +345,38 @@ if __name__ == "__main__":
             description='Convert docstring into a markdown API documentation.',
             formatter_class=argparse.RawTextHelpFormatter)
 
-    parser.add_argument('-n', '--package_name', default='mlxtend', help='Name of the package')
-    parser.add_argument('-d', '--package_dir', default='../../mlxtend/', help="Path to the package's enclosing directory")
-    parser.add_argument('-o1', '--output_module_api', default='../docs/sources/api_modules', help='Target directory for the module-level API Markdown files')
-    parser.add_argument('-o2', '--output_subpackage_api', default='../docs/sources/api_subpackages', help='Target directory for the subpackage-level API Markdown files')
-    parser.add_argument('-c', '--clean', action='store_true', help='Remove previous API files')
-    parser.add_argument('-s', '--silent', action='store_true', help='Suppress log printed to the screen')
-    parser.add_argument('-v', '--version', action='version', version='v. 0.1')
+    parser.add_argument('-n', '--package_name',
+                        default='mlxtend',
+                        help='Name of the package')
+    parser.add_argument('-d', '--package_dir',
+                        default='../../mlxtend/',
+                        help="Path to the package's enclosing directory")
+    parser.add_argument('-o1', '--output_module_api',
+                        default='../docs/sources/api_modules',
+                        help=('Target directory for the module-level'
+                              ' API Markdown files'))
+    parser.add_argument('-o2', '--output_subpackage_api',
+                        default='../docs/sources/api_subpackages',
+                        help=('Target directory for the'
+                              'subpackage-level API Markdown files'))
+    parser.add_argument('-c', '--clean',
+                        action='store_true',
+                        help='Remove previous API files')
+    parser.add_argument('-s', '--silent',
+                        action='store_true',
+                        help='Suppress log printed to the screen')
+    parser.add_argument('-v', '--version',
+                        action='version',
+                        version='v. 0.1')
 
     args = parser.parse_args()
 
     package = import_package(args.package_dir, args.package_name)
-    generate_api_docs(package=package, api_dir=args.output_module_api, clean=args.clean, printlog=not(args.silent))
-    summarize_methdods_and_functions(api_modules=args.output_module_api, out_dir=args.output_subpackage_api, printlog=not(args.silent), clean=args.clean)
+    generate_api_docs(package=package,
+                      api_dir=args.output_module_api,
+                      clean=args.clean,
+                      printlog=not(args.silent))
+    summarize_methdods_and_functions(api_modules=args.output_module_api,
+                                     out_dir=args.output_subpackage_api,
+                                     printlog=not(args.silent),
+                                     clean=args.clean)

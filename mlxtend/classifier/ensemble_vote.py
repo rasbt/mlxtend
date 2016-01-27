@@ -56,6 +56,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
     Examples
     --------
+    
     >>> import numpy as np
     >>> from sklearn.linear_model import LogisticRegression
     >>> from sklearn.naive_bayes import GaussianNB

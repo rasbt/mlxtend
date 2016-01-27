@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plot_linear_regression(X, y, model=LinearRegression(), corr_func=pearsonr,
+def plot_linear_regression(X, y, model=LinearRegression(), corr_func='pearsonr',
                            scattercolor='blue', fit_style='k--', legend=True,
                            xlim='auto'):
     """Plot a linear regression line fit.
@@ -27,9 +27,12 @@ def plot_linear_regression(X, y, model=LinearRegression(), corr_func=pearsonr,
     model: object (default: sklearn.linear_model.LinearRegression)
         Estimator object for regression. Must implement
         a .fit() and .predict() method.
-    corr_func: function (default: scipy.stats.pearsonr)
-        function to calculate the regression
-        slope.
+    corr_func: str or function (default: 'pearsonr')
+        Uses `pearsonr` from scipy.stats if corr_func='pearsonr'.
+        to compute the regression slope. If not 'pearsonr', the `corr_func`,
+        the `corr_func` parameter expects a function of the form
+        func(<x-array>, <y-array>) as inputs, which is expected to return
+        a tuple `(<correlation_coefficient>, <some_unused_value>)`.
     scattercolor: string (default: blue)
         Color of scatter plot points.
     fit_style: string (default: k--)
@@ -70,14 +73,16 @@ def plot_linear_regression(X, y, model=LinearRegression(), corr_func=pearsonr,
 
     plt.plot([x_min, x_max], [y_min, y_max], fit_style, lw=1)
 
-    if corr_func:
-        corr_coeff, p = corr_func(X[:, 0], y)
-        intercept, slope = model.intercept_, model.coef_[0]
+    if corr_func == 'pearsonr':
+        corr_func = pearsonr
+
+    corr_coeff, p = corr_func(X[:, 0], y)
+    intercept, slope = model.intercept_, model.coef_[0]
 
     if legend:
         leg_text = 'intercept: %.2f\nslope: %.2f' % (intercept, slope)
         if corr_func:
-            leg_text += '\ncorr_coeff: %.2f' % corr_coeff
+            leg_text += '\ncorrelation: %.2f' % corr_coeff
         plt.legend([leg_text], loc='best')
     regression_fit = (intercept, slope, corr_coeff)
     return regression_fit

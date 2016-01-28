@@ -267,7 +267,8 @@ def generate_api_docs(package, api_dir, clean=False, printlog=True):
 
 
 def summarize_methdods_and_functions(api_modules, out_dir,
-                                     printlog=False, clean=True):
+                                     printlog=False, clean=True,
+                                     str_above_header=''):
     """Generates subpacke-level summary files.
 
     Description
@@ -288,6 +289,8 @@ def summarize_methdods_and_functions(api_modules, out_dir,
         Removes previously existing API directory if True.
     printlog : bool (default: True)
         Prints a progress log to the standard output screen if True.
+    str_above_header : str (default: '')
+        Places a string just above the header.
     """
     if printlog:
         print('\n\nGenerating Subpackage Files\n%s\n' % (50 * '='))
@@ -314,6 +317,8 @@ def summarize_methdods_and_functions(api_modules, out_dir,
                         if not m.startswith('.'))
 
         new_output = []
+        if str_above_header:
+            new_output.append(str_above_header)
         for p in module_paths:
             with open(p, 'r') as r:
                 new_output.extend(r.readlines())
@@ -379,4 +384,7 @@ if __name__ == "__main__":
     summarize_methdods_and_functions(api_modules=args.output_module_api,
                                      out_dir=args.output_subpackage_api,
                                      printlog=not(args.silent),
-                                     clean=args.clean)
+                                     clean=args.clean,
+                                     str_above_header=('mlxtend'
+                                                       ' version: %s\n' % (
+                                                        package.__version__)))

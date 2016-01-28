@@ -1,3 +1,4 @@
+mlxtend version: 0.3.0
 ## autompg_data
 
 *autompg_data()*

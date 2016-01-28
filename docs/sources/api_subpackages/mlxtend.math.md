@@ -1,3 +1,4 @@
+mlxtend version: 0.3.0
 ## factorial
 
 *factorial(n)*

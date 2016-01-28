@@ -1,3 +1,4 @@
+mlxtend version: 0.3.0
 ## category_scatter
 
 *category_scatter(x, y, label_col, data, markers='sxo^v', colors=('blue', 'green', 'red', 'purple', 'gray', 'cyan'), alpha=0.7, markersize=20.0, legend_loc='best')*

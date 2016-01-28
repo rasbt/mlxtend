@@ -1,4 +1,4 @@
-# Installing MLxtend
+# Installing mlxtend
 
 ---
 

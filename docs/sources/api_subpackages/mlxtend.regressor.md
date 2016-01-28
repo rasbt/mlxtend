@@ -1,3 +1,4 @@
+mlxtend version: 0.3.0
 ## LinearRegression
 
 *LinearRegression(solver='normal equation', eta=0.01, epochs=50, random_seed=None, shuffle=False, zero_init_weight=False)*

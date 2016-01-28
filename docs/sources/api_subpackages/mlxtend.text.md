@@ -1,3 +1,4 @@
+mlxtend version: 0.3.0
 ## generalize_names
 
 *generalize_names(name, output_sep=' ', firstname_output_letters=1)*

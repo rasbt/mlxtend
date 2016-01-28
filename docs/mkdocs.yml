@@ -30,7 +30,7 @@ google_analytics: ['UA-38457794-2', 'rasbt.github.io/mlxtend/']
 pages:
 - Home: index.md
 - User Guide:
-  - api_subpackages/mlxtend.classifier.md
+  - user_guide/classifier/Adaline.md
 - API:
   - api_subpackages/mlxtend.classifier.md
   - api_subpackages/mlxtend.data.md

@@ -43,7 +43,7 @@ and checking off items as you go.
 
 ![](img/contributing/fork.png)
 
-- Clone the `mlxtend` repository to your local machine by executing 
+- Clone the `mlxtend` repository to your local machine by executing
  ```git clone https://github.com/<your_username>/mlxtend.git```
 
 ## Syncing an Existing Fork
@@ -278,19 +278,7 @@ For example,
 ~/github/mlxtend/docs$ mkdocs serve
 ```
 
-### 1.  Editing the Tutorials
-
-Please note that documents containing code examples are generated from IPython Notebook files and converted to markdown via
-
-```bash
-~/github/mlxtend/docs/examples$ nbconvert --to markdown <file.ipynb>
-```
-
-The markdown file should be placed into the documentation directory at `mlxtend/docs/sources` to build the documentation via  MkDocs.
-If you are adding a new document, please also include it in the pages section in the `mlxtend/docs/mkdocs.yml` file.
-
-
-### 2. Building the API documentation
+### 1. Building the API documentation
 
 To build the API documentation, navigate to `mlxtend/docs` and execute the `make_api.py` file from this directory via
 
@@ -298,11 +286,37 @@ To build the API documentation, navigate to `mlxtend/docs` and execute the `make
 ~/github/mlxtend/docs$ python make_api.py
 ```
 
-This should place the API documentation into the correct directories in `mlxtend/docs/sources/api`.
+This should place the API documentation into the correct directories into the two directories:
+
+- `mlxtend/docs/sources/api_modules`
+- `mlxtend/docs/sources/api_subpackes`
+
+### 2. Editing the User Guide
+
+The documents containing code examples for the "User Guide" are generated from IPython Notebook files. In order to convert a IPython notebook file to markdown after editing, please follow the following steps:
+
+1. Modify or edit the existing notebook.
+2. Execute all cells in the current notebook and make sure that no errors occur.
+3. Convert the notebook to markdown using the `ipynb2markdown.py` converter
+
+```python
+~/github/mlxtend/docs$ python ipynb2markdown.py --ipynb_path ./sources/user_guide/subpackage/notebookname.ipynb
+```
+
+**Note**  
+
+If you are adding a new document, please also include it in the pages section in the `mlxtend/docs/mkdocs.yml` file.
+
+
 
 ### 3. Building static HTML files of the documentation
 
-Build the static HTML files of the mlxtend documentation via
+First, please check the documenation via localhost (http://127.0.0.1:8000/):
+
+```bash
+~/github/mlxtend/docs$ mkdocs serve```
+
+Next, build the static HTML files of the mlxtend documentation via
 
 ```bash
 ~/github/mlxtend/docs$ mkdocs build --clean

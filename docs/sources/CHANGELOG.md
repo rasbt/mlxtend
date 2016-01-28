@@ -8,9 +8,9 @@
 
 ### Version 0.3.0
 
-- Added progress report to `classifier.NeuralNetMLP`
-- New scoring function `evaluate.scoring`
-- New confusion matrix functions `evaluate.confusion_matrix` and  `evaluate.plot_confusion_matrix`
+- Added a progress bar tracker to [`classifier.NeuralNetMLP`](./api_subpackages/mlxtend.classifier/#neuralnetmlp).
+- Added a function to score predicted vs. target class labels [`evaluate.scoring`](./api_subpackages/mlxtend.evaluate/#scoring).
+- Added confusion matrix functions to create ([`evaluate.confusion_matrix`](./api_subpackages/mlxtend.evaluate/#confusion_matrix)) and plot ([`evaluate.plot_confusion_matrix`](./api_subpackages/mlxtend.evaluate/#plot_confusion_matrix)) confusion matrices
 - Cosmetic improvements to the `evaluate.plot_decision_regions` function such as hiding plot axes
 - Renaming of `classifier.EnsembleClassfier` to `classifier.EnsembleVoteClassifier`
 - Improved random weight initialization in `Perceptron`, `Adaline`, `LinearRegression`, and `LogisticRegression`

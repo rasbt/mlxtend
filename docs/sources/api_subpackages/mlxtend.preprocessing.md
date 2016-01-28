@@ -1,3 +1,4 @@
+mlxtend version: 0.3.0
 ## DenseTransformer
 
 *DenseTransformer(some_param=True)*

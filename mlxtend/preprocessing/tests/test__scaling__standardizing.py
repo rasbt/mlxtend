@@ -81,3 +81,33 @@ def test_numpy_single_dim():
                          [1.46385]])
 
     np.testing.assert_allclose(ary_actu, ary_expc, rtol=1e-03)
+
+
+def test_zero_division_pandas():
+    s1 = pd.Series([0, 0, 0, 0, 0, 0], index=(range(6)))
+    s2 = pd.Series([10, 9, 8, 7, 6, 5], index=(range(6)))
+    df = pd.DataFrame(s1, columns=['s1'])
+    df['s2'] = s2
+
+    df_out1 = standardize(df, ['s1', 's2'])
+    ary_out1 = np.array([[0.0, 1.46385],
+                         [0.0, 0.87831],
+                         [0.0, 0.29277],
+                         [0.0, -0.29277],
+                         [0.0, -0.87831],
+                         [0.0, -1.46385]])
+    np.testing.assert_allclose(df_out1.values, ary_out1, rtol=1e-03)
+
+
+def test_zero_division_numpy():
+    ary = np.array([[0, 10], [0, 9], [0, 8], [0, 7], [0, 6], [0, 5]])
+
+    ary_actu = standardize(ary, columns=[0, 1])
+    ary_expc = np.array([[0.0, 1.46385],
+                         [0.0, 0.87831],
+                         [0.0, 0.29277],
+                         [0.0, -0.29277],
+                         [0.0, -0.87831],
+                         [0.0, -1.46385]])
+
+    np.testing.assert_allclose(ary_actu, ary_expc, rtol=1e-03)

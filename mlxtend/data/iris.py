@@ -17,7 +17,7 @@ def iris_data():
         0 = setosa, 1 = versicolor, 2 = virginica.
 
     Dataset Attributes:
-    
+
         - 1) sepal length [cm]
         - 2) sepal width [cm]
         - 3) petal length [cm]

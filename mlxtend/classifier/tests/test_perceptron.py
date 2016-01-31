@@ -7,7 +7,7 @@
 from mlxtend.classifier import Perceptron
 from mlxtend.data import iris_data
 import numpy as np
-from nose.tools import *
+from nose.tools import raises
 
 # Iris Data
 X, y = iris_data()

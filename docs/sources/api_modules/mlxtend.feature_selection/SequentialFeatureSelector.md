@@ -88,7 +88,8 @@ Sequential Feature Selection for Classification and Regression.
     'avg_score' (average cross-validation score)
 
 **Examples**
-    >>> from sklearn.neighbors import KNeighborsClassifier
+
+>>> from sklearn.neighbors import KNeighborsClassifier
     >>> from sklearn.datasets import load_iris
     >>> iris = load_iris()
     >>> X = iris.data
@@ -105,7 +106,6 @@ Sequential Feature Selection for Classification and Regression.
     [ 1.3,  0.2],
     [ 1.5,  0.2],
     [ 1.4,  0.2]])
-
     >>> print('best score: %.2f' % sfs.k_score_)
     best score: 0.97
 
@@ -136,7 +136,8 @@ None
 Get parameters for this estimator.
 
 **Parameters**
-    deep: boolean, optional
+
+deep: boolean, optional
     If True, will return the parameters for this estimator and
     contained subobjects that are estimators.
 
@@ -158,7 +159,8 @@ Set the parameters of this estimator.
     component of a nested object.
 
 **Returns**
-    self
+
+self
 
 <hr>
 

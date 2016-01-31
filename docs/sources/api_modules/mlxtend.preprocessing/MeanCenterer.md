@@ -17,17 +17,54 @@ Column centering of vectors and matrices.
 
 *fit(X)*
 
-None
+Gets the column means for mean centering.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Array of data vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+self
 
 <hr>
 
 *fit_transform(X)*
 
-None
+Fits and transforms an arry.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Array of data vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `X_tr` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    A copy of the input array with the columns centered.
 
 <hr>
 
 *transform(X)*
 
-None
+Centers a NumPy array.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Array of data vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `X_tr` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    A copy of the input array with the columns centered.
 

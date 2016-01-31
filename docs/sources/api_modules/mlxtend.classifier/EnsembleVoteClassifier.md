@@ -216,7 +216,8 @@ Set the parameters of this estimator.
     component of a nested object.
 
 **Returns**
-    self
+
+self
 
 <hr>
 
@@ -232,10 +233,12 @@ Return class labels or probabilities for X for each estimator.
     n_features is the number of features.
 
 **Returns**
-    If `voting='soft'`:
-    array-like = [n_classifiers, n_samples, n_classes]
+
+- `If `voting='soft'`` : array-like = [n_classifiers, n_samples, n_classes]
+
     Class probabilties calculated by each classifier.
-    If `voting='hard'`:
-    array-like = [n_classifiers, n_samples]
+
+- `If `voting='hard'`` : array-like = [n_classifiers, n_samples]
+
     Class labels predicted by each classifier.
 

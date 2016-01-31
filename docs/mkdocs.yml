@@ -30,7 +30,54 @@ google_analytics: ['UA-38457794-2', 'rasbt.github.io/mlxtend/']
 pages:
 - Home: index.md
 - User Guide:
-  - user_guide/classifier/Adaline.md
+  - classifier:
+    - user_guide/classifier/Adaline.md
+    - user_guide/classifier/EnsembleVoteClassifier.md
+    - user_guide/classifier/LogisticRegression.md
+    - user_guide/classifier/Perceptron.md
+  - regressor:
+    - user_guide/regressor/LinearRegression.md
+  - regression_utils:
+    - user_guide/regression_utils/plot_linear_regression.md
+  - evaluate:
+    - user_guide/evaluate/confusion_matrix.md
+    - user_guide/evaluate/plot_decision_regions.md
+    - user_guide/evaluate/plot_learning_curves.md
+    - user_guide/evaluate/scoring.md
+  - preprocessing:
+    - user_guide/preprocessing/DenseTransformer.md
+    - user_guide/preprocessing/MeanCenterer.md
+    - user_guide/preprocessing/minmax_scaling.md
+    - user_guide/preprocessing/shuffle_arrays_unison.md
+    - user_guide/preprocessing/standardize.md
+  - data:
+    - user_guide/data/autompg_data.md
+    - user_guide/data/boston_housing_data.md
+    - user_guide/data/iris_data.md
+    - user_guide/data/mnist_data.md
+    - user_guide/data/load_mnist.md
+    - user_guide/data/wine_data.md
+  - file_io:
+    - user_guide/file_io/find_filegroups.md
+    - user_guide/file_io/find_files.md
+  - general plotting:
+    - user_guide/general_plotting/category_scatter.md
+    - user_guide/general_plotting/enrichment_plot.md
+    - user_guide/general_plotting/stacked_barplot.md
+  - math:
+    - user_guide/math/num_combinations.md
+    - user_guide/math/num_permutations.md
+  - text:
+    - user_guide/text/generalize_names.md
+    - user_guide/text/generalize_names_duplcheck.md
+    - user_guide/text/tokenizer.md
+  - utils:
+    - user_guide/utils/Counter.md
+  - general concepts:
+    - user_guide/general_concepts/activation-functions.md
+    - user_guide/general_concepts/gradient-optimization.md
+    - user_guide/general_concepts/linear-gradient-derivative.md
+    - user_guide/general_concepts/regularization-linear.md
 - API:
   - api_subpackages/mlxtend.classifier.md
   - api_subpackages/mlxtend.data.md

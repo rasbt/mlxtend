@@ -33,6 +33,7 @@ def docstring_to_markdown(docstring):
     ----------
     clean_lst : list
         The markdown formatted docstring as lines (str) in a Python list.
+
     """
     new_docstring_lst = []
 
@@ -52,7 +53,9 @@ def docstring_to_markdown(docstring):
             elif ' : ' in line:
                 line = line.replace(' : ', '` : ')
                 new_docstring_lst[idx+1] = '\n- `%s\n' % line
-            elif not line.startswith('*'):
+            elif '**' in new_docstring_lst[idx-1] and '**' not in line:
+                new_docstring_lst[idx+1] = '\n%s' % line.lstrip()
+            elif '**' not in line:
                 new_docstring_lst[idx+1] = '    %s' % line.lstrip()
 
     clean_lst = []
@@ -78,6 +81,7 @@ def object_to_markdownpage(obj_name, obj, s=''):
     ---------
     s : str
         The markdown page.
+
     """
     # header
     s += '## %s\n' % obj_name
@@ -97,7 +101,8 @@ def object_to_markdownpage(obj_name, obj, s=''):
         methods = inspect.getmembers(obj)
         for m in methods:
             if not m[0].startswith('_'):
-                sig = str(inspect.signature(m[1])).replace('(self, ', '(')
+                sig = str(inspect.signature(m[1]))
+                sig = sig.replace('(self, ', '(').replace('(self)', '()')
                 s += '\n\n<hr>\n\n*%s%s*\n\n' % (m[0], sig)
                 m_doc = docstring_to_markdown(str(inspect.getdoc(m[1])))
                 s += '\n'.join(m_doc)
@@ -119,6 +124,7 @@ def import_package(rel_path_to_package, package_name):
     Returns
     ---------
     package : The imported package object.
+
     """
     try:
         curr_dir = os.path.dirname(os.path.realpath(__file__))
@@ -172,6 +178,7 @@ def get_functions_and_classes(package):
     --------
     list, list : list of classes and functions
         Each sublist consists of [name, member] sublists.
+
     """
     classes, functions = [], []
     for name, member in inspect.getmembers(package):
@@ -201,6 +208,7 @@ def generate_api_docs(package, api_dir, clean=False, printlog=True):
         Removes previously existing API directory if True.
     printlog : bool (default: True)
         Prints a progress log to the standard output screen if True.
+
     """
     if printlog:
         print('\n\nGenerating Module Files\n%s\n' % (50 * '='))
@@ -291,6 +299,7 @@ def summarize_methdods_and_functions(api_modules, out_dir,
         Prints a progress log to the standard output screen if True.
     str_above_header : str (default: '')
         Places a string just above the header.
+
     """
     if printlog:
         print('\n\nGenerating Subpackage Files\n%s\n' % (50 * '='))

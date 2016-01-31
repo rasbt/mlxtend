@@ -14,6 +14,8 @@
 
 **A library consisting of useful tools and extensions for the day-to-day data science tasks.**
 
+- Open source & commercially usable!
+
 <br>
 
 Sebastian Raschka 2014-2016

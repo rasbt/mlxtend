@@ -8,6 +8,7 @@
 
 ### Version 0.3.0
 
+- The `mlxtend.preprocessing.standardize` function now optionally returns the parameters, which are estimated from the array, for re-use. A further improvement makes the `standardize` function smarter in order to avoid zero-division errors.
 - Added a progress bar tracker to [`classifier.NeuralNetMLP`](./api_subpackages/mlxtend.classifier/#neuralnetmlp).
 - Added a function to score predicted vs. target class labels [`evaluate.scoring`](./api_subpackages/mlxtend.evaluate/#scoring).
 - Added confusion matrix functions to create ([`evaluate.confusion_matrix`](./api_subpackages/mlxtend.evaluate/#confusion_matrix)) and plot ([`evaluate.plot_confusion_matrix`](./api_subpackages/mlxtend.evaluate/#plot_confusion_matrix)) confusion matrices
@@ -22,7 +23,7 @@
 - Sequential Feature Selection algorithms were unified into a single [SFS](http://rasbt.github.io/mlxtend/docs/feature_selection/sequential_feature_selection/) object with parameters to enable floating selection and toggle between forward and backward selction.
 - New `SFS` features such as the generation of pandas `DataFrame` results tables and plotting functions (with confidence intervals, standard deviation, and standard error bars)
 - Added support for regression estimators in `SFS`
-- Stratified sampling of MNIST (now 500x samples from each of the 10 digits)
+- Stratified sampling of MNIST (now 500x random samples from each of the 10 digit categories)
 - Added boston [housing dataset](./data/boston_housing.md)
 - Renaming `mlxtend.plotting` to `mlxtend.general_plotting` in order to distinguish general plotting function from specialized utility function such as `evaluate.plot_decision_regions`
 - Shuffle fix and new shuffle parameter for classifier.NeuralNetMLP

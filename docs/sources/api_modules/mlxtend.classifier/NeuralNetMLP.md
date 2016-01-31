@@ -105,7 +105,8 @@ Learn weight coefficients from training data.
     Target class labels.
 
 **Returns:**
-    self
+
+self
 
 <hr>
 

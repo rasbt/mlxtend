@@ -8,7 +8,7 @@ An implementation of the ADAptive LInear NEuron, Adaline, for binary classificat
 
 An illustration of the ADAptive LInear NEuron (Adaline) -- a single-layer artificial linear neuron with a threshold unit:
     
-![](./adaline_schematic.png)
+![](./Adaline_files/adaline_schematic.png)
 
 The Adaline classifier is closely related to the Ordinary Least Squares (OLS) Linear Regression algorithm; in OLS regression we find the line (or hyperplane) that minimizes the vertical offsets. Or in other words, we define the best-fitting line as the line that minimizes the sum of squared errors (SSE) or mean squared error (MSE) between our target variable (y) and our predicted output over all samples $i$ in our dataset of size $n$.
 

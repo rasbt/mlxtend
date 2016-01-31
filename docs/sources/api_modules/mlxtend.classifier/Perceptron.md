@@ -64,8 +64,7 @@ Learn weight coefficients from training data.
 
 **Returns**
 
-- `self` : object
-
+self
 
 <hr>
 

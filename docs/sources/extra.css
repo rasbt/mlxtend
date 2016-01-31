@@ -21,7 +21,12 @@ h1, h2 {
    margin-bottom:20px;
  }
 
-h5, h6{
+h5, h6 {
    margin-top:30px;
    margin-bottom:10px;
  }
+
+img {
+  max-width: 90%;
+  height: auto;
+}

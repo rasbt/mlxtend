@@ -50,19 +50,56 @@ Column centering of vectors and matrices.
 
 *fit(X)*
 
-None
+Gets the column means for mean centering.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Array of data vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+self
 
 <hr>
 
 *fit_transform(X)*
 
-None
+Fits and transforms an arry.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Array of data vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `X_tr` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    A copy of the input array with the columns centered.
 
 <hr>
 
 *transform(X)*
 
-None
+Centers a NumPy array.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Array of data vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `X_tr` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    A copy of the input array with the columns centered.
 
 ## minmax_scaling
 
@@ -116,6 +153,7 @@ Shuffle NumPy arrays in unison.
 
 
 **Examples**
+
     >>> import numpy as np
     >>> from mlxtend.preprocessing import shuffle_arrays_unison
     >>> X1 = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
@@ -127,14 +165,13 @@ Shuffle NumPy arrays in unison.
 
 ## standardize
 
-*standardize(array, columns, ddof=0)*
+*standardize(array, columns, ddof=0, return_params=False, params=None)*
 
-standardize columns in pandas DataFrames.
+Standardize columns in pandas DataFrames.
 
 **Parameters**
 
 - `array` : pandas DataFrame or NumPy ndarray, shape = [n_rows, n_columns].
-
 
 
 - `columns` : array-like, shape = [n_columns]
@@ -142,11 +179,31 @@ standardize columns in pandas DataFrames.
     Array-like with column names, e.g., ['col1', 'col2', ...]
     or column indices [0, 2, 4, ...]
 
-
 - `ddof` : int (default: 0)
 
     Delta Degrees of Freedom. The divisor used in calculations
     is N - ddof, where N represents the number of elements.
+
+- `return_params` : dict (default: False)
+
+    If set to True, a dictionary is returned in addition to the
+    standardized array. The parameter dictionary contains the
+    column means ('avgs') and standard deviations ('stds') of
+    the individual columns.
+
+- `params` : dict (default: None)
+
+    A dictionary with column means and standard deviations as
+    returned by the `standardize` function if `return_params`
+    was set to True. If a `params` dictionary is provided, the
+    `standardize` function will use these instead of computing
+    them from the current array.
+
+**Notes**
+
+If all values in a given column are the same, these values are all
+    set to `0.0`. The standard deviation in the `parameters` dictionary
+    is consequently set to `1.0` to avoid dividing by zero.
 
 **Returns**
 

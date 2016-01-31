@@ -29,7 +29,7 @@ Class to display the progress of for-loop iterators.
 
 <hr>
 
-*update(self)*
+*update()*
 
 Print current iteration and time elapsed.
 

@@ -1,20 +1,17 @@
 
 ![](./img/logo.png)
 
-**A library consisting of useful tools and extensions for the day-to-day data science tasks.**
+### Welcome to mlxtend’s documentation!
+
+**Mlxtend is a library consisting of useful tools and extensions for the day-to-day data science tasks.**
+
+- This open source project released under a permissive new BSD open source [license](./license) and commercially usable!
 
 ![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)
 ![Python 3.5](https://img.shields.io/badge/python-3.5-blue.svg)
-![License](https://img.shields.io/badge/license-BSD-blue.svg)
+[![License](https://img.shields.io/badge/license-BSD-blue.svg)](./license)
 [![PyPI version](https://badge.fury.io/py/mlxtend.svg)](http://badge.fury.io/py/mlxtend)
 
-Sebastian Raschka 2014-2015
-
-Current PyPI version: 0.2.9
-Current GitHub version: 0.3.0dev
-
-
-<br>
 
 <hr>
 
@@ -24,30 +21,11 @@ Current GitHub version: 0.3.0dev
 - PyPI: [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend)
 - Questions? Check out the [Google Groups mailing list](https://groups.google.com/forum/#!forum/mlxtend)
 
-<br>
-
 <hr>
-## Recent changes
-
-- Sequential Feature Selection algorithms: [SFS](http://rasbt.github.io/mlxtend/docs/feature_selection/sequential_forward_selection/), [SFFS](http://rasbt.github.io/mlxtend/docs/feature_selection/sequential_floating_forward_selection/), and [SFBS](http://rasbt.github.io/mlxtend/docs/feature_selection/sequential_floating_backward_selection/)
-- [Neural Network / Multilayer Perceptron classifier](http://rasbt.github.io/mlxtend/docs/classifier/neuralnet_mlp/)
-- [Ordinary least square regression](http://rasbt.github.io/mlxtend/docs/regression/linear_regression/) using different solvers (gradient and stochastic gradient descent, and the closed form solution)
-
-<hr>
-<br>
 
 
 
-## Quick Install
-
-- latest version (from GitHub): `pip install git+git://github.com/rasbt/mlxtend.git#egg=mlxtend`
-- latest PyPI version: `pip install mlxtend`
-
-<hr>
-<br>
-
-
-## Example
+## Examples
 
 ```python
 import numpy as np

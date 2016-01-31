@@ -37,6 +37,7 @@ class Adaline(object):
       Weights after fitting.
     cost_ : list
       Sum of squared errors after each epoch.
+
     """
     def __init__(self, eta=0.01, epochs=50, solver='sgd',
                  random_seed=None, shuffle=False, zero_init_weight=False):
@@ -67,6 +68,7 @@ class Adaline(object):
         Returns
         -------
         self : object
+
         """
         # check array shape
         if not len(X.shape) == 2:
@@ -161,6 +163,7 @@ class Adaline(object):
         ----------
         class : int
           Predicted class label.
+          
         """
         return np.where(self.net_input(X) >= self.thres_,
                         self.classes_[1], self.classes_[0])

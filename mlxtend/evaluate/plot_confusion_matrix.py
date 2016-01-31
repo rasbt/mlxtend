@@ -31,6 +31,7 @@ def plot_confusion_matrix(conf_mat,
     -----------
     fig, ax : matplotlib.pyplot subplot objects
         Figure and axis elements of the subplot.
+
     """
     fig, ax = plt.subplots(figsize=figsize)
     if cmap is None:

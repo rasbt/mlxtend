@@ -47,6 +47,7 @@ def find_filegroups(paths, substring='', extensions=None, validity_check=True,
         Dictionary of files paths. Keys are the file names
         found in the first directory listed
         in `paths` (without file extension).
+
     """
     n = len(paths)
 

@@ -35,6 +35,7 @@ class MeanCenterer(TransformerObj):
         --------
         X_tr : {array-like, sparse matrix}, shape = [n_samples, n_features]
             A copy of the input array with the columns centered.
+
         """
         if not hasattr(self, "col_means"):
             raise AttributeError("MeanCenterer has not been fitted, yet.")

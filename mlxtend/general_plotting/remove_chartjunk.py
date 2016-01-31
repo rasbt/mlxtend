@@ -23,6 +23,7 @@ def remove_borders(axes, left=False, bottom=False, right=True, top=True):
         Hide right axis spine if True.
     top : bool (default: `True`)
         Hide top axis spine if True.
+
     """
     for ax in axes:
         ax.spines["top"].set_visible(not top)

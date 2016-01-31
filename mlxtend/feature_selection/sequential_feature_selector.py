@@ -104,9 +104,9 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
            [ 1.3,  0.2],
            [ 1.5,  0.2],
            [ 1.4,  0.2]])
-
     >>> print('best score: %.2f' % sfs.k_score_)
     best score: 0.97
+
     """
     def __init__(self, estimator, k_features,
                  forward=True, floating=False,

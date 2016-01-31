@@ -33,6 +33,7 @@ class Perceptron(object):
         Weights after fitting.
     cost_ : list
         Number of misclassifications in every epoch.
+
     """
     def __init__(self, eta=0.1, epochs=50, shuffle=False,
                  random_seed=None, zero_init_weight=False):
@@ -59,7 +60,8 @@ class Perceptron(object):
 
         Returns
         -------
-        self : object
+        self
+
         """
         # check array shape
         if not len(X.shape) == 2:

@@ -27,6 +27,7 @@ class Counter():
         The current iteration.
     start_time : int
         The system's time in seconds when the Counter was initialized.
+
     """
     def __init__(self, stderr=False, start_newline=True):
         if stderr:

@@ -34,6 +34,7 @@ def autompg_data():
         X is the feature matrix with 392 auto samples as rows
         and 8 feature columns (6 rows with NaNs removed).
         y is a 1-dimensional array of the target MPG values.
+
     """
     X = np.array([
         [ 8,307.0,130.0,3504.0,12.0,70,1,"chevrolet chevelle malibu"],

@@ -47,8 +47,8 @@ def plot_linear_regression(X, y, model=LinearRegression(), corr_func='pearsonr',
     ----------
     regression_fit : tuple
         intercept, slope, corr_coeff (float, float, float)
-    """
 
+    """
     if isinstance(X, list):
         X = np.asarray(X, dtype=np.float)
     if isinstance(y, list):

@@ -30,6 +30,7 @@ def iris_data():
         and 4 feature columns sepal length, sepal width,
         petal length, and petal width.
         y is a 1-dimensional array of the class labels {0, 1, 2}
+
     """
     X = np.array([[ 5.1,  3.5,  1.4,  0.2],
        [ 4.9,  3. ,  1.4,  0.2],

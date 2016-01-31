@@ -46,6 +46,7 @@ def plot_decision_regions(X, y, clf, X_highlight=None,
     Returns
     ---------
     fig : matplotlib.pyplot.figure object
+
     """
     # check if data is numpy array
     fig = plt.gca()

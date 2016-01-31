@@ -58,6 +58,7 @@ def plot_learning_curves(X_train, y_train,
     Returns
     ---------
     errors : (training_error, test_error): tuple of lists
+
     """
     if scoring != 'misclassification error':
         from sklearn import metrics

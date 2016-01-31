@@ -43,6 +43,7 @@ def plot_sequential_feature_selection(metric_dict,
     Returns
     ----------
     fig : matplotlib.pyplot.figure() object
+
     """
     allowed = {'std_dev', 'std_err', 'ci', None}
     if kind not in allowed:

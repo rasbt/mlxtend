@@ -27,6 +27,7 @@ def loadlocal_mnist(images_path, labels_path):
         Pixel values of the images.
     labels : [n_samples] numpy array
         Target class labels
+
     """
     with open(labels_path, 'rb') as lbpath:
         magic, n = struct.unpack('>II',

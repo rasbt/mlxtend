@@ -23,6 +23,7 @@ def shuffle_arrays_unison(arrays, random_state=None):
 
     Examples
     --------
+    
     >>> import numpy as np
     >>> from mlxtend.preprocessing import shuffle_arrays_unison
     >>> X1 = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])

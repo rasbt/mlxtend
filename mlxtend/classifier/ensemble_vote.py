@@ -106,6 +106,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         Returns
         -------
         self : object
+
         """
         if isinstance(y, np.ndarray) and len(y.shape) > 1 and y.shape[1] > 1:
             raise NotImplementedError('Multilabel and multi-output'
@@ -158,6 +159,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         ----------
         maj : array-like, shape = [n_samples]
             Predicted class labels.
+
         """
         if self.voting == 'soft':
 
@@ -189,6 +191,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         ----------
         avg : array-like, shape = [n_samples, n_classes]
             Weighted average probability for each class per sample.
+
         """
         avg = np.average(self._predict_probas(X), axis=0, weights=self.weights)
         return avg
@@ -208,6 +211,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             Class probabilties calculated by each classifier.
         If `voting='hard'` : array-like = [n_classifiers, n_samples]
             Class labels predicted by each classifier.
+
         """
         if self.voting == 'soft':
             return self._predict_probas(X)

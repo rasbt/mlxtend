@@ -18,7 +18,7 @@ def boston_housing_data():
     MEDV = Median value of owner-occupied homes in $1000's
 
     Dataset Attributes:
-    
+
         - 1) CRIM      per capita crime rate by town
         - 2) ZN        proportion of residential land zoned for lots over
                  25,000 sq.ft.
@@ -41,6 +41,7 @@ def boston_housing_data():
         X is the feature matrix with 506 housing samples as rows
         and 13 feature columns.
         y is a 1-dimensional array of the continuous target variable MEDV
+
     """
     X = np.array([
         [ 0.00632, 18.0, 2.31, 0.0, 0.538, 6.575, 65.2, 4.09, 1.0, 296.0, 15.3, 396.9, 4.98, ],

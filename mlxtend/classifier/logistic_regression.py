@@ -44,6 +44,7 @@ class LogisticRegression(object):
     cost_ : list
         List of floats with sum of squared error cost (sgd or gd) for every
         epoch.
+
     """
     def __init__(self, eta=0.01, epochs=50, regularization=None,
                  l2_lambda=0.0, learning='sgd', shuffle=False,
@@ -80,6 +81,7 @@ class LogisticRegression(object):
         Returns
         -------
         self : object
+
         """
         if not len(X.shape) == 2:
             raise ValueError('X must be a 2D array. Try X[:,np.newaxis]')
@@ -134,6 +136,7 @@ class LogisticRegression(object):
         ----------
         class : int
             Predicted class label(s).
+
         """
         # equivalent to np.where(self.activation(X) >= 0.5, 1, 0)
         return np.where(self.net_input(X) >= 0.0, 1, 0)
@@ -153,7 +156,8 @@ class LogisticRegression(object):
 
         Returns
         ----------
-            Class 1 probability : float
+        Class 1 probability : float
+
         """
         z = self.net_input(X)
         return self._sigmoid(z)

@@ -16,7 +16,7 @@ def wine_data():
     Class labels : {0, 1, 2}, distribution: [59, 71, 48]
 
     Dataset Attributes:
-    
+
         - 1) Alcohol
         - 2) Malic acid
         - 3) Ash
@@ -37,6 +37,7 @@ def wine_data():
         X is the feature matrix with 178 wine samples as rows
         and 13 feature columns.
         y is a 1-dimensional array of the 3 class labels 0, 1, 2
+
     """
     X = np.array([
         [ 14.23,1.71,2.43,15.6,127.0,2.8,3.06,0.28,2.29,5.64,1.04,3.92,1065.0 ],

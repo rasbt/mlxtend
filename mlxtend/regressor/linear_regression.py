@@ -42,6 +42,7 @@ class LinearRegression(object):
     cost_ : list
         Sum of squared errors after each epoch;
         ignored if solver='normal equation'
+
     """
     def __init__(self, solver='normal equation', eta=0.01,
                  epochs=50, random_seed=None, shuffle=False,
@@ -74,6 +75,7 @@ class LinearRegression(object):
         Returns
         -------
         self : object
+
         """
         # check array shape
         if not len(X.shape) == 2:
@@ -153,5 +155,6 @@ class LinearRegression(object):
         Returns
         ----------
         float : Predicted target value.
+
         """
         return self.net_input(X)

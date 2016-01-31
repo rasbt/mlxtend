@@ -35,6 +35,7 @@ def find_files(substring, path, recursive=False,
     ----------
     results : `list`
         List of the matched files.
+
     """
     def check_file(f, path):
         if not (ignore_substring and ignore_substring in f):

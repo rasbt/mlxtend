@@ -61,6 +61,7 @@ def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-',
     Returns
     ----------
     ax : matplotlib axis
+
     """
     if isinstance(df, pd.Series):
         df_temp = pd.DataFrame(df)

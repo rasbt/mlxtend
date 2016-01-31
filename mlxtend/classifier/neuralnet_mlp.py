@@ -66,6 +66,7 @@ class NeuralNetMLP(object):
     -----------
     cost_ : list
         Sum of squared errors after each epoch.
+
     """
     def __init__(self, n_output, n_features, n_hidden=30,
                  l1=0.0, l2=0.0, epochs=500, eta=0.001,
@@ -105,6 +106,7 @@ class NeuralNetMLP(object):
         -----------
         onehot : array, shape = (n_labels, n_samples)
             One-hot encoded class labels.
+
         """
         onehot = np.zeros((k, y.shape[0]))
         for idx, val in enumerate(y):
@@ -177,6 +179,7 @@ class NeuralNetMLP(object):
             Net input of output layer.
         a3 : array, shape = [n_output_units, n_samples]
             Activation of output layer.
+
         """
         a1 = self._add_bias_unit(X, how='column')
         z2 = w1.dot(a1.T)
@@ -212,6 +215,7 @@ class NeuralNetMLP(object):
         ---------
         cost : float
             Regularized cost.
+
         """
         term1 = -y_enc * (np.log(output))
         term2 = (1.0 - y_enc) * np.log(1.0 - output)
@@ -247,6 +251,7 @@ class NeuralNetMLP(object):
             Gradient of the weight matrix w1.
         grad2 : array, shape = [n_output_units, n_hidden_units]
             Gradient of the weight matrix w2.
+
         """
         # backpropagation
         sigma3 = a3 - y_enc
@@ -274,6 +279,7 @@ class NeuralNetMLP(object):
         ----------
         y_pred : array, shape = [n_samples]
             Predicted class labels.
+
         """
         if len(X.shape) != 2:
             raise AttributeError('X must be a [n_samples, n_features] array.\n'
@@ -297,6 +303,7 @@ class NeuralNetMLP(object):
         Returns:
         ----------
         self
+
         """
         np.random.seed(self.random_seed)
         self.cost_ = []
@@ -380,6 +387,7 @@ class NeuralNetMLP(object):
         ---------
         num_grad : array-like, shape = [n_weights]
             Numerical gradient enrolled as row vector.
+
         """
         y_enc = self._encode_labels(y, self.n_output)
         num_grad1 = np.zeros(np.shape(w1))
@@ -425,6 +433,7 @@ class NeuralNetMLP(object):
         eucl_dist : float
             Euclidean distance (L2) between the numerically
             approximated gradients and the backpropagated gradients.
+
         """
         num_grad = self._numerically_approximated_gradient(X=X,
                                                            y=y,

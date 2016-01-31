@@ -35,7 +35,8 @@ def generalize_names(name, output_sep=' ', firstname_output_letters=1):
     Returns
     ----------
     gen_name : `str`
-       The generalized name.
+        The generalized name.
+
     """
     # set first and last name positions
     last, first = 'last', 'first'
@@ -85,7 +86,7 @@ def generalize_names(name, output_sep=' ', firstname_output_letters=1):
 
 def generalize_names_duplcheck(df, col_name):
     """ Generalizes names and removes duplicates.
-    
+
     Description : Applies mlxtend.text.generalize_names to a DataFrame with 1 first name letter
     by default and uses more first name letters if duplicates are detected.
 

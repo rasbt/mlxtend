@@ -133,7 +133,7 @@ Min max scaling of pandas' DataFrames.
 
 ## shuffle_arrays_unison
 
-*shuffle_arrays_unison(arrays, random_state=None)*
+*shuffle_arrays_unison(arrays, random_seed=None)*
 
 Shuffle NumPy arrays in unison.
 
@@ -143,9 +143,9 @@ Shuffle NumPy arrays in unison.
 
     A list of NumPy arrays.
 
-- `random_state` : int (default: None)
+- `random_seed` : int (default: None)
 
-    Sets the random seed.
+    Sets the random state.
 
 **Returns**
 

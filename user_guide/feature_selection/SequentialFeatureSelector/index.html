@@ -643,8 +643,8 @@
 <li>Sequential Floating Forward Selection (SFFS)</li>
 <li>Sequential Floating Backward Selection (SFBS)</li>
 </ol>
-<p>The <strong><em>floating</em></strong> variants, SFFS and SFBS can be considered as extensions of the simpler SFS and SBS algorithms. the floating algorithms have an additional exclusion or inclusion step to remove features once they were included (or excluded), so that a larger number of feature subset combinations can be sampled. It is important to emphasize that this step is conditional only occurs if the resulting feature subset is assessed as "better" by the criterion function after removal (or addition) of a particular feature. Furthermore, I added an optional check to skip the conditional exclusion steps if the algorithm gets stuck in cycles.<br />
-The algorithms are outlined in pseudocode below:</p>
+<p>The <strong><em>floating</em></strong> variants, SFFS and SFBS can be considered as extensions to the simpler SFS and SBS algorithms. The floating algorithms have an additional exclusion or inclusion step to remove features once they were included (or excluded), so that a larger number of feature subset combinations can be sampled. It is important to emphasize that this step is conditional only occurs if the resulting feature subset is assessed as "better" by the criterion function after removal (or addition) of a particular feature. Furthermore, I added an optional check to skip the conditional exclusion steps if the algorithm gets stuck in cycles.<br />
+The algorithms are outlined in pseudo code below:</p>
 <h2 id="sequential-forward-selection-sfs">Sequential Forward Selection (SFS)</h2>
 <p><strong>Input:</strong> <mathjax>$Y = \{y_1, y_2, ..., y_d\}$</mathjax>  </p>
 <ul>

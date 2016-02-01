@@ -636,11 +636,13 @@
 <p>from mlxtend.feature_selection import SequentialFeatureSelector</p>
 </blockquote>
 <h1 id="overview">Overview</h1>
-<p>In a nutshell, SFAs remove or add one feature at the time based on the classifier performance until a feature subset of the desired size k is reached. There are 4 different flavors of SFAs available via the <code>Sequential Feature Selector</code>:
-1. Sequential Forward Selection (SFS)
-2. Sequential Backward Selection (SBS)
-3. Sequential Floating Forward Selection (SFFS)
-4. Sequential Floating Backward Selection (SFBS)</p>
+<p>In a nutshell, SFAs remove or add one feature at the time based on the classifier performance until a feature subset of the desired size k is reached. There are 4 different flavors of SFAs available via the <code>Sequential Feature Selector</code>:</p>
+<ol>
+<li>Sequential Forward Selection (SFS)</li>
+<li>Sequential Backward Selection (SBS)</li>
+<li>Sequential Floating Forward Selection (SFFS)</li>
+<li>Sequential Floating Backward Selection (SFBS)</li>
+</ol>
 <p>The <strong><em>floating</em></strong> variants, SFFS and SFBS can be considered as extensions of the simpler SFS and SBS algorithms. the floating algorithms have an additional exclusion or inclusion step to remove features once they were included (or excluded), so that a larger number of feature subset combinations can be sampled. It is important to emphasize that this step is conditional only occurs if the resulting feature subset is assessed as "better" by the criterion function after removal (or addition) of a particular feature. Furthermore, I added an optional check to skip the conditional exclusion steps if the algorithm gets stuck in cycles.<br />
 The algorithms are outlined in pseudocode below:</p>
 <h2 id="sequential-forward-selection-sfs">Sequential Forward Selection (SFS)</h2>

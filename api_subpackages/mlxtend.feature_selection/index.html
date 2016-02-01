@@ -757,32 +757,6 @@ keys: 'feature_idx' (tuple of indices of the feature subset)
 'avg_score' (average cross-validation score)</p>
 </li>
 </ul>
-<p><strong>Examples</strong></p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>from sklearn.neighbors import KNeighborsClassifier
-    &gt;&gt;&gt; from sklearn.datasets import load_iris
-    &gt;&gt;&gt; iris = load_iris()
-    &gt;&gt;&gt; X = iris.data
-    &gt;&gt;&gt; y = iris.target
-    &gt;&gt;&gt; knn = KNeighborsClassifier(n_neighbors=4)
-    &gt;&gt;&gt; sfs = SequentialFeatureSelector(knn, k_features=2,
-    ...                                 scoring='accuracy', cv=5)
-    &gt;&gt;&gt; sfs = sfs.fit(X, y)
-    &gt;&gt;&gt; sfs.indices_
-    (2, 3)
-    &gt;&gt;&gt; sfs.transform(X[:5])
-    array([[ 1.4,  0.2],
-    [ 1.4,  0.2],
-    [ 1.3,  0.2],
-    [ 1.5,  0.2],
-    [ 1.4,  0.2]])
-    &gt;&gt;&gt; print('best score: %.2f' % sfs.k_score_)
-    best score: 0.97</p>
-</blockquote>
-</blockquote>
-</blockquote>
 <h3 id="methods_1">Methods</h3>
 <hr>
 

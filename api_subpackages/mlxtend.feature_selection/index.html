@@ -722,7 +722,7 @@ algorithm gets stuck in cycles.</p>
 <p>The number of CPUs to use for cross validation. -1 means 'all CPUs'.</p>
 </li>
 <li>
-<p><code>pre_dispatch</code> : int, or string</p>
+<p><code>pre_dispatch</code> : int, or string (default: '2*n_jobs')</p>
 <p>Controls the number of jobs that get dispatched
 during parallel execution in cross_val_score.
 Reducing this number can be useful to avoid an explosion of
@@ -733,7 +733,7 @@ Use this for lightweight and fast-running jobs,
 to avoid delays due to on-demand spawning of the jobs
 An int, giving the exact number of total jobs that are spawned
 A string, giving an expression as a function
-of n_jobs, as in <code>2*n_jobs</code></p>
+of n_jobs, as in <code>'2*n_jobs'</code></p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>

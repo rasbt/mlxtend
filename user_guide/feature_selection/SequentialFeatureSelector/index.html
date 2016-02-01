@@ -643,7 +643,7 @@
 <li>Sequential Floating Forward Selection (SFFS)</li>
 <li>Sequential Floating Backward Selection (SFBS)</li>
 </ol>
-<p>The <strong><em>floating</em></strong> variants, SFFS and SFBS can be considered as extensions to the simpler SFS and SBS algorithms. The floating algorithms have an additional exclusion or inclusion step to remove features once they were included (or excluded), so that a larger number of feature subset combinations can be sampled. It is important to emphasize that this step is conditional only occurs if the resulting feature subset is assessed as "better" by the criterion function after removal (or addition) of a particular feature. Furthermore, I added an optional check to skip the conditional exclusion steps if the algorithm gets stuck in cycles.<br />
+<p>The <strong><em>floating</em></strong> variants, SFFS and SFBS can be considered as extensions to the simpler SFS and SBS algorithms. The floating algorithms have an additional exclusion or inclusion step to remove features once they were included (or excluded), so that a larger number of feature subset combinations can be sampled. It is important to emphasize that this step is conditional and only occurs if the resulting feature subset is assessed as "better" by the criterion function after removal (or addition) of a particular feature. Furthermore, I added an optional check to skip the conditional exclusion steps if the algorithm gets stuck in cycles.<br />
 The algorithms are outlined in pseudo code below:</p>
 <h2 id="sequential-forward-selection-sfs">Sequential Forward Selection (SFS)</h2>
 <p><strong>Input:</strong> <mathjax>$Y = \{y_1, y_2, ..., y_d\}$</mathjax>  </p>
@@ -1206,32 +1206,6 @@ keys: 'feature_idx' (tuple of indices of the feature subset)
 'avg_score' (average cross-validation score)</p>
 </li>
 </ul>
-<p><strong>Examples</strong></p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>from sklearn.neighbors import KNeighborsClassifier
-    &gt;&gt;&gt; from sklearn.datasets import load_iris
-    &gt;&gt;&gt; iris = load_iris()
-    &gt;&gt;&gt; X = iris.data
-    &gt;&gt;&gt; y = iris.target
-    &gt;&gt;&gt; knn = KNeighborsClassifier(n_neighbors=4)
-    &gt;&gt;&gt; sfs = SequentialFeatureSelector(knn, k_features=2,
-    ...                                 scoring='accuracy', cv=5)
-    &gt;&gt;&gt; sfs = sfs.fit(X, y)
-    &gt;&gt;&gt; sfs.indices_
-    (2, 3)
-    &gt;&gt;&gt; sfs.transform(X[:5])
-    array([[ 1.4,  0.2],
-    [ 1.4,  0.2],
-    [ 1.3,  0.2],
-    [ 1.5,  0.2],
-    [ 1.4,  0.2]])
-    &gt;&gt;&gt; print('best score: %.2f' % sfs.k_score_)
-    best score: 0.97</p>
-</blockquote>
-</blockquote>
-</blockquote>
 <h3 id="methods">Methods</h3>
 <hr>
 

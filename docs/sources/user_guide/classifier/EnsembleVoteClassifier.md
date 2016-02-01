@@ -93,10 +93,6 @@ $$\hat{y} = \arg \max_i \big[p(i_0 \mid \mathbf{x}), p(i_1 \mid \mathbf{x}) \big
 
 - [1] S. Raschka. [Python Machine Learning](https://github.com/rasbt/python-machine-learning-book). Packt Publishing Ltd., 2015.
 
-### Related Topics
-
-
-
 # Examples
 
 ## Example 1 -  Classifying Iris Flowers Using Different Classification Models
@@ -178,7 +174,7 @@ for clf, lab, grd in zip([clf1, clf2, clf3, eclf],
 ```
 
 
-![png](EnsembleVoteClassifier_files/EnsembleVoteClassifier_28_0.png)
+![png](EnsembleVoteClassifier_files/EnsembleVoteClassifier_27_0.png)
 
 
 ## Example 2 - Grid Search

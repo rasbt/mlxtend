@@ -62,10 +62,6 @@ $$MCC = \frac{ TP \times TN - FP \times FN } {\sqrt{ (TP + FP) ( TP + FN ) ( TN 
 - [2] Cyril Goutte and Eric Gaussier. [A probabilistic interpretation of precision, recall and f-score, with implication for evaluation](http://link.springer.com/chapter/10.1007/978-3-540-31865-1_25). In Advances in Information Retrieval, pages 345–359. Springer, 2005.
 - [3] Brian W Matthews. [Comparison of the predicted and observed secondary structure of T4 phage lysozyme](http://www.sciencedirect.com/science/article/pii/0005279575901099). Biochimica et Biophysica Acta (BBA)- Protein Structure, 405(2):442–451, 1975.
 
-### Related Topics
-
-- [Confusion Matrix](./confusion_matrix.md)
-
 # Examples
 
 ## Example 1 - Classification Error

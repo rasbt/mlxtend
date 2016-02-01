@@ -28,13 +28,6 @@ The Iris dataset for classification.
 - Bache, K. & Lichman, M. (2013). UCI Machine Learning Repository. Irvine, CA: University of California, School of Information and Computer Science.
 
 
-### Related Topics
-
-- [Boston Housing Data](boston_housing.html)
-- [Auto MPG](./autompg.html)
-- [MNIST](./mnist.html)
-- [Wine Dataset](./wine.html)
-
 # Examples
 
 ## Example - Dataset overview

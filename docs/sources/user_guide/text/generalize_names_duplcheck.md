@@ -19,11 +19,6 @@ By default,  `generalize_names_duplcheck` will apply  `generalize_names` to a pa
 
 - -
 
-### Related Topics
-
-- [Name Generalization](./generalize_names.html)
-- [Tokenizer](./tokenizer.html)
-
 # Examples
 
 ## Example 1 - Defaults

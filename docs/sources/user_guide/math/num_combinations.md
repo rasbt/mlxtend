@@ -1,6 +1,6 @@
 # Compute the Number of Combinations
 
-A functions to calculate the number of combinations for creating subsequences of *k* elements out of a sequence with *n* elements.
+A function to calculate the number of combinations for creating subsequences of *k* elements out of a sequence with *n* elements.
 
 > from mlxtend.math import num_combinations
 
@@ -40,10 +40,6 @@ k
 ### References
 
 - [https://en.wikipedia.org/wiki/Combination](https://en.wikipedia.org/wiki/Combination)
-
-### Related Topics
-
-- [Compute the Number of Permutations](./num_permutations.html)
 
 # Examples
 

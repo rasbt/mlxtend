@@ -105,10 +105,6 @@ It is important to note that the convergence of the perceptron is only guarantee
 
 - F. Rosenblatt. The perceptron, a perceiving and recognizing automaton Project Para. Cornell Aeronautical Laboratory, 1957.
 
-### Related Topics
-
-
-
 # Examples
 
 ## Example 1 - Classification of Iris Flowers
@@ -153,14 +149,14 @@ plt.show()
 
 
 
-![png](Perceptron_files/Perceptron_26_1.png)
+![png](Perceptron_files/Perceptron_25_1.png)
 
 
     [ 0.0097627   0.08408412  0.31449279]
 
 
 
-![png](Perceptron_files/Perceptron_26_3.png)
+![png](Perceptron_files/Perceptron_25_3.png)
 
 
 # API

@@ -12,11 +12,6 @@ In enrichment plots, the y-axis can be interpreted as "how many samples are less
 
 - -
 
-### Related Topics
-
-- [Category Scatterplot](./category_scatter.html)
-- [Stacked Barplot](./stacked_barplot.html)
-
 # Examples
 
 ## Example 1 - Enrichment Plots from Pandas DataFrames
@@ -84,7 +79,7 @@ ax = enrichment_plot(df, legend_loc='upper left')
 ```
 
 
-![png](enrichment_plot_files/enrichment_plot_13_0.png)
+![png](enrichment_plot_files/enrichment_plot_12_0.png)
 
 
 # API

@@ -12,10 +12,6 @@ This function finds files based on substring search. This is especially useful i
 
 - -
 
-### Related Topics
-
-- [Find Files](./find_files.html)
-
 # Examples
 
 ## Example 1 - Grouping related files in a dictionary

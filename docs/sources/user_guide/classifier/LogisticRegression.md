@@ -191,13 +191,6 @@ For more information on regularization, please see [Regularization of Generalize
 
 - Bishop, Christopher M. [*Pattern recognition and machine learning*](http://www.springer.com/br/book/9780387310732). Springer, 2006. pp. 203-213
 
-### Related Topics
-
-- [classifier.Adaline](./Adaline.md)
-- [classifier.Multi-layer Perceptron](./nnet-mlp.md)
-- [Gradient Descent and Stochastic Gradient Descent](../general_concepts/gradient-optimization.md)
-- [Regularization of Generalized Linear Models](../general_concepts/regularization_linear.md)
-
 # Examples
 
 ## Example 1 - Gradient Descent
@@ -234,11 +227,11 @@ plt.show()
 ```
 
 
-![png](LogisticRegression_files/LogisticRegression_47_0.png)
+![png](LogisticRegression_files/LogisticRegression_46_0.png)
 
 
 
-![png](LogisticRegression_files/LogisticRegression_47_1.png)
+![png](LogisticRegression_files/LogisticRegression_46_1.png)
 
 
 ### Predicting Class Labels
@@ -297,11 +290,11 @@ plt.show()
 ```
 
 
-![png](LogisticRegression_files/LogisticRegression_53_0.png)
+![png](LogisticRegression_files/LogisticRegression_52_0.png)
 
 
 
-![png](LogisticRegression_files/LogisticRegression_53_1.png)
+![png](LogisticRegression_files/LogisticRegression_52_1.png)
 
 
 # API

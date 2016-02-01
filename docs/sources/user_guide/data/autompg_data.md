@@ -29,13 +29,6 @@ The Auto-MPG dataset for regression analysis. The target (`y`) is defined as the
 - Source: [https://archive.ics.uci.edu/ml/datasets/Auto+MPG](https://archive.ics.uci.edu/ml/datasets/Auto+MPG)
 - Quinlan,R. (1993). Combining Instance-Based and Model-Based Learning. In Proceedings on the Tenth International Conference of Machine Learning, 236-243, University of Massachusetts, Amherst. Morgan Kaufmann.
 
-### Related Topics
-
-- [Boston Housing Data](boston_housing.html)
-- [Iris Dataset](./iris.html)
-- [MNIST](./mnist.html)
-- [Wine Dataset](./wine.html)
-
 # Examples
 
 ## Example - Dataset overview

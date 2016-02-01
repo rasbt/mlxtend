@@ -9,10 +9,6 @@ A function to plot learning curves for classifiers. Learning curves are extremel
 
 -
 
-### Related Topics
-
-- [Plotting Decision Regions](./plot_decision_regions.md)
-
 # Examples
 
 ## Example 1
@@ -40,7 +36,7 @@ plt.show()
 ```
 
 
-![png](plot_learning_curves_files/plot_learning_curves_10_0.png)
+![png](plot_learning_curves_files/plot_learning_curves_9_0.png)
 
 
 # API

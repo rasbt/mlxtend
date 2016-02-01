@@ -12,10 +12,6 @@ The `Counter` class implements an object for displaying the number of iterations
 
 - -
 
-### Related Topics
-
-- -
-
 # Examples
 
 ## Example 1 - Counting the iterations in a for-loop

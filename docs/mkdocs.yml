@@ -31,14 +31,17 @@ pages:
 - Home: index.md
 - User Guide:
   - classifier:
-    - user_guide/classifier/Adaline.md
     - user_guide/classifier/EnsembleVoteClassifier.md
-    - user_guide/classifier/LogisticRegression.md
     - user_guide/classifier/Perceptron.md
+    - user_guide/classifier/Adaline.md
+    - user_guide/classifier/LogisticRegression.md
+    - user_guide/classifier/NeuralNetMLP.md
   - regressor:
     - user_guide/regressor/LinearRegression.md
   - regression_utils:
     - user_guide/regression_utils/plot_linear_regression.md
+  - feature_selection:
+    - user_guide/feature_selection/SequentialFeatureSelector.md
   - evaluate:
     - user_guide/evaluate/confusion_matrix.md
     - user_guide/evaluate/plot_decision_regions.md

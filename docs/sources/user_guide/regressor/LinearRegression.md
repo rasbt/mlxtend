@@ -56,13 +56,6 @@ Random shuffling is implemented as:
 - A. I. Khuri. [Introduction to linear regression analysis](http://onlinelibrary.wiley.com/doi/10.1111/insr.12020_10/abstract), by Douglas C. Montgomery, Elizabeth A. Peck, G. Geoffrey Vining. International Statistical Review, 81(2):318–319, 2013.
 - D. S. G. Pollock. [The Classical Linear Regression Model](http://www.le.ac.uk/users/dsgp1/COURSES/MESOMET/ECMETXT/06mesmet.pdf).
 
-### Related Topics
-
-- [classifier.Adaline](../classifier/adaline.md)
-- [Gradient Descent and Stochastic Gradient Descent](../general_concepts/gradient-optimization.md)
-- [Deriving the Gradient Descent Rule for Linear Regression and Adaline](../general_concepts/linear-gradient-derivative.md)
-- [Regularization of Generalized Linear Models](../general_concepts/regularization_linear.md)
-
 # Examples
 
 ## Example 1 - Closed Form Solution
@@ -96,7 +89,7 @@ plt.show()
 
 
 
-![png](LinearRegression_files/LinearRegression_18_1.png)
+![png](LinearRegression_files/LinearRegression_17_1.png)
 
 
 ## Example 2 - Gradient Descent
@@ -130,7 +123,7 @@ plt.show()
 
 
 
-![png](LinearRegression_files/LinearRegression_20_1.png)
+![png](LinearRegression_files/LinearRegression_19_1.png)
 
 
 
@@ -146,7 +139,7 @@ plt.show()
 ```
 
 
-![png](LinearRegression_files/LinearRegression_21_0.png)
+![png](LinearRegression_files/LinearRegression_20_0.png)
 
 
  **Tip**: I you are using gradient descent, consider standardizing the variables for better convergence of the algorithm.
@@ -167,7 +160,7 @@ plt.show()
 ```
 
 
-![png](LinearRegression_files/LinearRegression_23_0.png)
+![png](LinearRegression_files/LinearRegression_22_0.png)
 
 
 ## Example 3 - Stochastic Gradient Descent
@@ -205,7 +198,7 @@ plt.show()
 
 
 
-![png](LinearRegression_files/LinearRegression_25_1.png)
+![png](LinearRegression_files/LinearRegression_24_1.png)
 
 
 
@@ -219,7 +212,7 @@ plt.show()
 ```
 
 
-![png](LinearRegression_files/LinearRegression_26_0.png)
+![png](LinearRegression_files/LinearRegression_25_0.png)
 
 
 # API

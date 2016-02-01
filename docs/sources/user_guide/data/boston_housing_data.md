@@ -36,13 +36,6 @@ The Boston Housing dataset for regression analysis.
 - Harrison, D. and Rubinfeld, D.L. 
 'Hedonic prices and the demand for clean air', J. Environ. Economics & Management, vol.5, 81-102, 1978.
 
-### Related Topics
-
-- [Auto MPG](autompg.html)
-- [Iris Dataset](./iris.html)
-- [MNIST](./mnist.html)
-- [Wine Dataset](./wine.html)
-
 # Examples
 
 ## Example - Dataset overview

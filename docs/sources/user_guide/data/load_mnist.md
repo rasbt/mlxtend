@@ -33,13 +33,6 @@ Each feature vector (row in the feature matrix) consists of 784 pixels (intensit
 - Y. LeCun and C. Cortes. Mnist handwritten digit database. AT&T Labs [Online]. Available: http://yann. lecun. com/exdb/mnist, 2010.
 
 
-### Related Topics
-
-- [Boston Housing Data](../data/boston_housing.html)
-- [Auto MPG](../data/autompg.html)
-- [MNIST](../data/mnist.html)
-- [Wine Dataset](../data/wine.html)
-
 # Examples
 
 ## Downloading the MNIST dataset

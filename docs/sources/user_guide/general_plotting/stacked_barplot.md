@@ -12,11 +12,6 @@ A matplotlib convenience function for creating barplots from DataFrames where ea
 
 - -
 
-### Related Topics
-
-- [Enrichment Plot](./enrichment_plot.html)
-- [Category Scatterplot](./category_scatter.html)
-
 # Examples
 
 ## Example 1 - Stacked Barplot from Pandas DataFrames
@@ -97,7 +92,7 @@ fig = stacked_barplot(df, rotation=45, legend_loc='best')
 ```
 
 
-![png](stacked_barplot_files/stacked_barplot_14_0.png)
+![png](stacked_barplot_files/stacked_barplot_13_0.png)
 
 
 # API

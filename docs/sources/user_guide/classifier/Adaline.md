@@ -65,13 +65,6 @@ Random shuffling is implemented as:
 
 - B. Widrow, M. E. Hoff, et al. [Adaptive switching circuits](http://www.rob.uni-luebeck.de/index.php?id=267). 1960.
 
-### Related Topics
-
-- [regressor.LinearRegression](../regressor/LinearRegression.md)
-- [Gradient Descent and Stochastic Gradient Descent](../general_concepts/gradient-optimization.md)
-- [Deriving the Gradient Descent Rule for Linear Regression and Adaline](../general_concepts/linear-gradient-derivative.md)
-- [Regularization of Generalized Linear Models](../general_concepts/regularization_linear.md)
-
 # Examples
 
 ## Example 1 - Closed Form Solution
@@ -104,7 +97,7 @@ plt.show()
 ```
 
 
-![png](Adaline_files/Adaline_19_0.png)
+![png](Adaline_files/Adaline_18_0.png)
 
 
 ## Example 2 - Gradient Descent
@@ -140,7 +133,7 @@ plt.ylabel('Cost')
 ```
 
 
-![png](Adaline_files/Adaline_21_0.png)
+![png](Adaline_files/Adaline_20_0.png)
 
 
 
@@ -151,7 +144,7 @@ plt.ylabel('Cost')
 
 
 
-![png](Adaline_files/Adaline_21_2.png)
+![png](Adaline_files/Adaline_20_2.png)
 
 
 ## Example 3 - Stochastic Gradient Descent
@@ -188,11 +181,11 @@ plt.show()
 ```
 
 
-![png](Adaline_files/Adaline_23_0.png)
+![png](Adaline_files/Adaline_22_0.png)
 
 
 
-![png](Adaline_files/Adaline_23_1.png)
+![png](Adaline_files/Adaline_22_1.png)
 
 
 # API

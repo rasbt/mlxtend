@@ -6,11 +6,7 @@ A function for plotting decision regions of classifiers in 1 or 2 dimensions.
 
 ### References
 
-- [Plotting Learning Curves](./plot_learning_curves.md)
-
-### Related Topics
-
--
+- 
 
 # Examples
 
@@ -43,7 +39,7 @@ plt.show()
 ```
 
 
-![png](plot_decision_regions_files/plot_decision_regions_10_0.png)
+![png](plot_decision_regions_files/plot_decision_regions_9_0.png)
 
 
 ## Example 2 - Decision regions in 1D
@@ -76,7 +72,7 @@ plt.show()
 ```
 
 
-![png](plot_decision_regions_files/plot_decision_regions_12_0.png)
+![png](plot_decision_regions_files/plot_decision_regions_11_0.png)
 
 
 ## Example 3 - Decision Region Grids
@@ -125,7 +121,7 @@ plt.show()
 ```
 
 
-![png](plot_decision_regions_files/plot_decision_regions_15_0.png)
+![png](plot_decision_regions_files/plot_decision_regions_14_0.png)
 
 
 # API

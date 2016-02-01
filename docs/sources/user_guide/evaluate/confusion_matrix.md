@@ -20,13 +20,9 @@ Let $P$ be the label of class 1 and $N$ be the label of a second class or the la
 
 - -
 
-### Related Topics
-
-- [Scoring Metrics](./scoring)
-
 # Examples
 
-## Example 1 -- Binary classification
+## Example 1 - Binary classification
 
 
 ```python
@@ -57,10 +53,10 @@ plt.show()
 ```
 
 
-![png](confusion_matrix_files/confusion_matrix_15_0.png)
+![png](confusion_matrix_files/confusion_matrix_14_0.png)
 
 
-## Example 2 -- Multi-class classification
+## Example 2 - Multi-class classification
 
 
 ```python
@@ -93,10 +89,10 @@ plt.show()
 ```
 
 
-![png](confusion_matrix_files/confusion_matrix_18_0.png)
+![png](confusion_matrix_files/confusion_matrix_17_0.png)
 
 
-## Example 3 -- Multi-class to binary
+## Example 3 - Multi-class to binary
 
 By setting `binary=True`, all class labels that are not the positive class label are being summarized to class 0. The positive class label becomes class 1.
 
@@ -129,7 +125,7 @@ plt.show()
 ```
 
 
-![png](confusion_matrix_files/confusion_matrix_22_0.png)
+![png](confusion_matrix_files/confusion_matrix_21_0.png)
 
 
 # API

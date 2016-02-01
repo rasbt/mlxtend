@@ -10,11 +10,6 @@ A function to quickly produce a scatter plot colored by categories from a pandas
 
 - -
 
-### Related Topics
-
-- [Enrichment Plot](./enrichment_plot.html)
-- [Stacked Barplot](./stacked_barplot.html)
-
 # Examples
 
 ## Example 1 - Category Scatter from Pandas DataFrames
@@ -104,7 +99,7 @@ fig = category_scatter(x='x', y='y', label_col='label', data=df, legend_loc='upp
 ```
 
 
-![png](category_scatter_files/category_scatter_12_0.png)
+![png](category_scatter_files/category_scatter_11_0.png)
 
 
 ## Example 2 - Category Scatter from NumPy Arrays
@@ -149,7 +144,7 @@ fix = category_scatter(x=1, y=2, label_col=0, data=ary, legend_loc='upper left')
 ```
 
 
-![png](category_scatter_files/category_scatter_16_0.png)
+![png](category_scatter_files/category_scatter_15_0.png)
 
 
 # API

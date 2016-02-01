@@ -52,13 +52,6 @@ Institute of Pharmaceutical and Food Analysis and Technologies, Via Brigata Sale
 - Source: [https://archive.ics.uci.edu/ml/datasets/Wine](https://archive.ics.uci.edu/ml/datasets/Wine)
 - Bache, K. & Lichman, M. (2013). UCI Machine Learning Repository. Irvine, CA: University of California, School of Information and Computer Science.
 
-### Related Topics
-
-- [Boston Housing Data](boston_housing.html)
-- [Auto MPG](./autompg.html)
-- [MNIST](./mnist.html)
-- [Iris Dataset](./iris.html)
-
 # Examples
 
 ## Example - Dataset overview

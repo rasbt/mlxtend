@@ -25,10 +25,6 @@ This function finds files that are related to each other based on their file nam
 
 - -
 
-### Related Topics
-
-- [Find Files](./find_files.html)
-
 # Examples
 
 ## Example 1 - Grouping related files in a dictionary

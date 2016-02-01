@@ -12,11 +12,6 @@ Different functions to tokenize text for natural language processing tasks, for 
 
 - -
 
-### Related Topics
-
-- [Name Generalization and Duplicates](./generalize_names_duplcheck.html)
-- [Name Generalization](./generalize_names.html)
-
 # Examples
 
 ## Example 1 - Extract Emoticons
@@ -77,15 +72,4 @@ Convert text to lowercase words and emoticons.
     >>> tokenizer_words_and_emoticons('</a>This :) is :( a test :-)!')
     ['this', 'is', 'a', 'test', ':)', ':(', ':-)']
 
-
- mlxtend.text import tokenizer_emoticons
-(tokenizer_emoticons)
-Help on function tokenizer_emoticons in module mlxtend.text.tokenizer:
-
-tokenizer_emoticons(text)
-    Funtion that returns emoticons from text
-    
-    Example:
-    >>> tokenizer_emoticons('</a>This :) is :( a test :-)!')
-    [':)', ':(', ':-)']
 

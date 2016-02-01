@@ -12,10 +12,6 @@ The `plot_linear_regression` is a convenience function that uses scikit-learn's 
 
 - -
 
-### Related Topics
-
-- -
-
 # Examples
 
 ## Example 1 - Ordinary Least Squares Simple Linear Regression
@@ -37,7 +33,7 @@ plt.show()
 ```
 
 
-![png](plot_linear_regression_files/plot_linear_regression_12_0.png)
+![png](plot_linear_regression_files/plot_linear_regression_11_0.png)
 
 
 # API

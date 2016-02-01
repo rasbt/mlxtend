@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="author" content="Sebastian Raschka"> 
+    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/classifier/Perceptron/"> 
+    <link rel="shortcut icon" href="../../../../../../favicon.ico">
+
+    <title>Perceptron - mlxtend</title>
+
+    <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
+    <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link href="../../../css/cinder.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+
+
+    <link href="../../../extra.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-38457794-2', 'rasbt.github.io/mlxtend/');
+    ga('send', 'pageview');
+    </script>
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../../..">mlxtend</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">classifier</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../EnsembleVoteClassifier/">EnsembleVoteClassifier</a>
+</li>
+
+        
+            
+<li class="active">
+    <a href="./">Perceptron</a>
+</li>
+
+        
+            
+<li >
+    <a href="../Adaline/">Adaline</a>
+</li>
+
+        
+            
+<li >
+    <a href="../LogisticRegression/">LogisticRegression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../NeuralNetMLP/">NeuralNetMLP</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">regressor</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../regressor/LinearRegression/">LinearRegression</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">regression_utils</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../regression_utils/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">feature_selection</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../feature_selection/SequentialFeatureSelector/">SequentialFeatureSelector</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">evaluate</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../evaluate/confusion_matrix/">Confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/plot_decision_regions/">Plot decision regions</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/plot_learning_curves/">Plot learning curves</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/scoring/">Scoring</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">preprocessing</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../preprocessing/DenseTransformer/">DenseTransformer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/MeanCenterer/">MeanCenterer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/minmax_scaling/">Minmax scaling</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/standardize/">Standardize</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">data</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../data/autompg_data/">Autompg data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/boston_housing_data/">Boston housing data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/iris_data/">Iris data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/mnist_data/">Mnist data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/load_mnist/">Load mnist</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/wine_data/">Wine data</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">file_io</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../file_io/find_filegroups/">Find filegroups</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../file_io/find_files/">Find files</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">general plotting</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../general_plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">math</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../math/num_combinations/">Num combinations</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/num_permutations/">Num permutations</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">text</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../text/generalize_names/">Generalize names</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../text/generalize_names_duplcheck/">Generalize names duplcheck</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../text/tokenizer/">Tokenizer</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">utils</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../utils/Counter/">Counter</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">general concepts</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../general_concepts/activation-functions/">Activation functions</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/gradient-optimization/">Gradient optimization</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/linear-gradient-derivative/">Linear gradient derivative</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/regularization-linear/">Regularization linear</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.classifier/">Mlxtend.classifier</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.evaluate/">Mlxtend.evaluate</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.feature_selection/">Mlxtend.feature selection</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.preprocessing/">Mlxtend.preprocessing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.text/">Mlxtend.text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.utils/">Mlxtend.utils</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../installation/">Installation</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../changelog/">Release Notes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../contributing/">Contributing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../license/">License</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../EnsembleVoteClassifier/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../Adaline/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a href="https://github.com/rasbt/mlxtend">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#perceptron">Perceptron</a></li>
+        
+    
+        <li class="main "><a href="#overview">Overview</a></li>
+        
+            <li><a href="#basic-notation">Basic Notation</a></li>
+        
+            <li><a href="#perceptron-rule">Perceptron Rule</a></li>
+        
+            <li><a href="#references">References</a></li>
+        
+    
+        <li class="main "><a href="#examples">Examples</a></li>
+        
+            <li><a href="#example-1-classification-of-iris-flowers">Example 1 - Classification of Iris Flowers</a></li>
+        
+    
+        <li class="main "><a href="#api">API</a></li>
+        
+            <li><a href="#methods">Methods</a></li>
+        
+    
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<h1 id="perceptron">Perceptron</h1>
+<p>Implementation of a Perceptron learning algorithm for classification.</p>
+<blockquote>
+<p>from mlxtend.classifier import Perceptron</p>
+</blockquote>
+<h1 id="overview">Overview</h1>
+<p>The idea behind this "thresholded" perceptron was to mimic how a single neuron in the brain works: It either "fires" or not. 
+A perceptron receives multiple input signals, and if the sum of the input signals exceed a certain threshold it either returns a signal or remains "silent" otherwise. What made this a "machine learning" algorithm was Frank Rosenblatt's idea of the perceptron learning rule: The perceptron algorithm is about learning the weights for the input signals in order to draw linear decision boundary that allows us to discriminate between the two linearly separable classes +1 and -1.</p>
+<p><img alt="" src="../Perceptron_files/perceptron_schematic.png" /></p>
+<h3 id="basic-notation">Basic Notation</h3>
+<p>Before we dive deeper into the algorithm(s) for learning the weights of the perceptron classifier, let us take a brief look at the basic notation. In the following sections, we will label the <em>positive</em> and <em>negative</em> class in our binary classification setting as "1" and "-1", respectively. Next, we define an activation function <mathjax>$g(\mathbf{z})$</mathjax> that takes a linear combination of the input values <mathjax>$\mathbf{x}$</mathjax> and weights <mathjax>$\mathbf{w}$</mathjax> as input (<mathjax>$\mathbf{z} = w_1x_{1} + \dots + w_mx_{m}$</mathjax>), and if <mathjax>$g(\mathbf{z})$</mathjax> is greater than a defined threshold <mathjax>$\theta$</mathjax> we predict 1 and -1 otherwise; in this case, this activation function <mathjax>$g$</mathjax> is a simple "unit step function," which is sometimes also called "Heaviside step function." </p>
+<p><mathjax>$$
+ g(z) =\begin{cases}
+    1 &amp; \text{if $z \ge \theta$}\\
+    -1 &amp; \text{otherwise}.
+  \end{cases}
+$$</mathjax></p>
+<p>where</p>
+<p><mathjax>$$z =  w_1x_{1} + \dots + w_mx_{m} = \sum_{j=1}^{m} x_{j}w_{j} \\ = \mathbf{w}^T\mathbf{x}$$</mathjax></p>
+<p><mathjax>$\mathbf{w}$</mathjax> is the feature vector, and <mathjax>$\mathbf{x}$</mathjax> is an <mathjax>$m$</mathjax>-dimensional sample from the training dataset:</p>
+<p><mathjax>$$ 
+\mathbf{w} = \begin{bmatrix}
+    w_{1}  \\
+    \vdots \\
+    w_{m}
+\end{bmatrix}
+\quad  \mathbf{x} = \begin{bmatrix}
+    x_{1}  \\
+    \vdots \\
+    x_{m}
+\end{bmatrix}$$</mathjax></p>
+<p>In order to simplify the notation, we bring <mathjax>$\theta$</mathjax> to the left side of the equation and define <mathjax>$w_0 = -\theta  \text{ and } x_0=1$</mathjax> </p>
+<p>so that </p>
+<p><mathjax>$$\begin{equation}
+ g({z}) =\begin{cases}
+    1 &amp; \text{if $z \ge 0$}\\
+    -1 &amp; \text{otherwise}.
+  \end{cases}
+\end{equation}$$</mathjax></p>
+<p>and</p>
+<p><mathjax>$$z = w_0x_{0} + w_1x_{1} + \dots + w_mx_{m} = \sum_{j=0}^{m} x_{j}w_{j} \\ = \mathbf{w}^T\mathbf{x}.$$</mathjax></p>
+<h3 id="perceptron-rule">Perceptron Rule</h3>
+<p>Rosenblatt's initial perceptron rule is fairly simple and can be summarized by the following steps: </p>
+<ol>
+<li>Initialize the weights to 0 or small random numbers.</li>
+<li>For each training sample <mathjax>$\mathbf{x^{(i)}}$</mathjax>:<ol>
+<li>Calculate the <em>output</em> value.</li>
+<li>Update the weights.</li>
+</ol>
+</li>
+</ol>
+<p>The output value is the class label predicted by the unit step function that we defined earlier (output <mathjax>$=g(\mathbf{z})$</mathjax>) and the weight update can be written more formally as  <mathjax>$w_j := w_j + \Delta w_j$</mathjax>.</p>
+<p>The value for updating the weights at each increment is calculated by the learning rule</p>
+<p><mathjax>$\Delta w_j = \eta \; (\text{target}^{(i)} - \text{output}^{(i)})\;x^{(i)}_{j}$</mathjax></p>
+<p>where <mathjax>$\eta$</mathjax> is the learning rate (a constant between 0.0 and 1.0), "target" is the true class label, and the "output" is the predicted class label.</p>
+<p>aIt is important to note that all weights in the weight vector are being updated simultaneously. Concretely, for a 2-dimensional dataset, we would write the update as:</p>
+<p><mathjax>$\Delta w_0 = \eta(\text{target}^{(i)} - \text{output}^{(i)})$</mathjax><br />
+<mathjax>$\Delta w_1 = \eta(\text{target}^{(i)} - \text{output}^{(i)})\;x^{(i)}_{1}$</mathjax><br />
+<mathjax>$\Delta w_2 = \eta(\text{target}^{(i)} - \text{output}^{(i)})\;x^{(i)}_{2}$</mathjax>  </p>
+<p>Before we implement the perceptron rule in Python, let us make a simple thought experiment to illustrate how beautifully simple this learning rule really is. In the two scenarios where the perceptron predicts the class label correctly, the weights remain unchanged:</p>
+<ul>
+<li><mathjax>$\Delta w_j = \eta(-1^{(i)} - -1^{(i)})\;x^{(i)}_{j} = 0$</mathjax> </li>
+<li><mathjax>$\Delta w_j = \eta(1^{(i)} - 1^{(i)})\;x^{(i)}_{j} = 0$</mathjax> </li>
+</ul>
+<p>However, in case of a wrong prediction, the weights are being "pushed" towards the direction of the positive or negative target class, respectively:</p>
+<ul>
+<li><mathjax>$\Delta w_j = \eta(1^{(i)} - -1^{(i)})\;x^{(i)}_{j} = \eta(2)\;x^{(i)}_{j}$</mathjax> </li>
+<li><mathjax>$\Delta w_j = \eta(-1^{(i)} - 1^{(i)})\;x^{(i)}_{j} = \eta(-2)\;x^{(i)}_{j}$</mathjax> </li>
+</ul>
+<p>It is important to note that the convergence of the perceptron is only guaranteed if the two classes are linearly separable. If the two classes can't be separated by a linear decision boundary, we can set a maximum number of passes over the training dataset ("epochs") and/or a threshold for the number of tolerated misclassifications.</p>
+<h3 id="references">References</h3>
+<ul>
+<li>F. Rosenblatt. The perceptron, a perceiving and recognizing automaton Project Para. Cornell Aeronautical Laboratory, 1957.</li>
+</ul>
+<h1 id="examples">Examples</h1>
+<h2 id="example-1-classification-of-iris-flowers">Example 1 - Classification of Iris Flowers</h2>
+<pre><code class="python">from mlxtend.data import iris_data
+from mlxtend.evaluate import plot_decision_regions
+from mlxtend.classifier import Perceptron
+import matplotlib.pyplot as plt
+
+# Loading Data
+
+X, y = iris_data()
+X = X[:, [0, 3]] # sepal length and petal width
+X = X[0:100] # class 0 and class 1
+y = y[0:100] # class 0 and class 1
+
+# standardize
+X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
+X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
+
+
+# Rosenblatt Perceptron
+
+ppn = Perceptron(epochs=5, eta=0.05, random_seed=0)
+ppn.fit(X, y)
+
+plot_decision_regions(X, y, clf=ppn)
+plt.title('Perceptron - Rosenblatt Perceptron Rule')
+plt.show()
+
+print(ppn.w_)
+
+plt.plot(range(len(ppn.cost_)), ppn.cost_)
+plt.xlabel('Iterations')
+plt.ylabel('Missclassifications')
+plt.show()
+</code></pre>
+
+<pre><code>[-0.3902373  -0.35696213 -0.37944732]
+</code></pre>
+<p><img alt="png" src="../Perceptron_files/Perceptron_25_1.png" /></p>
+<pre><code>[ 0.0097627   0.08408412  0.31449279]
+</code></pre>
+<p><img alt="png" src="../Perceptron_files/Perceptron_25_3.png" /></p>
+<h1 id="api">API</h1>
+<p><em>Perceptron(eta=0.1, epochs=50, shuffle=False, random_seed=None, zero_init_weight=False)</em></p>
+<p>Perceptron classifier.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>eta</code> : float (default: 0.1)</p>
+<p>Learning rate (between 0.0 and 1.0)</p>
+</li>
+<li>
+<p><code>epochs</code> : int (default: 50)</p>
+<p>Number of passes over the training dataset.</p>
+</li>
+<li>
+<p><code>shuffle</code> : bool (default: False)</p>
+<p>Shuffles training data every epoch if True to prevent circles.</p>
+</li>
+<li>
+<p><code>random_seed</code> : int</p>
+<p>Random state for initializing random weights.</p>
+</li>
+<li>
+<p><code>zero_init_weight</code> : bool (default: False)</p>
+<p>If True, weights are initialized to zero instead of small random
+numbers in the interval [-0.1, 0.1];
+ignored if solver='normal equation'</p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>w_</code> : 1d-array</p>
+<p>Weights after fitting.</p>
+</li>
+<li>
+<p><code>cost_</code> : list</p>
+<p>Number of misclassifications in every epoch.</p>
+</li>
+</ul>
+<h3 id="methods">Methods</h3>
+<hr>
+
+<p><em>fit(X, y, init_weights=True)</em></p>
+<p>Learn weight coefficients from training data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>init_weights</code> : bool (default: True)</p>
+<p>Re-initializes weights prior to fitting. Set False to continue
+training with weights from a previous fitting.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
+<hr>
+
+<p><em>net_input(X)</em></p>
+<p>Net input function</p>
+<hr>
+
+<p><em>predict(X)</em></p>
+<p>Predict class labels for X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>class</code> : int</p>
+<p>Predicted class label.</p>
+</li>
+</ul></div>
+        
+    </div>
+
+    <footer class="col-md-12 text-center">
+        <hr>
+        <p>
+        <small>Copyright &copy; 2014-2016 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        
+        <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
+    </footer>
+
+    <script src="../../../js/jquery-1.10.2.min.js"></script>
+    <script src="../../../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+    var base_url = '../../..';
+    </script>
+    <script data-main="../../../mkdocs/js/search.js" src="../../../mkdocs/js/require.js"></script>
+    <script src="../../../js/base.js"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="../../../mathjaxhelper.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+
+</html>

@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="author" content="Sebastian Raschka"> 
+    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/standardize/"> 
+    <link rel="shortcut icon" href="../../../../../../favicon.ico">
+
+    <title>Standardize - mlxtend</title>
+
+    <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
+    <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link href="../../../css/cinder.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+
+
+    <link href="../../../extra.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-38457794-2', 'rasbt.github.io/mlxtend/');
+    ga('send', 'pageview');
+    </script>
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../../..">mlxtend</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">classifier</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../classifier/EnsembleVoteClassifier/">EnsembleVoteClassifier</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/Perceptron/">Perceptron</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/Adaline/">Adaline</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/LogisticRegression/">LogisticRegression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/NeuralNetMLP/">NeuralNetMLP</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">regressor</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../regressor/LinearRegression/">LinearRegression</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">regression_utils</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../regression_utils/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">feature_selection</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../feature_selection/SequentialFeatureSelector/">SequentialFeatureSelector</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">evaluate</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../evaluate/confusion_matrix/">Confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/plot_decision_regions/">Plot decision regions</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/plot_learning_curves/">Plot learning curves</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/scoring/">Scoring</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">preprocessing</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../DenseTransformer/">DenseTransformer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../MeanCenterer/">MeanCenterer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../minmax_scaling/">Minmax scaling</a>
+</li>
+
+        
+            
+<li >
+    <a href="../shuffle_arrays_unison/">Shuffle arrays unison</a>
+</li>
+
+        
+            
+<li class="active">
+    <a href="./">Standardize</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">data</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../data/autompg_data/">Autompg data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/boston_housing_data/">Boston housing data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/iris_data/">Iris data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/mnist_data/">Mnist data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/load_mnist/">Load mnist</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/wine_data/">Wine data</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">file_io</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../file_io/find_filegroups/">Find filegroups</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../file_io/find_files/">Find files</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">general plotting</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../general_plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">math</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../math/num_combinations/">Num combinations</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/num_permutations/">Num permutations</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">text</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../text/generalize_names/">Generalize names</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../text/generalize_names_duplcheck/">Generalize names duplcheck</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../text/tokenizer/">Tokenizer</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">utils</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../utils/Counter/">Counter</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">general concepts</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../general_concepts/activation-functions/">Activation functions</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/gradient-optimization/">Gradient optimization</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/linear-gradient-derivative/">Linear gradient derivative</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/regularization-linear/">Regularization linear</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.classifier/">Mlxtend.classifier</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.evaluate/">Mlxtend.evaluate</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.feature_selection/">Mlxtend.feature selection</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.preprocessing/">Mlxtend.preprocessing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.text/">Mlxtend.text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.utils/">Mlxtend.utils</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../installation/">Installation</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../changelog/">Release Notes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../contributing/">Contributing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../license/">License</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../shuffle_arrays_unison/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../../data/autompg_data/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a href="https://github.com/rasbt/mlxtend">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#standardize">Standardize</a></li>
+        
+    
+        <li class="main "><a href="#overview">Overview</a></li>
+        
+            <li><a href="#related-topics">Related Topics</a></li>
+        
+    
+        <li class="main "><a href="#examples">Examples</a></li>
+        
+            <li><a href="#example-1-standardize-a-pandas-dataframe">Example 1 - Standardize a Pandas DataFrame</a></li>
+        
+            <li><a href="#example-2-standardize-a-numpy-array">Example 2 - Standardize a NumPy Array</a></li>
+        
+            <li><a href="#example-3-re-using-parameters">Example 3 - Re-using parameters</a></li>
+        
+    
+        <li class="main "><a href="#api">API</a></li>
+        
+    
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<h1 id="standardize">Standardize</h1>
+<p>A function that performs column-based standardization on a NumPy array.</p>
+<blockquote>
+<p>from mlxtend.preprocessing import standardize</p>
+</blockquote>
+<h1 id="overview">Overview</h1>
+<p>The result of standardization (or Z-score normalization) is that the features will be rescaled so that they'll have the properties of a standard normal distribution with</p>
+<p><mathjax>$\mu = 0$</mathjax> and <mathjax>$\sigma = 1$</mathjax>.</p>
+<p>where <mathjax>$\mu$</mathjax> is the mean (average) and <mathjax>$\sigma$</mathjax> is the standard deviation from the mean; standard scores (also called z scores) of the samples are calculated as</p>
+<p><mathjax>$$z=\frac{x-\mu}{\sigma}.$$</mathjax></p>
+<p>Standardizing the features so that they are centered around 0 with a standard deviation of 1 is not only important if we are comparing measurements that have different units, but it is also a general requirement for the optimal performance of many machine learning algorithms. </p>
+<p>One family of algorithms that is scale-invariant encompasses tree-based learning algorithms. Let's take the general CART decision tree algorithm. Without going into much depth regarding information gain and impurity measures, we can think of the decision as "is feature x_i &gt;= some_val?" Intuitively, we can see that it really doesn't matter on which scale this feature is (centimeters, Fahrenheit, a standardized scale -- it really doesn't matter).</p>
+<p>Some examples of algorithms where feature scaling matters are:</p>
+<ul>
+<li>k-nearest neighbors with an Euclidean distance measure if want all features to contribute equally</li>
+<li>k-means (see k-nearest neighbors)</li>
+<li>logistic regression, SVMs, perceptrons, neural networks etc. if you are using gradient descent/ascent-based optimization, otherwise some weights will update much faster than others</li>
+<li>linear discriminant analysis, principal component analysis, kernel principal component analysis since you want to find directions of maximizing the variance (under the constraints that those directions/eigenvectors/principal components are orthogonal); you want to have features on the same scale since you'd emphasize variables on "larger measurement scales" more.</li>
+</ul>
+<p>There are many more cases than I can possibly list here ... I always recommend you to think about the algorithm and what it's doing, and then it typically becomes obvious whether we want to scale your features or not.</p>
+<p>In addition, we'd also want to think about whether we want to "standardize" or "normalize" (here: scaling to [0, 1] range) our data. Some algorithms assume that our data is centered at 0. For example, if we initialize the weights of a small multi-layer perceptron with tanh activation units to 0 or small random values centered around zero, we want to update the model weights "equally."
+As a rule of thumb I'd say: When in doubt, just standardize the data, it shouldn't hurt.   </p>
+<h3 id="related-topics">Related Topics</h3>
+<ul>
+<li><a href="./mean_centering.md">MeanCenterer</a></li>
+<li><a href="../minmax_scaling/">MinMaxScaling</a></li>
+<li><a href="../shuffle_arrays_unison/">Shuffle Arrays in Unison</a></li>
+<li><a href="./scikit-learn_dense_transformer.md">DenseTransformer</a></li>
+</ul>
+<h1 id="examples">Examples</h1>
+<h2 id="example-1-standardize-a-pandas-dataframe">Example 1 - Standardize a Pandas DataFrame</h2>
+<pre><code class="python">import pandas as pd
+
+s1 = pd.Series([1, 2, 3, 4, 5, 6], index=(range(6)))
+s2 = pd.Series([10, 9, 8, 7, 6, 5], index=(range(6)))
+df = pd.DataFrame(s1, columns=['s1'])
+df['s2'] = s2
+df
+</code></pre>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>s1</th>
+      <th>s2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="python">from mlxtend.preprocessing import standardize
+standardize(df, columns=['s1', 's2'])
+</code></pre>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>s1</th>
+      <th>s2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-1.46385</td>
+      <td>1.46385</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.87831</td>
+      <td>0.87831</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.29277</td>
+      <td>0.29277</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.29277</td>
+      <td>-0.29277</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.87831</td>
+      <td>-0.87831</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1.46385</td>
+      <td>-1.46385</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="example-2-standardize-a-numpy-array">Example 2 - Standardize a NumPy Array</h2>
+<pre><code class="python">import numpy as np
+
+X = np.array([[1, 10], [2, 9], [3, 8], [4, 7], [5, 6], [6, 5]])
+X
+</code></pre>
+
+<pre><code>array([[ 1, 10],
+       [ 2,  9],
+       [ 3,  8],
+       [ 4,  7],
+       [ 5,  6],
+       [ 6,  5]])
+</code></pre>
+<pre><code class="python">from mlxtend.preprocessing import standardize
+standardize(X, columns=[0, 1])
+</code></pre>
+
+<pre><code>array([[-1.46385011,  1.46385011],
+       [-0.87831007,  0.87831007],
+       [-0.29277002,  0.29277002],
+       [ 0.29277002, -0.29277002],
+       [ 0.87831007, -0.87831007],
+       [ 1.46385011, -1.46385011]])
+</code></pre>
+<h2 id="example-3-re-using-parameters">Example 3 - Re-using parameters</h2>
+<p>In machine learning contexts, it is desired to re-use the parameters that have been obtained from a training set to scale new, future data (including the independent test set). By setting <code>return_params=True</code>, the <code>standardize</code> function returns a second object, a parameter dictionary containing the column means and standard deviations that can be re-used by feeding it to the <code>params</code> parameter upon function call.</p>
+<pre><code class="python">import numpy as np
+from mlxtend.preprocessing import standardize
+
+X_train = np.array([[1, 10], [4, 7], [3, 8]])
+X_test = np.array([[1, 2], [3, 4], [5, 6]])
+
+X_train_std, params = standardize(X_train, columns=[0, 1], return_params=True)
+X_train_std
+</code></pre>
+
+<pre><code>array([[-1.33630621,  1.33630621],
+       [ 1.06904497, -1.06904497],
+       [ 0.26726124, -0.26726124]])
+</code></pre>
+<pre><code class="python">params
+</code></pre>
+
+<pre><code>{'avgs': array([ 2.66666667,  8.33333333]),
+ 'stds': array([ 1.24721913,  1.24721913])}
+</code></pre>
+<pre><code class="python">X_test_std = standardize(X_test, columns=[0, 1], params=params)
+X_test_std
+</code></pre>
+
+<pre><code>array([[-1.33630621, -5.0779636 ],
+       [ 0.26726124, -3.47439614],
+       [ 1.87082869, -1.87082869]])
+</code></pre>
+<h1 id="api">API</h1>
+<p><em>standardize(array, columns, ddof=0, return_params=False, params=None)</em></p>
+<p>Standardize columns in pandas DataFrames.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>array</code> : pandas DataFrame or NumPy ndarray, shape = [n_rows, n_columns].</p>
+</li>
+<li>
+<p><code>columns</code> : array-like, shape = [n_columns]</p>
+<p>Array-like with column names, e.g., ['col1', 'col2', ...]
+or column indices [0, 2, 4, ...]</p>
+</li>
+<li>
+<p><code>ddof</code> : int (default: 0)</p>
+<p>Delta Degrees of Freedom. The divisor used in calculations
+is N - ddof, where N represents the number of elements.</p>
+</li>
+<li>
+<p><code>return_params</code> : dict (default: False)</p>
+<p>If set to True, a dictionary is returned in addition to the
+standardized array. The parameter dictionary contains the
+column means ('avgs') and standard deviations ('stds') of
+the individual columns.</p>
+</li>
+<li>
+<p><code>params</code> : dict (default: None)</p>
+<p>A dictionary with column means and standard deviations as
+returned by the <code>standardize</code> function if <code>return_params</code>
+was set to True. If a <code>params</code> dictionary is provided, the
+<code>standardize</code> function will use these instead of computing
+them from the current array.</p>
+</li>
+</ul>
+<p><strong>Notes</strong></p>
+<p>If all values in a given column are the same, these values are all
+    set to <code>0.0</code>. The standard deviation in the <code>parameters</code> dictionary
+    is consequently set to <code>1.0</code> to avoid dividing by zero.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>df_new</code> : pandas DataFrame object.</p>
+<p>Copy of the array or DataFrame with standardized columns.</p>
+</li>
+</ul></div>
+        
+    </div>
+
+    <footer class="col-md-12 text-center">
+        <hr>
+        <p>
+        <small>Copyright &copy; 2014-2016 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        
+        <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
+    </footer>
+
+    <script src="../../../js/jquery-1.10.2.min.js"></script>
+    <script src="../../../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+    var base_url = '../../..';
+    </script>
+    <script data-main="../../../mkdocs/js/search.js" src="../../../mkdocs/js/require.js"></script>
+    <script src="../../../js/base.js"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="../../../mathjaxhelper.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+
+</html>

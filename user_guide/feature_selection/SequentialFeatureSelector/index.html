@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="author" content="Sebastian Raschka"> 
+    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/feature_selection/SequentialFeatureSelector/"> 
+    <link rel="shortcut icon" href="../../../../../../favicon.ico">
+
+    <title>SequentialFeatureSelector - mlxtend</title>
+
+    <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
+    <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link href="../../../css/cinder.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+
+
+    <link href="../../../extra.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-38457794-2', 'rasbt.github.io/mlxtend/');
+    ga('send', 'pageview');
+    </script>
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../../..">mlxtend</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">classifier</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../classifier/EnsembleVoteClassifier/">EnsembleVoteClassifier</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/Perceptron/">Perceptron</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/Adaline/">Adaline</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/LogisticRegression/">LogisticRegression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/NeuralNetMLP/">NeuralNetMLP</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">regressor</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../regressor/LinearRegression/">LinearRegression</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">regression_utils</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../regression_utils/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">feature_selection</a>
+    <ul class="dropdown-menu">
+        
+            
+<li class="active">
+    <a href="./">SequentialFeatureSelector</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">evaluate</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../evaluate/confusion_matrix/">Confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/plot_decision_regions/">Plot decision regions</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/plot_learning_curves/">Plot learning curves</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/scoring/">Scoring</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">preprocessing</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../preprocessing/DenseTransformer/">DenseTransformer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/MeanCenterer/">MeanCenterer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/minmax_scaling/">Minmax scaling</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/standardize/">Standardize</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">data</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../data/autompg_data/">Autompg data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/boston_housing_data/">Boston housing data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/iris_data/">Iris data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/mnist_data/">Mnist data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/load_mnist/">Load mnist</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/wine_data/">Wine data</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">file_io</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../file_io/find_filegroups/">Find filegroups</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../file_io/find_files/">Find files</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">general plotting</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../general_plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">math</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../math/num_combinations/">Num combinations</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/num_permutations/">Num permutations</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">text</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../text/generalize_names/">Generalize names</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../text/generalize_names_duplcheck/">Generalize names duplcheck</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../text/tokenizer/">Tokenizer</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">utils</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../utils/Counter/">Counter</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">general concepts</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../general_concepts/activation-functions/">Activation functions</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/gradient-optimization/">Gradient optimization</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/linear-gradient-derivative/">Linear gradient derivative</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/regularization-linear/">Regularization linear</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.classifier/">Mlxtend.classifier</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.evaluate/">Mlxtend.evaluate</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.feature_selection/">Mlxtend.feature selection</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.preprocessing/">Mlxtend.preprocessing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.text/">Mlxtend.text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.utils/">Mlxtend.utils</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../installation/">Installation</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../changelog/">Release Notes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../contributing/">Contributing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../license/">License</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../../regression_utils/plot_linear_regression/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../../evaluate/confusion_matrix/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a href="https://github.com/rasbt/mlxtend">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#sequential-feature-selector">Sequential Feature Selector</a></li>
+        
+    
+        <li class="main "><a href="#overview">Overview</a></li>
+        
+            <li><a href="#sequential-forward-selection-sfs">Sequential Forward Selection (SFS)</a></li>
+        
+            <li><a href="#sequential-floating-backward-sbs">Sequential Floating Backward (SBS)</a></li>
+        
+            <li><a href="#sequential-floating-backward-selection-sfbs">Sequential Floating Backward Selection (SFBS)</a></li>
+        
+            <li><a href="#sequential-floating-forward-selection-sffs">Sequential Floating Forward Selection (SFFS)</a></li>
+        
+    
+        <li class="main "><a href="#examples">Examples</a></li>
+        
+            <li><a href="#example-1-a-simple-sequential-forward-selection-example">Example 1 - A simple Sequential Forward Selection example</a></li>
+        
+            <li><a href="#example-2-toggling-between-sfs-sbs-sffs-and-sfbs">Example 2 - Toggling between SFS, SBS, SFFS, and SFBS</a></li>
+        
+            <li><a href="#example-3-visualizing-the-results-in-dataframes">Example 3 - Visualizing the results in DataFrames</a></li>
+        
+            <li><a href="#example-4-plotting-the-results">Example 4 - Plotting the results</a></li>
+        
+            <li><a href="#example-5-sequential-feature-selection-for-regression">Example 5 - Sequential Feature Selection for Regression</a></li>
+        
+    
+        <li class="main "><a href="#api">API</a></li>
+        
+            <li><a href="#methods">Methods</a></li>
+        
+    
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<h1 id="sequential-feature-selector">Sequential Feature Selector</h1>
+<p>Implementation of of <em>sequential feature algorithms</em> (SFAs) -- greedy search algorithm -- that have been developed as a suboptimal solution to the computationally often not feasible exhaustive search.</p>
+<blockquote>
+<p>from mlxtend.feature_selection import SequentialFeatureSelector</p>
+</blockquote>
+<h1 id="overview">Overview</h1>
+<p>In a nutshell, SFAs remove or add one feature at the time based on the classifier performance until a feature subset of the desired size k is reached. There are 4 different flavors of SFAs available via the <code>Sequential Feature Selector</code>:
+1. Sequential Forward Selection (SFS)
+2. Sequential Backward Selection (SBS)
+3. Sequential Floating Forward Selection (SFFS)
+4. Sequential Floating Backward Selection (SFBS)</p>
+<p>The <strong><em>floating</em></strong> variants, SFFS and SFBS can be considered as extensions of the simpler SFS and SBS algorithms. the floating algorithms have an additional exclusion or inclusion step to remove features once they were included (or excluded), so that a larger number of feature subset combinations can be sampled. It is important to emphasize that this step is conditional only occurs if the resulting feature subset is assessed as "better" by the criterion function after removal (or addition) of a particular feature. Furthermore, I added an optional check to skip the conditional exclusion steps if the algorithm gets stuck in cycles.<br />
+The algorithms are outlined in pseudocode below:</p>
+<h2 id="sequential-forward-selection-sfs">Sequential Forward Selection (SFS)</h2>
+<p><strong>Input:</strong> <mathjax>$Y = \{y_1, y_2, ..., y_d\}$</mathjax>  </p>
+<ul>
+<li>The <strong><em>SFS</em></strong> algorithm takes the whole <mathjax>$d$</mathjax>-dimensional feature set as input.</li>
+</ul>
+<p><strong>Output:</strong> <mathjax>$X_k = \{x_j \; | \;j = 1, 2, ..., k; \; x_j \in Y\}$</mathjax>, where <mathjax>$k = (0, 1, 2, ..., d)$</mathjax></p>
+<ul>
+<li>SFS returns a subset of features; the number of selected features <mathjax>$k$</mathjax>, where <mathjax>$k &lt; d$</mathjax>, has to be specified <em>a priori</em>.</li>
+</ul>
+<p><strong>Initialization:</strong> <mathjax>$X_0 = \emptyset$</mathjax>, <mathjax>$k = 0$</mathjax></p>
+<ul>
+<li>We initialize the algorithm with an empty set <mathjax>$\emptyset$</mathjax> ("null set") so that <mathjax>$k = 0$</mathjax> (where <mathjax>$k$</mathjax> is the size of the subset).</li>
+</ul>
+<p><strong>Step 1 (Inclusion):</strong>  </p>
+<p><mathjax>$x^+ = \text{ arg max } J(x_k + x), \text{ where }  x \in Y - X_k$</mathjax><br />
+<mathjax>$X_k+1 = X_k + x^+$</mathjax><br />
+<mathjax>$k = k + 1$</mathjax>  <br />
+<em>Go to Step 2</em></p>
+<ul>
+<li>in this step, we add an additional feature, <mathjax>$x^+$</mathjax>, to our feature subset <mathjax>$X_k$</mathjax>.</li>
+<li><mathjax>$x^+$</mathjax> is the feature that maximizes our criterion function, that is, the feature that is associated with the best classifier performance if it is added to <mathjax>$X_k$</mathjax>.</li>
+</ul>
+<p><strong>Step 2 (Conditional Exclusion):</strong>  </p>
+<p><mathjax>$x^- = \text{ arg max } J(x_k - x), \text{ where } x \in X_k$</mathjax><br />
+<mathjax>$if \; J(x_k - x) &gt; J(x_k - x)$</mathjax>:  <br />
+&nbsp;&nbsp;&nbsp;&nbsp; <mathjax>$X_k-1 = X_k - x^-$</mathjax><br />
+&nbsp;&nbsp;&nbsp;&nbsp; <mathjax>$k = k - 1$</mathjax>  <br />
+<em>Go to Step 1</em>  </p>
+<ul>
+<li>In Step 2, we only remove a feature if the resulting subset would gain an increase in performance. We go back to Step 1.  </li>
+<li>Steps 1 and 2 are reapeated until the <strong>Termination</strong> criterion is reached.</li>
+</ul>
+<p><strong>Termination:</strong> <mathjax>$k = p$</mathjax></p>
+<ul>
+<li>We add features from the feature subset <mathjax>$X_k$</mathjax> until the feature subset of size <mathjax>$k$</mathjax> contains the number of desired features <mathjax>$p$</mathjax> that we specified <em>a priori</em>.</li>
+</ul>
+<h2 id="sequential-floating-backward-sbs">Sequential Floating Backward (SBS)</h2>
+<p><strong>Input:</strong> the set of all features, <mathjax>$Y = \{y_1, y_2, ..., y_d\}$</mathjax>  </p>
+<ul>
+<li>The SBS algorithm takes the whole feature set as input.</li>
+</ul>
+<p><strong>Output:</strong> <mathjax>$X_k = \{x_j \; | \;j = 1, 2, ..., k; \; x_j \in Y\}$</mathjax>, where <mathjax>$k = (0, 1, 2, ..., d)$</mathjax></p>
+<ul>
+<li>SBS returns a subset of features; the number of selected features <mathjax>$k$</mathjax>, where <mathjax>$k &lt; d$</mathjax>, has to be specified <em>a priori</em>.</li>
+</ul>
+<p><strong>Initialization:</strong> <mathjax>$X_0 = Y$</mathjax>, <mathjax>$k = d$</mathjax></p>
+<ul>
+<li>We initialize the algorithm with the given feature set so that the <mathjax>$k = d$</mathjax>.</li>
+</ul>
+<p><strong>Step 1 (Exclusion):</strong>  </p>
+<p><mathjax>$x^- = \text{ arg max } J(x_k - x), \text{  where } x \in X_k$</mathjax><br />
+<mathjax>$X_k-1 = X_k - x^-$</mathjax><br />
+<mathjax>$k = k - 1$</mathjax><br />
+<em>Go to Step 1</em>  </p>
+<ul>
+<li>In this step, we remove a feature, <mathjax>$x^-$</mathjax> from our feature subset <mathjax>$X_k$</mathjax>.</li>
+<li><mathjax>$x^-$</mathjax> is the feature that maximizes our criterion function upon re,oval, that is, the feature that is associated with the best classifier performance if it is removed from <mathjax>$X_k$</mathjax>.</li>
+<li>We repeat this procedure until the termination criterion is satisfied.</li>
+</ul>
+<p><strong>Termination:</strong> <mathjax>$k = p$</mathjax></p>
+<ul>
+<li>We add features from the feature subset <mathjax>$X_k$</mathjax> until the feature subset of size <mathjax>$k$</mathjax> contains the number of desired features <mathjax>$p$</mathjax> that we specified <em>a priori</em>.</li>
+</ul>
+<h2 id="sequential-floating-backward-selection-sfbs">Sequential Floating Backward Selection (SFBS)</h2>
+<p><strong>Input:</strong> the set of all features, <mathjax>$Y = \{y_1, y_2, ..., y_d\}$</mathjax>  </p>
+<ul>
+<li>The SFBS algorithm takes the whole feature set as input.</li>
+</ul>
+<p><strong>Output:</strong> <mathjax>$X_k = \{x_j \; | \;j = 1, 2, ..., k; \; x_j \in Y\}$</mathjax>, where <mathjax>$k = (0, 1, 2, ..., d)$</mathjax></p>
+<ul>
+<li>SFBS returns a subset of features; the number of selected features <mathjax>$k$</mathjax>, where <mathjax>$k &lt; d$</mathjax>, has to be specified <em>a priori</em>.</li>
+</ul>
+<p><strong>Initialization:</strong> <mathjax>$X_0 = Y$</mathjax>, <mathjax>$k = d$</mathjax></p>
+<ul>
+<li>We initialize the algorithm with the given feature set so that the <mathjax>$k = d$</mathjax>.</li>
+</ul>
+<p><strong>Step 1 (Exclusion):</strong>  </p>
+<p><mathjax>$x^- = \text{ arg max } J(x_k - x), \text{  where } x \in X_k$</mathjax><br />
+<mathjax>$X_k-1 = X_k - x^-$</mathjax><br />
+<mathjax>$k = k - 1$</mathjax><br />
+<em>Go to Step 2</em>  </p>
+<ul>
+<li>In this step, we remove a feature, <mathjax>$x^-$</mathjax> from our feature subset <mathjax>$X_k$</mathjax>.</li>
+<li><mathjax>$x^-$</mathjax> is the feature that maximizes our criterion function upon re,oval, that is, the feature that is associated with the best classifier performance if it is removed from <mathjax>$X_k$</mathjax>.</li>
+</ul>
+<p><strong>Step 2 (Conditional Inclusion):</strong><br />
+<br>
+<mathjax>$x^+ = \text{ arg max } J(x_k + x), \text{ where } x \in Y - X_k$</mathjax><br />
+<em>if J(x_k + x) &gt; J(x_k + x)</em>:  <br />
+&nbsp;&nbsp;&nbsp;&nbsp; <mathjax>$X_k+1 = X_k + x^+$</mathjax><br />
+&nbsp;&nbsp;&nbsp;&nbsp; <mathjax>$k = k + 1$</mathjax><br />
+<em>Go to Step 1</em>  </p>
+<ul>
+<li>In Step 2, we search for features that improve the classifier performance if they are added back to the feature subset. If such features exist, we add the feature <mathjax>$x^+$</mathjax> for which the perfomance improvement is max.</li>
+<li>Steps 1 and 2 are reapeated until the <strong>Termination</strong> criterion is reached.</li>
+</ul>
+<p><strong>Termination:</strong> <mathjax>$k = p$</mathjax></p>
+<ul>
+<li>We add features from the feature subset <mathjax>$X_k$</mathjax> until the feature subset of size <mathjax>$k$</mathjax> contains the number of desired features <mathjax>$p$</mathjax> that we specified <em>a priori</em>.</li>
+</ul>
+<h2 id="sequential-floating-forward-selection-sffs">Sequential Floating Forward Selection (SFFS)</h2>
+<p><strong>Input:</strong> the set of all features, <mathjax>$Y = \{y_1, y_2, ..., y_d\}$</mathjax>  </p>
+<ul>
+<li>The <strong><em>SFFS</em></strong> algorithm takes the whole feature set as input, if our feature space consists of, e.g. 10, if our feature space consists of 10 dimensions (<strong><em>d = 10</em></strong>).
+<br><br></li>
+</ul>
+<p><strong>Output:</strong> a subset of features, <mathjax>$X_k = \{x_j \; | \;j = 1, 2, ..., k; \; x_j \in Y\}$</mathjax>, where <mathjax>$k = (0, 1, 2, ..., d)$</mathjax></p>
+<ul>
+<li>The returned output of the algorithm is a subset of the feature space of a specified size. E.g., a subset of 5 features from a 10-dimensional feature space (<strong><em>k = 5, d = 10</em></strong>).
+<br><br></li>
+</ul>
+<p><strong>Initialization:</strong> <mathjax>$X_0 = Y$</mathjax>, <mathjax>$k = d$</mathjax></p>
+<ul>
+<li>We initialize the algorithm with an empty set ("null set") so that the <strong><em>k = 0</em></strong> (where <strong><em>k</em></strong> is the size of the subset)
+<br><br></li>
+</ul>
+<p><strong>Step 1 (Inclusion):</strong><br />
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp; <mathjax>$x^+ = \text{ arg max } J(x_k + x), \text{ where }  x \in Y - X_k$</mathjax><br />
+&nbsp;&nbsp;&nbsp;&nbsp; <mathjax>$X_k+1 = X_k + x^+$</mathjax><br />
+&nbsp;&nbsp;&nbsp;&nbsp; <mathjax>$k = k + 1$</mathjax>  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;<em>Go to Step 2</em><br />
+<br> <br>
+<strong>Step 2 (Conditional Exclusion):</strong><br />
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp; <mathjax>$x^- = \text{ arg max } J(x_k - x), \text{ where } x \in X_k$</mathjax><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<mathjax>$if \; J(x_k - x) &gt; J(x_k - x)$</mathjax>:  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <mathjax>$X_k-1 = X_k - x^- $</mathjax><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <mathjax>$k = k - 1$</mathjax>  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;<em>Go to Step 1</em>  </p>
+<ul>
+<li>In step 1, we include the feature from the <strong><em>feature space</em></strong> that leads to the best performance increase for our <strong><em>feature subset</em></strong> (assessed by the <strong><em>criterion function</em></strong>). Then, we go over to step 2</li>
+<li>In step 2, we only remove a feature if the resulting subset would gain an increase in performance. We go back to step 1.  </li>
+<li>Steps 1 and 2 are reapeated until the <strong>Termination</strong> criterion is reached.
+<br><br></li>
+</ul>
+<p><strong>Termination:</strong> stop when <strong><em>k</em></strong> equals the number of desired features</p>
+<h3 id="references">References</h3>
+<ul>
+<li>Ferri, F., et al. <a href="https://books.google.com/books?hl=en&amp;lr=&amp;id=sbajBQAAQBAJ&amp;oi=fnd&amp;pg=PA403&amp;dq=comparative+study+of+techniques+for+large+scale&amp;ots=KdIOYpA8wj&amp;sig=hdOsBP1HX4hcDjx4RLg_chheojc#v=onepage&amp;q=comparative%20study%20of%20techniques%20for%20large%20scale&amp;f=false"><em>"Comparative study of techniques for large-scale feature selection."</em></a> Pattern Recognition in Practice IV (1994): 403-413.</li>
+</ul>
+<h1 id="examples">Examples</h1>
+<h2 id="example-1-a-simple-sequential-forward-selection-example">Example 1 - A simple Sequential Forward Selection example</h2>
+<p>Initializing a simple classifier from scikit-learn:</p>
+<pre><code class="python">from sklearn.neighbors import KNeighborsClassifier
+from sklearn.datasets import load_iris
+iris = load_iris()
+X = iris.data
+y = iris.target
+knn = KNeighborsClassifier(n_neighbors=4)
+</code></pre>
+
+<p>We start by selection the "best" 3 features from the Iris dataset via Sequential Forward Selection (SFS). Here, we set <code>forward=True</code> and <code>floating=False</code>. By choosing <code>cv=0</code>, we don't perform any cross-validation, therefore, the performance (here: <code>'accuracy'</code>) is computed entirely on the training set. </p>
+<pre><code class="python">from mlxtend.feature_selection import SequentialFeatureSelector as SFS
+
+sfs1 = SFS(knn, 
+           k_features=3, 
+           forward=True, 
+           floating=False, 
+           scoring='accuracy',
+           cv=0)
+sfs1 = sfs1.fit(X, y)
+</code></pre>
+
+<pre><code>Features: 3/3
+</code></pre>
+<p>Via the <code>subsets_</code> attribute, we can take a look at the selected feature indices at each step:</p>
+<pre><code class="python">sfs1.subsets_
+</code></pre>
+
+<pre><code>{1: {'avg_score': 0.95999999999999996,
+  'cv_scores': array([ 0.96]),
+  'feature_idx': (3,)},
+ 2: {'avg_score': 0.97333333333333338,
+  'cv_scores': array([ 0.97333333]),
+  'feature_idx': (2, 3)},
+ 3: {'avg_score': 0.97333333333333338,
+  'cv_scores': array([ 0.97333333]),
+  'feature_idx': (1, 2, 3)}}
+</code></pre>
+<p>Furthermore, we can access the indices of the 3 best features directly via the <code>k_feature_idx_</code> attribute:</p>
+<pre><code class="python">sfs1.k_feature_idx_
+</code></pre>
+
+<pre><code>(1, 2, 3)
+</code></pre>
+<p>Finally, the prediction score for these 3 features can be accesses via <code>k_score_</code>:</p>
+<pre><code class="python">sfs1.k_score_
+</code></pre>
+
+<pre><code>0.97333333333333338
+</code></pre>
+<h2 id="example-2-toggling-between-sfs-sbs-sffs-and-sfbs">Example 2 - Toggling between SFS, SBS, SFFS, and SFBS</h2>
+<p>Using the <code>forward</code> and <code>floating</code> parameters, we can toggle between SFS, SBS, SFFS, and SFBS as shown below. Note that we are performing (stratified) 4-fold cross-validation for more robust estimates in contrast to Example 1. Via <code>n_jobs=-1</code>, we choose to run the cross-validation on all our available CPU cores.</p>
+<pre><code class="python"># Sequential Forward Selection
+sfs = SFS(knn, 
+          k_features=3, 
+          forward=True, 
+          floating=False, 
+          scoring='accuracy',
+          print_progress=False,
+          cv=4,
+          n_jobs=-1)
+sfs = sfs.fit(X, y)
+
+print('\nSequential Forward Selection (k=3):')
+print(sfs.k_feature_idx_)
+print('CV Score:')
+print(sfs.k_score_)
+
+###################################################
+
+# Sequential Backward Selection
+sbs = SFS(knn, 
+          k_features=3, 
+          forward=False, 
+          floating=False, 
+          scoring='accuracy',
+          print_progress=False,
+          cv=4,
+          n_jobs=-1)
+sbs = sbs.fit(X, y)
+
+print('\nSequential Backward Selection (k=3):')
+print(sbs.k_feature_idx_)
+print('CV Score:')
+print(sbs.k_score_)
+
+###################################################
+
+# Sequential Floating Forward Selection
+sffs = SFS(knn, 
+           k_features=3, 
+           forward=True, 
+           floating=True, 
+           scoring='accuracy',
+           print_progress=False,
+           cv=4,
+           n_jobs=-1)
+sffs = sffs.fit(X, y)
+
+print('\nSequential Floating Forward Selection (k=3):')
+print(sffs.k_feature_idx_)
+print('CV Score:')
+print(sffs.k_score_)
+
+###################################################
+
+# Sequential Floating Backward Selection
+sfbs = SFS(knn, 
+           k_features=3, 
+           forward=False, 
+           floating=True, 
+           scoring='accuracy',
+           print_progress=False,
+           cv=4,
+           n_jobs=-1)
+sfbs = sfbs.fit(X, y)
+
+print('\nSequential Floating Backward Selection (k=3):')
+print(sfbs.k_feature_idx_)
+print('CV Score:')
+print(sfbs.k_score_)
+</code></pre>
+
+<pre><code>Sequential Forward Selection (k=3):
+(1, 2, 3)
+CV Score:
+0.972756410256
+
+Sequential Backward Selection (k=3):
+(1, 2, 3)
+CV Score:
+0.972756410256
+
+Sequential Floating Forward Selection (k=3):
+(1, 2, 3)
+CV Score:
+0.972756410256
+
+Sequential Floating Backward Selection (k=3):
+(1, 2, 3)
+CV Score:
+0.972756410256
+</code></pre>
+<p>In this simple scenario, selecting the best 3 features out of the 4 available features in the Iris set, we end up with similar results regardless of which sequential selection algorithms we used.</p>
+<h2 id="example-3-visualizing-the-results-in-dataframes">Example 3 - Visualizing the results in DataFrames</h2>
+<p>For our convenience, we can visualize the output from the feature selection in a pandas DataFrame format using the <code>get_metric_dict</code> method of the SequentialFeatureSelector object. The columns <code>std_dev</code> and <code>std_err</code> represent the standard deviation and standard errors of the cross-validation scores, respectively.</p>
+<p>Below, we see the DataFrame of the Sequential Forward Selector from Example 2:</p>
+<pre><code class="python">import pandas as pd
+pd.DataFrame.from_dict(sfs.get_metric_dict()).T
+</code></pre>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>avg_score</th>
+      <th>ci_bound</th>
+      <th>cv_scores</th>
+      <th>feature_idx</th>
+      <th>std_dev</th>
+      <th>std_err</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>0.952991</td>
+      <td>0.0660624</td>
+      <td>[0.974358974359, 0.948717948718, 0.88888888888...</td>
+      <td>(3,)</td>
+      <td>0.0412122</td>
+      <td>0.0237939</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.959936</td>
+      <td>0.0494801</td>
+      <td>[0.974358974359, 0.948717948718, 0.91666666666...</td>
+      <td>(2, 3)</td>
+      <td>0.0308676</td>
+      <td>0.0178214</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.972756</td>
+      <td>0.0315204</td>
+      <td>[0.974358974359, 1.0, 0.944444444444, 0.972222...</td>
+      <td>(1, 2, 3)</td>
+      <td>0.0196636</td>
+      <td>0.0113528</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Now, let's compare it to the Sequential Backward Selector:</p>
+<pre><code class="python">pd.DataFrame.from_dict(sbs.get_metric_dict()).T
+</code></pre>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>avg_score</th>
+      <th>ci_bound</th>
+      <th>cv_scores</th>
+      <th>feature_idx</th>
+      <th>std_dev</th>
+      <th>std_err</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3</th>
+      <td>0.972756</td>
+      <td>0.0315204</td>
+      <td>[0.974358974359, 1.0, 0.944444444444, 0.972222...</td>
+      <td>(1, 2, 3)</td>
+      <td>0.0196636</td>
+      <td>0.0113528</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.952991</td>
+      <td>0.0372857</td>
+      <td>[0.974358974359, 0.948717948718, 0.91666666666...</td>
+      <td>(0, 1, 2, 3)</td>
+      <td>0.0232602</td>
+      <td>0.0134293</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>We can see that both SFS and SFBS found the same "best" 3 features, however, the intermediate steps where obviously different.</p>
+<p>The <code>ci_bound</code> column in the DataFrames above represents the confidence interval around the computed cross-validation scores. By default, a confidence interval of 95% is used, but we can use different confidence bounds via the <code>confidence_interval</code> parameter. E.g., the confidence bounds for a 90% confidence interval can be obtained as follows:</p>
+<pre><code class="python">pd.DataFrame.from_dict(sbs.get_metric_dict(confidence_interval=0.90)).T
+</code></pre>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>avg_score</th>
+      <th>ci_bound</th>
+      <th>cv_scores</th>
+      <th>feature_idx</th>
+      <th>std_dev</th>
+      <th>std_err</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3</th>
+      <td>0.972756</td>
+      <td>0.0242024</td>
+      <td>[0.974358974359, 1.0, 0.944444444444, 0.972222...</td>
+      <td>(1, 2, 3)</td>
+      <td>0.0196636</td>
+      <td>0.0113528</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.952991</td>
+      <td>0.0286292</td>
+      <td>[0.974358974359, 0.948717948718, 0.91666666666...</td>
+      <td>(0, 1, 2, 3)</td>
+      <td>0.0232602</td>
+      <td>0.0134293</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="example-4-plotting-the-results">Example 4 - Plotting the results</h2>
+<p>After importing the little helper function <code>plot_sequential_feature_selection</code>, we can also visualize the results using matplotlib figures.</p>
+<pre><code class="python">from mlxtend.feature_selection import plot_sequential_feature_selection as plot_sfs
+import matplotlib.pyplot as plt
+
+sfs = SFS(knn, 
+          k_features=4, 
+          forward=True, 
+          floating=False, 
+          scoring='accuracy',
+          cv=5)
+
+sfs = sfs.fit(X, y)
+
+fig1 = plot_sfs(sfs.get_metric_dict(), kind='std_dev')
+
+plt.ylim([0.8, 1])
+plt.title('Sequential Forward Selection (w. StdDev)')
+plt.grid()
+plt.show()
+</code></pre>
+
+<pre><code>Features: 4/4
+</code></pre>
+<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_41_1.png" /></p>
+<h2 id="example-5-sequential-feature-selection-for-regression">Example 5 - Sequential Feature Selection for Regression</h2>
+<p>Similar to the classification examples above, the <code>SequentialFeatureSelector</code> also supports scikit-learn's estimators
+for regression.</p>
+<pre><code class="python">from sklearn.linear_model import LinearRegression
+from sklearn.datasets import load_boston
+
+boston = load_boston()
+X, y = boston.data, boston.target
+
+lr = LinearRegression()
+
+sfs = SFS(lr, 
+          k_features=13, 
+          forward=True, 
+          floating=False, 
+          scoring='mean_squared_error',
+          cv=10)
+
+sfs = sfs.fit(X, y)
+fig = plot_sfs(sfs.get_metric_dict(), kind='std_err')
+
+plt.title('Sequential Forward Selection (w. StdDev)')
+plt.grid()
+plt.show()
+</code></pre>
+
+<pre><code>Features: 13/13
+</code></pre>
+<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_44_1.png" /></p>
+<h1 id="api">API</h1>
+<p><em>SequentialFeatureSelector(estimator, k_features, forward=True, floating=False, print_progress=True, scoring='accuracy', cv=5, skip_if_stuck=True, n_jobs=1, pre_dispatch='2</em>n_jobs')*</p>
+<p>Sequential Feature Selection for Classification and Regression.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>estimator</code> : scikit-learn classifier or regressor</p>
+</li>
+<li>
+<p><code>k_features</code> : int</p>
+<p>Number of features to select,
+where k_features &lt; the full feature set.</p>
+</li>
+<li>
+<p><code>forward</code> : bool (default: True)</p>
+<p>Forward selection if True,
+backward selection otherwise</p>
+</li>
+<li>
+<p><code>floating</code> : bool (default: False)</p>
+<p>Adds a conditional exclusion/inclusion if True.</p>
+</li>
+<li>
+<p><code>print_progress</code> : bool (default: True)</p>
+<p>Prints progress as the number of epochs
+to stderr.</p>
+</li>
+<li>
+<p><code>scoring</code> : str, (default='accuracy')</p>
+<p>Scoring metric in {accuracy, f1, precision, recall, roc_auc}
+for classifiers,
+{'mean_absolute_error', 'mean_squared_error',
+'median_absolute_error', 'r2'} for regressors,
+or a callable object or function with
+signature <code>scorer(estimator, X, y)</code>.</p>
+</li>
+<li>
+<p><code>cv</code> : int (default: 5)</p>
+<p>Scikit-learn cross-validation generator or <code>int</code>.
+If estimator is a classifier (or y consists of integer class labels),
+stratified k-fold is performed, and regular k-fold cross-validation
+otherwise.
+No cross-validation if cv is None, False, or 0.
+skip_if_stuck: bool (default: True)
+Set to True to skip conditional
+exlusion/inclusion if floating=True and
+algorithm gets stuck in cycles.</p>
+</li>
+<li>
+<p><code>n_jobs</code> : int (default: 1)</p>
+<p>The number of CPUs to use for cross validation. -1 means 'all CPUs'.</p>
+</li>
+<li>
+<p><code>pre_dispatch</code> : int, or string</p>
+<p>Controls the number of jobs that get dispatched
+during parallel execution in cross_val_score.
+Reducing this number can be useful to avoid an explosion of
+memory consumption when more jobs get dispatched than CPUs can process.
+This parameter can be:
+None, in which case all the jobs are immediately created and spawned.
+Use this for lightweight and fast-running jobs,
+to avoid delays due to on-demand spawning of the jobs
+An int, giving the exact number of total jobs that are spawned
+A string, giving an expression as a function
+of n_jobs, as in <code>2*n_jobs</code></p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>k_feature_idx_</code> : array-like, shape = [n_predictions]</p>
+<p>Feature Indices of the selected feature subsets.</p>
+</li>
+<li>
+<p><code>k_score_</code> : float</p>
+<p>Cross validation average score of the selected subset.</p>
+</li>
+<li>
+<p><code>subsets_</code> : dict</p>
+<p>A dictionary of selected feature subsets during the
+sequential selection, where the dictionary keys are
+the lenghts k of these feature subsets. The dictionary
+values are dictionaries themselves with the following
+keys: 'feature_idx' (tuple of indices of the feature subset)
+'cv_scores' (list individual cross-validation scores)
+'avg_score' (average cross-validation score)</p>
+</li>
+</ul>
+<p><strong>Examples</strong></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from sklearn.neighbors import KNeighborsClassifier
+    &gt;&gt;&gt; from sklearn.datasets import load_iris
+    &gt;&gt;&gt; iris = load_iris()
+    &gt;&gt;&gt; X = iris.data
+    &gt;&gt;&gt; y = iris.target
+    &gt;&gt;&gt; knn = KNeighborsClassifier(n_neighbors=4)
+    &gt;&gt;&gt; sfs = SequentialFeatureSelector(knn, k_features=2,
+    ...                                 scoring='accuracy', cv=5)
+    &gt;&gt;&gt; sfs = sfs.fit(X, y)
+    &gt;&gt;&gt; sfs.indices_
+    (2, 3)
+    &gt;&gt;&gt; sfs.transform(X[:5])
+    array([[ 1.4,  0.2],
+    [ 1.4,  0.2],
+    [ 1.3,  0.2],
+    [ 1.5,  0.2],
+    [ 1.4,  0.2]])
+    &gt;&gt;&gt; print('best score: %.2f' % sfs.k_score_)
+    best score: 0.97</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3 id="methods">Methods</h3>
+<hr>
+
+<p><em>fit(X, y)</em></p>
+<p>None</p>
+<hr>
+
+<p><em>fit_transform(X, y)</em></p>
+<p>None</p>
+<hr>
+
+<p><em>get_metric_dict(confidence_interval=0.95)</em></p>
+<p>None</p>
+<hr>
+
+<p><em>get_params(deep=True)</em></p>
+<p>Get parameters for this estimator.</p>
+<p><strong>Parameters</strong></p>
+<p>deep: boolean, optional
+    If True, will return the parameters for this estimator and
+    contained subobjects that are estimators.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>params</code> : mapping of string to any</p>
+<p>Parameter names mapped to their values.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.</p>
+<pre><code>The method works on simple estimators as well as on nested objects
+(such as pipelines). The former have parameters of the form
+``&lt;component&gt;__&lt;parameter&gt;`` so that it's possible to update each
+component of a nested object.
+</code></pre>
+<p><strong>Returns</strong></p>
+<p>self</p>
+<hr>
+
+<p><em>transform(X)</em></p>
+<p>None</p>
+<p><br><br>
+<em>plot_sequential_feature_selection(metric_dict, kind='std_dev', color='blue', bcolor='steelblue', marker='o', alpha=0.2, ylabel='Performance', confidence_interval=0.95)</em></p>
+<p>Plot sequential feature selection.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>metric_dict</code> : mlxtend.SequentialFeatureSelector.get_metric_dict() object</p>
+</li>
+<li>
+<p><code>kind</code> : str (default: "std_dev")</p>
+<p>The kind of error bar or confidence interval in
+{'std_dev', 'std_err', 'ci', None}.</p>
+</li>
+<li>
+<p><code>color</code> : str (default: "blue")</p>
+<p>Color of the lineplot (accepts any matplotlib color name)</p>
+</li>
+<li>
+<p><code>bcolor</code> : str (default: "steelblue").</p>
+<p>Color of the error bars / confidence intervals
+(accepts any matplotlib color name).</p>
+</li>
+<li>
+<p><code>marker</code> : str (default: "o")</p>
+<p>Marker of the line plot
+(accepts any matplotlib marker name).</p>
+</li>
+<li>
+<p><code>alpha</code> : float in [0, 1] (default: 0.2)</p>
+<p>Transparency of the error bars / confidence intervals.</p>
+</li>
+<li>
+<p><code>ylabel</code> : str (default: "Performance")</p>
+<p>Y-axis label.</p>
+</li>
+<li>
+<p><code>confidence_interval</code> : float (default: 0.95)</p>
+<p>Confidence level if <code>kind='ci'</code>.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>fig</code> : matplotlib.pyplot.figure() object</li>
+</ul></div>
+        
+    </div>
+
+    <footer class="col-md-12 text-center">
+        <hr>
+        <p>
+        <small>Copyright &copy; 2014-2016 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        
+        <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
+    </footer>
+
+    <script src="../../../js/jquery-1.10.2.min.js"></script>
+    <script src="../../../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+    var base_url = '../../..';
+    </script>
+    <script data-main="../../../mkdocs/js/search.js" src="../../../mkdocs/js/require.js"></script>
+    <script src="../../../js/base.js"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="../../../mathjaxhelper.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+
+</html>

@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="author" content="Sebastian Raschka"> 
+    <link rel="canonical" href="http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.classifier/"> 
+    <link rel="shortcut icon" href="../../../../favicon.ico">
+
+    <title>Mlxtend.classifier - mlxtend</title>
+
+    <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
+    <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/cinder.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+
+
+    <link href="../../extra.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-38457794-2', 'rasbt.github.io/mlxtend/');
+    ga('send', 'pageview');
+    </script>
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../..">mlxtend</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">classifier</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/classifier/EnsembleVoteClassifier/">EnsembleVoteClassifier</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/classifier/Perceptron/">Perceptron</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/classifier/Adaline/">Adaline</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/classifier/LogisticRegression/">LogisticRegression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/classifier/NeuralNetMLP/">NeuralNetMLP</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">regressor</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/regressor/LinearRegression/">LinearRegression</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">regression_utils</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/regression_utils/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">feature_selection</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/feature_selection/SequentialFeatureSelector/">SequentialFeatureSelector</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">evaluate</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/confusion_matrix/">Confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/plot_decision_regions/">Plot decision regions</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/plot_learning_curves/">Plot learning curves</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/scoring/">Scoring</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">preprocessing</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/DenseTransformer/">DenseTransformer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/MeanCenterer/">MeanCenterer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/minmax_scaling/">Minmax scaling</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/standardize/">Standardize</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">data</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/data/autompg_data/">Autompg data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/data/boston_housing_data/">Boston housing data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/data/iris_data/">Iris data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/data/mnist_data/">Mnist data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/data/load_mnist/">Load mnist</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/data/wine_data/">Wine data</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">file_io</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/file_io/find_filegroups/">Find filegroups</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/file_io/find_files/">Find files</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">general plotting</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/general_plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/general_plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/general_plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">math</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/math/num_combinations/">Num combinations</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/math/num_permutations/">Num permutations</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">text</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/text/generalize_names/">Generalize names</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/text/generalize_names_duplcheck/">Generalize names duplcheck</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/text/tokenizer/">Tokenizer</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">utils</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/utils/Counter/">Counter</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">general concepts</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/general_concepts/activation-functions/">Activation functions</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/general_concepts/gradient-optimization/">Gradient optimization</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/general_concepts/linear-gradient-derivative/">Linear gradient derivative</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/general_concepts/regularization-linear/">Regularization linear</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li class="active">
+    <a href="./">Mlxtend.classifier</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../mlxtend.data/">Mlxtend.data</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../mlxtend.evaluate/">Mlxtend.evaluate</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../mlxtend.feature_selection/">Mlxtend.feature selection</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../mlxtend.file_io/">Mlxtend.file io</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../mlxtend.general_plotting/">Mlxtend.general plotting</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../mlxtend.preprocessing/">Mlxtend.preprocessing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../mlxtend.regression_utils/">Mlxtend.regression utils</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../mlxtend.regressor/">Mlxtend.regressor</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../mlxtend.text/">Mlxtend.text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../mlxtend.utils/">Mlxtend.utils</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../installation/">Installation</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../changelog/">Release Notes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../contributing/">Contributing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../license/">License</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../../user_guide/general_concepts/regularization-linear/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../mlxtend.data/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a href="https://github.com/rasbt/mlxtend">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#adaline">Adaline</a></li>
+        
+            <li><a href="#methods">Methods</a></li>
+        
+    
+        <li class="main "><a href="#ensemblevoteclassifier">EnsembleVoteClassifier</a></li>
+        
+            <li><a href="#methods_1">Methods</a></li>
+        
+    
+        <li class="main "><a href="#logisticregression">LogisticRegression</a></li>
+        
+            <li><a href="#methods_2">Methods</a></li>
+        
+    
+        <li class="main "><a href="#neuralnetmlp">NeuralNetMLP</a></li>
+        
+            <li><a href="#methods_3">Methods</a></li>
+        
+    
+        <li class="main "><a href="#perceptron">Perceptron</a></li>
+        
+            <li><a href="#methods_4">Methods</a></li>
+        
+    
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<p>mlxtend version: 0.3.0</p>
+<h2 id="adaline">Adaline</h2>
+<p><em>Adaline(eta=0.01, epochs=50, solver='sgd', random_seed=None, shuffle=False, zero_init_weight=False)</em></p>
+<p>ADAptive LInear NEuron classifier.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>eta</code> : float (default: 0.01)</p>
+<p>solver rate (between 0.0 and 1.0)</p>
+</li>
+<li>
+<p><code>epochs</code> : int (default: 50)</p>
+<p>Passes over the training dataset.</p>
+</li>
+<li>
+<p><code>solver</code> : {'gd', 'sgd', 'normal equation'} (default: 'sgd')</p>
+<p>Method for solving the cost function. 'gd' for gradient descent,
+'sgd' for stochastic gradient descent, or 'normal equation' (default)
+to solve the cost function analytically.</p>
+</li>
+<li>
+<p><code>shuffle</code> : bool (default: False)</p>
+<p>Shuffles training data every epoch if True to prevent circles.</p>
+</li>
+<li>
+<p><code>random_seed</code> : int (default: None)</p>
+<p>Set random state for shuffling and initializing the weights.</p>
+</li>
+<li>
+<p><code>zero_init_weight</code> : bool (default: False)</p>
+<p>If True, weights are initialized to zero instead of small random
+numbers in the interval [-0.1, 0.1];
+ignored if solver='normal equation'</p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>w_</code> : 1d-array</p>
+<p>Weights after fitting.</p>
+</li>
+<li>
+<p><code>cost_</code> : list</p>
+<p>Sum of squared errors after each epoch.</p>
+</li>
+</ul>
+<h3 id="methods">Methods</h3>
+<hr>
+
+<p><em>activation(X)</em></p>
+<p>Compute the linear activation from the net input.</p>
+<hr>
+
+<p><em>fit(X, y, init_weights=True)</em></p>
+<p>Learn weight coefficients from training data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>init_weights</code> : bool (default: True)</p>
+<p>Re-initializes weights prior to fitting. Set False to continue
+training with weights from a previous fitting.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
+<hr>
+
+<p><em>net_input(X)</em></p>
+<p>Compute the linear net input.</p>
+<hr>
+
+<p><em>predict(X)</em></p>
+<p>Predict class labels of X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>class</code> : int</p>
+<p>Predicted class label.</p>
+</li>
+</ul>
+<h2 id="ensemblevoteclassifier">EnsembleVoteClassifier</h2>
+<p><em>EnsembleVoteClassifier(clfs, voting='hard', weights=None, verbose=0)</em></p>
+<p>Soft Voting/Majority Rule classifier for scikit-learn estimators.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>clfs</code> : array-like, shape = [n_classifiers]</p>
+<p>A list of classifiers.
+Invoking the <code>fit</code> method on the <code>VotingClassifier</code> will fit clones
+of those original classifiers that will
+be stored in the class attribute
+<code>self.clfs_</code>.</p>
+</li>
+<li>
+<p><code>voting</code> : str, {'hard', 'soft'} (default='hard')</p>
+<p>If 'hard', uses predicted class labels for majority rule voting.
+Else if 'soft', predicts the class label based on the argmax of
+the sums of the predicted probalities, which is recommended for
+an ensemble of well-calibrated classifiers.</p>
+</li>
+<li>
+<p><code>weights</code> : array-like, shape = [n_classifiers], optional (default=<code>None</code>)</p>
+<p>Sequence of weights (<code>float</code> or <code>int</code>) to weight the occurances of
+predicted class labels (<code>hard</code> voting) or class probabilities
+before averaging (<code>soft</code> voting). Uses uniform weights if <code>None</code>.</p>
+</li>
+<li>
+<p><code>verbose</code> : int, optional (default=0)</p>
+<p>Controls the verbosity of the building process.
+- <code>verbose=0</code> (default): Prints nothing
+- <code>verbose=1</code>: Prints the number &amp; name of the clf being fitted
+- <code>verbose=2</code>: Prints info about the parameters of the clf being fitted
+- <code>verbose&gt;2</code>: Changes <code>verbose</code> param of the underlying clf to
+self.verbose - 2</p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>classes_</code> : array-like, shape = [n_predictions]</p>
+</li>
+<li>
+<p><code>clf</code> : array-like, shape = [n_predictions]</p>
+<p>The unmodified input classifiers</p>
+</li>
+<li>
+<p><code>clf_</code> : array-like, shape = [n_predictions]</p>
+<p>Fitted clones of the input classifiers</p>
+</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code>&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; from sklearn.linear_model import LogisticRegression
+&gt;&gt;&gt; from sklearn.naive_bayes import GaussianNB
+&gt;&gt;&gt; from sklearn.ensemble import RandomForestClassifier
+&gt;&gt;&gt; from mlxtend.sklearn import EnsembleVoteClassifier
+&gt;&gt;&gt; clf1 = LogisticRegression(random_seed=1)
+&gt;&gt;&gt; clf2 = RandomForestClassifier(random_seed=1)
+&gt;&gt;&gt; clf3 = GaussianNB()
+&gt;&gt;&gt; X = np.array([[-1, -1], [-2, -1], [-3, -2], [1, 1], [2, 1], [3, 2]])
+&gt;&gt;&gt; y = np.array([1, 1, 1, 2, 2, 2])
+&gt;&gt;&gt; eclf1 = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
+... voting='hard', verbose=1)
+&gt;&gt;&gt; eclf1 = eclf1.fit(X, y)
+&gt;&gt;&gt; print(eclf1.predict(X))
+[1 1 1 2 2 2]
+&gt;&gt;&gt; eclf2 = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting='soft')
+&gt;&gt;&gt; eclf2 = eclf2.fit(X, y)
+&gt;&gt;&gt; print(eclf2.predict(X))
+[1 1 1 2 2 2]
+&gt;&gt;&gt; eclf3 = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
+...                          voting='soft', weights=[2,1,1])
+&gt;&gt;&gt; eclf3 = eclf3.fit(X, y)
+&gt;&gt;&gt; print(eclf3.predict(X))
+[1 1 1 2 2 2]
+&gt;&gt;&gt;
+</code></pre>
+<h3 id="methods_1">Methods</h3>
+<hr>
+
+<p><em>fit(X, y)</em></p>
+<p>Learn weight coefficients from training data for each classifier.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
+<hr>
+
+<p><em>fit_transform(X, y=None, </em><em>fit_params)</em></p>
+<p>Fit to data, then transform it.</p>
+<pre><code>Fits transformer to X and y with optional parameters fit_params
+and returns a transformed version of X.
+</code></pre>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : numpy array of shape [n_samples, n_features]</p>
+<p>Training set.</p>
+</li>
+<li>
+<p><code>y</code> : numpy array of shape [n_samples]</p>
+<p>Target values.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>X_new</code> : numpy array of shape [n_samples, n_features_new]</p>
+<p>Transformed array.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>get_params(deep=True)</em></p>
+<p>Return estimator parameter names for GridSearch support.</p>
+<hr>
+
+<p><em>predict(X)</em></p>
+<p>Predict class labels for X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>maj</code> : array-like, shape = [n_samples]</p>
+<p>Predicted class labels.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>predict_proba(X)</em></p>
+<p>Predict class probabilities for X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>avg</code> : array-like, shape = [n_samples, n_classes]</p>
+<p>Weighted average probability for each class per sample.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>score(X, y, sample_weight=None)</em></p>
+<p>Returns the mean accuracy on the given test data and labels.</p>
+<pre><code>In multi-label classification, this is the subset accuracy
+which is a harsh metric since you require for each sample that
+each label set be correctly predicted.
+</code></pre>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : array-like, shape = (n_samples, n_features)</p>
+<p>Test samples.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = (n_samples) or (n_samples, n_outputs)</p>
+<p>True labels for X.</p>
+</li>
+<li>
+<p><code>sample_weight</code> : array-like, shape = [n_samples], optional</p>
+<p>Sample weights.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>score</code> : float</p>
+<p>Mean accuracy of self.predict(X) wrt. y.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.</p>
+<pre><code>The method works on simple estimators as well as on nested objects
+(such as pipelines). The former have parameters of the form
+``&lt;component&gt;__&lt;parameter&gt;`` so that it's possible to update each
+component of a nested object.
+</code></pre>
+<p><strong>Returns</strong></p>
+<p>self</p>
+<hr>
+
+<p><em>transform(X)</em></p>
+<p>Return class labels or probabilities for X for each estimator.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>If</code>voting='soft'`` : array-like = [n_classifiers, n_samples, n_classes]</p>
+<p>Class probabilties calculated by each classifier.</p>
+</li>
+<li>
+<p><code>If</code>voting='hard'`` : array-like = [n_classifiers, n_samples]</p>
+<p>Class labels predicted by each classifier.</p>
+</li>
+</ul>
+<h2 id="logisticregression">LogisticRegression</h2>
+<p><em>LogisticRegression(eta=0.01, epochs=50, regularization=None, l2_lambda=0.0, learning='sgd', shuffle=False, random_seed=None, zero_init_weight=False)</em></p>
+<p>Logistic regression classifier.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>eta</code> : float (default: 0.01)</p>
+<p>Learning rate (between 0.0 and 1.0)</p>
+</li>
+<li>
+<p><code>epochs</code> : int (default: 50)</p>
+<p>Passes over the training dataset.</p>
+</li>
+<li>
+<p><code>learning</code> : str (default: sgd)</p>
+<p>Learning rule, sgd (stochastic gradient descent)
+or gd (gradient descent).</p>
+</li>
+<li>
+<p><code>regularization</code> : {None, 'l2'} (default: None)</p>
+<p>Type of regularization. No regularization if
+<code>regularization=None</code>.</p>
+</li>
+<li>
+<p><code>l2_lambda</code> : float</p>
+<p>Regularization parameter for L2 regularization.
+No regularization if l2_lambda=0.0.</p>
+</li>
+<li>
+<p><code>shuffle</code> : bool (default: False)</p>
+<p>Shuffles training data every epoch if True to prevent circles.</p>
+</li>
+<li>
+<p><code>random_seed</code> : int (default: None)</p>
+<p>Set random state for shuffling and initializing the weights.</p>
+</li>
+<li>
+<p><code>zero_init_weight</code> : bool (default: False)</p>
+<p>If True, weights are initialized to zero instead of small random
+numbers in the interval [-0.1, 0.1];
+ignored if solver='normal equation'</p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>w_</code> : 1d-array</p>
+<p>Weights after fitting.</p>
+</li>
+<li>
+<p><code>cost_</code> : list</p>
+<p>List of floats with sum of squared error cost (sgd or gd) for every
+epoch.</p>
+</li>
+</ul>
+<h3 id="methods_2">Methods</h3>
+<hr>
+
+<p><em>activation(X)</em></p>
+<p>Predict class probabilities of X from the net input.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>Class 1 probability</code> : float</li>
+</ul>
+<hr>
+
+<p><em>fit(X, y, init_weights=True)</em></p>
+<p>Learn weight coefficients from training data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>init_weights</code> : bool (default: True)</p>
+<p>(Re)initializes weights to small random floats if True.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
+<hr>
+
+<p><em>net_input(X)</em></p>
+<p>Compute the linear net input.</p>
+<hr>
+
+<p><em>predict(X)</em></p>
+<p>Predict class labels of X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>class</code> : int</p>
+<p>Predicted class label(s).</p>
+</li>
+</ul>
+<h2 id="neuralnetmlp">NeuralNetMLP</h2>
+<p><em>NeuralNetMLP(n_output, n_features, n_hidden=30, l1=0.0, l2=0.0, epochs=500, eta=0.001, alpha=0.0, decrease_const=0.0, random_weights=[-1.0, 1.0], shuffle_init=True, shuffle_epoch=True, minibatches=1, random_seed=None, print_progress=0)</em></p>
+<p>Feedforward neural network / Multi-layer perceptron classifier.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>n_output</code> : int</p>
+<p>Number of output units, should be equal to the
+number of unique class labels.</p>
+</li>
+<li>
+<p><code>n_features</code> : int</p>
+<p>Number of features (dimensions) in the target dataset.
+Should be equal to the number of columns in the X array.</p>
+</li>
+<li>
+<p><code>n_hidden</code> : int (default: 30)</p>
+<p>Number of hidden units.</p>
+</li>
+<li>
+<p><code>l1</code> : float (default: 0.0)</p>
+<p>Lambda value for L1-regularization.
+No regularization if l1=0.0 (default)</p>
+</li>
+<li>
+<p><code>l2</code> : float (default: 0.0)</p>
+<p>Lambda value for L2-regularization.
+No regularization if l2=0.0 (default)</p>
+</li>
+<li>
+<p><code>epochs</code> : int (default: 500)</p>
+<p>Number of passes over the training set.</p>
+</li>
+<li>
+<p><code>eta</code> : float (default: 0.001)</p>
+<p>Learning rate.</p>
+</li>
+<li>
+<p><code>alpha</code> : float (default: 0.0)</p>
+<p>Momentum constant. Factor multiplied with the
+gradient of the previous epoch t-1 to improve
+learning speed
+w(t) := w(t) - (grad(t) + alpha*grad(t-1))</p>
+</li>
+<li>
+<p><code>decrease_const</code> : float (default: 0.0)</p>
+<p>Decrease constant. Shrinks the learning rate
+after each epoch via eta / (1 + epoch*decrease_const)</p>
+</li>
+<li>
+<p><code>random_weights</code> : list (default: [-1.0, 1.0])</p>
+<p>Min and max values for initializing the random weights.
+Initializes weights to 0 if None or False.</p>
+</li>
+<li>
+<p><code>shuffle_init</code> : bool (default: True)</p>
+<p>Shuffles (a copy of the) training data before training.</p>
+</li>
+<li>
+<p><code>shuffle_epoch</code> : bool (default: True)</p>
+<p>Shuffles training data before every epoch if True to prevent circles.</p>
+</li>
+<li>
+<p><code>minibatches</code> : int (default: 1)</p>
+<p>Divides training data into k minibatches for efficiency.
+Normal gradient descent learning if k=1 (default).</p>
+</li>
+<li>
+<p><code>random_seed</code> : int (default: None)</p>
+<p>Set random seed for shuffling and initializing the weights.</p>
+</li>
+<li>
+<p><code>print_progress</code> : int (default: 0)</p>
+<p>Prints progress in fitting to stderr.
+0: No output
+1: Epochs elapsed
+2: 1 plus time elapsed
+3: 2 plus estimated time until completion</p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>cost_</code> : list</p>
+<p>Sum of squared errors after each epoch.</p>
+</li>
+</ul>
+<h3 id="methods_3">Methods</h3>
+<hr>
+
+<p><em>fit(X, y)</em></p>
+<p>Learn weight coefficients from training data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : array, shape = [n_samples, n_features]</p>
+<p>Input layer with original features.</p>
+</li>
+<li>
+<p><code>y</code> : array, shape = [n_samples]</p>
+<p>Target class labels.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>self</p>
+<hr>
+
+<p><em>predict(X)</em></p>
+<p>Predict class labels</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : array, shape = [n_samples, n_features]</p>
+<p>Input layer with original features.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li>
+<p><code>y_pred</code> : array, shape = [n_samples]</p>
+<p>Predicted class labels.</p>
+</li>
+</ul>
+<h2 id="perceptron">Perceptron</h2>
+<p><em>Perceptron(eta=0.1, epochs=50, shuffle=False, random_seed=None, zero_init_weight=False)</em></p>
+<p>Perceptron classifier.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>eta</code> : float (default: 0.1)</p>
+<p>Learning rate (between 0.0 and 1.0)</p>
+</li>
+<li>
+<p><code>epochs</code> : int (default: 50)</p>
+<p>Number of passes over the training dataset.</p>
+</li>
+<li>
+<p><code>shuffle</code> : bool (default: False)</p>
+<p>Shuffles training data every epoch if True to prevent circles.</p>
+</li>
+<li>
+<p><code>random_seed</code> : int</p>
+<p>Random state for initializing random weights.</p>
+</li>
+<li>
+<p><code>zero_init_weight</code> : bool (default: False)</p>
+<p>If True, weights are initialized to zero instead of small random
+numbers in the interval [-0.1, 0.1];
+ignored if solver='normal equation'</p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>w_</code> : 1d-array</p>
+<p>Weights after fitting.</p>
+</li>
+<li>
+<p><code>cost_</code> : list</p>
+<p>Number of misclassifications in every epoch.</p>
+</li>
+</ul>
+<h3 id="methods_4">Methods</h3>
+<hr>
+
+<p><em>fit(X, y, init_weights=True)</em></p>
+<p>Learn weight coefficients from training data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>init_weights</code> : bool (default: True)</p>
+<p>Re-initializes weights prior to fitting. Set False to continue
+training with weights from a previous fitting.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>self</p>
+<hr>
+
+<p><em>net_input(X)</em></p>
+<p>Net input function</p>
+<hr>
+
+<p><em>predict(X)</em></p>
+<p>Predict class labels for X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>class</code> : int</p>
+<p>Predicted class label.</p>
+</li>
+</ul></div>
+        
+    </div>
+
+    <footer class="col-md-12 text-center">
+        <hr>
+        <p>
+        <small>Copyright &copy; 2014-2016 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        
+        <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
+    </footer>
+
+    <script src="../../js/jquery-1.10.2.min.js"></script>
+    <script src="../../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+    var base_url = '../..';
+    </script>
+    <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+    <script src="../../js/base.js"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="../../mathjaxhelper.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+
+</html>

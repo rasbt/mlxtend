@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="author" content="Sebastian Raschka"> 
+    <link rel="canonical" href="http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.feature_selection/"> 
+    <link rel="shortcut icon" href="../../../../favicon.ico">
+
+    <title>Mlxtend.feature selection - mlxtend</title>
+
+    <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
+    <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/cinder.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+
+
+    <link href="../../extra.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-38457794-2', 'rasbt.github.io/mlxtend/');
+    ga('send', 'pageview');
+    </script>
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../..">mlxtend</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">classifier</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/classifier/EnsembleVoteClassifier/">EnsembleVoteClassifier</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/classifier/Perceptron/">Perceptron</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/classifier/Adaline/">Adaline</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/classifier/LogisticRegression/">LogisticRegression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/classifier/NeuralNetMLP/">NeuralNetMLP</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">regressor</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/regressor/LinearRegression/">LinearRegression</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">regression_utils</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/regression_utils/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">feature_selection</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/feature_selection/SequentialFeatureSelector/">SequentialFeatureSelector</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">evaluate</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/confusion_matrix/">Confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/plot_decision_regions/">Plot decision regions</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/plot_learning_curves/">Plot learning curves</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/scoring/">Scoring</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">preprocessing</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/DenseTransformer/">DenseTransformer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/MeanCenterer/">MeanCenterer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/minmax_scaling/">Minmax scaling</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/standardize/">Standardize</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">data</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/data/autompg_data/">Autompg data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/data/boston_housing_data/">Boston housing data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/data/iris_data/">Iris data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/data/mnist_data/">Mnist data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/data/load_mnist/">Load mnist</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/data/wine_data/">Wine data</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">file_io</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/file_io/find_filegroups/">Find filegroups</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/file_io/find_files/">Find files</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">general plotting</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/general_plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/general_plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/general_plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">math</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/math/num_combinations/">Num combinations</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/math/num_permutations/">Num permutations</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">text</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/text/generalize_names/">Generalize names</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/text/generalize_names_duplcheck/">Generalize names duplcheck</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/text/tokenizer/">Tokenizer</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">utils</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/utils/Counter/">Counter</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">general concepts</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/general_concepts/activation-functions/">Activation functions</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/general_concepts/gradient-optimization/">Gradient optimization</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/general_concepts/linear-gradient-derivative/">Linear gradient derivative</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/general_concepts/regularization-linear/">Regularization linear</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../mlxtend.classifier/">Mlxtend.classifier</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../mlxtend.data/">Mlxtend.data</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../mlxtend.evaluate/">Mlxtend.evaluate</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Mlxtend.feature selection</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../mlxtend.file_io/">Mlxtend.file io</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../mlxtend.general_plotting/">Mlxtend.general plotting</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../mlxtend.preprocessing/">Mlxtend.preprocessing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../mlxtend.regression_utils/">Mlxtend.regression utils</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../mlxtend.regressor/">Mlxtend.regressor</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../mlxtend.text/">Mlxtend.text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../mlxtend.utils/">Mlxtend.utils</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../installation/">Installation</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../changelog/">Release Notes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../contributing/">Contributing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../license/">License</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../mlxtend.evaluate/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../mlxtend.file_io/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a href="https://github.com/rasbt/mlxtend">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#columnselector">ColumnSelector</a></li>
+        
+            <li><a href="#methods">Methods</a></li>
+        
+    
+        <li class="main "><a href="#plot_sequential_feature_selection">plot_sequential_feature_selection</a></li>
+        
+    
+        <li class="main "><a href="#sequentialfeatureselector">SequentialFeatureSelector</a></li>
+        
+            <li><a href="#methods_1">Methods</a></li>
+        
+    
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<p>mlxtend version: 0.3.0</p>
+<h2 id="columnselector">ColumnSelector</h2>
+<p><em>ColumnSelector(cols)</em></p>
+<p>A feature selector for scikit-learn's Pipeline class that returns
+    specified columns from a numpy array.</p>
+<h3 id="methods">Methods</h3>
+<hr>
+
+<p><em>fit(X, y=None)</em></p>
+<p>None</p>
+<hr>
+
+<p><em>transform(X, y=None)</em></p>
+<p>None</p>
+<h2 id="plot_sequential_feature_selection">plot_sequential_feature_selection</h2>
+<p><em>plot_sequential_feature_selection(metric_dict, kind='std_dev', color='blue', bcolor='steelblue', marker='o', alpha=0.2, ylabel='Performance', confidence_interval=0.95)</em></p>
+<p>Plot sequential feature selection.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>metric_dict</code> : mlxtend.SequentialFeatureSelector.get_metric_dict() object</p>
+</li>
+<li>
+<p><code>kind</code> : str (default: "std_dev")</p>
+<p>The kind of error bar or confidence interval in
+{'std_dev', 'std_err', 'ci', None}.</p>
+</li>
+<li>
+<p><code>color</code> : str (default: "blue")</p>
+<p>Color of the lineplot (accepts any matplotlib color name)</p>
+</li>
+<li>
+<p><code>bcolor</code> : str (default: "steelblue").</p>
+<p>Color of the error bars / confidence intervals
+(accepts any matplotlib color name).</p>
+</li>
+<li>
+<p><code>marker</code> : str (default: "o")</p>
+<p>Marker of the line plot
+(accepts any matplotlib marker name).</p>
+</li>
+<li>
+<p><code>alpha</code> : float in [0, 1] (default: 0.2)</p>
+<p>Transparency of the error bars / confidence intervals.</p>
+</li>
+<li>
+<p><code>ylabel</code> : str (default: "Performance")</p>
+<p>Y-axis label.</p>
+</li>
+<li>
+<p><code>confidence_interval</code> : float (default: 0.95)</p>
+<p>Confidence level if <code>kind='ci'</code>.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>fig</code> : matplotlib.pyplot.figure() object</li>
+</ul>
+<h2 id="sequentialfeatureselector">SequentialFeatureSelector</h2>
+<p><em>SequentialFeatureSelector(estimator, k_features, forward=True, floating=False, print_progress=True, scoring='accuracy', cv=5, skip_if_stuck=True, n_jobs=1, pre_dispatch='2</em>n_jobs')*</p>
+<p>Sequential Feature Selection for Classification and Regression.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>estimator</code> : scikit-learn classifier or regressor</p>
+</li>
+<li>
+<p><code>k_features</code> : int</p>
+<p>Number of features to select,
+where k_features &lt; the full feature set.</p>
+</li>
+<li>
+<p><code>forward</code> : bool (default: True)</p>
+<p>Forward selection if True,
+backward selection otherwise</p>
+</li>
+<li>
+<p><code>floating</code> : bool (default: False)</p>
+<p>Adds a conditional exclusion/inclusion if True.</p>
+</li>
+<li>
+<p><code>print_progress</code> : bool (default: True)</p>
+<p>Prints progress as the number of epochs
+to stderr.</p>
+</li>
+<li>
+<p><code>scoring</code> : str, (default='accuracy')</p>
+<p>Scoring metric in {accuracy, f1, precision, recall, roc_auc}
+for classifiers,
+{'mean_absolute_error', 'mean_squared_error',
+'median_absolute_error', 'r2'} for regressors,
+or a callable object or function with
+signature <code>scorer(estimator, X, y)</code>.</p>
+</li>
+<li>
+<p><code>cv</code> : int (default: 5)</p>
+<p>Scikit-learn cross-validation generator or <code>int</code>.
+If estimator is a classifier (or y consists of integer class labels),
+stratified k-fold is performed, and regular k-fold cross-validation
+otherwise.
+No cross-validation if cv is None, False, or 0.
+skip_if_stuck: bool (default: True)
+Set to True to skip conditional
+exlusion/inclusion if floating=True and
+algorithm gets stuck in cycles.</p>
+</li>
+<li>
+<p><code>n_jobs</code> : int (default: 1)</p>
+<p>The number of CPUs to use for cross validation. -1 means 'all CPUs'.</p>
+</li>
+<li>
+<p><code>pre_dispatch</code> : int, or string</p>
+<p>Controls the number of jobs that get dispatched
+during parallel execution in cross_val_score.
+Reducing this number can be useful to avoid an explosion of
+memory consumption when more jobs get dispatched than CPUs can process.
+This parameter can be:
+None, in which case all the jobs are immediately created and spawned.
+Use this for lightweight and fast-running jobs,
+to avoid delays due to on-demand spawning of the jobs
+An int, giving the exact number of total jobs that are spawned
+A string, giving an expression as a function
+of n_jobs, as in <code>2*n_jobs</code></p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>k_feature_idx_</code> : array-like, shape = [n_predictions]</p>
+<p>Feature Indices of the selected feature subsets.</p>
+</li>
+<li>
+<p><code>k_score_</code> : float</p>
+<p>Cross validation average score of the selected subset.</p>
+</li>
+<li>
+<p><code>subsets_</code> : dict</p>
+<p>A dictionary of selected feature subsets during the
+sequential selection, where the dictionary keys are
+the lenghts k of these feature subsets. The dictionary
+values are dictionaries themselves with the following
+keys: 'feature_idx' (tuple of indices of the feature subset)
+'cv_scores' (list individual cross-validation scores)
+'avg_score' (average cross-validation score)</p>
+</li>
+</ul>
+<p><strong>Examples</strong></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from sklearn.neighbors import KNeighborsClassifier
+    &gt;&gt;&gt; from sklearn.datasets import load_iris
+    &gt;&gt;&gt; iris = load_iris()
+    &gt;&gt;&gt; X = iris.data
+    &gt;&gt;&gt; y = iris.target
+    &gt;&gt;&gt; knn = KNeighborsClassifier(n_neighbors=4)
+    &gt;&gt;&gt; sfs = SequentialFeatureSelector(knn, k_features=2,
+    ...                                 scoring='accuracy', cv=5)
+    &gt;&gt;&gt; sfs = sfs.fit(X, y)
+    &gt;&gt;&gt; sfs.indices_
+    (2, 3)
+    &gt;&gt;&gt; sfs.transform(X[:5])
+    array([[ 1.4,  0.2],
+    [ 1.4,  0.2],
+    [ 1.3,  0.2],
+    [ 1.5,  0.2],
+    [ 1.4,  0.2]])
+    &gt;&gt;&gt; print('best score: %.2f' % sfs.k_score_)
+    best score: 0.97</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3 id="methods_1">Methods</h3>
+<hr>
+
+<p><em>fit(X, y)</em></p>
+<p>None</p>
+<hr>
+
+<p><em>fit_transform(X, y)</em></p>
+<p>None</p>
+<hr>
+
+<p><em>get_metric_dict(confidence_interval=0.95)</em></p>
+<p>None</p>
+<hr>
+
+<p><em>get_params(deep=True)</em></p>
+<p>Get parameters for this estimator.</p>
+<p><strong>Parameters</strong></p>
+<p>deep: boolean, optional
+    If True, will return the parameters for this estimator and
+    contained subobjects that are estimators.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>params</code> : mapping of string to any</p>
+<p>Parameter names mapped to their values.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.</p>
+<pre><code>The method works on simple estimators as well as on nested objects
+(such as pipelines). The former have parameters of the form
+``&lt;component&gt;__&lt;parameter&gt;`` so that it's possible to update each
+component of a nested object.
+</code></pre>
+<p><strong>Returns</strong></p>
+<p>self</p>
+<hr>
+
+<p><em>transform(X)</em></p>
+<p>None</p></div>
+        
+    </div>
+
+    <footer class="col-md-12 text-center">
+        <hr>
+        <p>
+        <small>Copyright &copy; 2014-2016 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        
+        <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
+    </footer>
+
+    <script src="../../js/jquery-1.10.2.min.js"></script>
+    <script src="../../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+    var base_url = '../..';
+    </script>
+    <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+    <script src="../../js/base.js"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="../../mathjaxhelper.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+
+</html>

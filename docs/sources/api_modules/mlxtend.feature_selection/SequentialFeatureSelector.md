@@ -87,28 +87,6 @@ Sequential Feature Selection for Classification and Regression.
     'cv_scores' (list individual cross-validation scores)
     'avg_score' (average cross-validation score)
 
-**Examples**
-
->>> from sklearn.neighbors import KNeighborsClassifier
-    >>> from sklearn.datasets import load_iris
-    >>> iris = load_iris()
-    >>> X = iris.data
-    >>> y = iris.target
-    >>> knn = KNeighborsClassifier(n_neighbors=4)
-    >>> sfs = SequentialFeatureSelector(knn, k_features=2,
-    ...                                 scoring='accuracy', cv=5)
-    >>> sfs = sfs.fit(X, y)
-    >>> sfs.indices_
-    (2, 3)
-    >>> sfs.transform(X[:5])
-    array([[ 1.4,  0.2],
-    [ 1.4,  0.2],
-    [ 1.3,  0.2],
-    [ 1.5,  0.2],
-    [ 1.4,  0.2]])
-    >>> print('best score: %.2f' % sfs.k_score_)
-    best score: 0.97
-
 ### Methods
 
 <hr>

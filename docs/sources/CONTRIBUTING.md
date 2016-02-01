@@ -314,7 +314,8 @@ If you are adding a new document, please also include it in the pages section in
 First, please check the documenation via localhost (http://127.0.0.1:8000/):
 
 ```bash
-~/github/mlxtend/docs$ mkdocs serve```
+~/github/mlxtend/docs$ mkdocs serve
+```
 
 Next, build the static HTML files of the mlxtend documentation via
 

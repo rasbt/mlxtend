@@ -1,19 +1,20 @@
 # Sequential Feature Selector
 
-Implementation of of *sequential feature algorithms* (SFAs) -- greedy search algorithm -- that have been developed as a suboptimal solution to the computationally often not feasible exhaustive search.
+Implementation of *sequential feature algorithms* (SFAs) -- greedy search algorithms -- that have been developed as a suboptimal solution to the computationally often not feasible exhaustive search.
 
 > from mlxtend.feature_selection import SequentialFeatureSelector
 
 # Overview
 
-In a nutshell, SFAs remove or add one feature at the time based on the classifier performance until a feature subset of the desired size k is reached. There are 4 different flavors of SFAs available via the `Sequential Feature Selector`:
+In a nutshell, SFAs remove or add one feature at the time based on the classifier performance until a feature subset of the desired size k is reached. There are 4 different flavors of SFAs available via the `SequentialFeatureSelector`:
+
 1. Sequential Forward Selection (SFS)
 2. Sequential Backward Selection (SBS)
 3. Sequential Floating Forward Selection (SFFS)
 4. Sequential Floating Backward Selection (SFBS)
 
-The ***floating*** variants, SFFS and SFBS can be considered as extensions of the simpler SFS and SBS algorithms. the floating algorithms have an additional exclusion or inclusion step to remove features once they were included (or excluded), so that a larger number of feature subset combinations can be sampled. It is important to emphasize that this step is conditional only occurs if the resulting feature subset is assessed as "better" by the criterion function after removal (or addition) of a particular feature. Furthermore, I added an optional check to skip the conditional exclusion steps if the algorithm gets stuck in cycles.  
-The algorithms are outlined in pseudocode below:
+The ***floating*** variants, SFFS and SFBS can be considered as extensions to the simpler SFS and SBS algorithms. The floating algorithms have an additional exclusion or inclusion step to remove features once they were included (or excluded), so that a larger number of feature subset combinations can be sampled. It is important to emphasize that this step is conditional and only occurs if the resulting feature subset is assessed as "better" by the criterion function after removal (or addition) of a particular feature. Furthermore, I added an optional check to skip the conditional exclusion steps if the algorithm gets stuck in cycles.  
+The algorithms are outlined in pseudo code below:
 
 ## Sequential Forward Selection (SFS)
 
@@ -675,28 +676,6 @@ Sequential Feature Selection for Classification and Regression.
     keys: 'feature_idx' (tuple of indices of the feature subset)
     'cv_scores' (list individual cross-validation scores)
     'avg_score' (average cross-validation score)
-
-**Examples**
-
->>> from sklearn.neighbors import KNeighborsClassifier
-    >>> from sklearn.datasets import load_iris
-    >>> iris = load_iris()
-    >>> X = iris.data
-    >>> y = iris.target
-    >>> knn = KNeighborsClassifier(n_neighbors=4)
-    >>> sfs = SequentialFeatureSelector(knn, k_features=2,
-    ...                                 scoring='accuracy', cv=5)
-    >>> sfs = sfs.fit(X, y)
-    >>> sfs.indices_
-    (2, 3)
-    >>> sfs.transform(X[:5])
-    array([[ 1.4,  0.2],
-    [ 1.4,  0.2],
-    [ 1.3,  0.2],
-    [ 1.5,  0.2],
-    [ 1.4,  0.2]])
-    >>> print('best score: %.2f' % sfs.k_score_)
-    best score: 0.97
 
 ### Methods
 

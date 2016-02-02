@@ -5,7 +5,7 @@
 
 **Mlxtend is a library consisting of useful tools and extensions for the day-to-day data science tasks.**
 
-- This open source project released under a permissive new BSD open source [license](./license) and commercially usable!
+- This open source project is released under a permissive new BSD open source [license](./license) and commercially usable
 
 ![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)
 ![Python 3.5](https://img.shields.io/badge/python-3.5-blue.svg)

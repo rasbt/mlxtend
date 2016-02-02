@@ -6,6 +6,8 @@ Implementation of *sequential feature algorithms* (SFAs) -- greedy search algori
 
 # Overview
 
+Sequential feature selection algorithms are a family of greedy search algorithms that are used to reduce an initial d-dimensional feature space to a k-dimensional feature subspace where *k < d*. The motivation behind feature selection algorithms is to automatically select a subset of features that are most relevant to the problem to improve computational efficiency or reduce the generalization error of the model by removing irrelevant features or noise, which can be useful for algorithms that don't support regularization. 
+
 In a nutshell, SFAs remove or add one feature at the time based on the classifier performance until a feature subset of the desired size k is reached. There are 4 different flavors of SFAs available via the `SequentialFeatureSelector`:
 
 1. Sequential Forward Selection (SFS)
@@ -14,7 +16,15 @@ In a nutshell, SFAs remove or add one feature at the time based on the classifie
 4. Sequential Floating Backward Selection (SFBS)
 
 The ***floating*** variants, SFFS and SFBS can be considered as extensions to the simpler SFS and SBS algorithms. The floating algorithms have an additional exclusion or inclusion step to remove features once they were included (or excluded), so that a larger number of feature subset combinations can be sampled. It is important to emphasize that this step is conditional and only occurs if the resulting feature subset is assessed as "better" by the criterion function after removal (or addition) of a particular feature. Furthermore, I added an optional check to skip the conditional exclusion steps if the algorithm gets stuck in cycles.  
-The algorithms are outlined in pseudo code below:
+
+
+---
+
+How is this different from *Recursive Feature Elimination* (RFE)  -- e.g., as implemented in `sklearn.feature_selection.RFE`? RFE is computationally less complex using the feature's weight coefficients (e.g., linear models) or feature importances (tree-based algorithms) to eliminate features recursively, whereas SFSs eliminate (or add) feature based on a user-defined classifier/regression performance metric.
+
+---
+
+The SFAs  are outlined in pseudo code below:
 
 ## Sequential Forward Selection (SFS)
 
@@ -643,7 +653,7 @@ Sequential Feature Selection for Classification and Regression.
 
     The number of CPUs to use for cross validation. -1 means 'all CPUs'.
 
-- `pre_dispatch` : int, or string
+- `pre_dispatch` : int, or string (default: '2*n_jobs')
 
     Controls the number of jobs that get dispatched
     during parallel execution in cross_val_score.
@@ -655,7 +665,7 @@ Sequential Feature Selection for Classification and Regression.
     to avoid delays due to on-demand spawning of the jobs
     An int, giving the exact number of total jobs that are spawned
     A string, giving an expression as a function
-    of n_jobs, as in `2*n_jobs`
+    of n_jobs, as in `'2*n_jobs'`
 
 **Attributes**
 

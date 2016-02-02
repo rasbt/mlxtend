@@ -53,7 +53,7 @@ Sequential Feature Selection for Classification and Regression.
 
     The number of CPUs to use for cross validation. -1 means 'all CPUs'.
 
-- `pre_dispatch` : int, or string
+- `pre_dispatch` : int, or string (default: '2*n_jobs')
 
     Controls the number of jobs that get dispatched
     during parallel execution in cross_val_score.
@@ -65,7 +65,7 @@ Sequential Feature Selection for Classification and Regression.
     to avoid delays due to on-demand spawning of the jobs
     An int, giving the exact number of total jobs that are spawned
     A string, giving an expression as a function
-    of n_jobs, as in `2*n_jobs`
+    of n_jobs, as in `'2*n_jobs'`
 
 **Attributes**
 

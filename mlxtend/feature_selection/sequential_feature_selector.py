@@ -57,7 +57,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         algorithm gets stuck in cycles.
     n_jobs : int (default: 1)
         The number of CPUs to use for cross validation. -1 means 'all CPUs'.
-    pre_dispatch : int, or string
+    pre_dispatch : int, or string (default: '2*n_jobs')
         Controls the number of jobs that get dispatched
         during parallel execution in cross_val_score.
         Reducing this number can be useful to avoid an explosion of
@@ -68,7 +68,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             to avoid delays due to on-demand spawning of the jobs
         An int, giving the exact number of total jobs that are spawned
         A string, giving an expression as a function
-            of n_jobs, as in `2*n_jobs`
+            of n_jobs, as in `'2*n_jobs'`
 
     Attributes
     ----------

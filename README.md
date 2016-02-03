@@ -14,7 +14,7 @@
 
 **A library consisting of useful tools and extensions for the day-to-day data science tasks.**
 
-- Open source & commercially usable!
+- This open source project is released under a permissive new BSD open source [license](./license) and commercially usable
 
 <br>
 

@@ -6,21 +6,21 @@ Implementation of *sequential feature algorithms* (SFAs) -- greedy search algori
 
 # Overview
 
-Sequential feature selection algorithms are a family of greedy search algorithms that are used to reduce an initial d-dimensional feature space to a k-dimensional feature subspace where *k < d*. The motivation behind feature selection algorithms is to automatically select a subset of features that are most relevant to the problem to improve computational efficiency or reduce the generalization error of the model by removing irrelevant features or noise, which can be useful for algorithms that don't support regularization. 
+Sequential feature selection algorithms are a family of greedy search algorithms that are used to reduce an initial *d*-dimensional feature space to a *k*-dimensional feature subspace where *k < d*. The motivation behind feature selection algorithms is to automatically select a subset of features that are most relevant to the problem to improve computational efficiency or reduce the generalization error of the model by removing irrelevant features or noise, which can be useful for algorithms that don't support regularization. 
 
-In a nutshell, SFAs remove or add one feature at the time based on the classifier performance until a feature subset of the desired size k is reached. There are 4 different flavors of SFAs available via the `SequentialFeatureSelector`:
+In a nutshell, SFAs remove or add one feature at the time based on the classifier performance until a feature subset of the desired size *k* is reached. There are 4 different flavors of SFAs available via the `SequentialFeatureSelector`:
 
 1. Sequential Forward Selection (SFS)
 2. Sequential Backward Selection (SBS)
 3. Sequential Floating Forward Selection (SFFS)
 4. Sequential Floating Backward Selection (SFBS)
 
-The ***floating*** variants, SFFS and SFBS can be considered as extensions to the simpler SFS and SBS algorithms. The floating algorithms have an additional exclusion or inclusion step to remove features once they were included (or excluded), so that a larger number of feature subset combinations can be sampled. It is important to emphasize that this step is conditional and only occurs if the resulting feature subset is assessed as "better" by the criterion function after removal (or addition) of a particular feature. Furthermore, I added an optional check to skip the conditional exclusion steps if the algorithm gets stuck in cycles.  
+The ***floating*** variants, SFFS and SFBS, can be considered as extensions to the simpler SFS and SBS algorithms. The floating algorithms have an additional exclusion or inclusion step to remove features once they were included (or excluded), so that a larger number of feature subset combinations can be sampled. It is important to emphasize that this step is conditional and only occurs if the resulting feature subset is assessed as "better" by the criterion function after removal (or addition) of a particular feature. Furthermore, I added an optional check to skip the conditional exclusion steps if the algorithm gets stuck in cycles.  
 
 
 ---
 
-How is this different from *Recursive Feature Elimination* (RFE)  -- e.g., as implemented in `sklearn.feature_selection.RFE`? RFE is computationally less complex using the feature's weight coefficients (e.g., linear models) or feature importances (tree-based algorithms) to eliminate features recursively, whereas SFSs eliminate (or add) feature based on a user-defined classifier/regression performance metric.
+How is this different from *Recursive Feature Elimination* (RFE)  -- e.g., as implemented in `sklearn.feature_selection.RFE`? RFE is computationally less complex using the feature's weight coefficients (e.g., linear models) or feature importances (tree-based algorithms) to eliminate features recursively, whereas SFSs eliminate (or add) features based on a user-defined classifier/regression performance metric.
 
 ---
 
@@ -47,21 +47,11 @@ The SFAs  are outlined in pseudo code below:
   $x^+ = \text{ arg max } J(x_k + x), \text{ where }  x \in Y - X_k$  
   $X_k+1 = X_k + x^+$  
   $k = k + 1$    
-*Go to Step 2*
+  *Go to Step 1* 
 
 - in this step, we add an additional feature, $x^+$, to our feature subset $X_k$.
 - $x^+$ is the feature that maximizes our criterion function, that is, the feature that is associated with the best classifier performance if it is added to $X_k$.
-
-**Step 2 (Conditional Exclusion):**  
-
-$x^- = \text{ arg max } J(x_k - x), \text{ where } x \in X_k$  
-$if \; J(x_k - x) > J(x_k - x)$:    
-&nbsp;&nbsp;&nbsp;&nbsp; $X_k-1 = X_k - x^-$  
-&nbsp;&nbsp;&nbsp;&nbsp; $k = k - 1$    
-*Go to Step 1*  
-
-- In Step 2, we only remove a feature if the resulting subset would gain an increase in performance. We go back to Step 1.  
-- Steps 1 and 2 are reapeated until the **Termination** criterion is reached.
+- We repeat this procedure until the termination criterion is satisfied.
 
 **Termination:** $k = p$
 
@@ -558,7 +548,7 @@ plt.show()
     Features: 4/4
 
 
-![png](SequentialFeatureSelector_files/SequentialFeatureSelector_41_1.png)
+![png](SequentialFeatureSelector_files/SequentialFeatureSelector_40_1.png)
 
 
 ## Example 5 - Sequential Feature Selection for Regression
@@ -594,7 +584,7 @@ plt.show()
     Features: 13/13
 
 
-![png](SequentialFeatureSelector_files/SequentialFeatureSelector_44_1.png)
+![png](SequentialFeatureSelector_files/SequentialFeatureSelector_43_1.png)
 
 
 # API

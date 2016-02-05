@@ -636,12 +636,13 @@
 <p><mathjax>$$ SSE =  \sum_i (\text{target}^{(i)} - \text{output}^{(i)})^2$$</mathjax></p>
 <p><mathjax>$$MSE = \frac{1}{n} \times SSE$$</mathjax></p>
 <p><a href="../../regressor/LinearRegression/"><code>LinearRegression</code></a> implements a linear regression model for performing ordinary least squares regression, and in Adaline, we add a threshold function <mathjax>$g(\cdot)$</mathjax> to convert the continuous outcome to a categorical class label:</p>
-<p>\begin{equation}
- y = g({{z}}) =\begin{cases}
-    1 &amp; \text{if <mathjax>$z \ge 0$</mathjax>}\
+<p><mathjax>$$y = g({z}) = \left\{
+    \begin{array}{l}
+    1 &amp; \text{if z $\ge$ 0}\\
     -1 &amp; \text{otherwise}.
-  \end{cases}
-\end{equation}</p>
+    \end{array}
+    \\  
+  \right.$$</mathjax></p>
 <p>An Adaline model can be trained by one of the following three approaches:</p>
 <ul>
 <li>Normal Equations</li>

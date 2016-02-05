@@ -24,34 +24,42 @@ Here, $p(y=1 \mid \mathbf{x})$ is the conditional probability that a particular 
 
 ![](./LogisticRegression_files/logistic_function.png)
 
+
+```python
+\documentclass{article}
+\begin{document}
+This is your only binary choices
+\begin{math}
+  \left\{
+    \begin{array}{l}
+      0\\
+      1
+    \end{array}
+  \right.
+\end{math}
+\end{document}
+```
+
 After model fitting, the conditional probability $p(y=1 \mid \mathbf{x})$ is converted to a binary class label via a threshold function $g(\cdot)$:
 
-\begin{equation}
- y = g({z}) = \begin{cases}
-    1 & \text{if $\phi(z) \ge 0.5$}\\
-    0 & \text{otherwise}.
-  \end{cases}
-\end{equation}
+$$y = g({z}) =  \left\{
+     \begin{array}{l}
+      1 & \text{if $\phi(z) \ge 0.5$}\\
+      0 & \text{otherwise.}
+    \end{array}
+    \\
+  \right.$$
 
 or eqivalently:
 
-\begin{equation}
- y = g({z}) = \begin{cases}
+
+$$y = g({z}) = \left\{
+    \begin{array}{l}
     1 & \text{if z $\ge$ 0}\\
     0 & \text{otherwise}.
-  \end{cases}
-\end{equation}
-
-
-
-
-
-
-
-
-
-
-
+    \end{array}
+    \\  
+  \right.$$
 
 ### Objective Function -- Log-Likelihood
 
@@ -227,11 +235,11 @@ plt.show()
 ```
 
 
-![png](LogisticRegression_files/LogisticRegression_46_0.png)
+![png](LogisticRegression_files/LogisticRegression_47_0.png)
 
 
 
-![png](LogisticRegression_files/LogisticRegression_46_1.png)
+![png](LogisticRegression_files/LogisticRegression_47_1.png)
 
 
 ### Predicting Class Labels
@@ -290,11 +298,11 @@ plt.show()
 ```
 
 
-![png](LogisticRegression_files/LogisticRegression_52_0.png)
+![png](LogisticRegression_files/LogisticRegression_53_0.png)
 
 
 
-![png](LogisticRegression_files/LogisticRegression_52_1.png)
+![png](LogisticRegression_files/LogisticRegression_53_1.png)
 
 
 # API

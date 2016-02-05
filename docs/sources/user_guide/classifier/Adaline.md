@@ -19,13 +19,13 @@ $$MSE = \frac{1}{n} \times SSE$$
 
 [`LinearRegression`](../regressor/LinearRegression.md) implements a linear regression model for performing ordinary least squares regression, and in Adaline, we add a threshold function $g(\cdot)$ to convert the continuous outcome to a categorical class label:
 
-\begin{equation}
- y = g({{z}}) =\begin{cases}
-    1 & \text{if $z \ge 0$}\\
+$$y = g({z}) = \left\{
+    \begin{array}{l}
+    1 & \text{if z $\ge$ 0}\\
     -1 & \text{otherwise}.
-  \end{cases}
-\end{equation}
-
+    \end{array}
+    \\  
+  \right.$$
 
 An Adaline model can be trained by one of the following three approaches:
 

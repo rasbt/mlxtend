@@ -599,8 +599,6 @@
     
         <li class="main "><a href="#overview">Overview</a></li>
         
-            <li><a href="#related-topics">Related Topics</a></li>
-        
     
         <li class="main "><a href="#examples">Examples</a></li>
         
@@ -640,13 +638,6 @@
 <p>There are many more cases than I can possibly list here ... I always recommend you to think about the algorithm and what it's doing, and then it typically becomes obvious whether we want to scale your features or not.</p>
 <p>In addition, we'd also want to think about whether we want to "standardize" or "normalize" (here: scaling to [0, 1] range) our data. Some algorithms assume that our data is centered at 0. For example, if we initialize the weights of a small multi-layer perceptron with tanh activation units to 0 or small random values centered around zero, we want to update the model weights "equally."
 As a rule of thumb I'd say: When in doubt, just standardize the data, it shouldn't hurt.   </p>
-<h3 id="related-topics">Related Topics</h3>
-<ul>
-<li><a href="./mean_centering.md">MeanCenterer</a></li>
-<li><a href="../minmax_scaling/">MinMaxScaling</a></li>
-<li><a href="../shuffle_arrays_unison/">Shuffle Arrays in Unison</a></li>
-<li><a href="./scikit-learn_dense_transformer.md">DenseTransformer</a></li>
-</ul>
 <h1 id="examples">Examples</h1>
 <h2 id="example-1-standardize-a-pandas-dataframe">Example 1 - Standardize a Pandas DataFrame</h2>
 <pre><code class="python">import pandas as pd

@@ -666,7 +666,7 @@ X_std = (X - X.mean(axis=0)) / X.std(axis=0)
 
 <p>Train neural network for 3 output flower classes ('Setosa', 'Versicolor', 'Virginica'), regular gradient decent (<code>minibatches=1</code>), 30 hidden units, and no regularization.</p>
 <h3 id="gradient-descent">Gradient Descent</h3>
-<p>Setting the <code>minibatches</code> to <code>1</code> will result in gradient descent training (see <a href="../general_concepts/gradient_optimization.md">Gradient Descent vs. Stochastic Gradient Descent</a> for details).</p>
+<p>Setting the <code>minibatches</code> to <code>1</code> will result in gradient descent training; please see <a href="../../general_concepts/gradient-optimization/">Gradient Descent vs. Stochastic Gradient Descent</a> for details.</p>
 <pre><code class="python">from mlxtend.classifier import NeuralNetMLP
 
 import numpy as np
@@ -712,7 +712,7 @@ fig = plot_decision_regions(X=X_std, y=y, clf=nn1, legend=2)
 
 <p><img alt="png" src="../NeuralNetMLP_files/NeuralNetMLP_27_0.png" /></p>
 <h3 id="stochastic-gradient-descent">Stochastic Gradient Descent</h3>
-<p>Setting <code>minibatches</code> to <code>n_samples</code> will result in stochastic gradient descent training (see <a href="../general_concepts/gradient_optimization.md">Gradient Descent vs. Stochastic Gradient Descent</a> for details).</p>
+<p>Setting <code>minibatches</code> to <code>n_samples</code> will result in stochastic gradient descent training; please see <a href="../../general_concepts/gradient-optimization/">Gradient Descent vs. Stochastic Gradient Descent</a> for details.</p>
 <pre><code class="python">from mlxtend.classifier import NeuralNetMLP
 
 import numpy as np

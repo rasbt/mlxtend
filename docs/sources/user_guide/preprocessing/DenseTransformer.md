@@ -4,13 +4,6 @@ A simple transformer that converts a sparse into a dense numpy array, e.g., requ
 
 > from mlxtend.preprocessing import DenseTransformer
 
-### Related Topics
-
-- [Standardize](./standardize.md)
-- [MeanCenterer](./mean_centerer.md)
-- [Min-Max Scaling](./minmax_scaling.md)
-- [DenseTransformer](./scikit-learn_dense_transformer.md)
-
 # Examples
 
 ## Example 1

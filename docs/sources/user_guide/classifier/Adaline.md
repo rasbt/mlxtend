@@ -51,7 +51,7 @@ $$ \mathbf{w} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^Ty$$
 
 In the current implementation, the Adaline model is learned via Gradient Descent or Stochastic Gradient Descent.
 
-See [Gradient Descent and Stochastic Gradient Descent](../general_concepts/gradient-optimization.html) and [Deriving the Gradient Descent Rule for Linear Regression and Adaline](../general_concepts/linear-gradient-derivative.md) for details.
+See [Gradient Descent and Stochastic Gradient Descent](../general_concepts/gradient-optimization.md) and [Deriving the Gradient Descent Rule for Linear Regression and Adaline](../general_concepts/linear-gradient-derivative.md) for details.
 
 Random shuffling is implemented as:
 

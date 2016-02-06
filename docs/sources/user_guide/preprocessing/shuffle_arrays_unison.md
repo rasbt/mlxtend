@@ -4,13 +4,6 @@ A function for NumPy arrays in unison.
 
 > from mlxtend.preprocessing import shuffle_arrays_unison
 
-### Related Topics
-
-- [Standardize](./standardize.md)
-- [MeanCenterer](./mean_centerer.md)
-- [Min-Max Scaling](./minmax_scaling.md)
-- [DenseTransformer](./scikit-learn_dense_transformer.md)
-
 # Examples
 
 ## Example 1 - Scaling a Pandas DataFrame

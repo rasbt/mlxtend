@@ -5,7 +5,7 @@ site_description: A library consisting of useful tools and extensions for the da
 
 repo_url: https://github.com/rasbt/mlxtend
 
-include_search: true
+#include_search: true # not necessary for this theme
 docs_dir: sources
 theme: mkdocs
 theme_dir: cinder

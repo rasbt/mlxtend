@@ -128,7 +128,7 @@ Now, in order to find the weights of the model, we take a step proportional to t
 & w_j := w_j + \eta \sum^{n}_{i=1} \big( y^{(i)} - \phi\big(z^{(i)}\big)\big)x_j^{(i)}
 \end{align}
 
-Note that the gradient (and weight update) is computed from all samples in the training set in gradient ascent/descent in contrast to stochastic gradient ascent/descent. For more information about the differences between gradient descent and stochastic gradient descent, please see the related article [Gradient Descent and Stochastic Gradient Descent](../general_concepts/gradient-optimization.html).
+Note that the gradient (and weight update) is computed from all samples in the training set in gradient ascent/descent in contrast to stochastic gradient ascent/descent. For more information about the differences between gradient descent and stochastic gradient descent, please see the related article [Gradient Descent and Stochastic Gradient Descent](../general_concepts/gradient-optimization.md).
 
 The previous equation shows the weight update for a single weight $j$. In gradient-based optimization, all weight coefficients are updated simultaneously; the weight update can be written more compactly as 
 
@@ -192,7 +192,7 @@ where
 
 $$\Delta{\mathbf{w}} = - \eta \big( \nabla J(\mathbf{w}) + \lambda \mathbf{w}\big).$$
 
-For more information on regularization, please see [Regularization of Generalized Linear Models](../general_concepts/regularization_linear.md).
+For more information on regularization, please see [Regularization of Generalized Linear Models](../general_concepts/regularization-linear.md).
 
 ### References
 

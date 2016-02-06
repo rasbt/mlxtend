@@ -67,7 +67,7 @@ Train neural network for 3 output flower classes ('Setosa', 'Versicolor', 'Virgi
 
 ### Gradient Descent
 
-Setting the `minibatches` to `1` will result in gradient descent training (see [Gradient Descent vs. Stochastic Gradient Descent](../general_concepts/gradient_optimization.md) for details).
+Setting the `minibatches` to `1` will result in gradient descent training; please see [Gradient Descent vs. Stochastic Gradient Descent](../general_concepts/gradient-optimization.md) for details.
 
 
 ```python
@@ -130,7 +130,7 @@ fig = plot_decision_regions(X=X_std, y=y, clf=nn1, legend=2)
 
 ### Stochastic Gradient Descent
 
-Setting `minibatches` to `n_samples` will result in stochastic gradient descent training (see [Gradient Descent vs. Stochastic Gradient Descent](../general_concepts/gradient_optimization.md) for details).
+Setting `minibatches` to `n_samples` will result in stochastic gradient descent training; please see [Gradient Descent vs. Stochastic Gradient Descent](../general_concepts/gradient-optimization.md) for details.
 
 
 ```python

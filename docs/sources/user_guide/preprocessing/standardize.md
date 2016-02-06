@@ -37,13 +37,6 @@ As a rule of thumb I'd say: When in doubt, just standardize the data, it shouldn
 
  
 
-### Related Topics
-
-- [MeanCenterer](./mean_centering.md)
-- [MinMaxScaling](./minmax_scaling.md)
-- [Shuffle Arrays in Unison](./shuffle_arrays_unison.md)
-- [DenseTransformer](./scikit-learn_dense_transformer.md)
-
 # Examples
 
 ## Example 1 - Standardize a Pandas DataFrame

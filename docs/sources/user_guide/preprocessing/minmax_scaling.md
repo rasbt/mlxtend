@@ -4,13 +4,6 @@ A function for min-max scaling of pandas DataFrames or NumPy arrays.
 
 > from mlxtend.preprocessing import MinMaxScaling
 
-### Related Topics
-
-- [Standardize](./standardize.md)
-- [MeanCenterer](./mean_centerer.md)
-- [Shuffle Arrays in Unison](./shuffle_arrays_unison.md)
-- [DenseTransformer](./scikit-learn_dense_transformer.md)
-
 An alternative approach to Z-score normalization (or standardization) is the so-called Min-Max scaling (often also simply called "normalization" - a common cause for ambiguities).
 In this approach, the data is scaled to a fixed range - usually 0 to 1.
 The cost of having this bounded range - in contrast to standardization - is that we will end up with smaller standard deviations, which can suppress the effect of outliers.

@@ -40,7 +40,7 @@ $$ \mathbf{w} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^Ty$$
 
 ### Gradient Descent (GD)  and Stochastic Gradient Descent (SGD) 
 
-See [Gradient Descent and Stochastic Gradient Descent](../general_concepts/gradient-optimization.html) and [Deriving the Gradient Descent Rule for Linear Regression and Adaline](../general_concepts/linear-gradient-derivative.md) for details.
+See [Gradient Descent and Stochastic Gradient Descent](../general_concepts/gradient-optimization.md) and [Deriving the Gradient Descent Rule for Linear Regression and Adaline](../general_concepts/linear-gradient-derivative.md) for details.
 
 Random shuffling is implemented as:
 

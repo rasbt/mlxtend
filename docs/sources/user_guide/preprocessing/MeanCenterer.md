@@ -4,13 +4,6 @@ A transformer object that performs column-based mean centering on a NumPy array.
 
 > from mlxtend.preprocessing import MeanCenterer
 
-### Related Topics
-
-- [Standardize](./standardize.md)
-- [MinMaxScaling](./minmax_scaling.md)
-- [Shuffle Arrays in Unison](./shuffle_arrays_unison.md)
-- [DenseTransformer](./scikit-learn_dense_transformer.md)
-
 # Examples
 
 ## Example 1 - Centering a NumPy Array

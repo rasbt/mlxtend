@@ -20,8 +20,6 @@
 
 Sebastian Raschka 2014-2016
 
-Current version: 0.3.0
-
 <br>
 
 

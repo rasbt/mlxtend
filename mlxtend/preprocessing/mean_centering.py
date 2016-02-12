@@ -60,7 +60,6 @@ class MeanCenterer(TransformerObj):
         self.col_means = self._get_array(X).mean(axis=0)
         return self
 
-
     def fit_transform(self, X):
         """Fits and transforms an arry.
 

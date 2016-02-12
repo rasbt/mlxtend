@@ -1,4 +1,4 @@
-mlxtend version: 0.3.0
+mlxtend version: 0.3.1dev
 ## confusion_matrix
 
 *confusion_matrix(y_target, y_predicted, binary=False, positive_label=1)*

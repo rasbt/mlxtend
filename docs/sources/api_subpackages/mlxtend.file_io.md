@@ -1,4 +1,4 @@
-mlxtend version: 0.3.0
+mlxtend version: 0.3.1dev
 ## find_filegroups
 
 *find_filegroups(paths, substring='', extensions=None, validity_check=True, ignore_invisible=True, rstrip='', ignore_substring=None)*

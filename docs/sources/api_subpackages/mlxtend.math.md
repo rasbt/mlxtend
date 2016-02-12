@@ -1,4 +1,4 @@
-mlxtend version: 0.3.0
+mlxtend version: 0.3.1dev
 ## factorial
 
 *factorial(n)*

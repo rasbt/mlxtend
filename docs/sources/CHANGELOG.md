@@ -4,7 +4,7 @@
 
 ### Version 0.3.1dev
 
-- -
+- Function for one-hot encoding of class labels ([`preprocessing.one_hot`](./user_guide/preprocessing/one-hot_encoding.md))
 
 ### Version 0.3.0 (2016-01-31)
 

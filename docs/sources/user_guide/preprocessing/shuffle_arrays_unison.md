@@ -28,7 +28,7 @@ print('y:\n%s' % y)
 
 
 ```python
-X2, y2 = shuffle_arrays_unison(arrays=[X, y], random_state=3)
+X2, y2 = shuffle_arrays_unison(arrays=[X, y], random_seed=3)
 print('X2:\n%s' % X2)
 print('y2:\n%s' % y2)
 ```
@@ -44,7 +44,7 @@ print('y2:\n%s' % y2)
 # API
 
 
-*shuffle_arrays_unison(arrays, random_state=None)*
+*shuffle_arrays_unison(arrays, random_seed=None)*
 
 Shuffle NumPy arrays in unison.
 
@@ -54,9 +54,9 @@ Shuffle NumPy arrays in unison.
 
     A list of NumPy arrays.
 
-- `random_state` : int (default: None)
+- `random_seed` : int (default: None)
 
-    Sets the random seed.
+    Sets the random state.
 
 **Returns**
 

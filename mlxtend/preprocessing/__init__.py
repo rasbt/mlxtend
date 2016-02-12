@@ -10,7 +10,8 @@ from .shuffle import shuffle_arrays_unison
 from .scaling import minmax_scaling
 from .scaling import standardize
 from .dense_transformer import DenseTransformer
+from .onehot import one_hot
 
 
 __all__ = ["MeanCenterer", "shuffle_arrays_unison", "TransformerObj",
-           "minmax_scaling", "standardize", "DenseTransformer"]
+           "minmax_scaling", "standardize", "DenseTransformer", "one_hot"]

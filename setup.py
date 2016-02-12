@@ -7,10 +7,10 @@
 from setuptools import setup
 
 setup(name='mlxtend',
-      version='0.3.0',
+      version='0.3.1dev',
       description='Machine Learning Library Extensions',
       author='Sebastian Raschka',
-      author_email='se.raschka@gmail.com',
+      author_email='mail@sebastianraschka.com',
       url='https://github.com/rasbt/mlxtend',
       packages=['mlxtend',
                 'mlxtend.feature_selection',

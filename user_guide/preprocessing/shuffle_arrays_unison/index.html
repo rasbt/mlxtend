@@ -631,7 +631,7 @@ print('y:\n%s' % y)
 y:
 [1 2 3]
 </code></pre>
-<pre><code class="python">X2, y2 = shuffle_arrays_unison(arrays=[X, y], random_state=3)
+<pre><code class="python">X2, y2 = shuffle_arrays_unison(arrays=[X, y], random_seed=3)
 print('X2:\n%s' % X2)
 print('y2:\n%s' % y2)
 </code></pre>
@@ -644,7 +644,7 @@ y2:
 [2 1 3]
 </code></pre>
 <h1 id="api">API</h1>
-<p><em>shuffle_arrays_unison(arrays, random_state=None)</em></p>
+<p><em>shuffle_arrays_unison(arrays, random_seed=None)</em></p>
 <p>Shuffle NumPy arrays in unison.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -653,8 +653,8 @@ y2:
 <p>A list of NumPy arrays.</p>
 </li>
 <li>
-<p><code>random_state</code> : int (default: None)</p>
-<p>Sets the random seed.</p>
+<p><code>random_seed</code> : int (default: None)</p>
+<p>Sets the random state.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>

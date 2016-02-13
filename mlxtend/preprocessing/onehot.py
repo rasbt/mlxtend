@@ -36,7 +36,8 @@ def one_hot(y, num_labels='auto', dtype='float'):
     if not len(yt.shape) == 1:
         raise AttributeError('y array must be 1-dimensional')
     if num_labels == 'auto':
-        uniq = np.unique(yt).shape[0]
+        # uniq = np.unique(yt).shape[0]
+        uniq = np.max(yt + 1)
     else:
         uniq = num_labels
     if uniq == 1:

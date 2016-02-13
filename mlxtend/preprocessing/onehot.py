@@ -42,9 +42,3 @@ def one_hot(y, num_labels='auto', dtype='float'):
     if uniq == 1:
         return np.array([[0.]], dtype=dtype)
     return (np.arange(uniq) == yt[:, None]).astype(dtype)
-
-
-y = np.array([0, 1, 2, 3, 4, 2])
-one_hot(y)
-one_hot([0, 1, 2])
-one_hot([1])

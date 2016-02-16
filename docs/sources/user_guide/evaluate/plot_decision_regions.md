@@ -161,6 +161,119 @@ plt.show()
 ![png](plot_decision_regions_files/plot_decision_regions_16_0.png)
 
 
+## Example 5 - Evaluating Classifier Behavior on Non-Linear Problems
+
+
+```python
+from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import GaussianNB 
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import SVC
+
+# Initializing Classifiers
+clf1 = LogisticRegression(random_state=1)
+clf2 = RandomForestClassifier(n_estimators=100, random_state=1)
+clf3 = GaussianNB()
+clf4 = SVC()
+```
+
+
+```python
+# Loading Plotting Utilities
+import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
+import itertools
+from mlxtend.evaluate import plot_decision_regions
+import numpy as np
+```
+
+### XOR
+
+
+```python
+xx, yy = np.meshgrid(np.linspace(-3, 3, 50),
+                     np.linspace(-3, 3, 50))
+rng = np.random.RandomState(0)
+X = rng.randn(300, 2)
+y = np.array(np.logical_xor(X[:, 0] > 0, X[:, 1] > 0), dtype=int)
+```
+
+
+```python
+gs = gridspec.GridSpec(2, 2)
+
+fig = plt.figure(figsize=(10,8))
+
+for clf, lab, grd in zip([clf1, clf2, clf3, clf4],
+                         ['Logistic Regression', 'Random Forest', 'Naive Bayes', 'SVM'],
+                         itertools.product([0, 1], repeat=2)):
+
+    clf.fit(X, y)
+    ax = plt.subplot(gs[grd[0], grd[1]])
+    fig = plot_decision_regions(X=X, y=y, clf=clf, legend=2)
+    plt.title(lab)
+
+plt.show()
+```
+
+
+![png](plot_decision_regions_files/plot_decision_regions_22_0.png)
+
+
+### Half-Moons
+
+
+```python
+from sklearn.datasets import make_moons
+X, y = make_moons(n_samples=100, random_state=123)
+
+gs = gridspec.GridSpec(2, 2)
+
+fig = plt.figure(figsize=(10,8))
+
+for clf, lab, grd in zip([clf1, clf2, clf3, clf4],
+                         ['Logistic Regression', 'Random Forest', 'Naive Bayes', 'SVM'],
+                         itertools.product([0, 1], repeat=2)):
+
+    clf.fit(X, y)
+    ax = plt.subplot(gs[grd[0], grd[1]])
+    fig = plot_decision_regions(X=X, y=y, clf=clf, legend=2)
+    plt.title(lab)
+
+plt.show()
+```
+
+
+![png](plot_decision_regions_files/plot_decision_regions_24_0.png)
+
+
+### Concentric Circles
+
+
+```python
+from sklearn.datasets import make_circles
+X, y = make_circles(n_samples=1000, random_state=123, noise=0.1, factor=0.2)
+
+gs = gridspec.GridSpec(2, 2)
+
+fig = plt.figure(figsize=(10,8))
+
+for clf, lab, grd in zip([clf1, clf2, clf3, clf4],
+                         ['Logistic Regression', 'Random Forest', 'Naive Bayes', 'SVM'],
+                         itertools.product([0, 1], repeat=2)):
+
+    clf.fit(X, y)
+    ax = plt.subplot(gs[grd[0], grd[1]])
+    fig = plot_decision_regions(X=X, y=y, clf=clf, legend=2)
+    plt.title(lab)
+
+plt.show()
+```
+
+
+![png](plot_decision_regions_files/plot_decision_regions_26_0.png)
+
+
 # API
 
 

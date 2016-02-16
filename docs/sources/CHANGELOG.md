@@ -4,7 +4,8 @@
 
 ### Version 0.3.1dev
 
-- Function for one-hot encoding of class labels ([`preprocessing.one_hot`](./user_guide/preprocessing/one-hot_encoding.md))
+- New function for one-hot encoding of class labels ([`preprocessing.one_hot`](./user_guide/preprocessing/one-hot_encoding.md))
+- [`evaluate.plot_decision_regions`](./user_guide/evaluate/plot_decision_regions.md) function now handles class y-class labels correctly if array is of type `float`
 
 ### Version 0.3.0 (2016-01-31)
 

@@ -15,7 +15,7 @@ Compute a confusion matrix/contingency table.
 
     Predicted class labels.
 
-- `binary` : bool (default: True)
+- `binary` : bool (default: False)
 
     Maps a multi-class problem onto a
     binary confusion matrix, where
@@ -25,6 +25,11 @@ Compute a confusion matrix/contingency table.
 - `positive_label` : int (default: 1)
 
     Class label of the positive class.
+
+**Returns**
+
+- `mat` : array-like, shape=[n_classes, n_classes]
+
 
 ## plot_confusion_matrix
 

@@ -624,6 +624,8 @@
         
             <li><a href="#example-4-highlighting-test-data-points">Example 4 - Highlighting Test Data Points</a></li>
         
+            <li><a href="#example-5-evaluating-classifier-behavior-on-non-linear-problems">Example 5 - Evaluating Classifier Behavior on Non-Linear Problems</a></li>
+        
     
         <li class="main "><a href="#api">API</a></li>
         
@@ -767,6 +769,94 @@ plt.show()
 </code></pre>
 
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_16_0.png" /></p>
+<h2 id="example-5-evaluating-classifier-behavior-on-non-linear-problems">Example 5 - Evaluating Classifier Behavior on Non-Linear Problems</h2>
+<pre><code class="python">from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import GaussianNB 
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import SVC
+
+# Initializing Classifiers
+clf1 = LogisticRegression(random_state=1)
+clf2 = RandomForestClassifier(n_estimators=100, random_state=1)
+clf3 = GaussianNB()
+clf4 = SVC()
+</code></pre>
+
+<pre><code class="python"># Loading Plotting Utilities
+import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
+import itertools
+from mlxtend.evaluate import plot_decision_regions
+import numpy as np
+</code></pre>
+
+<h3 id="xor">XOR</h3>
+<pre><code class="python">xx, yy = np.meshgrid(np.linspace(-3, 3, 50),
+                     np.linspace(-3, 3, 50))
+rng = np.random.RandomState(0)
+X = rng.randn(300, 2)
+y = np.array(np.logical_xor(X[:, 0] &gt; 0, X[:, 1] &gt; 0), dtype=int)
+</code></pre>
+
+<pre><code class="python">gs = gridspec.GridSpec(2, 2)
+
+fig = plt.figure(figsize=(10,8))
+
+for clf, lab, grd in zip([clf1, clf2, clf3, clf4],
+                         ['Logistic Regression', 'Random Forest', 'Naive Bayes', 'SVM'],
+                         itertools.product([0, 1], repeat=2)):
+
+    clf.fit(X, y)
+    ax = plt.subplot(gs[grd[0], grd[1]])
+    fig = plot_decision_regions(X=X, y=y, clf=clf, legend=2)
+    plt.title(lab)
+
+plt.show()
+</code></pre>
+
+<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_22_0.png" /></p>
+<h3 id="half-moons">Half-Moons</h3>
+<pre><code class="python">from sklearn.datasets import make_moons
+X, y = make_moons(n_samples=100, random_state=123)
+
+gs = gridspec.GridSpec(2, 2)
+
+fig = plt.figure(figsize=(10,8))
+
+for clf, lab, grd in zip([clf1, clf2, clf3, clf4],
+                         ['Logistic Regression', 'Random Forest', 'Naive Bayes', 'SVM'],
+                         itertools.product([0, 1], repeat=2)):
+
+    clf.fit(X, y)
+    ax = plt.subplot(gs[grd[0], grd[1]])
+    fig = plot_decision_regions(X=X, y=y, clf=clf, legend=2)
+    plt.title(lab)
+
+plt.show()
+</code></pre>
+
+<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_24_0.png" /></p>
+<h3 id="concentric-circles">Concentric Circles</h3>
+<pre><code class="python">from sklearn.datasets import make_circles
+X, y = make_circles(n_samples=1000, random_state=123, noise=0.1, factor=0.2)
+
+gs = gridspec.GridSpec(2, 2)
+
+fig = plt.figure(figsize=(10,8))
+
+for clf, lab, grd in zip([clf1, clf2, clf3, clf4],
+                         ['Logistic Regression', 'Random Forest', 'Naive Bayes', 'SVM'],
+                         itertools.product([0, 1], repeat=2)):
+
+    clf.fit(X, y)
+    ax = plt.subplot(gs[grd[0], grd[1]])
+    fig = plot_decision_regions(X=X, y=y, clf=clf, legend=2)
+    plt.title(lab)
+
+plt.show()
+</code></pre>
+
+<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_26_0.png" /></p>
 <h1 id="api">API</h1>
 <p><em>plot_decision_regions(X, y, clf, X_highlight=None, res=0.02, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors=['red', 'blue', 'limegreen', 'gray', 'cyan'])</em></p>
 <p>Plot decision regions of a classifier.</p>

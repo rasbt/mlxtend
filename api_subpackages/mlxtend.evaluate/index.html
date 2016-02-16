@@ -643,7 +643,7 @@
 <p>Predicted class labels.</p>
 </li>
 <li>
-<p><code>binary</code> : bool (default: True)</p>
+<p><code>binary</code> : bool (default: False)</p>
 <p>Maps a multi-class problem onto a
 binary confusion matrix, where
 the positive class is 1 and
@@ -653,6 +653,10 @@ all other classes are 0.</p>
 <p><code>positive_label</code> : int (default: 1)</p>
 <p>Class label of the positive class.</p>
 </li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>mat</code> : array-like, shape=[n_classes, n_classes]</li>
 </ul>
 <h2 id="plot_confusion_matrix">plot_confusion_matrix</h2>
 <p><em>plot_confusion_matrix(conf_mat, hide_spines=False, hide_ticks=False, figsize=(2.5, 2.5), cmap=None, alpha=0.3)</em></p>

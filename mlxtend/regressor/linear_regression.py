@@ -129,7 +129,6 @@ class LinearRegression(object):
     def _normal_equation(self, X, y):
         """Solve linear regression analytically."""
         Xb = np.hstack((np.ones((X.shape[0], 1)), X))
-        w = np.zeros(X.shape[1])
         z = np.linalg.inv(np.dot(Xb.T, Xb))
         w = np.dot(z, np.dot(Xb.T, y))
         return w

@@ -34,8 +34,8 @@ else
     conda create -n testenv --yes python=$PYTHON_VERSION pip nose \
         numpy=$NUMPY_VERSION scipy=$SCIPY_VERSION \
         scikit-learn=$SKLEARN_VERSION \
-	    pandas=$PANDAS_VERSION \
-		matplotlib=$MATPLOTLIB_VERSION cython
+	      pandas=$PANDAS_VERSION \
+	     	matplotlib=$MATPLOTLIB_VERSION cython
 fi
 
 source activate testenv

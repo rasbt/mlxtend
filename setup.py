@@ -27,9 +27,10 @@ setup(name='mlxtend',
                 'mlxtend.utils',
                 ],
       package_data={'': ['LICENSE'],
-                    '': ['README.md']
+                    '': ['README.md'],
+                    '': ['requirements.txt']
                    },
-      license='new BSD',
+      license='BSD 3-Clause',
       platforms='any',
       classifiers=[
              'License :: OSI Approved :: BSD License',

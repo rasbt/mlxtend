@@ -1,5 +1,4 @@
-__todo__.txt
-__todo__
+.coverage
 docs/py-docstring-parser/
 docs/site/
 build/

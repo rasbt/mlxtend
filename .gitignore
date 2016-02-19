@@ -1,10 +1,23 @@
-.coverage
-docs/py-docstring-parser/
+# Documentation builds
 docs/site/
+
+# Temporary documentation files
+docs/sources/user_guide/*.md
+docs/sources/user_guide/*/*.md
+docs/sources/user_guide/*/*/*.png
+docs/sources/user_guide/*.png
+docs/sources/user_guide/*/*.png
+docs/sources/user_guide/*/*/*.png
+docs/sources/api_modules/
+docs/sources/api_subpackages/
+
+# PyPI
 build/
 dist/
 MANIFEST
 
+# Temporary files
+.coverage
 .ipynb_checkpoints
 
 *.sqlite

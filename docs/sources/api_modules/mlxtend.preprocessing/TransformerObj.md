@@ -1,8 +1,0 @@
-## TransformerObj
-
-*TransformerObj()*
-
-None
-
-### Methods
-

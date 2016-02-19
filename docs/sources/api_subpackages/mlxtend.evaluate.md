@@ -67,7 +67,7 @@ Plot a confusion matrix via matplotlib.
 
 ## plot_decision_regions
 
-*plot_decision_regions(X, y, clf, X_highlight=None, res=0.02, legend=1, hide_spines=True, markers='s^oxv<>', colors=['red', 'blue', 'limegreen', 'gray', 'cyan'])*
+*plot_decision_regions(X, y, clf, ax=None, X_highlight=None, res=0.02, legend=1, hide_spines=True, markers='s^oxv<>', colors='red,blue,limegreen,gray,cyan')*
 
 Plot decision regions of a classifier.
 
@@ -84,6 +84,11 @@ Plot decision regions of a classifier.
 - `clf` : Classifier object.
 
     Must have a .predict method.
+
+- `ax` : matplotlib.axes.Axes (default: None)
+
+    An existing matplotlib Axes. Creates
+    one if ax=None.
 
 - `X_highlight` : array-like, shape = [n_samples, n_features] (default: None)
 
@@ -107,13 +112,13 @@ Plot decision regions of a classifier.
 
     Scatterplot markers.
 
-- `colors` : list
+- `colors` : str (default 'red,blue,limegreen,gray,cyan')
 
-    Colors.
+    Comma separated list of colors.
 
 **Returns**
 
-- `fig` : matplotlib.pyplot.figure object
+- `ax` : matplotlib.axes.Axes object
 
 
 ## plot_learning_curves

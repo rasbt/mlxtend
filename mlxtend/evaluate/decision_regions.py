@@ -12,11 +12,13 @@ import numpy as np
 from matplotlib.colors import ListedColormap
 
 
-def plot_decision_regions(X, y, clf, X_highlight=None,
+def plot_decision_regions(X, y, clf,
+                          ax=None,
+                          X_highlight=None,
                           res=0.02, legend=1,
                           hide_spines=True,
                           markers='s^oxv<>',
-                          colors=['red', 'blue', 'limegreen', 'gray', 'cyan']):
+                          colors='red,blue,limegreen,gray,cyan'):
     """Plot decision regions of a classifier.
 
     Parameters
@@ -27,6 +29,9 @@ def plot_decision_regions(X, y, clf, X_highlight=None,
         True class labels.
     clf : Classifier object.
         Must have a .predict method.
+    ax : matplotlib.axes.Axes (default: None)
+        An existing matplotlib Axes. Creates
+        one if ax=None.
     X_highlight : array-like, shape = [n_samples, n_features] (default: None)
         An array with data points that are used to highlight samples in `X`.
     res : float (default: 0.02)
@@ -39,19 +44,21 @@ def plot_decision_regions(X, y, clf, X_highlight=None,
         No legend if legend is 0.
     markers : list
         Scatterplot markers.
-    colors : list
-        Colors.
+    colors : str (default 'red,blue,limegreen,gray,cyan')
+        Comma separated list of colors.
 
     Returns
     ---------
-    fig : matplotlib.pyplot.figure object
+    ax : matplotlib.axes.Axes object
 
     """
     # check if data is numpy array
-    fig = plt.gca()
     for a in (X, y):
         if not isinstance(a, np.ndarray):
             raise ValueError('%s must be a NumPy array.' % a.__name__)
+
+    if ax is None:
+        ax = plt.gca()
 
     # check if test data is provided
     plot_testdata = True
@@ -66,11 +73,11 @@ def plot_decision_regions(X, y, clf, X_highlight=None,
     else:
         dim = '1d'
 
-    marker_gen = cycle(['s', '^', 'o', 'x', 'v', '<', '>'])
+    marker_gen = cycle(list(markers))
 
     # make color map
     n_classes = len(np.unique(y.astype(int)))
-    colors = ['red', 'blue', 'limegreen', 'gray', 'cyan']
+    colors = colors.split(',')
     cmap = ListedColormap(colors[:n_classes])
 
     # plot the decision surface
@@ -91,9 +98,9 @@ def plot_decision_regions(X, y, clf, X_highlight=None,
         Z = clf.predict(np.array([xx.ravel()]).T)
 
     Z = Z.reshape(xx.shape)
-    plt.contourf(xx, yy, Z, alpha=0.3, cmap=cmap)
-    plt.xlim(xx.min(), xx.max())
-    plt.ylim(yy.min(), yy.max())
+    ax.contourf(xx, yy, Z, alpha=0.3, cmap=cmap)
+
+    ax.axis(xmin=xx.min(), xmax=xx.max(), y_min=yy.min(), y_max=yy.max())
 
     # plot class samples
 
@@ -103,42 +110,49 @@ def plot_decision_regions(X, y, clf, X_highlight=None,
         else:
             y_data = [0 for i in X[y.astype(int) == c]]
 
-        plt.scatter(x=X[y.astype(int) == c, 0],
-                    y=y_data,
-                    alpha=0.8,
-                    c=cmap(c),
-                    marker=next(marker_gen),
-                    label=c)
+        ax.scatter(x=X[y.astype(int) == c, 0],
+                   y=y_data,
+                   alpha=0.8,
+                   c=cmap(c),
+                   marker=next(marker_gen),
+                   label=c)
 
     if hide_spines:
-        fig.spines['right'].set_visible(False)
-        fig.spines['top'].set_visible(False)
-        fig.spines['left'].set_visible(False)
-        fig.spines['bottom'].set_visible(False)
-    fig.yaxis.set_ticks_position('left')
-    fig.xaxis.set_ticks_position('bottom')
+        ax.spines['right'].set_visible(False)
+        ax.spines['top'].set_visible(False)
+        ax.spines['left'].set_visible(False)
+        ax.spines['bottom'].set_visible(False)
+    ax.yaxis.set_ticks_position('left')
+    ax.xaxis.set_ticks_position('bottom')
     if not dim == '2d':
-        fig.axes.get_yaxis().set_ticks([])
+        ax.axes.get_yaxis().set_ticks([])
 
     if legend:
-        plt.legend(loc=legend, fancybox=True, framealpha=0.5)
+        legend = plt.legend(loc=legend,
+                            fancybox=True,
+                            framealpha=0.3,
+                            scatterpoints=1,
+                            handletextpad=-0.25,
+                            borderaxespad=0.9)
+
+        ax.add_artist(legend)
 
     if plot_testdata:
         if dim == '2d':
-            plt.scatter(X_highlight[:, 0],
-                        X_highlight[:, 1],
-                        c='',
-                        alpha=1.0,
-                        linewidth=1,
-                        marker='o',
-                        s=80)
+            ax.scatter(X_highlight[:, 0],
+                       X_highlight[:, 1],
+                       c='',
+                       alpha=1.0,
+                       linewidth=1,
+                       marker='o',
+                       s=80)
         else:
-            plt.scatter(X_highlight,
-                        [0 for i in X_highlight],
-                        c='',
-                        alpha=1.0,
-                        linewidth=1,
-                        marker='o',
-                        s=80)
+            ax.scatter(X_highlight,
+                       [0 for i in X_highlight],
+                       c='',
+                       alpha=1.0,
+                       linewidth=1,
+                       marker='o',
+                       s=80)
 
-    return fig
+    return ax

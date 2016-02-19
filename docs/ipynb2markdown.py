@@ -7,8 +7,8 @@
 #
 # License: BSD 3 clause
 
-
 import subprocess
+import glob
 import shutil
 import os
 import markdown
@@ -31,6 +31,7 @@ class ImgExtExtension(Extension):
 
 
 def ipynb_to_md(ipynb_path):
+    orig_path = os.getcwd()
     os.chdir(os.path.dirname(ipynb_path))
     file_name = os.path.basename(ipynb_path)
     subprocess.call(['python', '-m', 'nbconvert',
@@ -60,6 +61,7 @@ def ipynb_to_md(ipynb_path):
 
     with open(md_name, 'w') as f:
         f.write(''.join(new_s))
+    os.chdir(orig_path)
 
 
 # md = markdown.Markdown(extensions=[ImgExtExtension()])
@@ -77,10 +79,27 @@ if __name__ == "__main__":
     parser.add_argument('-i', '--ipynb',
                         help='Path to the IPython file')
 
+    parser.add_argument('-a', '--all',
+                        default='sources/user_guide',
+                        help='Path to parse all ipynb recursively')
+
     parser.add_argument('-v', '--version',
                         action='version',
                         version='v. 0.1')
 
     args = parser.parse_args()
 
-    ipynb_to_md(ipynb_path=args.ipynb)
+    if args.all and args.ipynb:
+        raise AttributeError('Conflicting flags --ipynb and --all; choose one')
+
+    if args.ipynb:
+        ipynb_to_md(ipynb_path=args.ipynb)
+    else:
+        tree = os.walk(args.all)
+        for d in tree:
+            filenames = glob.glob(os.path.join(d[0], '*'))
+            for f in filenames:
+                if f.endswith('.ipynb'):
+                    print(f)
+
+                    ipynb_to_md(ipynb_path=f)

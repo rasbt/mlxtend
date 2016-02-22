@@ -7,9 +7,11 @@
 # License: BSD 3 clause
 
 import numpy as np
+from time import time
+from .base import _BaseClassifier
 
 
-class LogisticRegression(object):
+class LogisticRegression(_BaseClassifier):
     """Logistic regression classifier.
 
     Parameters
@@ -35,12 +37,17 @@ class LogisticRegression(object):
         If True, weights are initialized to zero instead of small random
         numbers in the interval [-0.1, 0.1];
         ignored if solver='normal equation'
+    print_progress : int (default: 0)
+        Prints progress in fitting to stderr.
+        0: No output
+        1: Epochs elapsed and cost
+        2: 1 plus time elapsed
+        3: 2 plus estimated time until completion
 
     Attributes
     -----------
     w_ : 1d-array
         Weights after fitting.
-
     cost_ : list
         List of floats with sum of squared error cost (sgd or gd) for every
         epoch.
@@ -48,8 +55,10 @@ class LogisticRegression(object):
     """
     def __init__(self, eta=0.01, epochs=50, regularization=None,
                  l2_lambda=0.0, learning='sgd', shuffle=False,
-                 random_seed=None, zero_init_weight=False):
+                 random_seed=None, zero_init_weight=False,
+                 print_progress=0):
 
+        super(LogisticRegression, self).__init__(print_progress=print_progress)
         np.random.seed(random_seed)
         self.eta = eta
         self.epochs = epochs
@@ -83,8 +92,7 @@ class LogisticRegression(object):
         self : object
 
         """
-        if not len(X.shape) == 2:
-            raise ValueError('X must be a 2D array. Try X[:,np.newaxis]')
+        self._check_arrays(X, y)
 
         if (np.unique(y) != np.array([0, 1])).all():
             raise ValueError('Supports only binary class labels 0 and 1')
@@ -98,7 +106,8 @@ class LogisticRegression(object):
         self.m_ = len(self.w_)
         self.cost_ = []
 
-        for _ in range(self.epochs):
+        self.init_time_ = time()
+        for i in range(self.epochs):
 
             if self.shuffle:
                 X, y = self._shuffle(X, y)
@@ -120,24 +129,13 @@ class LogisticRegression(object):
                     self.w_[1:] += self.eta * (neg_grad - l2_reg)
                     self.w_[0] += self.eta * error
 
-            self.cost_.append(self._logit_cost(y, self.activation(X)))
+            cost = self._logit_cost(y, self.activation(X))
+            self.cost_.append(cost)
+            if self.print_progress:
+                self._print_progress(epoch=i+1, cost=cost)
         return self
 
-    def predict(self, X):
-        """Predict class labels of X.
-
-        Parameters
-        ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
-            Training vectors, where n_samples is the number of samples and
-            n_features is the number of features.
-
-        Returns
-        ----------
-        class : int
-            Predicted class label(s).
-
-        """
+    def _predict(self, X):
         # equivalent to np.where(self.activation(X) >= 0.5, 1, 0)
         return np.where(self.net_input(X) >= 0.0, 1, 0)
 
@@ -161,11 +159,6 @@ class LogisticRegression(object):
         """
         z = self.net_input(X)
         return self._sigmoid(z)
-
-    def _shuffle(self, X, y):
-        """Shuffle arrays in unison."""
-        r = np.random.permutation(len(y))
-        return X[r], y[r]
 
     def _logit_cost(self, y, y_val):
         logit = -y.dot(np.log(y_val)) - ((1 - y).dot(np.log(1 - y_val)))

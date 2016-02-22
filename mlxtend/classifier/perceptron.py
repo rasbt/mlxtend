@@ -7,9 +7,11 @@
 # License: BSD 3 clause
 
 import numpy as np
+from time import time
+from .base import _BaseClassifier
 
 
-class Perceptron(object):
+class Perceptron(_BaseClassifier):
     """Perceptron classifier.
 
     Parameters
@@ -26,6 +28,12 @@ class Perceptron(object):
         If True, weights are initialized to zero instead of small random
         numbers in the interval [-0.1, 0.1];
         ignored if solver='normal equation'
+    print_progress : int (default: 0)
+        Prints progress in fitting to stderr.
+        0: No output
+        1: Epochs elapsed and cost
+        2: 1 plus time elapsed
+        3: 2 plus estimated time until completion
 
     Attributes
     -----------
@@ -36,8 +44,9 @@ class Perceptron(object):
 
     """
     def __init__(self, eta=0.1, epochs=50, shuffle=False,
-                 random_seed=None, zero_init_weight=False):
-
+                 random_seed=None, zero_init_weight=False,
+                 print_progress=0):
+        super(Perceptron, self).__init__(print_progress=print_progress)
         np.random.seed(random_seed)
         self.eta = eta
         self.epochs = epochs
@@ -63,9 +72,7 @@ class Perceptron(object):
         self
 
         """
-        # check array shape
-        if not len(X.shape) == 2:
-            raise ValueError('X must be a 2D array. Try X[:,np.newaxis]')
+        self._check_arrays(X, y)
 
         # check if {0, 1} or {-1, 1} class labels are used
         self.classes_ = np.unique(y)
@@ -76,21 +83,23 @@ class Perceptron(object):
 
         if init_weights:
             self._init_weights(shape=X.shape[1]+1)
-            print(self.w_)
 
         self.cost_ = []
 
         # learn weights
-        for _ in range(self.epochs):
+        self.init_time_ = time()
+        for i in range(self.epochs):
             if self.shuffle:
                 X, y = self._shuffle(X, y)
             errors = 0
             for xi, target in zip(X, y):
-                update = self.eta * (target - self.predict(xi))
+                update = self.eta * (target - self._predict(xi))
                 self.w_[1:] += update * xi
                 self.w_[0] += update
                 errors += int(update != 0.0)
 
+            if self.print_progress:
+                self._print_progress(epoch=i+1, cost=errors)
             self.cost_.append(errors)
         return self
 
@@ -102,29 +111,10 @@ class Perceptron(object):
             self.w_ = 0.2 * np.random.ranf(shape) - 0.5
         self.w_.astype('float64')
 
-    def _shuffle(self, X, y):
-        """Shuffle arrays in unison."""
-        r = np.random.permutation(len(y))
-        return X[r], y[r]
-
     def net_input(self, X):
         """ Net input function """
         return np.dot(X, self.w_[1:]) + self.w_[0]
 
-    def predict(self, X):
-        """ Predict class labels for X.
-
-        Parameters
-        ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
-            Training vectors, where n_samples is the number of samples and
-            n_features is the number of features.
-
-        Returns
-        ----------
-        class : int
-          Predicted class label.
-
-        """
+    def _predict(self, X):
         return np.where(self.net_input(X) >= 0.0,
                         self.classes_[1], self.classes_[0])

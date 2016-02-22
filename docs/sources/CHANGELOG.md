@@ -9,6 +9,7 @@
   - Function now handles class y-class labels correctly if array is of type `float`
   - Correct handling of input arguments `markers` and `colors`
   - Accept an existing `Axes` via the `ax` argument
+- New `print_progress` parameter for all generalized models and multi-layer neural networks for printing time elapsed, ETA, and the current cost of the current epoch
 
 ### Version 0.3.0 (2016-01-31)
 

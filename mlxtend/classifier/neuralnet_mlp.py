@@ -7,12 +7,13 @@
 # License: BSD 3 clause
 
 import numpy as np
+from .base import _BaseClassifier
 from scipy.special import expit
 import sys
-import time
+from time import time
 
 
-class NeuralNetMLP(object):
+class NeuralNetMLP(_BaseClassifier):
     """ Feedforward neural network / Multi-layer perceptron classifier.
 
     Parameters
@@ -58,7 +59,7 @@ class NeuralNetMLP(object):
     print_progress : int (default: 0)
         Prints progress in fitting to stderr.
         0: No output
-        1: Epochs elapsed
+        1: Epochs elapsed and cost
         2: 1 plus time elapsed
         3: 2 plus estimated time until completion
 
@@ -77,6 +78,7 @@ class NeuralNetMLP(object):
                  minibatches=1, random_seed=None,
                  print_progress=0):
 
+        super(NeuralNetMLP, self).__init__(print_progress=print_progress)
         self.n_output = n_output
         self.n_features = n_features
         self.n_hidden = n_hidden
@@ -267,25 +269,7 @@ class NeuralNetMLP(object):
 
         return grad1, grad2
 
-    def predict(self, X):
-        """Predict class labels
-
-        Parameters
-        -----------
-        X : array, shape = [n_samples, n_features]
-            Input layer with original features.
-
-        Returns:
-        ----------
-        y_pred : array, shape = [n_samples]
-            Predicted class labels.
-
-        """
-        if len(X.shape) != 2:
-            raise AttributeError('X must be a [n_samples, n_features] array.\n'
-                                 'Use X[:,None] for 1-feature classification,'
-                                 '\nor X[[i]] for 1-sample classification')
-
+    def _predict(self, X):
         a1, z2, a2, z3, a3 = self._feedforward(X, self.w1, self.w2)
         y_pred = np.argmax(z3, axis=0)
         return y_pred
@@ -309,24 +293,20 @@ class NeuralNetMLP(object):
         self.cost_ = []
         self.gradient_ = np.array([])
         X_data, y_data = X.copy(), y.copy()
-        self._init_time = time.time()
 
         if self.shuffle_init:
-            idx = np.random.permutation(y_data.shape[0])
-            X_data, y_data = X_data[idx], y_data[idx]
+            X_data, y_data = self._shuffle(X_data, y_data)
 
         y_enc = self._encode_labels(y_data, self.n_output)
 
         delta_w1_prev = np.zeros(self.w1.shape)
         delta_w2_prev = np.zeros(self.w2.shape)
 
+        self.init_time_ = time()
         for i in range(self.epochs):
 
             # adaptive learning rate
             self.eta /= (1 + self.decrease_const*i)
-
-            if self.print_progress:
-                self._print_progress(epoch=i+1)
 
             if self.shuffle_epoch:
                 idx = np.random.permutation(y_enc.shape[1])
@@ -361,24 +341,10 @@ class NeuralNetMLP(object):
                 self.w2 -= (delta_w2 + (self.alpha * delta_w2_prev))
                 delta_w1_prev, delta_w2_prev = delta_w1, delta_w2
 
+                if self.print_progress:
+                    self._print_progress(epoch=i+1)
+
         return self
-
-    def _to_hhmmss(self, sec):
-        m, s = divmod(sec, 60)
-        h, m = divmod(m, 60)
-        return "%d:%02d:%02d" % (h, m, s)
-
-    def _print_progress(self, epoch):
-        if self.print_progress > 0:
-            sys.stderr.write('\rEpoch: %d/%d' % (epoch, self.epochs))
-            if self.print_progress > 1:
-                ela_sec = time.time() - self._init_time
-                ela_str = self._to_hhmmss(ela_sec)
-                sys.stderr.write(', Elapsed: %s' % ela_str)
-                if self.print_progress > 2:
-                    eta_sec = (ela_sec / epoch) * self.epochs - ela_sec
-                    sys.stderr.write(', ETA: %s' % self._to_hhmmss(eta_sec))
-            sys.stderr.flush()
 
     def _numerically_approximated_gradient(self, X, y, w1, w2, epsilon):
         """Numerically approx. gradient for gradient checking (debugging only).

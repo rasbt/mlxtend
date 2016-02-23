@@ -65,5 +65,5 @@ def test_l2_regularization_sgd():
     expect_weights = np.array([0.09,  0.232,  0.35])
 
     np.testing.assert_almost_equal(lr.w_, expect_weights, 2)
-    acc = sum(y_pred == y) / len(y)
+    acc = sum(y_pred == y) / float(len(y))
     assert(acc == 1.0)

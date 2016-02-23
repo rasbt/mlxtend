@@ -97,16 +97,23 @@ def object_to_markdownpage(obj_name, obj, s=''):
 
     # document methods
     if inspect.isclass(obj):
-        s += '\n\n### Methods'
-        methods = inspect.getmembers(obj)
-        for m in methods:
-            if not m[0].startswith('_'):
-                sig = str(inspect.signature(m[1]))
-                sig = sig.replace('(self, ', '(').replace('(self)', '()')
-                s += '\n\n<hr>\n\n*%s%s*\n\n' % (m[0], sig)
-                m_doc = docstring_to_markdown(str(inspect.getdoc(m[1])))
-                s += '\n'.join(m_doc)
-
+        methods, properties = '\n\n### Methods', '\n\n### Properties'
+        members = inspect.getmembers(obj)
+        for m in members:
+            if not m[0].startswith('_') and len(m) >= 2:
+                if isinstance(m[1], property):
+                    properties += '\n\n<hr>\n\n*%s*\n\n' % m[0]
+                    m_doc = docstring_to_markdown(str(inspect.getdoc(m[1])))
+                    properties += '\n'.join(m_doc)
+                else:
+                    sig = str(inspect.signature(m[1]))
+                    sig = sig.replace('(self, ', '(').replace('(self)', '()')
+                    sig = sig.replace('(self)', '()')
+                    methods += '\n\n<hr>\n\n*%s%s*\n\n' % (m[0], sig)
+                    m_doc = docstring_to_markdown(str(inspect.getdoc(m[1])))
+                    methods += '\n'.join(m_doc)
+        s += methods
+        s += properties
     return s + '\n\n'
 
 

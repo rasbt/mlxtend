@@ -10,6 +10,7 @@
   - Correct handling of input arguments `markers` and `colors`
   - Accept an existing `Axes` via the `ax` argument
 - New `print_progress` parameter for all generalized models and multi-layer neural networks for printing time elapsed, ETA, and the current cost of the current epoch
+- Minibatch learning for `classifier.LogisticRegression`, `classifier.Adaline`, and `regressor.LinearRegression` plus streamlined API
 
 ### Version 0.3.0 (2016-01-31)
 

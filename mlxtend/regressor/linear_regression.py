@@ -1,6 +1,19 @@
 # Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
 #
+# Base Regressor (Regressor Parent Class)
+# Author: Sebastian Raschka <sebastianraschka.com>
+#
+# License: BSD 3 clause
+
+import numpy as np
+from sys import stderr
+from time import time
+from .base import _BaseRegressor
+
+# Sebastian Raschka 2014-2016
+# mlxtend Machine Learning Library Extensions
+#
 # Class for fitting a linear regression model.
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
@@ -9,31 +22,33 @@
 import numpy as np
 
 
-class LinearRegression(object):
+class LinearRegression(_BaseRegressor):
     """ Ordinary least squares linear regression.
 
     Parameters
     ------------
-    solver : {'gd', 'sgd', 'normal equation'} (default: 'normal equation')
-        Method for solving the cost function. 'gd' for gradient descent,
-        'sgd' for stochastic gradient descent, or 'normal equation' (default)
-        to solve the cost function analytically.
-    eta : float (default: 0.1)
-        Learning rate (between 0.0 and 1.0);
-        ignored if solver='normal equation'.
+    eta : float (default: 0.01)
+        solver rate (between 0.0 and 1.0)
     epochs : int (default: 50)
-        Passes over the training dataset;
-        ignored if solver='normal equation'.
-    shuffle : bool (default: False)
-        Shuffles training data every epoch if True to prevent circles;
-        ignored if solver='normal equation'.
+        Passes over the training dataset.
+    minibatches : int (default: None)
+        The number of minibatches for gradient-based optimization.
+        If None: Normal Equations (closed-form solution)
+        If 1: Gradient Descent learning
+        If len(y): Stochastic Gradient Descent learning
+        If 1 < minibatches < len(y): Minibatch learning
     random_seed : int (default: None)
-        Set random state for shuffling and initializing the weights;
-        ignored if solver='normal equation'.
+        Set random state for shuffling and initializing the weights.
     zero_init_weight : bool (default: False)
         If True, weights are initialized to zero instead of small random
         numbers in the interval [-0.1, 0.1];
         ignored if solver='normal equation'
+    print_progress : int (default: 0)
+        Prints progress in fitting to stderr if not solver='normal equation'
+        0: No output
+        1: Epochs elapsed and cost
+        2: 1 plus time elapsed
+        3: 2 plus estimated time until completion
 
     Attributes
     -----------
@@ -44,18 +59,15 @@ class LinearRegression(object):
         ignored if solver='normal equation'
 
     """
-    def __init__(self, solver='normal equation', eta=0.01,
-                 epochs=50, random_seed=None, shuffle=False,
-                 zero_init_weight=False):
+    def __init__(self, eta=0.01, epochs=50,
+                 minibatches=None, random_seed=None,
+                 zero_init_weight=False, print_progress=0):
 
         np.random.seed(random_seed)
         self.eta = eta
         self.epochs = epochs
-        self.shuffle = shuffle
-        if solver not in ('normal equation', 'gd', 'sgd'):
-            raise ValueError('learning must be "normal equation", '
-                             '"gd", or "sgd"')
-        self.solver = solver
+        self.minibatches = minibatches
+        self.print_progress = print_progress
         self.zero_init_weight = zero_init_weight
 
     def fit(self, X, y, init_weights=True):
@@ -77,44 +89,36 @@ class LinearRegression(object):
         self : object
 
         """
-        # check array shape
-        if not len(X.shape) == 2:
-            raise ValueError('X must be a 2D array. Try X[:,np.newaxis]')
+        self._check_arrays(X, y)
 
-        if self.solver == 'normal equation':
+        # initialize weights
+        if init_weights:
+            self._init_weights(shape=1 + X.shape[1])
+
+        self.cost_ = []
+
+        if self.minibatches is None:
             self.w_ = self._normal_equation(X, y)
 
         # Gradient descent or stochastic gradient descent learning
         else:
-            # initialize weights
-            if not isinstance(init_weights, np.ndarray):
-                self._init_weights(shape=1 + X.shape[1])
-            else:
-                self.w_ = init_weights
-
-            self.cost_ = []
-
-            for _ in range(self.epochs):
-
-                if self.shuffle:
+            n_idx = list(range(y.shape[0]))
+            self.init_time_ = time()
+            for i in range(self.epochs):
+                if self.minibatches > 1:
                     X, y = self._shuffle(X, y)
 
-                if self.solver == 'gd':
-                    y_val = self.net_input(X)
-                    errors = (y - y_val)
-                    self.w_[1:] += self.eta * X.T.dot(errors)
+                minis = np.array_split(n_idx, self.minibatches)
+                for idx in minis:
+                    y_val = self.activation(X[idx])
+                    errors = (y[idx] - y_val)
+                    self.w_[1:] += self.eta * X[idx].T.dot(errors)
                     self.w_[0] += self.eta * errors.sum()
-                    cost = (errors**2).sum() / 2.0
 
-                elif self.solver == 'sgd':
-                    cost = 0.0
-                    for xi, yi in zip(X, y):
-                        yi_val = self.net_input(xi)
-                        error = (yi - yi_val)
-                        self.w_[1:] += self.eta * xi.dot(error)
-                        self.w_[0] += self.eta * error
-                        cost += error**2 / 2.0
+                cost = self._sum_squared_error_cost(y, self.activation(X))
                 self.cost_.append(cost)
+                if self.print_progress:
+                    self._print_progress(epoch=i+1, cost=cost)
 
         return self
 
@@ -142,6 +146,10 @@ class LinearRegression(object):
         """Compute the linear net input."""
         return np.dot(X, self.w_[1:]) + self.w_[0]
 
+    def activation(self, X):
+        """Compute the linear activation from the net input."""
+        return self.net_input(X)
+
     def predict(self, X):
         """Predict class labels of X.
 
@@ -157,3 +165,7 @@ class LinearRegression(object):
 
         """
         return self.net_input(X)
+
+    def _sum_squared_error_cost(self, y, y_val):
+        errors = (y - y_val)
+        return (errors**2).sum() / 2.0

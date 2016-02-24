@@ -20,17 +20,18 @@ class LogisticRegression(_BaseClassifier):
         Learning rate (between 0.0 and 1.0)
     epochs : int (default: 50)
         Passes over the training dataset.
-    learning : str (default: sgd)
-        Learning rule, sgd (stochastic gradient descent)
-        or gd (gradient descent).
     regularization : {None, 'l2'} (default: None)
         Type of regularization. No regularization if
         `regularization=None`.
     l2_lambda : float
         Regularization parameter for L2 regularization.
         No regularization if l2_lambda=0.0.
-    shuffle : bool (default: False)
-        Shuffles training data every epoch if True to prevent circles.
+    minibatches : int (default: 1)
+        Divide the training data into *k* minibatches
+        for accelerated stochastic gradient descent learning.
+        Gradient Descent Learning if `minibatches` = 1
+        Stochastic Gradient Descent learning if `minibatches` = len(y)
+        Minibatch learning if `minibatches` > 1
     random_seed : int (default: None)
         Set random state for shuffling and initializing the weights.
     zero_init_weight : bool (default: False)
@@ -54,7 +55,7 @@ class LogisticRegression(_BaseClassifier):
 
     """
     def __init__(self, eta=0.01, epochs=50, regularization=None,
-                 l2_lambda=0.0, learning='sgd', shuffle=False,
+                 l2_lambda=0.0, minibatches=1,
                  random_seed=None, zero_init_weight=False,
                  print_progress=0):
 
@@ -63,13 +64,9 @@ class LogisticRegression(_BaseClassifier):
         self.eta = eta
         self.epochs = epochs
         self.l2_lambda = l2_lambda
-        self.shuffle = shuffle
+        self.minibatches = minibatches
         self.regularization = regularization
         self.zero_init_weight = zero_init_weight
-
-        if learning not in ('sgd', 'gd'):
-            raise ValueError('learning must be sgd or gd')
-        self.learning = learning
 
         if self.regularization not in (None, 'l2'):
             raise AttributeError('regularization must be None or "l2"')
@@ -106,28 +103,20 @@ class LogisticRegression(_BaseClassifier):
         self.m_ = len(self.w_)
         self.cost_ = []
 
+        n_idx = list(range(y.shape[0]))
         self.init_time_ = time()
         for i in range(self.epochs):
-
-            if self.shuffle:
+            if self.minibatches > 1:
                 X, y = self._shuffle(X, y)
 
-            if self.learning == 'gd':
-                y_val = self.activation(X)
-                errors = (y - y_val)
-                neg_grad = X.T.dot(errors)
+            minis = np.array_split(n_idx, self.minibatches)
+            for idx in minis:
+                y_val = self.activation(X[idx])
+                errors = (y[idx] - y_val)
+                neg_grad = X[idx].T.dot(errors)
                 l2_reg = self.l2_lambda * self.w_[1:]
                 self.w_[1:] += self.eta * (neg_grad - l2_reg)
                 self.w_[0] += self.eta * errors.sum()
-
-            elif self.learning == 'sgd':
-                for xi, yi in zip(X, y):
-                    yi_val = self.activation(xi)
-                    error = (yi - yi_val)
-                    neg_grad = xi.dot(error)
-                    l2_reg = self.l2_lambda * self.w_[1:]
-                    self.w_[1:] += self.eta * (neg_grad - l2_reg)
-                    self.w_[0] += self.eta * error
 
             cost = self._logit_cost(y, self.activation(X))
             self.cost_.append(cost)

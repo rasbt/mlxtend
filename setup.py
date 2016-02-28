@@ -4,32 +4,22 @@
 #
 # License: BSD 3 clause
 
-from setuptools import setup
+from setuptools import setup, find_packages
+import mlxtend
+
+VERSION = mlxtend.__version__
 
 setup(name='mlxtend',
-      version='0.3.1dev',
+      version=VERSION,
       description='Machine Learning Library Extensions',
       author='Sebastian Raschka',
       author_email='mail@sebastianraschka.com',
       url='https://github.com/rasbt/mlxtend',
-      packages=['mlxtend',
-                'mlxtend.feature_selection',
-                'mlxtend.general_plotting',
-                'mlxtend.classifier',
-                'mlxtend.regressor',
-                'mlxtend.regression_utils',
-                'mlxtend.evaluate',
-                'mlxtend.preprocessing',
-                'mlxtend.math',
-                'mlxtend.text',
-                'mlxtend.file_io',
-                'mlxtend.data',
-                'mlxtend.utils',
-                ],
+      packages=find_packages(),
       package_data={'': ['LICENSE'],
                     '': ['README.md'],
                     '': ['requirements.txt']
-                   },
+                    },
       license='BSD 3-Clause',
       platforms='any',
       classifiers=[
@@ -58,7 +48,8 @@ A library of Python tools and extensions for data science.
 Contact
 =============
 
-If you have any questions or comments about mlxtend, please feel free to contact me via
+If you have any questions or comments about mlxtend,
+please feel free to contact me via
 eMail: mail@sebastianraschka.com
 or Twitter: https://twitter.com/rasbt
 
@@ -66,5 +57,4 @@ This project is hosted at https://github.com/rasbt/mlxtend
 
 The documentation can be found at http://rasbt.github.io/mlxtend/
 
-""",
-    )
+""")

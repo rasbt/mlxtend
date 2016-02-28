@@ -60,6 +60,9 @@ def plot_decision_regions(X, y, clf,
     if ax is None:
         ax = plt.gca()
 
+    if not y.dtype == int:
+        y = y.astype(int)
+        
     # check if test data is provided
     plot_testdata = True
     if not isinstance(X_highlight, np.ndarray):
@@ -76,7 +79,7 @@ def plot_decision_regions(X, y, clf,
     marker_gen = cycle(list(markers))
 
     # make color map
-    n_classes = len(np.unique(y.astype(int)))
+    n_classes = len(np.unique(y))
     colors = colors.split(',')
     cmap = ListedColormap(colors[:n_classes])
 
@@ -104,13 +107,13 @@ def plot_decision_regions(X, y, clf,
 
     # plot class samples
 
-    for c in np.unique(y.astype(int)):
+    for c in np.unique(y):
         if dim == '2d':
-            y_data = X[y.astype(int) == c, 1]
+            y_data = X[y == c, 1]
         else:
-            y_data = [0 for i in X[y.astype(int) == c]]
+            y_data = [0 for i in X[y == c]]
 
-        ax.scatter(x=X[y.astype(int) == c, 0],
+        ax.scatter(x=X[y == c, 0],
                    y=y_data,
                    alpha=0.8,
                    c=cmap(c),

@@ -786,7 +786,7 @@ clf4 = SVC()
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import itertools
-from mlxtend.evaluate import plot_decision_regions
+#from mlxtend.evaluate import plot_decision_regions
 import numpy as np
 </code></pre>
 
@@ -858,7 +858,7 @@ plt.show()
 
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_26_0.png" /></p>
 <h1 id="api">API</h1>
-<p><em>plot_decision_regions(X, y, clf, X_highlight=None, res=0.02, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors=['red', 'blue', 'limegreen', 'gray', 'cyan'])</em></p>
+<p><em>plot_decision_regions(X, y, clf, ax=None, X_highlight=None, res=0.02, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors='red,blue,limegreen,gray,cyan')</em></p>
 <p>Plot decision regions of a classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -873,6 +873,11 @@ plt.show()
 <li>
 <p><code>clf</code> : Classifier object.</p>
 <p>Must have a .predict method.</p>
+</li>
+<li>
+<p><code>ax</code> : matplotlib.axes.Axes (default: None)</p>
+<p>An existing matplotlib Axes. Creates
+one if ax=None.</p>
 </li>
 <li>
 <p><code>X_highlight</code> : array-like, shape = [n_samples, n_features] (default: None)</p>
@@ -897,13 +902,13 @@ No legend if legend is 0.</p>
 <p>Scatterplot markers.</p>
 </li>
 <li>
-<p><code>colors</code> : list</p>
-<p>Colors.</p>
+<p><code>colors</code> : str (default 'red,blue,limegreen,gray,cyan')</p>
+<p>Comma separated list of colors.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
 <ul>
-<li><code>fig</code> : matplotlib.pyplot.figure object</li>
+<li><code>ax</code> : matplotlib.axes.Axes object</li>
 </ul></div>
         
     </div>

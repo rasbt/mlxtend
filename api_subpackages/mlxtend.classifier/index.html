@@ -640,7 +640,7 @@
 
 <p>mlxtend version: 0.3.1dev</p>
 <h2 id="adaline">Adaline</h2>
-<p><em>Adaline(eta=0.01, epochs=50, solver='sgd', random_seed=None, shuffle=False, zero_init_weight=False)</em></p>
+<p><em>Adaline(eta=0.01, epochs=50, solver='sgd', random_seed=None, shuffle=False, zero_init_weight=False, print_progress=0)</em></p>
 <p>ADAptive LInear NEuron classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -671,6 +671,14 @@ to solve the cost function analytically.</p>
 <p>If True, weights are initialized to zero instead of small random
 numbers in the interval [-0.1, 0.1];
 ignored if solver='normal equation'</p>
+</li>
+<li>
+<p><code>print_progress</code> : int (default: 0)</p>
+<p>Prints progress in fitting to stderr if not solver='normal equation'
+0: No output
+1: Epochs elapsed and cost
+2: 1 plus time elapsed
+3: 2 plus estimated time until completion</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>
@@ -733,8 +741,8 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>class</code> : int</p>
-<p>Predicted class label.</p>
+<p><code>class_labels</code> : array-like, shape = [n_samples]</p>
+<p>Predicted class labels.</p>
 </li>
 </ul>
 <h2 id="ensemblevoteclassifier">EnsembleVoteClassifier</h2>
@@ -967,7 +975,7 @@ n_features is the number of features.</p>
 </li>
 </ul>
 <h2 id="logisticregression">LogisticRegression</h2>
-<p><em>LogisticRegression(eta=0.01, epochs=50, regularization=None, l2_lambda=0.0, learning='sgd', shuffle=False, random_seed=None, zero_init_weight=False)</em></p>
+<p><em>LogisticRegression(eta=0.01, epochs=50, regularization=None, l2_lambda=0.0, learning='sgd', shuffle=False, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
 <p>Logistic regression classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1007,6 +1015,14 @@ No regularization if l2_lambda=0.0.</p>
 <p>If True, weights are initialized to zero instead of small random
 numbers in the interval [-0.1, 0.1];
 ignored if solver='normal equation'</p>
+</li>
+<li>
+<p><code>print_progress</code> : int (default: 0)</p>
+<p>Prints progress in fitting to stderr.
+0: No output
+1: Epochs elapsed and cost
+2: 1 plus time elapsed
+3: 2 plus estimated time until completion</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>
@@ -1081,8 +1097,8 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>class</code> : int</p>
-<p>Predicted class label(s).</p>
+<p><code>class_labels</code> : array-like, shape = [n_samples]</p>
+<p>Predicted class labels.</p>
 </li>
 </ul>
 <h2 id="neuralnetmlp">NeuralNetMLP</h2>
@@ -1160,7 +1176,7 @@ Normal gradient descent learning if k=1 (default).</p>
 <p><code>print_progress</code> : int (default: 0)</p>
 <p>Prints progress in fitting to stderr.
 0: No output
-1: Epochs elapsed
+1: Epochs elapsed and cost
 2: 1 plus time elapsed
 3: 2 plus estimated time until completion</p>
 </li>
@@ -1193,23 +1209,24 @@ Normal gradient descent learning if k=1 (default).</p>
 <hr>
 
 <p><em>predict(X)</em></p>
-<p>Predict class labels</p>
+<p>Predict class labels of X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>X</code> : array, shape = [n_samples, n_features]</p>
-<p>Input layer with original features.</p>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
 </li>
 </ul>
-<p><strong>Returns:</strong></p>
+<p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>y_pred</code> : array, shape = [n_samples]</p>
+<p><code>class_labels</code> : array-like, shape = [n_samples]</p>
 <p>Predicted class labels.</p>
 </li>
 </ul>
 <h2 id="perceptron">Perceptron</h2>
-<p><em>Perceptron(eta=0.1, epochs=50, shuffle=False, random_seed=None, zero_init_weight=False)</em></p>
+<p><em>Perceptron(eta=0.1, epochs=50, shuffle=False, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
 <p>Perceptron classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1234,6 +1251,14 @@ Normal gradient descent learning if k=1 (default).</p>
 <p>If True, weights are initialized to zero instead of small random
 numbers in the interval [-0.1, 0.1];
 ignored if solver='normal equation'</p>
+</li>
+<li>
+<p><code>print_progress</code> : int (default: 0)</p>
+<p>Prints progress in fitting to stderr.
+0: No output
+1: Epochs elapsed and cost
+2: 1 plus time elapsed
+3: 2 plus estimated time until completion</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>
@@ -1278,7 +1303,7 @@ training with weights from a previous fitting.</p>
 <hr>
 
 <p><em>predict(X)</em></p>
-<p>Predict class labels for X.</p>
+<p>Predict class labels of X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1290,8 +1315,8 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>class</code> : int</p>
-<p>Predicted class label.</p>
+<p><code>class_labels</code> : array-like, shape = [n_samples]</p>
+<p>Predicted class labels.</p>
 </li>
 </ul></div>
         

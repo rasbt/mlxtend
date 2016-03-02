@@ -692,7 +692,7 @@ all other classes are 0.</p>
 </li>
 </ul>
 <h2 id="plot_decision_regions">plot_decision_regions</h2>
-<p><em>plot_decision_regions(X, y, clf, X_highlight=None, res=0.02, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors=['red', 'blue', 'limegreen', 'gray', 'cyan'])</em></p>
+<p><em>plot_decision_regions(X, y, clf, ax=None, X_highlight=None, res=0.02, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors='red,blue,limegreen,gray,cyan')</em></p>
 <p>Plot decision regions of a classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -707,6 +707,11 @@ all other classes are 0.</p>
 <li>
 <p><code>clf</code> : Classifier object.</p>
 <p>Must have a .predict method.</p>
+</li>
+<li>
+<p><code>ax</code> : matplotlib.axes.Axes (default: None)</p>
+<p>An existing matplotlib Axes. Creates
+one if ax=None.</p>
 </li>
 <li>
 <p><code>X_highlight</code> : array-like, shape = [n_samples, n_features] (default: None)</p>
@@ -731,13 +736,13 @@ No legend if legend is 0.</p>
 <p>Scatterplot markers.</p>
 </li>
 <li>
-<p><code>colors</code> : list</p>
-<p>Colors.</p>
+<p><code>colors</code> : str (default 'red,blue,limegreen,gray,cyan')</p>
+<p>Comma separated list of colors.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
 <ul>
-<li><code>fig</code> : matplotlib.pyplot.figure object</li>
+<li><code>ax</code> : matplotlib.axes.Axes object</li>
 </ul>
 <h2 id="plot_learning_curves">plot_learning_curves</h2>
 <p><em>plot_learning_curves(X_train, y_train, X_test, y_test, clf, train_marker='o', test_marker='^', scoring='misclassification error', suppress_plot=False, print_model=True, style='fivethirtyeight', legend_loc='best')</em></p>

@@ -651,7 +651,7 @@
 <p>Related to the <a href="../Perceptron/"><code>Perceptron</code></a> and <a href="../Adaline/">'Adaline'</a>, a Logistic Regression model is a linear model for binary classification. However, instead of minimizing a linear cost function such as the sum of squared errors (SSE) in Adaline, we minimize a sigmoid function, i.e., the logistic function:</p>
 <p><mathjax>$$\phi(z) = \frac{1}{1 + e^{-z}},$$</mathjax></p>
 <p>where <mathjax>$z$</mathjax> is defined as the net input</p>
-<p><mathjax>$$z = w_0x_0 + w_1x_1 + ... + w_mx_m = \sum_{j=1}^{m} w_j x_j= \mathbf{w}^T\mathbf{x}.$$</mathjax> </p>
+<p><mathjax>$$z = w_0x_0 + w_1x_1 + ... + w_mx_m = \sum_{j=0}^{m} w_j x_j= \mathbf{w}^T\mathbf{x}.$$</mathjax> </p>
 <p>The net input is in turn based on the logit function</p>
 <p><mathjax>$$logit(p(y=1 \mid \mathbf{x})) = z.$$</mathjax></p>
 <p>Here, <mathjax>$p(y=1 \mid \mathbf{x})$</mathjax> is the conditional probability that a particular sample belongs to class 1 given its features <mathjax>$\mathbf{x}$</mathjax>. The logit function takes inputs in the range [0, 1] and transform them to values over the entire real number range. In contrast, the logistic function takes input values over the entire real number range and transforms them to values in the range [0, 1]. In other words, the logistic function is the inverse of the logit function, and it lets us predict the conditional probability that a certain sample belongs to class 1 (or class 0).</p>

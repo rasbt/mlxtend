@@ -662,7 +662,13 @@
 <hr />
 <h3 id="version-031dev">Version 0.3.1dev</h3>
 <ul>
-<li>Function for one-hot encoding of class labels (<a href="../user_guide/preprocessing/one-hot_encoding/"><code>preprocessing.one_hot</code></a>)</li>
+<li>New function for one-hot encoding of class labels (<a href="../user_guide/preprocessing/one-hot_encoding/"><code>preprocessing.one_hot</code></a>)</li>
+<li><a href="../user_guide/evaluate/plot_decision_regions/"><code>evaluate.plot_decision_regions</code></a> improvements:</li>
+<li>Function now handles class y-class labels correctly if array is of type <code>float</code></li>
+<li>Correct handling of input arguments <code>markers</code> and <code>colors</code></li>
+<li>Accept an existing <code>Axes</code> via the <code>ax</code> argument</li>
+<li>New <code>print_progress</code> parameter for all generalized models and multi-layer neural networks for printing time elapsed, ETA, and the current cost of the current epoch</li>
+<li>Minibatch learning for <code>classifier.LogisticRegression</code>, <code>classifier.Adaline</code>, and <code>regressor.LinearRegression</code> plus streamlined API</li>
 </ul>
 <h3 id="version-030-2016-01-31">Version 0.3.0 (2016-01-31)</h3>
 <ul>

@@ -635,6 +635,8 @@
         
             <li><a href="#example-5-sequential-feature-selection-for-regression">Example 5 - Sequential Feature Selection for Regression</a></li>
         
+            <li><a href="#example-6-using-the-selected-feature-subset-for-making-new-predictions">Example 6 -- Using the Selected Feature Subset For Making New Predictions</a></li>
+        
     
         <li class="main "><a href="#api">API</a></li>
         
@@ -1128,6 +1130,61 @@ plt.show()
 <pre><code>Features: 13/13
 </code></pre>
 <p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_43_1.png" /></p>
+<h2 id="example-6-using-the-selected-feature-subset-for-making-new-predictions">Example 6 -- Using the Selected Feature Subset For Making New Predictions</h2>
+<pre><code class="python"># Initialize the dataset
+
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.datasets import load_iris
+from sklearn.cross_validation import train_test_split
+
+iris = load_iris()
+X, y = iris.data, iris.target
+X_train, X_test, y_train, y_test = train_test_split(
+         X, y, test_size=0.33, random_state=1)
+
+knn = KNeighborsClassifier(n_neighbors=4)
+</code></pre>
+
+<pre><code class="python"># Select the &quot;best&quot; three features via
+# 5-fold cross-validation on the training set.
+
+from mlxtend.feature_selection import SequentialFeatureSelector as SFS
+
+sfs1 = SFS(knn, 
+           k_features=3, 
+           forward=True, 
+           floating=False, 
+           scoring='accuracy',
+           cv=5)
+sfs1 = sfs1.fit(X_train, y_train)
+</code></pre>
+
+<pre><code>Features: 3/3
+</code></pre>
+<pre><code class="python">print('Selected features:', sfs1.k_feature_idx_)
+</code></pre>
+
+<pre><code>Selected features: (1, 2, 3)
+</code></pre>
+<pre><code class="python"># Generate the new subsets based on the selected features
+# Note that the transform call is equivalent to
+# X_train[:, sfs1.k_feature_idx_]
+
+X_train_sfs = sfs1.transform(X_train)
+X_test_sfs = sfs1.transform(X_test)
+
+# Fit the estimator using the new feature subset
+# and make a prediction on the test data
+knn.fit(X_train_sfs, y_train)
+y_pred = knn.predict(X_test_sfs)
+
+# Compute the accuracy of the prediction
+acc = float((y_test == y_pred).sum()) / y_pred.shape[0]
+print('Test set accuracy: %.2f %%' % (acc*100))
+</code></pre>
+
+<pre><code>Test set accuracy: 96.00 %
+</code></pre>
 <h1 id="api">API</h1>
 <p><em>SequentialFeatureSelector(estimator, k_features, forward=True, floating=False, print_progress=True, scoring='accuracy', cv=5, skip_if_stuck=True, n_jobs=1, pre_dispatch='2</em>n_jobs')*</p>
 <p>Sequential Feature Selection for Classification and Regression.</p>

@@ -80,7 +80,6 @@ if __name__ == "__main__":
                         help='Path to the IPython file')
 
     parser.add_argument('-a', '--all',
-                        default='sources/user_guide',
                         help='Path to parse all ipynb recursively')
 
     parser.add_argument('-v', '--version',

@@ -28,6 +28,9 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         of those original regressors that will
         be stored in the class attribute
         `self.regr_`.
+    meta_regressor : object
+        The meta-regressor to be fitted on the ensemble of
+        regressors
     verbose : int, optional (default=0)
         Controls the verbosity of the building process.
         - `verbose=0` (default): Prints nothing
@@ -140,7 +143,7 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
 
         Returns
         ----------
-        maj : array-like, shape = [n_samples]
+        y_target : array-like, shape = [n_samples]
             Predicted target values.
         """
         meta_features = self._predict_meta_features(X)

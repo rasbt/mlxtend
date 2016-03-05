@@ -83,6 +83,7 @@ pages:
     - user_guide/general_concepts/regularization-linear.md
   - Upcoming Features / 0.3.1dev:
     - user_guide/regressor/StackingRegressor.md
+    - user_guide/classifier/StackingClassifier.md
     - user_guide/preprocessing/one-hot_encoding.md
 - API:
   - api_subpackages/mlxtend.classifier.md

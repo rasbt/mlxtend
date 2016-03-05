@@ -16,10 +16,9 @@ setup(name='mlxtend',
       author_email='mail@sebastianraschka.com',
       url='https://github.com/rasbt/mlxtend',
       packages=find_packages(),
-      package_data={'': ['LICENSE'],
-                    '': ['README.md'],
-                    '': ['requirements.txt']
+      package_data={'': ['LICENSE', 'README.md', 'requirements.txt']
                     },
+      include_package_data=True,
       license='BSD 3-Clause',
       platforms='any',
       classifiers=[

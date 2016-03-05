@@ -9,6 +9,7 @@ from .adaline import Adaline
 from .logistic_regression import LogisticRegression
 from .neuralnet_mlp import NeuralNetMLP
 from .ensemble_vote import EnsembleVoteClassifier
+from .stacking_classification import StackingClassifier
 
 __all__ = ["Perceptron", "Adaline", "LogisticRegression", "NeuralNetMLP",
-           "EnsembleVoteClassifier"]
+           "EnsembleVoteClassifier", "StackingClassifier"]

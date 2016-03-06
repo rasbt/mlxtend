@@ -665,7 +665,7 @@
 <p>from mlxtend.feature_selection import SequentialFeatureSelector</p>
 </blockquote>
 <h1 id="overview">Overview</h1>
-<p>Sequential feature selection algorithms are a family of greedy search algorithms that are used to reduce an initial <em>d</em>-dimensional feature space to a <em>k</em>-dimensional feature subspace where <em>k &lt; d</em>. The motivation behind feature selection algorithms is to automatically select a subset of features that are most relevant to the problem to improve computational efficiency or reduce the generalization error of the model by removing irrelevant features or noise, which can be useful for algorithms that don't support regularization. </p>
+<p>Sequential feature selection algorithms are a family of greedy search algorithms that are used to reduce an initial <em>d</em>-dimensional feature space to a <em>k</em>-dimensional feature subspace where <em>k &lt; d</em>. The motivation behind feature selection algorithms is to automatically select a subset of features that is most relevant to the problem. The goal of feature selection is two-fold: We want to improve the computational efficiency and reduce the generalization error of the model by removing irrelevant features or noise. A wrapper approach such as sequential feature selection is especially useful if embedded feeature selection -- for example, a regularization penalty like LASSO -- is not applicable.</p>
 <p>In a nutshell, SFAs remove or add one feature at the time based on the classifier performance until a feature subset of the desired size <em>k</em> is reached. There are 4 different flavors of SFAs available via the <code>SequentialFeatureSelector</code>:</p>
 <ol>
 <li>Sequential Forward Selection (SFS)</li>
@@ -675,7 +675,7 @@
 </ol>
 <p>The <strong><em>floating</em></strong> variants, SFFS and SFBS, can be considered as extensions to the simpler SFS and SBS algorithms. The floating algorithms have an additional exclusion or inclusion step to remove features once they were included (or excluded), so that a larger number of feature subset combinations can be sampled. It is important to emphasize that this step is conditional and only occurs if the resulting feature subset is assessed as "better" by the criterion function after removal (or addition) of a particular feature. Furthermore, I added an optional check to skip the conditional exclusion steps if the algorithm gets stuck in cycles.  </p>
 <hr />
-<p>How is this different from <em>Recursive Feature Elimination</em> (RFE)  -- e.g., as implemented in <code>sklearn.feature_selection.RFE</code>? RFE is computationally less complex using the feature's weight coefficients (e.g., linear models) or feature importances (tree-based algorithms) to eliminate features recursively, whereas SFSs eliminate (or add) features based on a user-defined classifier/regression performance metric.</p>
+<p>How is this different from <em>Recursive Feature Elimination</em> (RFE)  -- e.g., as implemented in <code>sklearn.feature_selection.RFE</code>? RFE is computationally less complex using the feature weight coefficients (e.g., linear models) or feature importances (tree-based algorithms) to eliminate features recursively, whereas SFSs eliminate (or add) features based on a user-defined classifier/regression performance metric.</p>
 <hr />
 <p>The SFAs  are outlined in pseudo code below:</p>
 <h2 id="sequential-forward-selection-sfs">Sequential Forward Selection (SFS)</h2>

@@ -1218,8 +1218,6 @@ from sklearn.pipeline import Pipeline
 from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 import mlxtend
 
-print(mlxtend.__version__)
-
 knn = KNeighborsClassifier(n_neighbors=2)
 
 sfs1 = SFS(estimator=knn, 

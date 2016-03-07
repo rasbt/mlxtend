@@ -1212,6 +1212,7 @@ X_train, X_test, y_train, y_test = train_test_split(
          X, y, test_size=0.33, random_state=1)
 </code></pre>
 
+<p>Use scikit-learn's '<code>GridSearch</code> to tune the hyperparameters inside and outside the <code>SequentialFeatureSelector</code>:</p>
 <pre><code class="python">from sklearn.grid_search import GridSearchCV
 from sklearn.pipeline import Pipeline
 from mlxtend.feature_selection import SequentialFeatureSelector as SFS
@@ -1247,7 +1248,7 @@ gs = GridSearchCV(estimator=pipe,
 
 # run gridearch
 gs.fit(X_train, y_train)
-gs.best_params_
+
 </code></pre>
 
 <pre><code>[Parallel(n_jobs=1)]: Done  49 tasks       | elapsed:    2.7s
@@ -1262,6 +1263,12 @@ Fitting 5 folds for each of 16 candidates, totalling 80 fits
 
 
 {'sfs__estimator__n_neighbors': 2, 'sfs__k_features': 3}
+</code></pre>
+<p>... and the "best" parameters determined by GridSearch are ...</p>
+<pre><code class="python">print(&quot;Best parameters via GridSearch&quot;, gs.best_params_)
+</code></pre>
+
+<pre><code>Best parameters via GridSearch {'sfs__estimator__n_neighbors': 2, 'sfs__k_features': 3}
 </code></pre>
 <h1 id="api">API</h1>
 <p><em>SequentialFeatureSelector(estimator, k_features, forward=True, floating=False, print_progress=True, scoring='accuracy', cv=5, skip_if_stuck=True, n_jobs=1, pre_dispatch='2</em>n_jobs')*</p>

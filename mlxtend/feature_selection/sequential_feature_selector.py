@@ -19,6 +19,8 @@ from sklearn.base import clone
 from sklearn.base import BaseEstimator
 from sklearn.base import MetaEstimatorMixin
 from sklearn.cross_validation import cross_val_score
+from sklearn.pipeline import _name_estimators
+from sklearn.externals import six
 
 
 class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
@@ -91,7 +93,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                  print_progress=True, scoring='accuracy',
                  cv=5, skip_if_stuck=True, n_jobs=1,
                  pre_dispatch='2*n_jobs'):
-        self.estimator = clone(estimator)
+        self.estimator = estimator
         self.k_features = k_features
         self.forward = forward
         self.floating = floating
@@ -102,8 +104,11 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.cv = cv
         self.print_progress = print_progress
         self.n_jobs = n_jobs
+        self.named_est = {key: value for key, value in
+                          _name_estimators([self.estimator])}
 
     def fit(self, X, y):
+        self.est_ = clone(self.estimator)
         if X.shape[1] < self.k_features:
             raise AttributeError('Features in X < k_features')
         if self.skip_if_stuck:
@@ -179,15 +184,15 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
     def _calc_score(self, X, y, indices):
         if self.cv:
-            scores = cross_val_score(self.estimator,
+            scores = cross_val_score(self.est_,
                                      X[:, indices], y,
                                      cv=self.cv,
                                      scoring=self.scorer,
                                      n_jobs=self.n_jobs,
                                      pre_dispatch=self.pre_dispatch)
         else:
-            self.estimator.fit(X[:, indices], y)
-            scores = np.array([self.scorer(self.estimator, X[:, indices], y)])
+            self.est_.fit(X[:, indices], y)
+            scores = np.array([self.scorer(self.est_, X[:, indices], y)])
         return scores
 
     def _inclusion(self, orig_set, subset, X, y):

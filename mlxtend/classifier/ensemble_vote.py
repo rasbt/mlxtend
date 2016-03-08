@@ -12,9 +12,9 @@ from sklearn.base import BaseEstimator
 from sklearn.base import ClassifierMixin
 from sklearn.base import TransformerMixin
 from sklearn.preprocessing import LabelEncoder
-from sklearn.externals import six
 from sklearn.base import clone
-from sklearn.pipeline import _name_estimators
+from ..externals.name_estimators import _name_estimators
+from ..externals import six
 import numpy as np
 
 

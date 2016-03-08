@@ -19,8 +19,8 @@ from sklearn.base import clone
 from sklearn.base import BaseEstimator
 from sklearn.base import MetaEstimatorMixin
 from sklearn.cross_validation import cross_val_score
-from sklearn.pipeline import _name_estimators
-from sklearn.externals import six
+from ..externals.name_estimators import _name_estimators
+from ..externals import six
 
 
 class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):

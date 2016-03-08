@@ -30,7 +30,8 @@ class Adaline(_BaseClassifier):
         Set random state for shuffling and initializing the weights.
     zero_init_weight : bool (default: False)
         If True, weights are initialized to zero instead of small random
-        numbers in the interval [-0.1, 0.1];
+        numbers following a standard normal distribution with mean=0 and
+        stddev=1;
         ignored if solver='normal equation'
     print_progress : int (default: 0)
         Prints progress in fitting to stderr if not solver='normal equation'
@@ -53,7 +54,7 @@ class Adaline(_BaseClassifier):
                  zero_init_weight=False, print_progress=0):
 
         super(Adaline, self).__init__(print_progress=print_progress)
-        np.random.seed(random_seed)
+        self.random_seed = random_seed
         self.eta = eta
         self.minibatches = minibatches
         self.epochs = epochs
@@ -92,9 +93,10 @@ class Adaline(_BaseClassifier):
         else:
             self.thres_ = 0.5
 
-        # initialize weights
         if init_weights:
-            self._init_weights(shape=1 + X.shape[1])
+            self.w_ = self._init_weights(shape=1 + X.shape[1],
+                                         zero_init_weight=self.zero_init_weight,
+                                         seed=self.random_seed)
 
         self.cost_ = []
 
@@ -134,14 +136,6 @@ class Adaline(_BaseClassifier):
         z = np.linalg.inv(np.dot(Xb.T, Xb))
         w = np.dot(z, np.dot(Xb.T, y))
         return w
-
-    def _init_weights(self, shape):
-        """Initialize weight coefficients."""
-        if self.zero_init_weight:
-            self.w_ = np.zeros(shape)
-        else:
-            self.w_ = 0.2 * np.random.ranf(shape) - 0.5
-        self.w_.astype('float64')
 
     def net_input(self, X):
         """Compute the linear net input."""

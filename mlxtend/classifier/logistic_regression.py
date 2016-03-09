@@ -36,8 +36,8 @@ class LogisticRegression(_BaseClassifier):
         Set random state for shuffling and initializing the weights.
     zero_init_weight : bool (default: False)
         If True, weights are initialized to zero instead of small random
-        numbers in the interval [-0.1, 0.1];
-        ignored if solver='normal equation'
+        numbers following a standard normal distribution with mean=0 and
+        stddev=1.
     print_progress : int (default: 0)
         Prints progress in fitting to stderr.
         0: No output
@@ -60,7 +60,7 @@ class LogisticRegression(_BaseClassifier):
                  print_progress=0):
 
         super(LogisticRegression, self).__init__(print_progress=print_progress)
-        np.random.seed(random_seed)
+        self.random_seed = random_seed
         self.eta = eta
         self.epochs = epochs
         self.l2_lambda = l2_lambda
@@ -94,11 +94,10 @@ class LogisticRegression(_BaseClassifier):
         if (np.unique(y) != np.array([0, 1])).all():
             raise ValueError('Supports only binary class labels 0 and 1')
 
-        # initialize weights
-        if not isinstance(init_weights, np.ndarray):
-            self._init_weights(shape=1 + X.shape[1])
-        else:
-            self.w_ = init_weights
+        if init_weights:
+            self.w_ = self._init_weights(shape=1 + X.shape[1],
+                                         zero_init_weight=self.zero_init_weight,
+                                         seed=self.random_seed)
 
         self.m_ = len(self.w_)
         self.cost_ = []
@@ -159,11 +158,3 @@ class LogisticRegression(_BaseClassifier):
     def _sigmoid(self, z):
         """Compute the output of the logistic sigmoid function."""
         return 1.0 / (1.0 + np.exp(-z))
-
-    def _init_weights(self, shape):
-        """Initialize weight coefficients of the model."""
-        if self.zero_init_weight:
-            self.w_ = np.zeros(shape)
-        else:
-            self.w_ = 0.2 * np.random.ranf(shape) - 0.5
-        self.w_.astype('float64')

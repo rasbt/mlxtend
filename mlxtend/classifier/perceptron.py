@@ -26,8 +26,8 @@ class Perceptron(_BaseClassifier):
         Random state for initializing random weights.
     zero_init_weight : bool (default: False)
         If True, weights are initialized to zero instead of small random
-        numbers in the interval [-0.1, 0.1];
-        ignored if solver='normal equation'
+        numbers following a standard normal distribution with mean=0 and
+        stddev=1.
     print_progress : int (default: 0)
         Prints progress in fitting to stderr.
         0: No output
@@ -47,7 +47,7 @@ class Perceptron(_BaseClassifier):
                  random_seed=None, zero_init_weight=False,
                  print_progress=0):
         super(Perceptron, self).__init__(print_progress=print_progress)
-        np.random.seed(random_seed)
+        self.random_seed = random_seed
         self.eta = eta
         self.epochs = epochs
         self.shuffle = shuffle
@@ -82,7 +82,9 @@ class Perceptron(_BaseClassifier):
                              ' class labels {0, 1} or {-1, 1}.')
 
         if init_weights:
-            self._init_weights(shape=X.shape[1]+1)
+            self.w_ = self._init_weights(shape=1 + X.shape[1],
+                                         zero_init_weight=self.zero_init_weight,
+                                         seed=self.random_seed)
 
         self.cost_ = []
 
@@ -102,14 +104,6 @@ class Perceptron(_BaseClassifier):
                 self._print_progress(epoch=i+1, cost=errors)
             self.cost_.append(errors)
         return self
-
-    def _init_weights(self, shape):
-        """Initialize weights"""
-        if self.zero_init_weight:
-            self.w_ = np.zeros(shape)
-        else:
-            self.w_ = 0.2 * np.random.ranf(shape) - 0.5
-        self.w_.astype('float64')
 
     def net_input(self, X):
         """ Net input function """

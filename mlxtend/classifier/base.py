@@ -103,3 +103,13 @@ class _BaseClassifier(object):
 
         if not len(y) == X.shape[0]:
             raise ValueError('X and y must contain the same number of samples')
+
+    def _init_weights(self, shape, zero_init_weight=False, dtype='float64', seed=None):
+        """Initialize weight coefficients."""
+        if seed:
+            np.random.seed(seed)
+        if zero_init_weight:
+            w = np.zeros(shape)
+        else:
+            w = np.random.normal(loc=0.0, scale=1.0, size=shape)
+        return w.astype(dtype)

@@ -7,10 +7,27 @@
 # License: BSD 3 clause
 
 import numpy as np
-from .confusion_matrix import confusion_matrix
+from mlxtend.evaluate.confusion_matrix import confusion_matrix
 
 
-def scoring(y_target, y_predicted, metric='error', positive_label=1):
+def _accuracy(true, pred):
+    return (true == pred).sum() / float(true.shape[0])
+
+
+def _error(true, pred):
+    return 1.0 - _accuracy(true, pred)
+
+
+def _macro(true, pred, func, unique_labels):
+    scores = []
+    for l in unique_labels:
+        scores.append(func(np.where(true != l, 1, 0),
+                           np.where(pred != l, 1, 0)))
+    return float(sum(scores)) / len(scores)
+
+
+def scoring(y_target, y_predicted, metric='error',
+            positive_label=1, unique_labels='auto'):
     """Compute a scoring metric for supervised learning.
 
     Parameters
@@ -20,10 +37,10 @@ def scoring(y_target, y_predicted, metric='error', positive_label=1):
     y_predicted : array-like, shape=[n_values]
         Predicted class labels or target values.
     metric : str (default: 'error')
-        Performance metric.
-        [TP: True positives, TN = True negatives,\n
-         TN: True negatives, FN = False negatives]\n
+        Performance metric:
         'accuracy': (TP + TN)/(FP + FN + TP + TN) = 1-ERR\n
+        'per-class accuracy': Average per-class accuracy\n
+        'per-class error':  Average per-class error\n
         'error': (TP + TN)/(FP+ FN + TP + TN) = 1-ACC\n
         'false_positive_rate': FP/N = FP/(FP + TN)\n
         'true_positive_rate': TP/P = TP/(FN + TP)\n
@@ -35,9 +52,15 @@ def scoring(y_target, y_predicted, metric='error', positive_label=1):
         'f1': 2 * (PRE * REC)/(PRE + REC)\n
         'matthews_corr_coef':  (TP*TN - FP*FN)
            / (sqrt{(TP + FP)( TP + FN )( TN + FP )( TN + FN )})\n
+        Where:
+        [TP: True positives, TN = True negatives,\n
+         TN: True negatives, FN = False negatives]\n
     positive_label : int (default: 1)
         Label of the positive class for binary classification
         metrics.
+    unique_labels : str or array-like (default: 'auto')
+        If 'auto', deduces the unique class labels from
+        y_target
 
     Returns
     ------------
@@ -46,6 +69,8 @@ def scoring(y_target, y_predicted, metric='error', positive_label=1):
     """
     implemented = {'error',
                    'accuracy',
+                   'per-class accuracy',
+                   'per-class error',
                    'false_positive_rate',
                    'true_positive_rate',
                    'true_negative_rate',
@@ -55,12 +80,16 @@ def scoring(y_target, y_predicted, metric='error', positive_label=1):
                    'specificity',
                    'matthews_corr_coef',
                    'f1'}
+
     if metric not in implemented:
         raise AttributeError('`metric` not in %s' % implemented)
 
     if len(y_target) != len(y_predicted):
         raise AttributeError('`y_target` and `y_predicted`'
                              ' don\'t have the same number of elements.')
+
+    if unique_labels == 'auto':
+        unique_labels = np.unique(y_target)
 
     if not isinstance(y_target, np.ndarray):
         targ_tmp = np.asarray(y_target)
@@ -72,14 +101,24 @@ def scoring(y_target, y_predicted, metric='error', positive_label=1):
         pred_tmp = y_predicted
 
     # multi-class metrics
-    if metric in {'accuracy', 'error'}:
-        res = float((targ_tmp == pred_tmp).sum()) / pred_tmp.shape[0]
-        if metric == 'error':
-            res = 1.0 - res
+    if metric == 'accuracy':
+        res = _accuracy(targ_tmp, pred_tmp)
+    elif metric == 'error':
+        res = _error(targ_tmp, pred_tmp)
+    elif metric == 'per-class accuracy':
+        res = _macro(targ_tmp,
+                     pred_tmp,
+                     func=_accuracy,
+                     unique_labels=unique_labels)
+    elif metric == 'per-class error':
+        res = _macro(targ_tmp,
+                     pred_tmp,
+                     func=_error,
+                     unique_labels=unique_labels)
 
     # binary classification metrics
     else:
-        if len(np.unique(targ_tmp)) > 2 or len(np.unique(pred_tmp)) > 2:
+        if len(unique_labels) > 2 or len(np.unique(pred_tmp)) > 2:
             raise AttributeError('Metrics precision, '
                                  'recall, and f1 only support binary'
                                  ' class labels')

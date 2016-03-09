@@ -56,6 +56,10 @@ class NeuralNetMLP(_BaseClassifier):
         Normal gradient descent learning if k=1 (default).
     random_seed : int (default: None)
         Set random seed for shuffling and initializing the weights.
+    zero_init_weight : bool (default: False)
+        If True, weights are initialized to zero instead of small random
+        numbers following a standard normal distribution with mean=0 and
+        stddev=1.
     print_progress : int (default: 0)
         Prints progress in fitting to stderr.
         0: No output
@@ -72,10 +76,11 @@ class NeuralNetMLP(_BaseClassifier):
     def __init__(self, n_output, n_features, n_hidden=30,
                  l1=0.0, l2=0.0, epochs=500, eta=0.001,
                  alpha=0.0, decrease_const=0.0,
-                 random_weights=[-1.0, 1.0],
                  shuffle_init=True,
                  shuffle_epoch=True,
-                 minibatches=1, random_seed=None,
+                 minibatches=1,
+                 zero_init_weight=False,
+                 random_seed=None,
                  print_progress=0):
 
         super(NeuralNetMLP, self).__init__(print_progress=print_progress)
@@ -83,7 +88,7 @@ class NeuralNetMLP(_BaseClassifier):
         self.n_features = n_features
         self.n_hidden = n_hidden
         self.random_seed = random_seed
-        self.random_weights = random_weights
+        self.zero_init_weight = zero_init_weight
         self.w1, self.w2 = self._initialize_weights()
         self.l1 = l1
         self.l2 = l2
@@ -117,19 +122,14 @@ class NeuralNetMLP(_BaseClassifier):
 
     def _initialize_weights(self):
         """Initialize weights with small random numbers."""
-        if self.random_weights:
-            np.random.seed(self.random_seed)
-            w1 = np.random.uniform(self.random_weights[0],
-                                   self.random_weights[1],
-                                   size=self.n_hidden*(self.n_features + 1))
-            w1 = w1.reshape(self.n_hidden, self.n_features + 1)
-            w2 = np.random.uniform(self.random_weights[0],
-                                   self.random_weights[1],
-                                   size=self.n_output*(self.n_hidden + 1))
-            w2 = w2.reshape(self.n_output, self.n_hidden + 1)
-        else:
-            w1 = np.zeros((self.n_hidden, self.n_features + 1))
-            w2 = np.zeros((self.n_output, self.n_hidden + 1))
+        w1 = self._init_weights(shape=self.n_hidden*(self.n_features + 1),
+                                zero_init_weight=self.zero_init_weight,
+                                seed=self.random_seed)
+        w1 = w1.reshape(self.n_hidden, self.n_features + 1)
+        w2 = self._init_weights(shape=self.n_output*(self.n_hidden + 1),
+                                zero_init_weight=self.zero_init_weight,
+                                seed=self.random_seed)
+        w2 = w2.reshape(self.n_output, self.n_hidden + 1)
         return w1, w2
 
     def _sigmoid(self, z):

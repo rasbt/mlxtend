@@ -5,7 +5,7 @@
 # License: BSD 3 clause
 
 from mlxtend.evaluate import scoring
-
+import numpy as np
 
 def test_metric_argument():
     "Test exception is raised when user provides invalid metric argument"
@@ -112,3 +112,21 @@ def test_matthews_corr_coef():
                   y_predicted=y_pred,
                   metric='matthews_corr_coef')
     assert round(res, 3) == 0.258, res
+
+
+def test_avg_perclass_accuracy():
+    y_targ = np.array([0, 0, 0, 1, 1, 1, 1, 1, 2, 2])
+    y_pred = np.array([0, 1, 1, 0, 1, 1, 2, 2, 2, 2])
+    res = scoring(y_target=y_targ,
+                  y_predicted=y_pred,
+                  metric='per-class accuracy')
+    assert round(res, 3) == 0.667, res
+
+
+def test_avg_perclass_error():
+    y_targ = np.array([0, 0, 0, 1, 1, 1, 1, 1, 2, 2])
+    y_pred = np.array([0, 1, 1, 0, 1, 1, 2, 2, 2, 2])
+    res = scoring(y_target=y_targ,
+                  y_predicted=y_pred,
+                  metric='per-class error')
+    assert round(res, 3) == 0.333, res

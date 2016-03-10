@@ -110,28 +110,33 @@ class LogisticRegression(_BaseClassifier):
 
             minis = np.array_split(n_idx, self.minibatches)
             for idx in minis:
-                y_val = self.activation(X[idx])
+                y_val = self._activation(X[idx])
                 errors = (y[idx] - y_val)
                 neg_grad = X[idx].T.dot(errors)
                 l2_reg = self.l2_lambda * self.w_[1:]
                 self.w_[1:] += self.eta * (neg_grad - l2_reg)
                 self.w_[0] += self.eta * errors.sum()
 
-            cost = self._logit_cost(y, self.activation(X))
+            cost = self._logit_cost(y, self._activation(X))
             self.cost_.append(cost)
             if self.print_progress:
                 self._print_progress(epoch=i+1, cost=cost)
         return self
 
     def _predict(self, X):
-        # equivalent to np.where(self.activation(X) >= 0.5, 1, 0)
-        return np.where(self.net_input(X) >= 0.0, 1, 0)
+        # equivalent to np.where(self._activation(X) >= 0.5, 1, 0)
+        return np.where(self._net_input(X) >= 0.0, 1, 0)
 
-    def net_input(self, X):
+    def _net_input(self, X):
         """Compute the linear net input."""
         return X.dot(self.w_[1:]) + self.w_[0]
 
-    def activation(self, X):
+    def _activation(self, X):
+        """ Compute sigmoid activation."""
+        z = self._net_input(X)
+        return self._sigmoid(z)
+
+    def predict_proba(self, X):
         """Predict class probabilities of X from the net input.
 
         Parameters
@@ -145,8 +150,7 @@ class LogisticRegression(_BaseClassifier):
         Class 1 probability : float
 
         """
-        z = self.net_input(X)
-        return self._sigmoid(z)
+        return self._activation(X)
 
     def _logit_cost(self, y, y_val):
         logit = -y.dot(np.log(y_val)) - ((1 - y).dot(np.log(1 - y_val)))

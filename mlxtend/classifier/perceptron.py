@@ -105,10 +105,10 @@ class Perceptron(_BaseClassifier):
             self.cost_.append(errors)
         return self
 
-    def net_input(self, X):
+    def _net_input(self, X):
         """ Net input function """
         return np.dot(X, self.w_[1:]) + self.w_[0]
 
     def _predict(self, X):
-        return np.where(self.net_input(X) >= 0.0,
+        return np.where(self._net_input(X) >= 0.0,
                         self.classes_[1], self.classes_[0])

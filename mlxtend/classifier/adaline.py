@@ -113,12 +113,12 @@ class Adaline(_BaseClassifier):
 
                 minis = np.array_split(n_idx, self.minibatches)
                 for idx in minis:
-                    y_val = self.activation(X[idx])
+                    y_val = self._activation(X[idx])
                     errors = (y[idx] - y_val)
                     self.w_[1:] += self.eta * X[idx].T.dot(errors)
                     self.w_[0] += self.eta * errors.sum()
 
-                cost = self._sum_squared_error_cost(y, self.activation(X))
+                cost = self._sum_squared_error_cost(y, self._activation(X))
                 self.cost_.append(cost)
                 if self.print_progress:
                     self._print_progress(epoch=i+1, cost=cost)
@@ -137,14 +137,14 @@ class Adaline(_BaseClassifier):
         w = np.dot(z, np.dot(Xb.T, y))
         return w
 
-    def net_input(self, X):
+    def _net_input(self, X):
         """Compute the linear net input."""
         return np.dot(X, self.w_[1:]) + self.w_[0]
 
-    def activation(self, X):
+    def _activation(self, X):
         """Compute the linear activation from the net input."""
-        return self.net_input(X)
+        return self._net_input(X)
 
     def _predict(self, X):
-        return np.where(self.net_input(X) >= self.thres_,
+        return np.where(self._net_input(X) >= self.thres_,
                         self.classes_[1], self.classes_[0])

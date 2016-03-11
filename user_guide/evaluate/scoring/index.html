@@ -448,6 +448,12 @@
         
             
 <li >
+    <a href="../../classifier/SoftmaxRegression/">SoftmaxRegression</a>
+</li>
+
+        
+            
+<li >
     <a href="../../regressor/StackingRegressor/">StackingRegressor</a>
 </li>
 
@@ -636,7 +642,9 @@
         
             <li><a href="#sensitivity-and-specificity">Sensitivity and Specificity</a></li>
         
-            <li><a href="#matthews-correlation-coefficient">Matthews correlation coefficient</a></li>
+            <li><a href="#matthews-correlation-coefficient">Matthews Correlation Coefficient</a></li>
+        
+            <li><a href="#average-per-class-accuracy">Average Per-Class Accuracy</a></li>
         
     
         <li class="main "><a href="#examples">Examples</a></li>
@@ -678,10 +686,25 @@
 <p><em>Sensitivity</em> (SEN) is synonymous to <em>Recall</em> and the <em>True Positive Rate</em> whereas <em>Specificity (SPC)</em> is synonymous to the <em>True Negative Rate</em> -- <em>Sensitivity</em> measures the recovery rate of the <em>Positives</em> and complimentary, the <em>Specificity</em> measures the recovery rate of the <em>Negatives</em>.</p>
 <p><mathjax>$$SEN = TPR = REC = \frac{TP}{P} =  \frac{TP}{FN + TP}$$</mathjax></p>
 <p><mathjax>$$SPC = TNR =\frac{TN}{N} =  \frac{TN}{FP + TN}$$</mathjax></p>
-<h2 id="matthews-correlation-coefficient">Matthews correlation coefficient</h2>
+<h2 id="matthews-correlation-coefficient">Matthews Correlation Coefficient</h2>
 <p><em>Matthews correlation coefficient</em> (MCC) was first formulated by Brian W. Matthews [3] in 1975 to assess the performance of protein secondary structure predictions. The MCC can be understood as a specific case of a linear correlation coefficient (<em>Pearson's R</em>) for a binary classification setting and is considered as especially useful in unbalanced class settings.
 The previous metrics take values in the range between 0 (worst) and 1 (best), whereas the MCC is bounded between the range 1 (perfect correlation between ground truth and predicted outcome) and -1 (inverse or negative correlation) -- a value of 0 denotes a random prediction. </p>
 <p><mathjax>$$MCC = \frac{ TP \times TN - FP \times FN } {\sqrt{ (TP + FP) ( TP + FN ) ( TN + FP ) ( TN + FN ) } }$$</mathjax></p>
+<h2 id="average-per-class-accuracy">Average Per-Class Accuracy</h2>
+<p>The "overall" accuracy is defined as the number of correct predictions (<em>true positives</em> TP and <em>true negatives</em> TN) over all samples <em>n</em>:</p>
+<p><mathjax>$$ACC = \frac{TP + TN}{n}$$</mathjax></p>
+<p>in a binary class setting:</p>
+<p><img alt="" src="../scoring_files/conf_mat_binary-1.png" /></p>
+<p>In a multi-class setting, we can generalize the computation of the accuracy as the fraction of all true predictions (the diagonal) over all samples n.</p>
+<p><mathjax>$$ACC = \frac{T}{n}$$</mathjax></p>
+<p>Considering a multi-class problem with 3 classes (C0, C1, C2)</p>
+<p><img alt="" src="../scoring_files/conf_mat_multi-1.png" /></p>
+<p>let's assume our model made the following predictions:</p>
+<p><img alt="" src="../scoring_files/multi-ex-1.png" /></p>
+<p>We compute the accuracy as:</p>
+<p><mathjax>$$ACC = \frac{3 + 50 + 18}{90} \approx 0.79$$</mathjax></p>
+<p>Now, in order to compute the <strong><em>average per-class accuracy</em></strong>, we compute the binary accuracy for each class label separately; i.e., if class 1 is the positive class, class 0 and 2 are both considered the negative class.</p>
+<p><mathjax>$$APC\;ACC = \frac{83/90 + 71/90 + 78/90}{3} \approx 0.86$$</mathjax></p>
 <h3 id="references">References</h3>
 <ul>
 <li>[1] S. Raschka. <a href="http://arxiv.org/abs/1410.5330">An overview of general performance metrics of binary classifier systems</a>. Computing Research Repository (CoRR), abs/1410.5330, 2014.</li>
@@ -690,7 +713,7 @@ The previous metrics take values in the range between 0 (worst) and 1 (best), wh
 </ul>
 <h1 id="examples">Examples</h1>
 <h2 id="example-1-classification-error">Example 1 - Classification Error</h2>
-<pre><code class="python">from mlxtend.evaluate import scoring
+<pre><code class="python">#from mlxtend.evaluate import scoring
 
 y_targ = [1, 1, 1, 0, 0, 2, 0, 3]
 y_pred = [1, 0, 1, 0, 0, 2, 1, 3]

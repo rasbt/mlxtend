@@ -448,6 +448,12 @@
         
             
 <li >
+    <a href="../../user_guide/classifier/SoftmaxRegression/">SoftmaxRegression</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/regressor/StackingRegressor/">StackingRegressor</a>
 </li>
 
@@ -625,25 +631,49 @@
         
             <li><a href="#methods">Methods</a></li>
         
+            <li><a href="#properties">Properties</a></li>
+        
     
         <li class="main "><a href="#ensemblevoteclassifier">EnsembleVoteClassifier</a></li>
         
             <li><a href="#methods_1">Methods</a></li>
+        
+            <li><a href="#properties_1">Properties</a></li>
         
     
         <li class="main "><a href="#logisticregression">LogisticRegression</a></li>
         
             <li><a href="#methods_2">Methods</a></li>
         
+            <li><a href="#properties_2">Properties</a></li>
+        
     
         <li class="main "><a href="#neuralnetmlp">NeuralNetMLP</a></li>
         
             <li><a href="#methods_3">Methods</a></li>
         
+            <li><a href="#properties_3">Properties</a></li>
+        
     
         <li class="main "><a href="#perceptron">Perceptron</a></li>
         
             <li><a href="#methods_4">Methods</a></li>
+        
+            <li><a href="#properties_4">Properties</a></li>
+        
+    
+        <li class="main "><a href="#softmaxregression">SoftmaxRegression</a></li>
+        
+            <li><a href="#methods_5">Methods</a></li>
+        
+            <li><a href="#properties_5">Properties</a></li>
+        
+    
+        <li class="main "><a href="#stackingclassifier">StackingClassifier</a></li>
+        
+            <li><a href="#methods_6">Methods</a></li>
+        
+            <li><a href="#properties_6">Properties</a></li>
         
     
     </ul>
@@ -652,7 +682,7 @@
 
 <p>mlxtend version: 0.3.1dev</p>
 <h2 id="adaline">Adaline</h2>
-<p><em>Adaline(eta=0.01, epochs=50, solver='sgd', random_seed=None, shuffle=False, zero_init_weight=False, print_progress=0)</em></p>
+<p><em>Adaline(eta=0.01, epochs=50, minibatches=None, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
 <p>ADAptive LInear NEuron classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -665,14 +695,12 @@
 <p>Passes over the training dataset.</p>
 </li>
 <li>
-<p><code>solver</code> : {'gd', 'sgd', 'normal equation'} (default: 'sgd')</p>
-<p>Method for solving the cost function. 'gd' for gradient descent,
-'sgd' for stochastic gradient descent, or 'normal equation' (default)
-to solve the cost function analytically.</p>
-</li>
-<li>
-<p><code>shuffle</code> : bool (default: False)</p>
-<p>Shuffles training data every epoch if True to prevent circles.</p>
+<p><code>minibatches</code> : int (default: None)</p>
+<p>The number of minibatches for gradient-based optimization.
+If None: Normal Equations (closed-form solution)
+If 1: Gradient Descent learning
+If len(y): Stochastic Gradient Descent learning
+If 1 &lt; minibatches &lt; len(y): Minibatch learning</p>
 </li>
 <li>
 <p><code>random_seed</code> : int (default: None)</p>
@@ -681,7 +709,8 @@ to solve the cost function analytically.</p>
 <li>
 <p><code>zero_init_weight</code> : bool (default: False)</p>
 <p>If True, weights are initialized to zero instead of small random
-numbers in the interval [-0.1, 0.1];
+numbers following a standard normal distribution with mean=0 and
+stddev=1;
 ignored if solver='normal equation'</p>
 </li>
 <li>
@@ -757,6 +786,7 @@ n_features is the number of features.</p>
 <p>Predicted class labels.</p>
 </li>
 </ul>
+<h3 id="properties">Properties</h3>
 <h2 id="ensemblevoteclassifier">EnsembleVoteClassifier</h2>
 <p><em>EnsembleVoteClassifier(clfs, voting='hard', weights=None, verbose=0)</em></p>
 <p>Soft Voting/Majority Rule classifier for scikit-learn estimators.</p>
@@ -986,8 +1016,9 @@ n_features is the number of features.</p>
 <p>Class labels predicted by each classifier.</p>
 </li>
 </ul>
+<h3 id="properties_1">Properties</h3>
 <h2 id="logisticregression">LogisticRegression</h2>
-<p><em>LogisticRegression(eta=0.01, epochs=50, regularization=None, l2_lambda=0.0, learning='sgd', shuffle=False, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
+<p><em>LogisticRegression(eta=0.01, epochs=50, regularization=None, l2_lambda=0.0, minibatches=1, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
 <p>Logistic regression classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1000,23 +1031,17 @@ n_features is the number of features.</p>
 <p>Passes over the training dataset.</p>
 </li>
 <li>
-<p><code>learning</code> : str (default: sgd)</p>
-<p>Learning rule, sgd (stochastic gradient descent)
-or gd (gradient descent).</p>
-</li>
-<li>
-<p><code>regularization</code> : {None, 'l2'} (default: None)</p>
-<p>Type of regularization. No regularization if
-<code>regularization=None</code>.</p>
-</li>
-<li>
 <p><code>l2_lambda</code> : float</p>
 <p>Regularization parameter for L2 regularization.
 No regularization if l2_lambda=0.0.</p>
 </li>
 <li>
-<p><code>shuffle</code> : bool (default: False)</p>
-<p>Shuffles training data every epoch if True to prevent circles.</p>
+<p><code>minibatches</code> : int (default: 1)</p>
+<p>Divide the training data into <em>k</em> minibatches
+for accelerated stochastic gradient descent learning.
+Gradient Descent Learning if <code>minibatches</code> = 1
+Stochastic Gradient Descent learning if <code>minibatches</code> = len(y)
+Minibatch learning if <code>minibatches</code> &gt; 1</p>
 </li>
 <li>
 <p><code>random_seed</code> : int (default: None)</p>
@@ -1025,8 +1050,8 @@ No regularization if l2_lambda=0.0.</p>
 <li>
 <p><code>zero_init_weight</code> : bool (default: False)</p>
 <p>If True, weights are initialized to zero instead of small random
-numbers in the interval [-0.1, 0.1];
-ignored if solver='normal equation'</p>
+numbers following a standard normal distribution with mean=0 and
+stddev=1.</p>
 </li>
 <li>
 <p><code>print_progress</code> : int (default: 0)</p>
@@ -1113,8 +1138,9 @@ n_features is the number of features.</p>
 <p>Predicted class labels.</p>
 </li>
 </ul>
+<h3 id="properties_2">Properties</h3>
 <h2 id="neuralnetmlp">NeuralNetMLP</h2>
-<p><em>NeuralNetMLP(n_output, n_features, n_hidden=30, l1=0.0, l2=0.0, epochs=500, eta=0.001, alpha=0.0, decrease_const=0.0, random_weights=[-1.0, 1.0], shuffle_init=True, shuffle_epoch=True, minibatches=1, random_seed=None, print_progress=0)</em></p>
+<p><em>NeuralNetMLP(n_output, n_features, n_hidden=30, l1=0.0, l2=0.0, epochs=500, eta=0.001, alpha=0.0, decrease_const=0.0, shuffle_init=True, shuffle_epoch=True, minibatches=1, zero_init_weight=False, random_seed=None, print_progress=0)</em></p>
 <p>Feedforward neural network / Multi-layer perceptron classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1185,6 +1211,12 @@ Normal gradient descent learning if k=1 (default).</p>
 <p>Set random seed for shuffling and initializing the weights.</p>
 </li>
 <li>
+<p><code>zero_init_weight</code> : bool (default: False)</p>
+<p>If True, weights are initialized to zero instead of small random
+numbers following a standard normal distribution with mean=0 and
+stddev=1.</p>
+</li>
+<li>
 <p><code>print_progress</code> : int (default: 0)</p>
 <p>Prints progress in fitting to stderr.
 0: No output
@@ -1237,6 +1269,7 @@ n_features is the number of features.</p>
 <p>Predicted class labels.</p>
 </li>
 </ul>
+<h3 id="properties_3">Properties</h3>
 <h2 id="perceptron">Perceptron</h2>
 <p><em>Perceptron(eta=0.1, epochs=50, shuffle=False, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
 <p>Perceptron classifier.</p>
@@ -1261,8 +1294,8 @@ n_features is the number of features.</p>
 <li>
 <p><code>zero_init_weight</code> : bool (default: False)</p>
 <p>If True, weights are initialized to zero instead of small random
-numbers in the interval [-0.1, 0.1];
-ignored if solver='normal equation'</p>
+numbers following a standard normal distribution with mean=0 and
+stddev=1.</p>
 </li>
 <li>
 <p><code>print_progress</code> : int (default: 0)</p>
@@ -1330,7 +1363,301 @@ n_features is the number of features.</p>
 <p><code>class_labels</code> : array-like, shape = [n_samples]</p>
 <p>Predicted class labels.</p>
 </li>
-</ul></div>
+</ul>
+<h3 id="properties_4">Properties</h3>
+<h2 id="softmaxregression">SoftmaxRegression</h2>
+<p><em>SoftmaxRegression(eta=0.01, epochs=50, l2_lambda=0.0, minibatches=1, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
+<p>Logistic regression classifier.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>eta</code> : float (default: 0.01)</p>
+<p>Learning rate (between 0.0 and 1.0)</p>
+</li>
+<li>
+<p><code>epochs</code> : int (default: 50)</p>
+<p>Passes over the training dataset.</p>
+</li>
+<li>
+<p><code>l2_lambda</code> : float</p>
+<p>Regularization parameter for L2 regularization.
+No regularization if l2_lambda=0.0.</p>
+</li>
+<li>
+<p><code>minibatches</code> : int (default: 1)</p>
+<p>Divide the training data into <em>k</em> minibatches
+for accelerated stochastic gradient descent learning.
+Gradient Descent Learning if <code>minibatches</code> = 1
+Stochastic Gradient Descent learning if <code>minibatches</code> = len(y)
+Minibatch learning if <code>minibatches</code> &gt; 1</p>
+</li>
+<li>
+<p><code>random_seed</code> : int (default: None)</p>
+<p>Set random state for shuffling and initializing the weights.</p>
+</li>
+<li>
+<p><code>zero_init_weight</code> : bool (default: False)</p>
+<p>If True, weights are initialized to zero instead of small random
+numbers following a standard normal distribution with mean=0 and
+stddev=1.</p>
+</li>
+<li>
+<p><code>print_progress</code> : int (default: 0)</p>
+<p>Prints progress in fitting to stderr.
+0: No output
+1: Epochs elapsed and cost
+2: 1 plus time elapsed
+3: 2 plus estimated time until completion</p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>w_</code> : 1d-array</p>
+<p>Weights after fitting.</p>
+</li>
+<li>
+<p><code>cost_</code> : list</p>
+<p>List of floats with sum of squared error cost (sgd or gd) for every
+epoch.</p>
+</li>
+</ul>
+<h3 id="methods_5">Methods</h3>
+<hr>
+
+<p><em>fit(X, y, init_weights=True)</em></p>
+<p>Learn weight coefficients from training data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>init_weights</code> : bool (default: True)</p>
+<p>(Re)initializes weights to small random floats if True.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
+<hr>
+
+<p><em>predict(X)</em></p>
+<p>Predict class labels of X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>class_labels</code> : array-like, shape = [n_samples]</p>
+<p>Predicted class labels.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>predict_proba(X)</em></p>
+<p>Predict class probabilities of X from the net input.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>Class probabilties</code> : array-like, shape= [n_samples, n_classes]</li>
+</ul>
+<h3 id="properties_5">Properties</h3>
+<h2 id="stackingclassifier">StackingClassifier</h2>
+<p><em>StackingClassifier(classifiers, meta_classifier, use_probas=False, verbose=0)</em></p>
+<p>A Stacking classifier for scikit-learn estimators for classification.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>classifiers</code> : array-like, shape = [n_regressors]</p>
+<p>A list of classifiers.
+Invoking the <code>fit</code> method on the <code>StackingClassifer</code> will fit clones
+of these original classifiers that will
+be stored in the class attribute
+<code>self.clfs_</code>.</p>
+</li>
+<li>
+<p><code>meta_classifier</code> : object</p>
+<p>The meta-classifier to be fitted on the ensemble of
+classifiers</p>
+</li>
+<li>
+<p><code>use_probas</code> : bool (default: False)</p>
+<p>If True, trains meta-classifier based on predicted probabilities
+instead of class labels.</p>
+</li>
+<li>
+<p><code>verbose</code> : int, optional (default=0)</p>
+<p>Controls the verbosity of the building process.
+- <code>verbose=0</code> (default): Prints nothing
+- <code>verbose=1</code>: Prints the number &amp; name of the regressor being fitted
+- <code>verbose=2</code>: Prints info about the parameters of the
+regressor being fitted
+- <code>verbose&gt;2</code>: Changes <code>verbose</code> param of the underlying regressor to
+self.verbose - 2</p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>clfs_</code> : list, shape=[n_classifiers]</p>
+<p>Fitted classifiers (clones of the original classifiers)</p>
+</li>
+<li>
+<p><code>meta_clf_</code> : estimator</p>
+<p>Fitted meta-classifier (clone of the original meta-estimator)</p>
+</li>
+</ul>
+<h3 id="methods_6">Methods</h3>
+<hr>
+
+<p><em>fit(X, y)</em></p>
+<p>Fit ensemble classifers and the meta-classifier.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
+<hr>
+
+<p><em>fit_transform(X, y=None, </em><em>fit_params)</em></p>
+<p>Fit to data, then transform it.</p>
+<pre><code>Fits transformer to X and y with optional parameters fit_params
+and returns a transformed version of X.
+</code></pre>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : numpy array of shape [n_samples, n_features]</p>
+<p>Training set.</p>
+</li>
+<li>
+<p><code>y</code> : numpy array of shape [n_samples]</p>
+<p>Target values.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>X_new</code> : numpy array of shape [n_samples, n_features_new]</p>
+<p>Transformed array.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>get_params(deep=True)</em></p>
+<p>Return estimator parameter names for GridSearch support.</p>
+<hr>
+
+<p><em>predict(X)</em></p>
+<p>Predict target values for X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>labels</code> : array-like, shape = [n_samples]</p>
+<p>Predicted class labels.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>predict_proba(X)</em></p>
+<p>Predict class probabilities for X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>proba</code> : array-like, shape = [n_samples, n_classes]</p>
+<p>Probability for each class per sample.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>score(X, y, sample_weight=None)</em></p>
+<p>Returns the mean accuracy on the given test data and labels.</p>
+<pre><code>In multi-label classification, this is the subset accuracy
+which is a harsh metric since you require for each sample that
+each label set be correctly predicted.
+</code></pre>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : array-like, shape = (n_samples, n_features)</p>
+<p>Test samples.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = (n_samples) or (n_samples, n_outputs)</p>
+<p>True labels for X.</p>
+</li>
+<li>
+<p><code>sample_weight</code> : array-like, shape = [n_samples], optional</p>
+<p>Sample weights.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>score</code> : float</p>
+<p>Mean accuracy of self.predict(X) wrt. y.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.</p>
+<pre><code>The method works on simple estimators as well as on nested objects
+(such as pipelines). The former have parameters of the form
+``&lt;component&gt;__&lt;parameter&gt;`` so that it's possible to update each
+component of a nested object.
+</code></pre>
+<p><strong>Returns</strong></p>
+<p>self</p>
+<h3 id="properties_6">Properties</h3></div>
         
     </div>
 

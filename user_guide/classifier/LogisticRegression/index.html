@@ -448,6 +448,12 @@
         
             
 <li >
+    <a href="../SoftmaxRegression/">SoftmaxRegression</a>
+</li>
+
+        
+            
+<li >
     <a href="../../regressor/StackingRegressor/">StackingRegressor</a>
 </li>
 
@@ -643,6 +649,8 @@
         
             <li><a href="#example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</a></li>
         
+            <li><a href="#example-3-stochastic-gradient-descent-w-minibatches">Example 3 - Stochastic Gradient Descent w. Minibatches</a></li>
+        
     
         <li class="main "><a href="#api">API</a></li>
         
@@ -668,20 +676,6 @@
 <p><mathjax>$$logit(p(y=1 \mid \mathbf{x})) = z.$$</mathjax></p>
 <p>Here, <mathjax>$p(y=1 \mid \mathbf{x})$</mathjax> is the conditional probability that a particular sample belongs to class 1 given its features <mathjax>$\mathbf{x}$</mathjax>. The logit function takes inputs in the range [0, 1] and transform them to values over the entire real number range. In contrast, the logistic function takes input values over the entire real number range and transforms them to values in the range [0, 1]. In other words, the logistic function is the inverse of the logit function, and it lets us predict the conditional probability that a certain sample belongs to class 1 (or class 0).</p>
 <p><img alt="" src="../LogisticRegression_files/logistic_function.png" /></p>
-<pre><code class="python">\documentclass{article}
-\begin{document}
-This is your only binary choices
-\begin{math}
-  \left\{
-    \begin{array}{l}
-      0\\
-      1
-    \end{array}
-  \right.
-\end{math}
-\end{document}
-</code></pre>
-
 <p>After model fitting, the conditional probability <mathjax>$p(y=1 \mid \mathbf{x})$</mathjax> is converted to a binary class label via a threshold function <mathjax>$g(\cdot)$</mathjax>:</p>
 <p><mathjax>$$y = g({z}) =  \left\{
      \begin{array}{l}
@@ -808,11 +802,16 @@ y = y[0:100] # class 0 and class 1
 X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
 X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
 
-lr = LogisticRegression(eta=0.1, l2_lambda=0.0, epochs=500, learning='gd', random_seed=1)
+lr = LogisticRegression(eta=0.1, 
+                        l2_lambda=0.0, 
+                        epochs=100,
+                        minibatches=1, # for Gradient Descent
+                        random_seed=1,
+                        print_progress=3)
 lr.fit(X, y)
 
 plot_decision_regions(X, y, clf=lr)
-plt.title('Logistic Regression - Stochastic Gradient Descent')
+plt.title('Logistic Regression - Gradient Descent')
 plt.show()
 
 plt.plot(range(len(lr.cost_)), lr.cost_)
@@ -821,8 +820,10 @@ plt.ylabel('Cost')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_47_0.png" /></p>
-<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_47_1.png" /></p>
+<pre><code>Epoch: 100/100 | Cost 0.27 | Elapsed: 0:00:00 | ETA: 0:00:00
+</code></pre>
+<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_46_1.png" /></p>
+<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_46_2.png" /></p>
 <h3 id="predicting-class-labels">Predicting Class Labels</h3>
 <pre><code class="python">y_pred = lr.predict(X)
 print('Last 3 Class Labels: %s' % y_pred[-3:])
@@ -834,7 +835,7 @@ print('Last 3 Class Labels: %s' % y_pred[-3:])
 print('Last 3 Class Labels: %s' % y_pred[-3:])
 </code></pre>
 
-<pre><code>Last 3 Class Labels: [ 0.99999934  0.99898689  0.99999708]
+<pre><code>Last 3 Class Labels: [ 0.99999716  0.99547815  0.9999811 ]
 </code></pre>
 <h3 id="predicting-class-probabilities">Predicting Class Probabilities</h3>
 <h2 id="example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</h2>
@@ -854,7 +855,12 @@ y = y[0:100] # class 0 and class 1
 X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
 X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
 
-lr = LogisticRegression(eta=0.05, epochs=100, l2_lambda=0.0, learning='sgd', random_seed=1)
+lr = LogisticRegression(eta=0.5, 
+                        epochs=30, 
+                        l2_lambda=0.0, 
+                        minibatches=len(y), # for SGD learning 
+                        random_seed=1,
+                        print_progress=3)
 lr.fit(X, y)
 
 plot_decision_regions(X, y, clf=lr)
@@ -867,10 +873,52 @@ plt.ylabel('Cost')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_53_0.png" /></p>
-<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_53_1.png" /></p>
+<pre><code>Epoch: 30/30 | Cost 0.27 | Elapsed: 0:00:00 | ETA: 0:00:00
+</code></pre>
+<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_52_1.png" /></p>
+<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_52_2.png" /></p>
+<h2 id="example-3-stochastic-gradient-descent-w-minibatches">Example 3 - Stochastic Gradient Descent w. Minibatches</h2>
+<p>Here, we set <code>minibatches</code> to 5, which will result in Minibatch Learning with a batch size of 20 samples (since 100 Iris samples divided by 5 minibatches equals 20).</p>
+<pre><code class="python">from mlxtend.data import iris_data
+from mlxtend.evaluate import plot_decision_regions
+from mlxtend.classifier import LogisticRegression
+import matplotlib.pyplot as plt
+
+# Loading Data
+
+X, y = iris_data()
+X = X[:, [0, 3]] # sepal length and petal width
+X = X[0:100] # class 0 and class 1
+y = y[0:100] # class 0 and class 1
+
+# standardize
+X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
+X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
+
+lr = LogisticRegression(eta=0.5, 
+                        epochs=30, 
+                        l2_lambda=0.0, 
+                        minibatches=5, # 100/5 = 20 -&gt; minibatch-s 
+                        random_seed=1,
+                        print_progress=3)
+lr.fit(X, y)
+
+plot_decision_regions(X, y, clf=lr)
+plt.title('Logistic Regression - Stochastic Gradient Descent')
+plt.show()
+
+plt.plot(range(len(lr.cost_)), lr.cost_)
+plt.xlabel('Iterations')
+plt.ylabel('Cost')
+plt.show()
+</code></pre>
+
+<pre><code>Epoch: 30/30 | Cost 0.21 | Elapsed: 0:00:00 | ETA: 0:00:00
+</code></pre>
+<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_55_1.png" /></p>
+<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_55_2.png" /></p>
 <h1 id="api">API</h1>
-<p><em>LogisticRegression(eta=0.01, epochs=50, regularization=None, l2_lambda=0.0, learning='sgd', shuffle=False, random_seed=None, zero_init_weight=False)</em></p>
+<p><em>LogisticRegression(eta=0.01, epochs=50, regularization=None, l2_lambda=0.0, learning='sgd', shuffle=False, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
 <p>Logistic regression classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -910,6 +958,14 @@ No regularization if l2_lambda=0.0.</p>
 <p>If True, weights are initialized to zero instead of small random
 numbers in the interval [-0.1, 0.1];
 ignored if solver='normal equation'</p>
+</li>
+<li>
+<p><code>print_progress</code> : int (default: 0)</p>
+<p>Prints progress in fitting to stderr.
+0: No output
+1: Epochs elapsed and cost
+2: 1 plus time elapsed
+3: 2 plus estimated time until completion</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>
@@ -984,8 +1040,8 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>class</code> : int</p>
-<p>Predicted class label(s).</p>
+<p><code>class_labels</code> : array-like, shape = [n_samples]</p>
+<p>Predicted class labels.</p>
 </li>
 </ul></div>
         

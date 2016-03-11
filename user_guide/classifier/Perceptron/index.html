@@ -448,6 +448,12 @@
         
             
 <li >
+    <a href="../SoftmaxRegression/">SoftmaxRegression</a>
+</li>
+
+        
+            
+<li >
     <a href="../../regressor/StackingRegressor/">StackingRegressor</a>
 </li>
 
@@ -742,14 +748,17 @@ X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
 
 # Rosenblatt Perceptron
 
-ppn = Perceptron(epochs=5, eta=0.05, random_seed=0)
+ppn = Perceptron(epochs=5, 
+                 eta=0.05, 
+                 random_seed=0,
+                 print_progress=3)
 ppn.fit(X, y)
 
 plot_decision_regions(X, y, clf=ppn)
 plt.title('Perceptron - Rosenblatt Perceptron Rule')
 plt.show()
 
-print(ppn.w_)
+print('Bias &amp; Weights: %s' % ppn.w_)
 
 plt.plot(range(len(ppn.cost_)), ppn.cost_)
 plt.xlabel('Iterations')
@@ -757,14 +766,14 @@ plt.ylabel('Missclassifications')
 plt.show()
 </code></pre>
 
-<pre><code>[-0.3902373  -0.35696213 -0.37944732]
+<pre><code>Epoch: 5/5 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
 <p><img alt="png" src="../Perceptron_files/Perceptron_25_1.png" /></p>
-<pre><code>[ 0.0097627   0.08408412  0.31449279]
+<pre><code>Bias &amp; Weights: [ 0.0097627   0.08408412  0.31449279]
 </code></pre>
 <p><img alt="png" src="../Perceptron_files/Perceptron_25_3.png" /></p>
 <h1 id="api">API</h1>
-<p><em>Perceptron(eta=0.1, epochs=50, shuffle=False, random_seed=None, zero_init_weight=False)</em></p>
+<p><em>Perceptron(eta=0.1, epochs=50, shuffle=False, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
 <p>Perceptron classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -789,6 +798,14 @@ plt.show()
 <p>If True, weights are initialized to zero instead of small random
 numbers in the interval [-0.1, 0.1];
 ignored if solver='normal equation'</p>
+</li>
+<li>
+<p><code>print_progress</code> : int (default: 0)</p>
+<p>Prints progress in fitting to stderr.
+0: No output
+1: Epochs elapsed and cost
+2: 1 plus time elapsed
+3: 2 plus estimated time until completion</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>
@@ -825,9 +842,7 @@ training with weights from a previous fitting.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
+<p>self</p>
 <hr>
 
 <p><em>net_input(X)</em></p>
@@ -835,7 +850,7 @@ training with weights from a previous fitting.</p>
 <hr>
 
 <p><em>predict(X)</em></p>
-<p>Predict class labels for X.</p>
+<p>Predict class labels of X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -847,8 +862,8 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>class</code> : int</p>
-<p>Predicted class label.</p>
+<p><code>class_labels</code> : array-like, shape = [n_samples]</p>
+<p>Predicted class labels.</p>
 </li>
 </ul></div>
         

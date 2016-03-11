@@ -448,6 +448,12 @@
         
             
 <li >
+    <a href="../../user_guide/classifier/SoftmaxRegression/">SoftmaxRegression</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/regressor/StackingRegressor/">StackingRegressor</a>
 </li>
 
@@ -625,6 +631,8 @@
         
             <li><a href="#methods">Methods</a></li>
         
+            <li><a href="#properties">Properties</a></li>
+        
     
         <li class="main "><a href="#plot_sequential_feature_selection">plot_sequential_feature_selection</a></li>
         
@@ -632,6 +640,8 @@
         <li class="main "><a href="#sequentialfeatureselector">SequentialFeatureSelector</a></li>
         
             <li><a href="#methods_1">Methods</a></li>
+        
+            <li><a href="#properties_1">Properties</a></li>
         
     
     </ul>
@@ -652,6 +662,7 @@
 
 <p><em>transform(X, y=None)</em></p>
 <p>None</p>
+<h3 id="properties">Properties</h3>
 <h2 id="plot_sequential_feature_selection">plot_sequential_feature_selection</h2>
 <p><em>plot_sequential_feature_selection(metric_dict, kind='std_dev', color='blue', bcolor='steelblue', marker='o', alpha=0.2, ylabel='Performance', confidence_interval=0.95)</em></p>
 <p>Plot sequential feature selection.</p>
@@ -749,7 +760,7 @@ algorithm gets stuck in cycles.</p>
 <p>The number of CPUs to use for cross validation. -1 means 'all CPUs'.</p>
 </li>
 <li>
-<p><code>pre_dispatch</code> : int, or string (default: '2*n_jobs')</p>
+<p><code>pre_dispatch</code> : int, or string</p>
 <p>Controls the number of jobs that get dispatched
 during parallel execution in cross_val_score.
 Reducing this number can be useful to avoid an explosion of
@@ -760,7 +771,7 @@ Use this for lightweight and fast-running jobs,
 to avoid delays due to on-demand spawning of the jobs
 An int, giving the exact number of total jobs that are spawned
 A string, giving an expression as a function
-of n_jobs, as in <code>'2*n_jobs'</code></p>
+of n_jobs, as in <code>2*n_jobs</code></p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>
@@ -826,7 +837,8 @@ component of a nested object.
 <hr>
 
 <p><em>transform(X)</em></p>
-<p>None</p></div>
+<p>None</p>
+<h3 id="properties_1">Properties</h3></div>
         
     </div>
 

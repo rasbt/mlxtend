@@ -448,6 +448,12 @@
         
             
 <li >
+    <a href="../SoftmaxRegression/">SoftmaxRegression</a>
+</li>
+
+        
+            
+<li >
     <a href="../../regressor/StackingRegressor/">StackingRegressor</a>
 </li>
 
@@ -641,6 +647,8 @@
         
             <li><a href="#example-3-stochastic-gradient-descent">Example 3 - Stochastic Gradient Descent</a></li>
         
+            <li><a href="#example-3-stochastic-gradient-descent-with-minibatches">Example 3 - Stochastic Gradient Descent with Minibatches</a></li>
+        
     
         <li class="main "><a href="#api">API</a></li>
         
@@ -679,7 +687,7 @@
 <h3 id="normal-equations-closed-form-solution">Normal Equations (closed-form solution)</h3>
 <p>The closed-form solution should be preferred for "smaller" datasets where calculating (a "costly") matrix inverse is not a concern. For very large datasets, or datasets where the inverse of <mathjax>$[X^T X]$</mathjax> may not exist (the matrix is non-invertible or singular, e.g., in case of perfect multicollinearity), the gradient descent or stochastic gradient descent approaches are to be preferred.</p>
 <p>The linear function (linear regression model) is defined as:</p>
-<p><mathjax>$$z = w_0x_0 + w_1x_1 + ... + w_mx_m = \sum_{j=1}^{m} w_j x_j = \mathbf{w}^T\mathbf{x}$$</mathjax></p>
+<p><mathjax>$$z = w_0x_0 + w_1x_1 + ... + w_mx_m = \sum_{j=0}^{m} w_j x_j = \mathbf{w}^T\mathbf{x}$$</mathjax></p>
 <p>where <mathjax>$y$</mathjax> is the response variable, <mathjax>$\mathbf{x}$</mathjax> is an <mathjax>$m$</mathjax>-dimensional sample vector, and <mathjax>$\mathbf{w}$</mathjax> is the weight vector (vector of coefficients). Note that <mathjax>$w_0$</mathjax> represents the y-axis intercept of the model and therefore <mathjax>$x_0=1$</mathjax>.  </p>
 <p>Using the closed-form solution (normal equation), we compute the weights of the model as follows:</p>
 <p><mathjax>$$ \mathbf{w} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^Ty$$</mathjax></p>
@@ -722,7 +730,10 @@ X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
 X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
 
 
-ada = Adaline(epochs=30, eta=0.01, solver='normal equation', random_seed=1)
+ada = Adaline(epochs=30, 
+              eta=0.01, 
+              minibatches=None, 
+              random_seed=1)
 ada.fit(X, y)
 plot_decision_regions(X, y, clf=ada)
 plt.title('Adaline - Stochastic Gradient Descent')
@@ -749,21 +760,28 @@ X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
 X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
 
 
-ada = Adaline(epochs=30, eta=0.01, solver='gd', random_seed=1)
+ada = Adaline(epochs=30, 
+              eta=0.01, 
+              minibatches=1, # for Gradient Descent Learning
+              random_seed=1,
+              print_progress=3)
+
 ada.fit(X, y)
 plot_decision_regions(X, y, clf=ada)
 plt.title('Adaline - Stochastic Gradient Descent')
 plt.show()
 
-plt.plot(range(len(ada.cost_)), ada.cost_, marker='o')
+plt.plot(range(len(ada.cost_)), ada.cost_)
 plt.xlabel('Iterations')
 plt.ylabel('Cost')
 </code></pre>
 
-<p><img alt="png" src="../Adaline_files/Adaline_20_0.png" /></p>
-<pre><code>&lt;matplotlib.text.Text at 0x1095e0a90&gt;
+<pre><code>Epoch: 30/30 | Cost 0.95 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
-<p><img alt="png" src="../Adaline_files/Adaline_20_2.png" /></p>
+<p><img alt="png" src="../Adaline_files/Adaline_20_1.png" /></p>
+<pre><code>&lt;matplotlib.text.Text at 0x10d920eb8&gt;
+</code></pre>
+<p><img alt="png" src="../Adaline_files/Adaline_20_3.png" /></p>
 <h2 id="example-3-stochastic-gradient-descent">Example 3 - Stochastic Gradient Descent</h2>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.evaluate import plot_decision_regions
@@ -782,22 +800,68 @@ X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
 X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
 
 
-ada = Adaline(epochs=15, eta=0.01, solver='sgd', random_seed=1)
+ada = Adaline(epochs=15, 
+              eta=0.02, 
+              minibatches=len(y), # for SGD learning 
+              random_seed=1,
+              print_progress=3)
+
 ada.fit(X, y)
 plot_decision_regions(X, y, clf=ada)
 plt.title('Adaline - Stochastic Gradient Descent')
 plt.show()
 
-plt.plot(range(len(ada.cost_)), ada.cost_, marker='o')
+plt.plot(range(len(ada.cost_)), ada.cost_)
 plt.xlabel('Iterations')
 plt.ylabel('Cost')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../Adaline_files/Adaline_22_0.png" /></p>
+<pre><code>Epoch: 15/15 | Cost 0.95 | Elapsed: 0:00:00 | ETA: 0:00:00
+</code></pre>
 <p><img alt="png" src="../Adaline_files/Adaline_22_1.png" /></p>
+<p><img alt="png" src="../Adaline_files/Adaline_22_2.png" /></p>
+<h2 id="example-3-stochastic-gradient-descent-with-minibatches">Example 3 - Stochastic Gradient Descent with Minibatches</h2>
+<pre><code class="python">from mlxtend.data import iris_data
+from mlxtend.evaluate import plot_decision_regions
+from mlxtend.classifier import Adaline
+import matplotlib.pyplot as plt
+
+# Loading Data
+
+X, y = iris_data()
+X = X[:, [0, 3]] # sepal length and petal width
+X = X[0:100] # class 0 and class 1
+y = y[0:100] # class 0 and class 1
+
+# standardize
+X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
+X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
+
+
+ada = Adaline(epochs=15, 
+              eta=0.02, 
+              minibatches=5, # for SGD learning w. minibatch size 20
+              random_seed=1,
+              print_progress=3)
+
+ada.fit(X, y)
+plot_decision_regions(X, y, clf=ada)
+plt.title('Adaline - Stochastic Gradient Descent')
+plt.show()
+
+plt.plot(range(len(ada.cost_)), ada.cost_)
+plt.xlabel('Iterations')
+plt.ylabel('Cost')
+plt.show()
+</code></pre>
+
+<pre><code>Epoch: 15/15 | Cost 0.95 | Elapsed: 0:00:00 | ETA: 0:00:00
+</code></pre>
+<p><img alt="png" src="../Adaline_files/Adaline_24_1.png" /></p>
+<p><img alt="png" src="../Adaline_files/Adaline_24_2.png" /></p>
 <h1 id="api">API</h1>
-<p><em>Adaline(eta=0.01, epochs=50, solver='sgd', random_seed=None, shuffle=False, zero_init_weight=False)</em></p>
+<p><em>Adaline(eta=0.01, epochs=50, solver='sgd', random_seed=None, shuffle=False, zero_init_weight=False, print_progress=0)</em></p>
 <p>ADAptive LInear NEuron classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -828,6 +892,14 @@ to solve the cost function analytically.</p>
 <p>If True, weights are initialized to zero instead of small random
 numbers in the interval [-0.1, 0.1];
 ignored if solver='normal equation'</p>
+</li>
+<li>
+<p><code>print_progress</code> : int (default: 0)</p>
+<p>Prints progress in fitting to stderr if not solver='normal equation'
+0: No output
+1: Epochs elapsed and cost
+2: 1 plus time elapsed
+3: 2 plus estimated time until completion</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>
@@ -890,8 +962,8 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>class</code> : int</p>
-<p>Predicted class label.</p>
+<p><code>class_labels</code> : array-like, shape = [n_samples]</p>
+<p>Predicted class labels.</p>
 </li>
 </ul></div>
         

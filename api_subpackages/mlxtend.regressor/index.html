@@ -448,6 +448,12 @@
         
             
 <li >
+    <a href="../../user_guide/classifier/SoftmaxRegression/">SoftmaxRegression</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/regressor/StackingRegressor/">StackingRegressor</a>
 </li>
 
@@ -625,6 +631,15 @@
         
             <li><a href="#methods">Methods</a></li>
         
+            <li><a href="#properties">Properties</a></li>
+        
+    
+        <li class="main "><a href="#stackingregressor">StackingRegressor</a></li>
+        
+            <li><a href="#methods_1">Methods</a></li>
+        
+            <li><a href="#properties_1">Properties</a></li>
+        
     
     </ul>
 </div></div>
@@ -632,41 +647,43 @@
 
 <p>mlxtend version: 0.3.1dev</p>
 <h2 id="linearregression">LinearRegression</h2>
-<p><em>LinearRegression(solver='normal equation', eta=0.01, epochs=50, random_seed=None, shuffle=False, zero_init_weight=False)</em></p>
+<p><em>LinearRegression(eta=0.01, epochs=50, minibatches=None, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
 <p>Ordinary least squares linear regression.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>solver</code> : {'gd', 'sgd', 'normal equation'} (default: 'normal equation')</p>
-<p>Method for solving the cost function. 'gd' for gradient descent,
-'sgd' for stochastic gradient descent, or 'normal equation' (default)
-to solve the cost function analytically.</p>
-</li>
-<li>
-<p><code>eta</code> : float (default: 0.1)</p>
-<p>Learning rate (between 0.0 and 1.0);
-ignored if solver='normal equation'.</p>
+<p><code>eta</code> : float (default: 0.01)</p>
+<p>solver rate (between 0.0 and 1.0)</p>
 </li>
 <li>
 <p><code>epochs</code> : int (default: 50)</p>
-<p>Passes over the training dataset;
-ignored if solver='normal equation'.</p>
+<p>Passes over the training dataset.</p>
 </li>
 <li>
-<p><code>shuffle</code> : bool (default: False)</p>
-<p>Shuffles training data every epoch if True to prevent circles;
-ignored if solver='normal equation'.</p>
+<p><code>minibatches</code> : int (default: None)</p>
+<p>The number of minibatches for gradient-based optimization.
+If None: Normal Equations (closed-form solution)
+If 1: Gradient Descent learning
+If len(y): Stochastic Gradient Descent learning
+If 1 &lt; minibatches &lt; len(y): Minibatch learning</p>
 </li>
 <li>
 <p><code>random_seed</code> : int (default: None)</p>
-<p>Set random state for shuffling and initializing the weights;
-ignored if solver='normal equation'.</p>
+<p>Set random state for shuffling and initializing the weights.</p>
 </li>
 <li>
 <p><code>zero_init_weight</code> : bool (default: False)</p>
 <p>If True, weights are initialized to zero instead of small random
 numbers in the interval [-0.1, 0.1];
 ignored if solver='normal equation'</p>
+</li>
+<li>
+<p><code>print_progress</code> : int (default: 0)</p>
+<p>Prints progress in fitting to stderr if not solver='normal equation'
+0: No output
+1: Epochs elapsed and cost
+2: 1 plus time elapsed
+3: 2 plus estimated time until completion</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>
@@ -682,6 +699,10 @@ ignored if solver='normal equation'</p>
 </li>
 </ul>
 <h3 id="methods">Methods</h3>
+<hr>
+
+<p><em>activation(X)</em></p>
+<p>Compute the linear activation from the net input.</p>
 <hr>
 
 <p><em>fit(X, y, init_weights=True)</em></p>
@@ -726,7 +747,179 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li><code>float</code> : Predicted target value.</li>
-</ul></div>
+</ul>
+<h3 id="properties">Properties</h3>
+<h2 id="stackingregressor">StackingRegressor</h2>
+<p><em>StackingRegressor(regressors, meta_regressor, verbose=0)</em></p>
+<p>A Stacking regressor for scikit-learn estimators for regression.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>regressors</code> : array-like, shape = [n_regressors]</p>
+<p>A list of regressors.
+Invoking the <code>fit</code> method on the <code>StackingRegressor</code> will fit clones
+of those original regressors that will
+be stored in the class attribute
+<code>self.regr_</code>.</p>
+</li>
+<li>
+<p><code>meta_regressor</code> : object</p>
+<p>The meta-regressor to be fitted on the ensemble of
+regressors</p>
+</li>
+<li>
+<p><code>verbose</code> : int, optional (default=0)</p>
+<p>Controls the verbosity of the building process.
+- <code>verbose=0</code> (default): Prints nothing
+- <code>verbose=1</code>: Prints the number &amp; name of the regressor being fitted
+- <code>verbose=2</code>: Prints info about the parameters of the
+regressor being fitted
+- <code>verbose&gt;2</code>: Changes <code>verbose</code> param of the underlying regressor to
+self.verbose - 2</p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>regr_</code> : list, shape=[n_regressors]</p>
+<p>Fitted regressors (clones of the original regressors)</p>
+</li>
+<li>
+<p><code>meta_regr_</code> : estimator</p>
+<p>Fitted meta-regressor (clone of the original meta-estimator)</p>
+</li>
+<li>
+<p><code>coef_</code> : array-like, shape = [n_features]</p>
+<p>Model coefficients of the fitted meta-estimator</p>
+</li>
+<li>
+<p><code>intercept_</code> : float</p>
+<p>Intercept of the fitted meta-estimator</p>
+</li>
+</ul>
+<h3 id="methods_1">Methods</h3>
+<hr>
+
+<p><em>fit(X, y)</em></p>
+<p>Learn weight coefficients from training data for each regressor.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
+<hr>
+
+<p><em>fit_transform(X, y=None, </em><em>fit_params)</em></p>
+<p>Fit to data, then transform it.</p>
+<pre><code>Fits transformer to X and y with optional parameters fit_params
+and returns a transformed version of X.
+</code></pre>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : numpy array of shape [n_samples, n_features]</p>
+<p>Training set.</p>
+</li>
+<li>
+<p><code>y</code> : numpy array of shape [n_samples]</p>
+<p>Target values.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>X_new</code> : numpy array of shape [n_samples, n_features_new]</p>
+<p>Transformed array.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>get_params(deep=True)</em></p>
+<p>Return estimator parameter names for GridSearch support.</p>
+<hr>
+
+<p><em>predict(X)</em></p>
+<p>Predict target values for X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>y_target</code> : array-like, shape = [n_samples]</p>
+<p>Predicted target values.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>score(X, y, sample_weight=None)</em></p>
+<p>Returns the coefficient of determination R^2 of the prediction.</p>
+<pre><code>The coefficient R^2 is defined as (1 - u/v), where u is the regression
+</code></pre>
+<p>sum of squares ((y_true - y_pred) <strong> 2).sum() and v is the residual
+sum of squares ((y_true - y_true.mean()) </strong> 2).sum().</p>
+<p>Best possible score is 1.0 and it can be negative (because the</p>
+<p>model can be arbitrarily worse). A constant model that always
+    predicts the expected value of y, disregarding the input features,
+    would get a R^2 score of 0.0.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : array-like, shape = (n_samples, n_features)</p>
+<p>Test samples.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = (n_samples) or (n_samples, n_outputs)</p>
+<p>True values for X.</p>
+</li>
+<li>
+<p><code>sample_weight</code> : array-like, shape = [n_samples], optional</p>
+<p>Sample weights.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>score</code> : float</p>
+<p>R^2 of self.predict(X) wrt. y.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.</p>
+<pre><code>The method works on simple estimators as well as on nested objects
+(such as pipelines). The former have parameters of the form
+``&lt;component&gt;__&lt;parameter&gt;`` so that it's possible to update each
+component of a nested object.
+</code></pre>
+<p><strong>Returns</strong></p>
+<p>self</p>
+<h3 id="properties_1">Properties</h3>
+<hr>
+
+<p><em>coef_</em></p>
+<p>None</p>
+<hr>
+
+<p><em>intercept_</em></p>
+<p>None</p></div>
         
     </div>
 

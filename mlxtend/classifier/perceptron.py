@@ -20,10 +20,10 @@ class Perceptron(_BaseClassifier):
         Learning rate (between 0.0 and 1.0)
     epochs : int (default: 50)
         Number of passes over the training dataset.
-    shuffle : bool (default: False)
+    shuffle : bool (default: True)
          Shuffles training data every epoch if True to prevent circles.
     random_seed : int
-        Random state for initializing random weights.
+        Random state for initializing random weights and shuffling.
     zero_init_weight : bool (default: False)
         If True, weights are initialized to zero instead of small random
         numbers following a standard normal distribution with mean=0 and
@@ -43,7 +43,7 @@ class Perceptron(_BaseClassifier):
         Number of misclassifications in every epoch.
 
     """
-    def __init__(self, eta=0.1, epochs=50, shuffle=False,
+    def __init__(self, eta=0.1, epochs=50, shuffle=True,
                  random_seed=None, zero_init_weight=False,
                  print_progress=0):
         super(Perceptron, self).__init__(print_progress=print_progress)
@@ -88,13 +88,17 @@ class Perceptron(_BaseClassifier):
 
         self.cost_ = []
 
+        if self.shuffle:
+            np.random.seed(self.random_seed)
+
         # learn weights
         self.init_time_ = time()
+        n_idx = list(range(y.shape[0]))
         for i in range(self.epochs):
             if self.shuffle:
-                X, y = self._shuffle(X, y)
+                n_idx = np.random.permutation(n_idx)
             errors = 0
-            for xi, target in zip(X, y):
+            for xi, target in zip(X[n_idx], y[n_idx]):
                 update = self.eta * (target - self._predict(xi))
                 self.w_[1:] += update * xi
                 self.w_[0] += update

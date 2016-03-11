@@ -49,7 +49,7 @@ def test_univariate_gradient_descent():
 def test_univariate_stochastic_gradient_descent():
     sgd_lr = LinearRegression(minibatches=len(y),
                               eta=0.0001,
-                              epochs=100,
+                              epochs=150,
                               random_seed=0)
     sgd_lr.fit(X_rm_std, y_std)
     assert_almost_equal(sgd_lr.w_, expect_rm_std, decimal=2)
@@ -77,3 +77,13 @@ def test_multivariate_stochastic_gradient_descent():
                               random_seed=0)
     sgd_lr.fit(X_rm_lstat_std, y_std)
     assert_almost_equal(sgd_lr.w_, expect_rm_lstat_std, decimal=2)
+
+
+def test_ary_persistency_in_shuffling():
+    orig = X_rm_lstat_std.copy()
+    sgd_lr = LinearRegression(eta=0.0001,
+                              epochs=500,
+                              minibatches=len(y),
+                              random_seed=0)
+    sgd_lr.fit(X_rm_lstat_std, y_std)
+    np.testing.assert_almost_equal(orig, X_rm_lstat_std, 6)

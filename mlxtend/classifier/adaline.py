@@ -100,17 +100,21 @@ class Adaline(_BaseClassifier):
 
         self.cost_ = []
 
+        # random seed for shuffling
+        if self.random_seed:
+            np.random.seed(self.random_seed)
+
         if self.minibatches is None:
             self.w_ = self._normal_equation(X, y)
 
         # Gradient descent or stochastic gradient descent learning
         else:
             n_idx = list(range(y.shape[0]))
+            # skip shuffling if gradient descent
+            if self.minibatches > 1:
+                n_idx = np.random.permutation(n_idx)
             self.init_time_ = time()
             for i in range(self.epochs):
-                if self.minibatches > 1:
-                    X, y = self._shuffle(X, y)
-
                 minis = np.array_split(n_idx, self.minibatches)
                 for idx in minis:
                     y_val = self._activation(X[idx])

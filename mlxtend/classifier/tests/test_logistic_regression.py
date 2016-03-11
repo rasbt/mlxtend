@@ -74,3 +74,14 @@ def test_l2_regularization_sgd():
     acc = sum(y_pred == y) / float(len(y))
 
     assert(acc == 0.97)
+
+
+def test_ary_persistency_in_shuffling():
+    orig = X.copy()
+    lr = LogisticRegression(eta=0.01,
+                            epochs=100,
+                            minibatches=len(y),
+                            l2_lambda=1.0,
+                            random_seed=1)
+    lr.fit(X, y)
+    np.testing.assert_almost_equal(orig, X, 6)

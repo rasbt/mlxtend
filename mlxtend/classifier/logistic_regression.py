@@ -102,11 +102,15 @@ class LogisticRegression(_BaseClassifier):
         self.m_ = len(self.w_)
         self.cost_ = []
 
+        # random seed for shuffling
+        if self.random_seed:
+            np.random.seed(self.random_seed)
+
         n_idx = list(range(y.shape[0]))
         self.init_time_ = time()
         for i in range(self.epochs):
             if self.minibatches > 1:
-                X, y = self._shuffle(X, y)
+                n_idx = np.random.permutation(n_idx)
 
             minis = np.array_split(n_idx, self.minibatches)
             for idx in minis:

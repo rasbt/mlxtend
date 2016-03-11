@@ -56,10 +56,10 @@ class _BaseRegressor(object):
         # Implemented in child class
         pass
 
-    def _shuffle(self, X, y):
+    def _shuffle(self, arrays):
         """Shuffle arrays in unison."""
         r = np.random.permutation(len(y))
-        return X[r], y[r]
+        return [ary[r] for r in arrays]
 
     def _print_progress(self, epoch, cost=None, time_interval=10):
         if self.print_progress > 0:
@@ -103,3 +103,14 @@ class _BaseRegressor(object):
 
         if not len(y) == X.shape[0]:
             raise ValueError('X and y must contain the same number of samples')
+
+    def _init_weights(self, shape, zero_init_weight=False,
+                      dtype='float64', seed=None):
+        """Initialize weight coefficients."""
+        if seed:
+            np.random.seed(seed)
+        if zero_init_weight:
+            w = np.zeros(shape)
+        else:
+            w = np.random.normal(loc=0.0, scale=1.0, size=shape)
+        return w.astype(dtype)

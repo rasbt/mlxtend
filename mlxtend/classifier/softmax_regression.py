@@ -1,7 +1,8 @@
 # Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
 #
-# Implementation of the logistic regression algorithm for classification.
+# Implementation of the mulitnomial logistic regression algorithm
+# for classification.
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
@@ -47,11 +48,9 @@ class SoftmaxRegression(_BaseClassifier):
     w_ : 1d-array
         Weights after fitting.
     cost_ : list
-        List of floats with sum of squared error cost (sgd or gd) for every
-        epoch.
+        List of floats, the average cross_entropy for each epoch.
 
     """
-
     def __init__(self, eta=0.01, epochs=50,
                  l2_lambda=0.0, minibatches=1,
                  random_seed=None,
@@ -154,7 +153,7 @@ class SoftmaxRegression(_BaseClassifier):
                             self.eta * self.l2_lambda * self.w_)
                 self.b_ -= np.mean(diff, axis=0)
 
-            # compute cost of whole epoch
+            # compute cost of the whole epoch
             net = self._net_input(X, self.w_, self.b_)
             softm = self._softmax(net)
             cross_ent = self._cross_entropy(output=softm, y_target=y_enc)

@@ -7,9 +7,12 @@
 from .perceptron import Perceptron
 from .adaline import Adaline
 from .logistic_regression import LogisticRegression
+from .softmax_regression import SoftmaxRegression
 from .neuralnet_mlp import NeuralNetMLP
 from .ensemble_vote import EnsembleVoteClassifier
 from .stacking_classification import StackingClassifier
 
-__all__ = ["Perceptron", "Adaline", "LogisticRegression", "NeuralNetMLP",
+__all__ = ["Perceptron", "Adaline",
+           "LogisticRegression", "SoftmaxRegression",
+           "NeuralNetMLP",
            "EnsembleVoteClassifier", "StackingClassifier"]

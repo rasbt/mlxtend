@@ -48,7 +48,6 @@ def test_l2_regularization_gd():
                             epochs=20,
                             minibatches=1,
                             l2_lambda=1.0,
-                            regularization='l2',
                             random_seed=1)
     lr.fit(X, y)
     y_pred = lr.predict(X)
@@ -64,7 +63,6 @@ def test_l2_regularization_sgd():
                             epochs=100,
                             minibatches=len(y),
                             l2_lambda=1.0,
-                            regularization='l2',
                             random_seed=1)
     lr.fit(X, y)
     y_pred = lr.predict(X)

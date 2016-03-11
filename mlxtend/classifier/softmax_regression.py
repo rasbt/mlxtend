@@ -11,7 +11,7 @@ from time import time
 from .base import _BaseClassifier
 
 
-class LogisticRegression(_BaseClassifier):
+class SoftmaxRegression(_BaseClassifier):
     """Logistic regression classifier.
 
     Parameters
@@ -51,18 +51,46 @@ class LogisticRegression(_BaseClassifier):
         epoch.
 
     """
-    def __init__(self, eta=0.01, epochs=50, regularization=None,
+
+    def __init__(self, eta=0.01, epochs=50,
                  l2_lambda=0.0, minibatches=1,
-                 random_seed=None, zero_init_weight=False,
+                 random_seed=None,
+                 zero_init_weight=False,
                  print_progress=0):
 
-        super(LogisticRegression, self).__init__(print_progress=print_progress)
+        super(SoftmaxRegression, self).__init__(print_progress=print_progress)
         self.random_seed = random_seed
         self.eta = eta
         self.epochs = epochs
         self.l2_lambda = l2_lambda
         self.minibatches = minibatches
         self.zero_init_weight = zero_init_weight
+
+    def _one_hot(self, y, n_labels):
+        mat = np.zeros((len(y), n_labels))
+        for i, val in enumerate(y):
+            mat[i, val] = 1
+        return mat.astype(float)
+
+    def _init_bias(self, n_features, n_classes):
+        w = np.zeros((n_features, n_classes))
+        b = np.zeros(n_classes)
+        return w, b
+
+    def _net_input(self, X, W, b):
+        return (X.dot(W) + b)
+
+    def _softmax(self, z):
+        return (np.exp(z.T) / np.sum(np.exp(z), axis=1)).T
+
+    def _cross_entropy(self, output, y_target):
+        return - np.sum(np.log(output) * (y_target), axis=1)
+
+    def _cost(self, cross_entropy):
+        return np.mean(cross_entropy)
+
+    def _to_classlabels(self, z):
+        return z.argmax(axis=1)
 
     def fit(self, X, y, init_weights=True):
         """Learn weight coefficients from training data.
@@ -82,24 +110,25 @@ class LogisticRegression(_BaseClassifier):
         self : object
 
         """
-        self._check_arrays(X, y)
-
-        if (np.unique(y) != np.array([0, 1])).all():
-            raise ValueError('Supports only binary class labels 0 and 1')
-
         if init_weights:
-            self.w_ = self._init_weights(shape=1 + X.shape[1],
+            self._n_classes = np.max(y) + 1
+            self._n_features = X.shape[1]
+            self.w_ = self._init_weights(shape=(self._n_features,
+                                                self._n_classes),
                                          zero_init_weight=self.zero_init_weight,
                                          seed=self.random_seed)
+            self.b_ = self._init_weights(shape=self._n_classes,
+                                         zero_init_weight=self.zero_init_weight,
+                                         seed=self.random_seed)
+            self.cost_ = []
 
-        self.m_ = len(self.w_)
-        self.cost_ = []
+        n_idx = list(range(y.shape[0]))
+        y_enc = self._one_hot(y, self._n_classes)
 
         # random seed for shuffling
         if self.random_seed:
             np.random.seed(self.random_seed)
 
-        n_idx = list(range(y.shape[0]))
         self.init_time_ = time()
         for i in range(self.epochs):
             if self.minibatches > 1:
@@ -107,31 +136,35 @@ class LogisticRegression(_BaseClassifier):
 
             minis = np.array_split(n_idx, self.minibatches)
             for idx in minis:
-                y_val = self._activation(X[idx])
-                errors = (y[idx] - y_val)
-                neg_grad = X[idx].T.dot(errors)
-                l2_reg = self.l2_lambda * self.w_[1:]
-                self.w_[1:] += self.eta * (neg_grad - l2_reg)
-                self.w_[0] += self.eta * errors.sum()
 
-            cost = self._logit_cost(y, self._activation(X))
+                # givens:
+                # w_ -> n_feat x n_classes
+                # b_  -> n_classes
+
+                # net_input, softmax and diff -> n_samples x n_classes:
+                net = self._net_input(X[idx], self.w_, self.b_)
+                softm = self._softmax(net)
+                diff = softm - y_enc[idx]
+
+                # gradient -> n_features x n_classes
+                grad = np.dot(X[idx].T, diff)
+
+                # update in opp. direction of the cost gradient
+                self.w_ -= (self.eta * grad +
+                            self.eta * self.l2_lambda * self.w_)
+                self.b_ -= np.mean(diff, axis=0)
+
+            # compute cost of whole epoch
+            net = self._net_input(X, self.w_, self.b_)
+            softm = self._softmax(net)
+            cross_ent = self._cross_entropy(output=softm, y_target=y_enc)
+            cost = self._cost(cross_ent)
             self.cost_.append(cost)
+
             if self.print_progress:
                 self._print_progress(epoch=i+1, cost=cost)
+
         return self
-
-    def _predict(self, X):
-        # equivalent to np.where(self._activation(X) >= 0.5, 1, 0)
-        return np.where(self._net_input(X) >= 0.0, 1, 0)
-
-    def _net_input(self, X):
-        """Compute the linear net input."""
-        return X.dot(self.w_[1:]) + self.w_[0]
-
-    def _activation(self, X):
-        """ Compute sigmoid activation."""
-        z = self._net_input(X)
-        return self._sigmoid(z)
 
     def predict_proba(self, X):
         """Predict class probabilities of X from the net input.
@@ -144,18 +177,27 @@ class LogisticRegression(_BaseClassifier):
 
         Returns
         ----------
-        Class 1 probability : float
+        Class probabilties : array-like, shape= [n_samples, n_classes]
 
         """
-        return self._activation(X)
+        net = self._net_input(X, self.w_, self.b_)
+        softm = self._softmax(net)
+        return softm
 
-    def _logit_cost(self, y, y_val):
-        logit = -y.dot(np.log(y_val)) - ((1 - y).dot(np.log(1 - y_val)))
-        if self.l2_lambda:
-            l2 = self.l2_lambda / 2.0 * np.sum(self.w_[1:]**2)
-            logit += l2
-        return logit
+    def predict(self, X):
+        """Predict class labels of X.
 
-    def _sigmoid(self, z):
-        """Compute the output of the logistic sigmoid function."""
-        return 1.0 / (1.0 + np.exp(-z))
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+
+        Returns
+        ----------
+        class_labels : array-like, shape = [n_samples]
+          Predicted class labels.
+
+        """
+        probas = self.predict_proba(X)
+        return self._to_classlabels(probas)

@@ -4,10 +4,10 @@ docs/site/
 # Temporary documentation files
 docs/sources/user_guide/*.md
 docs/sources/user_guide/*/*.md
-docs/sources/user_guide/*/*/*.png
-docs/sources/user_guide/*.png
-docs/sources/user_guide/*/*.png
-docs/sources/user_guide/*/*/*.png
+#docs/sources/user_guide/*/*/*.png
+#docs/sources/user_guide/*.png
+#docs/sources/user_guide/*/*.png
+#docs/sources/user_guide/*/*/*.png
 docs/sources/api_modules/
 docs/sources/api_subpackages/
 

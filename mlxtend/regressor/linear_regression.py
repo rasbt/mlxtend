@@ -63,7 +63,7 @@ class LinearRegression(_BaseRegressor):
                  minibatches=None, random_seed=None,
                  zero_init_weight=False, print_progress=0):
 
-        np.random.seed(random_seed)
+        self.random_seed = random_seed
         self.eta = eta
         self.epochs = epochs
         self.minibatches = minibatches
@@ -93,9 +93,15 @@ class LinearRegression(_BaseRegressor):
 
         # initialize weights
         if init_weights:
-            self._init_weights(shape=1 + X.shape[1])
+            self.w_ = self._init_weights(shape=1 + X.shape[1],
+                                         zero_init_weight=self.zero_init_weight,
+                                         seed=self.random_seed)
 
         self.cost_ = []
+
+        # random seed for shuffling
+        if self.random_seed:
+            np.random.seed(self.random_seed)
 
         if self.minibatches is None:
             self.w_ = self._normal_equation(X, y)
@@ -106,7 +112,7 @@ class LinearRegression(_BaseRegressor):
             self.init_time_ = time()
             for i in range(self.epochs):
                 if self.minibatches > 1:
-                    X, y = self._shuffle(X, y)
+                    n_idx = np.random.permutation(n_idx)
 
                 minis = np.array_split(n_idx, self.minibatches)
                 for idx in minis:
@@ -121,14 +127,6 @@ class LinearRegression(_BaseRegressor):
                     self._print_progress(epoch=i+1, cost=cost)
 
         return self
-
-    def _init_weights(self, shape):
-        """Initialize weight coefficients."""
-        if self.zero_init_weight:
-            self.w_ = np.zeros(shape)
-        else:
-            self.w_ = 0.2 * np.random.ranf(shape) - 0.5
-        self.w_.astype('float64')
 
     def _normal_equation(self, X, y):
         """Solve linear regression analytically."""

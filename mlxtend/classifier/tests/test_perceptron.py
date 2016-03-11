@@ -68,3 +68,10 @@ def test_invalid_class():
         assert(1 == 2)
     except ValueError:
         pass
+
+
+def test_ary_persistency_in_shuffling():
+    orig = X.copy()
+    ppn = Perceptron(epochs=40, eta=0.05, random_seed=1)
+    ppn = ppn.fit(X, y0)  # 0, 1 class
+    np.testing.assert_almost_equal(orig, X, 6)

@@ -87,6 +87,16 @@ def test_stochastic_gradient_descent():
     assert((y1 == ada.predict(X_std)).all())
 
 
+def test_ary_persistency_in_shuffling():
+    orig = X_std.copy()
+    ada = Adaline(epochs=30,
+                  eta=0.01,
+                  minibatches=len(y),
+                  random_seed=1)
+    ada.fit(X_std, y1)
+    np.testing.assert_almost_equal(orig, X_std, 6)
+
+
 def test_0_1_class():
     t1 = np.array([0.51, -0.04,  0.51])
     ada = Adaline(epochs=30,

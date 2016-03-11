@@ -295,7 +295,7 @@ class NeuralNetMLP(_BaseClassifier):
         X_data, y_data = X.copy(), y.copy()
 
         if self.shuffle_init:
-            X_data, y_data = self._shuffle(X_data, y_data)
+            X_data, y_data = self._shuffle([X_data, y_data])
 
         y_enc = self._encode_labels(y_data, self.n_output)
 

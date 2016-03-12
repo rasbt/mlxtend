@@ -17,6 +17,7 @@ if sys.version_info <= (3, 0):
                       " with Python 2.x,"
                       " due to its unicode intricacies")
 
+
 def generalize_names(name, output_sep=' ', firstname_output_letters=1):
     """Generalize a person's first and last name.
 
@@ -48,15 +49,14 @@ def generalize_names(name, output_sep=' ', firstname_output_letters=1):
     exc = ['van der ', 'de ', 'van ', 'von ', 'di ']
     for e in exc:
         if name.startswith(e):
-            repl = e.replace(' ','')
-            name = (repl + name[len(e)-1:].strip())
+            repl = e.replace(' ', '')
+            name = (repl + name[len(e) - 1:].strip())
 
     exc = [' van der ', ' de ', ' van ', ' von ', ' di ',
-    ', van der ', ', de', ', van ', ', von ', ', di ']
+           ', van der ', ', de', ', van ', ', von ', ', di ']
 
     for e in exc:
-        name = name.replace(e, ' '+e.replace(' ', ''))
-
+        name = name.replace(e, ' ' + e.replace(' ', ''))
 
     if ',' in name:
         last, first = first, last
@@ -71,12 +71,15 @@ def generalize_names(name, output_sep=' ', firstname_output_letters=1):
     if sys.version_info.major == 2:
         name = name.decode('utf-8')
 
-    name = ''.join(x for x in unicodedata.normalize('NFKD', name) if x in string.ascii_letters+' ')
+    name = ''.join(x for x in unicodedata.normalize('NFKD', name)
+                   if x in string.ascii_letters + ' ')
 
     # get first and last name if applicable
     m = re.match('(?P<first>\w+)\W+(?P<last>\w+)', name)
     if m:
-        output = '%s%s%s' % (m.group(last), output_sep, m.group(first)[:firstname_output_letters])
+        output = '%s%s%s' % (m.group(last),
+                             output_sep,
+                             m.group(first)[:firstname_output_letters])
     else:
         output = name
 
@@ -87,21 +90,24 @@ def generalize_names(name, output_sep=' ', firstname_output_letters=1):
 def generalize_names_duplcheck(df, col_name):
     """ Generalizes names and removes duplicates.
 
-    Description : Applies mlxtend.text.generalize_names to a DataFrame with 1 first name letter
-    by default and uses more first name letters if duplicates are detected.
+    Description : Applies mlxtend.text.generalize_names to a DataFrame
+    with 1 first name letter by default
+    and uses more first name letters if duplicates are detected.
 
     Parameters
     ----------
     df : `pandas.DataFrame`
-      DataFrame that contains a column where generalize_names should be applied.
-
+        DataFrame that contains a column where
+        generalize_names should be applied.
     col_name : `str`
-      Name of the DataFrame column where `generalize_names` function should be applied to.
+        Name of the DataFrame column where `generalize_names`
+        function should be applied to.
 
     Returns
     ----------
     df_new : `str`
-      New DataFrame object where generalize_names function has been applied without duplicates.
+        New DataFrame object where generalize_names function has
+        been applied without duplicates.
 
     """
     df_new = df.copy()
@@ -110,15 +116,20 @@ def generalize_names_duplcheck(df, col_name):
 
     df_new[col_name] = df_new[col_name].apply(generalize_names)
 
-    dupl = list(df_new[df_new.duplicated(subset=col_name, take_last=True)].index) + \
-       list(df_new[df_new.duplicated(subset=col_name, take_last=False)].index)
+    dupl = (list(df_new[df_new.duplicated(subset=col_name,
+                                          take_last=True)].index) +
+            list(df_new[df_new.duplicated(subset=col_name,
+                                          take_last=False)].index))
 
     firstname_letters = 2
     while len(dupl) > 0:
         for idx in dupl:
-            df_new.loc[idx, col_name] = generalize_names(df.loc[idx, col_name],
-                                                  firstname_output_letters=firstname_letters)
-        dupl = list(df_new[df_new.duplicated(subset=col_name, take_last=True)].index) + \
-               list(df_new[df_new.duplicated(subset=col_name, take_last=False)].index)
+            df_new.loc[idx, col_name] = generalize_names(
+                df.loc[idx, col_name],
+                firstname_output_letters=firstname_letters)
+        dupl = (list(df_new[df_new.duplicated(subset=col_name,
+                                              take_last=True)].index) +
+                list(df_new[df_new.duplicated(subset=col_name,
+                                              take_last=False)].index))
         firstname_letters += 1
     return df_new

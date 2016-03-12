@@ -18,6 +18,7 @@ import numpy as np
 
 
 class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
+
     """A Stacking regressor for scikit-learn estimators for regression.
 
     Parameters

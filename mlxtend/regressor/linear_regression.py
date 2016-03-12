@@ -7,7 +7,6 @@
 # License: BSD 3 clause
 
 import numpy as np
-from sys import stderr
 from time import time
 from .base import _BaseRegressor
 
@@ -19,10 +18,9 @@ from .base import _BaseRegressor
 #
 # License: BSD 3 clause
 
-import numpy as np
-
 
 class LinearRegression(_BaseRegressor):
+
     """ Ordinary least squares linear regression.
 
     Parameters
@@ -93,9 +91,10 @@ class LinearRegression(_BaseRegressor):
 
         # initialize weights
         if init_weights:
-            self.w_ = self._init_weights(shape=1 + X.shape[1],
-                                         zero_init_weight=self.zero_init_weight,
-                                         seed=self.random_seed)
+            self.w_ = self._init_weights(
+                shape=1 + X.shape[1],
+                zero_init_weight=self.zero_init_weight,
+                seed=self.random_seed)
 
         self.cost_ = []
 
@@ -124,7 +123,7 @@ class LinearRegression(_BaseRegressor):
                 cost = self._sum_squared_error_cost(y, self.activation(X))
                 self.cost_.append(cost)
                 if self.print_progress:
-                    self._print_progress(epoch=i+1, cost=cost)
+                    self._print_progress(epoch=i + 1, cost=cost)
 
         return self
 
@@ -134,11 +133,6 @@ class LinearRegression(_BaseRegressor):
         z = np.linalg.inv(np.dot(Xb.T, Xb))
         w = np.dot(z, np.dot(Xb.T, y))
         return w
-
-    def _shuffle(self, X, y):
-        """Unison shuffling."""
-        r = np.random.permutation(len(y))
-        return X[r], y[r]
 
     def net_input(self, X):
         """Compute the linear net input."""

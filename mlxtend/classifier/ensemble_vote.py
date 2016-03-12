@@ -19,6 +19,7 @@ import numpy as np
 
 
 class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
+    
     """Soft Voting/Majority Rule classifier for scikit-learn estimators.
 
     Parameters
@@ -168,8 +169,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         else:  # 'hard' voting
             predictions = self._predict(X)
 
-            maj = np.apply_along_axis(
-                                      lambda x:
+            maj = np.apply_along_axis(lambda x:
                                       np.argmax(np.bincount(x,
                                                 weights=self.weights)),
                                       axis=1,

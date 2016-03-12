@@ -4,12 +4,10 @@
 #
 # License: BSD 3 clause
 
-from mlxtend.data import boston_housing_data
 from mlxtend.regressor import StackingRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import Ridge
 from sklearn.svm import SVR
-from mlxtend.data import boston_housing_data
 import numpy as np
 from sklearn.grid_search import GridSearchCV
 from numpy.testing import assert_almost_equal
@@ -31,7 +29,7 @@ def test_different_models():
     svr_rbf = SVR(kernel='rbf')
     stregr = StackingRegressor(regressors=[svr_lin, lr, ridge],
                                meta_regressor=svr_rbf)
-    y_pred = stregr.fit(X1, y).predict(X1)
+    stregr.fit(X1, y).predict(X1)
     mse = 0.214
     got = np.mean((stregr.predict(X1) - y) ** 2)
     assert round(got, 3) == mse
@@ -44,7 +42,7 @@ def test_multivariate():
     svr_rbf = SVR(kernel='rbf')
     stregr = StackingRegressor(regressors=[svr_lin, lr, ridge],
                                meta_regressor=svr_rbf)
-    y_pred = stregr.fit(X2, y).predict(X2)
+    stregr.fit(X2, y).predict(X2)
     mse = 0.218
     got = np.mean((stregr.predict(X2) - y) ** 2)
     print(got)
@@ -129,4 +127,5 @@ def test_get_coeff_fail():
     stregr = StackingRegressor(regressors=[ridge, lr],
                                meta_regressor=svr_rbf)
     stregr = stregr.fit(X1, y)
-    got = stregr.coef_
+    r = stregr.coef_
+    assert r

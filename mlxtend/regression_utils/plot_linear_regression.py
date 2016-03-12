@@ -13,7 +13,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plot_linear_regression(X, y, model=LinearRegression(), corr_func='pearsonr',
+def plot_linear_regression(X, y, model=LinearRegression(),
+                           corr_func='pearsonr',
                            scattercolor='blue', fit_style='k--', legend=True,
                            xlim='auto'):
     """Plot a linear regression line fit.

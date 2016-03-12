@@ -14,4 +14,4 @@ from .tokenizer import tokenizer_words_and_emoticons
 from .tokenizer import tokenizer_emoticons
 
 __all__ = ["generalize_names", "generalize_names_duplcheck",
-            "tokenizer_words_and_emoticons", "tokenizer_emoticons"]
+           "tokenizer_words_and_emoticons", "tokenizer_emoticons"]

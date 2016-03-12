@@ -12,6 +12,7 @@ from .base import _BaseClassifier
 
 
 class LogisticRegression(_BaseClassifier):
+
     """Logistic regression classifier.
 
     Parameters
@@ -51,7 +52,7 @@ class LogisticRegression(_BaseClassifier):
         epoch.
 
     """
-    def __init__(self, eta=0.01, epochs=50, regularization=None,
+    def __init__(self, eta=0.01, epochs=50,
                  l2_lambda=0.0, minibatches=1,
                  random_seed=None, zero_init_weight=False,
                  print_progress=0):
@@ -88,9 +89,10 @@ class LogisticRegression(_BaseClassifier):
             raise ValueError('Supports only binary class labels 0 and 1')
 
         if init_weights:
-            self.w_ = self._init_weights(shape=1 + X.shape[1],
-                                         zero_init_weight=self.zero_init_weight,
-                                         seed=self.random_seed)
+            self.w_ = self._init_weights(
+                shape=1 + X.shape[1],
+                zero_init_weight=self.zero_init_weight,
+                seed=self.random_seed)
 
         self.m_ = len(self.w_)
         self.cost_ = []
@@ -117,7 +119,7 @@ class LogisticRegression(_BaseClassifier):
             cost = self._logit_cost(y, self._activation(X))
             self.cost_.append(cost)
             if self.print_progress:
-                self._print_progress(epoch=i+1, cost=cost)
+                self._print_progress(epoch=i + 1, cost=cost)
         return self
 
     def _predict(self, X):

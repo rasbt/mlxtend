@@ -12,11 +12,17 @@ from time import time
 
 
 class _BaseClassifier(object):
-    """Parent Class Base Classifier"""
+
+    """Parent Class Base Classifier
+
+    A base class that is important by
+    classifier child classes.
+
+    """
     def __init__(self, print_progress=0):
         self.print_progress = print_progress
 
-    def fit(self, X, y):
+    def fit(self, X, y, init_weights=True):
         """Learn weight coefficients from training data.
 
         Parameters
@@ -26,12 +32,18 @@ class _BaseClassifier(object):
             n_features is the number of features.
         y : array-like, shape = [n_samples]
             Target values.
+        init_weights : bool (default: None)
+            Reinitialize weights
 
         Returns
         -------
         self : object
 
         """
+        if not (init_weights is None or isinstance(init_weights, bool)):
+            raise AttributeError("init_weights must be True, False, or None")
+        init_weights
+        self._check_arrays(X=X, y=y)
         return self
 
     def predict(self, X):

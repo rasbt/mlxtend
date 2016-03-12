@@ -9,8 +9,6 @@ from mlxtend.data import iris_data
 import numpy as np
 
 
-#### Binary
-
 X, y = iris_data()
 X = X[:, [0, 3]]  # sepal length and petal width
 X_bin = X[0:100]  # class 0 and class 1
@@ -77,8 +75,6 @@ def test_multi_logistic_regression_gd_weights():
 
 
 def test_multi_logistic_regression_gd_acc():
-    t = np.array([[-0.17, -2.86, 3.51],
-                  [-4.85, 2.0, 0.35]])
     lr = SoftmaxRegression(epochs=200,
                            eta=0.005,
                            minibatches=1,

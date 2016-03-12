@@ -11,6 +11,7 @@ from .transformer import TransformerObj
 
 
 class MeanCenterer(TransformerObj):
+
     """Column centering of vectors and matrices.
 
     Attributes

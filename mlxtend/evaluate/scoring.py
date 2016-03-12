@@ -145,9 +145,9 @@ def scoring(y_target, y_predicted, metric='error',
         elif metric == 'f1':
             pre = float(tp) / (tp + fp)
             rec = float(tp) / (fn + tp)
-            res = 2.0 * (pre * rec)/(pre + rec)
+            res = 2.0 * (pre * rec) / (pre + rec)
         elif metric == 'matthews_corr_coef':
-            res = float(tp*tn - fp*fn)
-            res = res / np.sqrt((tp + fp)*(tp + fn)*(tn + fp)*(tn + fn))
+            res = float(tp * tn - fp * fn)
+            res = res / np.sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))
 
     return res

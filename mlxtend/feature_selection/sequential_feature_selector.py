@@ -20,10 +20,10 @@ from sklearn.base import BaseEstimator
 from sklearn.base import MetaEstimatorMixin
 from sklearn.cross_validation import cross_val_score
 from ..externals.name_estimators import _name_estimators
-from ..externals import six
 
 
 class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
+
     """Sequential Feature Selection for Classification and Regression.
 
     Parameters
@@ -133,29 +133,29 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             prev_subset = set(k_idx)
             if self.forward:
                 k_idx, k_score, cv_scores = \
-                         self._inclusion(orig_set=orig_set,
-                                         subset=prev_subset,
-                                         X=X, y=y)
+                    self._inclusion(orig_set=orig_set,
+                                    subset=prev_subset,
+                                    X=X, y=y)
             else:
                 k_idx, k_score, cv_scores = \
-                         self._exclusion(feature_set=prev_subset, X=X, y=y)
+                    self._exclusion(feature_set=prev_subset, X=X, y=y)
 
             if self.floating and not self._is_stuck(sdq):
                 (new_feature,) = set(k_idx) ^ prev_subset
                 if self.forward:
                     k_idx_c, k_score_c, cv_scores_c = \
-                            self._exclusion(feature_set=k_idx,
-                                            fixed_feature=new_feature,
-                                            X=X, y=y)
+                        self._exclusion(feature_set=k_idx,
+                                        fixed_feature=new_feature,
+                                        X=X, y=y)
                 else:
                     k_idx_c, k_score_c, cv_scores_c = \
-                            self._inclusion(orig_set=orig_set - {new_feature},
-                                            subset=set(k_idx),
-                                            X=X, y=y)
+                        self._inclusion(orig_set=orig_set - {new_feature},
+                                        subset=set(k_idx),
+                                        X=X, y=y)
 
                 if k_score_c and k_score_c > k_score:
                     k_idx, k_score, cv_scores = \
-                                k_idx_c, k_score_c, cv_scores_c
+                        k_idx_c, k_score_c, cv_scores_c
 
             k = len(k_idx)
             # floating can lead to multiple same-sized subsets
@@ -168,7 +168,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
             if self.print_progress:
                 sys.stderr.write('\rFeatures: %d/%d' % (
-                        len(k_idx), self.k_features))
+                    len(k_idx), self.k_features))
                 sys.stderr.flush()
 
         self.k_feature_idx_ = k_idx
@@ -221,7 +221,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             all_avg_scores = []
             all_cv_scores = []
             all_subsets = []
-            for p in combinations(feature_set, r=n-1):
+            for p in combinations(feature_set, r=n - 1):
                 if fixed_feature and fixed_feature not in set(p):
                     continue
                 cv_scores = self._calc_score(X, y, p)

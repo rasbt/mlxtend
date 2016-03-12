@@ -46,13 +46,13 @@ def test_list():
 @raises(AttributeError)
 def test_multidim_list():
     y = [[0, 1, 2, 3, 4, 2]]
-    out = one_hot(y)
+    one_hot(y)
 
 
 @raises(AttributeError)
 def test_multidim_array():
     y = np.array([[0], [1], [2], [3], [4], [2]])
-    out = one_hot(y)
+    one_hot(y)
 
 
 def test_oneclass():
@@ -60,7 +60,7 @@ def test_oneclass():
                                   np.array([[0.]], dtype='float'))
 
 
-def test_list():
+def test_list_morelabels():
     y = [0, 1]
     expect = np.array([[1., 0., 0.],
                        [0., 1., 0.]], dtype='float')

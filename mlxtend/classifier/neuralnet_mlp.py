@@ -9,11 +9,11 @@
 import numpy as np
 from .base import _BaseClassifier
 from scipy.special import expit
-import sys
 from time import time
 
 
 class NeuralNetMLP(_BaseClassifier):
+
     """ Feedforward neural network / Multi-layer perceptron classifier.
 
     Parameters
@@ -122,11 +122,11 @@ class NeuralNetMLP(_BaseClassifier):
 
     def _initialize_weights(self):
         """Initialize weights with small random numbers."""
-        w1 = self._init_weights(shape=self.n_hidden*(self.n_features + 1),
+        w1 = self._init_weights(shape=self.n_hidden * (self.n_features + 1),
                                 zero_init_weight=self.zero_init_weight,
                                 seed=self.random_seed)
         w1 = w1.reshape(self.n_hidden, self.n_features + 1)
-        w2 = self._init_weights(shape=self.n_output*(self.n_hidden + 1),
+        w2 = self._init_weights(shape=self.n_output * (self.n_hidden + 1),
                                 zero_init_weight=self.zero_init_weight,
                                 seed=self.random_seed)
         w2 = w2.reshape(self.n_output, self.n_hidden + 1)
@@ -148,10 +148,10 @@ class NeuralNetMLP(_BaseClassifier):
     def _add_bias_unit(self, X, how='column'):
         """Add bias unit (column or row of 1s) to array at index 0."""
         if how == 'column':
-            X_new = np.ones((X.shape[0], X.shape[1]+1))
+            X_new = np.ones((X.shape[0], X.shape[1] + 1))
             X_new[:, 1:] = X
         elif how == 'row':
-            X_new = np.ones((X.shape[0]+1, X.shape[1]))
+            X_new = np.ones((X.shape[0] + 1, X.shape[1]))
             X_new[1:, :] = X
         else:
             raise AttributeError('how must be columns or row')
@@ -193,12 +193,12 @@ class NeuralNetMLP(_BaseClassifier):
 
     def _L2_reg(self, lambda_, w1, w2):
         """Compute L2-regularization cost."""
-        return ((lambda_/2.0) * (np.sum(w1[:, 1:] ** 2) +
+        return ((lambda_ / 2.0) * (np.sum(w1[:, 1:] ** 2) +
                 np.sum(w2[:, 1:] ** 2)))
 
     def _L1_reg(self, lambda_, w1, w2):
         """Compute L1-regularization cost."""
-        return ((lambda_/2.0) * (np.abs(w1[:, 1:]).sum() +
+        return ((lambda_ / 2.0) * (np.abs(w1[:, 1:]).sum() +
                 np.abs(w2[:, 1:]).sum()))
 
     def _get_cost(self, y_enc, output, w1, w2):
@@ -306,7 +306,7 @@ class NeuralNetMLP(_BaseClassifier):
         for i in range(self.epochs):
 
             # adaptive learning rate
-            self.eta /= (1 + self.decrease_const*i)
+            self.eta /= (1 + self.decrease_const * i)
 
             if self.shuffle_epoch:
                 idx = np.random.permutation(y_enc.shape[1])
@@ -342,7 +342,7 @@ class NeuralNetMLP(_BaseClassifier):
                 delta_w1_prev, delta_w2_prev = delta_w1, delta_w2
 
                 if self.print_progress:
-                    self._print_progress(epoch=i+1)
+                    self._print_progress(epoch=i + 1)
 
         return self
 
@@ -364,7 +364,7 @@ class NeuralNetMLP(_BaseClassifier):
                 a1, z2, a2, z3, a3 = self._feedforward(X,
                                                        w1 - epsilon_ary1,
                                                        w2)
-                cost1 = self._get_cost(y_enc, a3, w1-epsilon_ary1, w2)
+                cost1 = self._get_cost(y_enc, a3, w1 - epsilon_ary1, w2)
                 a1, z2, a2, z3, a3 = self._feedforward(X,
                                                        w1 + epsilon_ary1,
                                                        w2)

@@ -10,7 +10,8 @@ import time
 import sys
 
 
-class Counter():
+class Counter(object):
+
     """Class to display the progress of for-loop iterators.
 
     Parameters

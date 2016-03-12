@@ -62,7 +62,7 @@ def plot_decision_regions(X, y, clf,
 
     if not y.dtype == int:
         y = y.astype(int)
-        
+
     # check if test data is provided
     plot_testdata = True
     if not isinstance(X_highlight, np.ndarray):
@@ -146,7 +146,7 @@ def plot_decision_regions(X, y, clf,
                        X_highlight[:, 1],
                        c='',
                        alpha=1.0,
-                       linewidth=1,
+                       linewidths=1,
                        marker='o',
                        s=80)
         else:
@@ -154,7 +154,7 @@ def plot_decision_regions(X, y, clf,
                        [0 for i in X_highlight],
                        c='',
                        alpha=1.0,
-                       linewidth=1,
+                       linewidths=1,
                        marker='o',
                        s=80)
 

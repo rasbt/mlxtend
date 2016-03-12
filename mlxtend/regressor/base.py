@@ -117,6 +117,7 @@ class _BaseRegressor(object):
             raise ValueError('X and y must contain the same number of samples')
 
     def _init_weights(self, shape, zero_init_weight=False,
+                      coef=0.001,
                       dtype='float64', seed=None):
         """Initialize weight coefficients."""
         if seed:
@@ -124,5 +125,5 @@ class _BaseRegressor(object):
         if zero_init_weight:
             w = np.zeros(shape)
         else:
-            w = np.random.normal(loc=0.0, scale=1.0, size=shape)
+            w = coef * np.random.normal(loc=0.0, scale=1.0, size=shape)
         return w.astype(dtype)

@@ -120,7 +120,7 @@ def plot_learning_curves(X_train, y_train,
             plt.ylabel('Performance ({})'.format(scoring))
             if print_model:
                 plt.title('Learning Curves\n\n{}\n'.format(model))
-            plt.legend(loc='best', numpoints=1)
+            plt.legend(loc=legend_loc, numpoints=1)
             plt.xlim([0, 110])
             max_y = max(max(test_errors), max(training_errors))
             min_y = min(min(test_errors), min(training_errors))

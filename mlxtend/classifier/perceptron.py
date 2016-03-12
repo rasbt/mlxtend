@@ -12,6 +12,7 @@ from .base import _BaseClassifier
 
 
 class Perceptron(_BaseClassifier):
+    
     """Perceptron classifier.
 
     Parameters
@@ -82,9 +83,10 @@ class Perceptron(_BaseClassifier):
                              ' class labels {0, 1} or {-1, 1}.')
 
         if init_weights:
-            self.w_ = self._init_weights(shape=1 + X.shape[1],
-                                         zero_init_weight=self.zero_init_weight,
-                                         seed=self.random_seed)
+            self.w_ = self._init_weights(
+                shape=1 + X.shape[1],
+                zero_init_weight=self.zero_init_weight,
+                seed=self.random_seed)
 
         self.cost_ = []
 
@@ -105,7 +107,7 @@ class Perceptron(_BaseClassifier):
                 errors += int(update != 0.0)
 
             if self.print_progress:
-                self._print_progress(epoch=i+1, cost=errors)
+                self._print_progress(epoch=i + 1, cost=errors)
             self.cost_.append(errors)
         return self
 

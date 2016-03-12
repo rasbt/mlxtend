@@ -22,7 +22,7 @@ def one_hot(y, num_labels='auto', dtype='float'):
 
     Returns
     ----------
-    onehot : numpy.ndarray, shape = [n_classlabels]
+    ary : numpy.ndarray, shape = [n_classlabels]
         One-hot encoded array, where each sample is represented as
         a row vector in the returned array.
 
@@ -41,5 +41,11 @@ def one_hot(y, num_labels='auto', dtype='float'):
     else:
         uniq = num_labels
     if uniq == 1:
-        return np.array([[0.]], dtype=dtype)
-    return (np.arange(uniq) == yt[:, None]).astype(dtype)
+        ary = np.array([[0.]], dtype=dtype)
+
+    else:
+        ary = np.zeros((len(y), uniq))
+        for i, val in enumerate(y):
+            ary[i, val] = 1
+
+    return ary.astype(dtype)

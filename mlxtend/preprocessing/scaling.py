@@ -48,8 +48,8 @@ def minmax_scaling(array, columns, min_val=0, max_val=1):
     ary_newt[:, columns] = numerator / denominator
 
     if not min_val == 0 and not max_val == 1:
-            ary_newt[:, columns] = (ary_newt[:, columns] *
-                                    (max_val - min_val) + min_val)
+        ary_newt[:, columns] = (ary_newt[:, columns] *
+                                (max_val - min_val) + min_val)
 
     return ary_newt[:, columns]
 

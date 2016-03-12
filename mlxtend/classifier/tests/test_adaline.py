@@ -31,7 +31,7 @@ def test_array_dimensions():
 
 
 def test_normal_equation():
-    t1 = np.array([-5.21e-16,  -7.86e-02,   1.02e+00])
+    t1 = np.array([-5.21e-16, -7.86e-02, 1.02e+00])
     ada = Adaline(epochs=30,
                   eta=0.01,
                   minibatches=None,
@@ -42,7 +42,7 @@ def test_normal_equation():
 
 
 def test_gradient_descent():
-    t1 = np.array([-5.21e-16,  -7.86e-02,   1.02e+00])
+    t1 = np.array([-5.21e-16, -7.86e-02, 1.02e+00])
     ada = Adaline(epochs=30,
                   eta=0.01,
                   minibatches=1,
@@ -53,7 +53,7 @@ def test_gradient_descent():
 
 
 def test_refit_weights():
-    t1 = np.array([-5.21e-16,  -7.86e-02,   1.02e+00])
+    t1 = np.array([-5.21e-16, -7.86e-02, 1.02e+00])
     ada = Adaline(epochs=15,
                   eta=0.01,
                   minibatches=1,
@@ -65,7 +65,7 @@ def test_refit_weights():
 
 
 def test_standardized_iris_data_with_zero_weights():
-    t1 = np.array([-5.21e-16,  -7.86e-02,   1.02e+00])
+    t1 = np.array([-5.21e-16, -7.86e-02, 1.02e+00])
     ada = Adaline(epochs=30,
                   eta=0.01,
                   minibatches=1,
@@ -77,7 +77,7 @@ def test_standardized_iris_data_with_zero_weights():
 
 
 def test_stochastic_gradient_descent():
-    t1 = np.array([-5.21e-16,  -7.86e-02,   1.02e+00])
+    t1 = np.array([-5.21e-16, -7.86e-02, 1.02e+00])
     ada = Adaline(epochs=30,
                   eta=0.01,
                   minibatches=len(y),
@@ -98,7 +98,7 @@ def test_ary_persistency_in_shuffling():
 
 
 def test_0_1_class():
-    t1 = np.array([0.51, -0.04,  0.51])
+    t1 = np.array([0.51, -0.04, 0.51])
     ada = Adaline(epochs=30,
                   eta=0.01,
                   minibatches=1,

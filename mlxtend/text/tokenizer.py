@@ -6,8 +6,8 @@
 #
 # License: BSD 3 clause
 
-
 import re
+
 
 def tokenizer_words_and_emoticons(text):
     """Convert text to lowercase words and emoticons.

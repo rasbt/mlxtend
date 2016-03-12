@@ -12,11 +12,17 @@ from time import time
 
 
 class _BaseRegressor(object):
-    """Parent Class Base Regressor"""
+
+    """Parent Class Base Regressor
+
+    A base class that is important by
+    regressor child classes.
+
+    """
     def __init__(self, print_progress=0):
         self.print_progress = print_progress
 
-    def fit(self, X, y):
+    def fit(self, X, y, init_weights=True):
         """Learn weight coefficients from training data.
 
         Parameters
@@ -26,12 +32,18 @@ class _BaseRegressor(object):
             n_features is the number of features.
         y : array-like, shape = [n_samples]
             Target values.
+        init_weights : bool (default: None)
+            Reinitialize weights
 
         Returns
         -------
         self : object
 
         """
+        if not (init_weights is None or isinstance(init_weights, bool)):
+            raise AttributeError("init_weights must be True, False, or None")
+        init_weights
+        self._check_arrays(X=X, y=y)
         return self
 
     def predict(self, X):
@@ -58,8 +70,8 @@ class _BaseRegressor(object):
 
     def _shuffle(self, arrays):
         """Shuffle arrays in unison."""
-        r = np.random.permutation(len(y))
-        return [ary[r] for r in arrays]
+        r = np.random.permutation(len(arrays[0]))
+        return [ary[r] for ary in arrays]
 
     def _print_progress(self, epoch, cost=None, time_interval=10):
         if self.print_progress > 0:
@@ -105,6 +117,7 @@ class _BaseRegressor(object):
             raise ValueError('X and y must contain the same number of samples')
 
     def _init_weights(self, shape, zero_init_weight=False,
+                      coef=0.001,
                       dtype='float64', seed=None):
         """Initialize weight coefficients."""
         if seed:
@@ -112,5 +125,5 @@ class _BaseRegressor(object):
         if zero_init_weight:
             w = np.zeros(shape)
         else:
-            w = np.random.normal(loc=0.0, scale=1.0, size=shape)
+            w = coef * np.random.normal(loc=0.0, scale=1.0, size=shape)
         return w.astype(dtype)

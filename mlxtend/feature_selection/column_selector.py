@@ -8,8 +8,10 @@
 
 
 class ColumnSelector(object):
-    """ A feature selector for scikit-learn's Pipeline class that returns
-        specified columns from a numpy array.
+    """Select specific columns from a data set.
+
+    A feature selector for scikit-learn's Pipeline class that returns
+    specified columns from a numpy array.
 
     """
     def __init__(self, cols):

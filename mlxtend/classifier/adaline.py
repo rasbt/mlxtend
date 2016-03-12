@@ -12,6 +12,7 @@ from .base import _BaseClassifier
 
 
 class Adaline(_BaseClassifier):
+
     """ADAptive LInear NEuron classifier.
 
     Parameters
@@ -94,9 +95,10 @@ class Adaline(_BaseClassifier):
             self.thres_ = 0.5
 
         if init_weights:
-            self.w_ = self._init_weights(shape=1 + X.shape[1],
-                                         zero_init_weight=self.zero_init_weight,
-                                         seed=self.random_seed)
+            self.w_ = self._init_weights(
+                shape=1 + X.shape[1],
+                zero_init_weight=self.zero_init_weight,
+                seed=self.random_seed)
 
         self.cost_ = []
 
@@ -125,7 +127,7 @@ class Adaline(_BaseClassifier):
                 cost = self._sum_squared_error_cost(y, self._activation(X))
                 self.cost_.append(cost)
                 if self.print_progress:
-                    self._print_progress(epoch=i+1, cost=cost)
+                    self._print_progress(epoch=i + 1, cost=cost)
 
         return self
 

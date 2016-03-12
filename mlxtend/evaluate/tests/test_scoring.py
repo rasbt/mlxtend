@@ -7,6 +7,7 @@
 from mlxtend.evaluate import scoring
 import numpy as np
 
+
 def test_metric_argument():
     "Test exception is raised when user provides invalid metric argument"
     try:

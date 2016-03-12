@@ -9,18 +9,17 @@ from mlxtend.text import generalize_names_duplcheck
 from mlxtend.text import generalize_names
 from io import StringIO
 import pandas as pd
-import os
+
 
 def test_generalize_names_duplcheck():
-
 
     df = pd.read_csv(StringIO(csv))
 
     # duplicates before
     dupl = any(df['Name'].apply(generalize_names).duplicated())
-    assert(dupl==True)
+    assert dupl is True
 
     # no duplicates
     df_new = generalize_names_duplcheck(df=df, col_name='Name')
     no_dupl = any(df_new['Name'].duplicated())
-    assert(no_dupl==False)
+    assert no_dupl is False

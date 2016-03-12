@@ -9,8 +9,6 @@ from mlxtend.data import iris_data
 import numpy as np
 
 
-#### Binary
-
 X, y = iris_data()
 X = X[:, [0, 3]]  # sepal length and petal width
 X_bin = X[0:100]  # class 0 and class 1
@@ -24,8 +22,8 @@ X[:, 1] = (X[:, 1] - X[:, 1].mean()) / X[:, 1].std()
 
 
 def test_binary_logistic_regression_gd():
-    t = np.array([[1.11, -0.1],
-                  [-4.12, 2.52]])
+    t = np.array([[-0.2, 0.2],
+                  [-3.09, 3.09]])
     lr = SoftmaxRegression(epochs=200,
                            eta=0.005,
                            minibatches=1,
@@ -37,8 +35,8 @@ def test_binary_logistic_regression_gd():
 
 
 def test_binary_logistic_regression_sgd():
-    t = np.array([[0.56, 0.45],
-                  [-4.18, 2.58]])
+    t = np.array([[-0.68, 0.68],
+                  [-3.2, 3.2]])
     lr = SoftmaxRegression(epochs=200,
                            eta=0.005,
                            minibatches=len(y_bin),
@@ -57,8 +55,8 @@ def test_binary_l2_regularization_gd():
                            random_seed=1)
     lr.fit(X_bin, y_bin)
     y_pred = lr.predict(X_bin)
-    expect_weights = np.array([[0.186, 0.186],
-                               [-2.625, 2.037]])
+    expect_weights = np.array([[-0.316, 0.317],
+                               [-2.265, 2.265]])
 
     np.testing.assert_almost_equal(lr.w_, expect_weights, 3)
     acc = sum(y_pred == y_bin) / len(y_bin)
@@ -66,8 +64,8 @@ def test_binary_l2_regularization_gd():
 
 
 def test_multi_logistic_regression_gd_weights():
-    t = np.array([[-0.17, -2.86, 3.51],
-                  [-4.85, 2.0, 0.35]])
+    t = np.array([[-1.04, -2.39, 3.43],
+                  [-3.98, 2.31, 1.67]])
     lr = SoftmaxRegression(epochs=200,
                            eta=0.005,
                            minibatches=1,
@@ -77,8 +75,6 @@ def test_multi_logistic_regression_gd_weights():
 
 
 def test_multi_logistic_regression_gd_acc():
-    t = np.array([[-0.17, -2.86, 3.51],
-                  [-4.85, 2.0, 0.35]])
     lr = SoftmaxRegression(epochs=200,
                            eta=0.005,
                            minibatches=1,

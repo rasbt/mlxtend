@@ -14,7 +14,7 @@ from itertools import cycle
 
 
 def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-',
-                    alpha=0.5, lw=2, legend=True, where='post', grid=True,
+                    alpha=0.5, lw=2, where='post', grid=True,
                     count_label='Count',
                     xlim='auto', ylim='auto', invert_axes=False,
                     legend_loc='best', ax=None):
@@ -37,8 +37,6 @@ def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-',
         Transparency level from 0.0 to 1.0.
     lw : int or float (default: 2)
         Linewidth parameter.
-    legend : bool (default: True)
-        Plots legend if True.
     where : {'post', 'pre', 'mid'} (default: 'post')
         Starting location of the steps.
     grid : bool (default: `True`)
@@ -74,7 +72,7 @@ def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-',
     color_gen = cycle(colors)
     marker_gen = cycle(markers)
     linestyle_gen = cycle(linestyles.split(','))
-    r = range(1, len(df_temp.index)+1)
+    r = range(1, len(df_temp.index) + 1)
     labels = df_temp.columns
 
     x_data = df_temp
@@ -99,13 +97,13 @@ def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-',
         ax.set_ylim, ax.set_xlim = ax.set_xlim, ax.set_ylim
 
     if ylim == 'auto':
-        ax.set_ylim([np.min(y_data)-1, np.max(y_data)+1])
+        ax.set_ylim([np.min(y_data) - 1, np.max(y_data) + 1])
     else:
         ax.set_ylim(ylim)
 
     if xlim == 'auto':
         df_min, df_max = np.min(x_data.min()), np.max(x_data.max())
-        ax.set_xlim([df_min-1, df_max+1])
+        ax.set_xlim([df_min - 1, df_max + 1])
 
     else:
         ax.set_xlim(xlim)

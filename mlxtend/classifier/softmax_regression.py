@@ -14,6 +14,7 @@ from .base import _BaseClassifier
 
 
 class SoftmaxRegression(_BaseClassifier):
+
     """Logistic regression classifier.
 
     Parameters
@@ -72,11 +73,6 @@ class SoftmaxRegression(_BaseClassifier):
             mat[i, val] = 1
         return mat.astype(float)
 
-    def _init_bias(self, n_features, n_classes):
-        w = np.zeros((n_features, n_classes))
-        b = np.zeros(n_classes)
-        return w, b
-
     def _net_input(self, X, W, b):
         return (X.dot(W) + b)
 
@@ -113,13 +109,14 @@ class SoftmaxRegression(_BaseClassifier):
         if init_weights:
             self._n_classes = np.max(y) + 1
             self._n_features = X.shape[1]
-            self.w_ = self._init_weights(shape=(self._n_features,
-                                                self._n_classes),
-                                         zero_init_weight=self.zero_init_weight,
-                                         seed=self.random_seed)
-            self.b_ = self._init_weights(shape=self._n_classes,
-                                         zero_init_weight=self.zero_init_weight,
-                                         seed=self.random_seed)
+            self.w_ = self._init_weights(
+                shape=(self._n_features, self._n_classes),
+                zero_init_weight=self.zero_init_weight,
+                seed=self.random_seed)
+            self.b_ = self._init_weights(
+                shape=self._n_classes,
+                zero_init_weight=self.zero_init_weight,
+                seed=self.random_seed)
             self.cost_ = []
 
         n_idx = list(range(y.shape[0]))
@@ -162,7 +159,7 @@ class SoftmaxRegression(_BaseClassifier):
             self.cost_.append(cost)
 
             if self.print_progress:
-                self._print_progress(epoch=i+1, cost=cost)
+                self._print_progress(epoch=i + 1, cost=cost)
 
         return self
 

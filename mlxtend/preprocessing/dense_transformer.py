@@ -8,6 +8,7 @@
 
 
 class DenseTransformer(object):
+
     """Convert a sparse matrix into a dense matrix."""
 
     def __init__(self, some_param=True):

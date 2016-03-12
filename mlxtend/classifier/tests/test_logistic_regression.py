@@ -20,7 +20,7 @@ X[:, 1] = (X[:, 1] - X[:, 1].mean()) / X[:, 1].std()
 
 
 def test_logistic_regression_gd():
-    t = np.array([0.54, 1.22, 4.42])
+    t = np.array([0.52, 1.2, 4.4])
     lr = LogisticRegression(epochs=100,
                             eta=0.01,
                             minibatches=1,
@@ -28,11 +28,13 @@ def test_logistic_regression_gd():
 
     lr.fit(X, y)  # 0, 1 class
     np.testing.assert_almost_equal(lr.w_, t, 2)
-    assert((y == lr.predict(X)).all())
+    y_pred = lr.predict(X)
+    acc = np.sum(y == y_pred, axis=0) / float(X.shape[0])
+    assert acc == 1.0, "Acc: %s" % acc
 
 
 def test_logistic_regression_sgd():
-    t = np.array([0.53, 1.2, 4.4])
+    t = np.array([0.51, 1.18, 4.38])
     lr = LogisticRegression(epochs=100,
                             eta=0.01,
                             minibatches=len(y),
@@ -40,7 +42,9 @@ def test_logistic_regression_sgd():
 
     lr.fit(X, y)  # 0, 1 class
     np.testing.assert_almost_equal(lr.w_, t, 2)
-    assert((y == lr.predict(X)).all())
+    y_pred = lr.predict(X)
+    acc = np.sum(y == y_pred, axis=0) / float(X.shape[0])
+    assert acc == 1.0, "Acc: %s" % acc
 
 
 def test_l2_regularization_gd():
@@ -51,11 +55,12 @@ def test_l2_regularization_gd():
                             random_seed=1)
     lr.fit(X, y)
     y_pred = lr.predict(X)
-    expect_weights = np.array([0.303, 1.066, 2.329])
+    expect_weights = np.array([0.153, 1.055, 2.284])
 
     np.testing.assert_almost_equal(lr.w_, expect_weights, 3)
-    acc = sum(y_pred == y) / len(y)
-    assert(acc == 1.0)
+    y_pred = lr.predict(X)
+    acc = np.sum(y == y_pred, axis=0) / float(X.shape[0])
+    assert acc == 1.0, "Acc: %s" % acc
 
 
 def test_l2_regularization_sgd():
@@ -69,9 +74,9 @@ def test_l2_regularization_sgd():
     expect_weights = np.array([-2.73e-04, 2.40e-01, 3.53e-01])
 
     np.testing.assert_almost_equal(lr.w_, expect_weights, 2)
-    acc = sum(y_pred == y) / float(len(y))
-
-    assert(acc == 0.97)
+    y_pred = lr.predict(X)
+    acc = np.sum(y == y_pred, axis=0) / float(X.shape[0])
+    assert acc == 0.97, "Acc: %s" % acc
 
 
 def test_ary_persistency_in_shuffling():

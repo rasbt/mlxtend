@@ -55,7 +55,7 @@ def test_gradient_descent():
     nn.fit(X_std, y)
     y_pred = nn.predict(X_std)
     acc = np.sum(y == y_pred, axis=0) / float(X_std.shape[0])
-    assert(round(acc, 2) == 0.99)
+    assert round(acc, 2) == 0.99, "Acc: %s" % acc
 
 
 def test_shuffle():
@@ -75,7 +75,7 @@ def test_shuffle():
     nn.fit(X_std, y)
     y_pred = nn.predict(X_std)
     acc = np.sum(y == y_pred, axis=0) / float(X_std.shape[0])
-    assert(round(acc, 2) == 0.99)
+    assert round(acc, 2) == 0.99, "Acc: %s" % acc
 
     nn = NeuralNetMLP(n_output=3,
                       n_features=X.shape[1],
@@ -92,7 +92,7 @@ def test_shuffle():
     nn.fit(X_std, y)
     y_pred = nn.predict(X_std)
     acc = np.sum(y == y_pred, axis=0) / float(X_std.shape[0])
-    assert(round(acc, 2) == 0.99)
+    assert round(acc, 2) == 0.99, "Acc: %s" % acc
 
 
 def test_minibatch():
@@ -101,7 +101,7 @@ def test_minibatch():
                       n_hidden=10,
                       l2=0.0,
                       l1=0.0,
-                      epochs=15,
+                      epochs=30,
                       alpha=2.0,
                       eta=0.05,
                       minibatches=10,
@@ -112,8 +112,7 @@ def test_minibatch():
     nn.fit(X_std, y)
     y_pred = nn.predict(X_std)
     acc = np.sum(y == y_pred, axis=0) / float(X_std.shape[0])
-    print(acc)
-    assert(round(acc, 2) == 0.99)
+    assert round(acc, 2) == 0.99, "Acc: %s" % acc
 
 
 def test_binary():
@@ -133,7 +132,5 @@ def test_binary():
                       random_seed=1)
     nn.fit(X0, y0)
     y_pred = nn.predict(X0)
-    print(y_pred)
     acc = np.sum(y0 == y_pred, axis=0) / float(X0.shape[0])
-    print(acc)
-    assert(round(acc, 2) == 1.0)
+    assert round(acc, 2) == 1.0, "Acc: %s" % acc

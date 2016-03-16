@@ -15,7 +15,7 @@ from .base import _BaseClassifier
 
 class SoftmaxRegression(_BaseClassifier):
 
-    """Logistic regression classifier.
+    """Softmax regression classifier.
 
     Parameters
     ------------
@@ -47,7 +47,7 @@ class SoftmaxRegression(_BaseClassifier):
 
     Attributes
     -----------
-    w_ : 1d-array
+    w_ : 2d-array, shape=[n_features, n_classes]
         Weights after fitting.
     cost_ : list
         List of floats, the average cross_entropy for each epoch.

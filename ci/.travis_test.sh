@@ -11,28 +11,21 @@ set -e
 python --version
 python -c "import numpy; print('numpy %s' % numpy.__version__)"
 python -c "import scipy; print('scipy %s' % scipy.__version__)"
-python -c "import sklearn; print('sklearn %s' % sklearn.__version__)"
-python -c "import pandas; print('pandas %s' % pandas.__version__)"
-python -c "import matplotlib; print('matplotlib %s' % matplotlib.__version__)"
 
-if [[ "$COVERAGE" == "true" ]]; then
-    nosetests -s -v --with-coverage --cover-package=mlxtend.classifier
-    nosetests -s -v --with-coverage --cover-package=mlxtend.evaluate
-    nosetests -s -v --with-coverage --cover-package=mlxtend.math
-    nosetests -s -v --with-coverage --cover-package=mlxtend.preprocessing
-    nosetests -s -v --with-coverage --cover-package=mlxtend.regressor
-    nosetests -s -v --with-coverage --cover-package=mlxtend.text
-    nosetests -s -v --with-coverage --cover-package=mlxtend.feature_selection
-    nosetests -s -v --with-coverage --cover-package=mlxtend.utils
+
+if [[ "$TENSORFLOW" == "true" ]]; then
+    python -c "import tensorflow; print('tensorflow %s' % tensorflow.__version__)"
+    nosetests -s -v mlxtend.tf_classifier --nologcapture
 else
-    nosetests -s -v mlxtend.classifier
-    nosetests -s -v mlxtend.evaluate
-    nosetests -s -v mlxtend.math
-    nosetests -s -v mlxtend.preprocessing
-    nosetests -s -v mlxtend.regressor
-    nosetests -s -v mlxtend.regression_utils
-    nosetests -s -v mlxtend.text
-    nosetests -s -v mlxtend.feature_selection
-    nosetests -s -v mlxtend.utils
+    python -c "import sklearn; print('sklearn %s' % sklearn.__version__)"
+    python -c "import pandas; print('pandas %s' % pandas.__version__)"
+    python -c "import matplotlib; print('matplotlib %s' % matplotlib.__version__)"
+
+    if [[ "$COVERAGE" == "true" ]]; then
+        nosetests -s -v --with-coverage --exclude-dir=mlxtend/tf_classifier --exclude-dir=mlxtend/data --exclude-dir=mlxtend/general_plotting
+
+    else
+        nosetests -s -v --exclude-dir=mlxtend/tf_classifier --exclude-dir=mlxtend/data --exclude-dir=mlxtend/general_plotting
+    fi
+
 fi
-#make test-doc test-sphinxext

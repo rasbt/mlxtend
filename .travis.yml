@@ -1,4 +1,7 @@
 language: python
+sudo: false
+os:
+    - linux
 virtualenv:
   system_site_packages: true
 env:
@@ -8,6 +11,8 @@ env:
     - PYTHON_VERSION="3.5" LATEST="true"
     - PYTHON_VERSION="3.5" NUMPY_VERSION="1.10.4" SCIPY_VERSION="0.17" SKLEARN_VERSION="0.17" PANDAS_VERSION="0.17.1" MATPLOTLIB_VERSION="1.5.1"
     - PYTHON_VERSION="3.5" COVERAGE="true" LATEST="true"
+    - PYTHON_VERSION="2.7" TENSORFLOW="true" LATEST="true"
+    - PYTHON_VERSION="3.4" TENSORFLOW="true" LATEST="true"
 install: source ./ci/.travis_install.sh
 script: bash ./ci/.travis_test.sh
 after_success:
@@ -23,3 +28,11 @@ notifications:
       - mail@sebastianraschka.com
     on_success: always
     on_failure: always
+
+addons:
+    apt:
+        sources:
+            - ubuntu-toolchain-r-test
+        packages:
+            - gcc-4.8
+            - g++-4.8

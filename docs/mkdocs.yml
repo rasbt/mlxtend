@@ -30,6 +30,7 @@ google_analytics: ['UA-38457794-2', 'rasbt.github.io/mlxtend/']
 pages:
 - Home: index.md
 - User Guide:
+  - ./USER_GUIDE_INDEX.md
   - classifier:
     - user_guide/classifier/EnsembleVoteClassifier.md
     - user_guide/classifier/Perceptron.md

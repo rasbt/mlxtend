@@ -447,6 +447,12 @@
     <ul class="dropdown-menu">
         
             
+<li >
+    <a href="../../tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
+</li>
+
+        
+            
 <li class="active">
     <a href="./">SoftmaxRegression</a>
 </li>
@@ -597,7 +603,7 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../../general_concepts/regularization-linear/">
+                        <a rel="next" href="../../tf_classifier/TfSoftmaxRegression/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
@@ -666,6 +672,7 @@
 <p><mathjax>$$z = w_1x_1 + ... + w_mx_m  + b= \sum_{l=0}^{m} w_l x_l + b= \mathbf{w}^T\mathbf{x} + b.$$</mathjax> </p>
 <p>(<strong>w</strong> is the weight vector, <mathjax>$\mathbf{x}$</mathjax> is the feature vector of 1 training sample, and <mathjax>$b$</mathjax> is the bias unit.) <br />
 Now, this softmax function computes the probability that this training sample <mathjax>$\mathbf{x}^{(i)}$</mathjax> belongs to class <mathjax>$j$</mathjax> given the weight and net input <mathjax>$z^{(i)}$</mathjax>. So, we compute the probability <mathjax>$p(y = j \mid \mathbf{x^{(i)}; w}_j)$</mathjax> for each class label in  <mathjax>$j = 1, \ldots, k.$</mathjax>. Note the normalization term in the denominator which causes these class probabilities to sum up to one.</p>
+<p><img alt="" src="../SoftmaxRegression_files/softmax_schematic_1.png" /></p>
 <p>To illustrate the concept of softmax, let us walk through a concrete example. Let's assume we have a training set consisting of 4 samples from 3 different classes (0, 1, and 2)</p>
 <ul>
 <li><mathjax>$x_0 \rightarrow \text{class }0$</mathjax></li>
@@ -858,8 +865,8 @@ plt.ylabel('Cost')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_33_0.png" /></p>
-<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_33_1.png" /></p>
+<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_34_0.png" /></p>
+<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_34_1.png" /></p>
 <h3 id="predicting-class-labels">Predicting Class Labels</h3>
 <pre><code class="python">y_pred = lr.predict(X)
 print('Last 3 Class Labels: %s' % y_pred[-3:])
@@ -905,8 +912,8 @@ plt.ylabel('Cost')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_39_0.png" /></p>
-<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_39_1.png" /></p>
+<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_40_0.png" /></p>
+<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_40_1.png" /></p>
 <h1 id="api">API</h1>
 <p><em>SoftmaxRegression(eta=0.01, epochs=50, l2_lambda=0.0, minibatches=1, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
 <p>Logistic regression classifier.</p>

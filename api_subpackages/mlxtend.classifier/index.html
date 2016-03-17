@@ -448,6 +448,12 @@
         
             
 <li >
+    <a href="../../user_guide/tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/classifier/SoftmaxRegression/">SoftmaxRegression</a>
 </li>
 
@@ -736,10 +742,6 @@ ignored if solver='normal equation'</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>activation(X)</em></p>
-<p>Compute the linear activation from the net input.</p>
-<hr>
-
 <p><em>fit(X, y, init_weights=True)</em></p>
 <p>Learn weight coefficients from training data.</p>
 <p><strong>Parameters</strong></p>
@@ -763,10 +765,6 @@ training with weights from a previous fitting.</p>
 <ul>
 <li><code>self</code> : object</li>
 </ul>
-<hr>
-
-<p><em>net_input(X)</em></p>
-<p>Compute the linear net input.</p>
 <hr>
 
 <p><em>predict(X)</em></p>
@@ -1018,7 +1016,7 @@ n_features is the number of features.</p>
 </ul>
 <h3 id="properties_1">Properties</h3>
 <h2 id="logisticregression">LogisticRegression</h2>
-<p><em>LogisticRegression(eta=0.01, epochs=50, regularization=None, l2_lambda=0.0, minibatches=1, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
+<p><em>LogisticRegression(eta=0.01, epochs=50, l2_lambda=0.0, minibatches=1, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
 <p>Logistic regression classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1077,22 +1075,6 @@ epoch.</p>
 <h3 id="methods_2">Methods</h3>
 <hr>
 
-<p><em>activation(X)</em></p>
-<p>Predict class probabilities of X from the net input.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>Class 1 probability</code> : float</li>
-</ul>
-<hr>
-
 <p><em>fit(X, y, init_weights=True)</em></p>
 <p>Learn weight coefficients from training data.</p>
 <p><strong>Parameters</strong></p>
@@ -1117,10 +1099,6 @@ n_features is the number of features.</p>
 </ul>
 <hr>
 
-<p><em>net_input(X)</em></p>
-<p>Compute the linear net input.</p>
-<hr>
-
 <p><em>predict(X)</em></p>
 <p>Predict class labels of X.</p>
 <p><strong>Parameters</strong></p>
@@ -1137,6 +1115,22 @@ n_features is the number of features.</p>
 <p><code>class_labels</code> : array-like, shape = [n_samples]</p>
 <p>Predicted class labels.</p>
 </li>
+</ul>
+<hr>
+
+<p><em>predict_proba(X)</em></p>
+<p>Predict class probabilities of X from the net input.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>Class 1 probability</code> : float</li>
 </ul>
 <h3 id="properties_2">Properties</h3>
 <h2 id="neuralnetmlp">NeuralNetMLP</h2>
@@ -1271,7 +1265,7 @@ n_features is the number of features.</p>
 </ul>
 <h3 id="properties_3">Properties</h3>
 <h2 id="perceptron">Perceptron</h2>
-<p><em>Perceptron(eta=0.1, epochs=50, shuffle=False, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
+<p><em>Perceptron(eta=0.1, epochs=50, shuffle=True, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
 <p>Perceptron classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1284,12 +1278,12 @@ n_features is the number of features.</p>
 <p>Number of passes over the training dataset.</p>
 </li>
 <li>
-<p><code>shuffle</code> : bool (default: False)</p>
+<p><code>shuffle</code> : bool (default: True)</p>
 <p>Shuffles training data every epoch if True to prevent circles.</p>
 </li>
 <li>
 <p><code>random_seed</code> : int</p>
-<p>Random state for initializing random weights.</p>
+<p>Random state for initializing random weights and shuffling.</p>
 </li>
 <li>
 <p><code>zero_init_weight</code> : bool (default: False)</p>
@@ -1343,10 +1337,6 @@ training with weights from a previous fitting.</p>
 <p>self</p>
 <hr>
 
-<p><em>net_input(X)</em></p>
-<p>Net input function</p>
-<hr>
-
 <p><em>predict(X)</em></p>
 <p>Predict class labels of X.</p>
 <p><strong>Parameters</strong></p>
@@ -1367,7 +1357,7 @@ n_features is the number of features.</p>
 <h3 id="properties_4">Properties</h3>
 <h2 id="softmaxregression">SoftmaxRegression</h2>
 <p><em>SoftmaxRegression(eta=0.01, epochs=50, l2_lambda=0.0, minibatches=1, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
-<p>Logistic regression classifier.</p>
+<p>Softmax regression classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1413,13 +1403,12 @@ stddev=1.</p>
 <p><strong>Attributes</strong></p>
 <ul>
 <li>
-<p><code>w_</code> : 1d-array</p>
+<p><code>w_</code> : 2d-array, shape=[n_features, n_classes]</p>
 <p>Weights after fitting.</p>
 </li>
 <li>
 <p><code>cost_</code> : list</p>
-<p>List of floats with sum of squared error cost (sgd or gd) for every
-epoch.</p>
+<p>List of floats, the average cross_entropy for each epoch.</p>
 </li>
 </ul>
 <h3 id="methods_5">Methods</h3>

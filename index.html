@@ -701,7 +701,7 @@ gs = gridspec.GridSpec(2, 2)
 fig = plt.figure(figsize=(10, 8))
 
 for clf, lab, grd in zip([clf1, clf2, clf3, eclf],
-                         ['Logistic Regression', 'Random Forest', 'Naive Bayes', 'Ensemble'],
+                         ['Logistic Regression', 'Random Forest', 'RBF kernel SVM', 'Ensemble'],
                          itertools.product([0, 1], repeat=2)):
     clf.fit(X, y)
     ax = plt.subplot(gs[grd[0], grd[1]])
@@ -766,6 +766,6 @@ plt.show()
 </html>
 
 <!--
-MkDocs version : 0.14.0
-Build Date UTC : 2016-03-17 15:27:58.037951
+MkDocs version : 0.15.2
+Build Date UTC : 2016-03-18 02:55:42.105985
 -->

@@ -53,7 +53,7 @@ fi
 
 if [[ "$TENSORFLOW" == "true" ]]; then
   # workaround for "Cannot remove entries from nonexistent file /home/travis/miniconda/envs/testenv/lib/python3.4/site-packages/easy-install.pth"
-  conda update setuptools
+  conda update setuptools --yes
   curl https://bootstrap.pypa.io/ez_setup.py -o - | python
   case "$TRAVIS_OS_NAME" in
       "linux")

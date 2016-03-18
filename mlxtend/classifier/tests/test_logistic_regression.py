@@ -33,6 +33,20 @@ def test_logistic_regression_gd():
     assert acc == 1.0, "Acc: %s" % acc
 
 
+def test_predict_proba():
+    lr = LogisticRegression(epochs=100,
+                            eta=0.01,
+                            minibatches=1,
+                            random_seed=1)
+
+    lr.fit(X, y)  # 0, 1 class
+
+    idx = [0, 48, 99] # sample labels: 0, 0, 1
+    y_pred = lr.predict_proba(X[idx])
+    expect = np.array([0.009, 0.012, 0.993])
+    np.testing.assert_almost_equal(y_pred, expect, 3)
+
+
 def test_logistic_regression_sgd():
     t = np.array([0.51, 1.18, 4.38])
     lr = LogisticRegression(epochs=100,

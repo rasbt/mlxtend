@@ -74,6 +74,20 @@ def test_multi_logistic_regression_gd_weights():
     np.testing.assert_almost_equal(lr.w_, t, 2)
 
 
+def test_multi_logistic_probas():
+    lr = SoftmaxRegression(epochs=200,
+                           eta=0.005,
+                           minibatches=1,
+                           random_seed=1)
+    lr.fit(X, y)
+    idx = [0, 50, 149] # sample labels: 0, 1, 2
+    y_pred = lr.predict_proba(X[idx])
+    exp = np.array([[0.99, 0.01, 0.0],
+                    [0.01, 0.89, 0.1],
+                    [0.0, 0.02, 0.98]])
+    np.testing.assert_almost_equal(y_pred, exp, 2)
+
+
 def test_multi_logistic_regression_gd_acc():
     lr = SoftmaxRegression(epochs=200,
                            eta=0.005,

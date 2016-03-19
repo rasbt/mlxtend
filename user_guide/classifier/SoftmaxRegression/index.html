@@ -846,7 +846,7 @@ print('Cost: ', J_cost)
 <h2 id="example-1-gradient-descent">Example 1 - Gradient Descent</h2>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.evaluate import plot_decision_regions
-#from mlxtend.classifier import LogisticRegression
+from mlxtend.classifier import SoftmaxRegression
 import matplotlib.pyplot as plt
 
 # Loading Data
@@ -862,7 +862,7 @@ lr = SoftmaxRegression(eta=0.005, epochs=200, minibatches=1, random_seed=1)
 lr.fit(X, y)
 
 plot_decision_regions(X, y, clf=lr)
-plt.title('Logistic Regression - Stochastic Gradient Descent')
+plt.title('Softmax Regression - Stochastic Gradient Descent')
 plt.show()
 
 plt.plot(range(len(lr.cost_)), lr.cost_)
@@ -886,14 +886,14 @@ print('Last 3 Class Labels:\n %s' % y_pred[-3:])
 </code></pre>
 
 <pre><code>Last 3 Class Labels:
- [[  5.87274721e-06   7.26442000e-02   9.27349927e-01]
- [  2.46292872e-07   1.19483327e-02   9.88051421e-01]
- [  2.09323705e-04   2.93173063e-01   7.06617613e-01]]
+ [[  4.99921674e-06   7.23245885e-02   9.27670412e-01]
+ [  2.50487208e-07   1.20047952e-02   9.87994954e-01]
+ [  2.14388120e-04   2.95955727e-01   7.03829884e-01]]
 </code></pre>
 <h2 id="example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</h2>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.evaluate import plot_decision_regions
-from mlxtend.classifier import LogisticRegression
+from mlxtend.classifier import SoftmaxRegression
 import matplotlib.pyplot as plt
 
 # Loading Data
@@ -909,7 +909,7 @@ lr = SoftmaxRegression(eta=0.005, epochs=200, minibatches=len(y), random_seed=1)
 lr.fit(X, y)
 
 plot_decision_regions(X, y, clf=lr)
-plt.title('Logistic Regression - Stochastic Gradient Descent')
+plt.title('Softmax Regression - Stochastic Gradient Descent')
 plt.show()
 
 plt.plot(range(len(lr.cost_)), lr.cost_)

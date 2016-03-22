@@ -116,14 +116,17 @@ class _TfBaseClassifier(object):
         if not len(y) == X.shape[0]:
             raise ValueError('X and y must contain the same number of samples')
 
-    def _init_weights(self, shape, zero_init_weight=False,
-                      coef=0.001,
-                      dtype='float64', seed=None):
-        """Initialize weight coefficients."""
-        if seed:
-            np.random.seed(seed)
-        if zero_init_weight:
-            w = np.zeros(shape)
-        else:
-            w = coef * np.random.normal(loc=0.0, scale=1.0, size=shape)
-        return w.astype(dtype)
+    def _tensor_to_numpy(self, var):
+        sess = tf.Session()
+        with sess.as_default():
+            tf.initialize_all_variables().run()
+            return var.eval()
+
+    def _one_hot(self, y, n_labels):
+        mat = np.zeros((len(y), n_labels))
+        for i, val in enumerate(y):
+            mat[i, val] = 1
+        return mat.astype(float)
+
+    def _to_classlabels(self, z):
+        return z.argmax(axis=1)

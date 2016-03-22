@@ -12,6 +12,7 @@
 
 ## `tf_classifier` (TensorFlow Classifier)
  - [`TfSoftmaxRegression`](user_guide/tf_classifier/TfSoftmaxRegression.md) (new in 0.3.1dev)
+ - [`TfMultiLayerPerceptron`](user_guide/tf_classifier/TfMultiLayerPerceptron.md) (new in 0.3.1dev)
 
 ## `regressor`
 

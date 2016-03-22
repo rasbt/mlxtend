@@ -5,5 +5,6 @@
 # License: BSD 3 clause
 
 from .tf_softmax import TfSoftmaxRegression
+from .tf_multilayerperceptron import TfMultiLayerPerceptron
 
-__all__ = ["TfSoftmaxRegression"]
+__all__ = ["TfSoftmaxRegression", "TfMultiLayerPerceptron"]

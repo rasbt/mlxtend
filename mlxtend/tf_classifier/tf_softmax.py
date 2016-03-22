@@ -35,6 +35,8 @@ class TfSoftmaxRegression(_TfBaseClassifier):
         1: Epochs elapsed and cost
         2: 1 plus time elapsed
         3: 2 plus estimated time until completion
+    dtype : Array-type (default: None)
+        Uses tensorflow.float32 if None.
 
     Attributes
     -----------
@@ -59,16 +61,6 @@ class TfSoftmaxRegression(_TfBaseClassifier):
         self.minibatches = minibatches
         self.random_seed = random_seed
         self.print_progress = print_progress
-        self.seed = random_seed
-
-    def _one_hot(self, y, n_labels):
-        mat = np.zeros((len(y), n_labels))
-        for i, val in enumerate(y):
-            mat[i, val] = 1
-        return mat.astype(float)
-
-    def _to_classlabels(self, z):
-        return z.argmax(axis=1)
 
     def fit(self, X, y,
             init_weights=True, override_minibatches=None):
@@ -92,6 +84,7 @@ class TfSoftmaxRegression(_TfBaseClassifier):
         self : object
 
         """
+        self._check_arrays(X, y)
         if override_minibatches:
             n_batches = override_minibatches
         else:
@@ -128,8 +121,8 @@ class TfSoftmaxRegression(_TfBaseClassifier):
             y_batch = tf.gather(params=tf_y, indices=tf_idx)
 
             # Setup the graph for minimizing cross entropy cost
-            logits = tf.matmul(X_batch, tf_weights_) + tf_biases_
-            cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits,
+            net = tf.matmul(X_batch, tf_weights_) + tf_biases_
+            cross_entropy = tf.nn.softmax_cross_entropy_with_logits(net,
                                                                     y_batch)
             cost = tf.reduce_mean(cross_entropy)
             optimizer = tf.train.GradientDescentOptimizer(
@@ -161,12 +154,6 @@ class TfSoftmaxRegression(_TfBaseClassifier):
             self.weights_ = tf_weights_.eval()
             self.biases_ = tf_biases_.eval()
 
-    def _tensor_to_numpy(self, var):
-        sess = tf.Session()
-        with sess.as_default():
-            tf.initialize_all_variables().run()
-            return var.eval()
-
     def _resuse_weights(self, weights, biases):
             w = tf.Variable(weights)
             b = tf.Variable(biases)
@@ -174,7 +161,7 @@ class TfSoftmaxRegression(_TfBaseClassifier):
 
     def _initialize_weights(self, n_features, n_classes):
             w = tf.Variable(tf.truncated_normal([n_features, n_classes],
-                                                seed=self.seed))
+                                                seed=self.random_seed))
             b = tf.Variable(tf.zeros([n_classes]))
             return w, b
 
@@ -209,6 +196,7 @@ class TfSoftmaxRegression(_TfBaseClassifier):
         Class probabilties : array-like, shape= [n_samples, n_classes]
 
         """
+        self._check_arrays(X)
         if not hasattr(self, 'weights_'):
             raise AttributeError('The model has not been fitted, yet.')
 

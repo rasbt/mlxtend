@@ -13,48 +13,48 @@ from .tf_base import _TfBaseClassifier
 
 
 class TfMultiLayerPerceptron(_TfBaseClassifier):
-        """Multi-layer perceptron classifier.
+    """Multi-layer perceptron classifier.
 
-        Parameters
-        ------------
-        eta : float (default: 0.5)
-            Learning rate (between 0.0 and 1.0)
-        epochs : int (default: 50)
-            Passes over the training dataset.
-        n_hidden : list (default: [50, 10])
-            Number of units per hidden layer. By default 50 units in the
-            first hidden layer, and 10 hidden units in the second hidden layer.
-        activations : list (default: ['softmax', 'softmax'])
-            Activation functions for each layer.
-            Available actiavtion functions:
-            "softmax", "relu", "tanh", "elu", "softplus", "softsign"
-        minibatches : int (default: 1)
-            Divide the training data into *k* minibatches
-            for accelerated stochastic gradient descent learning.
-            Gradient Descent Learning if `minibatches` = 1
-            Stochastic Gradient Descent learning if `minibatches` = len(y)
-            Minibatch learning if `minibatches` > 1
-        random_seed : int (default: None)
-            Set random state for shuffling and initializing the weights.
-        print_progress : int (default: 0)
-            Prints progress in fitting to stderr.
-            0: No output
-            1: Epochs elapsed and cost
-            2: 1 plus time elapsed
-            3: 2 plus estimated time until completion
-        dtype : Array-type (default: None)
-            Uses tensorflow.float32 if None.
+    Parameters
+    ------------
+    eta : float (default: 0.5)
+        Learning rate (between 0.0 and 1.0)
+    epochs : int (default: 50)
+        Passes over the training dataset.
+    n_hidden : list (default: [50, 10])
+        Number of units per hidden layer. By default 50 units in the
+        first hidden layer, and 10 hidden units in the second hidden layer.
+    activations : list (default: ['softmax', 'softmax'])
+        Activation functions for each layer.
+        Available actiavtion functions:
+        "softmax", "relu", "tanh", "elu", "softplus", "softsign"
+    minibatches : int (default: 1)
+        Divide the training data into *k* minibatches
+        for accelerated stochastic gradient descent learning.
+        Gradient Descent Learning if `minibatches` = 1
+        Stochastic Gradient Descent learning if `minibatches` = len(y)
+        Minibatch learning if `minibatches` > 1
+    random_seed : int (default: None)
+        Set random state for shuffling and initializing the weights.
+    print_progress : int (default: 0)
+        Prints progress in fitting to stderr.
+        0: No output
+        1: Epochs elapsed and cost
+        2: 1 plus time elapsed
+        3: 2 plus estimated time until completion
+    dtype : Array-type (default: None)
+        Uses tensorflow.float32 if None.
 
-        Attributes
-        -----------
-        weights_ : 2d-array, shape=[n_features, n_classes]
-            Weights after fitting.
-        biases_ : 1D-array, shape=[n_classes]
-            Bias units after fitting.
-        cost_ : list
-            List of floats, the average cross_entropy for each epoch.
+    Attributes
+    -----------
+    weights_ : 2d-array, shape=[n_features, n_classes]
+        Weights after fitting.
+    biases_ : 1D-array, shape=[n_classes]
+        Bias units after fitting.
+    cost_ : list
+        List of floats, the average cross_entropy for each epoch.
 
-        """
+    """
     def __init__(self, eta=0.5, epochs=50,
                  n_hidden=[50, 10],
                  activations=['softmax', 'softmax'],
@@ -62,7 +62,8 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
                  print_progress=0, dtype=None):
         self.eta = eta
         if len(n_hidden) != len(activations):
-            raise AttributeError('Number n_hidden and n_activations must be equal.')
+            raise AttributeError('Number n_hidden and'
+                                 ' n_activations must be equal.')
         self.n_hidden = n_hidden
         self.activations = self._get_activations(activations)
 
@@ -93,7 +94,23 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
         return act
 
     def fit(self, X, y, init_weights=True, override_minibatches=None):
-        """
+        """Learn weight coefficients from training data.
+
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+        y : array-like, shape = [n_samples]
+            Target values.
+        init_weights : bool (default: True)
+            (Re)initializes weights to small random floats if True.
+        override_minibatches : int or None (default: None)
+            Uses a different number of minibatches for this session.
+
+        Returns
+        -------
+        self : object
 
         """
         self._check_arrays(X, y)
@@ -115,15 +132,17 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
                 self._n_classes = np.max(y) + 1
                 self._n_features = X.shape[1]
                 self._weight_maps, self._bias_maps = self._layermapping(
-                                                         n_features=self._n_features,
-                                                         n_classes=self._n_classes,
-                                                         n_hidden=self.n_hidden)
+                    n_features=self._n_features,
+                    n_classes=self._n_classes,
+                    n_hidden=self.n_hidden)
                 tf_weights, tf_biases = self._initialize_weights(
-                                            weight_maps=self._weight_maps,
-                                            bias_maps=self._bias_maps)
+                    weight_maps=self._weight_maps,
+                    bias_maps=self._bias_maps)
                 self.cost_ = []
             else:
-                tf_weights, tf_biases = self._reuse_weights(weights=self.weights_, baises=self.biases_)
+                tf_weights, tf_biases = self._reuse_weights(
+                    weights=self.weights_,
+                    baises=self.biases_)
 
             # Prepare the training data
             y_enc = self._one_hot(y, self._n_classes)
@@ -137,13 +156,17 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
             y_batch = tf.gather(params=tf_y, indices=tf_idx)
 
             # Setup the graph for minimizing cross entropy cost
-
-            logits = self._predict(tf_X=tf_X, tf_weights=tf_weights, tf_biases=tf_biases, activations=self.activations)
+            logits = self._predict(tf_X=tf_X,
+                                   tf_weights=tf_weights,
+                                   tf_biases=tf_biases,
+                                   activations=self.activations)
 
             # Define loss and optimizer
-            cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits, tf_y)
+            cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits,
+                                                                    tf_y)
             cost = tf.reduce_mean(cross_entropy)
-            optimizer = tf.train.GradientDescentOptimizer(learning_rate=self.eta)
+            optimizer = tf.train.GradientDescentOptimizer(
+                learning_rate=self.eta)
             train = optimizer.minimize(cost)
 
             # Initializing the variables
@@ -212,7 +235,10 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
         with tf.Session():
             tf.initialize_all_variables().run()
             tf_X = tf.convert_to_tensor(value=X, dtype=self.dtype)
-            logits = self._predict(tf_X=tf_X, tf_weights=self.weights_, tf_biases=self.biases_, activations=self.activations)
+            logits = self._predict(tf_X=tf_X,
+                                   tf_weights=self.weights_,
+                                   tf_biases=self.biases_,
+                                   activations=self.activations)
             return logits.eval()
 
     def _layermapping(self, n_features, n_classes, n_hidden):
@@ -236,8 +262,10 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
             }
 
         """
-        weights =  {1: [[n_features, n_hidden[0]], 'n_features, n_hidden_1'],
-                    'out': [[n_hidden[-1], n_classes], 'n_hidden_%d, n_classes' % len(n_hidden)]}
+        weights = {1: [[n_features, n_hidden[0]],
+                       'n_features, n_hidden_1'],
+                   'out': [[n_hidden[-1], n_classes],
+                           'n_hidden_%d, n_classes' % len(n_hidden)]}
         biases = {1: [[n_hidden[0]], 'n_hidden_1'],
                   'out': [[n_classes], 'n_classes']}
 
@@ -245,16 +273,20 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
             for i, h in enumerate(n_hidden[1:]):
                 layer = i + 2
                 weights[layer] = [[weights[layer - 1][0][1], h],
-                                  'n_hidden_%d, n_hidden_%d' % (layer - 1, layer)]
+                                  'n_hidden_%d, n_hidden_%d' % (layer -
+                                                                1, layer)]
                 biases[layer] = [[h], 'n_hidden_%d' % layer]
         return weights, biases
 
     def _predict(self, tf_X, tf_weights, tf_biases, activations):
-        hidden_1 = self.activations[1](tf.add(tf.matmul(tf_X, tf_weights[1]), tf_biases[1]))
+        hidden_1 = self.activations[1](tf.add(tf.matmul(tf_X,
+                                                        tf_weights[1]),
+                                              tf_biases[1]))
         prev_layer = hidden_1
         if len(tf_weights) > 2:
             for layer in range(2, len(tf_weights)):
-                prev_layer = self.activations[layer](tf.add(tf.matmul(prev_layer, tf_weights[layer]), tf_biases[layer]))
+                prev_layer = self.activations[layer](tf.add(tf.matmul(
+                    prev_layer, tf_weights[layer]), tf_biases[layer]))
         logits = tf.matmul(prev_layer, tf_weights['out']) + tf_biases['out']
         return logits
 
@@ -270,16 +302,7 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
                 seed = self.random_seed + i
             else:
                 seed = None
-            tf_weights[k[0]] = tf.Variable(tf.truncated_normal(weight_maps[k[0]][0],
-                                                               seed=seed))
+            tf_weights[k[0]] = tf.Variable(tf.truncated_normal(
+                weight_maps[k[0]][0], seed=seed))
             tf_biases[k[1]] = tf.zeros(bias_maps[k[1]][0])
         return tf_weights, tf_biases
-
-    def _one_hot(self, y, n_labels):
-        mat = np.zeros((len(y), n_labels))
-        for i, val in enumerate(y):
-            mat[i, val] = 1
-        return mat.astype(float)
-
-    def _to_classlabels(self, z):
-        return z.argmax(axis=1)

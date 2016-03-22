@@ -82,6 +82,7 @@ class TfSoftmaxRegression(_TfBaseClassifier):
         self : object
 
         """
+        self._check_arrays(X, y)
         if override_minibatches:
             n_batches = override_minibatches
         else:
@@ -193,6 +194,7 @@ class TfSoftmaxRegression(_TfBaseClassifier):
         Class probabilties : array-like, shape= [n_samples, n_classes]
 
         """
+        self._check_arrays(X)
         if not hasattr(self, 'weights_'):
             raise AttributeError('The model has not been fitted, yet.')
 

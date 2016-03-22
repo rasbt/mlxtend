@@ -35,6 +35,8 @@ class TfSoftmaxRegression(_TfBaseClassifier):
         1: Epochs elapsed and cost
         2: 1 plus time elapsed
         3: 2 plus estimated time until completion
+    dtype : Array-type (default: None)
+        Uses tensorflow.float32 if None.
 
     Attributes
     -----------

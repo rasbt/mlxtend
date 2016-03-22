@@ -13,9 +13,51 @@ from .tf_base import _TfBaseClassifier
 
 
 class TfMultiLayerPerceptron(_TfBaseClassifier):
-    def __init__(self, eta=0.5, n_hidden=[50, 10],
+        """Multi-layer perceptron classifier.
+
+        Parameters
+        ------------
+        eta : float (default: 0.5)
+            Learning rate (between 0.0 and 1.0)
+        epochs : int (default: 50)
+            Passes over the training dataset.
+        n_hidden : list (default: [50, 10])
+            Number of units per hidden layer. By default 50 units in the
+            first hidden layer, and 10 hidden units in the second hidden layer.
+        activations : list (default: ['softmax', 'softmax'])
+            Activation functions for each layer.
+            Available actiavtion functions:
+            "softmax", "relu", "tanh", "elu", "softplus", "softsign"
+        minibatches : int (default: 1)
+            Divide the training data into *k* minibatches
+            for accelerated stochastic gradient descent learning.
+            Gradient Descent Learning if `minibatches` = 1
+            Stochastic Gradient Descent learning if `minibatches` = len(y)
+            Minibatch learning if `minibatches` > 1
+        random_seed : int (default: None)
+            Set random state for shuffling and initializing the weights.
+        print_progress : int (default: 0)
+            Prints progress in fitting to stderr.
+            0: No output
+            1: Epochs elapsed and cost
+            2: 1 plus time elapsed
+            3: 2 plus estimated time until completion
+        dtype : Array-type (default: None)
+            Uses tensorflow.float32 if None.
+
+        Attributes
+        -----------
+        weights_ : 2d-array, shape=[n_features, n_classes]
+            Weights after fitting.
+        biases_ : 1D-array, shape=[n_classes]
+            Bias units after fitting.
+        cost_ : list
+            List of floats, the average cross_entropy for each epoch.
+
+        """
+    def __init__(self, eta=0.5, epochs=50,
+                 n_hidden=[50, 10],
                  activations=['softmax', 'softmax'],
-                 epochs=100,
                  minibatches=1, random_seed=None,
                  print_progress=0, dtype=None):
         self.eta = eta
@@ -54,7 +96,7 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
         """
 
         """
-
+        self._check_arrays(X, y)
         if override_minibatches:
             n_batches = override_minibatches
         else:
@@ -163,6 +205,7 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
         Class probabilties : array-like, shape= [n_samples, n_classes]
 
         """
+        self._check_arrays(X, y)
         if not hasattr(self, 'weights_'):
             raise AttributeError('The model has not been fitted, yet.')
 

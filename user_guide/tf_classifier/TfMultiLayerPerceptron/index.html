@@ -679,6 +679,7 @@
 <h1 id="overview">Overview</h1>
 <p>(A more detailed tutorial on multi-layer perceptrons is in preparation.)</p>
 <p><img alt="" src="../TfMultilayerPerceptron_files/mlp_overview_1.png" /></p>
+<p><img alt="" src="../TfMultilayerPerceptron_files/mlp_overview_2.png" /></p>
 <p>Please also see the activation function cheatsheet at <a href="../../general_concepts/activation-functions/"><code>general_concepts.activation-functions</code></a>.</p>
 <h1 id="examples">Examples</h1>
 <h2 id="example-1-gradient-descent">Example 1 - Gradient Descent</h2>
@@ -715,7 +716,7 @@ plt.show()
 
 <pre><code>Epoch: 20/20 | Cost 0.55
 </code></pre>
-<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_13_1.png" /></p>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_14_1.png" /></p>
 <p>Continue the training if cost could be further decreased via additional epochs. Instead of training the classifier another 20 epochs, we modify the epochs and set them to 550. Also, we want to make sure to set <code>init_weights</code> to <code>False</code> in order to re-use the model parameters from the previous training.</p>
 <pre><code class="python">mlp.epochs = 550
 mlp.fit(X, y, init_weights=False)
@@ -727,13 +728,13 @@ plt.show()
 
 <pre><code>Epoch: 550/550 | Cost 0.12
 </code></pre>
-<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_15_1.png" /></p>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_16_1.png" /></p>
 <pre><code class="python">plot_decision_regions(X=X, y=y, clf=mlp)
 plt.title('Logistic Sigmoid MLP - Gradient Descent')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_16_0.png" /></p>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_17_0.png" /></p>
 <h3 id="predicting-class-labels">Predicting Class Labels</h3>
 <pre><code class="python">print('Predicted class labels:', mlp.predict(X[[0, 99, 149]]))
 </code></pre>
@@ -788,8 +789,8 @@ plt.show()
 
 <pre><code>Epoch: 100/100 | Cost 0.13
 </code></pre>
-<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_23_1.png" /></p>
-<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_23_2.png" /></p>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_24_1.png" /></p>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_24_2.png" /></p>
 <h2 id="example-3-mnist">Example 3 - MNIST</h2>
 <p>Please note that <code>mnist_data</code> just contains a random 5000-sample subset of MNIST (~10% of the original dataset size) suitable for demonstration purposes regarding computational efficiency.</p>
 <p>Although it may be overkill, and the network may terribly overfit the training data, let us initialize a more complex neural network with 2 hidden layers and 200 ReLU (Rectifier Linear Units) each.</p>
@@ -818,7 +819,7 @@ plt.show()
 
 <pre><code>Epoch: 30/30 | Cost 0.02 | Elapsed: 0:00:32 | ETA: 0:00:00
 </code></pre>
-<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_27_1.png" /></p>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_28_1.png" /></p>
 <pre><code class="python">import numpy as np
 y_pred = mlp.predict(X)
 acc = np.sum(y == y_pred, axis=0) / X.shape[0]
@@ -835,7 +836,7 @@ print('Training Accuracy: %.2f%%' % (acc * 100))
 plot_digit(X, y, 4999)  
 </code></pre>
 
-<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_29_0.png" /></p>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_30_0.png" /></p>
 <pre><code class="python">print('Prediction: %d' % mlp.predict(X[4999, None]))
 </code></pre>
 

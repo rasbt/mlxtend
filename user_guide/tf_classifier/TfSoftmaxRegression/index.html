@@ -664,8 +664,6 @@
         
             <li><a href="#methods">Methods</a></li>
         
-            <li><a href="#properties">Properties</a></li>
-        
     
     </ul>
 </div></div>
@@ -695,10 +693,10 @@ X = X[:, [0, 3]] # sepal length and petal width
 X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
 X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
 
-lr = TfSoftmaxRegression(eta=0.75, 
-                         epochs=20, 
-                         print_progress=True, 
-                         minibatches=1, 
+lr = TfSoftmaxRegression(eta=0.75,
+                         epochs=20,
+                         print_progress=True,
+                         minibatches=1,
                          random_seed=1)
 
 lr.fit(X, y)
@@ -761,10 +759,10 @@ X = X[:, [0, 3]] # sepal length and petal width
 X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
 X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
 
-lr = TfSoftmaxRegression(eta=0.5, 
-                         epochs=10, 
-                         minibatches=len(y), 
-                         print_progress=True, 
+lr = TfSoftmaxRegression(eta=0.5,
+                         epochs=10,
+                         minibatches=len(y),
+                         print_progress=True,
                          random_seed=1)
 lr.fit(X, y)
 
@@ -790,10 +788,10 @@ import matplotlib.pyplot as plt
 
 X, y = mnist_data()
 
-lr = TfSoftmaxRegression(eta=0.01, 
-                         epochs=100, 
-                         minibatches=20, 
-                         print_progress=True, 
+lr = TfSoftmaxRegression(eta=0.01,
+                         epochs=100,
+                         minibatches=20,
+                         print_progress=True,
                          random_seed=1)
 lr.fit(X, y)
 
@@ -940,8 +938,7 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li><code>Class probabilties</code> : array-like, shape= [n_samples, n_classes]</li>
-</ul>
-<h3 id="properties">Properties</h3></div>
+</ul></div>
         
     </div>
 

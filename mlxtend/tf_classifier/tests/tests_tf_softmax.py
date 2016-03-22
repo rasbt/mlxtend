@@ -63,11 +63,11 @@ def test_multi_logistic_regression_gd_weights():
 
 def test_multi_logistic_probas():
     lr = TfSoftmaxRegression(epochs=200,
-                           eta=0.75,
-                           minibatches=1,
-                           random_seed=1)
+                             eta=0.75,
+                             minibatches=1,
+                             random_seed=1)
     lr.fit(X, y)
-    idx = [0, 50, 149] # sample labels: 0, 1, 2
+    idx = [0, 50, 149]  # sample labels: 0, 1, 2
     y_pred = lr.predict_proba(X[idx])
     exp = np.array([[0.99, 0.01, 0.0],
                     [0.01, 0.89, 0.1],

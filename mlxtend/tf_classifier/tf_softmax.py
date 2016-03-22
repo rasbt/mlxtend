@@ -121,8 +121,8 @@ class TfSoftmaxRegression(_TfBaseClassifier):
             y_batch = tf.gather(params=tf_y, indices=tf_idx)
 
             # Setup the graph for minimizing cross entropy cost
-            logits = tf.matmul(X_batch, tf_weights_) + tf_biases_
-            cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits,
+            net = tf.matmul(X_batch, tf_weights_) + tf_biases_
+            cross_entropy = tf.nn.softmax_cross_entropy_with_logits(net,
                                                                     y_batch)
             cost = tf.reduce_mean(cross_entropy)
             optimizer = tf.train.GradientDescentOptimizer(

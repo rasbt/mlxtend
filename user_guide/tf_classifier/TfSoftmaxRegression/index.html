@@ -453,6 +453,12 @@
     <ul class="dropdown-menu">
         
             
+<li >
+    <a href="../TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
+</li>
+
+        
+            
 <li class="active">
     <a href="./">TfSoftmaxRegression</a>
 </li>
@@ -609,7 +615,7 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../../general_concepts/regularization-linear/">
+                        <a rel="next" href="../TfMultiLayerPerceptron/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
@@ -657,6 +663,8 @@
         <li class="main "><a href="#api">API</a></li>
         
             <li><a href="#methods">Methods</a></li>
+        
+            <li><a href="#properties">Properties</a></li>
         
     
     </ul>
@@ -801,10 +809,10 @@ plt.show()
 <pre><code class="python">import numpy as np
 y_pred = lr.predict(X)
 acc = np.sum(y == y_pred, axis=0) / X.shape[0]
-print('Accuracy: %.2f%%' % (acc * 100))
+print('Training Accuracy: %.2f%%' % (acc * 100))
 </code></pre>
 
-<pre><code>Accuracy: 97.74%
+<pre><code>Training Accuracy: 97.74%
 </code></pre>
 <pre><code class="python">def plot_digit(X, y, idx):
     img = X[idx].reshape(28,28)
@@ -932,7 +940,8 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li><code>Class probabilties</code> : array-like, shape= [n_samples, n_classes]</li>
-</ul></div>
+</ul>
+<h3 id="properties">Properties</h3></div>
         
     </div>
 

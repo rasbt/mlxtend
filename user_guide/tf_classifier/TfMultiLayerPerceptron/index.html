@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name="author" content="Sebastian Raschka"> 
-    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/minmax_scaling/"> 
+    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/tf_classifier/TfMultiLayerPerceptron/"> 
     <link rel="shortcut icon" href="../../../../../../favicon.ico">
 
-    <title>Minmax scaling - mlxtend</title>
+    <title>TfMultiLayerPerceptron - mlxtend</title>
 
     <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
@@ -226,31 +226,31 @@
         
             
 <li >
-    <a href="../DenseTransformer/">DenseTransformer</a>
+    <a href="../../preprocessing/DenseTransformer/">DenseTransformer</a>
 </li>
 
         
             
 <li >
-    <a href="../MeanCenterer/">MeanCenterer</a>
-</li>
-
-        
-            
-<li class="active">
-    <a href="./">Minmax scaling</a>
+    <a href="../../preprocessing/MeanCenterer/">MeanCenterer</a>
 </li>
 
         
             
 <li >
-    <a href="../shuffle_arrays_unison/">Shuffle arrays unison</a>
+    <a href="../../preprocessing/minmax_scaling/">Minmax scaling</a>
 </li>
 
         
             
 <li >
-    <a href="../standardize/">Standardize</a>
+    <a href="../../preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/standardize/">Standardize</a>
 </li>
 
         
@@ -453,14 +453,14 @@
     <ul class="dropdown-menu">
         
             
-<li >
-    <a href="../../tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
+<li class="active">
+    <a href="./">TfMultiLayerPerceptron</a>
 </li>
 
         
             
 <li >
-    <a href="../../tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
+    <a href="../TfSoftmaxRegression/">TfSoftmaxRegression</a>
 </li>
 
         
@@ -484,7 +484,7 @@
         
             
 <li >
-    <a href="../one-hot_encoding/">One hot encoding</a>
+    <a href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
 </li>
 
         
@@ -615,12 +615,12 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../MeanCenterer/">
+                        <a rel="next" href="../../general_concepts/regularization-linear/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../shuffle_arrays_unison/">
+                        <a rel="prev" href="../TfSoftmaxRegression/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -645,201 +645,349 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#minmax-scaling">MinMax Scaling</a></li>
+        <li class="main active"><a href="#tensorflow-multi-layer-perceptron">TensorFlow Multi-Layer Perceptron</a></li>
+        
+    
+        <li class="main "><a href="#overview">Overview</a></li>
         
     
         <li class="main "><a href="#examples">Examples</a></li>
         
-            <li><a href="#example-1-scaling-a-pandas-dataframe">Example 1 - Scaling a Pandas DataFrame</a></li>
+            <li><a href="#example-1-gradient-descent">Example 1 - Gradient Descent</a></li>
         
-            <li><a href="#example-2-scaling-a-numpy-array">Example 2 - Scaling a NumPy Array</a></li>
+            <li><a href="#example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</a></li>
+        
+            <li><a href="#example-3-mnist">Example 3 - MNIST</a></li>
         
     
         <li class="main "><a href="#api">API</a></li>
+        
+            <li><a href="#methods">Methods</a></li>
+        
+            <li><a href="#properties">Properties</a></li>
         
     
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="minmax-scaling">MinMax Scaling</h1>
-<p>A function for min-max scaling of pandas DataFrames or NumPy arrays.</p>
+<h1 id="tensorflow-multi-layer-perceptron">TensorFlow Multi-Layer Perceptron</h1>
+<p>A multi-layer perceptron class for binary and multi-class classification tasks.</p>
 <blockquote>
-<p>from mlxtend.preprocessing import MinMaxScaling</p>
+<p>from mlxtend.tf_classifier import TfMultilayerPerceptron</p>
 </blockquote>
-<p>An alternative approach to Z-score normalization (or standardization) is the so-called Min-Max scaling (often also simply called "normalization" - a common cause for ambiguities).
-In this approach, the data is scaled to a fixed range - usually 0 to 1.
-The cost of having this bounded range - in contrast to standardization - is that we will end up with smaller standard deviations, which can suppress the effect of outliers.</p>
-<p>A Min-Max scaling is typically done via the following equation:</p>
-<p><mathjax>$$X_{sc} = \frac{X - X_{min}}{X_{max} - X_{min}}.$$</mathjax></p>
-<p>One family of algorithms that is scale-invariant encompasses tree-based learning algorithms. Let's take the general CART decision tree algorithm. Without going into much depth regarding information gain and impurity measures, we can think of the decision as "is feature x_i &gt;= some_val?" Intuitively, we can see that it really doesn't matter on which scale this feature is (centimeters, Fahrenheit, a standardized scale -- it really doesn't matter).</p>
-<p>Some examples of algorithms where feature scaling matters are:</p>
-<ul>
-<li>k-nearest neighbors with an Euclidean distance measure if want all features to contribute equally</li>
-<li>k-means (see k-nearest neighbors)</li>
-<li>logistic regression, SVMs, perceptrons, neural networks etc. if you are using gradient descent/ascent-based optimization, otherwise some weights will update much faster than others</li>
-<li>linear discriminant analysis, principal component analysis, kernel principal component analysis since you want to find directions of maximizing the variance (under the constraints that those directions/eigenvectors/principal components are orthogonal); you want to have features on the same scale since you'd emphasize variables on "larger measurement scales" more.</li>
-</ul>
-<p>There are many more cases than I can possibly list here ... I always recommend you to think about the algorithm and what it's doing, and then it typically becomes obvious whether we want to scale your features or not.</p>
-<p>In addition, we'd also want to think about whether we want to "standardize" or "normalize" (here: scaling to [0, 1] range) our data. Some algorithms assume that our data is centered at 0. For example, if we initialize the weights of a small multi-layer perceptron with tanh activation units to 0 or small random values centered around zero, we want to update the model weights "equally."
-As a rule of thumb I'd say: When in doubt, just standardize the data, it shouldn't hurt.   </p>
+<h1 id="overview">Overview</h1>
+<p>(A more detailed tutorial on multi-layer perceptrons is in preparation.)</p>
+<p><img alt="" src="../TfMultilayerPerceptron_files/mlp_overview_1.png" /></p>
+<p>Please also see the activation function cheatsheet at <a href="../../general_concepts/activation-functions/"><code>general_concepts.activation-functions</code></a>.</p>
 <h1 id="examples">Examples</h1>
-<h2 id="example-1-scaling-a-pandas-dataframe">Example 1 - Scaling a Pandas DataFrame</h2>
-<pre><code class="python">import pandas as pd
+<h2 id="example-1-gradient-descent">Example 1 - Gradient Descent</h2>
+<p>Each integer in the <code>hidden_layers</code> list argument specifies the number of neurons for the respective layer; via the <code>activations</code>, we specify the activation functions for the individual hidden layer. Below, we initialize a multi-layer perceptron with 1 hidden layer using the logistic sigmoid activation. Furthermore, we train the network via simple gradient descent training by setting <code>optimizer='gradientdescent'</code> and <code>minibatches=1</code>. </p>
+<pre><code class="python">from mlxtend.tf_classifier import TfMultiLayerPerceptron
+from mlxtend.data import iris_data
+from mlxtend.evaluate import plot_decision_regions
+import matplotlib.pyplot as plt
 
-s1 = pd.Series([1, 2, 3, 4, 5, 6], index=(range(6)))
-s2 = pd.Series([10, 9, 8, 7, 6, 5], index=(range(6)))
-df = pd.DataFrame(s1, columns=['s1'])
-df['s2'] = s2
-df
+# Loading Data
+X, y = iris_data()
+X = X[:, [0, 3]] # sepal length and petal width
+
+# standardize
+X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
+X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
+
+mlp = TfMultiLayerPerceptron(eta=0.5, 
+                             epochs=20, 
+                             hidden_layers=[10],
+                             activations=['logistic'],
+                             optimizer='gradientdescent',
+                             print_progress=True, 
+                             minibatches=1, 
+                             random_seed=1)
+
+mlp.fit(X, y)
+
+plt.plot(range(len(mlp.cost_)), mlp.cost_)
+plt.xlabel('Iterations')
+plt.ylabel('Cost')
+plt.show()
 </code></pre>
 
-<div>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>s1</th>
-      <th>s2</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>10</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2</td>
-      <td>9</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>3</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>4</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>5</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>6</td>
-      <td>5</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<pre><code class="python">from mlxtend.preprocessing import minmax_scaling
-minmax_scaling(df, columns=['s1', 's2'])
+<pre><code>Epoch: 20/20 | Cost 0.55
+</code></pre>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_13_1.png" /></p>
+<p>Continue the training if cost could be further decreased via additional epochs. Instead of training the classifier another 20 epochs, we modify the epochs and set them to 550. Also, we want to make sure to set <code>init_weights</code> to <code>False</code> in order to re-use the model parameters from the previous training.</p>
+<pre><code class="python">mlp.epochs = 550
+mlp.fit(X, y, init_weights=False)
+plt.plot(range(len(mlp.cost_)), mlp.cost_)
+plt.xlabel('Iterations')
+plt.ylabel('Cost')
+plt.show()
 </code></pre>
 
-<div>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>s1</th>
-      <th>s2</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.2</td>
-      <td>0.8</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.4</td>
-      <td>0.6</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.6</td>
-      <td>0.4</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.8</td>
-      <td>0.2</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>1.0</td>
-      <td>0.0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+<pre><code>Epoch: 550/550 | Cost 0.12
+</code></pre>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_15_1.png" /></p>
+<pre><code class="python">plot_decision_regions(X=X, y=y, clf=mlp)
+plt.title('Logistic Sigmoid MLP - Gradient Descent')
+plt.show()
+</code></pre>
 
-<h2 id="example-2-scaling-a-numpy-array">Example 2 - Scaling a NumPy Array</h2>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_16_0.png" /></p>
+<h3 id="predicting-class-labels">Predicting Class Labels</h3>
+<pre><code class="python">print('Predicted class labels:', mlp.predict(X[[0, 99, 149]]))
+</code></pre>
+
+<pre><code>Predicted class labels: [0 1 2]
+</code></pre>
+<h3 id="predicting-class-probabilities">Predicting Class Probabilities</h3>
+<pre><code class="python">print('Predicted class probabilities:\n', mlp.predict_proba(X[[0, 99, 149]]))
+</code></pre>
+
+<pre><code>Predicted class probabilities:
+ [[  9.92696404e-01   7.30253477e-03   1.04788933e-06]
+ [  1.58569030e-03   9.77745533e-01   2.06688400e-02]
+ [  5.52368738e-06   1.68280467e-01   8.31713974e-01]]
+</code></pre>
+<h2 id="example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</h2>
+<p>Stochastic gradient descent training sample by sample can be achieved by setting the number of minibatches equal to the number of samples in the training dataset; everything between <code>minibatches=1</code> and <code>minibatches=len(y)</code> is "minibatch" stochastic gradient descent. Below, we train a network using 10 minibatches.</p>
+<pre><code class="python">from mlxtend.data import iris_data
+from mlxtend.evaluate import plot_decision_regions
+from mlxtend.tf_classifier import TfMultiLayerPerceptron
+import matplotlib.pyplot as plt
+
+# Loading Data
+
+X, y = iris_data()
+X = X[:, [0, 3]] # sepal length and petal width
+
+# standardize
+X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
+X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
+
+mlp = TfMultiLayerPerceptron(eta=0.5, 
+                             epochs=100, 
+                             hidden_layers=[10],
+                             activations=['logistic'],
+                             print_progress=True, 
+                             optimizer='gradientdescent',
+                             minibatches=10, 
+                             random_seed=1)
+
+mlp.fit(X, y)
+
+plt.plot(range(len(mlp.cost_)), mlp.cost_)
+plt.xlabel('Iterations')
+plt.ylabel('Cost')
+plt.show()
+
+plot_decision_regions(X, y, clf=mlp)
+plt.title('MLP - Minibatch Stochastic Gradient Descent')
+plt.show()
+</code></pre>
+
+<pre><code>Epoch: 100/100 | Cost 0.13
+</code></pre>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_23_1.png" /></p>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_23_2.png" /></p>
+<h2 id="example-3-mnist">Example 3 - MNIST</h2>
+<p>Please note that <code>mnist_data</code> just contains a random 5000-sample subset of MNIST (~10% of the original dataset size) suitable for demonstration purposes regarding computational efficiency.</p>
+<p>Although it may be overkill, and the network may terribly overfit the training data, let us initialize a more complex neural network with 2 hidden layers and 200 ReLU (Rectifier Linear Units) each.</p>
+<pre><code class="python">from mlxtend.data import mnist_data
+from mlxtend.tf_classifier import TfMultiLayerPerceptron
+import matplotlib.pyplot as plt
+
+X, y = mnist_data()
+
+mlp = TfMultiLayerPerceptron(eta=0.01, 
+                             epochs=30, 
+                             hidden_layers=[200, 200],
+                             activations=['relu', 'relu'],
+                             print_progress=3, 
+                             minibatches=5, 
+                             optimizer='adam',
+                             random_seed=1)
+
+mlp.fit(X, y)
+
+plt.plot(range(len(mlp.cost_)), mlp.cost_)
+plt.xlabel('Iterations')
+plt.ylabel('Cost')
+plt.show()
+</code></pre>
+
+<pre><code>Epoch: 30/30 | Cost 0.02 | Elapsed: 0:00:32 | ETA: 0:00:00
+</code></pre>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_27_1.png" /></p>
 <pre><code class="python">import numpy as np
-
-X = np.array([[1, 10], [2, 9], [3, 8], [4, 7], [5, 6], [6, 5]])
-X
+y_pred = mlp.predict(X)
+acc = np.sum(y == y_pred, axis=0) / X.shape[0]
+print('Training Accuracy: %.2f%%' % (acc * 100))
 </code></pre>
 
-<pre><code>array([[ 1, 10],
-       [ 2,  9],
-       [ 3,  8],
-       [ 4,  7],
-       [ 5,  6],
-       [ 6,  5]])
+<pre><code>Training Accuracy: 100.00%
 </code></pre>
-<pre><code class="python">from mlxtend.preprocessing import minmax_scaling
-minmax_scaling(X, columns=[0, 1])
+<pre><code class="python">def plot_digit(X, y, idx):
+    img = X[idx].reshape(28,28)
+    plt.imshow(img, cmap='Greys',  interpolation='nearest')
+    plt.title('true label: %d' % y[idx])
+    plt.show()
+plot_digit(X, y, 4999)  
 </code></pre>
 
-<pre><code>array([[ 0. ,  1. ],
-       [ 0.2,  0.8],
-       [ 0.4,  0.6],
-       [ 0.6,  0.4],
-       [ 0.8,  0.2],
-       [ 1. ,  0. ]])
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_29_0.png" /></p>
+<pre><code class="python">print('Prediction: %d' % mlp.predict(X[4999, None]))
+</code></pre>
+
+<pre><code>Prediction: 9
 </code></pre>
 <h1 id="api">API</h1>
-<p><em>minmax_scaling(array, columns, min_val=0, max_val=1)</em></p>
-<p>Min max scaling of pandas' DataFrames.</p>
+<p><em>TfMultiLayerPerceptron(eta=0.5, epochs=50, hidden_layers=[50, 10], activations=['logistic', 'logistic'], optimizer='gradientdescent', momentum=0.0, l1=0.0, l2=0.0, minibatches=1, random_seed=None, print_progress=0, dtype=None)</em></p>
+<p>Multi-layer perceptron classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>array</code> : pandas DataFrame or NumPy ndarray, shape = [n_rows, n_columns].</p>
+<p><code>eta</code> : float (default: 0.5)</p>
+<p>Learning rate (between 0.0 and 1.0)</p>
 </li>
 <li>
-<p><code>columns</code> : array-like, shape = [n_columns]</p>
-<p>Array-like with column names, e.g., ['col1', 'col2', ...]
-or column indices [0, 2, 4, ...]</p>
+<p><code>epochs</code> : int (default: 50)</p>
+<p>Passes over the training dataset.</p>
 </li>
 <li>
-<p><code>min_val</code> : <code>int</code> or <code>float</code>, optional (default=<code>0</code>)</p>
-<p>minimum value after rescaling.</p>
+<p><code>hidden_layers</code> : list (default: [50, 10])</p>
+<p>Number of units per hidden layer. By default 50 units in the
+first hidden layer, and 10 hidden units in the second hidden layer.</p>
 </li>
 <li>
-<p><code>min_val</code> : <code>int</code> or <code>float</code>, optional (default=<code>1</code>)</p>
-<p>maximum value after rescaling.</p>
+<p><code>activations</code> : list (default: ['logistic', 'logistic'])</p>
+<p>Activation functions for each layer.
+Available actiavtion functions:
+"logistic", "relu", "tanh", "relu6", "elu", "softplus", "softsign"</p>
+</li>
+<li>
+<p><code>optimizer</code> : str (default: "gradientdescent")</p>
+<p>Optimizer to minimize the cost function:
+"gradientdescent", "momentum", "adam", "ftrl", "adagrad"</p>
+</li>
+<li>
+<p><code>momentum</code> : float (default: 0.0)</p>
+<p>Momentum constant for momentum learning; only applies if
+optimizer='momentum'</p>
+</li>
+<li>
+<p><code>l1</code> : float (default: 0.0)</p>
+<p>L1 regularization strength; only applies if optimizer='ftrl'</p>
+</li>
+<li>
+<p><code>l2</code> : float (default: 0.0)</p>
+<p>regularization strength; only applies if optimizer='ftrl'</p>
+</li>
+<li>
+<p><code>minibatches</code> : int (default: 1)</p>
+<p>Divide the training data into <em>k</em> minibatches
+for accelerated stochastic gradient descent learning.
+Gradient Descent Learning if <code>minibatches</code> = 1
+Stochastic Gradient Descent learning if <code>minibatches</code> = len(y)
+Minibatch learning if <code>minibatches</code> &gt; 1</p>
+</li>
+<li>
+<p><code>random_seed</code> : int (default: None)</p>
+<p>Set random state for shuffling and initializing the weights.</p>
+</li>
+<li>
+<p><code>print_progress</code> : int (default: 0)</p>
+<p>Prints progress in fitting to stderr.
+0: No output
+1: Epochs elapsed and cost
+2: 1 plus time elapsed
+3: 2 plus estimated time until completion</p>
+</li>
+<li>
+<p><code>dtype</code> : Array-type (default: None)</p>
+<p>Uses tensorflow.float32 if None.</p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>weights_</code> : 2d-array, shape=[n_features, n_classes]</p>
+<p>Weights after fitting.</p>
+</li>
+<li>
+<p><code>biases_</code> : 1D-array, shape=[n_classes]</p>
+<p>Bias units after fitting.</p>
+</li>
+<li>
+<p><code>cost_</code> : list</p>
+<p>List of floats, the average cross_entropy for each epoch.</p>
+</li>
+</ul>
+<h3 id="methods">Methods</h3>
+<hr>
+
+<p><em>fit(X, y, init_weights=True, override_minibatches=None)</em></p>
+<p>Learn weight coefficients from training data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>init_weights</code> : bool (default: True)</p>
+<p>(Re)initializes weights to small random floats if True.</p>
+</li>
+<li>
+<p><code>override_minibatches</code> : int or None (default: None)</p>
+<p>Uses a different number of minibatches for this session.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
+<hr>
+
+<p><em>predict(X)</em></p>
+<p>Predict class labels of X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>df_new</code> : pandas DataFrame object.</p>
-<p>Copy of the array or DataFrame with rescaled columns.</p>
+<p><code>class_labels</code> : array-like, shape = [n_samples]</p>
+<p>Predicted class labels.</p>
 </li>
-</ul></div>
+</ul>
+<hr>
+
+<p><em>predict_proba(X)</em></p>
+<p>Predict class probabilities of X from the net input.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>Class probabilties</code> : array-like, shape= [n_samples, n_classes]</li>
+</ul>
+<h3 id="properties">Properties</h3></div>
         
     </div>
 

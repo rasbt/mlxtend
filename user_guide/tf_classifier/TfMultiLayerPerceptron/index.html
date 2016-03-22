@@ -678,12 +678,12 @@
 </blockquote>
 <h1 id="overview">Overview</h1>
 <p>(A more detailed tutorial on multi-layer perceptrons is in preparation.)</p>
-<p><img alt="" src="../TfMultilayerPerceptron_files/mlp_overview_1.png" /></p>
-<p><img alt="" src="../TfMultilayerPerceptron_files/mlp_overview_2.png" /></p>
+<p><img alt="" src="../TfMultiLayerPerceptron_files/mlp_overview_1.png" /></p>
+<p><img alt="" src="../TfMultiLayerPerceptron_files/mlp_overview_2.png" /></p>
 <p>Please also see the activation function cheatsheet at <a href="../../general_concepts/activation-functions/"><code>general_concepts.activation-functions</code></a>.</p>
 <h1 id="examples">Examples</h1>
 <h2 id="example-1-gradient-descent">Example 1 - Gradient Descent</h2>
-<p>Each integer in the <code>hidden_layers</code> list argument specifies the number of neurons for the respective layer; via the <code>activations</code>, we specify the activation functions for the individual hidden layer. Below, we initialize a multi-layer perceptron with 1 hidden layer using the logistic sigmoid activation. Furthermore, we train the network via simple gradient descent training by setting <code>optimizer='gradientdescent'</code> and <code>minibatches=1</code>. </p>
+<p>Each integer in the <code>hidden_layers</code> list argument specifies the number of neurons for the respective layer; via the <code>activations</code>, we specify the activation functions for the individual hidden layer. Below, we initialize a multi-layer perceptron with 1 hidden layer using the logistic sigmoid activation. Furthermore, we train the network via simple gradient descent training by setting <code>optimizer='gradientdescent'</code> and <code>minibatches=1</code>.</p>
 <pre><code class="python">from mlxtend.tf_classifier import TfMultiLayerPerceptron
 from mlxtend.data import iris_data
 from mlxtend.evaluate import plot_decision_regions
@@ -697,13 +697,13 @@ X = X[:, [0, 3]] # sepal length and petal width
 X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
 X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
 
-mlp = TfMultiLayerPerceptron(eta=0.5, 
-                             epochs=20, 
-                             hidden_layers=[10],
+mlp = TfMultiLayerPerceptron(eta=0.5,
+                             epochs=20,
+                             hidden_layers=[5],
                              activations=['logistic'],
                              optimizer='gradientdescent',
-                             print_progress=True, 
-                             minibatches=1, 
+                             print_progress=True,
+                             minibatches=1,
                              random_seed=1)
 
 mlp.fit(X, y)
@@ -766,13 +766,13 @@ X = X[:, [0, 3]] # sepal length and petal width
 X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
 X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
 
-mlp = TfMultiLayerPerceptron(eta=0.5, 
-                             epochs=100, 
+mlp = TfMultiLayerPerceptron(eta=0.5,
+                             epochs=100,
                              hidden_layers=[10],
                              activations=['logistic'],
-                             print_progress=True, 
+                             print_progress=True,
                              optimizer='gradientdescent',
-                             minibatches=10, 
+                             minibatches=10,
                              random_seed=1)
 
 mlp.fit(X, y)
@@ -800,12 +800,12 @@ import matplotlib.pyplot as plt
 
 X, y = mnist_data()
 
-mlp = TfMultiLayerPerceptron(eta=0.01, 
-                             epochs=30, 
+mlp = TfMultiLayerPerceptron(eta=0.01,
+                             epochs=30,
                              hidden_layers=[200, 200],
                              activations=['relu', 'relu'],
-                             print_progress=3, 
-                             minibatches=5, 
+                             print_progress=3,
+                             minibatches=5,
                              optimizer='adam',
                              random_seed=1)
 

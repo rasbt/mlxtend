@@ -112,8 +112,10 @@ def object_to_markdownpage(obj_name, obj, s=''):
                     methods += '\n\n<hr>\n\n*%s%s*\n\n' % (m[0], sig)
                     m_doc = docstring_to_markdown(str(inspect.getdoc(m[1])))
                     methods += '\n'.join(m_doc)
-        s += methods
-        s += properties
+        if len(methods) > len('\n\n### Methods'):
+            s += methods
+        if len(properties) > len('\n\n### Properties'):
+            s += properties
     return s + '\n\n'
 
 

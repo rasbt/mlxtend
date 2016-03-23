@@ -664,8 +664,6 @@
         
             <li><a href="#methods">Methods</a></li>
         
-            <li><a href="#properties">Properties</a></li>
-        
     
     </ul>
 </div></div>
@@ -688,174 +686,6 @@ The meta-classifier can either be trained on the predicted class labels or proba
 <li>[2] Wolpert, David H. "<a href="http://www.sciencedirect.com/science/article/pii/S0893608005800231">Stacked generalization.</a>" Neural networks 5.2 (1992): 241-259.</li>
 </ul>
 <h1 id="examples">Examples</h1>
-<pre><code class="python"># Stacking classifier
-
-# Sebastian Raschka 2014-2016
-# mlxtend Machine Learning Library Extensions
-#
-# An ensemble-learning meta-classifier for stacking
-# Author: Sebastian Raschka &lt;sebastianraschka.com&gt;
-#
-# License: BSD 3 clause
-
-from sklearn.base import BaseEstimator
-from sklearn.base import ClassifierMixin
-from sklearn.base import TransformerMixin
-from sklearn.externals import six
-from sklearn.base import clone
-from sklearn.pipeline import _name_estimators
-import numpy as np
-
-
-class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
-    &quot;&quot;&quot;A Stacking classifier for scikit-learn estimators for classification.
-
-    Parameters
-    ----------
-    classifiers : array-like, shape = [n_regressors]
-        A list of classifiers.
-        Invoking the `fit` method on the `StackingClassifer` will fit clones
-        of these original classifiers that will
-        be stored in the class attribute
-        `self.clfs_`.
-    meta_classifier : object
-        The meta-classifier to be fitted on the ensemble of
-        classifiers
-    use_probas : bool (default: False)
-        If True, trains meta-classifier based on predicted probabilities
-        instead of class labels.
-    verbose : int, optional (default=0)
-        Controls the verbosity of the building process.
-        - `verbose=0` (default): Prints nothing
-        - `verbose=1`: Prints the number &amp; name of the regressor being fitted
-        - `verbose=2`: Prints info about the parameters of the
-                       regressor being fitted
-        - `verbose&gt;2`: Changes `verbose` param of the underlying regressor to
-           self.verbose - 2
-
-    Attributes
-    ----------
-    clfs_ : list, shape=[n_classifiers]
-        Fitted classifiers (clones of the original classifiers)
-    meta_clf_ : estimator
-        Fitted meta-classifier (clone of the original meta-estimator)
-
-    &quot;&quot;&quot;
-    def __init__(self, classifiers, meta_classifier, use_probas=False, verbose=0):
-
-        self.classifiers = classifiers
-        self.meta_classifier = meta_classifier
-        self.named_classifiers = {key: value for
-                                  key, value in
-                                  _name_estimators(classifiers)}
-        self.named_meta_classifier = {'meta-%s' % key: value for
-                                      key, value in
-                                      _name_estimators([meta_classifier])}
-        self.use_probas = use_probas
-        self.verbose = verbose
-
-    def fit(self, X, y):
-        &quot;&quot;&quot; Fit ensemble classifers and the meta-classifier.
-
-        Parameters
-        ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
-            Training vectors, where n_samples is the number of samples and
-            n_features is the number of features.
-        y : array-like, shape = [n_samples]
-            Target values.
-
-        Returns
-        -------
-        self : object
-
-        &quot;&quot;&quot;
-        self.clfs_ = [clone(clf) for clf in self.classifiers]
-        self.meta_clf_ = clone(self.meta_classifier)
-        if self.verbose &gt; 0:
-            print(&quot;Fitting %d classifiers...&quot; % (len(self.classifiers)))
-
-        for clf in self.clfs_:
-
-            if self.verbose &gt; 0:
-                i = self.clfs_.index(clf) + 1
-                print(&quot;Fitting classifier%d: %s (%d/%d)&quot; %
-                      (i, _name_estimators((clf,))[0][0], i, len(self.clf_)))
-
-            if self.verbose &gt; 2:
-                if hasattr(clf, 'verbose'):
-                    clf.set_params(verbose=self.verbose - 2)
-
-            if self.verbose &gt; 1:
-                print(_name_estimators((clf,))[0][1])
-
-            clf.fit(X, y)
-
-        meta_features = self._predict_meta_features(X)
-        self.meta_clf_.fit(meta_features, y)
-        return self
-
-    def get_params(self, deep=True):
-        &quot;&quot;&quot;Return estimator parameter names for GridSearch support.&quot;&quot;&quot;
-        if not deep:
-            return super(StackingClassifier, self).get_params(deep=False)
-        else:
-            out = self.named_classifiers.copy()
-            for name, step in six.iteritems(self.named_classifiers):
-                for key, value in six.iteritems(step.get_params(deep=True)):
-                    out['%s__%s' % (name, key)] = value
-
-            out.update(self.named_meta_classifier.copy())
-            for name, step in six.iteritems(self.named_meta_classifier):
-                for key, value in six.iteritems(step.get_params(deep=True)):
-                    out['%s__%s' % (name, key)] = value
-            return out
-
-    def _predict_meta_features(self, X):
-        if self.use_probas:
-            probas = np.asarray([clf.predict_proba(X) for clf in self.clfs_])
-            vals = np.average(probas, axis=0)
-        else:
-            vals = np.asarray([clf.predict(X) for clf in self.clfs_]).T
-        return vals
-
-    def predict(self, X):
-        &quot;&quot;&quot; Predict target values for X.
-
-        Parameters
-        ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
-            Training vectors, where n_samples is the number of samples and
-            n_features is the number of features.
-
-        Returns
-        ----------
-        labels : array-like, shape = [n_samples]
-            Predicted class labels.
-
-        &quot;&quot;&quot;
-        meta_features = self._predict_meta_features(X)
-        return self.meta_clf_.predict(meta_features)
-
-    def predict_proba(self, X):
-        &quot;&quot;&quot; Predict class probabilities for X.
-
-        Parameters
-        ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
-            Training vectors, where n_samples is the number of samples and
-            n_features is the number of features.
-
-        Returns
-        ----------
-        proba : array-like, shape = [n_samples, n_classes]
-            Probability for each class per sample.
-
-        &quot;&quot;&quot;
-        meta_features = self._predict_meta_features(X)
-        return self.meta_clf_.predict_proba(meta_features)
-</code></pre>
-
 <h2 id="example-1-simple-stacked-classification">Example 1 - Simple Stacked Classification</h2>
 <pre><code class="python">from sklearn import datasets
 
@@ -868,6 +698,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB 
 from sklearn.ensemble import RandomForestClassifier
+from mlxtend.classifier import StackingClassifier
 import numpy as np
 
 clf1 = KNeighborsClassifier(n_neighbors=1)
@@ -918,10 +749,15 @@ for clf, lab, grd in zip([clf1, clf2, clf3, sclf],
     plt.title(lab)
 </code></pre>
 
-<p><img alt="png" src="../StackingClassifier_files/StackingClassifier_17_0.png" /></p>
+<p><img alt="png" src="../StackingClassifier_files/StackingClassifier_16_0.png" /></p>
 <h2 id="example-2-stacked-classification-and-gridsearch">Example 2 - Stacked Classification and GridSearch</h2>
 <p>To set up a parameter grid for scikit-learn's <code>GridSearch</code>, we simply provide the estimator's names in the parameter grid -- in the special case of the meta-regressor, we append the <code>'meta-'</code> prefix.</p>
-<pre><code class="python">from sklearn.grid_search import GridSearchCV
+<pre><code class="python">from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB 
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.grid_search import GridSearchCV
+from mlxtend.classifier import StackingClassifier
 
 # Initializing models
 
@@ -947,14 +783,14 @@ for params, mean_score, scores in grid.grid_scores_:
         % (mean_score, scores.std() / 2, params))
 </code></pre>
 
-<pre><code>0.667 (+/-0.000) for {'kneighborsclassifier__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 0.1}
-0.667 (+/-0.000) for {'kneighborsclassifier__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 0.1}
-0.927 (+/-0.022) for {'kneighborsclassifier__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 10.0}
-0.913 (+/-0.027) for {'kneighborsclassifier__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 10.0}
-0.667 (+/-0.000) for {'kneighborsclassifier__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 0.1}
-0.667 (+/-0.000) for {'kneighborsclassifier__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 0.1}
-0.933 (+/-0.024) for {'kneighborsclassifier__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 10.0}
-0.940 (+/-0.019) for {'kneighborsclassifier__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 10.0}
+<pre><code>0.667 (+/-0.000) for {'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 1}
+0.667 (+/-0.000) for {'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 1}
+0.927 (+/-0.022) for {'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 1}
+0.913 (+/-0.027) for {'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 1}
+0.667 (+/-0.000) for {'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 5}
+0.667 (+/-0.000) for {'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 5}
+0.933 (+/-0.024) for {'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 5}
+0.940 (+/-0.019) for {'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 5}
 </code></pre>
 <p>In case we are planning to use a regression algorithm multiple times, all we need to do is to add an additional number suffix in the parameter grid as shown below:</p>
 <pre><code class="python">from sklearn.grid_search import GridSearchCV
@@ -984,22 +820,22 @@ for params, mean_score, scores in grid.grid_scores_:
         % (mean_score, scores.std() / 2, params))
 </code></pre>
 
-<pre><code>0.667 (+/-0.000) for {'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 0.1}
-0.667 (+/-0.000) for {'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 0.1}
-0.907 (+/-0.029) for {'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0}
-0.913 (+/-0.027) for {'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0}
-0.667 (+/-0.000) for {'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 0.1}
-0.667 (+/-0.000) for {'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 0.1}
-0.927 (+/-0.022) for {'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0}
-0.913 (+/-0.027) for {'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0}
-0.667 (+/-0.000) for {'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 0.1}
-0.667 (+/-0.000) for {'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 0.1}
-0.927 (+/-0.022) for {'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0}
-0.913 (+/-0.027) for {'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0}
-0.667 (+/-0.000) for {'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 0.1}
-0.667 (+/-0.000) for {'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 0.1}
-0.933 (+/-0.024) for {'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0}
-0.940 (+/-0.019) for {'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0}
+<pre><code>0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier-1__n_neighbors': 1}
+0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier-1__n_neighbors': 1}
+0.907 (+/-0.029) for {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier-1__n_neighbors': 1}
+0.913 (+/-0.027) for {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier-1__n_neighbors': 1}
+0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier-1__n_neighbors': 1}
+0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier-1__n_neighbors': 1}
+0.927 (+/-0.022) for {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier-1__n_neighbors': 1}
+0.913 (+/-0.027) for {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier-1__n_neighbors': 1}
+0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier-1__n_neighbors': 5}
+0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier-1__n_neighbors': 5}
+0.927 (+/-0.022) for {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier-1__n_neighbors': 5}
+0.913 (+/-0.027) for {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier-1__n_neighbors': 5}
+0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier-1__n_neighbors': 5}
+0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier-1__n_neighbors': 5}
+0.933 (+/-0.024) for {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier-1__n_neighbors': 5}
+0.940 (+/-0.019) for {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier-1__n_neighbors': 5}
 </code></pre>
 <h1 id="api">API</h1>
 <p><em>StackingClassifier(classifiers, meta_classifier, use_probas=False, verbose=0)</em></p>
@@ -1174,8 +1010,7 @@ each label set be correctly predicted.
 component of a nested object.
 </code></pre>
 <p><strong>Returns</strong></p>
-<p>self</p>
-<h3 id="properties">Properties</h3></div>
+<p>self</p></div>
         
     </div>
 

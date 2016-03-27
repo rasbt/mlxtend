@@ -31,7 +31,7 @@ def test_binary_logistic_regression_gd():
 
     lr.fit(X_bin, y_bin)
     np.testing.assert_almost_equal(lr.w_, t, 2)
-    assert((y_bin == lr.predict(X_bin)).all())
+    assert (y_bin == lr.predict(X_bin)).all()
 
 
 def test_binary_logistic_regression_sgd():
@@ -44,7 +44,7 @@ def test_binary_logistic_regression_sgd():
 
     lr.fit(X_bin, y_bin)  # 0, 1 class
     np.testing.assert_almost_equal(lr.w_, t, 2)
-    assert((y_bin == lr.predict(X_bin)).all())
+    assert (y_bin == lr.predict(X_bin)).all()
 
 
 def test_binary_l2_regularization_gd():
@@ -60,7 +60,7 @@ def test_binary_l2_regularization_gd():
 
     np.testing.assert_almost_equal(lr.w_, expect_weights, 3)
     acc = sum(y_pred == y_bin) / len(y_bin)
-    assert(acc == 1.0)
+    assert acc == 1.0
 
 
 def test_multi_logistic_regression_gd_weights():
@@ -80,7 +80,7 @@ def test_multi_logistic_probas():
                            minibatches=1,
                            random_seed=1)
     lr.fit(X, y)
-    idx = [0, 50, 149] # sample labels: 0, 1, 2
+    idx = [0, 50, 149]  # sample labels: 0, 1, 2
     y_pred = lr.predict_proba(X[idx])
     exp = np.array([[0.99, 0.01, 0.0],
                     [0.01, 0.89, 0.1],
@@ -94,4 +94,14 @@ def test_multi_logistic_regression_gd_acc():
                            minibatches=1,
                            random_seed=1)
     lr.fit(X, y)
-    assert((y == lr.predict(X)).all())
+    assert (y == lr.predict(X)).all()
+
+
+def test_score_function():
+    lr = SoftmaxRegression(epochs=200,
+                           eta=0.005,
+                           minibatches=1,
+                           random_seed=1)
+    lr.fit(X, y)
+    acc = lr.score(X, y)
+    assert acc == 1.0, acc

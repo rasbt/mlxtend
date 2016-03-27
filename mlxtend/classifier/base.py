@@ -127,3 +127,25 @@ class _BaseClassifier(object):
         else:
             w = coef * np.random.normal(loc=0.0, scale=1.0, size=shape)
         return w.astype(dtype)
+
+    def score(self, X, y):
+        """ Compute the prediction accuracy
+
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+        y : array-like, shape = [n_samples]
+            Target values (true class labels).
+
+        Returns
+        ---------
+        acc : float
+            The prediction accuracy as a float
+            between 0.0 and 1.0 (perfect score).
+
+        """
+        y_pred = self.predict(X)
+        acc = np.sum(y == y_pred, axis=0) / X.shape[0]
+        return acc

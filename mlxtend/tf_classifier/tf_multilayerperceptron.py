@@ -129,7 +129,8 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
             act[idx + 1] = adict[a]
         return act
 
-    def fit(self, X, y, init_weights=True, override_minibatches=None):
+    def fit(self, X, y, init_weights=True,
+            override_minibatches=None, n_classes=None):
         """Learn weight coefficients from training data.
 
         Parameters
@@ -143,7 +144,12 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
             (Re)initializes weights to small random floats if True.
         override_minibatches : int or None (default: None)
             Uses a different number of minibatches for this session.
-
+        n_classes : int (default: None)
+            A positive integer to declare the number of class labels
+            if not all class labels are present in a partial training set.
+            Gets the number of class labels automatically if None.
+            Ignored if init_weights=False.
+    
         Returns
         -------
         self : object
@@ -165,7 +171,10 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
         with g.as_default():
 
             if init_weights:
-                self._n_classes = np.max(y) + 1
+                if n_classes:
+                    self._n_classes = n_classes
+                else:
+                    self._n_classes = np.max(y) + 1
                 self._n_features = X.shape[1]
                 self._weight_maps, self._bias_maps = self._layermapping(
                     n_features=self._n_features,

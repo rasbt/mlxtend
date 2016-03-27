@@ -72,7 +72,7 @@ def test_binary_gd():
               random_seed=1)
 
     mlp.fit(X_bin, y_bin)
-    assert((y_bin == mlp.predict(X_bin)).all())
+    assert (y_bin == mlp.predict(X_bin)).all()
 
 
 def test_binary_sgd():
@@ -85,7 +85,7 @@ def test_binary_sgd():
               random_seed=1)
 
     mlp.fit(X_bin, y_bin)
-    assert((y_bin == mlp.predict(X_bin)).all())
+    assert (y_bin == mlp.predict(X_bin)).all()
 
 
 def test_multiclass_probas():
@@ -114,7 +114,20 @@ def test_multiclass_gd_acc():
               minibatches=1,
               random_seed=1)
     mlp.fit(X, y)
-    assert((y == mlp.predict(X)).all())
+    assert (y == mlp.predict(X)).all()
+
+
+def test_score_function():
+    mlp = MLP(epochs=100,
+              eta=0.5,
+              hidden_layers=[5],
+              optimizer='gradientdescent',
+              activations=['logistic'],
+              minibatches=1,
+              random_seed=1)
+    mlp.fit(X, y)
+    acc = mlp.score(X, y)
+    assert acc == 1.0, acc
 
 
 @raises(AttributeError)
@@ -127,4 +140,4 @@ def test_fail_minibatches():
               minibatches=13,
               random_seed=1)
     mlp.fit(X, y)
-    assert((y == mlp.predict(X)).all())
+    assert (y == mlp.predict(X)).all()

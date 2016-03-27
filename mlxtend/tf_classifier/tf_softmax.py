@@ -63,7 +63,7 @@ class TfSoftmaxRegression(_TfBaseClassifier):
         self.print_progress = print_progress
 
     def fit(self, X, y,
-            init_weights=True, override_minibatches=None):
+            init_weights=True, override_minibatches=None, n_classes=None):
 
         """Learn weight coefficients from training data.
 
@@ -78,6 +78,11 @@ class TfSoftmaxRegression(_TfBaseClassifier):
             (Re)initializes weights to small random floats if True.
         override_minibatches : int or None (default: None)
             Uses a different number of minibatches for this session.
+        n_classes : int (default: None)
+            A positive integer to declare the number of class labels
+            if not all class labels are present in a partial training set.
+            Gets the number of class labels automatically if None.
+            Ignored if init_weights=False.
 
         Returns
         -------
@@ -100,7 +105,10 @@ class TfSoftmaxRegression(_TfBaseClassifier):
         with g.as_default():
 
             if init_weights:
-                self._n_classes = np.max(y) + 1
+                if n_classes:
+                    self._n_classes = n_classes
+                else:
+                    self._n_classes = np.max(y) + 1
                 self._n_features = X.shape[1]
                 tf_weights_, tf_biases_ = self._initialize_weights(
                     n_features=self._n_features,

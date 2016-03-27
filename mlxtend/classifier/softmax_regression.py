@@ -88,7 +88,7 @@ class SoftmaxRegression(_BaseClassifier):
     def _to_classlabels(self, z):
         return z.argmax(axis=1)
 
-    def fit(self, X, y, init_weights=True):
+    def fit(self, X, y, init_weights=True, n_classes=None):
         """Learn weight coefficients from training data.
 
         Parameters
@@ -100,6 +100,11 @@ class SoftmaxRegression(_BaseClassifier):
             Target values.
         init_weights : bool (default: True)
             (Re)initializes weights to small random floats if True.
+        n_classes : int (default: None)
+            A positive integer to declare the number of class labels
+            if not all class labels are present in a partial training set.
+            Gets the number of class labels automatically if None.
+            Ignored if init_weights=False.
 
         Returns
         -------
@@ -107,7 +112,10 @@ class SoftmaxRegression(_BaseClassifier):
 
         """
         if init_weights:
-            self._n_classes = np.max(y) + 1
+            if n_classes:
+                self._n_classes = n_classes
+            else:
+                self._n_classes = np.max(y) + 1
             self._n_features = X.shape[1]
             self.w_ = self._init_weights(
                 shape=(self._n_features, self._n_classes),

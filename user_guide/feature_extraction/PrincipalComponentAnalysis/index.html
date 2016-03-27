@@ -768,14 +768,15 @@ cum_var_exp = np.cumsum(var_exp)
 </code></pre>
 
 <pre><code class="python">with plt.style.context('seaborn-whitegrid'):
-    plt.figure(figsize=(6, 4))
-
+    fig, ax = plt.subplots(figsize=(6, 4))
     plt.bar(range(4), var_exp, alpha=0.5, align='center',
             label='individual explained variance')
     plt.step(range(4), cum_var_exp, where='mid',
              label='cumulative explained variance')
     plt.ylabel('Explained variance ratio')
     plt.xlabel('Principal components')
+    plt.xticks(range(4))
+    ax.set_xticklabels(np.arange(1, X.shape[1] + 1))
     plt.legend(loc='best')
     plt.tight_layout()
 </code></pre>

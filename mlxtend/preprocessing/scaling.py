@@ -54,15 +54,16 @@ def minmax_scaling(array, columns, min_val=0, max_val=1):
     return ary_newt[:, columns]
 
 
-def standardize(array, columns, ddof=0, return_params=False, params=None):
+def standardize(array, columns=None, ddof=0, return_params=False, params=None):
     """Standardize columns in pandas DataFrames.
 
     Parameters
     ----------
     array : pandas DataFrame or NumPy ndarray, shape = [n_rows, n_columns].
-    columns : array-like, shape = [n_columns]
+    columns : array-like, shape = [n_columns] (default: None)
         Array-like with column names, e.g., ['col1', 'col2', ...]
         or column indices [0, 2, 4, ...]
+        If None, standardizes all columns.
     ddof : int (default: 0)
         Delta Degrees of Freedom. The divisor used in calculations
         is N - ddof, where N represents the number of elements.
@@ -97,8 +98,13 @@ def standardize(array, columns, ddof=0, return_params=False, params=None):
 
     if isinstance(ary_new, pd.DataFrame):
         ary_newt = ary_new.loc
+        if columns is None:
+            columns = ary_new.columns
     elif isinstance(ary_new, np.ndarray):
         ary_newt = ary_new
+        if columns is None:
+            columns = list(range(ary_new.shape[1]))
+
     else:
         raise AttributeError('Input array must be a pandas '
                              'DataFrame or NumPy array')

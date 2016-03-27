@@ -147,5 +147,5 @@ class _BaseClassifier(object):
 
         """
         y_pred = self.predict(X)
-        acc = np.sum(y == y_pred, axis=0) / X.shape[0]
+        acc = np.sum(y == y_pred, axis=0) / float(X.shape[0])
         return acc

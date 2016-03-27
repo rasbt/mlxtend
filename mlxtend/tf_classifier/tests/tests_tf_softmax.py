@@ -92,6 +92,26 @@ def test_score_function():
     assert acc == 1.0, acc
 
 
+def test_train_acc():
+    lr = TfSoftmaxRegression(epochs=3,
+                             eta=0.5,
+                             minibatches=1,
+                             random_seed=1)
+    lr.fit(X, y)
+    exp = [0.47, 0.65, 0.67]
+    np.testing.assert_almost_equal(exp, lr.train_acc_, decimal=2)
+
+
+def test_valid_acc():
+    lr = TfSoftmaxRegression(epochs=3,
+                             eta=0.5,
+                             minibatches=1,
+                             random_seed=1)
+    lr.fit(X, y, X_valid=X[:100], y_valid=y[:100])
+    exp = [0.5, 0.5, 0.5]
+    np.testing.assert_almost_equal(exp, lr.valid_acc_, decimal=2)
+
+
 @raises(AttributeError)
 def test_fail_minibatches():
     lr = TfSoftmaxRegression(epochs=100,

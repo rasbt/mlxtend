@@ -25,6 +25,9 @@
 ## `feature_selection`
 - [`SequentialFeatureSelector`](user_guide/feature_selection/SequentialFeatureSelector.md)
 
+## `feature_extraction`
+- [`PrincipalComponentAnalysis`](user_guide/feature_selection/PrincipalComponentAnalysis.md)
+
 ## `evaluate`
 - [`confusion_matrix`](user_guide/evaluate/confusion_matrix.md)
 - [`plot_decision_regions`](user_guide/evaluate/plot_decision_regions.md)

@@ -43,6 +43,8 @@ pages:
     - user_guide/regression_utils/plot_linear_regression.md
   - feature_selection:
     - user_guide/feature_selection/SequentialFeatureSelector.md
+  - feature_extraction:
+    - user_guide/feature_extraction/PrincipalComponentAnalysis.md
   - evaluate:
     - user_guide/evaluate/confusion_matrix.md
     - user_guide/evaluate/plot_decision_regions.md

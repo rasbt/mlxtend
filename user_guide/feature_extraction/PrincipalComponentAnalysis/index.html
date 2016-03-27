@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name="author" content="Sebastian Raschka"> 
-    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/one-hot_encoding/"> 
+    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/feature_extraction/PrincipalComponentAnalysis/"> 
     <link rel="shortcut icon" href="../../../../../../favicon.ico">
 
-    <title>One hot encoding - mlxtend</title>
+    <title>PrincipalComponentAnalysis - mlxtend</title>
 
     <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
@@ -193,7 +193,7 @@
         
             
 <li >
-    <a href="../../feature_extraction/PrincipalComponentAnalysis/">PrincipalComponentAnalysis</a>
+    <a href="./">PrincipalComponentAnalysis</a>
 </li>
 
         
@@ -241,31 +241,31 @@
         
             
 <li >
-    <a href="../DenseTransformer/">DenseTransformer</a>
+    <a href="../../preprocessing/DenseTransformer/">DenseTransformer</a>
 </li>
 
         
             
 <li >
-    <a href="../MeanCenterer/">MeanCenterer</a>
+    <a href="../../preprocessing/MeanCenterer/">MeanCenterer</a>
 </li>
 
         
             
 <li >
-    <a href="../minmax_scaling/">Minmax scaling</a>
+    <a href="../../preprocessing/minmax_scaling/">Minmax scaling</a>
 </li>
 
         
             
 <li >
-    <a href="../shuffle_arrays_unison/">Shuffle arrays unison</a>
+    <a href="../../preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
 </li>
 
         
             
 <li >
-    <a href="../standardize/">Standardize</a>
+    <a href="../../preprocessing/standardize/">Standardize</a>
 </li>
 
         
@@ -468,8 +468,8 @@
     <ul class="dropdown-menu">
         
             
-<li >
-    <a href="../../feature_extraction/PrincipalComponentAnalysis/">PrincipalComponentAnalysis</a>
+<li class="active">
+    <a href="./">PrincipalComponentAnalysis</a>
 </li>
 
         
@@ -504,8 +504,8 @@
 
         
             
-<li class="active">
-    <a href="./">One hot encoding</a>
+<li >
+    <a href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
 </li>
 
         
@@ -636,12 +636,12 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../../classifier/StackingClassifier/">
+                        <a rel="next" href="../../general_concepts/regularization-linear/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../../../api_subpackages/mlxtend.classifier/">
+                        <a rel="prev" href="../../tf_classifier/TfMultiLayerPerceptron/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -666,134 +666,156 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#one-hot-encoding">One-Hot Encoding</a></li>
+        <li class="main active"><a href="#principal-component-analysis">Principal Component Analysis</a></li>
         
     
         <li class="main "><a href="#overview">Overview</a></li>
         
+            <li><a href="#pca-and-dimensionality-reduction">PCA and Dimensionality Reduction</a></li>
+        
+            <li><a href="#a-summary-of-the-pca-approach">A Summary of the PCA Approach</a></li>
+        
+            <li><a href="#references">References</a></li>
+        
     
         <li class="main "><a href="#examples">Examples</a></li>
         
-            <li><a href="#example-1-defaults">Example 1 - Defaults</a></li>
+            <li><a href="#example-1-pca-on-iris">Example 1 - PCA on Iris</a></li>
         
-            <li><a href="#example-2-python-lists">Example 2 - Python Lists</a></li>
-        
-            <li><a href="#example-3-integer-arrays">Example 3 - Integer Arrays</a></li>
-        
-            <li><a href="#example-4-arbitrary-numbers-of-class-labels">Example 4 - Arbitrary Numbers of Class Labels</a></li>
+            <li><a href="#example-2-plotting-the-variance-explained-ratio">Example 2 - Plotting the Variance Explained Ratio</a></li>
         
     
         <li class="main "><a href="#api">API</a></li>
+        
+            <li><a href="#methods">Methods</a></li>
         
     
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="one-hot-encoding">One-Hot Encoding</h1>
-<p>A function that performs one-hot encoding for class labels.</p>
+<h1 id="principal-component-analysis">Principal Component Analysis</h1>
+<p>Implementation of Principal Component Analysis for dimensionality reduction</p>
 <blockquote>
-<p>from mlxtend.preprocessing import one_hot</p>
+<p>from mlxtend.feature_extraction import PrincipalComponentAnalysis</p>
 </blockquote>
 <h1 id="overview">Overview</h1>
-<p>Typical supervised machine learning algorithms for classifications assume that the class labels are <em>nominal</em> (a special case of <em>categorical</em> where no order is implied). A typical example of an nominal feature would be "color" since we can't say (in most applications) that "orange &gt; blue &gt; red".</p>
-<p>The <code>one_hot</code> function provides a simple interface to convert class label integers into a so-called one-hot array, where each unique label is represented as a column in the new array.</p>
-<p>For example, let's assume we have 5 data points from 3 different classes: 0, 1, and 2.</p>
-<pre><code>y = [0, # sample 1, class 0 
-     1, # sample 2, class 1 
-     0, # sample 3, class 0
-     2, # sample 4, class 2
-     2] # sample 5, class 2
-</code></pre>
-<p>After one-hot encoding, we then obtain the following array (note that the index position of the "1" in each row denotes the class label of this sample):</p>
-<pre><code>y = [[1,  0,  0], # sample 1, class 0 
-     [0,  1,  0], # sample 2, class 1  
-     [1,  0,  0], # sample 3, class 0
-     [0,  0,  1], # sample 4, class 2
-     [0,  0,  1]  # sample 5, class 2
-     ])
-</code></pre>
+<p>The sheer size of data in the modern age is not only a challenge for computer hardware but also a main bottleneck for the performance of many machine learning algorithms. The main goal of a PCA analysis is to identify patterns in data; PCA aims to detect the correlation between variables. If a strong correlation between variables exists, the attempt to reduce the dimensionality only makes sense. In a nutshell, this is what PCA is all about: Finding the directions of maximum variance in high-dimensional data and project it onto a smaller dimensional subspace while retaining most of the information.</p>
+<h3 id="pca-and-dimensionality-reduction">PCA and Dimensionality Reduction</h3>
+<p>Often, the desired goal is to reduce the dimensions of a <mathjax>$d$</mathjax>-dimensional dataset by projecting it onto a <mathjax>$(k)$</mathjax>-dimensional subspace (where <mathjax>$k\;&lt;\;d$</mathjax>) in order to increase the computational efficiency while retaining most of the information. An important question is "what is the size of <mathjax>$k$</mathjax> that represents the data 'well'?"</p>
+<p>Later, we will compute eigenvectors (the principal components) of a dataset and collect them in a projection matrix. Each of those eigenvectors is associated with an eigenvalue which can be interpreted as the "length" or "magnitude" of the corresponding eigenvector. If some eigenvalues have a significantly larger magnitude than others that the reduction of the dataset via PCA onto a smaller dimensional subspace by dropping the "less informative" eigenpairs is reasonable.</p>
+<h3 id="a-summary-of-the-pca-approach">A Summary of the PCA Approach</h3>
+<ul>
+<li>Standardize the data.</li>
+<li>Obtain the Eigenvectors and Eigenvalues from the covariance matrix or correlation matrix, or perform Singular Vector Decomposition.</li>
+<li>Sort eigenvalues in descending order and choose the <mathjax>$k$</mathjax> eigenvectors that correspond to the <mathjax>$k$</mathjax> largest eigenvalues where <mathjax>$k$</mathjax> is the number of dimensions of the new feature subspace (<mathjax>$k \le d$</mathjax>).</li>
+<li>Construct the projection matrix <mathjax>$\mathbf{W}$</mathjax> from the selected <mathjax>$k$</mathjax> eigenvectors.</li>
+<li>Transform the original dataset <mathjax>$\mathbf{X}$</mathjax> via <mathjax>$\mathbf{W}$</mathjax> to obtain a <mathjax>$k$</mathjax>-dimensional feature subspace <mathjax>$\mathbf{Y}$</mathjax>.</li>
+</ul>
+<h3 id="references">References</h3>
+<ul>
+<li>Pearson, Karl. "LIII. <a href="http://www.tandfonline.com/doi/abs/10.1080/14786440109462720?journalCode=tphm17">On lines and planes of closest fit to systems of points in space.</a>" The London, Edinburgh, and Dublin Philosophical Magazine and Journal of Science 2.11 (1901): 559-572.</li>
+</ul>
 <h1 id="examples">Examples</h1>
-<h2 id="example-1-defaults">Example 1 - Defaults</h2>
-<pre><code class="python">from mlxtend.preprocessing import one_hot
-import numpy as np
+<h2 id="example-1-pca-on-iris">Example 1 - PCA on Iris</h2>
+<pre><code class="python">from mlxtend.data import iris_data
+from mlxtend.preprocessing import standardize
+from mlxtend.feature_extraction import PrincipalComponentAnalysis
 
-y = np.array([0, 1, 2, 1, 2])
-one_hot(y)
+X, y = iris_data()
+X = standardize(X)
+
+pca = PrincipalComponentAnalysis(n_components=2)
+pca.fit(X)
+X_pca = pca.transform(X)
 </code></pre>
 
-<pre><code>array([[ 1.,  0.,  0.],
-       [ 0.,  1.,  0.],
-       [ 0.,  0.,  1.],
-       [ 0.,  1.,  0.],
-       [ 0.,  0.,  1.]])
-</code></pre>
-<h2 id="example-2-python-lists">Example 2 - Python Lists</h2>
-<pre><code class="python">from mlxtend.preprocessing import one_hot
+<pre><code class="python">import matplotlib.pyplot as plt
 
-y = [0, 1, 2, 1, 2]
-one_hot(y)
-</code></pre>
-
-<pre><code>array([[ 1.,  0.,  0.],
-       [ 0.,  1.,  0.],
-       [ 0.,  0.,  1.],
-       [ 0.,  1.,  0.],
-       [ 0.,  0.,  1.]])
-</code></pre>
-<h2 id="example-3-integer-arrays">Example 3 - Integer Arrays</h2>
-<pre><code class="python">from mlxtend.preprocessing import one_hot
-
-y = [0, 1, 2, 1, 2]
-one_hot(y, dtype='int')
+with plt.style.context('seaborn-whitegrid'):
+    plt.figure(figsize=(6, 4))
+    for lab, col in zip((0, 1, 2),
+                        ('blue', 'red', 'green')):
+        plt.scatter(X_pca[y==lab, 0],
+                    X_pca[y==lab, 1],
+                    label=lab,
+                    c=col)
+    plt.xlabel('Principal Component 1')
+    plt.ylabel('Principal Component 2')
+    plt.legend(loc='lower center')
+    plt.tight_layout()
+    plt.show()
 </code></pre>
 
-<pre><code>array([[1, 0, 0],
-       [0, 1, 0],
-       [0, 0, 1],
-       [0, 1, 0],
-       [0, 0, 1]])
-</code></pre>
-<h2 id="example-4-arbitrary-numbers-of-class-labels">Example 4 - Arbitrary Numbers of Class Labels</h2>
-<pre><code class="python">from mlxtend.preprocessing import one_hot
+<p><img alt="png" src="../PrincipalComponentAnalysis_files/PrincipalComponentAnalysis_14_0.png" /></p>
+<h2 id="example-2-plotting-the-variance-explained-ratio">Example 2 - Plotting the Variance Explained Ratio</h2>
+<pre><code class="python">from mlxtend.data import iris_data
+from mlxtend.preprocessing import standardize
 
-y = [0, 1, 2, 1, 2]
-one_hot(y, num_labels=10)
+X, y = iris_data()
+X = standardize(X)
+
+pca = PrincipalComponentAnalysis(n_components=None)
+pca.fit(X)
+X_pca = pca.transform(X)
 </code></pre>
 
-<pre><code>array([[ 1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.],
-       [ 0.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.],
-       [ 0.,  0.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.],
-       [ 0.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.],
-       [ 0.,  0.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.]])
+<pre><code class="python">import numpy as np
+
+tot = sum(pca.e_vals_)
+var_exp = [(i / tot)*100 for i in sorted(pca.e_vals_, reverse=True)]
+cum_var_exp = np.cumsum(var_exp)
 </code></pre>
+
+<pre><code class="python">with plt.style.context('seaborn-whitegrid'):
+    plt.figure(figsize=(6, 4))
+
+    plt.bar(range(4), var_exp, alpha=0.5, align='center',
+            label='individual explained variance')
+    plt.step(range(4), cum_var_exp, where='mid',
+             label='cumulative explained variance')
+    plt.ylabel('Explained variance ratio')
+    plt.xlabel('Principal components')
+    plt.legend(loc='best')
+    plt.tight_layout()
+</code></pre>
+
+<p><img alt="png" src="../PrincipalComponentAnalysis_files/PrincipalComponentAnalysis_18_0.png" /></p>
 <h1 id="api">API</h1>
-<p><em>one_hot(y, num_labels='auto', dtype='float')</em></p>
-<p>One-hot encoding of class labels</p>
+<p><em>PrincipalComponentAnalysis(n_components=None)</em></p>
+<p>Principal Component Analysis Class</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>y</code> : array-like, shape = [n_classlabels]</p>
-<p>Python list or numpy array consisting of class labels.</p>
-</li>
-<li>
-<p><code>num_labels</code> : int or 'auto'</p>
-<p>Number of unique labels in the class label array. Infers the number
-of unique labels from the input array if set to 'auto'.</p>
-</li>
-<li>
-<p><code>dtype</code> : str</p>
-<p>NumPy array type (float, float32, float64) of the output array.</p>
+<p><code>n_components</code> : int (default: None)</p>
+<p>The number of principal components for transformation.
+Keeps the original dimensions of the dataset if <code>None</code>.</p>
 </li>
 </ul>
-<p><strong>Returns</strong></p>
+<p><strong>Attributes</strong></p>
 <ul>
 <li>
-<p><code>onehot</code> : numpy.ndarray, shape = [n_classlabels]</p>
-<p>One-hot encoded array, where each sample is represented as
-a row vector in the returned array.</p>
+<p><code>w_</code> : array-like, shape=[n_features x n_components]</p>
+<p>Projection matrix</p>
 </li>
-</ul></div>
+<li>
+<p><code>e_vals_</code> : array-like, shape=[n_features]</p>
+<p>Eigenvalues in sorted order.</p>
+</li>
+<li>
+<p><code>e_vecs_</code> : array-like, shape=[n_features]</p>
+<p>Eigenvectors in sorted order.</p>
+</li>
+</ul>
+<h3 id="methods">Methods</h3>
+<hr>
+
+<p><em>fit(X)</em></p>
+<p>Fit the PCA model with X.</p>
+<hr>
+
+<p><em>transform(X)</em></p>
+<p>Apply the linear transformation on X.</p></div>
         
     </div>
 

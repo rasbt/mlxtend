@@ -188,6 +188,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">feature_extraction</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/feature_extraction/PrincipalComponentAnalysis/">PrincipalComponentAnalysis</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">evaluate</a>
     <ul class="dropdown-menu">
         
@@ -451,6 +466,12 @@
   <li class="dropdown-submenu">
     <a tabindex="-1" href="">Upcoming Features / 0.3.1dev</a>
     <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/feature_extraction/PrincipalComponentAnalysis/">PrincipalComponentAnalysis</a>
+</li>
+
         
             
 <li >
@@ -844,7 +865,7 @@ a row vector in the returned array.</p>
 &gt;&gt;&gt;
 </code></pre>
 <h2 id="standardize">standardize</h2>
-<p><em>standardize(array, columns, ddof=0, return_params=False, params=None)</em></p>
+<p><em>standardize(array, columns=None, ddof=0, return_params=False, params=None)</em></p>
 <p>Standardize columns in pandas DataFrames.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -852,9 +873,10 @@ a row vector in the returned array.</p>
 <p><code>array</code> : pandas DataFrame or NumPy ndarray, shape = [n_rows, n_columns].</p>
 </li>
 <li>
-<p><code>columns</code> : array-like, shape = [n_columns]</p>
+<p><code>columns</code> : array-like, shape = [n_columns] (default: None)</p>
 <p>Array-like with column names, e.g., ['col1', 'col2', ...]
-or column indices [0, 2, 4, ...]</p>
+or column indices [0, 2, 4, ...]
+If None, standardizes all columns.</p>
 </li>
 <li>
 <p><code>ddof</code> : int (default: 0)</p>

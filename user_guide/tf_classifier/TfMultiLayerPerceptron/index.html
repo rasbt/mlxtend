@@ -197,6 +197,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../feature_extraction/LinearDiscriminantAnalysis/">LinearDiscriminantAnalysis</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -474,6 +480,12 @@
 
         
             
+<li >
+    <a href="../../feature_extraction/LinearDiscriminantAnalysis/">LinearDiscriminantAnalysis</a>
+</li>
+
+        
+            
 <li class="active">
     <a href="./">TfMultiLayerPerceptron</a>
 </li>
@@ -636,7 +648,7 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../../feature_extraction/PrincipalComponentAnalysis/">
+                        <a rel="next" href="../../feature_extraction/LinearDiscriminantAnalysis/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
@@ -680,6 +692,8 @@
         
             <li><a href="#example-3-mnist">Example 3 - MNIST</a></li>
         
+            <li><a href="#example-4-training-and-validation-accuracies-during-training">Example 4 -- Training and Validation Accuracies During Training</a></li>
+        
     
         <li class="main "><a href="#api">API</a></li>
         
@@ -702,7 +716,7 @@
 <p>Please also see the activation function cheatsheet at <a href="../../general_concepts/activation-functions/"><code>general_concepts.activation-functions</code></a>.</p>
 <h1 id="examples">Examples</h1>
 <h2 id="example-1-gradient-descent">Example 1 - Gradient Descent</h2>
-<p>Each integer in the <code>hidden_layers</code> list argument specifies the number of neurons for the respective layer; via the <code>activations</code>, we specify the activation functions for the individual hidden layer. Below, we initialize a multi-layer perceptron with 1 hidden layer using the logistic sigmoid activation. Furthermore, we train the network via simple gradient descent training by setting <code>optimizer='gradientdescent'</code> and <code>minibatches=1</code>.</p>
+<p>Each integer in the <code>hidden_layers</code> list argument specifies the number of neurons for the respective layer; via the <code>activations</code>, we specify the activation functions for the individual hidden layer. Below, we initialize a multi-layer perceptron with 1 hidden layer using the logistic sigmoid activation. Furthermore, we train the network via simple gradient descent training by setting <code>optimizer='gradientdescent'</code> and <code>minibatches=1</code>. </p>
 <pre><code class="python">from mlxtend.tf_classifier import TfMultiLayerPerceptron
 from mlxtend.data import iris_data
 from mlxtend.evaluate import plot_decision_regions
@@ -716,13 +730,13 @@ X = X[:, [0, 3]] # sepal length and petal width
 X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
 X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
 
-mlp = TfMultiLayerPerceptron(eta=0.5,
-                             epochs=20,
-                             hidden_layers=[5],
+mlp = TfMultiLayerPerceptron(eta=0.5, 
+                             epochs=20, 
+                             hidden_layers=[10],
                              activations=['logistic'],
                              optimizer='gradientdescent',
-                             print_progress=True,
-                             minibatches=1,
+                             print_progress=True, 
+                             minibatches=1, 
                              random_seed=1)
 
 mlp.fit(X, y)
@@ -733,7 +747,7 @@ plt.ylabel('Cost')
 plt.show()
 </code></pre>
 
-<pre><code>Epoch: 20/20 | Cost 0.55
+<pre><code>Epoch: 20/20 | Cost 0.55 | TrainAcc 0.83
 </code></pre>
 <p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_14_1.png" /></p>
 <p>Continue the training if cost could be further decreased via additional epochs. Instead of training the classifier another 20 epochs, we modify the epochs and set them to 550. Also, we want to make sure to set <code>init_weights</code> to <code>False</code> in order to re-use the model parameters from the previous training.</p>
@@ -745,7 +759,7 @@ plt.ylabel('Cost')
 plt.show()
 </code></pre>
 
-<pre><code>Epoch: 550/550 | Cost 0.12
+<pre><code>Epoch: 550/550 | Cost 0.12 | TrainAcc 0.96
 </code></pre>
 <p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_16_1.png" /></p>
 <pre><code class="python">plot_decision_regions(X=X, y=y, clf=mlp)
@@ -785,13 +799,13 @@ X = X[:, [0, 3]] # sepal length and petal width
 X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
 X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
 
-mlp = TfMultiLayerPerceptron(eta=0.5,
-                             epochs=100,
+mlp = TfMultiLayerPerceptron(eta=0.5, 
+                             epochs=100, 
                              hidden_layers=[10],
                              activations=['logistic'],
-                             print_progress=True,
+                             print_progress=True, 
                              optimizer='gradientdescent',
-                             minibatches=10,
+                             minibatches=10, 
                              random_seed=1)
 
 mlp.fit(X, y)
@@ -806,7 +820,7 @@ plt.title('MLP - Minibatch Stochastic Gradient Descent')
 plt.show()
 </code></pre>
 
-<pre><code>Epoch: 100/100 | Cost 0.13
+<pre><code>Epoch: 100/100 | Cost 0.13 | TrainAcc 0.95
 </code></pre>
 <p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_24_1.png" /></p>
 <p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_24_2.png" /></p>
@@ -819,12 +833,12 @@ import matplotlib.pyplot as plt
 
 X, y = mnist_data()
 
-mlp = TfMultiLayerPerceptron(eta=0.01,
-                             epochs=30,
+mlp = TfMultiLayerPerceptron(eta=0.01, 
+                             epochs=30, 
                              hidden_layers=[200, 200],
                              activations=['relu', 'relu'],
-                             print_progress=3,
-                             minibatches=5,
+                             print_progress=1, 
+                             minibatches=5, 
                              optimizer='adam',
                              random_seed=1)
 
@@ -836,13 +850,12 @@ plt.ylabel('Cost')
 plt.show()
 </code></pre>
 
-<pre><code>Epoch: 30/30 | Cost 0.02 | Elapsed: 0:00:32 | ETA: 0:00:00
+<pre><code>Epoch: 30/30 | Cost 0.02 | TrainAcc 1.00
 </code></pre>
 <p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_28_1.png" /></p>
 <pre><code class="python">import numpy as np
 y_pred = mlp.predict(X)
-acc = np.sum(y == y_pred, axis=0) / X.shape[0]
-print('Training Accuracy: %.2f%%' % (acc * 100))
+print('Training Accuracy: %.2f%%' % (mlp.score(X, y) * 100))
 </code></pre>
 
 <pre><code>Training Accuracy: 100.00%
@@ -861,6 +874,43 @@ plot_digit(X, y, 4999)
 
 <pre><code>Prediction: 9
 </code></pre>
+<h2 id="example-4-training-and-validation-accuracies-during-training">Example 4 -- Training and Validation Accuracies During Training</h2>
+<p>Training accuracies are collected for each epoch by default. Optionally, we can pass validation dataset during model fitting to compute the validation accuracy values for each epoch. Here, pass 4000 samples from MNIST for training and 1000 samples from MNIST for validation.</p>
+<pre><code class="python">from mlxtend.data import mnist_data
+from mlxtend.preprocessing import shuffle_arrays_unison
+from mlxtend.tf_classifier import TfMultiLayerPerceptron
+import matplotlib.pyplot as plt
+
+X, y = mnist_data()
+X, y = shuffle_arrays_unison((X, y), random_seed=1)
+
+mlp = TfMultiLayerPerceptron(eta=0.01, 
+                             epochs=30, 
+                             hidden_layers=[200, 200],
+                             activations=['relu', 'relu'],
+                             print_progress=1, 
+                             minibatches=5, 
+                             optimizer='adam',
+                             random_seed=1)
+
+mlp.fit(X=X[:4000], 
+        y=y[:4000],
+        X_valid=X[4000:],
+        y_valid=y[4000:])
+</code></pre>
+
+<pre><code>Epoch: 30/30 | Cost 0.00 | TrainAcc 1.00 | ValidAcc 0.86
+</code></pre>
+<pre><code class="python">plt.plot(range(1, mlp.epochs + 1), mlp.train_acc_, label='training')
+plt.plot(range(1, mlp.epochs + 1), mlp.valid_acc_, label='validation')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.legend(loc='lower right')
+plt.grid()
+plt.show()
+</code></pre>
+
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_35_0.png" /></p>
 <h1 id="api">API</h1>
 <p><em>TfMultiLayerPerceptron(eta=0.5, epochs=50, hidden_layers=[50, 10], activations=['logistic', 'logistic'], optimizer='gradientdescent', momentum=0.0, l1=0.0, l2=0.0, minibatches=1, random_seed=None, print_progress=0, dtype=None)</em></p>
 <p>Multi-layer perceptron classifier.</p>
@@ -946,7 +996,7 @@ Minibatch learning if <code>minibatches</code> &gt; 1</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, init_weights=True, override_minibatches=None)</em></p>
+<p><em>fit(X, y, init_weights=True, override_minibatches=None, n_classes=None, X_valid=None, y_valid=None)</em></p>
 <p>Learn weight coefficients from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -966,6 +1016,22 @@ n_features is the number of features.</p>
 <li>
 <p><code>override_minibatches</code> : int or None (default: None)</p>
 <p>Uses a different number of minibatches for this session.</p>
+</li>
+<li>
+<p><code>n_classes</code> : int (default: None)</p>
+<p>A positive integer to declare the number of class labels
+if not all class labels are present in a partial training set.
+Gets the number of class labels automatically if None.
+Ignored if init_weights=False.</p>
+</li>
+<li>
+<p><code>X_valid</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Optional validation set to store the validation accuracy values
+for each epoch via self.valid_acc_</p>
+</li>
+<li>
+<p><code>y_valid</code> : array-like, shape = [n_samples]</p>
+<p>Target values for X_valid</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
@@ -1006,6 +1072,30 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li><code>Class probabilties</code> : array-like, shape= [n_samples, n_classes]</li>
+</ul>
+<hr>
+
+<p><em>score(X, y)</em></p>
+<p>Compute the prediction accuracy</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values (true class labels).</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>acc</code> : float</p>
+<p>The prediction accuracy as a float
+between 0.0 and 1.0 (perfect score).</p>
+</li>
 </ul></div>
         
     </div>

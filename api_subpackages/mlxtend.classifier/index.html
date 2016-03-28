@@ -197,6 +197,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../user_guide/feature_extraction/LinearDiscriminantAnalysis/">LinearDiscriminantAnalysis</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -470,6 +476,12 @@
             
 <li >
     <a href="../../user_guide/feature_extraction/PrincipalComponentAnalysis/">PrincipalComponentAnalysis</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/feature_extraction/LinearDiscriminantAnalysis/">LinearDiscriminantAnalysis</a>
 </li>
 
         
@@ -801,6 +813,30 @@ n_features is the number of features.</p>
 <li>
 <p><code>class_labels</code> : array-like, shape = [n_samples]</p>
 <p>Predicted class labels.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>score(X, y)</em></p>
+<p>Compute the prediction accuracy</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values (true class labels).</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>acc</code> : float</p>
+<p>The prediction accuracy as a float
+between 0.0 and 1.0 (perfect score).</p>
 </li>
 </ul>
 <h2 id="ensemblevoteclassifier">EnsembleVoteClassifier</h2>
@@ -1149,6 +1185,30 @@ n_features is the number of features.</p>
 <ul>
 <li><code>Class 1 probability</code> : float</li>
 </ul>
+<hr>
+
+<p><em>score(X, y)</em></p>
+<p>Compute the prediction accuracy</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values (true class labels).</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>acc</code> : float</p>
+<p>The prediction accuracy as a float
+between 0.0 and 1.0 (perfect score).</p>
+</li>
+</ul>
 <h2 id="neuralnetmlp">NeuralNetMLP</h2>
 <p><em>NeuralNetMLP(n_output, n_features, n_hidden=30, l1=0.0, l2=0.0, epochs=500, eta=0.001, alpha=0.0, decrease_const=0.0, shuffle_init=True, shuffle_epoch=True, minibatches=1, zero_init_weight=False, random_seed=None, print_progress=0)</em></p>
 <p>Feedforward neural network / Multi-layer perceptron classifier.</p>
@@ -1279,6 +1339,30 @@ n_features is the number of features.</p>
 <p>Predicted class labels.</p>
 </li>
 </ul>
+<hr>
+
+<p><em>score(X, y)</em></p>
+<p>Compute the prediction accuracy</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values (true class labels).</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>acc</code> : float</p>
+<p>The prediction accuracy as a float
+between 0.0 and 1.0 (perfect score).</p>
+</li>
+</ul>
 <h2 id="perceptron">Perceptron</h2>
 <p><em>Perceptron(eta=0.1, epochs=50, shuffle=True, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
 <p>Perceptron classifier.</p>
@@ -1369,6 +1453,30 @@ n_features is the number of features.</p>
 <p>Predicted class labels.</p>
 </li>
 </ul>
+<hr>
+
+<p><em>score(X, y)</em></p>
+<p>Compute the prediction accuracy</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values (true class labels).</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>acc</code> : float</p>
+<p>The prediction accuracy as a float
+between 0.0 and 1.0 (perfect score).</p>
+</li>
+</ul>
 <h2 id="softmaxregression">SoftmaxRegression</h2>
 <p><em>SoftmaxRegression(eta=0.01, epochs=50, l2_lambda=0.0, minibatches=1, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
 <p>Softmax regression classifier.</p>
@@ -1428,7 +1536,7 @@ stddev=1.</p>
 <h3 id="methods_5">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, init_weights=True)</em></p>
+<p><em>fit(X, y, init_weights=True, n_classes=None)</em></p>
 <p>Learn weight coefficients from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1444,6 +1552,13 @@ n_features is the number of features.</p>
 <li>
 <p><code>init_weights</code> : bool (default: True)</p>
 <p>(Re)initializes weights to small random floats if True.</p>
+</li>
+<li>
+<p><code>n_classes</code> : int (default: None)</p>
+<p>A positive integer to declare the number of class labels
+if not all class labels are present in a partial training set.
+Gets the number of class labels automatically if None.
+Ignored if init_weights=False.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
@@ -1484,6 +1599,30 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li><code>Class probabilties</code> : array-like, shape= [n_samples, n_classes]</li>
+</ul>
+<hr>
+
+<p><em>score(X, y)</em></p>
+<p>Compute the prediction accuracy</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values (true class labels).</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>acc</code> : float</p>
+<p>The prediction accuracy as a float
+between 0.0 and 1.0 (perfect score).</p>
+</li>
 </ul>
 <h2 id="stackingclassifier">StackingClassifier</h2>
 <p><em>StackingClassifier(classifiers, meta_classifier, use_probas=False, verbose=0)</em></p>

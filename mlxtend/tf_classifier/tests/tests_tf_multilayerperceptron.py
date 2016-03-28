@@ -141,3 +141,31 @@ def test_fail_minibatches():
               random_seed=1)
     mlp.fit(X, y)
     assert (y == mlp.predict(X)).all()
+
+
+def test_train_acc():
+    mlp = MLP(epochs=3,
+              eta=0.5,
+              hidden_layers=[5],
+              optimizer='gradientdescent',
+              activations=['logistic'],
+              minibatches=1,
+              random_seed=1)
+
+    mlp.fit(X, y)
+    exp = [0.33, 0.33, 0.33]
+    np.testing.assert_almost_equal(exp, mlp.train_acc_, decimal=2)
+
+
+def test_valid_acc():
+    mlp = MLP(epochs=3,
+              eta=0.5,
+              hidden_layers=[5],
+              optimizer='gradientdescent',
+              activations=['logistic'],
+              minibatches=1,
+              random_seed=1)
+
+    mlp.fit(X, y, X_valid=X[:100], y_valid=y[:100])
+    exp = [0.5, 0.5, 0.5]
+    np.testing.assert_almost_equal(exp, mlp.valid_acc_, decimal=2)

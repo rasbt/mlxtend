@@ -130,7 +130,8 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
         return act
 
     def fit(self, X, y, init_weights=True,
-            override_minibatches=None, n_classes=None):
+            override_minibatches=None, n_classes=None,
+            X_valid=None, y_valid=None):
         """Learn weight coefficients from training data.
 
         Parameters
@@ -149,7 +150,12 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
             if not all class labels are present in a partial training set.
             Gets the number of class labels automatically if None.
             Ignored if init_weights=False.
-    
+        X_valid : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Optional validation set to store the validation accuracy values
+            for each epoch via self.valid_acc_
+        y_valid : array-like, shape = [n_samples]
+            Target values for X_valid
+
         Returns
         -------
         self : object
@@ -165,6 +171,11 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
             raise AttributeError("Training set size %d cannot"
                                  " be divided into %d minibatches without"
                                  " remainder" % (y.shape[0], n_batches))
+
+        if hasattr(X_valid, 'shape'):
+            validation = True
+        else:
+            validation = False
 
         # Construct the Graph
         g = tf.Graph()
@@ -184,6 +195,8 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
                     weight_maps=self._weight_maps,
                     bias_maps=self._bias_maps)
                 self.cost_ = []
+                self.train_acc_ = []
+                self.valid_acc_ = []
             else:
                 tf_weights, tf_biases = self._reuse_weights(
                     weights=self.weights_,
@@ -194,6 +207,13 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
             n_idx = list(range(y.shape[0]))
             tf_X = tf.convert_to_tensor(value=X, dtype=self.dtype)
             tf_y = tf.convert_to_tensor(value=y_enc, dtype=self.dtype)
+
+            if validation:
+                tf_X_valid = tf.convert_to_tensor(value=X_valid,
+                                                  dtype=self.dtype)
+                y_valid_enc = self._one_hot(y_valid, self._n_classes)
+                tf_y_valid = tf.convert_to_tensor(value=y_valid_enc,
+                                                  dtype=self.dtype)
 
             tf_idx = tf.placeholder(tf.int32,
                                     shape=[int(y.shape[0] / n_batches)])
@@ -234,11 +254,37 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
                     costs.append(c)
                 avg_cost = np.mean(costs)
                 self.cost_.append(avg_cost)
-                self._print_progress(epoch + 1, avg_cost)
+
+                # compute prediction accuracy
+                train_acc = self._accuracy(y, tf_X, tf_weights, tf_biases,
+                                           self.activations)
+                self.train_acc_.append(train_acc)
+                if validation:
+                    valid_acc = self._accuracy(y_valid, tf_X_valid,
+                                               tf_weights, tf_biases,
+                                               self.activations)
+                    self.valid_acc_.append(valid_acc)
+                else:
+                    valid_acc = None
+                self._print_progress(epoch + 1,
+                                     cost=avg_cost,
+                                     train_acc=train_acc,
+                                     valid_acc=valid_acc)
+
             self.weights_ = {k: tf_weights[k].eval() for k in tf_weights}
             self.biases_ = {k: tf_biases[k].eval() for k in tf_biases}
 
         return
+
+    def _accuracy(self, y, tf_X, tf_weights_, tf_biases_, activations):
+        net = self._predict(tf_X=tf_X,
+                            tf_weights=tf_weights_,
+                            tf_biases=tf_biases_,
+                            activations=activations)
+        logits = tf.nn.softmax(net)
+        y_pred = np.argmax(logits.eval(), axis=1)
+        acc = np.sum(y == y_pred, axis=0) / float(y.shape[0])
+        return acc
 
     def predict(self, X):
         """Predict class labels of X.

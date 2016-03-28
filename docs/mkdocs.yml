@@ -45,6 +45,7 @@ pages:
     - user_guide/feature_selection/SequentialFeatureSelector.md
   - feature_extraction:
     - user_guide/feature_extraction/PrincipalComponentAnalysis.md
+    - user_guide/feature_extraction/LinearDiscriminantAnalysis.md
   - evaluate:
     - user_guide/evaluate/confusion_matrix.md
     - user_guide/evaluate/plot_decision_regions.md
@@ -86,6 +87,7 @@ pages:
     - user_guide/general_concepts/regularization-linear.md
   - Upcoming Features / 0.3.1dev:
     - user_guide/feature_extraction/PrincipalComponentAnalysis.md
+    - user_guide/feature_extraction/LinearDiscriminantAnalysis.md
     - user_guide/tf_classifier/TfMultiLayerPerceptron.md
     - user_guide/tf_classifier/TfSoftmaxRegression.md
     - user_guide/classifier/SoftmaxRegression.md

@@ -36,7 +36,19 @@ class PrincipalComponentAnalysis(object):
         pass
 
     def fit(self, X):
-        """ Fit the PCA model with X."""
+        """ Fit the PCA model with X.
+
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+
+        Returns
+        -------
+        self : object
+
+        """
         if self.n_components is None or self.n_components > X.shape[1]:
             n_components = X.shape[1]
         else:

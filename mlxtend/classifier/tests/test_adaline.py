@@ -52,6 +52,17 @@ def test_gradient_descent():
     assert((y1 == ada.predict(X_std)).all())
 
 
+def test_score_function():
+    t1 = np.array([-5.21e-16, -7.86e-02, 1.02e+00])
+    ada = Adaline(epochs=30,
+                  eta=0.01,
+                  minibatches=1,
+                  random_seed=1)
+    ada.fit(X_std, y1)
+    acc = ada.score(X_std, y1)
+    assert acc == 1.0, acc
+
+
 def test_refit_weights():
     t1 = np.array([-5.21e-16, -7.86e-02, 1.02e+00])
     ada = Adaline(epochs=15,

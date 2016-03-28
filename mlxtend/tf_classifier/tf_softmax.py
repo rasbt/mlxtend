@@ -46,6 +46,10 @@ class TfSoftmaxRegression(_TfBaseClassifier):
         Bias units after fitting.
     cost_ : list
         List of floats, the average cross_entropy for each epoch.
+    train_acc_ : list
+        List of training accuracies for each epoch
+    valid_acc_ : list
+        List of validation accuracies for each epoch
 
     """
     def __init__(self, eta=0.5, epochs=50,
@@ -63,7 +67,8 @@ class TfSoftmaxRegression(_TfBaseClassifier):
         self.print_progress = print_progress
 
     def fit(self, X, y,
-            init_weights=True, override_minibatches=None):
+            init_weights=True, override_minibatches=None, n_classes=None,
+            X_valid=None, y_valid=None):
 
         """Learn weight coefficients from training data.
 
@@ -78,6 +83,16 @@ class TfSoftmaxRegression(_TfBaseClassifier):
             (Re)initializes weights to small random floats if True.
         override_minibatches : int or None (default: None)
             Uses a different number of minibatches for this session.
+        n_classes : int (default: None)
+            A positive integer to declare the number of class labels
+            if not all class labels are present in a partial training set.
+            Gets the number of class labels automatically if None.
+            Ignored if init_weights=False.
+        X_valid : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Optional validation set to store the validation accuracy values
+            for each epoch via self.valid_acc_
+        y_valid : array-like, shape = [n_samples]
+            Target values for X_valid
 
         Returns
         -------
@@ -95,17 +110,27 @@ class TfSoftmaxRegression(_TfBaseClassifier):
                                  " be divided into %d minibatches without"
                                  " remainder" % (y.shape[0], n_batches))
 
+        if hasattr(X_valid, 'shape'):
+            validation = True
+        else:
+            validation = False
+
         # Construct the Graph
         g = tf.Graph()
         with g.as_default():
 
             if init_weights:
-                self._n_classes = np.max(y) + 1
+                if n_classes:
+                    self._n_classes = n_classes
+                else:
+                    self._n_classes = np.max(y) + 1
                 self._n_features = X.shape[1]
                 tf_weights_, tf_biases_ = self._initialize_weights(
                     n_features=self._n_features,
                     n_classes=self._n_classes)
                 self.cost_ = []
+                self.train_acc_ = []
+                self.valid_acc_ = []
             else:
                 tf_weights_ = tf.Variable(self.weights_)
                 tf_biases_ = tf.Variable(self.biases_)
@@ -115,6 +140,14 @@ class TfSoftmaxRegression(_TfBaseClassifier):
             n_idx = list(range(y.shape[0]))
             tf_X = tf.convert_to_tensor(value=X, dtype=self.dtype)
             tf_y = tf.convert_to_tensor(value=y_enc, dtype=self.dtype)
+
+            if validation:
+                tf_X_valid = tf.convert_to_tensor(value=X_valid,
+                                                  dtype=self.dtype)
+                y_valid_enc = self._one_hot(y_valid, self._n_classes)
+                tf_y_valid = tf.convert_to_tensor(value=y_valid_enc,
+                                                  dtype=self.dtype)
+
             tf_idx = tf.placeholder(tf.int32,
                                     shape=[int(y.shape[0] / n_batches)])
             X_batch = tf.gather(params=tf_X, indices=tf_idx)
@@ -150,9 +183,30 @@ class TfSoftmaxRegression(_TfBaseClassifier):
                     costs.append(c)
                 avg_cost = np.mean(costs)
                 self.cost_.append(avg_cost)
-                self._print_progress(epoch + 1, avg_cost)
+
+                # compute prediction accuracy
+                train_acc = self._accuracy(y, tf_X, tf_weights_, tf_biases_)
+                self.train_acc_.append(train_acc)
+                if validation:
+                    valid_acc = self._accuracy(y_valid, tf_X_valid,
+                                               tf_weights_, tf_biases_)
+                    self.valid_acc_.append(valid_acc)
+                else:
+                    valid_acc = None
+                self._print_progress(epoch + 1,
+                                     cost=avg_cost,
+                                     train_acc=train_acc,
+                                     valid_acc=valid_acc)
+
             self.weights_ = tf_weights_.eval()
             self.biases_ = tf_biases_.eval()
+
+    def _accuracy(self, y, tf_X, tf_weights_, tf_biases_):
+        logits = tf.nn.softmax(tf.matmul(tf_X, tf_weights_) +
+                               tf_biases_)
+        y_pred = np.argmax(logits.eval(), axis=1)
+        acc = np.sum(y == y_pred, axis=0) / float(y.shape[0])
+        return acc
 
     def _resuse_weights(self, weights, biases):
             w = tf.Variable(weights)

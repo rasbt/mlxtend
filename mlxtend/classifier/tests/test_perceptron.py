@@ -32,25 +32,32 @@ def test_array_dimensions():
 def test_standardized_iris_data():
     ppn = Perceptron(epochs=15, eta=0.01, random_seed=1)
     ppn = ppn.fit(X_std, y1)  # -1, 1 class
-    assert((y1 == ppn.predict(X_std)).all())
+    assert (y1 == ppn.predict(X_std)).all()
 
 
 def test_standardized_iris_data_with_shuffle():
     ppn = Perceptron(epochs=15, eta=0.01, random_seed=1, shuffle=True)
     ppn = ppn.fit(X_std, y1)  # -1, 1 class
-    assert((y1 == ppn.predict(X_std)).all())
+    assert (y1 == ppn.predict(X_std)).all()
+
+
+def test_score_function():
+    ppn = Perceptron(epochs=15, eta=0.01, random_seed=1, shuffle=True)
+    ppn = ppn.fit(X_std, y1)  # -1, 1 class
+    acc = ppn.score(X_std, y1)
+    assert acc == 1.0, acc
 
 
 def test_standardized_iris_data_with_zero_weights():
     ppn = Perceptron(epochs=15, eta=0.01, random_seed=1, zero_init_weight=True)
     ppn = ppn.fit(X_std, y1)  # -1, 1 class
-    assert((y1 == ppn.predict(X_std)).all())
+    assert (y1 == ppn.predict(X_std)).all()
 
 
 def test_nonstandardized_iris_data():
     ppn = Perceptron(epochs=100, eta=0.01, random_seed=1)
     ppn = ppn.fit(X, y1)  # -1, 1 class
-    assert((y1 == ppn.predict(X)).all())
+    assert (y1 == ppn.predict(X)).all()
 
 
 def test_0_1_class_iris_data():
@@ -58,7 +65,7 @@ def test_0_1_class_iris_data():
     ppn = ppn.fit(X, y0)  # 0, 1 class
     print(y0)
     print(ppn.predict(X))
-    assert((y0 == ppn.predict(X)).all())
+    assert (y0 == ppn.predict(X)).all()
 
 
 def test_invalid_class():

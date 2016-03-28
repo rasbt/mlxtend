@@ -58,6 +58,25 @@ def test_gradient_descent():
     assert round(acc, 2) == 0.99, "Acc: %s" % acc
 
 
+def test_score_function():
+
+    nn = NeuralNetMLP(n_output=3,
+                      n_features=X.shape[1],
+                      n_hidden=10,
+                      l2=0.0,
+                      l1=0.0,
+                      epochs=100,
+                      eta=0.1,
+                      minibatches=1,
+                      shuffle_init=False,
+                      shuffle_epoch=False,
+                      random_seed=1)
+
+    nn.fit(X_std, y)
+    acc = nn.score(X_std, y)
+    assert round(acc, 2) == 0.99, "Acc: %s" % acc
+
+
 def test_shuffle():
 
     nn = NeuralNetMLP(n_output=3,

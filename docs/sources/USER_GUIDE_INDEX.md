@@ -26,7 +26,7 @@
 - [`SequentialFeatureSelector`](user_guide/feature_selection/SequentialFeatureSelector.md)
 
 ## `feature_extraction`
-- [`PrincipalComponentAnalysis`](user_guide/feature_selection/PrincipalComponentAnalysis.md)
+- [`PrincipalComponentAnalysis`](user_guide/feature_extraction/PrincipalComponentAnalysis.md)
 
 ## `evaluate`
 - [`confusion_matrix`](user_guide/evaluate/confusion_matrix.md)

@@ -73,11 +73,16 @@ class _TfBaseClassifier(object):
         r = np.random.permutation(len(arrays[0]))
         return [ary[r] for ary in arrays]
 
-    def _print_progress(self, epoch, cost=None, time_interval=10):
+    def _print_progress(self, epoch, cost=None, train_acc=None,
+                        valid_acc=None, time_interval=10):
         if self.print_progress > 0:
             s = '\rEpoch: %d/%d' % (epoch, self.epochs)
-            if cost:
+            if cost is not None:
                 s += ' | Cost %.2f' % cost
+            if train_acc is not None:
+                s += ' | TrainAcc %.2f' % train_acc
+            if valid_acc is not None:
+                s += ' | ValidAcc %.2f' % valid_acc
             if self.print_progress > 1:
                 if not hasattr(self, 'ela_str_'):
                     self.ela_str_ = '00:00:00'
@@ -93,6 +98,7 @@ class _TfBaseClassifier(object):
                                    self.epochs - ela_sec)
                         self.eta_str_ = self._to_hhmmss(eta_sec)
                     s += ' | ETA: %s' % self.eta_str_
+
             stderr.write(s)
             stderr.flush()
 
@@ -130,3 +136,25 @@ class _TfBaseClassifier(object):
 
     def _to_classlabels(self, z):
         return z.argmax(axis=1)
+
+    def score(self, X, y):
+        """ Compute the prediction accuracy
+
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+        y : array-like, shape = [n_samples]
+            Target values (true class labels).
+
+        Returns
+        ---------
+        acc : float
+            The prediction accuracy as a float
+            between 0.0 and 1.0 (perfect score).
+
+        """
+        y_pred = self.predict(X)
+        acc = np.sum(y == y_pred, axis=0) / float(X.shape[0])
+        return acc

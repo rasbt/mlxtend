@@ -845,7 +845,7 @@ print('predicted class labels: ', to_classlabel(smax))
 <pre><code>predicted class labels:  [2 2 0 0]
 </code></pre>
 <p>As we can see, our predictions are terribly wrong, since the correct class labels are <code>[0, 1, 2, 2]</code>. Now, in order to train our logistic model (e.g., via an optimization algorithm such as gradient descent), we need to define a cost function <mathjax>$J(\cdot)$</mathjax> that we want to minimize:</p>
-<p><mathjax>$$J(\theta) = \frac{1}{n} \sum_{i=1}^{n} H(T_i, O_i),$$</mathjax></p>
+<p><mathjax>$$J(\mathbf{W}; \mathbf{b}) = \frac{1}{n} \sum_{i=1}^{n} H(T_i, O_i),$$</mathjax></p>
 <p>which is the average of all cross-entropies over our <mathjax>$n$</mathjax> training samples. The cross-entropy  function is defined as</p>
 <p><mathjax>$$H(T_i, O_i) = -\sum_m T_i \cdot log(O_i).$$</mathjax></p>
 <p>Here the <mathjax>$T$</mathjax> stands for "target" (i.e., the <em>true</em> class labels) and the <mathjax>$O$</mathjax> stands for output -- the computed <em>probability</em> via softmax; <strong>not</strong> the predicted class label.</p>
@@ -868,19 +868,23 @@ print('Cost: ', J_cost)
 <pre><code>Cost:  1.32159787159
 </code></pre>
 <p>In order to learn our softmax model -- determining the weight coefficients -- via gradient descent, we then need to compute the derivative </p>
-<p><mathjax>$$\nabla \mathbf{w}_j \, J(\mathbf{W}).$$</mathjax></p>
+<p><mathjax>$$\nabla \mathbf{w}_j \, J(\mathbf{W}; \mathbf{b}).$$</mathjax></p>
 <p>I don't want to walk through the tedious details here, but this cost derivative turns out to be simply:</p>
-<p><mathjax>$$\nabla \mathbf{w}_j \, J(\mathbf{W}) = - \frac{1}{n} \sum^{n}_{i=0} \big[\mathbf{x}^{(i)}\ \big(T_i - O_i \big) \big]$$</mathjax></p>
+<p><mathjax>$$\nabla \mathbf{w}_j \, J(\mathbf{W}; \mathbf{b}) = \frac{1}{n} \sum^{n}_{i=0} \big[\mathbf{x}^{(i)}\ \big(O_i - T_i \big) \big]$$</mathjax></p>
 <p>We can then use the cost derivate to update the weights in opposite direction of the cost gradient with learning rate <mathjax>$\eta$</mathjax>:</p>
-<p><mathjax>$$\mathbf{w}_j := \mathbf{w}_j - \eta \nabla \mathbf{w}_j \, J(\mathbf{W})$$</mathjax> </p>
-<p>for each class <mathjax>$$j \in \{0, 1, ..., k\}.$$</mathjax></p>
-<p>(Note that <mathjax>$\mathbf{w}_j$</mathjax> is the weight vector for the class <mathjax>$y=j$</mathjax>.)</p>
+<p><mathjax>$$\mathbf{w}_j := \mathbf{w}_j - \eta \nabla \mathbf{w}_j \, J(\mathbf{W}; \mathbf{b})$$</mathjax> </p>
+<p>for each class <mathjax>$$j \in \{0, 1, ..., k\}$$</mathjax></p>
+<p>(note that <mathjax>$\mathbf{w}_j$</mathjax> is the weight vector for the class <mathjax>$y=j$</mathjax>), and we update the bias units</p>
+<p><mathjax>$$\mathbf{b}_j := \mathbf{b}_j   - \eta \bigg[ \frac{1}{n} \sum^{n}_{i=0} \big(O_i - T_i  \big) \bigg].$$</mathjax> </p>
 <p>As a penalty against complexity, an approach to reduce the variance of our model and decrease the degree of overfitting by adding additional bias, we can further add a regularization term such as the L2 term with the regularization parameter <mathjax>$\lambda$</mathjax>:</p>
-<p>L2:        <mathjax>$\frac{\lambda}{2} ||w||_2$</mathjax>, </p>
+<p>L2:        <mathjax>$\frac{\lambda}{2} ||\mathbf{w}||_{2}^{2}$</mathjax>, </p>
+<p>where </p>
+<p><mathjax>$$||\mathbf{w}||_{2}^{2} = \sum^{m}_{l=0} \sum^{k}_{j=0} w_{i, j}$$</mathjax></p>
 <p>so that our cost function becomes</p>
-<p><mathjax>$$J(\theta) = \frac{1}{n} \sum_{i=1}^{n} H(T_i, O_i) + \frac{\lambda}{2} ||w||_2$$</mathjax></p>
+<p><mathjax>$$J(\mathbf{W}; \mathbf{b}) = \frac{1}{n} \sum_{i=1}^{n} H(T_i, O_i) + \frac{\lambda}{2} ||\mathbf{w}||_{2}^{2}$$</mathjax></p>
 <p>and we define the "regularized" weight update as</p>
-<p><mathjax>$$\mathbf{w}_j := \mathbf{w}_j -  \eta \big[\nabla \mathbf{w}_j \, J(\mathbf{W}) + \lambda w_j\big].$$</mathjax> </p>
+<p><mathjax>$$\mathbf{w}_j := \mathbf{w}_j -  \eta \big[\nabla \mathbf{w}_j \, J(\mathbf{W}) + \lambda \mathbf{w}_j \big].$$</mathjax></p>
+<p>(Please note that we don't regularize the bias term.)</p>
 <h1 id="examples">Examples</h1>
 <h2 id="example-1-gradient-descent">Example 1 - Gradient Descent</h2>
 <pre><code class="python">from mlxtend.data import iris_data

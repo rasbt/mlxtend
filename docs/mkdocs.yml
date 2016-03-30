@@ -46,6 +46,7 @@ pages:
   - feature_extraction:
     - user_guide/feature_extraction/PrincipalComponentAnalysis.md
     - user_guide/feature_extraction/LinearDiscriminantAnalysis.md
+    - user_guide/feature_extraction/RBFKernelPCA.md
   - evaluate:
     - user_guide/evaluate/confusion_matrix.md
     - user_guide/evaluate/plot_decision_regions.md

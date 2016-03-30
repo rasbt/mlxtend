@@ -1,15 +1,16 @@
 # Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
 #
-# Algorithm for sequential feature selection.
+# Linear Discriminant Analysis for dimensionality reduction
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
 
 import numpy as np
+from .base import _BaseFeatureExtractor
 
 
-class LinearDiscriminantAnalysis(object):
+class LinearDiscriminantAnalysis(_BaseFeatureExtractor):
     """
     Linear Discriminant Analysis Class
 
@@ -21,7 +22,7 @@ class LinearDiscriminantAnalysis(object):
 
     Attributes
     ----------
-    w_ : array-like, shape=[n_features x n_components]
+    w_ : array-like, shape=[n_features, n_discriminants]
         Projection matrix
     e_vals_ : array-like, shape=[n_features]
         Eigenvalues in sorted order.
@@ -33,7 +34,6 @@ class LinearDiscriminantAnalysis(object):
         if n_discriminants is not None and n_discriminants < 1:
             raise AttributeError('n_discriminants must be > 1 or None')
         self.n_discriminants = n_discriminants
-        pass
 
     def fit(self, X, y, n_classes=None):
         """ Fit the LDA model with X.
@@ -55,6 +55,7 @@ class LinearDiscriminantAnalysis(object):
         self : object
 
         """
+        self._check_arrays(X=X, y=y)
         if self.n_discriminants is None or self.n_discriminants > X.shape[1]:
             n_discriminants = X.shape[1]
         else:
@@ -67,18 +68,38 @@ class LinearDiscriminantAnalysis(object):
         self._n_features = X.shape[1]
 
         mean_vecs = self._mean_vectors(X=X, y=y, n_classes=self._n_classes)
-        within_scatter = self._within_scatter(X=X, y=y, n_classes=self._n_classes, mean_vectors=mean_vecs)
-        between_scatter = self._between_scatter(X=X, y=y, mean_vectors=mean_vecs)
-        self.e_vals_, self.e_vecs_ = self._eigendecom(within_scatter=within_scatter, between_scatter=between_scatter)
+        within_scatter = self._within_scatter(X=X,
+                                              y=y,
+                                              n_classes=self._n_classes,
+                                              mean_vectors=mean_vecs)
+        between_scatter = self._between_scatter(X=X,
+                                                y=y,
+                                                mean_vectors=mean_vecs)
+        self.e_vals_, self.e_vecs_ = self._eigendecom(
+            within_scatter=within_scatter, between_scatter=between_scatter)
         self.w_ = self._projection_matrix(eig_vals=self.e_vals_,
                                           eig_vecs=self.e_vecs_,
                                           n_discriminants=n_discriminants)
         return self
 
     def transform(self, X):
-        """ Apply the linear transformation on X."""
+        """ Apply the linear transformation on X.
+
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+
+        Returns
+        -------
+        X_projected : np.ndarray, shape = [n_samples, n_discriminants]
+            Projected training vectors.
+
+        """
         if not hasattr(self, 'w_'):
             raise AttributeError('Object as not been fitted, yet.')
+        self._check_arrays(X=X)
         return X.dot(self.w_)
 
     def _mean_vectors(self, X, y, n_classes):
@@ -92,7 +113,7 @@ class LinearDiscriminantAnalysis(object):
         for cl, mv in zip(range(n_classes), mean_vectors):
             class_sc_mat = np.zeros((X.shape[1], X.shape[1]))
             for row in X[y == cl]:
-                row, mv = row.reshape(X.shape[1], 1), mv.reshape(X.shape[1] ,1)
+                row, mv = row.reshape(X.shape[1], 1), mv.reshape(X.shape[1], 1)
                 class_sc_mat += (row - mv).dot((row - mv).T)
             S_W += class_sc_mat
         return S_W
@@ -104,15 +125,18 @@ class LinearDiscriminantAnalysis(object):
             n = X[y == i + 1, :].shape[0]
             mean_vec = mean_vec.reshape(X.shape[1], 1)
             overall_mean = overall_mean.reshape(X.shape[1], 1)
-            S_B += n * (mean_vec - overall_mean).dot((mean_vec - overall_mean).T)
+            S_B += n * (mean_vec - overall_mean).dot(
+                (mean_vec - overall_mean).T)
         return S_B
 
     def _eigendecom(self, within_scatter, between_scatter):
-        e_vals, e_vecs = np.linalg.eig(np.linalg.inv(within_scatter).dot(between_scatter))
+        e_vals, e_vecs = np.linalg.eig(np.linalg.inv(within_scatter).dot(
+            between_scatter))
         sort_idx = np.argsort(e_vals)[::-1]
         e_vals, e_vecs = e_vals[sort_idx], e_vecs[sort_idx]
         return e_vals, e_vecs
 
     def _projection_matrix(self, eig_vals, eig_vecs, n_discriminants):
-        matrix_w = np.vstack([eig_vecs[:, i] for i in range(n_discriminants)]).T
+        matrix_w = np.vstack([eig_vecs[:, i] for
+                              i in range(n_discriminants)]).T
         return matrix_w

@@ -404,5 +404,5 @@ if __name__ == "__main__":
                                      printlog=not(args.silent),
                                      clean=args.clean,
                                      str_above_header=('mlxtend'
-                                                       ' version: %s\n\n' % (
+                                                       ' version: %s \n' % (
                                                         package.__version__)))

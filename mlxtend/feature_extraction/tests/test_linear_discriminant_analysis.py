@@ -42,3 +42,16 @@ def test_evals():
     np.set_printoptions(suppress=True)
     print('%s' % lda.e_vals_)
     assert_almost_equal(lda.e_vals_, [20.90, 0.14, 0.0, 0.0], decimal=2)
+
+
+@raises(ValueError)
+def test_fail_array_fit():
+    lda = LDA()
+    lda.fit(X[1], y[1])
+
+
+@raises(ValueError)
+def test_fail_array_transform():
+    lda = LDA()
+    lda.fit(X, y)
+    exp = lda.transform(X[1])

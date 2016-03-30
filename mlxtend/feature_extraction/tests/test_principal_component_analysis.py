@@ -17,14 +17,12 @@ X = standardize(X)
 
 def test_default_components():
     pca = PCA()
-    pca.fit(X)
     res = pca.fit(X).transform(X)
     assert res.shape[1] == 4
 
 
 def test_default_2components():
     pca = PCA(n_components=2)
-    pca.fit(X)
     res = pca.fit(X).transform(X)
     assert res.shape[1] == 2
 
@@ -41,3 +39,16 @@ def test_evals():
     pca.fit(X)
     res = pca.fit(X).transform(X)
     assert_almost_equal(pca.e_vals_, [2.93, 0.93, 0.15, 0.02], decimal=2)
+
+
+@raises(ValueError)
+def test_fail_array_fit():
+    pca = PCA(n_components=2)
+    pca.fit(X[1])
+
+
+@raises(ValueError)
+def test_fail_array_transform():
+    pca = PCA(n_components=2)
+    pca.fit(X)
+    exp = pca.transform(X[1])

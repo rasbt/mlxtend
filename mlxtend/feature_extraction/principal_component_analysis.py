@@ -1,15 +1,16 @@
 # Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
 #
-# Algorithm for sequential feature selection.
+# Principal Component Analysis for dimensionality reduction.
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
 
 import numpy as np
+from .base import _BaseFeatureExtractor
 
 
-class PrincipalComponentAnalysis(object):
+class PrincipalComponentAnalysis(_BaseFeatureExtractor):
     """
     Principal Component Analysis Class
 
@@ -21,7 +22,7 @@ class PrincipalComponentAnalysis(object):
 
     Attributes
     ----------
-    w_ : array-like, shape=[n_features x n_components]
+    w_ : array-like, shape=[n_features, n_components]
         Projection matrix
     e_vals_ : array-like, shape=[n_features]
         Eigenvalues in sorted order.
@@ -33,7 +34,6 @@ class PrincipalComponentAnalysis(object):
         if n_components is not None and n_components < 1:
             raise AttributeError('n_components must be > 1 or None')
         self.n_components = n_components
-        pass
 
     def fit(self, X):
         """ Fit the PCA model with X.
@@ -49,6 +49,7 @@ class PrincipalComponentAnalysis(object):
         self : object
 
         """
+        self._check_arrays(X=X)
         if self.n_components is None or self.n_components > X.shape[1]:
             n_components = X.shape[1]
         else:
@@ -61,7 +62,21 @@ class PrincipalComponentAnalysis(object):
         return self
 
     def transform(self, X):
-        """ Apply the linear transformation on X."""
+        """ Apply the linear transformation on X.
+
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+
+        Returns
+        -------
+        X_projected : np.ndarray, shape = [n_samples, n_components]
+            Projected training vectors.
+
+        """
+        self._check_arrays(X=X)
         if not hasattr(self, 'w_'):
             raise AttributeError('Object as not been fitted, yet.')
         return X.dot(self.w_)

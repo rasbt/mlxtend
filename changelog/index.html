@@ -115,6 +115,12 @@
         
             
 <li >
+    <a href="../user_guide/classifier/StackingClassifier/">StackingClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../user_guide/classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -133,7 +139,34 @@
         
             
 <li >
+    <a href="../user_guide/classifier/SoftmaxRegression/">SoftmaxRegression</a>
+</li>
+
+        
+            
+<li >
     <a href="../user_guide/classifier/NeuralNetMLP/">NeuralNetMLP</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">tf_classifier</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../user_guide/tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
 </li>
 
         
@@ -149,6 +182,12 @@
             
 <li >
     <a href="../user_guide/regressor/LinearRegression/">LinearRegression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/regressor/StackingRegressor/">StackingRegressor</a>
 </li>
 
         
@@ -200,6 +239,12 @@
             
 <li >
     <a href="../user_guide/feature_extraction/LinearDiscriminantAnalysis/">LinearDiscriminantAnalysis</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/feature_extraction/RBFKernelPCA/">RBFKernelPCA</a>
 </li>
 
         
@@ -272,6 +317,12 @@
             
 <li >
     <a href="../user_guide/preprocessing/standardize/">Standardize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/preprocessing/one-hot_encoding/">One hot encoding</a>
 </li>
 
         
@@ -468,63 +519,6 @@
   </li>
 
                         
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">Upcoming Features / 0.3.1dev</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../user_guide/feature_extraction/PrincipalComponentAnalysis/">PrincipalComponentAnalysis</a>
-</li>
-
-        
-            
-<li >
-    <a href="../user_guide/feature_extraction/LinearDiscriminantAnalysis/">LinearDiscriminantAnalysis</a>
-</li>
-
-        
-            
-<li >
-    <a href="../user_guide/tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
-</li>
-
-        
-            
-<li >
-    <a href="../user_guide/tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
-</li>
-
-        
-            
-<li >
-    <a href="../user_guide/classifier/SoftmaxRegression/">SoftmaxRegression</a>
-</li>
-
-        
-            
-<li >
-    <a href="../user_guide/regressor/StackingRegressor/">StackingRegressor</a>
-</li>
-
-        
-            
-<li >
-    <a href="../user_guide/classifier/StackingClassifier/">StackingClassifier</a>
-</li>
-
-        
-            
-<li >
-    <a href="../user_guide/preprocessing/one-hot_encoding/">One hot encoding</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
                         </ul>
                     </li>
                 
@@ -537,6 +531,12 @@
                             
 <li >
     <a href="../api_subpackages/mlxtend.classifier/">Mlxtend.classifier</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../api_subpackages/mlxtend.tf_classifier/">Mlxtend.tf classifier</a>
 </li>
 
                         
@@ -623,7 +623,13 @@
                         
                             
 <li >
-    <a href="../contributing/">Contributing</a>
+    <a href="../contributing/">How To Contribute</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../contributors/">Contributors</a>
 </li>
 
                         
@@ -730,6 +736,7 @@
 <h1 id="release-notes">Release Notes</h1>
 <hr />
 <h3 id="version-031dev">Version 0.3.1dev</h3>
+<h5 id="new-features">New Features</h5>
 <ul>
 <li>New <code>SoftmaxRegression</code> classifier using Tensorflow (<a href="../user_guide/tf_classifier/TfSoftmaxRegression/"><code>tf_classifier.TfSoftmaxRegression</code></a>)</li>
 <li>New <code>SoftmaxRegression</code> classifier (<a href="../user_guide/classifier/SoftmaxRegression/"><code>classifier.SoftmaxRegression</code></a>)</li>
@@ -743,34 +750,57 @@
 <li>Accept an existing <code>Axes</code> via the <code>ax</code> argument</li>
 <li>New <code>print_progress</code> parameter for all generalized models and multi-layer neural networks for printing time elapsed, ETA, and the current cost of the current epoch</li>
 <li>Minibatch learning for <code>classifier.LogisticRegression</code>, <code>classifier.Adaline</code>, and <code>regressor.LinearRegression</code> plus streamlined API</li>
-<li>The <code>column</code> parameter in <code>mlxtend.preprocessing.standardize</code> now defaults to <code>None</code> to standardize all columns more conveniently</li>
 <li>New Principal Component Analysis class via <a href="../user_guide/feature_extraction/PrincipalComponentAnalysis/"><code>mlxtend.feature_extraction.PrincipalComponentAnalysis</code></a></li>
+<li>New RBF Kernel Principal Component Analysis class via <a href="../user_guide/feature_extraction/RBFKernelPCA/"><code>mlxtend.feature_extraction.RBFKernelPCA</code></a></li>
+<li>New Linear Discriminant Analysis class via <a href="../user_guide/feature_extraction/LinearDiscriminantAnalysis/"><code>mlxtend.feature_extraction.LinearDiscriminantAnalysis</code></a></li>
+</ul>
+<h5 id="changes">Changes</h5>
+<ul>
+<li>The <code>column</code> parameter in <code>mlxtend.preprocessing.standardize</code> now defaults to <code>None</code> to standardize all columns more conveniently</li>
 </ul>
 <h3 id="version-030-2016-01-31">Version 0.3.0 (2016-01-31)</h3>
+<h5 id="downloads">Downloads</h5>
 <ul>
-<li>The <code>mlxtend.preprocessing.standardize</code> function now optionally returns the parameters, which are estimated from the array, for re-use. A further improvement makes the <code>standardize</code> function smarter in order to avoid zero-division errors</li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.3.0.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.3.0.tar.gz">Source code (tar.gz)</a></li>
+</ul>
+<h5 id="new-features_1">New Features</h5>
+<ul>
 <li>Added a progress bar tracker to <code>classifier.NeuralNetMLP</code></li>
 <li>Added a function to score predicted vs. target class labels <code>evaluate.scoring</code></li>
 <li>Added confusion matrix functions to create (<code>evaluate.confusion_matrix</code>) and plot (<code>evaluate.plot_confusion_matrix</code>) confusion matrices</li>
+<li>New style parameter and improved axis scaling in <code>mlxtend.evaluate.plot_learning_curves</code></li>
+<li>Added <code>loadlocal_mnist</code> to <code>mlxtend.data</code> for streaming MNIST from a local byte files into numpy arrays</li>
+<li>New <code>NeuralNetMLP</code> parameters: <code>random_weights</code>, <code>shuffle_init</code>, <code>shuffle_epoch</code></li>
+<li>New <code>SFS</code> features such as the generation of pandas <code>DataFrame</code> results tables and plotting functions (with confidence intervals, standard deviation, and standard error bars)</li>
+<li>Added support for regression estimators in <code>SFS</code></li>
+<li>Added Boston <code>housing dataset</code></li>
+<li>New <code>shuffle</code> parameter for <code>classifier.NeuralNetMLP</code></li>
+</ul>
+<h5 id="changes_1">Changes</h5>
+<ul>
+<li>The <code>mlxtend.preprocessing.standardize</code> function now optionally returns the parameters, which are estimated from the array, for re-use. A further improvement makes the <code>standardize</code> function smarter in order to avoid zero-division errors</li>
 <li>Cosmetic improvements to the <code>evaluate.plot_decision_regions</code> function such as hiding plot axes</li>
 <li>Renaming of <code>classifier.EnsembleClassfier</code> to <code>classifier.EnsembleVoteClassifier</code></li>
 <li>Improved random weight initialization in <code>Perceptron</code>, <code>Adaline</code>, <code>LinearRegression</code>, and <code>LogisticRegression</code></li>
-<li>Changed <code>learning</code> parameter of <code>mlxtend.classifier.Adaline</code> to solver and added "normal equation" as closed-form solution solver</li>
-<li>New style parameter and improved axis scaling in <code>mlxtend.evaluate.plot_learning_curves</code></li>
+<li>Changed <code>learning</code> parameter of <code>mlxtend.classifier.Adaline</code> to <code>solver</code> and added "normal equation" as closed-form solution solver</li>
 <li>Hide y-axis labels in <code>mlxtend.evaluate.plot_decision_regions</code> in 1 dimensional evaluations</li>
-<li>Added <code>loadlocal_mnist</code> to <code>mlxtend.data</code> for streaming MNIST from a local byte files into numpy arrays</li>
-<li>New <code>NeuralNetMLP</code> parameters: <code>random_weights</code>, <code>shuffle_init</code>, <code>shuffle_epoch</code></li>
 <li>Sequential Feature Selection algorithms were unified into a single <code>SequentialFeatureSelector</code> class with parameters to enable floating selection and toggle between forward and backward selection.</li>
-<li>New <code>SFS</code> features such as the generation of pandas <code>DataFrame</code> results tables and plotting functions (with confidence intervals, standard deviation, and standard error bars)</li>
-<li>Added support for regression estimators in <code>SFS</code></li>
 <li>Stratified sampling of MNIST (now 500x random samples from each of the 10 digit categories)</li>
-<li>Added Boston <code>housing dataset</code></li>
 <li>Renaming <code>mlxtend.plotting</code> to <code>mlxtend.general_plotting</code> in order to distinguish general plotting function from specialized utility function such as <code>evaluate.plot_decision_regions</code></li>
-<li>Shuffle fix and new shuffle parameter for classifier.NeuralNetMLP</li>
 </ul>
 <h3 id="version-029-2015-07-14">Version 0.2.9 (2015-07-14)</h3>
+<h5 id="downloads_1">Downloads</h5>
+<ul>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.2.9.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.2.9.tar.gz">Source code (tar.gz)</a></li>
+</ul>
+<h5 id="new-features_2">New Features</h5>
 <ul>
 <li>Sequential Feature Selection algorithms: SFS, SFFS, SBS, and SFBS</li>
+</ul>
+<h5 id="changes_2">Changes</h5>
+<ul>
 <li>Changed <code>regularization</code> &amp; <code>lambda</code> parameters in <code>LogisticRegression</code> to single parameter <code>l2_lambda</code></li>
 </ul>
 <h3 id="version-028-2015-06-27">Version 0.2.8 (2015-06-27)</h3>

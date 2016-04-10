@@ -750,10 +750,12 @@
 <li>New <code>StackingClassifier</code> (<a href="../user_guide/classifier/StackingClassifier/"><code>classifier.StackingClassifier</code></a>)</li>
 <li>New function for one-hot encoding of class labels (<a href="../user_guide/preprocessing/one-hot_encoding/"><code>preprocessing.one_hot</code></a>)</li>
 <li>Added <code>GridSearch</code> support to the <code>SequentialFeatureSelector</code> (<a href="../user_guide/feature_selection/SequentialFeatureSelector/"><code>feature_selection/.SequentialFeatureSelector</code></a>)</li>
-<li><a href="../user_guide/evaluate/plot_decision_regions/"><code>evaluate.plot_decision_regions</code></a> improvements:</li>
+<li><a href="../user_guide/evaluate/plot_decision_regions/"><code>evaluate.plot_decision_regions</code></a> improvements:<ul>
 <li>Function now handles class y-class labels correctly if array is of type <code>float</code></li>
 <li>Correct handling of input arguments <code>markers</code> and <code>colors</code></li>
 <li>Accept an existing <code>Axes</code> via the <code>ax</code> argument</li>
+</ul>
+</li>
 <li>New <code>print_progress</code> parameter for all generalized models and multi-layer neural networks for printing time elapsed, ETA, and the current cost of the current epoch</li>
 <li>Minibatch learning for <code>classifier.LogisticRegression</code>, <code>classifier.Adaline</code>, and <code>regressor.LinearRegression</code> plus streamlined API</li>
 <li>New Principal Component Analysis class via <a href="../user_guide/feature_extraction/PrincipalComponentAnalysis/"><code>mlxtend.feature_extraction.PrincipalComponentAnalysis</code></a></li>

@@ -8,7 +8,8 @@
 
 ##### Changes
 
-- Adding optional `dropout` to the [`tf_classifier.TfMultiLayerPerceptron`](./user_guide/tf_classifier/TfMultiLayerPerceptron.md) classifier
+- Adding optional `dropout` to the [`tf_classifier.TfMultiLayerPerceptron`](./user_guide/tf_classifier/TfMultiLayerPerceptron.md) classifier for regularization
+- Adding an optional `decay` parameter to the [`tf_classifier.TfMultiLayerPerceptron`](./user_guide/tf_classifier/TfMultiLayerPerceptron.md) classifier for adaptive learning via an exponential decay of the learning rate eta
 
 ### Version 0.4.0 (2016-04-09)
 

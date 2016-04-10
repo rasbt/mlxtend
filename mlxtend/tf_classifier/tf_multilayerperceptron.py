@@ -41,6 +41,9 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
     dropout : float (default: 1.0)
         A float between in the range (0.0, 1.0] to specify
         the probability that each element is kept.
+    decay : list, shape=[decay_rate, decay_steps] (default: [0.0, 1])
+        Parameter to specify the exponential decay of the learning rate eta
+        for adaptive learning (eta * decay_rate ^ (epoch / decay_steps)).
     minibatches : int (default: 1)
         Divide the training data into *k* minibatches
         for accelerated stochastic gradient descent learning.
@@ -74,6 +77,7 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
                  optimizer='gradientdescent',
                  momentum=0.0, l1=0.0, l2=0.0,
                  dropout=1.0,
+                 decay=[0.0, 1.0],
                  minibatches=1, random_seed=None,
                  print_progress=0, dtype=None):
         self.eta = eta
@@ -86,7 +90,9 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
         self.l1 = l1
         self.l2 = l2
         self.dropout = dropout
-        self.optimizer = self._init_optimizer(optimizer)
+        self.decay = decay
+        self.optimizer = optimizer
+        self._init_optimizer(self.optimizer)
         self.epochs = epochs
         self.minibatches = minibatches
         self.random_seed = random_seed
@@ -100,20 +106,31 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
         return
 
     def _init_optimizer(self, optimizer):
+        self.global_step_ = tf.Variable(0, trainable=False)
+        if self.decay[0] > 0.0:
+            learning_rate = tf.train.exponential_decay(
+                learning_rate=self.eta,
+                global_step=self.global_step_,
+                decay_steps=self.decay[1],
+                decay_rate=self.decay[0])
+
+        else:
+            learning_rate = self.eta
         if optimizer == 'gradientdescent':
-            opt = tf.train.GradientDescentOptimizer(learning_rate=self.eta)
+            opt = tf.train.GradientDescentOptimizer(
+                learning_rate=learning_rate)
         elif optimizer == 'momentum':
-            opt = tf.train.MomentumOptimizer(learning_rate=self.eta,
+            opt = tf.train.MomentumOptimizer(learning_rate=learning_rate,
                                              momentum=self.momentum)
         elif optimizer == 'adam':
-            opt = tf.train.AdamOptimizer(learning_rate=self.eta)
+            opt = tf.train.AdamOptimizer(learning_rate=learning_rate)
         elif optimizer == 'ftrl':
             opt = tf.train.FtrlOptimizer(
-                learning_rate=self.eta,
+                learning_rate=learning_rate,
                 l1_regularization_strength=self.l1,
                 l2_regularization_strength=self.l2)
         elif optimizer == 'adagrad':
-            opt = tf.train.AdagradOptimizer(learning_rate=self.eta)
+            opt = tf.train.AdagradOptimizer(learning_rate=learning_rate)
         else:
             raise AttributeError('optimizer must be "gradientdescent",'
                                  ' "momentum", "adam", "ftrl", or "adagrad"')
@@ -185,6 +202,7 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
         # Construct the Graph
         g = tf.Graph()
         with g.as_default():
+            self.optimizer_ = self._init_optimizer(self.optimizer)
             if init_weights:
                 if n_classes:
                     self._n_classes = n_classes
@@ -235,7 +253,8 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
             cross_entropy = tf.nn.softmax_cross_entropy_with_logits(net,
                                                                     tf_y)
             cost = tf.reduce_mean(cross_entropy)
-            train = self.optimizer.minimize(cost)
+            train = self.optimizer_.minimize(cost,
+                                             global_step=self.global_step_)
 
             # Initializing the variables
             init = tf.initialize_all_variables()
@@ -249,7 +268,6 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
             sess.run(init)
             self.init_time_ = time()
             for epoch in range(self.epochs):
-
                 if self.minibatches > 1:
                     n_idx = np.random.permutation(n_idx)
                 minis = np.array_split(n_idx, self.minibatches)

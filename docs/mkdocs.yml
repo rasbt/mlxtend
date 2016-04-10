@@ -33,12 +33,18 @@ pages:
   - ./USER_GUIDE_INDEX.md
   - classifier:
     - user_guide/classifier/EnsembleVoteClassifier.md
+    - user_guide/classifier/StackingClassifier.md
     - user_guide/classifier/Perceptron.md
     - user_guide/classifier/Adaline.md
     - user_guide/classifier/LogisticRegression.md
+    - user_guide/classifier/SoftmaxRegression.md
     - user_guide/classifier/NeuralNetMLP.md
+  - tf_classifier:
+    - user_guide/tf_classifier/TfMultiLayerPerceptron.md
+    - user_guide/tf_classifier/TfSoftmaxRegression.md
   - regressor:
     - user_guide/regressor/LinearRegression.md
+    - user_guide/regressor/StackingRegressor.md
   - regression_utils:
     - user_guide/regression_utils/plot_linear_regression.md
   - feature_selection:
@@ -58,6 +64,7 @@ pages:
     - user_guide/preprocessing/minmax_scaling.md
     - user_guide/preprocessing/shuffle_arrays_unison.md
     - user_guide/preprocessing/standardize.md
+    - user_guide/preprocessing/one-hot_encoding.md
   - data:
     - user_guide/data/autompg_data.md
     - user_guide/data/boston_housing_data.md
@@ -86,17 +93,11 @@ pages:
     - user_guide/general_concepts/gradient-optimization.md
     - user_guide/general_concepts/linear-gradient-derivative.md
     - user_guide/general_concepts/regularization-linear.md
-  - Upcoming Features / 0.3.1dev:
-    - user_guide/feature_extraction/PrincipalComponentAnalysis.md
-    - user_guide/feature_extraction/LinearDiscriminantAnalysis.md
-    - user_guide/tf_classifier/TfMultiLayerPerceptron.md
-    - user_guide/tf_classifier/TfSoftmaxRegression.md
-    - user_guide/classifier/SoftmaxRegression.md
-    - user_guide/regressor/StackingRegressor.md
-    - user_guide/classifier/StackingClassifier.md
-    - user_guide/preprocessing/one-hot_encoding.md
+
+
 - API:
   - api_subpackages/mlxtend.classifier.md
+  - api_subpackages/mlxtend.tf_classifier.md
   - api_subpackages/mlxtend.data.md
   - api_subpackages/mlxtend.evaluate.md
   - api_subpackages/mlxtend.feature_selection.md
@@ -110,5 +111,7 @@ pages:
 - Installation: installation.md
 - About:
   - Release Notes: changelog.md
-  - Contributing: contributing.md
+  - How To Contribute: contributing.md
+  - Contributors: contributors.md
   - License: license.md
+  - Citing Mlxtend: cite.md

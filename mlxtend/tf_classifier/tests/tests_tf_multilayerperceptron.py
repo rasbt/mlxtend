@@ -130,6 +130,58 @@ def test_score_function():
     assert acc == 1.0, acc
 
 
+def test_score_function_momentum():
+    mlp = MLP(epochs=100,
+              eta=0.5,
+              hidden_layers=[5],
+              optimizer='momentum',
+              activations=['logistic'],
+              minibatches=1,
+              random_seed=1)
+    mlp.fit(X, y)
+    acc = mlp.score(X, y)
+    assert acc == 1.0, acc
+
+
+def test_score_function_adam():
+    mlp = MLP(epochs=100,
+              eta=0.5,
+              hidden_layers=[5],
+              optimizer='adam',
+              activations=['logistic'],
+              minibatches=1,
+              random_seed=1)
+    mlp.fit(X, y)
+    acc = mlp.score(X, y)
+    assert acc == 1.0, acc
+
+
+def test_score_function_ftrl():
+    mlp = MLP(epochs=100,
+              eta=0.5,
+              hidden_layers=[5],
+              optimizer='ftrl',
+              activations=['logistic'],
+              minibatches=1,
+              random_seed=1)
+    mlp.fit(X, y)
+    acc = mlp.score(X, y)
+    assert acc == 1.0, acc
+
+
+def test_score_function_adagrad():
+    mlp = MLP(epochs=100,
+              eta=0.5,
+              hidden_layers=[5],
+              optimizer='adagrad',
+              activations=['logistic'],
+              minibatches=1,
+              random_seed=1)
+    mlp.fit(X, y)
+    acc = mlp.score(X, y)
+    assert acc == 1.0, acc
+
+
 @raises(AttributeError)
 def test_fail_minibatches():
     mlp = MLP(epochs=100,

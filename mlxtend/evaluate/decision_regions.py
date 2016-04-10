@@ -52,16 +52,20 @@ def plot_decision_regions(X, y, clf,
     ax : matplotlib.axes.Axes object
 
     """
-    # check if data is numpy array
-    for a in (X, y):
+
+    if isinstance(y, list):
+        y_ary = np.array(y)
+    else:
+        y_ary = y
+    for a in (X, y_ary):
         if not isinstance(a, np.ndarray):
             raise ValueError('%s must be a NumPy array.' % a.__name__)
 
     if ax is None:
         ax = plt.gca()
 
-    if not y.dtype == int:
-        y = y.astype(int)
+    if not y_ary.dtype == int:
+        y_ary = y_ary.astype(int)
 
     # check if test data is provided
     plot_testdata = True
@@ -71,7 +75,13 @@ def plot_decision_regions(X, y, clf,
         else:
             plot_testdata = False
 
-    if len(X.shape) == 2 and X.shape[1] > 1:
+    if len(X.shape) > 2 or X.shape[1] > 2:
+        raise ValueError('X must be a 2D array')
+    elif X_highlight and len(X_highlight.shape) > 2:
+        raise ValueError('X_highlight must be a 2D array')
+    elif len(y_ary.shape) > 1:
+        raise ValueError('y must be a 1D array')
+    elif len(X.shape) == 2 and X.shape[1] > 1:
         dim = '2d'
     else:
         dim = '1d'
@@ -79,7 +89,7 @@ def plot_decision_regions(X, y, clf,
     marker_gen = cycle(list(markers))
 
     # make color map
-    n_classes = len(np.unique(y))
+    n_classes = np.unique(y_ary).shape[0]
     colors = colors.split(',')
     cmap = ListedColormap(colors[:n_classes])
 
@@ -107,13 +117,13 @@ def plot_decision_regions(X, y, clf,
 
     # plot class samples
 
-    for c in np.unique(y):
+    for c in np.unique(y_ary):
         if dim == '2d':
-            y_data = X[y == c, 1]
+            y_data = X[y_ary == c, 1]
         else:
             y_data = [0 for i in X[y == c]]
 
-        ax.scatter(x=X[y == c, 0],
+        ax.scatter(x=X[y_ary == c, 0],
                    y=y_data,
                    alpha=0.8,
                    c=cmap(c),

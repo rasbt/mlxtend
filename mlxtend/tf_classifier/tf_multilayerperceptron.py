@@ -77,15 +77,15 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
             raise AttributeError('Number of hidden_layers and'
                                  ' n_activations must be equal.')
         self.hidden_layers = hidden_layers
+        self.momentum = momentum
         self.activations = self._get_activations(activations)
+        self.l1 = l1
+        self.l2 = l2
         self.optimizer = self._init_optimizer(optimizer)
         self.epochs = epochs
         self.minibatches = minibatches
         self.random_seed = random_seed
         self.print_progress = print_progress
-        self.l1 = l1
-        self.l2 = l2
-        self.momentum = momentum
 
         if dtype is None:
             self.dtype = tf.float32
@@ -98,17 +98,17 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
         if optimizer == 'gradientdescent':
             opt = tf.train.GradientDescentOptimizer(learning_rate=self.eta)
         elif optimizer == 'momentum':
-            opt = tf.train.MomentumOptimzer(learning_rate=self.eta,
-                                            momentum=self.momentum)
+            opt = tf.train.MomentumOptimizer(learning_rate=self.eta,
+                                             momentum=self.momentum)
         elif optimizer == 'adam':
             opt = tf.train.AdamOptimizer(learning_rate=self.eta)
         elif optimizer == 'ftrl':
-            opt = tf.train.GradientDescentOptimizer(
+            opt = tf.train.FtrlOptimizer(
                 learning_rate=self.eta,
                 l1_regularization_strength=self.l1,
                 l2_regularization_strength=self.l2)
         elif optimizer == 'adagrad':
-            opt = tf.train.AdaGradOptimizer(learning_rate=self.eta)
+            opt = tf.train.AdagradOptimizer(learning_rate=self.eta)
         else:
             raise AttributeError('optimizer must be "gradientdescent",'
                                  ' "momentum", "adam", "ftrl", or "adagrad"')

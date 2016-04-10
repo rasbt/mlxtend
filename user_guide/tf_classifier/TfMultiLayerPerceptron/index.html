@@ -695,6 +695,8 @@
     
         <li class="main "><a href="#overview">Overview</a></li>
         
+            <li><a href="#references">References</a></li>
+        
     
         <li class="main "><a href="#examples">Examples</a></li>
         
@@ -705,6 +707,8 @@
             <li><a href="#example-3-mnist">Example 3 - MNIST</a></li>
         
             <li><a href="#example-4-training-and-validation-accuracies-during-training">Example 4 -- Training and Validation Accuracies During Training</a></li>
+        
+            <li><a href="#example-5-dropout">Example 5 -- Dropout</a></li>
         
     
         <li class="main "><a href="#api">API</a></li>
@@ -726,6 +730,10 @@
 <p><img alt="" src="../TfMultiLayerPerceptron_files/mlp_overview_1.png" /></p>
 <p><img alt="" src="../TfMultiLayerPerceptron_files/mlp_overview_2.png" /></p>
 <p>Please also see the activation function cheatsheet at <a href="../../general_concepts/activation-functions/"><code>general_concepts.activation-functions</code></a>.</p>
+<h3 id="references">References</h3>
+<ul>
+<li>Srivastava, Nitish, et al. <a href="http://dl.acm.org/citation.cfm?id=2670313"><em>"Dropout: A simple way to prevent neural networks from overfitting."</em></a> The Journal of Machine Learning Research 15.1 (2014): 1929-1958.</li>
+</ul>
 <h1 id="examples">Examples</h1>
 <h2 id="example-1-gradient-descent">Example 1 - Gradient Descent</h2>
 <p>Each integer in the <code>hidden_layers</code> list argument specifies the number of neurons for the respective layer; via the <code>activations</code>, we specify the activation functions for the individual hidden layer. Below, we initialize a multi-layer perceptron with 1 hidden layer using the logistic sigmoid activation. Furthermore, we train the network via simple gradient descent training by setting <code>optimizer='gradientdescent'</code> and <code>minibatches=1</code>. </p>
@@ -761,7 +769,7 @@ plt.show()
 
 <pre><code>Epoch: 20/20 | Cost 0.55 | TrainAcc 0.83
 </code></pre>
-<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_14_1.png" /></p>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_15_1.png" /></p>
 <p>Continue the training if cost could be further decreased via additional epochs. Instead of training the classifier another 20 epochs, we modify the epochs and set them to 550. Also, we want to make sure to set <code>init_weights</code> to <code>False</code> in order to re-use the model parameters from the previous training.</p>
 <pre><code class="python">mlp.epochs = 550
 mlp.fit(X, y, init_weights=False)
@@ -773,13 +781,13 @@ plt.show()
 
 <pre><code>Epoch: 550/550 | Cost 0.12 | TrainAcc 0.96
 </code></pre>
-<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_16_1.png" /></p>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_17_1.png" /></p>
 <pre><code class="python">plot_decision_regions(X=X, y=y, clf=mlp)
 plt.title('Logistic Sigmoid MLP - Gradient Descent')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_17_0.png" /></p>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_18_0.png" /></p>
 <h3 id="predicting-class-labels">Predicting Class Labels</h3>
 <pre><code class="python">print('Predicted class labels:', mlp.predict(X[[0, 99, 149]]))
 </code></pre>
@@ -834,8 +842,8 @@ plt.show()
 
 <pre><code>Epoch: 100/100 | Cost 0.13 | TrainAcc 0.95
 </code></pre>
-<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_24_1.png" /></p>
-<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_24_2.png" /></p>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_25_1.png" /></p>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_25_2.png" /></p>
 <h2 id="example-3-mnist">Example 3 - MNIST</h2>
 <p>Please note that <code>mnist_data</code> just contains a random 5000-sample subset of MNIST (~10% of the original dataset size) suitable for demonstration purposes regarding computational efficiency.</p>
 <p>Although it may be overkill, and the network may terribly overfit the training data, let us initialize a more complex neural network with 2 hidden layers and 200 ReLU (Rectifier Linear Units) each.</p>
@@ -864,7 +872,7 @@ plt.show()
 
 <pre><code>Epoch: 30/30 | Cost 0.02 | TrainAcc 1.00
 </code></pre>
-<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_28_1.png" /></p>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_29_1.png" /></p>
 <pre><code class="python">import numpy as np
 y_pred = mlp.predict(X)
 print('Training Accuracy: %.2f%%' % (mlp.score(X, y) * 100))
@@ -880,7 +888,7 @@ print('Training Accuracy: %.2f%%' % (mlp.score(X, y) * 100))
 plot_digit(X, y, 4999)  
 </code></pre>
 
-<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_30_0.png" /></p>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_31_0.png" /></p>
 <pre><code class="python">print('Prediction: %d' % mlp.predict(X[4999, None]))
 </code></pre>
 
@@ -922,9 +930,49 @@ plt.grid()
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_35_0.png" /></p>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_36_0.png" /></p>
+<h2 id="example-5-dropout">Example 5 -- Dropout</h2>
+<p>The 3 most common techniques for preventing overfitting are <em>Early Termination</em> and <em>Regularization</em>.</p>
+<p>In early termination, we stop training the network when we noticed an increasing gap between the training and validation performance. Another method is to apply regularization to reduce the number of parameters in our network and thereby reduce its complexity via this induced bias. Popular examples of regularization are L2 &amp; L1 regularization, which are essentially "penalties" against large weights that are added to the cost function. For more details, please see the documentation page at <a href="../../general_concepts/regularization-linear/"><code>general_concepts/regularization-linear</code></a>. (The multi-layer perceptron implementation supports L1 and L2 regularization via the <code>l1</code> and <code>l2</code> initialization parameters.)</p>
+<p>Another regularization technique, next to L1 and L2 regularization, is dropout. In dropout, we simply "cancel" half of the "neural" connections between layers during training -- randomly. As a consequence, our neural network can never rely on any given activation to be present. Therefore, the network will attempt to learn a redundant representation just to make sure that at least some useful information remains during in epoch. As weird as it sounds, in practice, dropout makes our network more robust and helps reducing the degree of overfitting. However, keep in mind that dropout is only applied during training; during testing, evaluation, and predictions on new data, we want something that's deterministic.</p>
+<pre><code class="python">from mlxtend.data import mnist_data
+from mlxtend.preprocessing import shuffle_arrays_unison
+from mlxtend.tf_classifier import TfMultiLayerPerceptron
+import matplotlib.pyplot as plt
+
+X, y = mnist_data()
+X, y = shuffle_arrays_unison((X, y), random_seed=1)
+
+mlp = TfMultiLayerPerceptron(eta=0.01, 
+                             epochs=75, 
+                             hidden_layers=[200, 200],
+                             activations=['relu', 'relu'],
+                             print_progress=1, 
+                             minibatches=5, 
+                             optimizer='adam',
+                             random_seed=1,
+                             dropout=0.55)
+
+mlp.fit(X=X[:4000], 
+        y=y[:4000],
+        X_valid=X[4000:],
+        y_valid=y[4000:])
+</code></pre>
+
+<pre><code>Epoch: 75/75 | Cost 639.21 | TrainAcc 1.00 | ValidAcc 0.90
+</code></pre>
+<pre><code class="python">plt.plot(range(1, mlp.epochs + 1), mlp.train_acc_, label='training')
+plt.plot(range(1, mlp.epochs + 1), mlp.valid_acc_, label='validation')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.legend(loc='lower right')
+plt.grid()
+plt.show()
+</code></pre>
+
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_40_0.png" /></p>
 <h1 id="api">API</h1>
-<p><em>TfMultiLayerPerceptron(eta=0.5, epochs=50, hidden_layers=[50, 10], activations=['logistic', 'logistic'], optimizer='gradientdescent', momentum=0.0, l1=0.0, l2=0.0, minibatches=1, random_seed=None, print_progress=0, dtype=None)</em></p>
+<p><em>TfMultiLayerPerceptron(eta=0.5, epochs=50, hidden_layers=[50, 10], activations=['logistic', 'logistic'], optimizer='gradientdescent', momentum=0.0, l1=0.0, l2=0.0, dropout=1.0, minibatches=1, random_seed=None, print_progress=0, dtype=None)</em></p>
 <p>Multi-layer perceptron classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -964,6 +1012,11 @@ optimizer='momentum'</p>
 <li>
 <p><code>l2</code> : float (default: 0.0)</p>
 <p>regularization strength; only applies if optimizer='ftrl'</p>
+</li>
+<li>
+<p><code>dropout</code> : float (default: 1.0)</p>
+<p>A float between in the range (0.0, 1.0] to specify
+the probability that each element is kept.</p>
 </li>
 <li>
 <p><code>minibatches</code> : int (default: 1)</p>

@@ -704,9 +704,9 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.4 </p>
+<p>mlxtend version: 0.4.1dev </p>
 <h2 id="tfmultilayerperceptron">TfMultiLayerPerceptron</h2>
-<p><em>TfMultiLayerPerceptron(eta=0.5, epochs=50, hidden_layers=[50, 10], activations=['logistic', 'logistic'], optimizer='gradientdescent', momentum=0.0, l1=0.0, l2=0.0, minibatches=1, random_seed=None, print_progress=0, dtype=None)</em></p>
+<p><em>TfMultiLayerPerceptron(eta=0.5, epochs=50, hidden_layers=[50, 10], activations=['logistic', 'logistic'], optimizer='gradientdescent', momentum=0.0, l1=0.0, l2=0.0, dropout=1.0, minibatches=1, random_seed=None, print_progress=0, dtype=None)</em></p>
 <p>Multi-layer perceptron classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -746,6 +746,11 @@ optimizer='momentum'</p>
 <li>
 <p><code>l2</code> : float (default: 0.0)</p>
 <p>regularization strength; only applies if optimizer='ftrl'</p>
+</li>
+<li>
+<p><code>dropout</code> : float (default: 1.0)</p>
+<p>A float between in the range (0.0, 1.0] to specify
+the probability that each element is kept.</p>
 </li>
 <li>
 <p><code>minibatches</code> : int (default: 1)</p>

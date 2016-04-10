@@ -692,6 +692,8 @@
     
         <li class="main active"><a href="#release-notes">Release Notes</a></li>
         
+            <li><a href="#version-041">Version 0.4.1</a></li>
+        
             <li><a href="#version-040-2016-04-09">Version 0.4.0 (2016-04-09)</a></li>
         
             <li><a href="#version-030-2016-01-31">Version 0.3.0 (2016-01-31)</a></li>
@@ -741,11 +743,18 @@
 
 <h1 id="release-notes">Release Notes</h1>
 <hr />
-<h3 id="version-040-2016-04-09">Version 0.4.0 (2016-04-09)</h3>
+<h3 id="version-041">Version 0.4.1</h3>
 <h5 id="new-features">New Features</h5>
+<h5 id="changes">Changes</h5>
 <ul>
-<li>New <code>SoftmaxRegression</code> classifier using Tensorflow (<a href="../user_guide/tf_classifier/TfSoftmaxRegression/"><code>tf_classifier.TfSoftmaxRegression</code></a>)</li>
+<li>Adding optional <code>dropout</code> to the <a href="../user_guide/tf_classifier/TfMultiLayerPerceptron/"><code>tf_classifier.TfMultiLayerPerceptron</code></a> classifier</li>
+</ul>
+<h3 id="version-040-2016-04-09">Version 0.4.0 (2016-04-09)</h3>
+<h5 id="new-features_1">New Features</h5>
+<ul>
+<li>New <code>TfSoftmaxRegression</code> classifier using Tensorflow (<a href="../user_guide/tf_classifier/TfSoftmaxRegression/"><code>tf_classifier.TfSoftmaxRegression</code></a>)</li>
 <li>New <code>SoftmaxRegression</code> classifier (<a href="../user_guide/classifier/SoftmaxRegression/"><code>classifier.SoftmaxRegression</code></a>)</li>
+<li>New <code>TfMultiLayerPerceptron</code> classifier using Tensorflow (<a href="../user_guide/tf_classifier/TfMultiLayerPerceptron/"><code>tf_classifier.TfMultiLayerPerceptron</code></a>)</li>
 <li>New <code>StackingRegressor</code> (<a href="../user_guide/regressor/StackingRegressor/"><code>regressor.StackingRegressor</code></a>)</li>
 <li>New <code>StackingClassifier</code> (<a href="../user_guide/classifier/StackingClassifier/"><code>classifier.StackingClassifier</code></a>)</li>
 <li>New function for one-hot encoding of class labels (<a href="../user_guide/preprocessing/one-hot_encoding/"><code>preprocessing.one_hot</code></a>)</li>
@@ -762,7 +771,7 @@
 <li>New RBF Kernel Principal Component Analysis class via <a href="../user_guide/feature_extraction/RBFKernelPCA/"><code>mlxtend.feature_extraction.RBFKernelPCA</code></a></li>
 <li>New Linear Discriminant Analysis class via <a href="../user_guide/feature_extraction/LinearDiscriminantAnalysis/"><code>mlxtend.feature_extraction.LinearDiscriminantAnalysis</code></a></li>
 </ul>
-<h5 id="changes">Changes</h5>
+<h5 id="changes_1">Changes</h5>
 <ul>
 <li>The <code>column</code> parameter in <code>mlxtend.preprocessing.standardize</code> now defaults to <code>None</code> to standardize all columns more conveniently</li>
 </ul>
@@ -772,7 +781,7 @@
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.3.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.3.0.tar.gz">Source code (tar.gz)</a></li>
 </ul>
-<h5 id="new-features_1">New Features</h5>
+<h5 id="new-features_2">New Features</h5>
 <ul>
 <li>Added a progress bar tracker to <code>classifier.NeuralNetMLP</code></li>
 <li>Added a function to score predicted vs. target class labels <code>evaluate.scoring</code></li>
@@ -785,7 +794,7 @@
 <li>Added Boston <code>housing dataset</code></li>
 <li>New <code>shuffle</code> parameter for <code>classifier.NeuralNetMLP</code></li>
 </ul>
-<h5 id="changes_1">Changes</h5>
+<h5 id="changes_2">Changes</h5>
 <ul>
 <li>The <code>mlxtend.preprocessing.standardize</code> function now optionally returns the parameters, which are estimated from the array, for re-use. A further improvement makes the <code>standardize</code> function smarter in order to avoid zero-division errors</li>
 <li>Cosmetic improvements to the <code>evaluate.plot_decision_regions</code> function such as hiding plot axes</li>
@@ -803,11 +812,11 @@
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.2.9.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.2.9.tar.gz">Source code (tar.gz)</a></li>
 </ul>
-<h5 id="new-features_2">New Features</h5>
+<h5 id="new-features_3">New Features</h5>
 <ul>
 <li>Sequential Feature Selection algorithms: SFS, SFFS, SBS, and SFBS</li>
 </ul>
-<h5 id="changes_2">Changes</h5>
+<h5 id="changes_3">Changes</h5>
 <ul>
 <li>Changed <code>regularization</code> &amp; <code>lambda</code> parameters in <code>LogisticRegression</code> to single parameter <code>l2_lambda</code></li>
 </ul>

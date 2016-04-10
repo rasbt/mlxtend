@@ -9,7 +9,9 @@ from nose.tools import raises
 from mlxtend.evaluate import plot_decision_regions
 from mlxtend.data import iris_data
 from mlxtend.classifier import SoftmaxRegression
+import matplotlib.pyplot as plt
 
+plt.switch_backend('agg')
 X, y = iris_data()
 sr = SoftmaxRegression(epochs=15, eta=0.01, random_seed=1)
 

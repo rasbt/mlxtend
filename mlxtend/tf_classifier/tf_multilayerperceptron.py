@@ -38,6 +38,9 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
         L1 regularization strength; only applies if optimizer='ftrl'
     l2 : float (default: 0.0)
         regularization strength; only applies if optimizer='ftrl'
+    dropout : float (default: 1.0)
+        A float between in the range (0.0, 1.0] to specify
+        the probability that each element is kept.
     minibatches : int (default: 1)
         Divide the training data into *k* minibatches
         for accelerated stochastic gradient descent learning.
@@ -70,6 +73,7 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
                  activations=['logistic', 'logistic'],
                  optimizer='gradientdescent',
                  momentum=0.0, l1=0.0, l2=0.0,
+                 dropout=1.0,
                  minibatches=1, random_seed=None,
                  print_progress=0, dtype=None):
         self.eta = eta
@@ -81,6 +85,7 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
         self.activations = self._get_activations(activations)
         self.l1 = l1
         self.l2 = l2
+        self.dropout = dropout
         self.optimizer = self._init_optimizer(optimizer)
         self.epochs = epochs
         self.minibatches = minibatches
@@ -180,7 +185,6 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
         # Construct the Graph
         g = tf.Graph()
         with g.as_default():
-
             if init_weights:
                 if n_classes:
                     self._n_classes = n_classes
@@ -224,7 +228,8 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
             net = self._predict(tf_X=tf_X,
                                 tf_weights=tf_weights,
                                 tf_biases=tf_biases,
-                                activations=self.activations)
+                                activations=self.activations,
+                                dropout=True)
 
             # Define loss and optimizer
             cross_entropy = tf.nn.softmax_cross_entropy_with_logits(net,
@@ -235,7 +240,7 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
             # Initializing the variables
             init = tf.initialize_all_variables()
 
-        # random seed for shuffling
+        # random seed for shuffling and dropout
         if self.random_seed:
             np.random.seed(self.random_seed)
 
@@ -327,7 +332,8 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
             net = self._predict(tf_X=tf_X,
                                 tf_weights=self.weights_,
                                 tf_biases=self.biases_,
-                                activations=self.activations)
+                                activations=self.activations,
+                                dropout=False)
             logits = tf.nn.softmax(net)
             return logits.eval()
 
@@ -368,15 +374,22 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
                 biases[layer] = [[h], 'n_hidden_%d' % layer]
         return weights, biases
 
-    def _predict(self, tf_X, tf_weights, tf_biases, activations):
+    def _predict(self, tf_X, tf_weights, tf_biases,
+                 activations, dropout=False):
         hidden_1 = self.activations[1](tf.add(tf.matmul(tf_X,
                                                         tf_weights[1]),
                                               tf_biases[1]))
         prev_layer = hidden_1
+        if dropout:
+            prev_layer = tf.nn.dropout(prev_layer, self.dropout,
+                                       seed=self.random_seed)
         if len(tf_weights) > 2:
             for layer in range(2, len(tf_weights)):
                 prev_layer = self.activations[layer](tf.add(tf.matmul(
                     prev_layer, tf_weights[layer]), tf_biases[layer]))
+                if dropout:
+                    prev_layer = tf.nn.dropout(prev_layer, dropout,
+                                               seed=self.random_seed)
         net = tf.matmul(prev_layer, tf_weights['out']) + tf_biases['out']
         return net
 

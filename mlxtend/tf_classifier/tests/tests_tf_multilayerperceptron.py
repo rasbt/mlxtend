@@ -117,6 +117,20 @@ def test_multiclass_gd_acc():
     assert (y == mlp.predict(X)).all()
 
 
+def test_multiclass_gd_dropout():
+    mlp = MLP(epochs=100,
+              eta=0.5,
+              hidden_layers=[5],
+              optimizer='gradientdescent',
+              activations=['logistic'],
+              minibatches=1,
+              random_seed=1,
+              dropout=0.05)
+    mlp.fit(X, y)
+    acc = round(mlp.score(X, y), 2)
+    assert acc == 0.67, acc
+
+
 def test_score_function():
     mlp = MLP(epochs=100,
               eta=0.5,

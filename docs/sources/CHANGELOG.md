@@ -2,21 +2,30 @@
 
 ---
 
+### Version 0.4.1
+
+##### New Features
+
+##### Changes
+
+- Adding optional `dropout` to the [`tf_classifier.TfMultiLayerPerceptron`](./user_guide/tf_classifier/TfMultiLayerPerceptron.md) classifier
+
 ### Version 0.4.0 (2016-04-09)
 
 ##### New Features
 
 
-- New `SoftmaxRegression` classifier using Tensorflow ([`tf_classifier.TfSoftmaxRegression`](./user_guide/tf_classifier/TfSoftmaxRegression.md))
+- New `TfSoftmaxRegression` classifier using Tensorflow ([`tf_classifier.TfSoftmaxRegression`](./user_guide/tf_classifier/TfSoftmaxRegression.md))
 - New `SoftmaxRegression` classifier ([`classifier.SoftmaxRegression`](./user_guide/classifier/SoftmaxRegression.md))
+- New `TfMultiLayerPerceptron` classifier using Tensorflow ([`tf_classifier.TfMultiLayerPerceptron`](./user_guide/tf_classifier/TfMultiLayerPerceptron.md))
 - New `StackingRegressor` ([`regressor.StackingRegressor`](./user_guide/regressor/StackingRegressor.md))
 - New `StackingClassifier` ([`classifier.StackingClassifier`](./user_guide/classifier/StackingClassifier.md))
 - New function for one-hot encoding of class labels ([`preprocessing.one_hot`](./user_guide/preprocessing/one-hot_encoding.md))
 - Added `GridSearch` support to the `SequentialFeatureSelector` ([`feature_selection/.SequentialFeatureSelector`](./user_guide/feature_selection/SequentialFeatureSelector.md))
 - [`evaluate.plot_decision_regions`](./user_guide/evaluate/plot_decision_regions.md) improvements:
-  - Function now handles class y-class labels correctly if array is of type `float`
-  - Correct handling of input arguments `markers` and `colors`
-  - Accept an existing `Axes` via the `ax` argument
+    - Function now handles class y-class labels correctly if array is of type `float`
+    - Correct handling of input arguments `markers` and `colors`
+    - Accept an existing `Axes` via the `ax` argument
 - New `print_progress` parameter for all generalized models and multi-layer neural networks for printing time elapsed, ETA, and the current cost of the current epoch
 - Minibatch learning for `classifier.LogisticRegression`, `classifier.Adaline`, and `regressor.LinearRegression` plus streamlined API
 - New Principal Component Analysis class via [`mlxtend.feature_extraction.PrincipalComponentAnalysis`](./user_guide/feature_extraction/PrincipalComponentAnalysis.md)

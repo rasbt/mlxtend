@@ -2,7 +2,10 @@
 
 ---
 
-### Version 0.3.1dev
+### Version 0.4.0 (2016-04-09)
+
+##### New Features
+
 
 - New `SoftmaxRegression` classifier using Tensorflow ([`tf_classifier.TfSoftmaxRegression`](./user_guide/tf_classifier/TfSoftmaxRegression.md))
 - New `SoftmaxRegression` classifier ([`classifier.SoftmaxRegression`](./user_guide/classifier/SoftmaxRegression.md))
@@ -16,36 +19,63 @@
   - Accept an existing `Axes` via the `ax` argument
 - New `print_progress` parameter for all generalized models and multi-layer neural networks for printing time elapsed, ETA, and the current cost of the current epoch
 - Minibatch learning for `classifier.LogisticRegression`, `classifier.Adaline`, and `regressor.LinearRegression` plus streamlined API
-- The `column` parameter in `mlxtend.preprocessing.standardize` now defaults to `None` to standardize all columns more conveniently
 - New Principal Component Analysis class via [`mlxtend.feature_extraction.PrincipalComponentAnalysis`](./user_guide/feature_extraction/PrincipalComponentAnalysis.md)
+- New RBF Kernel Principal Component Analysis class via [`mlxtend.feature_extraction.RBFKernelPCA`](./user_guide/feature_extraction/RBFKernelPCA.md)
+- New Linear Discriminant Analysis class via [`mlxtend.feature_extraction.LinearDiscriminantAnalysis`](./user_guide/feature_extraction/LinearDiscriminantAnalysis.md)
+
+##### Changes
+
+- The `column` parameter in `mlxtend.preprocessing.standardize` now defaults to `None` to standardize all columns more conveniently
 
 ### Version 0.3.0 (2016-01-31)
 
-- The `mlxtend.preprocessing.standardize` function now optionally returns the parameters, which are estimated from the array, for re-use. A further improvement makes the `standardize` function smarter in order to avoid zero-division errors
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.3.0.zip)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.3.0.tar.gz)
+
+##### New Features
+
 - Added a progress bar tracker to `classifier.NeuralNetMLP`
 - Added a function to score predicted vs. target class labels `evaluate.scoring`
 - Added confusion matrix functions to create (`evaluate.confusion_matrix`) and plot (`evaluate.plot_confusion_matrix`) confusion matrices
+- New style parameter and improved axis scaling in `mlxtend.evaluate.plot_learning_curves`
+- Added `loadlocal_mnist` to `mlxtend.data` for streaming MNIST from a local byte files into numpy arrays
+- New `NeuralNetMLP` parameters: `random_weights`, `shuffle_init`, `shuffle_epoch`
+- New `SFS` features such as the generation of pandas `DataFrame` results tables and plotting functions (with confidence intervals, standard deviation, and standard error bars)
+- Added support for regression estimators in `SFS`
+- Added Boston `housing dataset`
+- New `shuffle` parameter for `classifier.NeuralNetMLP`
+
+##### Changes
+
+- The `mlxtend.preprocessing.standardize` function now optionally returns the parameters, which are estimated from the array, for re-use. A further improvement makes the `standardize` function smarter in order to avoid zero-division errors
 - Cosmetic improvements to the `evaluate.plot_decision_regions` function such as hiding plot axes
 - Renaming of `classifier.EnsembleClassfier` to `classifier.EnsembleVoteClassifier`
 - Improved random weight initialization in `Perceptron`, `Adaline`, `LinearRegression`, and `LogisticRegression`
-- Changed `learning` parameter of `mlxtend.classifier.Adaline` to solver and added "normal equation" as closed-form solution solver
-- New style parameter and improved axis scaling in `mlxtend.evaluate.plot_learning_curves`
+- Changed `learning` parameter of `mlxtend.classifier.Adaline` to `solver` and added "normal equation" as closed-form solution solver
 - Hide y-axis labels in `mlxtend.evaluate.plot_decision_regions` in 1 dimensional evaluations
-- Added `loadlocal_mnist` to `mlxtend.data` for streaming MNIST from a local byte files into numpy arrays
-- New `NeuralNetMLP` parameters: `random_weights`, `shuffle_init`, `shuffle_epoch`
 - Sequential Feature Selection algorithms were unified into a single `SequentialFeatureSelector` class with parameters to enable floating selection and toggle between forward and backward selection.
-- New `SFS` features such as the generation of pandas `DataFrame` results tables and plotting functions (with confidence intervals, standard deviation, and standard error bars)
-- Added support for regression estimators in `SFS`
 - Stratified sampling of MNIST (now 500x random samples from each of the 10 digit categories)
-- Added Boston `housing dataset`
 - Renaming `mlxtend.plotting` to `mlxtend.general_plotting` in order to distinguish general plotting function from specialized utility function such as `evaluate.plot_decision_regions`
-- Shuffle fix and new shuffle parameter for classifier.NeuralNetMLP
 
 ### Version 0.2.9 (2015-07-14)
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.2.9.zip)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.2.9.tar.gz)
+
+##### New Features
+
 - Sequential Feature Selection algorithms: SFS, SFFS, SBS, and SFBS
+
+##### Changes
+
 - Changed `regularization` & `lambda` parameters in `LogisticRegression` to single parameter `l2_lambda`
 
 ### Version 0.2.8 (2015-06-27)
+
 - API changes:
     - `mlxtend.sklearn.EnsembleClassifier` -> `mlxtend.classifier.EnsembleClassifier`
     -  `mlxtend.sklearn.ColumnSelector` -> `mlxtend.feature_selection.ColumnSelector`

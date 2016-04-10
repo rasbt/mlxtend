@@ -371,7 +371,7 @@ $ cat files.txt | xargs rm -rf ; rm files.txt
 Next, test if `pip` is able to install the packages. First, navigate to a different directory, and from there, install the package:
 
 ```bash
-$ pip install code/mlxtend/
+$ pip install mlxtend/
 ```
 
 and uninstall it again

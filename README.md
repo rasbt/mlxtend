@@ -7,6 +7,9 @@
 ![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)
 ![Python 3.5](https://img.shields.io/badge/python-3.5-blue.svg)
 ![License](https://img.shields.io/badge/license-BSD-blue.svg)
+[![Join the chat at https://gitter.im/rasbt/mlxtend](https://badges.gitter.im/rasbt/mlxtend.svg)](https://gitter.im/rasbt/mlxtend?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![](https://zenodo.org/badge/doi/10.5281/zenodo.49235.svg)](https://zenodo.org/record/49235#.VwWISmNh23c)
+
 
 ![](./docs/sources/img/logo.png)
 
@@ -106,3 +109,17 @@ plt.show()
 ```
 
 ![](./docs/sources/img/ensemble_decision_regions_2d.png)
+
+---
+
+If you use mlxtend as part of your workflow in a scientific publication, please consider citing the mlxtend repository with the following DOI:
+
+[![](https://zenodo.org/badge/doi/10.5281/zenodo.49235.svg)](https://zenodo.org/record/49235#.VwWISmNh23c)
+
+---
+
+## Contact
+
+I received a lot of feedback and questions about mlxtend recently, and I thought that it would be worthwhile to set up a public communication channel. Before you write an email with a question about mlxtend, please consider posting it here since it can also be useful to others! Please join the [Google Groups Mailing List](https://groups.google.com/forum/#!forum/mlxtend)!
+
+If Google Groups is not for you, please feel free to write me an [email](mailto:mail@sebastianraschka.com) or consider filing an issue on [GitHub's issue tracker](https://github.com/rasbt/mlxtend/issues) for new feature requests or bug reports. In addition, I setup a [Gitter channel](https://gitter.im/rasbt/mlxtend?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) for live discussions.

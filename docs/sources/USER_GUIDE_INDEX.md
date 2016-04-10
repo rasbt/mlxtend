@@ -28,7 +28,7 @@
 ## `feature_extraction`
 - [`PrincipalComponentAnalysis`](user_guide/feature_extraction/PrincipalComponentAnalysis.md) (new in 0.3.1dev)
 - [`LinearDiscriminantAnalysis`](user_guide/feature_extraction/LinearDiscriminantAnalysis.md) (new in 0.3.1dev)
-- [`LinearDiscriminantAnalysis`](user_guide/feature_extraction/RBFKernelPCA.md) (new in 0.3.1dev)
+- [`RBFKernelPCA`](user_guide/feature_extraction/RBFKernelPCA.md) (new in 0.3.1dev)
 
 ## `evaluate`
 - [`confusion_matrix`](user_guide/evaluate/confusion_matrix.md)

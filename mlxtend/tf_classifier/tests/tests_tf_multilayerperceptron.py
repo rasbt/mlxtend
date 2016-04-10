@@ -242,7 +242,7 @@ def test_multiclass_gd_nolearningdecay():
               optimizer='gradientdescent',
               activations=['logistic'],
               minibatches=1,
-              decay=[0.0, 1],
+              decay=[0.0, 1.0],
               random_seed=1)
     mlp.fit(X, y)
     expect = [3.11, 2.12, 1.5, 1.17, 1.0]
@@ -256,7 +256,7 @@ def test_multiclass_gd_learningdecay():
               optimizer='gradientdescent',
               activations=['logistic'],
               minibatches=1,
-              decay=[0.5, 1],
+              decay=[0.5, 1.0],
               random_seed=1)
     mlp.fit(X, y)
     expect = [3.11, 2.12, 1.79, 1.65, 1.59]

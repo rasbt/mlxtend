@@ -77,7 +77,7 @@ class TfMultiLayerPerceptron(_TfBaseClassifier):
                  optimizer='gradientdescent',
                  momentum=0.0, l1=0.0, l2=0.0,
                  dropout=1.0,
-                 decay=[0.0, 1],
+                 decay=[0.0, 1.0],
                  minibatches=1, random_seed=None,
                  print_progress=0, dtype=None):
         self.eta = eta

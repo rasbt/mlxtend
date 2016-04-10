@@ -233,3 +233,31 @@ def test_valid_acc():
 
     mlp.fit(X, y, X_valid=X[:100], y_valid=y[:100])
     assert len(mlp.valid_acc_) == 3
+
+
+def test_multiclass_gd_nolearningdecay():
+    mlp = MLP(epochs=5,
+              eta=0.5,
+              hidden_layers=[15],
+              optimizer='gradientdescent',
+              activations=['logistic'],
+              minibatches=1,
+              decay=[0.0, 1],
+              random_seed=1)
+    mlp.fit(X, y)
+    expect = [3.11, 2.12, 1.5, 1.17, 1.0]
+    np.testing.assert_almost_equal(expect, mlp.cost_, decimal=2)
+
+
+def test_multiclass_gd_learningdecay():
+    mlp = MLP(epochs=5,
+              eta=0.5,
+              hidden_layers=[15],
+              optimizer='gradientdescent',
+              activations=['logistic'],
+              minibatches=1,
+              decay=[0.5, 1],
+              random_seed=1)
+    mlp.fit(X, y)
+    expect = [3.11, 2.12, 1.79, 1.65, 1.59]
+    np.testing.assert_almost_equal(expect, mlp.cost_, decimal=2)

@@ -15,7 +15,7 @@ class _BaseRegressor(object):
 
     """Parent Class Base Regressor
 
-    A base class that is important by
+    A base class that is implemented by
     regressor child classes.
 
     """

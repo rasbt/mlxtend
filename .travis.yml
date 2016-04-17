@@ -26,11 +26,6 @@ addons:
             - libblas-dev
             - liblapack-dev
             - gfortran
-            - python-numpy
-            - python-scipy
-            - python3-numpy
-            - python3-scipy
-
 
 install: source ./ci/.travis_install.sh
 script: bash ./ci/.travis_test.sh

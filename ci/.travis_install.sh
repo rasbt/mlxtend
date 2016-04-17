@@ -23,10 +23,10 @@ deactivate
 # itself
 
 if [[ "$PYTHON_VERSION" == "2.7" ]]; then
-    wget http://repo.continuum.io/miniconda/Miniconda-3.16.0-Linux-x86_64.sh \
+    wget http://repo.continuum.io/miniconda/Miniconda2-4.0.5-Linux-x86_64.sh \
         -O miniconda.sh
 else
-    wget http://repo.continuum.io/miniconda/Miniconda-3.16.0-Linux-x86_64.sh \
+    wget http://repo.continuum.io/miniconda/Miniconda3-4.0.5-Linux-x86_64.sh \
         -O miniconda.sh
 fi
 

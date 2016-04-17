@@ -260,4 +260,4 @@ def test_multiclass_gd_learningdecay():
               random_seed=1)
     mlp.fit(X, y)
     expect = [3.107878, 2.124671, 1.786916, 1.65095, 1.590468]
-    np.testing.numpy.testing.assert_array_less(expect, mlp.cost_, decimal=2)
+    np.testing.assert_almost_equal(expect, mlp.cost_, decimal=2)

@@ -21,6 +21,15 @@ deactivate
 
 # Use the miniconda installer for faster download / install of conda
 # itself
+
+if [[ "$PYTHON_VERSION" == "2.7" ]]; then
+    wget http://repo.continuum.io/miniconda/Miniconda-3.16.0-Linux-x86_64.sh \
+        -O miniconda.sh
+else
+    wget http://repo.continuum.io/miniconda/Miniconda-3.16.0-Linux-x86_64.sh \
+        -O miniconda.sh
+fi
+
 wget http://repo.continuum.io/miniconda/Miniconda-3.16.0-Linux-x86_64.sh \
     -O miniconda.sh
 chmod +x miniconda.sh && ./miniconda.sh -b

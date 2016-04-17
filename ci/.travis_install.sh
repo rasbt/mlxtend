@@ -21,7 +21,7 @@ deactivate
 
 # Use the miniconda installer for faster download / install of conda
 # itself
-wget http://repo.continuum.io/miniconda/Miniconda-3.9.1-Linux-x86_64.sh \
+wget http://repo.continuum.io/miniconda/Miniconda-3.16.0-Linux-x86_64.sh \
     -O miniconda.sh
 chmod +x miniconda.sh && ./miniconda.sh -b
 export PATH=/home/travis/miniconda/bin:$PATH

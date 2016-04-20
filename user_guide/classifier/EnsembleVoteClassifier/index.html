@@ -710,6 +710,8 @@
         
             <li><a href="#example-2-grid-search">Example 2 - Grid Search</a></li>
         
+            <li><a href="#example-3-majority-voting-with-classifiers-trained-on-different-feature-subsets">Example 3 - Majority voting with classifiers trained on different feature subsets</a></li>
+        
     
         <li class="main "><a href="#api">API</a></li>
         
@@ -892,6 +894,102 @@ grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
 grid = grid.fit(iris.data, iris.target)
 </code></pre>
 
+<h2 id="example-3-majority-voting-with-classifiers-trained-on-different-feature-subsets">Example 3 - Majority voting with classifiers trained on different feature subsets</h2>
+<p>Feature selection algorithms implemented in scikit-learn as well as the <code>SequentialFeatureSelector</code> implement a <code>transform</code> method that passes the reduced feature subset to the next item in a <code>Pipeline</code>.</p>
+<p>For example, the method</p>
+<pre><code>def transform(self, X):
+    return X[:, self.k_feature_idx_]
+</code></pre>
+<p>returns the best feature columns, <code>k_feature_idx_</code>, given a dataset X.</p>
+<p>Thus, we simply need to construct a <code>Pipeline</code> consisting of the feature selector and the classifier in order to select different feature subsets for different algorithms. During <code>fitting</code>, the optimal feature subsets are automatically determined via the <code>GridSearchCV</code> object, and by calling <code>predict</code>, the fitted feature selector in the pipeline only passes these columns along, which resulted in the best performance for the respective classifier.</p>
+<pre><code class="python">from sklearn import datasets
+
+iris = datasets.load_iris()
+X, y = iris.data[:, :], iris.target
+
+from sklearn.grid_search import GridSearchCV
+from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import GaussianNB 
+from sklearn.ensemble import RandomForestClassifier
+from mlxtend.classifier import EnsembleVoteClassifier
+from sklearn.pipeline import Pipeline
+from mlxtend.feature_selection import SequentialFeatureSelector
+
+clf1 = LogisticRegression(random_state=1)
+clf2 = RandomForestClassifier(random_state=1)
+clf3 = GaussianNB()
+
+# Creating a feature-selection-classifier pipeline
+
+sfs1 = SequentialFeatureSelector(clf1, 
+                                 k_features=4,
+                                 forward=True, 
+                                 floating=False, 
+                                 scoring='accuracy',
+                                 print_progress=False,
+                                 cv=0)
+
+clf1_pipe = Pipeline([('sfs', sfs1),
+                      ('logreg', clf1)])
+
+eclf = EnsembleVoteClassifier(clfs=[clf1_pipe, clf2, clf3], voting='soft')
+
+
+params = {'pipeline__sfs__k_features': [1, 2, 3],
+          'pipeline__logreg__C': [1.0, 100.0],
+          'randomforestclassifier__n_estimators': [20, 200]}
+
+grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
+grid.fit(iris.data, iris.target)
+
+for params, mean_score, scores in grid.grid_scores_:
+    print(&quot;%0.3f (+/-%0.03f) for %r&quot;
+        % (mean_score, scores.std() / 2, params))
+</code></pre>
+
+<pre><code>0.953 (+/-0.013) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 20}
+0.947 (+/-0.017) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 200}
+0.953 (+/-0.013) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 20}
+0.947 (+/-0.017) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 200}
+0.953 (+/-0.013) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 20}
+0.953 (+/-0.017) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 200}
+0.947 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 20}
+0.953 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 200}
+0.947 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 20}
+0.947 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 200}
+0.960 (+/-0.012) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 20}
+0.953 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 200}
+</code></pre>
+<p>The best parameters determined via GridSearch are:</p>
+<pre><code class="python">grid.best_params_
+</code></pre>
+
+<pre><code>{'pipeline__logreg__C': 100.0,
+ 'pipeline__sfs__k_features': 3,
+ 'randomforestclassifier__n_estimators': 20}
+</code></pre>
+<p>Now, we assign these parameters to the ensemble voting classifier, fit the models on the complete training set, and perform a prediction on 3 samples from the Iris dataset.</p>
+<pre><code class="python">eclf = eclf.set_params(**grid.best_params_)
+eclf.fit(X, y).predict(X[[1, 51, 149]])
+</code></pre>
+
+<pre><code>array([0, 1, 2])
+</code></pre>
+<h3 id="manual-approach">Manual Approach</h3>
+<p>Alternatively, we can select different columns "manually" using the <code>ColumnSelector</code> object. In this example, we select only the first (sepal length) and third (petal length) column for the logistic regression classifier (<code>clf1</code>).</p>
+<pre><code class="python">from mlxtend.feature_selection import ColumnSelector
+
+col_sel = ColumnSelector(cols=[0, 2])
+
+clf1_pipe = Pipeline([('sel', col_sel),
+                      ('logreg', clf1)])
+
+eclf = EnsembleVoteClassifier(clfs=[clf1_pipe, clf2, clf3], voting='soft')
+eclf.fit(X, y).predict(X[[1, 51, 149]])
+</code></pre>
+
+<pre><code>array([0, 1, 2])
+</code></pre>
 <h1 id="api">API</h1>
 <p><em>EnsembleVoteClassifier(clfs, voting='hard', weights=None, verbose=0)</em></p>
 <p>Soft Voting/Majority Rule classifier for scikit-learn estimators.</p>

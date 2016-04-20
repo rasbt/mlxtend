@@ -706,7 +706,7 @@
 
 <p>mlxtend version: 0.4.1dev </p>
 <h2 id="tfmultilayerperceptron">TfMultiLayerPerceptron</h2>
-<p><em>TfMultiLayerPerceptron(eta=0.5, epochs=50, hidden_layers=[50, 10], activations=['logistic', 'logistic'], optimizer='gradientdescent', momentum=0.0, l1=0.0, l2=0.0, dropout=1.0, minibatches=1, random_seed=None, print_progress=0, dtype=None)</em></p>
+<p><em>TfMultiLayerPerceptron(eta=0.5, epochs=50, hidden_layers=[50, 10], activations=['logistic', 'logistic'], optimizer='gradientdescent', momentum=0.0, l1=0.0, l2=0.0, dropout=1.0, decay=[0.0, 1], minibatches=1, random_seed=None, print_progress=0, dtype=None)</em></p>
 <p>Multi-layer perceptron classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -751,6 +751,11 @@ optimizer='momentum'</p>
 <p><code>dropout</code> : float (default: 1.0)</p>
 <p>A float between in the range (0.0, 1.0] to specify
 the probability that each element is kept.</p>
+</li>
+<li>
+<p><code>decay</code> : list, shape=[decay_rate, decay_steps] (default: [0.0, 1])</p>
+<p>Parameter to specify the exponential decay of the learning rate eta
+for adaptive learning (eta * decay_rate ^ (epoch / decay_steps)).</p>
 </li>
 <li>
 <p><code>minibatches</code> : int (default: 1)</p>

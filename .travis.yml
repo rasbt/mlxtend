@@ -27,10 +27,8 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   - conda info -a
-  - if [[ "${LATEST}" == "true" ]]; then echo "test";
-    else
-    echo "notest";
-    fi
+  - if [[ "${LATEST}" == "true" ]]; then
+        conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy scipy matplotlib pandas sklearn;
   - if [[ "${LATEST}" == "true" ]]; then
         conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy scipy matplotlib pandas sklearn;
     else

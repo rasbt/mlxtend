@@ -947,18 +947,18 @@ for params, mean_score, scores in grid.grid_scores_:
         % (mean_score, scores.std() / 2, params))
 </code></pre>
 
-<pre><code>0.953 (+/-0.013) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 20}
-0.947 (+/-0.017) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 200}
-0.953 (+/-0.013) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 20}
-0.947 (+/-0.017) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 200}
-0.953 (+/-0.013) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 20}
-0.953 (+/-0.017) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 200}
-0.947 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 20}
-0.953 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 200}
-0.947 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 20}
-0.947 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 200}
-0.960 (+/-0.012) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 20}
-0.953 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 200}
+<pre><code>0.953 (+/-0.013) for {'pipeline__sfs__k_features': 1, 'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 20}
+0.947 (+/-0.017) for {'pipeline__sfs__k_features': 1, 'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 200}
+0.953 (+/-0.013) for {'pipeline__sfs__k_features': 2, 'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 20}
+0.947 (+/-0.017) for {'pipeline__sfs__k_features': 2, 'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 200}
+0.953 (+/-0.013) for {'pipeline__sfs__k_features': 3, 'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 20}
+0.953 (+/-0.017) for {'pipeline__sfs__k_features': 3, 'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 200}
+0.947 (+/-0.017) for {'pipeline__sfs__k_features': 1, 'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 20}
+0.953 (+/-0.017) for {'pipeline__sfs__k_features': 1, 'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 200}
+0.947 (+/-0.017) for {'pipeline__sfs__k_features': 2, 'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 20}
+0.947 (+/-0.017) for {'pipeline__sfs__k_features': 2, 'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 200}
+0.960 (+/-0.012) for {'pipeline__sfs__k_features': 3, 'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 20}
+0.953 (+/-0.017) for {'pipeline__sfs__k_features': 3, 'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 200}
 </code></pre>
 <p>The best parameters determined via GridSearch are:</p>
 <pre><code class="python">grid.best_params_
@@ -985,6 +985,35 @@ clf1_pipe = Pipeline([('sel', col_sel),
                       ('logreg', clf1)])
 
 eclf = EnsembleVoteClassifier(clfs=[clf1_pipe, clf2, clf3], voting='soft')
+eclf.fit(X, y).predict(X[[1, 51, 149]])
+</code></pre>
+
+<pre><code>array([0, 1, 2])
+</code></pre>
+<p>Furthermore, we can fit the <code>SequentialFeatureSelector</code> separately, outside the grid search hyperparameter optimization pipeline. Here, we determine the best features first, and then we construct a pipeline using these "fixed," best features as seed for the <code>ColumnSelector</code>:</p>
+<pre><code class="python">sfs1 = SequentialFeatureSelector(clf1, 
+                                 k_features=2,
+                                 forward=True, 
+                                 floating=False, 
+                                 scoring='accuracy',
+                                 print_progress=True,
+                                 cv=0)
+
+sfs1.fit(X, y)
+
+print('Best features', sfs1.k_feature_idx_)
+
+col_sel = ColumnSelector(cols=sfs1.k_feature_idx_)
+
+clf1_pipe = Pipeline([('sel', col_sel),
+                      ('logreg', clf1)])
+</code></pre>
+
+<pre><code>Features: 2/2
+
+Best features (1, 3)
+</code></pre>
+<pre><code class="python">eclf = EnsembleVoteClassifier(clfs=[clf1_pipe, clf2, clf3], voting='soft')
 eclf.fit(X, y).predict(X[[1, 51, 149]])
 </code></pre>
 

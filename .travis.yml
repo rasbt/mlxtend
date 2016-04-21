@@ -1,39 +1,52 @@
+sudo: required
 dist: trusty
 language: python
-sudo: false
-os:
-    - linux
-virtualenv:
-  system_site_packages: true
-env:
-  matrix:
-    - PYTHON_VERSION="2.7" LATEST="true"
-    - PYTHON_VERSION="3.4" LATEST="true"
-    - PYTHON_VERSION="3.5" LATEST="true"
-    - PYTHON_VERSION="3.5" NUMPY_VERSION="1.10.4" SCIPY_VERSION="0.17" SKLEARN_VERSION="0.17" PANDAS_VERSION="0.17.1" MATPLOTLIB_VERSION="1.5.1"
-    - PYTHON_VERSION="3.5" COVERAGE="true" LATEST="true"
-    - PYTHON_VERSION="2.7" TENSORFLOW="true" LATEST="true"
-    - PYTHON_VERSION="3.4" TENSORFLOW="true" LATEST="true"
-install: source ./ci/.travis_install.sh
+matrix:
+    include:
+        - python: 3.5
+          env: LATEST="false" TENSORFLOW="false" COVERAGE="false" NUMPY_VERSION="1.10.4" SCIPY_VERSION="0.17" SKLEARN_VERSION="0.17" PANDAS_VERSION="0.17.1" MATPLOTLIB_VERSION="1.5.1"
+        - python: 3.5
+          env: LATEST="true" TENSORFLOW="false" COVERAGE="false"
+        - python: 3.4
+          env: LATEST="true" TENSORFLOW="false" COVERAGE="false"
+        - python: 3.4
+          env: LATEST="true" TENSORFLOW="true" COVERAGE="false"
+        - python: 2.7
+          env: LATEST="true" TENSORFLOW="false" COVERAGE="false"
+        - python: 2.7
+          env: LATEST="true" TENSORFLOW="true" COVERAGE="false"
+install:
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+      wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+    else
+      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+    fi
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - conda info -a
+  - if [[ "$LATEST" == "true" ]]; then
+      conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy scipy matplotlib pandas sklearn;
+    else
+      conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy=$NUMPY_VERSION scipy=$SCIPY_VERSION matplotlib=$MATPLOTLIB_VERSION pandas=$PANDAS_VERSION sklearn=$SKLEARN_VERSION;
+    fi
+  - source activate test-environment
+  - if [[ "$COVERAGE" == "true" ]]; then pip install coverage coveralls
+  - if [[ "$TENSORFLOW" == "true" ]]; then
+      python -c "import tensorflow; print('tensorflow %s' % tensorflow.__version__)";
+    else
+      python -c "import sklearn; print('sklearn %s' % sklearn.__version__)";
+      python -c "import pandas; print('pandas %s' % pandas.__version__)";
+      python -c "import matplotlib; print('matplotlib %s' % matplotlib.__version__)";
+    fi
 script: bash ./ci/.travis_test.sh
 after_success:
-    # Ignore coveralls failures as the coveralls server is not very reliable
-    # but we don't want travis to report a failure in the github UI just
-    # because the coverage report failed to be published.
     - if [[ "$COVERAGE" == "true" ]]; then coveralls || echo "failed"; fi
-cache: apt
-sudo: false
 notifications:
   email:
     recipients:
       - mail@sebastianraschka.com
     on_success: always
     on_failure: always
-
-addons:
-    apt:
-        sources:
-            - ubuntu-toolchain-r-test
-        packages:
-            - gcc-4.8
-            - g++-4.8

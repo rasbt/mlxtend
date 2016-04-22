@@ -28,9 +28,9 @@ install:
   - conda update -q conda
   - conda info -a
   - if [[ "${LATEST}" == "true" ]]; then
-        conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy scipy matplotlib pandas sklearn;
+        conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy scipy matplotlib pandas scikit-learn;
     else
-        conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy=$NUMPY_VERSION scipy=$SCIPY_VERSION matplotlib=$MATPLOTLIB_VERSION pandas=$PANDAS_VERSION sklearn=$SKLEARN_VERSION;
+        conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy=$NUMPY_VERSION scipy=$SCIPY_VERSION matplotlib=$MATPLOTLIB_VERSION pandas=$PANDAS_VERSION scikit-learn=$SKLEARN_VERSION;
     fi
   - source activate test-environment
   - if [[ "${COVERAGE}" == "true" ]]; then pip install coverage coveralls

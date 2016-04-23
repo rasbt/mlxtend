@@ -27,7 +27,7 @@
         },
         {
             "location": "/USER_GUIDE_INDEX/",
-            "text": "User Guide Index\n\n\nclassifier\n\n\n\n\nEnsembleVoteClassifier\n\n\nStackingClassifier\n (new in 0.3.1dev)\n\n\nPerceptron\n\n\nAdaline\n\n\nLogisticRegression\n\n\nNeuralNetMLP\n\n\nSoftmaxRegression\n (new in 0.3.1dev)\n\n\n\n\ntf_classifier\n (TensorFlow Classifier)\n\n\n\n\nTfSoftmaxRegression\n (new in 0.3.1dev)\n\n\nTfMultiLayerPerceptron\n (new in 0.3.1dev)\n\n\n\n\nregressor\n\n\n\n\nLinearRegression\n\n\nStackingRegressor\n (new in 0.3.1dev)\n\n\n\n\nregression_utils\n\n\n\n\nplot_linear_regression\n\n\n\n\nfeature_selection\n\n\n\n\nSequentialFeatureSelector\n\n\n\n\nfeature_extraction\n\n\n\n\nPrincipalComponentAnalysis\n (new in 0.3.1dev)\n\n\nLinearDiscriminantAnalysis\n (new in 0.3.1dev)\n\n\nRBFKernelPCA\n (new in 0.3.1dev)\n\n\n\n\nevaluate\n\n\n\n\nconfusion_matrix\n\n\nplot_decision_regions\n\n\nplot_learning_curves\n\n\nscoring\n\n\n\n\npreprocessing\n\n\n\n\nDenseTransformer\n\n\nMeanCenterer\n\n\nminmax_scaling\n\n\nshuffle_arrays_unison\n\n\nstandardize\n\n\none-hot_encoding\n (new in 0.3.1dev)\n\n\n\n\ndata\n\n\n\n\nautompg_data\n\n\nboston_housing_data\n\n\niris_data\n\n\nmnist_data\n\n\nload_mnist\n\n\nwine_data\n\n\n\n\nfile_io\n\n\n\n\nfind_filegroups\n\n\nfind_files\n\n\n\n\ngeneral plotting\n\n\n\n\ncategory_scatter\n\n\nenrichment_plot\n\n\nstacked_barplot\n\n\n\n\nmath\n\n\n\n\nnum_combinations\n\n\nnum_permutations\n\n\n\n\ntext\n\n\n\n\ngeneralize_names\n\n\ngeneralize_names_duplcheck\n\n\ntokenizer.\n\n\n\n\nutils\n\n\n\n\nCounter\n\n\n\n\ngeneral concepts\n\n\n\n\nactivation-functions\n\n\ngradient-optimization\n\n\nlinear-gradient-derivative\n\n\nregularization-linear",
+            "text": "User Guide Index\n\n\nclassifier\n\n\n\n\nEnsembleVoteClassifier\n\n\nStackingClassifier\n\n\nPerceptron\n\n\nAdaline\n\n\nLogisticRegression\n\n\nNeuralNetMLP\n\n\nSoftmaxRegression\n\n\n\n\ntf_classifier\n (TensorFlow Classifier)\n\n\n\n\nTfSoftmaxRegression\n\n\nTfMultiLayerPerceptron\n\n\n\n\nregressor\n\n\n\n\nLinearRegression\n\n\nStackingRegressor\n\n\n\n\ntf_regressor\n (TensorFlow Regressor)\n\n\n\n\nTfLinearRegression\n (new in 0.4.1dev)\n\n\n\n\nregression_utils\n\n\n\n\nplot_linear_regression\n\n\n\n\nfeature_selection\n\n\n\n\nSequentialFeatureSelector\n\n\n\n\nfeature_extraction\n\n\n\n\nPrincipalComponentAnalysis\n\n\nLinearDiscriminantAnalysis\n\n\nRBFKernelPCA\n\n\n\n\nevaluate\n\n\n\n\nconfusion_matrix\n\n\nplot_decision_regions\n\n\nplot_learning_curves\n\n\nscoring\n\n\n\n\npreprocessing\n\n\n\n\nDenseTransformer\n\n\nMeanCenterer\n\n\nminmax_scaling\n\n\nshuffle_arrays_unison\n\n\nstandardize\n\n\none-hot_encoding\n\n\n\n\ndata\n\n\n\n\nautompg_data\n\n\nboston_housing_data\n\n\niris_data\n\n\nmnist_data\n\n\nload_mnist\n\n\nwine_data\n\n\n\n\nfile_io\n\n\n\n\nfind_filegroups\n\n\nfind_files\n\n\n\n\ngeneral plotting\n\n\n\n\ncategory_scatter\n\n\nenrichment_plot\n\n\nstacked_barplot\n\n\n\n\nmath\n\n\n\n\nnum_combinations\n\n\nnum_permutations\n\n\n\n\ntext\n\n\n\n\ngeneralize_names\n\n\ngeneralize_names_duplcheck\n\n\ntokenizer.\n\n\n\n\nutils\n\n\n\n\nCounter\n\n\n\n\ngeneral concepts\n\n\n\n\nactivation-functions\n\n\ngradient-optimization\n\n\nlinear-gradient-derivative\n\n\nregularization-linear",
             "title": "USER GUIDE INDEX"
         },
         {
@@ -37,18 +37,23 @@
         },
         {
             "location": "/USER_GUIDE_INDEX/#classifier",
-            "text": "EnsembleVoteClassifier  StackingClassifier  (new in 0.3.1dev)  Perceptron  Adaline  LogisticRegression  NeuralNetMLP  SoftmaxRegression  (new in 0.3.1dev)",
+            "text": "EnsembleVoteClassifier  StackingClassifier  Perceptron  Adaline  LogisticRegression  NeuralNetMLP  SoftmaxRegression",
             "title": "classifier"
         },
         {
             "location": "/USER_GUIDE_INDEX/#tf_classifier-tensorflow-classifier",
-            "text": "TfSoftmaxRegression  (new in 0.3.1dev)  TfMultiLayerPerceptron  (new in 0.3.1dev)",
+            "text": "TfSoftmaxRegression  TfMultiLayerPerceptron",
             "title": "tf_classifier (TensorFlow Classifier)"
         },
         {
             "location": "/USER_GUIDE_INDEX/#regressor",
-            "text": "LinearRegression  StackingRegressor  (new in 0.3.1dev)",
+            "text": "LinearRegression  StackingRegressor",
             "title": "regressor"
+        },
+        {
+            "location": "/USER_GUIDE_INDEX/#tf_regressor-tensorflow-regressor",
+            "text": "TfLinearRegression  (new in 0.4.1dev)",
+            "title": "tf_regressor (TensorFlow Regressor)"
         },
         {
             "location": "/USER_GUIDE_INDEX/#regression_utils",
@@ -62,7 +67,7 @@
         },
         {
             "location": "/USER_GUIDE_INDEX/#feature_extraction",
-            "text": "PrincipalComponentAnalysis  (new in 0.3.1dev)  LinearDiscriminantAnalysis  (new in 0.3.1dev)  RBFKernelPCA  (new in 0.3.1dev)",
+            "text": "PrincipalComponentAnalysis  LinearDiscriminantAnalysis  RBFKernelPCA",
             "title": "feature_extraction"
         },
         {
@@ -72,7 +77,7 @@
         },
         {
             "location": "/USER_GUIDE_INDEX/#preprocessing",
-            "text": "DenseTransformer  MeanCenterer  minmax_scaling  shuffle_arrays_unison  standardize  one-hot_encoding  (new in 0.3.1dev)",
+            "text": "DenseTransformer  MeanCenterer  minmax_scaling  shuffle_arrays_unison  standardize  one-hot_encoding",
             "title": "preprocessing"
         },
         {

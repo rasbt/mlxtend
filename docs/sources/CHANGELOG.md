@@ -2,9 +2,11 @@
 
 ---
 
-### Version 0.4.1
+### Version 0.4.1dev
 
 ##### New Features
+
+- New TensorFlow estimator for Linear Regression ([`tf_regressor.TfLinearRegression`](./user_guide/tf_regressor/TfLinearRegression.md))
 
 ##### Changes
 

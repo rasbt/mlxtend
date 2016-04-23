@@ -4,7 +4,6 @@
 #
 # License: BSD 3 clause
 
-from .counter import Counter
-from .testing import assert_raises
+from .tf_linear_regression import TfLinearRegression
 
-__all__ = ["Counter", "assert_raises"]
+__all__ = ["TfLinearRegression"]

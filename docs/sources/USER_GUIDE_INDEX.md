@@ -1,23 +1,24 @@
 # User Guide Index
 
 ## `classifier`
-
  - [`EnsembleVoteClassifier`](user_guide/classifier/EnsembleVoteClassifier.md)
- - [`StackingClassifier`](user_guide/classifier/StackingClassifier.md) (new in 0.3.1dev)
+ - [`StackingClassifier`](user_guide/classifier/StackingClassifier.md)
  - [`Perceptron`](user_guide/classifier/Perceptron.md)
  - [`Adaline`](user_guide/classifier/Adaline.md)
  - [`LogisticRegression`](user_guide/classifier/LogisticRegression.md)
  - [`NeuralNetMLP`](user_guide/classifier/NeuralNetMLP.md)
- - [`SoftmaxRegression`](user_guide/classifier/SoftmaxRegression.md) (new in 0.3.1dev)
+ - [`SoftmaxRegression`](user_guide/classifier/SoftmaxRegression.md)
 
 ## `tf_classifier` (TensorFlow Classifier)
- - [`TfSoftmaxRegression`](user_guide/tf_classifier/TfSoftmaxRegression.md) (new in 0.3.1dev)
- - [`TfMultiLayerPerceptron`](user_guide/tf_classifier/TfMultiLayerPerceptron.md) (new in 0.3.1dev)
+ - [`TfSoftmaxRegression`](user_guide/tf_classifier/TfSoftmaxRegression.md)
+ - [`TfMultiLayerPerceptron`](user_guide/tf_classifier/TfMultiLayerPerceptron.md)
 
 ## `regressor`
-
 - [`LinearRegression`](user_guide/regressor/LinearRegression.md)
-- [`StackingRegressor`](user_guide/regressor/StackingRegressor.md) (new in 0.3.1dev)
+- [`StackingRegressor`](user_guide/regressor/StackingRegressor.md)
+
+## `tf_regressor` (TensorFlow Regressor)
+- [`TfLinearRegression`](user_guide/tf_regressor/TfLinearRegression.md) (new in 0.4.1dev)
 
 ## `regression_utils`
 - [`plot_linear_regression`](user_guide/regression_utils/plot_linear_regression.md)
@@ -26,9 +27,9 @@
 - [`SequentialFeatureSelector`](user_guide/feature_selection/SequentialFeatureSelector.md)
 
 ## `feature_extraction`
-- [`PrincipalComponentAnalysis`](user_guide/feature_extraction/PrincipalComponentAnalysis.md) (new in 0.3.1dev)
-- [`LinearDiscriminantAnalysis`](user_guide/feature_extraction/LinearDiscriminantAnalysis.md) (new in 0.3.1dev)
-- [`RBFKernelPCA`](user_guide/feature_extraction/RBFKernelPCA.md) (new in 0.3.1dev)
+- [`PrincipalComponentAnalysis`](user_guide/feature_extraction/PrincipalComponentAnalysis.md)
+- [`LinearDiscriminantAnalysis`](user_guide/feature_extraction/LinearDiscriminantAnalysis.md)
+- [`RBFKernelPCA`](user_guide/feature_extraction/RBFKernelPCA.md)
 
 ## `evaluate`
 - [`confusion_matrix`](user_guide/evaluate/confusion_matrix.md)
@@ -42,7 +43,7 @@
 - [`minmax_scaling`](user_guide/preprocessing/minmax_scaling.md)
 - [`shuffle_arrays_unison`](user_guide/preprocessing/shuffle_arrays_unison.md)
 - [`standardize`](user_guide/preprocessing/standardize.md)
-- [`one-hot_encoding`](user_guide/preprocessing/one-hot_encoding.md) (new in 0.3.1dev)
+- [`one-hot_encoding`](user_guide/preprocessing/one-hot_encoding.md)
 
 ## `data`
 - [`autompg_data`](user_guide/data/autompg_data.md)

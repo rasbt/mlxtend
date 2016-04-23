@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name="author" content="Sebastian Raschka"> 
-    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/math/num_permutations/"> 
+    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/tf_regressor/TfLinearRegression/"> 
     <link rel="shortcut icon" href="../../../../../../favicon.ico">
 
-    <title>Num permutations - mlxtend</title>
+    <title>TfLinearRegression - mlxtend</title>
 
     <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
@@ -201,8 +201,8 @@
     <ul class="dropdown-menu">
         
             
-<li >
-    <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
+<li class="active">
+    <a href="./">TfLinearRegression</a>
 </li>
 
         
@@ -445,13 +445,13 @@
         
             
 <li >
-    <a href="../num_combinations/">Num combinations</a>
+    <a href="../../math/num_combinations/">Num combinations</a>
 </li>
 
         
             
-<li class="active">
-    <a href="./">Num permutations</a>
+<li >
+    <a href="../../math/num_permutations/">Num permutations</a>
 </li>
 
         
@@ -681,12 +681,12 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../num_combinations/">
+                        <a rel="next" href="../../regressor/StackingRegressor/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../../text/generalize_names/">
+                        <a rel="prev" href="../../regression_utils/plot_linear_regression/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -711,7 +711,7 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#compute-the-number-of-permutations">Compute the Number of Permutations</a></li>
+        <li class="main active"><a href="#linearregression">LinearRegression</a></li>
         
     
         <li class="main "><a href="#overview">Overview</a></li>
@@ -721,105 +721,235 @@
     
         <li class="main "><a href="#examples">Examples</a></li>
         
-            <li><a href="#example-1-compute-the-number-of-permutations">Example 1 - Compute the number of permutations</a></li>
+            <li><a href="#example-1-simple-linear-regression">Example 1 - Simple Linear Regression</a></li>
         
-            <li><a href="#example-2-a-progress-tracking-use-case">Example 2 - A progress tracking use-case</a></li>
+            <li><a href="#example-2-multiple-linear-regression">Example 2 - Multiple Linear Regression</a></li>
         
     
         <li class="main "><a href="#api">API</a></li>
+        
+            <li><a href="#methods">Methods</a></li>
         
     
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="compute-the-number-of-permutations">Compute the Number of Permutations</h1>
-<p>A function to calculate the number of permutations for creating subsequences of <em>k</em> elements out of a sequence with <em>n</em> elements.</p>
+<h1 id="linearregression">LinearRegression</h1>
+<p>A implementation of Ordinary Least Squares simple and multiple linear regression using TensorFlow.</p>
 <blockquote>
-<p>from mlxtend.math import num_permutations</p>
+<p>from mlxtend.tf_regressor import TfLinearRegression</p>
 </blockquote>
 <h1 id="overview">Overview</h1>
-<p>Permutations are selections of items from a collection with regard to the order in which they appear (in contrast to combinations). For example, let's consider a permutation of 3 elements (k=3) from a collection of 5 elements (n=5): </p>
+<p>The linear regression model is fitted using gradient descent optimization supporting simple and multiple linear regression; for more information on linear regression, please refer to the documentation of the related 
+<a href="../regressor.LinearRegression.md"><code>mlxtend.regressor.LinearRegression estimator</code></a> and the tutorials:</p>
 <ul>
-<li>collection: {1, 2, 3, 4, 5}</li>
-<li>combination 1a: {1, 3, 5} </li>
-<li>combination 1b: {1, 5, 3}</li>
-<li>combination 1c: {3, 5, 1}</li>
-<li>...</li>
-<li>combination 2: {1, 3, 4}</li>
+<li><a href="../../general_concepts/gradient-optimization/">Gradient Descent and Stochastic Gradient Descent</a></li>
+<li><a href="../../general_concepts/linear-gradient-derivative/">Deriving the Gradient Descent Rule for Linear Regression and Adaline</a>.</li>
 </ul>
-<p>In the example above the permutations 1a, 1b, and 1c, are the "same combination" but distinct permutations -- in combinations, the order does not matter, but in permutation it does matter.</p>
-<p>The number of ways to combine elements (<strong>without replacement</strong>) from a collection with size <em>n</em> into subsets of size <em>k</em> is computed via the binomial coefficient ("<em>n</em> choose <em>k</em>"):</p>
-<p>\[ k!\begin{pmatrix} 
-n  \
-k 
-\end{pmatrix} = k! \cdot \frac{n!}{k!(n-k)!} = \frac{n!}{(n-k)!} \]</p>
-<p>To compute the number of permutations <strong>with replacement</strong>, we simply need to compute <mathjax>$n^k$</mathjax>.</p>
 <h3 id="references">References</h3>
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Permutation">https://en.wikipedia.org/wiki/Permutation</a></li>
+<li>F. Galton. <a href="http://www.jstor.org/stable/2841583">Regression towards mediocrity in hereditary stature</a>. Journal of the Anthropological Institute of Great Britain and Ireland, pages 246–263, 1886.</li>
+<li>A. I. Khuri. <a href="http://onlinelibrary.wiley.com/doi/10.1111/insr.12020_10/abstract">Introduction to linear regression analysis</a>, by Douglas C. Montgomery, Elizabeth A. Peck, G. Geoffrey Vining. International Statistical Review, 81(2):318–319, 2013.</li>
+<li>D. S. G. Pollock. <a href="http://www.le.ac.uk/users/dsgp1/COURSES/MESOMET/ECMETXT/06mesmet.pdf">The Classical Linear Regression Model</a>.</li>
 </ul>
 <h1 id="examples">Examples</h1>
-<h2 id="example-1-compute-the-number-of-permutations">Example 1 - Compute the number of permutations</h2>
-<pre><code class="python">from mlxtend.math import num_permutations
+<h2 id="example-1-simple-linear-regression">Example 1 - Simple Linear Regression</h2>
+<h3 id="generate-some-sample-data">Generate some sample data</h3>
+<pre><code class="python">import numpy as np
+import matplotlib.pyplot as plt
 
-c = num_permutations(n=20, k=8, with_replacement=False)
-print('Number of ways to permute 20 elements into 8 subelements: %d' % c)
+np.random.seed(1)
+X = np.array([np.random.normal(1.0, 4.55) for i in range(100)])
+y = np.array([x1 * 0.1 + 0.1 + np.random.normal(0.0, 0.05) for x1 in X])
+X = X[:, np.newaxis]
+
+plt.scatter(X, y)
+plt.show()
 </code></pre>
 
-<pre><code>Number of ways to permute 20 elements into 8 subelements: 5079110400
-</code></pre>
-<pre><code class="python">from mlxtend.math import num_permutations
+<p><img alt="png" src="../TfLinearRegression_files/TfLinearRegression_13_0.png" /></p>
+<h3 id="fit-regressor-and-check-mse-cost">Fit regressor and check MSE cost</h3>
+<pre><code class="python">from mlxtend.tf_regressor import TfLinearRegression
 
-c = num_permutations(n=20, k=8, with_replacement=True)
-print('Number of ways to combine 20 elements into 8 subelements (with replacement): %d' % c)
-</code></pre>
+gd_lr = TfLinearRegression(eta=0.05, 
+                           epochs=5,
+                           random_seed=1,
+                           print_progress=3)
+gd_lr.fit(X, y)
 
-<pre><code>Number of ways to combine 20 elements into 8 subelements (with replacement): 25600000000
-</code></pre>
-<h2 id="example-2-a-progress-tracking-use-case">Example 2 - A progress tracking use-case</h2>
-<p>It is often quite useful to track the progress of a computational expensive tasks to estimate its runtime. Here, the <code>num_combination</code> function can be used to compute the maximum number of loops of a <code>permutations</code> iterable from itertools:</p>
-<pre><code class="python">import itertools
-import sys
-import time
-from mlxtend.math import num_permutations
+print('Intercept: %.2f' % gd_lr.bias_)
+print('Slope: %.2f' % gd_lr.weights_)
 
-items = {1, 2, 3, 4, 5, 6, 7, 8}
-max_iter = num_permutations(n=len(items), k=3, 
-                            with_replacement=False)
-
-for idx, i in enumerate(itertools.permutations(items, r=3)):
-    # do some computation with itemset i
-    time.sleep(0.01)
-    sys.stdout.write('\rProgress: %d/%d' % (idx + 1, max_iter))
-    sys.stdout.flush()
+plt.plot(range(1, gd_lr.epochs+1), gd_lr.cost_)
+plt.xlabel('epochs')
+plt.ylabel('mean squared error (MSE)')
+plt.show()
 </code></pre>
 
-<pre><code>Progress: 336/336
+<pre><code>Epoch: 5/5 | Cost 2.40 | Elapsed: 00:00:00 | ETA: 00:00:00
+
+Intercept: 0.10
+Slope: 0.39
+</code></pre>
+<p><img alt="png" src="../TfLinearRegression_files/TfLinearRegression_15_2.png" /></p>
+<h3 id="continue-training-for-another-50-epochs">Continue training for another 50 epochs</h3>
+<pre><code class="python">gd_lr.epochs = 50
+gd_lr.fit(X, y, init_weights=False)
+
+print('Intercept: %.2f' % gd_lr.bias_)
+print('Slope: %.2f' % gd_lr.weights_)
+
+plt.plot(range(1, gd_lr.epochs+1), gd_lr.cost_)
+plt.xlabel('epochs')
+plt.ylabel('mean squared error (MSE)')
+plt.show()
+</code></pre>
+
+<pre><code>Epoch: 50/50 | Cost 0.00 | Elapsed: 0:00:00 | ETA: 0:00:00
+
+Intercept: 0.11
+Slope: 0.10
+</code></pre>
+<p><img alt="png" src="../TfLinearRegression_files/TfLinearRegression_17_2.png" /></p>
+<h3 id="visualize-the-regression-fit">Visualize the regression fit</h3>
+<pre><code class="python">def lin_regplot(X, y, model):
+    plt.scatter(X, y, c='blue')
+    plt.plot(X, model.predict(X), color='red')    
+    return
+
+lin_regplot(X, y, gd_lr)
+plt.show()
+</code></pre>
+
+<p><img alt="png" src="../TfLinearRegression_files/TfLinearRegression_19_0.png" /></p>
+<p><strong>Tip</strong>: If we are using gradient descent, we should consider standardizing the feature variables for faster convergence:</p>
+<pre><code class="python">X_std = (X - np.mean(X)) / X.std()
+y_std = (y - np.mean(y)) / y.std()
+
+gd_lr = TfLinearRegression(eta=0.5, 
+                           epochs=10,
+                           random_seed=0,
+                           print_progress=3)    
+gd_lr.fit(X_std, y_std)
+
+plt.plot(range(1, gd_lr.epochs + 1), gd_lr.cost_)
+plt.xlabel('Epochs')
+plt.ylabel('Cost')
+plt.tight_layout()
+plt.show()  
+</code></pre>
+
+<pre><code>Epoch: 10/10 | Cost 0.01 | Elapsed: 0:00:00 | ETA: 0:00:00
+</code></pre>
+<p><img alt="png" src="../TfLinearRegression_files/TfLinearRegression_21_1.png" /></p>
+<pre><code class="python">lin_regplot(X_std, y_std, gd_lr)
+plt.show()
+</code></pre>
+
+<p><img alt="png" src="../TfLinearRegression_files/TfLinearRegression_22_0.png" /></p>
+<h2 id="example-2-multiple-linear-regression">Example 2 - Multiple Linear Regression</h2>
+<h3 id="loading-the-boston-housing-data">Loading the Boston Housing Data</h3>
+<pre><code class="python">from mlxtend.data import boston_housing_data
+from mlxtend.preprocessing import shuffle_arrays_unison
+
+X, y = boston_housing_data()
+X, y = shuffle_arrays_unison([X, y], random_seed=1)
+X_test, y_test = X[:50], y[:50]
+X_train, y_train = X[50:], y[50:]
+
+# standardize
+mu1, mu2 = X_train.mean(axis=0), y_train.mean()
+sigma1, sigma2 = X_train.std(axis=0), y_train.std()
+X_train = (X_train - mu1) / sigma1
+X_test = (X_test - mu1) / sigma1
+y_train = (y_train - mu2) / sigma2
+y_test = (y_test - mu2) / sigma2
+</code></pre>
+
+<h3 id="fit-the-regression-model">Fit the regression model</h3>
+<pre><code class="python">gd_lr = TfLinearRegression(eta=0.1, 
+                           epochs=200,
+                           random_seed=1,
+                           print_progress=3)    
+
+gd_lr.fit(X_train, y_train)
+
+plt.plot(range(51, gd_lr.epochs + 1), gd_lr.cost_[50:])
+plt.xlabel('Epochs')
+plt.ylabel('Cost')
+plt.tight_layout()
+plt.show()  
+</code></pre>
+
+<pre><code>Epoch: 200/200 | Cost 0.27 | Elapsed: 0:00:00 | ETA: 0:00:00
+</code></pre>
+<p><img alt="png" src="../TfLinearRegression_files/TfLinearRegression_27_1.png" /></p>
+<h3 id="evaluate-the-results">Evaluate the results</h3>
+<pre><code class="python">from sklearn.metrics import r2_score
+from sklearn.metrics import mean_squared_error
+
+y_train_pred = gd_lr.predict(X_train)
+y_test_pred = gd_lr.predict(X_test)
+
+print('MSE train: %.3f, test: %.3f' % (
+        mean_squared_error(y_train, y_train_pred),
+        mean_squared_error(y_test, y_test_pred)))
+print('R^2 train: %.3f, test: %.3f' % (
+        r2_score(y_train, y_train_pred),
+        r2_score(y_test, y_test_pred)))
+</code></pre>
+
+<pre><code>MSE train: 0.265, test: 0.247
+R^2 train: 0.735, test: 0.780
 </code></pre>
 <h1 id="api">API</h1>
-<p><em>num_permutations(n, k, with_replacement=False)</em></p>
-<p>Function to calculate the number of possible permutations.</p>
+<p><em>TfLinearRegression(eta=0.1, epochs=50, print_progress=0, random_seed=None, dtype=None)</em></p>
+<p>Estimator for Linear Regression in TensorFlow using Gradient Descent.</p>
+<pre><code>Added in version 0.4.1
+</code></pre>
+<h3 id="methods">Methods</h3>
+<hr>
+
+<p><em>fit(X, y, init_weights=True)</em></p>
+<p>Learn weight coefficients from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>n</code> : <code>int</code></p>
-<p>Total number of items.</p>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
 </li>
 <li>
-<p><code>k</code> : <code>int</code></p>
-<p>Number of elements of the target itemset.</p>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
 </li>
 <li>
-<p><code>with_replacement</code> : <code>bool</code></p>
-<p>Allows repeated elements if True.</p>
+<p><code>init_weights</code> : bool (default: True)</p>
+<p>Reinitialize weights</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
+<hr>
+
+<p><em>predict(X)</em></p>
+<p>Predict class labels of X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>permut</code> : <code>int</code></p>
-<p>Number of possible permutations.</p>
+<p><code>class_labels</code> : array-like, shape = [n_samples]</p>
+<p>Predicted class labels.</p>
 </li>
 </ul></div>
         

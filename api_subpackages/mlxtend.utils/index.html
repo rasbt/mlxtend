@@ -197,6 +197,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">tf_regressor</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/tf_regressor/TfLinearRegression/">TfLinearRegression</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">regression_utils</a>
     <ul class="dropdown-menu">
         
@@ -578,13 +593,19 @@
                         
                             
 <li >
-    <a href="../mlxtend.regression_utils/">Mlxtend.regression utils</a>
+    <a href="../mlxtend.regressor/">Mlxtend.regressor</a>
 </li>
 
                         
                             
 <li >
-    <a href="../mlxtend.regressor/">Mlxtend.regressor</a>
+    <a href="../mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -690,7 +711,10 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#counter">Counter</a></li>
+        <li class="main active"><a href="#assert_raises">assert_raises</a></li>
+        
+    
+        <li class="main "><a href="#counter">Counter</a></li>
         
             <li><a href="#methods">Methods</a></li>
         
@@ -700,6 +724,30 @@
         <div class="col-md-9" role="main">
 
 <p>mlxtend version: 0.4.1dev </p>
+<h2 id="assert_raises">assert_raises</h2>
+<p><em>assert_raises(exception_type, message, func, </em>args, *<em>kwargs)</em></p>
+<p>Check that an exception is raised with a specific message</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>exception_type</code> : exception</p>
+<p>The exception that should be raised</p>
+</li>
+<li>
+<p><code>message</code> : str (default: None)</p>
+<p>The error message that should be raised. Ignored if False or None.</p>
+</li>
+<li>
+<p><code>func</code> : callable</p>
+<p>The function that raises the exception</p>
+</li>
+<li>
+<p><code>*args</code> : positional arguments to <code>func</code>.</p>
+</li>
+<li>
+<p><code>**kwargs</code> : keyword arguments to <code>func</code></p>
+</li>
+</ul>
 <h2 id="counter">Counter</h2>
 <p><em>Counter(stderr=False, start_newline=True)</em></p>
 <p>Class to display the progress of for-loop iterators.</p>

@@ -45,6 +45,8 @@ pages:
   - regressor:
     - user_guide/regressor/LinearRegression.md
     - user_guide/regressor/StackingRegressor.md
+  - tf_regressor:
+    - user_guide/tf_regressor/TfLinearRegression.md
   - regression_utils:
     - user_guide/regression_utils/plot_linear_regression.md
   - feature_selection:
@@ -104,8 +106,9 @@ pages:
   - api_subpackages/mlxtend.file_io.md
   - api_subpackages/mlxtend.general_plotting.md
   - api_subpackages/mlxtend.preprocessing.md
-  - api_subpackages/mlxtend.regression_utils.md
   - api_subpackages/mlxtend.regressor.md
+  - api_subpackages/mlxtend.tf_regressor.md
+  - api_subpackages/mlxtend.regression_utils.md
   - api_subpackages/mlxtend.text.md
   - api_subpackages/mlxtend.utils.md
 - Installation: installation.md

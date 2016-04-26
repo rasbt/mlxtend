@@ -25,7 +25,7 @@ def test_nonfitted():
                   X)
 
 
-def test_three_blobs_1():
+def test_three_blobs_multi():
     km = Kmeans(k=3,
                 max_iter=50,
                 random_seed=1,
@@ -34,7 +34,18 @@ def test_three_blobs_1():
     assert (y_pred == y).all()
 
 
-def test_three_blobs_2():
+def test_three_blobs_1sample():
+    km = Kmeans(k=3,
+                max_iter=50,
+                random_seed=1,
+                print_progress=0)
+    sample = X[1, :].reshape(1, 2)
+
+    y_pred = km.fit(X).predict(sample)
+    assert y_pred[0] == y[1]
+
+
+def test_three_blobs_centroids():
     km = Kmeans(k=3,
                 max_iter=50,
                 random_seed=1,

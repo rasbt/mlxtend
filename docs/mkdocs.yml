@@ -107,7 +107,7 @@ pages:
   - api_subpackages/mlxtend.evaluate.md
   - api_subpackages/mlxtend.feature_selection.md
   - api_subpackages/mlxtend.feature_extraction.md
-  - api_subpackages/mlxtend.cluster.md  
+  - api_subpackages/mlxtend.cluster.md
   - api_subpackages/mlxtend.file_io.md
   - api_subpackages/mlxtend.general_plotting.md
   - api_subpackages/mlxtend.preprocessing.md

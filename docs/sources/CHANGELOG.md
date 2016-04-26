@@ -7,6 +7,7 @@
 ##### New Features
 
 - New TensorFlow estimator for Linear Regression ([`tf_regressor.TfLinearRegression`](./user_guide/tf_regressor/TfLinearRegression.md))
+- New k-means clustering estimator ([`cluster.Kmeans`](./user_guide/cluster/Kmeans.md))
 
 ##### Changes
 

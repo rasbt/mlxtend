@@ -284,6 +284,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">tf_cluster</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../tf_cluster/TfKmeans/">TfKmeans</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">evaluate</a>
     <ul class="dropdown-menu">
         
@@ -608,6 +623,12 @@
                         
                             
 <li >
+    <a href="../../../api_subpackages/mlxtend.tf_cluster/">Mlxtend.tf cluster</a>
+</li>
+
+                        
+                            
+<li >
     <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
 </li>
 
@@ -719,7 +740,7 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../../evaluate/confusion_matrix/">
+                        <a rel="prev" href="../../tf_cluster/TfKmeans/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -810,7 +831,9 @@ print('Iterations until convergence:', km.iterations_)
 print('Final centroids:\n', km.centroids_)
 </code></pre>
 
-<pre><code>Iterations until convergence: 2
+<pre><code>Iteration: 2/50 | Elapsed: 00:00:00 | ETA: 00:00:00
+
+Iterations until convergence: 2
 Final centroids:
  [[-1.5947298   2.92236966]
  [ 2.06521743  0.96137409]
@@ -848,7 +871,8 @@ plt.scatter(km.centroids_[:,0],
             c='red',
             label='centroids')
 
-plt.legend(loc='lower left')
+plt.legend(loc='lower left',
+           scatterpoints=1)
 plt.grid()
 plt.show()
 </code></pre>

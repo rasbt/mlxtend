@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name="author" content="Sebastian Raschka"> 
-    <link rel="canonical" href="http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.cluster/"> 
+    <link rel="canonical" href="http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.tf_cluster/"> 
     <link rel="shortcut icon" href="../../../../favicon.ico">
 
-    <title>Mlxtend.cluster - mlxtend</title>
+    <title>Mlxtend.tf cluster - mlxtend</title>
 
     <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
@@ -616,14 +616,14 @@
 
                         
                             
-<li class="active">
-    <a href="./">Mlxtend.cluster</a>
+<li >
+    <a href="../mlxtend.cluster/">Mlxtend.cluster</a>
 </li>
 
                         
                             
-<li >
-    <a href="../mlxtend.tf_cluster/">Mlxtend.tf cluster</a>
+<li class="active">
+    <a href="./">Mlxtend.tf cluster</a>
 </li>
 
                         
@@ -735,12 +735,12 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../mlxtend.feature_extraction/">
+                        <a rel="next" href="../mlxtend.cluster/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../mlxtend.tf_cluster/">
+                        <a rel="prev" href="../mlxtend.file_io/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -765,7 +765,7 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#kmeans">Kmeans</a></li>
+        <li class="main active"><a href="#tfkmeans">TfKmeans</a></li>
         
             <li><a href="#methods">Methods</a></li>
         
@@ -775,9 +775,9 @@
         <div class="col-md-9" role="main">
 
 <p>mlxtend version: 0.4.1dev </p>
-<h2 id="kmeans">Kmeans</h2>
-<p><em>Kmeans(k, max_iter=10, random_seed=None, print_progress=0)</em></p>
-<p>K-means clustering class.</p>
+<h2 id="tfkmeans">TfKmeans</h2>
+<p><em>TfKmeans(k, max_iter=10, random_seed=None, print_progress=0, dtype=None)</em></p>
+<p>TensorFlow K-means clustering class.</p>
 <pre><code>Added in 0.4.1dev
 </code></pre>
 <p><strong>Parameters</strong></p>
@@ -804,11 +804,15 @@ converged.</p>
 2: 1 plus time elapsed
 3: 2 plus estimated time until completion</p>
 </li>
+<li>
+<p><code>dtype</code> : Array-type (default: None)</p>
+<p>Uses tensorflow.float32 if None.</p>
+</li>
 </ul>
 <p><strong>Attributes</strong></p>
 <ul>
 <li>
-<p><code>centroids_</code> : 2d-array, shape={k, n_features}</p>
+<p><code>centroids_</code> : 2d-array, shape = {k, n_features}</p>
 <p>Feature values of the k cluster centroids.</p>
 </li>
 <li>

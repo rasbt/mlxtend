@@ -119,6 +119,12 @@
      <changefreq>daily</changefreq>
     </url>
         
+    <url>
+     <loc>http://rasbt.github.io/mlxtend</loc>
+     <lastmod></lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
     
 
     
@@ -161,6 +167,12 @@
         
     <url>
      <loc>http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.cluster/</loc>
+     <lastmod>2016-04-26</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.tf_cluster/</loc>
      <lastmod>2016-04-26</lastmod>
      <changefreq>daily</changefreq>
     </url>

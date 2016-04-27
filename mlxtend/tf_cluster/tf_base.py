@@ -9,9 +9,10 @@
 import numpy as np
 from sys import stderr
 from time import time
+import tensorflow as tf
 
 
-class _BaseCluster(object):
+class _TfBaseCluster(object):
 
     """Parent Class Base Cluster
 
@@ -19,9 +20,13 @@ class _BaseCluster(object):
     clustering child classes.
 
     """
-    def __init__(self, print_progress=0, random_seed=None):
+    def __init__(self, print_progress=0, random_seed=None, dtype=None):
         self.print_progress = print_progress
         self.random_seed = random_seed
+        if dtype is None:
+            self.dtype = tf.float32
+        else:
+            self.dtype = dtype
         self._is_fitted = False
 
     def fit(self, X):

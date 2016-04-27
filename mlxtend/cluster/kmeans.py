@@ -86,6 +86,9 @@ class Kmeans(_BaseCluster):
                 self.centroids_ = new_centroids
 
             self.iterations_ += 1
+            if self.print_progress:
+                self._print_progress(iteration=self.iterations_,
+                                     n_iter=self.max_iter)
 
         return self
 

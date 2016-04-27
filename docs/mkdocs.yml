@@ -57,6 +57,8 @@ pages:
     - user_guide/feature_extraction/RBFKernelPCA.md
   - cluster:
     - user_guide/cluster/Kmeans.md
+  - tf_cluster:
+    - user_guide/tf_cluster/TfKmeans.md
   - evaluate:
     - user_guide/evaluate/confusion_matrix.md
     - user_guide/evaluate/plot_decision_regions.md
@@ -108,6 +110,7 @@ pages:
   - api_subpackages/mlxtend.feature_selection.md
   - api_subpackages/mlxtend.feature_extraction.md
   - api_subpackages/mlxtend.cluster.md
+  - api_subpackages/mlxtend.tf_cluster.md
   - api_subpackages/mlxtend.file_io.md
   - api_subpackages/mlxtend.general_plotting.md
   - api_subpackages/mlxtend.preprocessing.md

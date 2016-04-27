@@ -9,7 +9,7 @@
 from .base import _BaseCluster
 import numpy as np
 from time import time
-from scipy.spatial.distance import euclidean
+# from scipy.spatial.distance import euclidean
 
 
 class Kmeans(_BaseCluster):
@@ -86,12 +86,17 @@ class Kmeans(_BaseCluster):
                 self.centroids_ = new_centroids
 
             self.iterations_ += 1
+            if self.print_progress:
+                self._print_progress(iteration=self.iterations_,
+                                     n_iter=self.max_iter)
 
         return self
 
     def _get_cluster_idx(self, X, centroids):
         for sample_idx, sample in enumerate(X):
-            dist = [euclidean(sample, c) for c in self.centroids_]
+            # dist = [euclidean(sample, c) for c in self.centroids_]
+            dist = np.sqrt(np.sum(np.square(sample - self.centroids_), axis=1))
+
             yield np.argmin(dist)
 
     def _predict(self, X):

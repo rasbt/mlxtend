@@ -5,7 +5,7 @@
 # License: BSD 3 clause
 
 from mlxtend.data import three_blobs_data
-from mlxtend.cluster import Kmeans
+from mlxtend.tf_cluster import TfKmeans
 from mlxtend.utils import assert_raises
 import numpy as np
 
@@ -14,10 +14,10 @@ X, y = three_blobs_data()
 
 
 def test_nonfitted():
-    km = Kmeans(k=3,
-                max_iter=50,
-                random_seed=1,
-                print_progress=0)
+    km = TfKmeans(k=3,
+                  max_iter=50,
+                  random_seed=1,
+                  print_progress=0)
 
     assert_raises(AttributeError,
                   'Model is not fitted, yet.',
@@ -26,19 +26,19 @@ def test_nonfitted():
 
 
 def test_three_blobs_multi():
-    km = Kmeans(k=3,
-                max_iter=50,
-                random_seed=1,
-                print_progress=0)
+    km = TfKmeans(k=3,
+                  max_iter=50,
+                  random_seed=1,
+                  print_progress=0)
     y_pred = km.fit(X).predict(X)
     assert (y_pred == y).all()
 
 
 def test_three_blobs_1sample():
-    km = Kmeans(k=3,
-                max_iter=50,
-                random_seed=1,
-                print_progress=0)
+    km = TfKmeans(k=3,
+                  max_iter=50,
+                  random_seed=1,
+                  print_progress=0)
     sample = X[1, :].reshape(1, 2)
 
     y_pred = km.fit(X).predict(sample)
@@ -46,10 +46,10 @@ def test_three_blobs_1sample():
 
 
 def test_three_blobs_centroids():
-    km = Kmeans(k=3,
-                max_iter=50,
-                random_seed=1,
-                print_progress=0)
+    km = TfKmeans(k=3,
+                  max_iter=50,
+                  random_seed=1,
+                  print_progress=0)
 
     centroids = np.array([[-1.5947298, 2.92236966],
                           [2.06521743, 0.96137409],

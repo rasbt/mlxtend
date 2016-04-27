@@ -34,6 +34,9 @@
 ## `cluster`
 - [`Kmeans`](user_guide/cluster/Kmeans.md) (new in 0.4.1dev)
 
+## `tf_cluster`
+- [`TfKmeans`](user_guide/tf_cluster/TfKmeans.md) (new in 0.4.1dev)
+
 ## `evaluate`
 - [`confusion_matrix`](user_guide/evaluate/confusion_matrix.md)
 - [`plot_decision_regions`](user_guide/evaluate/plot_decision_regions.md)

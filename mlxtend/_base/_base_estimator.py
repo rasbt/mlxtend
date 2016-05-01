@@ -110,6 +110,8 @@ class _BaseEstimator(object):
                     if not iteration % time_interval:
                         eta_sec = ((ela_sec / float(iteration)) *
                                    n_iter - ela_sec)
+                        if eta_sec < 0.0:
+                            eta_sec = 0.0
                         self.eta_str_ = self._to_hhmmss(eta_sec)
                     s += ' | ETA: %s' % self.eta_str_
             stderr.write(s)

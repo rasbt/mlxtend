@@ -2,7 +2,7 @@
 
 ---
 
-### Version 0.4.1dev
+### Version 0.4.1 (2016-05-01)
 
 ##### New Features
 

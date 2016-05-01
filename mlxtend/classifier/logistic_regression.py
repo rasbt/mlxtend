@@ -59,7 +59,7 @@ class LogisticRegression(_BaseClassifier):
                  random_seed=None,
                  print_progress=0):
 
-        super(LogisticRegression, self).__init__(print_progress=0,
+        super(LogisticRegression, self).__init__(print_progress=print_progress,
                                                  random_seed=random_seed)
         self.eta = eta
         self.epochs = epochs

@@ -55,7 +55,7 @@ class Adaline(_BaseClassifier):
                  minibatches=None, random_seed=None,
                  print_progress=0):
 
-        super(Adaline, self).__init__(print_progress=0,
+        super(Adaline, self).__init__(print_progress=print_progress,
                                       random_seed=random_seed)
         self.eta = eta
         self.minibatches = minibatches

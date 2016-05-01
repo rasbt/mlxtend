@@ -58,12 +58,13 @@ class SoftmaxRegression(_BaseClassifier, _BaseMultiClass,):
 
     """
     def __init__(self, eta=0.01, epochs=50,
-                 l2=0.0, minibatches=1,
+                 l2=0.0,
+                 minibatches=1,
                  n_classes=None,
                  random_seed=None,
                  print_progress=0):
 
-        super(SoftmaxRegression, self).__init__(print_progress=0,
+        super(SoftmaxRegression, self).__init__(print_progress=print_progress,
                                                 random_seed=random_seed)
         self.eta = eta
         self.epochs = epochs
@@ -81,7 +82,7 @@ class SoftmaxRegression(_BaseClassifier, _BaseMultiClass,):
         return - np.sum(np.log(output) * (y_target), axis=1)
 
     def _cost(self, cross_entropy):
-        L2_term = np.sum(self.w_ ** 2)
+        L2_term = self.l2 * np.sum(self.w_ ** 2)
         cross_entropy = cross_entropy + L2_term
         return 0.5 * np.mean(cross_entropy)
 
@@ -135,7 +136,9 @@ class SoftmaxRegression(_BaseClassifier, _BaseMultiClass,):
             self.cost_.append(cost)
 
             if self.print_progress:
-                self._print_progress(epoch=i + 1, cost=cost)
+                self._print_progress(iteration=i + 1,
+                                     n_iter=self.epochs,
+                                     cost=cost)
 
         return self
 

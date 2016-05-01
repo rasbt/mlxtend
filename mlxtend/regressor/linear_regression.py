@@ -60,7 +60,7 @@ class LinearRegression(_BaseRegressor):
     def __init__(self, eta=0.01, epochs=50,
                  minibatches=None, random_seed=None,
                  print_progress=0):
-        super(LinearRegression, self).__init__(print_progress=0,
+        super(LinearRegression, self).__init__(print_progress=print_progress,
                                                random_seed=random_seed)
 
         self.eta = eta

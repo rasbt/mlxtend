@@ -60,6 +60,9 @@ class TfSoftmaxRegression(_BaseClassifier, _BaseMultiClass, _BaseMultiLayer):
                  minibatches=1, random_seed=None,
                  print_progress=0, dtype=None):
 
+        super(TfSoftmaxRegression, self).__init__(
+            print_progress=print_progress, random_seed=random_seed)
+
         if dtype is None:
             self.dtype = tf.float32
         else:
@@ -68,8 +71,6 @@ class TfSoftmaxRegression(_BaseClassifier, _BaseMultiClass, _BaseMultiLayer):
         self.epochs = epochs
         self.n_classes = n_classes
         self.minibatches = minibatches
-        self.random_seed = random_seed
-        self.print_progress = print_progress
 
     def _fit(self, X, y, init_params=True,):
         self._check_target_array(y)
@@ -140,7 +141,9 @@ class TfSoftmaxRegression(_BaseClassifier, _BaseMultiClass, _BaseMultiLayer):
                 train_acc = self._accuracy(y, tf_X, tf_w_, tf_b_)
                 self.train_acc_.append(train_acc)
                 if self.print_progress:
-                    self._print_progress(epoch=epoch + 1, cost=avg_cost)
+                    self._print_progress(iteration=epoch + 1,
+                                         n_iter=self.epochs,
+                                         cost=avg_cost)
 
             self.w_ = tf_w_.eval()
             self.b_ = tf_b_.eval()

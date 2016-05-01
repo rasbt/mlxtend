@@ -91,8 +91,8 @@ class TfMultiLayerPerceptron(_BaseClassifier,
                  minibatches=1, random_seed=None,
                  print_progress=0, dtype=None):
 
-        super(TfMultiLayerPerceptron, self).__init__(print_progress=0,
-                                                     random_seed=random_seed)
+        super(TfMultiLayerPerceptron, self).__init__(
+            print_progress=print_progress, random_seed=random_seed)
         self.eta = eta
         if len(hidden_layers) != len(activations):
             raise AttributeError('Number of hidden_layers and'

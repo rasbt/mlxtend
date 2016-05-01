@@ -46,7 +46,7 @@ class Perceptron(_BaseClassifier):
     """
     def __init__(self, eta=0.1, epochs=50, random_seed=None,
                  print_progress=0):
-        super(Perceptron, self).__init__(print_progress=0,
+        super(Perceptron, self).__init__(print_progress=print_progress,
                                          random_seed=random_seed)
         self.eta = eta
         self.epochs = epochs
@@ -77,7 +77,9 @@ class Perceptron(_BaseClassifier):
                 errors += int(update != 0.0)
 
             if self.print_progress:
-                self._print_progress(epoch=i + 1, cost=errors)
+                self._print_progress(iteration=i + 1,
+                                     n_iter=self.epochs,
+                                     cost=errors)
             self.cost_.append(errors)
         return self
 

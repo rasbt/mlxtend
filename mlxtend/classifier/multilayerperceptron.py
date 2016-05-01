@@ -79,8 +79,8 @@ class MultiLayerPerceptron(_BaseClassifier, _BaseMultiClass, _BaseMultiLayer):
                  minibatches=1, random_seed=None,
                  print_progress=0):
 
-        super(MultiLayerPerceptron, self).__init__(print_progress=0,
-                                                   random_seed=random_seed)
+        super(MultiLayerPerceptron, self).__init__(
+            print_progress=print_progress, random_seed=random_seed)
         if len(hidden_layers) > 1:
             raise AttributeError('Currently, only 1 hidden layer is supported')
         self.hidden_layers = hidden_layers
@@ -191,7 +191,9 @@ class MultiLayerPerceptron(_BaseClassifier, _BaseMultiClass, _BaseMultiLayer):
 
             self.cost_.append(cost)
             if self.print_progress:
-                self._print_progress(epoch=i + 1, cost=cost)
+                self._print_progress(iteration=i + 1,
+                                     n_iter=self.epochs,
+                                     cost=cost)
 
         return self
 

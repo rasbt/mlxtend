@@ -58,33 +58,6 @@ class TfLinearRegression(_BaseRegressor):
         else:
             self.dtype = dtype
 
-    def _fit(self, X, y, init_weights=True):
-        """Learn weight coefficients from training data.
-
-        Parameters
-        ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
-            Training vectors, where n_samples is the number of samples and
-            n_features is the number of features.
-        y : array-like, shape = [n_samples]
-            Target values.
-        init_weights : bool (default: True)
-            Reinitialize weights
-
-        Returns
-        -------
-        self : object
-
-        """
-        self._is_fitted = False
-
-        self._check_arrays(X=X, y=y)
-        if self.random_seed:
-            np.random.seed(self.random_seed)
-        self._fit(X=X, y=y, init_weights=init_weights)
-        self._is_fitted = True
-        return self
-
     def _fit(self, X, y, init_params=True):
         if init_params:
             self.cost_ = []
@@ -135,9 +108,9 @@ class TfLinearRegression(_BaseRegressor):
                 _, c = sess.run([train, mse_cost])
                 self.cost_.append(c)
                 if self.print_progress:
-                    self._print_progress(iteration=(i + 1),
+                    self._print_progress(iteration=(epoch + 1),
                                          n_iter=self.epochs,
-                                         cost=cost)
+                                         cost=c)
 
             self.w_ = w.eval().flatten()
             self.b_ = b.eval()

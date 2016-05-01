@@ -6,15 +6,15 @@
 
 from mlxtend._base import _BaseUnsupervisedEstimator
 import numpy as np
-from mlxtend.utils import assert_raises
 
 
 def test_init():
     est = _BaseUnsupervisedEstimator(print_progress=0, random_seed=1)
+    assert hasattr(est, 'print_progress')
+    assert hasattr(est, 'random_seed')
 
 
 def test_fit():
     X = np.array([[1], [2], [3]])
-    y = np.array([1, 2, 3])
     est = _BaseUnsupervisedEstimator(print_progress=0, random_seed=1)
     est.fit(X=X)

@@ -86,10 +86,6 @@ class _BaseEstimator(object):
         # Implemented in child class
         pass
 
-    def _init_params(self):
-        # Implemented in child class
-        pass
-
     def _shuffle_arrays(self, arrays):
         """Shuffle arrays in unison."""
         r = np.random.permutation(len(arrays[0]))

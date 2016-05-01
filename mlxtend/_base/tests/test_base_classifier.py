@@ -11,6 +11,8 @@ from mlxtend.utils import assert_raises
 
 def test_init():
     cl = _BaseClassifier(print_progress=0, random_seed=1)
+    assert hasattr(cl, 'print_progress')
+    assert hasattr(cl, 'random_seed')
 
 
 def test_check_labels_ok_1():

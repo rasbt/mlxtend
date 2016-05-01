@@ -4,7 +4,6 @@
 #
 # License: BSD 3 clause
 
-import numpy as np
 from mlxtend._base import _BaseMultiLayer
 
 
@@ -35,6 +34,7 @@ def test_init_from_layermapping():
                                hidden_layers=[3, 2])
     w, b = mlp._init_params_from_layermapping(weight_maps=wm, bias_maps=bm)
 
+    """
     expect_w = {1: np.array([[0.016, -0.006, -0.005],
                              [-0.011, 0.009, -0.023],
                              [0.017, -0.008, 0.003],
@@ -49,6 +49,7 @@ def test_init_from_layermapping():
     expect_b = {1: np.array([0., 0., 0.]),
                 2: np.array([0., 0.]),
                 'out': np.array([0., 0., 0., 0.])}
+    """
 
     assert len(w.keys()) == 3
     assert len(b.keys()) == 3

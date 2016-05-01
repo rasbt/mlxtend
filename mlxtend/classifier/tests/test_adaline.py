@@ -8,7 +8,6 @@ import numpy as np
 from mlxtend.classifier import Adaline
 from mlxtend.data import iris_data
 from mlxtend.utils import assert_raises
-from nose.tools import raises
 
 
 # Iris Data

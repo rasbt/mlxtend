@@ -100,7 +100,6 @@ class TfSoftmaxRegression(_BaseClassifier, _BaseMultiClass, _BaseMultiLayer):
 
             # Prepare the training data
             y_enc = self._one_hot(y, self.n_classes, dtype=np.float)
-            n_idx = list(range(y.shape[0]))
             tf_X = tf.convert_to_tensor(value=X, dtype=self.dtype)
             tf_y = tf.convert_to_tensor(value=y_enc, dtype=self.dtype)
 
@@ -141,7 +140,7 @@ class TfSoftmaxRegression(_BaseClassifier, _BaseMultiClass, _BaseMultiLayer):
                 train_acc = self._accuracy(y, tf_X, tf_w_, tf_b_)
                 self.train_acc_.append(train_acc)
                 if self.print_progress:
-                    self._print_progress(epoch=i + 1, cost=avg_cost)
+                    self._print_progress(epoch=epoch + 1, cost=avg_cost)
 
             self.w_ = tf_w_.eval()
             self.b_ = tf_b_.eval()

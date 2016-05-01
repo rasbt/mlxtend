@@ -19,7 +19,7 @@ import numpy as np
 
 
 class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
-    
+
     """Soft Voting/Majority Rule classifier for scikit-learn estimators.
 
     Parameters

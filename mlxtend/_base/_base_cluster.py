@@ -6,9 +6,6 @@
 #
 # License: BSD 3 clause
 
-import numpy as np
-from sys import stderr
-from time import time
 from ._base_unsupervised_estimator import _BaseUnsupervisedEstimator
 
 

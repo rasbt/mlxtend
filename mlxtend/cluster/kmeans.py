@@ -8,7 +8,6 @@
 
 
 import numpy as np
-from time import time
 from .._base import _BaseCluster
 # from scipy.spatial.distance import euclidean
 

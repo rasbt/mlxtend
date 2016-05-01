@@ -6,7 +6,6 @@
 
 from mlxtend._base import _BaseMultiClass
 import numpy as np
-from mlxtend.utils import assert_raises
 
 
 def test_default():
@@ -38,12 +37,3 @@ def test_morelabels():
                        [1., 0., 0., 0.],
                        [0., 1., 0., 0.]])
     np.testing.assert_array_equal(expect, out)
-
-"""
-def test_list_morelabels():
-    y = [0, 1]
-    expect = np.array([[1., 0., 0.],
-                       [0., 1., 0.]], dtype='float')
-    out = one_hot(y, num_labels=3)
-    np.testing.assert_array_equal(expect, out)
-"""

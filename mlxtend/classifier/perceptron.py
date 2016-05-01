@@ -62,7 +62,6 @@ class Perceptron(_BaseClassifier):
                 random_seed=self.random_seed)
             self.cost_ = []
 
-        n_idx = list(range(y_data.shape[0]))
         self.init_time_ = time()
 
         for i in range(self.epochs):

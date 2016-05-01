@@ -204,7 +204,7 @@ class TfMultiLayerPerceptron(_BaseClassifier,
             y_batch = tf.gather(params=tf_y, indices=tf_idx)
 
             # Setup the graph for minimizing cross entropy cost
-            net = self._predict(tf_X=tf_X,
+            net = self._predict(tf_X=X_batch,
                                 tf_weights=tf_weights,
                                 tf_biases=tf_biases,
                                 activations=self.activations,
@@ -212,7 +212,7 @@ class TfMultiLayerPerceptron(_BaseClassifier,
 
             # Define loss and optimizer
             cross_entropy = tf.nn.softmax_cross_entropy_with_logits(net,
-                                                                    tf_y)
+                                                                    y_batch)
             cost = tf.reduce_mean(cross_entropy)
             train = self.optimizer_.minimize(cost,
                                              global_step=self.global_step_)
@@ -238,10 +238,6 @@ class TfMultiLayerPerceptron(_BaseClassifier,
                     costs.append(c)
                 avg_cost = np.mean(costs)
                 self.cost_.append(avg_cost)
-
-                # compute prediction accuracy
-                train_acc = self._accuracy(y, tf_X, tf_weights, tf_biases,
-                                           self.activations)
 
                 self._print_progress(iteration=epoch + 1,
                                      n_iter=self.epochs,

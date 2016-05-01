@@ -11,6 +11,8 @@ from mlxtend.utils import assert_raises
 
 def test_init():
     est = _BaseSupervisedEstimator(print_progress=0, random_seed=1)
+    assert hasattr(est, 'print_progress')
+    assert hasattr(est, 'random_seed')
 
 
 def test_fit_1():

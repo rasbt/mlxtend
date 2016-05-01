@@ -18,7 +18,7 @@ import numpy as np
 
 
 class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
-    
+
     """A Stacking classifier for scikit-learn estimators for classification.
 
     Parameters

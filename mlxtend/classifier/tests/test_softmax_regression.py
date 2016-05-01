@@ -4,9 +4,10 @@
 #
 # License: BSD 3 clause
 
+import numpy as np
 from mlxtend.classifier import SoftmaxRegression
 from mlxtend.data import iris_data
-import numpy as np
+from mlxtend.utils import assert_raises
 
 
 X, y = iris_data()
@@ -21,9 +22,23 @@ X[:, 0] = (X[:, 0] - X[:, 0].mean()) / X[:, 0].std()
 X[:, 1] = (X[:, 1] - X[:, 1].mean()) / X[:, 1].std()
 
 
+def test_labels():
+    X = np.array([[1, 2], [3, 4]])
+    y = np.array([-1, 1])
+    lr = SoftmaxRegression(epochs=200,
+                           eta=0.005,
+                           minibatches=1,
+                           random_seed=1)
+    assert_raises(AttributeError,
+                  'y array must not contain negative labels.\nFound [-1  1]',
+                  lr.fit,
+                  X,
+                  y)
+
+
 def test_binary_logistic_regression_gd():
-    t = np.array([[-0.2, 0.2],
-                  [-3.09, 3.09]])
+    t = np.array([[1.92, -1.91],
+                  [-3.15, 3.13]])
     lr = SoftmaxRegression(epochs=200,
                            eta=0.005,
                            minibatches=1,
@@ -34,9 +49,27 @@ def test_binary_logistic_regression_gd():
     assert (y_bin == lr.predict(X_bin)).all()
 
 
+def test_refit_weights():
+    t = np.array([[1.92, -1.91],
+                  [-3.15, 3.13]])
+    lr = SoftmaxRegression(epochs=100,
+                           eta=0.005,
+                           minibatches=1,
+                           random_seed=1)
+
+    lr.fit(X_bin, y_bin)
+    w1 = lr.w_[0][0]
+    w2 = lr.w_[0][0]
+    lr.fit(X_bin, y_bin, init_params=False)
+
+    assert w1 != lr.w_[0][0]
+    assert w2 != lr.w_[1][0]
+    np.testing.assert_almost_equal(lr.w_, t, 2)
+
+
 def test_binary_logistic_regression_sgd():
-    t = np.array([[-0.68, 0.68],
-                  [-3.2, 3.2]])
+    t = np.array([[0.13, -0.12],
+                  [-3.06, 3.05]])
     lr = SoftmaxRegression(epochs=200,
                            eta=0.005,
                            minibatches=len(y_bin),
@@ -48,24 +81,22 @@ def test_binary_logistic_regression_sgd():
 
 
 def test_binary_l2_regularization_gd():
-    lr = SoftmaxRegression(eta=0.005,
-                           epochs=200,
+    t = np.array([[1.23, -1.23],
+                  [-2.28, 2.27]])
+    lr = SoftmaxRegression(epochs=200,
+                           eta=0.005,
+                           l2=1.0,
                            minibatches=1,
-                           l2_lambda=1.0,
                            random_seed=1)
-    lr.fit(X_bin, y_bin)
-    y_pred = lr.predict(X_bin)
-    expect_weights = np.array([[-0.316, 0.317],
-                               [-2.265, 2.265]])
 
-    np.testing.assert_almost_equal(lr.w_, expect_weights, 3)
-    acc = sum(y_pred == y_bin) / len(y_bin)
-    assert acc == 1.0
+    lr.fit(X_bin, y_bin)
+    np.testing.assert_almost_equal(lr.w_, t, 2)
+    assert (y_bin == lr.predict(X_bin)).all()
 
 
 def test_multi_logistic_regression_gd_weights():
-    t = np.array([[-1.04, -2.39, 3.43],
-                  [-3.98, 2.31, 1.67]])
+    t = np.array([[0.58, -3.72, 3.15],
+                  [-3.52, 3.21, 0.28]])
     lr = SoftmaxRegression(epochs=200,
                            eta=0.005,
                            minibatches=1,
@@ -82,9 +113,9 @@ def test_multi_logistic_probas():
     lr.fit(X, y)
     idx = [0, 50, 149]  # sample labels: 0, 1, 2
     y_pred = lr.predict_proba(X[idx])
-    exp = np.array([[0.99, 0.01, 0.0],
-                    [0.01, 0.89, 0.1],
-                    [0.0, 0.02, 0.98]])
+    exp = np.array([[1.0, 0.0, 0.0],
+                    [0.08, 0.60, 0.32],
+                    [0.0, 0.00, 0.99]])
     np.testing.assert_almost_equal(y_pred, exp, 2)
 
 

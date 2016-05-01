@@ -38,7 +38,7 @@ pages:
     - user_guide/classifier/Adaline.md
     - user_guide/classifier/LogisticRegression.md
     - user_guide/classifier/SoftmaxRegression.md
-    - user_guide/classifier/NeuralNetMLP.md
+    - user_guide/classifier/MultiLayerPerceptron.md
   - tf_classifier:
     - user_guide/tf_classifier/TfMultiLayerPerceptron.md
     - user_guide/tf_classifier/TfSoftmaxRegression.md

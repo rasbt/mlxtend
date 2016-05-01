@@ -117,6 +117,20 @@ def test_multiclass_gd_acc():
     assert (y == mlp.predict(X)).all()
 
 
+def test_continue_learning():
+    mlp = MLP(epochs=25,
+              eta=0.5,
+              hidden_layers=[5],
+              optimizer='gradientdescent',
+              activations=['logistic'],
+              minibatches=1,
+              random_seed=1)
+    mlp.fit(X, y)
+    assert np.sum(y == mlp.predict(X)) == 144, np.sum(y == mlp.predict(X))
+    mlp.fit(X, y, init_params=False)
+    assert np.sum(y == mlp.predict(X)) == 150, np.sum(y == mlp.predict(X))
+
+
 def test_multiclass_gd_dropout():
     mlp = MLP(epochs=100,
               eta=0.5,
@@ -207,32 +221,6 @@ def test_fail_minibatches():
               random_seed=1)
     mlp.fit(X, y)
     assert (y == mlp.predict(X)).all()
-
-
-def test_train_acc():
-    mlp = MLP(epochs=3,
-              eta=0.5,
-              hidden_layers=[5],
-              optimizer='gradientdescent',
-              activations=['logistic'],
-              minibatches=1,
-              random_seed=1)
-
-    mlp.fit(X, y)
-    assert len(mlp.train_acc_) == 3
-
-
-def test_valid_acc():
-    mlp = MLP(epochs=3,
-              eta=0.5,
-              hidden_layers=[5],
-              optimizer='gradientdescent',
-              activations=['logistic'],
-              minibatches=1,
-              random_seed=1)
-
-    mlp.fit(X, y, X_valid=X[:100], y_valid=y[:100])
-    assert len(mlp.valid_acc_) == 3
 
 
 def test_multiclass_gd_nolearningdecay():

@@ -8,12 +8,15 @@
 
 import numpy as np
 from time import time
-from .base import _BaseClassifier
+from .._base import _BaseClassifier
 
 
 class Adaline(_BaseClassifier):
 
     """ADAptive LInear NEuron classifier.
+
+    Note that this implementation of Adaline expects binary class labels
+    in {0, 1}.
 
     Parameters
     ------------
@@ -21,19 +24,16 @@ class Adaline(_BaseClassifier):
         solver rate (between 0.0 and 1.0)
     epochs : int (default: 50)
         Passes over the training dataset.
+        Prior to each epoch, the dataset is shuffled
+        if `minibatches > 1` to prevent cycles in stochastic gradient descent.
     minibatches : int (default: None)
         The number of minibatches for gradient-based optimization.
         If None: Normal Equations (closed-form solution)
         If 1: Gradient Descent learning
-        If len(y): Stochastic Gradient Descent learning
-        If 1 < minibatches < len(y): Minibatch learning
+        If len(y): Stochastic Gradient Descent (SGD) online learning
+        If 1 < minibatches < len(y): SGD Minibatch learning
     random_seed : int (default: None)
         Set random state for shuffling and initializing the weights.
-    zero_init_weight : bool (default: False)
-        If True, weights are initialized to zero instead of small random
-        numbers following a standard normal distribution with mean=0 and
-        stddev=1;
-        ignored if solver='normal equation'
     print_progress : int (default: 0)
         Prints progress in fitting to stderr if not solver='normal equation'
         0: No output
@@ -41,93 +41,62 @@ class Adaline(_BaseClassifier):
         2: 1 plus time elapsed
         3: 2 plus estimated time until completion
 
-
     Attributes
     -----------
-    w_ : 1d-array
-      Weights after fitting.
+    w_ : 2d-array, shape={n_features, 1}
+      Model weights after fitting.
+    b_ : 1d-array, shape={1,}
+      Bias unit after fitting.
     cost_ : list
       Sum of squared errors after each epoch.
 
     """
     def __init__(self, eta=0.01, epochs=50,
                  minibatches=None, random_seed=None,
-                 zero_init_weight=False, print_progress=0):
+                 print_progress=0):
 
-        super(Adaline, self).__init__(print_progress=print_progress)
-        self.random_seed = random_seed
+        super(Adaline, self).__init__(print_progress=0,
+                                      random_seed=random_seed)
         self.eta = eta
         self.minibatches = minibatches
         self.epochs = epochs
-        self.zero_init_weight = zero_init_weight
 
-    def fit(self, X, y, init_weights=True):
-        """Learn weight coefficients from training data.
+    def _fit(self, X, y, init_params=True):
+        self._check_target_array(y, allowed={(0, 1)})
+        y_data = np.where(y == 0, -1., 1.)
 
-        Parameters
-        ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
-            Training vectors, where n_samples is the number of samples and
-            n_features is the number of features.
-        y : array-like, shape = [n_samples]
-            Target values.
-        init_weights : bool (default: True)
-            Re-initializes weights prior to fitting. Set False to continue
-            training with weights from a previous fitting.
-
-        Returns
-        -------
-        self : object
-
-        """
-        self._check_arrays(X, y)
-
-        # check if {0, 1} or {-1, 1} class labels are used
-        self.classes_ = np.unique(y)
-        if not len(self.classes_) == 2 \
-                or not self.classes_[0] in (-1, 0) \
-                or not self.classes_[1] == 1:
-            raise ValueError('Only supports binary class'
-                             ' labels {0, 1} or {-1, 1}.')
-        if self.classes_[0] == -1:
-            self.thres_ = 0.0
-        else:
-            self.thres_ = 0.5
-
-        if init_weights:
-            self.w_ = self._init_weights(
-                shape=1 + X.shape[1],
-                zero_init_weight=self.zero_init_weight,
-                seed=self.random_seed)
-
-        self.cost_ = []
-
-        # random seed for shuffling
-        if self.random_seed:
-            np.random.seed(self.random_seed)
+        if init_params:
+            self.b_, self.w_ = self._init_params(
+                weights_shape=(X.shape[1], 1),
+                bias_shape=(1,),
+                random_seed=self.random_seed)
+            self.cost_ = []
 
         if self.minibatches is None:
-            self.w_ = self._normal_equation(X, y)
+            self.b_, self.w_ = self._normal_equation(X, y_data)
 
         # Gradient descent or stochastic gradient descent learning
         else:
-            n_idx = list(range(y.shape[0]))
-            # skip shuffling if gradient descent
-            if self.minibatches > 1:
-                n_idx = np.random.permutation(n_idx)
             self.init_time_ = time()
             for i in range(self.epochs):
-                minis = np.array_split(n_idx, self.minibatches)
-                for idx in minis:
-                    y_val = self._activation(X[idx])
-                    errors = (y[idx] - y_val)
-                    self.w_[1:] += self.eta * X[idx].T.dot(errors)
-                    self.w_[0] += self.eta * errors.sum()
 
-                cost = self._sum_squared_error_cost(y, self._activation(X))
+                for idx in self._yield_minibatches_idx(
+                        n_batches=self.minibatches,
+                        data_ary=y_data,
+                        shuffle=True):
+
+                    y_val = self._net_input(X[idx])
+                    errors = (y_data[idx] - y_val)
+                    self.w_ += (self.eta *
+                                X[idx].T.dot(errors).reshape(self.w_.shape))
+                    self.b_ += self.eta * errors.sum()
+
+                cost = self._sum_squared_error_cost(y_data, self._net_input(X))
                 self.cost_.append(cost)
                 if self.print_progress:
-                    self._print_progress(epoch=i + 1, cost=cost)
+                    self._print_progress(iteration=(i + 1),
+                                         n_iter=self.epochs,
+                                         cost=cost)
 
         return self
 
@@ -140,17 +109,13 @@ class Adaline(_BaseClassifier):
         Xb = np.hstack((np.ones((X.shape[0], 1)), X))
         w = np.zeros(X.shape[1])
         z = np.linalg.inv(np.dot(Xb.T, Xb))
-        w = np.dot(z, np.dot(Xb.T, y))
-        return w
+        params = np.dot(z, np.dot(Xb.T, y))
+        b, w = np.array([params[0]]), params[1:].reshape(X.shape[1], 1)
+        return b, w
 
     def _net_input(self, X):
         """Compute the linear net input."""
-        return np.dot(X, self.w_[1:]) + self.w_[0]
-
-    def _activation(self, X):
-        """Compute the linear activation from the net input."""
-        return self._net_input(X)
+        return (np.dot(X, self.w_) + self.b_).flatten()
 
     def _predict(self, X):
-        return np.where(self._net_input(X) >= self.thres_,
-                        self.classes_[1], self.classes_[0])
+        return np.where(self._net_input(X) < 0.0, 0, 1)

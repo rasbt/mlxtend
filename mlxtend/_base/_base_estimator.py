@@ -11,27 +11,41 @@ from sys import stderr
 from time import time
 
 
-class _BaseCluster(object):
+class _BaseEstimator(object):
 
-    """Parent Class Base Cluster
+    """Parent Class Estimator
 
     A base class that is implemented by
-    clustering child classes.
+    classifiers, regressors, and clustering estimators.
 
     """
-    def __init__(self, print_progress=0, random_seed=None):
+    def __init__(self, print_progress=0,
+                 random_seed=None):
         self.print_progress = print_progress
         self.random_seed = random_seed
+        if self.random_seed is not None:
+            np.random.seed(self.random_seed)
         self._is_fitted = False
+        self._allowed_labels = None
 
-    def fit(self, X):
-        """Learn cluster centroids from training data.
+    def _fit(self, X, y=None, init_params=True):
+        # Implemented in child class
+        pass
+
+    def fit(self, X, y=None, init_params=True):
+        """Learn model from training data.
 
         Parameters
         ----------
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
+        y : array-like, shape = [n_samples]
+            Target values.
+        init_params : bool (default: True)
+            Re-initializes model parametersprior to fitting.
+            Set False to continue training with weights from
+            a previous model fitting.
 
         Returns
         -------
@@ -39,19 +53,17 @@ class _BaseCluster(object):
 
         """
         self._is_fitted = False
-        self._check_array(X=X)
+        self._check_arrays(X=X, y=y)
         if self.random_seed is not None:
             np.random.seed(self.random_seed)
-        self._fit(X=X)
+        if init_params:
+            self._init_params
+        self._fit(X=X, y=y)
         self._is_fitted = True
         return self
 
-    def _fit(self, X):
-        # Implemented in child class
-        pass
-
     def predict(self, X):
-        """Predict cluster labels of X.
+        """Predict targets from X.
 
         Parameters
         ----------
@@ -61,11 +73,11 @@ class _BaseCluster(object):
 
         Returns
         ----------
-        cluster_labels : array-like, shape = [n_samples]
-          Predicted cluster labels.
+        target_values : array-like, shape = [n_samples]
+          Predicted target values.
 
         """
-        self._check_array(X=X)
+        self._check_arrays(X=X)
         if not self._is_fitted:
             raise AttributeError('Model is not fitted, yet.')
         return self._predict(X)
@@ -74,7 +86,11 @@ class _BaseCluster(object):
         # Implemented in child class
         pass
 
-    def _shuffle(self, arrays):
+    def _init_params(self):
+        # Implemented in child class
+        pass
+
+    def _shuffle_arrays(self, arrays):
         """Shuffle arrays in unison."""
         r = np.random.permutation(len(arrays[0]))
         return [ary[r] for ary in arrays]
@@ -108,8 +124,48 @@ class _BaseCluster(object):
         h, m = divmod(m, 60)
         return "%d:%02d:%02d" % (h, m, s)
 
-    def _check_array(self, X):
+    def _check_arrays(self, X, y=None):
         if isinstance(X, list):
             raise ValueError('X must be a numpy array')
         if not len(X.shape) == 2:
             raise ValueError('X must be a 2D array. Try X[:, numpy.newaxis]')
+        try:
+            if y is None:
+                return
+        except(AttributeError):
+            if not len(y.shape) == 1:
+                raise ValueError('y must be a 1D array.')
+
+        if not len(y) == X.shape[0]:
+            raise ValueError('X and y must contain the same number of samples')
+
+    def _init_params(self, weights_shape, bias_shape=(1,), dtype='float64',
+                     scale=0.01, random_seed=None):
+        """Initialize weight coefficients."""
+        if random_seed:
+            np.random.seed(random_seed)
+        w = np.random.normal(loc=0.0, scale=scale, size=weights_shape)
+        b = np.zeros(shape=bias_shape)
+        return b.astype(dtype), w.astype(dtype)
+
+    def _yield_minibatches_idx(self, n_batches, data_ary, shuffle=True):
+            indices = np.arange(data_ary.shape[0])
+
+            if shuffle:
+                indices = np.random.permutation(indices)
+            if n_batches > 1:
+                remainder = data_ary.shape[0] % n_batches
+
+                if remainder:
+                    minis = np.array_split(indices[:-remainder], n_batches)
+                    minis[-1] = np.concatenate((minis[-1],
+                                                indices[-remainder:]),
+                                               axis=0)
+                else:
+                    minis = np.array_split(indices, n_batches)
+
+            else:
+                minis = (indices,)
+
+            for idx_batch in minis:
+                yield idx_batch

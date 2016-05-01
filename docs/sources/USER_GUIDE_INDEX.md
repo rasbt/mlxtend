@@ -6,7 +6,7 @@
  - [`Perceptron`](user_guide/classifier/Perceptron.md)
  - [`Adaline`](user_guide/classifier/Adaline.md)
  - [`LogisticRegression`](user_guide/classifier/LogisticRegression.md)
- - [`NeuralNetMLP`](user_guide/classifier/NeuralNetMLP.md)
+ - [`MultiLayerPerceptron`](user_guide/classifier/MultiLayerPerceptron.md)
  - [`SoftmaxRegression`](user_guide/classifier/SoftmaxRegression.md)
 
 ## `tf_classifier` (TensorFlow Classifier)

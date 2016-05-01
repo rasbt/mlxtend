@@ -12,8 +12,13 @@
 
 ##### Changes
 
-- Adding optional `dropout` to the [`tf_classifier.TfMultiLayerPerceptron`](./user_guide/tf_classifier/TfMultiLayerPerceptron.md) classifier for regularization
-- Adding an optional `decay` parameter to the [`tf_classifier.TfMultiLayerPerceptron`](./user_guide/tf_classifier/TfMultiLayerPerceptron.md) classifier for adaptive learning via an exponential decay of the learning rate eta
+- Due to refactoring of the estimator classes, the `init_weights` parameter of the `fit` methods was globally renamed to `init_params`
+- Overall performance improvements of estimators due to code clean-up and refactoring
+- Added several additional checks for correct array types and more meaningful exception messages
+- Added optional `dropout` to the [`tf_classifier.TfMultiLayerPerceptron`](./user_guide/tf_classifier/TfMultiLayerPerceptron.md) classifier for regularization
+- Added an optional `decay` parameter to the [`tf_classifier.TfMultiLayerPerceptron`](./user_guide/tf_classifier/TfMultiLayerPerceptron.md) classifier for adaptive learning via an exponential decay of the learning rate eta
+- Replaced old `NeuralNetMLP` by more streamlined `MultiLayerPerceptron` ([`classifier.MultiLayerPerceptron`](./user_guide/classifier/MultiLayerPerceptron.md)); now also with softmax in the output layer and categorical cross-entropy loss.
+- Unified `init_params` parameter for fit functions to continue training where the algorithm left off (if supported)
 
 ### Version 0.4.0 (2016-04-09)
 

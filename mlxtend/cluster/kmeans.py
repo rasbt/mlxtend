@@ -6,9 +6,10 @@
 #
 # License: BSD 3 clause
 
-from .base import _BaseCluster
+
 import numpy as np
 from time import time
+from .._base import _BaseCluster
 # from scipy.spatial.distance import euclidean
 
 
@@ -25,6 +26,10 @@ class Kmeans(_BaseCluster):
         Number of iterations during cluster assignment.
         Cluster re-assignment stops automatically when the algorithm
         converged.
+    convergence_tolerance : float (default: 1e-05)
+        Compares current centroids with centroids of the previous iteration
+        using the given tolerance (a small positive float)to determine
+        if the algorithm converged early.
     random_seed : int (default: None)
         Set random state for the initial centroid assignment.
     print_progress : int (default: 0)
@@ -48,27 +53,31 @@ class Kmeans(_BaseCluster):
 
     """
 
-    def __init__(self, k, max_iter=10, random_seed=None, print_progress=0):
+    def __init__(self, k, max_iter=10,
+                 convergence_tolerance=1e-05,
+                 random_seed=None, print_progress=0):
         super(Kmeans, self).__init__(print_progress=print_progress,
                                      random_seed=random_seed)
         self.k = k
         self.max_iter = max_iter
+        self.convergence_tolerance = convergence_tolerance
 
-    def _fit(self, X):
+    def _fit(self, X, init_params=True):
         """Learn cluster centroids from training data.
 
         Called in self.fit
 
         """
-        self.iterations_ = 0
+
         n_samples = X.shape[0]
 
-        # initialize centroids
-        idx = np.random.choice(n_samples, self.k, replace=False)
-        self.centroids_ = X[idx]
+        if init_params:
+            self.iterations_ = 0
+            # initialize centroids
+            idx = np.random.choice(n_samples, self.k, replace=False)
+            self.centroids_ = X[idx]
 
         for _ in range(self.max_iter):
-
             # assign samples to cluster centroids
             self.clusters_ = {i: [] for i in range(self.k)}
             for sample_idx, cluster_idx in enumerate(
@@ -80,7 +89,10 @@ class Kmeans(_BaseCluster):
                                       for k in sorted(self.clusters_.keys())])
 
             # stop if cluster assignment doesn't change
-            if (self.centroids_ == new_centroids).all():
+
+            if np.allclose(self.centroids_, new_centroids,
+                           rtol=self.convergence_tolerance,
+                           atol=1e-08, equal_nan=False):
                 break
             else:
                 self.centroids_ = new_centroids

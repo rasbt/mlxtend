@@ -8,7 +8,7 @@
 
 import numpy as np
 from time import time
-from .base import _BaseRegressor
+from .._base import _BaseRegressor
 
 # Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
@@ -29,6 +29,8 @@ class LinearRegression(_BaseRegressor):
         solver rate (between 0.0 and 1.0)
     epochs : int (default: 50)
         Passes over the training dataset.
+        Prior to each epoch, the dataset is shuffled
+        if `minibatches > 1` to prevent cycles in stochastic gradient descent.
     minibatches : int (default: None)
         The number of minibatches for gradient-based optimization.
         If None: Normal Equations (closed-form solution)
@@ -37,10 +39,6 @@ class LinearRegression(_BaseRegressor):
         If 1 < minibatches < len(y): Minibatch learning
     random_seed : int (default: None)
         Set random state for shuffling and initializing the weights.
-    zero_init_weight : bool (default: False)
-        If True, weights are initialized to zero instead of small random
-        numbers in the interval [-0.1, 0.1];
-        ignored if solver='normal equation'
     print_progress : int (default: 0)
         Prints progress in fitting to stderr if not solver='normal equation'
         0: No output
@@ -50,8 +48,10 @@ class LinearRegression(_BaseRegressor):
 
     Attributes
     -----------
-    w_ : 1d-array
-        Weights after fitting.
+    w_ : 2d-array, shape={n_features, 1}
+      Model weights after fitting.
+    b_ : 1d-array, shape={1,}
+      Bias unit after fitting.
     cost_ : list
         Sum of squared errors after each epoch;
         ignored if solver='normal equation'
@@ -59,104 +59,66 @@ class LinearRegression(_BaseRegressor):
     """
     def __init__(self, eta=0.01, epochs=50,
                  minibatches=None, random_seed=None,
-                 zero_init_weight=False, print_progress=0):
+                 print_progress=0):
+        super(LinearRegression, self).__init__(print_progress=0,
+                                               random_seed=random_seed)
 
-        self.random_seed = random_seed
         self.eta = eta
         self.epochs = epochs
         self.minibatches = minibatches
-        self.print_progress = print_progress
-        self.zero_init_weight = zero_init_weight
 
-    def fit(self, X, y, init_weights=True):
-        """Learn weight coefficients from training data.
+    def _fit(self, X, y, init_params=True):
 
-        Parameters
-        ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
-            Training vectors, where n_samples is the number of samples and
-            n_features is the number of features.
-        y : array-like, shape = [n_samples]
-            Target values.
-        init_weights : bool (default: True)
-            Re-initializes weights prior to fitting. Set False to continue
-            training with weights from a previous fitting.
-
-        Returns
-        -------
-        self : object
-
-        """
-        self._check_arrays(X, y)
-
-        # initialize weights
-        if init_weights:
-            self.w_ = self._init_weights(
-                shape=1 + X.shape[1],
-                zero_init_weight=self.zero_init_weight,
-                seed=self.random_seed)
-
-        self.cost_ = []
-
-        # random seed for shuffling
-        if self.random_seed:
-            np.random.seed(self.random_seed)
+        if init_params:
+            self.b_, self.w_ = self._init_params(
+                weights_shape=(X.shape[1], 1),
+                bias_shape=(1,),
+                random_seed=self.random_seed)
+            self.cost_ = []
 
         if self.minibatches is None:
-            self.w_ = self._normal_equation(X, y)
+            self.b_, self.w_ = self._normal_equation(X, y)
 
         # Gradient descent or stochastic gradient descent learning
         else:
-            n_idx = list(range(y.shape[0]))
             self.init_time_ = time()
             for i in range(self.epochs):
-                if self.minibatches > 1:
-                    n_idx = np.random.permutation(n_idx)
 
-                minis = np.array_split(n_idx, self.minibatches)
-                for idx in minis:
-                    y_val = self.activation(X[idx])
+                for idx in self._yield_minibatches_idx(
+                        n_batches=self.minibatches,
+                        data_ary=y,
+                        shuffle=True):
+
+                    y_val = self._net_input(X[idx])
                     errors = (y[idx] - y_val)
-                    self.w_[1:] += self.eta * X[idx].T.dot(errors)
-                    self.w_[0] += self.eta * errors.sum()
+                    self.w_ += (self.eta *
+                                X[idx].T.dot(errors).reshape(self.w_.shape))
+                    self.b_ += self.eta * errors.sum()
 
-                cost = self._sum_squared_error_cost(y, self.activation(X))
+                cost = self._sum_squared_error_cost(y, self._net_input(X))
                 self.cost_.append(cost)
                 if self.print_progress:
-                    self._print_progress(epoch=i + 1, cost=cost)
+                    self._print_progress(iteration=(i + 1),
+                                         n_iter=self.epochs,
+                                         cost=cost)
 
         return self
 
     def _normal_equation(self, X, y):
         """Solve linear regression analytically."""
         Xb = np.hstack((np.ones((X.shape[0], 1)), X))
+        w = np.zeros(X.shape[1])
         z = np.linalg.inv(np.dot(Xb.T, Xb))
-        w = np.dot(z, np.dot(Xb.T, y))
-        return w
+        params = np.dot(z, np.dot(Xb.T, y))
+        b, w = np.array([params[0]]), params[1:].reshape(X.shape[1], 1)
+        return b, w
 
-    def net_input(self, X):
+    def _net_input(self, X):
         """Compute the linear net input."""
-        return np.dot(X, self.w_[1:]) + self.w_[0]
+        return (np.dot(X, self.w_) + self.b_).flatten()
 
-    def activation(self, X):
-        """Compute the linear activation from the net input."""
-        return self.net_input(X)
-
-    def predict(self, X):
-        """Predict class labels of X.
-
-        Parameters
-        ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
-            Training vectors, where n_samples is the number of samples and
-            n_features is the number of features.
-
-        Returns
-        ----------
-        float : Predicted target value.
-
-        """
-        return self.net_input(X)
+    def _predict(self, X):
+        return self._net_input(X)
 
     def _sum_squared_error_cost(self, y, y_val):
         errors = (y - y_val)

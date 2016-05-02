@@ -767,6 +767,8 @@
     
         <li class="main active"><a href="#release-notes">Release Notes</a></li>
         
+            <li><a href="#version-042dev">Version 0.4.2dev</a></li>
+        
             <li><a href="#version-041-2016-05-01">Version 0.4.1 (2016-05-01)</a></li>
         
             <li><a href="#version-040-2016-04-09">Version 0.4.0 (2016-04-09)</a></li>
@@ -818,19 +820,26 @@
 
 <h1 id="release-notes">Release Notes</h1>
 <hr />
-<h3 id="version-041-2016-05-01">Version 0.4.1 (2016-05-01)</h3>
+<h3 id="version-042dev">Version 0.4.2dev</h3>
 <h5 id="downloads">Downloads</h5>
+<p>~</p>
+<h5 id="new-features">New Features</h5>
+<p>~</p>
+<h5 id="changes">Changes</h5>
+<p>~</p>
+<h3 id="version-041-2016-05-01">Version 0.4.1 (2016-05-01)</h3>
+<h5 id="downloads_1">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/0.4.1.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.4.1.tar.gz">Source code (tar.gz)</a></li>
 </ul>
-<h5 id="new-features">New Features</h5>
+<h5 id="new-features_1">New Features</h5>
 <ul>
 <li>New TensorFlow estimator for Linear Regression (<a href="../user_guide/tf_regressor/TfLinearRegression/"><code>tf_regressor.TfLinearRegression</code></a>)</li>
 <li>New k-means clustering estimator (<a href="../user_guide/cluster/Kmeans/"><code>cluster.Kmeans</code></a>)</li>
 <li>New TensorFlow k-means clustering estimator (<a href="../user_guide/tf_cluster/TfKmeans/"><code>tf_cluster.Kmeans</code></a>)</li>
 </ul>
-<h5 id="changes">Changes</h5>
+<h5 id="changes_1">Changes</h5>
 <ul>
 <li>Due to refactoring of the estimator classes, the <code>init_weights</code> parameter of the <code>fit</code> methods was globally renamed to <code>init_params</code></li>
 <li>Overall performance improvements of estimators due to code clean-up and refactoring</li>
@@ -841,7 +850,7 @@
 <li>Unified <code>init_params</code> parameter for fit functions to continue training where the algorithm left off (if supported)</li>
 </ul>
 <h3 id="version-040-2016-04-09">Version 0.4.0 (2016-04-09)</h3>
-<h5 id="new-features_1">New Features</h5>
+<h5 id="new-features_2">New Features</h5>
 <ul>
 <li>New <code>TfSoftmaxRegression</code> classifier using Tensorflow (<a href="../user_guide/tf_classifier/TfSoftmaxRegression/"><code>tf_classifier.TfSoftmaxRegression</code></a>)</li>
 <li>New <code>SoftmaxRegression</code> classifier (<a href="../user_guide/classifier/SoftmaxRegression/"><code>classifier.SoftmaxRegression</code></a>)</li>
@@ -862,17 +871,17 @@
 <li>New RBF Kernel Principal Component Analysis class via <a href="../user_guide/feature_extraction/RBFKernelPCA/"><code>mlxtend.feature_extraction.RBFKernelPCA</code></a></li>
 <li>New Linear Discriminant Analysis class via <a href="../user_guide/feature_extraction/LinearDiscriminantAnalysis/"><code>mlxtend.feature_extraction.LinearDiscriminantAnalysis</code></a></li>
 </ul>
-<h5 id="changes_1">Changes</h5>
+<h5 id="changes_2">Changes</h5>
 <ul>
 <li>The <code>column</code> parameter in <code>mlxtend.preprocessing.standardize</code> now defaults to <code>None</code> to standardize all columns more conveniently</li>
 </ul>
 <h3 id="version-030-2016-01-31">Version 0.3.0 (2016-01-31)</h3>
-<h5 id="downloads_1">Downloads</h5>
+<h5 id="downloads_2">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.3.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.3.0.tar.gz">Source code (tar.gz)</a></li>
 </ul>
-<h5 id="new-features_2">New Features</h5>
+<h5 id="new-features_3">New Features</h5>
 <ul>
 <li>Added a progress bar tracker to <code>classifier.NeuralNetMLP</code></li>
 <li>Added a function to score predicted vs. target class labels <code>evaluate.scoring</code></li>
@@ -885,7 +894,7 @@
 <li>Added Boston <code>housing dataset</code></li>
 <li>New <code>shuffle</code> parameter for <code>classifier.NeuralNetMLP</code></li>
 </ul>
-<h5 id="changes_2">Changes</h5>
+<h5 id="changes_3">Changes</h5>
 <ul>
 <li>The <code>mlxtend.preprocessing.standardize</code> function now optionally returns the parameters, which are estimated from the array, for re-use. A further improvement makes the <code>standardize</code> function smarter in order to avoid zero-division errors</li>
 <li>Cosmetic improvements to the <code>evaluate.plot_decision_regions</code> function such as hiding plot axes</li>
@@ -898,16 +907,16 @@
 <li>Renaming <code>mlxtend.plotting</code> to <code>mlxtend.general_plotting</code> in order to distinguish general plotting function from specialized utility function such as <code>evaluate.plot_decision_regions</code></li>
 </ul>
 <h3 id="version-029-2015-07-14">Version 0.2.9 (2015-07-14)</h3>
-<h5 id="downloads_2">Downloads</h5>
+<h5 id="downloads_3">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.2.9.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.2.9.tar.gz">Source code (tar.gz)</a></li>
 </ul>
-<h5 id="new-features_3">New Features</h5>
+<h5 id="new-features_4">New Features</h5>
 <ul>
 <li>Sequential Feature Selection algorithms: SFS, SFFS, SBS, and SFBS</li>
 </ul>
-<h5 id="changes_3">Changes</h5>
+<h5 id="changes_4">Changes</h5>
 <ul>
 <li>Changed <code>regularization</code> &amp; <code>lambda</code> parameters in <code>LogisticRegression</code> to single parameter <code>l2_lambda</code></li>
 </ul>

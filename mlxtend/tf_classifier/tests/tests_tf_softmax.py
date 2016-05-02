@@ -31,7 +31,21 @@ def test_binary_logistic_regression_gd():
                              random_seed=1)
 
     lr.fit(X_bin, y_bin)
-    np.testing.assert_almost_equal(lr.weights_, t, 2)
+    np.testing.assert_almost_equal(lr.w_, t, 2)
+    assert (y_bin == lr.predict(X_bin)).all()
+
+
+def test_init_params():
+    t = np.array([[-0.28, 0.95],
+                  [-2.23, 2.4]])
+    lr = TfSoftmaxRegression(epochs=50,
+                             eta=0.5,
+                             minibatches=1,
+                             random_seed=1)
+
+    lr.fit(X_bin, y_bin)
+    lr.fit(X_bin, y_bin, init_params=False)
+    np.testing.assert_almost_equal(lr.w_, t, 2)
     assert (y_bin == lr.predict(X_bin)).all()
 
 
@@ -44,7 +58,7 @@ def test_binary_logistic_regression_sgd():
                              random_seed=1)
 
     lr.fit(X_bin, y_bin)  # 0, 1 class
-    np.testing.assert_almost_equal(lr.weights_, t, 2)
+    np.testing.assert_almost_equal(lr.w_, t, 2)
     assert (y_bin == lr.predict(X_bin)).all()
 
 
@@ -56,7 +70,7 @@ def test_multi_logistic_regression_gd_weights():
                              minibatches=1,
                              random_seed=1)
     lr.fit(X, y)
-    np.testing.assert_almost_equal(lr.weights_, t, 2)
+    np.testing.assert_almost_equal(lr.w_, t, 2)
 
 
 def test_multi_logistic_probas():
@@ -100,16 +114,6 @@ def test_train_acc():
     lr.fit(X, y)
     exp = [0.47, 0.65, 0.67]
     np.testing.assert_almost_equal(exp, lr.train_acc_, decimal=2)
-
-
-def test_valid_acc():
-    lr = TfSoftmaxRegression(epochs=3,
-                             eta=0.5,
-                             minibatches=1,
-                             random_seed=1)
-    lr.fit(X, y, X_valid=X[:100], y_valid=y[:100])
-    exp = [0.5, 0.5, 0.5]
-    np.testing.assert_almost_equal(exp, lr.valid_acc_, decimal=2)
 
 
 @raises(AttributeError)

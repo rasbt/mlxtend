@@ -14,13 +14,13 @@
 #
 # License: BSD 3 clause
 
-from mlxtend.tf_cluster.tf_base import _TfBaseCluster
 import tensorflow as tf
 import numpy as np
 from time import time
+from .._base import _BaseCluster
 
 
-class TfKmeans(_TfBaseCluster):
+class TfKmeans(_BaseCluster):
     """ TensorFlow K-means clustering class.
 
     Added in 0.4.1dev
@@ -33,6 +33,10 @@ class TfKmeans(_TfBaseCluster):
         Number of iterations during cluster assignment.
         Cluster re-assignment stops automatically when the algorithm
         converged.
+    convergence_tolerance : float (default: 1e-05)
+        Compares current centroids with centroids of the previous iteration
+        using the given tolerance (a small positive float)to determine
+        if the algorithm converged early.
     random_seed : int (default: None)
         Set random state for the initial centroid assignment.
     print_progress : int (default: 0)
@@ -59,27 +63,35 @@ class TfKmeans(_TfBaseCluster):
     """
 
     def __init__(self, k, max_iter=10,
+                 convergence_tolerance=1e-05,
                  random_seed=None, print_progress=0, dtype=None):
         super(TfKmeans, self).__init__(print_progress=print_progress,
-                                       random_seed=random_seed,
-                                       dtype=dtype)
+                                       random_seed=random_seed)
 
         self.k = k
         self.max_iter = max_iter
+        self.convergence_tolerance = convergence_tolerance
+        if dtype is None:
+            self.dtype = tf.float32
+        else:
+            self.dtype = dtype
 
-    def _fit(self, X):
+    def _fit(self, X, init_params=True):
         """Learn cluster centroids from training data.
 
         Called in self.fit
 
         """
-        self.iterations_ = 0
         n_samples = X.shape[0]
         n_features = X.shape[1]
 
         # initialize centroids
-        idx = np.random.choice(n_samples, self.k, replace=False)
-        self.centroids_ = X[idx]
+
+        if init_params:
+            self.iterations_ = 0
+            # initialize centroids
+            idx = np.random.choice(n_samples, self.k, replace=False)
+            self.centroids_ = X[idx]
 
         self.g_train = tf.Graph()
 
@@ -128,7 +140,9 @@ class TfKmeans(_TfBaseCluster):
                                               feed_dict={tf_X: X,
                                               tf_centroids: self.centroids_})
 
-                if (self.centroids_ == new_centroids).all():
+                if np.allclose(self.centroids_, new_centroids,
+                               rtol=self.convergence_tolerance,
+                               atol=1e-08, equal_nan=False):
                     break
                 else:
                     self.centroids_ = new_centroids

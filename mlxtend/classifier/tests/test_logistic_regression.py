@@ -4,9 +4,10 @@
 #
 # License: BSD 3 clause
 
+import numpy as np
 from mlxtend.classifier import LogisticRegression
 from mlxtend.data import iris_data
-import numpy as np
+from mlxtend.utils import assert_raises
 
 
 X, y = iris_data()
@@ -19,31 +20,72 @@ X[:, 0] = (X[:, 0] - X[:, 0].mean()) / X[:, 0].std()
 X[:, 1] = (X[:, 1] - X[:, 1].mean()) / X[:, 1].std()
 
 
+def test_invalid_labels_1():
+    y1 = np.where(y == 0, 2, 1)
+    lr = LogisticRegression(epochs=15, eta=0.01, random_seed=1)
+    assert_raises(AttributeError,
+                  'Labels not in {(0, 1)}.\nFound (1, 2)',
+                  lr.fit,
+                  X,
+                  y1,
+                  {(0, 1)})
+
+
+def test_invalid_labels_2():
+    y1 = np.where(y == 0, -1, 1)
+    lr = LogisticRegression(epochs=15, eta=0.01, random_seed=1)
+    assert_raises(AttributeError,
+                  'y array must not contain negative labels.\nFound [-1  1]',
+                  lr.fit,
+                  X,
+                  y1,
+                  {(-1, 1)})
+
+
 def test_logistic_regression_gd():
-    t = np.array([0.52, 1.2, 4.4])
+    w = np.array([[1.2], [4.4]])
+    b = np.array([0.52])
     lr = LogisticRegression(epochs=100,
                             eta=0.01,
                             minibatches=1,
                             random_seed=1)
 
-    lr.fit(X, y)  # 0, 1 class
-    np.testing.assert_almost_equal(lr.w_, t, 2)
+    lr.fit(X, y)
+    np.testing.assert_almost_equal(lr.w_, w, 2)
+    np.testing.assert_almost_equal(lr.b_, b, 2)
     y_pred = lr.predict(X)
     acc = np.sum(y == y_pred, axis=0) / float(X.shape[0])
     assert acc == 1.0, "Acc: %s" % acc
 
 
 def test_score_function():
-    t = np.array([0.52, 1.2, 4.4])
     lr = LogisticRegression(epochs=100,
                             eta=0.01,
                             minibatches=1,
                             random_seed=1)
 
-    lr.fit(X, y)  # 0, 1 class
-    np.testing.assert_almost_equal(lr.w_, t, 2)
+    lr.fit(X, y)
     acc = lr.score(X, y)
     assert acc == 1.0, "Acc: %s" % acc
+
+
+def test_refit_weights():
+    w = np.array([[1.2], [4.4]])
+    b = np.array([0.52])
+    lr = LogisticRegression(epochs=50,
+                            eta=0.01,
+                            minibatches=1,
+                            random_seed=1)
+
+    lr.fit(X, y)
+    w1 = lr.w_[0][0]
+    w2 = lr.w_[0][0]
+    lr.fit(X, y, init_params=False)
+
+    assert w1 != lr.w_[0][0]
+    assert w2 != lr.w_[1][0]
+    np.testing.assert_almost_equal(lr.w_, w, 2)
+    np.testing.assert_almost_equal(lr.b_, b, 2)
 
 
 def test_predict_proba():
@@ -52,8 +94,7 @@ def test_predict_proba():
                             minibatches=1,
                             random_seed=1)
 
-    lr.fit(X, y)  # 0, 1 class
-
+    lr.fit(X, y)
     idx = [0, 48, 99]  # sample labels: 0, 0, 1
     y_pred = lr.predict_proba(X[idx])
     expect = np.array([0.009, 0.012, 0.993])
@@ -61,14 +102,14 @@ def test_predict_proba():
 
 
 def test_logistic_regression_sgd():
-    t = np.array([0.51, 1.18, 4.38])
+    w = np.array([[1.18], [4.38]])
     lr = LogisticRegression(epochs=100,
                             eta=0.01,
                             minibatches=len(y),
                             random_seed=1)
 
     lr.fit(X, y)  # 0, 1 class
-    np.testing.assert_almost_equal(lr.w_, t, 2)
+    np.testing.assert_almost_equal(lr.w_, w, 2)
     y_pred = lr.predict(X)
     acc = np.sum(y == y_pred, axis=0) / float(X.shape[0])
     assert acc == 1.0, "Acc: %s" % acc
@@ -82,7 +123,7 @@ def test_l2_regularization_gd():
                             random_seed=1)
     lr.fit(X, y)
     y_pred = lr.predict(X)
-    expect_weights = np.array([0.153, 1.055, 2.284])
+    expect_weights = np.array([[1.061], [2.280]])
 
     np.testing.assert_almost_equal(lr.w_, expect_weights, 3)
     y_pred = lr.predict(X)
@@ -98,7 +139,7 @@ def test_l2_regularization_sgd():
                             random_seed=1)
     lr.fit(X, y)
     y_pred = lr.predict(X)
-    expect_weights = np.array([-2.73e-04, 2.40e-01, 3.53e-01])
+    expect_weights = np.array([[0.24], [0.35]])
 
     np.testing.assert_almost_equal(lr.w_, expect_weights, 2)
     y_pred = lr.predict(X)

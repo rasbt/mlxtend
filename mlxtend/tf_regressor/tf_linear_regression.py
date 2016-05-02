@@ -6,13 +6,13 @@
 #
 # License: BSD 3 clause
 
-from .tf_base import _TfBaseRegressor
 import numpy as np
 import tensorflow as tf
 from time import time
+from .._base import _BaseRegressor
 
 
-class TfLinearRegression(_TfBaseRegressor):
+class TfLinearRegression(_BaseRegressor):
     """Estimator for Linear Regression in TensorFlow using Gradient Descent.
 
     Added in version 0.4.1
@@ -41,10 +41,10 @@ class TfLinearRegression(_TfBaseRegressor):
 
         Attributes
         -----------
-        weights_ : 1d-array, shape=[n_features]
-            Model weights after fitting.
-        bias_ : 1d-array, shape=[1]
-                Bias unit (intercept term)
+        w_ : 2d-array, shape={n_features, 1}
+          Model weights after fitting.
+        b_ : 1d-array, shape={1,}
+          Bias unit after fitting.
         cost_ : list
             Sum of mean squared errors (MSE) after each epoch;
 
@@ -58,38 +58,10 @@ class TfLinearRegression(_TfBaseRegressor):
         else:
             self.dtype = dtype
 
-    def fit(self, X, y, init_weights=True):
-        """Learn weight coefficients from training data.
-
-        Parameters
-        ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
-            Training vectors, where n_samples is the number of samples and
-            n_features is the number of features.
-        y : array-like, shape = [n_samples]
-            Target values.
-        init_weights : bool (default: True)
-            Reinitialize weights
-
-        Returns
-        -------
-        self : object
-
-        """
-        self._is_fitted = False
-        if not (init_weights is None or isinstance(init_weights, bool)):
-            raise AttributeError("init_weights must be True or False")
-        self._check_arrays(X=X, y=y)
-        if self.random_seed:
-            np.random.seed(self.random_seed)
-        self._fit(X=X, y=y, init_weights=init_weights)
-        self._is_fitted = True
-        return self
-
-    def _fit(self, X, y, init_weights=True):
-        if not hasattr(self, "cost_"):
+    def _fit(self, X, y, init_params=True):
+        if init_params:
             self.cost_ = []
-        self.cost_ = []
+
         g_train = tf.Graph()
 
         with g_train.as_default():
@@ -108,7 +80,7 @@ class TfLinearRegression(_TfBaseRegressor):
             tf_y = tf.convert_to_tensor(value=y[:, np.newaxis],
                                         dtype=self.dtype)
 
-            if init_weights:
+            if init_params:
                 w = tf.Variable(tf.truncated_normal(shape=[X.shape[1], 1],
                                                     seed=self.random_seed,
                                                     dtype=self.dtype),
@@ -116,9 +88,9 @@ class TfLinearRegression(_TfBaseRegressor):
 
                 b = tf.Variable(tf.zeros(shape=[1]), dtype=self.dtype)
             else:
-                w = tf.Variable(self.weights_[:, np.newaxis],
+                w = tf.Variable(self.w_[:, np.newaxis],
                                 dtype=self.dtype)
-                b = tf.Variable(self.bias_, dtype=self.dtype)
+                b = tf.Variable(self.b_, dtype=self.dtype)
 
             y_pred = self._net_input(tf_X, w, b)
             mse_cost = tf.reduce_mean(tf.square(y_pred - tf_y))
@@ -135,10 +107,13 @@ class TfLinearRegression(_TfBaseRegressor):
             for epoch in range(1, self.epochs + 1):
                 _, c = sess.run([train, mse_cost])
                 self.cost_.append(c)
-                self._print_progress(epoch, cost=c)
+                if self.print_progress:
+                    self._print_progress(iteration=(epoch + 1),
+                                         n_iter=self.epochs,
+                                         cost=c)
 
-            self.weights_ = w.eval().flatten()
-            self.bias_ = b.eval()
+            self.w_ = w.eval().flatten()
+            self.b_ = b.eval()
 
     def predict(self, X):
         """Predict class labels of X.
@@ -163,9 +138,9 @@ class TfLinearRegression(_TfBaseRegressor):
     def _predict(self, X):
         g_predict = tf.Graph()
         with g_predict.as_default():
-            w = tf.convert_to_tensor(value=self.weights_[:, np.newaxis],
+            w = tf.convert_to_tensor(value=self.w_[:, np.newaxis],
                                      dtype=self.dtype)
-            b = tf.convert_to_tensor(value=self.bias_, dtype=self.dtype)
+            b = tf.convert_to_tensor(value=self.b_, dtype=self.dtype)
             tf_X = tf.convert_to_tensor(value=X, dtype=self.dtype)
             predict_init = tf.initialize_all_variables()
 

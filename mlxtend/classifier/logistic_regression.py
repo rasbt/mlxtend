@@ -8,12 +8,15 @@
 
 import numpy as np
 from time import time
-from .base import _BaseClassifier
+from .._base import _BaseClassifier
 
 
 class LogisticRegression(_BaseClassifier):
 
     """Logistic regression classifier.
+
+    Note that this implementation of Logistic Regression
+    expects binary class labels in {0, 1}.
 
     Parameters
     ------------
@@ -21,21 +24,18 @@ class LogisticRegression(_BaseClassifier):
         Learning rate (between 0.0 and 1.0)
     epochs : int (default: 50)
         Passes over the training dataset.
+        Prior to each epoch, the dataset is shuffled
+        if `minibatches > 1` to prevent cycles in stochastic gradient descent.
     l2_lambda : float
         Regularization parameter for L2 regularization.
         No regularization if l2_lambda=0.0.
     minibatches : int (default: 1)
-        Divide the training data into *k* minibatches
-        for accelerated stochastic gradient descent learning.
-        Gradient Descent Learning if `minibatches` = 1
-        Stochastic Gradient Descent learning if `minibatches` = len(y)
-        Minibatch learning if `minibatches` > 1
+        The number of minibatches for gradient-based optimization.
+        If 1: Gradient Descent learning
+        If len(y): Stochastic Gradient Descent (SGD) online learning
+        If 1 < minibatches < len(y): SGD Minibatch learning
     random_seed : int (default: None)
         Set random state for shuffling and initializing the weights.
-    zero_init_weight : bool (default: False)
-        If True, weights are initialized to zero instead of small random
-        numbers following a standard normal distribution with mean=0 and
-        stddev=1.
     print_progress : int (default: 0)
         Prints progress in fitting to stderr.
         0: No output
@@ -45,90 +45,68 @@ class LogisticRegression(_BaseClassifier):
 
     Attributes
     -----------
-    w_ : 1d-array
-        Weights after fitting.
+    w_ : 2d-array, shape={n_features, 1}
+      Model weights after fitting.
+    b_ : 1d-array, shape={1,}
+      Bias unit after fitting.
     cost_ : list
-        List of floats with sum of squared error cost (sgd or gd) for every
+        List of floats with cross_entropy cost (sgd or gd) for every
         epoch.
 
     """
     def __init__(self, eta=0.01, epochs=50,
                  l2_lambda=0.0, minibatches=1,
-                 random_seed=None, zero_init_weight=False,
+                 random_seed=None,
                  print_progress=0):
 
-        super(LogisticRegression, self).__init__(print_progress=print_progress)
-        self.random_seed = random_seed
+        super(LogisticRegression, self).__init__(print_progress=print_progress,
+                                                 random_seed=random_seed)
         self.eta = eta
         self.epochs = epochs
         self.l2_lambda = l2_lambda
         self.minibatches = minibatches
-        self.zero_init_weight = zero_init_weight
 
-    def fit(self, X, y, init_weights=True):
-        """Learn weight coefficients from training data.
+    def _fit(self, X, y, init_params=True):
 
-        Parameters
-        ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
-            Training vectors, where n_samples is the number of samples and
-            n_features is the number of features.
-        y : array-like, shape = [n_samples]
-            Target values.
-        init_weights : bool (default: True)
-            (Re)initializes weights to small random floats if True.
+        self._check_target_array(y, allowed={(0, 1)})
 
-        Returns
-        -------
-        self : object
+        if init_params:
+            self.b_, self.w_ = self._init_params(
+                weights_shape=(X.shape[1], 1),
+                bias_shape=(1,),
+                random_seed=self.random_seed)
+            self.cost_ = []
 
-        """
-        self._check_arrays(X, y)
-
-        if (np.unique(y) != np.array([0, 1])).all():
-            raise ValueError('Supports only binary class labels 0 and 1')
-
-        if init_weights:
-            self.w_ = self._init_weights(
-                shape=1 + X.shape[1],
-                zero_init_weight=self.zero_init_weight,
-                seed=self.random_seed)
-
-        self.m_ = len(self.w_)
-        self.cost_ = []
-
-        # random seed for shuffling
-        if self.random_seed:
-            np.random.seed(self.random_seed)
-
-        n_idx = list(range(y.shape[0]))
         self.init_time_ = time()
         for i in range(self.epochs):
-            if self.minibatches > 1:
-                n_idx = np.random.permutation(n_idx)
 
-            minis = np.array_split(n_idx, self.minibatches)
-            for idx in minis:
+            for idx in self._yield_minibatches_idx(
+                    n_batches=self.minibatches,
+                    data_ary=y,
+                    shuffle=True):
+
                 y_val = self._activation(X[idx])
                 errors = (y[idx] - y_val)
-                neg_grad = X[idx].T.dot(errors)
-                l2_reg = self.l2_lambda * self.w_[1:]
-                self.w_[1:] += self.eta * (neg_grad - l2_reg)
-                self.w_[0] += self.eta * errors.sum()
+                neg_grad = X[idx].T.dot(errors).reshape(self.w_.shape)
+                l2_reg = self.l2_lambda * self.w_
+                self.w_ += self.eta * (neg_grad - l2_reg)
+                self.b_ += self.eta * errors.sum()
 
             cost = self._logit_cost(y, self._activation(X))
             self.cost_.append(cost)
             if self.print_progress:
-                self._print_progress(epoch=i + 1, cost=cost)
+                self._print_progress(iteration=(i + 1),
+                                     n_iter=self.epochs,
+                                     cost=cost)
         return self
 
     def _predict(self, X):
-        # equivalent to np.where(self._activation(X) >= 0.5, 1, 0)
-        return np.where(self._net_input(X) >= 0.0, 1, 0)
+        # equivalent to np.where(self._activation(X) < 0.5, 0, 1)
+        return np.where(self._net_input(X) < 0.0, 0, 1)
 
     def _net_input(self, X):
         """Compute the linear net input."""
-        return X.dot(self.w_[1:]) + self.w_[0]
+        return (X.dot(self.w_) + self.b_).flatten()
 
     def _activation(self, X):
         """ Compute sigmoid activation."""

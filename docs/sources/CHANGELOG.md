@@ -15,7 +15,7 @@
 
 ##### Changes
 
-~
+- Use small, positive bias units in `TfMultiLayerPerceptron`'s hidden layer(s) if their activations are ReLUs in order to avoid dead neurons
 
 
 ### Version 0.4.1 (2016-05-01)

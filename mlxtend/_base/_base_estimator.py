@@ -138,12 +138,14 @@ class _BaseEstimator(object):
             raise ValueError('X and y must contain the same number of samples')
 
     def _init_params(self, weights_shape, bias_shape=(1,), dtype='float64',
-                     scale=0.01, random_seed=None):
+                     scale=0.01, bias_const=0.0, random_seed=None):
         """Initialize weight coefficients."""
         if random_seed:
             np.random.seed(random_seed)
         w = np.random.normal(loc=0.0, scale=scale, size=weights_shape)
         b = np.zeros(shape=bias_shape)
+        if bias_const != 0.0:
+            b += bias_const
         return b.astype(dtype), w.astype(dtype)
 
     def _yield_minibatches_idx(self, n_batches, data_ary, shuffle=True):

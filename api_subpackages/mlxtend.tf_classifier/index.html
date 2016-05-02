@@ -145,7 +145,7 @@
         
             
 <li >
-    <a href="../../user_guide/classifier/NeuralNetMLP/">NeuralNetMLP</a>
+    <a href="../../user_guide/classifier/MultiLayerPerceptron/">MultiLayerPerceptron</a>
 </li>
 
         
@@ -781,7 +781,7 @@
 
 <p>mlxtend version: 0.4.1dev </p>
 <h2 id="tfmultilayerperceptron">TfMultiLayerPerceptron</h2>
-<p><em>TfMultiLayerPerceptron(eta=0.5, epochs=50, hidden_layers=[50, 10], activations=['logistic', 'logistic'], optimizer='gradientdescent', momentum=0.0, l1=0.0, l2=0.0, dropout=1.0, decay=[0.0, 1.0], minibatches=1, random_seed=None, print_progress=0, dtype=None)</em></p>
+<p><em>TfMultiLayerPerceptron(eta=0.5, epochs=50, hidden_layers=[50, 10], n_classes=None, activations=['logistic', 'logistic'], optimizer='gradientdescent', momentum=0.0, l1=0.0, l2=0.0, dropout=1.0, decay=[0.0, 1.0], minibatches=1, random_seed=None, print_progress=0, dtype=None)</em></p>
 <p>Multi-layer perceptron classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -791,12 +791,20 @@
 </li>
 <li>
 <p><code>epochs</code> : int (default: 50)</p>
-<p>Passes over the training dataset.</p>
+<p>Passes over the training dataset.
+Prior to each epoch, the dataset is shuffled
+if <code>minibatches &gt; 1</code> to prevent cycles in stochastic gradient descent.</p>
 </li>
 <li>
 <p><code>hidden_layers</code> : list (default: [50, 10])</p>
 <p>Number of units per hidden layer. By default 50 units in the
 first hidden layer, and 10 hidden units in the second hidden layer.</p>
+</li>
+<li>
+<p><code>n_classes</code> : int (default: None)</p>
+<p>A positive integer to declare the number of class labels
+if not all class labels are present in a partial training set.
+Gets the number of class labels automatically if None.</p>
 </li>
 <li>
 <p><code>activations</code> : list (default: ['logistic', 'logistic'])</p>
@@ -860,11 +868,11 @@ Minibatch learning if <code>minibatches</code> &gt; 1</p>
 <p><strong>Attributes</strong></p>
 <ul>
 <li>
-<p><code>weights_</code> : 2d-array, shape=[n_features, n_classes]</p>
+<p><code>w_</code> : 2d-array, shape=[n_features, n_classes]</p>
 <p>Weights after fitting.</p>
 </li>
 <li>
-<p><code>biases_</code> : 1D-array, shape=[n_classes]</p>
+<p><code>b_</code> : 1D-array, shape=[n_classes]</p>
 <p>Bias units after fitting.</p>
 </li>
 <li>
@@ -875,8 +883,8 @@ Minibatch learning if <code>minibatches</code> &gt; 1</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, init_weights=True, override_minibatches=None, n_classes=None, X_valid=None, y_valid=None)</em></p>
-<p>Learn weight coefficients from training data.</p>
+<p><em>fit(X, y, init_params=True)</em></p>
+<p>Learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -889,28 +897,10 @@ n_features is the number of features.</p>
 <p>Target values.</p>
 </li>
 <li>
-<p><code>init_weights</code> : bool (default: True)</p>
-<p>(Re)initializes weights to small random floats if True.</p>
-</li>
-<li>
-<p><code>override_minibatches</code> : int or None (default: None)</p>
-<p>Uses a different number of minibatches for this session.</p>
-</li>
-<li>
-<p><code>n_classes</code> : int (default: None)</p>
-<p>A positive integer to declare the number of class labels
-if not all class labels are present in a partial training set.
-Gets the number of class labels automatically if None.
-Ignored if init_weights=False.</p>
-</li>
-<li>
-<p><code>X_valid</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Optional validation set to store the validation accuracy values
-for each epoch via self.valid_acc_</p>
-</li>
-<li>
-<p><code>y_valid</code> : array-like, shape = [n_samples]</p>
-<p>Target values for X_valid</p>
+<p><code>init_params</code> : bool (default: True)</p>
+<p>Re-initializes model parametersprior to fitting.
+Set False to continue training with weights from
+a previous model fitting.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
@@ -977,7 +967,7 @@ between 0.0 and 1.0 (perfect score).</p>
 </li>
 </ul>
 <h2 id="tfsoftmaxregression">TfSoftmaxRegression</h2>
-<p><em>TfSoftmaxRegression(eta=0.5, epochs=50, minibatches=1, random_seed=None, print_progress=0, dtype=None)</em></p>
+<p><em>TfSoftmaxRegression(eta=0.5, epochs=50, n_classes=None, minibatches=1, random_seed=None, print_progress=0, dtype=None)</em></p>
 <p>Softmax regression classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -987,7 +977,15 @@ between 0.0 and 1.0 (perfect score).</p>
 </li>
 <li>
 <p><code>epochs</code> : int (default: 50)</p>
-<p>Passes over the training dataset.</p>
+<p>Passes over the training dataset.
+Prior to each epoch, the dataset is shuffled
+if <code>minibatches &gt; 1</code> to prevent cycles in stochastic gradient descent.</p>
+</li>
+<li>
+<p><code>n_classes</code> : int (default: None)</p>
+<p>A positive integer to declare the number of class labels
+if not all class labels are present in a partial training set.
+Gets the number of class labels automatically if None.</p>
 </li>
 <li>
 <p><code>minibatches</code> : int (default: 1)</p>
@@ -1017,31 +1015,23 @@ Minibatch learning if <code>minibatches</code> &gt; 1</p>
 <p><strong>Attributes</strong></p>
 <ul>
 <li>
-<p><code>weights_</code> : 2d-array, shape=[n_features, n_classes]</p>
+<p><code>w_</code> : 2d-array, shape=[n_features, n_classes]</p>
 <p>Weights after fitting.</p>
 </li>
 <li>
-<p><code>biases_</code> : 1D-array, shape=[n_classes]</p>
+<p><code>b_</code> : 1D-array, shape=[n_classes]</p>
 <p>Bias units after fitting.</p>
 </li>
 <li>
 <p><code>cost_</code> : list</p>
 <p>List of floats, the average cross_entropy for each epoch.</p>
 </li>
-<li>
-<p><code>train_acc_</code> : list</p>
-<p>List of training accuracies for each epoch</p>
-</li>
-<li>
-<p><code>valid_acc_</code> : list</p>
-<p>List of validation accuracies for each epoch</p>
-</li>
 </ul>
 <h3 id="methods_1">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, init_weights=True, override_minibatches=None, n_classes=None, X_valid=None, y_valid=None)</em></p>
-<p>Learn weight coefficients from training data.</p>
+<p><em>fit(X, y, init_params=True)</em></p>
+<p>Learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1054,28 +1044,10 @@ n_features is the number of features.</p>
 <p>Target values.</p>
 </li>
 <li>
-<p><code>init_weights</code> : bool (default: True)</p>
-<p>(Re)initializes weights to small random floats if True.</p>
-</li>
-<li>
-<p><code>override_minibatches</code> : int or None (default: None)</p>
-<p>Uses a different number of minibatches for this session.</p>
-</li>
-<li>
-<p><code>n_classes</code> : int (default: None)</p>
-<p>A positive integer to declare the number of class labels
-if not all class labels are present in a partial training set.
-Gets the number of class labels automatically if None.
-Ignored if init_weights=False.</p>
-</li>
-<li>
-<p><code>X_valid</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Optional validation set to store the validation accuracy values
-for each epoch via self.valid_acc_</p>
-</li>
-<li>
-<p><code>y_valid</code> : array-like, shape = [n_samples]</p>
-<p>Target values for X_valid</p>
+<p><code>init_params</code> : bool (default: True)</p>
+<p>Re-initializes model parametersprior to fitting.
+Set False to continue training with weights from
+a previous model fitting.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
@@ -1085,7 +1057,7 @@ for each epoch via self.valid_acc_</p>
 <hr>
 
 <p><em>predict(X)</em></p>
-<p>Predict class labels of X.</p>
+<p>Predict targets from X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1097,8 +1069,8 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>class_labels</code> : array-like, shape = [n_samples]</p>
-<p>Predicted class labels.</p>
+<p><code>target_values</code> : array-like, shape = [n_samples]</p>
+<p>Predicted target values.</p>
 </li>
 </ul>
 <hr>

@@ -145,7 +145,7 @@
         
             
 <li >
-    <a href="../../user_guide/classifier/NeuralNetMLP/">NeuralNetMLP</a>
+    <a href="../../user_guide/classifier/MultiLayerPerceptron/">MultiLayerPerceptron</a>
 </li>
 
         
@@ -780,24 +780,29 @@
             <li><a href="#methods_2">Methods</a></li>
         
     
-        <li class="main "><a href="#neuralnetmlp">NeuralNetMLP</a></li>
+        <li class="main "><a href="#multilayerperceptron">MultiLayerPerceptron</a></li>
         
             <li><a href="#methods_3">Methods</a></li>
         
     
-        <li class="main "><a href="#perceptron">Perceptron</a></li>
+        <li class="main "><a href="#neuralnetmlp">NeuralNetMLP</a></li>
         
             <li><a href="#methods_4">Methods</a></li>
         
     
-        <li class="main "><a href="#softmaxregression">SoftmaxRegression</a></li>
+        <li class="main "><a href="#perceptron">Perceptron</a></li>
         
             <li><a href="#methods_5">Methods</a></li>
         
     
-        <li class="main "><a href="#stackingclassifier">StackingClassifier</a></li>
+        <li class="main "><a href="#softmaxregression">SoftmaxRegression</a></li>
         
             <li><a href="#methods_6">Methods</a></li>
+        
+    
+        <li class="main "><a href="#stackingclassifier">StackingClassifier</a></li>
+        
+            <li><a href="#methods_7">Methods</a></li>
         
     
     </ul>
@@ -806,8 +811,11 @@
 
 <p>mlxtend version: 0.4.1dev </p>
 <h2 id="adaline">Adaline</h2>
-<p><em>Adaline(eta=0.01, epochs=50, minibatches=None, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
+<p><em>Adaline(eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0)</em></p>
 <p>ADAptive LInear NEuron classifier.</p>
+<pre><code>Note that this implementation of Adaline expects binary class labels
+in {0, 1}.
+</code></pre>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -816,26 +824,21 @@
 </li>
 <li>
 <p><code>epochs</code> : int (default: 50)</p>
-<p>Passes over the training dataset.</p>
+<p>Passes over the training dataset.
+Prior to each epoch, the dataset is shuffled
+if <code>minibatches &gt; 1</code> to prevent cycles in stochastic gradient descent.</p>
 </li>
 <li>
 <p><code>minibatches</code> : int (default: None)</p>
 <p>The number of minibatches for gradient-based optimization.
 If None: Normal Equations (closed-form solution)
 If 1: Gradient Descent learning
-If len(y): Stochastic Gradient Descent learning
-If 1 &lt; minibatches &lt; len(y): Minibatch learning</p>
+If len(y): Stochastic Gradient Descent (SGD) online learning
+If 1 &lt; minibatches &lt; len(y): SGD Minibatch learning</p>
 </li>
 <li>
 <p><code>random_seed</code> : int (default: None)</p>
 <p>Set random state for shuffling and initializing the weights.</p>
-</li>
-<li>
-<p><code>zero_init_weight</code> : bool (default: False)</p>
-<p>If True, weights are initialized to zero instead of small random
-numbers following a standard normal distribution with mean=0 and
-stddev=1;
-ignored if solver='normal equation'</p>
 </li>
 <li>
 <p><code>print_progress</code> : int (default: 0)</p>
@@ -849,8 +852,12 @@ ignored if solver='normal equation'</p>
 <p><strong>Attributes</strong></p>
 <ul>
 <li>
-<p><code>w_</code> : 1d-array</p>
-<p>Weights after fitting.</p>
+<p><code>w_</code> : 2d-array, shape={n_features, 1}</p>
+<p>Model weights after fitting.</p>
+</li>
+<li>
+<p><code>b_</code> : 1d-array, shape={1,}</p>
+<p>Bias unit after fitting.</p>
 </li>
 <li>
 <p><code>cost_</code> : list</p>
@@ -860,8 +867,8 @@ ignored if solver='normal equation'</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, init_weights=True)</em></p>
-<p>Learn weight coefficients from training data.</p>
+<p><em>fit(X, y, init_params=True)</em></p>
+<p>Learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -874,9 +881,10 @@ n_features is the number of features.</p>
 <p>Target values.</p>
 </li>
 <li>
-<p><code>init_weights</code> : bool (default: True)</p>
-<p>Re-initializes weights prior to fitting. Set False to continue
-training with weights from a previous fitting.</p>
+<p><code>init_params</code> : bool (default: True)</p>
+<p>Re-initializes model parametersprior to fitting.
+Set False to continue training with weights from
+a previous model fitting.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
@@ -886,7 +894,7 @@ training with weights from a previous fitting.</p>
 <hr>
 
 <p><em>predict(X)</em></p>
-<p>Predict class labels of X.</p>
+<p>Predict targets from X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -898,8 +906,8 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>class_labels</code> : array-like, shape = [n_samples]</p>
-<p>Predicted class labels.</p>
+<p><code>target_values</code> : array-like, shape = [n_samples]</p>
+<p>Predicted target values.</p>
 </li>
 </ul>
 <hr>
@@ -1156,8 +1164,11 @@ n_features is the number of features.</p>
 </li>
 </ul>
 <h2 id="logisticregression">LogisticRegression</h2>
-<p><em>LogisticRegression(eta=0.01, epochs=50, l2_lambda=0.0, minibatches=1, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
+<p><em>LogisticRegression(eta=0.01, epochs=50, l2_lambda=0.0, minibatches=1, random_seed=None, print_progress=0)</em></p>
 <p>Logistic regression classifier.</p>
+<pre><code>Note that this implementation of Logistic Regression
+expects binary class labels in {0, 1}.
+</code></pre>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1166,7 +1177,9 @@ n_features is the number of features.</p>
 </li>
 <li>
 <p><code>epochs</code> : int (default: 50)</p>
-<p>Passes over the training dataset.</p>
+<p>Passes over the training dataset.
+Prior to each epoch, the dataset is shuffled
+if <code>minibatches &gt; 1</code> to prevent cycles in stochastic gradient descent.</p>
 </li>
 <li>
 <p><code>l2_lambda</code> : float</p>
@@ -1175,21 +1188,14 @@ No regularization if l2_lambda=0.0.</p>
 </li>
 <li>
 <p><code>minibatches</code> : int (default: 1)</p>
-<p>Divide the training data into <em>k</em> minibatches
-for accelerated stochastic gradient descent learning.
-Gradient Descent Learning if <code>minibatches</code> = 1
-Stochastic Gradient Descent learning if <code>minibatches</code> = len(y)
-Minibatch learning if <code>minibatches</code> &gt; 1</p>
+<p>The number of minibatches for gradient-based optimization.
+If 1: Gradient Descent learning
+If len(y): Stochastic Gradient Descent (SGD) online learning
+If 1 &lt; minibatches &lt; len(y): SGD Minibatch learning</p>
 </li>
 <li>
 <p><code>random_seed</code> : int (default: None)</p>
 <p>Set random state for shuffling and initializing the weights.</p>
-</li>
-<li>
-<p><code>zero_init_weight</code> : bool (default: False)</p>
-<p>If True, weights are initialized to zero instead of small random
-numbers following a standard normal distribution with mean=0 and
-stddev=1.</p>
 </li>
 <li>
 <p><code>print_progress</code> : int (default: 0)</p>
@@ -1203,20 +1209,24 @@ stddev=1.</p>
 <p><strong>Attributes</strong></p>
 <ul>
 <li>
-<p><code>w_</code> : 1d-array</p>
-<p>Weights after fitting.</p>
+<p><code>w_</code> : 2d-array, shape={n_features, 1}</p>
+<p>Model weights after fitting.</p>
+</li>
+<li>
+<p><code>b_</code> : 1d-array, shape={1,}</p>
+<p>Bias unit after fitting.</p>
 </li>
 <li>
 <p><code>cost_</code> : list</p>
-<p>List of floats with sum of squared error cost (sgd or gd) for every
+<p>List of floats with cross_entropy cost (sgd or gd) for every
 epoch.</p>
 </li>
 </ul>
 <h3 id="methods_2">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, init_weights=True)</em></p>
-<p>Learn weight coefficients from training data.</p>
+<p><em>fit(X, y, init_params=True)</em></p>
+<p>Learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1229,8 +1239,10 @@ n_features is the number of features.</p>
 <p>Target values.</p>
 </li>
 <li>
-<p><code>init_weights</code> : bool (default: True)</p>
-<p>(Re)initializes weights to small random floats if True.</p>
+<p><code>init_params</code> : bool (default: True)</p>
+<p>Re-initializes model parametersprior to fitting.
+Set False to continue training with weights from
+a previous model fitting.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
@@ -1240,7 +1252,7 @@ n_features is the number of features.</p>
 <hr>
 
 <p><em>predict(X)</em></p>
-<p>Predict class labels of X.</p>
+<p>Predict targets from X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1252,8 +1264,8 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>class_labels</code> : array-like, shape = [n_samples]</p>
-<p>Predicted class labels.</p>
+<p><code>target_values</code> : array-like, shape = [n_samples]</p>
+<p>Predicted target values.</p>
 </li>
 </ul>
 <hr>
@@ -1271,6 +1283,175 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li><code>Class 1 probability</code> : float</li>
+</ul>
+<hr>
+
+<p><em>score(X, y)</em></p>
+<p>Compute the prediction accuracy</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values (true class labels).</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>acc</code> : float</p>
+<p>The prediction accuracy as a float
+between 0.0 and 1.0 (perfect score).</p>
+</li>
+</ul>
+<h2 id="multilayerperceptron">MultiLayerPerceptron</h2>
+<p><em>MultiLayerPerceptron(eta=0.5, epochs=50, hidden_layers=[50], n_classes=None, momentum=0.0, l1=0.0, l2=0.0, dropout=1.0, decrease_const=0.0, minibatches=1, random_seed=None, print_progress=0)</em></p>
+<p>Multi-layer perceptron classifier with logistic sigmoid activations</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>eta</code> : float (default: 0.5)</p>
+<p>Learning rate (between 0.0 and 1.0)</p>
+</li>
+<li>
+<p><code>epochs</code> : int (default: 50)</p>
+<p>Passes over the training dataset.
+Prior to each epoch, the dataset is shuffled
+if <code>minibatches &gt; 1</code> to prevent cycles in stochastic gradient descent.</p>
+</li>
+<li>
+<p><code>hidden_layers</code> : list (default: [50])</p>
+<p>Number of units per hidden layer. By default 50 units in the
+first hidden layer. At the moment only 1 hidden layer is supported</p>
+</li>
+<li>
+<p><code>n_classes</code> : int (default: None)</p>
+<p>A positive integer to declare the number of class labels
+if not all class labels are present in a partial training set.
+Gets the number of class labels automatically if None.</p>
+</li>
+<li>
+<p><code>l1</code> : float (default: 0.0)</p>
+<p>L1 regularization strength</p>
+</li>
+<li>
+<p><code>l2</code> : float (default: 0.0)</p>
+<p>L2 regularization strength</p>
+</li>
+<li>
+<p><code>momentum</code> : float (default: 0.0)</p>
+<p>Momentum constant. Factor multiplied with the
+gradient of the previous epoch t-1 to improve
+learning speed
+w(t) := w(t) - (grad(t) + momentum * grad(t-1))</p>
+</li>
+<li>
+<p><code>decrease_const</code> : float (default: 0.0)</p>
+<p>Decrease constant. Shrinks the learning rate
+after each epoch via eta / (1 + epoch*decrease_const)</p>
+</li>
+<li>
+<p><code>minibatches</code> : int (default: 1)</p>
+<p>Divide the training data into <em>k</em> minibatches
+for accelerated stochastic gradient descent learning.
+Gradient Descent Learning if <code>minibatches</code> = 1
+Stochastic Gradient Descent learning if <code>minibatches</code> = len(y)
+Minibatch learning if <code>minibatches</code> &gt; 1</p>
+</li>
+<li>
+<p><code>random_seed</code> : int (default: None)</p>
+<p>Set random state for shuffling and initializing the weights.</p>
+</li>
+<li>
+<p><code>print_progress</code> : int (default: 0)</p>
+<p>Prints progress in fitting to stderr.
+0: No output
+1: Epochs elapsed and cost
+2: 1 plus time elapsed
+3: 2 plus estimated time until completion</p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>w_</code> : 2d-array, shape=[n_features, n_classes]</p>
+<p>Weights after fitting.</p>
+</li>
+<li>
+<p><code>b_</code> : 1D-array, shape=[n_classes]</p>
+<p>Bias units after fitting.</p>
+</li>
+<li>
+<p><code>cost_</code> : list</p>
+<p>List of floats; the mean categorical cross entropy
+cost after each epoch.</p>
+</li>
+</ul>
+<h3 id="methods_3">Methods</h3>
+<hr>
+
+<p><em>fit(X, y, init_params=True)</em></p>
+<p>Learn model from training data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>init_params</code> : bool (default: True)</p>
+<p>Re-initializes model parametersprior to fitting.
+Set False to continue training with weights from
+a previous model fitting.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
+<hr>
+
+<p><em>predict(X)</em></p>
+<p>Predict targets from X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>target_values</code> : array-like, shape = [n_samples]</p>
+<p>Predicted target values.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>predict_proba(X)</em></p>
+<p>Predict class probabilities of X from the net input.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>Class probabilties</code> : array-like, shape= [n_samples, n_classes]</li>
 </ul>
 <hr>
 
@@ -1389,7 +1570,7 @@ stddev=1.</p>
 <p>Sum of squared errors after each epoch.</p>
 </li>
 </ul>
-<h3 id="methods_3">Methods</h3>
+<h3 id="methods_4">Methods</h3>
 <hr>
 
 <p><em>fit(X, y)</em></p>
@@ -1451,8 +1632,11 @@ between 0.0 and 1.0 (perfect score).</p>
 </li>
 </ul>
 <h2 id="perceptron">Perceptron</h2>
-<p><em>Perceptron(eta=0.1, epochs=50, shuffle=True, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
+<p><em>Perceptron(eta=0.1, epochs=50, random_seed=None, print_progress=0)</em></p>
 <p>Perceptron classifier.</p>
+<pre><code>Note that this implementation of the Perceptron expects binary class labels
+in {0, 1}.
+</code></pre>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1461,21 +1645,12 @@ between 0.0 and 1.0 (perfect score).</p>
 </li>
 <li>
 <p><code>epochs</code> : int (default: 50)</p>
-<p>Number of passes over the training dataset.</p>
-</li>
-<li>
-<p><code>shuffle</code> : bool (default: True)</p>
-<p>Shuffles training data every epoch if True to prevent circles.</p>
+<p>Number of passes over the training dataset.
+Prior to each epoch, the dataset is shuffled to prevent cycles.</p>
 </li>
 <li>
 <p><code>random_seed</code> : int</p>
 <p>Random state for initializing random weights and shuffling.</p>
-</li>
-<li>
-<p><code>zero_init_weight</code> : bool (default: False)</p>
-<p>If True, weights are initialized to zero instead of small random
-numbers following a standard normal distribution with mean=0 and
-stddev=1.</p>
 </li>
 <li>
 <p><code>print_progress</code> : int (default: 0)</p>
@@ -1489,19 +1664,23 @@ stddev=1.</p>
 <p><strong>Attributes</strong></p>
 <ul>
 <li>
-<p><code>w_</code> : 1d-array</p>
-<p>Weights after fitting.</p>
+<p><code>w_</code> : 2d-array, shape={n_features, 1}</p>
+<p>Model weights after fitting.</p>
+</li>
+<li>
+<p><code>b_</code> : 1d-array, shape={1,}</p>
+<p>Bias unit after fitting.</p>
 </li>
 <li>
 <p><code>cost_</code> : list</p>
 <p>Number of misclassifications in every epoch.</p>
 </li>
 </ul>
-<h3 id="methods_4">Methods</h3>
+<h3 id="methods_5">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, init_weights=True)</em></p>
-<p>Learn weight coefficients from training data.</p>
+<p><em>fit(X, y, init_params=True)</em></p>
+<p>Learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1514,17 +1693,20 @@ n_features is the number of features.</p>
 <p>Target values.</p>
 </li>
 <li>
-<p><code>init_weights</code> : bool (default: True)</p>
-<p>Re-initializes weights prior to fitting. Set False to continue
-training with weights from a previous fitting.</p>
+<p><code>init_params</code> : bool (default: True)</p>
+<p>Re-initializes model parametersprior to fitting.
+Set False to continue training with weights from
+a previous model fitting.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
-<p>self</p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
 <hr>
 
 <p><em>predict(X)</em></p>
-<p>Predict class labels of X.</p>
+<p>Predict targets from X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1536,8 +1718,8 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>class_labels</code> : array-like, shape = [n_samples]</p>
-<p>Predicted class labels.</p>
+<p><code>target_values</code> : array-like, shape = [n_samples]</p>
+<p>Predicted target values.</p>
 </li>
 </ul>
 <hr>
@@ -1565,7 +1747,7 @@ between 0.0 and 1.0 (perfect score).</p>
 </li>
 </ul>
 <h2 id="softmaxregression">SoftmaxRegression</h2>
-<p><em>SoftmaxRegression(eta=0.01, epochs=50, l2_lambda=0.0, minibatches=1, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
+<p><em>SoftmaxRegression(eta=0.01, epochs=50, l2=0.0, minibatches=1, n_classes=None, random_seed=None, print_progress=0)</em></p>
 <p>Softmax regression classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1575,30 +1757,31 @@ between 0.0 and 1.0 (perfect score).</p>
 </li>
 <li>
 <p><code>epochs</code> : int (default: 50)</p>
-<p>Passes over the training dataset.</p>
+<p>Passes over the training dataset.
+Prior to each epoch, the dataset is shuffled
+if <code>minibatches &gt; 1</code> to prevent cycles in stochastic gradient descent.</p>
 </li>
 <li>
-<p><code>l2_lambda</code> : float</p>
+<p><code>l2</code> : float</p>
 <p>Regularization parameter for L2 regularization.
-No regularization if l2_lambda=0.0.</p>
+No regularization if l2=0.0.</p>
 </li>
 <li>
 <p><code>minibatches</code> : int (default: 1)</p>
-<p>Divide the training data into <em>k</em> minibatches
-for accelerated stochastic gradient descent learning.
-Gradient Descent Learning if <code>minibatches</code> = 1
-Stochastic Gradient Descent learning if <code>minibatches</code> = len(y)
-Minibatch learning if <code>minibatches</code> &gt; 1</p>
+<p>The number of minibatches for gradient-based optimization.
+If 1: Gradient Descent learning
+If len(y): Stochastic Gradient Descent (SGD) online learning
+If 1 &lt; minibatches &lt; len(y): SGD Minibatch learning</p>
+</li>
+<li>
+<p><code>n_classes</code> : int (default: None)</p>
+<p>A positive integer to declare the number of class labels
+if not all class labels are present in a partial training set.
+Gets the number of class labels automatically if None.</p>
 </li>
 <li>
 <p><code>random_seed</code> : int (default: None)</p>
 <p>Set random state for shuffling and initializing the weights.</p>
-</li>
-<li>
-<p><code>zero_init_weight</code> : bool (default: False)</p>
-<p>If True, weights are initialized to zero instead of small random
-numbers following a standard normal distribution with mean=0 and
-stddev=1.</p>
 </li>
 <li>
 <p><code>print_progress</code> : int (default: 0)</p>
@@ -1612,19 +1795,23 @@ stddev=1.</p>
 <p><strong>Attributes</strong></p>
 <ul>
 <li>
-<p><code>w_</code> : 2d-array, shape=[n_features, n_classes]</p>
-<p>Weights after fitting.</p>
+<p><code>w_</code> : 2d-array, shape={n_features, 1}</p>
+<p>Model weights after fitting.</p>
+</li>
+<li>
+<p><code>b_</code> : 1d-array, shape={1,}</p>
+<p>Bias unit after fitting.</p>
 </li>
 <li>
 <p><code>cost_</code> : list</p>
 <p>List of floats, the average cross_entropy for each epoch.</p>
 </li>
 </ul>
-<h3 id="methods_5">Methods</h3>
+<h3 id="methods_6">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, init_weights=True, n_classes=None)</em></p>
-<p>Learn weight coefficients from training data.</p>
+<p><em>fit(X, y, init_params=True)</em></p>
+<p>Learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1637,15 +1824,10 @@ n_features is the number of features.</p>
 <p>Target values.</p>
 </li>
 <li>
-<p><code>init_weights</code> : bool (default: True)</p>
-<p>(Re)initializes weights to small random floats if True.</p>
-</li>
-<li>
-<p><code>n_classes</code> : int (default: None)</p>
-<p>A positive integer to declare the number of class labels
-if not all class labels are present in a partial training set.
-Gets the number of class labels automatically if None.
-Ignored if init_weights=False.</p>
+<p><code>init_params</code> : bool (default: True)</p>
+<p>Re-initializes model parametersprior to fitting.
+Set False to continue training with weights from
+a previous model fitting.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
@@ -1655,7 +1837,7 @@ Ignored if init_weights=False.</p>
 <hr>
 
 <p><em>predict(X)</em></p>
-<p>Predict class labels of X.</p>
+<p>Predict targets from X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1667,8 +1849,8 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>class_labels</code> : array-like, shape = [n_samples]</p>
-<p>Predicted class labels.</p>
+<p><code>target_values</code> : array-like, shape = [n_samples]</p>
+<p>Predicted target values.</p>
 </li>
 </ul>
 <hr>
@@ -1756,7 +1938,7 @@ self.verbose - 2</p>
 <p>Fitted meta-classifier (clone of the original meta-estimator)</p>
 </li>
 </ul>
-<h3 id="methods_6">Methods</h3>
+<h3 id="methods_7">Methods</h3>
 <hr>
 
 <p><em>fit(X, y)</em></p>

@@ -145,7 +145,7 @@
         
             
 <li >
-    <a href="../user_guide/classifier/NeuralNetMLP/">NeuralNetMLP</a>
+    <a href="../user_guide/classifier/MultiLayerPerceptron/">MultiLayerPerceptron</a>
 </li>
 
         
@@ -767,7 +767,7 @@
     
         <li class="main active"><a href="#release-notes">Release Notes</a></li>
         
-            <li><a href="#version-041dev">Version 0.4.1dev</a></li>
+            <li><a href="#version-041-2016-05-01">Version 0.4.1 (2016-05-01)</a></li>
         
             <li><a href="#version-040-2016-04-09">Version 0.4.0 (2016-04-09)</a></li>
         
@@ -818,7 +818,7 @@
 
 <h1 id="release-notes">Release Notes</h1>
 <hr />
-<h3 id="version-041dev">Version 0.4.1dev</h3>
+<h3 id="version-041-2016-05-01">Version 0.4.1 (2016-05-01)</h3>
 <h5 id="new-features">New Features</h5>
 <ul>
 <li>New TensorFlow estimator for Linear Regression (<a href="../user_guide/tf_regressor/TfLinearRegression/"><code>tf_regressor.TfLinearRegression</code></a>)</li>
@@ -827,8 +827,13 @@
 </ul>
 <h5 id="changes">Changes</h5>
 <ul>
-<li>Adding optional <code>dropout</code> to the <a href="../user_guide/tf_classifier/TfMultiLayerPerceptron/"><code>tf_classifier.TfMultiLayerPerceptron</code></a> classifier for regularization</li>
-<li>Adding an optional <code>decay</code> parameter to the <a href="../user_guide/tf_classifier/TfMultiLayerPerceptron/"><code>tf_classifier.TfMultiLayerPerceptron</code></a> classifier for adaptive learning via an exponential decay of the learning rate eta</li>
+<li>Due to refactoring of the estimator classes, the <code>init_weights</code> parameter of the <code>fit</code> methods was globally renamed to <code>init_params</code></li>
+<li>Overall performance improvements of estimators due to code clean-up and refactoring</li>
+<li>Added several additional checks for correct array types and more meaningful exception messages</li>
+<li>Added optional <code>dropout</code> to the <a href="../user_guide/tf_classifier/TfMultiLayerPerceptron/"><code>tf_classifier.TfMultiLayerPerceptron</code></a> classifier for regularization</li>
+<li>Added an optional <code>decay</code> parameter to the <a href="../user_guide/tf_classifier/TfMultiLayerPerceptron/"><code>tf_classifier.TfMultiLayerPerceptron</code></a> classifier for adaptive learning via an exponential decay of the learning rate eta</li>
+<li>Replaced old <code>NeuralNetMLP</code> by more streamlined <code>MultiLayerPerceptron</code> (<a href="../user_guide/classifier/MultiLayerPerceptron/"><code>classifier.MultiLayerPerceptron</code></a>); now also with softmax in the output layer and categorical cross-entropy loss.</li>
+<li>Unified <code>init_params</code> parameter for fit functions to continue training where the algorithm left off (if supported)</li>
 </ul>
 <h3 id="version-040-2016-04-09">Version 0.4.0 (2016-04-09)</h3>
 <h5 id="new-features_1">New Features</h5>

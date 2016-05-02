@@ -145,7 +145,7 @@
         
             
 <li >
-    <a href="../../user_guide/classifier/NeuralNetMLP/">NeuralNetMLP</a>
+    <a href="../../user_guide/classifier/MultiLayerPerceptron/">MultiLayerPerceptron</a>
 </li>
 
         
@@ -776,7 +776,7 @@
 
 <p>mlxtend version: 0.4.1dev </p>
 <h2 id="kmeans">Kmeans</h2>
-<p><em>Kmeans(k, max_iter=10, random_seed=None, print_progress=0)</em></p>
+<p><em>Kmeans(k, max_iter=10, convergence_tolerance=1e-05, random_seed=None, print_progress=0)</em></p>
 <p>K-means clustering class.</p>
 <pre><code>Added in 0.4.1dev
 </code></pre>
@@ -791,6 +791,12 @@
 <p>Number of iterations during cluster assignment.
 Cluster re-assignment stops automatically when the algorithm
 converged.</p>
+</li>
+<li>
+<p><code>convergence_tolerance</code> : float (default: 1e-05)</p>
+<p>Compares current centroids with centroids of the previous iteration
+using the given tolerance (a small positive float)to determine
+if the algorithm converged early.</p>
 </li>
 <li>
 <p><code>random_seed</code> : int (default: None)</p>
@@ -826,14 +832,20 @@ cluster.</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X)</em></p>
-<p>Learn cluster centroids from training data.</p>
+<p><em>fit(X, init_params=True)</em></p>
+<p>Learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
 <p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
 <p>Training vectors, where n_samples is the number of samples and
 n_features is the number of features.</p>
+</li>
+<li>
+<p><code>init_params</code> : bool (default: True)</p>
+<p>Re-initializes model parametersprior to fitting.
+Set False to continue training with weights from
+a previous model fitting.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
@@ -843,7 +855,7 @@ n_features is the number of features.</p>
 <hr>
 
 <p><em>predict(X)</em></p>
-<p>Predict cluster labels of X.</p>
+<p>Predict targets from X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -855,8 +867,8 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>cluster_labels</code> : array-like, shape = [n_samples]</p>
-<p>Predicted cluster labels.</p>
+<p><code>target_values</code> : array-like, shape = [n_samples]</p>
+<p>Predicted target values.</p>
 </li>
 </ul></div>
         

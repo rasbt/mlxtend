@@ -145,7 +145,7 @@
         
             
 <li >
-    <a href="../../classifier/NeuralNetMLP/">NeuralNetMLP</a>
+    <a href="../../classifier/MultiLayerPerceptron/">MultiLayerPerceptron</a>
 </li>
 
         
@@ -832,8 +832,8 @@ gd_lr = TfLinearRegression(eta=0.05,
                            print_progress=3)
 gd_lr.fit(X, y)
 
-print('Intercept: %.2f' % gd_lr.bias_)
-print('Slope: %.2f' % gd_lr.weights_)
+print('Intercept: %.2f' % gd_lr.b_)
+print('Slope: %.2f' % gd_lr.w_)
 
 plt.plot(range(1, gd_lr.epochs+1), gd_lr.cost_)
 plt.xlabel('epochs')
@@ -841,7 +841,7 @@ plt.ylabel('mean squared error (MSE)')
 plt.show()
 </code></pre>
 
-<pre><code>Epoch: 5/5 | Cost 2.40 | Elapsed: 00:00:00 | ETA: 00:00:00
+<pre><code>Iteration: 6/5 | Cost 2.40 | Elapsed: 00:00:00 | ETA: 00:00:00
 
 Intercept: 0.10
 Slope: 0.39
@@ -849,18 +849,18 @@ Slope: 0.39
 <p><img alt="png" src="../TfLinearRegression_files/TfLinearRegression_15_2.png" /></p>
 <h3 id="continue-training-for-another-50-epochs">Continue training for another 50 epochs</h3>
 <pre><code class="python">gd_lr.epochs = 50
-gd_lr.fit(X, y, init_weights=False)
+gd_lr.fit(X, y, init_params=False)
 
-print('Intercept: %.2f' % gd_lr.bias_)
-print('Slope: %.2f' % gd_lr.weights_)
+print('Intercept: %.2f' % gd_lr.b_)
+print('Slope: %.2f' % gd_lr.w_)
 
-plt.plot(range(1, gd_lr.epochs+1), gd_lr.cost_)
+plt.plot(range(1, 56), gd_lr.cost_)
 plt.xlabel('epochs')
 plt.ylabel('mean squared error (MSE)')
 plt.show()
 </code></pre>
 
-<pre><code>Epoch: 50/50 | Cost 0.00 | Elapsed: 0:00:00 | ETA: 0:00:00
+<pre><code>Iteration: 51/50 | Cost 0.00 | Elapsed: 0:00:00 | ETA: 0:00:00
 
 Intercept: 0.11
 Slope: 0.10
@@ -894,7 +894,7 @@ plt.tight_layout()
 plt.show()  
 </code></pre>
 
-<pre><code>Epoch: 10/10 | Cost 0.01 | Elapsed: 0:00:00 | ETA: 0:00:00
+<pre><code>Iteration: 11/10 | Cost 0.01 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
 <p><img alt="png" src="../TfLinearRegression_files/TfLinearRegression_21_1.png" /></p>
 <pre><code class="python">lin_regplot(X_std, y_std, gd_lr)
@@ -936,7 +936,7 @@ plt.tight_layout()
 plt.show()  
 </code></pre>
 
-<pre><code>Epoch: 200/200 | Cost 0.27 | Elapsed: 0:00:00 | ETA: 0:00:00
+<pre><code>Iteration: 201/200 | Cost 0.27 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
 <p><img alt="png" src="../TfLinearRegression_files/TfLinearRegression_27_1.png" /></p>
 <h3 id="evaluate-the-results">Evaluate the results</h3>
@@ -965,8 +965,8 @@ R^2 train: 0.735, test: 0.780
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, init_weights=True)</em></p>
-<p>Learn weight coefficients from training data.</p>
+<p><em>fit(X, y, init_params=True)</em></p>
+<p>Learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -979,8 +979,10 @@ n_features is the number of features.</p>
 <p>Target values.</p>
 </li>
 <li>
-<p><code>init_weights</code> : bool (default: True)</p>
-<p>Reinitialize weights</p>
+<p><code>init_params</code> : bool (default: True)</p>
+<p>Re-initializes model parametersprior to fitting.
+Set False to continue training with weights from
+a previous model fitting.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>

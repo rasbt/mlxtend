@@ -145,7 +145,7 @@
         
             
 <li >
-    <a href="../NeuralNetMLP/">NeuralNetMLP</a>
+    <a href="../MultiLayerPerceptron/">MultiLayerPerceptron</a>
 </li>
 
         
@@ -740,7 +740,7 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../NeuralNetMLP/">
+                        <a rel="prev" href="../MultiLayerPerceptron/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -781,8 +781,6 @@
         <li class="main "><a href="#api">API</a></li>
         
             <li><a href="#methods">Methods</a></li>
-        
-            <li><a href="#properties">Properties</a></li>
         
     
     </ul>
@@ -988,7 +986,11 @@ X = X[:, [0, 3]] # sepal length and petal width
 X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
 X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
 
-lr = SoftmaxRegression(eta=0.005, epochs=200, minibatches=1, random_seed=1)
+lr = SoftmaxRegression(eta=0.075, 
+                       epochs=500, 
+                       minibatches=1, 
+                       random_seed=1,
+                       print_progress=3)
 lr.fit(X, y)
 
 plot_decision_regions(X, y, clf=lr)
@@ -1001,8 +1003,10 @@ plt.ylabel('Cost')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_34_0.png" /></p>
+<pre><code>Iteration: 500/500 | Cost 0.07 | Elapsed: 0:00:00 | ETA: 0:00:00
+</code></pre>
 <p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_34_1.png" /></p>
+<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_34_2.png" /></p>
 <h3 id="predicting-class-labels">Predicting Class Labels</h3>
 <pre><code class="python">y_pred = lr.predict(X)
 print('Last 3 Class Labels: %s' % y_pred[-3:])
@@ -1016,9 +1020,9 @@ print('Last 3 Class Labels:\n %s' % y_pred[-3:])
 </code></pre>
 
 <pre><code>Last 3 Class Labels:
- [[  4.99921674e-06   7.23245885e-02   9.27670412e-01]
- [  2.50487208e-07   1.20047952e-02   9.87994954e-01]
- [  2.14388120e-04   2.95955727e-01   7.03829884e-01]]
+ [[  5.19550893e-07   3.12873619e-02   9.68712119e-01]
+ [  1.08556117e-09   2.37254987e-03   9.97627449e-01]
+ [  1.07576472e-05   1.63409763e-01   8.36579479e-01]]
 </code></pre>
 <h2 id="example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</h2>
 <pre><code class="python">from mlxtend.data import iris_data
@@ -1051,8 +1055,8 @@ plt.show()
 <p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_40_0.png" /></p>
 <p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_40_1.png" /></p>
 <h1 id="api">API</h1>
-<p><em>SoftmaxRegression(eta=0.01, epochs=50, l2_lambda=0.0, minibatches=1, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
-<p>Logistic regression classifier.</p>
+<p><em>SoftmaxRegression(eta=0.01, epochs=50, l2=0.0, minibatches=1, n_classes=None, random_seed=None, print_progress=0)</em></p>
+<p>Softmax regression classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1061,30 +1065,31 @@ plt.show()
 </li>
 <li>
 <p><code>epochs</code> : int (default: 50)</p>
-<p>Passes over the training dataset.</p>
+<p>Passes over the training dataset.
+Prior to each epoch, the dataset is shuffled
+if <code>minibatches &gt; 1</code> to prevent cycles in stochastic gradient descent.</p>
 </li>
 <li>
-<p><code>l2_lambda</code> : float</p>
+<p><code>l2</code> : float</p>
 <p>Regularization parameter for L2 regularization.
-No regularization if l2_lambda=0.0.</p>
+No regularization if l2=0.0.</p>
 </li>
 <li>
 <p><code>minibatches</code> : int (default: 1)</p>
-<p>Divide the training data into <em>k</em> minibatches
-for accelerated stochastic gradient descent learning.
-Gradient Descent Learning if <code>minibatches</code> = 1
-Stochastic Gradient Descent learning if <code>minibatches</code> = len(y)
-Minibatch learning if <code>minibatches</code> &gt; 1</p>
+<p>The number of minibatches for gradient-based optimization.
+If 1: Gradient Descent learning
+If len(y): Stochastic Gradient Descent (SGD) online learning
+If 1 &lt; minibatches &lt; len(y): SGD Minibatch learning</p>
+</li>
+<li>
+<p><code>n_classes</code> : int (default: None)</p>
+<p>A positive integer to declare the number of class labels
+if not all class labels are present in a partial training set.
+Gets the number of class labels automatically if None.</p>
 </li>
 <li>
 <p><code>random_seed</code> : int (default: None)</p>
 <p>Set random state for shuffling and initializing the weights.</p>
-</li>
-<li>
-<p><code>zero_init_weight</code> : bool (default: False)</p>
-<p>If True, weights are initialized to zero instead of small random
-numbers following a standard normal distribution with mean=0 and
-stddev=1.</p>
 </li>
 <li>
 <p><code>print_progress</code> : int (default: 0)</p>
@@ -1098,20 +1103,23 @@ stddev=1.</p>
 <p><strong>Attributes</strong></p>
 <ul>
 <li>
-<p><code>w_</code> : 1d-array</p>
-<p>Weights after fitting.</p>
+<p><code>w_</code> : 2d-array, shape={n_features, 1}</p>
+<p>Model weights after fitting.</p>
+</li>
+<li>
+<p><code>b_</code> : 1d-array, shape={1,}</p>
+<p>Bias unit after fitting.</p>
 </li>
 <li>
 <p><code>cost_</code> : list</p>
-<p>List of floats with sum of squared error cost (sgd or gd) for every
-epoch.</p>
+<p>List of floats, the average cross_entropy for each epoch.</p>
 </li>
 </ul>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, init_weights=True)</em></p>
-<p>Learn weight coefficients from training data.</p>
+<p><em>fit(X, y, init_params=True)</em></p>
+<p>Learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1124,8 +1132,10 @@ n_features is the number of features.</p>
 <p>Target values.</p>
 </li>
 <li>
-<p><code>init_weights</code> : bool (default: True)</p>
-<p>(Re)initializes weights to small random floats if True.</p>
+<p><code>init_params</code> : bool (default: True)</p>
+<p>Re-initializes model parametersprior to fitting.
+Set False to continue training with weights from
+a previous model fitting.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
@@ -1135,7 +1145,7 @@ n_features is the number of features.</p>
 <hr>
 
 <p><em>predict(X)</em></p>
-<p>Predict class labels of X.</p>
+<p>Predict targets from X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1147,8 +1157,8 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>class_labels</code> : array-like, shape = [n_samples]</p>
-<p>Predicted class labels.</p>
+<p><code>target_values</code> : array-like, shape = [n_samples]</p>
+<p>Predicted target values.</p>
 </li>
 </ul>
 <hr>
@@ -1167,7 +1177,30 @@ n_features is the number of features.</p>
 <ul>
 <li><code>Class probabilties</code> : array-like, shape= [n_samples, n_classes]</li>
 </ul>
-<h3 id="properties">Properties</h3></div>
+<hr>
+
+<p><em>score(X, y)</em></p>
+<p>Compute the prediction accuracy</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values (true class labels).</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>acc</code> : float</p>
+<p>The prediction accuracy as a float
+between 0.0 and 1.0 (perfect score).</p>
+</li>
+</ul></div>
         
     </div>
 

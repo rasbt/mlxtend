@@ -145,7 +145,7 @@
         
             
 <li >
-    <a href="../../user_guide/classifier/NeuralNetMLP/">NeuralNetMLP</a>
+    <a href="../../user_guide/classifier/MultiLayerPerceptron/">MultiLayerPerceptron</a>
 </li>
 
         
@@ -783,8 +783,8 @@
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, init_weights=True)</em></p>
-<p>Learn weight coefficients from training data.</p>
+<p><em>fit(X, y, init_params=True)</em></p>
+<p>Learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -797,8 +797,10 @@ n_features is the number of features.</p>
 <p>Target values.</p>
 </li>
 <li>
-<p><code>init_weights</code> : bool (default: True)</p>
-<p>Reinitialize weights</p>
+<p><code>init_params</code> : bool (default: True)</p>
+<p>Re-initializes model parametersprior to fitting.
+Set False to continue training with weights from
+a previous model fitting.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>

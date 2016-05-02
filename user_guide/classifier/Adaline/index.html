@@ -145,7 +145,7 @@
         
             
 <li >
-    <a href="../NeuralNetMLP/">NeuralNetMLP</a>
+    <a href="../MultiLayerPerceptron/">MultiLayerPerceptron</a>
 </li>
 
         
@@ -914,10 +914,10 @@ plt.xlabel('Iterations')
 plt.ylabel('Cost')
 </code></pre>
 
-<pre><code>Epoch: 30/30 | Cost 0.95 | Elapsed: 0:00:00 | ETA: 0:00:00
+<pre><code>Iteration: 30/30 | Cost 3.79 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
 <p><img alt="png" src="../Adaline_files/Adaline_20_1.png" /></p>
-<pre><code>&lt;matplotlib.text.Text at 0x10d920eb8&gt;
+<pre><code>&lt;matplotlib.text.Text at 0x104382780&gt;
 </code></pre>
 <p><img alt="png" src="../Adaline_files/Adaline_20_3.png" /></p>
 <h2 id="example-3-stochastic-gradient-descent">Example 3 - Stochastic Gradient Descent</h2>
@@ -955,7 +955,7 @@ plt.ylabel('Cost')
 plt.show()
 </code></pre>
 
-<pre><code>Epoch: 15/15 | Cost 0.95 | Elapsed: 0:00:00 | ETA: 0:00:00
+<pre><code>Iteration: 15/15 | Cost 3.79 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
 <p><img alt="png" src="../Adaline_files/Adaline_22_1.png" /></p>
 <p><img alt="png" src="../Adaline_files/Adaline_22_2.png" /></p>
@@ -994,13 +994,16 @@ plt.ylabel('Cost')
 plt.show()
 </code></pre>
 
-<pre><code>Epoch: 15/15 | Cost 0.95 | Elapsed: 0:00:00 | ETA: 0:00:00
+<pre><code>Iteration: 15/15 | Cost 3.79 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
 <p><img alt="png" src="../Adaline_files/Adaline_24_1.png" /></p>
 <p><img alt="png" src="../Adaline_files/Adaline_24_2.png" /></p>
 <h1 id="api">API</h1>
-<p><em>Adaline(eta=0.01, epochs=50, solver='sgd', random_seed=None, shuffle=False, zero_init_weight=False, print_progress=0)</em></p>
+<p><em>Adaline(eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0)</em></p>
 <p>ADAptive LInear NEuron classifier.</p>
+<pre><code>Note that this implementation of Adaline expects binary class labels
+in {0, 1}.
+</code></pre>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1009,27 +1012,21 @@ plt.show()
 </li>
 <li>
 <p><code>epochs</code> : int (default: 50)</p>
-<p>Passes over the training dataset.</p>
+<p>Passes over the training dataset.
+Prior to each epoch, the dataset is shuffled
+if <code>minibatches &gt; 1</code> to prevent cycles in stochastic gradient descent.</p>
 </li>
 <li>
-<p><code>solver</code> : {'gd', 'sgd', 'normal equation'} (default: 'sgd')</p>
-<p>Method for solving the cost function. 'gd' for gradient descent,
-'sgd' for stochastic gradient descent, or 'normal equation' (default)
-to solve the cost function analytically.</p>
-</li>
-<li>
-<p><code>shuffle</code> : bool (default: False)</p>
-<p>Shuffles training data every epoch if True to prevent circles.</p>
+<p><code>minibatches</code> : int (default: None)</p>
+<p>The number of minibatches for gradient-based optimization.
+If None: Normal Equations (closed-form solution)
+If 1: Gradient Descent learning
+If len(y): Stochastic Gradient Descent (SGD) online learning
+If 1 &lt; minibatches &lt; len(y): SGD Minibatch learning</p>
 </li>
 <li>
 <p><code>random_seed</code> : int (default: None)</p>
 <p>Set random state for shuffling and initializing the weights.</p>
-</li>
-<li>
-<p><code>zero_init_weight</code> : bool (default: False)</p>
-<p>If True, weights are initialized to zero instead of small random
-numbers in the interval [-0.1, 0.1];
-ignored if solver='normal equation'</p>
 </li>
 <li>
 <p><code>print_progress</code> : int (default: 0)</p>
@@ -1043,8 +1040,12 @@ ignored if solver='normal equation'</p>
 <p><strong>Attributes</strong></p>
 <ul>
 <li>
-<p><code>w_</code> : 1d-array</p>
-<p>Weights after fitting.</p>
+<p><code>w_</code> : 2d-array, shape={n_features, 1}</p>
+<p>Model weights after fitting.</p>
+</li>
+<li>
+<p><code>b_</code> : 1d-array, shape={1,}</p>
+<p>Bias unit after fitting.</p>
 </li>
 <li>
 <p><code>cost_</code> : list</p>
@@ -1054,12 +1055,8 @@ ignored if solver='normal equation'</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>activation(X)</em></p>
-<p>Compute the linear activation from the net input.</p>
-<hr>
-
-<p><em>fit(X, y, init_weights=True)</em></p>
-<p>Learn weight coefficients from training data.</p>
+<p><em>fit(X, y, init_params=True)</em></p>
+<p>Learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1072,9 +1069,10 @@ n_features is the number of features.</p>
 <p>Target values.</p>
 </li>
 <li>
-<p><code>init_weights</code> : bool (default: True)</p>
-<p>Re-initializes weights prior to fitting. Set False to continue
-training with weights from a previous fitting.</p>
+<p><code>init_params</code> : bool (default: True)</p>
+<p>Re-initializes model parametersprior to fitting.
+Set False to continue training with weights from
+a previous model fitting.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
@@ -1083,12 +1081,8 @@ training with weights from a previous fitting.</p>
 </ul>
 <hr>
 
-<p><em>net_input(X)</em></p>
-<p>Compute the linear net input.</p>
-<hr>
-
 <p><em>predict(X)</em></p>
-<p>Predict class labels of X.</p>
+<p>Predict targets from X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1100,8 +1094,32 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>class_labels</code> : array-like, shape = [n_samples]</p>
-<p>Predicted class labels.</p>
+<p><code>target_values</code> : array-like, shape = [n_samples]</p>
+<p>Predicted target values.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>score(X, y)</em></p>
+<p>Compute the prediction accuracy</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values (true class labels).</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>acc</code> : float</p>
+<p>The prediction accuracy as a float
+between 0.0 and 1.0 (perfect score).</p>
 </li>
 </ul></div>
         

@@ -145,7 +145,7 @@
         
             
 <li >
-    <a href="../NeuralNetMLP/">NeuralNetMLP</a>
+    <a href="../MultiLayerPerceptron/">MultiLayerPerceptron</a>
 </li>
 
         
@@ -904,15 +904,19 @@ plt.ylabel('Missclassifications')
 plt.show()
 </code></pre>
 
-<pre><code>Epoch: 5/5 | Elapsed: 0:00:00 | ETA: 0:00:00
+<pre><code>Iteration: 5/5 | Elapsed: 00:00:00 | ETA: 00:00:00
 </code></pre>
 <p><img alt="png" src="../Perceptron_files/Perceptron_25_1.png" /></p>
-<pre><code>Bias &amp; Weights: [ 0.0097627   0.08408412  0.31449279]
+<pre><code>Bias &amp; Weights: [[ 0.03330268]
+ [ 0.23472335]]
 </code></pre>
 <p><img alt="png" src="../Perceptron_files/Perceptron_25_3.png" /></p>
 <h1 id="api">API</h1>
-<p><em>Perceptron(eta=0.1, epochs=50, shuffle=False, random_seed=None, zero_init_weight=False, print_progress=0)</em></p>
+<p><em>Perceptron(eta=0.1, epochs=50, random_seed=None, print_progress=0)</em></p>
 <p>Perceptron classifier.</p>
+<pre><code>Note that this implementation of the Perceptron expects binary class labels
+in {0, 1}.
+</code></pre>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -921,21 +925,12 @@ plt.show()
 </li>
 <li>
 <p><code>epochs</code> : int (default: 50)</p>
-<p>Number of passes over the training dataset.</p>
-</li>
-<li>
-<p><code>shuffle</code> : bool (default: False)</p>
-<p>Shuffles training data every epoch if True to prevent circles.</p>
+<p>Number of passes over the training dataset.
+Prior to each epoch, the dataset is shuffled to prevent cycles.</p>
 </li>
 <li>
 <p><code>random_seed</code> : int</p>
-<p>Random state for initializing random weights.</p>
-</li>
-<li>
-<p><code>zero_init_weight</code> : bool (default: False)</p>
-<p>If True, weights are initialized to zero instead of small random
-numbers in the interval [-0.1, 0.1];
-ignored if solver='normal equation'</p>
+<p>Random state for initializing random weights and shuffling.</p>
 </li>
 <li>
 <p><code>print_progress</code> : int (default: 0)</p>
@@ -949,8 +944,12 @@ ignored if solver='normal equation'</p>
 <p><strong>Attributes</strong></p>
 <ul>
 <li>
-<p><code>w_</code> : 1d-array</p>
-<p>Weights after fitting.</p>
+<p><code>w_</code> : 2d-array, shape={n_features, 1}</p>
+<p>Model weights after fitting.</p>
+</li>
+<li>
+<p><code>b_</code> : 1d-array, shape={1,}</p>
+<p>Bias unit after fitting.</p>
 </li>
 <li>
 <p><code>cost_</code> : list</p>
@@ -960,8 +959,8 @@ ignored if solver='normal equation'</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, init_weights=True)</em></p>
-<p>Learn weight coefficients from training data.</p>
+<p><em>fit(X, y, init_params=True)</em></p>
+<p>Learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -974,21 +973,20 @@ n_features is the number of features.</p>
 <p>Target values.</p>
 </li>
 <li>
-<p><code>init_weights</code> : bool (default: True)</p>
-<p>Re-initializes weights prior to fitting. Set False to continue
-training with weights from a previous fitting.</p>
+<p><code>init_params</code> : bool (default: True)</p>
+<p>Re-initializes model parametersprior to fitting.
+Set False to continue training with weights from
+a previous model fitting.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
-<p>self</p>
-<hr>
-
-<p><em>net_input(X)</em></p>
-<p>Net input function</p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
 <hr>
 
 <p><em>predict(X)</em></p>
-<p>Predict class labels of X.</p>
+<p>Predict targets from X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1000,8 +998,32 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>class_labels</code> : array-like, shape = [n_samples]</p>
-<p>Predicted class labels.</p>
+<p><code>target_values</code> : array-like, shape = [n_samples]</p>
+<p>Predicted target values.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>score(X, y)</em></p>
+<p>Compute the prediction accuracy</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values (true class labels).</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>acc</code> : float</p>
+<p>The prediction accuracy as a float
+between 0.0 and 1.0 (perfect score).</p>
 </li>
 </ul></div>
         

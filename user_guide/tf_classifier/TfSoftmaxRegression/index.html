@@ -145,7 +145,7 @@
         
             
 <li >
-    <a href="../../classifier/NeuralNetMLP/">NeuralNetMLP</a>
+    <a href="../../classifier/MultiLayerPerceptron/">MultiLayerPerceptron</a>
 </li>
 
         
@@ -779,8 +779,6 @@
         
             <li><a href="#example-3-mnist">Example 3 - MNIST</a></li>
         
-            <li><a href="#example-4-training-and-validation-accuracies-during-training">Example 4 -- Training and Validation Accuracies During Training</a></li>
-        
     
         <li class="main "><a href="#api">API</a></li>
         
@@ -829,19 +827,19 @@ plt.ylabel('Cost')
 plt.show()
 </code></pre>
 
-<pre><code>Epoch: 20/20 | Cost 0.37 | TrainAcc 0.93
+<pre><code>Iteration: 20/20 | Cost 0.37
 </code></pre>
 <p><img alt="png" src="../TfSoftmaxRegression_files/TfSoftmaxRegression_12_1.png" /></p>
 <p>Continue the training if cost could be further decreased via additional epochs. Instead of training the classifier another 20 epochs, we modify the epochs and set them to 500. Also, we want to make sure to set <code>init_weights</code> to <code>False</code> in order to re-use the model parameters from the previous training.</p>
 <pre><code class="python">lr.epochs = 500
-lr.fit(X, y, init_weights=False)
+lr.fit(X, y, init_params=False)
 plt.plot(range(len(lr.cost_)), lr.cost_)
 plt.xlabel('Iterations')
 plt.ylabel('Cost')
 plt.show()
 </code></pre>
 
-<pre><code>Epoch: 500/500 | Cost 0.13 | TrainAcc 0.97
+<pre><code>Iteration: 500/500 | Cost 0.13
 </code></pre>
 <p><img alt="png" src="../TfSoftmaxRegression_files/TfSoftmaxRegression_14_1.png" /></p>
 <pre><code class="python">plot_decision_regions(X, y, clf=lr)
@@ -861,9 +859,9 @@ plt.show()
 </code></pre>
 
 <pre><code>Predicted class probabilities:
- [[  9.92753923e-01   7.24608125e-03   6.90939350e-09]
- [  5.35254460e-03   9.61461246e-01   3.31862010e-02]
- [  1.28487800e-05   2.01715842e-01   7.98271239e-01]]
+ [[  9.92753923e-01   7.24608498e-03   6.90939350e-09]
+ [  5.35254739e-03   9.61461246e-01   3.31862085e-02]
+ [  1.28487918e-05   2.01715842e-01   7.98271239e-01]]
 </code></pre>
 <h2 id="example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</h2>
 <p>Stochastic gradient descent training sample by sample can be achieved by setting the number of minibatches equal to the number of samples in the training dataset; everything between <code>minibatches=1</code> and <code>minibatches=len(y)</code> is "minibatch" stochastic gradient descent.</p>
@@ -898,7 +896,7 @@ plt.title('Softmax Regression - Gradient Descent')
 plt.show()
 </code></pre>
 
-<pre><code>Epoch: 10/10 | Cost 0.15 | TrainAcc 0.96
+<pre><code>Iteration: 10/10 | Cost 0.15
 </code></pre>
 <p><img alt="png" src="../TfSoftmaxRegression_files/TfSoftmaxRegression_22_1.png" /></p>
 <p><img alt="png" src="../TfSoftmaxRegression_files/TfSoftmaxRegression_22_2.png" /></p>
@@ -923,7 +921,7 @@ plt.ylabel('Cost')
 plt.show()
 </code></pre>
 
-<pre><code>Epoch: 100/100 | Cost 4.76 | TrainAcc 0.98
+<pre><code>Iteration: 100/100 | Cost 6.26
 </code></pre>
 <p><img alt="png" src="../TfSoftmaxRegression_files/TfSoftmaxRegression_25_1.png" /></p>
 <pre><code class="python">import numpy as np
@@ -931,7 +929,7 @@ y_pred = lr.predict(X)
 print('Training Accuracy: %.2f%%' % (lr.score(X, y) * 100))
 </code></pre>
 
-<pre><code>Training Accuracy: 97.74%
+<pre><code>Training Accuracy: 93.86%
 </code></pre>
 <pre><code class="python">def plot_digit(X, y, idx):
     img = X[idx].reshape(28,28)
@@ -945,44 +943,10 @@ plot_digit(X, y, 4999)
 <pre><code class="python">print('Prediction: %d' % lr.predict(X[4999, None]))
 </code></pre>
 
-<pre><code>Prediction: 9
+<pre><code>Prediction: 8
 </code></pre>
-<h2 id="example-4-training-and-validation-accuracies-during-training">Example 4 -- Training and Validation Accuracies During Training</h2>
-<p>Training accuracies are collected for each epoch by default. Optionally, we can pass validation dataset during model fitting to compute the validation accuracy values for each epoch. Here, pass 4000 samples from MNIST for training and 1000 samples from MNIST for validation.</p>
-<pre><code class="python">from mlxtend.data import mnist_data
-from mlxtend.preprocessing import shuffle_arrays_unison
-from mlxtend.tf_classifier import TfSoftmaxRegression
-import matplotlib.pyplot as plt
-
-X, y = mnist_data()
-X, y = shuffle_arrays_unison((X, y), random_seed=1)
-
-lr = TfSoftmaxRegression(eta=0.01, 
-                         epochs=100, 
-                         minibatches=20, 
-                         print_progress=True, 
-                         random_seed=1)
-lr.fit(X=X[:4000], 
-       y=y[:4000],
-       X_valid=X[4000:],
-       y_valid=y[4000:])
-</code></pre>
-
-<pre><code>Epoch: 100/100 | Cost 0.59 | TrainAcc 0.99 | ValidAcc 0.85
-</code></pre>
-<pre><code class="python">plt.plot(range(1, lr.epochs + 1), lr.train_acc_, label='training')
-plt.plot(range(1, lr.epochs + 1), lr.valid_acc_, label='validation')
-plt.legend(loc='lower right')
-plt.xlabel('Epoch')
-plt.ylabel('Accuracy')
-plt.legend(loc='lower right')
-plt.grid()
-plt.show()
-</code></pre>
-
-<p><img alt="png" src="../TfSoftmaxRegression_files/TfSoftmaxRegression_32_0.png" /></p>
 <h1 id="api">API</h1>
-<p><em>TfSoftmaxRegression(eta=0.5, epochs=50, minibatches=1, random_seed=None, print_progress=0, dtype=None)</em></p>
+<p><em>TfSoftmaxRegression(eta=0.5, epochs=50, n_classes=None, minibatches=1, random_seed=None, print_progress=0, dtype=None)</em></p>
 <p>Softmax regression classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -992,7 +956,15 @@ plt.show()
 </li>
 <li>
 <p><code>epochs</code> : int (default: 50)</p>
-<p>Passes over the training dataset.</p>
+<p>Passes over the training dataset.
+Prior to each epoch, the dataset is shuffled
+if <code>minibatches &gt; 1</code> to prevent cycles in stochastic gradient descent.</p>
+</li>
+<li>
+<p><code>n_classes</code> : int (default: None)</p>
+<p>A positive integer to declare the number of class labels
+if not all class labels are present in a partial training set.
+Gets the number of class labels automatically if None.</p>
 </li>
 <li>
 <p><code>minibatches</code> : int (default: 1)</p>
@@ -1022,31 +994,23 @@ Minibatch learning if <code>minibatches</code> &gt; 1</p>
 <p><strong>Attributes</strong></p>
 <ul>
 <li>
-<p><code>weights_</code> : 2d-array, shape=[n_features, n_classes]</p>
+<p><code>w_</code> : 2d-array, shape=[n_features, n_classes]</p>
 <p>Weights after fitting.</p>
 </li>
 <li>
-<p><code>biases_</code> : 1D-array, shape=[n_classes]</p>
+<p><code>b_</code> : 1D-array, shape=[n_classes]</p>
 <p>Bias units after fitting.</p>
 </li>
 <li>
 <p><code>cost_</code> : list</p>
 <p>List of floats, the average cross_entropy for each epoch.</p>
 </li>
-<li>
-<p><code>train_acc_</code> : list</p>
-<p>List of training accuracies for each epoch</p>
-</li>
-<li>
-<p><code>valid_acc_</code> : list</p>
-<p>List of validation accuracies for each epoch</p>
-</li>
 </ul>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, init_weights=True, override_minibatches=None, n_classes=None, X_valid=None, y_valid=None)</em></p>
-<p>Learn weight coefficients from training data.</p>
+<p><em>fit(X, y, init_params=True)</em></p>
+<p>Learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1059,28 +1023,10 @@ n_features is the number of features.</p>
 <p>Target values.</p>
 </li>
 <li>
-<p><code>init_weights</code> : bool (default: True)</p>
-<p>(Re)initializes weights to small random floats if True.</p>
-</li>
-<li>
-<p><code>override_minibatches</code> : int or None (default: None)</p>
-<p>Uses a different number of minibatches for this session.</p>
-</li>
-<li>
-<p><code>n_classes</code> : int (default: None)</p>
-<p>A positive integer to declare the number of class labels
-if not all class labels are present in a partial training set.
-Gets the number of class labels automatically if None.
-Ignored if init_weights=False.</p>
-</li>
-<li>
-<p><code>X_valid</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Optional validation set to store the validation accuracy values
-for each epoch via self.valid_acc_</p>
-</li>
-<li>
-<p><code>y_valid</code> : array-like, shape = [n_samples]</p>
-<p>Target values for X_valid</p>
+<p><code>init_params</code> : bool (default: True)</p>
+<p>Re-initializes model parametersprior to fitting.
+Set False to continue training with weights from
+a previous model fitting.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
@@ -1090,7 +1036,7 @@ for each epoch via self.valid_acc_</p>
 <hr>
 
 <p><em>predict(X)</em></p>
-<p>Predict class labels of X.</p>
+<p>Predict targets from X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1102,8 +1048,8 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>class_labels</code> : array-like, shape = [n_samples]</p>
-<p>Predicted class labels.</p>
+<p><code>target_values</code> : array-like, shape = [n_samples]</p>
+<p>Predicted target values.</p>
 </li>
 </ul>
 <hr>

@@ -2,7 +2,28 @@
 
 ---
 
+
+### Version 0.4.2dev
+
+##### Downloads
+
+~
+
+##### New Features
+
+~
+
+##### Changes
+
+~
+
+
 ### Version 0.4.1 (2016-05-01)
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/0.4.1.zip)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.4.1.tar.gz)
 
 ##### New Features
 

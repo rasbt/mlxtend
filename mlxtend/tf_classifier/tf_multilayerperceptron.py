@@ -184,7 +184,8 @@ class TfMultiLayerPerceptron(_BaseClassifier,
                     hidden_layers=self.hidden_layers)
                 tf_weights, tf_biases = self._init_params_from_layermapping(
                     weight_maps=self._weight_maps,
-                    bias_maps=self._bias_maps)
+                    bias_maps=self._bias_maps,
+                    activations=self.activations)
                 self.cost_ = []
 
             else:
@@ -326,14 +327,20 @@ class TfMultiLayerPerceptron(_BaseClassifier,
             b = {k: tf.Variable(self.b_[k]) for k in self.b_}
             return w, b
 
-    def _init_params_from_layermapping(self, weight_maps, bias_maps):
+    def _init_params_from_layermapping(self, weight_maps,
+                                       bias_maps, activations):
         tf_weights, tf_biases = {}, {}
-        for i, k in enumerate(zip(weight_maps, bias_maps)):
+        for i, k, in enumerate(zip(weight_maps, bias_maps)):
+            assert k[0] == k[1]
             if self.random_seed:
                 seed = self.random_seed + i
             else:
                 seed = None
             tf_weights[k[0]] = tf.Variable(tf.random_normal(
                 weight_maps[k[0]][0], seed=seed))
-            tf_biases[k[1]] = tf.zeros(bias_maps[k[1]][0])
+
+            if k[0] in activations and activations[k[0]] != 'relu':
+                tf_biases[k[1]] = tf.zeros(bias_maps[k[1]][0])
+            else:
+                tf_biases[k[1]] = tf.constant(0.1, shape=bias_maps[k[1]][0])
         return tf_weights, tf_biases

@@ -75,6 +75,19 @@ def test_binary_gd():
     assert (y_bin == mlp.predict(X_bin)).all()
 
 
+def test_binary_gd_relu():
+    mlp = MLP(epochs=100,
+              eta=0.5,
+              hidden_layers=[5],
+              optimizer='gradientdescent',
+              activations=['relu'],
+              minibatches=1,
+              random_seed=1)
+
+    mlp.fit(X_bin, y_bin)
+    assert (y_bin == mlp.predict(X_bin)).all()
+
+
 def test_binary_sgd():
     mlp = MLP(epochs=10,
               eta=0.5,

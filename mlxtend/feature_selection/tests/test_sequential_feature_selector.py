@@ -8,9 +8,11 @@ import numpy as np
 from numpy.testing import assert_almost_equal
 from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 from sklearn.neighbors import KNeighborsClassifier
+from mlxtend.classifier import SoftmaxRegression
 from sklearn.datasets import load_iris
 from sklearn.linear_model import LinearRegression
 from sklearn.datasets import load_boston
+from mlxtend.utils import assert_raises
 
 
 def dict_compare_utility(d1, d2):
@@ -203,3 +205,39 @@ def test_regression():
                 print_progress=False)
     sfs_r = sfs_r.fit(X, y)
     assert round(sfs_r.k_score_, 4) == -34.7631
+
+
+def test_clone_params_fail():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    assert_raises(TypeError,
+                  ("Cannot clone object"
+                   " '<class 'mlxtend.classifier."
+                   "softmax_regression.SoftmaxRegression'>'"
+                   " (type <class 'type'>): it does not seem to be a"
+                   " scikit-learn estimator as it does not"
+                   " implement a 'get_params' methods."),
+                  SFS,
+                  SoftmaxRegression,
+                  k_features=3,
+                  clone_estimator=True)
+
+
+def test_clone_params_pass():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    lr = SoftmaxRegression(random_seed=1)
+    sfs1 = SFS(lr,
+               k_features=3,
+               forward=True,
+               floating=False,
+               scoring='accuracy',
+               cv=0,
+               skip_if_stuck=True,
+               clone_estimator=False,
+               print_progress=False,
+               n_jobs=1)
+    sfs1 = sfs1.fit(X, y)
+    assert sfs1.k_feature_idx_ == (0, 1, 2)

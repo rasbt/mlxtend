@@ -865,19 +865,23 @@ Variance Score: 0.7049
 <h2 id="example-2-stacked-regression-and-gridsearch">Example 2 - Stacked Regression and GridSearch</h2>
 <p>To set up a parameter grid for scikit-learn's <code>GridSearch</code>, we simply provide the estimator's names in the parameter grid -- in the special case of the meta-regressor, we append the <code>'meta-'</code> prefix.</p>
 <pre><code class="python">from sklearn.grid_search import GridSearchCV
+from sklearn.linear_model import Lasso
 
 # Initializing models
 
 lr = LinearRegression()
 svr_lin = SVR(kernel='linear')
 ridge = Ridge(random_state=1)
+lasso = Lasso(random_state=1)
 svr_rbf = SVR(kernel='rbf')
-stregr = StackingRegressor(regressors=[svr_lin, lr, ridge], 
+stregr = StackingRegressor(regressors=[svr_lin, lr, ridge, lasso], 
                            meta_regressor=svr_rbf)
 
-params = {'ridge__alpha': [0.8, 10.0],
-          'svr__C': [0.1, 0.5],
-          'meta-svr__C': [0.1, 0.5]}
+params = {'lasso__alpha': [0.1, 1.0, 10.0],
+          'ridge__alpha': [0.1, 1.0, 10.0],
+          'svr__C': [0.1, 1.0, 10.0],
+          'meta-svr__C': [0.1, 1.0, 10.0, 100.0],
+          'meta-svr__gamma': [0.1, 1.0, 10.0]}
 
 grid = GridSearchCV(estimator=stregr, 
                     param_grid=params, 
@@ -888,16 +892,17 @@ grid.fit(X, y)
 for params, mean_score, scores in grid.grid_scores_:
     print(&quot;%0.3f (+/-%0.03f) for %r&quot;
         % (mean_score, scores.std() / 2, params))
+    break
+print('...\n\n')
+print('Best Parameters:\n%s' % grid.best_params_)
 </code></pre>
 
-<pre><code>-8.358 (+/-6.361) for {'meta-svr__C': 0.1, 'svr__C': 0.1, 'ridge__alpha': 0.8}
--7.852 (+/-5.875) for {'meta-svr__C': 0.1, 'svr__C': 0.5, 'ridge__alpha': 0.8}
--8.450 (+/-6.406) for {'meta-svr__C': 0.1, 'svr__C': 0.1, 'ridge__alpha': 10.0}
--8.006 (+/-5.975) for {'meta-svr__C': 0.1, 'svr__C': 0.5, 'ridge__alpha': 10.0}
--4.078 (+/-3.378) for {'meta-svr__C': 0.5, 'svr__C': 0.1, 'ridge__alpha': 0.8}
--3.102 (+/-2.417) for {'meta-svr__C': 0.5, 'svr__C': 0.5, 'ridge__alpha': 0.8}
--4.573 (+/-3.742) for {'meta-svr__C': 0.5, 'svr__C': 0.1, 'ridge__alpha': 10.0}
--3.405 (+/-2.594) for {'meta-svr__C': 0.5, 'svr__C': 0.5, 'ridge__alpha': 10.0}
+<pre><code>-9.810 (+/-6.862) for {'lasso__alpha': 0.1, 'meta-svr__C': 0.1, 'meta-svr__gamma': 0.1, 'ridge__alpha': 0.1, 'svr__C': 0.1}
+...
+
+
+Best Parameters:
+{'lasso__alpha': 0.1, 'meta-svr__C': 1.0, 'meta-svr__gamma': 1.0, 'ridge__alpha': 0.1, 'svr__C': 10.0}
 </code></pre>
 <pre><code class="python"># Evaluate and visualize the fit
 print(&quot;Mean Squared Error: %.4f&quot;
@@ -911,8 +916,8 @@ with plt.style.context(('seaborn-whitegrid')):
 plt.show()
 </code></pre>
 
-<pre><code>Mean Squared Error: 0.2104
-Variance Score: 0.6955
+<pre><code>Mean Squared Error: 0.1844
+Variance Score: 0.7331
 </code></pre>
 <p><img alt="png" src="../StackingRegressor_files/StackingRegressor_19_1.png" /></p>
 <p>In case we are planning to use a regression algorithm multiple times, all we need to do is to add an additional number suffix in the parameter grid as shown below:</p>
@@ -928,6 +933,11 @@ Invoking the <code>fit</code> method on the <code>StackingRegressor</code> will 
 of those original regressors that will
 be stored in the class attribute
 <code>self.regr_</code>.</p>
+</li>
+<li>
+<p><code>meta_regressor</code> : object</p>
+<p>The meta-regressor to be fitted on the ensemble of
+regressors</p>
 </li>
 <li>
 <p><code>verbose</code> : int, optional (default=0)</p>
@@ -1024,7 +1034,7 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>maj</code> : array-like, shape = [n_samples]</p>
+<p><code>y_target</code> : array-like, shape = [n_samples]</p>
 <p>Predicted target values.</p>
 </li>
 </ul>

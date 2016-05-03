@@ -59,7 +59,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         algorithm gets stuck in cycles.
     n_jobs : int (default: 1)
         The number of CPUs to use for cross validation. -1 means 'all CPUs'.
-    pre_dispatch : int, or string
+    pre_dispatch : int, or string (default: '2*n_jobs')
         Controls the number of jobs that get dispatched
         during parallel execution in cross_val_score.
         Reducing this number can be useful to avoid an explosion of
@@ -71,6 +71,11 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         An int, giving the exact number of total jobs that are spawned
         A string, giving an expression as a function
             of n_jobs, as in `2*n_jobs`
+    clone_estimator : bool (default: True)
+        Clones estimator if True; works with the original estimator instance
+        if False. Set to False if the estimator doesn't
+        implement scikit-learn's set_params and get_params methods.
+        In addition, it is required to set cv=0, and n_jobs=1.
 
     Attributes
     ----------
@@ -92,7 +97,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                  forward=True, floating=False,
                  print_progress=True, scoring='accuracy',
                  cv=5, skip_if_stuck=True, n_jobs=1,
-                 pre_dispatch='2*n_jobs'):
+                 pre_dispatch='2*n_jobs',
+                 clone_estimator=True):
         self.estimator = estimator
         self.k_features = k_features
         self.forward = forward
@@ -106,9 +112,28 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.n_jobs = n_jobs
         self.named_est = {key: value for key, value in
                           _name_estimators([self.estimator])}
+        self.clone_estimator = clone_estimator
+        if self.clone_estimator:
+            self.est_ = clone(self.estimator)
+        else:
+            self.est_ = self.estimator
 
     def fit(self, X, y):
-        self.est_ = clone(self.estimator)
+        """Perform feature selection and learn model from training data.
+
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+        y : array-like, shape = [n_samples]
+            Target values.
+
+        Returns
+        -------
+        self : object
+
+        """
         if X.shape[1] < self.k_features:
             raise AttributeError('Features in X < k_features')
         if self.skip_if_stuck:
@@ -235,13 +260,61 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         return res
 
     def transform(self, X):
+        """Reduce X to its most important features.
+
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+
+        Returns
+        -------
+        Reduced feature subset of X, shape={n_samples, k_features}
+
+        """
         return X[:, self.k_feature_idx_]
 
     def fit_transform(self, X, y):
+        """Fit to training data then reduce X to its most important features.
+
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+
+        Returns
+        -------
+        Reduced feature subset of X, shape={n_samples, k_features}
+
+        """
         self.fit(X, y)
         return self.transform(X)
 
     def get_metric_dict(self, confidence_interval=0.95):
+        """Return metric dictionary
+
+        Parameters
+        ----------
+        confidence_interval : float (default: 0.95)
+            A positive float between 0.0 and 1.0 to compute the confidence
+            interval bounds of the CV score averages.
+
+        Returns
+        ----------
+        Dictionary with items where each dictionary value is a list
+        with the number of iterations (number of feature subsets) as
+        its length. The dictionary keys corresponding to these lists
+        are as follows:
+            'feature_idx': tuple of the indices of the feature subset
+            'cv_scores': list with individual CV scores
+            'avg_score': of CV average scores
+            'std_dev': standard devation of the CV score average
+            'std_err': standard error of the CV score average
+            'ci_bound': confidence interval bound of the CV score average
+
+        """
         fdict = deepcopy(self.subsets_)
         for k in fdict:
             std_dev = np.std(self.subsets_[k]['cv_scores'])

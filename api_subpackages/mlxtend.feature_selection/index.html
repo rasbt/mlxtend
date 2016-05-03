@@ -782,7 +782,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.4.1dev </p>
+<p>mlxtend version: 0.4.2dev </p>
 <h2 id="columnselector">ColumnSelector</h2>
 <p><em>ColumnSelector(cols)</em></p>
 <p>Select specific columns from a data set.</p>
@@ -843,7 +843,7 @@ specified columns from a numpy array.
 <li><code>fig</code> : matplotlib.pyplot.figure() object</li>
 </ul>
 <h2 id="sequentialfeatureselector">SequentialFeatureSelector</h2>
-<p><em>SequentialFeatureSelector(estimator, k_features, forward=True, floating=False, print_progress=True, scoring='accuracy', cv=5, skip_if_stuck=True, n_jobs=1, pre_dispatch='2</em>n_jobs')*</p>
+<p><em>SequentialFeatureSelector(estimator, k_features, forward=True, floating=False, print_progress=True, scoring='accuracy', cv=5, skip_if_stuck=True, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
 <p>Sequential Feature Selection for Classification and Regression.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -895,7 +895,7 @@ algorithm gets stuck in cycles.</p>
 <p>The number of CPUs to use for cross validation. -1 means 'all CPUs'.</p>
 </li>
 <li>
-<p><code>pre_dispatch</code> : int, or string</p>
+<p><code>pre_dispatch</code> : int, or string (default: '2*n_jobs')</p>
 <p>Controls the number of jobs that get dispatched
 during parallel execution in cross_val_score.
 Reducing this number can be useful to avoid an explosion of
@@ -907,6 +907,13 @@ to avoid delays due to on-demand spawning of the jobs
 An int, giving the exact number of total jobs that are spawned
 A string, giving an expression as a function
 of n_jobs, as in <code>2*n_jobs</code></p>
+</li>
+<li>
+<p><code>clone_estimator</code> : bool (default: True)</p>
+<p>Clones estimator if True; works with the original estimator instance
+if False. Set to False if the estimator doesn't
+implement scikit-learn's set_params and get_params methods.
+In addition, it is required to set cv=0, and n_jobs=1.</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>
@@ -934,15 +941,60 @@ keys: 'feature_idx' (tuple of indices of the feature subset)
 <hr>
 
 <p><em>fit(X, y)</em></p>
-<p>None</p>
+<p>Perform feature selection and learn model from training data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
 <hr>
 
 <p><em>fit_transform(X, y)</em></p>
-<p>None</p>
+<p>Fit to training data then reduce X to its most important features.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Reduced feature subset of X, shape={n_samples, k_features}</p>
 <hr>
 
 <p><em>get_metric_dict(confidence_interval=0.95)</em></p>
-<p>None</p>
+<p>Return metric dictionary</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>confidence_interval</code> : float (default: 0.95)</p>
+<p>A positive float between 0.0 and 1.0 to compute the confidence
+interval bounds of the CV score averages.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Dictionary with items where each dictionary value is a list
+    with the number of iterations (number of feature subsets) as
+    its length. The dictionary keys corresponding to these lists
+    are as follows:
+    'feature_idx': tuple of the indices of the feature subset
+    'cv_scores': list with individual CV scores
+    'avg_score': of CV average scores
+    'std_dev': standard devation of the CV score average
+    'std_err': standard error of the CV score average
+    'ci_bound': confidence interval bound of the CV score average</p>
 <hr>
 
 <p><em>get_params(deep=True)</em></p>
@@ -972,7 +1024,17 @@ component of a nested object.
 <hr>
 
 <p><em>transform(X)</em></p>
-<p>None</p></div>
+<p>Reduce X to its most important features.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Reduced feature subset of X, shape={n_samples, k_features}</p></div>
         
     </div>
 

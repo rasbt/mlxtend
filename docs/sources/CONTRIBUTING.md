@@ -413,3 +413,69 @@ Finally, to cleanup our local drive, remove the virtual testing environment via
 ```bash
 $ conda remove --name 'mlxtend-testing' --all
 ```
+
+## Creating a Conda build
+
+General instruction on how to create a Conda package can be found at [http://conda.pydata.org/docs/build_tutorials/pkgs.html](http://conda.pydata.org/docs/build_tutorials/pkgs.html).
+
+**1.** Create a conda skeleton in your home directory:
+
+```bash
+conda skeleton pypi mlxtend --version 0.4.1
+```
+
+Executing the command above will create a new directory called `mlxtend`. Please inspect the meta.yaml file and modify section if appropriate.
+
+**2.** Create builds for Python 2.7, 3.4, and 3.5 by executing the following commands:
+
+```bash
+conda build --python 2.7 mlxtend
+conda build --python 3.5 mlxtend
+conda build --python 3.4 mlxtend
+```
+
+**3.** Create a new conda environment and install the package locally to check if it works correctly:
+
+```bash
+conda create -n testmlxtend python=3
+source activate testmlxtend
+conda install --use-local mlxtend
+conda uninstall mlxtend
+```
+
+**4.** Convert the packages for other platforms (modify the paths in the following commands if necessary):
+
+```bash
+conda convert --platform all /Users/Sebastian/miniconda3/conda-bld/osx-64/mlxtend-0.4.1-py27_0.tar.bz2 -o mlxtend_py27/
+
+conda convert --platform all /Users/Sebastian/miniconda3/conda-bld/osx-64/mlxtend-0.4.1-py34_0.tar.bz2 -o mlxtend_py34/
+
+conda convert --platform all /Users/Sebastian/miniconda3/conda-bld/osx-64/mlxtend-0.4.1-py35_0.tar.bz2 -o mlxtend_py35/
+```
+
+**5.** Finally, upload the packages to Anaconda.org (modify the paths in the following commands if necessary):
+
+```bash
+anaconda upload /Users/Sebastian/mlxtend_py35/win-64/mlxtend-0.4.1-py35_0.tar.bz2
+anaconda upload /Users/Sebastian/mlxtend_py35/win-32/mlxtend-0.4.1-py35_0.tar.bz2
+anaconda upload /Users/Sebastian/mlxtend_py35/osx-64/mlxtend-0.4.1-py35_0.tar.bz2
+anaconda upload /Users/Sebastian/mlxtend_py35/linux-64/mlxtend-0.4.1-py35_0.tar.bz2
+anaconda upload /Users/Sebastian/mlxtend_py35/linux-32/mlxtend-0.4.1-py35_0.tar.bz2
+anaconda upload /Users/Sebastian/mlxtend_py34/win-64/mlxtend-0.4.1-py34_0.tar.bz2
+anaconda upload /Users/Sebastian/mlxtend_py34/win-32/mlxtend-0.4.1-py34_0.tar.bz2
+anaconda upload /Users/Sebastian/mlxtend_py34/osx-64/mlxtend-0.4.1-py34_0.tar.bz2
+anaconda upload /Users/Sebastian/mlxtend_py34/linux-64/mlxtend-0.4.1-py34_0.tar.bz2
+anaconda upload /Users/Sebastian/mlxtend_py34/linux-32/mlxtend-0.4.1-py34_0.tar.bz2
+anaconda upload /Users/Sebastian/mlxtend_py27/win-64/mlxtend-0.4.1-py27_0.tar.bz2
+anaconda upload /Users/Sebastian/mlxtend_py27/win-32/mlxtend-0.4.1-py27_0.tar.bz2
+anaconda upload /Users/Sebastian/mlxtend_py27/osx-64/mlxtend-0.4.1-py27_0.tar.bz2
+anaconda upload /Users/Sebastian/mlxtend_py27/linux-64/mlxtend-0.4.1-py27_0.tar.bz2
+anaconda upload /Users/Sebastian/mlxtend_py27/linux-32/mlxtend-0.4.1-py27_0.tar.bz2
+```
+
+**6.** Install the deployed packages to check if the upload was successful:
+
+```bash
+conda install -c rasbt mlxtend
+conda uninstall mlxtend
+```

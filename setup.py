@@ -19,6 +19,9 @@ setup(name='mlxtend',
       package_data={'': ['LICENSE', 'README.md', 'requirements.txt']
                     },
       include_package_data=True,
+      install_requires=['numpy>=1.10.4', 'scipy>=0.17'],
+      extras_require={'testing': ['nose'],
+                      'docs': ['mkdocs']},
       license='BSD 3-Clause',
       platforms='any',
       classifiers=[

@@ -4,6 +4,7 @@
 #
 # License: BSD 3 clause
 
+import sys
 import numpy as np
 from numpy.testing import assert_almost_equal
 from mlxtend.feature_selection import SequentialFeatureSelector as SFS
@@ -211,13 +212,21 @@ def test_clone_params_fail():
     iris = load_iris()
     X = iris.data
     y = iris.target
+
+    if sys.version_info >= (3, 0):
+        objtype = 'class'
+    else:
+        objtype = 'type'
+
+    expect = ("Cannot clone object"
+              " '<class 'mlxtend.classifier."
+              "softmax_regression.SoftmaxRegression'>'"
+              " (type <%s 'type'>): it does not seem to be a"
+              " scikit-learn estimator as it does not"
+              " implement a 'get_params' methods.") % objtype
+
     assert_raises(TypeError,
-                  ("Cannot clone object"
-                   " '<class 'mlxtend.classifier."
-                   "softmax_regression.SoftmaxRegression'>'"
-                   " (type <class 'type'>): it does not seem to be a"
-                   " scikit-learn estimator as it does not"
-                   " implement a 'get_params' methods."),
+                  expect,
                   SFS,
                   SoftmaxRegression,
                   k_features=3,
@@ -230,7 +239,7 @@ def test_clone_params_pass():
     y = iris.target
     lr = SoftmaxRegression(random_seed=1)
     sfs1 = SFS(lr,
-               k_features=3,
+               k_features=2,
                forward=True,
                floating=False,
                scoring='accuracy',
@@ -240,4 +249,4 @@ def test_clone_params_pass():
                print_progress=False,
                n_jobs=1)
     sfs1 = sfs1.fit(X, y)
-    assert sfs1.k_feature_idx_ == (0, 1, 2)
+    assert(sfs1.k_feature_idx_ == (1, 3))

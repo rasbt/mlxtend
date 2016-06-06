@@ -126,7 +126,7 @@ class SoftmaxRegression(_BaseClassifier, _BaseMultiClass,):
                 # update in opp. direction of the cost gradient
                 self.w_ -= (self.eta * grad +
                             self.eta * self.l2 * self.w_)
-                self.b_ -= (self.eta * np.mean(diff, axis=0))
+                self.b_ -= (self.eta * np.sum(diff, axis=0))
 
             # compute cost of the whole epoch
             net = self._net_input(X, self.w_, self.b_)

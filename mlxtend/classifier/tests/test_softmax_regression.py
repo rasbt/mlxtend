@@ -37,8 +37,8 @@ def test_labels():
 
 
 def test_binary_logistic_regression_gd():
-    t = np.array([[1.92, -1.91],
-                  [-3.15, 3.13]])
+    t = np.array([[0.13, -0.12],
+                  [-3.07, 3.05]])
     lr = SoftmaxRegression(epochs=200,
                            eta=0.005,
                            minibatches=1,
@@ -50,8 +50,8 @@ def test_binary_logistic_regression_gd():
 
 
 def test_refit_weights():
-    t = np.array([[1.92, -1.91],
-                  [-3.15, 3.13]])
+    t = np.array([[0.13, -0.12],
+                  [-3.07, 3.05]])
     lr = SoftmaxRegression(epochs=100,
                            eta=0.005,
                            minibatches=1,
@@ -81,8 +81,8 @@ def test_binary_logistic_regression_sgd():
 
 
 def test_binary_l2_regularization_gd():
-    t = np.array([[1.23, -1.23],
-                  [-2.28, 2.27]])
+    t = np.array([[-0.17, 0.17],
+                  [-2.26, 2.26]])
     lr = SoftmaxRegression(epochs=200,
                            eta=0.005,
                            l2=1.0,
@@ -95,8 +95,8 @@ def test_binary_l2_regularization_gd():
 
 
 def test_multi_logistic_regression_gd_weights():
-    t = np.array([[0.58, -3.72, 3.15],
-                  [-3.52, 3.21, 0.28]])
+    t = np.array([[-0.95, -2.45, 3.4],
+                  [-3.95, 2.34, 1.59]])
     lr = SoftmaxRegression(epochs=200,
                            eta=0.005,
                            minibatches=1,
@@ -113,9 +113,9 @@ def test_multi_logistic_probas():
     lr.fit(X, y)
     idx = [0, 50, 149]  # sample labels: 0, 1, 2
     y_pred = lr.predict_proba(X[idx])
-    exp = np.array([[1.0, 0.0, 0.0],
-                    [0.08, 0.60, 0.32],
-                    [0.0, 0.00, 0.99]])
+    exp = np.array([[0.99, 0.01, 0.00],
+                    [0.01, 0.88, 0.11],
+                    [0.00, 0.02, 0.98]])
     np.testing.assert_almost_equal(y_pred, exp, 2)
 
 

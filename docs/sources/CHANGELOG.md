@@ -17,6 +17,7 @@
 
 - Use small, positive bias units in `TfMultiLayerPerceptron`'s hidden layer(s) if their activations are ReLUs in order to avoid dead neurons
 - Added an optional "clone_estimator" parameter to the `SequentialFeatureSelector`
+- Fixed a bug in `classifier.SoftmaxRegression` where the mean values of the offsets were used to update the bias units rather than their sum
 
 ### Version 0.4.1 (2016-05-01)
 

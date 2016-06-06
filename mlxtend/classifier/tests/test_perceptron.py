@@ -4,6 +4,7 @@
 #
 # License: BSD 3 clause
 
+import sys
 import numpy as np
 from mlxtend.classifier import Perceptron
 from mlxtend.data import iris_data
@@ -24,8 +25,16 @@ X_std[:, 1] = (X[:, 1] - X[:, 1].mean()) / X[:, 1].std()
 def test_invalid_labels_1():
     y1 = np.where(y0 == 0, 2, 1)
     ppn = Perceptron(epochs=15, eta=0.01, random_seed=1)
+
+    if sys.version_info >= (3, 0):
+        objtype = '{(0, 1)}'
+    else:
+        objtype = 'set([(0, 1)])'
+
+    expect = 'Labels not in %s.\nFound (1, 2)' % objtype
+
     assert_raises(AttributeError,
-                  'Labels not in {(0, 1)}.\nFound (1, 2)',
+                  expect,
                   ppn.fit,
                   X,
                   y1,
@@ -35,6 +44,7 @@ def test_invalid_labels_1():
 def test_invalid_labels_2():
     y1 = np.where(y0 == 0, -1, 1)
     ppn = Perceptron(epochs=15, eta=0.01, random_seed=1)
+
     assert_raises(AttributeError,
                   'y array must not contain negative labels.\nFound [-1  1]',
                   ppn.fit,

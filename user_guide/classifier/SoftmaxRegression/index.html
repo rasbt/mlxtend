@@ -994,7 +994,7 @@ lr = SoftmaxRegression(eta=0.075,
 lr.fit(X, y)
 
 plot_decision_regions(X, y, clf=lr)
-plt.title('Softmax Regression - Stochastic Gradient Descent')
+plt.title('Softmax Regression - Gradient Descent')
 plt.show()
 
 plt.plot(range(len(lr.cost_)), lr.cost_)
@@ -1003,7 +1003,7 @@ plt.ylabel('Cost')
 plt.show()
 </code></pre>
 
-<pre><code>Iteration: 500/500 | Cost 0.07 | Elapsed: 0:00:00 | ETA: 0:00:00
+<pre><code>Iteration: 500/500 | Cost 0.06 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
 <p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_34_1.png" /></p>
 <p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_34_2.png" /></p>
@@ -1020,9 +1020,9 @@ print('Last 3 Class Labels:\n %s' % y_pred[-3:])
 </code></pre>
 
 <pre><code>Last 3 Class Labels:
- [[  5.19550893e-07   3.12873619e-02   9.68712119e-01]
- [  1.08556117e-09   2.37254987e-03   9.97627449e-01]
- [  1.07576472e-05   1.63409763e-01   8.36579479e-01]]
+ [[  1.27761006e-12   8.49689648e-03   9.91503104e-01]
+ [  2.68342439e-16   2.06778782e-04   9.99793221e-01]
+ [  1.05327110e-09   1.16375286e-01   8.83624713e-01]]
 </code></pre>
 <h2 id="example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</h2>
 <pre><code class="python">from mlxtend.data import iris_data

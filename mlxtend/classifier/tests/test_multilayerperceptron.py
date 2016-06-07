@@ -25,26 +25,26 @@ X[:, 1] = (X[:, 1] - X[:, 1].mean()) / X[:, 1].std()
 def test_multiclass_gd_acc():
     mlp = MLP(epochs=20,
               eta=0.05,
-              hidden_layers=[25],
+              hidden_layers=[10],
               minibatches=1,
               random_seed=1)
     mlp.fit(X, y)
     assert round(mlp.cost_[0], 2) == 0.55, mlp.cost_[0]
-    assert round(mlp.cost_[-1], 2) == 0.02, mlp.cost_[-1]
+    assert round(mlp.cost_[-1], 2) == 0.01, mlp.cost_[-1]
     assert (y == mlp.predict(X)).all()
 
 
 def test_predict_proba():
     mlp = MLP(epochs=20,
               eta=0.05,
-              hidden_layers=[25],
+              hidden_layers=[10],
               minibatches=1,
               random_seed=1)
     mlp.fit(X, y)
 
     pred = mlp.predict_proba(X[0, np.newaxis])
-    exp = np.array([[0.56, 0.22, 0.22]])
-    np.testing.assert_almost_equal(pred, exp, decimal=2)
+    exp = np.array([[0.6, 0.2, 0.2]])
+    np.testing.assert_almost_equal(pred, exp, decimal=1)
 
 
 def test_multiclass_sgd_acc():
@@ -125,16 +125,18 @@ def test_momentum_1():
 
 
 def test_retrain():
-    mlp = MLP(epochs=10,
+    mlp = MLP(epochs=5,
               eta=0.05,
-              hidden_layers=[25],
+              hidden_layers=[10],
               minibatches=len(y),
               random_seed=1)
 
     mlp.fit(X, y)
     cost_1 = mlp.cost_[-1]
+    mlp.fit(X, y)
+    cost_2 = mlp.cost_[-1]
     mlp.fit(X, y, init_params=False)
+    cost_3 = mlp.cost_[-1]
 
-    assert round(cost_1, 3) == 0.058, cost_1
-    assert round(mlp.cost_[-1], 3) == 0.023, mlp.cost_[-1]
-    assert (y == mlp.predict(X)).all()
+    assert cost_2 == cost_1
+    assert cost_3 < (cost_2 / 2.0)

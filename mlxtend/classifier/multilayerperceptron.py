@@ -157,7 +157,7 @@ class MultiLayerPerceptron(_BaseClassifier, _BaseMultiClass, _BaseMultiLayer):
                 grad_B_out = np.sum(sigma_out, axis=0)
 
                 # LEARNING RATE ADJUSTEMENTS
-                self._decr_eta /= (1 + self.decrease_const * i)
+                self._decr_eta /= (1.0 + self.decrease_const * i)
 
                 # REGULARIZATION AND WEIGHT UPDATES
 
@@ -213,7 +213,7 @@ class MultiLayerPerceptron(_BaseClassifier, _BaseMultiClass, _BaseMultiLayer):
 
     def _compute_cost(self, cross_entropy):
         L2_term = (self.l2 *
-                   (np.sum(self.w_[1] ** 2) + np.sum(self.w_['out'] ** 2)))
+                   (np.sum(self.w_[1] ** 2.0) + np.sum(self.w_['out'] ** 2.0)))
 
         L1_term = (self.l1 *
                    (np.abs(self.w_[1]).sum() + np.abs(self.w_['out']).sum()))

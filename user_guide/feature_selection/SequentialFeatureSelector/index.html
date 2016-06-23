@@ -821,7 +821,7 @@
 </ol>
 <p>The <strong><em>floating</em></strong> variants, SFFS and SFBS, can be considered as extensions to the simpler SFS and SBS algorithms. The floating algorithms have an additional exclusion or inclusion step to remove features once they were included (or excluded), so that a larger number of feature subset combinations can be sampled. It is important to emphasize that this step is conditional and only occurs if the resulting feature subset is assessed as "better" by the criterion function after removal (or addition) of a particular feature. Furthermore, I added an optional check to skip the conditional exclusion steps if the algorithm gets stuck in cycles.  </p>
 <hr />
-<p>How is this different from <em>Recursive Feature Elimination</em> (RFE)  -- e.g., as implemented in <code>sklearn.feature_selection.RFE</code>? RFE is computationally less complex using the feature weight coefficients (e.g., linear models) or feature importances (tree-based algorithms) to eliminate features recursively, whereas SFSs eliminate (or add) features based on a user-defined classifier/regression performance metric.</p>
+<p>How is this different from <em>Recursive Feature Elimination</em> (RFE)  -- e.g., as implemented in <code>sklearn.feature_selection.RFE</code>? RFE is computationally less complex using the feature weight coefficients (e.g., linear models) or feature importance (tree-based algorithms) to eliminate features recursively, whereas SFSs eliminate (or add) features based on a user-defined classifier/regression performance metric.</p>
 <hr />
 <p>The SFAs  are outlined in pseudo code below:</p>
 <h2 id="sequential-forward-selection-sfs">Sequential Forward Selection (SFS)</h2>
@@ -1392,8 +1392,8 @@ gs = GridSearchCV(estimator=pipe,
 gs = gs.fit(X_train, y_train)
 </code></pre>
 
-<pre><code>[Parallel(n_jobs=1)]: Done  49 tasks       | elapsed:    2.7s
-[Parallel(n_jobs=1)]: Done  80 out of  80 | elapsed:    4.7s finished
+<pre><code>[Parallel(n_jobs=1)]: Done  49 tasks       | elapsed:    2.8s
+[Parallel(n_jobs=1)]: Done  80 out of  80 | elapsed:    4.8s finished
 
 
 Fitting 5 folds for each of 16 candidates, totalling 80 fits
@@ -1402,10 +1402,68 @@ Fitting 5 folds for each of 16 candidates, totalling 80 fits
 <pre><code class="python">print(&quot;Best parameters via GridSearch&quot;, gs.best_params_)
 </code></pre>
 
-<pre><code>Best parameters via GridSearch {'sfs__estimator__n_neighbors': 2, 'sfs__k_features': 3}
+<pre><code>Best parameters via GridSearch {'sfs__estimator__n_neighbors': 1, 'sfs__k_features': 3}
+</code></pre>
+<h3 id="obtaining-the-best-k-feature-indices-after-gridsearch">Obtaining the best <em>k</em> feature indices after GridSearch</h3>
+<p>If we are interested in the best <em>k</em> feature indices via <code>SequentialFeatureSelection.k_feature_idx_</code>, we have to initialize a <code>GridSearchCV</code> object with <code>refit=True</code>. Now, the grid search object will take the complete training dataset and the best parameters, which it found via cross-validation, to train the estimator pipeline.</p>
+<pre><code class="python">gs = GridSearchCV(estimator=pipe, 
+                  param_grid=param_grid, 
+                  scoring='accuracy', 
+                  n_jobs=1, 
+                  cv=5, 
+                  verbose=1, 
+                  refit=True)
+gs = gs.fit(X_train, y_train)
+</code></pre>
+
+<pre><code>[Parallel(n_jobs=1)]: Done  49 tasks       | elapsed:    3.0s
+[Parallel(n_jobs=1)]: Done  80 out of  80 | elapsed:    5.2s finished
+
+
+Fitting 5 folds for each of 16 candidates, totalling 80 fits
+</code></pre>
+<p>After running the grid search, we can access the individual pipeline objects of the <code>best_estimator_</code> via the <code>steps</code> attribute.</p>
+<pre><code class="python">gs.best_estimator_.steps
+</code></pre>
+
+<pre><code>[('sfs', SequentialFeatureSelector(clone_estimator=True, cv=5,
+               estimator=KNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',
+             metric_params=None, n_jobs=1, n_neighbors=1, p=2,
+             weights='uniform'),
+               floating=False, forward=True, k_features=3, n_jobs=1,
+               pre_dispatch='2*n_jobs', print_progress=False,
+               scoring='accuracy', skip_if_stuck=True)),
+ ('knn',
+  KNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',
+             metric_params=None, n_jobs=1, n_neighbors=2, p=2,
+             weights='uniform'))]
+</code></pre>
+<p>Via sub-indexing, we can then obtain the best-selected feature subset:</p>
+<pre><code class="python">print('Best features:', gs.best_estimator_.steps[0][1].k_feature_idx_)
+</code></pre>
+
+<pre><code>Best features: (0, 1, 3)
+</code></pre>
+<p>During cross-validation, this feature combination had a CV accuracy of:</p>
+<pre><code class="python">print('Best score:', gs.best_score_)
+</code></pre>
+
+<pre><code>Best score: 0.94
+</code></pre>
+<pre><code class="python">gs.best_params_
+</code></pre>
+
+<pre><code>{'sfs__estimator__n_neighbors': 1, 'sfs__k_features': 3}
+</code></pre>
+<p><strong>Alternatively</strong>, if we can set the "best grid search parameters" in our pipeline manually if we ran <code>GridSearchCV</code> with <code>refit=False</code>. It should yield the same results:</p>
+<pre><code class="python">pipe.set_params(**gs.best_params_).fit(X_train, y_train)
+print('Best features:', pipe.steps[0][1].k_feature_idx_)
+</code></pre>
+
+<pre><code>Best features: (0, 1, 3)
 </code></pre>
 <h1 id="api">API</h1>
-<p><em>SequentialFeatureSelector(estimator, k_features, forward=True, floating=False, print_progress=True, scoring='accuracy', cv=5, skip_if_stuck=True, n_jobs=1, pre_dispatch='2</em>n_jobs')*</p>
+<p><em>SequentialFeatureSelector(estimator, k_features, forward=True, floating=False, print_progress=True, scoring='accuracy', cv=5, skip_if_stuck=True, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
 <p>Sequential Feature Selection for Classification and Regression.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1468,7 +1526,14 @@ Use this for lightweight and fast-running jobs,
 to avoid delays due to on-demand spawning of the jobs
 An int, giving the exact number of total jobs that are spawned
 A string, giving an expression as a function
-of n_jobs, as in <code>'2*n_jobs'</code></p>
+of n_jobs, as in <code>2*n_jobs</code></p>
+</li>
+<li>
+<p><code>clone_estimator</code> : bool (default: True)</p>
+<p>Clones estimator if True; works with the original estimator instance
+if False. Set to False if the estimator doesn't
+implement scikit-learn's set_params and get_params methods.
+In addition, it is required to set cv=0, and n_jobs=1.</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>
@@ -1496,15 +1561,60 @@ keys: 'feature_idx' (tuple of indices of the feature subset)
 <hr>
 
 <p><em>fit(X, y)</em></p>
-<p>None</p>
+<p>Perform feature selection and learn model from training data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
 <hr>
 
 <p><em>fit_transform(X, y)</em></p>
-<p>None</p>
+<p>Fit to training data then reduce X to its most important features.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Reduced feature subset of X, shape={n_samples, k_features}</p>
 <hr>
 
 <p><em>get_metric_dict(confidence_interval=0.95)</em></p>
-<p>None</p>
+<p>Return metric dictionary</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>confidence_interval</code> : float (default: 0.95)</p>
+<p>A positive float between 0.0 and 1.0 to compute the confidence
+interval bounds of the CV score averages.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Dictionary with items where each dictionary value is a list
+    with the number of iterations (number of feature subsets) as
+    its length. The dictionary keys corresponding to these lists
+    are as follows:
+    'feature_idx': tuple of the indices of the feature subset
+    'cv_scores': list with individual CV scores
+    'avg_score': of CV average scores
+    'std_dev': standard devation of the CV score average
+    'std_err': standard error of the CV score average
+    'ci_bound': confidence interval bound of the CV score average</p>
 <hr>
 
 <p><em>get_params(deep=True)</em></p>
@@ -1534,7 +1644,17 @@ component of a nested object.
 <hr>
 
 <p><em>transform(X)</em></p>
-<p>None</p>
+<p>Reduce X to its most important features.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Reduced feature subset of X, shape={n_samples, k_features}</p>
 <p><br><br>
 <em>plot_sequential_feature_selection(metric_dict, kind='std_dev', color='blue', bcolor='steelblue', marker='o', alpha=0.2, ylabel='Performance', confidence_interval=0.95)</em></p>
 <p>Plot sequential feature selection.</p>

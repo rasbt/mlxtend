@@ -250,3 +250,51 @@ def test_clone_params_pass():
                n_jobs=1)
     sfs1 = sfs1.fit(X, y)
     assert(sfs1.k_feature_idx_ == (1, 3))
+
+
+def test_transform_not_fitted():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=4)
+
+    sfs1 = SFS(knn,
+               k_features=2,
+               forward=True,
+               floating=False,
+               scoring='accuracy',
+               cv=0,
+               skip_if_stuck=True,
+               clone_estimator=False,
+               print_progress=False,
+               n_jobs=1)
+
+    expect = 'SequentialFeatureSelector has not been fitted, yet.'
+
+    assert_raises(AttributeError,
+                  expect,
+                  sfs1.transform,
+                  X)
+
+def test_get_metric_dict_not_fitted():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=4)
+
+    sfs1 = SFS(knn,
+               k_features=2,
+               forward=True,
+               floating=False,
+               scoring='accuracy',
+               cv=0,
+               skip_if_stuck=True,
+               clone_estimator=False,
+               print_progress=False,
+               n_jobs=1)
+
+    expect = 'SequentialFeatureSelector has not been fitted, yet.'
+
+    assert_raises(AttributeError,
+                  expect,
+                  sfs1.get_metric_dict)

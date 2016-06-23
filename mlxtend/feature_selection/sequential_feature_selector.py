@@ -117,6 +117,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             self.est_ = clone(self.estimator)
         else:
             self.est_ = self.estimator
+        self.fitted = False
 
     def fit(self, X, y):
         """Perform feature selection and learn model from training data.
@@ -199,6 +200,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.k_feature_idx_ = k_idx
         self.k_score_ = k_score
         self.subsets_plus_ = dict()
+        self.fitted = True
         return self
 
     def _is_stuck(self, sdq):
@@ -273,6 +275,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         Reduced feature subset of X, shape={n_samples, k_features}
 
         """
+        self._check_fitted()
         return X[:, self.k_feature_idx_]
 
     def fit_transform(self, X, y):
@@ -315,6 +318,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             'ci_bound': confidence interval bound of the CV score average
 
         """
+        self._check_fitted()
         fdict = deepcopy(self.subsets_)
         for k in fdict:
             std_dev = np.std(self.subsets_[k]['cv_scores'])
@@ -330,3 +334,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         std_err = scipy.stats.sem(ary)
         bound = std_err * sp.stats.t._ppf((1 + confidence) / 2.0, len(ary))
         return bound, std_err
+
+    def _check_fitted(self):
+        if not self.fitted:
+            raise AttributeError('SequentialFeatureSelector has not been'
+                                 ' fitted, yet.')

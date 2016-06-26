@@ -783,6 +783,8 @@
         
             <li><a href="#example-2-plotting-the-variance-explained-ratio">Example 2 - Plotting the Variance Explained Ratio</a></li>
         
+            <li><a href="#example-3-pca-via-svd">Example 3 - PCA via SVD</a></li>
+        
     
         <li class="main "><a href="#api">API</a></li>
         
@@ -881,8 +883,47 @@ cum_var_exp = np.cumsum(var_exp)
 </code></pre>
 
 <p><img alt="png" src="../PrincipalComponentAnalysis_files/PrincipalComponentAnalysis_18_0.png" /></p>
+<h2 id="example-3-pca-via-svd">Example 3 - PCA via SVD</h2>
+<p>While the eigendecomposition of the covariance or correlation matrix may be more intuitiuve, most PCA implementations perform a Singular Vector Decomposition (SVD) to improve the computational efficiency. Another advantage of using SVD is that the results tend to be more numerically stable, since we can decompose the input matrix directly without the additional covariance-matrix step.</p>
+<pre><code class="python">from mlxtend.data import iris_data
+from mlxtend.preprocessing import standardize
+from mlxtend.feature_extraction import PrincipalComponentAnalysis
+
+X, y = iris_data()
+X = standardize(X)
+
+pca = PrincipalComponentAnalysis(n_components=2,
+                                 solver='svd')
+pca.fit(X)
+X_pca = pca.transform(X)
+</code></pre>
+
+<pre><code class="python">import matplotlib.pyplot as plt
+
+with plt.style.context('seaborn-whitegrid'):
+    plt.figure(figsize=(6, 4))
+    for lab, col in zip((0, 1, 2),
+                        ('blue', 'red', 'green')):
+        plt.scatter(X_pca[y==lab, 0],
+                    X_pca[y==lab, 1],
+                    label=lab,
+                    c=col)
+    plt.xlabel('Principal Component 1')
+    plt.ylabel('Principal Component 2')
+    plt.legend(loc='lower center')
+    plt.tight_layout()
+    plt.show()
+</code></pre>
+
+<p><img alt="png" src="../PrincipalComponentAnalysis_files/PrincipalComponentAnalysis_22_0.png" /></p>
+<p>If we compare this PCA projection to the previous plot in example 1, we notice that they are mirror images of each other. Note that this is not due to an error in any of those two implementations, but the reason for this difference is that, depending on the eigensolver, eigenvectors can have either negative or positive signs.</p>
+<p>For instance, if <mathjax>$v$</mathjax> is an eigenvector of a matrix <mathjax>$\Sigma$</mathjax>, we have</p>
+<p><mathjax>$$\Sigma v = \lambda v,$$</mathjax></p>
+<p>where <mathjax>$\lambda$</mathjax> is our eigenvalue</p>
+<p>then <mathjax>$-v$</mathjax> is also an eigenvector that has the same eigenvalue, since</p>
+<p><mathjax>$$\Sigma(-v) = -\Sigma v = -\lambda v = \lambda(-v).$$</mathjax></p>
 <h1 id="api">API</h1>
-<p><em>PrincipalComponentAnalysis(n_components=None)</em></p>
+<p><em>PrincipalComponentAnalysis(n_components=None, solver='eigen')</em></p>
 <p>Principal Component Analysis Class</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -890,6 +931,10 @@ cum_var_exp = np.cumsum(var_exp)
 <p><code>n_components</code> : int (default: None)</p>
 <p>The number of principal components for transformation.
 Keeps the original dimensions of the dataset if <code>None</code>.</p>
+</li>
+<li>
+<p><code>solver</code> : str (default: 'eigen')</p>
+<p _eigen_="'eigen'," _svd_="'svd'">Method for performing the matrix decomposition.</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>
@@ -911,7 +956,7 @@ Keeps the original dimensions of the dataset if <code>None</code>.</p>
 <hr>
 
 <p><em>fit(X)</em></p>
-<p>Fit the PCA model with X.</p>
+<p>Learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>

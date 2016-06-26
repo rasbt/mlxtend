@@ -936,14 +936,14 @@ print('Training Accuracy: %.2f%%' % (lr.score(X, y) * 100))
     plt.imshow(img, cmap='Greys',  interpolation='nearest')
     plt.title('true label: %d' % y[idx])
     plt.show()
-plot_digit(X, y, 4999)  
+plot_digit(X, y, 0)  
 </code></pre>
 
 <p><img alt="png" src="../TfSoftmaxRegression_files/TfSoftmaxRegression_27_0.png" /></p>
-<pre><code class="python">print('Prediction: %d' % lr.predict(X[4999, None]))
+<pre><code class="python">print('Prediction: %d' % lr.predict(X[0, None]))
 </code></pre>
 
-<pre><code>Prediction: 8
+<pre><code>Prediction: 0
 </code></pre>
 <h1 id="api">API</h1>
 <p><em>TfSoftmaxRegression(eta=0.5, epochs=50, n_classes=None, minibatches=1, random_seed=None, print_progress=0, dtype=None)</em></p>
@@ -1024,7 +1024,7 @@ n_features is the number of features.</p>
 </li>
 <li>
 <p><code>init_params</code> : bool (default: True)</p>
-<p>Re-initializes model parametersprior to fitting.
+<p>Re-initializes model parameters prior to fitting.
 Set False to continue training with weights from
 a previous model fitting.</p>
 </li>

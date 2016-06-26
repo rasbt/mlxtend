@@ -900,7 +900,7 @@ plt.xlabel('Epochs')
 plt.show()
 </code></pre>
 
-<pre><code>Iteration: 5/5 | Cost 0.13 | Elapsed: 00:00:00 | ETA: 00:00:00
+<pre><code>Iteration: 5/5 | Cost 0.11 | Elapsed: 00:00:00 | ETA: 00:00:00
 </code></pre>
 <p><img alt="png" src="../MultiLayerPerceptron_files/MultiLayerPerceptron_31_1.png" /></p>
 <p>Continue the training for 25 epochs...</p>
@@ -908,7 +908,7 @@ plt.show()
 nn2 = nn2.fit(X_std, y)
 </code></pre>
 
-<pre><code>Iteration: 25/25 | Cost 0.06 | Elapsed: 0:00:00 | ETA: 0:00:00
+<pre><code>Iteration: 25/25 | Cost 0.07 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
 <pre><code class="python">plt.plot(range(len(nn2.cost_)), nn2.cost_)
 plt.ylabel('Cost')
@@ -986,7 +986,7 @@ print('Test Accuracy: %.2f%%' % (100 * nn1.score(X_test_std, y_test)))
 </code></pre>
 
 <pre><code>Train Accuracy: 100.00%
-Test Accuracy: 84.56%
+Test Accuracy: 84.62%
 </code></pre>
 <p><strong>Please note</strong> that this neural network has been trained on only 10% of the MNIST data for technical demonstration purposes, hence, the lousy predictive performance.</p>
 <h1 id="api">API</h1>

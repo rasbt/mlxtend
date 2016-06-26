@@ -986,7 +986,7 @@ X = X[:, [0, 3]] # sepal length and petal width
 X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
 X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
 
-lr = SoftmaxRegression(eta=0.075, 
+lr = SoftmaxRegression(eta=0.01, 
                        epochs=500, 
                        minibatches=1, 
                        random_seed=1,
@@ -1020,9 +1020,9 @@ print('Last 3 Class Labels:\n %s' % y_pred[-3:])
 </code></pre>
 
 <pre><code>Last 3 Class Labels:
- [[  1.27761006e-12   8.49689648e-03   9.91503104e-01]
- [  2.68342439e-16   2.06778782e-04   9.99793221e-01]
- [  1.05327110e-09   1.16375286e-01   8.83624713e-01]]
+ [[  9.18728149e-09   1.68894679e-02   9.83110523e-01]
+ [  2.97052325e-11   7.26356627e-04   9.99273643e-01]
+ [  1.57464093e-06   1.57779528e-01   8.42218897e-01]]
 </code></pre>
 <h2 id="example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</h2>
 <pre><code class="python">from mlxtend.data import iris_data
@@ -1039,7 +1039,7 @@ X = X[:, [0, 3]] # sepal length and petal width
 X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
 X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
 
-lr = SoftmaxRegression(eta=0.005, epochs=200, minibatches=len(y), random_seed=1)
+lr = SoftmaxRegression(eta=0.01, epochs=300, minibatches=len(y), random_seed=1)
 lr.fit(X, y)
 
 plot_decision_regions(X, y, clf=lr)
@@ -1133,7 +1133,7 @@ n_features is the number of features.</p>
 </li>
 <li>
 <p><code>init_params</code> : bool (default: True)</p>
-<p>Re-initializes model parametersprior to fitting.
+<p>Re-initializes model parameters prior to fitting.
 Set False to continue training with weights from
 a previous model fitting.</p>
 </li>

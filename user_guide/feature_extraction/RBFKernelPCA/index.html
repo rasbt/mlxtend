@@ -875,9 +875,9 @@ from sklearn.datasets import make_moons
 
 X, y = make_moons(n_samples=50, random_state=1)
 
-plt.scatter(X[y==0, 0], X[y==0, 1],
+plt.scatter(X[y==0, 0], X[y==0, 1], 
             color='red', marker='o', alpha=0.5)
-plt.scatter(X[y==1, 0], X[y==1, 1],
+plt.scatter(X[y==1, 0], X[y==1, 1], 
             color='blue', marker='^', alpha=0.5)
 plt.ylabel('y coordinate')
 plt.xlabel('x coordinate')
@@ -892,9 +892,9 @@ plt.show()
 pca = PCA(n_components=2)
 X_pca = pca.fit(X).transform(X)
 
-plt.scatter(X_pca[y==0, 0], X_pca[y==0, 1],
+plt.scatter(X_pca[y==0, 0], X_pca[y==0, 1], 
             color='red', marker='o', alpha=0.5)
-plt.scatter(X_pca[y==1, 0], X_pca[y==1, 1],
+plt.scatter(X_pca[y==1, 0], X_pca[y==1, 1], 
             color='blue', marker='^', alpha=0.5)
 
 plt.xlabel('PC1')
@@ -916,9 +916,9 @@ X_kpca = kpca.X_projected_
 </code></pre>
 
 <p>Please note that the components of kernel methods such as RBF kernel PCA already represent the projected data points (in contrast to PCA, where the component axis are the "top k" eigenvectors thar are used to contruct a projection matrix, which is then used to transform the training samples). Thus, the projected training set is available after fitting via the <code>.X_projected_</code> attribute.</p>
-<pre><code class="python">plt.scatter(X_kpca[y==0, 0], X_kpca[y==0, 1],
+<pre><code class="python">plt.scatter(X_kpca[y==0, 0], X_kpca[y==0, 1], 
             color='red', marker='o', alpha=0.5)
-plt.scatter(X_kpca[y==1, 0], X_kpca[y==1, 1],
+plt.scatter(X_kpca[y==1, 0], X_kpca[y==1, 1], 
             color='blue', marker='^', alpha=0.5)
 
 plt.title('First 2 principal components after RBF Kernel PCA')
@@ -931,9 +931,9 @@ plt.show()
 <p>The new feature space is linearly separable now. Since we are often interested in dimensionality reduction, let's have a look at the first component only.</p>
 <pre><code class="python">import numpy as np
 
-plt.scatter(X_kpca[y==0, 0], np.zeros((25, 1)),
+plt.scatter(X_kpca[y==0, 0], np.zeros((25, 1)), 
             color='red', marker='o', alpha=0.5)
-plt.scatter(X_kpca[y==1, 0], np.zeros((25, 1)),
+plt.scatter(X_kpca[y==1, 0], np.zeros((25, 1)), 
             color='blue', marker='^', alpha=0.5)
 
 plt.title('First principal component after RBF Kernel PCA')
@@ -952,16 +952,16 @@ from sklearn.datasets import make_moons
 X2, y2 = make_moons(n_samples=200, random_state=5)
 X2_kpca = kpca.transform(X2)
 
-plt.scatter(X_kpca[y==0, 0], X_kpca[y==0, 1],
+plt.scatter(X_kpca[y==0, 0], X_kpca[y==0, 1], 
             color='red', marker='o', alpha=0.5, label='fit data')
-plt.scatter(X_kpca[y==1, 0], X_kpca[y==1, 1],
+plt.scatter(X_kpca[y==1, 0], X_kpca[y==1, 1], 
             color='blue', marker='^', alpha=0.5, label='fit data')
 
-plt.scatter(X2_kpca[y2==0, 0], X2_kpca[y2==0, 1],
-            color='orange', marker='v',
+plt.scatter(X2_kpca[y2==0, 0], X2_kpca[y2==0, 1], 
+            color='orange', marker='v', 
             alpha=0.2, label='new data')
-plt.scatter(X2_kpca[y2==1, 0], X2_kpca[y2==1, 1],
-            color='cyan', marker='s',
+plt.scatter(X2_kpca[y2==1, 0], X2_kpca[y2==1, 1], 
+            color='cyan', marker='s', 
             alpha=0.2, label='new data')
 
 plt.legend()
@@ -973,7 +973,7 @@ plt.show()
 <p>Following the concepts explained in example 1, let's have a look at another classic case: 2 concentric circles with random noise produced by scikit-learn’s <code>make_circles</code>.</p>
 <pre><code class="python">from sklearn.datasets import make_circles
 
-X, y = make_circles(n_samples=1000, random_state=123,
+X, y = make_circles(n_samples=1000, random_state=123, 
                     noise=0.1, factor=0.2)
 
 plt.figure(figsize=(8,6))
@@ -996,9 +996,9 @@ kpca.fit(X)
 X_kpca = kpca.X_projected_
 </code></pre>
 
-<pre><code class="python">plt.scatter(X_kpca[y==0, 0], X_kpca[y==0, 1],
+<pre><code class="python">plt.scatter(X_kpca[y==0, 0], X_kpca[y==0, 1], 
             color='red', marker='o', alpha=0.5)
-plt.scatter(X_kpca[y==1, 0], X_kpca[y==1, 1],
+plt.scatter(X_kpca[y==1, 0], X_kpca[y==1, 1], 
             color='blue', marker='^', alpha=0.5)
 
 plt.title('First 2 principal components after RBF Kernel PCA')
@@ -1008,9 +1008,9 @@ plt.show()
 </code></pre>
 
 <p><img alt="png" src="../RBFKernelPCA_files/RBFKernelPCA_36_0.png" /></p>
-<pre><code class="python">plt.scatter(X_kpca[y==0, 0], np.zeros((500, 1)),
+<pre><code class="python">plt.scatter(X_kpca[y==0, 0], np.zeros((500, 1)), 
             color='red', marker='o', alpha=0.5)
-plt.scatter(X_kpca[y==1, 0], np.zeros((500, 1)),
+plt.scatter(X_kpca[y==1, 0], np.zeros((500, 1)), 
             color='blue', marker='^', alpha=0.5)
 
 plt.title('First principal component after RBF Kernel PCA')

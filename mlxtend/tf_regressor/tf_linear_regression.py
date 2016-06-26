@@ -9,10 +9,12 @@
 import numpy as np
 import tensorflow as tf
 from time import time
-from .._base import _BaseRegressor
+from .._base import _BaseModel
+from .._base import _IterativeModel
+from .._base import _Regressor
 
 
-class TfLinearRegression(_BaseRegressor):
+class TfLinearRegression(_BaseModel, _IterativeModel, _Regressor):
     """Estimator for Linear Regression in TensorFlow using Gradient Descent.
 
     Added in version 0.4.1
@@ -49,14 +51,15 @@ class TfLinearRegression(_BaseRegressor):
             Sum of mean squared errors (MSE) after each epoch;
 
         """
-        super(TfLinearRegression, self).__init__(print_progress=print_progress,
-                                                 random_seed=random_seed)
         self.eta = eta
         self.epochs = epochs
         if dtype is None:
             self.dtype = tf.float32
         else:
             self.dtype = dtype
+        self.random_seed = random_seed
+        self.print_progress = print_progress
+        self._is_fitted = False
 
     def _fit(self, X, y, init_params=True):
         if init_params:
@@ -104,7 +107,7 @@ class TfLinearRegression(_BaseRegressor):
 
             sess.run(train_init)
             self.init_time_ = time()
-            for epoch in range(1, self.epochs + 1):
+            for epoch in range(self.epochs):
                 _, c = sess.run([train, mse_cost])
                 self.cost_.append(c)
                 if self.print_progress:

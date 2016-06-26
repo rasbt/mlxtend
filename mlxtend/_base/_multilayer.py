@@ -9,8 +9,7 @@
 import numpy as np
 
 
-class _BaseMultiLayer(object):
-    """Add-on Parent Class for Multi-layer classifiers"""
+class _MultiLayer(object):
 
     def __init__(self):
         pass
@@ -52,11 +51,13 @@ class _BaseMultiLayer(object):
                 biases[layer] = [[h], 'n_hidden_%d' % layer]
         return weights, biases
 
-    def _init_params_from_layermapping(self, weight_maps, bias_maps):
+    def _init_params_from_layermapping(self, weight_maps, bias_maps,
+                                       random_seed=None):
+        rgen = np.random.RandomState(random_seed)
         weights, biases = {}, {}
         for i, k in enumerate(zip(weight_maps, bias_maps)):
-            weights[k[0]] = np.random.normal(loc=0.0,
-                                             scale=0.01,
-                                             size=weight_maps[k[0]][0])
+            weights[k[0]] = rgen.normal(loc=0.0,
+                                        scale=0.01,
+                                        size=weight_maps[k[0]][0])
             biases[k[1]] = np.zeros(shape=bias_maps[k[1]][0])
         return weights, biases

@@ -4,11 +4,17 @@
 #
 # License: BSD 3 clause
 
-from mlxtend._base import _BaseMultiLayer
+from mlxtend._base import _MultiLayer
+
+
+class BlankClassifier(_MultiLayer):
+
+    def __init__(self):
+        pass
 
 
 def test_layermapping():
-    mlp = _BaseMultiLayer()
+    mlp = BlankClassifier()
     w, b = mlp._layermapping(n_features=10,
                              n_classes=11,
                              hidden_layers=[8, 7, 6])
@@ -28,28 +34,13 @@ def test_layermapping():
 
 
 def test_init_from_layermapping():
-    mlp = _BaseMultiLayer()
+    mlp = BlankClassifier()
     wm, bm = mlp._layermapping(n_features=5,
                                n_classes=4,
                                hidden_layers=[3, 2])
-    w, b = mlp._init_params_from_layermapping(weight_maps=wm, bias_maps=bm)
-
-    """
-    expect_w = {1: np.array([[0.016, -0.006, -0.005],
-                             [-0.011, 0.009, -0.023],
-                             [0.017, -0.008, 0.003],
-                             [-0.002, 0.015, -0.021],
-                             [-0.003, -0.004, 0.011]]),
-                2: np.array([[-0.011, -0.002],
-                             [-0.009, 0.000],
-                             [0.006, -0.011]]),
-                'out': np.array([[0.011, 0.009, 0.005, 0.009],
-                                 [-0.007, -0.001, -0.009, -0.003]])}
-
-    expect_b = {1: np.array([0., 0., 0.]),
-                2: np.array([0., 0.]),
-                'out': np.array([0., 0., 0., 0.])}
-    """
+    w, b = mlp._init_params_from_layermapping(weight_maps=wm,
+                                              bias_maps=bm,
+                                              random_seed=1)
 
     assert len(w.keys()) == 3
     assert len(b.keys()) == 3

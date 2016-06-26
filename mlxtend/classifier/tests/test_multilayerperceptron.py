@@ -8,7 +8,6 @@ from mlxtend.classifier import MultiLayerPerceptron as MLP
 from mlxtend.data import iris_data
 import numpy as np
 from mlxtend.utils import assert_raises
-import warnings
 
 
 X, y = iris_data()
@@ -31,15 +30,8 @@ def test_multiclass_gd_acc():
               random_seed=1)
     mlp.fit(X, y)
     assert round(mlp.cost_[0], 2) == 0.55, mlp.cost_[0]
-
-    if round(mlp.cost_[-1], 2) == 0.25:
-        warnings.warn('About 10% of the time, mlp.cost_[-1] is'
-                      ' 0.247213137424 when tested via Travis CI.'
-                      ' Likely, it is an architecture-related problem but'
-                      ' should be looked into in future.')
-    else:
-        assert round(mlp.cost_[-1], 2) == 0.01, mlp.cost_[-1]
-        assert (y == mlp.predict(X)).all()
+    assert round(mlp.cost_[-1], 2) == 0.01, mlp.cost_[-1]
+    assert (y == mlp.predict(X)).all()
 
 
 def test_predict_proba():
@@ -62,7 +54,7 @@ def test_multiclass_sgd_acc():
               minibatches=len(y),
               random_seed=1)
     mlp.fit(X, y)
-    assert round(mlp.cost_[-1], 3) == 0.024, mlp.cost_[-1]
+    assert round(mlp.cost_[-1], 3) == 0.023, mlp.cost_[-1]
     assert (y == mlp.predict(X)).all()
 
 
@@ -73,7 +65,7 @@ def test_multiclass_minibatch_acc():
               minibatches=5,
               random_seed=1)
     mlp.fit(X, y)
-    assert round(mlp.cost_[-1], 3) == 0.025, mlp.cost_[-1]
+    assert round(mlp.cost_[-1], 3) == 0.024, mlp.cost_[-1]
     assert (y == mlp.predict(X)).all()
 
 
@@ -128,7 +120,7 @@ def test_momentum_1():
               random_seed=1)
 
     mlp.fit(X, y)
-    assert round(mlp.cost_[-1], 4) == 0.0059, mlp.cost_[-1]
+    assert round(mlp.cost_[-1], 4) == 0.0057, mlp.cost_[-1]
     assert (y == mlp.predict(X)).all()
 
 

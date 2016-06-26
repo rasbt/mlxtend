@@ -7,10 +7,10 @@
 # License: BSD 3 clause
 
 import numpy as np
-from .base import _BaseFeatureExtractor
+from .._base import _BaseModel
 
 
-class LinearDiscriminantAnalysis(_BaseFeatureExtractor):
+class LinearDiscriminantAnalysis(_BaseModel):
     """
     Linear Discriminant Analysis Class
 
@@ -55,7 +55,14 @@ class LinearDiscriminantAnalysis(_BaseFeatureExtractor):
         self : object
 
         """
+        self._is_fitted = False
         self._check_arrays(X=X, y=y)
+        self._fit(X=X, y=y, n_classes=n_classes)
+        self._is_fitted = True
+        return self
+
+    def _fit(self, X, y, n_classes=None):
+
         if self.n_discriminants is None or self.n_discriminants > X.shape[1]:
             n_discriminants = X.shape[1]
         else:

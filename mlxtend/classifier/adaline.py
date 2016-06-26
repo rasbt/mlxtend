@@ -8,10 +8,12 @@
 
 import numpy as np
 from time import time
-from .._base import _BaseClassifier
+from .._base import _BaseModel
+from .._base import _IterativeModel
+from .._base import _Classifier
 
 
-class Adaline(_BaseClassifier):
+class Adaline(_BaseModel, _IterativeModel, _Classifier):
 
     """ADAptive LInear NEuron classifier.
 
@@ -55,11 +57,12 @@ class Adaline(_BaseClassifier):
                  minibatches=None, random_seed=None,
                  print_progress=0):
 
-        super(Adaline, self).__init__(print_progress=print_progress,
-                                      random_seed=random_seed)
         self.eta = eta
         self.minibatches = minibatches
         self.epochs = epochs
+        self.random_seed = random_seed
+        self.print_progress = print_progress
+        self._is_fitted = False
 
     def _fit(self, X, y, init_params=True):
         self._check_target_array(y, allowed={(0, 1)})
@@ -78,9 +81,11 @@ class Adaline(_BaseClassifier):
         # Gradient descent or stochastic gradient descent learning
         else:
             self.init_time_ = time()
+            rgen = np.random.RandomState(self.random_seed)
             for i in range(self.epochs):
 
                 for idx in self._yield_minibatches_idx(
+                        rgen=rgen,
                         n_batches=self.minibatches,
                         data_ary=y_data,
                         shuffle=True):

@@ -8,10 +8,12 @@
 
 import numpy as np
 from time import time
-from .._base import _BaseClassifier
+from .._base import _BaseModel
+from .._base import _IterativeModel
+from .._base import _Classifier
 
 
-class LogisticRegression(_BaseClassifier):
+class LogisticRegression(_BaseModel, _IterativeModel, _Classifier):
 
     """Logistic regression classifier.
 
@@ -59,12 +61,13 @@ class LogisticRegression(_BaseClassifier):
                  random_seed=None,
                  print_progress=0):
 
-        super(LogisticRegression, self).__init__(print_progress=print_progress,
-                                                 random_seed=random_seed)
         self.eta = eta
         self.epochs = epochs
         self.l2_lambda = l2_lambda
         self.minibatches = minibatches
+        self.random_seed = random_seed
+        self.print_progress = print_progress
+        self._is_fitted = False
 
     def _fit(self, X, y, init_params=True):
 
@@ -78,9 +81,11 @@ class LogisticRegression(_BaseClassifier):
             self.cost_ = []
 
         self.init_time_ = time()
+        rgen = np.random.RandomState(self.random_seed)
         for i in range(self.epochs):
 
             for idx in self._yield_minibatches_idx(
+                    rgen=rgen,
                     n_batches=self.minibatches,
                     data_ary=y,
                     shuffle=True):

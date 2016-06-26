@@ -4,16 +4,15 @@
 #
 # License: BSD 3 clause
 
-from ._base_estimator import _BaseEstimator
-from ._base_supervised_estimator import _BaseSupervisedEstimator
-from ._base_unsupervised_estimator import _BaseUnsupervisedEstimator
-from ._base_classifier import _BaseClassifier
-from ._base_multiclass import _BaseMultiClass
-from ._base_multilayer import _BaseMultiLayer
-from ._base_regressor import _BaseRegressor
-from ._base_cluster import _BaseCluster
+from ._base_model import _BaseModel
+from ._cluster import _Cluster
+from ._classifier import _Classifier
+from ._regressor import _Regressor
+from ._iterative_model import _IterativeModel
+from ._multiclass import _MultiClass
+from ._multilayer import _MultiLayer
 
-__all__ = ["_BaseEstimator",
-           "_BaseSupervisedEstimator", "_BaseUnsupervisedEstimator",
-           "_BaseClassifier", "_BaseMultiClass", "_BaseMultiLayer",
-           "_BaseRegressor", "_BaseCluster"]
+
+__all__ = ["_BaseModel",
+           "_Cluster", "_Classifier", "_Regressor", "_IterativeModel",
+           "_MultiClass", "_MultiLayer"]

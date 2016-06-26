@@ -19,6 +19,7 @@ def test_nonfitted():
                 random_seed=1,
                 print_progress=0)
 
+    km._is_fitted = False
     assert_raises(AttributeError,
                   'Model is not fitted, yet.',
                   km.predict,

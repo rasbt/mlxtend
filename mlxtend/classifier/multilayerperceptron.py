@@ -9,12 +9,15 @@
 import numpy as np
 from time import time
 from scipy.special import expit
-from .._base import _BaseClassifier
-from .._base import _BaseMultiClass
-from .._base import _BaseMultiLayer
+from .._base import _BaseModel
+from .._base import _IterativeModel
+from .._base import _MultiClass
+from .._base import _MultiLayer
+from .._base import _Classifier
 
 
-class MultiLayerPerceptron(_BaseClassifier, _BaseMultiClass, _BaseMultiLayer):
+class MultiLayerPerceptron(_BaseModel, _IterativeModel,
+                           _MultiClass, _MultiLayer, _Classifier):
     """Multi-layer perceptron classifier with logistic sigmoid activations
 
     Parameters
@@ -79,8 +82,6 @@ class MultiLayerPerceptron(_BaseClassifier, _BaseMultiClass, _BaseMultiLayer):
                  minibatches=1, random_seed=None,
                  print_progress=0):
 
-        super(MultiLayerPerceptron, self).__init__(
-            print_progress=print_progress, random_seed=random_seed)
         if len(hidden_layers) > 1:
             raise AttributeError('Currently, only 1 hidden layer is supported')
         self.hidden_layers = hidden_layers
@@ -92,6 +93,9 @@ class MultiLayerPerceptron(_BaseClassifier, _BaseMultiClass, _BaseMultiLayer):
         self.momentum = momentum
         self.epochs = epochs
         self.minibatches = minibatches
+        self.random_seed = random_seed
+        self.print_progress = print_progress
+        self._is_fitted = False
 
     def _fit(self, X, y, init_params=True):
 
@@ -110,7 +114,8 @@ class MultiLayerPerceptron(_BaseClassifier, _BaseMultiClass, _BaseMultiLayer):
 
             self.w_, self.b_ = self._init_params_from_layermapping(
                 weight_maps=self._weight_maps,
-                bias_maps=self._bias_maps)
+                bias_maps=self._bias_maps,
+                random_seed=self.random_seed)
 
             self.cost_ = []
 
@@ -123,8 +128,11 @@ class MultiLayerPerceptron(_BaseClassifier, _BaseMultiClass, _BaseMultiLayer):
         y_enc = self._one_hot(y=y, n_labels=self.n_classes, dtype=np.float)
 
         self.init_time_ = time()
+
+        rgen = np.random.RandomState(self.random_seed)
         for i in range(self.epochs):
             for idx in self._yield_minibatches_idx(
+                    rgen=rgen,
                     n_batches=self.minibatches,
                     data_ary=y,
                     shuffle=True):

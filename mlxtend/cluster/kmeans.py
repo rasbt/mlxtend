@@ -8,11 +8,13 @@
 
 
 import numpy as np
-from .._base import _BaseCluster
+from .._base import _Cluster
+from .._base import _BaseModel
+from .._base import _IterativeModel
 # from scipy.spatial.distance import euclidean
 
 
-class Kmeans(_BaseCluster):
+class Kmeans(_BaseModel, _Cluster, _IterativeModel):
     """ K-means clustering class.
 
     Added in 0.4.1dev
@@ -55,11 +57,13 @@ class Kmeans(_BaseCluster):
     def __init__(self, k, max_iter=10,
                  convergence_tolerance=1e-05,
                  random_seed=None, print_progress=0):
-        super(Kmeans, self).__init__(print_progress=print_progress,
-                                     random_seed=random_seed)
+
         self.k = k
         self.max_iter = max_iter
         self.convergence_tolerance = convergence_tolerance
+        self.random_seed = random_seed
+        self.print_progress = print_progress
+        self._is_fitted = False
 
     def _fit(self, X, init_params=True):
         """Learn cluster centroids from training data.
@@ -73,7 +77,8 @@ class Kmeans(_BaseCluster):
         if init_params:
             self.iterations_ = 0
             # initialize centroids
-            idx = np.random.choice(n_samples, self.k, replace=False)
+            rgen = np.random.RandomState(self.random_seed)
+            idx = rgen.choice(n_samples, self.k, replace=False)
             self.centroids_ = X[idx]
 
         for _ in range(self.max_iter):

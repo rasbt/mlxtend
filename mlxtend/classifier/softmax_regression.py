@@ -10,11 +10,13 @@
 
 import numpy as np
 from time import time
-from .._base import _BaseClassifier
-from .._base import _BaseMultiClass
+from .._base import _BaseModel
+from .._base import _IterativeModel
+from .._base import _MultiClass
+from .._base import _Classifier
 
 
-class SoftmaxRegression(_BaseClassifier, _BaseMultiClass,):
+class SoftmaxRegression(_BaseModel, _IterativeModel, _MultiClass, _Classifier):
 
     """Softmax regression classifier.
 
@@ -64,13 +66,14 @@ class SoftmaxRegression(_BaseClassifier, _BaseMultiClass,):
                  random_seed=None,
                  print_progress=0):
 
-        super(SoftmaxRegression, self).__init__(print_progress=print_progress,
-                                                random_seed=random_seed)
         self.eta = eta
         self.epochs = epochs
         self.l2 = l2
         self.minibatches = minibatches
         self.n_classes = n_classes
+        self.random_seed = random_seed
+        self.print_progress = print_progress
+        self._is_fitted = False
 
     def _net_input(self, X, W, b):
         return (X.dot(W) + b)
@@ -105,8 +108,10 @@ class SoftmaxRegression(_BaseClassifier, _BaseMultiClass,):
         y_enc = self._one_hot(y=y, n_labels=self.n_classes, dtype=np.float)
 
         self.init_time_ = time()
+        rgen = np.random.RandomState(self.random_seed)
         for i in range(self.epochs):
             for idx in self._yield_minibatches_idx(
+                    rgen=rgen,
                     n_batches=self.minibatches,
                     data_ary=y,
                     shuffle=True):

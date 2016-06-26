@@ -144,20 +144,6 @@ def test_continue_learning():
     assert np.sum(y == mlp.predict(X)) == 150, np.sum(y == mlp.predict(X))
 
 
-def test_multiclass_gd_dropout():
-    mlp = MLP(epochs=100,
-              eta=0.5,
-              hidden_layers=[5],
-              optimizer='gradientdescent',
-              activations=['logistic'],
-              minibatches=1,
-              random_seed=1,
-              dropout=0.05)
-    mlp.fit(X, y)
-    acc = round(mlp.score(X, y), 2)
-    assert acc == 0.67, acc
-
-
 def test_score_function():
     mlp = MLP(epochs=100,
               eta=0.5,
@@ -234,31 +220,3 @@ def test_fail_minibatches():
               random_seed=1)
     mlp.fit(X, y)
     assert (y == mlp.predict(X)).all()
-
-
-def test_multiclass_gd_nolearningdecay():
-    mlp = MLP(epochs=5,
-              eta=0.5,
-              hidden_layers=[15],
-              optimizer='gradientdescent',
-              activations=['logistic'],
-              minibatches=1,
-              decay=[0.0, 1.0],
-              random_seed=1)
-    mlp.fit(X, y)
-    expect = [3.11, 2.12, 1.5, 1.17, 1.0]
-    np.testing.assert_almost_equal(expect, mlp.cost_, decimal=2)
-
-
-def test_multiclass_gd_learningdecay():
-    mlp = MLP(epochs=5,
-              eta=0.5,
-              hidden_layers=[15],
-              optimizer='gradientdescent',
-              activations=['logistic'],
-              minibatches=1,
-              decay=[0.5, 1.0],
-              random_seed=1)
-    mlp.fit(X, y)
-    expect = [3.107878, 2.124671, 1.786916, 1.65095, 1.590468]
-    np.testing.assert_almost_equal(expect, mlp.cost_, decimal=2)

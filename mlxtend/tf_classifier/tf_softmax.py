@@ -9,12 +9,14 @@
 import tensorflow as tf
 import numpy as np
 from time import time
-from .._base import _BaseClassifier
-from .._base import _BaseMultiClass
-from .._base import _BaseMultiLayer
+from .._base import _BaseModel
+from .._base import _IterativeModel
+from .._base import _MultiClass
+from .._base import _Classifier
 
 
-class TfSoftmaxRegression(_BaseClassifier, _BaseMultiClass, _BaseMultiLayer):
+class TfSoftmaxRegression(_BaseModel, _IterativeModel, _MultiClass,
+                          _Classifier):
     """Softmax regression classifier.
 
     Parameters
@@ -60,9 +62,6 @@ class TfSoftmaxRegression(_BaseClassifier, _BaseMultiClass, _BaseMultiLayer):
                  minibatches=1, random_seed=None,
                  print_progress=0, dtype=None):
 
-        super(TfSoftmaxRegression, self).__init__(
-            print_progress=print_progress, random_seed=random_seed)
-
         if dtype is None:
             self.dtype = tf.float32
         else:
@@ -71,6 +70,9 @@ class TfSoftmaxRegression(_BaseClassifier, _BaseMultiClass, _BaseMultiLayer):
         self.epochs = epochs
         self.n_classes = n_classes
         self.minibatches = minibatches
+        self.random_seed = random_seed
+        self.print_progress = print_progress
+        self._is_fitted = False
 
     def _fit(self, X, y, init_params=True,):
         self._check_target_array(y)
@@ -124,10 +126,12 @@ class TfSoftmaxRegression(_BaseClassifier, _BaseMultiClass, _BaseMultiLayer):
         # Launch the graph
         with tf.Session(graph=g) as sess:
             sess.run(init)
+            rgen = np.random.RandomState(self.random_seed)
             self.init_time_ = time()
             for epoch in range(self.epochs):
                 costs = []
                 for idx in self._yield_minibatches_idx(
+                        rgen=rgen,
                         n_batches=self.minibatches,
                         data_ary=y,
                         shuffle=True):

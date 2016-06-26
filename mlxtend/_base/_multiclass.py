@@ -9,8 +9,7 @@
 import numpy as np
 
 
-class _BaseMultiClass(object):
-    """Add-on Parent Class for Multi-class classifier"""
+class _MultiClass(object):
 
     def __init__(self):
         pass

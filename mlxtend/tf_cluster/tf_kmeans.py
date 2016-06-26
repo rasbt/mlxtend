@@ -17,10 +17,12 @@
 import tensorflow as tf
 import numpy as np
 from time import time
-from .._base import _BaseCluster
+from .._base import _Cluster
+from .._base import _BaseModel
+from .._base import _IterativeModel
 
 
-class TfKmeans(_BaseCluster):
+class TfKmeans(_BaseModel, _Cluster, _IterativeModel):
     """ TensorFlow K-means clustering class.
 
     Added in 0.4.1dev
@@ -65,8 +67,6 @@ class TfKmeans(_BaseCluster):
     def __init__(self, k, max_iter=10,
                  convergence_tolerance=1e-05,
                  random_seed=None, print_progress=0, dtype=None):
-        super(TfKmeans, self).__init__(print_progress=print_progress,
-                                       random_seed=random_seed)
 
         self.k = k
         self.max_iter = max_iter
@@ -75,6 +75,9 @@ class TfKmeans(_BaseCluster):
             self.dtype = tf.float32
         else:
             self.dtype = dtype
+        self.random_seed = random_seed
+        self.print_progress = print_progress
+        self._is_fitted = False
 
     def _fit(self, X, init_params=True):
         """Learn cluster centroids from training data.
@@ -90,7 +93,8 @@ class TfKmeans(_BaseCluster):
         if init_params:
             self.iterations_ = 0
             # initialize centroids
-            idx = np.random.choice(n_samples, self.k, replace=False)
+            rgen = np.random.RandomState(self.random_seed)
+            idx = rgen.choice(n_samples, self.k, replace=False)
             self.centroids_ = X[idx]
 
         self.g_train = tf.Graph()

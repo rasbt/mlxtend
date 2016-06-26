@@ -8,10 +8,10 @@
 
 import numpy as np
 from scipy.spatial import distance
-from .base import _BaseFeatureExtractor
+from .._base import _BaseModel
 
 
-class RBFKernelPCA(_BaseFeatureExtractor):
+class RBFKernelPCA(_BaseModel):
     """
     RBF Kernel Principal Component Analysis for dimensionality reduction.
 
@@ -42,9 +42,10 @@ class RBFKernelPCA(_BaseFeatureExtractor):
         self.n_components = n_components
         self.gamma = gamma
         self.copy_X = copy_X
+        self._is_fitted = False
 
     def fit(self, X):
-        """ Fit the PCA model with X.
+        """Learn model from training data.
 
         Parameters
         ----------
@@ -57,7 +58,13 @@ class RBFKernelPCA(_BaseFeatureExtractor):
         self : object
 
         """
+        self._is_fitted = False
         self._check_arrays(X=X)
+        self._fit(X=X)
+        self._is_fitted = True
+        return self
+
+    def _fit(self, X):
         if self.n_components is None or self.n_components > X.shape[1]:
             n_components = X.shape[1]
         else:

@@ -8,18 +8,12 @@
 
 import numpy as np
 from time import time
-from .._base import _BaseRegressor
-
-# Sebastian Raschka 2014-2016
-# mlxtend Machine Learning Library Extensions
-#
-# Class for fitting a linear regression model.
-# Author: Sebastian Raschka <sebastianraschka.com>
-#
-# License: BSD 3 clause
+from .._base import _BaseModel
+from .._base import _IterativeModel
+from .._base import _Regressor
 
 
-class LinearRegression(_BaseRegressor):
+class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
 
     """ Ordinary least squares linear regression.
 
@@ -60,12 +54,13 @@ class LinearRegression(_BaseRegressor):
     def __init__(self, eta=0.01, epochs=50,
                  minibatches=None, random_seed=None,
                  print_progress=0):
-        super(LinearRegression, self).__init__(print_progress=print_progress,
-                                               random_seed=random_seed)
 
         self.eta = eta
         self.epochs = epochs
         self.minibatches = minibatches
+        self.random_seed = random_seed
+        self.print_progress = print_progress
+        self._is_fitted = False
 
     def _fit(self, X, y, init_params=True):
 
@@ -82,9 +77,11 @@ class LinearRegression(_BaseRegressor):
         # Gradient descent or stochastic gradient descent learning
         else:
             self.init_time_ = time()
+            rgen = np.random.RandomState(self.random_seed)
             for i in range(self.epochs):
 
                 for idx in self._yield_minibatches_idx(
+                        rgen=rgen,
                         n_batches=self.minibatches,
                         data_ary=y,
                         shuffle=True):

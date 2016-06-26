@@ -9,13 +9,15 @@
 import tensorflow as tf
 import numpy as np
 from time import time
-from .._base import _BaseClassifier
-from .._base import _BaseMultiClass
-from .._base import _BaseMultiLayer
+from .._base import _BaseModel
+from .._base import _IterativeModel
+from .._base import _MultiClass
+from .._base import _MultiLayer
+from .._base import _Classifier
 
 
-class TfMultiLayerPerceptron(_BaseClassifier,
-                             _BaseMultiClass, _BaseMultiLayer):
+class TfMultiLayerPerceptron(_BaseModel, _IterativeModel,
+                             _MultiClass, _MultiLayer, _Classifier):
     """Multi-layer perceptron classifier.
 
     Parameters
@@ -91,8 +93,6 @@ class TfMultiLayerPerceptron(_BaseClassifier,
                  minibatches=1, random_seed=None,
                  print_progress=0, dtype=None):
 
-        super(TfMultiLayerPerceptron, self).__init__(
-            print_progress=print_progress, random_seed=random_seed)
         self.eta = eta
         if len(hidden_layers) != len(activations):
             raise AttributeError('Number of hidden_layers and'
@@ -109,6 +109,9 @@ class TfMultiLayerPerceptron(_BaseClassifier,
         self._init_optimizer(self.optimizer)
         self.epochs = epochs
         self.minibatches = minibatches
+        self.random_seed = random_seed
+        self.print_progress = print_progress
+        self._is_fitted = False
 
         if dtype is None:
             self.dtype = tf.float32
@@ -222,8 +225,7 @@ class TfMultiLayerPerceptron(_BaseClassifier,
             init = tf.initialize_all_variables()
 
         # random seed for shuffling and dropout
-        if self.random_seed:
-            np.random.seed(self.random_seed)
+        rgen = np.random.RandomState(self.random_seed)
 
         # Launch the graph
         with tf.Session(graph=g) as sess:
@@ -231,7 +233,7 @@ class TfMultiLayerPerceptron(_BaseClassifier,
             self.init_time_ = time()
             for epoch in range(self.epochs):
                 if self.minibatches > 1:
-                    n_idx = np.random.permutation(n_idx)
+                    n_idx = rgen.permutation(n_idx)
                 minis = np.array_split(n_idx, self.minibatches)
                 costs = []
                 for idx in minis:

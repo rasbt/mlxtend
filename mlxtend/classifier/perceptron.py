@@ -8,10 +8,12 @@
 
 import numpy as np
 from time import time
-from .._base import _BaseClassifier
+from .._base import _BaseModel
+from .._base import _IterativeModel
+from .._base import _Classifier
 
 
-class Perceptron(_BaseClassifier):
+class Perceptron(_BaseModel, _IterativeModel, _Classifier):
 
     """Perceptron classifier.
 
@@ -46,10 +48,12 @@ class Perceptron(_BaseClassifier):
     """
     def __init__(self, eta=0.1, epochs=50, random_seed=None,
                  print_progress=0):
-        super(Perceptron, self).__init__(print_progress=print_progress,
-                                         random_seed=random_seed)
+
         self.eta = eta
         self.epochs = epochs
+        self.random_seed = random_seed
+        self.print_progress = print_progress
+        self._is_fitted = False
 
     def _fit(self, X, y, init_params=True):
         self._check_target_array(y, allowed={(0, 1)})
@@ -63,11 +67,12 @@ class Perceptron(_BaseClassifier):
             self.cost_ = []
 
         self.init_time_ = time()
-
+        rgen = np.random.RandomState(self.random_seed)
         for i in range(self.epochs):
             errors = 0
 
             for idx in self._yield_minibatches_idx(
+                    rgen=rgen,
                     n_batches=y_data.shape[0], data_ary=y_data, shuffle=True):
 
                 update = self.eta * (y_data[idx] -

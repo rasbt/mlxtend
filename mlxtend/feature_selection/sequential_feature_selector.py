@@ -55,7 +55,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         No cross-validation if cv is None, False, or 0.
     skip_if_stuck: bool (default: True)
         Set to True to skip conditional
-        exlusion/inclusion if floating=True and
+        exclusion/inclusion if floating=True and
         algorithm gets stuck in cycles.
     n_jobs : int (default: 1)
         The number of CPUs to use for cross validation. -1 means 'all CPUs'.
@@ -86,7 +86,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     subsets_ : dict
         A dictionary of selected feature subsets during the
         sequential selection, where the dictionary keys are
-        the lenghts k of these feature subsets. The dictionary
+        the lengths k of these feature subsets. The dictionary
         values are dictionaries themselves with the following
         keys: 'feature_idx' (tuple of indices of the feature subset)
               'cv_scores' (list individual cross-validation scores)
@@ -313,7 +313,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             'feature_idx': tuple of the indices of the feature subset
             'cv_scores': list with individual CV scores
             'avg_score': of CV average scores
-            'std_dev': standard devation of the CV score average
+            'std_dev': standard deviation of the CV score average
             'std_err': standard error of the CV score average
             'ci_bound': confidence interval bound of the CV score average
 

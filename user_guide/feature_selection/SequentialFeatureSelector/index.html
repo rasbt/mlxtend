@@ -811,7 +811,7 @@
 <p>from mlxtend.feature_selection import SequentialFeatureSelector</p>
 </blockquote>
 <h1 id="overview">Overview</h1>
-<p>Sequential feature selection algorithms are a family of greedy search algorithms that are used to reduce an initial <em>d</em>-dimensional feature space to a <em>k</em>-dimensional feature subspace where <em>k &lt; d</em>. The motivation behind feature selection algorithms is to automatically select a subset of features that is most relevant to the problem. The goal of feature selection is two-fold: We want to improve the computational efficiency and reduce the generalization error of the model by removing irrelevant features or noise. A wrapper approach such as sequential feature selection is especially useful if embedded feeature selection -- for example, a regularization penalty like LASSO -- is not applicable.</p>
+<p>Sequential feature selection algorithms are a family of greedy search algorithms that are used to reduce an initial <em>d</em>-dimensional feature space to a <em>k</em>-dimensional feature subspace where <em>k &lt; d</em>. The motivation behind feature selection algorithms is to automatically select a subset of features that is most relevant to the problem. The goal of feature selection is two-fold: We want to improve the computational efficiency and reduce the generalization error of the model by removing irrelevant features or noise. A wrapper approach such as sequential feature selection is especially useful if embedded feature selection -- for example, a regularization penalty like LASSO -- is not applicable.</p>
 <p>In a nutshell, SFAs remove or add one feature at the time based on the classifier performance until a feature subset of the desired size <em>k</em> is reached. There are 4 different flavors of SFAs available via the <code>SequentialFeatureSelector</code>:</p>
 <ol>
 <li>Sequential Forward Selection (SFS)</li>
@@ -908,8 +908,8 @@
 &nbsp;&nbsp;&nbsp;&nbsp; <mathjax>$k = k + 1$</mathjax><br />
 <em>Go to Step 1</em>  </p>
 <ul>
-<li>In Step 2, we search for features that improve the classifier performance if they are added back to the feature subset. If such features exist, we add the feature <mathjax>$x^+$</mathjax> for which the perfomance improvement is max.</li>
-<li>Steps 1 and 2 are reapeated until the <strong>Termination</strong> criterion is reached.</li>
+<li>In Step 2, we search for features that improve the classifier performance if they are added back to the feature subset. If such features exist, we add the feature <mathjax>$x^+$</mathjax> for which the performance improvement is max.</li>
+<li>Steps 1 and 2 are repeated until the <strong>Termination</strong> criterion is reached.</li>
 </ul>
 <p><strong>Termination:</strong> <mathjax>$k = p$</mathjax></p>
 <ul>
@@ -948,7 +948,7 @@
 <ul>
 <li>In step 1, we include the feature from the <strong><em>feature space</em></strong> that leads to the best performance increase for our <strong><em>feature subset</em></strong> (assessed by the <strong><em>criterion function</em></strong>). Then, we go over to step 2</li>
 <li>In step 2, we only remove a feature if the resulting subset would gain an increase in performance. We go back to step 1.  </li>
-<li>Steps 1 and 2 are reapeated until the <strong>Termination</strong> criterion is reached.
+<li>Steps 1 and 2 are repeated until the <strong>Termination</strong> criterion is reached.
 <br><br></li>
 </ul>
 <p><strong>Termination:</strong> stop when <strong><em>k</em></strong> equals the number of desired features</p>
@@ -1392,8 +1392,8 @@ gs = GridSearchCV(estimator=pipe,
 gs = gs.fit(X_train, y_train)
 </code></pre>
 
-<pre><code>[Parallel(n_jobs=1)]: Done  49 tasks       | elapsed:    2.8s
-[Parallel(n_jobs=1)]: Done  80 out of  80 | elapsed:    4.8s finished
+<pre><code>[Parallel(n_jobs=1)]: Done  49 tasks       | elapsed:    4.3s
+[Parallel(n_jobs=1)]: Done  80 out of  80 | elapsed:    6.5s finished
 
 
 Fitting 5 folds for each of 16 candidates, totalling 80 fits
@@ -1416,8 +1416,8 @@ Fitting 5 folds for each of 16 candidates, totalling 80 fits
 gs = gs.fit(X_train, y_train)
 </code></pre>
 
-<pre><code>[Parallel(n_jobs=1)]: Done  49 tasks       | elapsed:    3.0s
-[Parallel(n_jobs=1)]: Done  80 out of  80 | elapsed:    5.2s finished
+<pre><code>[Parallel(n_jobs=1)]: Done  49 tasks       | elapsed:    3.2s
+[Parallel(n_jobs=1)]: Done  80 out of  80 | elapsed:    6.0s finished
 
 
 Fitting 5 folds for each of 16 candidates, totalling 80 fits
@@ -1507,7 +1507,7 @@ otherwise.
 No cross-validation if cv is None, False, or 0.
 skip_if_stuck: bool (default: True)
 Set to True to skip conditional
-exlusion/inclusion if floating=True and
+exclusion/inclusion if floating=True and
 algorithm gets stuck in cycles.</p>
 </li>
 <li>
@@ -1550,7 +1550,7 @@ In addition, it is required to set cv=0, and n_jobs=1.</p>
 <p><code>subsets_</code> : dict</p>
 <p>A dictionary of selected feature subsets during the
 sequential selection, where the dictionary keys are
-the lenghts k of these feature subsets. The dictionary
+the lengths k of these feature subsets. The dictionary
 values are dictionaries themselves with the following
 keys: 'feature_idx' (tuple of indices of the feature subset)
 'cv_scores' (list individual cross-validation scores)
@@ -1612,7 +1612,7 @@ interval bounds of the CV score averages.</p>
     'feature_idx': tuple of the indices of the feature subset
     'cv_scores': list with individual CV scores
     'avg_score': of CV average scores
-    'std_dev': standard devation of the CV score average
+    'std_dev': standard deviation of the CV score average
     'std_err': standard error of the CV score average
     'ci_bound': confidence interval bound of the CV score average</p>
 <hr>

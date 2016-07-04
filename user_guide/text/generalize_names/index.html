@@ -767,20 +767,20 @@
     
         <li class="main active"><a href="#generalize-names">Generalize Names</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#references">References</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-defaults">Example 1 - Defaults</a></li>
+            
+                    <li><a href="#example-2-optional-parameters">Example 2 - Optional Parameters</a></li>
+            
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-1-defaults">Example 1 - Defaults</a></li>
-        
-            <li><a href="#example-1-optional-parameters">Example 1 - Optional Parameters</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
+            <li><a href="#api">API</a></li>
+                
         
     
     </ul>
@@ -792,14 +792,14 @@
 <blockquote>
 <p>from mlxtend.text import generalize_names</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p>A function that converts a name into a general format <code>&lt;last_name&gt;&lt;separator&gt;&lt;firstname letter(s)&gt; (all lowercase)</code>, which is useful if data is collected from different sources and is supposed to be compared or merged based on name identifiers. E.g., if names are stored in a pandas <code>DataFrame</code> column, the apply function can be used to generalize names: <code>df['name'] = df['name'].apply(generalize_names)</code></p>
 <h3 id="references">References</h3>
 <ul>
 <li>-</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-defaults">Example 1 - Defaults</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-defaults">Example 1 - Defaults</h3>
 <pre><code class="python">from mlxtend.text import generalize_names
 </code></pre>
 
@@ -818,7 +818,7 @@
 
 <pre><code>'pozo j'
 </code></pre>
-<h2 id="example-1-optional-parameters">Example 1 - Optional Parameters</h2>
+<h3 id="example-2-optional-parameters">Example 2 - Optional Parameters</h3>
 <pre><code class="python">from mlxtend.text import generalize_names
 </code></pre>
 
@@ -837,7 +837,7 @@
 
 <pre><code>'etoo, s'
 </code></pre>
-<h1 id="api">API</h1></div>
+<h2 id="api">API</h2></div>
         
     </div>
 

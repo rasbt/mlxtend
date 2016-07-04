@@ -767,20 +767,20 @@
     
         <li class="main active"><a href="#mnist-dataset">MNIST Dataset</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#references">References</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-dataset-overview">Example - Dataset overview</a></li>
+            
+                    <li><a href="#example-visualize-mnist">Example - Visualize MNIST</a></li>
+            
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-dataset-overview">Example - Dataset overview</a></li>
-        
-            <li><a href="#example-visualize-mnist">Example - Visualize MNIST</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
+            <li><a href="#api">API</a></li>
+                
         
     
     </ul>
@@ -792,7 +792,7 @@
 <blockquote>
 <p>from mlxtend.data import mnist_data</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p>The MNIST dataset was constructed from two datasets of the US National Institute of Standards and Technology (NIST). The training set consists of handwritten digits from 250 different people, 50 percent high school students, and 50 percent employees from the Census Bureau. Note that the test set contains handwritten digits from different people following the same split.</p>
 <p><strong>Features</strong></p>
 <p>Each feature vector (row in the feature matrix) consists of 784 pixels (intensities) -- unrolled from the original 28x28 pixels images.</p>
@@ -809,8 +809,8 @@
 <li>Source: <a href="http://yann.lecun.com/exdb/mnist/">http://yann.lecun.com/exdb/mnist/</a></li>
 <li>Y. LeCun and C. Cortes. Mnist handwritten digit database. AT&amp;T Labs [Online]. Available: <a href="http://yann.lecun.com/exdb/mnist">http://yann.lecun.com/exdb/mnist</a>, 2010.</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-dataset-overview">Example - Dataset overview</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-dataset-overview">Example - Dataset overview</h3>
 <pre><code class="python">from mlxtend.data import mnist_data
 X, y = mnist_data()
 
@@ -874,7 +874,7 @@ print('Class distribution: %s' % np.bincount(y))
 [0 1 2 3 4 5 6 7 8 9]
 Class distribution: [500 500 500 500 500 500 500 500 500 500]
 </code></pre>
-<h2 id="example-visualize-mnist">Example - Visualize MNIST</h2>
+<h3 id="example-visualize-mnist">Example - Visualize MNIST</h3>
 <pre><code class="python">%matplotlib inline
 import matplotlib.pyplot as plt
 def plot_digit(X, y, idx):
@@ -886,7 +886,7 @@ plot_digit(X, y, 4)
 </code></pre>
 
 <p><img alt="png" src="../mnist_data_files/mnist_data_13_0.png" /></p>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>mnist_data()</em></p>
 <p>5000 samples from the MNIST handwritten digits dataset.</p>
 <ul>

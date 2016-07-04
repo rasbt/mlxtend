@@ -767,22 +767,20 @@
     
         <li class="main active"><a href="#load-mnist-dataset">Load MNIST Dataset</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#references">References</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#downloading-the-mnist-dataset">Downloading the MNIST dataset</a></li>
+            
+                    <li><a href="#example-1-loading-mnist-into-numpy-arrays">Example 1 - Loading MNIST into NumPy Arrays</a></li>
+            
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#downloading-the-mnist-dataset">Downloading the MNIST dataset</a></li>
-        
-            <li><a href="#example-loading-mnist-into-numpy-arrays">Example - Loading MNIST into NumPy Arrays</a></li>
-        
-            <li><a href="#examples-store-as-csv-files">Examples - Store as CSV Files</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
+            <li><a href="#api">API</a></li>
+                
         
     
     </ul>
@@ -794,7 +792,7 @@
 <blockquote>
 <p>from mlxtend.data_utils import load_mnist_data</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p>The MNIST dataset was constructed from two datasets of the US National Institute of Standards and Technology (NIST). The training set consists of handwritten digits from 250 different people, 50 percent high school students, and 50 percent employees from the Census Bureau. Note that the test set contains handwritten digits from different people following the same split.</p>
 <p>The MNIST dataset is publicly available at http://yann.lecun.com/exdb/mnist/ and consists of the following four parts:
 - Training set images: train-images-idx3-ubyte.gz (9.9 MB, 47 MB unzipped, and 60,000 samples)
@@ -816,8 +814,8 @@
 <li>Source: <a href="http://yann.lecun.com/exdb/mnist">http://yann.lecun.com/exdb/mnist/</a></li>
 <li>Y. LeCun and C. Cortes. Mnist handwritten digit database. AT&amp;T Labs [Online]. Available: http://yann. lecun. com/exdb/mnist, 2010.</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="downloading-the-mnist-dataset">Downloading the MNIST dataset</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="downloading-the-mnist-dataset">Downloading the MNIST dataset</h3>
 <p>1) Download the MNIST files from Y. LeCun's website</p>
 <ul>
 <li>http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz</li>
@@ -832,7 +830,7 @@
 <p>for example, via</p>
 <pre><code>gunzip t*-ubyte.gz
 </code></pre>
-<h2 id="example-loading-mnist-into-numpy-arrays">Example - Loading MNIST into NumPy Arrays</h2>
+<h3 id="example-1-loading-mnist-into-numpy-arrays">Example 1 - Loading MNIST into NumPy Arrays</h3>
 <pre><code class="python">from mlxtend.data import loadlocal_mnist
 </code></pre>
 
@@ -903,12 +901,14 @@ print('Class distribution: %s' % np.bincount(y))
 labels: [0 1 2 3 4 5 6 7 8 9]
 Class distribution: [5923 6742 5958 6131 5842 5421 5918 6265 5851 5949]
 </code></pre>
-<h2 id="examples-store-as-csv-files">Examples - Store as CSV Files</h2>
-<pre><code class="python">np.savetxt(fname='/Users/Sebastian/Desktop/images.csv', X=X, delimiter=',', fmt='%d')
-np.savetxt(fname='/Users/Sebastian/Desktop/labels.csv', X=y, delimiter=',', fmt='%d')
+<h4 id="store-as-csv-files">Store as CSV Files</h4>
+<pre><code class="python">np.savetxt(fname='/Users/Sebastian/Desktop/images.csv', 
+           X=X, delimiter=',', fmt='%d')
+np.savetxt(fname='/Users/Sebastian/Desktop/labels.csv', 
+           X=y, delimiter=',', fmt='%d')
 </code></pre>
 
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>loadlocal_mnist(images_path, labels_path)</em></p>
 <p>Read MNIST from ubyte files.</p>
 <p><strong>Parameters</strong></p>

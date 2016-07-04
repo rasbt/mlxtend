@@ -767,20 +767,20 @@
     
         <li class="main active"><a href="#compute-the-number-of-permutations">Compute the Number of Permutations</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#references">References</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-compute-the-number-of-permutations">Example 1 - Compute the number of permutations</a></li>
+            
+                    <li><a href="#example-2-a-progress-tracking-use-case">Example 2 - A progress tracking use-case</a></li>
+            
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-1-compute-the-number-of-permutations">Example 1 - Compute the number of permutations</a></li>
-        
-            <li><a href="#example-2-a-progress-tracking-use-case">Example 2 - A progress tracking use-case</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
+            <li><a href="#api">API</a></li>
+                
         
     
     </ul>
@@ -792,7 +792,7 @@
 <blockquote>
 <p>from mlxtend.math import num_permutations</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p>Permutations are selections of items from a collection with regard to the order in which they appear (in contrast to combinations). For example, let's consider a permutation of 3 elements (k=3) from a collection of 5 elements (n=5): </p>
 <ul>
 <li>collection: {1, 2, 3, 4, 5}</li>
@@ -804,21 +804,24 @@
 </ul>
 <p>In the example above the permutations 1a, 1b, and 1c, are the "same combination" but distinct permutations -- in combinations, the order does not matter, but in permutation it does matter.</p>
 <p>The number of ways to combine elements (<strong>without replacement</strong>) from a collection with size <em>n</em> into subsets of size <em>k</em> is computed via the binomial coefficient ("<em>n</em> choose <em>k</em>"):</p>
-<p>\[ k!\begin{pmatrix} 
-n  \
+<p><mathjax>$$
+k!\begin{pmatrix} 
+n  \\
 k 
-\end{pmatrix} = k! \cdot \frac{n!}{k!(n-k)!} = \frac{n!}{(n-k)!} \]</p>
+\end{pmatrix} = k! \cdot \frac{n!}{k!(n-k)!} = \frac{n!}{(n-k)!}
+$$</mathjax></p>
 <p>To compute the number of permutations <strong>with replacement</strong>, we simply need to compute <mathjax>$n^k$</mathjax>.</p>
 <h3 id="references">References</h3>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Permutation">https://en.wikipedia.org/wiki/Permutation</a></li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-compute-the-number-of-permutations">Example 1 - Compute the number of permutations</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-compute-the-number-of-permutations">Example 1 - Compute the number of permutations</h3>
 <pre><code class="python">from mlxtend.math import num_permutations
 
 c = num_permutations(n=20, k=8, with_replacement=False)
-print('Number of ways to permute 20 elements into 8 subelements: %d' % c)
+print('Number of ways to permute 20 elements'
+      ' into 8 subelements: %d' % c)
 </code></pre>
 
 <pre><code>Number of ways to permute 20 elements into 8 subelements: 5079110400
@@ -826,12 +829,13 @@ print('Number of ways to permute 20 elements into 8 subelements: %d' % c)
 <pre><code class="python">from mlxtend.math import num_permutations
 
 c = num_permutations(n=20, k=8, with_replacement=True)
-print('Number of ways to combine 20 elements into 8 subelements (with replacement): %d' % c)
+print('Number of ways to combine 20 elements'
+      ' into 8 subelements (with replacement): %d' % c)
 </code></pre>
 
 <pre><code>Number of ways to combine 20 elements into 8 subelements (with replacement): 25600000000
 </code></pre>
-<h2 id="example-2-a-progress-tracking-use-case">Example 2 - A progress tracking use-case</h2>
+<h3 id="example-2-a-progress-tracking-use-case">Example 2 - A progress tracking use-case</h3>
 <p>It is often quite useful to track the progress of a computational expensive tasks to estimate its runtime. Here, the <code>num_combination</code> function can be used to compute the maximum number of loops of a <code>permutations</code> iterable from itertools:</p>
 <pre><code class="python">import itertools
 import sys
@@ -851,7 +855,7 @@ for idx, i in enumerate(itertools.permutations(items, r=3)):
 
 <pre><code>Progress: 336/336
 </code></pre>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>num_permutations(n, k, with_replacement=False)</em></p>
 <p>Function to calculate the number of possible permutations.</p>
 <p><strong>Parameters</strong></p>

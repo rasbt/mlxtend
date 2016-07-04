@@ -767,28 +767,28 @@
     
         <li class="main active"><a href="#principal-component-analysis">Principal Component Analysis</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#pca-and-dimensionality-reduction">PCA and Dimensionality Reduction</a></li>
+            
+                    <li><a href="#a-summary-of-the-pca-approach">A Summary of the PCA Approach</a></li>
+            
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#pca-and-dimensionality-reduction">PCA and Dimensionality Reduction</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-pca-on-iris">Example 1 - PCA on Iris</a></li>
+            
+                    <li><a href="#example-2-plotting-the-variance-explained-ratio">Example 2 - Plotting the Variance Explained Ratio</a></li>
+            
+                    <li><a href="#example-3-pca-via-svd">Example 3 - PCA via SVD</a></li>
+            
         
-            <li><a href="#a-summary-of-the-pca-approach">A Summary of the PCA Approach</a></li>
-        
-            <li><a href="#references">References</a></li>
-        
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-1-pca-on-iris">Example 1 - PCA on Iris</a></li>
-        
-            <li><a href="#example-2-plotting-the-variance-explained-ratio">Example 2 - Plotting the Variance Explained Ratio</a></li>
-        
-            <li><a href="#example-3-pca-via-svd">Example 3 - PCA via SVD</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
-        
-            <li><a href="#methods">Methods</a></li>
+            <li><a href="#api">API</a></li>
+                
+                    <li><a href="#methods">Methods</a></li>
+            
         
     
     </ul>
@@ -800,7 +800,7 @@
 <blockquote>
 <p>from mlxtend.feature_extraction import PrincipalComponentAnalysis</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p>The sheer size of data in the modern age is not only a challenge for computer hardware but also a main bottleneck for the performance of many machine learning algorithms. The main goal of a PCA analysis is to identify patterns in data; PCA aims to detect the correlation between variables. If a strong correlation between variables exists, the attempt to reduce the dimensionality only makes sense. In a nutshell, this is what PCA is all about: Finding the directions of maximum variance in high-dimensional data and project it onto a smaller dimensional subspace while retaining most of the information.</p>
 <h3 id="pca-and-dimensionality-reduction">PCA and Dimensionality Reduction</h3>
 <p>Often, the desired goal is to reduce the dimensions of a <mathjax>$d$</mathjax>-dimensional dataset by projecting it onto a <mathjax>$(k)$</mathjax>-dimensional subspace (where <mathjax>$k\;&lt;\;d$</mathjax>) in order to increase the computational efficiency while retaining most of the information. An important question is "what is the size of <mathjax>$k$</mathjax> that represents the data 'well'?"</p>
@@ -817,8 +817,8 @@
 <ul>
 <li>Pearson, Karl. "LIII. <a href="http://www.tandfonline.com/doi/abs/10.1080/14786440109462720?journalCode=tphm17">On lines and planes of closest fit to systems of points in space.</a>" The London, Edinburgh, and Dublin Philosophical Magazine and Journal of Science 2.11 (1901): 559-572.</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-pca-on-iris">Example 1 - PCA on Iris</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-pca-on-iris">Example 1 - PCA on Iris</h3>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.preprocessing import standardize
 from mlxtend.feature_extraction import PrincipalComponentAnalysis
@@ -849,7 +849,7 @@ with plt.style.context('seaborn-whitegrid'):
 </code></pre>
 
 <p><img alt="png" src="../PrincipalComponentAnalysis_files/PrincipalComponentAnalysis_14_0.png" /></p>
-<h2 id="example-2-plotting-the-variance-explained-ratio">Example 2 - Plotting the Variance Explained Ratio</h2>
+<h3 id="example-2-plotting-the-variance-explained-ratio">Example 2 - Plotting the Variance Explained Ratio</h3>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.preprocessing import standardize
 
@@ -883,7 +883,7 @@ cum_var_exp = np.cumsum(var_exp)
 </code></pre>
 
 <p><img alt="png" src="../PrincipalComponentAnalysis_files/PrincipalComponentAnalysis_18_0.png" /></p>
-<h2 id="example-3-pca-via-svd">Example 3 - PCA via SVD</h2>
+<h3 id="example-3-pca-via-svd">Example 3 - PCA via SVD</h3>
 <p>While the eigendecomposition of the covariance or correlation matrix may be more intuitiuve, most PCA implementations perform a Singular Vector Decomposition (SVD) to improve the computational efficiency. Another advantage of using SVD is that the results tend to be more numerically stable, since we can decompose the input matrix directly without the additional covariance-matrix step.</p>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.preprocessing import standardize
@@ -922,7 +922,7 @@ with plt.style.context('seaborn-whitegrid'):
 <p>where <mathjax>$\lambda$</mathjax> is our eigenvalue</p>
 <p>then <mathjax>$-v$</mathjax> is also an eigenvector that has the same eigenvalue, since</p>
 <p><mathjax>$$\Sigma(-v) = -\Sigma v = -\lambda v = \lambda(-v).$$</mathjax></p>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>PrincipalComponentAnalysis(n_components=None, solver='eigen')</em></p>
 <p>Principal Component Analysis Class</p>
 <p><strong>Parameters</strong></p>

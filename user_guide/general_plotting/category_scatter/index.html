@@ -767,20 +767,20 @@
     
         <li class="main active"><a href="#scatterplot-with-categories">Scatterplot with Categories</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#references">References</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-category-scatter-from-pandas-dataframes">Example 1 - Category Scatter from Pandas DataFrames</a></li>
+            
+                    <li><a href="#example-2-category-scatter-from-numpy-arrays">Example 2 - Category Scatter from NumPy Arrays</a></li>
+            
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-1-category-scatter-from-pandas-dataframes">Example 1 - Category Scatter from Pandas DataFrames</a></li>
-        
-            <li><a href="#example-2-category-scatter-from-numpy-arrays">Example 2 - Category Scatter from NumPy Arrays</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
+            <li><a href="#api">API</a></li>
+                
         
     
     </ul>
@@ -792,13 +792,13 @@
 <blockquote>
 <p>from mlxtend.general_plotting import category_scatter</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <h3 id="references">References</h3>
 <ul>
 <li>-</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-category-scatter-from-pandas-dataframes">Example 1 - Category Scatter from Pandas DataFrames</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-category-scatter-from-pandas-dataframes">Example 1 - Category Scatter from Pandas DataFrames</h3>
 <pre><code class="python">import pandas as pd
 from io import StringIO
 
@@ -870,11 +870,12 @@ df
 import matplotlib.pyplot as plt
 from mlxtend.general_plotting import category_scatter
 
-fig = category_scatter(x='x', y='y', label_col='label', data=df, legend_loc='upper left')
+fig = category_scatter(x='x', y='y', label_col='label', 
+                       data=df, legend_loc='upper left')
 </code></pre>
 
 <p><img alt="png" src="../category_scatter_files/category_scatter_11_0.png" /></p>
-<h2 id="example-2-category-scatter-from-numpy-arrays">Example 2 - Category Scatter from NumPy Arrays</h2>
+<h3 id="example-2-category-scatter-from-numpy-arrays">Example 2 - Category Scatter from NumPy Arrays</h3>
 <pre><code class="python">import numpy as np
 from io import BytesIO
 
@@ -901,11 +902,12 @@ ary
 import matplotlib.pyplot as plt
 from mlxtend.general_plotting import category_scatter
 
-fix = category_scatter(x=1, y=2, label_col=0, data=ary, legend_loc='upper left')
+fix = category_scatter(x=1, y=2, label_col=0, 
+                       data=ary, legend_loc='upper left')
 </code></pre>
 
 <p><img alt="png" src="../category_scatter_files/category_scatter_15_0.png" /></p>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>category_scatter(x, y, label_col, data, markers='sxo^v', colors=('blue', 'green', 'red', 'purple', 'gray', 'cyan'), alpha=0.7, markersize=20.0, legend_loc='best')</em></p>
 <p>Scatter plot to plot categories in different colors/markerstyles.</p>
 <p><strong>Parameters</strong></p>

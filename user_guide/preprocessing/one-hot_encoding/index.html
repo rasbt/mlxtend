@@ -774,12 +774,16 @@
         <li class="main "><a href="#examples">Examples</a></li>
         
             <li><a href="#example-1-defaults">Example 1 - Defaults</a></li>
+                
         
             <li><a href="#example-2-python-lists">Example 2 - Python Lists</a></li>
+                
         
             <li><a href="#example-3-integer-arrays">Example 3 - Integer Arrays</a></li>
+                
         
             <li><a href="#example-4-arbitrary-numbers-of-class-labels">Example 4 - Arbitrary Numbers of Class Labels</a></li>
+                
         
     
         <li class="main "><a href="#api">API</a></li>
@@ -789,12 +793,12 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="one-hot-encoding">One-Hot Encoding</h1>
+<h2 id="one-hot-encoding">One-Hot Encoding</h2>
 <p>A function that performs one-hot encoding for class labels.</p>
 <blockquote>
 <p>from mlxtend.preprocessing import one_hot</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p>Typical supervised machine learning algorithms for classifications assume that the class labels are <em>nominal</em> (a special case of <em>categorical</em> where no order is implied). A typical example of an nominal feature would be "color" since we can't say (in most applications) that "orange &gt; blue &gt; red".</p>
 <p>The <code>one_hot</code> function provides a simple interface to convert class label integers into a so-called one-hot array, where each unique label is represented as a column in the new array.</p>
 <p>For example, let's assume we have 5 data points from 3 different classes: 0, 1, and 2.</p>
@@ -812,8 +816,8 @@
      [0,  0,  1]  # sample 5, class 2
      ])
 </code></pre>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-defaults">Example 1 - Defaults</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-defaults">Example 1 - Defaults</h3>
 <pre><code class="python">from mlxtend.preprocessing import one_hot
 import numpy as np
 
@@ -827,7 +831,7 @@ one_hot(y)
        [ 0.,  1.,  0.],
        [ 0.,  0.,  1.]])
 </code></pre>
-<h2 id="example-2-python-lists">Example 2 - Python Lists</h2>
+<h3 id="example-2-python-lists">Example 2 - Python Lists</h3>
 <pre><code class="python">from mlxtend.preprocessing import one_hot
 
 y = [0, 1, 2, 1, 2]
@@ -840,7 +844,7 @@ one_hot(y)
        [ 0.,  1.,  0.],
        [ 0.,  0.,  1.]])
 </code></pre>
-<h2 id="example-3-integer-arrays">Example 3 - Integer Arrays</h2>
+<h3 id="example-3-integer-arrays">Example 3 - Integer Arrays</h3>
 <pre><code class="python">from mlxtend.preprocessing import one_hot
 
 y = [0, 1, 2, 1, 2]
@@ -853,7 +857,7 @@ one_hot(y, dtype='int')
        [0, 1, 0],
        [0, 0, 1]])
 </code></pre>
-<h2 id="example-4-arbitrary-numbers-of-class-labels">Example 4 - Arbitrary Numbers of Class Labels</h2>
+<h3 id="example-4-arbitrary-numbers-of-class-labels">Example 4 - Arbitrary Numbers of Class Labels</h3>
 <pre><code class="python">from mlxtend.preprocessing import one_hot
 
 y = [0, 1, 2, 1, 2]
@@ -866,7 +870,7 @@ one_hot(y, num_labels=10)
        [ 0.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.],
        [ 0.,  0.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.]])
 </code></pre>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>one_hot(y, num_labels='auto', dtype='float')</em></p>
 <p>One-hot encoding of class labels</p>
 <p><strong>Parameters</strong></p>

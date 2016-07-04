@@ -767,24 +767,24 @@
     
         <li class="main active"><a href="#tensorflow-multi-layer-perceptron">TensorFlow Multi-Layer Perceptron</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#references">References</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-gradient-descent">Example 1 - Gradient Descent</a></li>
+            
+                    <li><a href="#example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</a></li>
+            
+                    <li><a href="#example-3-mnist">Example 3 - MNIST</a></li>
+            
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-1-gradient-descent">Example 1 - Gradient Descent</a></li>
-        
-            <li><a href="#example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</a></li>
-        
-            <li><a href="#example-3-mnist">Example 3 - MNIST</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
-        
-            <li><a href="#methods">Methods</a></li>
+            <li><a href="#api">API</a></li>
+                
+                    <li><a href="#methods">Methods</a></li>
+            
         
     
     </ul>
@@ -796,7 +796,7 @@
 <blockquote>
 <p>from mlxtend.tf_classifier import TfMultiLayerPerceptron</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p>(A more detailed tutorial on multi-layer perceptrons is in preparation.)</p>
 <p><img alt="" src="../TfMultiLayerPerceptron_files/mlp_overview_1.png" /></p>
 <p><img alt="" src="../TfMultiLayerPerceptron_files/mlp_overview_2.png" /></p>
@@ -805,8 +805,8 @@
 <ul>
 <li>Srivastava, Nitish, et al. <a href="http://dl.acm.org/citation.cfm?id=2670313"><em>"Dropout: A simple way to prevent neural networks from overfitting."</em></a> The Journal of Machine Learning Research 15.1 (2014): 1929-1958.</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-gradient-descent">Example 1 - Gradient Descent</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-gradient-descent">Example 1 - Gradient Descent</h3>
 <p>Each integer in the <code>hidden_layers</code> list argument specifies the number of neurons for the respective layer; via the <code>activations</code>, we specify the activation functions for the individual hidden layer. Below, we initialize a multi-layer perceptron with 1 hidden layer using the logistic sigmoid activation. Furthermore, we train the network via simple gradient descent training by setting <code>optimizer='gradientdescent'</code> and <code>minibatches=1</code>. </p>
 <pre><code class="python">from mlxtend.tf_classifier import TfMultiLayerPerceptron
 from mlxtend.data import iris_data
@@ -859,13 +859,13 @@ plt.show()
 </code></pre>
 
 <p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_18_0.png" /></p>
-<h3 id="predicting-class-labels">Predicting Class Labels</h3>
+<h4 id="predicting-class-labels">Predicting Class Labels</h4>
 <pre><code class="python">print('Predicted class labels:', mlp.predict(X[[0, 99, 149]]))
 </code></pre>
 
 <pre><code>Predicted class labels: [0 1 2]
 </code></pre>
-<h3 id="predicting-class-probabilities">Predicting Class Probabilities</h3>
+<h4 id="predicting-class-probabilities">Predicting Class Probabilities</h4>
 <pre><code class="python">print('Predicted class probabilities:\n', mlp.predict_proba(X[[0, 99, 149]]))
 </code></pre>
 
@@ -874,7 +874,7 @@ plt.show()
  [  1.58569030e-03   9.77745533e-01   2.06688400e-02]
  [  5.52368192e-06   1.68280497e-01   8.31713974e-01]]
 </code></pre>
-<h2 id="example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</h2>
+<h3 id="example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</h3>
 <p>Stochastic gradient descent training sample by sample can be achieved by setting the number of minibatches equal to the number of samples in the training dataset; everything between <code>minibatches=1</code> and <code>minibatches=len(y)</code> is "minibatch" stochastic gradient descent. Below, we train a network using 10 minibatches.</p>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.evaluate import plot_decision_regions
@@ -915,7 +915,7 @@ plt.show()
 </code></pre>
 <p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_25_1.png" /></p>
 <p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_25_2.png" /></p>
-<h2 id="example-3-mnist">Example 3 - MNIST</h2>
+<h3 id="example-3-mnist">Example 3 - MNIST</h3>
 <p>Please note that <code>mnist_data</code> just contains a random 5000-sample subset of MNIST (~10% of the original dataset size) suitable for demonstration purposes regarding computational efficiency.</p>
 <p>Although it may be overkill, and the network may terribly overfit the training data, let us initialize a more complex neural network with 2 hidden layers and 200 ReLU (Rectifier Linear Units) each.</p>
 <pre><code class="python">from mlxtend.data import mnist_data
@@ -965,7 +965,7 @@ plot_digit(X, y, 4999)
 
 <pre><code>Prediction: 9
 </code></pre>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>TfMultiLayerPerceptron(eta=0.5, epochs=50, hidden_layers=[50, 10], n_classes=None, activations=['logistic', 'logistic'], optimizer='gradientdescent', momentum=0.0, l1=0.0, l2=0.0, dropout=1.0, decay=[0.0, 1.0], minibatches=1, random_seed=None, print_progress=0, dtype=None)</em></p>
 <p>Multi-layer perceptron classifier.</p>
 <p><strong>Parameters</strong></p>

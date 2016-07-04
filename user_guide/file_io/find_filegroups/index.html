@@ -767,18 +767,18 @@
     
         <li class="main active"><a href="#find-filegroups">Find Filegroups</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#references">References</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-grouping-related-files-in-a-dictionary">Example 1 - Grouping related files in a dictionary</a></li>
+            
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-1-grouping-related-files-in-a-dictionary">Example 1 - Grouping related files in a dictionary</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
+            <li><a href="#api">API</a></li>
+                
         
     
     </ul>
@@ -790,7 +790,7 @@
 <blockquote>
 <p>from mlxtend.file_io import find_filegroups</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p>This function finds files that are related to each other based on their file names. This can be useful for parsing collections files that have been stored in different subdirectories, for examples:</p>
 <pre><code>input_dir/
     task01.txt
@@ -809,8 +809,8 @@ output_dir/
 <ul>
 <li>-</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-grouping-related-files-in-a-dictionary">Example 1 - Grouping related files in a dictionary</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-grouping-related-files-in-a-dictionary">Example 1 - Grouping related files in a dictionary</h3>
 <p>Given the following directory and file structure</p>
 <pre><code>dir_1/
     file_1.log
@@ -844,7 +844,7 @@ find_filegroups(paths=['./data_find_filegroups/dir_1',
   './data_find_filegroups/dir_2/file_3.csv',
   './data_find_filegroups/dir_3/file_3.txt']}
 </code></pre>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>find_filegroups(paths, substring='', extensions=None, validity_check=True, ignore_invisible=True, rstrip='', ignore_substring=None)</em></p>
 <p>Find and collect files from different directories in a python dictionary.</p>
 <p><strong>Parameters</strong></p>

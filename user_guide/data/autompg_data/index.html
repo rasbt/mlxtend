@@ -767,18 +767,18 @@
     
         <li class="main active"><a href="#auto-mpg">Auto MPG</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#references">References</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-dataset-overview">Example - Dataset overview</a></li>
+            
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-dataset-overview">Example - Dataset overview</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
+            <li><a href="#api">API</a></li>
+                
         
     
     </ul>
@@ -790,7 +790,7 @@
 <blockquote>
 <p>from mlxtend.data import autompg_data</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p>The Auto-MPG dataset for regression analysis. The target (<code>y</code>) is defined as the miles per gallon (mpg) for 392 automobiles (6 rows containing "NaN"s have been removed. The 8 feature columns are:</p>
 <p><strong>Features</strong></p>
 <ol>
@@ -816,8 +816,8 @@
 <li>Source: <a href="https://archive.ics.uci.edu/ml/datasets/Auto+MPG">https://archive.ics.uci.edu/ml/datasets/Auto+MPG</a></li>
 <li>Quinlan,R. (1993). Combining Instance-Based and Model-Based Learning. In Proceedings on the Tenth International Conference of Machine Learning, 236-243, University of Massachusetts, Amherst. Morgan Kaufmann.</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-dataset-overview">Example - Dataset overview</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-dataset-overview">Example - Dataset overview</h3>
 <pre><code class="python">from mlxtend.data import autompg_data
 X, y = autompg_data()
 
@@ -845,7 +845,7 @@ Header: ['cylinders', 'displacement', 'horsepower weight', 'acceleration', 'mode
        [   4. ,  120. ,   79. , ...,   18.6,   82. ,    1. ],
        [   4. ,  119. ,   82. , ...,   19.4,   82. ,    1. ]])
 </code></pre>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>autompg_data()</em></p>
 <p>Auto MPG dataset.</p>
 <ul>

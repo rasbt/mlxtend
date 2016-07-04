@@ -767,20 +767,20 @@
     
         <li class="main active"><a href="#tokenizer">Tokenizer</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#references">References</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-extract-emoticons">Example 1 - Extract Emoticons</a></li>
+            
+                    <li><a href="#example-2-extract-words-and-emoticons">Example 2 - Extract Words and Emoticons</a></li>
+            
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-1-extract-emoticons">Example 1 - Extract Emoticons</a></li>
-        
-            <li><a href="#example-2-extract-words-and-emoticons">Example 2 - Extract Words and Emoticons</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
+            <li><a href="#api">API</a></li>
+                
         
     
     </ul>
@@ -792,14 +792,14 @@
 <blockquote>
 <p>from mlxtend.text import tokenizer_[type]</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p>Different functions to tokenize text for natural language processing tasks, for example such as building a bag-of-words model for text classification.</p>
 <h3 id="references">References</h3>
 <ul>
 <li>-</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-extract-emoticons">Example 1 - Extract Emoticons</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-extract-emoticons">Example 1 - Extract Emoticons</h3>
 <pre><code class="python">from mlxtend.text import tokenizer_emoticons
 </code></pre>
 
@@ -808,7 +808,7 @@
 
 <pre><code>[':)', ':(', ':-)']
 </code></pre>
-<h2 id="example-2-extract-words-and-emoticons">Example 2 - Extract Words and Emoticons</h2>
+<h3 id="example-2-extract-words-and-emoticons">Example 2 - Extract Words and Emoticons</h3>
 <pre><code class="python">from mlxtend.text import tokenizer_words_and_emoticons
 </code></pre>
 
@@ -817,7 +817,7 @@
 
 <pre><code>['this', 'is', 'a', 'test', ':)', ':(', ':-)']
 </code></pre>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>tokenizer_emoticons(text)</em></p>
 <p>Return emoticons from text</p>
 <pre><code>Example:

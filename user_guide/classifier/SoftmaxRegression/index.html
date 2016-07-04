@@ -767,20 +767,20 @@
     
         <li class="main active"><a href="#softmax-regression">Softmax Regression</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-gradient-descent">Example 1 - Gradient Descent</a></li>
+            
+                    <li><a href="#example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</a></li>
+            
         
-            <li><a href="#example-1-gradient-descent">Example 1 - Gradient Descent</a></li>
-        
-            <li><a href="#example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
-        
-            <li><a href="#methods">Methods</a></li>
+            <li><a href="#api">API</a></li>
+                
+                    <li><a href="#methods">Methods</a></li>
+            
         
     
     </ul>
@@ -792,7 +792,7 @@
 <blockquote>
 <p>from mlxtend.classifier import SoftmaxRegression</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p><em>Softmax Regression</em> (synonyms: <em>Multinomial Logistic</em>, <em>Maximum Entropy Classifier</em>, or just <em>Multi-class Logistic Regression</em>) is a generalization of logistic regression that we can use for multi-class classification (under the assumption that the classes are  mutually exclusive). In contrast, we use the (standard) <em>Logistic Regression</em> model in binary classification tasks.</p>
 <p>Below is a schematic of a <em>Logistic Regression</em> model, for more details, please see the <a href="../LogisticRegression/"><code>LogisticRegression</code> manual</a>.</p>
 <p><img alt="" src="../SoftmaxRegression_files/logistic_regression_schematic.png" /></p>
@@ -970,8 +970,8 @@ print('Cost: ', J_cost)
 <p>and we define the "regularized" weight update as</p>
 <p><mathjax>$$\mathbf{w}_j := \mathbf{w}_j -  \eta \big[\nabla \mathbf{w}_j \, J(\mathbf{W}) + \lambda \mathbf{w}_j \big].$$</mathjax></p>
 <p>(Please note that we don't regularize the bias term.)</p>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-gradient-descent">Example 1 - Gradient Descent</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-gradient-descent">Example 1 - Gradient Descent</h3>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.evaluate import plot_decision_regions
 from mlxtend.classifier import SoftmaxRegression
@@ -1007,14 +1007,14 @@ plt.show()
 </code></pre>
 <p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_34_1.png" /></p>
 <p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_34_2.png" /></p>
-<h3 id="predicting-class-labels">Predicting Class Labels</h3>
+<h4 id="predicting-class-labels">Predicting Class Labels</h4>
 <pre><code class="python">y_pred = lr.predict(X)
 print('Last 3 Class Labels: %s' % y_pred[-3:])
 </code></pre>
 
 <pre><code>Last 3 Class Labels: [2 2 2]
 </code></pre>
-<h3 id="predicting-class-probabilities">Predicting Class Probabilities</h3>
+<h4 id="predicting-class-probabilities">Predicting Class Probabilities</h4>
 <pre><code class="python">y_pred = lr.predict_proba(X)
 print('Last 3 Class Labels:\n %s' % y_pred[-3:])
 </code></pre>
@@ -1024,7 +1024,7 @@ print('Last 3 Class Labels:\n %s' % y_pred[-3:])
  [  2.97052325e-11   7.26356627e-04   9.99273643e-01]
  [  1.57464093e-06   1.57779528e-01   8.42218897e-01]]
 </code></pre>
-<h2 id="example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</h2>
+<h3 id="example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</h3>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.evaluate import plot_decision_regions
 from mlxtend.classifier import SoftmaxRegression
@@ -1054,7 +1054,7 @@ plt.show()
 
 <p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_40_0.png" /></p>
 <p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_40_1.png" /></p>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>SoftmaxRegression(eta=0.01, epochs=50, l2=0.0, minibatches=1, n_classes=None, random_seed=None, print_progress=0)</em></p>
 <p>Softmax regression classifier.</p>
 <p><strong>Parameters</strong></p>

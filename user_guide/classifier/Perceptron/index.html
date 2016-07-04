@@ -767,24 +767,24 @@
     
         <li class="main active"><a href="#perceptron">Perceptron</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#basic-notation">Basic Notation</a></li>
+            
+                    <li><a href="#perceptron-rule">Perceptron Rule</a></li>
+            
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#basic-notation">Basic Notation</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-classification-of-iris-flowers">Example 1 - Classification of Iris Flowers</a></li>
+            
         
-            <li><a href="#perceptron-rule">Perceptron Rule</a></li>
-        
-            <li><a href="#references">References</a></li>
-        
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-1-classification-of-iris-flowers">Example 1 - Classification of Iris Flowers</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
-        
-            <li><a href="#methods">Methods</a></li>
+            <li><a href="#api">API</a></li>
+                
+                    <li><a href="#methods">Methods</a></li>
+            
         
     
     </ul>
@@ -796,11 +796,11 @@
 <blockquote>
 <p>from mlxtend.classifier import Perceptron</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p>The idea behind this "thresholded" perceptron was to mimic how a single neuron in the brain works: It either "fires" or not. 
 A perceptron receives multiple input signals, and if the sum of the input signals exceed a certain threshold it either returns a signal or remains "silent" otherwise. What made this a "machine learning" algorithm was Frank Rosenblatt's idea of the perceptron learning rule: The perceptron algorithm is about learning the weights for the input signals in order to draw linear decision boundary that allows us to discriminate between the two linearly separable classes +1 and -1.</p>
 <p><img alt="" src="../Perceptron_files/perceptron_schematic.png" /></p>
-<h3 id="basic-notation">Basic Notation</h3>
+<h4 id="basic-notation">Basic Notation</h4>
 <p>Before we dive deeper into the algorithm(s) for learning the weights of the perceptron classifier, let us take a brief look at the basic notation. In the following sections, we will label the <em>positive</em> and <em>negative</em> class in our binary classification setting as "1" and "-1", respectively. Next, we define an activation function <mathjax>$g(\mathbf{z})$</mathjax> that takes a linear combination of the input values <mathjax>$\mathbf{x}$</mathjax> and weights <mathjax>$\mathbf{w}$</mathjax> as input (<mathjax>$\mathbf{z} = w_1x_{1} + \dots + w_mx_{m}$</mathjax>), and if <mathjax>$g(\mathbf{z})$</mathjax> is greater than a defined threshold <mathjax>$\theta$</mathjax> we predict 1 and -1 otherwise; in this case, this activation function <mathjax>$g$</mathjax> is a simple "unit step function," which is sometimes also called "Heaviside step function." </p>
 <p><mathjax>$$
  g(z) =\begin{cases}
@@ -824,15 +824,15 @@ $$</mathjax></p>
 \end{bmatrix}$$</mathjax></p>
 <p>In order to simplify the notation, we bring <mathjax>$\theta$</mathjax> to the left side of the equation and define <mathjax>$w_0 = -\theta  \text{ and } x_0=1$</mathjax> </p>
 <p>so that </p>
-<p><mathjax>$$\begin{equation}
+<p><mathjax>$$
  g({z}) =\begin{cases}
     1 &amp; \text{if $z \ge 0$}\\
     -1 &amp; \text{otherwise}.
   \end{cases}
-\end{equation}$$</mathjax></p>
+$$</mathjax></p>
 <p>and</p>
 <p><mathjax>$$z = w_0x_{0} + w_1x_{1} + \dots + w_mx_{m} = \sum_{j=0}^{m} x_{j}w_{j} \\ = \mathbf{w}^T\mathbf{x}.$$</mathjax></p>
-<h3 id="perceptron-rule">Perceptron Rule</h3>
+<h4 id="perceptron-rule">Perceptron Rule</h4>
 <p>Rosenblatt's initial perceptron rule is fairly simple and can be summarized by the following steps: </p>
 <ol>
 <li>Initialize the weights to 0 or small random numbers.</li>
@@ -865,8 +865,8 @@ $$</mathjax></p>
 <ul>
 <li>F. Rosenblatt. The perceptron, a perceiving and recognizing automaton Project Para. Cornell Aeronautical Laboratory, 1957.</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-classification-of-iris-flowers">Example 1 - Classification of Iris Flowers</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-classification-of-iris-flowers">Example 1 - Classification of Iris Flowers</h3>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.evaluate import plot_decision_regions
 from mlxtend.classifier import Perceptron
@@ -907,11 +907,11 @@ plt.show()
 <pre><code>Iteration: 5/5 | Elapsed: 00:00:00 | ETA: 00:00:00
 </code></pre>
 <p><img alt="png" src="../Perceptron_files/Perceptron_25_1.png" /></p>
-<pre><code>Bias &amp; Weights: [[ 0.03330268]
- [ 0.23472335]]
+<pre><code>Bias &amp; Weights: [[-0.04500809]
+ [ 0.11048855]]
 </code></pre>
 <p><img alt="png" src="../Perceptron_files/Perceptron_25_3.png" /></p>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>Perceptron(eta=0.1, epochs=50, random_seed=None, print_progress=0)</em></p>
 <p>Perceptron classifier.</p>
 <pre><code>Note that this implementation of the Perceptron expects binary class labels
@@ -974,7 +974,7 @@ n_features is the number of features.</p>
 </li>
 <li>
 <p><code>init_params</code> : bool (default: True)</p>
-<p>Re-initializes model parametersprior to fitting.
+<p>Re-initializes model parameters prior to fitting.
 Set False to continue training with weights from
 a previous model fitting.</p>
 </li>

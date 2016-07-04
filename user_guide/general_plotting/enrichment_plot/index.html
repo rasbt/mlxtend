@@ -767,18 +767,18 @@
     
         <li class="main active"><a href="#enrichment-plot">Enrichment Plot</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#references">References</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-enrichment-plots-from-pandas-dataframes">Example 1 - Enrichment Plots from Pandas DataFrames</a></li>
+            
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-1-enrichment-plots-from-pandas-dataframes">Example 1 - Enrichment Plots from Pandas DataFrames</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
+            <li><a href="#api">API</a></li>
+                
         
     
     </ul>
@@ -790,14 +790,14 @@
 <blockquote>
 <p>from mlxtend.general_plotting import category_scatter</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p>In enrichment plots, the y-axis can be interpreted as "how many samples are less or equal to the corresponding x-axis label."</p>
 <h3 id="references">References</h3>
 <ul>
 <li>-</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-enrichment-plots-from-pandas-dataframes">Example 1 - Enrichment Plots from Pandas DataFrames</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-enrichment-plots-from-pandas-dataframes">Example 1 - Enrichment Plots from Pandas DataFrames</h3>
 <pre><code class="python">import pandas as pd
 s1 = [1.1, 1.5]
 s2 = [2.1, 1.8]
@@ -851,7 +851,7 @@ ax = enrichment_plot(df, legend_loc='upper left')
 </code></pre>
 
 <p><img alt="png" src="../enrichment_plot_files/enrichment_plot_12_0.png" /></p>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-', alpha=0.5, lw=2, legend=True, where='post', grid=True, count_label='Count', xlim='auto', ylim='auto', invert_axes=False, legend_loc='best', ax=None)</em></p>
 <p>Plot stacked barplots</p>
 <p><strong>Parameters</strong></p>

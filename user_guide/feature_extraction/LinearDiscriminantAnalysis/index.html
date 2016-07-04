@@ -767,24 +767,24 @@
     
         <li class="main active"><a href="#linear-discriminant-analysis">Linear Discriminant Analysis</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#summarizing-the-lda-approach-in-5-steps">Summarizing the LDA approach in 5 steps</a></li>
+            
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#summarizing-the-lda-approach-in-5-steps">Summarizing the LDA approach in 5 steps</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-lda-on-iris">Example 1 - LDA on Iris</a></li>
+            
+                    <li><a href="#example-2-plotting-the-between-class-variance-explained-ratio">Example 2 - Plotting the Between-Class Variance Explained Ratio</a></li>
+            
         
-            <li><a href="#references">References</a></li>
-        
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-1-lda-on-iris">Example 1 - LDA on Iris</a></li>
-        
-            <li><a href="#example-2-plotting-the-between-class-variance-explained-ratio">Example 2 - Plotting the Between-Class Variance Explained Ratio</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
-        
-            <li><a href="#methods">Methods</a></li>
+            <li><a href="#api">API</a></li>
+                
+                    <li><a href="#methods">Methods</a></li>
+            
         
     
     </ul>
@@ -796,14 +796,14 @@
 <blockquote>
 <p>from mlxtend.feature_extraction import LinearDiscriminantAnalysis</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p>Linear Discriminant Analysis (LDA) is most commonly used as dimensionality reduction technique in the pre-processing step for pattern-classification and machine learning applications.
 The goal is to project a dataset onto a lower-dimensional space with good class-separability in order avoid overfitting ("curse of dimensionality") and also reduce computational costs.</p>
 <p>Ronald A. Fisher formulated the <em>Linear Discriminant</em> in 1936 (<a href="http://onlinelibrary.wiley.com/doi/10.1111/j.1469-1809.1936.tb02137.x/abstract">The Use of Multiple  Measurements in Taxonomic Problems</a>), and it also has some practical uses as classifier. The original Linear discriminant was described for a 2-class problem, and it was then later generalized as "multi-class Linear Discriminant Analysis" or "Multiple Discriminant Analysis" by C. R. Rao in 1948 (<a href="http://www.jstor.org/stable/2983775">The utilization of multiple measurements in problems of biological classification</a>)</p>
 <p><strong>The general LDA approach is very similar to a Principal Component Analysis, but in addition to finding the component axes that maximize the variance of our data (PCA), we are additionally interested in the axes that maximize the separation between multiple classes (LDA).</strong></p>
 <p>So, in a nutshell, often the goal of an LDA is to project a feature space (a dataset n-dimensional samples) onto a smaller subspace <mathjax>$k$</mathjax> (where <mathjax>$k \leq n-1$</mathjax>) while maintaining the class-discriminatory information. <br />
 In general, dimensionality reduction does not only help reducing computational costs for a given classification task, but it can also be helpful to avoid overfitting by minimizing the error in parameter estimation ("curse of dimensionality").</p>
-<h3 id="summarizing-the-lda-approach-in-5-steps">Summarizing the LDA approach in 5 steps</h3>
+<h4 id="summarizing-the-lda-approach-in-5-steps">Summarizing the LDA approach in 5 steps</h4>
 <p>Listed below are the 5 general steps for performing a linear discriminant analysis.</p>
 <ol>
 <li>Compute the <mathjax>$d$</mathjax>-dimensional mean vectors for the different classes from the dataset.</li>
@@ -817,8 +817,8 @@ In general, dimensionality reduction does not only help reducing computational c
 <li>Fisher, Ronald A. "<a href="http://onlinelibrary.wiley.com/doi/10.1111/j.1469-1809.1936.tb02137.x/abstract">The use of multiple measurements in taxonomic problems.</a>" Annals of eugenics 7.2 (1936): 179-188.</li>
 <li>Rao, C. Radhakrishna. "<a href="http://www.jstor.org/stable/2983775">The utilization of multiple measurements in problems of biological classification.</a>" Journal of the Royal Statistical Society. Series B (Methodological) 10.2 (1948): 159-203.</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-lda-on-iris">Example 1 - LDA on Iris</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-lda-on-iris">Example 1 - LDA on Iris</h3>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.preprocessing import standardize
 from mlxtend.feature_extraction import LinearDiscriminantAnalysis
@@ -849,7 +849,7 @@ with plt.style.context('seaborn-whitegrid'):
 </code></pre>
 
 <p><img alt="png" src="../LinearDiscriminantAnalysis_files/LinearDiscriminantAnalysis_14_0.png" /></p>
-<h2 id="example-2-plotting-the-between-class-variance-explained-ratio">Example 2 - Plotting the Between-Class Variance Explained Ratio</h2>
+<h3 id="example-2-plotting-the-between-class-variance-explained-ratio">Example 2 - Plotting the Between-Class Variance Explained Ratio</h3>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.preprocessing import standardize
 from mlxtend.feature_extraction import LinearDiscriminantAnalysis
@@ -884,7 +884,7 @@ cum_var_exp = np.cumsum(var_exp)
 </code></pre>
 
 <p><img alt="png" src="../LinearDiscriminantAnalysis_files/LinearDiscriminantAnalysis_18_0.png" /></p>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>LinearDiscriminantAnalysis(n_discriminants=None)</em></p>
 <p>Linear Discriminant Analysis Class</p>
 <p><strong>Parameters</strong></p>

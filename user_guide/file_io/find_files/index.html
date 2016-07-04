@@ -765,39 +765,39 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#find-filegroups">Find Filegroups</a></li>
+        <li class="main active"><a href="#find-files">Find Files</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#references">References</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-grouping-related-files-in-a-dictionary">Example 1 - Grouping related files in a dictionary</a></li>
+            
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-1-grouping-related-files-in-a-dictionary">Example 1 - Grouping related files in a dictionary</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
+            <li><a href="#api">API</a></li>
+                
         
     
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="find-filegroups">Find Filegroups</h1>
+<h1 id="find-files">Find Files</h1>
 <p>A function that finds files in a given directory based on substring matches and returns a list of the file names found.</p>
 <blockquote>
 <p>from mlxtend.file_io import find_files</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p>This function finds files based on substring search. This is especially useful if we want to find specific files in a directory tree and return their absolute paths for further processing in Python.</p>
 <h3 id="references">References</h3>
 <ul>
 <li>-</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-grouping-related-files-in-a-dictionary">Example 1 - Grouping related files in a dictionary</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-grouping-related-files-in-a-dictionary">Example 1 - Grouping related files in a dictionary</h3>
 <p>Given the following directory and file structure</p>
 <pre><code>dir_1/
     file_1.log
@@ -822,7 +822,7 @@ find_files(substring='_2', path='./data_find_filegroups/', recursive=True)
  './data_find_filegroups/dir_2/file_2.csv',
  './data_find_filegroups/dir_3/file_2.txt']
 </code></pre>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>find_files(substring, path, recursive=False, check_ext=None, ignore_invisible=True, ignore_substring=None)</em></p>
 <p>Find files in a directory based on substring matching.</p>
 <p><strong>Parameters</strong></p>

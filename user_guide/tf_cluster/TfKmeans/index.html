@@ -767,20 +767,20 @@
     
         <li class="main active"><a href="#tfkmeans">TfKmeans</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#references">References</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-three-blobs">Example 1 - Three Blobs</a></li>
+            
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-1-three-blobs">Example 1 - Three Blobs</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
-        
-            <li><a href="#methods">Methods</a></li>
+            <li><a href="#api">API</a></li>
+                
+                    <li><a href="#methods">Methods</a></li>
+            
         
     
     </ul>
@@ -792,7 +792,7 @@
 <blockquote>
 <p>from mlxtend.tf_cluster import TfKmeans</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p>Clustering falls into the category of unsupervised learning, a subfield of machine learning where the ground truth labels are not available to us in real-world applications. In clustering, our goal is to group samples by similarity (in k-means: Euclidean distance).</p>
 <p>The k-means algorithms can be summarized as follows:</p>
 <ol>
@@ -805,8 +805,8 @@
 <ul>
 <li>MacQueen, J. B. (1967). <a href="http://projecteuclid.org/euclid.bsmsp/1200512992">Some Methods for classification and Analysis of Multivariate Observations</a>. Proceedings of 5th Berkeley Symposium on Mathematical Statistics and Probability. University of California Press. pp. 281–297. MR 0214227. Zbl 0214.46201. Retrieved 2009-04-07.</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-three-blobs">Example 1 - Three Blobs</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-three-blobs">Example 1 - Three Blobs</h3>
 <h4 id="load-some-sample-data">Load some sample data:</h4>
 <pre><code class="python">import matplotlib.pyplot as plt
 from mlxtend.data import three_blobs_data
@@ -878,8 +878,8 @@ plt.show()
 </code></pre>
 
 <p><img alt="png" src="../TfKmeans_files/TfKmeans_17_0.png" /></p>
-<h1 id="api">API</h1>
-<p><em>TfKmeans(k, max_iter=10, random_seed=None, print_progress=0, dtype=None)</em></p>
+<h2 id="api">API</h2>
+<p><em>TfKmeans(k, max_iter=10, convergence_tolerance=1e-05, random_seed=None, print_progress=0, dtype=None)</em></p>
 <p>TensorFlow K-means clustering class.</p>
 <pre><code>Added in 0.4.1dev
 </code></pre>
@@ -894,6 +894,12 @@ plt.show()
 <p>Number of iterations during cluster assignment.
 Cluster re-assignment stops automatically when the algorithm
 converged.</p>
+</li>
+<li>
+<p><code>convergence_tolerance</code> : float (default: 1e-05)</p>
+<p>Compares current centroids with centroids of the previous iteration
+using the given tolerance (a small positive float)to determine
+if the algorithm converged early.</p>
 </li>
 <li>
 <p><code>random_seed</code> : int (default: None)</p>
@@ -933,14 +939,20 @@ cluster.</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X)</em></p>
-<p>Learn cluster centroids from training data.</p>
+<p><em>fit(X, init_params=True)</em></p>
+<p>Learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
 <p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
 <p>Training vectors, where n_samples is the number of samples and
 n_features is the number of features.</p>
+</li>
+<li>
+<p><code>init_params</code> : bool (default: True)</p>
+<p>Re-initializes model parameters prior to fitting.
+Set False to continue training with weights from
+a previous model fitting.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
@@ -950,7 +962,7 @@ n_features is the number of features.</p>
 <hr>
 
 <p><em>predict(X)</em></p>
-<p>Predict cluster labels of X.</p>
+<p>Predict targets from X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -962,8 +974,8 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>cluster_labels</code> : array-like, shape = [n_samples]</p>
-<p>Predicted cluster labels.</p>
+<p><code>target_values</code> : array-like, shape = [n_samples]</p>
+<p>Predicted target values.</p>
 </li>
 </ul></div>
         

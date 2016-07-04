@@ -767,20 +767,20 @@
     
         <li class="main active"><a href="#counter">Counter</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#references">References</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-counting-the-iterations-in-a-for-loop">Example 1 - Counting the iterations in a for-loop</a></li>
+            
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-1-counting-the-iterations-in-a-for-loop">Example 1 - Counting the iterations in a for-loop</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
-        
-            <li><a href="#methods">Methods</a></li>
+            <li><a href="#api">API</a></li>
+                
+                    <li><a href="#methods">Methods</a></li>
+            
         
     
     </ul>
@@ -792,14 +792,14 @@
 <blockquote>
 <p>from mlxtend.utils import Counter</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p>The <code>Counter</code> class implements an object for displaying the number of iterations and time elapsed in a for-loop. Please note that the <code>Counter</code> was implemented for efficiency; thus, the <code>Counter</code> offers only very basic functionality in order to avoid relatively expensive evaluations (of if-else statements).</p>
 <h3 id="references">References</h3>
 <ul>
 <li>-</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-counting-the-iterations-in-a-for-loop">Example 1 - Counting the iterations in a for-loop</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-counting-the-iterations-in-a-for-loop">Example 1 - Counting the iterations in a for-loop</h3>
 <pre><code class="python">from mlxtend.utils import Counter
 </code></pre>
 
@@ -815,7 +815,7 @@ for i in range(20):
 <pre><code>20 iter | 2 sec
 </code></pre>
 <p>Note that the first number displays the current iteration, and the second number shows the time elapsed after initializing the <code>Counter</code>.</p>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>Counter(stderr=False, start_newline=True)</em></p>
 <p>Class to display the progress of for-loop iterators.</p>
 <p><strong>Parameters</strong></p>

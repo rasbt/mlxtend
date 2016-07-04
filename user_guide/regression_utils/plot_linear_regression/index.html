@@ -767,18 +767,18 @@
     
         <li class="main active"><a href="#linear-regression-plot">Linear Regression Plot</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#references">References</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-ordinary-least-squares-simple-linear-regression">Example 1 - Ordinary Least Squares Simple Linear Regression</a></li>
+            
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-1-ordinary-least-squares-simple-linear-regression">Example 1 - Ordinary Least Squares Simple Linear Regression</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
+            <li><a href="#api">API</a></li>
+                
         
     
     </ul>
@@ -790,14 +790,14 @@
 <blockquote>
 <p>from mlxtend.regression_utils import plot_linear_regression</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p>The <code>plot_linear_regression</code> is a convenience function that uses scikit-learn's <code>linear_model.LinearRegression</code> to fit a linear model and SciPy's <code>stats.pearsonr</code> to calculate the correlation coefficient. </p>
 <h3 id="references">References</h3>
 <ul>
 <li>-</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-ordinary-least-squares-simple-linear-regression">Example 1 - Ordinary Least Squares Simple Linear Regression</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-ordinary-least-squares-simple-linear-regression">Example 1 - Ordinary Least Squares Simple Linear Regression</h3>
 <pre><code class="python">import matplotlib.pyplot as plt
 from mlxtend.regression_utils import plot_linear_regression
 import numpy as np
@@ -813,7 +813,7 @@ plt.show()
 </code></pre>
 
 <p><img alt="png" src="../plot_linear_regression_files/plot_linear_regression_11_0.png" /></p>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>plot_linear_regression(X, y, model=LinearRegression(copy_X=True, fit_intercept=True, n_jobs=1, normalize=False), corr_func='pearsonr', scattercolor='blue', fit_style='k--', legend=True, xlim='auto')</em></p>
 <p>Plot a linear regression line fit.</p>
 <p><strong>Parameters</strong></p>

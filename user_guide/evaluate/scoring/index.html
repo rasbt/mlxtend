@@ -767,30 +767,32 @@
     
         <li class="main active"><a href="#scoring">Scoring</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#confusion-matrix">Confusion Matrix</a></li>
+            
+                    <li><a href="#error-and-accuracy">Error and Accuracy</a></li>
+            
+                    <li><a href="#true-and-false-positive-rates">True and False Positive Rates</a></li>
+            
+                    <li><a href="#precision-recall-and-the-f1-score">Precision, Recall, and the F1-Score</a></li>
+            
+                    <li><a href="#sensitivity-and-specificity">Sensitivity and Specificity</a></li>
+            
+                    <li><a href="#matthews-correlation-coefficient">Matthews Correlation Coefficient</a></li>
+            
+                    <li><a href="#average-per-class-accuracy">Average Per-Class Accuracy</a></li>
+            
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#confusion-matrix">Confusion Matrix</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-classification-error">Example 1 - Classification Error</a></li>
+            
         
-            <li><a href="#error-and-accuracy">Error and Accuracy</a></li>
-        
-            <li><a href="#true-and-false-positive-rates">True and False Positive Rates</a></li>
-        
-            <li><a href="#precision-recall-and-the-f1-score">Precision, Recall, and the F1-Score</a></li>
-        
-            <li><a href="#sensitivity-and-specificity">Sensitivity and Specificity</a></li>
-        
-            <li><a href="#matthews-correlation-coefficient">Matthews Correlation Coefficient</a></li>
-        
-            <li><a href="#average-per-class-accuracy">Average Per-Class Accuracy</a></li>
-        
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-1-classification-error">Example 1 - Classification Error</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
+            <li><a href="#api">API</a></li>
+                
         
     
     </ul>
@@ -802,33 +804,33 @@
 <blockquote>
 <p>from mlxtend.evaluate import scoring</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
-<h2 id="confusion-matrix">Confusion Matrix</h2>
+<h2 id="overview">Overview</h2>
+<h3 id="confusion-matrix">Confusion Matrix</h3>
 <p>The <em>confusion matrix</em> (or <em>error matrix</em>) is one way to summarize the performance of a classifier for binary classification tasks. This square matrix consists of columns and rows that list the number of instances as absolute or relative "actual class" vs. "predicted class" ratios.</p>
 <p>Let <mathjax>$P$</mathjax> be the label of class 1 and <mathjax>$N$</mathjax> be the label of a second class or the label of all classes that are <em>not class 1</em> in a multi-class setting.</p>
 <p><img alt="" src="../confusion_matrix_files/confusion_matrix_1.png" /></p>
-<h2 id="error-and-accuracy">Error and Accuracy</h2>
+<h3 id="error-and-accuracy">Error and Accuracy</h3>
 <p>Both the prediction <em>error</em> (ERR) and <em>accuracy</em> (ACC) provide general information about how many samples are misclassified. The <em>error</em> can be understood as the sum of all false predictions divided by the number of total predications, and the the accuracy is calculated as the sum of correct predictions divided by the total number of predictions, respectively. </p>
 <p><mathjax>$$ERR = \frac{FP + FN}{FP+ FN + TP + TN} = 1-ACC$$</mathjax></p>
 <p><mathjax>$$ACC = \frac{TP + TN}{FP+ FN + TP + TN} = 1-ERR$$</mathjax></p>
-<h2 id="true-and-false-positive-rates">True and False Positive Rates</h2>
+<h3 id="true-and-false-positive-rates">True and False Positive Rates</h3>
 <p>The <em>True Positive Rate</em> (TPR) and <em>False Positive Rate</em> (FPR) are performance metrics that are especially useful for imbalanced class problems. In <em>spam classification</em>, for example, we are of course primarily interested in the detection and filtering out of <em>spam</em>. However, it is also important to decrease the number of messages that were incorrectly classified as <em>spam</em> (<em>False Positives</em>): A situation where a person misses an important message is considered as "worse" than a situation where a person ends up with a few <em>spam</em> messages in his e-mail inbox. In contrast to the <em>FPR</em>, the <em>True Positive Rate</em> provides useful information about the fraction of <em>positive</em> (or <em>relevant</em>) samples that were correctly identified out of the total pool of <em>Positives</em>.</p>
 <p><mathjax>$$FPR = \frac{FP}{N} =  \frac{FP}{FP + TN}$$</mathjax></p>
 <p><mathjax>$$TPR = \frac{TP}{P} =  \frac{TP}{FN + TP}$$</mathjax></p>
-<h2 id="precision-recall-and-the-f1-score">Precision, Recall, and the F1-Score</h2>
+<h3 id="precision-recall-and-the-f1-score">Precision, Recall, and the F1-Score</h3>
 <p><em>Precision</em> (PRE) and <em>Recall</em> (REC) are metrics that are more commonly used in <em>Information Technology</em> and related to the <em>False</em> and <em>True Prositive Rates</em>. In fact, <em>Recall</em> is synonymous to the <em>True Positive Rate</em> and also sometimes called <em>Sensitivity</em>. The F<mathjax>$_1$</mathjax>-Score can be understood as a combination of both <em>Precision</em> and <em>Recall</em>.</p>
 <p><mathjax>$$PRE = \frac{TP}{TP + FP}$$</mathjax></p>
 <p><mathjax>$$REC = TPR = \frac{TP}{P} =  \frac{TP}{FN + TP}$$</mathjax></p>
 <p><mathjax>$$F_1 = 2 \cdot \frac{PRE \cdot REC}{PRE + REC}$$</mathjax></p>
-<h2 id="sensitivity-and-specificity">Sensitivity and Specificity</h2>
+<h3 id="sensitivity-and-specificity">Sensitivity and Specificity</h3>
 <p><em>Sensitivity</em> (SEN) is synonymous to <em>Recall</em> and the <em>True Positive Rate</em> whereas <em>Specificity (SPC)</em> is synonymous to the <em>True Negative Rate</em> -- <em>Sensitivity</em> measures the recovery rate of the <em>Positives</em> and complimentary, the <em>Specificity</em> measures the recovery rate of the <em>Negatives</em>.</p>
 <p><mathjax>$$SEN = TPR = REC = \frac{TP}{P} =  \frac{TP}{FN + TP}$$</mathjax></p>
 <p><mathjax>$$SPC = TNR =\frac{TN}{N} =  \frac{TN}{FP + TN}$$</mathjax></p>
-<h2 id="matthews-correlation-coefficient">Matthews Correlation Coefficient</h2>
+<h3 id="matthews-correlation-coefficient">Matthews Correlation Coefficient</h3>
 <p><em>Matthews correlation coefficient</em> (MCC) was first formulated by Brian W. Matthews [3] in 1975 to assess the performance of protein secondary structure predictions. The MCC can be understood as a specific case of a linear correlation coefficient (<em>Pearson's R</em>) for a binary classification setting and is considered as especially useful in unbalanced class settings.
 The previous metrics take values in the range between 0 (worst) and 1 (best), whereas the MCC is bounded between the range 1 (perfect correlation between ground truth and predicted outcome) and -1 (inverse or negative correlation) -- a value of 0 denotes a random prediction. </p>
 <p><mathjax>$$MCC = \frac{ TP \times TN - FP \times FN } {\sqrt{ (TP + FP) ( TP + FN ) ( TN + FP ) ( TN + FN ) } }$$</mathjax></p>
-<h2 id="average-per-class-accuracy">Average Per-Class Accuracy</h2>
+<h3 id="average-per-class-accuracy">Average Per-Class Accuracy</h3>
 <p>The "overall" accuracy is defined as the number of correct predictions (<em>true positives</em> TP and <em>true negatives</em> TN) over all samples <em>n</em>:</p>
 <p><mathjax>$$ACC = \frac{TP + TN}{n}$$</mathjax></p>
 <p>in a binary class setting:</p>
@@ -849,8 +851,8 @@ The previous metrics take values in the range between 0 (worst) and 1 (best), wh
 <li>[2] Cyril Goutte and Eric Gaussier. <a href="http://link.springer.com/chapter/10.1007/978-3-540-31865-1_25">A probabilistic interpretation of precision, recall and f-score, with implication for evaluation</a>. In Advances in Information Retrieval, pages 345–359. Springer, 2005.</li>
 <li>[3] Brian W Matthews. <a href="http://www.sciencedirect.com/science/article/pii/0005279575901099">Comparison of the predicted and observed secondary structure of T4 phage lysozyme</a>. Biochimica et Biophysica Acta (BBA)- Protein Structure, 405(2):442–451, 1975.</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-classification-error">Example 1 - Classification Error</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-classification-error">Example 1 - Classification Error</h3>
 <pre><code class="python">#from mlxtend.evaluate import scoring
 
 y_targ = [1, 1, 1, 0, 0, 2, 0, 3]
@@ -862,7 +864,7 @@ print('Error: %s%%' % (res * 100))
 
 <pre><code>Error: 25.0%
 </code></pre>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>scoring(y_target, y_predicted, metric='error', positive_label=1)</em></p>
 <p>Compute a scoring metric for supervised learning.</p>
 <p><strong>Parameters</strong></p>

@@ -767,32 +767,32 @@
     
         <li class="main active"><a href="#logistic-regression">Logistic Regression</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#objective-function-log-likelihood">Objective Function -- Log-Likelihood</a></li>
+            
+                    <li><a href="#objective-function-logistic-cost-function">Objective Function -- Logistic Cost Function</a></li>
+            
+                    <li><a href="#gradient-descent-gd-and-stochastic-gradient-descent-sgd-optimization">Gradient Descent (GD)  and Stochastic Gradient Descent (SGD) Optimization</a></li>
+            
+                    <li><a href="#regularization">Regularization</a></li>
+            
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#objective-function-log-likelihood">Objective Function -- Log-Likelihood</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-gradient-descent">Example 1 - Gradient Descent</a></li>
+            
+                    <li><a href="#example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</a></li>
+            
+                    <li><a href="#example-3-stochastic-gradient-descent-w-minibatches">Example 3 - Stochastic Gradient Descent w. Minibatches</a></li>
+            
         
-            <li><a href="#objective-function-logistic-cost-function">Objective Function -- Logistic Cost Function</a></li>
-        
-            <li><a href="#gradient-descent-gd-and-stochastic-gradient-descent-sgd-optimization">Gradient Descent (GD)  and Stochastic Gradient Descent (SGD) Optimization</a></li>
-        
-            <li><a href="#regularization">Regularization</a></li>
-        
-            <li><a href="#references">References</a></li>
-        
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-1-gradient-descent">Example 1 - Gradient Descent</a></li>
-        
-            <li><a href="#example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</a></li>
-        
-            <li><a href="#example-3-stochastic-gradient-descent-w-minibatches">Example 3 - Stochastic Gradient Descent w. Minibatches</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
-        
-            <li><a href="#methods">Methods</a></li>
+            <li><a href="#api">API</a></li>
+                
+                    <li><a href="#methods">Methods</a></li>
+            
         
     
     </ul>
@@ -804,7 +804,7 @@
 <blockquote>
 <p>from mlxtend.classifier import LogisticRegression</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p><img alt="" src="../LogisticRegression_files/logistic_regression_schematic.png" /></p>
 <p>Related to the <a href="../Perceptron/"><code>Perceptron</code></a> and <a href="../Adaline/">'Adaline'</a>, a Logistic Regression model is a linear model for binary classification. However, instead of minimizing a linear cost function such as the sum of squared errors (SSE) in Adaline, we minimize a sigmoid function, i.e., the logistic function:</p>
 <p><mathjax>$$\phi(z) = \frac{1}{1 + e^{-z}},$$</mathjax></p>
@@ -815,21 +815,19 @@
 <p>Here, <mathjax>$p(y=1 \mid \mathbf{x})$</mathjax> is the conditional probability that a particular sample belongs to class 1 given its features <mathjax>$\mathbf{x}$</mathjax>. The logit function takes inputs in the range [0, 1] and transform them to values over the entire real number range. In contrast, the logistic function takes input values over the entire real number range and transforms them to values in the range [0, 1]. In other words, the logistic function is the inverse of the logit function, and it lets us predict the conditional probability that a certain sample belongs to class 1 (or class 0).</p>
 <p><img alt="" src="../LogisticRegression_files/logistic_function.png" /></p>
 <p>After model fitting, the conditional probability <mathjax>$p(y=1 \mid \mathbf{x})$</mathjax> is converted to a binary class label via a threshold function <mathjax>$g(\cdot)$</mathjax>:</p>
-<p><mathjax>$$y = g({z}) =  \left\{
-     \begin{array}{l}
-      1 &amp; \text{if $\phi(z) \ge 0.5$}\\
-      0 &amp; \text{otherwise.}
-    \end{array}
-    \\
-  \right.$$</mathjax></p>
-<p>or eqivalently:</p>
-<p><mathjax>$$y = g({z}) = \left\{
-    \begin{array}{l}
-    1 &amp; \text{if z $\ge$ 0}\\
-    0 &amp; \text{otherwise}.
-    \end{array}
-    \\  
-  \right.$$</mathjax></p>
+<p><mathjax>$$y = g({z}) = 
+ \begin{cases}
+  1 &amp; \text{if $\phi(z) \ge 0.5$}\\
+  0 &amp; \text{otherwise.}
+   \end{cases}
+$$</mathjax></p>
+<p>or equivalently:</p>
+<p><mathjax>$$y = g({z}) = 
+\begin{cases}
+1 &amp; \text{if z $\ge$ 0}\\
+0 &amp; \text{otherwise}.
+\end{cases}
+$$</mathjax></p>
 <h3 id="objective-function-log-likelihood">Objective Function -- Log-Likelihood</h3>
 <p>In order to parameterize a logistic regression model, we maximize the likelihood <mathjax>$L(\cdot)$</mathjax> (or minimize the logistic cost function).</p>
 <p>We write the likelihood as </p>
@@ -922,8 +920,8 @@ where</p>
 <ul>
 <li>Bishop, Christopher M. <a href="http://www.springer.com/br/book/9780387310732"><em>Pattern recognition and machine learning</em></a>. Springer, 2006. pp. 203-213</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-gradient-descent">Example 1 - Gradient Descent</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-gradient-descent">Example 1 - Gradient Descent</h3>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.evaluate import plot_decision_regions
 from mlxtend.classifier import LogisticRegression
@@ -962,21 +960,21 @@ plt.show()
 </code></pre>
 <p><img alt="png" src="../LogisticRegression_files/LogisticRegression_46_1.png" /></p>
 <p><img alt="png" src="../LogisticRegression_files/LogisticRegression_46_2.png" /></p>
-<h3 id="predicting-class-labels">Predicting Class Labels</h3>
+<h4 id="predicting-class-labels">Predicting Class Labels</h4>
 <pre><code class="python">y_pred = lr.predict(X)
 print('Last 3 Class Labels: %s' % y_pred[-3:])
 </code></pre>
 
 <pre><code>Last 3 Class Labels: [1 1 1]
 </code></pre>
+<h4 id="predicting-class-probabilities">Predicting Class Probabilities</h4>
 <pre><code class="python">y_pred = lr.predict_proba(X)
 print('Last 3 Class Labels: %s' % y_pred[-3:])
 </code></pre>
 
 <pre><code>Last 3 Class Labels: [ 0.99997968  0.99339873  0.99992707]
 </code></pre>
-<h3 id="predicting-class-probabilities">Predicting Class Probabilities</h3>
-<h2 id="example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</h2>
+<h3 id="example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</h3>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.evaluate import plot_decision_regions
 from mlxtend.classifier import LogisticRegression
@@ -1015,7 +1013,7 @@ plt.show()
 </code></pre>
 <p><img alt="png" src="../LogisticRegression_files/LogisticRegression_52_1.png" /></p>
 <p><img alt="png" src="../LogisticRegression_files/LogisticRegression_52_2.png" /></p>
-<h2 id="example-3-stochastic-gradient-descent-w-minibatches">Example 3 - Stochastic Gradient Descent w. Minibatches</h2>
+<h3 id="example-3-stochastic-gradient-descent-w-minibatches">Example 3 - Stochastic Gradient Descent w. Minibatches</h3>
 <p>Here, we set <code>minibatches</code> to 5, which will result in Minibatch Learning with a batch size of 20 samples (since 100 Iris samples divided by 5 minibatches equals 20).</p>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.evaluate import plot_decision_regions
@@ -1055,7 +1053,7 @@ plt.show()
 </code></pre>
 <p><img alt="png" src="../LogisticRegression_files/LogisticRegression_55_1.png" /></p>
 <p><img alt="png" src="../LogisticRegression_files/LogisticRegression_55_2.png" /></p>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>LogisticRegression(eta=0.01, epochs=50, l2_lambda=0.0, minibatches=1, random_seed=None, print_progress=0)</em></p>
 <p>Logistic regression classifier.</p>
 <pre><code>Note that this implementation of Logistic Regression

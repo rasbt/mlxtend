@@ -767,18 +767,18 @@
     
         <li class="main active"><a href="#iris-dataset">Iris Dataset</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#references">References</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-dataset-overview">Example - Dataset overview</a></li>
+            
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-dataset-overview">Example - Dataset overview</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
+            <li><a href="#api">API</a></li>
+                
         
     
     </ul>
@@ -790,7 +790,7 @@
 <blockquote>
 <p>from mlxtend.data import iris_data</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p>The Iris dataset for classification.</p>
 <p><strong>Features</strong></p>
 <ol>
@@ -812,8 +812,8 @@
 <li>Source: <a href="https://archive.ics.uci.edu/ml/datasets/Iris">https://archive.ics.uci.edu/ml/datasets/Iris</a> </li>
 <li>Bache, K. &amp; Lichman, M. (2013). UCI Machine Learning Repository. Irvine, CA: University of California, School of Information and Computer Science.</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-dataset-overview">Example - Dataset overview</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-dataset-overview">Example - Dataset overview</h3>
 <pre><code class="python">from mlxtend.data import iris_data
 X, y = iris_data()
 
@@ -838,7 +838,7 @@ print('Class distribution: %s' % np.bincount(y))
 [0 1 2]
 Class distribution: [50 50 50]
 </code></pre>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>iris_data()</em></p>
 <p>Iris flower dataset.</p>
 <ul>

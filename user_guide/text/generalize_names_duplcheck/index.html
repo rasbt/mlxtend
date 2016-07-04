@@ -767,18 +767,18 @@
     
         <li class="main active"><a href="#generalize-names-duplicate-checking">Generalize Names &amp; Duplicate Checking</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#references">References</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-defaults">Example 1 - Defaults</a></li>
+            
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-1-defaults">Example 1 - Defaults</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
+            <li><a href="#api">API</a></li>
+                
         
     
     </ul>
@@ -790,7 +790,7 @@
 <blockquote>
 <p>from mlxtend.text import generalize_names_duplcheck</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p><strong>Note</strong> that using <a href="../generalize_named.html"><code>mlxtend.text.generalize_names</code></a> with few <code>firstname_output_letters</code> can result in duplicate entries. E.g., if your dataset contains the names "Adam Johnson" and "Andrew Johnson", the default setting (i.e., 1 first name letter) will produce the generalized name "johnson a" in both cases.</p>
 <p>One solution is to increase the number of first name letters in the output by setting the parameter <code>firstname_output_letters</code> to a value larger than 1. </p>
 <p>An alternative solution is to use the <code>generalize_names_duplcheck</code> function if you are working with pandas DataFrames. </p>
@@ -799,8 +799,8 @@
 <ul>
 <li>-</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-defaults">Example 1 - Defaults</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-defaults">Example 1 - Defaults</h3>
 <p>Reading in a CSV file that has column <code>Name</code> for which we want to generalize the names:</p>
 <ul>
 <li>Samuel Eto'o</li>
@@ -883,7 +883,7 @@ df_new
 </table>
 </div>
 
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>generalize_names_duplcheck(df, col_name)</em></p>
 <p>Generalizes names and removes duplicates.</p>
 <p>Applies mlxtend.text.generalize_names to a DataFrame with 1 first name letter

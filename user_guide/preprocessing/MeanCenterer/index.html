@@ -767,15 +767,15 @@
     
         <li class="main active"><a href="#mean-centerer">Mean Centerer</a></li>
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-centering-a-numpy-array">Example 1 - Centering a NumPy Array</a></li>
+            
         
-            <li><a href="#example-1-centering-a-numpy-array">Example 1 - Centering a NumPy Array</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
-        
-            <li><a href="#methods">Methods</a></li>
+            <li><a href="#api">API</a></li>
+                
+                    <li><a href="#methods">Methods</a></li>
+            
         
     
     </ul>
@@ -787,8 +787,8 @@
 <blockquote>
 <p>from mlxtend.preprocessing import MeanCenterer</p>
 </blockquote>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-centering-a-numpy-array">Example 1 - Centering a NumPy Array</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-centering-a-numpy-array">Example 1 - Centering a NumPy Array</h3>
 <p>Use the <code>fit</code> method to fit the column means of a dataset (e.g., the training dataset) to a new <code>MeanCenterer</code> object. Then, call the <code>transform</code> method on the same dataset to center it at the sample mean.</p>
 <pre><code class="python">import numpy as np
 from mlxtend.preprocessing import MeanCenterer
@@ -804,7 +804,7 @@ mc.transform(X_train)
        [ 0.,  0.,  0.],
        [ 3.,  3.,  3.]])
 </code></pre>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>MeanCenterer()</em></p>
 <p>Column centering of vectors and matrices.</p>
 <p><strong>Attributes</strong></p>

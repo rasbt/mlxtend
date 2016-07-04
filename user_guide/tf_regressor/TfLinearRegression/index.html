@@ -767,22 +767,22 @@
     
         <li class="main active"><a href="#tflinearregression">TfLinearRegression</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#references">References</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-simple-linear-regression">Example 1 - Simple Linear Regression</a></li>
+            
+                    <li><a href="#example-2-multiple-linear-regression">Example 2 - Multiple Linear Regression</a></li>
+            
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-1-simple-linear-regression">Example 1 - Simple Linear Regression</a></li>
-        
-            <li><a href="#example-2-multiple-linear-regression">Example 2 - Multiple Linear Regression</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
-        
-            <li><a href="#methods">Methods</a></li>
+            <li><a href="#api">API</a></li>
+                
+                    <li><a href="#methods">Methods</a></li>
+            
         
     
     </ul>
@@ -794,7 +794,7 @@
 <blockquote>
 <p>from mlxtend.tf_regressor import TfLinearRegression</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p>The linear regression model is fitted using gradient descent optimization supporting simple and multiple linear regression; for more information on linear regression, please refer to the documentation of the related 
 <a href="../../regressor/LinearRegression/"><code>mlxtend.regressor.LinearRegression estimator</code></a> and the tutorials:</p>
 <ul>
@@ -807,9 +807,9 @@
 <li>A. I. Khuri. <a href="http://onlinelibrary.wiley.com/doi/10.1111/insr.12020_10/abstract">Introduction to linear regression analysis</a>, by Douglas C. Montgomery, Elizabeth A. Peck, G. Geoffrey Vining. International Statistical Review, 81(2):318–319, 2013.</li>
 <li>D. S. G. Pollock. <a href="http://www.le.ac.uk/users/dsgp1/COURSES/MESOMET/ECMETXT/06mesmet.pdf">The Classical Linear Regression Model</a>.</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-simple-linear-regression">Example 1 - Simple Linear Regression</h2>
-<h3 id="generate-some-sample-data">Generate some sample data</h3>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-simple-linear-regression">Example 1 - Simple Linear Regression</h3>
+<h4 id="generate-some-sample-data">Generate some sample data</h4>
 <pre><code class="python">import numpy as np
 import matplotlib.pyplot as plt
 
@@ -823,7 +823,7 @@ plt.show()
 </code></pre>
 
 <p><img alt="png" src="../TfLinearRegression_files/TfLinearRegression_13_0.png" /></p>
-<h3 id="fit-regressor-and-check-mse-cost">Fit regressor and check MSE cost</h3>
+<h4 id="fit-regressor-and-check-mse-cost">Fit regressor and check MSE cost</h4>
 <pre><code class="python">from mlxtend.tf_regressor import TfLinearRegression
 
 gd_lr = TfLinearRegression(eta=0.05, 
@@ -847,7 +847,7 @@ Intercept: 0.10
 Slope: 0.39
 </code></pre>
 <p><img alt="png" src="../TfLinearRegression_files/TfLinearRegression_15_2.png" /></p>
-<h3 id="continue-training-for-another-50-epochs">Continue training for another 50 epochs</h3>
+<h4 id="continue-training-for-another-50-epochs">Continue training for another 50 epochs</h4>
 <pre><code class="python">gd_lr.epochs = 50
 gd_lr.fit(X, y, init_params=False)
 
@@ -866,7 +866,7 @@ Intercept: 0.11
 Slope: 0.10
 </code></pre>
 <p><img alt="png" src="../TfLinearRegression_files/TfLinearRegression_17_2.png" /></p>
-<h3 id="visualize-the-regression-fit">Visualize the regression fit</h3>
+<h4 id="visualize-the-regression-fit">Visualize the regression fit</h4>
 <pre><code class="python">def lin_regplot(X, y, model):
     plt.scatter(X, y, c='blue')
     plt.plot(X, model.predict(X), color='red')    
@@ -902,8 +902,8 @@ plt.show()
 </code></pre>
 
 <p><img alt="png" src="../TfLinearRegression_files/TfLinearRegression_22_0.png" /></p>
-<h2 id="example-2-multiple-linear-regression">Example 2 - Multiple Linear Regression</h2>
-<h3 id="loading-the-boston-housing-data">Loading the Boston Housing Data</h3>
+<h3 id="example-2-multiple-linear-regression">Example 2 - Multiple Linear Regression</h3>
+<h4 id="loading-the-boston-housing-data">Loading the Boston Housing Data</h4>
 <pre><code class="python">from mlxtend.data import boston_housing_data
 from mlxtend.preprocessing import shuffle_arrays_unison
 
@@ -921,7 +921,7 @@ y_train = (y_train - mu2) / sigma2
 y_test = (y_test - mu2) / sigma2
 </code></pre>
 
-<h3 id="fit-the-regression-model">Fit the regression model</h3>
+<h4 id="fit-the-regression-model">Fit the regression model</h4>
 <pre><code class="python">gd_lr = TfLinearRegression(eta=0.1, 
                            epochs=200,
                            random_seed=1,
@@ -939,7 +939,7 @@ plt.show()
 <pre><code>Iteration: 200/200 | Cost 0.27 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
 <p><img alt="png" src="../TfLinearRegression_files/TfLinearRegression_27_1.png" /></p>
-<h3 id="evaluate-the-results">Evaluate the results</h3>
+<h4 id="evaluate-the-results">Evaluate the results</h4>
 <pre><code class="python">from sklearn.metrics import r2_score
 from sklearn.metrics import mean_squared_error
 
@@ -957,7 +957,7 @@ print('R^2 train: %.3f, test: %.3f' % (
 <pre><code>MSE train: 0.265, test: 0.247
 R^2 train: 0.735, test: 0.780
 </code></pre>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>TfLinearRegression(eta=0.1, epochs=50, print_progress=0, random_seed=None, dtype=None)</em></p>
 <p>Estimator for Linear Regression in TensorFlow using Gradient Descent.</p>
 <pre><code>Added in version 0.4.1

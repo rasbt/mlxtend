@@ -798,7 +798,11 @@
 
 <h2 id="links">Links</h2>
 <ul>
-<li>Documentation: <a href="http://rasbt.github.io/mlxtend/">http://rasbt.github.io/mlxtend/</a></li>
+<li>Documentation: <ul>
+<li>html: <a href="http://rasbt.github.io/mlxtend/">http://rasbt.github.io/mlxtend/</a></li>
+<li>pdf: <a href="http://sebastianraschka.com/pdf/software/mlxtend.pdf">http://sebastianraschka.com/pdf/software/mlxtend.pdf</a></li>
+</ul>
+</li>
 <li>Source code repository: <a href="https://github.com/rasbt/mlxtend">https://github.com/rasbt/mlxtend</a></li>
 <li>PyPI: <a href="https://pypi.python.org/pypi/mlxtend">https://pypi.python.org/pypi/mlxtend</a></li>
 <li>Questions? Check out the <a href="https://groups.google.com/forum/#!forum/mlxtend">Google Groups mailing list</a></li>
@@ -821,23 +825,33 @@ from mlxtend.evaluate import plot_decision_regions
 clf1 = LogisticRegression(random_state=0)
 clf2 = RandomForestClassifier(random_state=0)
 clf3 = SVC(random_state=0, probability=True)
-eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], weights=[2, 1, 1], voting='soft')
+eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
+                              weights=[2, 1, 1], voting='soft')
 
 # Loading some example data
 X, y = iris_data()
 X = X[:,[0, 2]]
 
 # Plotting Decision Regions
+
 gs = gridspec.GridSpec(2, 2)
 fig = plt.figure(figsize=(10, 8))
 
+labels = ['Logistic Regression',
+          'Random Forest',
+          'RBF kernel SVM',
+          'Ensemble']
+
 for clf, lab, grd in zip([clf1, clf2, clf3, eclf],
-                         ['Logistic Regression', 'Random Forest', 'RBF kernel SVM', 'Ensemble'],
-                         itertools.product([0, 1], repeat=2)):
+                         labels,
+                         itertools.product([0, 1],
+                         repeat=2)):
     clf.fit(X, y)
     ax = plt.subplot(gs[grd[0], grd[1]])
-    fig = plot_decision_regions(X=X, y=y, clf=clf, legend=2)
+    fig = plot_decision_regions(X=X, y=y,
+                                clf=clf, legend=2)
     plt.title(lab)
+
 plt.show()
 </code></pre>
 
@@ -845,6 +859,16 @@ plt.show()
 <p><img alt="" src="./img/ensemble_decision_regions_2d.png" /></p>
 <p>If you use mlxtend as part of your workflow in a scientific publication, please consider citing the mlxtend repository with the following DOI:</p>
 <p><a href="https://zenodo.org/record/49235#.VwWISmNh23c"><img alt="" src="https://zenodo.org/badge/doi/10.5281/zenodo.49235.svg" /></a></p>
+<pre><code>@misc{raschkas_2016_49235,
+  author       = {Raschka, Sebastian},
+  title        = {Mlxtend},
+  month        = apr,
+  year         = 2016,
+  doi          = {10.5281/zenodo.49235},
+  url          = {http://dx.doi.org/10.5281/zenodo.49235}
+}
+</code></pre>
+
 <h2 id="contact">Contact</h2>
 <p>I received a lot of feedback and questions about mlxtend recently, and I thought that it would be worthwhile to set up a public communication channel. Before you write an email with a question about mlxtend, please consider posting it here since it can also be useful to others! Please join the <a href="https://groups.google.com/forum/#!forum/mlxtend">Google Groups Mailing List</a>!</p>
 <p>If Google Groups is not for you, please feel free to write me an <a href="mailto:mail@sebastianraschka.com">email</a> or consider filing an issue on <a href="https://github.com/rasbt/mlxtend/issues">GitHub's issue tracker</a> for new feature requests or bug reports. In addition, I setup a <a href="https://gitter.im/rasbt/mlxtend?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge">Gitter channel</a> for live discussions.</p></div>
@@ -903,6 +927,6 @@ plt.show()
 </html>
 
 <!--
-MkDocs version : 0.15.2
-Build Date UTC : 2016-06-28 04:29:04.652502
+MkDocs version : 0.15.3
+Build Date UTC : 2016-07-04 15:36:45.322618
 -->

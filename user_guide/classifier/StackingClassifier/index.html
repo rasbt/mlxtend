@@ -767,22 +767,22 @@
     
         <li class="main active"><a href="#stackingclassifier">StackingClassifier</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#references">References</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-simple-stacked-classification">Example 1 - Simple Stacked Classification</a></li>
+            
+                    <li><a href="#example-2-stacked-classification-and-gridsearch">Example 2 - Stacked Classification and GridSearch</a></li>
+            
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-1-simple-stacked-classification">Example 1 - Simple Stacked Classification</a></li>
-        
-            <li><a href="#example-2-stacked-classification-and-gridsearch">Example 2 - Stacked Classification and GridSearch</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
-        
-            <li><a href="#methods">Methods</a></li>
+            <li><a href="#api">API</a></li>
+                
+                    <li><a href="#methods">Methods</a></li>
+            
         
     
     </ul>
@@ -794,7 +794,7 @@
 <blockquote>
 <p>from mlxtend.classifier import StackingClassifier</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p>Stacking is an ensemble learning technique to combine multiple classification models via a meta-classifier. The individual classification models are trained based on the complete training set; then, the meta-classifier is fitted based on the outputs -- meta-features -- of the individual classification models in the ensemble.
 The meta-classifier can either be trained on the predicted class labels or probabilities from the ensemble.</p>
 <p><img alt="" src="../StackingClassifier_files/stackingclassification_overview.png" /></p>
@@ -805,8 +805,8 @@ The meta-classifier can either be trained on the predicted class labels or proba
 <li>[1] Tang, J., S. Alelyani, and H. Liu. "<a href="https://books.google.com/books?id=nwQZCwAAQBAJ&amp;lpg=PA500&amp;dq=stacking%20classifier%20subsets&amp;pg=PA499#v=onepage&amp;q&amp;f=false">Data Classification: Algorithms and Applications.</a>" Data Mining and Knowledge Discovery Series, CRC Press (2015): pp. 498-500.</li>
 <li>[2] Wolpert, David H. "<a href="http://www.sciencedirect.com/science/article/pii/S0893608005800231">Stacked generalization.</a>" Neural networks 5.2 (1992): 241-259.</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-simple-stacked-classification">Example 1 - Simple Stacked Classification</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-simple-stacked-classification">Example 1 - Simple Stacked Classification</h3>
 <pre><code class="python">from sklearn import datasets
 
 iris = datasets.load_iris()
@@ -836,8 +836,10 @@ for clf, label in zip([clf1, clf2, clf3, sclf],
                        'Naive Bayes',
                        'StackingClassifier']):
 
-    scores = cross_validation.cross_val_score(clf, X, y, cv=3, scoring='accuracy')
-    print(&quot;Accuracy: %0.2f (+/- %0.2f) [%s]&quot; % (scores.mean(), scores.std(), label))
+    scores = cross_validation.cross_val_score(clf, X, y, 
+                                              cv=3, scoring='accuracy')
+    print(&quot;Accuracy: %0.2f (+/- %0.2f) [%s]&quot; 
+          % (scores.mean(), scores.std(), label))
 </code></pre>
 
 <pre><code>3-fold cross validation:
@@ -870,7 +872,7 @@ for clf, lab, grd in zip([clf1, clf2, clf3, sclf],
 </code></pre>
 
 <p><img alt="png" src="../StackingClassifier_files/StackingClassifier_16_0.png" /></p>
-<h2 id="example-2-stacked-classification-and-gridsearch">Example 2 - Stacked Classification and GridSearch</h2>
+<h3 id="example-2-stacked-classification-and-gridsearch">Example 2 - Stacked Classification and GridSearch</h3>
 <p>To set up a parameter grid for scikit-learn's <code>GridSearch</code>, we simply provide the estimator's names in the parameter grid -- in the special case of the meta-regressor, we append the <code>'meta-'</code> prefix.</p>
 <pre><code class="python">from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
@@ -957,7 +959,7 @@ for params, mean_score, scores in grid.grid_scores_:
 0.933 (+/-0.024) for {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier-1__n_neighbors': 5}
 0.940 (+/-0.019) for {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier-1__n_neighbors': 5}
 </code></pre>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>StackingClassifier(classifiers, meta_classifier, use_probas=False, verbose=0)</em></p>
 <p>A Stacking classifier for scikit-learn estimators for classification.</p>
 <p><strong>Parameters</strong></p>

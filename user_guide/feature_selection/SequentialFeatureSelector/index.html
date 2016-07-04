@@ -767,38 +767,40 @@
     
         <li class="main active"><a href="#sequential-feature-selector">Sequential Feature Selector</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#sequential-forward-selection-sfs">Sequential Forward Selection (SFS)</a></li>
+            
+                    <li><a href="#sequential-floating-backward-sbs">Sequential Floating Backward (SBS)</a></li>
+            
+                    <li><a href="#sequential-floating-backward-selection-sfbs">Sequential Floating Backward Selection (SFBS)</a></li>
+            
+                    <li><a href="#sequential-floating-forward-selection-sffs">Sequential Floating Forward Selection (SFFS)</a></li>
+            
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#sequential-forward-selection-sfs">Sequential Forward Selection (SFS)</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-a-simple-sequential-forward-selection-example">Example 1 - A simple Sequential Forward Selection example</a></li>
+            
+                    <li><a href="#example-2-toggling-between-sfs-sbs-sffs-and-sfbs">Example 2 - Toggling between SFS, SBS, SFFS, and SFBS</a></li>
+            
+                    <li><a href="#example-3-visualizing-the-results-in-dataframes">Example 3 - Visualizing the results in DataFrames</a></li>
+            
+                    <li><a href="#example-4-plotting-the-results">Example 4 - Plotting the results</a></li>
+            
+                    <li><a href="#example-5-sequential-feature-selection-for-regression">Example 5 - Sequential Feature Selection for Regression</a></li>
+            
+                    <li><a href="#example-6-using-the-selected-feature-subset-for-making-new-predictions">Example 6 -- Using the Selected Feature Subset For Making New Predictions</a></li>
+            
+                    <li><a href="#example-7-sequential-feature-selection-and-gridsearch">Example 7 -- Sequential Feature Selection and GridSearch</a></li>
+            
         
-            <li><a href="#sequential-floating-backward-sbs">Sequential Floating Backward (SBS)</a></li>
-        
-            <li><a href="#sequential-floating-backward-selection-sfbs">Sequential Floating Backward Selection (SFBS)</a></li>
-        
-            <li><a href="#sequential-floating-forward-selection-sffs">Sequential Floating Forward Selection (SFFS)</a></li>
-        
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-1-a-simple-sequential-forward-selection-example">Example 1 - A simple Sequential Forward Selection example</a></li>
-        
-            <li><a href="#example-2-toggling-between-sfs-sbs-sffs-and-sfbs">Example 2 - Toggling between SFS, SBS, SFFS, and SFBS</a></li>
-        
-            <li><a href="#example-3-visualizing-the-results-in-dataframes">Example 3 - Visualizing the results in DataFrames</a></li>
-        
-            <li><a href="#example-4-plotting-the-results">Example 4 - Plotting the results</a></li>
-        
-            <li><a href="#example-5-sequential-feature-selection-for-regression">Example 5 - Sequential Feature Selection for Regression</a></li>
-        
-            <li><a href="#example-6-using-the-selected-feature-subset-for-making-new-predictions">Example 6 -- Using the Selected Feature Subset For Making New Predictions</a></li>
-        
-            <li><a href="#example-7-sequential-feature-selection-and-gridsearch">Example 7 -- Sequential Feature Selection and GridSearch</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
-        
-            <li><a href="#methods">Methods</a></li>
+            <li><a href="#api">API</a></li>
+                
+                    <li><a href="#methods">Methods</a></li>
+            
         
     
     </ul>
@@ -810,7 +812,7 @@
 <blockquote>
 <p>from mlxtend.feature_selection import SequentialFeatureSelector</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p>Sequential feature selection algorithms are a family of greedy search algorithms that are used to reduce an initial <em>d</em>-dimensional feature space to a <em>k</em>-dimensional feature subspace where <em>k &lt; d</em>. The motivation behind feature selection algorithms is to automatically select a subset of features that is most relevant to the problem. The goal of feature selection is two-fold: We want to improve the computational efficiency and reduce the generalization error of the model by removing irrelevant features or noise. A wrapper approach such as sequential feature selection is especially useful if embedded feature selection -- for example, a regularization penalty like LASSO -- is not applicable.</p>
 <p>In a nutshell, SFAs remove or add one feature at the time based on the classifier performance until a feature subset of the desired size <em>k</em> is reached. There are 4 different flavors of SFAs available via the <code>SequentialFeatureSelector</code>:</p>
 <ol>
@@ -824,7 +826,7 @@
 <p>How is this different from <em>Recursive Feature Elimination</em> (RFE)  -- e.g., as implemented in <code>sklearn.feature_selection.RFE</code>? RFE is computationally less complex using the feature weight coefficients (e.g., linear models) or feature importance (tree-based algorithms) to eliminate features recursively, whereas SFSs eliminate (or add) features based on a user-defined classifier/regression performance metric.</p>
 <hr />
 <p>The SFAs  are outlined in pseudo code below:</p>
-<h2 id="sequential-forward-selection-sfs">Sequential Forward Selection (SFS)</h2>
+<h3 id="sequential-forward-selection-sfs">Sequential Forward Selection (SFS)</h3>
 <p><strong>Input:</strong> <mathjax>$Y = \{y_1, y_2, ..., y_d\}$</mathjax>  </p>
 <ul>
 <li>The <strong><em>SFS</em></strong> algorithm takes the whole <mathjax>$d$</mathjax>-dimensional feature set as input.</li>
@@ -851,7 +853,7 @@
 <ul>
 <li>We add features from the feature subset <mathjax>$X_k$</mathjax> until the feature subset of size <mathjax>$k$</mathjax> contains the number of desired features <mathjax>$p$</mathjax> that we specified <em>a priori</em>.</li>
 </ul>
-<h2 id="sequential-floating-backward-sbs">Sequential Floating Backward (SBS)</h2>
+<h3 id="sequential-floating-backward-sbs">Sequential Floating Backward (SBS)</h3>
 <p><strong>Input:</strong> the set of all features, <mathjax>$Y = \{y_1, y_2, ..., y_d\}$</mathjax>  </p>
 <ul>
 <li>The SBS algorithm takes the whole feature set as input.</li>
@@ -878,7 +880,7 @@
 <ul>
 <li>We add features from the feature subset <mathjax>$X_k$</mathjax> until the feature subset of size <mathjax>$k$</mathjax> contains the number of desired features <mathjax>$p$</mathjax> that we specified <em>a priori</em>.</li>
 </ul>
-<h2 id="sequential-floating-backward-selection-sfbs">Sequential Floating Backward Selection (SFBS)</h2>
+<h3 id="sequential-floating-backward-selection-sfbs">Sequential Floating Backward Selection (SFBS)</h3>
 <p><strong>Input:</strong> the set of all features, <mathjax>$Y = \{y_1, y_2, ..., y_d\}$</mathjax>  </p>
 <ul>
 <li>The SFBS algorithm takes the whole feature set as input.</li>
@@ -915,7 +917,7 @@
 <ul>
 <li>We add features from the feature subset <mathjax>$X_k$</mathjax> until the feature subset of size <mathjax>$k$</mathjax> contains the number of desired features <mathjax>$p$</mathjax> that we specified <em>a priori</em>.</li>
 </ul>
-<h2 id="sequential-floating-forward-selection-sffs">Sequential Floating Forward Selection (SFFS)</h2>
+<h3 id="sequential-floating-forward-selection-sffs">Sequential Floating Forward Selection (SFFS)</h3>
 <p><strong>Input:</strong> the set of all features, <mathjax>$Y = \{y_1, y_2, ..., y_d\}$</mathjax>  </p>
 <ul>
 <li>The <strong><em>SFFS</em></strong> algorithm takes the whole feature set as input, if our feature space consists of, e.g. 10, if our feature space consists of 10 dimensions (<strong><em>d = 10</em></strong>).
@@ -956,8 +958,8 @@
 <ul>
 <li>Ferri, F., et al. <a href="https://books.google.com/books?hl=en&amp;lr=&amp;id=sbajBQAAQBAJ&amp;oi=fnd&amp;pg=PA403&amp;dq=comparative+study+of+techniques+for+large+scale&amp;ots=KdIOYpA8wj&amp;sig=hdOsBP1HX4hcDjx4RLg_chheojc#v=onepage&amp;q=comparative%20study%20of%20techniques%20for%20large%20scale&amp;f=false"><em>"Comparative study of techniques for large-scale feature selection."</em></a> Pattern Recognition in Practice IV (1994): 403-413.</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-a-simple-sequential-forward-selection-example">Example 1 - A simple Sequential Forward Selection example</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-a-simple-sequential-forward-selection-example">Example 1 - A simple Sequential Forward Selection example</h3>
 <p>Initializing a simple classifier from scikit-learn:</p>
 <pre><code class="python">from sklearn.neighbors import KNeighborsClassifier
 from sklearn.datasets import load_iris
@@ -1007,7 +1009,7 @@ sfs1 = sfs1.fit(X, y)
 
 <pre><code>0.97333333333333338
 </code></pre>
-<h2 id="example-2-toggling-between-sfs-sbs-sffs-and-sfbs">Example 2 - Toggling between SFS, SBS, SFFS, and SFBS</h2>
+<h3 id="example-2-toggling-between-sfs-sbs-sffs-and-sfbs">Example 2 - Toggling between SFS, SBS, SFFS, and SFBS</h3>
 <p>Using the <code>forward</code> and <code>floating</code> parameters, we can toggle between SFS, SBS, SFFS, and SFBS as shown below. Note that we are performing (stratified) 4-fold cross-validation for more robust estimates in contrast to Example 1. Via <code>n_jobs=-1</code>, we choose to run the cross-validation on all our available CPU cores.</p>
 <pre><code class="python"># Sequential Forward Selection
 sfs = SFS(knn, 
@@ -1101,7 +1103,7 @@ CV Score:
 0.972756410256
 </code></pre>
 <p>In this simple scenario, selecting the best 3 features out of the 4 available features in the Iris set, we end up with similar results regardless of which sequential selection algorithms we used.</p>
-<h2 id="example-3-visualizing-the-results-in-dataframes">Example 3 - Visualizing the results in DataFrames</h2>
+<h3 id="example-3-visualizing-the-results-in-dataframes">Example 3 - Visualizing the results in DataFrames</h3>
 <p>For our convenience, we can visualize the output from the feature selection in a pandas DataFrame format using the <code>get_metric_dict</code> method of the SequentialFeatureSelector object. The columns <code>std_dev</code> and <code>std_err</code> represent the standard deviation and standard errors of the cross-validation scores, respectively.</p>
 <p>Below, we see the DataFrame of the Sequential Forward Selector from Example 2:</p>
 <pre><code class="python">import pandas as pd
@@ -1234,7 +1236,7 @@ pd.DataFrame.from_dict(sfs.get_metric_dict()).T
 </table>
 </div>
 
-<h2 id="example-4-plotting-the-results">Example 4 - Plotting the results</h2>
+<h3 id="example-4-plotting-the-results">Example 4 - Plotting the results</h3>
 <p>After importing the little helper function <code>plot_sequential_feature_selection</code>, we can also visualize the results using matplotlib figures.</p>
 <pre><code class="python">from mlxtend.feature_selection import plot_sequential_feature_selection as plot_sfs
 import matplotlib.pyplot as plt
@@ -1259,7 +1261,7 @@ plt.show()
 <pre><code>Features: 4/4
 </code></pre>
 <p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_40_1.png" /></p>
-<h2 id="example-5-sequential-feature-selection-for-regression">Example 5 - Sequential Feature Selection for Regression</h2>
+<h3 id="example-5-sequential-feature-selection-for-regression">Example 5 - Sequential Feature Selection for Regression</h3>
 <p>Similar to the classification examples above, the <code>SequentialFeatureSelector</code> also supports scikit-learn's estimators
 for regression.</p>
 <pre><code class="python">from sklearn.linear_model import LinearRegression
@@ -1288,7 +1290,7 @@ plt.show()
 <pre><code>Features: 13/13
 </code></pre>
 <p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_43_1.png" /></p>
-<h2 id="example-6-using-the-selected-feature-subset-for-making-new-predictions">Example 6 -- Using the Selected Feature Subset For Making New Predictions</h2>
+<h3 id="example-6-using-the-selected-feature-subset-for-making-new-predictions">Example 6 -- Using the Selected Feature Subset For Making New Predictions</h3>
 <pre><code class="python"># Initialize the dataset
 
 from sklearn.neighbors import KNeighborsClassifier
@@ -1343,7 +1345,7 @@ print('Test set accuracy: %.2f %%' % (acc*100))
 
 <pre><code>Test set accuracy: 96.00 %
 </code></pre>
-<h2 id="example-7-sequential-feature-selection-and-gridsearch">Example 7 -- Sequential Feature Selection and GridSearch</h2>
+<h3 id="example-7-sequential-feature-selection-and-gridsearch">Example 7 -- Sequential Feature Selection and GridSearch</h3>
 <pre><code class="python"># Initialize the dataset
 
 from sklearn.neighbors import KNeighborsClassifier
@@ -1404,7 +1406,7 @@ Fitting 5 folds for each of 16 candidates, totalling 80 fits
 
 <pre><code>Best parameters via GridSearch {'sfs__estimator__n_neighbors': 1, 'sfs__k_features': 3}
 </code></pre>
-<h3 id="obtaining-the-best-k-feature-indices-after-gridsearch">Obtaining the best <em>k</em> feature indices after GridSearch</h3>
+<h4 id="obtaining-the-best-k-feature-indices-after-gridsearch">Obtaining the best <em>k</em> feature indices after GridSearch</h4>
 <p>If we are interested in the best <em>k</em> feature indices via <code>SequentialFeatureSelection.k_feature_idx_</code>, we have to initialize a <code>GridSearchCV</code> object with <code>refit=True</code>. Now, the grid search object will take the complete training dataset and the best parameters, which it found via cross-validation, to train the estimator pipeline.</p>
 <pre><code class="python">gs = GridSearchCV(estimator=pipe, 
                   param_grid=param_grid, 
@@ -1462,7 +1464,7 @@ print('Best features:', pipe.steps[0][1].k_feature_idx_)
 
 <pre><code>Best features: (0, 1, 3)
 </code></pre>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>SequentialFeatureSelector(estimator, k_features, forward=True, floating=False, print_progress=True, scoring='accuracy', cv=5, skip_if_stuck=True, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
 <p>Sequential Feature Selection for Classification and Regression.</p>
 <p><strong>Parameters</strong></p>

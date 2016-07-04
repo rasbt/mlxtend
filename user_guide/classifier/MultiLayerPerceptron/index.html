@@ -767,24 +767,26 @@
     
         <li class="main active"><a href="#neural-network-multilayer-perceptron">Neural Network - Multilayer Perceptron</a></li>
         
-    
-        <li class="main "><a href="#overview">Overview</a></li>
+            <li><a href="#overview">Overview</a></li>
+                
+                    <li><a href="#basic-architecture">Basic Architecture</a></li>
+            
+                    <li><a href="#activation">Activation</a></li>
+            
+                    <li><a href="#references">References</a></li>
+            
         
-            <li><a href="#basic-architecture">Basic Architecture</a></li>
+            <li><a href="#examples">Examples</a></li>
+                
+                    <li><a href="#example-1-classifying-iris-flowers">Example 1 - Classifying Iris Flowers</a></li>
+            
+                    <li><a href="#example-2-classifying-handwritten-digits-from-a-10-mnist-subset">Example 2 - Classifying Handwritten Digits from a 10% MNIST Subset</a></li>
+            
         
-            <li><a href="#activation">Activation</a></li>
-        
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
-            <li><a href="#example-1-classifying-iris-flowers">Example 1 - Classifying Iris Flowers</a></li>
-        
-            <li><a href="#example-2-classifying-handwritten-digits-from-a-10-mnist-subset">Example 2 - Classifying Handwritten Digits from a 10% MNIST Subset</a></li>
-        
-    
-        <li class="main "><a href="#api">API</a></li>
-        
-            <li><a href="#methods">Methods</a></li>
+            <li><a href="#api">API</a></li>
+                
+                    <li><a href="#methods">Methods</a></li>
+            
         
     
     </ul>
@@ -796,9 +798,9 @@
 <blockquote>
 <p>from mlxtend.classifier import MultiLayerPerceptron</p>
 </blockquote>
-<h1 id="overview">Overview</h1>
+<h2 id="overview">Overview</h2>
 <p><em>Although the code is fully working and can be used for common classification tasks, this implementation is not geared towards efficiency but clarity – the original code was written for demonstration purposes.</em></p>
-<h2 id="basic-architecture">Basic Architecture</h2>
+<h3 id="basic-architecture">Basic Architecture</h3>
 <p><img alt="" src="../NeuralNetMLP_files/neuralnet_mlp_1.png" />  </p>
 <p>The neurons <mathjax>$x_0$</mathjax> and <mathjax>$a_0$</mathjax> represent the bias units (<mathjax>$x_0=1$</mathjax>, <mathjax>$a_0=1$</mathjax>). </p>
 <p>The <mathjax>$i$</mathjax>th superscript denotes the <mathjax>$i$</mathjax>th layer, and the <em>j</em>th subscripts stands for the index of the respective unit. For example, <mathjax>$a_{1}^{(2)}$</mathjax> refers to the first activation unit <strong>after</strong> the bias unit (i.e., 2nd activation unit) in the 2nd layer (here: the hidden layer)</p>
@@ -814,7 +816,7 @@
 <p>For example, the weight coefficient that connects the units</p>
 <p><mathjax>$a_0^{(2)} \rightarrow a_1^{(3)}$</mathjax></p>
 <p>would be written as <mathjax>$w_{1,0}^{(2)}$</mathjax>.</p>
-<h2 id="activation">Activation</h2>
+<h3 id="activation">Activation</h3>
 <p>In the current implementation, the activations of the hidden layer(s) are computed via the logistic (sigmoid) function <mathjax>$\phi(z) = \frac{1}{1 + e^{-z}}.$</mathjax></p>
 <p><img alt="" src="../NeuralNetMLP_files/logistic_function.png" /></p>
 <p>(For more details on the logistic function, please see <a href="../LogisticRegression/"><code>classifier.LogisticRegression</code></a>; a general overview of different activation function can be found <a href="../../general_concepts/activation-functions/">here</a>.)</p>
@@ -825,8 +827,8 @@
 <li>C. M. Bishop. <a href="https://books.google.de/books?hl=en&amp;lr=&amp;id=T0S0BgAAQBAJ&amp;oi=fnd&amp;pg=PP1&amp;dq=Neural+networks+for+pattern+recognition&amp;ots=jL6TqGbBld&amp;sig=fiLrMg-RJx22cgQ7zd2CiwUqNqI&amp;redir_esc=y#v=onepage&amp;q=Neural%20networks%20for%20pattern%20recognition&amp;f=false">Neural networks for pattern recognition</a>. Oxford University Press, 1995.</li>
 <li>T. Hastie, J. Friedman, and R. Tibshirani. <a href="http://statweb.stanford.edu/%7Etibs/ElemStatLearn/">The Elements of Statistical Learning</a>, Volume 2. Springer, 2009.</li>
 </ul>
-<h1 id="examples">Examples</h1>
-<h2 id="example-1-classifying-iris-flowers">Example 1 - Classifying Iris Flowers</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-classifying-iris-flowers">Example 1 - Classifying Iris Flowers</h3>
 <p>Load 2 features from Iris (petal length and petal width) for visualization purposes:</p>
 <pre><code class="python">from mlxtend.data import iris_data
 X, y = iris_data()
@@ -837,7 +839,7 @@ X_std = (X - X.mean(axis=0)) / X.std(axis=0)
 </code></pre>
 
 <p>Train neural network for 3 output flower classes ('Setosa', 'Versicolor', 'Virginica'), regular gradient decent (<code>minibatches=1</code>), 30 hidden units, and no regularization.</p>
-<h3 id="gradient-descent">Gradient Descent</h3>
+<h4 id="gradient-descent">Gradient Descent</h4>
 <p>Setting the <code>minibatches</code> to <code>1</code> will result in gradient descent training; please see <a href="../../general_concepts/gradient-optimization/">Gradient Descent vs. Stochastic Gradient Descent</a> for details.</p>
 <pre><code class="python">from mlxtend.classifier import MultiLayerPerceptron as MLP
 
@@ -879,7 +881,7 @@ plt.show()
 
 <pre><code>Accuracy: 96.67%
 </code></pre>
-<h3 id="stochastic-gradient-descent">Stochastic Gradient Descent</h3>
+<h4 id="stochastic-gradient-descent">Stochastic Gradient Descent</h4>
 <p>Setting <code>minibatches</code> to <code>n_samples</code> will result in stochastic gradient descent training; please see <a href="../../general_concepts/gradient-optimization/">Gradient Descent vs. Stochastic Gradient Descent</a> for details.</p>
 <pre><code class="python">nn2 = MLP(hidden_layers=[50], 
           l2=0.00, 
@@ -917,7 +919,7 @@ plt.show()
 </code></pre>
 
 <p><img alt="png" src="../MultiLayerPerceptron_files/MultiLayerPerceptron_34_0.png" /></p>
-<h2 id="example-2-classifying-handwritten-digits-from-a-10-mnist-subset">Example 2 - Classifying Handwritten Digits from a 10% MNIST Subset</h2>
+<h3 id="example-2-classifying-handwritten-digits-from-a-10-mnist-subset">Example 2 - Classifying Handwritten Digits from a 10% MNIST Subset</h3>
 <p>Load a <strong>5000-sample subset</strong> of the <a href="http://rasbt.github.io/mlxtend/docs/data/mnist/">MNIST dataset</a> (please see <a href="../../data/load_mnist/"><code>data.load_mnist</code></a> if you want to download and read in the complete MNIST dataset).</p>
 <pre><code class="python">from mlxtend.data import mnist_data
 from mlxtend.preprocessing import shuffle_arrays_unison
@@ -989,7 +991,7 @@ print('Test Accuracy: %.2f%%' % (100 * nn1.score(X_test_std, y_test)))
 Test Accuracy: 84.62%
 </code></pre>
 <p><strong>Please note</strong> that this neural network has been trained on only 10% of the MNIST data for technical demonstration purposes, hence, the lousy predictive performance.</p>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>NeuralNetMLP(n_output, n_features, n_hidden=30, l1=0.0, l2=0.0, epochs=500, eta=0.001, alpha=0.0, decrease_const=0.0, shuffle_init=True, shuffle_epoch=True, minibatches=1, zero_init_weight=False, random_seed=None, print_progress=0)</em></p>
 <p>Feedforward neural network / Multi-layer perceptron classifier.</p>
 <p><strong>Parameters</strong></p>

@@ -15,7 +15,7 @@
 
 
 
-**A library consisting of useful tools and extensions for the day-to-day data science tasks.**
+**Mlxtend is a library consisting of useful tools and extensions for the day-to-day data science tasks.**
 
 - This open source project is released under a permissive new BSD open source [license](./license) and commercially usable
 
@@ -28,7 +28,7 @@ Sebastian Raschka 2014-2016
 
 ## Links
 
-- **Documentation:** [http://rasbt.github.io/mlxtend/](http://rasbt.github.io/mlxtend/)
+- **Documentation:** [[html](http://rasbt.github.io/mlxtend/)] [[pdf](sebastianraschka.com/pdf/software/mlxtend.pdf)]
 - Source code repository: [https://github.com/rasbt/mlxtend](https://github.com/rasbt/mlxtend)
 - PyPI: [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend)
 - Changelog: [http://rasbt.github.io/mlxtend/changelog](http://rasbt.github.io/mlxtend/changelog)
@@ -138,6 +138,17 @@ plt.show()
 If you use mlxtend as part of your workflow in a scientific publication, please consider citing the mlxtend repository with the following DOI:
 
 [![](https://zenodo.org/badge/doi/10.5281/zenodo.49235.svg)](https://zenodo.org/record/49235#.VwWISmNh23c)
+
+```
+@misc{raschkas_2016_49235,
+  author       = {Raschka, Sebastian},
+  title        = {Mlxtend},
+  month        = apr,
+  year         = 2016,
+  doi          = {10.5281/zenodo.49235},
+  url          = {http://dx.doi.org/10.5281/zenodo.49235}
+}
+```
 
 ---
 

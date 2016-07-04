@@ -4,6 +4,9 @@
         <li class="main {% if toc_item.active %}active{% endif %}"><a href="{{ toc_item.url }}">{{ toc_item.title }}</a></li>
         {% for toc_item in toc_item.children %}
             <li><a href="{{ toc_item.url }}">{{ toc_item.title }}</a></li>
+                {% for toc_item_2 in toc_item.children %}
+                    <li><a href="{{ toc_item_2.url }}">{{ toc_item_2.title }}</a></li>
+            {% endfor %}
         {% endfor %}
     {% endfor %}
     </ul>

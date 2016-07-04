@@ -37,11 +37,11 @@ and checking off items as you go.
 - If you don't have a [GitHub](https://github.com) account, yet, please create one to contribute to this project.
 - Please submit a ticket for your issue to discuss the fix or new feature before too much time and effort is spent for the implementation.
 
-![](img/contributing/new_issue.png)
+![](./img/contributing/new_issue.png)
 
 - Fork the `mlxtend` repository from the GitHub web interface.
 
-![](img/contributing/fork.png)
+![](./img/contributing/fork.png)
 
 - Clone the `mlxtend` repository to your local machine by executing
  ```git clone https://github.com/<your_username>/mlxtend.git```
@@ -259,7 +259,7 @@ $ git push origin <feature_branch>
 Go to your GitHub repository online, select the new feature branch, and submit a new pull request:
 
 
-![](img/contributing/pull_request.png)
+![](./img/contributing/pull_request.png)
 
 
 <hr>
@@ -327,6 +327,14 @@ To deploy the documentation, execute
 
 ```bash
 ~/github/mlxtend/docs$ mkdocs gh-deploy --clean
+```
+
+### 4. Generate a PDF of the documentation
+
+To generate a PDF version of the documentation, simply `cd` into the `mlxtend/docs` directory and execute:
+
+```bash
+python md2pdf.py 
 ```
 
 ## Uploading a new version to PyPI

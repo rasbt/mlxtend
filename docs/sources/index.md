@@ -18,7 +18,8 @@
 <hr>
 
 ## Links
-- Documentation: [http://rasbt.github.io/mlxtend/](http://rasbt.github.io/mlxtend/)
+
+- Documentation: [[html](http://rasbt.github.io/mlxtend/)] [[pdf](sebastianraschka.com/pdf/software/mlxtend.pdf)]
 - Source code repository: [https://github.com/rasbt/mlxtend](https://github.com/rasbt/mlxtend)
 - PyPI: [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend)
 - Questions? Check out the [Google Groups mailing list](https://groups.google.com/forum/#!forum/mlxtend)
@@ -45,23 +46,33 @@ from mlxtend.evaluate import plot_decision_regions
 clf1 = LogisticRegression(random_state=0)
 clf2 = RandomForestClassifier(random_state=0)
 clf3 = SVC(random_state=0, probability=True)
-eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], weights=[2, 1, 1], voting='soft')
+eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
+                              weights=[2, 1, 1], voting='soft')
 
 # Loading some example data
 X, y = iris_data()
 X = X[:,[0, 2]]
 
 # Plotting Decision Regions
+
 gs = gridspec.GridSpec(2, 2)
 fig = plt.figure(figsize=(10, 8))
 
+labels = ['Logistic Regression',
+          'Random Forest',
+          'RBF kernel SVM',
+          'Ensemble']
+
 for clf, lab, grd in zip([clf1, clf2, clf3, eclf],
-                         ['Logistic Regression', 'Random Forest', 'RBF kernel SVM', 'Ensemble'],
-                         itertools.product([0, 1], repeat=2)):
+                         labels,
+                         itertools.product([0, 1],
+                         repeat=2)):
     clf.fit(X, y)
     ax = plt.subplot(gs[grd[0], grd[1]])
-    fig = plot_decision_regions(X=X, y=y, clf=clf, legend=2)
+    fig = plot_decision_regions(X=X, y=y,
+                                clf=clf, legend=2)
     plt.title(lab)
+
 plt.show()
 ```
 
@@ -72,6 +83,17 @@ plt.show()
 If you use mlxtend as part of your workflow in a scientific publication, please consider citing the mlxtend repository with the following DOI:
 
 [![](https://zenodo.org/badge/doi/10.5281/zenodo.49235.svg)](https://zenodo.org/record/49235#.VwWISmNh23c)
+
+```
+@misc{raschkas_2016_49235,
+  author       = {Raschka, Sebastian},
+  title        = {Mlxtend},
+  month        = apr,
+  year         = 2016,
+  doi          = {10.5281/zenodo.49235},
+  url          = {http://dx.doi.org/10.5281/zenodo.49235}
+}
+```
 
 
 ## Contact

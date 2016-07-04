@@ -40,7 +40,7 @@ def docstring_to_markdown(docstring):
     for idx, line in enumerate(docstring.split('\n')):
         line = line.strip()
         if set(line) in ({'-'}, {'='}):
-            new_docstring_lst[idx-1] = '**%s**' % new_docstring_lst[idx-1]
+            new_docstring_lst[idx - 1] = '**%s**' % new_docstring_lst[idx - 1]
         elif line.startswith('>>>'):
             line = '    %s' % line
         new_docstring_lst.append(line)
@@ -48,15 +48,15 @@ def docstring_to_markdown(docstring):
     for idx, line in enumerate(new_docstring_lst[1:]):
         if line:
             if line.startswith('Description : '):
-                new_docstring_lst[idx+1] = (new_docstring_lst[idx+1]
-                                            .replace('Description : ', ''))
+                new_docstring_lst[idx + 1] = (new_docstring_lst[idx + 1]
+                                              .replace('Description : ', ''))
             elif ' : ' in line:
                 line = line.replace(' : ', '` : ')
-                new_docstring_lst[idx+1] = '\n- `%s\n' % line
-            elif '**' in new_docstring_lst[idx-1] and '**' not in line:
-                new_docstring_lst[idx+1] = '\n%s' % line.lstrip()
+                new_docstring_lst[idx + 1] = '\n- `%s\n' % line
+            elif '**' in new_docstring_lst[idx - 1] and '**' not in line:
+                new_docstring_lst[idx + 1] = '\n%s' % line.lstrip()
             elif '**' not in line:
-                new_docstring_lst[idx+1] = '    %s' % line.lstrip()
+                new_docstring_lst[idx + 1] = '    %s' % line.lstrip()
 
     clean_lst = []
     for line in new_docstring_lst:
@@ -232,8 +232,7 @@ def generate_api_docs(package, api_dir, clean=False, printlog=True):
     # get subpackages
     api_docs = {}
     for importer, pkg_name, is_pkg in pkgutil.iter_modules(
-                                                           package.__path__,
-                                                           prefix):
+            package.__path__, prefix):
         if is_pkg:
             subpackage = __import__(pkg_name, fromlist="dummy")
             prefix = subpackage.__name__ + "."
@@ -365,8 +364,8 @@ if __name__ == "__main__":
 
     import argparse
     parser = argparse.ArgumentParser(
-            description='Convert docstring into a markdown API documentation.',
-            formatter_class=argparse.RawTextHelpFormatter)
+        description='Convert docstring into a markdown API documentation.',
+        formatter_class=argparse.RawTextHelpFormatter)
 
     parser.add_argument('-n', '--package_name',
                         default='mlxtend',

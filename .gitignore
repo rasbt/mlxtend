@@ -1,5 +1,6 @@
 # Documentation builds
 docs/site/
+docs/mlxtend.pdf
 
 # Temporary documentation files
 docs/sources/user_guide/*.md

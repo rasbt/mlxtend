@@ -45,7 +45,7 @@ def ipynb_to_md(ipynb_path):
                 new_s.append(line)
                 break
         for line in f:
-            if line.startswith('# API'):
+            if line.startswith('## API'):
                 new_s.append(line)
                 new_s.append('\n')
                 break

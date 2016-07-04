@@ -28,6 +28,7 @@
 
 - [Source code (zip)](https://github.com/rasbt/mlxtend/archive/0.4.1.zip)
 - [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.4.1.tar.gz)
+- [PDF documentation](http://sebastianraschka.com/pdf/mlxtend-v0-4-1.pdf)
 
 ##### New Features
 

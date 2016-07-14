@@ -769,6 +769,8 @@
         
             <li><a href="#pypi">PyPI</a></li>
                 
+                    <li><a href="#upgrading-via-pip">Upgrading via pip</a></li>
+            
         
             <li><a href="#dev-version">Dev Version</a></li>
                 
@@ -792,9 +794,15 @@
 <pre><code class="bash">python setup.py install
 </code></pre>
 
+<h5 id="upgrading-via-pip">Upgrading via <code>pip</code></h5>
+<p>To upgrade an existing version of mlxtend from PyPI, exectute</p>
+<pre><code class="bash">pip install mlxtend --upgrade --no-deps
+</code></pre>
+
+<p>Please note that the dependencies (NumPy and SciPy) will also be upgraded if you omit the <code>--no-deps</code> flag; use the <code>--no-deps</code> ("no dependencies") flag if you don't want this.</p>
 <h3 id="dev-version">Dev Version</h3>
 <p>The mlxtend version on PyPI may always one step behind; you can install the latest development version from the GitHub repository by executing</p>
-<pre><code class="bash">pip install git+git://github.com/rasbt/mlxtend.git#egg=mlxtend
+<pre><code class="bash">pip install git+git://github.com/rasbt/mlxtend.git
 </code></pre>
 
 <p>Or, you can fork the GitHub repository from https://github.com/rasbt/mlxtend and install mlxtend from your local drive via</p>
@@ -802,7 +810,7 @@
 </code></pre>
 
 <h3 id="anacondaconda">Anaconda/Conda</h3>
-<p>Conda packages are now available for Mac, Windows, and Linux. You can install mlxtend using conda by executing </p>
+<p>Conda packages are now available for Mac, Windows, and Linux. You can install mlxtend using conda by executing</p>
 <pre><code class="bash">conda install -c rasbt mlxtend
 </code></pre></div>
         

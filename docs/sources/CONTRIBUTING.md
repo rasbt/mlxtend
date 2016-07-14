@@ -334,7 +334,7 @@ To deploy the documentation, execute
 To generate a PDF version of the documentation, simply `cd` into the `mlxtend/docs` directory and execute:
 
 ```bash
-python md2pdf.py 
+python md2pdf.py
 ```
 
 ## Uploading a new version to PyPI
@@ -411,7 +411,7 @@ $ pip uninstall mlxtend
 After this dry-run succeeded, repeat this process using the "real" PyPI:
 
 ```bash
-$ python setup.py sdist upload
+$ python setup.py sdist bdist_wheel upload
 ```
 
 ### 4. Removing the virtual environment

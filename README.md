@@ -15,7 +15,7 @@
 
 
 
-**Mlxtend is a library consisting of useful tools and extensions for the day-to-day data science tasks.**
+**Mlxtend (machine learning extensions) is a Python library of useful tools for the day-to-day data science tasks.**
 
 - This open source project is released under a permissive new BSD open source [license](./license) and commercially usable
 
@@ -28,7 +28,7 @@ Sebastian Raschka 2014-2016
 
 ## Links
 
-- **Documentation:** 
+- **Documentation:**
     - html: [http://rasbt.github.io/mlxtend/](http://rasbt.github.io/mlxtend/)
     - pdf: [http://sebastianraschka.com/pdf/software/mlxtend.pdf](http://sebastianraschka.com/pdf/software/mlxtend.pdf)
 - PyPI: [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend)
@@ -83,7 +83,7 @@ python setup.py install
 
 #### Anaconda/Conda
 
-Conda packages are now available for Mac, Windows, and Linux. You can install mlxtend using conda by executing 
+Conda packages are now available for Mac, Windows, and Linux. You can install mlxtend using conda by executing
 
 ```bash
 conda install -c rasbt mlxtend

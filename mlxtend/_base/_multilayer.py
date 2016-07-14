@@ -35,29 +35,33 @@ class _MultiLayer(object):
             }
 
         """
-        weights = {1: [[n_features, hidden_layers[0]],
-                       'n_features, n_hidden_1'],
+        weights = {'1': [[n_features, hidden_layers[0]],
+                         'n_features, n_hidden_1'],
                    'out': [[hidden_layers[-1], n_classes],
                            'n_hidden_%d, n_classes' % len(hidden_layers)]}
-        biases = {1: [[hidden_layers[0]], 'n_hidden_1'],
+        biases = {'1': [[hidden_layers[0]], 'n_hidden_1'],
                   'out': [[n_classes], 'n_classes']}
 
         if len(hidden_layers) > 1:
             for i, h in enumerate(hidden_layers[1:]):
                 layer = i + 2
-                weights[layer] = [[weights[layer - 1][0][1], h],
-                                  'n_hidden_%d, n_hidden_%d' % (layer -
-                                                                1, layer)]
-                biases[layer] = [[h], 'n_hidden_%d' % layer]
+                weights[str(layer)] = [[weights[str(layer - 1)][0][1], h],
+                                       'n_hidden_%d, n_hidden_%d'
+                                       % (layer - 1, layer)]
+                biases[str(layer)] = [[h], 'n_hidden_%d' % layer]
         return weights, biases
 
     def _init_params_from_layermapping(self, weight_maps, bias_maps,
                                        random_seed=None):
         rgen = np.random.RandomState(random_seed)
         weights, biases = {}, {}
-        for i, k in enumerate(zip(weight_maps, bias_maps)):
-            weights[k[0]] = rgen.normal(loc=0.0,
-                                        scale=0.01,
-                                        size=weight_maps[k[0]][0])
-            biases[k[1]] = np.zeros(shape=bias_maps[k[1]][0])
+
+        rgen = np.random.RandomState(random_seed)
+        weights, biases = {}, {}
+
+        for kw, kb in zip(sorted(weight_maps), sorted(bias_maps)):
+            weights[kw] = rgen.normal(loc=0.0,
+                                      scale=0.01,
+                                      size=weight_maps[kw][0])
+            biases[kb] = np.zeros(shape=bias_maps[kb][0])
         return weights, biases

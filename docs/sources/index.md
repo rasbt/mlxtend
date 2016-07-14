@@ -3,7 +3,7 @@
 
 ### Welcome to mlxtend’s documentation!
 
-**Mlxtend is a library consisting of useful tools and extensions for the day-to-day data science tasks.**
+**Mlxtend (machine learning extensions) is a Python library of useful tools for the day-to-day data science tasks.**
 
 - This open source project is released under a permissive new BSD open source [license](./license) and commercially usable
 
@@ -19,7 +19,7 @@
 
 ## Links
 
-- Documentation: 
+- Documentation:
     - html: [http://rasbt.github.io/mlxtend/](http://rasbt.github.io/mlxtend/)
     - pdf: [http://sebastianraschka.com/pdf/software/mlxtend.pdf](http://sebastianraschka.com/pdf/software/mlxtend.pdf)
 - Source code repository: [https://github.com/rasbt/mlxtend](https://github.com/rasbt/mlxtend)

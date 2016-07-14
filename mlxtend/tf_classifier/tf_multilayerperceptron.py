@@ -161,7 +161,7 @@ class TfMultiLayerPerceptron(_BaseModel, _IterativeModel,
         for idx, a in enumerate(activations):
             if a not in adict:
                 raise AttributeError('%s not in %s' % (a, list(adict.keys())))
-            act[idx + 1] = adict[a]
+            act[str(idx + 1)] = adict[a]
         return act
 
     def _fit(self, X, y, init_params=True):
@@ -307,9 +307,9 @@ class TfMultiLayerPerceptron(_BaseModel, _IterativeModel,
 
     def _predict(self, tf_X, tf_weights, tf_biases,
                  activations, dropout=False):
-        hidden_1 = self.activations[1](tf.add(tf.matmul(tf_X,
-                                                        tf_weights[1]),
-                                              tf_biases[1]))
+        hidden_1 = self.activations['1'](tf.add(tf.matmul(tf_X,
+                                                          tf_weights['1']),
+                                                tf_biases['1']))
         prev_layer = hidden_1
         if dropout:
             prev_layer = tf.nn.dropout(prev_layer, self.dropout,
@@ -332,7 +332,7 @@ class TfMultiLayerPerceptron(_BaseModel, _IterativeModel,
     def _init_params_from_layermapping(self, weight_maps,
                                        bias_maps, activations):
         tf_weights, tf_biases = {}, {}
-        for i, k, in enumerate(zip(weight_maps, bias_maps)):
+        for i, k in enumerate(zip(sorted(weight_maps), sorted(bias_maps))):
             assert k[0] == k[1]
             if self.random_seed:
                 seed = self.random_seed + i
@@ -344,5 +344,5 @@ class TfMultiLayerPerceptron(_BaseModel, _IterativeModel,
             if k[0] in activations and activations[k[0]] != 'relu':
                 tf_biases[k[1]] = tf.zeros(bias_maps[k[1]][0])
             else:
-                tf_biases[k[1]] = tf.constant(0.1, shape=bias_maps[k[1]][0])
+                tf_biases[k[0]] = tf.constant(0.1, shape=bias_maps[k[1]][0])
         return tf_weights, tf_biases

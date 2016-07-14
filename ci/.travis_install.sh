@@ -26,7 +26,7 @@ source activate test-environment
 pip install nose nose-exclude;
 
 if [ "${COVERAGE}" = "true" ]; then
-    pip install coverage coveralls;
+    pip install coverage coveralls codecov;
 fi
 
 python --version

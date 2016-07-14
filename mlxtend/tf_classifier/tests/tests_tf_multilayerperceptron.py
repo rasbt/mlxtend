@@ -48,14 +48,14 @@ def test_mapping():
                              n_classes=11,
                              hidden_layers=[8, 7, 6])
 
-    expect_b = {1: [[8], 'n_hidden_1'],
-                2: [[7], 'n_hidden_2'],
-                3: [[6], 'n_hidden_3'],
+    expect_b = {'1': [[8], 'n_hidden_1'],
+                '2': [[7], 'n_hidden_2'],
+                '3': [[6], 'n_hidden_3'],
                 'out': [[11], 'n_classes']}
 
-    expect_w = {1: [[10, 8], 'n_features, n_hidden_1'],
-                2: [[8, 7], 'n_hidden_1, n_hidden_2'],
-                3: [[7, 6], 'n_hidden_2, n_hidden_3'],
+    expect_w = {'1': [[10, 8], 'n_features, n_hidden_1'],
+                '2': [[8, 7], 'n_hidden_1, n_hidden_2'],
+                '3': [[7, 6], 'n_hidden_2, n_hidden_3'],
                 'out': [[6, 11], 'n_hidden_3, n_classes']}
 
     assert expect_b == b, b

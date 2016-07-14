@@ -120,8 +120,8 @@ class MultiLayerPerceptron(_BaseModel, _IterativeModel,
             self.cost_ = []
 
             if self.momentum != 0.0:
-                prev_grad_b_1 = np.zeros(shape=self.b_[1].shape)
-                prev_grad_w_1 = np.zeros(shape=self.w_[1].shape)
+                prev_grad_b_1 = np.zeros(shape=self.b_['1'].shape)
+                prev_grad_w_1 = np.zeros(shape=self.w_['1'].shape)
                 prev_grad_b_out = np.zeros(shape=self.b_['out'].shape)
                 prev_grad_w_out = np.zeros(shape=self.w_['out'].shape)
 
@@ -170,7 +170,7 @@ class MultiLayerPerceptron(_BaseModel, _IterativeModel,
                 # REGULARIZATION AND WEIGHT UPDATES
 
                 dW_1 = (self._decr_eta * grad_W_1 +
-                        self._decr_eta * self.l2 * self.w_[1])
+                        self._decr_eta * self.l2 * self.w_['1'])
 
                 dW_out = (self._decr_eta * grad_W_out +
                           self._decr_eta * self.l2 * self.w_['out'])
@@ -178,14 +178,14 @@ class MultiLayerPerceptron(_BaseModel, _IterativeModel,
                 dB_1 = self._decr_eta * grad_B_1
                 dB_out = self._decr_eta * grad_B_out
 
-                self.w_[1] -= dW_1
-                self.b_[1] -= dB_1
+                self.w_['1'] -= dW_1
+                self.b_['1'] -= dB_1
                 self.w_['out'] -= dW_out
                 self.b_['out'] -= dB_out
 
                 if self.momentum != 0.0:
-                    self.w_[1] -= self.momentum * prev_grad_w_1
-                    self.b_[1] -= self.momentum * prev_grad_b_1
+                    self.w_['1'] -= self.momentum * prev_grad_w_1
+                    self.b_['1'] -= self.momentum * prev_grad_b_1
                     self.w_['out'] -= self.momentum * prev_grad_w_out
                     self.b_['out'] -= self.momentum * prev_grad_b_out
                     prev_grad_b_1 = grad_B_1
@@ -209,7 +209,7 @@ class MultiLayerPerceptron(_BaseModel, _IterativeModel,
 
         # [n_samples, n_features] dot [n_features, n_hidden]
         # -> [n_samples, n_hidden]
-        net_1 = np.dot(X, self.w_[1]) + self.b_[1]
+        net_1 = np.dot(X, self.w_['1']) + self.b_['1']
         act_1 = self._sigmoid(net_1)
 
         # [n_samples, n_hidden] dot [n_hidden, n_classlabels]
@@ -221,10 +221,10 @@ class MultiLayerPerceptron(_BaseModel, _IterativeModel,
 
     def _compute_cost(self, cross_entropy):
         L2_term = (self.l2 *
-                   (np.sum(self.w_[1] ** 2.0) + np.sum(self.w_['out'] ** 2.0)))
+                   (np.sum(self.w_['1'] ** 2.0) + np.sum(self.w_['out'] ** 2.0)))
 
         L1_term = (self.l1 *
-                   (np.abs(self.w_[1]).sum() + np.abs(self.w_['out']).sum()))
+                   (np.abs(self.w_['1']).sum() + np.abs(self.w_['out']).sum()))
 
         cross_entropy = cross_entropy + L2_term + L1_term
         return 0.5 * np.mean(cross_entropy)

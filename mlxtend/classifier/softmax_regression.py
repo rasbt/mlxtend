@@ -79,7 +79,10 @@ class SoftmaxRegression(_BaseModel, _IterativeModel, _MultiClass, _Classifier):
         return (X.dot(W) + b)
 
     def _softmax(self, z):
-        return (np.exp(z.T) / np.sum(np.exp(z), axis=1)).T
+        e_x = np.exp(z - z.max(axis=1, keepdims=True))
+        out = e_x / e_x.sum(axis=1, keepdims=True)
+        return out
+        #return (np.exp(z.T) / np.sum(np.exp(z), axis=1)).T
 
     def _cross_entropy(self, output, y_target):
         return - np.sum(np.log(output) * (y_target), axis=1)

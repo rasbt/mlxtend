@@ -5,7 +5,7 @@
 # License: BSD 3 clause
 
 import numpy as np
-from nose.tools import raises
+from mlxtend.utils import assert_raises
 from mlxtend.evaluate import plot_decision_regions
 from mlxtend.data import iris_data
 from mlxtend.classifier import SoftmaxRegression
@@ -23,16 +23,40 @@ def test_pass():
 
 def test_ylist():
     sr.fit(X[:, :2], y)
-    plot_decision_regions(X=X[:, :2], y=list(y), clf=sr)
+    assert_raises(ValueError,
+                  'y must be a 1D NumPy array',
+                  plot_decision_regions,
+                  X[:, :2], list(y), sr)
 
 
-@raises(ValueError)
+def test_X_column_fail():
+    sr.fit(X, y)
+    assert_raises(ValueError,
+                  'X cannot have more than 2 feature columns',
+                  plot_decision_regions,
+                  X, y, sr)
+
+
 def test_X_dim_fail():
-    sr.fit(X, y)
-    plot_decision_regions(X=X, y=y, clf=sr)
+    sr.fit(X[:, :2], y)
+    assert_raises(ValueError,
+                  'X must be a 2D array',
+                  plot_decision_regions,
+                  X[:, :2].flatten(), y, sr)
 
 
-@raises(ValueError)
-def test_y_dim_fail():
-    sr.fit(X, y)
-    plot_decision_regions(X=X, y=X, clf=sr)
+def test_y_int_ary():
+    sr.fit(X[:, :2], y)
+    assert_raises(ValueError,
+                  'y must have be an integer array. '
+                  'Try passing the array as y.astype(np.integer)',
+                  plot_decision_regions,
+                  X[:, :2], y.astype(np.float), sr)
+
+
+def test_y_ary_dim():
+    sr.fit(X[:, :2], y)
+    assert_raises(ValueError,
+                  'y must be a 1D array',
+                  plot_decision_regions,
+                  X[:, :2], y[:, np.newaxis], sr)

@@ -15,12 +15,13 @@
 
 ##### Changes
 
-- Added SVD solver option to `PrincipalComponentAnalysis` 
+- Added SVD solver option to `PrincipalComponentAnalysis`
 - Raise AttributeError with "not fitted" message in SequentialFeatureSelector if `transform` or `get_metric_dict` are called prior to `fit`
 - Use small, positive bias units in `TfMultiLayerPerceptron`'s hidden layer(s) if their activations are ReLUs in order to avoid dead neurons
 - Added an optional "clone_estimator" parameter to the `SequentialFeatureSelector`
 - Fixed a bug in `classifier.SoftmaxRegression` where the mean values of the offsets were used to update the bias units rather than their sum
 - Fixed rare bug in MLP layer_mapping functions that caused a swap between the random number generation seed when initializing weights and biases
+- More rigorous type and shape checks in `evaluate.plot_decision_regions`
 
 ### Version 0.4.1 (2016-05-01)
 

@@ -819,7 +819,7 @@ svm.fit(X,y)
 
 # Plotting decision regions
 plot_decision_regions(X, y, clf=svm, 
-                      res=0.0002, legend=2)
+                      res=0.02, legend=2)
 
 # Adding axes annotations
 plt.xlabel('sepal length [cm]')
@@ -828,6 +828,7 @@ plt.title('SVM on Iris')
 plt.show()
 </code></pre>
 
+<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_9_0.png" /></p>
 <h3 id="example-2-decision-regions-in-1d">Example 2 - Decision regions in 1D</h3>
 <pre><code class="python">from mlxtend.evaluate import plot_decision_regions
 import matplotlib.pyplot as plt

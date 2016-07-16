@@ -6,5 +6,6 @@
 
 from .counter import Counter
 from .testing import assert_raises
+from .checking import check_Xy
 
-__all__ = ["Counter", "assert_raises"]
+__all__ = ["Counter", "assert_raises", "check_Xy"]

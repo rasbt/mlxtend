@@ -18,16 +18,22 @@ def test_ok():
 
 
 def test_invalid_type_X():
+    expect = "X must be a NumPy array. Found <class 'list'>"
+    if (sys.version_info < (3, 0)):
+        expect = expect.replace('class', 'type')
     assert_raises(ValueError,
-                  "X must be a NumPy array. Found <class 'list'>",
+                  expect,
                   check_Xy,
                   [1, 2, 3, 4],
                   y)
 
 
 def test_invalid_type_y():
+    expect = "y must be a NumPy array. Found <class 'list'>"
+    if (sys.version_info < (3, 0)):
+        expect = expect.replace('class', 'type')
     assert_raises(ValueError,
-                  "y must be a NumPy array. Found <class 'list'>",
+                  expect,
                   check_Xy,
                   X,
                   [1, 2, 3, 4])

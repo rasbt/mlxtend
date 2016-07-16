@@ -7,6 +7,7 @@
 from mlxtend.utils import assert_raises
 from mlxtend.utils import check_Xy
 import numpy as np
+import sys
 
 y = np.array([1, 2, 3, 4])
 X = np.array([[1., 2.], [3., 4.], [5., 6.], [7., 8.]])
@@ -41,9 +42,15 @@ def test_invalid_dtype_X():
 
 
 def test_invalid_dtype_y():
+
+    if (sys.version_info > (3, 0)):
+        expect = ('y must be an integer array. Found <U1. '
+                  'Try passing the array as y.astype(np.integer)')
+    else:
+        expect = ('y must be an integer array. Found |S1. '
+                  'Try passing the array as y.astype(np.integer)')
     assert_raises(ValueError,
-                  ('y must be an integer array. Found <U1. '
-                   'Try passing the array as y.astype(np.integer)'),
+                  expect,
                   check_Xy,
                   X,
                   np.array(['a', 'b', 'c', 'd']))

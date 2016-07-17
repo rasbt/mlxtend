@@ -9,7 +9,7 @@
 import numpy as np
 
 
-class TransformerObj(object):
+class CopyTransformer(object):
     def __init__(self):
         self.ary = None
 

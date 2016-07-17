@@ -7,10 +7,9 @@
 # License: BSD 3 clause
 
 import numpy as np
-from .transformer import TransformerObj
 
 
-class MeanCenterer(TransformerObj):
+class MeanCenterer(object):
 
     """Column centering of vectors and matrices.
 

@@ -3,7 +3,7 @@
 ---
 
 
-### Version 0.4.2dev
+### Version 0.4.2dev0
 
 ##### Downloads
 
@@ -22,6 +22,7 @@
 - Fixed a bug in `classifier.SoftmaxRegression` where the mean values of the offsets were used to update the bias units rather than their sum
 - Fixed rare bug in MLP layer_mapping functions that caused a swap between the random number generation seed when initializing weights and biases
 - More rigorous type and shape checks in `evaluate.plot_decision_regions`
+- Changes in `DenseTransformer` so that it doesn't fail if the input array is not sparse
 
 ### Version 0.4.1 (2016-05-01)
 

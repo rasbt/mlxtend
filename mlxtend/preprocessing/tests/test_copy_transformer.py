@@ -14,6 +14,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.feature_extraction.text import TfidfTransformer
 from scipy.sparse import issparse
 from mlxtend.utils import assert_raises
+import sys
 
 
 iris = load_iris()
@@ -27,9 +28,13 @@ def test_copy():
 
 def test_copy_failtype():
     copy = CopyTransformer()
+
+    expect = ("X must be a list or NumPy array or SciPy sparse array."
+              " Found <class 'int'>")
+    if sys.version_info < (3, 0):
+        expect = expect.replace('class', 'type')
     assert_raises(ValueError,
-                  "X must be a list or NumPy array or SciPy sparse array."
-                  " Found <class 'int'>",
+                  expect,
                   copy.transform,
                   1)
 

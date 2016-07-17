@@ -7,14 +7,69 @@
 # License: BSD 3 clause
 
 import numpy as np
+from sklearn.base import BaseEstimator
+from scipy.sparse import issparse
 
 
-class CopyTransformer(object):
+class CopyTransformer(BaseEstimator):
+    """Transformer that returns a copy of the input array"""
     def __init__(self):
-        self.ary = None
+        pass
 
-    def _get_array(self, X):
+    def transform(self, X, y=None):
+        """ Return a copy of the input array.
+
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+        y : array-like, shape = [n_samples] (default: None)
+
+        Returns
+        ---------
+        X_copy : copy of the input X array.
+
+        """
         if isinstance(X, list):
-            self.ary = np.asarray(X)
+            return np.asarray(X)
+        elif isinstance(X, np.ndarray) or issparse(X):
+            return X.copy()
         else:
-            self.ary = np.copy(X)
+            raise ValueError('X must be a list or NumPy array'
+                             ' or SciPy sparse array. Found %s'
+                             % type(X))
+
+    def fit_transform(self, X, y=None):
+        """ Return a copy of the input array.
+
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+        y : array-like, shape = [n_samples] (default: None)
+
+        Returns
+        ---------
+        X_copy : copy of the input X array.
+
+        """
+        return self.transform(X)
+
+    def fit(self, X, y=None):
+        """ Mock method. Does nothing.
+
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+        y : array-like, shape = [n_samples] (default: None)
+
+        Returns
+        ---------
+        self
+
+        """
+        return self

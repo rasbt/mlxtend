@@ -25,6 +25,7 @@
 
 ## `feature_selection`
 - [`SequentialFeatureSelector`](user_guide/feature_selection/SequentialFeatureSelector.md)
+- [`ColumnSelector`](user_guide/feature_selection/ColumnSelector.md)
 
 ## `feature_extraction`
 - [`PrincipalComponentAnalysis`](user_guide/feature_extraction/PrincipalComponentAnalysis.md)
@@ -44,12 +45,13 @@
 - [`scoring`](user_guide/evaluate/scoring.md)
 
 ## `preprocessing`
-- [`DenseTransformer`](user_guide/preprocessing/DenseTransformer.md)
 - [`MeanCenterer`](user_guide/preprocessing/MeanCenterer.md)
 - [`minmax_scaling`](user_guide/preprocessing/minmax_scaling.md)
 - [`shuffle_arrays_unison`](user_guide/preprocessing/shuffle_arrays_unison.md)
 - [`standardize`](user_guide/preprocessing/standardize.md)
 - [`one-hot_encoding`](user_guide/preprocessing/one-hot_encoding.md)
+- [`DenseTransformer`](user_guide/preprocessing/DenseTransformer.md)
+- [`CopyTransformer`](user_guide/preprocessing/CopyTransformer.md)
 
 ## `data`
 - [`autompg_data`](user_guide/data/autompg_data.md)

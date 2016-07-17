@@ -5,64 +5,49 @@
 # License: BSD 3 clause
 
 import numpy as np
-from mlxtend.preprocessing import one_hot
-from nose.tools import raises
+from mlxtend.preprocessing import CopyTransformer
+from sklearn.datasets import load_iris
+from sklearn.pipeline import make_pipeline
+from sklearn.grid_search import GridSearchCV
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.feature_extraction.text import TfidfTransformer
+from scipy.sparse import issparse
+from mlxtend.utils import assert_raises
 
 
-def test_default():
-    y = np.array([0, 1, 2, 3, 4, 2])
-    expect = np.array([[1., 0., 0., 0., 0.],
-                       [0., 1., 0., 0., 0.],
-                       [0., 0., 1., 0., 0.],
-                       [0., 0., 0., 1., 0.],
-                       [0., 0., 0., 0., 1.],
-                       [0., 0., 1., 0., 0.]], dtype='float')
-    out = one_hot(y)
-    np.testing.assert_array_equal(expect, out)
+iris = load_iris()
+X, y = iris.data, iris.target
 
 
-def test_autoguessing():
-    y = np.array([0, 4, 0, 4])
-    expect = np.array([[1., 0., 0., 0., 0.],
-                       [0., 0., 0., 0., 1.],
-                       [1., 0., 0., 0., 0.],
-                       [0., 0., 0., 0., 1.]], dtype='float')
-    out = one_hot(y)
-    np.testing.assert_array_equal(expect, out)
+def test_copy():
+    copy = CopyTransformer()
+    np.testing.assert_array_equal(X, copy.transform(X))
 
 
-def test_list():
-    y = [0, 1, 2, 3, 4, 2]
-    expect = np.array([[1., 0., 0., 0., 0.],
-                       [0., 1., 0., 0., 0.],
-                       [0., 0., 1., 0., 0.],
-                       [0., 0., 0., 1., 0.],
-                       [0., 0., 0., 0., 1.],
-                       [0., 0., 1., 0., 0.]], dtype='float')
-    out = one_hot(y)
-    np.testing.assert_array_equal(expect, out)
+def test_copy_failtype():
+    copy = CopyTransformer()
+    assert_raises(ValueError,
+                  "X must be a list or NumPy array or SciPy sparse array."
+                  " Found <class 'int'>",
+                  copy.transform,
+                  1)
 
 
-@raises(AttributeError)
-def test_multidim_list():
-    y = [[0, 1, 2, 3, 4, 2]]
-    one_hot(y)
+def test_pipeline():
+    param_grid = [{'logisticregression__C': [1, 0.1, 10]}]
+    pipe = make_pipeline(StandardScaler(),
+                         CopyTransformer(),
+                         LogisticRegression())
+    grid = GridSearchCV(pipe, param_grid, cv=3, n_jobs=1)
+    grid.fit(X, y)
 
 
-@raises(AttributeError)
-def test_multidim_array():
-    y = np.array([[0], [1], [2], [3], [4], [2]])
-    one_hot(y)
-
-
-def test_oneclass():
-    np.testing.assert_array_equal(one_hot([0]),
-                                  np.array([[0.]], dtype='float'))
-
-
-def test_list_morelabels():
-    y = [0, 1]
-    expect = np.array([[1., 0., 0.],
-                       [0., 1., 0.]], dtype='float')
-    out = one_hot(y, num_labels=3)
-    np.testing.assert_array_equal(expect, out)
+def test_sparse():
+    copy = CopyTransformer()
+    tfidf = TfidfTransformer()
+    X_t = tfidf.fit_transform([[1, 2, 3]])
+    assert issparse(X_t)
+    X_dense = copy.transform(X_t).toarray()
+    expect = np.array([[0.26726124, 0.53452248, 0.80178373]])
+    assert np.allclose(X_dense, expect)

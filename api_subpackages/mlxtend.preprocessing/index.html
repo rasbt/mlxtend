@@ -236,6 +236,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../user_guide/feature_selection/ColumnSelector/">ColumnSelector</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -337,12 +343,6 @@
         
             
 <li >
-    <a href="../../user_guide/preprocessing/DenseTransformer/">DenseTransformer</a>
-</li>
-
-        
-            
-<li >
     <a href="../../user_guide/preprocessing/MeanCenterer/">MeanCenterer</a>
 </li>
 
@@ -368,6 +368,18 @@
             
 <li >
     <a href="../../user_guide/preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/DenseTransformer/">DenseTransformer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/CopyTransformer/">CopyTransformer</a>
 </li>
 
         
@@ -765,15 +777,21 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#densetransformer">DenseTransformer</a></li>
+        <li class="main active"><a href="#copytransformer">CopyTransformer</a></li>
         
             <li><a href="#methods">Methods</a></li>
                 
         
     
-        <li class="main "><a href="#meancenterer">MeanCenterer</a></li>
+        <li class="main "><a href="#densetransformer">DenseTransformer</a></li>
         
             <li><a href="#methods_1">Methods</a></li>
+                
+        
+    
+        <li class="main "><a href="#meancenterer">MeanCenterer</a></li>
+        
+            <li><a href="#methods_2">Methods</a></li>
                 
         
     
@@ -789,34 +807,181 @@
         <li class="main "><a href="#standardize">standardize</a></li>
         
     
-        <li class="main "><a href="#transformerobj">TransformerObj</a></li>
-        
-    
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.4.2dev </p>
-<h2 id="densetransformer">DenseTransformer</h2>
-<p><em>DenseTransformer(some_param=True)</em></p>
-<p>Convert a sparse matrix into a dense matrix.</p>
+<p>mlxtend version: 0.4.2dev0 </p>
+<h2 id="copytransformer">CopyTransformer</h2>
+<p><em>CopyTransformer()</em></p>
+<p>Transformer that returns a copy of the input array</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
 <p><em>fit(X, y=None)</em></p>
-<p>None</p>
+<p>Mock method. Does nothing.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>self</p>
 <hr>
 
 <p><em>fit_transform(X, y=None)</em></p>
-<p>None</p>
+<p>Return a copy of the input array.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>X_copy</code> : copy of the input X array.</li>
+</ul>
 <hr>
 
 <p><em>get_params(deep=True)</em></p>
-<p>None</p>
+<p>Get parameters for this estimator.</p>
+<p><strong>Parameters</strong></p>
+<p>deep: boolean, optional
+    If True, will return the parameters for this estimator and
+    contained subobjects that are estimators.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>params</code> : mapping of string to any</p>
+<p>Parameter names mapped to their values.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.</p>
+<pre><code>The method works on simple estimators as well as on nested objects
+(such as pipelines). The former have parameters of the form
+``&lt;component&gt;__&lt;parameter&gt;`` so that it's possible to update each
+component of a nested object.
+</code></pre>
+<p><strong>Returns</strong></p>
+<p>self</p>
 <hr>
 
 <p><em>transform(X, y=None)</em></p>
-<p>None</p>
+<p>Return a copy of the input array.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>X_copy</code> : copy of the input X array.</li>
+</ul>
+<h2 id="densetransformer">DenseTransformer</h2>
+<p><em>DenseTransformer(return_copy=True)</em></p>
+<p>Convert a sparse array into a dense array.</p>
+<h3 id="methods_1">Methods</h3>
+<hr>
+
+<p><em>fit(X, y=None)</em></p>
+<p>Mock method. Does nothing.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>self</p>
+<hr>
+
+<p><em>fit_transform(X, y=None)</em></p>
+<p>Return a dense version of the input array.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>X_dense</code> : dense version of the input X array.</li>
+</ul>
+<hr>
+
+<p><em>get_params(deep=True)</em></p>
+<p>Get parameters for this estimator.</p>
+<p><strong>Parameters</strong></p>
+<p>deep: boolean, optional
+    If True, will return the parameters for this estimator and
+    contained subobjects that are estimators.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>params</code> : mapping of string to any</p>
+<p>Parameter names mapped to their values.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.</p>
+<pre><code>The method works on simple estimators as well as on nested objects
+(such as pipelines). The former have parameters of the form
+``&lt;component&gt;__&lt;parameter&gt;`` so that it's possible to update each
+component of a nested object.
+</code></pre>
+<p><strong>Returns</strong></p>
+<p>self</p>
+<hr>
+
+<p><em>transform(X, y=None)</em></p>
+<p>Return a dense version of the input array.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>X_dense</code> : dense version of the input X array.</li>
+</ul>
 <h2 id="meancenterer">MeanCenterer</h2>
 <p><em>MeanCenterer()</em></p>
 <p>Column centering of vectors and matrices.</p>
@@ -828,7 +993,7 @@
 the MeanCenterer object.</p>
 </li>
 </ul>
-<h3 id="methods_1">Methods</h3>
+<h3 id="methods_2">Methods</h3>
 <hr>
 
 <p><em>fit(X)</em></p>
@@ -1010,10 +1175,7 @@ them from the current array.</p>
 <p><code>df_new</code> : pandas DataFrame object.</p>
 <p>Copy of the array or DataFrame with standardized columns.</p>
 </li>
-</ul>
-<h2 id="transformerobj">TransformerObj</h2>
-<p><em>TransformerObj()</em></p>
-<p>None</p></div>
+</ul></div>
         
     </div>
 

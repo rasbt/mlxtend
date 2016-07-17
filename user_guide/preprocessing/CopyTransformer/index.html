@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name="author" content="Sebastian Raschka"> 
-    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/DenseTransformer/"> 
+    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/CopyTransformer/"> 
     <link rel="shortcut icon" href="../../../../../../favicon.ico">
 
-    <title>DenseTransformer - mlxtend</title>
+    <title>CopyTransformer - mlxtend</title>
 
     <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
@@ -372,14 +372,14 @@
 
         
             
-<li class="active">
-    <a href="./">DenseTransformer</a>
+<li >
+    <a href="../DenseTransformer/">DenseTransformer</a>
 </li>
 
         
             
-<li >
-    <a href="../CopyTransformer/">CopyTransformer</a>
+<li class="active">
+    <a href="./">CopyTransformer</a>
 </li>
 
         
@@ -747,12 +747,12 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../one-hot_encoding/">
+                        <a rel="next" href="../DenseTransformer/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../CopyTransformer/">
+                        <a rel="prev" href="../../data/autompg_data/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -777,7 +777,7 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#densetransformer">DenseTransformer</a></li>
+        <li class="main active"><a href="#copytransformer">CopyTransformer</a></li>
         
             <li><a href="#examples">Examples</a></li>
                 
@@ -794,10 +794,10 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="densetransformer">DenseTransformer</h1>
-<p>A simple transformer that converts a sparse into a dense numpy array, e.g., required for scikit-learn's <code>Pipeline</code> when, for example, <code>CountVectorizers</code> are used in combination with estimators that are not compatible with sparse matrices.</p>
+<h1 id="copytransformer">CopyTransformer</h1>
+<p>A simple transformer that returns a copy of the input array, for example, as part of a scikit-learn pipeline.</p>
 <blockquote>
-<p>from mlxtend.preprocessing import DenseTransformer</p>
+<p>from mlxtend.preprocessing import CopyTransformer</p>
 </blockquote>
 <h2 id="examples">Examples</h2>
 <h3 id="example-1">Example 1</h3>
@@ -805,7 +805,7 @@
 from sklearn.grid_search import GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import CountVectorizer
-from mlxtend.preprocessing import DenseTransformer
+from mlxtend.preprocessing import CopyTransformer
 import re
 import numpy as np
 
@@ -815,7 +815,7 @@ y_train = np.array([0, 0, 1, 1])
 
 pipe_1 = Pipeline([
     ('vect', CountVectorizer()),
-    ('to_dense', DenseTransformer()),
+    ('to_dense', CopyTransformer()),
     ('clf', RandomForestClassifier())
 ])
 
@@ -852,28 +852,93 @@ Best parameters set:
     clf__n_estimators: 50
 
 
-[Parallel(n_jobs=1)]: Done  18 out of  18 | elapsed:    2.4s finished
+[Parallel(n_jobs=1)]: Done  18 out of  18 | elapsed:    2.1s finished
 </code></pre>
 <h2 id="api">API</h2>
-<p><em>DenseTransformer(some_param=True)</em></p>
-<p>Convert a sparse matrix into a dense matrix.</p>
+<p><em>CopyTransformer()</em></p>
+<p>Transformer that returns a copy of the input array</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
 <p><em>fit(X, y=None)</em></p>
-<p>None</p>
+<p>Mock method. Does nothing.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>self</p>
 <hr>
 
 <p><em>fit_transform(X, y=None)</em></p>
-<p>None</p>
+<p>Return a copy of the input array.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>X_copy</code> : copy of the input X array.</li>
+</ul>
 <hr>
 
 <p><em>get_params(deep=True)</em></p>
-<p>None</p>
+<p>Get parameters for this estimator.</p>
+<p><strong>Parameters</strong></p>
+<p>deep: boolean, optional
+    If True, will return the parameters for this estimator and
+    contained subobjects that are estimators.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>params</code> : mapping of string to any</p>
+<p>Parameter names mapped to their values.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.</p>
+<pre><code>The method works on simple estimators as well as on nested objects
+(such as pipelines). The former have parameters of the form
+``&lt;component&gt;__&lt;parameter&gt;`` so that it's possible to update each
+component of a nested object.
+</code></pre>
+<p><strong>Returns</strong></p>
+<p>self</p>
 <hr>
 
 <p><em>transform(X, y=None)</em></p>
-<p>None</p></div>
+<p>Return a copy of the input array.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>X_copy</code> : copy of the input X array.</li>
+</ul></div>
         
     </div>
 

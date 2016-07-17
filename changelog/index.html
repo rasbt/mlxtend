@@ -236,6 +236,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../user_guide/feature_selection/ColumnSelector/">ColumnSelector</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -337,12 +343,6 @@
         
             
 <li >
-    <a href="../user_guide/preprocessing/DenseTransformer/">DenseTransformer</a>
-</li>
-
-        
-            
-<li >
     <a href="../user_guide/preprocessing/MeanCenterer/">MeanCenterer</a>
 </li>
 
@@ -368,6 +368,18 @@
             
 <li >
     <a href="../user_guide/preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/preprocessing/DenseTransformer/">DenseTransformer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/preprocessing/CopyTransformer/">CopyTransformer</a>
 </li>
 
         
@@ -767,7 +779,7 @@
     
         <li class="main active"><a href="#release-notes">Release Notes</a></li>
         
-            <li><a href="#version-042dev">Version 0.4.2dev</a></li>
+            <li><a href="#version-042dev0">Version 0.4.2dev0</a></li>
                 
                     <li><a href="#downloads">Downloads</a></li>
             
@@ -871,11 +883,14 @@
 
 <h1 id="release-notes">Release Notes</h1>
 <hr />
-<h3 id="version-042dev">Version 0.4.2dev</h3>
+<h3 id="version-042dev0">Version 0.4.2dev0</h3>
 <h5 id="downloads">Downloads</h5>
 <p>~</p>
 <h5 id="new-features">New Features</h5>
-<p>~</p>
+<ul>
+<li>Added <code>preprocessing.CopyTransformer</code>, a mock class that returns copies of
+imput arrays via <code>transform</code> and <code>fit_transform</code></li>
+</ul>
 <h5 id="changes">Changes</h5>
 <ul>
 <li>Added SVD solver option to <code>PrincipalComponentAnalysis</code></li>
@@ -885,6 +900,8 @@
 <li>Fixed a bug in <code>classifier.SoftmaxRegression</code> where the mean values of the offsets were used to update the bias units rather than their sum</li>
 <li>Fixed rare bug in MLP layer_mapping functions that caused a swap between the random number generation seed when initializing weights and biases</li>
 <li>More rigorous type and shape checks in <code>evaluate.plot_decision_regions</code></li>
+<li>Changes in <code>DenseTransformer</code> so that it doesn't fail if the input array is not sparse</li>
+<li>Use scikit-learn's <code>BaseEstimator</code> as parent class for <code>feature_selection.ColumnSelector</code></li>
 </ul>
 <h3 id="version-041-2016-05-01">Version 0.4.1 (2016-05-01)</h3>
 <h5 id="downloads_1">Downloads</h5>

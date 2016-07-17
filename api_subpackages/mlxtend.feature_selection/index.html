@@ -236,6 +236,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../user_guide/feature_selection/ColumnSelector/">ColumnSelector</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -337,12 +343,6 @@
         
             
 <li >
-    <a href="../../user_guide/preprocessing/DenseTransformer/">DenseTransformer</a>
-</li>
-
-        
-            
-<li >
     <a href="../../user_guide/preprocessing/MeanCenterer/">MeanCenterer</a>
 </li>
 
@@ -368,6 +368,18 @@
             
 <li >
     <a href="../../user_guide/preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/DenseTransformer/">DenseTransformer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/CopyTransformer/">CopyTransformer</a>
 </li>
 
         
@@ -784,18 +796,80 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.4.2dev </p>
+<p>mlxtend version: 0.4.2dev0 </p>
 <h2 id="columnselector">ColumnSelector</h2>
-<p><em>ColumnSelector(cols)</em></p>
-<p>Select specific columns from a data set.</p>
-<pre><code>A feature selector for scikit-learn's Pipeline class that returns
-specified columns from a numpy array.
-</code></pre>
+<p><em>ColumnSelector(cols=None)</em></p>
+<p>Base class for all estimators in scikit-learn</p>
+<p><strong>Notes</strong></p>
+<p>All estimators should specify all the parameters that can be set
+    at the class level in their <code>__init__</code> as explicit keyword
+arguments (no <code>*args</code> or <code>**kwargs</code>).</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
 <p><em>fit(X, y=None)</em></p>
-<p>None</p>
+<p>Mock method. Does nothing.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>self</p>
+<hr>
+
+<p><em>fit_transform(X, y=None)</em></p>
+<p>Return a slice of the input array.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>X_slice</code> : shape = [n_samples, k_features]</p>
+<p>Subset of the feature space where k_features &lt;= n_features</p>
+</li>
+</ul>
+<hr>
+
+<p><em>get_params(deep=True)</em></p>
+<p>Get parameters for this estimator.</p>
+<p><strong>Parameters</strong></p>
+<p>deep: boolean, optional
+    If True, will return the parameters for this estimator and
+    contained subobjects that are estimators.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>params</code> : mapping of string to any</p>
+<p>Parameter names mapped to their values.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.</p>
+<pre><code>The method works on simple estimators as well as on nested objects
+(such as pipelines). The former have parameters of the form
+``&lt;component&gt;__&lt;parameter&gt;`` so that it's possible to update each
+component of a nested object.
+</code></pre>
+<p><strong>Returns</strong></p>
+<p>self</p>
 <hr>
 
 <p><em>transform(X, y=None)</em></p>

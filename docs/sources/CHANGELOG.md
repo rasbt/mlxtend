@@ -3,7 +3,7 @@
 ---
 
 
-### Version 0.4.2dev
+### Version 0.4.2dev0
 
 ##### Downloads
 
@@ -11,7 +11,8 @@
 
 ##### New Features
 
-~
+- Added `preprocessing.CopyTransformer`, a mock class that returns copies of
+imput arrays via `transform` and `fit_transform`
 
 ##### Changes
 
@@ -22,6 +23,8 @@
 - Fixed a bug in `classifier.SoftmaxRegression` where the mean values of the offsets were used to update the bias units rather than their sum
 - Fixed rare bug in MLP layer_mapping functions that caused a swap between the random number generation seed when initializing weights and biases
 - More rigorous type and shape checks in `evaluate.plot_decision_regions`
+- Changes in `DenseTransformer` so that it doesn't fail if the input array is not sparse
+- Use scikit-learn's `BaseEstimator` as parent class for `feature_selection.ColumnSelector`
 
 ### Version 0.4.1 (2016-05-01)
 

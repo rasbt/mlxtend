@@ -51,6 +51,7 @@ pages:
     - user_guide/regression_utils/plot_linear_regression.md
   - feature_selection:
     - user_guide/feature_selection/SequentialFeatureSelector.md
+    - user_guide/feature_selection/ColumnSelector.md
   - feature_extraction:
     - user_guide/feature_extraction/PrincipalComponentAnalysis.md
     - user_guide/feature_extraction/LinearDiscriminantAnalysis.md
@@ -65,12 +66,13 @@ pages:
     - user_guide/evaluate/plot_learning_curves.md
     - user_guide/evaluate/scoring.md
   - preprocessing:
-    - user_guide/preprocessing/DenseTransformer.md
     - user_guide/preprocessing/MeanCenterer.md
     - user_guide/preprocessing/minmax_scaling.md
     - user_guide/preprocessing/shuffle_arrays_unison.md
     - user_guide/preprocessing/standardize.md
     - user_guide/preprocessing/one-hot_encoding.md
+    - user_guide/preprocessing/DenseTransformer.md
+    - user_guide/preprocessing/CopyTransformer.md
   - data:
     - user_guide/data/autompg_data.md
     - user_guide/data/boston_housing_data.md

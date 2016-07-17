@@ -1,25 +1,23 @@
 # Sebastian Raschka 2014-2016
 # mlxtend Machine Learning Library Extensions
 #
-# A class for transforming sparse numpy arrays into dense arrays.
+# A Class that returns a copy of a dataset in a scikit-learn pipeline.
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
 
-
+import numpy as np
 from sklearn.base import BaseEstimator
 from scipy.sparse import issparse
 
 
-class DenseTransformer(BaseEstimator):
-    """Convert a sparse array into a dense array."""
-
-    def __init__(self, return_copy=True):
-        self.return_copy = return_copy
-        self.is_fitted = False
+class CopyTransformer(BaseEstimator):
+    """Transformer that returns a copy of the input array"""
+    def __init__(self):
+        pass
 
     def transform(self, X, y=None):
-        """ Return a dense version of the input array.
+        """ Return a copy of the input array.
 
         Parameters
         ----------
@@ -30,15 +28,34 @@ class DenseTransformer(BaseEstimator):
 
         Returns
         ---------
-        X_dense : dense version of the input X array.
+        X_copy : copy of the input X array.
 
         """
-        if issparse(X):
-            return X.toarray()
-        elif self.return_copy:
+        if isinstance(X, list):
+            return np.asarray(X)
+        elif isinstance(X, np.ndarray) or issparse(X):
             return X.copy()
         else:
-            return X
+            raise ValueError('X must be a list or NumPy array'
+                             ' or SciPy sparse array. Found %s'
+                             % type(X))
+
+    def fit_transform(self, X, y=None):
+        """ Return a copy of the input array.
+
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+        y : array-like, shape = [n_samples] (default: None)
+
+        Returns
+        ---------
+        X_copy : copy of the input X array.
+
+        """
+        return self.transform(X)
 
     def fit(self, X, y=None):
         """ Mock method. Does nothing.
@@ -55,22 +72,4 @@ class DenseTransformer(BaseEstimator):
         self
 
         """
-        self.is_fitted = True
         return self
-
-    def fit_transform(self, X, y=None):
-        """ Return a dense version of the input array.
-
-        Parameters
-        ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
-            Training vectors, where n_samples is the number of samples and
-            n_features is the number of features.
-        y : array-like, shape = [n_samples] (default: None)
-
-        Returns
-        ---------
-        X_dense : dense version of the input X array.
-
-        """
-        return self.transform(X=X, y=y)

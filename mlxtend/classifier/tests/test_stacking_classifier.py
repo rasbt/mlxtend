@@ -10,8 +10,10 @@ from sklearn import cross_validation
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.utils.validation import NotFittedError
 import numpy as np
 from sklearn import datasets
+from mlxtend.utils import assert_raises
 
 
 iris = datasets.load_iris()
@@ -87,3 +89,45 @@ def test_gridsearch_enumerate_names():
 
     grid = GridSearchCV(estimator=sclf, param_grid=params, cv=5)
     grid = grid.fit(iris.data, iris.target)
+
+
+def test_use_probas():
+    np.random.seed(123)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingClassifier(classifiers=[clf1, clf2],
+                              use_probas=True,
+                              meta_classifier=meta)
+
+    scores = cross_validation.cross_val_score(sclf,
+                                              X,
+                                              y,
+                                              cv=5,
+                                              scoring='accuracy')
+    scores_mean = (round(scores.mean(), 2))
+    assert scores_mean == 0.93, scores_mean
+
+
+def test_not_fitted():
+    np.random.seed(123)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingClassifier(classifiers=[clf1, clf2],
+                              use_probas=True,
+                              meta_classifier=meta)
+
+    assert_raises(NotFittedError,
+                  "This StackingClassifier instance is not fitted yet."
+                  " Call 'fit' with appropriate arguments"
+                  " before using this method.",
+                  sclf.predict,
+                  iris.data)
+
+    assert_raises(NotFittedError,
+                  "This StackingClassifier instance is not fitted yet."
+                  " Call 'fit' with appropriate arguments"
+                  " before using this method.",
+                  sclf.predict_proba,
+                  iris.data)

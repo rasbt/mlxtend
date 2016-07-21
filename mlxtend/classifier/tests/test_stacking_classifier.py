@@ -131,3 +131,15 @@ def test_not_fitted():
                   " before using this method.",
                   sclf.predict_proba,
                   iris.data)
+
+
+def test_verbose():
+    np.random.seed(123)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingClassifier(classifiers=[clf1, clf2],
+                              use_probas=True,
+                              meta_classifier=meta,
+                              verbose=3)
+    sclf.fit(iris.data, iris.target)

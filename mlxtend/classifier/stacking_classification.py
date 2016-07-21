@@ -93,7 +93,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             if self.verbose > 0:
                 i = self.clfs_.index(clf) + 1
                 print("Fitting classifier%d: %s (%d/%d)" %
-                      (i, _name_estimators((clf,))[0][0], i, len(self.clf_)))
+                      (i, _name_estimators((clf,))[0][0], i, len(self.clfs_)))
 
             if self.verbose > 2:
                 if hasattr(clf, 'verbose'):

@@ -25,6 +25,7 @@ imput arrays via `transform` and `fit_transform`
 - More rigorous type and shape checks in `evaluate.plot_decision_regions`
 - Changes in `DenseTransformer` so that it doesn't fail if the input array is not sparse
 - Use scikit-learn's `BaseEstimator` as parent class for `feature_selection.ColumnSelector`
+- Fix `AttributeError` issue when `verbose` > 1 in `StackingClassifier`
 
 ### Version 0.4.1 (2016-05-01)
 

@@ -37,11 +37,11 @@ python -c "import scipy; print('scipy %s' % scipy.__version__)"
 
 if [ "${TENSORFLOW}" = "true" ]; then
     if [ "${TRAVIS_PYTHON_VERSION}" = "2.7" ]; then
-        pip install https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.9.0rc0-cp27-none-linux_x86_64.whl;
+        pip install https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.9.0-cp27-none-linux_x86_64.whl;
     elif [ "${TRAVIS_PYTHON_VERSION}" = "3.5" ]; then
-        pip install https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.9.0rc0-cp35-cp35m-linux_x86_64.whl;
+        pip install https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.9.0-cp35-cp35m-linux_x86_64.whl;
     else
-        pip install https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.9.0rc0-cp34-cp34m-linux_x86_64.whl;
+        pip install https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.9.0-cp34-cp34m-linux_x86_64.whl;
     fi
     python -c "import tensorflow; print('tensorflow %s' % tensorflow.__version__)";
 else

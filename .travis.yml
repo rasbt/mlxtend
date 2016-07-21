@@ -11,6 +11,8 @@ matrix:
           env: LATEST="true" TENSORFLOW="true" COVERAGE="false"
         - python: 3.4
           env: LATEST="true" TENSORFLOW="false" COVERAGE="false"
+        - python: 3.4
+          env: LATEST="true" TENSORFLOW="true" COVERAGE="false"
         - python: 2.7
           env: LATEST="true" TENSORFLOW="false" COVERAGE="false"
         - python: 2.7

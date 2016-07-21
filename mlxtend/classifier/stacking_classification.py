@@ -12,6 +12,7 @@ from sklearn.base import BaseEstimator
 from sklearn.base import ClassifierMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
+from sklearn.utils.validation import check_is_fitted
 from ..externals.name_estimators import _name_estimators
 from ..externals import six
 import numpy as np
@@ -92,7 +93,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             if self.verbose > 0:
                 i = self.clfs_.index(clf) + 1
                 print("Fitting classifier%d: %s (%d/%d)" %
-                      (i, _name_estimators((clf,))[0][0], i, len(self.clf_)))
+                      (i, _name_estimators((clf,))[0][0], i, len(self.clfs_)))
 
             if self.verbose > 2:
                 if hasattr(clf, 'verbose'):
@@ -146,6 +147,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             Predicted class labels.
 
         """
+        check_is_fitted(self, 'clfs_')
         meta_features = self._predict_meta_features(X)
         return self.meta_clf_.predict(meta_features)
 
@@ -164,5 +166,6 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             Probability for each class per sample.
 
         """
+        check_is_fitted(self, 'clfs_')
         meta_features = self._predict_meta_features(X)
         return self.meta_clf_.predict_proba(meta_features)

@@ -17,6 +17,7 @@ matrix:
           env: LATEST="true" TENSORFLOW="true" COVERAGE="false"
 
 before_install:
+    - sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 3B4FE6ACC0B21F32 40976EAF437D05B5
     - sudo apt-get -qq update
 install:
     - source ci/.travis_install.sh

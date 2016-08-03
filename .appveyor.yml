@@ -1,6 +1,6 @@
 build: false
 
-environment:s
+environment:
   matrix:
     - PYTHON_VERSION: 3.5
       MINICONDA: C:\Miniconda3

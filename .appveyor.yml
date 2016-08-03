@@ -1,5 +1,3 @@
-build: false
-
 environment:
   matrix:
     - PYTHON_VERSION: 3.5

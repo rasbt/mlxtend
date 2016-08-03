@@ -16,6 +16,8 @@ imput arrays via `transform` and `fit_transform`
 
 ##### Changes
 
+- Added AppVeyor to CI to ensure MS Windows compatibility
+- Dataset are now saved as compressed text/csv files rather than being imported as data types
 - Added SVD solver option to `PrincipalComponentAnalysis`
 - Raise AttributeError with "not fitted" message in SequentialFeatureSelector if `transform` or `get_metric_dict` are called prior to `fit`
 - Use small, positive bias units in `TfMultiLayerPerceptron`'s hidden layer(s) if their activations are ReLUs in order to avoid dead neurons

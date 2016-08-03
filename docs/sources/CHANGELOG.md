@@ -18,6 +18,7 @@ imput arrays via `transform` and `fit_transform`
 
 - Added AppVeyor to CI to ensure MS Windows compatibility
 - Dataset are now saved as compressed text/csv files rather than being imported as data types
+- `feature_selection.SequentialFeatureSelector` now supports the selection of `k_features` using a tuple to specify a min-max k_features range
 - Added SVD solver option to `PrincipalComponentAnalysis`
 - Raise AttributeError with "not fitted" message in SequentialFeatureSelector if `transform` or `get_metric_dict` are called prior to `fit`
 - Use small, positive bias units in `TfMultiLayerPerceptron`'s hidden layer(s) if their activations are ReLUs in order to avoid dead neurons

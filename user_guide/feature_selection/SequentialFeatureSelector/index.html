@@ -808,6 +808,8 @@
             
                     <li><a href="#example-7-sequential-feature-selection-and-gridsearch">Example 7 -- Sequential Feature Selection and GridSearch</a></li>
             
+                    <li><a href="#example-8-selecting-the-best-feature-combination-in-a-k-range">Example 8 -- Selecting the "best"  feature combination in a k-range</a></li>
+            
         
             <li><a href="#api">API</a></li>
                 
@@ -1406,17 +1408,17 @@ gs = GridSearchCV(estimator=pipe,
 gs = gs.fit(X_train, y_train)
 </code></pre>
 
-<pre><code>[Parallel(n_jobs=1)]: Done  49 tasks       | elapsed:    4.3s
-[Parallel(n_jobs=1)]: Done  80 out of  80 | elapsed:    6.5s finished
+<pre><code>Fitting 5 folds for each of 16 candidates, totalling 80 fits
 
 
-Fitting 5 folds for each of 16 candidates, totalling 80 fits
+[Parallel(n_jobs=1)]: Done  49 tasks       | elapsed:    2.6s
+[Parallel(n_jobs=1)]: Done  80 out of  80 | elapsed:    4.6s finished
 </code></pre>
 <p>... and the "best" parameters determined by GridSearch are ...</p>
 <pre><code class="python">print(&quot;Best parameters via GridSearch&quot;, gs.best_params_)
 </code></pre>
 
-<pre><code>Best parameters via GridSearch {'sfs__estimator__n_neighbors': 1, 'sfs__k_features': 3}
+<pre><code>Best parameters via GridSearch {'sfs__k_features': 3, 'sfs__estimator__n_neighbors': 1}
 </code></pre>
 <h4 id="obtaining-the-best-k-feature-indices-after-gridsearch">Obtaining the best <em>k</em> feature indices after GridSearch</h4>
 <p>If we are interested in the best <em>k</em> feature indices via <code>SequentialFeatureSelection.k_feature_idx_</code>, we have to initialize a <code>GridSearchCV</code> object with <code>refit=True</code>. Now, the grid search object will take the complete training dataset and the best parameters, which it found via cross-validation, to train the estimator pipeline.</p>
@@ -1430,11 +1432,11 @@ Fitting 5 folds for each of 16 candidates, totalling 80 fits
 gs = gs.fit(X_train, y_train)
 </code></pre>
 
-<pre><code>[Parallel(n_jobs=1)]: Done  49 tasks       | elapsed:    3.2s
-[Parallel(n_jobs=1)]: Done  80 out of  80 | elapsed:    6.0s finished
+<pre><code>Fitting 5 folds for each of 16 candidates, totalling 80 fits
 
 
-Fitting 5 folds for each of 16 candidates, totalling 80 fits
+[Parallel(n_jobs=1)]: Done  49 tasks       | elapsed:    2.6s
+[Parallel(n_jobs=1)]: Done  80 out of  80 | elapsed:    4.4s finished
 </code></pre>
 <p>After running the grid search, we can access the individual pipeline objects of the <code>best_estimator_</code> via the <code>steps</code> attribute.</p>
 <pre><code class="python">gs.best_estimator_.steps
@@ -1476,8 +1478,53 @@ print('Best features:', pipe.steps[0][1].k_feature_idx_)
 
 <pre><code>Best features: (0, 1, 3)
 </code></pre>
+<h3 id="example-8-selecting-the-best-feature-combination-in-a-k-range">Example 8 -- Selecting the "best"  feature combination in a k-range</h3>
+<p>If <code>k_features</code> is set to to a tuple <code>(min_k, max_k)</code> (new in 0.4.2), the SFS will now select the best feature combination that it discovered by iterating from <code>k=1</code> to <code>max_k</code> (forward), or <code>max_k</code> to <code>min_k</code> (backward). The size of the returned feature subset is then within <code>max_k</code> to <code>min_k</code>, depending on which combination scored best during cross validation.</p>
+<pre><code class="python">X.shape
+</code></pre>
+
+<pre><code>(150, 4)
+</code></pre>
+<pre><code class="python">from mlxtend.feature_selection import SequentialFeatureSelector as SFS
+from sklearn.neighbors import KNeighborsClassifier
+from mlxtend.data import wine_data
+from sklearn.cross_validation import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+
+X, y = wine_data()
+X_train, X_test, y_train, y_test= train_test_split(X, y, 
+                                                   stratify=y,
+                                                   test_size=0.3,
+                                                   random_state=1)
+
+knn = KNeighborsClassifier(n_neighbors=2)
+
+sfs1 = SFS(estimator=knn, 
+           k_features=(3, 10),
+           forward=True, 
+           floating=False, 
+           scoring='accuracy',
+           print_progress=False,
+           cv=5)
+
+pipe = make_pipeline(StandardScaler(), sfs1)
+
+pipe.fit(X_train, y_train)
+
+print('best combination (ACC: %.3f): %s\n' % (sfs1.k_score_, sfs1.k_feature_idx_))
+print('all subsets:\n', sfs1.subsets_)
+plot_sfs(sfs1.get_metric_dict(), kind='std_err');
+</code></pre>
+
+<pre><code>best combination (ACC: 0.984): (0, 2, 3, 6, 8, 9, 12)
+
+all subsets:
+ {1: {'avg_score': 0.79045484949832778, 'feature_idx': (6,), 'cv_scores': array([ 0.76923077,  0.68      ,  0.84      ,  0.75      ,  0.91304348])}, 2: {'avg_score': 0.92686510590858406, 'feature_idx': (9, 6), 'cv_scores': array([ 0.88461538,  0.96      ,  0.96      ,  0.91666667,  0.91304348])}, 3: {'avg_score': 0.95927870680044602, 'feature_idx': (9, 12, 6), 'cv_scores': array([ 0.96153846,  0.96      ,  0.96      ,  0.95833333,  0.95652174])}, 4: {'avg_score': 0.96791973244147156, 'feature_idx': (0, 9, 12, 6), 'cv_scores': array([ 0.92307692,  0.96      ,  1.        ,  1.        ,  0.95652174])}, 5: {'avg_score': 0.98361204013377923, 'feature_idx': (0, 9, 3, 12, 6), 'cv_scores': array([ 0.96153846,  1.        ,  1.        ,  1.        ,  0.95652174])}, 6: {'avg_score': 0.97561204013377922, 'feature_idx': (0, 2, 3, 6, 9, 12), 'cv_scores': array([ 0.96153846,  1.        ,  0.96      ,  1.        ,  0.95652174])}, 7: {'avg_score': 0.98399999999999999, 'feature_idx': (0, 2, 3, 6, 8, 9, 12), 'cv_scores': array([ 1.  ,  0.92,  1.  ,  1.  ,  1.  ])}, 8: {'avg_score': 0.98399999999999999, 'feature_idx': (0, 2, 3, 6, 8, 9, 10, 12), 'cv_scores': array([ 1.  ,  0.96,  0.96,  1.  ,  1.  ])}, 9: {'avg_score': 0.98399999999999999, 'feature_idx': (0, 2, 3, 6, 8, 9, 10, 11, 12), 'cv_scores': array([ 1.  ,  0.96,  0.96,  1.  ,  1.  ])}, 10: {'avg_score': 0.96830769230769231, 'feature_idx': (0, 2, 3, 6, 7, 8, 9, 10, 11, 12), 'cv_scores': array([ 0.96153846,  0.92      ,  0.96      ,  1.        ,  1.        ])}}
+</code></pre>
+<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_70_1.png" /></p>
 <h2 id="api">API</h2>
-<p><em>SequentialFeatureSelector(estimator, k_features, forward=True, floating=False, print_progress=True, scoring='accuracy', cv=5, skip_if_stuck=True, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
+<p><em>SequentialFeatureSelector(estimator, k_features='best', forward=True, floating=False, print_progress=True, scoring='accuracy', cv=5, skip_if_stuck=True, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
 <p>Sequential Feature Selection for Classification and Regression.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1485,9 +1532,14 @@ print('Best features:', pipe.steps[0][1].k_feature_idx_)
 <p><code>estimator</code> : scikit-learn classifier or regressor</p>
 </li>
 <li>
-<p><code>k_features</code> : int</p>
+<p><code>k_features</code> : int or tuple (new in 0.4.2) (default: 1)</p>
 <p>Number of features to select,
-where k_features &lt; the full feature set.</p>
+where k_features &lt; the full feature set.
+New in 0.4.2: A tuple containing a min and max value can be provided,
+and the SFS will consider return any feature combination between
+min and max that scored highest in cross-validtion. For example,
+the tuple (1, 4) will return any combination from
+1 up to 4 features instead of a fixed number of features k.</p>
 </li>
 <li>
 <p><code>forward</code> : bool (default: True)</p>

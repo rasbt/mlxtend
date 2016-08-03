@@ -14,8 +14,8 @@ if [[ "$TENSORFLOW" == "true" ]]; then
     fi
 else
     if [[ "$COVERAGE" == "true" ]]; then
-        nosetests -s -v --with-coverage --exclude-dir=mlxtend/tf_classifier --exclude-dir=mlxtend/tf_regressor --exclude-dir=mlxtend/tf_cluster --exclude-dir=mlxtend/data --exclude-dir=mlxtend/general_plotting
+        nosetests -s -v --with-coverage --exclude-dir=mlxtend/tf_classifier --exclude-dir=mlxtend/tf_regressor --exclude-dir=mlxtend/tf_cluster --exclude-dir=mlxtend/general_plotting
     else
-        nosetests -s -v --exclude-dir=mlxtend/tf_classifier --exclude-dir=mlxtend/tf_regressor --exclude-dir=mlxtend/tf_cluster --exclude-dir=mlxtend/data --exclude-dir=mlxtend/general_plotting
+        nosetests -s -v --exclude-dir=mlxtend/tf_classifier --exclude-dir=mlxtend/tf_regressor --exclude-dir=mlxtend/tf_cluster  --exclude-dir=mlxtend/general_plotting
     fi
 fi

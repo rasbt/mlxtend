@@ -18,4 +18,4 @@ install:
   - pip install nose-exclude
 
 test_script:
-  - nosetests -s -v --exclude-dir=mlxtend/tf_classifier --exclude-dir=mlxtend/tf_regressor --exclude-dir=mlxtend/tf_cluster --exclude-dir=mlxtend/data --exclude-dir=mlxtend/general_plotting
+  - nosetests -s -v --exclude-dir=mlxtend/tf_classifier --exclude-dir=mlxtend/tf_regressor --exclude-dir=mlxtend/tf_cluster --exclude-dir=mlxtend/general_plotting

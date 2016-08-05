@@ -1,3 +1,5 @@
-include LICENSE
+include LICENSE-BSD3.txt
+include LICENSE-CC-BY.txt
 include README.md
 include requirements.txt
+recursive-include mlxtend/data *.csv *.csv.gz *.txt

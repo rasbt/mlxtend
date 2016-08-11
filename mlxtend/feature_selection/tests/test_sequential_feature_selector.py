@@ -372,6 +372,7 @@ def test_regression():
                 skip_if_stuck=True,
                 print_progress=False)
     sfs_r = sfs_r.fit(X, y)
+    assert len(sfs_r.k_feature_idx_) == 13
     assert round(sfs_r.k_score_, 4) == -34.7631
     
 def test_regression_in_range():
@@ -379,7 +380,7 @@ def test_regression_in_range():
     X, y = boston.data, boston.target
     lr = LinearRegression()
     sfs_r = SFS(lr,
-                k_features=(1,13),
+                k_features=(1, 13),
                 forward=True,
                 floating=False,
                 scoring='mean_squared_error',
@@ -387,6 +388,7 @@ def test_regression_in_range():
                 skip_if_stuck=True,
                 print_progress=False)
     sfs_r = sfs_r.fit(X, y)
+    assert len(sfs_r.k_feature_idx_) == 9
     assert round(sfs_r.k_score_, 4) == -31.1537
 
 

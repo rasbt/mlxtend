@@ -814,7 +814,7 @@ import numpy as np
 
 # Loading some example data
 X, y = iris_data()
-X, y = shuffle_arrays_unison(arrays=[X, y], random_state=123)
+X, y = shuffle_arrays_unison(arrays=[X, y], random_seed=123)
 X_train, X_test = X[:100], X[100:]
 y_train, y_test = y[:100], y[100:]
 

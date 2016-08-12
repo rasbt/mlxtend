@@ -23,12 +23,16 @@ imput arrays via `transform` and `fit_transform`
 - Raise AttributeError with "not fitted" message in SequentialFeatureSelector if `transform` or `get_metric_dict` are called prior to `fit`
 - Use small, positive bias units in `TfMultiLayerPerceptron`'s hidden layer(s) if their activations are ReLUs in order to avoid dead neurons
 - Added an optional "clone_estimator" parameter to the `SequentialFeatureSelector`
-- Fixed a bug in `classifier.SoftmaxRegression` where the mean values of the offsets were used to update the bias units rather than their sum
-- Fixed rare bug in MLP layer_mapping functions that caused a swap between the random number generation seed when initializing weights and biases
 - More rigorous type and shape checks in `evaluate.plot_decision_regions`
 - Changes in `DenseTransformer` so that it doesn't fail if the input array is not sparse
 - Use scikit-learn's `BaseEstimator` as parent class for `feature_selection.ColumnSelector`
-- Fix `AttributeError` issue when `verbose` > 1 in `StackingClassifier`
+
+##### Bug Fixes
+
+- Fixed problem when a tuple-range was provided as argument to the `SequentialFeatureSelector`'s `k_features` parameter and the scoring metric was more negative than -1 (e.g., as in scikit-learn's MSE scoring function) via [wahutch](https://github.com/wahutch)
+- Fixed `AttributeError` issue when `verbose` > 1 in `StackingClassifier`
+- Fixed a bug in `classifier.SoftmaxRegression` where the mean values of the offsets were used to update the bias units rather than their sum
+- Fixed rare bug in MLP layer_mapping functions that caused a swap between the random number generation seed when initializing weights and biases
 
 ### Version 0.4.1 (2016-05-01)
 

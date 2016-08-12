@@ -372,7 +372,24 @@ def test_regression():
                 skip_if_stuck=True,
                 print_progress=False)
     sfs_r = sfs_r.fit(X, y)
+    assert len(sfs_r.k_feature_idx_) == 13
     assert round(sfs_r.k_score_, 4) == -34.7631
+    
+def test_regression_in_range():
+    boston = load_boston()
+    X, y = boston.data, boston.target
+    lr = LinearRegression()
+    sfs_r = SFS(lr,
+                k_features=(1, 13),
+                forward=True,
+                floating=False,
+                scoring='mean_squared_error',
+                cv=10,
+                skip_if_stuck=True,
+                print_progress=False)
+    sfs_r = sfs_r.fit(X, y)
+    assert len(sfs_r.k_feature_idx_) == 9
+    assert round(sfs_r.k_score_, 4) == -31.1537
 
 
 def test_clone_params_fail():

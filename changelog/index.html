@@ -780,101 +780,103 @@
         <li class="main active"><a href="#release-notes">Release Notes</a></li>
         
             <li><a href="#version-042dev0">Version 0.4.2dev0</a></li>
-                
+                <!-- 
                     <li><a href="#downloads">Downloads</a></li>
             
                     <li><a href="#new-features">New Features</a></li>
             
                     <li><a href="#changes">Changes</a></li>
             
+                    <li><a href="#bug-fixes">Bug Fixes</a></li>
+             -->
         
             <li><a href="#version-041-2016-05-01">Version 0.4.1 (2016-05-01)</a></li>
-                
+                <!-- 
                     <li><a href="#downloads_1">Downloads</a></li>
             
                     <li><a href="#new-features_1">New Features</a></li>
             
                     <li><a href="#changes_1">Changes</a></li>
-            
+             -->
         
             <li><a href="#version-040-2016-04-09">Version 0.4.0 (2016-04-09)</a></li>
-                
+                <!-- 
                     <li><a href="#new-features_2">New Features</a></li>
             
                     <li><a href="#changes_2">Changes</a></li>
-            
+             -->
         
             <li><a href="#version-030-2016-01-31">Version 0.3.0 (2016-01-31)</a></li>
-                
+                <!-- 
                     <li><a href="#downloads_2">Downloads</a></li>
             
                     <li><a href="#new-features_3">New Features</a></li>
             
                     <li><a href="#changes_3">Changes</a></li>
-            
+             -->
         
             <li><a href="#version-029-2015-07-14">Version 0.2.9 (2015-07-14)</a></li>
-                
+                <!-- 
                     <li><a href="#downloads_3">Downloads</a></li>
             
                     <li><a href="#new-features_4">New Features</a></li>
             
                     <li><a href="#changes_4">Changes</a></li>
-            
+             -->
         
             <li><a href="#version-028-2015-06-27">Version 0.2.8 (2015-06-27)</a></li>
-                
+                <!--  -->
         
             <li><a href="#version-027-2015-06-20">Version 0.2.7 (2015-06-20)</a></li>
-                
+                <!--  -->
         
             <li><a href="#version-026-2015-05-08">Version 0.2.6 (2015-05-08)</a></li>
-                
+                <!--  -->
         
             <li><a href="#version-025-2015-04-17">Version 0.2.5 (2015-04-17)</a></li>
-                
+                <!--  -->
         
             <li><a href="#version-024-2015-03-15">Version 0.2.4 (2015-03-15)</a></li>
-                
+                <!--  -->
         
             <li><a href="#version-023-2015-03-11">Version 0.2.3 (2015-03-11)</a></li>
-                
+                <!--  -->
         
             <li><a href="#version-022-2015-03-01">Version 0.2.2 (2015-03-01)</a></li>
-                
+                <!--  -->
         
             <li><a href="#version-021-2015-01-20">Version 0.2.1 (2015-01-20)</a></li>
-                
+                <!--  -->
         
             <li><a href="#version-020-2015-01-13">Version 0.2.0 (2015-01-13)</a></li>
-                
+                <!--  -->
         
             <li><a href="#version-019-2015-01-10">Version 0.1.9 (2015-01-10)</a></li>
-                
+                <!--  -->
         
             <li><a href="#version-018-2015-01-07">Version 0.1.8 (2015-01-07)</a></li>
-                
+                <!--  -->
         
             <li><a href="#version-017-2015-01-07">Version 0.1.7 (2015-01-07)</a></li>
-                
+                <!--  -->
         
             <li><a href="#version-016-2015-01-04">Version 0.1.6 (2015-01-04)</a></li>
-                
+                <!--  -->
         
             <li><a href="#version-015-2014-12-11">Version 0.1.5 (2014-12-11)</a></li>
-                
+                <!--  -->
         
             <li><a href="#version-014-2014-08-20">Version 0.1.4 (2014-08-20)</a></li>
-                
+                <!--  -->
         
             <li><a href="#version-013-2014-08-19">Version 0.1.3 (2014-08-19)</a></li>
-                
+                <!--  -->
         
             <li><a href="#version-012-2014-08-19">Version 0.1.2 (2014-08-19)</a></li>
-                
+                <!--  -->
         
             <li><a href="#version-011-2014-08-13">Version 0.1.1 (2014-08-13)</a></li>
-                
+                <!--  -->
         
     
     </ul>
@@ -900,12 +902,16 @@ imput arrays via <code>transform</code> and <code>fit_transform</code></li>
 <li>Raise AttributeError with "not fitted" message in SequentialFeatureSelector if <code>transform</code> or <code>get_metric_dict</code> are called prior to <code>fit</code></li>
 <li>Use small, positive bias units in <code>TfMultiLayerPerceptron</code>'s hidden layer(s) if their activations are ReLUs in order to avoid dead neurons</li>
 <li>Added an optional "clone_estimator" parameter to the <code>SequentialFeatureSelector</code></li>
-<li>Fixed a bug in <code>classifier.SoftmaxRegression</code> where the mean values of the offsets were used to update the bias units rather than their sum</li>
-<li>Fixed rare bug in MLP layer_mapping functions that caused a swap between the random number generation seed when initializing weights and biases</li>
 <li>More rigorous type and shape checks in <code>evaluate.plot_decision_regions</code></li>
 <li>Changes in <code>DenseTransformer</code> so that it doesn't fail if the input array is not sparse</li>
 <li>Use scikit-learn's <code>BaseEstimator</code> as parent class for <code>feature_selection.ColumnSelector</code></li>
-<li>Fix <code>AttributeError</code> issue when <code>verbose</code> &gt; 1 in <code>StackingClassifier</code></li>
+</ul>
+<h5 id="bug-fixes">Bug Fixes</h5>
+<ul>
+<li>Fixed problem when a tuple-range was provided as argument to the <code>SequentialFeatureSelector</code>'s <code>k_features</code> parameter and the scoring metric was more negative than -1 (e.g., as in scikit-learn's MSE scoring function) via <a href="https://github.com/wahutch">wahutch</a></li>
+<li>Fixed <code>AttributeError</code> issue when <code>verbose</code> &gt; 1 in <code>StackingClassifier</code></li>
+<li>Fixed a bug in <code>classifier.SoftmaxRegression</code> where the mean values of the offsets were used to update the bias units rather than their sum</li>
+<li>Fixed rare bug in MLP layer_mapping functions that caused a swap between the random number generation seed when initializing weights and biases</li>
 </ul>
 <h3 id="version-041-2016-05-01">Version 0.4.1 (2016-05-01)</h3>
 <h5 id="downloads_1">Downloads</h5>

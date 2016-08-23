@@ -20,7 +20,7 @@
 
 - Documentation:
     - html: [http://rasbt.github.io/mlxtend/](http://rasbt.github.io/mlxtend/)
-    - pdf: [http://sebastianraschka.com/pdf/software/mlxtend.pdf](http://sebastianraschka.com/pdf/software/mlxtend.pdf)
+    - pdf: [http://sebastianraschka.com/pdf/software/mlxtend-latest.pdf](http://sebastianraschka.com/pdf/software/mlxtend-latest.pdf)
 - Source code repository: [https://github.com/rasbt/mlxtend](https://github.com/rasbt/mlxtend)
 - PyPI: [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend)
 - Questions? Check out the [Google Groups mailing list](https://groups.google.com/forum/#!forum/mlxtend)
@@ -99,7 +99,7 @@ If you use mlxtend as part of your workflow in a scientific publication, please 
 ## License
 
 - This project is released under a permissive new BSD open source [license](`[LICENSE-BSD3.txt](https://github.com/rasbt/mlxtend/blob/master/LICENSE-BSD3.txt)`) and commercially usable. There is no warranty; not even for merchantability or fitness for a particular purpose.
-- In addition, you may use, copy, modify and redistribute all artistic creative works (figures and images) included in this distribution under the directory 
+- In addition, you may use, copy, modify and redistribute all artistic creative works (figures and images) included in this distribution under the directory
 according to the terms and conditions of the Creative Commons Attribution 4.0 International License.  See the file [LICENSE-CC-BY.txt](https://github.com/rasbt/mlxtend/blob/master/LICENSE-CC-BY.txt) for details. (Computer-generated graphics such as the plots produced by matplotlib fall under the BSD license mentioned above).
 
 ## Contact

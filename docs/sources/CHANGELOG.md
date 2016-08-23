@@ -3,11 +3,13 @@
 ---
 
 
-### Version 0.4.2dev0
+### Version 0.4.2
 
 ##### Downloads
 
-~
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/0.4.2.zip)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.4.2.tar.gz)
+- [PDF documentation](http://sebastianraschka.com/pdf/mlxtend-latest.pdf)
 
 ##### New Features
 
@@ -40,7 +42,7 @@ imput arrays via `transform` and `fit_transform`
 
 - [Source code (zip)](https://github.com/rasbt/mlxtend/archive/0.4.1.zip)
 - [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.4.1.tar.gz)
-- [PDF documentation](http://sebastianraschka.com/pdf/mlxtend-v0-4-1.pdf)
+- [PDF documentation](http://sebastianraschka.com/pdf/mlxtend-0.4.1.pdf)
 
 ##### New Features
 

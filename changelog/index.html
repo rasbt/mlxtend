@@ -900,22 +900,22 @@ imput arrays via <code>transform</code> and <code>fit_transform</code></li>
 <h5 id="changes">Changes</h5>
 <ul>
 <li>Added AppVeyor to CI to ensure MS Windows compatibility</li>
-<li>Dataset are now saved as compressed text/csv files rather than being imported as data types</li>
-<li><code>feature_selection.SequentialFeatureSelector</code> now supports the selection of <code>k_features</code> using a tuple to specify a min-max k_features range</li>
-<li>Added SVD solver option to <code>PrincipalComponentAnalysis</code></li>
-<li>Raise AttributeError with "not fitted" message in SequentialFeatureSelector if <code>transform</code> or <code>get_metric_dict</code> are called prior to <code>fit</code></li>
-<li>Use small, positive bias units in <code>TfMultiLayerPerceptron</code>'s hidden layer(s) if their activations are ReLUs in order to avoid dead neurons</li>
-<li>Added an optional "clone_estimator" parameter to the <code>SequentialFeatureSelector</code></li>
-<li>More rigorous type and shape checks in <code>evaluate.plot_decision_regions</code></li>
-<li>Changes in <code>DenseTransformer</code> so that it doesn't fail if the input array is not sparse</li>
-<li>Use scikit-learn's <code>BaseEstimator</code> as parent class for <code>feature_selection.ColumnSelector</code></li>
+<li>Dataset are now saved as compressed .txt or .csv files rather than being imported as Python objects</li>
+<li><code>feature_selection.SequentialFeatureSelector</code> now supports the selection of <code>k_features</code> using a tuple to specify a "min-max" <code>k_features</code> range</li>
+<li>Added "SVD solver" option to the <code>PrincipalComponentAnalysis</code></li>
+<li>Raise a <code>AttributeError</code> with "not fitted" message in <code>SequentialFeatureSelector</code> if <code>transform</code> or <code>get_metric_dict</code> are called prior to <code>fit</code></li>
+<li>Use small, positive bias units in <code>TfMultiLayerPerceptron</code>'s hidden layer(s) if the activations are ReLUs in order to avoid dead neurons</li>
+<li>Added an optional <code>clone_estimator</code> parameter to the <code>SequentialFeatureSelector</code> that defaults to <code>True</code>, avoiding the modification of the original estimator objects</li>
+<li>More rigorous type and shape checks in the <code>evaluate.plot_decision_regions</code> function</li>
+<li><code>DenseTransformer</code> now doesn't raise and error if the input array is <em>not</em> sparse</li>
+<li>API clean-up using scikit-learn's <code>BaseEstimator</code> as parent class for <code>feature_selection.ColumnSelector</code></li>
 </ul>
 <h5 id="bug-fixes">Bug Fixes</h5>
 <ul>
-<li>Fixed problem when a tuple-range was provided as argument to the <code>SequentialFeatureSelector</code>'s <code>k_features</code> parameter and the scoring metric was more negative than -1 (e.g., as in scikit-learn's MSE scoring function) via <a href="https://github.com/wahutch">wahutch</a></li>
-<li>Fixed <code>AttributeError</code> issue when <code>verbose</code> &gt; 1 in <code>StackingClassifier</code></li>
+<li>Fixed a problem when a tuple-range was provided as argument to the <code>SequentialFeatureSelector</code>'s <code>k_features</code> parameter and the scoring metric was more negative than -1 (e.g., as in scikit-learn's MSE scoring function) via <a href="https://github.com/wahutch">wahutch</a></li>
+<li>Fixed an <code>AttributeError</code> issue when <code>verbose</code> &gt; 1 in <code>StackingClassifier</code></li>
 <li>Fixed a bug in <code>classifier.SoftmaxRegression</code> where the mean values of the offsets were used to update the bias units rather than their sum</li>
-<li>Fixed rare bug in MLP layer_mapping functions that caused a swap between the random number generation seed when initializing weights and biases</li>
+<li>Fixed rare bug in MLP <code>_layer_mapping</code> functions that caused a swap between the random number generation seed when initializing weights and biases</li>
 </ul>
 <h3 id="version-041-2016-05-01">Version 0.4.1 (2016-05-01)</h3>
 <h5 id="downloads_1">Downloads</h5>

@@ -1,6 +1,6 @@
 - This project is released under a permissive new BSD open source license and commercially usable. There is no warranty; not even for merchantability or fitness for a particular purpose.
 
-- In addition, you may use, copy, modify and redistribute all artistic creative works (figures and images) included in this distribution under the directory 
+- In addition, you may use, copy, modify, and redistribute all artistic creative works (figures and images) included in this distribution under the directory 
 according to the terms and conditions of the Creative Commons Attribution 4.0 International License. (Computer-generated graphics such as the plots produced by matplotlib fall under the BSD license mentioned above).
 
 
@@ -60,4 +60,3 @@ The licensor cannot revoke these freedoms as long as you follow the license term
 Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
 
 No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
-

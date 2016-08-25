@@ -3,7 +3,7 @@
 ---
 
 
-### Version 0.4.2
+### Version 0.4.2 (2016-08-24)
 
 ##### Downloads
 

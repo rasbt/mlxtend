@@ -2,6 +2,21 @@
 
 ---
 
+### Version 0.4.3dev0
+
+##### Downloads
+
+- -
+
+- -
+
+##### Changes
+
+- -
+
+##### Bug Fixes
+
+- Raise `AttributeError` in `plot_decision_regions` when the `X_higlight` argument is a 1D array (via [chkoar](https://github.com/chkoar))
 
 ### Version 0.4.2 (2016-08-24)
 

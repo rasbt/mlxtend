@@ -77,7 +77,7 @@ def plot_decision_regions(X, y, clf,
         raise ValueError('X must be a 2D array')
     if X.shape[1] > 2:
         raise ValueError('X cannot have more than 2 feature columns')
-    elif isinstance(X_highlight, np.ndarray) and len(X_highlight.shape) > 2:
+    elif isinstance(X_highlight, np.ndarray) and len(X_highlight.shape) < 2:
         raise ValueError('X_highlight must be a 2D array')
     elif len(y.shape) > 1:
         raise ValueError('y must be a 1D array')

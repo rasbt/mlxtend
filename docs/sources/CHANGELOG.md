@@ -8,7 +8,9 @@
 
 - -
 
-- -
+##### New Features
+
+- New `ExhaustiveFeatureSelector` estimator in `mlxtend.feature_selection` for evaluating all feature combinations in a specified range
 
 ##### Changes
 
@@ -17,6 +19,8 @@
 ##### Bug Fixes
 
 - Raise `AttributeError` in `plot_decision_regions` when the `X_higlight` argument is a 1D array (via [chkoar](https://github.com/chkoar))
+
+
 
 ### Version 0.4.2 (2016-08-24)
 

@@ -17,7 +17,7 @@ def plot_sequential_feature_selection(metric_dict,
                                       alpha=0.2,
                                       ylabel='Performance',
                                       confidence_interval=0.95):
-    """Plot sequential feature selection.
+    """Plot feature selection results.
 
     Parameters
     ----------

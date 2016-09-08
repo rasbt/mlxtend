@@ -374,7 +374,8 @@ def test_regression():
     sfs_r = sfs_r.fit(X, y)
     assert len(sfs_r.k_feature_idx_) == 13
     assert round(sfs_r.k_score_, 4) == -34.7631
-    
+
+
 def test_regression_in_range():
     boston = load_boston()
     X, y = boston.data, boston.target

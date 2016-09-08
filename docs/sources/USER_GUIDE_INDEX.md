@@ -25,6 +25,7 @@
 
 ## `feature_selection`
 - [`SequentialFeatureSelector`](user_guide/feature_selection/SequentialFeatureSelector.md)
+- [`ExhaustiveFeatureSelector`](user_guide/feature_selection/ExhaustiveFeatureSelector.md)
 - [`ColumnSelector`](user_guide/feature_selection/ColumnSelector.md)
 
 ## `feature_extraction`
@@ -58,7 +59,7 @@
 - [`boston_housing_data`](user_guide/data/boston_housing_data.md)
 - [`iris_data`](user_guide/data/iris_data.md)
 - [`mnist_data`](user_guide/data/mnist_data.md)
-- [`load_mnist`](user_guide/data/load_mnist.md)
+- [`loadlocal_mnist`](user_guide/data/loadlocal_mnist.md)
 - [`wine_data`](user_guide/data/wine_data.md)
 - [`three_blobs`](user_guide/data/three_blobs_data.md)
 

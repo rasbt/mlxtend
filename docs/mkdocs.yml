@@ -51,6 +51,7 @@ pages:
     - user_guide/regression_utils/plot_linear_regression.md
   - feature_selection:
     - user_guide/feature_selection/SequentialFeatureSelector.md
+    - user_guide/feature_selection/ExhaustiveFeatureSelector.md
     - user_guide/feature_selection/ColumnSelector.md
   - feature_extraction:
     - user_guide/feature_extraction/PrincipalComponentAnalysis.md

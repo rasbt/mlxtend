@@ -238,6 +238,12 @@
         
             
 <li >
+    <a href="../../feature_selection/ExhaustiveFeatureSelector/">ExhaustiveFeatureSelector</a>
+</li>
+
+        
+            
+<li >
     <a href="../../feature_selection/ColumnSelector/">ColumnSelector</a>
 </li>
 
@@ -418,7 +424,7 @@
         
             
 <li >
-    <a href="../../data/load_mnist/">Load mnist</a>
+    <a href="../../data/loadlocal_mnist/">Loadlocal mnist</a>
 </li>
 
         
@@ -814,7 +820,7 @@
 <p><em>Although the code is fully working and can be used for common classification tasks, this implementation is not geared towards efficiency but clarity – the original code was written for demonstration purposes.</em></p>
 <h3 id="basic-architecture">Basic Architecture</h3>
 <p><img alt="" src="../NeuralNetMLP_files/neuralnet_mlp_1.png" />  </p>
-<p>The neurons <mathjax>$x_0$</mathjax> and <mathjax>$a_0$</mathjax> represent the bias units (<mathjax>$x_0=1$</mathjax>, <mathjax>$a_0=1$</mathjax>). </p>
+<p>The neurons <mathjax>$x_0$</mathjax> and <mathjax>$a_0$</mathjax> represent the bias units (<mathjax>$x_0=1$</mathjax>, <mathjax>$a_0=1$</mathjax>).</p>
 <p>The <mathjax>$i$</mathjax>th superscript denotes the <mathjax>$i$</mathjax>th layer, and the <em>j</em>th subscripts stands for the index of the respective unit. For example, <mathjax>$a_{1}^{(2)}$</mathjax> refers to the first activation unit <strong>after</strong> the bias unit (i.e., 2nd activation unit) in the 2nd layer (here: the hidden layer)</p>
 <p>\begin{align}
     \mathbf{a^{(2)}} &amp;= \begin{bmatrix}
@@ -855,14 +861,14 @@ X_std = (X - X.mean(axis=0)) / X.std(axis=0)
 <p>Setting the <code>minibatches</code> to <code>1</code> will result in gradient descent training; please see <a href="../../general_concepts/gradient-optimization/">Gradient Descent vs. Stochastic Gradient Descent</a> for details.</p>
 <pre><code class="python">from mlxtend.classifier import MultiLayerPerceptron as MLP
 
-nn1 = MLP(hidden_layers=[50], 
-          l2=0.00, 
-          l1=0.0, 
-          epochs=150, 
-          eta=0.05, 
+nn1 = MLP(hidden_layers=[50],
+          l2=0.00,
+          l1=0.0,
+          epochs=150,
+          eta=0.05,
           momentum=0.1,
           decrease_const=0.0,
-          minibatches=1, 
+          minibatches=1,
           random_seed=1,
           print_progress=3)
 
@@ -895,14 +901,14 @@ plt.show()
 </code></pre>
 <h4 id="stochastic-gradient-descent">Stochastic Gradient Descent</h4>
 <p>Setting <code>minibatches</code> to <code>n_samples</code> will result in stochastic gradient descent training; please see <a href="../../general_concepts/gradient-optimization/">Gradient Descent vs. Stochastic Gradient Descent</a> for details.</p>
-<pre><code class="python">nn2 = MLP(hidden_layers=[50], 
-          l2=0.00, 
-          l1=0.0, 
-          epochs=5, 
-          eta=0.005, 
+<pre><code class="python">nn2 = MLP(hidden_layers=[50],
+          l2=0.00,
+          l1=0.0,
+          epochs=5,
+          eta=0.005,
           momentum=0.1,
           decrease_const=0.0,
-          minibatches=len(y), 
+          minibatches=len(y),
           random_seed=1,
           print_progress=3)
 
@@ -932,7 +938,7 @@ plt.show()
 
 <p><img alt="png" src="../MultiLayerPerceptron_files/MultiLayerPerceptron_34_0.png" /></p>
 <h3 id="example-2-classifying-handwritten-digits-from-a-10-mnist-subset">Example 2 - Classifying Handwritten Digits from a 10% MNIST Subset</h3>
-<p>Load a <strong>5000-sample subset</strong> of the <a href="http://rasbt.github.io/mlxtend/docs/data/mnist/">MNIST dataset</a> (please see <a href="../../data/load_mnist/"><code>data.load_mnist</code></a> if you want to download and read in the complete MNIST dataset).</p>
+<p>Load a <strong>5000-sample subset</strong> of the <a href="http://rasbt.github.io/mlxtend/docs/data/mnist/">MNIST dataset</a> (please see <a href="../../data/loadlocal_mnist/"><code>data.loadlocal_mnist</code></a> if you want to download and read in the complete MNIST dataset).</p>
 <pre><code class="python">from mlxtend.data import mnist_data
 from mlxtend.preprocessing import shuffle_arrays_unison
 
@@ -959,8 +965,8 @@ plot_digit(X, y, 3500)
 <pre><code class="python">import numpy as np
 from mlxtend.preprocessing import standardize
 
-X_train_std, params = standardize(X_train, 
-                                  columns=range(X_train.shape[1]), 
+X_train_std, params = standardize(X_train,
+                                  columns=range(X_train.shape[1]),
                                   return_params=True)
 
 X_test_std = standardize(X_test,
@@ -969,14 +975,14 @@ X_test_std = standardize(X_test,
 </code></pre>
 
 <p>Initialize the neural network to recognize the 10 different digits (0-10) using 300 epochs and mini-batch learning.</p>
-<pre><code class="python">nn1 = MLP(hidden_layers=[150], 
-          l2=0.00, 
-          l1=0.0, 
-          epochs=100, 
-          eta=0.005, 
+<pre><code class="python">nn1 = MLP(hidden_layers=[150],
+          l2=0.00,
+          l1=0.0,
+          epochs=100,
+          eta=0.005,
           momentum=0.0,
           decrease_const=0.0,
-          minibatches=100, 
+          minibatches=100,
           random_seed=1,
           print_progress=3)
 </code></pre>

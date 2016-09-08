@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name="author" content="Sebastian Raschka"> 
-    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/regressor/StackingRegressor/"> 
+    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/data/loadlocal_mnist/"> 
     <link rel="shortcut icon" href="../../../../../../favicon.ico">
 
-    <title>StackingRegressor - mlxtend</title>
+    <title>Loadlocal mnist - mlxtend</title>
 
     <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
@@ -181,13 +181,13 @@
         
             
 <li >
-    <a href="../LinearRegression/">LinearRegression</a>
+    <a href="../../regressor/LinearRegression/">LinearRegression</a>
 </li>
 
         
             
-<li class="active">
-    <a href="./">StackingRegressor</a>
+<li >
+    <a href="../../regressor/StackingRegressor/">StackingRegressor</a>
 </li>
 
         
@@ -400,43 +400,43 @@
         
             
 <li >
-    <a href="../../data/autompg_data/">Autompg data</a>
+    <a href="../autompg_data/">Autompg data</a>
 </li>
 
         
             
 <li >
-    <a href="../../data/boston_housing_data/">Boston housing data</a>
+    <a href="../boston_housing_data/">Boston housing data</a>
 </li>
 
         
             
 <li >
-    <a href="../../data/iris_data/">Iris data</a>
+    <a href="../iris_data/">Iris data</a>
 </li>
 
         
             
 <li >
-    <a href="../../data/mnist_data/">Mnist data</a>
+    <a href="../mnist_data/">Mnist data</a>
+</li>
+
+        
+            
+<li class="active">
+    <a href="./">Loadlocal mnist</a>
 </li>
 
         
             
 <li >
-    <a href="../../data/loadlocal_mnist/">Loadlocal mnist</a>
+    <a href="../wine_data/">Wine data</a>
 </li>
 
         
             
 <li >
-    <a href="../../data/wine_data/">Wine data</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../data/three_blobs_data/">Three blobs data</a>
+    <a href="../three_blobs_data/">Three blobs data</a>
 </li>
 
         
@@ -753,12 +753,12 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../LinearRegression/">
+                        <a rel="next" href="../mnist_data/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../../tf_regressor/TfLinearRegression/">
+                        <a rel="prev" href="../wine_data/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -783,7 +783,7 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#stackingregressor">StackingRegressor</a></li>
+        <li class="main active"><a href="#load-the-mnist-dataset-from-local-files">Load the MNIST Dataset from Local Files</a></li>
         
             <li><a href="#overview">Overview</a></li>
                 <!-- 
@@ -792,325 +792,165 @@
         
             <li><a href="#examples">Examples</a></li>
                 <!-- 
-                    <li><a href="#example-1-simple-stacked-regression">Example 1 - Simple Stacked Regression</a></li>
+                    <li><a href="#downloading-the-mnist-dataset">Downloading the MNIST dataset</a></li>
             
-                    <li><a href="#example-2-stacked-regression-and-gridsearch">Example 2 - Stacked Regression and GridSearch</a></li>
+                    <li><a href="#example-1-loading-mnist-into-numpy-arrays">Example 1 - Loading MNIST into NumPy Arrays</a></li>
              -->
         
             <li><a href="#api">API</a></li>
-                <!-- 
-                    <li><a href="#methods">Methods</a></li>
-            
-                    <li><a href="#properties">Properties</a></li>
-             -->
+                <!--  -->
         
     
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="stackingregressor">StackingRegressor</h1>
-<p>An ensemble-learning meta-regressor for stacking regression</p>
+<h1 id="load-the-mnist-dataset-from-local-files">Load the MNIST Dataset from Local Files</h1>
+<p>A utility function that loads the <code>MNIST</code> dataset from byte-form into NumPy arrays.</p>
 <blockquote>
-<p>from mlxtend.regressor import StackingRegressor</p>
+<p>from mlxtend.data import loadlocal_mnist</p>
 </blockquote>
 <h2 id="overview">Overview</h2>
-<p>Stacking regression is an ensemble learning technique to combine multiple regression models via a meta-regressor. The individual regression models are trained based on the complete training set; then, the meta-regressor is fitted based on the outputs -- meta-features -- of the individual regression models in the ensemble.</p>
-<p><img alt="" src="../StackingRegressor_files/stackingregression_overview.png" /></p>
+<p>The MNIST dataset was constructed from two datasets of the US National Institute of Standards and Technology (NIST). The training set consists of handwritten digits from 250 different people, 50 percent high school students, and 50 percent employees from the Census Bureau. Note that the test set contains handwritten digits from different people following the same split.</p>
+<p>The MNIST dataset is publicly available at http://yann.lecun.com/exdb/mnist/ and consists of the following four parts:
+- Training set images: train-images-idx3-ubyte.gz (9.9 MB, 47 MB unzipped, and 60,000 samples)
+- Training set labels: train-labels-idx1-ubyte.gz (29 KB, 60 KB unzipped, and 60,000 labels)
+- Test set images: t10k-images-idx3-ubyte.gz (1.6 MB, 7.8 MB, unzipped and 10,000 samples)
+- Test set labels: t10k-labels-idx1-ubyte.gz (5 KB, 10 KB unzipped, and 10,000 labels)</p>
+<p><strong>Features</strong></p>
+<p>Each feature vector (row in the feature matrix) consists of 784 pixels (intensities) -- unrolled from the original 28x28 pixels images.</p>
+<ul>
+<li>
+<p>Number of samples: 50000 images</p>
+</li>
+<li>
+<p>Target variable (discrete): {50x Setosa, 50x Versicolor, 50x Virginica}</p>
+</li>
+</ul>
 <h3 id="references">References</h3>
 <ul>
-<li>Breiman, Leo. "<a href="http://link.springer.com/article/10.1023/A:1018046112532#page-1">Stacked regressions.</a>" Machine learning 24.1 (1996): 49-64.</li>
+<li>Source: <a href="http://yann.lecun.com/exdb/mnist">http://yann.lecun.com/exdb/mnist/</a></li>
+<li>Y. LeCun and C. Cortes. Mnist handwritten digit database. AT&amp;T Labs [Online]. Available: http://yann. lecun. com/exdb/mnist, 2010.</li>
 </ul>
 <h2 id="examples">Examples</h2>
-<h3 id="example-1-simple-stacked-regression">Example 1 - Simple Stacked Regression</h3>
-<pre><code class="python">from mlxtend.regressor import StackingRegressor
-from mlxtend.data import boston_housing_data
-from sklearn.linear_model import LinearRegression
-from sklearn.linear_model import Ridge
-from sklearn.svm import SVR
-import matplotlib.pyplot as plt
-import numpy as np
-
-# Generating a sample dataset
-np.random.seed(1)
-X = np.sort(5 * np.random.rand(40, 1), axis=0)
-y = np.sin(X).ravel()
-y[::5] += 3 * (0.5 - np.random.rand(8))
+<h3 id="downloading-the-mnist-dataset">Downloading the MNIST dataset</h3>
+<p>1) Download the MNIST files from Y. LeCun's website</p>
+<ul>
+<li>http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz</li>
+<li>http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz</li>
+<li>http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz</li>
+<li>http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz</li>
+</ul>
+<p>for example, via</p>
+<pre><code>curl -O http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz
+</code></pre>
+<p>2) Unzip the downloaded gzip archives</p>
+<p>for example, via</p>
+<pre><code>gunzip t*-ubyte.gz
+</code></pre>
+<h3 id="example-1-loading-mnist-into-numpy-arrays">Example 1 - Loading MNIST into NumPy Arrays</h3>
+<pre><code class="python">from mlxtend.data import loadlocal_mnist
 </code></pre>
 
-<pre><code class="python"># Initializing models
+<pre><code class="python">X, y = loadlocal_mnist(
+        images_path='/Users/Sebastian/Desktop/train-images-idx3-ubyte', 
+        labels_path='/Users/Sebastian/Desktop/train-labels-idx1-ubyte')
 
-lr = LinearRegression()
-svr_lin = SVR(kernel='linear')
-ridge = Ridge(random_state=1)
-svr_rbf = SVR(kernel='rbf')
-
-stregr = StackingRegressor(regressors=[svr_lin, lr, ridge], 
-                           meta_regressor=svr_rbf)
-
-# Training the stacking classifier
-
-stregr.fit(X, y)
-stregr.predict(X)
-
-# Evaluate and visualize the fit
-
-print(&quot;Mean Squared Error: %.4f&quot;
-      % np.mean((stregr.predict(X) - y) ** 2))
-print('Variance Score: %.4f' % stregr.score(X, y))
-
-with plt.style.context(('seaborn-whitegrid')):
-    plt.scatter(X, y, c='lightgray')
-    plt.plot(X, stregr.predict(X), c='darkgreen', lw=2)
-
-plt.show()
 </code></pre>
 
-<pre><code>Mean Squared Error: 0.2039
-Variance Score: 0.7049
-</code></pre>
-<p><img alt="png" src="../StackingRegressor_files/StackingRegressor_14_1.png" /></p>
-<pre><code class="python">stregr
+<pre><code class="python">print('Dimensions: %s x %s' % (X.shape[0], X.shape[1]))
+print('\n1st row', X[0])
 </code></pre>
 
-<pre><code>StackingRegressor(meta_regressor=SVR(C=1.0, cache_size=200, coef0=0.0, degree=3, epsilon=0.1, gamma='auto',
-  kernel='rbf', max_iter=-1, shrinking=True, tol=0.001, verbose=False),
-         regressors=[SVR(C=1.0, cache_size=200, coef0=0.0, degree=3, epsilon=0.1, gamma='auto',
-  kernel='linear', max_iter=-1, shrinking=True, tol=0.001, verbose=False), LinearRegression(copy_X=True, fit_intercept=True, n_jobs=1, normalize=False), Ridge(alpha=1.0, copy_X=True, fit_intercept=True, max_iter=None,
-   normalize=False, random_state=1, solver='auto', tol=0.001)],
-         verbose=0)
+<pre><code>Dimensions: 60000 x 784
+
+1st row [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0   3  18  18  18 126 136 175  26 166 255
+ 247 127   0   0   0   0   0   0   0   0   0   0   0   0  30  36  94 154
+ 170 253 253 253 253 253 225 172 253 242 195  64   0   0   0   0   0   0
+   0   0   0   0   0  49 238 253 253 253 253 253 253 253 253 251  93  82
+  82  56  39   0   0   0   0   0   0   0   0   0   0   0   0  18 219 253
+ 253 253 253 253 198 182 247 241   0   0   0   0   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0  80 156 107 253 253 205  11   0  43 154
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+   0  14   1 154 253  90   0   0   0   0   0   0   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0   0   0   0   0   0 139 253 190   2   0
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+   0   0   0   0   0  11 190 253  70   0   0   0   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  35 241
+ 225 160 108   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0   0  81 240 253 253 119  25   0   0   0
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+   0   0  45 186 253 253 150  27   0   0   0   0   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0   0   0   0   0   0  16  93 252 253 187
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+   0   0   0   0   0   0   0 249 253 249  64   0   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0  46 130 183 253
+ 253 207   2   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+   0   0   0   0  39 148 229 253 253 253 250 182   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0   0   0   0   0  24 114 221 253 253 253
+ 253 201  78   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+   0   0  23  66 213 253 253 253 253 198  81   2   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0   0   0  18 171 219 253 253 253 253 195
+  80   9   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+  55 172 226 253 253 253 253 244 133  11   0   0   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0   0   0 136 253 253 253 212 135 132  16
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0   0   0]
 </code></pre>
-<h3 id="example-2-stacked-regression-and-gridsearch">Example 2 - Stacked Regression and GridSearch</h3>
-<p>To set up a parameter grid for scikit-learn's <code>GridSearch</code>, we simply provide the estimator's names in the parameter grid -- in the special case of the meta-regressor, we append the <code>'meta-'</code> prefix.</p>
-<pre><code class="python">from sklearn.grid_search import GridSearchCV
-from sklearn.linear_model import Lasso
-
-# Initializing models
-
-lr = LinearRegression()
-svr_lin = SVR(kernel='linear')
-ridge = Ridge(random_state=1)
-lasso = Lasso(random_state=1)
-svr_rbf = SVR(kernel='rbf')
-regressors = [svr_lin, lr, ridge, lasso]
-stregr = StackingRegressor(regressors=regressors, 
-                           meta_regressor=svr_rbf)
-
-params = {'lasso__alpha': [0.1, 1.0, 10.0],
-          'ridge__alpha': [0.1, 1.0, 10.0],
-          'svr__C': [0.1, 1.0, 10.0],
-          'meta-svr__C': [0.1, 1.0, 10.0, 100.0],
-          'meta-svr__gamma': [0.1, 1.0, 10.0]}
-
-grid = GridSearchCV(estimator=stregr, 
-                    param_grid=params, 
-                    cv=5,
-                    refit=True)
-grid.fit(X, y)
-
-for params, mean_score, scores in grid.grid_scores_:
-    print(&quot;%0.3f (+/-%0.03f) for %r&quot;
-        % (mean_score, scores.std() / 2, params))
-    break
-print('...\n\n')
-print('Best Parameters:\n%s' % grid.best_params_)
-</code></pre>
-
-<pre><code>-9.810 (+/-6.862) for {'lasso__alpha': 0.1, 'meta-svr__C': 0.1, 'meta-svr__gamma': 0.1, 'ridge__alpha': 0.1, 'svr__C': 0.1}
-...
-
-
-Best Parameters:
-{'lasso__alpha': 0.1, 'meta-svr__C': 1.0, 'meta-svr__gamma': 1.0, 'ridge__alpha': 0.1, 'svr__C': 10.0}
-</code></pre>
-<pre><code class="python"># Evaluate and visualize the fit
-print(&quot;Mean Squared Error: %.4f&quot;
-      % np.mean((grid.predict(X) - y) ** 2))
-print('Variance Score: %.4f' % grid.score(X, y))
-
-with plt.style.context(('seaborn-whitegrid')):
-    plt.scatter(X, y, c='lightgray')
-    plt.plot(X, grid.predict(X), c='darkgreen', lw=2)
-
-plt.show()
+<pre><code class="python">import numpy as np
+print('Digits:  0 1 2 3 4 5 6 7 8 9')
+print('labels: %s' % np.unique(y))
+print('Class distribution: %s' % np.bincount(y))
 </code></pre>
 
-<pre><code>Mean Squared Error: 0.1844
-Variance Score: 0.7331
+<pre><code>Digits:  0 1 2 3 4 5 6 7 8 9
+labels: [0 1 2 3 4 5 6 7 8 9]
+Class distribution: [5923 6742 5958 6131 5842 5421 5918 6265 5851 5949]
 </code></pre>
-<p><img alt="png" src="../StackingRegressor_files/StackingRegressor_19_1.png" /></p>
-<p>In case we are planning to use a regression algorithm multiple times, all we need to do is to add an additional number suffix in the parameter grid as shown below:</p>
+<h4 id="store-as-csv-files">Store as CSV Files</h4>
+<pre><code class="python">np.savetxt(fname='/Users/Sebastian/Desktop/images.csv', 
+           X=X, delimiter=',', fmt='%d')
+np.savetxt(fname='/Users/Sebastian/Desktop/labels.csv', 
+           X=y, delimiter=',', fmt='%d')
+</code></pre>
+
 <h2 id="api">API</h2>
-<p><em>StackingRegressor(regressors, meta_regressor, verbose=0)</em></p>
-<p>A Stacking regressor for scikit-learn estimators for regression.</p>
+<p><em>loadlocal_mnist(images_path, labels_path)</em></p>
+<p>Read MNIST from ubyte files.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>regressors</code> : array-like, shape = [n_regressors]</p>
-<p>A list of regressors.
-Invoking the <code>fit</code> method on the <code>StackingRegressor</code> will fit clones
-of those original regressors that will
-be stored in the class attribute
-<code>self.regr_</code>.</p>
+<p><code>images_path</code> : str</p>
+<p>path to the test or train MNIST ubyte file</p>
 </li>
 <li>
-<p><code>meta_regressor</code> : object</p>
-<p>The meta-regressor to be fitted on the ensemble of
-regressors</p>
-</li>
-<li>
-<p><code>verbose</code> : int, optional (default=0)</p>
-<p>Controls the verbosity of the building process.
-- <code>verbose=0</code> (default): Prints nothing
-- <code>verbose=1</code>: Prints the number &amp; name of the regressor being fitted
-- <code>verbose=2</code>: Prints info about the parameters of the
-regressor being fitted
-- <code>verbose&gt;2</code>: Changes <code>verbose</code> param of the underlying regressor to
-self.verbose - 2</p>
-</li>
-</ul>
-<p><strong>Attributes</strong></p>
-<ul>
-<li>
-<p><code>regr_</code> : list, shape=[n_regressors]</p>
-<p>Fitted regressors (clones of the original regressors)</p>
-</li>
-<li>
-<p><code>meta_regr_</code> : estimator</p>
-<p>Fitted meta-regressor (clone of the original meta-estimator)</p>
-</li>
-<li>
-<p><code>coef_</code> : array-like, shape = [n_features]</p>
-<p>Model coefficients of the fitted meta-estimator</p>
-</li>
-<li>
-<p><code>intercept_</code> : float</p>
-<p>Intercept of the fitted meta-estimator</p>
-</li>
-</ul>
-<h3 id="methods">Methods</h3>
-<hr>
-
-<p><em>fit(X, y)</em></p>
-<p>Learn weight coefficients from training data for each regressor.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
-<hr>
-
-<p><em>fit_transform(X, y=None, </em><em>fit_params)</em></p>
-<p>Fit to data, then transform it.</p>
-<pre><code>Fits transformer to X and y with optional parameters fit_params
-and returns a transformed version of X.
-</code></pre>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : numpy array of shape [n_samples, n_features]</p>
-<p>Training set.</p>
-</li>
-<li>
-<p><code>y</code> : numpy array of shape [n_samples]</p>
-<p>Target values.</p>
+<p><code>labels_path</code> : str</p>
+<p>path to the test or train MNIST class labels file</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>X_new</code> : numpy array of shape [n_samples, n_features_new]</p>
-<p>Transformed array.</p>
-</li>
-</ul>
-<hr>
-
-<p><em>get_params(deep=True)</em></p>
-<p>Return estimator parameter names for GridSearch support.</p>
-<hr>
-
-<p><em>predict(X)</em></p>
-<p>Predict target values for X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>y_target</code> : array-like, shape = [n_samples]</p>
-<p>Predicted target values.</p>
-</li>
-</ul>
-<hr>
-
-<p><em>score(X, y, sample_weight=None)</em></p>
-<p>Returns the coefficient of determination R^2 of the prediction.</p>
-<pre><code>The coefficient R^2 is defined as (1 - u/v), where u is the regression
-</code></pre>
-<p>sum of squares ((y_true - y_pred) <strong> 2).sum() and v is the residual
-sum of squares ((y_true - y_true.mean()) </strong> 2).sum().</p>
-<p>Best possible score is 1.0 and it can be negative (because the</p>
-<p>model can be arbitrarily worse). A constant model that always
-    predicts the expected value of y, disregarding the input features,
-    would get a R^2 score of 0.0.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : array-like, shape = (n_samples, n_features)</p>
-<p>Test samples.</p>
+<p><code>images</code> : [n_samples, n_pixels] numpy.array</p>
+<p>Pixel values of the images.</p>
 </li>
 <li>
-<p><code>y</code> : array-like, shape = (n_samples) or (n_samples, n_outputs)</p>
-<p>True values for X.</p>
+<p><code>labels</code> : [n_samples] numpy array</p>
+<p>Target class labels</p>
 </li>
-<li>
-<p><code>sample_weight</code> : array-like, shape = [n_samples], optional</p>
-<p>Sample weights.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>score</code> : float</p>
-<p>R^2 of self.predict(X) wrt. y.</p>
-</li>
-</ul>
-<hr>
-
-<p><em>set_params(</em><em>params)</em></p>
-<p>Set the parameters of this estimator.</p>
-<pre><code>The method works on simple estimators as well as on nested objects
-(such as pipelines). The former have parameters of the form
-``&lt;component&gt;__&lt;parameter&gt;`` so that it's possible to update each
-component of a nested object.
-</code></pre>
-<p><strong>Returns</strong></p>
-<p>self</p>
-<h3 id="properties">Properties</h3>
-<hr>
-
-<p><em>coef_</em></p>
-<p>None</p>
-<hr>
-
-<p><em>intercept_</em></p>
-<p>None</p></div>
+</ul></div>
         
     </div>
 

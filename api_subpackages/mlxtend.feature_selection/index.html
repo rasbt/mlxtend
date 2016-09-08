@@ -238,6 +238,12 @@
         
             
 <li >
+    <a href="../../user_guide/feature_selection/ExhaustiveFeatureSelector/">ExhaustiveFeatureSelector</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/feature_selection/ColumnSelector/">ColumnSelector</a>
 </li>
 
@@ -418,7 +424,7 @@
         
             
 <li >
-    <a href="../../user_guide/data/load_mnist/">Load mnist</a>
+    <a href="../../user_guide/data/loadlocal_mnist/">Loadlocal mnist</a>
 </li>
 
         
@@ -783,12 +789,18 @@
                 <!--  -->
         
     
+        <li class="main "><a href="#exhaustivefeatureselector">ExhaustiveFeatureSelector</a></li>
+        
+            <li><a href="#methods_1">Methods</a></li>
+                <!--  -->
+        
+    
         <li class="main "><a href="#plot_sequential_feature_selection">plot_sequential_feature_selection</a></li>
         
     
         <li class="main "><a href="#sequentialfeatureselector">SequentialFeatureSelector</a></li>
         
-            <li><a href="#methods_1">Methods</a></li>
+            <li><a href="#methods_2">Methods</a></li>
                 <!--  -->
         
     
@@ -796,7 +808,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.4.2dev0 </p>
+<p>mlxtend version: 0.4.3dev0 </p>
 <h2 id="columnselector">ColumnSelector</h2>
 <p><em>ColumnSelector(cols=None)</em></p>
 <p>Base class for all estimators in scikit-learn</p>
@@ -873,10 +885,212 @@ component of a nested object.
 <hr>
 
 <p><em>transform(X, y=None)</em></p>
-<p>None</p>
+<p>Return a slice of the input array.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>X_slice</code> : shape = [n_samples, k_features]</p>
+<p>Subset of the feature space where k_features &lt;= n_features</p>
+</li>
+</ul>
+<h2 id="exhaustivefeatureselector">ExhaustiveFeatureSelector</h2>
+<p><em>ExhaustiveFeatureSelector(estimator, min_features=1, max_features=1, print_progress=True, scoring='accuracy', cv=5, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
+<p>Exhaustive Feature Selection for Classification and Regression.
+    (new in v0.4.3)</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>estimator</code> : scikit-learn classifier or regressor</p>
+</li>
+<li>
+<p><code>min_features</code> : int (default: 1)</p>
+<p>Minumum number of features to select</p>
+</li>
+<li>
+<p><code>max_features</code> : int (default: 1)</p>
+<p>Maximum number of features to select</p>
+</li>
+<li>
+<p><code>print_progress</code> : bool (default: True)</p>
+<p>Prints progress as the number of epochs
+to stderr.</p>
+</li>
+<li>
+<p><code>scoring</code> : str, (default='accuracy')</p>
+<p>Scoring metric in {accuracy, f1, precision, recall, roc_auc}
+for classifiers,
+{'mean_absolute_error', 'mean_squared_error',
+'median_absolute_error', 'r2'} for regressors,
+or a callable object or function with
+signature <code>scorer(estimator, X, y)</code>.</p>
+</li>
+<li>
+<p><code>cv</code> : int (default: 5)</p>
+<p>Scikit-learn cross-validation generator or <code>int</code>.
+If estimator is a classifier (or y consists of integer class labels),
+stratified k-fold is performed, and regular k-fold cross-validation
+otherwise.
+No cross-validation if cv is None, False, or 0.</p>
+</li>
+<li>
+<p><code>n_jobs</code> : int (default: 1)</p>
+<p>The number of CPUs to use for cross validation. -1 means 'all CPUs'.</p>
+</li>
+<li>
+<p><code>pre_dispatch</code> : int, or string (default: '2*n_jobs')</p>
+<p>Controls the number of jobs that get dispatched
+during parallel execution in cross_val_score.
+Reducing this number can be useful to avoid an explosion of
+memory consumption when more jobs get dispatched than CPUs can process.
+This parameter can be:
+None, in which case all the jobs are immediately created and spawned.
+Use this for lightweight and fast-running jobs,
+to avoid delays due to on-demand spawning of the jobs
+An int, giving the exact number of total jobs that are spawned
+A string, giving an expression as a function
+of n_jobs, as in <code>2*n_jobs</code></p>
+</li>
+<li>
+<p><code>clone_estimator</code> : bool (default: True)</p>
+<p>Clones estimator if True; works with the original estimator instance
+if False. Set to False if the estimator doesn't
+implement scikit-learn's set_params and get_params methods.
+In addition, it is required to set cv=0, and n_jobs=1.</p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>best_idx_</code> : array-like, shape = [n_predictions]</p>
+<p>Feature Indices of the selected feature subsets.</p>
+</li>
+<li>
+<p><code>best_score_</code> : float</p>
+<p>Cross validation average score of the selected subset.</p>
+</li>
+<li>
+<p><code>subsets_</code> : dict</p>
+<p>A dictionary of selected feature subsets during the
+sequential selection, where the dictionary keys are
+the lengths k of these feature subsets. The dictionary
+values are dictionaries themselves with the following
+keys: 'feature_idx' (tuple of indices of the feature subset)
+'cv_scores' (list individual cross-validation scores)
+'avg_score' (average cross-validation score)</p>
+</li>
+</ul>
+<h3 id="methods_1">Methods</h3>
+<hr>
+
+<p><em>fit(X, y)</em></p>
+<p>Perform feature selection and learn model from training data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
+<hr>
+
+<p><em>fit_transform(X, y)</em></p>
+<p>Fit to training data and return the best selected features from X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Feature subset of X, shape={n_samples, k_features}</p>
+<hr>
+
+<p><em>get_metric_dict(confidence_interval=0.95)</em></p>
+<p>Return metric dictionary</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>confidence_interval</code> : float (default: 0.95)</p>
+<p>A positive float between 0.0 and 1.0 to compute the confidence
+interval bounds of the CV score averages.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Dictionary with items where each dictionary value is a list
+    with the number of iterations (number of feature subsets) as
+    its length. The dictionary keys corresponding to these lists
+    are as follows:
+    'feature_idx': tuple of the indices of the feature subset
+    'cv_scores': list with individual CV scores
+    'avg_score': of CV average scores
+    'std_dev': standard deviation of the CV score average
+    'std_err': standard error of the CV score average
+    'ci_bound': confidence interval bound of the CV score average</p>
+<hr>
+
+<p><em>get_params(deep=True)</em></p>
+<p>Get parameters for this estimator.</p>
+<p><strong>Parameters</strong></p>
+<p>deep: boolean, optional
+    If True, will return the parameters for this estimator and
+    contained subobjects that are estimators.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>params</code> : mapping of string to any</p>
+<p>Parameter names mapped to their values.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.</p>
+<pre><code>The method works on simple estimators as well as on nested objects
+(such as pipelines). The former have parameters of the form
+``&lt;component&gt;__&lt;parameter&gt;`` so that it's possible to update each
+component of a nested object.
+</code></pre>
+<p><strong>Returns</strong></p>
+<p>self</p>
+<hr>
+
+<p><em>transform(X)</em></p>
+<p>Return the best selected features from X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Feature subset of X, shape={n_samples, k_features}</p>
 <h2 id="plot_sequential_feature_selection">plot_sequential_feature_selection</h2>
 <p><em>plot_sequential_feature_selection(metric_dict, kind='std_dev', color='blue', bcolor='steelblue', marker='o', alpha=0.2, ylabel='Performance', confidence_interval=0.95)</em></p>
-<p>Plot sequential feature selection.</p>
+<p>Plot feature selection results.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1018,7 +1232,7 @@ keys: 'feature_idx' (tuple of indices of the feature subset)
 'avg_score' (average cross-validation score)</p>
 </li>
 </ul>
-<h3 id="methods_1">Methods</h3>
+<h3 id="methods_2">Methods</h3>
 <hr>
 
 <p><em>fit(X, y)</em></p>

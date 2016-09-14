@@ -50,9 +50,9 @@ def test_X_highlight_fail_if_1d():
     assert_raises(ValueError,
                   'X_highlight must be a 2D array',
                   plot_decision_regions,
-                  X[:,:2], y, sr, X_highlight=y)
-                  
-                  
+                  X[:, :2], y, sr, X_highlight=y)
+
+
 def test_y_int_ary():
     sr.fit(X[:, :2], y)
     assert_raises(ValueError,

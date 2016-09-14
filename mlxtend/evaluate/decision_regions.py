@@ -21,6 +21,11 @@ def plot_decision_regions(X, y, clf,
                           colors='red,blue,limegreen,gray,cyan'):
     """Plot decision regions of a classifier.
 
+    Please note that this functions assumes that class labels are
+    labeled consecutively, e.g,. 0, 1, 2, 3, 4, and 5. If you have class
+    labels with integer labels > 4, you need to provide additional colors
+    and/or markers as `colors` and `markers` arguments.
+
     Parameters
     ----------
     X : array-like, shape = [n_samples, n_features]
@@ -111,7 +116,10 @@ def plot_decision_regions(X, y, clf,
         Z = clf.predict(np.array([xx.ravel()]).T)
 
     Z = Z.reshape(xx.shape)
-    ax.contourf(xx, yy, Z, alpha=0.3, cmap=cmap)
+    ax.contourf(xx, yy, Z,
+                alpha=0.3,
+                cmap=cmap,
+                levels=np.arange(Z.max() + 2) - 0.5)
 
     ax.axis(xmin=xx.min(), xmax=xx.max(), y_min=yy.min(), y_max=yy.max())
 

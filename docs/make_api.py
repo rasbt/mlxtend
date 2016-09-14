@@ -45,17 +45,19 @@ def docstring_to_markdown(docstring):
             line = '    %s' % line
         new_docstring_lst.append(line)
 
+    param_encountered = False
     for idx, line in enumerate(new_docstring_lst[1:]):
         if line:
             if line.startswith('Description : '):
                 new_docstring_lst[idx + 1] = (new_docstring_lst[idx + 1]
                                               .replace('Description : ', ''))
             elif ' : ' in line:
+                param_encountered = True
                 line = line.replace(' : ', '` : ')
                 new_docstring_lst[idx + 1] = '\n- `%s\n' % line
             elif '**' in new_docstring_lst[idx - 1] and '**' not in line:
                 new_docstring_lst[idx + 1] = '\n%s' % line.lstrip()
-            elif '**' not in line:
+            elif '**' not in line and param_encountered:
                 new_docstring_lst[idx + 1] = '    %s' % line.lstrip()
 
     clean_lst = []

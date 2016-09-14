@@ -18,6 +18,7 @@
 
 ##### Bug Fixes
 
+- `mlxtend.evaluate.plot_decision_regions` now draws decision regions correctly if more than 4 class labels are present
 - Raise `AttributeError` in `plot_decision_regions` when the `X_higlight` argument is a 1D array (via [chkoar](https://github.com/chkoar))
 
 

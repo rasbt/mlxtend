@@ -18,7 +18,7 @@ python setup.py install
 
 ##### Upgrading via `pip`
 
-To upgrade an existing version of mlxtend from PyPI, exectute
+To upgrade an existing version of mlxtend from PyPI, execute
 
 ```bash
 pip install mlxtend --upgrade --no-deps
@@ -42,7 +42,7 @@ python setup.py install
 
 ### Anaconda/Conda
 
-Conda packages are now available for Mac, Windows, and Linux. You can install mlxtend using conda by executing
+[Conda](https://www.continuum.io/downloads) packages are now available for Mac, Windows, and Linux. You can install mlxtend using conda by executing
 
 ```bash
 conda install -c rasbt mlxtend

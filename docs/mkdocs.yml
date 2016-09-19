@@ -51,6 +51,7 @@ pages:
     - user_guide/regression_utils/plot_linear_regression.md
   - feature_selection:
     - user_guide/feature_selection/SequentialFeatureSelector.md
+    - user_guide/feature_selection/ExhaustiveFeatureSelector.md
     - user_guide/feature_selection/ColumnSelector.md
   - feature_extraction:
     - user_guide/feature_extraction/PrincipalComponentAnalysis.md
@@ -78,7 +79,7 @@ pages:
     - user_guide/data/boston_housing_data.md
     - user_guide/data/iris_data.md
     - user_guide/data/mnist_data.md
-    - user_guide/data/load_mnist.md
+    - user_guide/data/loadlocal_mnist.md
     - user_guide/data/wine_data.md
     - user_guide/data/three_blobs_data.md
   - file_io:

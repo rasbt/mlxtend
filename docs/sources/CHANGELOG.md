@@ -2,12 +2,34 @@
 
 ---
 
-
-### Version 0.4.2dev0
+### Version 0.4.3dev0
 
 ##### Downloads
 
-~
+- -
+
+##### New Features
+
+- New `ExhaustiveFeatureSelector` estimator in `mlxtend.feature_selection` for evaluating all feature combinations in a specified range
+
+##### Changes
+
+- -
+
+##### Bug Fixes
+
+- `mlxtend.evaluate.plot_decision_regions` now draws decision regions correctly if more than 4 class labels are present
+- Raise `AttributeError` in `plot_decision_regions` when the `X_higlight` argument is a 1D array (via [chkoar](https://github.com/chkoar))
+
+
+
+### Version 0.4.2 (2016-08-24)
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/0.4.2.zip)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.4.2.tar.gz)
+- [PDF documentation](http://sebastianraschka.com/pdf/mlxtend-latest.pdf)
 
 ##### New Features
 
@@ -16,15 +38,23 @@ imput arrays via `transform` and `fit_transform`
 
 ##### Changes
 
-- Added SVD solver option to `PrincipalComponentAnalysis`
-- Raise AttributeError with "not fitted" message in SequentialFeatureSelector if `transform` or `get_metric_dict` are called prior to `fit`
-- Use small, positive bias units in `TfMultiLayerPerceptron`'s hidden layer(s) if their activations are ReLUs in order to avoid dead neurons
-- Added an optional "clone_estimator" parameter to the `SequentialFeatureSelector`
+- Added AppVeyor to CI to ensure MS Windows compatibility
+- Dataset are now saved as compressed .txt or .csv files rather than being imported as Python objects
+- `feature_selection.SequentialFeatureSelector` now supports the selection of `k_features` using a tuple to specify a "min-max" `k_features` range
+- Added "SVD solver" option to the `PrincipalComponentAnalysis`
+- Raise a `AttributeError` with "not fitted" message in `SequentialFeatureSelector` if `transform` or `get_metric_dict` are called prior to `fit`
+- Use small, positive bias units in `TfMultiLayerPerceptron`'s hidden layer(s) if the activations are ReLUs in order to avoid dead neurons
+- Added an optional `clone_estimator` parameter to the `SequentialFeatureSelector` that defaults to `True`, avoiding the modification of the original estimator objects
+- More rigorous type and shape checks in the `evaluate.plot_decision_regions` function
+- `DenseTransformer` now doesn't raise and error if the input array is *not* sparse
+- API clean-up using scikit-learn's `BaseEstimator` as parent class for `feature_selection.ColumnSelector`
+
+##### Bug Fixes
+
+- Fixed a problem when a tuple-range was provided as argument to the `SequentialFeatureSelector`'s `k_features` parameter and the scoring metric was more negative than -1 (e.g., as in scikit-learn's MSE scoring function) via [wahutch](https://github.com/wahutch)
+- Fixed an `AttributeError` issue when `verbose` > 1 in `StackingClassifier`
 - Fixed a bug in `classifier.SoftmaxRegression` where the mean values of the offsets were used to update the bias units rather than their sum
-- Fixed rare bug in MLP layer_mapping functions that caused a swap between the random number generation seed when initializing weights and biases
-- More rigorous type and shape checks in `evaluate.plot_decision_regions`
-- Changes in `DenseTransformer` so that it doesn't fail if the input array is not sparse
-- Use scikit-learn's `BaseEstimator` as parent class for `feature_selection.ColumnSelector`
+- Fixed rare bug in MLP `_layer_mapping` functions that caused a swap between the random number generation seed when initializing weights and biases
 
 ### Version 0.4.1 (2016-05-01)
 
@@ -32,7 +62,7 @@ imput arrays via `transform` and `fit_transform`
 
 - [Source code (zip)](https://github.com/rasbt/mlxtend/archive/0.4.1.zip)
 - [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.4.1.tar.gz)
-- [PDF documentation](http://sebastianraschka.com/pdf/mlxtend-v0-4-1.pdf)
+- [PDF documentation](http://sebastianraschka.com/pdf/mlxtend-0.4.1.pdf)
 
 ##### New Features
 

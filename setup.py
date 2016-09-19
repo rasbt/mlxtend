@@ -16,7 +16,10 @@ setup(name='mlxtend',
       author_email='mail@sebastianraschka.com',
       url='https://github.com/rasbt/mlxtend',
       packages=find_packages(),
-      package_data={'': ['LICENSE', 'README.md', 'requirements.txt']
+      package_data={'': ['LICENSE-BSD3.txt',
+                         'LICENSE-CC-BY.txt',
+                         'README.md',
+                         'requirements.txt']
                     },
       include_package_data=True,
       install_requires=['numpy>=1.10.4', 'scipy>=0.17'],

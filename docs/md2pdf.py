@@ -11,7 +11,7 @@
 import yaml
 import os
 import subprocess
-
+from mlxtend import __version__
 
 yaml_path = "./mkdocs.yml"
 source_path = os.path.join(os.path.dirname(yaml_path), 'sources')
@@ -58,7 +58,7 @@ def gen_title(fname):
 
 with open(md_out_path, 'w') as f_out:
     meta = r"""---
-title: Mlxtend v0.4.1
+title: Mlxtend %s
 subtitle: Library Documentation
 author: Sebastian Raschka
 header-includes:
@@ -68,7 +68,7 @@ header-includes:
     - \fancyfoot[CE,CO]{}
 ---
 
-"""
+""" % __version__
     f_out.write(meta)
     for md in mkdocs:
         md_path = os.path.join(source_path, md)
@@ -93,7 +93,8 @@ header-includes:
                 f_out.write(line)
             f_out.write('\n\n')
 
-subprocess.check_call(['pandoc', '-N', 'temp.md', '--output=mlxtend.pdf', '--toc',
+subprocess.check_call(['pandoc', '-N', 'temp.md', '--output=mlxtend.pdf',
+                       '--toc',
                        '--normalize', '--smart', '--latex-engine=xelatex',
                        '--toc-depth=4', '--highlight-style=pygments',
                        '--template=pdftemplate.tex'])

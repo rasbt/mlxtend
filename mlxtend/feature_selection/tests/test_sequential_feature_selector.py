@@ -34,6 +34,83 @@ def dict_compare_utility(d1, d2):
                                      " != d2[%s]['cv_scores']" % (i, i)))
 
 
+def test_kfeatures_type_1():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier()
+    expect = ('k_features must be a positive integer between 1 and X.shape[1],'
+              ' got 0')
+    sfs = SFS(estimator=knn,
+              k_features=0)
+    assert_raises(AttributeError,
+                  expect,
+                  sfs.fit,
+                  X,
+                  y)
+
+
+def test_kfeatures_type_2():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier()
+    expect = 'k_features must be a positive integer or tuple'
+    sfs = SFS(estimator=knn,
+              k_features='abc')
+    assert_raises(AttributeError,
+                  expect,
+                  sfs.fit,
+                  X,
+                  y)
+
+
+def test_kfeatures_type_3():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier()
+    expect = ('k_features tuple min value must be in range(1, X.shape[1]+1).')
+    sfs = SFS(estimator=knn,
+              k_features=(0, 5))
+    assert_raises(AttributeError,
+                  expect,
+                  sfs.fit,
+                  X,
+                  y)
+
+
+def test_kfeatures_type_4():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier()
+    expect = ('k_features tuple max value must be in range(1, X.shape[1]+1).')
+    sfs = SFS(estimator=knn,
+              k_features=(1, 5))
+    assert_raises(AttributeError,
+                  expect,
+                  sfs.fit,
+                  X,
+                  y)
+
+
+def test_kfeatures_type_5():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier()
+    expect = ('he min k_features value must be'
+              ' larger than the max k_features value.')
+    sfs = SFS(estimator=knn,
+              k_features=(3, 1))
+    assert_raises(AttributeError,
+                  expect,
+                  sfs.fit,
+                  X,
+                  y)
+
+
 def test_knn_wo_cv():
     iris = load_iris()
     X = iris.data
@@ -164,6 +241,96 @@ def test_knn_option_sfbs():
     assert sfs4.k_feature_idx_ == (1, 2, 3)
 
 
+def test_knn_option_sfbs_tuplerange_1():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=3)
+    sfs4 = SFS(knn,
+               k_features=(1, 3),
+               forward=False,
+               floating=True,
+               scoring='accuracy',
+               cv=4,
+               skip_if_stuck=True,
+               print_progress=False)
+    sfs4 = sfs4.fit(X, y)
+    assert round(sfs4.k_score_, 3) == 0.966, sfs4.k_score_
+    assert sfs4.k_feature_idx_ == (1, 2, 3), sfs4.k_feature_idx_
+
+
+def test_knn_option_sfbs_tuplerange_2():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=3)
+    sfs4 = SFS(knn,
+               k_features=(1, 4),
+               forward=False,
+               floating=True,
+               scoring='accuracy',
+               cv=4,
+               skip_if_stuck=True,
+               print_progress=False)
+    sfs4 = sfs4.fit(X, y)
+    assert round(sfs4.k_score_, 3) == 0.966, sfs4.k_score_
+    assert sfs4.k_feature_idx_ == (1, 2, 3), sfs4.k_feature_idx_
+
+
+def test_knn_option_sffs_tuplerange_1():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=3)
+    sfs4 = SFS(knn,
+               k_features=(1, 3),
+               forward=True,
+               floating=True,
+               scoring='accuracy',
+               cv=4,
+               skip_if_stuck=True,
+               print_progress=False)
+    sfs4 = sfs4.fit(X, y)
+    assert round(sfs4.k_score_, 3) == 0.967, sfs4.k_score_
+    assert sfs4.k_feature_idx_ == (0, 2, 3), sfs4.k_feature_idx_
+
+
+def test_knn_option_sfs_tuplerange_1():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=3)
+    sfs4 = SFS(knn,
+               k_features=(1, 3),
+               forward=True,
+               floating=False,
+               scoring='accuracy',
+               cv=4,
+               skip_if_stuck=True,
+               print_progress=False)
+    sfs4 = sfs4.fit(X, y)
+    assert round(sfs4.k_score_, 3) == 0.967, sfs4.k_score_
+    assert sfs4.k_feature_idx_ == (0, 2, 3), sfs4.k_feature_idx_
+
+
+def test_knn_option_sbs_tuplerange_1():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=3)
+    sfs4 = SFS(knn,
+               k_features=(1, 3),
+               forward=False,
+               floating=False,
+               scoring='accuracy',
+               cv=4,
+               skip_if_stuck=True,
+               print_progress=False)
+    sfs4 = sfs4.fit(X, y)
+    assert round(sfs4.k_score_, 3) == 0.967, sfs4.k_score_
+    assert sfs4.k_feature_idx_ == (0, 2, 3), sfs4.k_feature_idx_
+
+
 def test_knn_scoring_metric():
     iris = load_iris()
     X = iris.data
@@ -205,7 +372,25 @@ def test_regression():
                 skip_if_stuck=True,
                 print_progress=False)
     sfs_r = sfs_r.fit(X, y)
+    assert len(sfs_r.k_feature_idx_) == 13
     assert round(sfs_r.k_score_, 4) == -34.7631
+
+
+def test_regression_in_range():
+    boston = load_boston()
+    X, y = boston.data, boston.target
+    lr = LinearRegression()
+    sfs_r = SFS(lr,
+                k_features=(1, 13),
+                forward=True,
+                floating=False,
+                scoring='mean_squared_error',
+                cv=10,
+                skip_if_stuck=True,
+                print_progress=False)
+    sfs_r = sfs_r.fit(X, y)
+    assert len(sfs_r.k_feature_idx_) == 9
+    assert round(sfs_r.k_score_, 4) == -31.1537
 
 
 def test_clone_params_fail():
@@ -275,6 +460,7 @@ def test_transform_not_fitted():
                   expect,
                   sfs1.transform,
                   X)
+
 
 def test_get_metric_dict_not_fitted():
     iris = load_iris()

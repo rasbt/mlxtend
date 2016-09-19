@@ -22,78 +22,78 @@ y_std = (y - y.mean()) / y.std()
 
 
 def test_univariate_normal_equation():
-    w_exp = np.array([[9.102]])
-    b_exp = np.array([-34.671])
+    w_exp = np.array([[9.1]])
+    b_exp = np.array([-34.7])
     ne_lr = LinearRegression(minibatches=None)
     ne_lr.fit(X_rm, y)
-    assert_almost_equal(ne_lr.w_, w_exp, decimal=3)
-    assert_almost_equal(ne_lr.b_, b_exp, decimal=3)
+    assert_almost_equal(ne_lr.w_, w_exp, decimal=1)
+    assert_almost_equal(ne_lr.b_, b_exp, decimal=1)
 
 
 def test_univariate_normal_equation_std():
-    w_exp = np.array([[0.695]])
-    b_exp = np.array([0.00])
+    w_exp = np.array([[0.7]])
+    b_exp = np.array([0.0])
     ne_lr = LinearRegression(minibatches=None)
     ne_lr.fit(X_rm_std, y_std)
-    assert_almost_equal(ne_lr.w_, w_exp, decimal=3)
-    assert_almost_equal(ne_lr.b_, b_exp, decimal=3)
+    assert_almost_equal(ne_lr.w_, w_exp, decimal=1)
+    assert_almost_equal(ne_lr.b_, b_exp, decimal=1)
 
 
 def test_univariate_gradient_descent():
-    w_exp = np.array([[0.695]])
-    b_exp = np.array([0.00])
+    w_exp = np.array([[0.7]])
+    b_exp = np.array([0.0])
     gd_lr = LinearRegression(minibatches=1,
                              eta=0.001,
                              epochs=500,
                              random_seed=0)
     gd_lr.fit(X_rm_std, y_std)
-    assert_almost_equal(gd_lr.w_, w_exp, decimal=3)
-    assert_almost_equal(gd_lr.b_, b_exp, decimal=3)
+    assert_almost_equal(gd_lr.w_, w_exp, decimal=1)
+    assert_almost_equal(gd_lr.b_, b_exp, decimal=1)
 
 
 def test_univariate_stochastic_gradient_descent():
-    w_exp = np.array([[0.695]])
-    b_exp = np.array([0.00])
+    w_exp = np.array([[0.7]])
+    b_exp = np.array([0.0])
     sgd_lr = LinearRegression(minibatches=len(y),
                               eta=0.0001,
                               epochs=150,
                               random_seed=0)
     sgd_lr.fit(X_rm_std, y_std)
-    assert_almost_equal(sgd_lr.w_, w_exp, decimal=3)
-    assert_almost_equal(sgd_lr.b_, b_exp, decimal=3)
+    assert_almost_equal(sgd_lr.w_, w_exp, decimal=1)
+    assert_almost_equal(sgd_lr.b_, b_exp, decimal=1)
 
 
 def test_multivariate_normal_equation():
-    w_exp = np.array([[5.095], [-0.642]])
-    b_exp = np.array([-1.358])
+    w_exp = np.array([[5.1], [-0.6]])
+    b_exp = np.array([-1.5])
     ne_lr = LinearRegression(minibatches=None)
     ne_lr.fit(X_rm_lstat, y)
-    assert_almost_equal(ne_lr.w_, w_exp, decimal=3)
-    assert_almost_equal(ne_lr.b_, b_exp, decimal=3)
+    assert_almost_equal(ne_lr.w_, w_exp, decimal=1)
+    assert_almost_equal(ne_lr.b_, b_exp, decimal=1)
 
 
 def test_multivariate_gradient_descent():
-    w_exp = np.array([[0.389], [-0.499]])
-    b_exp = np.array([0.000])
+    w_exp = np.array([[0.4], [-0.5]])
+    b_exp = np.array([0.0])
     gd_lr = LinearRegression(eta=0.001,
                              epochs=500,
                              minibatches=1,
                              random_seed=0)
     gd_lr.fit(X_rm_lstat_std, y_std)
-    assert_almost_equal(gd_lr.w_, w_exp, decimal=3)
-    assert_almost_equal(gd_lr.b_, b_exp, decimal=3)
+    assert_almost_equal(gd_lr.w_, w_exp, decimal=1)
+    assert_almost_equal(gd_lr.b_, b_exp, decimal=1)
 
 
 def test_multivariate_stochastic_gradient_descent():
-    w_exp = np.array([[0.389], [-0.499]])
-    b_exp = np.array([0.000])
+    w_exp = np.array([[0.4], [-0.5]])
+    b_exp = np.array([0.0])
     sgd_lr = LinearRegression(eta=0.0001,
                               epochs=500,
                               minibatches=len(y),
                               random_seed=0)
     sgd_lr.fit(X_rm_lstat_std, y_std)
-    assert_almost_equal(sgd_lr.w_, w_exp, decimal=3)
-    assert_almost_equal(sgd_lr.b_, b_exp, decimal=3)
+    assert_almost_equal(sgd_lr.w_, w_exp, decimal=1)
+    assert_almost_equal(sgd_lr.b_, b_exp, decimal=1)
 
 
 def test_ary_persistency_in_shuffling():

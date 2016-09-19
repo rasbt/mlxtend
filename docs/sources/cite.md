@@ -1,4 +1,4 @@
-# Citing Mlxtend
+# Citing mlxtend
 
 If you use mlxtend as part of your workflow in a scientific publication, please consider citing the mlxtend repository with the following DOI:
 

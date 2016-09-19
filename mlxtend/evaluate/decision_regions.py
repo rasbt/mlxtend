@@ -21,6 +21,13 @@ def plot_decision_regions(X, y, clf,
                           colors='red,blue,limegreen,gray,cyan'):
     """Plot decision regions of a classifier.
 
+    Please note that this functions assumes that class labels are
+    labeled consecutively, e.g,. 0, 1, 2, 3, 4, and 5. If you have class
+    labels with integer labels > 4, you may want to provide additional colors
+    and/or markers as `colors` and `markers` arguments.
+    See http://matplotlib.org/examples/color/named_colors.html for more
+    information.
+
     Parameters
     ----------
     X : array-like, shape = [n_samples, n_features]
@@ -53,7 +60,6 @@ def plot_decision_regions(X, y, clf,
 
     """
 
-    # Check types
     if not isinstance(X, np.ndarray):
         raise ValueError('X must be a 2D NumPy array')
     if not isinstance(y, np.ndarray):
@@ -65,7 +71,6 @@ def plot_decision_regions(X, y, clf,
     if ax is None:
         ax = plt.gca()
 
-    # check if test data is provided
     plot_testdata = True
     if not isinstance(X_highlight, np.ndarray):
         if X_highlight is not None:
@@ -77,7 +82,7 @@ def plot_decision_regions(X, y, clf,
         raise ValueError('X must be a 2D array')
     if X.shape[1] > 2:
         raise ValueError('X cannot have more than 2 feature columns')
-    elif isinstance(X_highlight, np.ndarray) and len(X_highlight.shape) > 2:
+    elif isinstance(X_highlight, np.ndarray) and len(X_highlight.shape) < 2:
         raise ValueError('X_highlight must be a 2D array')
     elif len(y.shape) > 1:
         raise ValueError('y must be a 1D array')
@@ -88,12 +93,11 @@ def plot_decision_regions(X, y, clf,
 
     marker_gen = cycle(list(markers))
 
-    # make color map
     n_classes = np.unique(y).shape[0]
     colors = colors.split(',')
-    cmap = ListedColormap(colors[:n_classes])
+    colors_gen = cycle(colors)
+    colors = [next(colors_gen) for c in range(n_classes)]
 
-    # plot the decision surface
     if dim == '2d':
         y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
     else:
@@ -111,13 +115,14 @@ def plot_decision_regions(X, y, clf,
         Z = clf.predict(np.array([xx.ravel()]).T)
 
     Z = Z.reshape(xx.shape)
-    ax.contourf(xx, yy, Z, alpha=0.3, cmap=cmap)
+    ax.contourf(xx, yy, Z,
+                alpha=0.3,
+                colors=colors,
+                levels=np.arange(Z.max() + 2) - 0.5)
 
     ax.axis(xmin=xx.min(), xmax=xx.max(), y_min=yy.min(), y_max=yy.max())
 
-    # plot class samples
-
-    for c in np.unique(y):
+    for idx, c in enumerate(np.unique(y)):
         if dim == '2d':
             y_data = X[y == c, 1]
         else:
@@ -126,7 +131,7 @@ def plot_decision_regions(X, y, clf,
         ax.scatter(x=X[y == c, 0],
                    y=y_data,
                    alpha=0.8,
-                   c=cmap(c),
+                   c=colors[idx],
                    marker=next(marker_gen),
                    label=c)
 

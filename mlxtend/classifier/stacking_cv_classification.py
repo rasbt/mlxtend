@@ -1,5 +1,14 @@
 # Stacking CV classifier
 
+# Sebastian Raschka 2014-2016
+# mlxtend Machine Learning Library Extensions
+#
+# An ensemble-learning meta-classifier for stacking
+# Authors: Reiichiro Nakano <github.com/reiinakano>
+#          Sebastian Raschka <sebastianraschka.com>
+#
+# License: BSD 3 clause
+
 from sklearn.base import BaseEstimator
 from sklearn.base import ClassifierMixin
 from sklearn.base import TransformerMixin
@@ -47,6 +56,7 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         Controls the verbosity of the building process.
         - `verbose=0` (default): Prints nothing
         - `verbose=1`: Prints the number & name of the regressor being fitted
+                       and which fold is currently being used for fitting
         - `verbose=2`: Prints info about the parameters of the
                        regressor being fitted
         - `verbose>2`: Changes `verbose` param of the underlying regressor to
@@ -128,26 +138,38 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             for num, (train_index, test_index) in enumerate(skf):
 
                 if self.verbose > 0:
-                    print "Training and fitting fold %d of %d..." % ((num+1), self.n_folds)
+                    print "Training and fitting fold %d of %d..." % \
+                          ((num+1), self.n_folds)
 
                 if not self.use_probas:
-                    prediction = model.fit(X[train_index], y[train_index]).predict(X[test_index])
+                    prediction = model.fit(X[train_index], y[train_index])\
+                        .predict(X[test_index])
                     prediction = prediction.reshape(prediction.shape[0], 1)
                 else:
-                    prediction = model.fit(X[train_index], y[train_index]).predict_proba(X[test_index])
-                single_model_prediction = np.vstack([single_model_prediction.astype(prediction.dtype), prediction])
+                    prediction = model.fit(X[train_index], y[train_index]).\
+                        predict_proba(X[test_index])
+                single_model_prediction = np.vstack([single_model_prediction.
+                                                    astype(prediction.dtype),
+                                                     prediction])
 
-            all_model_predictions = np.hstack((all_model_predictions.astype(single_model_prediction.dtype),
+            all_model_predictions = np.hstack((all_model_predictions.
+                                               astype(single_model_prediction.
+                                                      dtype),
                                                single_model_prediction))
 
-        # We have to shuffle the labels in the same order as we generated predictions during CV
-        # (we kinda shuffled them when we did Stratified CV)
-        # We also do the same with the features (we will need this only IF use_features_in_secondary is True)
+        # We have to shuffle the labels in the same order as we generated
+        # predictions during CV (we kinda shuffled them when we did
+        # Stratified CV).
+        # We also do the same with the features (we will need this only IF
+        # use_features_in_secondary is True)
         reordered_labels = np.array([]).astype(y.dtype)
-        reordered_features = np.array([]).reshape((0, X.shape[1])).astype(X.dtype)
+        reordered_features = np.array([]).reshape((0, X.shape[1]))\
+            .astype(X.dtype)
         for train_index, test_index in skf:
-            reordered_labels = np.concatenate((reordered_labels, y[test_index]))
-            reordered_features = np.concatenate((reordered_features, X[test_index]))
+            reordered_labels = np.concatenate((reordered_labels,
+                                               y[test_index]))
+            reordered_features = np.concatenate((reordered_features,
+                                                 X[test_index]))
 
         # Fit the base models correctly this time using ALL the training set
         for model in self.clfs_:
@@ -157,7 +179,9 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         if not self.use_features_in_secondary:
             self.meta_clf_.fit(all_model_predictions, reordered_labels)
         else:
-            self.meta_clf_.fit(np.hstack((reordered_features, all_model_predictions)), reordered_labels)
+            self.meta_clf_.fit(np.hstack((reordered_features,
+                                          all_model_predictions)),
+                               reordered_labels)
 
         return self
 
@@ -197,15 +221,19 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         for model in self.clfs_:
             if not self.use_probas:
                 single_model_prediction = model.predict(X)
-                single_model_prediction = single_model_prediction.reshape(single_model_prediction.shape[0], 1)
+                single_model_prediction = single_model_prediction\
+                    .reshape(single_model_prediction.shape[0], 1)
             else:
                 single_model_prediction = model.predict_proba(X)
-            all_model_predictions = np.hstack((all_model_predictions.astype(single_model_prediction.dtype),
+            all_model_predictions = np.hstack((all_model_predictions.
+                                               astype(single_model_prediction
+                                                      .dtype),
                                                single_model_prediction))
         if not self.use_features_in_secondary:
             return self.meta_clf_.predict(all_model_predictions)
         else:
-            return self.meta_clf_.predict(np.hstack((X, all_model_predictions)))
+            return self.meta_clf_.predict(np.hstack((X,
+                                                     all_model_predictions)))
 
     def predict_proba(self, X):
         """ Predict class probabilities for X.
@@ -227,12 +255,16 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         for model in self.clfs_:
             if not self.use_probas:
                 single_model_prediction = model.predict(X)
-                single_model_prediction = single_model_prediction.reshape(single_model_prediction.shape[0], 1)
+                single_model_prediction = single_model_prediction\
+                    .reshape(single_model_prediction.shape[0], 1)
             else:
                 single_model_prediction = model.predict_proba(X)
-            all_model_predictions = np.hstack((all_model_predictions.astype(single_model_prediction.dtype),
+            all_model_predictions = np.hstack((all_model_predictions.
+                                               astype(single_model_prediction.
+                                                      dtype),
                                                single_model_prediction))
         if not self.use_features_in_secondary:
             return self.meta_clf_.predict_proba(all_model_predictions)
         else:
-            return self.meta_clf_.predict_proba(np.hstack((X, all_model_predictions)))
+            return self.meta_clf_\
+                .predict_proba(np.hstack((X,all_model_predictions)))

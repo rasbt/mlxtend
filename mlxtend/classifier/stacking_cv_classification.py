@@ -121,14 +121,14 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             if self.verbose > 0:
                 i = self.clfs_.index(model) + 1
                 print("Fitting classifier%d: %s (%d/%d)" %
-                      (i, _name_estimators((clf,))[0][0], i, len(self.clfs_)))
+                      (i, _name_estimators((model,))[0][0], i, len(self.clfs_)))
 
             if self.verbose > 2:
-                if hasattr(clf, 'verbose'):
-                    clf.set_params(verbose=self.verbose - 2)
+                if hasattr(model, 'verbose'):
+                    model.set_params(verbose=self.verbose - 2)
 
             if self.verbose > 1:
-                print(_name_estimators((clf,))[0][1])
+                print(_name_estimators((model,))[0][1])
 
             if not self.use_probas:
                 single_model_prediction = np.array([]).reshape(0, 1)
@@ -268,3 +268,94 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         else:
             return self.meta_clf_\
                 .predict_proba(np.hstack((X,all_model_predictions)))
+
+
+if __name__ == "__main__":
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.ensemble import RandomForestClassifier
+    from sklearn.neighbors import KNeighborsClassifier
+    from sklearn import datasets
+    from sklearn.grid_search import GridSearchCV
+    from sklearn import cross_validation
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.naive_bayes import GaussianNB
+    from sklearn.ensemble import RandomForestClassifier
+    from sklearn.utils.validation import NotFittedError
+
+    iris = datasets.load_iris()
+    X, y = iris.data[:, 1:3], iris.target
+    np.random.seed(123)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingCVClassifier(classifiers=[clf1, clf2],
+                              meta_classifier=meta)
+
+    scores = cross_validation.cross_val_score(sclf,
+                                              X,
+                                              y,
+                                              cv=5,
+                                              scoring='accuracy')
+    scores_mean = (round(scores.mean(), 2))
+    print scores_mean
+
+
+    np.random.seed(123)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingCVClassifier(classifiers=[clf1, clf2],
+                              stratify=True,
+                              meta_classifier=meta)
+
+    scores = cross_validation.cross_val_score(sclf,
+                                              X,
+                                              y,
+                                              cv=5,
+                                              scoring='accuracy')
+    scores_mean = (round(scores.mean(), 2))
+    print scores_mean
+
+
+
+    iris = datasets.load_digits()
+    X = iris.data
+    y = iris.target
+    clf = StackingCVClassifier([LogisticRegression(), RandomForestClassifier(n_estimators=30, random_state=32),
+                                KNeighborsClassifier()], LogisticRegression(), verbose=6)
+    print clf.get_params(deep=False)
+
+    from sklearn.cross_validation import cross_val_score
+    print np.mean(cross_val_score(LogisticRegression(), X, y))
+    print np.mean(cross_val_score(RandomForestClassifier(n_estimators=30), X, y))
+    print np.mean(cross_val_score(KNeighborsClassifier(), X, y))
+
+    from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
+    labels = y
+    model = clf
+    feature_set = X
+    skf = StratifiedKFold(labels, n_folds=10)
+    accuracy = []
+    precision = []
+    recall = []
+    f1 = []
+    confusion_matrices = []
+    for train, test in skf:
+        X_train, X_test, y_train, y_test = feature_set[train], feature_set[test], labels[train], labels[test]
+        model.fit(X_train, y_train)
+        prediction = model.predict(X_test)
+        accuracy.append(accuracy_score(y_test, prediction))
+        precision.append(precision_score(y_test, prediction, pos_label=None, average='weighted'))
+        recall.append(recall_score(y_test, prediction, pos_label=None, average='weighted'))
+        f1.append(f1_score(y_test, prediction, pos_label=None, average='weighted'))
+        confusion_matrices.append(confusion_matrix(y_test, prediction))
+    metrics = {}
+    metrics["accuracy"] = np.mean(accuracy)
+    metrics["precision"] = np.mean(precision)
+    metrics["recall"] = np.mean(recall)
+    metrics["f1"] = np.mean(f1)
+    metrics["confusion_matrix"] = confusion_matrices[0]
+    for matrix in confusion_matrices[1:]:
+        metrics["confusion_matrix"] += matrix
+    print metrics
+    print accuracy

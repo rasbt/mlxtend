@@ -92,7 +92,7 @@ def test_gridsearch_enumerate_names():
     grid = grid.fit(iris.data, iris.target)
 
 
-def test_use_probas():
+def test_do_not_use_probas():
     np.random.seed(123)
     meta = LogisticRegression()
     clf1 = RandomForestClassifier()

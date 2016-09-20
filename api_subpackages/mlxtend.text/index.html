@@ -804,7 +804,7 @@
 <p><em>generalize_names(name, output_sep=' ', firstname_output_letters=1)</em></p>
 <p>Generalize a person's first and last name.</p>
 <p>Returns a person's name in the format
-    <code>&lt;last_name&gt;&lt;separator&gt;&lt;firstname letter(s)&gt; (all lowercase)</code></p>
+<code>&lt;last_name&gt;&lt;separator&gt;&lt;firstname letter(s)&gt; (all lowercase)</code></p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -831,8 +831,8 @@
 <p><em>generalize_names_duplcheck(df, col_name)</em></p>
 <p>Generalizes names and removes duplicates.</p>
 <p>Applies mlxtend.text.generalize_names to a DataFrame
-    with 1 first name letter by default
-    and uses more first name letters if duplicates are detected.</p>
+with 1 first name letter by default
+and uses more first name letters if duplicates are detected.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -857,17 +857,15 @@ been applied without duplicates.</p>
 <h2 id="tokenizer_emoticons">tokenizer_emoticons</h2>
 <p><em>tokenizer_emoticons(text)</em></p>
 <p>Return emoticons from text</p>
-<pre><code>Example:
-&gt;&gt;&gt; tokenizer_emoticons('&lt;/a&gt;This :) is :( a test :-)!')
-[':)', ':(', ':-)']
-</code></pre>
+<p>Example:
+    &gt;&gt;&gt; tokenizer_emoticons('</a>This :) is :( a test :-)!')
+[':)', ':(', ':-)']</p>
 <h2 id="tokenizer_words_and_emoticons">tokenizer_words_and_emoticons</h2>
 <p><em>tokenizer_words_and_emoticons(text)</em></p>
 <p>Convert text to lowercase words and emoticons.</p>
-<pre><code>Example:
-&gt;&gt;&gt; tokenizer_words_and_emoticons('&lt;/a&gt;This :) is :( a test :-)!')
-['this', 'is', 'a', 'test', ':)', ':(', ':-)']
-</code></pre></div>
+<p>Example:
+    &gt;&gt;&gt; tokenizer_words_and_emoticons('</a>This :) is :( a test :-)!')
+['this', 'is', 'a', 'test', ':)', ':(', ':-)']</p></div>
         
     </div>
 

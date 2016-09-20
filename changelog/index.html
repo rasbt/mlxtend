@@ -903,6 +903,8 @@
 <h1 id="release-notes">Release Notes</h1>
 <hr />
 <h3 id="version-043dev0">Version 0.4.3dev0</h3>
+<p>The CHANGELOG for the current development version is available via
+<a href="https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md">https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md</a>.</p>
 <h5 id="downloads">Downloads</h5>
 <ul>
 <li>-</li>
@@ -913,11 +915,12 @@
 </ul>
 <h5 id="changes">Changes</h5>
 <ul>
-<li>-</li>
+<li>All plotting functions have been moved to <code>mlxtend.plotting</code> for compatibility reasons with continuous integration services and to make the installation of <code>matplotlib</code> optional for users of mlxtend's core functionality.</li>
 </ul>
 <h5 id="bug-fixes">Bug Fixes</h5>
 <ul>
-<li>Raise <code>AttributeError</code> in <code>plot_decision_regions</code> when the <code>X_higlight</code> argument is a 1D array (via <a href="https://github.com/chkoar">chkoar</a>)</li>
+<li><code>mlxtend.plotting.plot_decision_regions</code> now draws decision regions correctly if more than 4 class labels are present</li>
+<li>Raise <code>AttributeError</code> in <code>plot_decision_regions</code> when the <code>X_higlight</code> argument is a 1D array (via <a href="https://github.com/chkoar">chkoar</a>).</li>
 </ul>
 <h3 id="version-042-2016-08-24">Version 0.4.2 (2016-08-24)</h3>
 <h5 id="downloads_1">Downloads</h5>

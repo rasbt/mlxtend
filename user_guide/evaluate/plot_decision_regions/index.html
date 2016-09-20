@@ -788,21 +788,32 @@
             <li><a href="#references">References</a></li>
                 <!--  -->
         
-            <li><a href="#examples">Examples</a></li>
+    
+        <li class="main "><a href="#examples">Examples</a></li>
+        
+            <li><a href="#example-1-decision-regions-in-2d">Example 1 - Decision regions in 2D</a></li>
+                <!--  -->
+        
+            <li><a href="#example-2-decision-regions-in-1d">Example 2 - Decision regions in 1D</a></li>
+                <!--  -->
+        
+            <li><a href="#example-3-decision-region-grids">Example 3 - Decision Region Grids</a></li>
+                <!--  -->
+        
+            <li><a href="#example-4-highlighting-test-data-points">Example 4 - Highlighting Test Data Points</a></li>
+                <!--  -->
+        
+            <li><a href="#example-5-evaluating-classifier-behavior-on-non-linear-problems">Example 5 - Evaluating Classifier Behavior on Non-Linear Problems</a></li>
                 <!-- 
-                    <li><a href="#example-1-decision-regions-in-2d">Example 1 - Decision regions in 2D</a></li>
+                    <li><a href="#xor">XOR</a></li>
             
-                    <li><a href="#example-2-decision-regions-in-1d">Example 2 - Decision regions in 1D</a></li>
+                    <li><a href="#half-moons">Half-Moons</a></li>
             
-                    <li><a href="#example-3-decision-region-grids">Example 3 - Decision Region Grids</a></li>
-            
-                    <li><a href="#example-4-highlighting-test-data-points">Example 4 - Highlighting Test Data Points</a></li>
-            
-                    <li><a href="#example-5-evaluating-classifier-behavior-on-non-linear-problems">Example 5 - Evaluating Classifier Behavior on Non-Linear Problems</a></li>
+                    <li><a href="#concentric-circles">Concentric Circles</a></li>
              -->
         
-            <li><a href="#api">API</a></li>
-                <!--  -->
+    
+        <li class="main "><a href="#api">API</a></li>
         
     
     </ul>
@@ -818,8 +829,8 @@
 <ul>
 <li></li>
 </ul>
-<h2 id="examples">Examples</h2>
-<h3 id="example-1-decision-regions-in-2d">Example 1 - Decision regions in 2D</h3>
+<h1 id="examples">Examples</h1>
+<h2 id="example-1-decision-regions-in-2d">Example 1 - Decision regions in 2D</h2>
 <pre><code class="python">from mlxtend.evaluate import plot_decision_regions
 import matplotlib.pyplot as plt
 from sklearn import datasets
@@ -827,12 +838,12 @@ from sklearn.svm import SVC
 
 # Loading some example data
 iris = datasets.load_iris()
-X = iris.data[:, [0,2]]
+X = iris.data[:, [0, 2]]
 y = iris.target
 
 # Training a classifier
 svm = SVC(C=0.5, kernel='linear')
-svm.fit(X,y)
+svm.fit(X, y)
 
 
 # Plotting decision regions
@@ -847,7 +858,7 @@ plt.show()
 </code></pre>
 
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_9_0.png" /></p>
-<h3 id="example-2-decision-regions-in-1d">Example 2 - Decision regions in 1D</h3>
+<h2 id="example-2-decision-regions-in-1d">Example 2 - Decision regions in 1D</h2>
 <pre><code class="python">from mlxtend.evaluate import plot_decision_regions
 import matplotlib.pyplot as plt
 from sklearn import datasets
@@ -861,7 +872,7 @@ y = iris.target
 
 # Training a classifier
 svm = SVC(C=0.5, kernel='linear')
-svm.fit(X,y)
+svm.fit(X, y)
 
 # Plotting decision regions
 plot_decision_regions(X, y, clf=svm, 
@@ -875,7 +886,7 @@ plt.show()
 </code></pre>
 
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_11_0.png" /></p>
-<h3 id="example-3-decision-region-grids">Example 3 - Decision Region Grids</h3>
+<h2 id="example-3-decision-region-grids">Example 3 - Decision Region Grids</h2>
 <pre><code class="python">from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB 
 from sklearn.ensemble import RandomForestClassifier
@@ -917,7 +928,7 @@ plt.show()
 </code></pre>
 
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_14_0.png" /></p>
-<h3 id="example-4-highlighting-test-data-points">Example 4 - Highlighting Test Data Points</h3>
+<h2 id="example-4-highlighting-test-data-points">Example 4 - Highlighting Test Data Points</h2>
 <pre><code class="python">from mlxtend.evaluate import plot_decision_regions
 from mlxtend.preprocessing import shuffle_arrays_unison
 import matplotlib.pyplot as plt
@@ -949,7 +960,7 @@ plt.show()
 </code></pre>
 
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_16_0.png" /></p>
-<h3 id="example-5-evaluating-classifier-behavior-on-non-linear-problems">Example 5 - Evaluating Classifier Behavior on Non-Linear Problems</h3>
+<h2 id="example-5-evaluating-classifier-behavior-on-non-linear-problems">Example 5 - Evaluating Classifier Behavior on Non-Linear Problems</h2>
 <pre><code class="python">from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB 
 from sklearn.ensemble import RandomForestClassifier
@@ -1042,9 +1053,13 @@ plt.show()
 </code></pre>
 
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_26_0.png" /></p>
-<h2 id="api">API</h2>
+<h1 id="api">API</h1>
 <p><em>plot_decision_regions(X, y, clf, ax=None, X_highlight=None, res=0.02, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors='red,blue,limegreen,gray,cyan')</em></p>
 <p>Plot decision regions of a classifier.</p>
+<p>Please note that this functions assumes that class labels are
+labeled consecutively, e.g,. 0, 1, 2, 3, 4, and 5. If you have class
+labels with integer labels &gt; 4, you need to provide additional colors
+and/or markers as <code>colors</code> and <code>markers</code> arguments.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>

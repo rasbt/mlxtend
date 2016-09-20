@@ -98,7 +98,7 @@ def test_do_not_use_probas():
     clf1 = RandomForestClassifier()
     clf2 = GaussianNB()
     sclf = StackingCVClassifier(classifiers=[clf1, clf2],
-                                use_probas=True,
+                                use_probas=False,
                                 meta_classifier=meta)
 
     scores = cross_validation.cross_val_score(sclf,
@@ -107,7 +107,7 @@ def test_do_not_use_probas():
                                               cv=5,
                                               scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
-    assert scores_mean == 0.94, scores_mean
+    assert scores_mean == 0.93, scores_mean
 
 
 def test_use_features_in_secondary():

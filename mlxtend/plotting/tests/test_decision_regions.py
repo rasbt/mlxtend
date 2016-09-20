@@ -6,7 +6,7 @@
 
 import numpy as np
 from mlxtend.utils import assert_raises
-from mlxtend.evaluate import plot_decision_regions
+from mlxtend.plotting import plot_decision_regions
 from mlxtend.data import iris_data
 from mlxtend.classifier import SoftmaxRegression
 import matplotlib.pyplot as plt

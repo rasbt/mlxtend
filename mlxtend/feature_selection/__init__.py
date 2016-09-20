@@ -7,11 +7,8 @@
 from .column_selector import ColumnSelector
 from .sequential_feature_selector import SequentialFeatureSelector
 from .exhaustive_feature_selector import ExhaustiveFeatureSelector
-from .plot_sequential_feature_selection\
-    import plot_sequential_feature_selection
 
 
 __all__ = ["ColumnSelector",
            "SequentialFeatureSelector",
-           "ExhaustiveFeatureSelector",
-           "plot_sequential_feature_selection"]
+           "ExhaustiveFeatureSelector"]

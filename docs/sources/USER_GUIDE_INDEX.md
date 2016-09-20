@@ -20,9 +20,6 @@
 ## `tf_regressor` (TensorFlow Regressor)
 - [`TfLinearRegression`](user_guide/tf_regressor/TfLinearRegression.md) (new in 0.4.1dev)
 
-## `regression_utils`
-- [`plot_linear_regression`](user_guide/regression_utils/plot_linear_regression.md)
-
 ## `feature_selection`
 - [`SequentialFeatureSelector`](user_guide/feature_selection/SequentialFeatureSelector.md)
 - [`ExhaustiveFeatureSelector`](user_guide/feature_selection/ExhaustiveFeatureSelector.md)
@@ -41,8 +38,6 @@
 
 ## `evaluate`
 - [`confusion_matrix`](user_guide/evaluate/confusion_matrix.md)
-- [`plot_decision_regions`](user_guide/evaluate/plot_decision_regions.md)
-- [`plot_learning_curves`](user_guide/evaluate/plot_learning_curves.md)
 - [`scoring`](user_guide/evaluate/scoring.md)
 
 ## `preprocessing`
@@ -67,10 +62,15 @@
 - [`find_filegroups`](user_guide/file_io/find_filegroups.md)
 - [`find_files`](user_guide/file_io/find_files.md)
 
-## `general plotting`
-- [`category_scatter`](user_guide/general_plotting/category_scatter.md)
-- [`enrichment_plot`](user_guide/general_plotting/enrichment_plot.md)
-- [`stacked_barplot`](user_guide/general_plotting/stacked_barplot.md)
+## `plotting`
+- [`plot_decision_regions`](user_guide/plotting/plot_decision_regions.md)
+- [`plot_learning_curves`](user_guide/plotting/plot_learning_curves.md)
+- [`plot_linear_regression`](user_guide/plotting/plot_linear_regression.md)
+- [`plot_confusion_matrix`](user_guide/plotting/plot_confusion_matrix.md)
+- [`plot_sequential_feature_selection`](user_guide/plotting/plot_sequential_feature_selection.md)
+- [`category_scatter`](user_guide/plotting/category_scatter.md)
+- [`enrichment_plot`](user_guide/plotting/enrichment_plot.md)
+- [`stacked_barplot`](user_guide/plotting/stacked_barplot.md)
 
 ## `math`
 - [`num_combinations`](user_guide/math/num_combinations.md)

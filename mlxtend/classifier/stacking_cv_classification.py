@@ -138,8 +138,8 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             for num, (train_index, test_index) in enumerate(skf):
 
                 if self.verbose > 0:
-                    print "Training and fitting fold %d of %d..." % \
-                          ((num+1), self.n_folds)
+                    print ("Training and fitting fold %d of %d..." % \
+                          ((num+1), self.n_folds))
 
                 if not self.use_probas:
                     prediction = model.fit(X[train_index], y[train_index])\

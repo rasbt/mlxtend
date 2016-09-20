@@ -47,8 +47,6 @@ pages:
     - user_guide/regressor/StackingRegressor.md
   - tf_regressor:
     - user_guide/tf_regressor/TfLinearRegression.md
-  - regression_utils:
-    - user_guide/regression_utils/plot_linear_regression.md
   - feature_selection:
     - user_guide/feature_selection/SequentialFeatureSelector.md
     - user_guide/feature_selection/ExhaustiveFeatureSelector.md
@@ -63,8 +61,6 @@ pages:
     - user_guide/tf_cluster/TfKmeans.md
   - evaluate:
     - user_guide/evaluate/confusion_matrix.md
-    - user_guide/evaluate/plot_decision_regions.md
-    - user_guide/evaluate/plot_learning_curves.md
     - user_guide/evaluate/scoring.md
   - preprocessing:
     - user_guide/preprocessing/MeanCenterer.md
@@ -85,10 +81,15 @@ pages:
   - file_io:
     - user_guide/file_io/find_filegroups.md
     - user_guide/file_io/find_files.md
-  - general plotting:
-    - user_guide/general_plotting/category_scatter.md
-    - user_guide/general_plotting/enrichment_plot.md
-    - user_guide/general_plotting/stacked_barplot.md
+  - plotting:
+    - user_guide/plotting/plot_decision_regions.md
+    - user_guide/plotting/plot_learning_curves.md
+    - user_guide/plotting/plot_sequential_feature_selection.md
+    - user_guide/plotting/plot_confusion_matrix.md
+    - user_guide/plotting/plot_linear_regression.md
+    - user_guide/plotting/category_scatter.md
+    - user_guide/plotting/enrichment_plot.md
+    - user_guide/plotting/stacked_barplot.md
   - math:
     - user_guide/math/num_combinations.md
     - user_guide/math/num_permutations.md
@@ -113,11 +114,10 @@ pages:
   - api_subpackages/mlxtend.cluster.md
   - api_subpackages/mlxtend.tf_cluster.md
   - api_subpackages/mlxtend.file_io.md
-  - api_subpackages/mlxtend.general_plotting.md
+  - api_subpackages/mlxtend.plotting.md
   - api_subpackages/mlxtend.preprocessing.md
   - api_subpackages/mlxtend.regressor.md
   - api_subpackages/mlxtend.tf_regressor.md
-  - api_subpackages/mlxtend.regression_utils.md
   - api_subpackages/mlxtend.text.md
   - api_subpackages/mlxtend.utils.md
 - Installation: installation.md

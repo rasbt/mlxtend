@@ -13,9 +13,9 @@ and checking off items as you go.
 
 1. [ ]  Open a new "issue" on GitHub to discuss the new feature / bug fix  
 2. [ ]  Fork the mlxtend repository from GitHub (if not already done earlier)
-3. [ ]  Create and check out a new topic branch   
-4. [ ]  Implement a new feature or apply the bug-fix  
-5. [ ]  Add appropriate unit test functions  
+3. [ ]  Create and check out a new topic branch (please don't make modifications in the master branch)
+4. [ ]  Implement the new feature or apply the bug-fix  
+5. [ ]  Add appropriate unit test functions in `mlxtend/*/tests`
 6. [ ]  Run `nosetests ./mlxtend -sv` and make sure that all unit tests pass  
 7. [ ]  Check/improve the test coverage by running `nosetests ./mlxtend --with-coverage`
 8. [ ]  Check for style issues by running `flake8 ./mlxtend` (you may want to run `nosetests` again after you made modifications to the code)
@@ -25,7 +25,6 @@ and checking off items as you go.
 11. [ ]  Check the Travis-CI build passed at [https://travis-ci.org/rasbt/mlxtend](https://travis-ci.org/rasbt/mlxtend)
 12. [ ]  Check/improve the unit test coverage at [https://coveralls.io/github/rasbt/mlxtend](https://coveralls.io/github/rasbt/mlxtend)
 13. [ ]  Check/improve the code health at [https://landscape.io/github/rasbt/mlxtend](https://landscape.io/github/rasbt/mlxtend)
-14. [ ]  Squash (many small) commits to a larger commit
 
 <hr>
 
@@ -192,6 +191,10 @@ $ git commit -m '<meaningful commit message>'
 #### 7. Optional: squashing commits
 
 If you made multiple smaller commits, it would be nice if you could group them into a larger, summarizing commit. First, list your recent commit via
+
+**Note**  
+**Due to the improved GitHub UI, this is no longer necessary/encouraged.**
+
 
 ```bash
 $ git log

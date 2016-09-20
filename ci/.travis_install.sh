@@ -23,6 +23,7 @@ fi
 
 source activate test-environment
 
+conda install pyqt5
 pip install nose nose-exclude;
 
 if [ "${COVERAGE}" = "true" ]; then

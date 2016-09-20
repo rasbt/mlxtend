@@ -16,9 +16,9 @@ conda update -q conda
 conda info -a
 
 if [ "${LATEST}" = "true" ]; then
-    conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy scipy matplotlib pandas scikit-learn;
+    conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy scipy pandas scikit-learn;
 else
-    conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy=$NUMPY_VERSION scipy=$SCIPY_VERSION matplotlib=$MATPLOTLIB_VERSION pandas=$PANDAS_VERSION scikit-learn=$SKLEARN_VERSION;
+    conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy=$NUMPY_VERSION scipy=$SCIPY_VERSION pandas=$PANDAS_VERSION scikit-learn=$SKLEARN_VERSION;
 fi
 
 source activate test-environment
@@ -31,7 +31,6 @@ fi
 
 python --version
 python -c "import pandas; print('pandas %s' % pandas.__version__)";
-python -c "import matplotlib; print('matplotlib %s' % matplotlib.__version__)";
 python -c "import numpy; print('numpy %s' % numpy.__version__)"
 python -c "import scipy; print('scipy %s' % scipy.__version__)"
 

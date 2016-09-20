@@ -4,7 +4,7 @@
 #
 # License: BSD 3 clause
 
-from mlxtend.evaluate import plot_learning_curves
+from mlxtend.plotting import plot_learning_curves
 from sklearn import datasets
 from sklearn.cross_validation import train_test_split
 from sklearn.tree import DecisionTreeClassifier

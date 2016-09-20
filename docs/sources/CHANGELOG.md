@@ -4,6 +4,9 @@
 
 ### Version 0.4.3dev0
 
+The CHANGELOG for the current development version is available via
+[https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md](https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md).
+
 ##### Downloads
 
 - -
@@ -14,12 +17,12 @@
 
 ##### Changes
 
-- -
+- All plotting functions have been moved to `mlxtend.plotting` for compatibility reasons with continuous integration services and to make the installation of `matplotlib` optional for users of mlxtend's core functionality.
 
 ##### Bug Fixes
 
-- `mlxtend.evaluate.plot_decision_regions` now draws decision regions correctly if more than 4 class labels are present
-- Raise `AttributeError` in `plot_decision_regions` when the `X_higlight` argument is a 1D array (via [chkoar](https://github.com/chkoar))
+- `mlxtend.plotting.plot_decision_regions` now draws decision regions correctly if more than 4 class labels are present
+- Raise `AttributeError` in `plot_decision_regions` when the `X_higlight` argument is a 1D array (via [chkoar](https://github.com/chkoar)).
 
 
 

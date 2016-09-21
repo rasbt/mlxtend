@@ -27,7 +27,8 @@ def test_StackingClassifier():
     clf1 = RandomForestClassifier()
     clf2 = GaussianNB()
     sclf = StackingCVClassifier(classifiers=[clf1, clf2],
-                                meta_classifier=meta)
+                                meta_classifier=meta,
+                                shuffle=False)
 
     scores = cross_validation.cross_val_score(sclf,
                                               X,
@@ -45,7 +46,8 @@ def test_StackingClassifier_proba():
     clf1 = RandomForestClassifier()
     clf2 = GaussianNB()
     sclf = StackingCVClassifier(classifiers=[clf1, clf2],
-                                meta_classifier=meta)
+                                meta_classifier=meta,
+                                shuffle=False)
 
     scores = cross_validation.cross_val_score(sclf,
                                               X,
@@ -63,7 +65,8 @@ def test_gridsearch():
     clf2 = GaussianNB()
     sclf = StackingCVClassifier(classifiers=[clf1, clf2],
                                 meta_classifier=meta,
-                                use_probas=True)
+                                use_probas=True,
+                                shuffle=False)
 
     params = {'meta-logisticregression__C': [1.0, 100.0],
               'randomforestclassifier__n_estimators': [20, 200]}
@@ -83,7 +86,8 @@ def test_gridsearch_enumerate_names():
     clf1 = RandomForestClassifier()
     clf2 = GaussianNB()
     sclf = StackingCVClassifier(classifiers=[clf1, clf1, clf2],
-                                meta_classifier=meta)
+                                meta_classifier=meta,
+                                shuffle=False)
 
     params = {'meta-logisticregression__C': [1.0, 100.0],
               'randomforestclassifier-1__n_estimators': [5, 10],
@@ -100,7 +104,8 @@ def test_use_probas():
     clf2 = GaussianNB()
     sclf = StackingCVClassifier(classifiers=[clf1, clf2],
                                 use_probas=True,
-                                meta_classifier=meta)
+                                meta_classifier=meta,
+                                shuffle=False)
 
     scores = cross_validation.cross_val_score(sclf,
                                               X,
@@ -118,7 +123,8 @@ def test_use_features_in_secondary():
     clf2 = GaussianNB()
     sclf = StackingCVClassifier(classifiers=[clf1, clf2],
                                 use_features_in_secondary=True,
-                                meta_classifier=meta)
+                                meta_classifier=meta,
+                                shuffle=False)
 
     scores = cross_validation.cross_val_score(sclf,
                                               X,
@@ -136,7 +142,7 @@ def test_not_fitted():
     clf2 = GaussianNB()
     sclf = StackingCVClassifier(classifiers=[clf1, clf2],
                                 use_probas=True,
-                                meta_classifier=meta)
+                                meta_classifier=meta, shuffle=False)
 
     assert_raises(NotFittedError,
                   "This StackingCVClassifier instance is not fitted yet."
@@ -161,5 +167,6 @@ def test_verbose():
     sclf = StackingCVClassifier(classifiers=[clf1, clf2],
                                 use_probas=True,
                                 meta_classifier=meta,
+                                shuffle=False,
                                 verbose=3)
     sclf.fit(iris.data, iris.target)

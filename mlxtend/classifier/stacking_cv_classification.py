@@ -52,6 +52,12 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         will be Stratified K-Fold.
         If False, the cross-validation technique used will be Regular K-Fold.
         It is highly recommended to use Stratified K-Fold.
+    shuffle : bool (default: True)
+        If True, when fitting, the training data will be shuffled prior to
+        cross-validation.
+    random_state: None, int, or RandomState
+        When shuffle=True, pseudo-random number generator state used for
+        shuffling. If None, use default numpy RNG for shuffling.
     verbose : int, optional (default=0)
         Controls the verbosity of the building process.
         - `verbose=0` (default): Prints nothing
@@ -73,7 +79,8 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     def __init__(self, classifiers, meta_classifier,
                  use_probas=False, n_folds=2,
                  use_features_in_secondary=False,
-                 stratify=True, verbose=0):
+                 stratify=True, random_state=None,
+                 shuffle=True, verbose=0):
 
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier
@@ -88,6 +95,8 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.n_folds = n_folds
         self.use_features_in_secondary = use_features_in_secondary
         self.stratify = stratify
+        self.shuffle = shuffle
+        self.random_state = random_state
 
     def fit(self, X, y):
         """ Fit ensemble classifers and the meta-classifier.
@@ -111,9 +120,13 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             print("Fitting %d classifiers..." % (len(self.classifiers)))
 
         if self.stratify:
-            skf = StratifiedKFold(y, n_folds=self.n_folds)
+            skf = StratifiedKFold(y, n_folds=self.n_folds,
+                                  shuffle=self.shuffle,
+                                  random_state=self.random_state)
         else:
-            skf = KFold(len(y), n_folds=self.n_folds)
+            skf = KFold(len(y), n_folds=self.n_folds,
+                        shuffle=self.shuffle,
+                        random_state=self.random_state)
 
         all_model_predictions = np.array([]).reshape(len(y), 0)
         for model in self.clfs_:

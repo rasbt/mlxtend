@@ -142,13 +142,13 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                     print ("Training and fitting fold %d of %d..." %
                            ((num+1), self.n_folds))
 
-                prediction = model.fit(X[train_index], y[train_index])
+                model.fit(X[train_index], y[train_index])
 
                 if not self.use_probas:
-                    prediction = prediction.predict(X[test_index])
+                    prediction = model.predict(X[test_index])
                     prediction = prediction.reshape(prediction.shape[0], 1)
                 else:
-                    prediction = prediction.predict_proba(X[test_index])
+                    prediction = model.predict_proba(X[test_index])
                 single_model_prediction = np.vstack([single_model_prediction.
                                                     astype(prediction.dtype),
                                                      prediction])

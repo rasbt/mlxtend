@@ -152,6 +152,7 @@ def test_do_not_stratify():
     scores_mean = (round(scores.mean(), 2))
     assert scores_mean == 0.94
 
+
 def test_not_fitted():
     np.random.seed(123)
     meta = LogisticRegression()

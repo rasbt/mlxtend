@@ -135,6 +135,23 @@ def test_use_features_in_secondary():
     assert scores_mean == 0.93, scores_mean
 
 
+def test_do_not_stratify():
+    np.random.seed(123)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingCVClassifier(classifiers=[clf1, clf2],
+                                meta_classifier=meta,
+                                stratify=False)
+
+    scores = cross_validation.cross_val_score(sclf,
+                                              X,
+                                              y,
+                                              cv=5,
+                                              scoring='accuracy')
+    scores_mean = (round(scores.mean(), 2))
+    assert scores_mean == 0.94
+
 def test_not_fitted():
     np.random.seed(123)
     meta = LogisticRegression()

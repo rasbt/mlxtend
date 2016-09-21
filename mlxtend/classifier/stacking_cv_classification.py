@@ -27,7 +27,7 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
     Parameters
     ----------
-    classifiers : array-like, shape = [n_regressors]
+    classifiers : array-like, shape = [n_classifiers]
         A list of classifiers.
         Invoking the `fit` method on the `StackingClassifer` will fit clones
         of these original classifiers that will
@@ -71,7 +71,7 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
     """
     def __init__(self, classifiers, meta_classifier,
-                 use_probas=True, n_folds=2,
+                 use_probas=False, n_folds=2,
                  use_features_in_secondary=False,
                  stratify=True, verbose=0):
 
@@ -121,7 +121,8 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             if self.verbose > 0:
                 i = self.clfs_.index(model) + 1
                 print("Fitting classifier%d: %s (%d/%d)" %
-                      (i, _name_estimators((model,))[0][0], i, len(self.clfs_)))
+                      (i, _name_estimators((model,))[0][0],
+                       i, len(self.clfs_)))
 
             if self.verbose > 2:
                 if hasattr(model, 'verbose'):
@@ -138,16 +139,16 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             for num, (train_index, test_index) in enumerate(skf):
 
                 if self.verbose > 0:
-                    print ("Training and fitting fold %d of %d..." % \
-                          ((num+1), self.n_folds))
+                    print ("Training and fitting fold %d of %d..." %
+                           ((num+1), self.n_folds))
+
+                prediction = model.fit(X[train_index], y[train_index])
 
                 if not self.use_probas:
-                    prediction = model.fit(X[train_index], y[train_index])\
-                        .predict(X[test_index])
+                    prediction = prediction.predict(X[test_index])
                     prediction = prediction.reshape(prediction.shape[0], 1)
                 else:
-                    prediction = model.fit(X[train_index], y[train_index]).\
-                        predict_proba(X[test_index])
+                    prediction = prediction.predict_proba(X[test_index])
                 single_model_prediction = np.vstack([single_model_prediction.
                                                     astype(prediction.dtype),
                                                      prediction])
@@ -267,4 +268,4 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             return self.meta_clf_.predict_proba(all_model_predictions)
         else:
             return self.meta_clf_\
-                .predict_proba(np.hstack((X,all_model_predictions)))
+                .predict_proba(np.hstack((X, all_model_predictions)))

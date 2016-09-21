@@ -35,7 +35,7 @@ def test_StackingClassifier():
                                               cv=5,
                                               scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
-    assert scores_mean == 0.94
+    assert scores_mean == 0.93
 
 
 def test_StackingClassifier_proba():
@@ -53,7 +53,7 @@ def test_StackingClassifier_proba():
                                               cv=5,
                                               scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
-    assert scores_mean == 0.94
+    assert scores_mean == 0.93
 
 
 def test_gridsearch():
@@ -62,7 +62,8 @@ def test_gridsearch():
     clf1 = RandomForestClassifier()
     clf2 = GaussianNB()
     sclf = StackingCVClassifier(classifiers=[clf1, clf2],
-                                meta_classifier=meta)
+                                meta_classifier=meta,
+                                use_probas=True)
 
     params = {'meta-logisticregression__C': [1.0, 100.0],
               'randomforestclassifier__n_estimators': [20, 200]}
@@ -92,13 +93,13 @@ def test_gridsearch_enumerate_names():
     grid = grid.fit(iris.data, iris.target)
 
 
-def test_do_not_use_probas():
+def test_use_probas():
     np.random.seed(123)
     meta = LogisticRegression()
     clf1 = RandomForestClassifier()
     clf2 = GaussianNB()
     sclf = StackingCVClassifier(classifiers=[clf1, clf2],
-                                use_probas=False,
+                                use_probas=True,
                                 meta_classifier=meta)
 
     scores = cross_validation.cross_val_score(sclf,
@@ -107,7 +108,7 @@ def test_do_not_use_probas():
                                               cv=5,
                                               scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
-    assert scores_mean == 0.93, scores_mean
+    assert scores_mean == 0.94, scores_mean
 
 
 def test_use_features_in_secondary():
@@ -125,7 +126,7 @@ def test_use_features_in_secondary():
                                               cv=5,
                                               scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
-    assert scores_mean == 0.95, scores_mean
+    assert scores_mean == 0.93, scores_mean
 
 
 def test_not_fitted():

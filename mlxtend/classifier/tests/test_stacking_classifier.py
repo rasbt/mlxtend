@@ -14,6 +14,7 @@ from sklearn.utils.validation import NotFittedError
 import numpy as np
 from sklearn import datasets
 from mlxtend.utils import assert_raises
+from nose.tools import assert_almost_equal
 
 
 iris = datasets.load_iris()
@@ -37,13 +38,14 @@ def test_StackingClassifier():
     assert scores_mean == 0.95
 
 
-def test_StackingClassifier_proba():
+def test_StackingClassifier_proba_avg_1():
 
     np.random.seed(123)
     meta = LogisticRegression()
     clf1 = RandomForestClassifier()
     clf2 = GaussianNB()
     sclf = StackingClassifier(classifiers=[clf1, clf2],
+                              use_probas=True,
                               meta_classifier=meta)
 
     scores = cross_validation.cross_val_score(sclf,
@@ -52,7 +54,54 @@ def test_StackingClassifier_proba():
                                               cv=5,
                                               scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
-    assert scores_mean == 0.95
+    assert scores_mean == 0.93, scores_mean
+
+
+def test_StackingClassifier_proba_concat_1():
+
+    np.random.seed(123)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingClassifier(classifiers=[clf1, clf2],
+                              use_probas=True,
+                              average_probas=False,
+                              meta_classifier=meta)
+
+    scores = cross_validation.cross_val_score(sclf,
+                                              X,
+                                              y,
+                                              cv=5,
+                                              scoring='accuracy')
+    scores_mean = (round(scores.mean(), 2))
+    assert scores_mean == 0.93, scores_mean
+
+
+def test_StackingClassifier_avg_vs_concat():
+    np.random.seed(123)
+    lr1 = LogisticRegression()
+    sclf1 = StackingClassifier(classifiers=[lr1, lr1],
+                               use_probas=True,
+                               average_probas=True,
+                               meta_classifier=lr1)
+
+    sclf1.fit(X, y)
+    r1 = sclf1._predict_meta_features(X[:2])
+    assert r1.shape == (2, 3)
+    assert_almost_equal(np.sum(r1[0]), 1.0, places=6)
+    assert_almost_equal(np.sum(r1[1]), 1.0, places=6)
+
+    sclf2 = StackingClassifier(classifiers=[lr1, lr1],
+                               use_probas=True,
+                               average_probas=False,
+                               meta_classifier=lr1)
+
+    sclf2.fit(X, y)
+    r2 = sclf2._predict_meta_features(X[:2])
+    assert r2.shape == (2, 6)
+    assert_almost_equal(np.sum(r2[0]), 2.0, places=6)
+    assert_almost_equal(np.sum(r2[1]), 2.0, places=6)
+    np.array_equal(r2[0][:3], r2[0][3:])
 
 
 def test_gridsearch():

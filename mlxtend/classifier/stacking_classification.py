@@ -25,7 +25,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
     Parameters
     ----------
-    classifiers : array-like, shape = [n_regressors]
+    classifiers : array-like, shape = [n_classifiers]
         A list of classifiers.
         Invoking the `fit` method on the `StackingClassifer` will fit clones
         of these original classifiers that will

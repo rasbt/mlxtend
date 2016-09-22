@@ -212,21 +212,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../user_guide/regression_utils/plot_linear_regression/">Plot linear regression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">feature_selection</a>
     <ul class="dropdown-menu">
         
@@ -317,18 +302,6 @@
             
 <li >
     <a href="../user_guide/evaluate/confusion_matrix/">Confusion matrix</a>
-</li>
-
-        
-            
-<li >
-    <a href="../user_guide/evaluate/plot_decision_regions/">Plot decision regions</a>
-</li>
-
-        
-            
-<li >
-    <a href="../user_guide/evaluate/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
@@ -467,24 +440,54 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../user_guide/general_plotting/category_scatter/">Category scatter</a>
+    <a href="../user_guide/plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../user_guide/general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../user_guide/plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../user_guide/general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../user_guide/plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/stacked_barplot/">Stacked barplot</a>
 </li>
 
         
@@ -653,7 +656,7 @@
                         
                             
 <li >
-    <a href="../api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +675,6 @@
                             
 <li >
     <a href="../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -786,6 +783,9 @@
         <li class="main active"><a href="#release-notes">Release Notes</a></li>
         
             <li><a href="#version-043dev0">Version 0.4.3dev0</a></li>
+                <!--  -->
+        
+            <li><a href="#version-042-2016-08-24">Version 0.4.2 (2016-08-24)</a></li>
                 <!-- 
                     <li><a href="#downloads">Downloads</a></li>
             
@@ -796,49 +796,38 @@
                     <li><a href="#bug-fixes">Bug Fixes</a></li>
              -->
         
-            <li><a href="#version-042-2016-08-24">Version 0.4.2 (2016-08-24)</a></li>
+            <li><a href="#version-041-2016-05-01">Version 0.4.1 (2016-05-01)</a></li>
                 <!-- 
                     <li><a href="#downloads_1">Downloads</a></li>
             
                     <li><a href="#new-features_1">New Features</a></li>
             
                     <li><a href="#changes_1">Changes</a></li>
-            
-                    <li><a href="#bug-fixes_1">Bug Fixes</a></li>
              -->
         
-            <li><a href="#version-041-2016-05-01">Version 0.4.1 (2016-05-01)</a></li>
+            <li><a href="#version-040-2016-04-09">Version 0.4.0 (2016-04-09)</a></li>
                 <!-- 
-                    <li><a href="#downloads_2">Downloads</a></li>
-            
                     <li><a href="#new-features_2">New Features</a></li>
             
                     <li><a href="#changes_2">Changes</a></li>
              -->
         
-            <li><a href="#version-040-2016-04-09">Version 0.4.0 (2016-04-09)</a></li>
+            <li><a href="#version-030-2016-01-31">Version 0.3.0 (2016-01-31)</a></li>
                 <!-- 
+                    <li><a href="#downloads_2">Downloads</a></li>
+            
                     <li><a href="#new-features_3">New Features</a></li>
             
                     <li><a href="#changes_3">Changes</a></li>
              -->
         
-            <li><a href="#version-030-2016-01-31">Version 0.3.0 (2016-01-31)</a></li>
+            <li><a href="#version-029-2015-07-14">Version 0.2.9 (2015-07-14)</a></li>
                 <!-- 
                     <li><a href="#downloads_3">Downloads</a></li>
             
                     <li><a href="#new-features_4">New Features</a></li>
             
                     <li><a href="#changes_4">Changes</a></li>
-             -->
-        
-            <li><a href="#version-029-2015-07-14">Version 0.2.9 (2015-07-14)</a></li>
-                <!-- 
-                    <li><a href="#downloads_4">Downloads</a></li>
-            
-                    <li><a href="#new-features_5">New Features</a></li>
-            
-                    <li><a href="#changes_5">Changes</a></li>
              -->
         
             <li><a href="#version-028-2015-06-27">Version 0.2.8 (2015-06-27)</a></li>
@@ -905,36 +894,20 @@
 <h3 id="version-043dev0">Version 0.4.3dev0</h3>
 <p>The CHANGELOG for the current development version is available via
 <a href="https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md">https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md</a>.</p>
-<h5 id="downloads">Downloads</h5>
-<ul>
-<li>-</li>
-</ul>
-<h5 id="new-features">New Features</h5>
-<ul>
-<li>New <code>ExhaustiveFeatureSelector</code> estimator in <code>mlxtend.feature_selection</code> for evaluating all feature combinations in a specified range</li>
-</ul>
-<h5 id="changes">Changes</h5>
-<ul>
-<li>All plotting functions have been moved to <code>mlxtend.plotting</code> for compatibility reasons with continuous integration services and to make the installation of <code>matplotlib</code> optional for users of mlxtend's core functionality.</li>
-</ul>
-<h5 id="bug-fixes">Bug Fixes</h5>
-<ul>
-<li><code>mlxtend.plotting.plot_decision_regions</code> now draws decision regions correctly if more than 4 class labels are present</li>
-<li>Raise <code>AttributeError</code> in <code>plot_decision_regions</code> when the <code>X_higlight</code> argument is a 1D array (via <a href="https://github.com/chkoar">chkoar</a>).</li>
-</ul>
+<p>The documentation files for the development version are available as Jupyter Notebooks in the <a href="https://github.com/rasbt/mlxtend/tree/master/docs/sources/user_guide">user_guide</a> section on GitHub</p>
 <h3 id="version-042-2016-08-24">Version 0.4.2 (2016-08-24)</h3>
-<h5 id="downloads_1">Downloads</h5>
+<h5 id="downloads">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/0.4.2.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.4.2.tar.gz">Source code (tar.gz)</a></li>
 <li><a href="http://sebastianraschka.com/pdf/mlxtend-latest.pdf">PDF documentation</a></li>
 </ul>
-<h5 id="new-features_1">New Features</h5>
+<h5 id="new-features">New Features</h5>
 <ul>
 <li>Added <code>preprocessing.CopyTransformer</code>, a mock class that returns copies of
 imput arrays via <code>transform</code> and <code>fit_transform</code></li>
 </ul>
-<h5 id="changes_1">Changes</h5>
+<h5 id="changes">Changes</h5>
 <ul>
 <li>Added AppVeyor to CI to ensure MS Windows compatibility</li>
 <li>Dataset are now saved as compressed .txt or .csv files rather than being imported as Python objects</li>
@@ -947,7 +920,7 @@ imput arrays via <code>transform</code> and <code>fit_transform</code></li>
 <li><code>DenseTransformer</code> now doesn't raise and error if the input array is <em>not</em> sparse</li>
 <li>API clean-up using scikit-learn's <code>BaseEstimator</code> as parent class for <code>feature_selection.ColumnSelector</code></li>
 </ul>
-<h5 id="bug-fixes_1">Bug Fixes</h5>
+<h5 id="bug-fixes">Bug Fixes</h5>
 <ul>
 <li>Fixed a problem when a tuple-range was provided as argument to the <code>SequentialFeatureSelector</code>'s <code>k_features</code> parameter and the scoring metric was more negative than -1 (e.g., as in scikit-learn's MSE scoring function) via <a href="https://github.com/wahutch">wahutch</a></li>
 <li>Fixed an <code>AttributeError</code> issue when <code>verbose</code> &gt; 1 in <code>StackingClassifier</code></li>
@@ -955,19 +928,19 @@ imput arrays via <code>transform</code> and <code>fit_transform</code></li>
 <li>Fixed rare bug in MLP <code>_layer_mapping</code> functions that caused a swap between the random number generation seed when initializing weights and biases</li>
 </ul>
 <h3 id="version-041-2016-05-01">Version 0.4.1 (2016-05-01)</h3>
-<h5 id="downloads_2">Downloads</h5>
+<h5 id="downloads_1">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/0.4.1.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.4.1.tar.gz">Source code (tar.gz)</a></li>
 <li><a href="http://sebastianraschka.com/pdf/mlxtend-0.4.1.pdf">PDF documentation</a></li>
 </ul>
-<h5 id="new-features_2">New Features</h5>
+<h5 id="new-features_1">New Features</h5>
 <ul>
 <li>New TensorFlow estimator for Linear Regression (<a href="../user_guide/tf_regressor/TfLinearRegression/"><code>tf_regressor.TfLinearRegression</code></a>)</li>
 <li>New k-means clustering estimator (<a href="../user_guide/cluster/Kmeans/"><code>cluster.Kmeans</code></a>)</li>
 <li>New TensorFlow k-means clustering estimator (<a href="../user_guide/tf_cluster/TfKmeans/"><code>tf_cluster.Kmeans</code></a>)</li>
 </ul>
-<h5 id="changes_2">Changes</h5>
+<h5 id="changes_1">Changes</h5>
 <ul>
 <li>Due to refactoring of the estimator classes, the <code>init_weights</code> parameter of the <code>fit</code> methods was globally renamed to <code>init_params</code></li>
 <li>Overall performance improvements of estimators due to code clean-up and refactoring</li>
@@ -978,7 +951,7 @@ imput arrays via <code>transform</code> and <code>fit_transform</code></li>
 <li>Unified <code>init_params</code> parameter for fit functions to continue training where the algorithm left off (if supported)</li>
 </ul>
 <h3 id="version-040-2016-04-09">Version 0.4.0 (2016-04-09)</h3>
-<h5 id="new-features_3">New Features</h5>
+<h5 id="new-features_2">New Features</h5>
 <ul>
 <li>New <code>TfSoftmaxRegression</code> classifier using Tensorflow (<a href="../user_guide/tf_classifier/TfSoftmaxRegression/"><code>tf_classifier.TfSoftmaxRegression</code></a>)</li>
 <li>New <code>SoftmaxRegression</code> classifier (<a href="../user_guide/classifier/SoftmaxRegression/"><code>classifier.SoftmaxRegression</code></a>)</li>
@@ -987,7 +960,7 @@ imput arrays via <code>transform</code> and <code>fit_transform</code></li>
 <li>New <code>StackingClassifier</code> (<a href="../user_guide/classifier/StackingClassifier/"><code>classifier.StackingClassifier</code></a>)</li>
 <li>New function for one-hot encoding of class labels (<a href="../user_guide/preprocessing/one-hot_encoding/"><code>preprocessing.one_hot</code></a>)</li>
 <li>Added <code>GridSearch</code> support to the <code>SequentialFeatureSelector</code> (<a href="../user_guide/feature_selection/SequentialFeatureSelector/"><code>feature_selection/.SequentialFeatureSelector</code></a>)</li>
-<li><a href="../user_guide/evaluate/plot_decision_regions/"><code>evaluate.plot_decision_regions</code></a> improvements:<ul>
+<li><code>evaluate.plot_decision_regions</code> improvements:<ul>
 <li>Function now handles class y-class labels correctly if array is of type <code>float</code></li>
 <li>Correct handling of input arguments <code>markers</code> and <code>colors</code></li>
 <li>Accept an existing <code>Axes</code> via the <code>ax</code> argument</li>
@@ -999,17 +972,17 @@ imput arrays via <code>transform</code> and <code>fit_transform</code></li>
 <li>New RBF Kernel Principal Component Analysis class via <a href="../user_guide/feature_extraction/RBFKernelPCA/"><code>mlxtend.feature_extraction.RBFKernelPCA</code></a></li>
 <li>New Linear Discriminant Analysis class via <a href="../user_guide/feature_extraction/LinearDiscriminantAnalysis/"><code>mlxtend.feature_extraction.LinearDiscriminantAnalysis</code></a></li>
 </ul>
-<h5 id="changes_3">Changes</h5>
+<h5 id="changes_2">Changes</h5>
 <ul>
 <li>The <code>column</code> parameter in <code>mlxtend.preprocessing.standardize</code> now defaults to <code>None</code> to standardize all columns more conveniently</li>
 </ul>
 <h3 id="version-030-2016-01-31">Version 0.3.0 (2016-01-31)</h3>
-<h5 id="downloads_3">Downloads</h5>
+<h5 id="downloads_2">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.3.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.3.0.tar.gz">Source code (tar.gz)</a></li>
 </ul>
-<h5 id="new-features_4">New Features</h5>
+<h5 id="new-features_3">New Features</h5>
 <ul>
 <li>Added a progress bar tracker to <code>classifier.NeuralNetMLP</code></li>
 <li>Added a function to score predicted vs. target class labels <code>evaluate.scoring</code></li>
@@ -1022,7 +995,7 @@ imput arrays via <code>transform</code> and <code>fit_transform</code></li>
 <li>Added Boston <code>housing dataset</code></li>
 <li>New <code>shuffle</code> parameter for <code>classifier.NeuralNetMLP</code></li>
 </ul>
-<h5 id="changes_4">Changes</h5>
+<h5 id="changes_3">Changes</h5>
 <ul>
 <li>The <code>mlxtend.preprocessing.standardize</code> function now optionally returns the parameters, which are estimated from the array, for re-use. A further improvement makes the <code>standardize</code> function smarter in order to avoid zero-division errors</li>
 <li>Cosmetic improvements to the <code>evaluate.plot_decision_regions</code> function such as hiding plot axes</li>
@@ -1035,16 +1008,16 @@ imput arrays via <code>transform</code> and <code>fit_transform</code></li>
 <li>Renaming <code>mlxtend.plotting</code> to <code>mlxtend.general_plotting</code> in order to distinguish general plotting function from specialized utility function such as <code>evaluate.plot_decision_regions</code></li>
 </ul>
 <h3 id="version-029-2015-07-14">Version 0.2.9 (2015-07-14)</h3>
-<h5 id="downloads_4">Downloads</h5>
+<h5 id="downloads_3">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.2.9.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.2.9.tar.gz">Source code (tar.gz)</a></li>
 </ul>
-<h5 id="new-features_5">New Features</h5>
+<h5 id="new-features_4">New Features</h5>
 <ul>
 <li>Sequential Feature Selection algorithms: SFS, SFFS, SBS, and SFBS</li>
 </ul>
-<h5 id="changes_5">Changes</h5>
+<h5 id="changes_4">Changes</h5>
 <ul>
 <li>Changed <code>regularization</code> &amp; <code>lambda</code> parameters in <code>LogisticRegression</code> to single parameter <code>l2_lambda</code></li>
 </ul>

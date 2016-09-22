@@ -15,6 +15,7 @@ The CHANGELOG for the current development version is available via
 
 - New `ExhaustiveFeatureSelector` estimator in `mlxtend.feature_selection` for evaluating all feature combinations in a specified range
 - The `StackingClassifier` has a new parameter `average_probas` that is set to `True` by default to maintain the current behavior. A deprecation warning was added though, and it will default to `False` in future releases (0.5.0); `average_probas=False` will result in stacking of the level-1 predicted probabilities rather than averaging these.
+- New 'StackingCVClassifier' estimator in 'mlxtend.classifier' for implementing a stacking ensemble that uses cross-validation techniques for training the meta-estimator to avoid overfitting. [Reiichiro Nakano](https://github.com/reiinakano)
 
 ##### Changes
 

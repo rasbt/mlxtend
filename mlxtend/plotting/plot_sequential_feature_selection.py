@@ -6,11 +6,7 @@
 #
 # License: BSD 3 clause
 
-try:
-    import matplotlib.pyplot as plt
-    _HAS_MPL = True
-except ImportError as e:
-    _HAS_MPL = False
+import matplotlib.pyplot as plt
 
 def plot_sequential_feature_selection(metric_dict,
                                       kind='std_dev',
@@ -48,9 +44,6 @@ def plot_sequential_feature_selection(metric_dict,
     fig : matplotlib.pyplot.figure() object
 
     """
-
-    if not _HAS_MPL:
-        raise ImportError('Need to have a working matplot lib installation to use this.')
 
     allowed = {'std_dev', 'std_err', 'ci', None}
     if kind not in allowed:

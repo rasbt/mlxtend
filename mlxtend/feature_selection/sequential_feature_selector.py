@@ -123,7 +123,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.fitted = False
         self.subsets_ = {}
         self.interrupted_ = False
-        self._TESTING_INTERUPT_MODE = False  # don't mess with this unless testing
+        self._TESTING_INTERRUPT_MODE = False  # don't mess with this unless testing
 
     def fit(self, X, y):
         """Perform feature selection and learn model from training data.
@@ -265,7 +265,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                         k_score
                     ))
 
-                if self._TESTING_INTERUPT_MODE:
+                if self._TESTING_INTERRUPT_MODE:
                     raise KeyboardInterrupt
 
         except KeyboardInterrupt as e:

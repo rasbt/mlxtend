@@ -42,9 +42,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         backward selection otherwise
     floating : bool (default: False)
         Adds a conditional exclusion/inclusion if True.
-    print_progress : bool (default: True)
-        Prints progress as the number of epochs
-        to stderr.
+    verbose : int (default: 0), level of verbosity to use in logging
     scoring : str, (default='accuracy')
         Scoring metric in {accuracy, f1, precision, recall, roc_auc}
         for classifiers,
@@ -100,10 +98,10 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     """
     def __init__(self, estimator, k_features='best',
                  forward=True, floating=False,
-                 print_progress=True, scoring='accuracy',
+                 verbose=0, scoring='accuracy',
                  cv=5, skip_if_stuck=True, n_jobs=1,
                  pre_dispatch='2*n_jobs',
-                 clone_estimator=True, verbose=0):
+                 clone_estimator=True):
         self.estimator = estimator
         self.k_features = k_features
         self.forward = forward
@@ -113,7 +111,6 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.scorer = get_scorer(scoring)
         self.skip_if_stuck = skip_if_stuck
         self.cv = cv
-        self.print_progress = print_progress
         self.n_jobs = n_jobs
         self.verbose = verbose
         self.named_est = {key: value for key, value in
@@ -125,6 +122,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             self.est_ = self.estimator
         self.fitted = False
         self.subsets_ = {}
+        self.interrupted_ = False
+        self._TESTING_INTERUPT_MODE = False  # don't mess with this unless testing
 
     def fit(self, X, y):
         """Perform feature selection and learn model from training data.
@@ -252,21 +251,25 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                     }
                 sdq.append(k_idx)
 
-                if self.print_progress:
-                    if self.verbose == 0:
-                        sys.stderr.write('\rFeatures: %d/%s' % (
-                            len(k_idx),
-                            k_to_select
-                        ))
-                        sys.stderr.flush()
-                    elif self.verbose > 0 or self.verbose:
-                        sys.stderr.write('\n[%s] Features: %d/%s -- avg. score: %s' % (
-                            datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                            len(k_idx),
-                            k_to_select,
-                            k_score
-                        ))
+                if self.verbose == 0:
+                    sys.stderr.write('\rFeatures: %d/%s' % (
+                        len(k_idx),
+                        k_to_select
+                    ))
+                    sys.stderr.flush()
+                elif self.verbose > 0 or self.verbose:
+                    sys.stderr.write('\n[%s] Features: %d/%s -- avg. score: %s' % (
+                        datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                        len(k_idx),
+                        k_to_select,
+                        k_score
+                    ))
+
+                if self._TESTING_INTERUPT_MODE:
+                    raise KeyboardInterrupt
+
         except KeyboardInterrupt as e:
+            self.interrupted_ = True
             sys.stderr.write('\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...')
 
         if select_in_range:

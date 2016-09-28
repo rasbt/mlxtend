@@ -505,7 +505,7 @@ def test_keyboard_interrupt():
         n_jobs=1
     )
 
-    sfs1._TESTING_INTERUPT_MODE = True
+    sfs1._TESTING_INTERRUPT_MODE = True
     out = sfs1.fit(X, y)
 
     assert len(out.subsets_.keys()) > 0

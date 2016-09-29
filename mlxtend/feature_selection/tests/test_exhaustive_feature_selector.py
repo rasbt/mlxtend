@@ -15,6 +15,12 @@ from sklearn.linear_model import LinearRegression
 from sklearn.datasets import load_boston
 from mlxtend.utils import assert_raises
 from mlxtend.classifier import SoftmaxRegression
+from distutils.version import LooseVersion as Version
+from sklearn import __version__ as sklearn_version
+if Version(sklearn_version) < '0.18':
+    MEAN_SQUARED_ERROR = 'mean_squared_error'
+else:
+    MEAN_SQUARED_ERROR = 'neg_mean_squared_error'
 
 
 def dict_compare_utility(d1, d2):
@@ -171,7 +177,7 @@ def test_regression():
     efs_r = EFS(lr,
                 min_features=3,
                 max_features=4,
-                scoring='mean_squared_error',
+                scoring=MEAN_SQUARED_ERROR,
                 cv=10,
                 print_progress=False)
     efs_r = efs_r.fit(X, y)

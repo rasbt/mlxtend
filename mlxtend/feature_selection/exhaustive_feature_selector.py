@@ -18,8 +18,13 @@ from sklearn.metrics import get_scorer
 from sklearn.base import clone
 from sklearn.base import BaseEstimator
 from sklearn.base import MetaEstimatorMixin
-from sklearn.cross_validation import cross_val_score
 from ..externals.name_estimators import _name_estimators
+from distutils.version import LooseVersion as Version
+from sklearn import __version__ as sklearn_version
+if Version(sklearn_version) < '0.18':
+    from sklearn.cross_validation import cross_val_score
+else:
+    from sklearn.model_selection import cross_val_score
 
 
 class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):

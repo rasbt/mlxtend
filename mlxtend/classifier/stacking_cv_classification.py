@@ -9,16 +9,22 @@
 #
 # License: BSD 3 clause
 
+from ..externals.name_estimators import _name_estimators
 from sklearn.base import BaseEstimator
 from sklearn.base import ClassifierMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
 from sklearn.utils.validation import check_is_fitted
-from sklearn.pipeline import _name_estimators
 from sklearn.externals import six
 import numpy as np
-from sklearn.cross_validation import StratifiedKFold
-from sklearn.cross_validation import KFold
+from distutils.version import LooseVersion as Version
+from sklearn import __version__ as sklearn_version
+if Version(sklearn_version) < '0.18':
+    from sklearn.cross_validation import StratifiedKFold
+    from sklearn.cross_validation import KFold
+else:
+    from sklearn.model_selection import StratifiedKFold
+    from sklearn.model_selection import KFold
 
 
 class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
@@ -120,13 +126,24 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             print("Fitting %d classifiers..." % (len(self.classifiers)))
 
         if self.stratify:
-            skf = StratifiedKFold(y, n_folds=self.n_folds,
-                                  shuffle=self.shuffle,
-                                  random_state=self.random_state)
+            if Version(sklearn_version) < '0.18':
+                skf = StratifiedKFold(y, n_folds=self.n_folds,
+                                      shuffle=self.shuffle,
+                                      random_state=self.random_state)
+            else:
+                skf = list(StratifiedKFold(n_splits=self.n_folds,
+                                           shuffle=self.shuffle,
+                                           random_state=self.random_state)
+                           .split(X, y))
         else:
-            skf = KFold(len(y), n_folds=self.n_folds,
-                        shuffle=self.shuffle,
-                        random_state=self.random_state)
+            if Version(sklearn_version) < '0.18':
+                skf = KFold(len(y), n_folds=self.n_folds,
+                            shuffle=self.shuffle,
+                            random_state=self.random_state)
+            else:
+                skf = list(KFold(n_splits=self.n_folds,
+                           shuffle=self.shuffle,
+                           random_state=self.random_state).split(X))
 
         all_model_predictions = np.array([]).reshape(len(y), 0)
         for model in self.clfs_:
@@ -152,8 +169,8 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             for num, (train_index, test_index) in enumerate(skf):
 
                 if self.verbose > 0:
-                    print ("Training and fitting fold %d of %d..." %
-                           ((num+1), self.n_folds))
+                    print("Training and fitting fold %d of %d..." %
+                          ((num + 1), self.n_folds))
 
                 model.fit(X[train_index], y[train_index])
 
@@ -166,10 +183,10 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                                                     astype(prediction.dtype),
                                                      prediction])
 
-            all_model_predictions = np.hstack((all_model_predictions.
+            all_model_predictions = np.hstack([all_model_predictions.
                                                astype(single_model_prediction.
                                                       dtype),
-                                               single_model_prediction))
+                                               single_model_prediction])
 
         # We have to shuffle the labels in the same order as we generated
         # predictions during CV (we kinda shuffled them when we did

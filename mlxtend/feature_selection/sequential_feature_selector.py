@@ -18,8 +18,13 @@ from sklearn.metrics import get_scorer
 from sklearn.base import clone
 from sklearn.base import BaseEstimator
 from sklearn.base import MetaEstimatorMixin
-from sklearn.cross_validation import cross_val_score
 from ..externals.name_estimators import _name_estimators
+from distutils.version import LooseVersion as Version
+from sklearn import __version__ as sklearn_version
+if Version(sklearn_version) < '0.18':
+    from sklearn.cross_validation import cross_val_score
+else:
+    from sklearn.model_selection import cross_val_score
 
 
 class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
@@ -45,13 +50,15 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     print_progress : bool (default: True)
         Prints progress as the number of epochs
         to stderr.
-    scoring : str, (default='accuracy')
+    scoring : str or callable (default='accuracy')
         Scoring metric in {accuracy, f1, precision, recall, roc_auc}
         for classifiers,
-        {'mean_absolute_error', 'mean_squared_error',
+        {'mean_absolute_error', 'mean_squared_error'/'neg_mean_squared_error',
         'median_absolute_error', 'r2'} for regressors,
         or a callable object or function with
-        signature ``scorer(estimator, X, y)``.
+        signature ``scorer(estimator, X, y)``; see
+        http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
+        for more information.
     cv : int (default: 5)
         Scikit-learn cross-validation generator or `int`.
         If estimator is a classifier (or y consists of integer class labels),
@@ -100,7 +107,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     """
     def __init__(self, estimator, k_features='best',
                  forward=True, floating=False,
-                 print_progress=True, scoring='accuracy',
+                 print_progress=True, scoring=None,
                  cv=5, skip_if_stuck=True, n_jobs=1,
                  pre_dispatch='2*n_jobs',
                  clone_estimator=True):
@@ -110,7 +117,10 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.floating = floating
         self.pre_dispatch = pre_dispatch
         self.scoring = scoring
-        self.scorer = get_scorer(scoring)
+        if isinstance(scoring, str):
+            self.scorer = get_scorer(scoring)
+        else:
+            self.scorer = scoring
         self.skip_if_stuck = skip_if_stuck
         self.cv = cv
         self.print_progress = print_progress

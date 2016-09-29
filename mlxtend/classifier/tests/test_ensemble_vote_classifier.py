@@ -5,13 +5,19 @@
 # License: BSD 3 clause
 
 from mlxtend.classifier import EnsembleVoteClassifier
-from sklearn.grid_search import GridSearchCV
-from sklearn import cross_validation
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 from sklearn import datasets
+from distutils.version import LooseVersion as Version
+from sklearn import __version__ as sklearn_version
+if Version(sklearn_version) < '0.18':
+    from sklearn.grid_search import GridSearchCV
+    from sklearn.cross_validation import cross_val_score
+else:
+    from sklearn.model_selection import GridSearchCV
+    from sklearn.model_selection import cross_val_score
 
 
 iris = datasets.load_iris()
@@ -26,11 +32,11 @@ def test_EnsembleVoteClassifier():
     clf3 = GaussianNB()
     eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting='hard')
 
-    scores = cross_validation.cross_val_score(eclf,
-                                              X,
-                                              y,
-                                              cv=5,
-                                              scoring='accuracy')
+    scores = cross_val_score(eclf,
+                             X,
+                             y,
+                             cv=5,
+                             scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
     assert(scores_mean == 0.94)
 
@@ -45,11 +51,11 @@ def test_EnsembleVoteClassifier_weights():
                                   voting='soft',
                                   weights=[1, 2, 10])
 
-    scores = cross_validation.cross_val_score(eclf,
-                                              X,
-                                              y,
-                                              cv=5,
-                                              scoring='accuracy')
+    scores = cross_val_score(eclf,
+                             X,
+                             y,
+                             cv=5,
+                             scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
     assert(scores_mean == 0.93)
 
@@ -67,10 +73,16 @@ def test_EnsembleVoteClassifier_gridsearch():
     grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
     grid.fit(iris.data, iris.target)
 
-    mean_scores = []
-    for params, mean_score, scores in grid.grid_scores_:
-        mean_scores.append(round(mean_score, 2))
-    assert(mean_scores == [0.95, 0.96, 0.96, 0.95])
+    if Version(sklearn_version) < '0.18':
+        mean_scores = []
+        for params, mean_score, scores in grid.grid_scores_:
+            mean_scores.append(round(mean_score, 2))
+    else:
+        mean_scores = [round(s, 2) for s
+                       in grid.cv_results_['mean_test_score']]
+
+    assert mean_scores == [0.95, 0.96, 0.96, 0.95]
+
 
 
 def test_EnsembleVoteClassifier_gridsearch_enumerate_names():

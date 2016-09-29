@@ -5,16 +5,23 @@
 # License: BSD 3 clause
 
 from mlxtend.classifier import StackingClassifier
-from sklearn.grid_search import GridSearchCV
-from sklearn import cross_validation
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.utils.validation import NotFittedError
 import numpy as np
 from sklearn import datasets
 from mlxtend.utils import assert_raises
 from nose.tools import assert_almost_equal
+from distutils.version import LooseVersion as Version
+from sklearn import __version__ as sklearn_version
+if Version(sklearn_version) < '0.18':
+    from sklearn.grid_search import GridSearchCV
+    from sklearn.cross_validation import cross_val_score
+    from sklearn.utils.validation import NotFittedError
+else:
+    from sklearn.model_selection import GridSearchCV
+    from sklearn.model_selection import cross_val_score
+    from sklearn.exceptions import NotFittedError
 
 
 iris = datasets.load_iris()
@@ -29,11 +36,11 @@ def test_StackingClassifier():
     sclf = StackingClassifier(classifiers=[clf1, clf2],
                               meta_classifier=meta)
 
-    scores = cross_validation.cross_val_score(sclf,
-                                              X,
-                                              y,
-                                              cv=5,
-                                              scoring='accuracy')
+    scores = cross_val_score(sclf,
+                             X,
+                             y,
+                             cv=5,
+                             scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
     assert scores_mean == 0.95
 
@@ -48,11 +55,11 @@ def test_StackingClassifier_proba_avg_1():
                               use_probas=True,
                               meta_classifier=meta)
 
-    scores = cross_validation.cross_val_score(sclf,
-                                              X,
-                                              y,
-                                              cv=5,
-                                              scoring='accuracy')
+    scores = cross_val_score(sclf,
+                             X,
+                             y,
+                             cv=5,
+                             scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
     assert scores_mean == 0.93, scores_mean
 
@@ -68,11 +75,11 @@ def test_StackingClassifier_proba_concat_1():
                               average_probas=False,
                               meta_classifier=meta)
 
-    scores = cross_validation.cross_val_score(sclf,
-                                              X,
-                                              y,
-                                              cv=5,
-                                              scoring='accuracy')
+    scores = cross_val_score(sclf,
+                             X,
+                             y,
+                             cv=5,
+                             scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
     assert scores_mean == 0.93, scores_mean
 
@@ -118,9 +125,14 @@ def test_gridsearch():
     grid = GridSearchCV(estimator=sclf, param_grid=params, cv=5)
     grid.fit(iris.data, iris.target)
 
-    mean_scores = []
-    for params, mean_score, scores in grid.grid_scores_:
-        mean_scores.append(round(mean_score, 2))
+    if Version(sklearn_version) < '0.18':
+        mean_scores = []
+        for params, mean_score, scores in grid.grid_scores_:
+            mean_scores.append(round(mean_score, 2))
+    else:
+        mean_scores = [round(s, 2) for s
+                       in grid.cv_results_['mean_test_score']]
+
     assert mean_scores == [0.95, 0.97, 0.96, 0.96]
 
 
@@ -149,11 +161,11 @@ def test_use_probas():
                               use_probas=True,
                               meta_classifier=meta)
 
-    scores = cross_validation.cross_val_score(sclf,
-                                              X,
-                                              y,
-                                              cv=5,
-                                              scoring='accuracy')
+    scores = cross_val_score(sclf,
+                             X,
+                             y,
+                             cv=5,
+                             scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
     assert scores_mean == 0.93, scores_mean
 

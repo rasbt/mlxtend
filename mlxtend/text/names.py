@@ -11,6 +11,9 @@ import unicodedata
 import string
 import re
 import sys
+from pandas import __version__ as pandas_version
+from distutils.version import LooseVersion as Version
+
 
 if sys.version_info <= (3, 0):
     raise ImportError("Sorry, the text.names module is incompatible"
@@ -116,10 +119,16 @@ def generalize_names_duplcheck(df, col_name):
 
     df_new[col_name] = df_new[col_name].apply(generalize_names)
 
-    dupl = (list(df_new[df_new.duplicated(subset=col_name,
-                                          take_last=True)].index) +
-            list(df_new[df_new.duplicated(subset=col_name,
-                                          take_last=False)].index))
+    if Version(pandas_version) < '0.17':
+        dupl = (list(df_new[df_new.duplicated(subset=col_name,
+                                              keep='last')].index) +
+                list(df_new[df_new.duplicated(subset=col_name,
+                                              keep='first')].index))
+    else:
+        dupl = (list(df_new[df_new.duplicated(subset=col_name,
+                                              keep='last')].index) +
+                list(df_new[df_new.duplicated(subset=col_name,
+                                              keep='first')].index))
 
     firstname_letters = 2
     while len(dupl) > 0:
@@ -127,9 +136,15 @@ def generalize_names_duplcheck(df, col_name):
             df_new.loc[idx, col_name] = generalize_names(
                 df.loc[idx, col_name],
                 firstname_output_letters=firstname_letters)
-        dupl = (list(df_new[df_new.duplicated(subset=col_name,
-                                              take_last=True)].index) +
-                list(df_new[df_new.duplicated(subset=col_name,
-                                              take_last=False)].index))
+        if Version(pandas_version) < '0.17':
+            dupl = (list(df_new[df_new.duplicated(subset=col_name,
+                                                  keep='last')].index) +
+                    list(df_new[df_new.duplicated(subset=col_name,
+                                                  keep='first')].index))
+        else:
+            dupl = (list(df_new[df_new.duplicated(subset=col_name,
+                                                  keep='last')].index) +
+                    list(df_new[df_new.duplicated(subset=col_name,
+                                                  keep='first')].index))
         firstname_letters += 1
     return df_new

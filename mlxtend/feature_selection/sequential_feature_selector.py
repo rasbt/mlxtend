@@ -47,15 +47,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         backward selection otherwise
     floating : bool (default: False)
         Adds a conditional exclusion/inclusion if True.
-<<<<<<< HEAD
     verbose : int (default: 0), level of verbosity to use in logging
-    scoring : str, (default='accuracy')
-=======
-    print_progress : bool (default: True)
-        Prints progress as the number of epochs
-        to stderr.
     scoring : str or callable (default='accuracy')
->>>>>>> rasbt/master
         Scoring metric in {accuracy, f1, precision, recall, roc_auc}
         for classifiers,
         {'mean_absolute_error', 'mean_squared_error'/'neg_mean_squared_error',
@@ -112,11 +105,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     """
     def __init__(self, estimator, k_features='best',
                  forward=True, floating=False,
-<<<<<<< HEAD
-                 verbose=0, scoring='accuracy',
-=======
-                 print_progress=True, scoring=None,
->>>>>>> rasbt/master
+                 verbose=0, scoring=None,
                  cv=5, skip_if_stuck=True, n_jobs=1,
                  pre_dispatch='2*n_jobs',
                  clone_estimator=True):

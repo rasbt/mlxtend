@@ -510,7 +510,7 @@ def test_keyboard_interrupt():
     knn = KNeighborsClassifier(n_neighbors=4)
     sfs1 = SFS(
         knn,
-        k_features=32,
+        k_features=3,
         forward=True,
         floating=False,
         scoring='accuracy',

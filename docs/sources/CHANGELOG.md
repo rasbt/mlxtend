@@ -21,6 +21,7 @@ The CHANGELOG for the current development version is available via
 ##### Changes
 
 - All plotting functions have been moved to `mlxtend.plotting` for compatibility reasons with continuous integration services and to make the installation of `matplotlib` optional for users of mlxtend's core functionality.
+- Added a compatibility layer for scikit-learn 0.18 using the new `model_selection` module  while maintaining backwards compatibility to scikit-learn 0.17
 
 ##### Bug Fixes
 

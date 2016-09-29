@@ -14,6 +14,12 @@ from sklearn.datasets import load_iris
 from sklearn.linear_model import LinearRegression
 from sklearn.datasets import load_boston
 from mlxtend.utils import assert_raises
+from distutils.version import LooseVersion as Version
+from sklearn import __version__ as sklearn_version
+if Version(sklearn_version) < '0.18':
+    MEAN_SQUARED_ERROR = 'mean_squared_error'
+else:
+    MEAN_SQUARED_ERROR = 'neg_mean_squared_error'
 
 
 def dict_compare_utility(d1, d2):
@@ -351,12 +357,22 @@ def test_knn_scoring_metric():
                k_features=3,
                forward=False,
                floating=True,
-               scoring='precision',
                cv=4,
                skip_if_stuck=True,
                verbose=0)
     sfs6 = sfs6.fit(X, y)
-    assert round(sfs6.k_score_, 4) == 0.9737
+    assert round(sfs6.k_score_, 4) == 0.9728
+
+    sfs7 = SFS(knn,
+               k_features=3,
+               forward=False,
+               floating=True,
+               scoring='f1_macro',
+               cv=4,
+               skip_if_stuck=True,
+               print_progress=False)
+    sfs7 = sfs7.fit(X, y)
+    assert round(sfs7.k_score_, 4) == 0.9727, sfs7.k_score_
 
 
 def test_regression():
@@ -367,7 +383,7 @@ def test_regression():
                 k_features=13,
                 forward=True,
                 floating=False,
-                scoring='mean_squared_error',
+                scoring=MEAN_SQUARED_ERROR,
                 cv=10,
                 skip_if_stuck=True,
                 verbose=0)
@@ -384,7 +400,7 @@ def test_regression_in_range():
                 k_features=(1, 13),
                 forward=True,
                 floating=False,
-                scoring='mean_squared_error',
+                scoring=MEAN_SQUARED_ERROR,
                 cv=10,
                 skip_if_stuck=True,
                 verbose=0)

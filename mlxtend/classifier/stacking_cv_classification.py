@@ -29,7 +29,9 @@ else:
 
 class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
-    """A Stacking CV classifier for scikit-learn estimators for classification.
+    """A 'Stacking Cross-Validation' classifier for scikit-learn estimators.
+
+    New in mlxtend v0.4.3
 
     Parameters
     ----------

@@ -370,7 +370,7 @@ def test_knn_scoring_metric():
                scoring='f1_macro',
                cv=4,
                skip_if_stuck=True,
-               print_progress=False)
+    )
     sfs7 = sfs7.fit(X, y)
     assert round(sfs7.k_score_, 4) == 0.9727, sfs7.k_score_
 

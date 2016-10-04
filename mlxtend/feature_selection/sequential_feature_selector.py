@@ -10,6 +10,7 @@ import datetime
 import numpy as np
 import scipy as sp
 import scipy.stats
+import warnings
 import sys
 from copy import deepcopy
 from itertools import combinations
@@ -105,10 +106,20 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     """
     def __init__(self, estimator, k_features='best',
                  forward=True, floating=False,
-                 verbose=0, scoring=None,
+                 print_progress=False, verbose=0, scoring=None,
                  cv=5, skip_if_stuck=True, n_jobs=1,
                  pre_dispatch='2*n_jobs',
                  clone_estimator=True):
+
+        if print_progress:
+            warnings.warn("The print_progress parameter "
+                          "has been deprecated in "
+                          "0.4.3 and will be removed in 0.5.0. "
+                          "Please use the verbose parameter instead.",
+                          DeprecationWarning)
+            if verbose == 0:
+                verbose = 1
+
         self.estimator = estimator
         self.k_features = k_features
         self.forward = forward

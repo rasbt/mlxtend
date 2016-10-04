@@ -48,7 +48,9 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         backward selection otherwise
     floating : bool (default: False)
         Adds a conditional exclusion/inclusion if True.
-    verbose : int (default: 0), level of verbosity to use in logging
+    verbose : int (default: 1), level of verbosity to use in logging. If 0, no output,
+        if 1 number of features in current set, if 2 detailed logging including timestamp
+        and cv scores at step.
     scoring : str or callable (default='accuracy')
         Scoring metric in {accuracy, f1, precision, recall, roc_auc}
         for classifiers,
@@ -106,7 +108,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     """
     def __init__(self, estimator, k_features='best',
                  forward=True, floating=False,
-                 print_progress=False, verbose=0, scoring=None,
+                 print_progress=False, verbose=1, scoring=None,
                  cv=5, skip_if_stuck=True, n_jobs=1,
                  pre_dispatch='2*n_jobs',
                  clone_estimator=True):
@@ -272,14 +274,14 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                     }
                 sdq.append(k_idx)
 
-                if self.verbose == 0:
+                if self.verbose == 1:
                     sys.stderr.write('\rFeatures: %d/%s' % (
                         len(k_idx),
                         k_to_select
                     ))
                     sys.stderr.flush()
-                elif self.verbose > 0 or self.verbose:
-                    sys.stderr.write('\n[%s] Features: %d/%s -- avg. score: %s' % (
+                elif self.verbose > 1:
+                    sys.stderr.write('\n[%s] Features: %d/%s -- score: %s' % (
                         datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                         len(k_idx),
                         k_to_select,

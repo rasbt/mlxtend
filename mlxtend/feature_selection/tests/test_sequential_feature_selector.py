@@ -129,7 +129,7 @@ def test_knn_wo_cv():
                scoring='accuracy',
                cv=0,
                skip_if_stuck=True,
-               print_progress=False)
+               verbose=0)
     sfs1 = sfs1.fit(X, y)
     expect = {1: {'avg_score': 0.95999999999999996,
                   'cv_scores': np.array([0.96]),
@@ -155,7 +155,7 @@ def test_knn_cv3():
                scoring='accuracy',
                cv=4,
                skip_if_stuck=True,
-               print_progress=False)
+               verbose=0)
     sfs1 = sfs1.fit(X, y)
     sfs1.subsets_
     expect = {1: {'avg_score': 0.95299145299145294,
@@ -191,7 +191,7 @@ def test_knn_option_sfs():
                scoring='accuracy',
                cv=4,
                skip_if_stuck=True,
-               print_progress=False)
+               verbose=0)
     sfs1 = sfs1.fit(X, y)
     assert sfs1.k_feature_idx_ == (1, 2, 3)
 
@@ -208,7 +208,7 @@ def test_knn_option_sffs():
                scoring='accuracy',
                cv=4,
                skip_if_stuck=True,
-               print_progress=False)
+               verbose=0)
     sfs2 = sfs2.fit(X, y)
     assert sfs2.k_feature_idx_ == (1, 2, 3)
 
@@ -225,7 +225,7 @@ def test_knn_option_sbs():
                scoring='accuracy',
                cv=4,
                skip_if_stuck=True,
-               print_progress=False)
+               verbose=0)
     sfs3 = sfs3.fit(X, y)
     assert sfs3.k_feature_idx_ == (1, 2, 3)
 
@@ -242,7 +242,7 @@ def test_knn_option_sfbs():
                scoring='accuracy',
                cv=4,
                skip_if_stuck=True,
-               print_progress=False)
+               verbose=0)
     sfs4 = sfs4.fit(X, y)
     assert sfs4.k_feature_idx_ == (1, 2, 3)
 
@@ -259,7 +259,7 @@ def test_knn_option_sfbs_tuplerange_1():
                scoring='accuracy',
                cv=4,
                skip_if_stuck=True,
-               print_progress=False)
+               verbose=0)
     sfs4 = sfs4.fit(X, y)
     assert round(sfs4.k_score_, 3) == 0.966, sfs4.k_score_
     assert sfs4.k_feature_idx_ == (1, 2, 3), sfs4.k_feature_idx_
@@ -277,7 +277,7 @@ def test_knn_option_sfbs_tuplerange_2():
                scoring='accuracy',
                cv=4,
                skip_if_stuck=True,
-               print_progress=False)
+               verbose=0)
     sfs4 = sfs4.fit(X, y)
     assert round(sfs4.k_score_, 3) == 0.966, sfs4.k_score_
     assert sfs4.k_feature_idx_ == (1, 2, 3), sfs4.k_feature_idx_
@@ -295,7 +295,7 @@ def test_knn_option_sffs_tuplerange_1():
                scoring='accuracy',
                cv=4,
                skip_if_stuck=True,
-               print_progress=False)
+               verbose=0)
     sfs4 = sfs4.fit(X, y)
     assert round(sfs4.k_score_, 3) == 0.967, sfs4.k_score_
     assert sfs4.k_feature_idx_ == (0, 2, 3), sfs4.k_feature_idx_
@@ -313,7 +313,7 @@ def test_knn_option_sfs_tuplerange_1():
                scoring='accuracy',
                cv=4,
                skip_if_stuck=True,
-               print_progress=False)
+               verbose=0)
     sfs4 = sfs4.fit(X, y)
     assert round(sfs4.k_score_, 3) == 0.967, sfs4.k_score_
     assert sfs4.k_feature_idx_ == (0, 2, 3), sfs4.k_feature_idx_
@@ -331,7 +331,7 @@ def test_knn_option_sbs_tuplerange_1():
                scoring='accuracy',
                cv=4,
                skip_if_stuck=True,
-               print_progress=False)
+               verbose=0)
     sfs4 = sfs4.fit(X, y)
     assert round(sfs4.k_score_, 3) == 0.967, sfs4.k_score_
     assert sfs4.k_feature_idx_ == (0, 2, 3), sfs4.k_feature_idx_
@@ -349,7 +349,7 @@ def test_knn_scoring_metric():
                scoring='accuracy',
                cv=4,
                skip_if_stuck=True,
-               print_progress=False)
+               verbose=0)
     sfs5 = sfs5.fit(X, y)
     assert round(sfs5.k_score_, 4) == 0.9728
 
@@ -359,7 +359,7 @@ def test_knn_scoring_metric():
                floating=True,
                cv=4,
                skip_if_stuck=True,
-               print_progress=False)
+               verbose=0)
     sfs6 = sfs6.fit(X, y)
     assert round(sfs6.k_score_, 4) == 0.9728
 
@@ -370,7 +370,7 @@ def test_knn_scoring_metric():
                scoring='f1_macro',
                cv=4,
                skip_if_stuck=True,
-               print_progress=False)
+    )
     sfs7 = sfs7.fit(X, y)
     assert round(sfs7.k_score_, 4) == 0.9727, sfs7.k_score_
 
@@ -386,7 +386,7 @@ def test_regression():
                 scoring=MEAN_SQUARED_ERROR,
                 cv=10,
                 skip_if_stuck=True,
-                print_progress=False)
+                verbose=0)
     sfs_r = sfs_r.fit(X, y)
     assert len(sfs_r.k_feature_idx_) == 13
     assert round(sfs_r.k_score_, 4) == -34.7631
@@ -403,7 +403,7 @@ def test_regression_in_range():
                 scoring=MEAN_SQUARED_ERROR,
                 cv=10,
                 skip_if_stuck=True,
-                print_progress=False)
+                verbose=0)
     sfs_r = sfs_r.fit(X, y)
     assert len(sfs_r.k_feature_idx_) == 9
     assert round(sfs_r.k_score_, 4) == -31.1537
@@ -447,7 +447,7 @@ def test_clone_params_pass():
                cv=0,
                skip_if_stuck=True,
                clone_estimator=False,
-               print_progress=False,
+               verbose=0,
                n_jobs=1)
     sfs1 = sfs1.fit(X, y)
     assert(sfs1.k_feature_idx_ == (1, 3))
@@ -467,7 +467,7 @@ def test_transform_not_fitted():
                cv=0,
                skip_if_stuck=True,
                clone_estimator=False,
-               print_progress=False,
+               verbose=0,
                n_jobs=1)
 
     expect = 'SequentialFeatureSelector has not been fitted, yet.'
@@ -492,7 +492,7 @@ def test_get_metric_dict_not_fitted():
                cv=0,
                skip_if_stuck=True,
                clone_estimator=False,
-               print_progress=False,
+               verbose=0,
                n_jobs=1)
 
     expect = 'SequentialFeatureSelector has not been fitted, yet.'
@@ -500,3 +500,29 @@ def test_get_metric_dict_not_fitted():
     assert_raises(AttributeError,
                   expect,
                   sfs1.get_metric_dict)
+
+
+def test_keyboard_interrupt():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+
+    knn = KNeighborsClassifier(n_neighbors=4)
+    sfs1 = SFS(
+        knn,
+        k_features=3,
+        forward=True,
+        floating=False,
+        scoring='accuracy',
+        cv=3,
+        skip_if_stuck=True,
+        clone_estimator=False,
+        verbose=5,
+        n_jobs=1
+    )
+
+    sfs1._TESTING_INTERRUPT_MODE = True
+    out = sfs1.fit(X, y)
+
+    assert len(out.subsets_.keys()) > 0
+    assert sfs1.interrupted_

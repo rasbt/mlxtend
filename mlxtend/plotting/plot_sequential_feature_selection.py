@@ -8,7 +8,6 @@
 
 import matplotlib.pyplot as plt
 
-
 def plot_sequential_feature_selection(metric_dict,
                                       kind='std_dev',
                                       color='blue',
@@ -45,6 +44,7 @@ def plot_sequential_feature_selection(metric_dict,
     fig : matplotlib.pyplot.figure() object
 
     """
+
     allowed = {'std_dev', 'std_err', 'ci', None}
     if kind not in allowed:
         raise AttributeError('kind not in %s' % allowed)

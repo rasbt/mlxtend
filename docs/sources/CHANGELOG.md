@@ -18,6 +18,7 @@ The CHANGELOG for the current development version is available via
 - New 'StackingCVClassifier' estimator in 'mlxtend.classifier' for implementing a stacking ensemble that uses cross-validation techniques for training the meta-estimator to avoid overfitting. [Reiichiro Nakano](https://github.com/reiinakano)
 - New `OnehotTransactions` encoder class added to the `preprocessing` submodule for transforming transaction data into a one-hot encoded array
 - The `SequentialFeatureSelector` estimator in `mlxtend.feature_selection` now is safely stoppable mid-process by control+c, and deprecated print_progress in favor of a more tunable verbose parameter. [Will McGinnis](https://github.com/wdm0006)
+- New `apriori` function in `association` to extract frequent itemsets from transaction data for association rule mining
 
 ##### Changes
 

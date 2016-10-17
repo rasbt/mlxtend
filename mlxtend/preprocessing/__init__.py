@@ -11,7 +11,9 @@ from .scaling import standardize
 from .dense_transformer import DenseTransformer
 from .copy_transformer import CopyTransformer
 from .onehot import one_hot
+from .onehot import OnehotTransactions
 
 
 __all__ = ["MeanCenterer", "shuffle_arrays_unison", "CopyTransformer",
-           "minmax_scaling", "standardize", "DenseTransformer", "one_hot"]
+           "minmax_scaling", "standardize", "DenseTransformer",
+           "one_hot", "OnehotTransactions"]

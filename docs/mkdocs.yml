@@ -68,6 +68,7 @@ pages:
     - user_guide/preprocessing/shuffle_arrays_unison.md
     - user_guide/preprocessing/standardize.md
     - user_guide/preprocessing/one-hot_encoding.md
+    - user_guide/preprocessing/OnehotTransactions.md
     - user_guide/preprocessing/DenseTransformer.md
     - user_guide/preprocessing/CopyTransformer.md
   - data:

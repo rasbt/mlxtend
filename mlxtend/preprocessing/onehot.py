@@ -49,3 +49,146 @@ def one_hot(y, num_labels='auto', dtype='float'):
             ary[i, val] = 1
 
     return ary.astype(dtype)
+
+
+class OnehotTransactions(object):
+    """One-hot encoder class for transaction data in Python lists
+
+    Parameters
+    ------------
+    None
+
+    Attributes
+    ------------
+    columns_: list
+      List of unique names in the `X` input list of lists
+
+    """
+    def __init__(self):
+        return None
+
+    def fit(self, X):
+        """Learn unique column names from transaction DataFrame
+
+        Parameters
+        ------------
+        X : list of lists
+          A python list of lists, where the outer list stores the
+          n transactions and the inner list stores the items in each
+          transaction.
+
+          For example,
+          [['Apple', 'Beer', 'Rice', 'Chicken'],
+           ['Apple', 'Beer', 'Rice'],
+           ['Apple', 'Beer'],
+           ['Apple', 'Bananas'],
+           ['Milk', 'Beer', 'Rice', 'Chicken'],
+           ['Milk', 'Beer', 'Rice'],
+           ['Milk', 'Beer'],
+           ['Apple', 'Bananas']]
+
+        """
+        unique_items = set()
+        for transaction in X:
+            for item in transaction:
+                unique_items.add(item)
+        self.columns_ = sorted(unique_items)
+        return self
+
+    def transform(self, X):
+        """Transform transactions into a one-hot encoded NumPy array.
+
+        Parameters
+        ------------
+        X : list of lists
+          A python list of lists, where the outer list stores the
+          n transactions and the inner list stores the items in each
+          transaction.
+
+          For example,
+          [['Apple', 'Beer', 'Rice', 'Chicken'],
+           ['Apple', 'Beer', 'Rice'],
+           ['Apple', 'Beer'],
+           ['Apple', 'Bananas'],
+           ['Milk', 'Beer', 'Rice', 'Chicken'],
+           ['Milk', 'Beer', 'Rice'],
+           ['Milk', 'Beer'],
+           ['Apple', 'Bananas']]
+
+        Returns
+        ------------
+        onehot : NumPy array [n_transactions, n_unique_items]
+           The NumPy one-hot encoded integer array of the input transactions,
+           where the columns represent the unique items found in the input
+           array in alphabetic order
+
+           For example,
+           array([[1, 0, 1, 1, 0, 1],
+                  [1, 0, 1, 0, 0, 1],
+                  [1, 0, 1, 0, 0, 0],
+                  [1, 1, 0, 0, 0, 0],
+                  [0, 0, 1, 1, 1, 1],
+                  [0, 0, 1, 0, 1, 1],
+                  [0, 0, 1, 0, 1, 0],
+                  [1, 1, 0, 0, 0, 0]])
+          The corresponding column labels are available as self.columns_, e.g.,
+          ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']
+
+        """
+        onehot = np.zeros((len(X), len(self.columns_)), dtype=int)
+        for row_idx, transaction in enumerate(X):
+            for col_idx, item in enumerate(self.columns_):
+                onehot[row_idx, col_idx] = int(item in transaction)
+        return onehot
+
+    def inverse_transform(self, onehot):
+        """Transforms a one-hot encoded NumPy array back into transactions.
+
+        Parameters
+        ------------
+        onehot : NumPy array [n_transactions, n_unique_items]
+           The NumPy one-hot encoded integer array of the input transactions,
+           where the columns represent the unique items found in the input
+           array in alphabetic order
+
+           For example,
+           ```
+           array([[1, 0, 1, 1, 0, 1],
+                  [1, 0, 1, 0, 0, 1],
+                  [1, 0, 1, 0, 0, 0],
+                  [1, 1, 0, 0, 0, 0],
+                  [0, 0, 1, 1, 1, 1],
+                  [0, 0, 1, 0, 1, 1],
+                  [0, 0, 1, 0, 1, 0],
+                  [1, 1, 0, 0, 0, 0]])
+          ```
+          The corresponding column labels are available as self.columns_, e.g.,
+          ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']
+
+        Returns
+        ------------
+        X : list of lists
+          A python list of lists, where the outer list stores the
+          n transactions and the inner list stores the items in each
+          transaction.
+
+          For example,
+          ```
+          [['Apple', 'Beer', 'Rice', 'Chicken'],
+           ['Apple', 'Beer', 'Rice'],
+           ['Apple', 'Beer'],
+           ['Apple', 'Bananas'],
+           ['Milk', 'Beer', 'Rice', 'Chicken'],
+           ['Milk', 'Beer', 'Rice'],
+           ['Milk', 'Beer'],
+           ['Apple', 'Bananas']]
+          ```
+
+        """
+        return [[self.columns_[idx]
+                 for idx, cell in enumerate(row) if cell]
+                for row in onehot]
+
+    def fit_transform(self, X):
+        """Fit a OnehotTransactions encoder and transform a dataset."""
+        return self.fit(X).transform(X)

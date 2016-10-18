@@ -48,9 +48,10 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         backward selection otherwise
     floating : bool (default: False)
         Adds a conditional exclusion/inclusion if True.
-    verbose : int (default: 1), level of verbosity to use in logging. If 0, no output,
-        if 1 number of features in current set, if 2 detailed logging including timestamp
-        and cv scores at step.
+    verbose : int (default: 1), level of verbosity to use in logging.
+        If 0, no output,
+        if 1 number of features in current set, if 2 detailed logging i
+        ncluding timestamp and cv scores at step.
     scoring : str or callable (default='accuracy')
         Scoring metric in {accuracy, f1, precision, recall, roc_auc}
         for classifiers,
@@ -146,7 +147,9 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.fitted = False
         self.subsets_ = {}
         self.interrupted_ = False
-        self._TESTING_INTERRUPT_MODE = False  # don't mess with this unless testing
+
+        # don't mess with this unless testing
+        self._TESTING_INTERRUPT_MODE = False
 
     def fit(self, X, y):
         """Perform feature selection and learn model from training data.

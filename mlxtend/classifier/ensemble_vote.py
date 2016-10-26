@@ -13,6 +13,7 @@ from sklearn.base import ClassifierMixin
 from sklearn.base import TransformerMixin
 from sklearn.preprocessing import LabelEncoder
 from sklearn.base import clone
+from sklearn.exceptions import NotFittedError
 from ..externals.name_estimators import _name_estimators
 from ..externals import six
 import numpy as np
@@ -162,6 +163,10 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             Predicted class labels.
 
         """
+        if not hasattr(self, 'clfs_'):
+            raise NotFittedError("Estimator not fitted, "
+                                 "call `fit` before exploiting the model.")
+
         if self.voting == 'soft':
 
             maj = np.argmax(self.predict_proba(X), axis=1)
@@ -193,6 +198,10 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             Weighted average probability for each class per sample.
 
         """
+        if not hasattr(self, 'clfs_'):
+            raise NotFittedError("Estimator not fitted, "
+                                 "call `fit` before exploiting the model.")
+
         avg = np.average(self._predict_probas(X), axis=0, weights=self.weights)
         return avg
 

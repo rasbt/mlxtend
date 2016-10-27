@@ -117,7 +117,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         if print_progress:
             warnings.warn("The print_progress parameter "
                           "has been deprecated in "
-                          "0.4.3 and will be removed in 0.5.0. "
+                          "0.4.3 and will be removed in 0.6.0. "
                           "Please use the verbose parameter instead.",
                           DeprecationWarning)
             if verbose == 0:

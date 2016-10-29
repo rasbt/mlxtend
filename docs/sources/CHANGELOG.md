@@ -20,6 +20,7 @@ The CHANGELOG for the current development version is available at
 - The `SequentialFeatureSelector` estimator in `mlxtend.feature_selection` now is safely stoppable mid-process by control+c, and deprecated print_progress in favor of a more tunable verbose parameter ([Will McGinnis](https://github.com/wdm0006))
 - New `apriori` function in `association` to extract frequent itemsets from transaction data for association rule mining
 - New `checkerboard_plot` function in `plotting` to plot checkerboard tables / heat maps
+- New `mcnemar_table` function in `evaluate` to compute 2x2 contingency tables for McNemar's test
 
 ##### Changes
 

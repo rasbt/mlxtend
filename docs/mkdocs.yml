@@ -62,6 +62,7 @@ pages:
     - user_guide/tf_cluster/TfKmeans.md
   - evaluate:
     - user_guide/evaluate/confusion_matrix.md
+    - user_guide/evaluate/mcnemar_table.md
     - user_guide/evaluate/scoring.md
   - preprocessing:
     - user_guide/preprocessing/MeanCenterer.md

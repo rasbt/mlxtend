@@ -26,7 +26,7 @@ Link related issues/pull requests here
 - [ ] Ran `nosetests ./mlxtend -sv` and make sure that all unit tests pass
 - [ ] Checked the test coverage by running `nosetests ./mlxtend --with-coverage`
 - [ ] Checked for style issues by running `flake8 ./mlxtend`
-- [ ] Added a note about the modification or contribution to the `./docs/sources/`CHANGELOG.md` file
+- [ ] Added a note about the modification or contribution to the `./docs/sources/CHANGELOG.md` file
 - [ ] Modify documentation in the appropriate location under `mlxtend/docs/sources/` (optional)
 - [ ] Checked that the Travis-CI build passed at https://travis-ci.org/rasbt/mlxtend
 

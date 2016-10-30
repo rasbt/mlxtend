@@ -63,6 +63,7 @@ pages:
   - evaluate:
     - user_guide/evaluate/confusion_matrix.md
     - user_guide/evaluate/mcnemar_table.md
+    - user_guide/evaluate/mcnemar.md
     - user_guide/evaluate/scoring.md
   - preprocessing:
     - user_guide/preprocessing/MeanCenterer.md

@@ -25,8 +25,8 @@ def test_defaults():
     chi2, p = (20.672222222222221, 5.4500948254271171e-06)
     chi2p, pp = mcnemar(tb)
 
-    assert_almost_equal(chi2, chi2p, places=10)
-    assert_almost_equal(p, pp, places=10)
+    assert_almost_equal(chi2, chi2p, places=7)
+    assert_almost_equal(p, pp, places=7)
 
 
 def test_corrected_false():
@@ -35,8 +35,8 @@ def test_corrected_false():
     chi2, p = (21.355555555555554, 3.8151358651125936e-06)
     chi2p, pp = mcnemar(tb, corrected=False)
 
-    assert_almost_equal(chi2, chi2p, places=10)
-    assert_almost_equal(p, pp, places=10)
+    assert_almost_equal(chi2, chi2p, places=7)
+    assert_almost_equal(p, pp, places=7)
 
 
 def test_exact():
@@ -47,7 +47,7 @@ def test_exact():
     chi2p, pp = mcnemar(tb, exact=True)
 
     assert chi2 is None
-    assert_almost_equal(p, pp, places=10)
+    assert_almost_equal(p, pp, places=7)
     assert p < 4.45e-06
 
 
@@ -59,5 +59,5 @@ def test_exact_corrected():
     chi2p, pp = mcnemar(tb, exact=True, corrected=False)
 
     assert chi2 is None
-    assert_almost_equal(p, pp, places=10)
+    assert_almost_equal(p, pp, places=7)
     assert p < 4.45e-06

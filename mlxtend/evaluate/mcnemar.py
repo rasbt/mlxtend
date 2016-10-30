@@ -6,6 +6,8 @@
 # License: BSD 3 clause
 
 import numpy as np
+from scipy.stats import chisqprob
+from scipy.stats import binom
 
 
 def mcnemar_table(y_target, y_model1, y_model2):
@@ -24,13 +26,12 @@ def mcnemar_table(y_target, y_model1, y_model2):
     Returns
     ----------
     tb : array-like, shape=[2, 2]
-       - Cell [0, 0]: number of samples that both models predicted correctly
-       - Cell [1, 1]: number of samples that both models predicted incorrectly
-       - Cell [1, 0]: # of samples that model 1 got right and model 2 got wrong
-       - Cell [1, 0]: # of samples that model 2 got right and model 1 got wrong
-
+       2x2 contingency table with the following contents:
+       a: tb[0, 0]: # of samples that both models predicted correctly
+       b: tb[0, 1]: # of samples that model 1 got right and model 2 got wrong
+       c: tb[1, 0]: # of samples that model 2 got right and model 1 got wrong
+       d: tb[1, 1]: # of samples that both models predicted incorrectly
     """
-
     for ary in (y_target, y_model1, y_model2):
         if len(ary.shape) != 1:
             raise ValueError('One or more input arrays are not 1-dimensional.')
@@ -57,3 +58,54 @@ def mcnemar_table(y_target, y_model1, y_model2):
     tb[0, 1] = np.sum(minus_true == -1)
 
     return tb
+
+
+def mcnemar(ary, corrected=True, exact=False):
+    """
+    McNemar test for paired nominal data
+
+    Parameters
+    -----------
+    ary : array-like, shape=[2, 2]
+        2 x 2 contigency table (as returned by evaluate.mcnemar_table),
+        where
+        a: ary[0, 0]: # of samples that both models predicted correctly
+        b: ary[0, 1]: # of samples that model 1 got right and model 2 got wrong
+        c: ary[1, 0]: # of samples that model 2 got right and model 1 got wrong
+        d: aryCell [1, 1]: # of samples that both models predicted incorrectly
+    corrected : array-like, shape=[n_samples] (default: True)
+        Uses Edward's continuity correction for chi-squared if `True`
+    exact : bool, (default: False)
+        If `True`, uses an exact binomial test comparing b to
+        a binomial distribution with n = b + c and p = 0.5.
+        It is highly recommended to use `exact=True` for sample sizes < 25
+        since chi-squared is not well-approximated
+        by the chi-squared distribution!
+
+    Returns
+    -----------
+    chi2, p : float or None, float
+        Returns the chi-squared value and the p-value;
+        if `exact=True` (default: `False`), `chi2` is `None`
+
+    """
+
+    if not ary.shape == (2, 2):
+        raise ValueError('Input array must be a 2x2 array.')
+
+    b = ary[0, 1]
+    c = ary[1, 0]
+    n = b + c
+
+    if not exact:
+        if corrected:
+            chi2 = (abs(ary[0, 1] - ary[1, 0]) - 1.0)**2 / n
+        else:
+            chi2 = (ary[0, 1] - ary[1, 0])**2 / n
+        p = chisqprob(chi2, 1)
+
+    else:
+        p = 2. * sum([binom.pmf(k=i, n=n, p=0.5, loc=0) for i in range(b, n)])
+        chi2 = None
+
+    return chi2, p

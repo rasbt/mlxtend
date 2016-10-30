@@ -95,13 +95,13 @@ def mcnemar(ary, corrected=True, exact=False):
 
     b = ary[0, 1]
     c = ary[1, 0]
-    n = float(b + c)
+    n = b + c
 
     if not exact:
         if corrected:
-            chi2 = (abs(ary[0, 1] - ary[1, 0]) - 1.0)**2 / n
+            chi2 = (abs(ary[0, 1] - ary[1, 0]) - 1.0)**2 / float(n)
         else:
-            chi2 = (ary[0, 1] - ary[1, 0])**2 / n
+            chi2 = (ary[0, 1] - ary[1, 0])**2 / float(n)
         p = chisqprob(chi2, 1)
 
     else:

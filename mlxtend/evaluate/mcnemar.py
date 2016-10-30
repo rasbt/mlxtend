@@ -95,7 +95,7 @@ def mcnemar(ary, corrected=True, exact=False):
 
     b = ary[0, 1]
     c = ary[1, 0]
-    n = b + c
+    n = float(b + c)
 
     if not exact:
         if corrected:

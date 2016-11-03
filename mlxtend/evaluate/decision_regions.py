@@ -9,7 +9,7 @@
 import warnings
 
 
-def plot_decision_regions(**args):
+def plot_decision_regions(*args, **kwargs):
     """Plot decision regions of a classifier.
 
     Note that importing this function from mlxtend.evaluate has been
@@ -28,4 +28,4 @@ def plot_decision_regions(**args):
                   DeprecationWarning,
                   stacklevel=2)
 
-    return plot_decision_regions(**args)
+    return plot_decision_regions(*args, **kwargs)

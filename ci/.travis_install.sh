@@ -41,4 +41,8 @@ else
     python -c "import sklearn; print('sklearn %s' % sklearn.__version__)";
 fi
 
+if [ "${NOTEBOOKS}" = "true" ]; then
+    conda install jupyter matplotlib
+  fi
+
 python setup.py install;

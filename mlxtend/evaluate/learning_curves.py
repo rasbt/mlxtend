@@ -9,7 +9,7 @@
 import warnings
 
 
-def plot_learning_curves(**args):
+def plot_learning_curves(*args, **kwargs):
     """
 
     Note that importing this function from mlxtend.evaluate has been
@@ -28,4 +28,4 @@ def plot_learning_curves(**args):
                   DeprecationWarning,
                   stacklevel=2)
 
-    return plot_learning_curves(**args)
+    return plot_learning_curves(args, kwargs)

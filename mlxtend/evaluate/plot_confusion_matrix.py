@@ -8,7 +8,7 @@
 import warnings
 
 
-def plot_confusion_matrix(**args):
+def plot_confusion_matrix(*args, **kwargs):
     """
 
     Note that importing this function from mlxtend.evaluate has been
@@ -27,4 +27,4 @@ def plot_confusion_matrix(**args):
                   DeprecationWarning,
                   stacklevel=2)
 
-    return plot_confusion_matrix(**args)
+    return plot_confusion_matrix(*args, **kwargs)

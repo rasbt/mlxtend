@@ -1,18 +1,18 @@
 language: python
 matrix:
     include:
-        #- python: 3.5
-        #  env: LATEST="false" TENSORFLOW="false" COVERAGE="false" NUMPY_VERSION="1.10.4" SCIPY_VERSION="0.17" SKLEARN_VERSION="0.17" PANDAS_VERSION="0.17.1"
-        #- python: 3.5
-        #  env: LATEST="true" TENSORFLOW="false" COVERAGE="true" NOTEBOOKS="false"
+        - python: 3.5
+          env: LATEST="false" TENSORFLOW="false" COVERAGE="false" NUMPY_VERSION="1.10.4" SCIPY_VERSION="0.17" SKLEARN_VERSION="0.17" PANDAS_VERSION="0.17.1"
+        - python: 3.5
+          env: LATEST="true" TENSORFLOW="false" COVERAGE="true" NOTEBOOKS="false"
         - python: 3.5
           env: LATEST="true" TENSORFLOW="true" COVERAGE="false" NOTEBOOKS="true"
-        #- python: 3.4
-        #  env: LATEST="true" TENSORFLOW="false" COVERAGE="false" NOTEBOOKS="false"
-        #- python: 2.7
-        #  env: LATEST="true" TENSORFLOW="false" COVERAGE="false" NOTEBOOKS="false"
-        #- python: 2.7
-        #  env: LATEST="true" TENSORFLOW="true" COVERAGE="false" NOTEBOOKS="false"
+        - python: 3.4
+          env: LATEST="true" TENSORFLOW="false" COVERAGE="false" NOTEBOOKS="false"
+        - python: 2.7
+          env: LATEST="true" TENSORFLOW="false" COVERAGE="false" NOTEBOOKS="false"
+        - python: 2.7
+          env: LATEST="true" TENSORFLOW="true" COVERAGE="false" NOTEBOOKS="false"
 install:
     - sudo apt-get update
     - source ci/.travis_install.sh

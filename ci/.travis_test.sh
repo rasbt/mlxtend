@@ -23,5 +23,5 @@ fi
 if [[ "$NOTEBOOKS" == "true" ]]; then
     cd docs
     python make_api.py
-    jupyter nbconvert --to notebook --execute sources/user_guide/classifier/Perceptron.ipynb
+    python  execute_notebooks.py
 fi

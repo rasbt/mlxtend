@@ -43,7 +43,6 @@ fi
 
 if [ "${NOTEBOOKS}" = "true" ]; then
     conda install jupyter matplotlib
-    pip install watermark
   fi
 
 python setup.py install;

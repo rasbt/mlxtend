@@ -23,5 +23,5 @@ fi
 if [[ "$NOTEBOOKS" == "true" ]]; then
     cd docs
     python make_api.py
-    python  execute_notebooks.py
+    find sources -name "*.ipynb" -exec jupyter nbconvert --to notebook --execute {} \;
 fi

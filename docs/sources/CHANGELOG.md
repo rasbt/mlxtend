@@ -2,14 +2,18 @@
 
 ---
 
-### Version 0.5.dev0
+
+### Version 0.5.1dev0
 
 The CHANGELOG for the current development version is available at
 [https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md](https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md).
 
+### Version 0.5.0
+
 ##### Downloads
 
-- -
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/0.5.0.zip)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.5.0.tar.gz)
 
 ##### New Features
 
@@ -24,8 +28,8 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- All plotting functions have been moved to `mlxtend.plotting` for compatibility reasons with continuous integration services and to make the installation of `matplotlib` optional for users of mlxtend's core functionality
-- Added a compatibility layer for scikit-learn 0.18 using the new `model_selection` module  while maintaining backwards compatibility to scikit-learn 0.17.
+- All plotting functions have been moved to `mlxtend.plotting` for compatibility reasons with continuous integration services and to make the installation of `matplotlib` optional for users of `mlxtend`'s core functionality
+- Added a compatibility layer for `scikit-learn 0.18` using the new `model_selection` module  while maintaining backwards compatibility to scikit-learn 0.17.
 
 ##### Bug Fixes
 

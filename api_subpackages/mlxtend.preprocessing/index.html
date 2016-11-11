@@ -121,6 +121,12 @@
         
             
 <li >
+    <a href="../../user_guide/classifier/StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../../user_guide/tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../user_guide/regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../../user_guide/evaluate/plot_decision_regions/">Plot decision regions</a>
+    <a href="../../user_guide/evaluate/mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../../user_guide/evaluate/plot_learning_curves/">Plot learning curves</a>
+    <a href="../../user_guide/evaluate/mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../../user_guide/preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../user_guide/general_plotting/category_scatter/">Category scatter</a>
+    <a href="../../user_guide/plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../../user_guide/general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../../user_guide/plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../../user_guide/general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../../user_guide/plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -753,7 +795,7 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../mlxtend.general_plotting/">
+                        <a rel="next" href="../mlxtend.plotting/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
@@ -807,6 +849,12 @@
         <li class="main "><a href="#one_hot">one_hot</a></li>
         
     
+        <li class="main "><a href="#onehottransactions">OnehotTransactions</a></li>
+        
+            <li><a href="#methods_3">Methods</a></li>
+                <!--  -->
+        
+    
         <li class="main "><a href="#shuffle_arrays_unison">shuffle_arrays_unison</a></li>
         
     
@@ -817,7 +865,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.4.3dev0 </p>
+<p>mlxtend version: 0.5.dev0 </p>
 <h2 id="copytransformer">CopyTransformer</h2>
 <p><em>CopyTransformer()</em></p>
 <p>Transformer that returns a copy of the input array</p>
@@ -878,7 +926,7 @@ contained subobjects that are estimators.</p>
 <p><em>set_params(</em><em>params)</em></p>
 <p>Set the parameters of this estimator.</p>
 <p>The method works on simple estimators as well as on nested objects
-(such as pipelines). The former have parameters of the form
+(such as pipelines). The latter have parameters of the form
 <code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
 component of a nested object.</p>
 <p><strong>Returns</strong></p>
@@ -962,7 +1010,7 @@ contained subobjects that are estimators.</p>
 <p><em>set_params(</em><em>params)</em></p>
 <p>Set the parameters of this estimator.</p>
 <p>The method works on simple estimators as well as on nested objects
-(such as pipelines). The former have parameters of the form
+(such as pipelines). The latter have parameters of the form
 <code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
 component of a nested object.</p>
 <p><strong>Returns</strong></p>
@@ -1104,6 +1152,125 @@ of unique labels from the input array if set to 'auto'.</p>
 <p><code>ary</code> : numpy.ndarray, shape = [n_classlabels]</p>
 <p>One-hot encoded array, where each sample is represented as
 a row vector in the returned array.</p>
+</li>
+</ul>
+<h2 id="onehottransactions">OnehotTransactions</h2>
+<p><em>OnehotTransactions()</em></p>
+<p>One-hot encoder class for transaction data in Python lists</p>
+<p><strong>Parameters</strong></p>
+<p>None</p>
+<p><strong>Attributes</strong></p>
+<p>columns_: list
+List of unique names in the <code>X</code> input list of lists</p>
+<h3 id="methods_3">Methods</h3>
+<hr>
+
+<p><em>fit(X)</em></p>
+<p>Learn unique column names from transaction DataFrame</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : list of lists</p>
+<p>A python list of lists, where the outer list stores the
+n transactions and the inner list stores the items in each
+transaction.</p>
+<p>For example,
+[['Apple', 'Beer', 'Rice', 'Chicken'],
+['Apple', 'Beer', 'Rice'],
+['Apple', 'Beer'],
+['Apple', 'Bananas'],
+['Milk', 'Beer', 'Rice', 'Chicken'],
+['Milk', 'Beer', 'Rice'],
+['Milk', 'Beer'],
+['Apple', 'Bananas']]</p>
+</li>
+</ul>
+<hr>
+
+<p><em>fit_transform(X)</em></p>
+<p>Fit a OnehotTransactions encoder and transform a dataset.</p>
+<hr>
+
+<p><em>inverse_transform(onehot)</em></p>
+<p>Transforms a one-hot encoded NumPy array back into transactions.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>onehot</code> : NumPy array [n_transactions, n_unique_items]</p>
+<p>The NumPy one-hot encoded integer array of the input transactions,
+where the columns represent the unique items found in the input
+array in alphabetic order</p>
+<p>For example,
+<code>array([[1, 0, 1, 1, 0, 1],
+[1, 0, 1, 0, 0, 1],
+[1, 0, 1, 0, 0, 0],
+[1, 1, 0, 0, 0, 0],
+[0, 0, 1, 1, 1, 1],
+[0, 0, 1, 0, 1, 1],
+[0, 0, 1, 0, 1, 0],
+[1, 1, 0, 0, 0, 0]])</code>
+The corresponding column labels are available as self.columns_, e.g.,
+['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>X</code> : list of lists</p>
+<p>A python list of lists, where the outer list stores the
+n transactions and the inner list stores the items in each
+transaction.</p>
+<p>For example,
+<code>[['Apple', 'Beer', 'Rice', 'Chicken'],
+['Apple', 'Beer', 'Rice'],
+['Apple', 'Beer'],
+['Apple', 'Bananas'],
+['Milk', 'Beer', 'Rice', 'Chicken'],
+['Milk', 'Beer', 'Rice'],
+['Milk', 'Beer'],
+['Apple', 'Bananas']]</code></p>
+</li>
+</ul>
+<hr>
+
+<p><em>transform(X)</em></p>
+<p>Transform transactions into a one-hot encoded NumPy array.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : list of lists</p>
+<p>A python list of lists, where the outer list stores the
+n transactions and the inner list stores the items in each
+transaction.</p>
+<p>For example,
+[['Apple', 'Beer', 'Rice', 'Chicken'],
+['Apple', 'Beer', 'Rice'],
+['Apple', 'Beer'],
+['Apple', 'Bananas'],
+['Milk', 'Beer', 'Rice', 'Chicken'],
+['Milk', 'Beer', 'Rice'],
+['Milk', 'Beer'],
+['Apple', 'Bananas']]</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>onehot</code> : NumPy array [n_transactions, n_unique_items]</p>
+<p>The NumPy one-hot encoded integer array of the input transactions,
+where the columns represent the unique items found in the input
+array in alphabetic order</p>
+<p>For example,
+array([[1, 0, 1, 1, 0, 1],
+[1, 0, 1, 0, 0, 1],
+[1, 0, 1, 0, 0, 0],
+[1, 1, 0, 0, 0, 0],
+[0, 0, 1, 1, 1, 1],
+[0, 0, 1, 0, 1, 1],
+[0, 0, 1, 0, 1, 0],
+[1, 1, 0, 0, 0, 0]])
+The corresponding column labels are available as self.columns_, e.g.,
+['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']</p>
 </li>
 </ul>
 <h2 id="shuffle_arrays_unison">shuffle_arrays_unison</h2>

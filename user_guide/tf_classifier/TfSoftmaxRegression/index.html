@@ -121,6 +121,12 @@
         
             
 <li >
+    <a href="../../classifier/StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../../evaluate/plot_decision_regions/">Plot decision regions</a>
+    <a href="../../evaluate/mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../../evaluate/plot_learning_curves/">Plot learning curves</a>
+    <a href="../../evaluate/mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../general_plotting/category_scatter/">Category scatter</a>
+    <a href="../../plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../../plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../../plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -828,7 +870,7 @@
 <p>Simple gradient descent training via <code>minibatches=1</code>:</p>
 <pre><code class="python">from mlxtend.tf_classifier import TfSoftmaxRegression
 from mlxtend.data import iris_data
-from mlxtend.evaluate import plot_decision_regions
+from mlxtend.plotting import plot_decision_regions
 import matplotlib.pyplot as plt
 
 # Loading Data
@@ -855,7 +897,7 @@ plt.show()
 
 <pre><code>Iteration: 20/20 | Cost 0.37
 </code></pre>
-<p><img alt="png" src="../TfSoftmaxRegression_files/TfSoftmaxRegression_12_1.png" /></p>
+<p><img alt="png" src="../TfSoftmaxRegression_files/TfSoftmaxRegression_10_1.png" /></p>
 <p>Continue the training if cost could be further decreased via additional epochs. Instead of training the classifier another 20 epochs, we modify the epochs and set them to 500. Also, we want to make sure to set <code>init_weights</code> to <code>False</code> in order to re-use the model parameters from the previous training.</p>
 <pre><code class="python">lr.epochs = 500
 lr.fit(X, y, init_params=False)
@@ -867,13 +909,13 @@ plt.show()
 
 <pre><code>Iteration: 500/500 | Cost 0.13
 </code></pre>
-<p><img alt="png" src="../TfSoftmaxRegression_files/TfSoftmaxRegression_14_1.png" /></p>
+<p><img alt="png" src="../TfSoftmaxRegression_files/TfSoftmaxRegression_12_1.png" /></p>
 <pre><code class="python">plot_decision_regions(X, y, clf=lr)
 plt.title('Softmax Regression - Gradient Descent')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../TfSoftmaxRegression_files/TfSoftmaxRegression_15_0.png" /></p>
+<p><img alt="png" src="../TfSoftmaxRegression_files/TfSoftmaxRegression_13_0.png" /></p>
 <h4 id="predicting-class-labels">Predicting Class Labels</h4>
 <pre><code class="python">print('Predicted class labels:', lr.predict(X[[0, 99, 149]]))
 </code></pre>
@@ -924,8 +966,10 @@ plt.show()
 
 <pre><code>Iteration: 10/10 | Cost 0.15
 </code></pre>
-<p><img alt="png" src="../TfSoftmaxRegression_files/TfSoftmaxRegression_22_1.png" /></p>
-<p><img alt="png" src="../TfSoftmaxRegression_files/TfSoftmaxRegression_22_2.png" /></p>
+<p><img alt="png" src="../TfSoftmaxRegression_files/TfSoftmaxRegression_20_1.png" /></p>
+<pre><code>/Users/Sebastian/miniconda3/lib/python3.5/site-packages/ipykernel/__main__.py:27: DeprecationWarning: Note that importing this function from mlxtend.evaluate has been deprecated and will not longer be supported in mlxtend 0.6. Please use`from mlxtend.plotting import plot_decision_regions` instead.
+</code></pre>
+<p><img alt="png" src="../TfSoftmaxRegression_files/TfSoftmaxRegression_20_3.png" /></p>
 <h3 id="example-3-mnist">Example 3 - MNIST</h3>
 <p>Note that <code>mnist_data</code> just contains a random 5000-sample subset of MNIST (~10% of the original dataset size).</p>
 <pre><code class="python">from mlxtend.data import mnist_data
@@ -949,7 +993,7 @@ plt.show()
 
 <pre><code>Iteration: 100/100 | Cost 6.26
 </code></pre>
-<p><img alt="png" src="../TfSoftmaxRegression_files/TfSoftmaxRegression_25_1.png" /></p>
+<p><img alt="png" src="../TfSoftmaxRegression_files/TfSoftmaxRegression_23_1.png" /></p>
 <pre><code class="python">import numpy as np
 y_pred = lr.predict(X)
 print('Training Accuracy: %.2f%%' % (lr.score(X, y) * 100))
@@ -965,7 +1009,7 @@ print('Training Accuracy: %.2f%%' % (lr.score(X, y) * 100))
 plot_digit(X, y, 0)  
 </code></pre>
 
-<p><img alt="png" src="../TfSoftmaxRegression_files/TfSoftmaxRegression_27_0.png" /></p>
+<p><img alt="png" src="../TfSoftmaxRegression_files/TfSoftmaxRegression_25_0.png" /></p>
 <pre><code class="python">print('Prediction: %d' % lr.predict(X[0, None]))
 </code></pre>
 

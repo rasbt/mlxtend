@@ -121,6 +121,12 @@
         
             
 <li >
+    <a href="../../classifier/StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../plot_decision_regions/">Plot decision regions</a>
+    <a href="../mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../plot_learning_curves/">Plot learning curves</a>
+    <a href="../mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../general_plotting/category_scatter/">Category scatter</a>
+    <a href="../../plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../../plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../../plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -753,7 +795,7 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../plot_learning_curves/">
+                        <a rel="next" href="../mcnemar/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
@@ -871,7 +913,7 @@ The previous metrics take values in the range between 0 (worst) and 1 (best), wh
 </ul>
 <h2 id="examples">Examples</h2>
 <h3 id="example-1-classification-error">Example 1 - Classification Error</h3>
-<pre><code class="python">#from mlxtend.evaluate import scoring
+<pre><code class="python">from mlxtend.evaluate import scoring
 
 y_targ = [1, 1, 1, 0, 0, 2, 0, 3]
 y_pred = [1, 0, 1, 0, 0, 2, 1, 3]
@@ -883,7 +925,7 @@ print('Error: %s%%' % (res * 100))
 <pre><code>Error: 25.0%
 </code></pre>
 <h2 id="api">API</h2>
-<p><em>scoring(y_target, y_predicted, metric='error', positive_label=1)</em></p>
+<p><em>scoring(y_target, y_predicted, metric='error', positive_label=1, unique_labels='auto')</em></p>
 <p>Compute a scoring metric for supervised learning.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -897,10 +939,10 @@ print('Error: %s%%' % (res * 100))
 </li>
 <li>
 <p><code>metric</code> : str (default: 'error')</p>
-<p>Performance metric.
-[TP: True positives, TN = True negatives,</p>
-<p>TN: True negatives, FN = False negatives]</p>
-<p>'accuracy': (TP + TN)/(FP + FN + TP + TN) = 1-ERR</p>
+<p>Performance metric:
+'accuracy': (TP + TN)/(FP + FN + TP + TN) = 1-ERR</p>
+<p>'per-class accuracy': Average per-class accuracy</p>
+<p>'per-class error':  Average per-class error</p>
 <p>'error': (TP + TN)/(FP+ FN + TP + TN) = 1-ACC</p>
 <p>'false_positive_rate': FP/N = FP/(FP + TN)</p>
 <p>'true_positive_rate': TP/P = TP/(FN + TP)</p>
@@ -912,11 +954,19 @@ print('Error: %s%%' % (res * 100))
 <p>'f1': 2 * (PRE * REC)/(PRE + REC)</p>
 <p>'matthews_corr_coef':  (TP<em>TN - FP</em>FN)
 / (sqrt{(TP + FP)( TP + FN )( TN + FP )( TN + FN )})</p>
+<p>Where:
+[TP: True positives, TN = True negatives,</p>
+<p>TN: True negatives, FN = False negatives]</p>
 </li>
 <li>
 <p><code>positive_label</code> : int (default: 1)</p>
 <p>Label of the positive class for binary classification
 metrics.</p>
+</li>
+<li>
+<p><code>unique_labels</code> : str or array-like (default: 'auto')</p>
+<p>If 'auto', deduces the unique class labels from
+y_target</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>

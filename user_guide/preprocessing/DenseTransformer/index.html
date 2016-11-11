@@ -121,6 +121,12 @@
         
             
 <li >
+    <a href="../../classifier/StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../../evaluate/plot_decision_regions/">Plot decision regions</a>
+    <a href="../../evaluate/mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../../evaluate/plot_learning_curves/">Plot learning curves</a>
+    <a href="../../evaluate/mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../general_plotting/category_scatter/">Category scatter</a>
+    <a href="../../plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../../plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../../plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -753,7 +795,7 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../one-hot_encoding/">
+                        <a rel="next" href="../OnehotTransactions/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
@@ -808,7 +850,7 @@
 <h2 id="examples">Examples</h2>
 <h3 id="example-1">Example 1</h3>
 <pre><code class="python">from sklearn.pipeline import Pipeline
-from sklearn.grid_search import GridSearchCV
+from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import CountVectorizer
 from mlxtend.preprocessing import DenseTransformer
@@ -858,28 +900,92 @@ Best parameters set:
     clf__n_estimators: 50
 
 
-[Parallel(n_jobs=1)]: Done  18 out of  18 | elapsed:    2.4s finished
+[Parallel(n_jobs=1)]: Done  18 out of  18 | elapsed:    3.9s finished
 </code></pre>
 <h2 id="api">API</h2>
-<p><em>DenseTransformer(some_param=True)</em></p>
-<p>Convert a sparse matrix into a dense matrix.</p>
+<p><em>DenseTransformer(return_copy=True)</em></p>
+<p>Convert a sparse array into a dense array.</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
 <p><em>fit(X, y=None)</em></p>
-<p>None</p>
+<p>Mock method. Does nothing.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>self</p>
 <hr>
 
 <p><em>fit_transform(X, y=None)</em></p>
-<p>None</p>
+<p>Return a dense version of the input array.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>X_dense</code> : dense version of the input X array.</li>
+</ul>
 <hr>
 
 <p><em>get_params(deep=True)</em></p>
-<p>None</p>
+<p>Get parameters for this estimator.</p>
+<p><strong>Parameters</strong></p>
+<p>deep: boolean, optional
+If True, will return the parameters for this estimator and
+contained subobjects that are estimators.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>params</code> : mapping of string to any</p>
+<p>Parameter names mapped to their values.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.</p>
+<p>The method works on simple estimators as well as on nested objects
+(such as pipelines). The latter have parameters of the form
+<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
+component of a nested object.</p>
+<p><strong>Returns</strong></p>
+<p>self</p>
 <hr>
 
 <p><em>transform(X, y=None)</em></p>
-<p>None</p></div>
+<p>Return a dense version of the input array.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>X_dense</code> : dense version of the input X array.</li>
+</ul></div>
         
     </div>
 

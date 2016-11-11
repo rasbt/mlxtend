@@ -121,6 +121,12 @@
         
             
 <li >
+    <a href="../../classifier/StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../../evaluate/plot_decision_regions/">Plot decision regions</a>
+    <a href="../../evaluate/mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../../evaluate/plot_learning_curves/">Plot learning curves</a>
+    <a href="../../evaluate/mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../general_plotting/category_scatter/">Category scatter</a>
+    <a href="../../plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../../plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../../plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -917,7 +959,7 @@ plt.xlabel('x coordinate')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../RBFKernelPCA_files/RBFKernelPCA_18_0.png" /></p>
+<p><img alt="png" src="../RBFKernelPCA_files/RBFKernelPCA_16_0.png" /></p>
 <p>Since the two half-moon shapes are linearly inseparable, we expect that the “classic” PCA will fail to give us a “good” representation of the data in 1D space. Let us use <code>PCA</code> class to perform the dimensionality reduction.</p>
 <pre><code class="python">from mlxtend.feature_extraction import PrincipalComponentAnalysis as PCA
 
@@ -934,7 +976,7 @@ plt.ylabel('PC2')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../RBFKernelPCA_files/RBFKernelPCA_20_0.png" /></p>
+<p><img alt="png" src="../RBFKernelPCA_files/RBFKernelPCA_18_0.png" /></p>
 <p>As we can see, the resulting principal components do not yield a subspace where the data is linearly separated well. Note that PCA is a unsupervised method and does not “consider” class labels in order to maximize the variance in contrast to Linear Discriminant Analysis. Here, the colors blue and red are just added for visualization purposes to indicate the degree of separation.</p>
 <p>Next, we will perform dimensionality reduction via RBF kernel PCA on our half-moon data. The choice of <mathjax>$\gamma$</mathjax>
 depends on the dataset and can be obtained via hyperparameter tuning techniques like Grid Search. Hyperparameter tuning is a broad topic itself, and here I will just use a <mathjax>$\gamma$</mathjax>-value that I found to produce “good” results.</p>
@@ -959,7 +1001,7 @@ plt.ylabel('PC2')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../RBFKernelPCA_files/RBFKernelPCA_25_0.png" /></p>
+<p><img alt="png" src="../RBFKernelPCA_files/RBFKernelPCA_23_0.png" /></p>
 <p>The new feature space is linearly separable now. Since we are often interested in dimensionality reduction, let's have a look at the first component only.</p>
 <pre><code class="python">import numpy as np
 
@@ -974,7 +1016,7 @@ plt.yticks([])
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../RBFKernelPCA_files/RBFKernelPCA_27_0.png" /></p>
+<p><img alt="png" src="../RBFKernelPCA_files/RBFKernelPCA_25_0.png" /></p>
 <p>We can clearly see that the projection via RBF kernel PCA yielded a subspace where the classes are separated well. Such a subspace can then be used as input for generalized linear classification models, e.g.,  logistic regression.</p>
 <h4 id="projecting-new-data_1">Projecting new data</h4>
 <p>Finally, via the transform method, we can project new data onto the new component axes.</p>
@@ -1000,7 +1042,7 @@ plt.legend()
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../RBFKernelPCA_files/RBFKernelPCA_31_0.png" /></p>
+<p><img alt="png" src="../RBFKernelPCA_files/RBFKernelPCA_29_0.png" /></p>
 <h3 id="example-2-concentric-circles">Example 2 - Concentric circles</h3>
 <p>Following the concepts explained in example 1, let's have a look at another classic case: 2 concentric circles with random noise produced by scikit-learn’s <code>make_circles</code>.</p>
 <pre><code class="python">from sklearn.datasets import make_circles
@@ -1018,7 +1060,7 @@ plt.xlabel('x coordinate')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../RBFKernelPCA_files/RBFKernelPCA_34_0.png" /></p>
+<p><img alt="png" src="../RBFKernelPCA_files/RBFKernelPCA_32_0.png" /></p>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.preprocessing import standardize
 from mlxtend.feature_extraction import RBFKernelPCA as KPCA
@@ -1039,7 +1081,7 @@ plt.ylabel('PC2')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../RBFKernelPCA_files/RBFKernelPCA_36_0.png" /></p>
+<p><img alt="png" src="../RBFKernelPCA_files/RBFKernelPCA_34_0.png" /></p>
 <pre><code class="python">plt.scatter(X_kpca[y==0, 0], np.zeros((500, 1)), 
             color='red', marker='o', alpha=0.5)
 plt.scatter(X_kpca[y==1, 0], np.zeros((500, 1)), 
@@ -1051,9 +1093,9 @@ plt.yticks([])
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../RBFKernelPCA_files/RBFKernelPCA_37_0.png" /></p>
+<p><img alt="png" src="../RBFKernelPCA_files/RBFKernelPCA_35_0.png" /></p>
 <h2 id="api">API</h2>
-<p><em>RBFKernelPrincipalComponentAnalysis(gamma=15.0, n_components=None, copy_X=True)</em></p>
+<p><em>RBFKernelPCA(gamma=15.0, n_components=None, copy_X=True)</em></p>
 <p>RBF Kernel Principal Component Analysis for dimensionality reduction.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1091,7 +1133,7 @@ of new data via the transform method. Uses a reference to X if False.</p>
 <hr>
 
 <p><em>fit(X)</em></p>
-<p>Fit the PCA model with X.</p>
+<p>Learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>

@@ -121,6 +121,12 @@
         
             
 <li >
+    <a href="../../classifier/StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../../evaluate/plot_decision_regions/">Plot decision regions</a>
+    <a href="../../evaluate/mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../../evaluate/plot_learning_curves/">Plot learning curves</a>
+    <a href="../../evaluate/mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../general_plotting/category_scatter/">Category scatter</a>
+    <a href="../../plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../../plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../../plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -849,7 +891,8 @@ print('1st row', X[0])
 <pre><code>Dimensions: 392 x 8
 
 Header: ['cylinders', 'displacement', 'horsepower weight', 'acceleration', 'model year', 'origin', 'car name']
-1st row ['8' '307.0' '130.0' '3504.0' '12.0' '70' '1' 'chevrolet chevelle malibu']
+1st row [  8.00000000e+00   3.07000000e+02   1.30000000e+02   3.50400000e+03
+   1.20000000e+01   7.00000000e+01   1.00000000e+00              nan]
 </code></pre>
 <p>Note that the feature array contains a <code>str</code> column ("car name"), thus it is recommended to pick the features as needed and convert it into a <code>float</code> array for further analysis. The example below shows how to get rid of the <code>car name</code> column and cast the NumPy array as a <code>float</code> array.</p>
 <pre><code class="python">X[:, :-1].astype(float)

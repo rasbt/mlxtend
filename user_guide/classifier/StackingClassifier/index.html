@@ -121,6 +121,12 @@
         
             
 <li >
+    <a href="../StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../Perceptron/">Perceptron</a>
 </li>
 
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../../evaluate/plot_decision_regions/">Plot decision regions</a>
+    <a href="../../evaluate/mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../../evaluate/plot_learning_curves/">Plot learning curves</a>
+    <a href="../../evaluate/mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../general_plotting/category_scatter/">Category scatter</a>
+    <a href="../../plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../../plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../../plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -758,7 +800,7 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../Perceptron/">
+                        <a rel="prev" href="../StackingCVClassifier/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -785,22 +827,29 @@
     
         <li class="main active"><a href="#stackingclassifier">StackingClassifier</a></li>
         
-            <li><a href="#overview">Overview</a></li>
-                <!-- 
-                    <li><a href="#references">References</a></li>
-             -->
+    
+        <li class="main "><a href="#overview">Overview</a></li>
         
-            <li><a href="#examples">Examples</a></li>
-                <!-- 
-                    <li><a href="#example-1-simple-stacked-classification">Example 1 - Simple Stacked Classification</a></li>
-            
-                    <li><a href="#example-2-stacked-classification-and-gridsearch">Example 2 - Stacked Classification and GridSearch</a></li>
-             -->
+            <li><a href="#references">References</a></li>
+                <!--  -->
         
-            <li><a href="#api">API</a></li>
-                <!-- 
-                    <li><a href="#methods">Methods</a></li>
-             -->
+    
+        <li class="main "><a href="#examples">Examples</a></li>
+        
+            <li><a href="#example-1-simple-stacked-classification">Example 1 - Simple Stacked Classification</a></li>
+                <!--  -->
+        
+            <li><a href="#example-2-using-probabilities-as-meta-features">Example 2 - Using Probabilities as Meta-Features</a></li>
+                <!--  -->
+        
+            <li><a href="#example-3-stacked-classification-and-gridsearch">Example 3 - Stacked Classification and GridSearch</a></li>
+                <!--  -->
+        
+    
+        <li class="main "><a href="#api">API</a></li>
+        
+            <li><a href="#methods">Methods</a></li>
+                <!--  -->
         
     
     </ul>
@@ -812,7 +861,7 @@
 <blockquote>
 <p>from mlxtend.classifier import StackingClassifier</p>
 </blockquote>
-<h2 id="overview">Overview</h2>
+<h1 id="overview">Overview</h1>
 <p>Stacking is an ensemble learning technique to combine multiple classification models via a meta-classifier. The individual classification models are trained based on the complete training set; then, the meta-classifier is fitted based on the outputs -- meta-features -- of the individual classification models in the ensemble.
 The meta-classifier can either be trained on the predicted class labels or probabilities from the ensemble.</p>
 <p><img alt="" src="../StackingClassifier_files/stackingclassification_overview.png" /></p>
@@ -823,8 +872,8 @@ The meta-classifier can either be trained on the predicted class labels or proba
 <li>[1] Tang, J., S. Alelyani, and H. Liu. "<a href="https://books.google.com/books?id=nwQZCwAAQBAJ&amp;lpg=PA500&amp;dq=stacking%20classifier%20subsets&amp;pg=PA499#v=onepage&amp;q&amp;f=false">Data Classification: Algorithms and Applications.</a>" Data Mining and Knowledge Discovery Series, CRC Press (2015): pp. 498-500.</li>
 <li>[2] Wolpert, David H. "<a href="http://www.sciencedirect.com/science/article/pii/S0893608005800231">Stacked generalization.</a>" Neural networks 5.2 (1992): 241-259.</li>
 </ul>
-<h2 id="examples">Examples</h2>
-<h3 id="example-1-simple-stacked-classification">Example 1 - Simple Stacked Classification</h3>
+<h1 id="examples">Examples</h1>
+<h2 id="example-1-simple-stacked-classification">Example 1 - Simple Stacked Classification</h2>
 <pre><code class="python">from sklearn import datasets
 
 iris = datasets.load_iris()
@@ -860,7 +909,11 @@ for clf, label in zip([clf1, clf2, clf3, sclf],
           % (scores.mean(), scores.std(), label))
 </code></pre>
 
-<pre><code>3-fold cross validation:
+<pre><code>/Users/Sebastian/miniconda3/lib/python3.5/site-packages/sklearn/cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
+  "This module will be removed in 0.20.", DeprecationWarning)
+
+
+3-fold cross validation:
 
 Accuracy: 0.91 (+/- 0.01) [KNN]
 Accuracy: 0.91 (+/- 0.06) [Random Forest]
@@ -868,7 +921,7 @@ Accuracy: 0.92 (+/- 0.03) [Naive Bayes]
 Accuracy: 0.95 (+/- 0.03) [StackingClassifier]
 </code></pre>
 <pre><code class="python">import matplotlib.pyplot as plt
-from mlxtend.evaluate import plot_decision_regions
+from mlxtend.plotting import plot_decision_regions
 import matplotlib.gridspec as gridspec
 import itertools
 
@@ -889,8 +942,52 @@ for clf, lab, grd in zip([clf1, clf2, clf3, sclf],
     plt.title(lab)
 </code></pre>
 
-<p><img alt="png" src="../StackingClassifier_files/StackingClassifier_16_0.png" /></p>
-<h3 id="example-2-stacked-classification-and-gridsearch">Example 2 - Stacked Classification and GridSearch</h3>
+<p><img alt="png" src="../StackingClassifier_files/StackingClassifier_14_0.png" /></p>
+<h2 id="example-2-using-probabilities-as-meta-features">Example 2 - Using Probabilities as Meta-Features</h2>
+<p>Alternatively, the class-probabilities of the first-level classifiers can be used to train the meta-classifier (2nd-level classifier) by setting <code>use_probas=True</code>. If <code>average_probas=False</code>, the probabilities of the level-1 classifiers are averaged, if <code>average_probas=False</code>, the probabilities are stacked (recommended). For example, in a 3-class setting with 2 level-1 classifiers, these classifiers may make the following "probability" predictions for 1 training sample:</p>
+<ul>
+<li>classifier 1: [0.2, 0.5, 0.3]</li>
+<li>classifier 2: [0.3, 0.4, 0.4]</li>
+</ul>
+<p>If <code>average_probas=True</code>, the meta-features would be:</p>
+<ul>
+<li>[0.25, 0.45, 0.35]</li>
+</ul>
+<p>In contrast, using <code>average_probas=False</code> results in k features where, k = [n_classes * n_classifiers], by stacking these level-1 probabilities:</p>
+<ul>
+<li>[0.2, 0.5, 0.3, 0.3, 0.4, 0.4]</li>
+</ul>
+<pre><code class="python">clf1 = KNeighborsClassifier(n_neighbors=1)
+clf2 = RandomForestClassifier(random_state=1)
+clf3 = GaussianNB()
+lr = LogisticRegression()
+sclf = StackingClassifier(classifiers=[clf1, clf2, clf3],
+                          use_probas=True,
+                          average_probas=False,
+                          meta_classifier=lr)
+
+print('3-fold cross validation:\n')
+
+for clf, label in zip([clf1, clf2, clf3, sclf], 
+                      ['KNN', 
+                       'Random Forest', 
+                       'Naive Bayes',
+                       'StackingClassifier']):
+
+    scores = cross_validation.cross_val_score(clf, X, y, 
+                                              cv=3, scoring='accuracy')
+    print(&quot;Accuracy: %0.2f (+/- %0.2f) [%s]&quot; 
+          % (scores.mean(), scores.std(), label))
+</code></pre>
+
+<pre><code>3-fold cross validation:
+
+Accuracy: 0.91 (+/- 0.01) [KNN]
+Accuracy: 0.91 (+/- 0.06) [Random Forest]
+Accuracy: 0.92 (+/- 0.03) [Naive Bayes]
+Accuracy: 0.94 (+/- 0.03) [StackingClassifier]
+</code></pre>
+<h2 id="example-3-stacked-classification-and-gridsearch">Example 3 - Stacked Classification and GridSearch</h2>
 <p>To set up a parameter grid for scikit-learn's <code>GridSearch</code>, we simply provide the estimator's names in the parameter grid -- in the special case of the meta-regressor, we append the <code>'meta-'</code> prefix.</p>
 <pre><code class="python">from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
@@ -920,17 +1017,21 @@ grid.fit(X, y)
 
 for params, mean_score, scores in grid.grid_scores_:
     print(&quot;%0.3f (+/-%0.03f) for %r&quot;
-        % (mean_score, scores.std() / 2, params))
+        % (mean_score, scores.std() / 2.0, params))
 </code></pre>
 
-<pre><code>0.667 (+/-0.000) for {'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 1}
-0.667 (+/-0.000) for {'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 1}
-0.927 (+/-0.022) for {'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 1}
-0.913 (+/-0.027) for {'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 1}
-0.667 (+/-0.000) for {'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 5}
-0.667 (+/-0.000) for {'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 5}
-0.933 (+/-0.024) for {'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 5}
-0.940 (+/-0.019) for {'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 5}
+<pre><code>/Users/Sebastian/miniconda3/lib/python3.5/site-packages/sklearn/grid_search.py:43: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. This module will be removed in 0.20.
+  DeprecationWarning)
+
+
+0.667 (+/-0.000) for {'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10}
+0.667 (+/-0.000) for {'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50}
+0.927 (+/-0.022) for {'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10}
+0.913 (+/-0.027) for {'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50}
+0.667 (+/-0.000) for {'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10}
+0.667 (+/-0.000) for {'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50}
+0.933 (+/-0.024) for {'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10}
+0.940 (+/-0.019) for {'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50}
 </code></pre>
 <p>In case we are planning to use a regression algorithm multiple times, all we need to do is to add an additional number suffix in the parameter grid as shown below:</p>
 <pre><code class="python">from sklearn.grid_search import GridSearchCV
@@ -960,30 +1061,30 @@ for params, mean_score, scores in grid.grid_scores_:
         % (mean_score, scores.std() / 2, params))
 </code></pre>
 
-<pre><code>0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier-1__n_neighbors': 1}
-0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier-1__n_neighbors': 1}
-0.907 (+/-0.029) for {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier-1__n_neighbors': 1}
-0.913 (+/-0.027) for {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier-1__n_neighbors': 1}
-0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier-1__n_neighbors': 1}
-0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier-1__n_neighbors': 1}
-0.927 (+/-0.022) for {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier-1__n_neighbors': 1}
-0.913 (+/-0.027) for {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier-1__n_neighbors': 1}
-0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier-1__n_neighbors': 5}
-0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier-1__n_neighbors': 5}
-0.927 (+/-0.022) for {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier-1__n_neighbors': 5}
-0.913 (+/-0.027) for {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier-1__n_neighbors': 5}
-0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier-1__n_neighbors': 5}
-0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 0.1, 'kneighborsclassifier-1__n_neighbors': 5}
-0.933 (+/-0.024) for {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier-1__n_neighbors': 5}
-0.940 (+/-0.019) for {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50, 'meta-logisticregression__C': 10.0, 'kneighborsclassifier-1__n_neighbors': 5}
+<pre><code>0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.907 (+/-0.029) for {'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.913 (+/-0.027) for {'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.927 (+/-0.022) for {'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.913 (+/-0.027) for {'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.927 (+/-0.022) for {'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.913 (+/-0.027) for {'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.933 (+/-0.024) for {'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.940 (+/-0.019) for {'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
 </code></pre>
-<h2 id="api">API</h2>
-<p><em>StackingClassifier(classifiers, meta_classifier, use_probas=False, verbose=0)</em></p>
+<h1 id="api">API</h1>
+<p><em>StackingClassifier(classifiers, meta_classifier, use_probas=False, average_probas=True, verbose=0)</em></p>
 <p>A Stacking classifier for scikit-learn estimators for classification.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>classifiers</code> : array-like, shape = [n_regressors]</p>
+<p><code>classifiers</code> : array-like, shape = [n_classifiers]</p>
 <p>A list of classifiers.
 Invoking the <code>fit</code> method on the <code>StackingClassifer</code> will fit clones
 of these original classifiers that will
@@ -999,6 +1100,11 @@ classifiers</p>
 <p><code>use_probas</code> : bool (default: False)</p>
 <p>If True, trains meta-classifier based on predicted probabilities
 instead of class labels.</p>
+</li>
+<li>
+<p><code>average_probas</code> : bool (default: True)</p>
+<p><code>average_probas=True</code> is deprecated and will be changed to
+<code>average_probas=False</code> in v0.5.0.</p>
 </li>
 <li>
 <p><code>verbose</code> : int, optional (default=0)</p>
@@ -1047,9 +1153,8 @@ n_features is the number of features.</p>
 
 <p><em>fit_transform(X, y=None, </em><em>fit_params)</em></p>
 <p>Fit to data, then transform it.</p>
-<pre><code>Fits transformer to X and y with optional parameters fit_params
-and returns a transformed version of X.
-</code></pre>
+<p>Fits transformer to X and y with optional parameters fit_params
+and returns a transformed version of X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1114,10 +1219,9 @@ n_features is the number of features.</p>
 
 <p><em>score(X, y, sample_weight=None)</em></p>
 <p>Returns the mean accuracy on the given test data and labels.</p>
-<pre><code>In multi-label classification, this is the subset accuracy
+<p>In multi-label classification, this is the subset accuracy
 which is a harsh metric since you require for each sample that
-each label set be correctly predicted.
-</code></pre>
+each label set be correctly predicted.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1144,11 +1248,10 @@ each label set be correctly predicted.
 
 <p><em>set_params(</em><em>params)</em></p>
 <p>Set the parameters of this estimator.</p>
-<pre><code>The method works on simple estimators as well as on nested objects
-(such as pipelines). The former have parameters of the form
-``&lt;component&gt;__&lt;parameter&gt;`` so that it's possible to update each
-component of a nested object.
-</code></pre>
+<p>The method works on simple estimators as well as on nested objects
+(such as pipelines). The latter have parameters of the form
+<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
+component of a nested object.</p>
 <p><strong>Returns</strong></p>
 <p>self</p></div>
         

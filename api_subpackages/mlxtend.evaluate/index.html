@@ -121,6 +121,12 @@
         
             
 <li >
+    <a href="../../user_guide/classifier/StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../../user_guide/tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../user_guide/regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../../user_guide/evaluate/plot_decision_regions/">Plot decision regions</a>
+    <a href="../../user_guide/evaluate/mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../../user_guide/evaluate/plot_learning_curves/">Plot learning curves</a>
+    <a href="../../user_guide/evaluate/mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../../user_guide/preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../user_guide/general_plotting/category_scatter/">Category scatter</a>
+    <a href="../../user_guide/plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../../user_guide/general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../../user_guide/plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../../user_guide/general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../../user_guide/plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -786,6 +828,12 @@
         <li class="main active"><a href="#confusion_matrix">confusion_matrix</a></li>
         
     
+        <li class="main "><a href="#mcnemar">mcnemar</a></li>
+        
+    
+        <li class="main "><a href="#mcnemar_table">mcnemar_table</a></li>
+        
+    
         <li class="main "><a href="#plot_confusion_matrix">plot_confusion_matrix</a></li>
         
     
@@ -802,7 +850,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.4.3dev0 </p>
+<p>mlxtend version: 0.5.dev0 </p>
 <h2 id="confusion_matrix">confusion_matrix</h2>
 <p><em>confusion_matrix(y_target, y_predicted, binary=False, positive_label=1)</em></p>
 <p>Compute a confusion matrix/contingency table.</p>
@@ -832,161 +880,86 @@ all other classes are 0.</p>
 <ul>
 <li><code>mat</code> : array-like, shape=[n_classes, n_classes]</li>
 </ul>
+<h2 id="mcnemar">mcnemar</h2>
+<p><em>mcnemar(ary, corrected=True, exact=False)</em></p>
+<p>McNemar test for paired nominal data</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>ary</code> : array-like, shape=[2, 2]</p>
+<p>2 x 2 contigency table (as returned by evaluate.mcnemar_table),
+where
+a: ary[0, 0]: # of samples that both models predicted correctly
+b: ary[0, 1]: # of samples that model 1 got right and model 2 got wrong
+c: ary[1, 0]: # of samples that model 2 got right and model 1 got wrong
+d: aryCell [1, 1]: # of samples that both models predicted incorrectly</p>
+</li>
+<li>
+<p><code>corrected</code> : array-like, shape=[n_samples] (default: True)</p>
+<p>Uses Edward's continuity correction for chi-squared if <code>True</code></p>
+</li>
+<li>
+<p><code>exact</code> : bool, (default: False)</p>
+<p>If <code>True</code>, uses an exact binomial test comparing b to
+a binomial distribution with n = b + c and p = 0.5.
+It is highly recommended to use <code>exact=True</code> for sample sizes &lt; 25
+since chi-squared is not well-approximated
+by the chi-squared distribution!</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>chi2, p</code> : float or None, float</p>
+<p>Returns the chi-squared value and the p-value;
+if <code>exact=True</code> (default: <code>False</code>), <code>chi2</code> is <code>None</code></p>
+</li>
+</ul>
+<h2 id="mcnemar_table">mcnemar_table</h2>
+<p><em>mcnemar_table(y_target, y_model1, y_model2)</em></p>
+<p>Compute a 2x2 contigency table for McNemar's test.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>y_target</code> : array-like, shape=[n_samples]</p>
+<p>True class labels as 1D NumPy array.</p>
+</li>
+<li>
+<p><code>y_model1</code> : array-like, shape=[n_samples]</p>
+<p>Predicted class labels from model as 1D NumPy array.</p>
+</li>
+<li>
+<p><code>y_model2</code> : array-like, shape=[n_samples]</p>
+<p>Predicted class labels from model 2 as 1D NumPy array.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>tb</code> : array-like, shape=[2, 2]</p>
+<p>2x2 contingency table with the following contents:
+a: tb[0, 0]: # of samples that both models predicted correctly
+b: tb[0, 1]: # of samples that model 1 got right and model 2 got wrong
+c: tb[1, 0]: # of samples that model 2 got right and model 1 got wrong
+d: tb[1, 1]: # of samples that both models predicted incorrectly</p>
+</li>
+</ul>
 <h2 id="plot_confusion_matrix">plot_confusion_matrix</h2>
-<p><em>plot_confusion_matrix(conf_mat, hide_spines=False, hide_ticks=False, figsize=(2.5, 2.5), cmap=None, alpha=0.3)</em></p>
-<p>Plot a confusion matrix via matplotlib.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>conf_mat</code> : array-like, shape = [n_classes, n_classes]</p>
-<p>Confusion matrix from evaluate.confusion matrix.</p>
-</li>
-<li>
-<p><code>hide_spines</code> : bool (default: False)</p>
-<p>Hides axis spines if True.</p>
-</li>
-<li>
-<p><code>hide_ticks</code> : bool (default: False)</p>
-<p>Hides axis ticks if True</p>
-</li>
-<li>
-<p><code>figsize</code> : tuple (default: (2.5, 2.5))</p>
-<p>Height and width of the figure</p>
-</li>
-<li>
-<p><code>cmap</code> : matplotlib colormap (default: <code>None</code>)</p>
-<p>Uses matplotlib.pyplot.cm.Blues if <code>None</code></p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>fig, ax</code> : matplotlib.pyplot subplot objects</p>
-<p>Figure and axis elements of the subplot.</p>
-</li>
-</ul>
+<p><em>plot_confusion_matrix(</em><em>args)</em></p>
+<p>Note that importing this function from mlxtend.evaluate has been
+deprecated and will not longer be supported in mlxtend 0.6.
+Please use <code>from mlxtend.plotting import plot_confusion_matrix</code> instead.</p>
 <h2 id="plot_decision_regions">plot_decision_regions</h2>
-<p><em>plot_decision_regions(X, y, clf, ax=None, X_highlight=None, res=0.02, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors='red,blue,limegreen,gray,cyan')</em></p>
+<p><em>plot_decision_regions(</em><em>args)</em></p>
 <p>Plot decision regions of a classifier.</p>
-<p>Please note that this functions assumes that class labels are
-labeled consecutively, e.g,. 0, 1, 2, 3, 4, and 5. If you have class
-labels with integer labels &gt; 4, you may want to provide additional colors
-and/or markers as <code>colors</code> and <code>markers</code> arguments.
-See http://matplotlib.org/examples/color/named_colors.html for more
-information.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : array-like, shape = [n_samples, n_features]</p>
-<p>Feature Matrix.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>True class labels.</p>
-</li>
-<li>
-<p><code>clf</code> : Classifier object.</p>
-<p>Must have a .predict method.</p>
-</li>
-<li>
-<p><code>ax</code> : matplotlib.axes.Axes (default: None)</p>
-<p>An existing matplotlib Axes. Creates
-one if ax=None.</p>
-</li>
-<li>
-<p><code>X_highlight</code> : array-like, shape = [n_samples, n_features] (default: None)</p>
-<p>An array with data points that are used to highlight samples in <code>X</code>.</p>
-</li>
-<li>
-<p><code>res</code> : float (default: 0.02)</p>
-<p>Grid width. Lower values increase the resolution but
-slow down the plotting.</p>
-</li>
-<li>
-<p><code>hide_spines</code> : bool (default: True)</p>
-<p>Hide axis spines if True.</p>
-</li>
-<li>
-<p><code>legend</code> : int (default: 1)</p>
-<p>Integer to specify the legend location.
-No legend if legend is 0.</p>
-</li>
-<li>
-<p><code>markers</code> : list</p>
-<p>Scatterplot markers.</p>
-</li>
-<li>
-<p><code>colors</code> : str (default 'red,blue,limegreen,gray,cyan')</p>
-<p>Comma separated list of colors.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>ax</code> : matplotlib.axes.Axes object</li>
-</ul>
+<p>Note that importing this function from mlxtend.evaluate has been
+deprecated and will not longer be supported in mlxtend 0.6.
+Please use <code>from mlxtend.plotting import plot_decision_regions</code> instead.</p>
 <h2 id="plot_learning_curves">plot_learning_curves</h2>
-<p><em>plot_learning_curves(X_train, y_train, X_test, y_test, clf, train_marker='o', test_marker='^', scoring='misclassification error', suppress_plot=False, print_model=True, style='fivethirtyeight', legend_loc='best')</em></p>
-<p>Plots learning curves of a classifier.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X_train</code> : array-like, shape = [n_samples, n_features]</p>
-<p>Feature matrix of the training dataset.</p>
-</li>
-<li>
-<p><code>y_train</code> : array-like, shape = [n_samples]</p>
-<p>True class labels of the training dataset.</p>
-</li>
-<li>
-<p><code>X_test</code> : array-like, shape = [n_samples, n_features]</p>
-<p>Feature matrix of the test dataset.</p>
-</li>
-<li>
-<p><code>y_test</code> : array-like, shape = [n_samples]</p>
-<p>True class labels of the test dataset.</p>
-</li>
-<li>
-<p><code>clf</code> : Classifier object. Must have a .predict .fit method.</p>
-</li>
-<li>
-<p><code>train_marker</code> : str (default: 'o')</p>
-<p>Marker for the training set line plot.</p>
-</li>
-<li>
-<p><code>test_marker</code> : str (default: '^')</p>
-<p>Marker for the test set line plot.</p>
-</li>
-<li>
-<p><code>scoring</code> : str (default: 'misclassification error')</p>
-<p _accuracy_="'accuracy'," _average_precision_="'average_precision'," _f1_macro_f1_weighted_="'f1_macro',
-'f1_weighted'," _f1_micro_="'f1_micro'," _f1_samples_="'f1_samples'," _log_loss_precision_="'log_loss',
-'precision'," _mean_absolute_error_="'mean_absolute_error'," _mean_squared_error_median_absolute_error_="'mean_squared_error',
-'median_absolute_error'," _r2_="'r2'" _recall_="'recall'," _roc_auc_adjusted_rand_score_="'roc_auc',
-'adjusted_rand_score',">If not 'misclassification error', accepts the following metrics
-(from scikit-learn):</p>
-</li>
-<li>
-<p><code>suppress_plot=False</code> : bool (default: False)</p>
-<p>Suppress matplotlib plots if True. Recommended
-for testing purposes.</p>
-</li>
-<li>
-<p><code>print_model</code> : bool (default: True)</p>
-<p>Print model parameters in plot title if True.</p>
-</li>
-<li>
-<p><code>style</code> : str (default: 'fivethirtyeight')</p>
-<p>Matplotlib style</p>
-</li>
-<li>
-<p><code>legend_loc</code> : str (default: 'best')</p>
-<p _best_="'best'," _lower="'lower" _upper="'upper" left_="left'," right_="right'">Where to place the plot legend:</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>errors</code> : (training_error, test_error): tuple of lists</li>
-</ul>
+<p><em>plot_learning_curves(</em><em>args)</em></p>
+<p>Note that importing this function from mlxtend.evaluate has been
+deprecated and will not longer be supported in mlxtend 0.6.
+Please use <code>from mlxtend.plotting import plot_learning_curves</code> instead.</p>
 <h2 id="scoring">scoring</h2>
 <p><em>scoring(y_target, y_predicted, metric='error', positive_label=1, unique_labels='auto')</em></p>
 <p>Compute a scoring metric for supervised learning.</p>

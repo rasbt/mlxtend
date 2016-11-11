@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="author" content="Sebastian Raschka"> 
+    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/OnehotTransactions/"> 
+    <link rel="shortcut icon" href="../../../../../../favicon.ico">
+
+    <title>OnehotTransactions - mlxtend</title>
+
+    <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
+    <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link href="../../../css/cinder.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+
+
+    <link href="../../../extra.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-38457794-2', 'rasbt.github.io/mlxtend/');
+    ga('send', 'pageview');
+    </script>
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../../..">mlxtend</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../USER_GUIDE_INDEX/">USER GUIDE INDEX</a>
+</li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">classifier</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../classifier/EnsembleVoteClassifier/">EnsembleVoteClassifier</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/StackingClassifier/">StackingClassifier</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/Perceptron/">Perceptron</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/Adaline/">Adaline</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/LogisticRegression/">LogisticRegression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/SoftmaxRegression/">SoftmaxRegression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/MultiLayerPerceptron/">MultiLayerPerceptron</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">tf_classifier</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">regressor</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../regressor/LinearRegression/">LinearRegression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../regressor/StackingRegressor/">StackingRegressor</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">tf_regressor</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">feature_selection</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../feature_selection/SequentialFeatureSelector/">SequentialFeatureSelector</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../feature_selection/ExhaustiveFeatureSelector/">ExhaustiveFeatureSelector</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../feature_selection/ColumnSelector/">ColumnSelector</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">feature_extraction</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../feature_extraction/PrincipalComponentAnalysis/">PrincipalComponentAnalysis</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../feature_extraction/LinearDiscriminantAnalysis/">LinearDiscriminantAnalysis</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../feature_extraction/RBFKernelPCA/">RBFKernelPCA</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">cluster</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../cluster/Kmeans/">Kmeans</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">tf_cluster</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../tf_cluster/TfKmeans/">TfKmeans</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">evaluate</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../evaluate/confusion_matrix/">Confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/mcnemar_table/">Mcnemar table</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/mcnemar/">Mcnemar</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/scoring/">Scoring</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">preprocessing</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../MeanCenterer/">MeanCenterer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../minmax_scaling/">Minmax scaling</a>
+</li>
+
+        
+            
+<li >
+    <a href="../shuffle_arrays_unison/">Shuffle arrays unison</a>
+</li>
+
+        
+            
+<li >
+    <a href="../standardize/">Standardize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li class="active">
+    <a href="./">OnehotTransactions</a>
+</li>
+
+        
+            
+<li >
+    <a href="../DenseTransformer/">DenseTransformer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../CopyTransformer/">CopyTransformer</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">data</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../data/autompg_data/">Autompg data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/boston_housing_data/">Boston housing data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/iris_data/">Iris data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/mnist_data/">Mnist data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/loadlocal_mnist/">Loadlocal mnist</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/wine_data/">Wine data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/three_blobs_data/">Three blobs data</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">file_io</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../file_io/find_filegroups/">Find filegroups</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../file_io/find_files/">Find files</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">plotting</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../plotting/plot_decision_regions/">Plot decision regions</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_learning_curves/">Plot learning curves</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/checkerboard_plot/">Checkerboard plot</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">math</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../math/num_combinations/">Num combinations</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/num_permutations/">Num permutations</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">text</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../text/generalize_names/">Generalize names</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../text/generalize_names_duplcheck/">Generalize names duplcheck</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../text/tokenizer/">Tokenizer</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">utils</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../utils/Counter/">Counter</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">general concepts</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../general_concepts/activation-functions/">Activation functions</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/gradient-optimization/">Gradient optimization</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/linear-gradient-derivative/">Linear gradient derivative</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/regularization-linear/">Regularization linear</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.classifier/">Mlxtend.classifier</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.tf_classifier/">Mlxtend.tf classifier</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.evaluate/">Mlxtend.evaluate</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.feature_selection/">Mlxtend.feature selection</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.feature_extraction/">Mlxtend.feature extraction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.cluster/">Mlxtend.cluster</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.tf_cluster/">Mlxtend.tf cluster</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.preprocessing/">Mlxtend.preprocessing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.text/">Mlxtend.text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.utils/">Mlxtend.utils</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../installation/">Installation</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../changelog/">Release Notes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../contributing/">How To Contribute</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../contributors/">Contributors</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../license/">License</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../cite/">Citing Mlxtend</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../one-hot_encoding/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../DenseTransformer/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a href="https://github.com/rasbt/mlxtend">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#one-hot-encoding-of-transaction-data">One-Hot Encoding of Transaction Data</a></li>
+        
+    
+        <li class="main "><a href="#overview">Overview</a></li>
+        
+    
+        <li class="main "><a href="#examples">Examples</a></li>
+        
+            <li><a href="#example-1">Example 1</a></li>
+                <!--  -->
+        
+    
+        <li class="main "><a href="#api">API</a></li>
+        
+            <li><a href="#methods">Methods</a></li>
+                <!--  -->
+        
+    
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<h2 id="one-hot-encoding-of-transaction-data">One-Hot Encoding of Transaction Data</h2>
+<p>One-hot encoder class for transaction data in Python lists</p>
+<blockquote>
+<p>from mlxtend.preprocessing import OnehotTransactions</p>
+</blockquote>
+<h2 id="overview">Overview</h2>
+<p>Encodes database transaction data in form of a Python list of lists into a one-hot encoded NumPy integer array.</p>
+<h2 id="examples">Examples</h2>
+<h3 id="example-1">Example 1</h3>
+<p>Suppose we have the following transaction data:</p>
+<pre><code class="python">from mlxtend.preprocessing import OnehotTransactions
+
+dataset = [['Apple', 'Beer', 'Rice', 'Chicken'],
+           ['Apple', 'Beer', 'Rice'],
+           ['Apple', 'Beer'],
+           ['Apple', 'Bananas'],
+           ['Milk', 'Beer', 'Rice', 'Chicken'],
+           ['Milk', 'Beer', 'Rice'],
+           ['Milk', 'Beer'],
+           ['Apple', 'Bananas']]
+</code></pre>
+
+<p>Using and <code>OnehotTransaction</code> object, we can transform this dataset into a one-hot encoded format suitable for typical machine learning APIs. Via the <code>fit</code> method, the <code>OnehotTransaction</code> encoder learns the unique labels in the dataset, and via the <code>transform</code> method, it transforms the input dataset (a Python list of lists) into a one-hot encoded NumPy integer array:</p>
+<pre><code class="python">oht = OnehotTransactions()
+oht_ary = oht.fit(dataset).transform(dataset)
+oht_ary
+</code></pre>
+
+<pre><code>array([[1, 0, 1, 1, 0, 1],
+       [1, 0, 1, 0, 0, 1],
+       [1, 0, 1, 0, 0, 0],
+       [1, 1, 0, 0, 0, 0],
+       [0, 0, 1, 1, 1, 1],
+       [0, 0, 1, 0, 1, 1],
+       [0, 0, 1, 0, 1, 0],
+       [1, 1, 0, 0, 0, 0]])
+</code></pre>
+<p>After fitting, the unique column names that correspond to the data array shown above can be accessed via the <code>columns_</code> attribute:</p>
+<pre><code class="python">oht.columns_
+</code></pre>
+
+<pre><code>['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']
+</code></pre>
+<p>For our convenience, we can turn the one-hot encoded array into a pandas DataFrame:</p>
+<pre><code class="python">import pandas as pd
+
+pd.DataFrame(oht_ary, columns=oht.columns_)
+</code></pre>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Apple</th>
+      <th>Bananas</th>
+      <th>Beer</th>
+      <th>Chicken</th>
+      <th>Milk</th>
+      <th>Rice</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>If we desire, we can turn the one-hot encoded array back into a transaction list of lists via the <code>inverse_transform</code> function:</p>
+<pre><code class="python">first4 = oht_ary[:4]
+oht.inverse_transform(first4)
+</code></pre>
+
+<pre><code>[['Apple', 'Beer', 'Chicken', 'Rice'],
+ ['Apple', 'Beer', 'Rice'],
+ ['Apple', 'Beer'],
+ ['Apple', 'Bananas']]
+</code></pre>
+<h2 id="api">API</h2>
+<p><em>OnehotTransactions()</em></p>
+<p>One-hot encoder class for transaction data in Python lists</p>
+<p><strong>Parameters</strong></p>
+<p>None</p>
+<p><strong>Attributes</strong></p>
+<p>columns_: list
+List of unique names in the <code>X</code> input list of lists</p>
+<h3 id="methods">Methods</h3>
+<hr>
+
+<p><em>fit(X)</em></p>
+<p>Learn unique column names from transaction DataFrame</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : list of lists</p>
+<p>A python list of lists, where the outer list stores the
+n transactions and the inner list stores the items in each
+transaction.</p>
+<p>For example,
+[['Apple', 'Beer', 'Rice', 'Chicken'],
+['Apple', 'Beer', 'Rice'],
+['Apple', 'Beer'],
+['Apple', 'Bananas'],
+['Milk', 'Beer', 'Rice', 'Chicken'],
+['Milk', 'Beer', 'Rice'],
+['Milk', 'Beer'],
+['Apple', 'Bananas']]</p>
+</li>
+</ul>
+<hr>
+
+<p><em>fit_transform(X)</em></p>
+<p>Fit a OnehotTransactions encoder and transform a dataset.</p>
+<hr>
+
+<p><em>inverse_transform(onehot)</em></p>
+<p>Transforms a one-hot encoded NumPy array back into transactions.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>onehot</code> : NumPy array [n_transactions, n_unique_items]</p>
+<p>The NumPy one-hot encoded integer array of the input transactions,
+where the columns represent the unique items found in the input
+array in alphabetic order</p>
+<p>For example,
+array([[1, 0, 1, 1, 0, 1],
+[1, 0, 1, 0, 0, 1],
+[1, 0, 1, 0, 0, 0],
+[1, 1, 0, 0, 0, 0],
+[0, 0, 1, 1, 1, 1],
+[0, 0, 1, 0, 1, 1],
+[0, 0, 1, 0, 1, 0],
+[1, 1, 0, 0, 0, 0]])
+The corresponding column labels are available as self.columns_, e.g.,
+['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>X</code> : list of lists</p>
+<p>A python list of lists, where the outer list stores the
+n transactions and the inner list stores the items in each
+transaction.</p>
+<p>For example,
+[['Apple', 'Beer', 'Rice', 'Chicken'],
+['Apple', 'Beer', 'Rice'],
+['Apple', 'Beer'],
+['Apple', 'Bananas'],
+['Milk', 'Beer', 'Rice', 'Chicken'],
+['Milk', 'Beer', 'Rice'],
+['Milk', 'Beer'],
+['Apple', 'Bananas']]</p>
+</li>
+</ul>
+<hr>
+
+<p><em>transform(X)</em></p>
+<p>Transform transactions into a one-hot encoded NumPy array.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : list of lists</p>
+<p>A python list of lists, where the outer list stores the
+n transactions and the inner list stores the items in each
+transaction.</p>
+<p>For example,
+[['Apple', 'Beer', 'Rice', 'Chicken'],
+['Apple', 'Beer', 'Rice'],
+['Apple', 'Beer'],
+['Apple', 'Bananas'],
+['Milk', 'Beer', 'Rice', 'Chicken'],
+['Milk', 'Beer', 'Rice'],
+['Milk', 'Beer'],
+['Apple', 'Bananas']]</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>onehot</code> : NumPy array [n_transactions, n_unique_items]</p>
+<p>The NumPy one-hot encoded integer array of the input transactions,
+where the columns represent the unique items found in the input
+array in alphabetic order</p>
+<p>For example,
+array([[1, 0, 1, 1, 0, 1],
+[1, 0, 1, 0, 0, 1],
+[1, 0, 1, 0, 0, 0],
+[1, 1, 0, 0, 0, 0],
+[0, 0, 1, 1, 1, 1],
+[0, 0, 1, 0, 1, 1],
+[0, 0, 1, 0, 1, 0],
+[1, 1, 0, 0, 0, 0]])
+The corresponding column labels are available as self.columns_, e.g.,
+['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']</p>
+</li>
+</ul></div>
+        
+    </div>
+
+    <footer class="col-md-12 text-center">
+        <hr>
+        <p>
+        <small>Copyright &copy; 2014-2016 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        
+        <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
+    </footer>
+
+    <script src="../../../js/jquery-1.10.2.min.js"></script>
+    <script src="../../../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+    var base_url = '../../..';
+    </script>
+    <script data-main="../../../mkdocs/js/search.js" src="../../../mkdocs/js/require.js"></script>
+    <script src="../../../js/base.js"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="../../../mathjaxhelper.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+
+</html>

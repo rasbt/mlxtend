@@ -121,6 +121,12 @@
         
             
 <li >
+    <a href="../StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../Perceptron/">Perceptron</a>
 </li>
 
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../../evaluate/plot_decision_regions/">Plot decision regions</a>
+    <a href="../../evaluate/mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../../evaluate/plot_learning_curves/">Plot learning curves</a>
+    <a href="../../evaluate/mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../general_plotting/category_scatter/">Category scatter</a>
+    <a href="../../plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../../plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../../plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -903,7 +945,11 @@ for clf, label in zip([clf1, clf2, clf3], labels):
           % (scores.mean(), scores.std(), label))
 </code></pre>
 
-<pre><code>5-fold cross validation:
+<pre><code>/Users/Sebastian/miniconda3/lib/python3.5/site-packages/sklearn/cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
+  "This module will be removed in 0.20.", DeprecationWarning)
+
+
+5-fold cross validation:
 
 Accuracy: 0.90 (+/- 0.05) [Logistic Regression]
 Accuracy: 0.93 (+/- 0.05) [Random Forest]
@@ -930,7 +976,7 @@ Accuracy: 0.95 (+/- 0.05) [Ensemble]
 </code></pre>
 <h4 id="plotting-decision-regions">Plotting Decision Regions</h4>
 <pre><code class="python">import matplotlib.pyplot as plt
-from mlxtend.evaluate import plot_decision_regions
+from mlxtend.plotting import plot_decision_regions
 import matplotlib.gridspec as gridspec
 import itertools
 
@@ -949,7 +995,7 @@ for clf, lab, grd in zip([clf1, clf2, clf3, eclf],
     plt.title(lab)
 </code></pre>
 
-<p><img alt="png" src="../EnsembleVoteClassifier_files/EnsembleVoteClassifier_27_0.png" /></p>
+<p><img alt="png" src="../EnsembleVoteClassifier_files/EnsembleVoteClassifier_25_0.png" /></p>
 <h3 id="example-2-grid-search">Example 2 - Grid Search</h3>
 <pre><code class="python">from sklearn import datasets
 
@@ -979,10 +1025,14 @@ for params, mean_score, scores in grid.grid_scores_:
         % (mean_score, scores.std() / 2, params))
 </code></pre>
 
-<pre><code>0.953 (+/-0.013) for {'randomforestclassifier__n_estimators': 20, 'logisticregression__C': 1.0}
-0.960 (+/-0.012) for {'randomforestclassifier__n_estimators': 200, 'logisticregression__C': 1.0}
-0.960 (+/-0.012) for {'randomforestclassifier__n_estimators': 20, 'logisticregression__C': 100.0}
-0.953 (+/-0.017) for {'randomforestclassifier__n_estimators': 200, 'logisticregression__C': 100.0}
+<pre><code>/Users/Sebastian/miniconda3/lib/python3.5/site-packages/sklearn/grid_search.py:43: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. This module will be removed in 0.20.
+  DeprecationWarning)
+
+
+0.953 (+/-0.013) for {'logisticregression__C': 1.0, 'randomforestclassifier__n_estimators': 20}
+0.960 (+/-0.012) for {'logisticregression__C': 1.0, 'randomforestclassifier__n_estimators': 200}
+0.960 (+/-0.012) for {'logisticregression__C': 100.0, 'randomforestclassifier__n_estimators': 20}
+0.953 (+/-0.017) for {'logisticregression__C': 100.0, 'randomforestclassifier__n_estimators': 200}
 </code></pre>
 <p><strong>Note</strong>: If the <code>EnsembleClassifier</code> is initialized with multiple similar estimator objects, the estimator names are modified with consecutive integer indices, for example:</p>
 <pre><code class="python">clf1 = LogisticRegression(random_state=1)
@@ -1052,18 +1102,20 @@ for params, mean_score, scores in grid.grid_scores_:
         % (mean_score, scores.std() / 2, params))
 </code></pre>
 
-<pre><code>0.953 (+/-0.013) for {'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 20, 'pipeline__sfs__k_features': 1}
-0.947 (+/-0.017) for {'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 200, 'pipeline__sfs__k_features': 1}
-0.953 (+/-0.013) for {'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 20, 'pipeline__sfs__k_features': 2}
-0.947 (+/-0.017) for {'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 200, 'pipeline__sfs__k_features': 2}
-0.953 (+/-0.013) for {'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 20, 'pipeline__sfs__k_features': 3}
-0.953 (+/-0.017) for {'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 200, 'pipeline__sfs__k_features': 3}
-0.947 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 20, 'pipeline__sfs__k_features': 1}
-0.953 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 200, 'pipeline__sfs__k_features': 1}
-0.947 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 20, 'pipeline__sfs__k_features': 2}
-0.947 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 200, 'pipeline__sfs__k_features': 2}
-0.960 (+/-0.012) for {'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 20, 'pipeline__sfs__k_features': 3}
-0.953 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 200, 'pipeline__sfs__k_features': 3}
+<pre><code>Features: 3/3
+
+0.953 (+/-0.013) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 20}
+0.947 (+/-0.017) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 200}
+0.953 (+/-0.013) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 20}
+0.947 (+/-0.017) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 200}
+0.953 (+/-0.013) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 20}
+0.953 (+/-0.017) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 200}
+0.947 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 20}
+0.953 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 200}
+0.947 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 20}
+0.947 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 200}
+0.960 (+/-0.012) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 20}
+0.953 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 200}
 </code></pre>
 <p>The best parameters determined via GridSearch are:</p>
 <pre><code class="python">grid.best_params_
@@ -1078,11 +1130,17 @@ for params, mean_score, scores in grid.grid_scores_:
 eclf.fit(X, y).predict(X[[1, 51, 149]])
 </code></pre>
 
-<pre><code>array([0, 1, 2])
+<pre><code>Features: 3/3
+
+
+
+
+array([0, 1, 2])
 </code></pre>
 <h4 id="manual-approach">Manual Approach</h4>
 <p>Alternatively, we can select different columns "manually" using the <code>ColumnSelector</code> object. In this example, we select only the first (sepal length) and third (petal length) column for the logistic regression classifier (<code>clf1</code>).</p>
 <pre><code class="python">from mlxtend.feature_selection import ColumnSelector
+
 
 col_sel = ColumnSelector(cols=[0, 2])
 
@@ -1228,9 +1286,8 @@ n_features is the number of features.</p>
 
 <p><em>fit_transform(X, y=None, </em><em>fit_params)</em></p>
 <p>Fit to data, then transform it.</p>
-<pre><code>Fits transformer to X and y with optional parameters fit_params
-and returns a transformed version of X.
-</code></pre>
+<p>Fits transformer to X and y with optional parameters fit_params
+and returns a transformed version of X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1295,10 +1352,9 @@ n_features is the number of features.</p>
 
 <p><em>score(X, y, sample_weight=None)</em></p>
 <p>Returns the mean accuracy on the given test data and labels.</p>
-<pre><code>In multi-label classification, this is the subset accuracy
+<p>In multi-label classification, this is the subset accuracy
 which is a harsh metric since you require for each sample that
-each label set be correctly predicted.
-</code></pre>
+each label set be correctly predicted.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1325,11 +1381,10 @@ each label set be correctly predicted.
 
 <p><em>set_params(</em><em>params)</em></p>
 <p>Set the parameters of this estimator.</p>
-<pre><code>The method works on simple estimators as well as on nested objects
-(such as pipelines). The former have parameters of the form
-``&lt;component&gt;__&lt;parameter&gt;`` so that it's possible to update each
-component of a nested object.
-</code></pre>
+<p>The method works on simple estimators as well as on nested objects
+(such as pipelines). The latter have parameters of the form
+<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
+component of a nested object.</p>
 <p><strong>Returns</strong></p>
 <p>self</p>
 <hr>

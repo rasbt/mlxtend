@@ -121,6 +121,12 @@
         
             
 <li >
+    <a href="../../user_guide/classifier/StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../../user_guide/tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../user_guide/regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../../user_guide/evaluate/plot_decision_regions/">Plot decision regions</a>
+    <a href="../../user_guide/evaluate/mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../../user_guide/evaluate/plot_learning_curves/">Plot learning curves</a>
+    <a href="../../user_guide/evaluate/mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../../user_guide/preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../user_guide/general_plotting/category_scatter/">Category scatter</a>
+    <a href="../../user_guide/plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../../user_guide/general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../../user_guide/plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../../user_guide/general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../../user_guide/plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -807,25 +849,25 @@
                 <!--  -->
         
     
-        <li class="main "><a href="#neuralnetmlp">NeuralNetMLP</a></li>
+        <li class="main "><a href="#perceptron">Perceptron</a></li>
         
             <li><a href="#methods_4">Methods</a></li>
                 <!--  -->
         
     
-        <li class="main "><a href="#perceptron">Perceptron</a></li>
+        <li class="main "><a href="#softmaxregression">SoftmaxRegression</a></li>
         
             <li><a href="#methods_5">Methods</a></li>
                 <!--  -->
         
     
-        <li class="main "><a href="#softmaxregression">SoftmaxRegression</a></li>
+        <li class="main "><a href="#stackingclassifier">StackingClassifier</a></li>
         
             <li><a href="#methods_6">Methods</a></li>
                 <!--  -->
         
     
-        <li class="main "><a href="#stackingclassifier">StackingClassifier</a></li>
+        <li class="main "><a href="#stackingcvclassifier">StackingCVClassifier</a></li>
         
             <li><a href="#methods_7">Methods</a></li>
                 <!--  -->
@@ -835,7 +877,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.4.3dev0 </p>
+<p>mlxtend version: 0.5.dev0 </p>
 <h2 id="adaline">Adaline</h2>
 <p><em>Adaline(eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0)</em></p>
 <p>ADAptive LInear NEuron classifier.</p>
@@ -1157,7 +1199,7 @@ each label set be correctly predicted.</p>
 <p><em>set_params(</em><em>params)</em></p>
 <p>Set the parameters of this estimator.</p>
 <p>The method works on simple estimators as well as on nested objects
-(such as pipelines). The former have parameters of the form
+(such as pipelines). The latter have parameters of the form
 <code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
 component of a nested object.</p>
 <p><strong>Returns</strong></p>
@@ -1498,160 +1540,6 @@ n_features is the number of features.</p>
 between 0.0 and 1.0 (perfect score).</p>
 </li>
 </ul>
-<h2 id="neuralnetmlp">NeuralNetMLP</h2>
-<p><em>NeuralNetMLP(n_output, n_features, n_hidden=30, l1=0.0, l2=0.0, epochs=500, eta=0.001, alpha=0.0, decrease_const=0.0, shuffle_init=True, shuffle_epoch=True, minibatches=1, zero_init_weight=False, random_seed=None, print_progress=0)</em></p>
-<p>Feedforward neural network / Multi-layer perceptron classifier.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>n_output</code> : int</p>
-<p>Number of output units, should be equal to the
-number of unique class labels.</p>
-</li>
-<li>
-<p><code>n_features</code> : int</p>
-<p>Number of features (dimensions) in the target dataset.
-Should be equal to the number of columns in the X array.</p>
-</li>
-<li>
-<p><code>n_hidden</code> : int (default: 30)</p>
-<p>Number of hidden units.</p>
-</li>
-<li>
-<p><code>l1</code> : float (default: 0.0)</p>
-<p>Lambda value for L1-regularization.
-No regularization if l1=0.0 (default)</p>
-</li>
-<li>
-<p><code>l2</code> : float (default: 0.0)</p>
-<p>Lambda value for L2-regularization.
-No regularization if l2=0.0 (default)</p>
-</li>
-<li>
-<p><code>epochs</code> : int (default: 500)</p>
-<p>Number of passes over the training set.</p>
-</li>
-<li>
-<p><code>eta</code> : float (default: 0.001)</p>
-<p>Learning rate.</p>
-</li>
-<li>
-<p><code>alpha</code> : float (default: 0.0)</p>
-<p>Momentum constant. Factor multiplied with the
-gradient of the previous epoch t-1 to improve
-learning speed
-w(t) := w(t) - (grad(t) + alpha*grad(t-1))</p>
-</li>
-<li>
-<p><code>decrease_const</code> : float (default: 0.0)</p>
-<p>Decrease constant. Shrinks the learning rate
-after each epoch via eta / (1 + epoch*decrease_const)</p>
-</li>
-<li>
-<p><code>random_weights</code> : list (default: [-1.0, 1.0])</p>
-<p>Min and max values for initializing the random weights.
-Initializes weights to 0 if None or False.</p>
-</li>
-<li>
-<p><code>shuffle_init</code> : bool (default: True)</p>
-<p>Shuffles (a copy of the) training data before training.</p>
-</li>
-<li>
-<p><code>shuffle_epoch</code> : bool (default: True)</p>
-<p>Shuffles training data before every epoch if True to prevent circles.</p>
-</li>
-<li>
-<p><code>minibatches</code> : int (default: 1)</p>
-<p>Divides training data into k minibatches for efficiency.
-Normal gradient descent learning if k=1 (default).</p>
-</li>
-<li>
-<p><code>random_seed</code> : int (default: None)</p>
-<p>Set random seed for shuffling and initializing the weights.</p>
-</li>
-<li>
-<p><code>zero_init_weight</code> : bool (default: False)</p>
-<p>If True, weights are initialized to zero instead of small random
-numbers following a standard normal distribution with mean=0 and
-stddev=1.</p>
-</li>
-<li>
-<p><code>print_progress</code> : int (default: 0)</p>
-<p>Prints progress in fitting to stderr.
-0: No output
-1: Epochs elapsed and cost
-2: 1 plus time elapsed
-3: 2 plus estimated time until completion</p>
-</li>
-</ul>
-<p><strong>Attributes</strong></p>
-<ul>
-<li>
-<p><code>cost_</code> : list</p>
-<p>Sum of squared errors after each epoch.</p>
-</li>
-</ul>
-<h3 id="methods_4">Methods</h3>
-<hr>
-
-<p><em>fit(X, y)</em></p>
-<p>Learn weight coefficients from training data.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : array, shape = [n_samples, n_features]</p>
-<p>Input layer with original features.</p>
-</li>
-<li>
-<p><code>y</code> : array, shape = [n_samples]</p>
-<p>Target class labels.</p>
-</li>
-</ul>
-<p><strong>Returns:</strong></p>
-<p>self</p>
-<hr>
-
-<p><em>predict(X)</em></p>
-<p>Predict class labels of X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>class_labels</code> : array-like, shape = [n_samples]</p>
-<p>Predicted class labels.</p>
-</li>
-</ul>
-<hr>
-
-<p><em>score(X, y)</em></p>
-<p>Compute the prediction accuracy</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values (true class labels).</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>acc</code> : float</p>
-<p>The prediction accuracy as a float
-between 0.0 and 1.0 (perfect score).</p>
-</li>
-</ul>
 <h2 id="perceptron">Perceptron</h2>
 <p><em>Perceptron(eta=0.1, epochs=50, random_seed=None, print_progress=0)</em></p>
 <p>Perceptron classifier.</p>
@@ -1696,7 +1584,7 @@ Prior to each epoch, the dataset is shuffled to prevent cycles.</p>
 <p>Number of misclassifications in every epoch.</p>
 </li>
 </ul>
-<h3 id="methods_5">Methods</h3>
+<h3 id="methods_4">Methods</h3>
 <hr>
 
 <p><em>fit(X, y, init_params=True)</em></p>
@@ -1827,7 +1715,7 @@ Gets the number of class labels automatically if None.</p>
 <p>List of floats, the average cross_entropy for each epoch.</p>
 </li>
 </ul>
-<h3 id="methods_6">Methods</h3>
+<h3 id="methods_5">Methods</h3>
 <hr>
 
 <p><em>fit(X, y, init_params=True)</em></p>
@@ -1914,12 +1802,12 @@ between 0.0 and 1.0 (perfect score).</p>
 </li>
 </ul>
 <h2 id="stackingclassifier">StackingClassifier</h2>
-<p><em>StackingClassifier(classifiers, meta_classifier, use_probas=False, verbose=0)</em></p>
+<p><em>StackingClassifier(classifiers, meta_classifier, use_probas=False, average_probas=True, verbose=0)</em></p>
 <p>A Stacking classifier for scikit-learn estimators for classification.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>classifiers</code> : array-like, shape = [n_regressors]</p>
+<p><code>classifiers</code> : array-like, shape = [n_classifiers]</p>
 <p>A list of classifiers.
 Invoking the <code>fit</code> method on the <code>StackingClassifer</code> will fit clones
 of these original classifiers that will
@@ -1937,10 +1825,215 @@ classifiers</p>
 instead of class labels.</p>
 </li>
 <li>
+<p><code>average_probas</code> : bool (default: True)</p>
+<p><code>average_probas=True</code> is deprecated and will be changed to
+<code>average_probas=False</code> in v0.5.0.</p>
+</li>
+<li>
 <p><code>verbose</code> : int, optional (default=0)</p>
 <p>Controls the verbosity of the building process.
 - <code>verbose=0</code> (default): Prints nothing
 - <code>verbose=1</code>: Prints the number &amp; name of the regressor being fitted
+- <code>verbose=2</code>: Prints info about the parameters of the
+regressor being fitted
+- <code>verbose&gt;2</code>: Changes <code>verbose</code> param of the underlying regressor to
+self.verbose - 2</p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>clfs_</code> : list, shape=[n_classifiers]</p>
+<p>Fitted classifiers (clones of the original classifiers)</p>
+</li>
+<li>
+<p><code>meta_clf_</code> : estimator</p>
+<p>Fitted meta-classifier (clone of the original meta-estimator)</p>
+</li>
+</ul>
+<h3 id="methods_6">Methods</h3>
+<hr>
+
+<p><em>fit(X, y)</em></p>
+<p>Fit ensemble classifers and the meta-classifier.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
+<hr>
+
+<p><em>fit_transform(X, y=None, </em><em>fit_params)</em></p>
+<p>Fit to data, then transform it.</p>
+<p>Fits transformer to X and y with optional parameters fit_params
+and returns a transformed version of X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : numpy array of shape [n_samples, n_features]</p>
+<p>Training set.</p>
+</li>
+<li>
+<p><code>y</code> : numpy array of shape [n_samples]</p>
+<p>Target values.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>X_new</code> : numpy array of shape [n_samples, n_features_new]</p>
+<p>Transformed array.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>get_params(deep=True)</em></p>
+<p>Return estimator parameter names for GridSearch support.</p>
+<hr>
+
+<p><em>predict(X)</em></p>
+<p>Predict target values for X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>labels</code> : array-like, shape = [n_samples]</p>
+<p>Predicted class labels.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>predict_proba(X)</em></p>
+<p>Predict class probabilities for X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>proba</code> : array-like, shape = [n_samples, n_classes]</p>
+<p>Probability for each class per sample.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>score(X, y, sample_weight=None)</em></p>
+<p>Returns the mean accuracy on the given test data and labels.</p>
+<p>In multi-label classification, this is the subset accuracy
+which is a harsh metric since you require for each sample that
+each label set be correctly predicted.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : array-like, shape = (n_samples, n_features)</p>
+<p>Test samples.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = (n_samples) or (n_samples, n_outputs)</p>
+<p>True labels for X.</p>
+</li>
+<li>
+<p><code>sample_weight</code> : array-like, shape = [n_samples], optional</p>
+<p>Sample weights.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>score</code> : float</p>
+<p>Mean accuracy of self.predict(X) wrt. y.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.</p>
+<p>The method works on simple estimators as well as on nested objects
+(such as pipelines). The latter have parameters of the form
+<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
+component of a nested object.</p>
+<p><strong>Returns</strong></p>
+<p>self</p>
+<h2 id="stackingcvclassifier">StackingCVClassifier</h2>
+<p><em>StackingCVClassifier(classifiers, meta_classifier, use_probas=False, n_folds=2, use_features_in_secondary=False, stratify=True, random_state=None, shuffle=True, verbose=0)</em></p>
+<p>A 'Stacking Cross-Validation' classifier for scikit-learn estimators.</p>
+<p>New in mlxtend v0.4.3</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>classifiers</code> : array-like, shape = [n_classifiers]</p>
+<p>A list of classifiers.
+Invoking the <code>fit</code> method on the <code>StackingClassifer</code> will fit clones
+of these original classifiers that will
+be stored in the class attribute
+<code>self.clfs_</code>.</p>
+</li>
+<li>
+<p><code>meta_classifier</code> : object</p>
+<p>The meta-classifier to be fitted on the ensemble of
+classifiers</p>
+</li>
+<li>
+<p><code>use_probas</code> : bool (default: False)</p>
+<p>If True, trains meta-classifier based on predicted probabilities
+instead of class labels.</p>
+</li>
+<li>
+<p><code>n_folds</code> : int (default=2)</p>
+<p>The number of folds used for while creating training data for the
+meta-classifier during fitting.</p>
+</li>
+<li>
+<p><code>use_features_in_secondary</code> : bool (default: False)</p>
+<p>If True, the meta-classifier will be trained both on the predictions
+of the original classifiers and the original dataset.
+If False, the meta-classifier will be trained only on the predictions
+of the original classifiers.</p>
+</li>
+<li>
+<p><code>stratify</code> : bool (default: True)</p>
+<p>If True, the cross-validation technique used for fitting the classifier
+will be Stratified K-Fold.
+If False, the cross-validation technique used will be Regular K-Fold.
+It is highly recommended to use Stratified K-Fold.</p>
+</li>
+<li>
+<p><code>shuffle</code> : bool (default: True)</p>
+<p>If True, when fitting, the training data will be shuffled prior to
+cross-validation.
+random_state: None, int, or RandomState
+When shuffle=True, pseudo-random number generator state used for
+shuffling. If None, use default numpy RNG for shuffling.</p>
+</li>
+<li>
+<p><code>verbose</code> : int, optional (default=0)</p>
+<p>Controls the verbosity of the building process.
+- <code>verbose=0</code> (default): Prints nothing
+- <code>verbose=1</code>: Prints the number &amp; name of the regressor being fitted
+and which fold is currently being used for fitting
 - <code>verbose=2</code>: Prints info about the parameters of the
 regressor being fitted
 - <code>verbose&gt;2</code>: Changes <code>verbose</code> param of the underlying regressor to
@@ -2079,7 +2172,7 @@ each label set be correctly predicted.</p>
 <p><em>set_params(</em><em>params)</em></p>
 <p>Set the parameters of this estimator.</p>
 <p>The method works on simple estimators as well as on nested objects
-(such as pipelines). The former have parameters of the form
+(such as pipelines). The latter have parameters of the form
 <code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
 component of a nested object.</p>
 <p><strong>Returns</strong></p>

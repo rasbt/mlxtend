@@ -122,6 +122,12 @@
         
             
 <li >
+    <a href="user_guide/classifier/StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="user_guide/classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -204,21 +210,6 @@
             
 <li >
     <a href="user_guide/tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="user_guide/regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -323,13 +314,13 @@
         
             
 <li >
-    <a href="user_guide/evaluate/plot_decision_regions/">Plot decision regions</a>
+    <a href="user_guide/evaluate/mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="user_guide/evaluate/plot_learning_curves/">Plot learning curves</a>
+    <a href="user_guide/evaluate/mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -375,6 +366,12 @@
             
 <li >
     <a href="user_guide/preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="user_guide/preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -447,6 +444,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="user_guide/association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -468,24 +480,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="user_guide/general_plotting/category_scatter/">Category scatter</a>
+    <a href="user_guide/plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="user_guide/general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="user_guide/plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="user_guide/general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="user_guide/plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="user_guide/plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="user_guide/plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="user_guide/plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="user_guide/plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="user_guide/plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="user_guide/plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -654,7 +702,7 @@
                         
                             
 <li >
-    <a href="api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -673,12 +721,6 @@
                             
 <li >
     <a href="api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -837,7 +879,7 @@ from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
 from mlxtend.classifier import EnsembleVoteClassifier
 from mlxtend.data import iris_data
-from mlxtend.evaluate import plot_decision_regions
+from mlxtend.plotting import plot_decision_regions
 
 # Initializing Classifiers
 clf1 = LogisticRegression(random_state=0)
@@ -952,5 +994,5 @@ according to the terms and conditions of the Creative Commons Attribution 4.0 In
 
 <!--
 MkDocs version : 0.15.3
-Build Date UTC : 2016-09-20 04:27:29.795787
+Build Date UTC : 2016-11-11 06:53:40.261494
 -->

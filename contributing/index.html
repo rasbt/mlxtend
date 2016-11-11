@@ -121,6 +121,12 @@
         
             
 <li >
+    <a href="../user_guide/classifier/StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../user_guide/classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../user_guide/tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../user_guide/regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../user_guide/evaluate/plot_decision_regions/">Plot decision regions</a>
+    <a href="../user_guide/evaluate/mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../user_guide/evaluate/plot_learning_curves/">Plot learning curves</a>
+    <a href="../user_guide/evaluate/mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../user_guide/preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../user_guide/association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../user_guide/general_plotting/category_scatter/">Category scatter</a>
+    <a href="../user_guide/plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../user_guide/general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../user_guide/plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../user_guide/general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../user_guide/plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -865,9 +907,9 @@ and checking off items as you go.</p>
 <ol>
 <li>[ ]  Open a new "issue" on GitHub to discuss the new feature / bug fix  </li>
 <li>[ ]  Fork the mlxtend repository from GitHub (if not already done earlier)</li>
-<li>[ ]  Create and check out a new topic branch   </li>
-<li>[ ]  Implement a new feature or apply the bug-fix  </li>
-<li>[ ]  Add appropriate unit test functions  </li>
+<li>[ ]  Create and check out a new topic branch (please don't make modifications in the master branch)</li>
+<li>[ ]  Implement the new feature or apply the bug-fix  </li>
+<li>[ ]  Add appropriate unit test functions in <code>mlxtend/*/tests</code></li>
 <li>[ ]  Run <code>nosetests ./mlxtend -sv</code> and make sure that all unit tests pass  </li>
 <li>[ ]  Check/improve the test coverage by running <code>nosetests ./mlxtend --with-coverage</code></li>
 <li>[ ]  Check for style issues by running <code>flake8 ./mlxtend</code> (you may want to run <code>nosetests</code> again after you made modifications to the code)</li>
@@ -877,7 +919,6 @@ and checking off items as you go.</p>
 <li>[ ]  Check the Travis-CI build passed at <a href="https://travis-ci.org/rasbt/mlxtend">https://travis-ci.org/rasbt/mlxtend</a></li>
 <li>[ ]  Check/improve the unit test coverage at <a href="https://coveralls.io/github/rasbt/mlxtend">https://coveralls.io/github/rasbt/mlxtend</a></li>
 <li>[ ]  Check/improve the code health at <a href="https://landscape.io/github/rasbt/mlxtend">https://landscape.io/github/rasbt/mlxtend</a></li>
-<li>[ ]  Squash (many small) commits to a larger commit</li>
 </ol>
 <hr>
 
@@ -994,6 +1035,8 @@ $ git commit -m '&lt;meaningful commit message&gt;'
 
 <h4 id="7-optional-squashing-commits">7. Optional: squashing commits</h4>
 <p>If you made multiple smaller commits, it would be nice if you could group them into a larger, summarizing commit. First, list your recent commit via</p>
+<p><strong>Note</strong><br />
+<strong>Due to the improved GitHub UI, this is no longer necessary/encouraged.</strong></p>
 <pre><code class="bash">$ git log
 </code></pre>
 

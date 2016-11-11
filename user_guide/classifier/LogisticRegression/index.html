@@ -121,6 +121,12 @@
         
             
 <li >
+    <a href="../StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../Perceptron/">Perceptron</a>
 </li>
 
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../../evaluate/plot_decision_regions/">Plot decision regions</a>
+    <a href="../../evaluate/mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../../evaluate/plot_learning_curves/">Plot learning curves</a>
+    <a href="../../evaluate/mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../general_plotting/category_scatter/">Category scatter</a>
+    <a href="../../plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../../plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../../plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -808,9 +850,7 @@
              -->
         
             <li><a href="#api">API</a></li>
-                <!-- 
-                    <li><a href="#methods">Methods</a></li>
-             -->
+                <!--  -->
         
     
     </ul>
@@ -941,7 +981,7 @@ where</p>
 <h2 id="examples">Examples</h2>
 <h3 id="example-1-gradient-descent">Example 1 - Gradient Descent</h3>
 <pre><code class="python">from mlxtend.data import iris_data
-from mlxtend.evaluate import plot_decision_regions
+from mlxtend.plotting import plot_decision_regions
 from mlxtend.classifier import LogisticRegression
 import matplotlib.pyplot as plt
 
@@ -976,8 +1016,8 @@ plt.show()
 
 <pre><code>Iteration: 100/100 | Cost 0.32 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
-<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_46_1.png" /></p>
-<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_46_2.png" /></p>
+<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_44_1.png" /></p>
+<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_44_2.png" /></p>
 <h4 id="predicting-class-labels">Predicting Class Labels</h4>
 <pre><code class="python">y_pred = lr.predict(X)
 print('Last 3 Class Labels: %s' % y_pred[-3:])
@@ -994,7 +1034,7 @@ print('Last 3 Class Labels: %s' % y_pred[-3:])
 </code></pre>
 <h3 id="example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</h3>
 <pre><code class="python">from mlxtend.data import iris_data
-from mlxtend.evaluate import plot_decision_regions
+from mlxtend.plotting import plot_decision_regions
 from mlxtend.classifier import LogisticRegression
 import matplotlib.pyplot as plt
 
@@ -1029,12 +1069,12 @@ plt.show()
 
 <pre><code>Iteration: 30/30 | Cost 0.27 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
-<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_52_1.png" /></p>
-<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_52_2.png" /></p>
+<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_50_1.png" /></p>
+<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_50_2.png" /></p>
 <h3 id="example-3-stochastic-gradient-descent-w-minibatches">Example 3 - Stochastic Gradient Descent w. Minibatches</h3>
 <p>Here, we set <code>minibatches</code> to 5, which will result in Minibatch Learning with a batch size of 20 samples (since 100 Iris samples divided by 5 minibatches equals 20).</p>
 <pre><code class="python">from mlxtend.data import iris_data
-from mlxtend.evaluate import plot_decision_regions
+from mlxtend.plotting import plot_decision_regions
 from mlxtend.classifier import LogisticRegression
 import matplotlib.pyplot as plt
 
@@ -1069,153 +1109,7 @@ plt.show()
 
 <pre><code>Iteration: 30/30 | Cost 0.25 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
-<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_55_1.png" /></p>
-<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_55_2.png" /></p>
-<h2 id="api">API</h2>
-<p><em>LogisticRegression(eta=0.01, epochs=50, l2_lambda=0.0, minibatches=1, random_seed=None, print_progress=0)</em></p>
-<p>Logistic regression classifier.</p>
-<pre><code>Note that this implementation of Logistic Regression
-expects binary class labels in {0, 1}.
-</code></pre>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>eta</code> : float (default: 0.01)</p>
-<p>Learning rate (between 0.0 and 1.0)</p>
-</li>
-<li>
-<p><code>epochs</code> : int (default: 50)</p>
-<p>Passes over the training dataset.
-Prior to each epoch, the dataset is shuffled
-if <code>minibatches &gt; 1</code> to prevent cycles in stochastic gradient descent.</p>
-</li>
-<li>
-<p><code>l2_lambda</code> : float</p>
-<p>Regularization parameter for L2 regularization.
-No regularization if l2_lambda=0.0.</p>
-</li>
-<li>
-<p><code>minibatches</code> : int (default: 1)</p>
-<p>The number of minibatches for gradient-based optimization.
-If 1: Gradient Descent learning
-If len(y): Stochastic Gradient Descent (SGD) online learning
-If 1 &lt; minibatches &lt; len(y): SGD Minibatch learning</p>
-</li>
-<li>
-<p><code>random_seed</code> : int (default: None)</p>
-<p>Set random state for shuffling and initializing the weights.</p>
-</li>
-<li>
-<p><code>print_progress</code> : int (default: 0)</p>
-<p>Prints progress in fitting to stderr.
-0: No output
-1: Epochs elapsed and cost
-2: 1 plus time elapsed
-3: 2 plus estimated time until completion</p>
-</li>
-</ul>
-<p><strong>Attributes</strong></p>
-<ul>
-<li>
-<p><code>w_</code> : 2d-array, shape={n_features, 1}</p>
-<p>Model weights after fitting.</p>
-</li>
-<li>
-<p><code>b_</code> : 1d-array, shape={1,}</p>
-<p>Bias unit after fitting.</p>
-</li>
-<li>
-<p><code>cost_</code> : list</p>
-<p>List of floats with cross_entropy cost (sgd or gd) for every
-epoch.</p>
-</li>
-</ul>
-<h3 id="methods">Methods</h3>
-<hr>
-
-<p><em>fit(X, y, init_params=True)</em></p>
-<p>Learn model from training data.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values.</p>
-</li>
-<li>
-<p><code>init_params</code> : bool (default: True)</p>
-<p>Re-initializes model parameters prior to fitting.
-Set False to continue training with weights from
-a previous model fitting.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
-<hr>
-
-<p><em>predict(X)</em></p>
-<p>Predict targets from X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>target_values</code> : array-like, shape = [n_samples]</p>
-<p>Predicted target values.</p>
-</li>
-</ul>
-<hr>
-
-<p><em>predict_proba(X)</em></p>
-<p>Predict class probabilities of X from the net input.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>Class 1 probability</code> : float</li>
-</ul>
-<hr>
-
-<p><em>score(X, y)</em></p>
-<p>Compute the prediction accuracy</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values (true class labels).</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>acc</code> : float</p>
-<p>The prediction accuracy as a float
-between 0.0 and 1.0 (perfect score).</p>
-</li>
-</ul></div>
+<h2 id="api">API</h2></div>
         
     </div>
 

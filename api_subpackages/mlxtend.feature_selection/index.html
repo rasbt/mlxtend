@@ -121,6 +121,12 @@
         
             
 <li >
+    <a href="../../user_guide/classifier/StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../../user_guide/tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../user_guide/regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../../user_guide/evaluate/plot_decision_regions/">Plot decision regions</a>
+    <a href="../../user_guide/evaluate/mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../../user_guide/evaluate/plot_learning_curves/">Plot learning curves</a>
+    <a href="../../user_guide/evaluate/mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../../user_guide/preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../user_guide/general_plotting/category_scatter/">Category scatter</a>
+    <a href="../../user_guide/plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../../user_guide/general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../../user_guide/plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../../user_guide/general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../../user_guide/plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -808,7 +850,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.4.3dev0 </p>
+<p>mlxtend version: 0.5.dev0 </p>
 <h2 id="columnselector">ColumnSelector</h2>
 <p><em>ColumnSelector(cols=None)</em></p>
 <p>Base class for all estimators in scikit-learn</p>
@@ -876,7 +918,7 @@ contained subobjects that are estimators.</p>
 <p><em>set_params(</em><em>params)</em></p>
 <p>Set the parameters of this estimator.</p>
 <p>The method works on simple estimators as well as on nested objects
-(such as pipelines). The former have parameters of the form
+(such as pipelines). The latter have parameters of the form
 <code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
 component of a nested object.</p>
 <p><strong>Returns</strong></p>
@@ -1067,7 +1109,7 @@ contained subobjects that are estimators.</p>
 <p><em>set_params(</em><em>params)</em></p>
 <p>Set the parameters of this estimator.</p>
 <p>The method works on simple estimators as well as on nested objects
-(such as pipelines). The former have parameters of the form
+(such as pipelines). The latter have parameters of the form
 <code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
 component of a nested object.</p>
 <p><strong>Returns</strong></p>
@@ -1087,51 +1129,13 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <p>Feature subset of X, shape={n_samples, k_features}</p>
 <h2 id="plot_sequential_feature_selection">plot_sequential_feature_selection</h2>
-<p><em>plot_sequential_feature_selection(metric_dict, kind='std_dev', color='blue', bcolor='steelblue', marker='o', alpha=0.2, ylabel='Performance', confidence_interval=0.95)</em></p>
-<p>Plot feature selection results.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>metric_dict</code> : mlxtend.SequentialFeatureSelector.get_metric_dict() object</p>
-</li>
-<li>
-<p><code>kind</code> : str (default: "std_dev")</p>
-<p>The kind of error bar or confidence interval in
-{'std_dev', 'std_err', 'ci', None}.</p>
-</li>
-<li>
-<p><code>color</code> : str (default: "blue")</p>
-<p>Color of the lineplot (accepts any matplotlib color name)</p>
-</li>
-<li>
-<p><code>bcolor</code> : str (default: "steelblue").</p>
-<p>Color of the error bars / confidence intervals
-(accepts any matplotlib color name).</p>
-</li>
-<li>
-<p><code>marker</code> : str (default: "o")</p>
-<p>Marker of the line plot
-(accepts any matplotlib marker name).</p>
-</li>
-<li>
-<p><code>alpha</code> : float in [0, 1] (default: 0.2)</p>
-<p>Transparency of the error bars / confidence intervals.</p>
-</li>
-<li>
-<p><code>ylabel</code> : str (default: "Performance")</p>
-<p>Y-axis label.</p>
-</li>
-<li>
-<p><code>confidence_interval</code> : float (default: 0.95)</p>
-<p>Confidence level if <code>kind='ci'</code>.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>fig</code> : matplotlib.pyplot.figure() object</li>
-</ul>
+<p><em>plot_sequential_feature_selection(</em><em>args)</em></p>
+<p>Note that importing this function from mlxtend.evaluate has been
+deprecated and will not longer be supported in mlxtend 0.6.
+Please use <code>from mlxtend.plotting import plot_sequential_feature_selection</code>
+instead.</p>
 <h2 id="sequentialfeatureselector">SequentialFeatureSelector</h2>
-<p><em>SequentialFeatureSelector(estimator, k_features='best', forward=True, floating=False, print_progress=True, scoring='accuracy', cv=5, skip_if_stuck=True, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
+<p><em>SequentialFeatureSelector(estimator, k_features='best', forward=True, floating=False, print_progress=False, verbose=1, scoring=None, cv=5, skip_if_stuck=True, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
 <p>Sequential Feature Selection for Classification and Regression.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1158,18 +1162,21 @@ backward selection otherwise</p>
 <p>Adds a conditional exclusion/inclusion if True.</p>
 </li>
 <li>
-<p><code>print_progress</code> : bool (default: True)</p>
-<p>Prints progress as the number of epochs
-to stderr.</p>
+<p><code>verbose</code> : int (default: 1), level of verbosity to use in logging.</p>
+<p>If 0, no output,
+if 1 number of features in current set, if 2 detailed logging i
+ncluding timestamp and cv scores at step.</p>
 </li>
 <li>
-<p><code>scoring</code> : str, (default='accuracy')</p>
+<p><code>scoring</code> : str or callable (default='accuracy')</p>
 <p>Scoring metric in {accuracy, f1, precision, recall, roc_auc}
 for classifiers,
-{'mean_absolute_error', 'mean_squared_error',
+{'mean_absolute_error', 'mean_squared_error'/'neg_mean_squared_error',
 'median_absolute_error', 'r2'} for regressors,
 or a callable object or function with
-signature <code>scorer(estimator, X, y)</code>.</p>
+signature <code>scorer(estimator, X, y)</code>; see
+http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
+for more information.</p>
 </li>
 <li>
 <p><code>cv</code> : int (default: 5)</p>
@@ -1308,7 +1315,7 @@ contained subobjects that are estimators.</p>
 <p><em>set_params(</em><em>params)</em></p>
 <p>Set the parameters of this estimator.</p>
 <p>The method works on simple estimators as well as on nested objects
-(such as pipelines). The former have parameters of the form
+(such as pipelines). The latter have parameters of the form
 <code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
 component of a nested object.</p>
 <p><strong>Returns</strong></p>

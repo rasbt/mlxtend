@@ -121,6 +121,12 @@
         
             
 <li >
+    <a href="../../classifier/StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../../evaluate/plot_decision_regions/">Plot decision regions</a>
+    <a href="../../evaluate/mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../../evaluate/plot_learning_curves/">Plot learning curves</a>
+    <a href="../../evaluate/mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../general_plotting/category_scatter/">Category scatter</a>
+    <a href="../../plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../../plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../../plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -837,50 +879,72 @@ print('1st row', X[0])
 </code></pre>
 
 <pre><code>Dimensions: 5000 x 784
-1st row [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-   0  51 159 253 159  50   0   0   0   0   0   0   0   0   0   0   0   0
-   0   0   0   0   0   0   0   0   0   0  48 238 252 252 252 237   0   0
-   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-   0  54 227 253 252 239 233 252  57   6   0   0   0   0   0   0   0   0
-   0   0   0   0   0   0   0   0   0  10  60 224 252 253 252 202  84 252
- 253 122   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-   0 163 252 252 252 253 252 252  96 189 253 167   0   0   0   0   0   0
-   0   0   0   0   0   0   0   0   0   0  51 238 253 253 190 114 253 228
-  47  79 255 168   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-   0  48 238 252 252 179  12  75 121  21   0   0 253 243  50   0   0   0
-   0   0   0   0   0   0   0   0   0   0  38 165 253 233 208  84   0   0
-   0   0   0   0 253 252 165   0   0   0   0   0   0   0   0   0   0   0
-   0   7 178 252 240  71  19  28   0   0   0   0   0   0 253 252 195   0
-   0   0   0   0   0   0   0   0   0   0   0  57 252 252  63   0   0   0
-   0   0   0   0   0   0 253 252 195   0   0   0   0   0   0   0   0   0
-   0   0   0 198 253 190   0   0   0   0   0   0   0   0   0   0 255 253
- 196   0   0   0   0   0   0   0   0   0   0   0  76 246 252 112   0   0
-   0   0   0   0   0   0   0   0 253 252 148   0   0   0   0   0   0   0
-   0   0   0   0  85 252 230  25   0   0   0   0   0   0   0   0   7 135
- 253 186  12   0   0   0   0   0   0   0   0   0   0   0  85 252 223   0
-   0   0   0   0   0   0   0   7 131 252 225  71   0   0   0   0   0   0
-   0   0   0   0   0   0  85 252 145   0   0   0   0   0   0   0  48 165
- 252 173   0   0   0   0   0   0   0   0   0   0   0   0   0   0  86 253
- 225   0   0   0   0   0   0 114 238 253 162   0   0   0   0   0   0   0
-   0   0   0   0   0   0   0   0  85 252 249 146  48  29  85 178 225 253
- 223 167  56   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-  85 252 252 252 229 215 252 252 252 196 130   0   0   0   0   0   0   0
-   0   0   0   0   0   0   0   0   0   0  28 199 252 252 253 252 252 233
- 145   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-   0   0   0  25 128 252 253 252 141  37   0   0   0   0   0   0   0   0
-   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-   0   0   0   0   0   0   0   0   0   0]
+1st row [   0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.   51.  159.  253.  159.   50.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.   48.  238.
+  252.  252.  252.  237.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.   54.  227.  253.  252.  239.  233.  252.   57.    6.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.   10.   60.  224.  252.  253.  252.  202.   84.  252.
+  253.  122.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.  163.  252.  252.  252.  253.
+  252.  252.   96.  189.  253.  167.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.   51.  238.
+  253.  253.  190.  114.  253.  228.   47.   79.  255.  168.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.   48.  238.  252.  252.  179.   12.   75.  121.   21.    0.    0.
+  253.  243.   50.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.   38.  165.  253.  233.  208.   84.    0.    0.
+    0.    0.    0.    0.  253.  252.  165.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    7.  178.  252.  240.   71.
+   19.   28.    0.    0.    0.    0.    0.    0.  253.  252.  195.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.   57.
+  252.  252.   63.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+  253.  252.  195.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.  198.  253.  190.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.  255.  253.  196.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.   76.  246.  252.  112.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.  253.  252.  148.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.   85.  252.
+  230.   25.    0.    0.    0.    0.    0.    0.    0.    0.    7.  135.
+  253.  186.   12.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.   85.  252.  223.    0.    0.    0.    0.    0.    0.    0.
+    0.    7.  131.  252.  225.   71.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.   85.  252.  145.    0.    0.    0.
+    0.    0.    0.    0.   48.  165.  252.  173.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.   86.  253.
+  225.    0.    0.    0.    0.    0.    0.  114.  238.  253.  162.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.   85.  252.  249.  146.   48.   29.   85.  178.  225.  253.
+  223.  167.   56.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.   85.  252.  252.  252.  229.  215.
+  252.  252.  252.  196.  130.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.   28.  199.
+  252.  252.  253.  252.  252.  233.  145.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.   25.  128.  252.  253.  252.  141.   37.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+    0.    0.    0.    0.]
 </code></pre>
 <pre><code class="python">import numpy as np
 print('Classes: Setosa, Versicolor, Virginica')
@@ -903,7 +967,7 @@ def plot_digit(X, y, idx):
 plot_digit(X, y, 4)       
 </code></pre>
 
-<p><img alt="png" src="../mnist_data_files/mnist_data_13_0.png" /></p>
+<p><img alt="png" src="../mnist_data_files/mnist_data_11_0.png" /></p>
 <h2 id="api">API</h2>
 <p><em>mnist_data()</em></p>
 <p>5000 samples from the MNIST handwritten digits dataset.</p>

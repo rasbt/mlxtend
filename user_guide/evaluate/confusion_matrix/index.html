@@ -121,6 +121,12 @@
         
             
 <li >
+    <a href="../../classifier/StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../plot_decision_regions/">Plot decision regions</a>
+    <a href="../mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../plot_learning_curves/">Plot learning curves</a>
+    <a href="../mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../general_plotting/category_scatter/">Category scatter</a>
+    <a href="../../plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../../plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../../plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -758,7 +800,7 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../plot_decision_regions/">
+                        <a rel="prev" href="../mcnemar_table/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -839,14 +881,15 @@ cm
 <pre><code>array([[3, 1],
        [2, 2]])
 </code></pre>
+<p>To visualize the confusion matrix using matplotlib, see the utility function <a href="../../plotting/plot_confusion matrix"><code>mlxtend.plotting.plot_confusion_matrix</code></a>:</p>
 <pre><code class="python">import matplotlib.pyplot as plt
-from mlxtend.evaluate import plot_confusion_matrix
+from mlxtend.plotting import plot_confusion_matrix
 
 fig, ax = plot_confusion_matrix(conf_mat=cm)
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../confusion_matrix_files/confusion_matrix_14_0.png" /></p>
+<p><img alt="png" src="../confusion_matrix_files/confusion_matrix_13_0.png" /></p>
 <h3 id="example-2-multi-class-classification">Example 2 - Multi-class classification</h3>
 <pre><code class="python">from mlxtend.evaluate import confusion_matrix
 
@@ -864,6 +907,7 @@ cm
        [0, 0, 1, 0],
        [0, 0, 0, 1]])
 </code></pre>
+<p>To visualize the confusion matrix using matplotlib, see the utility function <a href="../../plotting/plot_confusion matrix"><code>mlxtend.plotting.plot_confusion_matrix</code></a>:</p>
 <pre><code class="python">import matplotlib.pyplot as plt
 from mlxtend.evaluate import confusion_matrix
 
@@ -890,13 +934,14 @@ cm
 <pre><code>array([[4, 1],
        [1, 2]])
 </code></pre>
-<pre><code class="python">from mlxtend.evaluate import plot_confusion_matrix
+<p>To visualize the confusion matrix using matplotlib, see the utility function <a href="../../plotting/plot_confusion matrix"><code>mlxtend.plotting.plot_confusion_matrix</code></a>:</p>
+<pre><code class="python">from mlxtend.plotting import plot_confusion_matrix
 
 fig, ax = plot_confusion_matrix(conf_mat=cm)
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../confusion_matrix_files/confusion_matrix_21_0.png" /></p>
+<p><img alt="png" src="../confusion_matrix_files/confusion_matrix_22_0.png" /></p>
 <h2 id="api">API</h2>
 <p><em>confusion_matrix(y_target, y_predicted, binary=False, positive_label=1)</em></p>
 <p>Compute a confusion matrix/contingency table.</p>
@@ -925,39 +970,6 @@ all other classes are 0.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li><code>mat</code> : array-like, shape=[n_classes, n_classes]</li>
-</ul>
-<p><br><br>
-<em>plot_confusion_matrix(conf_mat, hide_spines=False, hide_ticks=False, figsize=(2.5, 2.5), cmap=None, alpha=0.3)</em></p>
-<p>Plot a confusion matrix via matplotlib.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>conf_mat</code> : array-like, shape = [n_classes, n_classes]</p>
-<p>Confusion matrix from evaluate.confusion matrix.</p>
-</li>
-<li>
-<p><code>hide_spines</code> : bool (default: False)</p>
-<p>Hides axis spines if True.</p>
-</li>
-<li>
-<p><code>hide_ticks</code> : bool (default: False)</p>
-<p>Hides axis ticks if True</p>
-</li>
-<li>
-<p><code>figsize</code> : tuple (default: (2.5, 2.5))</p>
-<p>Height and width of the figure</p>
-</li>
-<li>
-<p><code>cmap</code> : matplotlib colormap (default: <code>None</code>)</p>
-<p>Uses matplotlib.pyplot.cm.Blues if <code>None</code></p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>fig, ax</code> : matplotlib.pyplot subplot objects</p>
-<p>Figure and axis elements of the subplot.</p>
-</li>
 </ul></div>
         
     </div>

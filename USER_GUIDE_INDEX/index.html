@@ -121,6 +121,12 @@
         
             
 <li >
+    <a href="../user_guide/classifier/StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../user_guide/classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../user_guide/tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../user_guide/regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../user_guide/evaluate/plot_decision_regions/">Plot decision regions</a>
+    <a href="../user_guide/evaluate/mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../user_guide/evaluate/plot_learning_curves/">Plot learning curves</a>
+    <a href="../user_guide/evaluate/mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../user_guide/preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../user_guide/association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../user_guide/general_plotting/category_scatter/">Category scatter</a>
+    <a href="../user_guide/plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../user_guide/general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../user_guide/plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../user_guide/general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../user_guide/plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -788,16 +830,13 @@
             <li><a href="#classifier">classifier</a></li>
                 <!--  -->
         
-            <li><a href="#tf_classifier-tensorflow-classifier">tf_classifier (TensorFlow Classifier)</a></li>
+            <li><a href="#tf_classifier">tf_classifier</a></li>
                 <!--  -->
         
             <li><a href="#regressor">regressor</a></li>
                 <!--  -->
         
-            <li><a href="#tf_regressor-tensorflow-regressor">tf_regressor (TensorFlow Regressor)</a></li>
-                <!--  -->
-        
-            <li><a href="#regression_utils">regression_utils</a></li>
+            <li><a href="#tf_regressor">tf_regressor</a></li>
                 <!--  -->
         
             <li><a href="#feature_selection">feature_selection</a></li>
@@ -821,10 +860,13 @@
             <li><a href="#data">data</a></li>
                 <!--  -->
         
+            <li><a href="#association">association</a></li>
+                <!--  -->
+        
             <li><a href="#file_io">file_io</a></li>
                 <!--  -->
         
-            <li><a href="#general-plotting">general plotting</a></li>
+            <li><a href="#plotting">plotting</a></li>
                 <!--  -->
         
             <li><a href="#math">math</a></li>
@@ -847,111 +889,119 @@
 <h1 id="user-guide-index">User Guide Index</h1>
 <h2 id="classifier"><code>classifier</code></h2>
 <ul>
-<li><a href="../user_guide/classifier/EnsembleVoteClassifier/"><code>EnsembleVoteClassifier</code></a></li>
-<li><a href="../user_guide/classifier/StackingClassifier/"><code>StackingClassifier</code></a></li>
-<li><a href="../user_guide/classifier/Perceptron/"><code>Perceptron</code></a></li>
-<li><a href="../user_guide/classifier/Adaline/"><code>Adaline</code></a></li>
-<li><a href="../user_guide/classifier/LogisticRegression/"><code>LogisticRegression</code></a></li>
-<li><a href="../user_guide/classifier/MultiLayerPerceptron/"><code>MultiLayerPerceptron</code></a></li>
-<li><a href="../user_guide/classifier/SoftmaxRegression/"><code>SoftmaxRegression</code></a></li>
+<li><a href="../user_guide/classifier/EnsembleVoteClassifier/">EnsembleVoteClassifier</a></li>
+<li><a href="../user_guide/classifier/StackingClassifier/">StackingClassifier</a></li>
+<li><a href="../user_guide/classifier/StackingCVClassifier/">StackingCVClassifier</a></li>
+<li><a href="../user_guide/classifier/Perceptron/">Perceptron</a></li>
+<li><a href="../user_guide/classifier/Adaline/">Adaline</a></li>
+<li><a href="../user_guide/classifier/LogisticRegression/">LogisticRegression</a></li>
+<li><a href="../user_guide/classifier/SoftmaxRegression/">SoftmaxRegression</a></li>
+<li><a href="../user_guide/classifier/MultiLayerPerceptron/">MultiLayerPerceptron</a></li>
 </ul>
-<h2 id="tf_classifier-tensorflow-classifier"><code>tf_classifier</code> (TensorFlow Classifier)</h2>
+<h2 id="tf_classifier"><code>tf_classifier</code></h2>
 <ul>
-<li><a href="../user_guide/tf_classifier/TfSoftmaxRegression/"><code>TfSoftmaxRegression</code></a></li>
-<li><a href="../user_guide/tf_classifier/TfMultiLayerPerceptron/"><code>TfMultiLayerPerceptron</code></a></li>
+<li><a href="../user_guide/tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a></li>
+<li><a href="../user_guide/tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a></li>
 </ul>
 <h2 id="regressor"><code>regressor</code></h2>
 <ul>
-<li><a href="../user_guide/regressor/LinearRegression/"><code>LinearRegression</code></a></li>
-<li><a href="../user_guide/regressor/StackingRegressor/"><code>StackingRegressor</code></a></li>
+<li><a href="../user_guide/regressor/LinearRegression/">LinearRegression</a></li>
+<li><a href="../user_guide/regressor/StackingRegressor/">StackingRegressor</a></li>
 </ul>
-<h2 id="tf_regressor-tensorflow-regressor"><code>tf_regressor</code> (TensorFlow Regressor)</h2>
+<h2 id="tf_regressor"><code>tf_regressor</code></h2>
 <ul>
-<li><a href="../user_guide/tf_regressor/TfLinearRegression/"><code>TfLinearRegression</code></a> (new in 0.4.1dev)</li>
-</ul>
-<h2 id="regression_utils"><code>regression_utils</code></h2>
-<ul>
-<li><a href="../user_guide/regression_utils/plot_linear_regression/"><code>plot_linear_regression</code></a></li>
+<li><a href="../user_guide/tf_regressor/TfLinearRegression/">TfLinearRegression</a></li>
 </ul>
 <h2 id="feature_selection"><code>feature_selection</code></h2>
 <ul>
-<li><a href="../user_guide/feature_selection/SequentialFeatureSelector/"><code>SequentialFeatureSelector</code></a></li>
-<li><a href="../user_guide/feature_selection/ExhaustiveFeatureSelector/"><code>ExhaustiveFeatureSelector</code></a></li>
-<li><a href="../user_guide/feature_selection/ColumnSelector/"><code>ColumnSelector</code></a></li>
+<li><a href="../user_guide/feature_selection/SequentialFeatureSelector/">SequentialFeatureSelector</a></li>
+<li><a href="../user_guide/feature_selection/ExhaustiveFeatureSelector/">ExhaustiveFeatureSelector</a></li>
+<li><a href="../user_guide/feature_selection/ColumnSelector/">ColumnSelector</a></li>
 </ul>
 <h2 id="feature_extraction"><code>feature_extraction</code></h2>
 <ul>
-<li><a href="../user_guide/feature_extraction/PrincipalComponentAnalysis/"><code>PrincipalComponentAnalysis</code></a></li>
-<li><a href="../user_guide/feature_extraction/LinearDiscriminantAnalysis/"><code>LinearDiscriminantAnalysis</code></a></li>
-<li><a href="../user_guide/feature_extraction/RBFKernelPCA/"><code>RBFKernelPCA</code></a></li>
+<li><a href="../user_guide/feature_extraction/PrincipalComponentAnalysis/">PrincipalComponentAnalysis</a></li>
+<li><a href="../user_guide/feature_extraction/LinearDiscriminantAnalysis/">LinearDiscriminantAnalysis</a></li>
+<li><a href="../user_guide/feature_extraction/RBFKernelPCA/">RBFKernelPCA</a></li>
 </ul>
 <h2 id="cluster"><code>cluster</code></h2>
 <ul>
-<li><a href="../user_guide/cluster/Kmeans/"><code>Kmeans</code></a> (new in 0.4.1dev)</li>
+<li><a href="../user_guide/cluster/Kmeans/">Kmeans</a></li>
 </ul>
 <h2 id="tf_cluster"><code>tf_cluster</code></h2>
 <ul>
-<li><a href="../user_guide/tf_cluster/TfKmeans/"><code>TfKmeans</code></a> (new in 0.4.1dev)</li>
+<li><a href="../user_guide/tf_cluster/TfKmeans/">TfKmeans</a></li>
 </ul>
 <h2 id="evaluate"><code>evaluate</code></h2>
 <ul>
-<li><a href="../user_guide/evaluate/confusion_matrix/"><code>confusion_matrix</code></a></li>
-<li><a href="../user_guide/evaluate/plot_decision_regions/"><code>plot_decision_regions</code></a></li>
-<li><a href="../user_guide/evaluate/plot_learning_curves/"><code>plot_learning_curves</code></a></li>
-<li><a href="../user_guide/evaluate/scoring/"><code>scoring</code></a></li>
+<li><a href="../user_guide/evaluate/confusion_matrix/">confusion_matrix</a></li>
+<li><a href="../user_guide/evaluate/mcnemar_table/">mcnemar_table</a></li>
+<li><a href="../user_guide/evaluate/mcnemar/">mcnemar</a></li>
+<li><a href="../user_guide/evaluate/scoring/">scoring</a></li>
 </ul>
 <h2 id="preprocessing"><code>preprocessing</code></h2>
 <ul>
-<li><a href="../user_guide/preprocessing/MeanCenterer/"><code>MeanCenterer</code></a></li>
-<li><a href="../user_guide/preprocessing/minmax_scaling/"><code>minmax_scaling</code></a></li>
-<li><a href="../user_guide/preprocessing/shuffle_arrays_unison/"><code>shuffle_arrays_unison</code></a></li>
-<li><a href="../user_guide/preprocessing/standardize/"><code>standardize</code></a></li>
-<li><a href="../user_guide/preprocessing/one-hot_encoding/"><code>one-hot_encoding</code></a></li>
-<li><a href="../user_guide/preprocessing/DenseTransformer/"><code>DenseTransformer</code></a></li>
-<li><a href="../user_guide/preprocessing/CopyTransformer/"><code>CopyTransformer</code></a></li>
+<li><a href="../user_guide/preprocessing/MeanCenterer/">MeanCenterer</a></li>
+<li><a href="../user_guide/preprocessing/minmax_scaling/">minmax_scaling</a></li>
+<li><a href="../user_guide/preprocessing/shuffle_arrays_unison/">shuffle_arrays_unison</a></li>
+<li><a href="../user_guide/preprocessing/standardize/">standardize</a></li>
+<li><a href="../user_guide/preprocessing/one-hot_encoding/">one-hot_encoding</a></li>
+<li><a href="../user_guide/preprocessing/OnehotTransactions/">OnehotTransactions</a></li>
+<li><a href="../user_guide/preprocessing/DenseTransformer/">DenseTransformer</a></li>
+<li><a href="../user_guide/preprocessing/CopyTransformer/">CopyTransformer</a></li>
 </ul>
 <h2 id="data"><code>data</code></h2>
 <ul>
-<li><a href="../user_guide/data/autompg_data/"><code>autompg_data</code></a></li>
-<li><a href="../user_guide/data/boston_housing_data/"><code>boston_housing_data</code></a></li>
-<li><a href="../user_guide/data/iris_data/"><code>iris_data</code></a></li>
-<li><a href="../user_guide/data/mnist_data/"><code>mnist_data</code></a></li>
-<li><a href="../user_guide/data/loadlocal_mnist/"><code>loadlocal_mnist</code></a></li>
-<li><a href="../user_guide/data/wine_data/"><code>wine_data</code></a></li>
-<li><a href="../user_guide/data/three_blobs_data/"><code>three_blobs</code></a></li>
+<li><a href="../user_guide/data/autompg_data/">autompg_data</a></li>
+<li><a href="../user_guide/data/boston_housing_data/">boston_housing_data</a></li>
+<li><a href="../user_guide/data/iris_data/">iris_data</a></li>
+<li><a href="../user_guide/data/mnist_data/">mnist_data</a></li>
+<li><a href="../user_guide/data/loadlocal_mnist/">loadlocal_mnist</a></li>
+<li><a href="../user_guide/data/wine_data/">wine_data</a></li>
+<li><a href="../user_guide/data/three_blobs_data/">three_blobs_data</a></li>
+</ul>
+<h2 id="association"><code>association</code></h2>
+<ul>
+<li><a href="../user_guide/association/apriori/">apriori</a></li>
 </ul>
 <h2 id="file_io"><code>file_io</code></h2>
 <ul>
-<li><a href="../user_guide/file_io/find_filegroups/"><code>find_filegroups</code></a></li>
-<li><a href="../user_guide/file_io/find_files/"><code>find_files</code></a></li>
+<li><a href="../user_guide/file_io/find_filegroups/">find_filegroups</a></li>
+<li><a href="../user_guide/file_io/find_files/">find_files</a></li>
 </ul>
-<h2 id="general-plotting"><code>general plotting</code></h2>
+<h2 id="plotting"><code>plotting</code></h2>
 <ul>
-<li><a href="../user_guide/general_plotting/category_scatter/"><code>category_scatter</code></a></li>
-<li><a href="../user_guide/general_plotting/enrichment_plot/"><code>enrichment_plot</code></a></li>
-<li><a href="../user_guide/general_plotting/stacked_barplot/"><code>stacked_barplot</code></a></li>
+<li><a href="../user_guide/plotting/plot_decision_regions/">plot_decision_regions</a></li>
+<li><a href="../user_guide/plotting/plot_learning_curves/">plot_learning_curves</a></li>
+<li><a href="../user_guide/plotting/plot_sequential_feature_selection/">plot_sequential_feature_selection</a></li>
+<li><a href="../user_guide/plotting/plot_confusion_matrix/">plot_confusion_matrix</a></li>
+<li><a href="../user_guide/plotting/plot_linear_regression/">plot_linear_regression</a></li>
+<li><a href="../user_guide/plotting/category_scatter/">category_scatter</a></li>
+<li><a href="../user_guide/plotting/enrichment_plot/">enrichment_plot</a></li>
+<li><a href="../user_guide/plotting/stacked_barplot/">stacked_barplot</a></li>
+<li><a href="../user_guide/plotting/checkerboard_plot/">checkerboard_plot</a></li>
 </ul>
 <h2 id="math"><code>math</code></h2>
 <ul>
-<li><a href="../user_guide/math/num_combinations/"><code>num_combinations</code></a></li>
-<li><a href="../user_guide/math/num_permutations/"><code>num_permutations</code></a></li>
+<li><a href="../user_guide/math/num_combinations/">num_combinations</a></li>
+<li><a href="../user_guide/math/num_permutations/">num_permutations</a></li>
 </ul>
 <h2 id="text"><code>text</code></h2>
 <ul>
-<li><a href="../user_guide/text/generalize_names/"><code>generalize_names</code></a></li>
-<li><a href="../user_guide/text/generalize_names_duplcheck/"><code>generalize_names_duplcheck</code></a></li>
-<li><a href="../user_guide/text/tokenizer/"><code>tokenizer.</code></a></li>
+<li><a href="../user_guide/text/generalize_names/">generalize_names</a></li>
+<li><a href="../user_guide/text/generalize_names_duplcheck/">generalize_names_duplcheck</a></li>
+<li><a href="../user_guide/text/tokenizer/">tokenizer</a></li>
 </ul>
 <h2 id="utils"><code>utils</code></h2>
 <ul>
-<li><a href="../user_guide/utils/Counter/"><code>Counter</code></a></li>
+<li><a href="../user_guide/utils/Counter/">Counter</a></li>
 </ul>
 <h2 id="general-concepts"><code>general concepts</code></h2>
 <ul>
-<li><a href="../user_guide/general_concepts/activation-functions/"><code>activation-functions</code></a></li>
-<li><a href="../user_guide/general_concepts/gradient-optimization/"><code>gradient-optimization</code></a></li>
-<li><a href="../user_guide/general_concepts/linear-gradient-derivative/"><code>linear-gradient-derivative</code></a></li>
-<li><a href="../user_guide/general_concepts/regularization-linear/"><code>regularization-linear</code></a></li>
+<li><a href="../user_guide/general_concepts/activation-functions/">activation-functions</a></li>
+<li><a href="../user_guide/general_concepts/gradient-optimization/">gradient-optimization</a></li>
+<li><a href="../user_guide/general_concepts/linear-gradient-derivative/">linear-gradient-derivative</a></li>
+<li><a href="../user_guide/general_concepts/regularization-linear/">regularization-linear</a></li>
 </ul></div>
         
     </div>

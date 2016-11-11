@@ -121,6 +121,12 @@
         
             
 <li >
+    <a href="../StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../Perceptron/">Perceptron</a>
 </li>
 
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../../evaluate/plot_decision_regions/">Plot decision regions</a>
+    <a href="../../evaluate/mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../../evaluate/plot_learning_curves/">Plot learning curves</a>
+    <a href="../../evaluate/mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../general_plotting/category_scatter/">Category scatter</a>
+    <a href="../../plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../../plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../../plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -869,7 +911,7 @@ $$</mathjax></p>
 <h2 id="examples">Examples</h2>
 <h3 id="example-1-closed-form-solution">Example 1 - Closed Form Solution</h3>
 <pre><code class="python">from mlxtend.data import iris_data
-from mlxtend.evaluate import plot_decision_regions
+from mlxtend.plotting import plot_decision_regions
 from mlxtend.classifier import Adaline
 import matplotlib.pyplot as plt
 
@@ -896,10 +938,10 @@ plt.title('Adaline - Stochastic Gradient Descent')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../Adaline_files/Adaline_18_0.png" /></p>
+<p><img alt="png" src="../Adaline_files/Adaline_16_0.png" /></p>
 <h3 id="example-2-gradient-descent">Example 2 - Gradient Descent</h3>
 <pre><code class="python">from mlxtend.data import iris_data
-from mlxtend.evaluate import plot_decision_regions
+from mlxtend.plotting import plot_decision_regions
 from mlxtend.classifier import Adaline
 import matplotlib.pyplot as plt
 
@@ -933,13 +975,13 @@ plt.ylabel('Cost')
 
 <pre><code>Iteration: 30/30 | Cost 3.79 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
-<p><img alt="png" src="../Adaline_files/Adaline_20_1.png" /></p>
-<pre><code>&lt;matplotlib.text.Text at 0x10ca096a0&gt;
+<p><img alt="png" src="../Adaline_files/Adaline_18_1.png" /></p>
+<pre><code>&lt;matplotlib.text.Text at 0x10eb32908&gt;
 </code></pre>
-<p><img alt="png" src="../Adaline_files/Adaline_20_3.png" /></p>
+<p><img alt="png" src="../Adaline_files/Adaline_18_3.png" /></p>
 <h3 id="example-3-stochastic-gradient-descent">Example 3 - Stochastic Gradient Descent</h3>
 <pre><code class="python">from mlxtend.data import iris_data
-from mlxtend.evaluate import plot_decision_regions
+from mlxtend.plotting import plot_decision_regions
 from mlxtend.classifier import Adaline
 import matplotlib.pyplot as plt
 
@@ -974,11 +1016,11 @@ plt.show()
 
 <pre><code>Iteration: 15/15 | Cost 3.81 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
-<p><img alt="png" src="../Adaline_files/Adaline_22_1.png" /></p>
-<p><img alt="png" src="../Adaline_files/Adaline_22_2.png" /></p>
+<p><img alt="png" src="../Adaline_files/Adaline_20_1.png" /></p>
+<p><img alt="png" src="../Adaline_files/Adaline_20_2.png" /></p>
 <h3 id="example-4-stochastic-gradient-descent-with-minibatches">Example 4 - Stochastic Gradient Descent with Minibatches</h3>
 <pre><code class="python">from mlxtend.data import iris_data
-from mlxtend.evaluate import plot_decision_regions
+from mlxtend.plotting import plot_decision_regions
 from mlxtend.classifier import Adaline
 import matplotlib.pyplot as plt
 
@@ -1013,14 +1055,13 @@ plt.show()
 
 <pre><code>Iteration: 15/15 | Cost 3.87 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
-<p><img alt="png" src="../Adaline_files/Adaline_24_1.png" /></p>
-<p><img alt="png" src="../Adaline_files/Adaline_24_2.png" /></p>
+<p><img alt="png" src="../Adaline_files/Adaline_22_1.png" /></p>
+<p><img alt="png" src="../Adaline_files/Adaline_22_2.png" /></p>
 <h2 id="api">API</h2>
 <p><em>Adaline(eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0)</em></p>
 <p>ADAptive LInear NEuron classifier.</p>
-<pre><code>Note that this implementation of Adaline expects binary class labels
-in {0, 1}.
-</code></pre>
+<p>Note that this implementation of Adaline expects binary class labels
+in {0, 1}.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>

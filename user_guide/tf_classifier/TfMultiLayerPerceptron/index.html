@@ -121,6 +121,12 @@
         
             
 <li >
+    <a href="../../classifier/StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../../evaluate/plot_decision_regions/">Plot decision regions</a>
+    <a href="../../evaluate/mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../../evaluate/plot_learning_curves/">Plot learning curves</a>
+    <a href="../../evaluate/mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../general_plotting/category_scatter/">Category scatter</a>
+    <a href="../../plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../../plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../../plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -828,7 +870,7 @@
 <p>Each integer in the <code>hidden_layers</code> list argument specifies the number of neurons for the respective layer; via the <code>activations</code>, we specify the activation functions for the individual hidden layer. Below, we initialize a multi-layer perceptron with 1 hidden layer using the logistic sigmoid activation. Furthermore, we train the network via simple gradient descent training by setting <code>optimizer='gradientdescent'</code> and <code>minibatches=1</code>. </p>
 <pre><code class="python">from mlxtend.tf_classifier import TfMultiLayerPerceptron
 from mlxtend.data import iris_data
-from mlxtend.evaluate import plot_decision_regions
+from mlxtend.plotting import plot_decision_regions
 import matplotlib.pyplot as plt
 
 # Loading Data
@@ -858,7 +900,7 @@ plt.show()
 
 <pre><code>Iteration: 20/20 | Cost 0.55 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
-<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_15_1.png" /></p>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_13_1.png" /></p>
 <p>Continue the training if cost could be further decreased via additional epochs. Instead of training the classifier another 20 epochs, we modify the epochs and set them to 550. Also, we want to make sure to set <code>init_weights</code> to <code>False</code> in order to re-use the model parameters from the previous training.</p>
 <pre><code class="python">mlp.epochs = 550
 mlp.fit(X, y, init_params=False)
@@ -868,15 +910,15 @@ plt.ylabel('Cost')
 plt.show()
 </code></pre>
 
-<pre><code>Iteration: 550/550 | Cost 0.12 | Elapsed: 0:00:02 | ETA: 0:00:00
+<pre><code>Iteration: 550/550 | Cost 0.12 | Elapsed: 0:00:01 | ETA: 0:00:00
 </code></pre>
-<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_17_1.png" /></p>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_15_1.png" /></p>
 <pre><code class="python">plot_decision_regions(X=X, y=y, clf=mlp)
 plt.title('Logistic Sigmoid MLP - Gradient Descent')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_18_0.png" /></p>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_16_0.png" /></p>
 <h4 id="predicting-class-labels">Predicting Class Labels</h4>
 <pre><code class="python">print('Predicted class labels:', mlp.predict(X[[0, 99, 149]]))
 </code></pre>
@@ -888,7 +930,7 @@ plt.show()
 </code></pre>
 
 <pre><code>Predicted class probabilities:
- [[  9.92696404e-01   7.30253849e-03   1.04788933e-06]
+ [[  9.92696404e-01   7.30253896e-03   1.04788933e-06]
  [  1.58569030e-03   9.77745533e-01   2.06688400e-02]
  [  5.52368192e-06   1.68280497e-01   8.31713974e-01]]
 </code></pre>
@@ -929,10 +971,12 @@ plt.title('MLP - Minibatch Stochastic Gradient Descent')
 plt.show()
 </code></pre>
 
-<pre><code>Iteration: 100/100 | Cost 0.13 | Elapsed: 0:00:03 | ETA: 0:00:00
+<pre><code>Iteration: 100/100 | Cost 0.13 | Elapsed: 0:00:01 | ETA: 0:00:00
 </code></pre>
-<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_25_1.png" /></p>
-<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_25_2.png" /></p>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_23_1.png" /></p>
+<pre><code>/Users/Sebastian/miniconda3/lib/python3.5/site-packages/ipykernel/__main__.py:31: DeprecationWarning: Note that importing this function from mlxtend.evaluate has been deprecated and will not longer be supported in mlxtend 0.6. Please use`from mlxtend.plotting import plot_decision_regions` instead.
+</code></pre>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_23_3.png" /></p>
 <h3 id="example-3-mnist">Example 3 - MNIST</h3>
 <p>Please note that <code>mnist_data</code> just contains a random 5000-sample subset of MNIST (~10% of the original dataset size) suitable for demonstration purposes regarding computational efficiency.</p>
 <p>Although it may be overkill, and the network may terribly overfit the training data, let us initialize a more complex neural network with 2 hidden layers and 200 ReLU (Rectifier Linear Units) each.</p>
@@ -959,15 +1003,15 @@ plt.ylabel('Cost')
 plt.show()
 </code></pre>
 
-<pre><code>Iteration: 30/30 | Cost 40.04 | Elapsed: 0:00:14 | ETA: 0:00:00
+<pre><code>Iteration: 30/30 | Cost 35.72 | Elapsed: 0:00:08 | ETA: 0:00:00
 </code></pre>
-<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_29_1.png" /></p>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_27_1.png" /></p>
 <pre><code class="python">import numpy as np
 y_pred = mlp.predict(X)
 print('Training Accuracy: %.2f%%' % (mlp.score(X, y) * 100))
 </code></pre>
 
-<pre><code>Training Accuracy: 99.76%
+<pre><code>Training Accuracy: 99.78%
 </code></pre>
 <pre><code class="python">def plot_digit(X, y, idx):
     img = X[idx].reshape(28,28)
@@ -977,7 +1021,7 @@ print('Training Accuracy: %.2f%%' % (mlp.score(X, y) * 100))
 plot_digit(X, y, 4999)  
 </code></pre>
 
-<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_31_0.png" /></p>
+<p><img alt="png" src="../TfMultiLayerPerceptron_files/TfMultiLayerPerceptron_29_0.png" /></p>
 <pre><code class="python">print('Prediction: %d' % mlp.predict(X[4999, None]))
 </code></pre>
 

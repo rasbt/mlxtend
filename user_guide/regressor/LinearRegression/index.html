@@ -121,6 +121,12 @@
         
             
 <li >
+    <a href="../../classifier/StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../../evaluate/plot_decision_regions/">Plot decision regions</a>
+    <a href="../../evaluate/mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../../evaluate/plot_learning_curves/">Plot learning curves</a>
+    <a href="../../evaluate/mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../general_plotting/category_scatter/">Category scatter</a>
+    <a href="../../plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../../plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../../plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -887,7 +929,7 @@ plt.show()
 <pre><code>Intercept: 0.25
 Slope: 0.81
 </code></pre>
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_17_1.png" /></p>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_15_1.png" /></p>
 <h3 id="example-2-gradient-descent">Example 2 - Gradient Descent</h3>
 <pre><code class="python">import numpy as np
 import matplotlib.pyplot as plt
@@ -920,7 +962,7 @@ plt.show()
 Intercept: 0.82
 Slope: 0.22
 </code></pre>
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_19_2.png" /></p>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_17_2.png" /></p>
 <pre><code class="python"># Visualizing the cost to check for convergence and plotting the linear model:
 
 plt.plot(range(1, gd_lr.epochs+1), gd_lr.cost_)
@@ -931,7 +973,7 @@ plt.tight_layout()
 plt.show()    
 </code></pre>
 
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_20_0.png" /></p>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_18_0.png" /></p>
 <h3 id="example-3-stochastic-gradient-descent">Example 3 - Stochastic Gradient Descent</h3>
 <pre><code class="python">import numpy as np
 import matplotlib.pyplot as plt
@@ -961,7 +1003,7 @@ plt.show()
 <pre><code>Intercept: 0.24
 Slope: 0.82
 </code></pre>
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_22_1.png" /></p>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_20_1.png" /></p>
 <pre><code class="python">plt.plot(range(1, sgd_lr.epochs+1), sgd_lr.cost_)
 plt.xlabel('Epochs')
 plt.ylabel('Cost')
@@ -970,7 +1012,7 @@ plt.tight_layout()
 plt.show()  
 </code></pre>
 
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_23_0.png" /></p>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_21_0.png" /></p>
 <h3 id="example-3-stochastic-gradient-descent-with-minibatches">Example 3 - Stochastic Gradient Descent with Minibatches</h3>
 <pre><code class="python">import numpy as np
 import matplotlib.pyplot as plt
@@ -1000,7 +1042,7 @@ plt.show()
 <pre><code>Intercept: 0.24
 Slope: 0.82
 </code></pre>
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_25_1.png" /></p>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_23_1.png" /></p>
 <pre><code class="python">plt.plot(range(1, sgd_lr.epochs+1), sgd_lr.cost_)
 plt.xlabel('Epochs')
 plt.ylabel('Cost')
@@ -1009,7 +1051,7 @@ plt.tight_layout()
 plt.show()  
 </code></pre>
 
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_26_0.png" /></p>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_24_0.png" /></p>
 <h2 id="api">API</h2>
 <p><em>LinearRegression(eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0)</em></p>
 <p>Ordinary least squares linear regression.</p>

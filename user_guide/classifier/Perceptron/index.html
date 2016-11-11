@@ -120,6 +120,12 @@
 
         
             
+<li >
+    <a href="../StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
 <li class="active">
     <a href="./">Perceptron</a>
 </li>
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../../evaluate/plot_decision_regions/">Plot decision regions</a>
+    <a href="../../evaluate/mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../../evaluate/plot_learning_curves/">Plot learning curves</a>
+    <a href="../../evaluate/mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../general_plotting/category_scatter/">Category scatter</a>
+    <a href="../../plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../../plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../../plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -753,7 +795,7 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../StackingClassifier/">
+                        <a rel="next" href="../StackingCVClassifier/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
@@ -886,7 +928,7 @@ $$</mathjax></p>
 <h2 id="examples">Examples</h2>
 <h3 id="example-1-classification-of-iris-flowers">Example 1 - Classification of Iris Flowers</h3>
 <pre><code class="python">from mlxtend.data import iris_data
-from mlxtend.evaluate import plot_decision_regions
+from mlxtend.plotting import plot_decision_regions
 from mlxtend.classifier import Perceptron
 import matplotlib.pyplot as plt
 
@@ -924,17 +966,16 @@ plt.show()
 
 <pre><code>Iteration: 5/5 | Elapsed: 00:00:00 | ETA: 00:00:00
 </code></pre>
-<p><img alt="png" src="../Perceptron_files/Perceptron_25_1.png" /></p>
+<p><img alt="png" src="../Perceptron_files/Perceptron_23_1.png" /></p>
 <pre><code>Bias &amp; Weights: [[-0.04500809]
  [ 0.11048855]]
 </code></pre>
-<p><img alt="png" src="../Perceptron_files/Perceptron_25_3.png" /></p>
+<p><img alt="png" src="../Perceptron_files/Perceptron_23_3.png" /></p>
 <h2 id="api">API</h2>
 <p><em>Perceptron(eta=0.1, epochs=50, random_seed=None, print_progress=0)</em></p>
 <p>Perceptron classifier.</p>
-<pre><code>Note that this implementation of the Perceptron expects binary class labels
-in {0, 1}.
-</code></pre>
+<p>Note that this implementation of the Perceptron expects binary class labels
+in {0, 1}.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>

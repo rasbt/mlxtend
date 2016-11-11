@@ -121,6 +121,12 @@
         
             
 <li >
+    <a href="../StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../Perceptron/">Perceptron</a>
 </li>
 
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../../evaluate/plot_decision_regions/">Plot decision regions</a>
+    <a href="../../evaluate/mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../../evaluate/plot_learning_curves/">Plot learning curves</a>
+    <a href="../../evaluate/mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../general_plotting/category_scatter/">Category scatter</a>
+    <a href="../../plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../../plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../../plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -829,11 +871,13 @@ Now, this softmax function computes the probability that this training sample <m
 <li><mathjax>$x_3 \rightarrow \text{class }2$</mathjax></li>
 </ul>
 <pre><code class="python">import numpy as np
+
 y = np.array([0, 1, 2, 2])
 </code></pre>
 
 <p>First, we want to encode the class labels into a format that we can more easily work with; we apply one-hot encoding:</p>
 <pre><code class="python">y_enc = (np.arange(np.max(y) + 1) == y[:, None]).astype(float)
+
 print('one-hot encoding:\n', y_enc)
 </code></pre>
 
@@ -991,7 +1035,7 @@ print('Cost: ', J_cost)
 <h2 id="examples">Examples</h2>
 <h3 id="example-1-gradient-descent">Example 1 - Gradient Descent</h3>
 <pre><code class="python">from mlxtend.data import iris_data
-from mlxtend.evaluate import plot_decision_regions
+from mlxtend.plotting import plot_decision_regions
 from mlxtend.classifier import SoftmaxRegression
 import matplotlib.pyplot as plt
 
@@ -1023,8 +1067,8 @@ plt.show()
 
 <pre><code>Iteration: 500/500 | Cost 0.06 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
-<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_34_1.png" /></p>
-<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_34_2.png" /></p>
+<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_32_1.png" /></p>
+<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_32_2.png" /></p>
 <h4 id="predicting-class-labels">Predicting Class Labels</h4>
 <pre><code class="python">y_pred = lr.predict(X)
 print('Last 3 Class Labels: %s' % y_pred[-3:])
@@ -1044,7 +1088,7 @@ print('Last 3 Class Labels:\n %s' % y_pred[-3:])
 </code></pre>
 <h3 id="example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</h3>
 <pre><code class="python">from mlxtend.data import iris_data
-from mlxtend.evaluate import plot_decision_regions
+from mlxtend.plotting import plot_decision_regions
 from mlxtend.classifier import SoftmaxRegression
 import matplotlib.pyplot as plt
 
@@ -1070,8 +1114,8 @@ plt.ylabel('Cost')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_40_0.png" /></p>
-<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_40_1.png" /></p>
+<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_38_0.png" /></p>
+<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_38_1.png" /></p>
 <h2 id="api">API</h2>
 <p><em>SoftmaxRegression(eta=0.01, epochs=50, l2=0.0, minibatches=1, n_classes=None, random_seed=None, print_progress=0)</em></p>
 <p>Softmax regression classifier.</p>

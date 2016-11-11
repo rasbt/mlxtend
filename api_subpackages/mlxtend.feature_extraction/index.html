@@ -121,6 +121,12 @@
         
             
 <li >
+    <a href="../../user_guide/classifier/StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../../user_guide/tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../user_guide/regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../../user_guide/evaluate/plot_decision_regions/">Plot decision regions</a>
+    <a href="../../user_guide/evaluate/mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../../user_guide/evaluate/plot_learning_curves/">Plot learning curves</a>
+    <a href="../../user_guide/evaluate/mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../../user_guide/preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../user_guide/general_plotting/category_scatter/">Category scatter</a>
+    <a href="../../user_guide/plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../../user_guide/general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../../user_guide/plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../../user_guide/general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../../user_guide/plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -801,17 +843,11 @@
                 <!--  -->
         
     
-        <li class="main "><a href="#rbfkernelprincipalcomponentanalysis">RBFKernelPrincipalComponentAnalysis</a></li>
-        
-            <li><a href="#methods_3">Methods</a></li>
-                <!--  -->
-        
-    
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.4.3dev0 </p>
+<p>mlxtend version: 0.5.dev0 </p>
 <h2 id="lineardiscriminantanalysis">LinearDiscriminantAnalysis</h2>
 <p><em>LinearDiscriminantAnalysis(n_discriminants=None)</em></p>
 <p>Linear Discriminant Analysis Class</p>
@@ -990,77 +1026,6 @@ of new data via the transform method. Uses a reference to X if False.</p>
 
 <p><em>fit(X)</em></p>
 <p>Learn model from training data.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
-<hr>
-
-<p><em>transform(X)</em></p>
-<p>Apply the non-linear transformation on X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>X_projected</code> : np.ndarray, shape = [n_samples, n_components]</p>
-<p>Projected training vectors.</p>
-</li>
-</ul>
-<h2 id="rbfkernelprincipalcomponentanalysis">RBFKernelPrincipalComponentAnalysis</h2>
-<p><em>RBFKernelPrincipalComponentAnalysis(gamma=15.0, n_components=None, copy_X=True)</em></p>
-<p>RBF Kernel Principal Component Analysis for dimensionality reduction.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>gamma</code> : float (default: 15.0)</p>
-<p>Free parameter (coefficient) of the RBF kernel.</p>
-</li>
-<li>
-<p><code>n_components</code> : int (default: None)</p>
-<p>The number of principal components for transformation.
-Keeps the original dimensions of the dataset if <code>None</code>.</p>
-</li>
-<li>
-<p><code>copy_X</code> : bool (default: True)</p>
-<p>Copies training data, which is required to compute the projection
-of new data via the transform method. Uses a reference to X if False.</p>
-</li>
-</ul>
-<p><strong>Attributes</strong></p>
-<ul>
-<li>
-<p><code>e_vals_</code> : array-like, shape=[n_features]</p>
-<p>Eigenvalues in sorted order.</p>
-</li>
-<li>
-<p><code>e_vecs_</code> : array-like, shape=[n_features]</p>
-<p>Eigenvectors in sorted order.</p>
-</li>
-<li>
-<p><code>X_projected_</code> : array-like, shape=[n_samples, n_components]</p>
-<p>Training samples projected along the component axes.</p>
-</li>
-</ul>
-<h3 id="methods_3">Methods</h3>
-<hr>
-
-<p><em>fit(X)</em></p>
-<p>Fit the PCA model with X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>

@@ -121,6 +121,12 @@
         
             
 <li >
+    <a href="../StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+            
+<li >
     <a href="../Perceptron/">Perceptron</a>
 </li>
 
@@ -203,21 +209,6 @@
             
 <li >
     <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regression_utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../regression_utils/plot_linear_regression/">Plot linear regression</a>
 </li>
 
         
@@ -322,13 +313,13 @@
         
             
 <li >
-    <a href="../../evaluate/plot_decision_regions/">Plot decision regions</a>
+    <a href="../../evaluate/mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../../evaluate/plot_learning_curves/">Plot learning curves</a>
+    <a href="../../evaluate/mcnemar/">Mcnemar</a>
 </li>
 
         
@@ -374,6 +365,12 @@
             
 <li >
     <a href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/OnehotTransactions/">OnehotTransactions</a>
 </li>
 
         
@@ -446,6 +443,21 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">association</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../association/apriori/">Apriori</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -467,24 +479,60 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general plotting</a>
+    <a tabindex="-1" href="">plotting</a>
     <ul class="dropdown-menu">
         
             
 <li >
-    <a href="../../general_plotting/category_scatter/">Category scatter</a>
+    <a href="../../plotting/plot_decision_regions/">Plot decision regions</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/enrichment_plot/">Enrichment plot</a>
+    <a href="../../plotting/plot_learning_curves/">Plot learning curves</a>
 </li>
 
         
             
 <li >
-    <a href="../../general_plotting/stacked_barplot/">Stacked barplot</a>
+    <a href="../../plotting/plot_sequential_feature_selection/">Plot sequential feature selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_confusion_matrix/">Plot confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_linear_regression/">Plot linear regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/category_scatter/">Category scatter</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/enrichment_plot/">Enrichment plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked barplot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/checkerboard_plot/">Checkerboard plot</a>
 </li>
 
         
@@ -653,7 +701,7 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.general_plotting/">Mlxtend.general plotting</a>
+    <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
                         
@@ -672,12 +720,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.regression_utils/">Mlxtend.regression utils</a>
 </li>
 
                         
@@ -820,7 +862,7 @@
 <p><em>Although the code is fully working and can be used for common classification tasks, this implementation is not geared towards efficiency but clarity – the original code was written for demonstration purposes.</em></p>
 <h3 id="basic-architecture">Basic Architecture</h3>
 <p><img alt="" src="../NeuralNetMLP_files/neuralnet_mlp_1.png" />  </p>
-<p>The neurons <mathjax>$x_0$</mathjax> and <mathjax>$a_0$</mathjax> represent the bias units (<mathjax>$x_0=1$</mathjax>, <mathjax>$a_0=1$</mathjax>).</p>
+<p>The neurons <mathjax>$x_0$</mathjax> and <mathjax>$a_0$</mathjax> represent the bias units (<mathjax>$x_0=1$</mathjax>, <mathjax>$a_0=1$</mathjax>). </p>
 <p>The <mathjax>$i$</mathjax>th superscript denotes the <mathjax>$i$</mathjax>th layer, and the <em>j</em>th subscripts stands for the index of the respective unit. For example, <mathjax>$a_{1}^{(2)}$</mathjax> refers to the first activation unit <strong>after</strong> the bias unit (i.e., 2nd activation unit) in the 2nd layer (here: the hidden layer)</p>
 <p>\begin{align}
     \mathbf{a^{(2)}} &amp;= \begin{bmatrix}
@@ -861,14 +903,14 @@ X_std = (X - X.mean(axis=0)) / X.std(axis=0)
 <p>Setting the <code>minibatches</code> to <code>1</code> will result in gradient descent training; please see <a href="../../general_concepts/gradient-optimization/">Gradient Descent vs. Stochastic Gradient Descent</a> for details.</p>
 <pre><code class="python">from mlxtend.classifier import MultiLayerPerceptron as MLP
 
-nn1 = MLP(hidden_layers=[50],
-          l2=0.00,
-          l1=0.0,
-          epochs=150,
-          eta=0.05,
+nn1 = MLP(hidden_layers=[50], 
+          l2=0.00, 
+          l1=0.0, 
+          epochs=150, 
+          eta=0.05, 
           momentum=0.1,
           decrease_const=0.0,
-          minibatches=1,
+          minibatches=1, 
           random_seed=1,
           print_progress=3)
 
@@ -877,7 +919,7 @@ nn1 = nn1.fit(X_std, y)
 
 <pre><code>Iteration: 150/150 | Cost 0.06 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
-<pre><code class="python">from mlxtend.evaluate import plot_decision_regions
+<pre><code class="python">from mlxtend.plotting import plot_decision_regions
 import matplotlib.pyplot as plt
 
 fig = plot_decision_regions(X=X_std, y=y, clf=nn1, legend=2)
@@ -885,7 +927,7 @@ plt.title('Multi-layer Perceptron w. 1 hidden layer (logistic sigmoid)')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../MultiLayerPerceptron_files/MultiLayerPerceptron_26_0.png" /></p>
+<p><img alt="png" src="../MultiLayerPerceptron_files/MultiLayerPerceptron_24_0.png" /></p>
 <pre><code class="python">import matplotlib.pyplot as plt
 plt.plot(range(len(nn1.cost_)), nn1.cost_)
 plt.ylabel('Cost')
@@ -893,7 +935,7 @@ plt.xlabel('Epochs')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../MultiLayerPerceptron_files/MultiLayerPerceptron_27_0.png" /></p>
+<p><img alt="png" src="../MultiLayerPerceptron_files/MultiLayerPerceptron_25_0.png" /></p>
 <pre><code class="python">print('Accuracy: %.2f%%' % (100 * nn1.score(X_std, y)))
 </code></pre>
 
@@ -901,14 +943,14 @@ plt.show()
 </code></pre>
 <h4 id="stochastic-gradient-descent">Stochastic Gradient Descent</h4>
 <p>Setting <code>minibatches</code> to <code>n_samples</code> will result in stochastic gradient descent training; please see <a href="../../general_concepts/gradient-optimization/">Gradient Descent vs. Stochastic Gradient Descent</a> for details.</p>
-<pre><code class="python">nn2 = MLP(hidden_layers=[50],
-          l2=0.00,
-          l1=0.0,
-          epochs=5,
-          eta=0.005,
+<pre><code class="python">nn2 = MLP(hidden_layers=[50], 
+          l2=0.00, 
+          l1=0.0, 
+          epochs=5, 
+          eta=0.005, 
           momentum=0.1,
           decrease_const=0.0,
-          minibatches=len(y),
+          minibatches=len(y), 
           random_seed=1,
           print_progress=3)
 
@@ -922,7 +964,7 @@ plt.show()
 
 <pre><code>Iteration: 5/5 | Cost 0.11 | Elapsed: 00:00:00 | ETA: 00:00:00
 </code></pre>
-<p><img alt="png" src="../MultiLayerPerceptron_files/MultiLayerPerceptron_31_1.png" /></p>
+<p><img alt="png" src="../MultiLayerPerceptron_files/MultiLayerPerceptron_29_1.png" /></p>
 <p>Continue the training for 25 epochs...</p>
 <pre><code class="python">nn2.epochs = 25
 nn2 = nn2.fit(X_std, y)
@@ -936,7 +978,7 @@ plt.xlabel('Epochs')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../MultiLayerPerceptron_files/MultiLayerPerceptron_34_0.png" /></p>
+<p><img alt="png" src="../MultiLayerPerceptron_files/MultiLayerPerceptron_32_0.png" /></p>
 <h3 id="example-2-classifying-handwritten-digits-from-a-10-mnist-subset">Example 2 - Classifying Handwritten Digits from a 10% MNIST Subset</h3>
 <p>Load a <strong>5000-sample subset</strong> of the <a href="http://rasbt.github.io/mlxtend/docs/data/mnist/">MNIST dataset</a> (please see <a href="../../data/loadlocal_mnist/"><code>data.loadlocal_mnist</code></a> if you want to download and read in the complete MNIST dataset).</p>
 <pre><code class="python">from mlxtend.data import mnist_data
@@ -960,13 +1002,13 @@ def plot_digit(X, y, idx):
 plot_digit(X, y, 3500)    
 </code></pre>
 
-<p><img alt="png" src="../MultiLayerPerceptron_files/MultiLayerPerceptron_39_0.png" /></p>
+<p><img alt="png" src="../MultiLayerPerceptron_files/MultiLayerPerceptron_37_0.png" /></p>
 <p>Standardize pixel values:</p>
 <pre><code class="python">import numpy as np
 from mlxtend.preprocessing import standardize
 
-X_train_std, params = standardize(X_train,
-                                  columns=range(X_train.shape[1]),
+X_train_std, params = standardize(X_train, 
+                                  columns=range(X_train.shape[1]), 
                                   return_params=True)
 
 X_test_std = standardize(X_test,
@@ -975,14 +1017,14 @@ X_test_std = standardize(X_test,
 </code></pre>
 
 <p>Initialize the neural network to recognize the 10 different digits (0-10) using 300 epochs and mini-batch learning.</p>
-<pre><code class="python">nn1 = MLP(hidden_layers=[150],
-          l2=0.00,
-          l1=0.0,
-          epochs=100,
-          eta=0.005,
+<pre><code class="python">nn1 = MLP(hidden_layers=[150], 
+          l2=0.00, 
+          l1=0.0, 
+          epochs=100, 
+          eta=0.005, 
           momentum=0.0,
           decrease_const=0.0,
-          minibatches=100,
+          minibatches=100, 
           random_seed=1,
           print_progress=3)
 </code></pre>
@@ -998,9 +1040,9 @@ plt.xlabel('Epochs')
 plt.show()
 </code></pre>
 
-<pre><code>Iteration: 100/100 | Cost 0.01 | Elapsed: 0:00:22 | ETA: 0:00:00
+<pre><code>Iteration: 100/100 | Cost 0.01 | Elapsed: 0:00:17 | ETA: 0:00:00
 </code></pre>
-<p><img alt="png" src="../MultiLayerPerceptron_files/MultiLayerPerceptron_45_1.png" /></p>
+<p><img alt="png" src="../MultiLayerPerceptron_files/MultiLayerPerceptron_43_1.png" /></p>
 <pre><code class="python">print('Train Accuracy: %.2f%%' % (100 * nn1.score(X_train_std, y_train)))
 print('Test Accuracy: %.2f%%' % (100 * nn1.score(X_test_std, y_test)))
 </code></pre>
@@ -1010,48 +1052,45 @@ Test Accuracy: 84.62%
 </code></pre>
 <p><strong>Please note</strong> that this neural network has been trained on only 10% of the MNIST data for technical demonstration purposes, hence, the lousy predictive performance.</p>
 <h2 id="api">API</h2>
-<p><em>NeuralNetMLP(n_output, n_features, n_hidden=30, l1=0.0, l2=0.0, epochs=500, eta=0.001, alpha=0.0, decrease_const=0.0, shuffle_init=True, shuffle_epoch=True, minibatches=1, zero_init_weight=False, random_seed=None, print_progress=0)</em></p>
-<p>Feedforward neural network / Multi-layer perceptron classifier.</p>
+<p><em>MultiLayerPerceptron(eta=0.5, epochs=50, hidden_layers=[50], n_classes=None, momentum=0.0, l1=0.0, l2=0.0, dropout=1.0, decrease_const=0.0, minibatches=1, random_seed=None, print_progress=0)</em></p>
+<p>Multi-layer perceptron classifier with logistic sigmoid activations</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>n_output</code> : int</p>
-<p>Number of output units, should be equal to the
-number of unique class labels.</p>
+<p><code>eta</code> : float (default: 0.5)</p>
+<p>Learning rate (between 0.0 and 1.0)</p>
 </li>
 <li>
-<p><code>n_features</code> : int</p>
-<p>Number of features (dimensions) in the target dataset.
-Should be equal to the number of columns in the X array.</p>
+<p><code>epochs</code> : int (default: 50)</p>
+<p>Passes over the training dataset.
+Prior to each epoch, the dataset is shuffled
+if <code>minibatches &gt; 1</code> to prevent cycles in stochastic gradient descent.</p>
 </li>
 <li>
-<p><code>n_hidden</code> : int (default: 30)</p>
-<p>Number of hidden units.</p>
+<p><code>hidden_layers</code> : list (default: [50])</p>
+<p>Number of units per hidden layer. By default 50 units in the
+first hidden layer. At the moment only 1 hidden layer is supported</p>
+</li>
+<li>
+<p><code>n_classes</code> : int (default: None)</p>
+<p>A positive integer to declare the number of class labels
+if not all class labels are present in a partial training set.
+Gets the number of class labels automatically if None.</p>
 </li>
 <li>
 <p><code>l1</code> : float (default: 0.0)</p>
-<p>Lambda value for L1-regularization.
-No regularization if l1=0.0 (default)</p>
+<p>L1 regularization strength</p>
 </li>
 <li>
 <p><code>l2</code> : float (default: 0.0)</p>
-<p>Lambda value for L2-regularization.
-No regularization if l2=0.0 (default)</p>
+<p>L2 regularization strength</p>
 </li>
 <li>
-<p><code>epochs</code> : int (default: 500)</p>
-<p>Number of passes over the training set.</p>
-</li>
-<li>
-<p><code>eta</code> : float (default: 0.001)</p>
-<p>Learning rate.</p>
-</li>
-<li>
-<p><code>alpha</code> : float (default: 0.0)</p>
+<p><code>momentum</code> : float (default: 0.0)</p>
 <p>Momentum constant. Factor multiplied with the
 gradient of the previous epoch t-1 to improve
 learning speed
-w(t) := w(t) - (grad(t) + alpha*grad(t-1))</p>
+w(t) := w(t) - (grad(t) + momentum * grad(t-1))</p>
 </li>
 <li>
 <p><code>decrease_const</code> : float (default: 0.0)</p>
@@ -1059,32 +1098,16 @@ w(t) := w(t) - (grad(t) + alpha*grad(t-1))</p>
 after each epoch via eta / (1 + epoch*decrease_const)</p>
 </li>
 <li>
-<p><code>random_weights</code> : list (default: [-1.0, 1.0])</p>
-<p>Min and max values for initializing the random weights.
-Initializes weights to 0 if None or False.</p>
-</li>
-<li>
-<p><code>shuffle_init</code> : bool (default: True)</p>
-<p>Shuffles (a copy of the) training data before training.</p>
-</li>
-<li>
-<p><code>shuffle_epoch</code> : bool (default: True)</p>
-<p>Shuffles training data before every epoch if True to prevent circles.</p>
-</li>
-<li>
 <p><code>minibatches</code> : int (default: 1)</p>
-<p>Divides training data into k minibatches for efficiency.
-Normal gradient descent learning if k=1 (default).</p>
+<p>Divide the training data into <em>k</em> minibatches
+for accelerated stochastic gradient descent learning.
+Gradient Descent Learning if <code>minibatches</code> = 1
+Stochastic Gradient Descent learning if <code>minibatches</code> = len(y)
+Minibatch learning if <code>minibatches</code> &gt; 1</p>
 </li>
 <li>
 <p><code>random_seed</code> : int (default: None)</p>
-<p>Set random seed for shuffling and initializing the weights.</p>
-</li>
-<li>
-<p><code>zero_init_weight</code> : bool (default: False)</p>
-<p>If True, weights are initialized to zero instead of small random
-numbers following a standard normal distribution with mean=0 and
-stddev=1.</p>
+<p>Set random state for shuffling and initializing the weights.</p>
 </li>
 <li>
 <p><code>print_progress</code> : int (default: 0)</p>
@@ -1098,32 +1121,50 @@ stddev=1.</p>
 <p><strong>Attributes</strong></p>
 <ul>
 <li>
+<p><code>w_</code> : 2d-array, shape=[n_features, n_classes]</p>
+<p>Weights after fitting.</p>
+</li>
+<li>
+<p><code>b_</code> : 1D-array, shape=[n_classes]</p>
+<p>Bias units after fitting.</p>
+</li>
+<li>
 <p><code>cost_</code> : list</p>
-<p>Sum of squared errors after each epoch.</p>
+<p>List of floats; the mean categorical cross entropy
+cost after each epoch.</p>
 </li>
 </ul>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X, y)</em></p>
-<p>Learn weight coefficients from training data.</p>
+<p><em>fit(X, y, init_params=True)</em></p>
+<p>Learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>X</code> : array, shape = [n_samples, n_features]</p>
-<p>Input layer with original features.</p>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
 </li>
 <li>
-<p><code>y</code> : array, shape = [n_samples]</p>
-<p>Target class labels.</p>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>init_params</code> : bool (default: True)</p>
+<p>Re-initializes model parameters prior to fitting.
+Set False to continue training with weights from
+a previous model fitting.</p>
 </li>
 </ul>
-<p><strong>Returns:</strong></p>
-<p>self</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
 <hr>
 
 <p><em>predict(X)</em></p>
-<p>Predict class labels of X.</p>
+<p>Predict targets from X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1135,9 +1176,25 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>class_labels</code> : array-like, shape = [n_samples]</p>
-<p>Predicted class labels.</p>
+<p><code>target_values</code> : array-like, shape = [n_samples]</p>
+<p>Predicted target values.</p>
 </li>
+</ul>
+<hr>
+
+<p><em>predict_proba(X)</em></p>
+<p>Predict class probabilities of X from the net input.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>Class probabilties</code> : array-like, shape= [n_samples, n_classes]</li>
 </ul>
 <hr>
 

@@ -82,15 +82,6 @@ Or, you can fork the GitHub repository from https://github.com/rasbt/mlxtend and
 python setup.py install
 ```
 
-#### Anaconda/Conda
-
-Conda packages are now available for Mac, Windows, and Linux. You can install mlxtend using conda by executing
-
-```bash
-conda install -c rasbt mlxtend
-```
-
-
 <br>
 <br>
 

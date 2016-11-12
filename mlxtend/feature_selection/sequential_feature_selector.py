@@ -20,12 +20,7 @@ from sklearn.base import clone
 from sklearn.base import BaseEstimator
 from sklearn.base import MetaEstimatorMixin
 from ..externals.name_estimators import _name_estimators
-from distutils.version import LooseVersion as Version
-from sklearn import __version__ as sklearn_version
-if Version(sklearn_version) < '0.18':
-    from sklearn.cross_validation import cross_val_score
-else:
-    from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import cross_val_score
 
 
 class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
@@ -109,19 +104,10 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     """
     def __init__(self, estimator, k_features='best',
                  forward=True, floating=False,
-                 print_progress=False, verbose=1, scoring=None,
+                 verbose=1, scoring=None,
                  cv=5, skip_if_stuck=True, n_jobs=1,
                  pre_dispatch='2*n_jobs',
                  clone_estimator=True):
-
-        if print_progress:
-            warnings.warn("The print_progress parameter "
-                          "has been deprecated in "
-                          "0.4.3 and will be removed in 0.6.0. "
-                          "Please use the verbose parameter instead.",
-                          DeprecationWarning)
-            if verbose == 0:
-                verbose = 1
 
         self.estimator = estimator
         self.k_features = k_features

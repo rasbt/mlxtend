@@ -11,12 +11,7 @@ from sklearn.svm import SVR
 import numpy as np
 from numpy.testing import assert_almost_equal
 from nose.tools import raises
-from distutils.version import LooseVersion as Version
-from sklearn import __version__ as sklearn_version
-if Version(sklearn_version) < '0.18':
-    from sklearn.grid_search import GridSearchCV
-else:
-    from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import GridSearchCV
 
 # Generating a sample dataset
 np.random.seed(1)

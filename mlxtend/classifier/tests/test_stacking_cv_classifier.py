@@ -13,16 +13,9 @@ from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 from sklearn import datasets
 from mlxtend.utils import assert_raises
-from distutils.version import LooseVersion as Version
-from sklearn import __version__ as sklearn_version
-if Version(sklearn_version) < '0.18':
-    from sklearn.utils.validation import NotFittedError
-    from sklearn.cross_validation import cross_val_score
-    from sklearn.grid_search import GridSearchCV
-else:
-    from sklearn.model_selection import GridSearchCV
-    from sklearn.exceptions import NotFittedError
-    from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import GridSearchCV
+from sklearn.exceptions import NotFittedError
+from sklearn.model_selection import cross_val_score
 
 iris = datasets.load_iris()
 X, y = iris.data[:, 1:3], iris.target
@@ -81,13 +74,8 @@ def test_gridsearch():
     grid = GridSearchCV(estimator=sclf, param_grid=params, cv=5)
     grid.fit(iris.data, iris.target)
 
-    if Version(sklearn_version) < '0.18':
-        mean_scores = []
-        for params, mean_score, scores in grid.grid_scores_:
-            mean_scores.append(round(mean_score, 2))
-    else:
-        mean_scores = [round(s, 2) for s
-                       in grid.cv_results_['mean_test_score']]
+    mean_scores = [round(s, 2) for s
+                   in grid.cv_results_['mean_test_score']]
 
     assert mean_scores == [0.96, 0.95, 0.96, 0.95]
 

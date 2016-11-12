@@ -827,12 +827,15 @@
     
         <li class="main active"><a href="#installing-mlxtend">Installing mlxtend</a></li>
         
-            <li><a href="#pypi">PyPI</a></li>
+            <li><a href="#requirements">Requirements</a></li>
+                <!--  -->
+        
+            <li><a href="#installing-mlxtend-from-pypi-via-pip">Installing mlxtend from PyPI via pip</a></li>
                 <!-- 
-                    <li><a href="#upgrading-via-pip">Upgrading via pip</a></li>
+                    <li><a href="#upgrading-mlxtend-via-pip">Upgrading mlxtend via pip</a></li>
              -->
         
-            <li><a href="#dev-version">Dev Version</a></li>
+            <li><a href="#installing-the-latest-development-version">Installing the latest development version</a></li>
                 <!--  -->
         
     
@@ -842,7 +845,17 @@
 
 <h1 id="installing-mlxtend">Installing mlxtend</h1>
 <hr />
-<h3 id="pypi">PyPI</h3>
+<h3 id="requirements">Requirements</h3>
+<p><code>mlxtend</code> implements functionality that is partly based on other packages such as <code>NumPy</code>, <code>SciPy</code>, <code>scikit-learn</code>, and <code>matplotlib</code>. The current requirements are listed below:</p>
+<ul>
+<li>Python 2.7 or Python 3.5</li>
+<li>scipy &gt;= 0.17</li>
+<li>numpy &gt;= 1.10.4</li>
+<li>pandas &gt;= 0.17.1</li>
+<li>scikit-learn &gt;= 0.17</li>
+<li>matplotlib &gt;= 1.5.1 (optional, required only for functions in <code>mlxtend.plotting</code>)</li>
+</ul>
+<h3 id="installing-mlxtend-from-pypi-via-pip">Installing mlxtend from PyPI via <code>pip</code></h3>
 <p>To install mlxtend, just execute  </p>
 <pre><code class="bash">pip install mlxtend  
 </code></pre>
@@ -851,13 +864,13 @@
 <pre><code class="bash">python setup.py install
 </code></pre>
 
-<h5 id="upgrading-via-pip">Upgrading via <code>pip</code></h5>
+<h5 id="upgrading-mlxtend-via-pip">Upgrading mlxtend via <code>pip</code></h5>
 <p>To upgrade an existing version of mlxtend from PyPI, execute</p>
 <pre><code class="bash">pip install mlxtend --upgrade --no-deps
 </code></pre>
 
 <p>Please note that the dependencies (NumPy and SciPy) will also be upgraded if you omit the <code>--no-deps</code> flag; use the <code>--no-deps</code> ("no dependencies") flag if you don't want this.</p>
-<h3 id="dev-version">Dev Version</h3>
+<h3 id="installing-the-latest-development-version">Installing the latest development version</h3>
 <p>The mlxtend version on PyPI may always one step behind; you can install the latest development version from the GitHub repository by executing</p>
 <pre><code class="bash">pip install git+git://github.com/rasbt/mlxtend.git
 </code></pre>

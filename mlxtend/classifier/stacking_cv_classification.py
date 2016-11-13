@@ -16,15 +16,9 @@ from sklearn.base import TransformerMixin
 from sklearn.base import clone
 from sklearn.utils.validation import check_is_fitted
 from sklearn.externals import six
+from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import KFold
 import numpy as np
-from distutils.version import LooseVersion as Version
-from sklearn import __version__ as sklearn_version
-if Version(sklearn_version) < '0.18':
-    from sklearn.cross_validation import StratifiedKFold
-    from sklearn.cross_validation import KFold
-else:
-    from sklearn.model_selection import StratifiedKFold
-    from sklearn.model_selection import KFold
 
 
 class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
@@ -128,24 +122,14 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             print("Fitting %d classifiers..." % (len(self.classifiers)))
 
         if self.stratify:
-            if Version(sklearn_version) < '0.18':
-                skf = StratifiedKFold(y, n_folds=self.n_folds,
-                                      shuffle=self.shuffle,
-                                      random_state=self.random_state)
-            else:
-                skf = list(StratifiedKFold(n_splits=self.n_folds,
-                                           shuffle=self.shuffle,
-                                           random_state=self.random_state)
-                           .split(X, y))
+            skf = list(StratifiedKFold(n_splits=self.n_folds,
+                                       shuffle=self.shuffle,
+                                       random_state=self.random_state)
+                       .split(X, y))
         else:
-            if Version(sklearn_version) < '0.18':
-                skf = KFold(len(y), n_folds=self.n_folds,
-                            shuffle=self.shuffle,
-                            random_state=self.random_state)
-            else:
-                skf = list(KFold(n_splits=self.n_folds,
-                           shuffle=self.shuffle,
-                           random_state=self.random_state).split(X))
+            skf = list(KFold(n_splits=self.n_folds,
+                       shuffle=self.shuffle,
+                       random_state=self.random_state).split(X))
 
         all_model_predictions = np.array([]).reshape(len(y), 0)
         for model in self.clfs_:

@@ -37,9 +37,8 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     use_probas : bool (default: False)
         If True, trains meta-classifier based on predicted probabilities
         instead of class labels.
-    average_probas : bool (default: True)
-        `average_probas=True` is deprecated and will be changed to
-        `average_probas=False` in v0.5.0.
+    average_probas : bool (default: False)
+        Averages the probabilities as meta features if True.
     verbose : int, optional (default=0)
         Controls the verbosity of the building process.
         - `verbose=0` (default): Prints nothing
@@ -58,7 +57,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
     """
     def __init__(self, classifiers, meta_classifier,
-                 use_probas=False, average_probas=True, verbose=0):
+                 use_probas=False, average_probas=False, verbose=0):
 
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier
@@ -69,11 +68,6 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                                       key, value in
                                       _name_estimators([meta_classifier])}
         self.use_probas = use_probas
-        if average_probas and use_probas:
-            warnings.simplefilter('always', DeprecationWarning)
-            warnings.warn("`average_probas=True` has been deprecated and will "
-                          "be changed to `average_probas=False` in v0.5.0.",
-                          DeprecationWarning)
         self.average_probas = average_probas
         self.verbose = verbose
 

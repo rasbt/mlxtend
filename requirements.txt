@@ -1,7 +1,7 @@
 scipy>=0.17
 numpy>=1.10.4
 pandas>=0.17.1
-scikit-learn>=0.17
+scikit-learn>=0.18
 matplotlib>=1.5.1
 
 

@@ -8,7 +8,28 @@
 The CHANGELOG for the current development version is available at
 [https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md](https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md).
 
-### Version 0.5.0
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/0.5.0.zip)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.5.0.tar.gz)
+
+##### New Features
+
+- The `EnsembleVoteClassifier` has a new `refit` attribute that prevents refitting classifiers if `refit=False` to save computational time.
+
+##### Changes
+
+- -
+
+##### Bug Fixes
+
+- -
+
+
+
+
+
+### Version 0.5.0 (2016-11-09)
 
 ##### Downloads
 

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name="author" content="Sebastian Raschka"> 
     <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/classifier/Adaline/"> 
-    <link rel="shortcut icon" href="../../../../../../favicon.ico">
+    <link rel="shortcut icon" href="../../../favicon.ico">
 
     <title>Adaline - mlxtend</title>
 
@@ -865,16 +865,16 @@
 <h2 id="overview">Overview</h2>
 <p>An illustration of the ADAptive LInear NEuron (Adaline) -- a single-layer artificial linear neuron with a threshold unit:</p>
 <p><img alt="" src="../Adaline_files/adaline_schematic.png" /></p>
-<p>The Adaline classifier is closely related to the Ordinary Least Squares (OLS) Linear Regression algorithm; in OLS regression we find the line (or hyperplane) that minimizes the vertical offsets. Or in other words, we define the best-fitting line as the line that minimizes the sum of squared errors (SSE) or mean squared error (MSE) between our target variable (y) and our predicted output over all samples <mathjax>$i$</mathjax> in our dataset of size <mathjax>$n$</mathjax>.</p>
-<p><mathjax>$$ SSE =  \sum_i (\text{target}^{(i)} - \text{output}^{(i)})^2$$</mathjax></p>
-<p><mathjax>$$MSE = \frac{1}{n} \times SSE$$</mathjax></p>
-<p><a href="../../regressor/LinearRegression/"><code>LinearRegression</code></a> implements a linear regression model for performing ordinary least squares regression, and in Adaline, we add a threshold function <mathjax>$g(\cdot)$</mathjax> to convert the continuous outcome to a categorical class label:</p>
-<p><mathjax>$$y = g({z}) =
+<p>The Adaline classifier is closely related to the Ordinary Least Squares (OLS) Linear Regression algorithm; in OLS regression we find the line (or hyperplane) that minimizes the vertical offsets. Or in other words, we define the best-fitting line as the line that minimizes the sum of squared errors (SSE) or mean squared error (MSE) between our target variable (y) and our predicted output over all samples $i$ in our dataset of size $n$.</p>
+<p>$$ SSE =  \sum_i (\text{target}^{(i)} - \text{output}^{(i)})^2$$</p>
+<p>$$MSE = \frac{1}{n} \times SSE$$</p>
+<p><a href="../../regressor/LinearRegression/"><code>LinearRegression</code></a> implements a linear regression model for performing ordinary least squares regression, and in Adaline, we add a threshold function $g(\cdot)$ to convert the continuous outcome to a categorical class label:</p>
+<p>$$y = g({z}) =
 \begin{cases}
 1 &amp; \text{if z $\ge$ 0}\\
 -1 &amp; \text{otherwise}.
 \end{cases}
-$$</mathjax></p>
+$$</p>
 <p>An Adaline model can be trained by one of the following three approaches:</p>
 <ul>
 <li>Normal Equations</li>
@@ -882,12 +882,12 @@ $$</mathjax></p>
 <li>Stochastic Gradient Descent</li>
 </ul>
 <h3 id="normal-equations-closed-form-solution">Normal Equations (closed-form solution)</h3>
-<p>The closed-form solution should be preferred for "smaller" datasets where calculating (a "costly") matrix inverse is not a concern. For very large datasets, or datasets where the inverse of <mathjax>$[X^T X]$</mathjax> may not exist (the matrix is non-invertible or singular, e.g., in case of perfect multicollinearity), the gradient descent or stochastic gradient descent approaches are to be preferred.</p>
+<p>The closed-form solution should be preferred for "smaller" datasets where calculating (a "costly") matrix inverse is not a concern. For very large datasets, or datasets where the inverse of $[X^T X]$ may not exist (the matrix is non-invertible or singular, e.g., in case of perfect multicollinearity), the gradient descent or stochastic gradient descent approaches are to be preferred.</p>
 <p>The linear function (linear regression model) is defined as:</p>
-<p><mathjax>$$z = w_0x_0 + w_1x_1 + ... + w_mx_m = \sum_{j=0}^{m} w_j x_j = \mathbf{w}^T\mathbf{x}$$</mathjax></p>
-<p>where <mathjax>$y$</mathjax> is the response variable, <mathjax>$\mathbf{x}$</mathjax> is an <mathjax>$m$</mathjax>-dimensional sample vector, and <mathjax>$\mathbf{w}$</mathjax> is the weight vector (vector of coefficients). Note that <mathjax>$w_0$</mathjax> represents the y-axis intercept of the model and therefore <mathjax>$x_0=1$</mathjax>.  </p>
+<p>$$z = w_0x_0 + w_1x_1 + ... + w_mx_m = \sum_{j=0}^{m} w_j x_j = \mathbf{w}^T\mathbf{x}$$</p>
+<p>where $y$ is the response variable, $\mathbf{x}$ is an $m$-dimensional sample vector, and $\mathbf{w}$ is the weight vector (vector of coefficients). Note that $w_0$ represents the y-axis intercept of the model and therefore $x_0=1$.  </p>
 <p>Using the closed-form solution (normal equation), we compute the weights of the model as follows:</p>
-<p><mathjax>$$ \mathbf{w} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^Ty$$</mathjax></p>
+<p>$$ \mathbf{w} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^Ty$$</p>
 <h3 id="gradient-descent-gd-and-stochastic-gradient-descent-sgd">Gradient Descent (GD)  and Stochastic Gradient Descent (SGD)</h3>
 <p>In the current implementation, the Adaline model is learned via Gradient Descent or Stochastic Gradient Descent.</p>
 <p>See <a href="../../general_concepts/gradient-optimization/">Gradient Descent and Stochastic Gradient Descent</a> and <a href="../../general_concepts/linear-gradient-derivative/">Deriving the Gradient Descent Rule for Linear Regression and Adaline</a> for details.</p>

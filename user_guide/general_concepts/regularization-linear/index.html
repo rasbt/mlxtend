@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name="author" content="Sebastian Raschka"> 
     <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/general_concepts/regularization-linear/"> 
-    <link rel="shortcut icon" href="../../../../../../favicon.ico">
+    <link rel="shortcut icon" href="../../../favicon.ico">
 
     <title>Regularization linear - mlxtend</title>
 
@@ -847,19 +847,19 @@
 <h2 id="overview">Overview</h2>
 <p>We can understand regularization as an approach of adding an additional bias to a model to reduce the degree of overfitting in models that suffer from high variance. By adding regularization terms to the cost function, we penalize large model coefficients (weights); effectively, we are reducing the complexity of the model.</p>
 <h2 id="l2-regularization">L2 regularization</h2>
-<p>In L2 regularization, we shrink the weights by computing the Euclidean norm of the weight coefficients (the weight vector <mathjax>$\mathbf{w}$</mathjax>); <mathjax>$\lambda$</mathjax> is the regularization parameter to be optimized.</p>
-<p><mathjax>$$L2: \lambda\; \lVert \mathbf{w} \lVert_2 = \lambda \sum_{j=1}^{m} w_j^2$$</mathjax></p>
+<p>In L2 regularization, we shrink the weights by computing the Euclidean norm of the weight coefficients (the weight vector $\mathbf{w}$); $\lambda$ is the regularization parameter to be optimized.</p>
+<p>$$L2: \lambda\; \lVert \mathbf{w} \lVert_2 = \lambda \sum_{j=1}^{m} w_j^2$$</p>
 <p>For example, we can regularize the sum of squared errors cost function (SSE) as follows:
-<mathjax>$$SSE =  \sum^{n}_{i=1} \big(\text{target}^{(i)} - \text{output}^{(i)}\big)^2 + L2$$</mathjax></p>
+$$SSE =  \sum^{n}_{i=1} \big(\text{target}^{(i)} - \text{output}^{(i)}\big)^2 + L2$$</p>
 <p>Intuitively, we can think of regression as an additional penalty term or constraint as shown in the figure below. Without regularization, our objective is to find the global cost minimum. By adding a regularization penalty, our objective becomes to minimize the cost function under the constraint that we have to stay within our "budget" (the gray-shaded ball).</p>
 <p><img alt="" src="../regularization-linear_files/l2.png" /></p>
 <p>In addition, we can control the regularization strength via the regularization
-parameter <mathjax>$\lambda$</mathjax>. The larger the value of <mathjax>$\lambda$</mathjax>, the stronger the regularization of the model. The weight coefficients approach 0 when <mathjax>$\lambda$</mathjax> goes towards infinity.</p>
+parameter $\lambda$. The larger the value of $\lambda$, the stronger the regularization of the model. The weight coefficients approach 0 when $\lambda$ goes towards infinity.</p>
 <h2 id="l1-regularization">L1 regularization</h2>
-<p>In L1 regularization, we shrink the weights using the absolute values of the weight coefficients (the weight vector <mathjax>$\mathbf{w}$</mathjax>); <mathjax>$\lambda$</mathjax> is the regularization parameter to be optimized.</p>
-<p><mathjax>$$L1: \lambda \; \lVert\mathbf{w}\rVert_1 = \lambda \sum_{j=1}^{m} |w_j|$$</mathjax></p>
+<p>In L1 regularization, we shrink the weights using the absolute values of the weight coefficients (the weight vector $\mathbf{w}$); $\lambda$ is the regularization parameter to be optimized.</p>
+<p>$$L1: \lambda \; \lVert\mathbf{w}\rVert_1 = \lambda \sum_{j=1}^{m} |w_j|$$</p>
 <p>For example, we can regularize the sum of squared errors cost function (SSE) as follows:
-<mathjax>$$SSE =  \sum^{n}_{i=1} \big(\text{target}^{(i)} - \text{output}^{(i)}\big)^2 + L1$$</mathjax></p>
+$$SSE =  \sum^{n}_{i=1} \big(\text{target}^{(i)} - \text{output}^{(i)}\big)^2 + L1$$</p>
 <p>At its core, L1-regularization is very similar to L2 regularization. However, instead of a quadratic penalty term as in L2, we penalize the model by the absolute weight coefficients. As we can see in the figure below, our "budget" has "sharp edges," which is the geometric interpretation of why the L1 model induces sparsity.</p>
 <p><img alt="" src="../regularization-linear_files/l1.png" /></p>
 <h3 id="references">References</h3>

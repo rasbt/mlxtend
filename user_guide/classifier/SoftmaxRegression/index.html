@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name="author" content="Sebastian Raschka"> 
     <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/classifier/SoftmaxRegression/"> 
-    <link rel="shortcut icon" href="../../../../../../favicon.ico">
+    <link rel="shortcut icon" href="../../../favicon.ico">
 
     <title>SoftmaxRegression - mlxtend</title>
 
@@ -856,19 +856,19 @@
 <p><em>Softmax Regression</em> (synonyms: <em>Multinomial Logistic</em>, <em>Maximum Entropy Classifier</em>, or just <em>Multi-class Logistic Regression</em>) is a generalization of logistic regression that we can use for multi-class classification (under the assumption that the classes are  mutually exclusive). In contrast, we use the (standard) <em>Logistic Regression</em> model in binary classification tasks.</p>
 <p>Below is a schematic of a <em>Logistic Regression</em> model, for more details, please see the <a href="../LogisticRegression/"><code>LogisticRegression</code> manual</a>.</p>
 <p><img alt="" src="../SoftmaxRegression_files/logistic_regression_schematic.png" /></p>
-<p>In <em>Softmax Regression</em> (SMR), we replace the sigmoid logistic function by the so-called <em>softmax</em> function <mathjax>$\phi_{softmax}(\cdot)$</mathjax>.</p>
-<p><mathjax>$$P(y=j \mid z^{(i)}) = \phi_{softmax}(z^{(i)}) = \frac{e^{z^{(i)}}}{\sum_{j=0}^{k} e^{z_{k}^{(i)}}},$$</mathjax></p>
+<p>In <em>Softmax Regression</em> (SMR), we replace the sigmoid logistic function by the so-called <em>softmax</em> function $\phi_{softmax}(\cdot)$.</p>
+<p>$$P(y=j \mid z^{(i)}) = \phi_{softmax}(z^{(i)}) = \frac{e^{z^{(i)}}}{\sum_{j=0}^{k} e^{z_{k}^{(i)}}},$$</p>
 <p>where we define the net input <em>z</em> as </p>
-<p><mathjax>$$z = w_1x_1 + ... + w_mx_m  + b= \sum_{l=0}^{m} w_l x_l + b= \mathbf{w}^T\mathbf{x} + b.$$</mathjax> </p>
-<p>(<strong>w</strong> is the weight vector, <mathjax>$\mathbf{x}$</mathjax> is the feature vector of 1 training sample, and <mathjax>$b$</mathjax> is the bias unit.) <br />
-Now, this softmax function computes the probability that this training sample <mathjax>$\mathbf{x}^{(i)}$</mathjax> belongs to class <mathjax>$j$</mathjax> given the weight and net input <mathjax>$z^{(i)}$</mathjax>. So, we compute the probability <mathjax>$p(y = j \mid \mathbf{x^{(i)}; w}_j)$</mathjax> for each class label in  <mathjax>$j = 1, \ldots, k.$</mathjax>. Note the normalization term in the denominator which causes these class probabilities to sum up to one.</p>
+<p>$$z = w_1x_1 + ... + w_mx_m  + b= \sum_{l=0}^{m} w_l x_l + b= \mathbf{w}^T\mathbf{x} + b.$$ </p>
+<p>(<strong>w</strong> is the weight vector, $\mathbf{x}$ is the feature vector of 1 training sample, and $b$ is the bias unit.) <br />
+Now, this softmax function computes the probability that this training sample $\mathbf{x}^{(i)}$ belongs to class $j$ given the weight and net input $z^{(i)}$. So, we compute the probability $p(y = j \mid \mathbf{x^{(i)}; w}_j)$ for each class label in  $j = 1, \ldots, k.$. Note the normalization term in the denominator which causes these class probabilities to sum up to one.</p>
 <p><img alt="" src="../SoftmaxRegression_files/softmax_schematic_1.png" /></p>
 <p>To illustrate the concept of softmax, let us walk through a concrete example. Let's assume we have a training set consisting of 4 samples from 3 different classes (0, 1, and 2)</p>
 <ul>
-<li><mathjax>$x_0 \rightarrow \text{class }0$</mathjax></li>
-<li><mathjax>$x_1 \rightarrow \text{class }1$</mathjax></li>
-<li><mathjax>$x_2 \rightarrow \text{class }2$</mathjax></li>
-<li><mathjax>$x_3 \rightarrow \text{class }2$</mathjax></li>
+<li>$x_0 \rightarrow \text{class }0$</li>
+<li>$x_1 \rightarrow \text{class }1$</li>
+<li>$x_2 \rightarrow \text{class }2$</li>
+<li>$x_3 \rightarrow \text{class }2$</li>
 </ul>
 <pre><code class="python">import numpy as np
 
@@ -919,7 +919,7 @@ bias:
  [ 0.01  0.1   0.1 ]
 </code></pre>
 <p>To compute the net input, we multiply the 4x2 matrix feature matrix <code>X</code> with the 2x3 (n_features x n_classes) weight matrix <code>W</code>, which yields a 4x3 output matrix (n_samples x n_classes) to which we then add the bias unit: </p>
-<p><mathjax>$$\mathbf{Z} = \mathbf{X}\mathbf{W} + \mathbf{b}.$$</mathjax></p>
+<p>$$\mathbf{Z} = \mathbf{X}\mathbf{W} + \mathbf{b}.$$</p>
 <pre><code class="python">X = np.array([[0.1, 0.5],
               [1.1, 2.3],
               [-1.1, -2.3],
@@ -962,7 +962,7 @@ print('net input:\n', net_in)
  [-0.39 -0.7  -1.1 ]]
 </code></pre>
 <p>Now, it's time to compute the softmax activation that we discussed earlier:</p>
-<p><mathjax>$$P(y=j \mid z^{(i)}) = \phi_{softmax}(z^{(i)}) = \frac{e^{z^{(i)}}}{\sum_{j=0}^{k} e^{z_{k}^{(i)}}}.$$</mathjax></p>
+<p>$$P(y=j \mid z^{(i)}) = \phi_{softmax}(z^{(i)}) = \frac{e^{z^{(i)}}}{\sum_{j=0}^{k} e^{z_{k}^{(i)}}}.$$</p>
 <pre><code class="python">def softmax(z):
     return (np.exp(z.T) / np.sum(np.exp(z), axis=1)).T
 
@@ -991,11 +991,11 @@ print('predicted class labels: ', to_classlabel(smax))
 
 <pre><code>predicted class labels:  [2 2 0 0]
 </code></pre>
-<p>As we can see, our predictions are terribly wrong, since the correct class labels are <code>[0, 1, 2, 2]</code>. Now, in order to train our logistic model (e.g., via an optimization algorithm such as gradient descent), we need to define a cost function <mathjax>$J(\cdot)$</mathjax> that we want to minimize:</p>
-<p><mathjax>$$J(\mathbf{W}; \mathbf{b}) = \frac{1}{n} \sum_{i=1}^{n} H(T_i, O_i),$$</mathjax></p>
-<p>which is the average of all cross-entropies over our <mathjax>$n$</mathjax> training samples. The cross-entropy  function is defined as</p>
-<p><mathjax>$$H(T_i, O_i) = -\sum_m T_i \cdot log(O_i).$$</mathjax></p>
-<p>Here the <mathjax>$T$</mathjax> stands for "target" (i.e., the <em>true</em> class labels) and the <mathjax>$O$</mathjax> stands for output -- the computed <em>probability</em> via softmax; <strong>not</strong> the predicted class label.</p>
+<p>As we can see, our predictions are terribly wrong, since the correct class labels are <code>[0, 1, 2, 2]</code>. Now, in order to train our logistic model (e.g., via an optimization algorithm such as gradient descent), we need to define a cost function $J(\cdot)$ that we want to minimize:</p>
+<p>$$J(\mathbf{W}; \mathbf{b}) = \frac{1}{n} \sum_{i=1}^{n} H(T_i, O_i),$$</p>
+<p>which is the average of all cross-entropies over our $n$ training samples. The cross-entropy  function is defined as</p>
+<p>$$H(T_i, O_i) = -\sum_m T_i \cdot log(O_i).$$</p>
+<p>Here the $T$ stands for "target" (i.e., the <em>true</em> class labels) and the $O$ stands for output -- the computed <em>probability</em> via softmax; <strong>not</strong> the predicted class label.</p>
 <pre><code class="python">def cross_entropy(output, y_target):
     return - np.sum(np.log(output) * (y_target), axis=1)
 
@@ -1015,22 +1015,22 @@ print('Cost: ', J_cost)
 <pre><code>Cost:  1.32159787159
 </code></pre>
 <p>In order to learn our softmax model -- determining the weight coefficients -- via gradient descent, we then need to compute the derivative </p>
-<p><mathjax>$$\nabla \mathbf{w}_j \, J(\mathbf{W}; \mathbf{b}).$$</mathjax></p>
+<p>$$\nabla \mathbf{w}_j \, J(\mathbf{W}; \mathbf{b}).$$</p>
 <p>I don't want to walk through the tedious details here, but this cost derivative turns out to be simply:</p>
-<p><mathjax>$$\nabla \mathbf{w}_j \, J(\mathbf{W}; \mathbf{b}) = \frac{1}{n} \sum^{n}_{i=0} \big[\mathbf{x}^{(i)}\ \big(O_i - T_i \big) \big]$$</mathjax></p>
-<p>We can then use the cost derivate to update the weights in opposite direction of the cost gradient with learning rate <mathjax>$\eta$</mathjax>:</p>
-<p><mathjax>$$\mathbf{w}_j := \mathbf{w}_j - \eta \nabla \mathbf{w}_j \, J(\mathbf{W}; \mathbf{b})$$</mathjax> </p>
-<p>for each class <mathjax>$$j \in \{0, 1, ..., k\}$$</mathjax></p>
-<p>(note that <mathjax>$\mathbf{w}_j$</mathjax> is the weight vector for the class <mathjax>$y=j$</mathjax>), and we update the bias units</p>
-<p><mathjax>$$\mathbf{b}_j := \mathbf{b}_j   - \eta \bigg[ \frac{1}{n} \sum^{n}_{i=0} \big(O_i - T_i  \big) \bigg].$$</mathjax> </p>
-<p>As a penalty against complexity, an approach to reduce the variance of our model and decrease the degree of overfitting by adding additional bias, we can further add a regularization term such as the L2 term with the regularization parameter <mathjax>$\lambda$</mathjax>:</p>
-<p>L2:        <mathjax>$\frac{\lambda}{2} ||\mathbf{w}||_{2}^{2}$</mathjax>, </p>
+<p>$$\nabla \mathbf{w}_j \, J(\mathbf{W}; \mathbf{b}) = \frac{1}{n} \sum^{n}_{i=0} \big[\mathbf{x}^{(i)}\ \big(O_i - T_i \big) \big]$$</p>
+<p>We can then use the cost derivate to update the weights in opposite direction of the cost gradient with learning rate $\eta$:</p>
+<p>$$\mathbf{w}_j := \mathbf{w}_j - \eta \nabla \mathbf{w}_j \, J(\mathbf{W}; \mathbf{b})$$ </p>
+<p>for each class $$j \in \{0, 1, ..., k\}$$</p>
+<p>(note that $\mathbf{w}_j$ is the weight vector for the class $y=j$), and we update the bias units</p>
+<p>$$\mathbf{b}_j := \mathbf{b}_j   - \eta \bigg[ \frac{1}{n} \sum^{n}_{i=0} \big(O_i - T_i  \big) \bigg].$$ </p>
+<p>As a penalty against complexity, an approach to reduce the variance of our model and decrease the degree of overfitting by adding additional bias, we can further add a regularization term such as the L2 term with the regularization parameter $\lambda$:</p>
+<p>L2:        $\frac{\lambda}{2} ||\mathbf{w}||_{2}^{2}$, </p>
 <p>where </p>
-<p><mathjax>$$||\mathbf{w}||_{2}^{2} = \sum^{m}_{l=0} \sum^{k}_{j=0} w_{i, j}$$</mathjax></p>
+<p>$$||\mathbf{w}||_{2}^{2} = \sum^{m}_{l=0} \sum^{k}_{j=0} w_{i, j}$$</p>
 <p>so that our cost function becomes</p>
-<p><mathjax>$$J(\mathbf{W}; \mathbf{b}) = \frac{1}{n} \sum_{i=1}^{n} H(T_i, O_i) + \frac{\lambda}{2} ||\mathbf{w}||_{2}^{2}$$</mathjax></p>
+<p>$$J(\mathbf{W}; \mathbf{b}) = \frac{1}{n} \sum_{i=1}^{n} H(T_i, O_i) + \frac{\lambda}{2} ||\mathbf{w}||_{2}^{2}$$</p>
 <p>and we define the "regularized" weight update as</p>
-<p><mathjax>$$\mathbf{w}_j := \mathbf{w}_j -  \eta \big[\nabla \mathbf{w}_j \, J(\mathbf{W}) + \lambda \mathbf{w}_j \big].$$</mathjax></p>
+<p>$$\mathbf{w}_j := \mathbf{w}_j -  \eta \big[\nabla \mathbf{w}_j \, J(\mathbf{W}) + \lambda \mathbf{w}_j \big].$$</p>
 <p>(Please note that we don't regularize the bias term.)</p>
 <h2 id="examples">Examples</h2>
 <h3 id="example-1-gradient-descent">Example 1 - Gradient Descent</h3>

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name="author" content="Sebastian Raschka"> 
     <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/evaluate/scoring/"> 
-    <link rel="shortcut icon" href="../../../../../../favicon.ico">
+    <link rel="shortcut icon" href="../../../favicon.ico">
 
     <title>Scoring - mlxtend</title>
 
@@ -867,44 +867,44 @@
 <h2 id="overview">Overview</h2>
 <h3 id="confusion-matrix">Confusion Matrix</h3>
 <p>The <em>confusion matrix</em> (or <em>error matrix</em>) is one way to summarize the performance of a classifier for binary classification tasks. This square matrix consists of columns and rows that list the number of instances as absolute or relative "actual class" vs. "predicted class" ratios.</p>
-<p>Let <mathjax>$P$</mathjax> be the label of class 1 and <mathjax>$N$</mathjax> be the label of a second class or the label of all classes that are <em>not class 1</em> in a multi-class setting.</p>
+<p>Let $P$ be the label of class 1 and $N$ be the label of a second class or the label of all classes that are <em>not class 1</em> in a multi-class setting.</p>
 <p><img alt="" src="../confusion_matrix_files/confusion_matrix_1.png" /></p>
 <h3 id="error-and-accuracy">Error and Accuracy</h3>
 <p>Both the prediction <em>error</em> (ERR) and <em>accuracy</em> (ACC) provide general information about how many samples are misclassified. The <em>error</em> can be understood as the sum of all false predictions divided by the number of total predications, and the the accuracy is calculated as the sum of correct predictions divided by the total number of predictions, respectively. </p>
-<p><mathjax>$$ERR = \frac{FP + FN}{FP+ FN + TP + TN} = 1-ACC$$</mathjax></p>
-<p><mathjax>$$ACC = \frac{TP + TN}{FP+ FN + TP + TN} = 1-ERR$$</mathjax></p>
+<p>$$ERR = \frac{FP + FN}{FP+ FN + TP + TN} = 1-ACC$$</p>
+<p>$$ACC = \frac{TP + TN}{FP+ FN + TP + TN} = 1-ERR$$</p>
 <h3 id="true-and-false-positive-rates">True and False Positive Rates</h3>
 <p>The <em>True Positive Rate</em> (TPR) and <em>False Positive Rate</em> (FPR) are performance metrics that are especially useful for imbalanced class problems. In <em>spam classification</em>, for example, we are of course primarily interested in the detection and filtering out of <em>spam</em>. However, it is also important to decrease the number of messages that were incorrectly classified as <em>spam</em> (<em>False Positives</em>): A situation where a person misses an important message is considered as "worse" than a situation where a person ends up with a few <em>spam</em> messages in his e-mail inbox. In contrast to the <em>FPR</em>, the <em>True Positive Rate</em> provides useful information about the fraction of <em>positive</em> (or <em>relevant</em>) samples that were correctly identified out of the total pool of <em>Positives</em>.</p>
-<p><mathjax>$$FPR = \frac{FP}{N} =  \frac{FP}{FP + TN}$$</mathjax></p>
-<p><mathjax>$$TPR = \frac{TP}{P} =  \frac{TP}{FN + TP}$$</mathjax></p>
+<p>$$FPR = \frac{FP}{N} =  \frac{FP}{FP + TN}$$</p>
+<p>$$TPR = \frac{TP}{P} =  \frac{TP}{FN + TP}$$</p>
 <h3 id="precision-recall-and-the-f1-score">Precision, Recall, and the F1-Score</h3>
-<p><em>Precision</em> (PRE) and <em>Recall</em> (REC) are metrics that are more commonly used in <em>Information Technology</em> and related to the <em>False</em> and <em>True Prositive Rates</em>. In fact, <em>Recall</em> is synonymous to the <em>True Positive Rate</em> and also sometimes called <em>Sensitivity</em>. The F<mathjax>$_1$</mathjax>-Score can be understood as a combination of both <em>Precision</em> and <em>Recall</em>.</p>
-<p><mathjax>$$PRE = \frac{TP}{TP + FP}$$</mathjax></p>
-<p><mathjax>$$REC = TPR = \frac{TP}{P} =  \frac{TP}{FN + TP}$$</mathjax></p>
-<p><mathjax>$$F_1 = 2 \cdot \frac{PRE \cdot REC}{PRE + REC}$$</mathjax></p>
+<p><em>Precision</em> (PRE) and <em>Recall</em> (REC) are metrics that are more commonly used in <em>Information Technology</em> and related to the <em>False</em> and <em>True Prositive Rates</em>. In fact, <em>Recall</em> is synonymous to the <em>True Positive Rate</em> and also sometimes called <em>Sensitivity</em>. The F$_1$-Score can be understood as a combination of both <em>Precision</em> and <em>Recall</em>.</p>
+<p>$$PRE = \frac{TP}{TP + FP}$$</p>
+<p>$$REC = TPR = \frac{TP}{P} =  \frac{TP}{FN + TP}$$</p>
+<p>$$F_1 = 2 \cdot \frac{PRE \cdot REC}{PRE + REC}$$</p>
 <h3 id="sensitivity-and-specificity">Sensitivity and Specificity</h3>
 <p><em>Sensitivity</em> (SEN) is synonymous to <em>Recall</em> and the <em>True Positive Rate</em> whereas <em>Specificity (SPC)</em> is synonymous to the <em>True Negative Rate</em> -- <em>Sensitivity</em> measures the recovery rate of the <em>Positives</em> and complimentary, the <em>Specificity</em> measures the recovery rate of the <em>Negatives</em>.</p>
-<p><mathjax>$$SEN = TPR = REC = \frac{TP}{P} =  \frac{TP}{FN + TP}$$</mathjax></p>
-<p><mathjax>$$SPC = TNR =\frac{TN}{N} =  \frac{TN}{FP + TN}$$</mathjax></p>
+<p>$$SEN = TPR = REC = \frac{TP}{P} =  \frac{TP}{FN + TP}$$</p>
+<p>$$SPC = TNR =\frac{TN}{N} =  \frac{TN}{FP + TN}$$</p>
 <h3 id="matthews-correlation-coefficient">Matthews Correlation Coefficient</h3>
 <p><em>Matthews correlation coefficient</em> (MCC) was first formulated by Brian W. Matthews [3] in 1975 to assess the performance of protein secondary structure predictions. The MCC can be understood as a specific case of a linear correlation coefficient (<em>Pearson's R</em>) for a binary classification setting and is considered as especially useful in unbalanced class settings.
 The previous metrics take values in the range between 0 (worst) and 1 (best), whereas the MCC is bounded between the range 1 (perfect correlation between ground truth and predicted outcome) and -1 (inverse or negative correlation) -- a value of 0 denotes a random prediction. </p>
-<p><mathjax>$$MCC = \frac{ TP \times TN - FP \times FN } {\sqrt{ (TP + FP) ( TP + FN ) ( TN + FP ) ( TN + FN ) } }$$</mathjax></p>
+<p>$$MCC = \frac{ TP \times TN - FP \times FN } {\sqrt{ (TP + FP) ( TP + FN ) ( TN + FP ) ( TN + FN ) } }$$</p>
 <h3 id="average-per-class-accuracy">Average Per-Class Accuracy</h3>
 <p>The "overall" accuracy is defined as the number of correct predictions (<em>true positives</em> TP and <em>true negatives</em> TN) over all samples <em>n</em>:</p>
-<p><mathjax>$$ACC = \frac{TP + TN}{n}$$</mathjax></p>
+<p>$$ACC = \frac{TP + TN}{n}$$</p>
 <p>in a binary class setting:</p>
 <p><img alt="" src="../scoring_files/conf_mat_binary-1.png" /></p>
 <p>In a multi-class setting, we can generalize the computation of the accuracy as the fraction of all true predictions (the diagonal) over all samples n.</p>
-<p><mathjax>$$ACC = \frac{T}{n}$$</mathjax></p>
+<p>$$ACC = \frac{T}{n}$$</p>
 <p>Considering a multi-class problem with 3 classes (C0, C1, C2)</p>
 <p><img alt="" src="../scoring_files/conf_mat_multi-1.png" /></p>
 <p>let's assume our model made the following predictions:</p>
 <p><img alt="" src="../scoring_files/multi-ex-1.png" /></p>
 <p>We compute the accuracy as:</p>
-<p><mathjax>$$ACC = \frac{3 + 50 + 18}{90} \approx 0.79$$</mathjax></p>
+<p>$$ACC = \frac{3 + 50 + 18}{90} \approx 0.79$$</p>
 <p>Now, in order to compute the <strong><em>average per-class accuracy</em></strong>, we compute the binary accuracy for each class label separately; i.e., if class 1 is the positive class, class 0 and 2 are both considered the negative class.</p>
-<p><mathjax>$$APC\;ACC = \frac{83/90 + 71/90 + 78/90}{3} \approx 0.86$$</mathjax></p>
+<p>$$APC\;ACC = \frac{83/90 + 71/90 + 78/90}{3} \approx 0.86$$</p>
 <h3 id="references">References</h3>
 <ul>
 <li>[1] S. Raschka. <a href="http://arxiv.org/abs/1410.5330">An overview of general performance metrics of binary classifier systems</a>. Computing Research Repository (CoRR), abs/1410.5330, 2014.</li>

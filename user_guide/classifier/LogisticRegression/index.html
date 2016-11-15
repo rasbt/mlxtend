@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name="author" content="Sebastian Raschka"> 
     <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/classifier/LogisticRegression/"> 
-    <link rel="shortcut icon" href="../../../../../../favicon.ico">
+    <link rel="shortcut icon" href="../../../favicon.ico">
 
     <title>LogisticRegression - mlxtend</title>
 
@@ -865,51 +865,51 @@
 <h2 id="overview">Overview</h2>
 <p><img alt="" src="../LogisticRegression_files/logistic_regression_schematic.png" /></p>
 <p>Related to the <a href="../Perceptron/"><code>Perceptron</code></a> and <a href="../Adaline/">'Adaline'</a>, a Logistic Regression model is a linear model for binary classification. However, instead of minimizing a linear cost function such as the sum of squared errors (SSE) in Adaline, we minimize a sigmoid function, i.e., the logistic function:</p>
-<p><mathjax>$$\phi(z) = \frac{1}{1 + e^{-z}},$$</mathjax></p>
-<p>where <mathjax>$z$</mathjax> is defined as the net input</p>
-<p><mathjax>$$z = w_0x_0 + w_1x_1 + ... + w_mx_m = \sum_{j=0}^{m} w_j x_j= \mathbf{w}^T\mathbf{x}.$$</mathjax> </p>
+<p>$$\phi(z) = \frac{1}{1 + e^{-z}},$$</p>
+<p>where $z$ is defined as the net input</p>
+<p>$$z = w_0x_0 + w_1x_1 + ... + w_mx_m = \sum_{j=0}^{m} w_j x_j= \mathbf{w}^T\mathbf{x}.$$ </p>
 <p>The net input is in turn based on the logit function</p>
-<p><mathjax>$$logit(p(y=1 \mid \mathbf{x})) = z.$$</mathjax></p>
-<p>Here, <mathjax>$p(y=1 \mid \mathbf{x})$</mathjax> is the conditional probability that a particular sample belongs to class 1 given its features <mathjax>$\mathbf{x}$</mathjax>. The logit function takes inputs in the range [0, 1] and transform them to values over the entire real number range. In contrast, the logistic function takes input values over the entire real number range and transforms them to values in the range [0, 1]. In other words, the logistic function is the inverse of the logit function, and it lets us predict the conditional probability that a certain sample belongs to class 1 (or class 0).</p>
+<p>$$logit(p(y=1 \mid \mathbf{x})) = z.$$</p>
+<p>Here, $p(y=1 \mid \mathbf{x})$ is the conditional probability that a particular sample belongs to class 1 given its features $\mathbf{x}$. The logit function takes inputs in the range [0, 1] and transform them to values over the entire real number range. In contrast, the logistic function takes input values over the entire real number range and transforms them to values in the range [0, 1]. In other words, the logistic function is the inverse of the logit function, and it lets us predict the conditional probability that a certain sample belongs to class 1 (or class 0).</p>
 <p><img alt="" src="../LogisticRegression_files/logistic_function.png" /></p>
-<p>After model fitting, the conditional probability <mathjax>$p(y=1 \mid \mathbf{x})$</mathjax> is converted to a binary class label via a threshold function <mathjax>$g(\cdot)$</mathjax>:</p>
-<p><mathjax>$$y = g({z}) = 
+<p>After model fitting, the conditional probability $p(y=1 \mid \mathbf{x})$ is converted to a binary class label via a threshold function $g(\cdot)$:</p>
+<p>$$y = g({z}) = 
  \begin{cases}
   1 &amp; \text{if $\phi(z) \ge 0.5$}\\
   0 &amp; \text{otherwise.}
    \end{cases}
-$$</mathjax></p>
+$$</p>
 <p>or equivalently:</p>
-<p><mathjax>$$y = g({z}) = 
+<p>$$y = g({z}) = 
 \begin{cases}
 1 &amp; \text{if z $\ge$ 0}\\
 0 &amp; \text{otherwise}.
 \end{cases}
-$$</mathjax></p>
+$$</p>
 <h3 id="objective-function-log-likelihood">Objective Function -- Log-Likelihood</h3>
-<p>In order to parameterize a logistic regression model, we maximize the likelihood <mathjax>$L(\cdot)$</mathjax> (or minimize the logistic cost function).</p>
+<p>In order to parameterize a logistic regression model, we maximize the likelihood $L(\cdot)$ (or minimize the logistic cost function).</p>
 <p>We write the likelihood as </p>
-<p><mathjax>$$L(\mathbf{w}) = P(\mathbf{y} \mid \mathbf{x};\mathbf{w}) = \prod_{i=1}^{n} P\big(y^{(i)} \mid x^{(i)}; \mathbf{w}\big) = \prod^{n}_{i=1}\bigg(\phi\big(z^{(i)}\big)\bigg)^{y^{(i)}} \bigg(1-\phi\big(z^{(i)}\big)\bigg)^{1-y^{(i)}},$$</mathjax></p>
+<p>$$L(\mathbf{w}) = P(\mathbf{y} \mid \mathbf{x};\mathbf{w}) = \prod_{i=1}^{n} P\big(y^{(i)} \mid x^{(i)}; \mathbf{w}\big) = \prod^{n}_{i=1}\bigg(\phi\big(z^{(i)}\big)\bigg)^{y^{(i)}} \bigg(1-\phi\big(z^{(i)}\big)\bigg)^{1-y^{(i)}},$$</p>
 <p>under the assumption that the training samples are independent of each other.</p>
 <p>In practice, it is easier to maximize the (natural) log of this equation, which is called
 the log-likelihood function:</p>
-<p><mathjax>$$l(\mathbf{w}) = \log L(\mathbf{w}) = \sum^{n}_{i=1} y^{(i)} \log \bigg(\phi\big(z^{(i)}\big)\bigg) + \big( 1 - y^{(i)}\big) \log \big(1-\phi\big(z^{(i)}\big)\big)$$</mathjax></p>
+<p>$$l(\mathbf{w}) = \log L(\mathbf{w}) = \sum^{n}_{i=1} y^{(i)} \log \bigg(\phi\big(z^{(i)}\big)\bigg) + \big( 1 - y^{(i)}\big) \log \big(1-\phi\big(z^{(i)}\big)\big)$$</p>
 <p>One advantage of taking the log is to avoid numeric underflow (and challenges with floating point math) for very small likelihoods. Another advantage is that we can obtain the derivative more easily, using the addition trick to rewrite the product of factors as a summation term, which we can then maximize using optimization algorithms such as gradient ascent.</p>
 <h3 id="objective-function-logistic-cost-function">Objective Function -- Logistic Cost Function</h3>
-<p>An alternative to maximizing the log-likelihood, we can define a cost function <mathjax>$J(\cdot)$</mathjax> to be minimized; we rewrite the log-likelihood as:</p>
-<p><mathjax>$$J(\mathbf{w}) = \sum_{i=1}^{m} - y^{(i)} log \bigg( \phi\big(z^{(i)}\big) \bigg) - \big(1 - y^{(i)}\big) log\bigg(1-\phi\big(z^{(i)}\big)\bigg)$$</mathjax></p>
-<p><mathjax>$$
+<p>An alternative to maximizing the log-likelihood, we can define a cost function $J(\cdot)$ to be minimized; we rewrite the log-likelihood as:</p>
+<p>$$J(\mathbf{w}) = \sum_{i=1}^{m} - y^{(i)} log \bigg( \phi\big(z^{(i)}\big) \bigg) - \big(1 - y^{(i)}\big) log\bigg(1-\phi\big(z^{(i)}\big)\bigg)$$</p>
+<p>$$
  J\big(\phi(z), y; \mathbf{w}\big) =\begin{cases}
     -log\big(\phi(z) \big) &amp; \text{if $y = 1$}\\
     -log\big(1- \phi(z) \big) &amp; \text{if $y = 0$}
   \end{cases}
-$$</mathjax></p>
+$$</p>
 <p><img alt="" src="../LogisticRegression_files/logistic_cost.png" /></p>
 <p>As we can see in the figure above, we penalize wrong predictions with an increasingly larger cost.</p>
 <h3 id="gradient-descent-gd-and-stochastic-gradient-descent-sgd-optimization">Gradient Descent (GD)  and Stochastic Gradient Descent (SGD) Optimization</h3>
 <h4 id="gradient-ascent-and-the-log-likelihood">Gradient Ascent and the log-likelihood</h4>
 <p>To learn the weight coefficient of a logistic regression model via gradient-based optimization, we compute the partial derivative of the log-likelihood function -- w.r.t. the <em>j</em>th weight -- as follows:</p>
-<p><mathjax>$$\frac{\partial}{\partial w_j} l(\mathbf{w}) = \bigg(y \frac{1}{\phi(z)} - (1-y) \frac{1}{1-\phi{(z)}} \bigg) \frac{\partial}{\partial w_j}\phi(z)$$</mathjax></p>
+<p>$$\frac{\partial}{\partial w_j} l(\mathbf{w}) = \bigg(y \frac{1}{\phi(z)} - (1-y) \frac{1}{1-\phi{(z)}} \bigg) \frac{\partial}{\partial w_j}\phi(z)$$</p>
 <p>As an intermediate step, we compute the partial derivative of the sigmoid function, which will come in handy later:</p>
 <p>\begin{align}
 &amp;\frac{\partial}{\partial z} \phi(z) = \frac{\partial}{{\partial z}} \frac{1}{1+e^{-z}} \\
@@ -917,34 +917,34 @@ $$</mathjax></p>
 &amp;= \frac{1}{1+e^{-z}} \bigg(1 - \frac{1}{1+e^{-z}} \bigg)\\
 &amp;= \phi(z)\big(1-\phi(z)\big)
 \end{align}</p>
-<p>Now, we re-substitute <mathjax>$$\frac{\partial}{\partial z} \phi(z) = \phi(z) \big(1 - \phi(z)\big)$$</mathjax> back into in the log-likelihood partial derivative equation and obtain the equation shown below:</p>
+<p>Now, we re-substitute $$\frac{\partial}{\partial z} \phi(z) = \phi(z) \big(1 - \phi(z)\big)$$ back into in the log-likelihood partial derivative equation and obtain the equation shown below:</p>
 <p>\begin{align}
 &amp; \bigg(y \frac{1}{\phi{(z)}} - (1 - y) \frac{1}{1 - \phi(z)} \bigg) \frac{\partial}{\partial w_j} \phi(z) \\
 &amp;= \bigg(y \frac{1}{\phi{(z)}} - (1 - y) \frac{1}{1 - \phi(z)} \bigg) \phi(z) \big(1 - \phi(z)\big) \frac{\partial}{\partial w_j}z\\
 &amp;= \big(y(1-\phi(z)\big) - (1 - y) \phi(z)\big)x_j\\
 &amp;=\big(y - \phi(z)\big)x_j
 \end{align}</p>
-<p>Now, in order to find the weights of the model, we take a step proportional to the positive direction of the gradient to maximize the log-likelihood. Futhermore, we add a coefficient, the learning rate <mathjax>$\eta$</mathjax> to the weight update:</p>
+<p>Now, in order to find the weights of the model, we take a step proportional to the positive direction of the gradient to maximize the log-likelihood. Futhermore, we add a coefficient, the learning rate $\eta$ to the weight update:</p>
 <p>\begin{align}
 &amp; w_j := w_j + \eta \frac{\partial}{\partial w_j} l(\mathbf{w})\\
 &amp; w_j := w_j + \eta \sum^{n}_{i=1} \big( y^{(i)} - \phi\big(z^{(i)}\big)\big)x_j^{(i)}
 \end{align}</p>
 <p>Note that the gradient (and weight update) is computed from all samples in the training set in gradient ascent/descent in contrast to stochastic gradient ascent/descent. For more information about the differences between gradient descent and stochastic gradient descent, please see the related article <a href="../../general_concepts/gradient-optimization/">Gradient Descent and Stochastic Gradient Descent</a>.</p>
-<p>The previous equation shows the weight update for a single weight <mathjax>$j$</mathjax>. In gradient-based optimization, all weight coefficients are updated simultaneously; the weight update can be written more compactly as </p>
-<p><mathjax>$$\mathbf{w} := \mathbf{w} + \Delta\mathbf{w},$$</mathjax>
+<p>The previous equation shows the weight update for a single weight $j$. In gradient-based optimization, all weight coefficients are updated simultaneously; the weight update can be written more compactly as </p>
+<p>$$\mathbf{w} := \mathbf{w} + \Delta\mathbf{w},$$
 where</p>
-<p><mathjax>$$\Delta{\mathbf{w}} = \eta \nabla l(\mathbf{w})$$</mathjax></p>
+<p>$$\Delta{\mathbf{w}} = \eta \nabla l(\mathbf{w})$$</p>
 <h4 id="gradient-descent-and-the-logistic-cost-function">Gradient Descent and the logistic cost function</h4>
-<p>In the previous section, we derived the gradient of the log-likelihood function, which can be optimized via gradient ascent. Similarly, we can obtain the cost gradient of the logistic cost function <mathjax>$J(\cdot)$</mathjax> and minimize it via gradient descent in order to learn the logistic regression model.</p>
+<p>In the previous section, we derived the gradient of the log-likelihood function, which can be optimized via gradient ascent. Similarly, we can obtain the cost gradient of the logistic cost function $J(\cdot)$ and minimize it via gradient descent in order to learn the logistic regression model.</p>
 <p>The update rule for a single weight:</p>
 <p>\begin{align}
 &amp; \Delta{w_j} = -\eta \frac{\partial J}{\partial w_j} \
 &amp; = - \eta \sum_{i=1}^{n}\big(y^{(i)} - \phi\big(z^{(i)}\big) x^{(i)} \big)
 \end{align}</p>
 <p>The simultaneous weight update:</p>
-<p><mathjax>$$\mathbf{w} := \mathbf{w} + \Delta\mathbf{w}$$</mathjax></p>
+<p>$$\mathbf{w} := \mathbf{w} + \Delta\mathbf{w}$$</p>
 <p>where</p>
-<p><mathjax>$$\Delta{\mathbf{w}} = - \eta \nabla J(\mathbf{w}).$$</mathjax></p>
+<p>$$\Delta{\mathbf{w}} = - \eta \nabla J(\mathbf{w}).$$</p>
 <h4 id="shuffling">Shuffling</h4>
 <p>Random shuffling is implemented as:</p>
 <ul>
@@ -961,18 +961,18 @@ where</p>
 </ul>
 <h3 id="regularization">Regularization</h3>
 <p>As a way to tackle overfitting, we can add additional bias to the logistic regression model via a regularization terms. Via the L2 regularization term, we reduce the complexity of the model by penalizing large weight coefficients:</p>
-<p><mathjax>$$L2: \frac{\lambda}{2}\lVert \mathbf{w} \lVert_2 = \frac{\lambda}{2} \sum_{j=1}^{m} w_j^2$$</mathjax></p>
+<p>$$L2: \frac{\lambda}{2}\lVert \mathbf{w} \lVert_2 = \frac{\lambda}{2} \sum_{j=1}^{m} w_j^2$$</p>
 <p>In order to apply regularization, we just need to add the regularization term to the cost function that we defined for logistic regression to shrink the weights:</p>
-<p><mathjax>$$J(\mathbf{w}) =  \sum_{i=1}^{m} \Bigg[ - y^{(i)} log \bigg( \phi\big(z^{(i)}\big) \bigg) - \big(1 - y^{(i)}\big) log\bigg(1-\phi\big(z^{(i)}\big)\bigg) \Bigg] + \frac{\lambda}{2} \sum_{j=1}^{m} w_j^2$$</mathjax></p>
+<p>$$J(\mathbf{w}) =  \sum_{i=1}^{m} \Bigg[ - y^{(i)} log \bigg( \phi\big(z^{(i)}\big) \bigg) - \big(1 - y^{(i)}\big) log\bigg(1-\phi\big(z^{(i)}\big)\bigg) \Bigg] + \frac{\lambda}{2} \sum_{j=1}^{m} w_j^2$$</p>
 <p>The update rule for a single weight:</p>
 <p>\begin{align}
 &amp; \Delta{w_j} = -\eta \bigg( \frac{\partial J}{\partial w_j} + \lambda w_j\bigg)\
 &amp; = - \eta \sum_{i=1}^{n}\big(y^{(i)} - \phi\big(z^{(i)}\big) x^{(i)} \big) - \eta \lambda w_j
 \end{align}</p>
 <p>The simultaneous weight update:</p>
-<p><mathjax>$$\mathbf{w} := \mathbf{w} + \Delta\mathbf{w}$$</mathjax></p>
+<p>$$\mathbf{w} := \mathbf{w} + \Delta\mathbf{w}$$</p>
 <p>where</p>
-<p><mathjax>$$\Delta{\mathbf{w}} = - \eta \big( \nabla J(\mathbf{w}) + \lambda \mathbf{w}\big).$$</mathjax></p>
+<p>$$\Delta{\mathbf{w}} = - \eta \big( \nabla J(\mathbf{w}) + \lambda \mathbf{w}\big).$$</p>
 <p>For more information on regularization, please see <a href="../../general_concepts/regularization-linear/">Regularization of Generalized Linear Models</a>.</p>
 <h3 id="references">References</h3>
 <ul>

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name="author" content="Sebastian Raschka"> 
     <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/math/num_combinations/"> 
-    <link rel="shortcut icon" href="../../../../../../favicon.ico">
+    <link rel="shortcut icon" href="../../../favicon.ico">
 
     <title>Num combinations - mlxtend</title>
 
@@ -864,21 +864,21 @@
 </ul>
 <p>In the example above the combinations 1a, 1b, and 1c, are the "same combination" and counted as "1 possible way to combine items 1, 3, and 5" -- in combinations, the order does not matter.</p>
 <p>The number of ways to combine elements (<strong>without replacement</strong>)  from a collection with size <em>n</em> into subsets of size <em>k</em> is computed via the binomial coefficient ("<em>n</em> choose <em>k</em>"):</p>
-<p><mathjax>$$
+<p>$$
 \begin{pmatrix} 
 n  \\
 k 
 \end{pmatrix} = \frac{n(n-1)\ldots(n-k+1)}{k(k-1)\dots1} = \frac{n!}{k!(n-k)!}
-$$</mathjax></p>
+$$</p>
 <p>To compute the number of combinations <strong>with replacement</strong>, the following, alternative equation 
 is used ("<em>n</em> multichoose <em>k</em>"):</p>
-<p><mathjax>$$\begin{pmatrix} 
+<p>$$\begin{pmatrix} 
 n  \\
 k 
 \end{pmatrix} = \begin{pmatrix} 
 n + k -1  \\
 k 
-\end{pmatrix}$$</mathjax></p>
+\end{pmatrix}$$</p>
 <h3 id="references">References</h3>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Combination">https://en.wikipedia.org/wiki/Combination</a></li>

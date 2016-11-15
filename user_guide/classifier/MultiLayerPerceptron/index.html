@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name="author" content="Sebastian Raschka"> 
     <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/classifier/MultiLayerPerceptron/"> 
-    <link rel="shortcut icon" href="../../../../../../favicon.ico">
+    <link rel="shortcut icon" href="../../../favicon.ico">
 
     <title>MultiLayerPerceptron - mlxtend</title>
 
@@ -862,8 +862,8 @@
 <p><em>Although the code is fully working and can be used for common classification tasks, this implementation is not geared towards efficiency but clarity – the original code was written for demonstration purposes.</em></p>
 <h3 id="basic-architecture">Basic Architecture</h3>
 <p><img alt="" src="../NeuralNetMLP_files/neuralnet_mlp_1.png" />  </p>
-<p>The neurons <mathjax>$x_0$</mathjax> and <mathjax>$a_0$</mathjax> represent the bias units (<mathjax>$x_0=1$</mathjax>, <mathjax>$a_0=1$</mathjax>). </p>
-<p>The <mathjax>$i$</mathjax>th superscript denotes the <mathjax>$i$</mathjax>th layer, and the <em>j</em>th subscripts stands for the index of the respective unit. For example, <mathjax>$a_{1}^{(2)}$</mathjax> refers to the first activation unit <strong>after</strong> the bias unit (i.e., 2nd activation unit) in the 2nd layer (here: the hidden layer)</p>
+<p>The neurons $x_0$ and $a_0$ represent the bias units ($x_0=1$, $a_0=1$). </p>
+<p>The $i$th superscript denotes the $i$th layer, and the <em>j</em>th subscripts stands for the index of the respective unit. For example, $a_{1}^{(2)}$ refers to the first activation unit <strong>after</strong> the bias unit (i.e., 2nd activation unit) in the 2nd layer (here: the hidden layer)</p>
 <p>\begin{align}
     \mathbf{a^{(2)}} &amp;= \begin{bmatrix}
            a_{0}^{(2)} \
@@ -872,12 +872,12 @@
            a_{m}^{(2)}
          \end{bmatrix}.
   \end{align}</p>
-<p>Each layer <mathjax>$(l)$</mathjax> in a multi-layer perceptron, a directed graph, is fully connected to the next layer <mathjax>$(l+1)$</mathjax>. We write the weight coefficient that connects the <mathjax>$k$</mathjax>th unit in the <mathjax>$l$</mathjax>th layer to the <mathjax>$j$</mathjax>th unit in layer <mathjax>$l+1$</mathjax> as <mathjax>$w^{(l)}_{j, k}$</mathjax>.</p>
+<p>Each layer $(l)$ in a multi-layer perceptron, a directed graph, is fully connected to the next layer $(l+1)$. We write the weight coefficient that connects the $k$th unit in the $l$th layer to the $j$th unit in layer $l+1$ as $w^{(l)}_{j, k}$.</p>
 <p>For example, the weight coefficient that connects the units</p>
-<p><mathjax>$a_0^{(2)} \rightarrow a_1^{(3)}$</mathjax></p>
-<p>would be written as <mathjax>$w_{1,0}^{(2)}$</mathjax>.</p>
+<p>$a_0^{(2)} \rightarrow a_1^{(3)}$</p>
+<p>would be written as $w_{1,0}^{(2)}$.</p>
 <h3 id="activation">Activation</h3>
-<p>In the current implementation, the activations of the hidden layer(s) are computed via the logistic (sigmoid) function <mathjax>$\phi(z) = \frac{1}{1 + e^{-z}}.$</mathjax></p>
+<p>In the current implementation, the activations of the hidden layer(s) are computed via the logistic (sigmoid) function $\phi(z) = \frac{1}{1 + e^{-z}}.$</p>
 <p><img alt="" src="../NeuralNetMLP_files/logistic_function.png" /></p>
 <p>(For more details on the logistic function, please see <a href="../LogisticRegression/"><code>classifier.LogisticRegression</code></a>; a general overview of different activation function can be found <a href="../../general_concepts/activation-functions/">here</a>.)</p>
 <p>Furthermore, the MLP uses the softmax function in the output layer, For more details on the logistic function, please see <a href="../SoftmaxRegression/"><code>classifier.SoftmaxRegression</code></a>.</p>

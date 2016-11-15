@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name="author" content="Sebastian Raschka"> 
     <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/standardize/"> 
-    <link rel="shortcut icon" href="../../../../../../favicon.ico">
+    <link rel="shortcut icon" href="../../../favicon.ico">
 
     <title>Standardize - mlxtend</title>
 
@@ -854,9 +854,9 @@
 </blockquote>
 <h2 id="overview">Overview</h2>
 <p>The result of standardization (or Z-score normalization) is that the features will be rescaled so that they'll have the properties of a standard normal distribution with</p>
-<p><mathjax>$\mu = 0$</mathjax> and <mathjax>$\sigma = 1$</mathjax>.</p>
-<p>where <mathjax>$\mu$</mathjax> is the mean (average) and <mathjax>$\sigma$</mathjax> is the standard deviation from the mean; standard scores (also called z scores) of the samples are calculated as</p>
-<p><mathjax>$$z=\frac{x-\mu}{\sigma}.$$</mathjax></p>
+<p>$\mu = 0$ and $\sigma = 1$.</p>
+<p>where $\mu$ is the mean (average) and $\sigma$ is the standard deviation from the mean; standard scores (also called z scores) of the samples are calculated as</p>
+<p>$$z=\frac{x-\mu}{\sigma}.$$</p>
 <p>Standardizing the features so that they are centered around 0 with a standard deviation of 1 is not only important if we are comparing measurements that have different units, but it is also a general requirement for the optimal performance of many machine learning algorithms. </p>
 <p>One family of algorithms that is scale-invariant encompasses tree-based learning algorithms. Let's take the general CART decision tree algorithm. Without going into much depth regarding information gain and impurity measures, we can think of the decision as "is feature x_i &gt;= some_val?" Intuitively, we can see that it really doesn't matter on which scale this feature is (centimeters, Fahrenheit, a standardized scale -- it really doesn't matter).</p>
 <p>Some examples of algorithms where feature scaling matters are:</p>

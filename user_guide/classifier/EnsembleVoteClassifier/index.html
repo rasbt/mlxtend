@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name="author" content="Sebastian Raschka"> 
     <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/classifier/EnsembleVoteClassifier/"> 
-    <link rel="shortcut icon" href="../../../../../../favicon.ico">
+    <link rel="shortcut icon" href="../../../favicon.ico">
 
     <title>EnsembleVoteClassifier - mlxtend</title>
 
@@ -827,24 +827,35 @@
     
         <li class="main active"><a href="#ensemblevoteclassifier">EnsembleVoteClassifier</a></li>
         
-            <li><a href="#overview">Overview</a></li>
+    
+        <li class="main "><a href="#overview">Overview</a></li>
+        
+            <li><a href="#majority-voting-hard-voting">Majority Voting / Hard Voting</a></li>
+                <!--  -->
+        
+            <li><a href="#weighted-majority-vote">Weighted Majority Vote</a></li>
+                <!--  -->
+        
+            <li><a href="#soft-voting">Soft Voting</a></li>
+                <!--  -->
+        
+            <li><a href="#references">References</a></li>
+                <!--  -->
+        
+    
+        <li class="main "><a href="#examples">Examples</a></li>
+        
+            <li><a href="#example-1-classifying-iris-flowers-using-different-classification-models">Example 1 -  Classifying Iris Flowers Using Different Classification Models</a></li>
                 <!-- 
-                    <li><a href="#majority-voting-hard-voting">Majority Voting / Hard Voting</a></li>
-            
-                    <li><a href="#weighted-majority-vote">Weighted Majority Vote</a></li>
-            
-                    <li><a href="#soft-voting">Soft Voting</a></li>
-            
-                    <li><a href="#references">References</a></li>
+                    <li><a href="#plotting-decision-regions">Plotting Decision Regions</a></li>
              -->
         
-            <li><a href="#examples">Examples</a></li>
+            <li><a href="#example-2-grid-search">Example 2 - Grid Search</a></li>
+                <!--  -->
+        
+            <li><a href="#example-3-majority-voting-with-classifiers-trained-on-different-feature-subsets">Example 3 - Majority voting with classifiers trained on different feature subsets</a></li>
                 <!-- 
-                    <li><a href="#example-1-classifying-iris-flowers-using-different-classification-models">Example 1 -  Classifying Iris Flowers Using Different Classification Models</a></li>
-            
-                    <li><a href="#example-2-grid-search">Example 2 - Grid Search</a></li>
-            
-                    <li><a href="#example-3-majority-voting-with-classifiers-trained-on-different-feature-subsets">Example 3 - Majority voting with classifiers trained on different feature subsets</a></li>
+                    <li><a href="#manual-approach">Manual Approach</a></li>
              -->
         
             <li><a href="#api">API</a></li>
@@ -862,7 +873,7 @@
 <blockquote>
 <p>from mlxtend.classifier import EnsembleVoteClassifier</p>
 </blockquote>
-<h2 id="overview">Overview</h2>
+<h1 id="overview">Overview</h1>
 <p>The <code>EnsembleVoteClassifier</code> is a meta-classifier for combining similar or conceptually different machine learning classifiers for classification via majority or plurality voting. (For simplicity, we will refer to both majority and plurality voting as majority voting.)</p>
 <p><img alt="" src="../EnsembleVoteClassifier_files/voting.png" /></p>
 <p>The <code>EnsembleVoteClassifier</code> implements "hard" and "soft" voting. In hard voting, we predict the final class label as the class label that has been predicted most frequently by the classification models. In soft voting, we predict the class labels by averaging the class-probabilities (only recommended if the classifiers are well-calibrated).</p>
@@ -870,59 +881,59 @@
 <p><strong>Note</strong></p>
 <p>If you are interested in using the <code>EnsembleVoteClassifier</code>, please note that it is now also available through scikit learn (&gt;0.17) as <a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.VotingClassifier.html"><code>VotingClassifier</code></a>.</p>
 <h3 id="majority-voting-hard-voting">Majority Voting / Hard Voting</h3>
-<p>Hard voting is the simplest case of majority voting. Here, we predict the class label <mathjax>$\hat{y}$</mathjax> via majority (plurality) voting of each classifier <mathjax>$C_j$</mathjax>:</p>
-<p><mathjax>$$\hat{y}=mode\{C_1(\mathbf{x}), C_2(\mathbf{x}), ..., C_m(\mathbf{x})\}$$</mathjax></p>
+<p>Hard voting is the simplest case of majority voting. Here, we predict the class label $\hat{y}$ via majority (plurality) voting of each classifier $C_j$:</p>
+<p>$$\hat{y}=mode\{C_1(\mathbf{x}), C_2(\mathbf{x}), ..., C_m(\mathbf{x})\}$$</p>
 <p>Assuming that we combine three classifiers that classify a training sample as follows:</p>
 <ul>
 <li>classifier 1 -&gt; class 0</li>
 <li>classifier 2 -&gt; class 0</li>
 <li>classifier 3 -&gt; class 1</li>
 </ul>
-<p><mathjax>$$\hat{y}=mode\{0, 0, 1\} = 0$$</mathjax></p>
+<p>$$\hat{y}=mode\{0, 0, 1\} = 0$$</p>
 <p>Via majority vote, we would we would classify the sample as "class 0."</p>
 <h3 id="weighted-majority-vote">Weighted Majority Vote</h3>
-<p>In addition to the simple majority vote (hard voting) as described in the previous section, we can compute a weighted majority vote by associating a weight <mathjax>$w_j$</mathjax> with classifier <mathjax>$C_j$</mathjax>:</p>
-<p><mathjax>$$\hat{y} = \arg \max_i \sum^{m}_{j=1} w_j \chi_A \big(C_j(\mathbf{x})=i\big),$$</mathjax></p>
-<p>where <mathjax>$\chi_A$</mathjax> is the characteristic function <mathjax>$[C_j(\mathbf{x}) = i \; \in A]$</mathjax>, and <mathjax>$A$</mathjax> is the set of unique class labels. </p>
+<p>In addition to the simple majority vote (hard voting) as described in the previous section, we can compute a weighted majority vote by associating a weight $w_j$ with classifier $C_j$:</p>
+<p>$$\hat{y} = \arg \max_i \sum^{m}_{j=1} w_j \chi_A \big(C_j(\mathbf{x})=i\big),$$</p>
+<p>where $\chi_A$ is the characteristic function $[C_j(\mathbf{x}) = i \; \in A]$, and $A$ is the set of unique class labels. </p>
 <p>Continuing with the example from the previous section</p>
 <ul>
 <li>classifier 1 -&gt; class 0</li>
 <li>classifier 2 -&gt; class 0</li>
 <li>classifier 3 -&gt; class 1</li>
 </ul>
-<p>assigning the weights {0.2, 0.2, 0.6} would yield a prediction <mathjax>$\hat{y} = 1$</mathjax>:</p>
-<p><mathjax>$$\arg \max_i [0.2 \times i_0 + 0.2 \times i_0 + 0.6 \times i_1] = 1$$</mathjax></p>
+<p>assigning the weights {0.2, 0.2, 0.6} would yield a prediction $\hat{y} = 1$:</p>
+<p>$$\arg \max_i [0.2 \times i_0 + 0.2 \times i_0 + 0.6 \times i_1] = 1$$</p>
 <h3 id="soft-voting">Soft Voting</h3>
-<p>In soft voting, we predict the class labels based on the predicted probabilities <mathjax>$p$</mathjax> for classifier -- this approach is only recommended if the classifiers are well-calibrated.</p>
-<p><mathjax>$$\hat{y} = \arg \max_i \sum^{m}_{j=1} w_j p_{ij},$$</mathjax></p>
-<p>where <mathjax>$w_j$</mathjax> is the weight that can be assigned to the <mathjax>$j$</mathjax>th classifier.</p>
-<p>Assuming the example in the previous section was a binary classification task with class labels <mathjax>$i \in \{0, 1\}$</mathjax>, our ensemble could make the following prediction:</p>
+<p>In soft voting, we predict the class labels based on the predicted probabilities $p$ for classifier -- this approach is only recommended if the classifiers are well-calibrated.</p>
+<p>$$\hat{y} = \arg \max_i \sum^{m}_{j=1} w_j p_{ij},$$</p>
+<p>where $w_j$ is the weight that can be assigned to the $j$th classifier.</p>
+<p>Assuming the example in the previous section was a binary classification task with class labels $i \in \{0, 1\}$, our ensemble could make the following prediction:</p>
 <ul>
-<li><mathjax>$C_1(\mathbf{x}) \rightarrow [0.9, 0.1]$</mathjax></li>
-<li><mathjax>$C_2(\mathbf{x}) \rightarrow [0.8, 0.2]$</mathjax></li>
-<li><mathjax>$C_3(\mathbf{x}) \rightarrow [0.4, 0.6]$</mathjax></li>
+<li>$C_1(\mathbf{x}) \rightarrow [0.9, 0.1]$</li>
+<li>$C_2(\mathbf{x}) \rightarrow [0.8, 0.2]$</li>
+<li>$C_3(\mathbf{x}) \rightarrow [0.4, 0.6]$</li>
 </ul>
 <p>Using uniform weights, we compute the average probabilities:</p>
-<p><mathjax>$$p(i_0 \mid \mathbf{x}) = \frac{0.9 + 0.8 + 0.4}{3} = 0.7 \\\\
-p(i_1 \mid \mathbf{x}) = \frac{0.1 + 0.2 + 0.6}{3} = 0.3$$</mathjax></p>
-<p><mathjax>$$\hat{y} = \arg \max_i \big[p(i_0 \mid \mathbf{x}), p(i_1 \mid \mathbf{x}) \big] = 0$$</mathjax></p>
-<p>However, assigning the weights {0.1, 0.1, 0.8} would yield a prediction <mathjax>$\hat{y} = 1$</mathjax>:</p>
-<p><mathjax>$$p(i_0 \mid \mathbf{x}) = {0.1 \times 0.9 + 0.1 \times 0.8 + 0.8 \times  0.4} = 0.49 \\\\
-p(i_1 \mid \mathbf{x}) = {0.1 \times 0.1 + 0.2 \times 0.1 + 0.8 \times 0.6} = 0.51$$</mathjax></p>
-<p><mathjax>$$\hat{y} = \arg \max_i \big[p(i_0 \mid \mathbf{x}), p(i_1 \mid \mathbf{x}) \big] = 1$$</mathjax></p>
+<p>$$p(i_0 \mid \mathbf{x}) = \frac{0.9 + 0.8 + 0.4}{3} = 0.7 \\\\
+p(i_1 \mid \mathbf{x}) = \frac{0.1 + 0.2 + 0.6}{3} = 0.3$$</p>
+<p>$$\hat{y} = \arg \max_i \big[p(i_0 \mid \mathbf{x}), p(i_1 \mid \mathbf{x}) \big] = 0$$</p>
+<p>However, assigning the weights {0.1, 0.1, 0.8} would yield a prediction $\hat{y} = 1$:</p>
+<p>$$p(i_0 \mid \mathbf{x}) = {0.1 \times 0.9 + 0.1 \times 0.8 + 0.8 \times  0.4} = 0.49 \\\\
+p(i_1 \mid \mathbf{x}) = {0.1 \times 0.1 + 0.2 \times 0.1 + 0.8 \times 0.6} = 0.51$$</p>
+<p>$$\hat{y} = \arg \max_i \big[p(i_0 \mid \mathbf{x}), p(i_1 \mid \mathbf{x}) \big] = 1$$</p>
 <h3 id="references">References</h3>
 <ul>
 <li>[1] S. Raschka. <a href="https://github.com/rasbt/python-machine-learning-book">Python Machine Learning</a>. Packt Publishing Ltd., 2015.</li>
 </ul>
-<h2 id="examples">Examples</h2>
-<h3 id="example-1-classifying-iris-flowers-using-different-classification-models">Example 1 -  Classifying Iris Flowers Using Different Classification Models</h3>
+<h1 id="examples">Examples</h1>
+<h2 id="example-1-classifying-iris-flowers-using-different-classification-models">Example 1 -  Classifying Iris Flowers Using Different Classification Models</h2>
 <pre><code class="python">from sklearn import datasets
 
 iris = datasets.load_iris()
 X, y = iris.data[:, 1:3], iris.target
 </code></pre>
 
-<pre><code class="python">from sklearn import cross_validation
+<pre><code class="python">from sklearn import model_selection
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB 
 from sklearn.ensemble import RandomForestClassifier
@@ -938,18 +949,14 @@ labels = ['Logistic Regression', 'Random Forest', 'Naive Bayes']
 
 for clf, label in zip([clf1, clf2, clf3], labels):
 
-    scores = cross_validation.cross_val_score(clf, X, y, 
+    scores = model_selection.cross_val_score(clf, X, y, 
                                               cv=5, 
                                               scoring='accuracy')
     print(&quot;Accuracy: %0.2f (+/- %0.2f) [%s]&quot;
           % (scores.mean(), scores.std(), label))
 </code></pre>
 
-<pre><code>/Users/Sebastian/miniconda3/lib/python3.5/site-packages/sklearn/cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
-  "This module will be removed in 0.20.", DeprecationWarning)
-
-
-5-fold cross validation:
+<pre><code>5-fold cross validation:
 
 Accuracy: 0.90 (+/- 0.05) [Logistic Regression]
 Accuracy: 0.93 (+/- 0.05) [Random Forest]
@@ -962,7 +969,7 @@ eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], weights=[1,1,1])
 labels = ['Logistic Regression', 'Random Forest', 'Naive Bayes', 'Ensemble']
 for clf, label in zip([clf1, clf2, clf3, eclf], labels):
 
-    scores = cross_validation.cross_val_score(clf, X, y, 
+    scores = model_selection.cross_val_score(clf, X, y, 
                                               cv=5, 
                                               scoring='accuracy')
     print(&quot;Accuracy: %0.2f (+/- %0.2f) [%s]&quot; 
@@ -996,14 +1003,35 @@ for clf, lab, grd in zip([clf1, clf2, clf3, eclf],
 </code></pre>
 
 <p><img alt="png" src="../EnsembleVoteClassifier_files/EnsembleVoteClassifier_25_0.png" /></p>
-<h3 id="example-2-grid-search">Example 2 - Grid Search</h3>
+<pre><code class="python">import matplotlib.pyplot as plt
+from mlxtend.plotting import plot_decision_regions
+import matplotlib.gridspec as gridspec
+import itertools
+
+gs = gridspec.GridSpec(2, 2)
+
+fig = plt.figure(figsize=(10,8))
+
+labels = ['Logistic Regression', 'Random Forest', 'Naive Bayes', 'Ensemble']
+for clf, lab, grd in zip([clf1, clf2, clf3, eclf],
+                         labels,
+                         itertools.product([0, 1], repeat=2)):
+
+    clf.fit(X, y)
+    ax = plt.subplot(gs[grd[0], grd[1]])
+    fig = plot_decision_regions(X=X, y=y, clf=clf)
+    plt.title(lab)
+</code></pre>
+
+<p><img alt="png" src="../EnsembleVoteClassifier_files/EnsembleVoteClassifier_26_0.png" /></p>
+<h2 id="example-2-grid-search">Example 2 - Grid Search</h2>
 <pre><code class="python">from sklearn import datasets
 
 iris = datasets.load_iris()
 X, y = iris.data[:, 1:3], iris.target
 </code></pre>
 
-<pre><code class="python">from sklearn.grid_search import GridSearchCV
+<pre><code class="python">from sklearn.model_selection import GridSearchCV
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB 
 from sklearn.ensemble import RandomForestClassifier
@@ -1020,19 +1048,19 @@ params = {'logisticregression__C': [1.0, 100.0],
 grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
 grid.fit(iris.data, iris.target)
 
-for params, mean_score, scores in grid.grid_scores_:
-    print(&quot;%0.3f (+/-%0.03f) for %r&quot;
-        % (mean_score, scores.std() / 2, params))
+cv_keys = ('mean_test_score', 'std_test_score', 'params')
+
+for r, _ in enumerate(grid.cv_results_['mean_test_score']):
+    print(&quot;%0.3f +/- %0.2f %r&quot;
+          % (grid.cv_results_[cv_keys[0]][r],
+             grid.cv_results_[cv_keys[1]][r] / 2.0,
+             grid.cv_results_[cv_keys[2]][r]))
 </code></pre>
 
-<pre><code>/Users/Sebastian/miniconda3/lib/python3.5/site-packages/sklearn/grid_search.py:43: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. This module will be removed in 0.20.
-  DeprecationWarning)
-
-
-0.953 (+/-0.013) for {'logisticregression__C': 1.0, 'randomforestclassifier__n_estimators': 20}
-0.960 (+/-0.012) for {'logisticregression__C': 1.0, 'randomforestclassifier__n_estimators': 200}
-0.960 (+/-0.012) for {'logisticregression__C': 100.0, 'randomforestclassifier__n_estimators': 20}
-0.953 (+/-0.017) for {'logisticregression__C': 100.0, 'randomforestclassifier__n_estimators': 200}
+<pre><code>0.953 +/- 0.01 {'logisticregression__C': 1.0, 'randomforestclassifier__n_estimators': 20}
+0.960 +/- 0.01 {'logisticregression__C': 1.0, 'randomforestclassifier__n_estimators': 200}
+0.960 +/- 0.01 {'logisticregression__C': 100.0, 'randomforestclassifier__n_estimators': 20}
+0.953 +/- 0.02 {'logisticregression__C': 100.0, 'randomforestclassifier__n_estimators': 200}
 </code></pre>
 <p><strong>Note</strong>: If the <code>EnsembleClassifier</code> is initialized with multiple similar estimator objects, the estimator names are modified with consecutive integer indices, for example:</p>
 <pre><code class="python">clf1 = LogisticRegression(random_state=1)
@@ -1048,7 +1076,7 @@ grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
 grid = grid.fit(iris.data, iris.target)
 </code></pre>
 
-<h3 id="example-3-majority-voting-with-classifiers-trained-on-different-feature-subsets">Example 3 - Majority voting with classifiers trained on different feature subsets</h3>
+<h2 id="example-3-majority-voting-with-classifiers-trained-on-different-feature-subsets">Example 3 - Majority voting with classifiers trained on different feature subsets</h2>
 <p>Feature selection algorithms implemented in scikit-learn as well as the <code>SequentialFeatureSelector</code> implement a <code>transform</code> method that passes the reduced feature subset to the next item in a <code>Pipeline</code>.</p>
 <p>For example, the method</p>
 <pre><code>def transform(self, X):
@@ -1061,7 +1089,7 @@ grid = grid.fit(iris.data, iris.target)
 iris = datasets.load_iris()
 X, y = iris.data[:, :], iris.target
 
-from sklearn.grid_search import GridSearchCV
+from sklearn.model_selection import GridSearchCV
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB 
 from sklearn.ensemble import RandomForestClassifier
@@ -1080,7 +1108,7 @@ sfs1 = SequentialFeatureSelector(clf1,
                                  forward=True, 
                                  floating=False, 
                                  scoring='accuracy',
-                                 print_progress=False,
+                                 verbose=0,
                                  cv=0)
 
 clf1_pipe = Pipeline([('sfs', sfs1),
@@ -1097,25 +1125,29 @@ params = {'pipeline__sfs__k_features': [1, 2, 3],
 grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
 grid.fit(iris.data, iris.target)
 
-for params, mean_score, scores in grid.grid_scores_:
-    print(&quot;%0.3f (+/-%0.03f) for %r&quot;
-        % (mean_score, scores.std() / 2, params))
+
+
+cv_keys = ('mean_test_score', 'std_test_score', 'params')
+
+for r, _ in enumerate(grid.cv_results_['mean_test_score']):
+    print(&quot;%0.3f +/- %0.2f %r&quot;
+          % (grid.cv_results_[cv_keys[0]][r],
+             grid.cv_results_[cv_keys[1]][r] / 2.0,
+             grid.cv_results_[cv_keys[2]][r]))
 </code></pre>
 
-<pre><code>Features: 3/3
-
-0.953 (+/-0.013) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 20}
-0.947 (+/-0.017) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 200}
-0.953 (+/-0.013) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 20}
-0.947 (+/-0.017) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 200}
-0.953 (+/-0.013) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 20}
-0.953 (+/-0.017) for {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 200}
-0.947 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 20}
-0.953 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 200}
-0.947 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 20}
-0.947 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 200}
-0.960 (+/-0.012) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 20}
-0.953 (+/-0.017) for {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 200}
+<pre><code>0.953 +/- 0.01 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 20}
+0.947 +/- 0.02 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 200}
+0.953 +/- 0.01 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 20}
+0.947 +/- 0.02 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 200}
+0.953 +/- 0.01 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 20}
+0.953 +/- 0.02 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 200}
+0.947 +/- 0.02 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 20}
+0.953 +/- 0.02 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 200}
+0.947 +/- 0.02 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 20}
+0.947 +/- 0.02 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 200}
+0.960 +/- 0.01 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 20}
+0.953 +/- 0.02 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 200}
 </code></pre>
 <p>The best parameters determined via GridSearch are:</p>
 <pre><code class="python">grid.best_params_
@@ -1130,12 +1162,7 @@ for params, mean_score, scores in grid.grid_scores_:
 eclf.fit(X, y).predict(X[[1, 51, 149]])
 </code></pre>
 
-<pre><code>Features: 3/3
-
-
-
-
-array([0, 1, 2])
+<pre><code>array([0, 1, 2])
 </code></pre>
 <h4 id="manual-approach">Manual Approach</h4>
 <p>Alternatively, we can select different columns "manually" using the <code>ColumnSelector</code> object. In this example, we select only the first (sepal length) and third (petal length) column for the logistic regression classifier (<code>clf1</code>).</p>

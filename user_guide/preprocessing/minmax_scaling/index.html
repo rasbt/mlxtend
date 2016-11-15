@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name="author" content="Sebastian Raschka"> 
     <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/minmax_scaling/"> 
-    <link rel="shortcut icon" href="../../../../../../favicon.ico">
+    <link rel="shortcut icon" href="../../../favicon.ico">
 
     <title>Minmax scaling - mlxtend</title>
 
@@ -851,7 +851,7 @@
 In this approach, the data is scaled to a fixed range - usually 0 to 1.
 The cost of having this bounded range - in contrast to standardization - is that we will end up with smaller standard deviations, which can suppress the effect of outliers.</p>
 <p>A Min-Max scaling is typically done via the following equation:</p>
-<p><mathjax>$$X_{sc} = \frac{X - X_{min}}{X_{max} - X_{min}}.$$</mathjax></p>
+<p>$$X_{sc} = \frac{X - X_{min}}{X_{max} - X_{min}}.$$</p>
 <p>One family of algorithms that is scale-invariant encompasses tree-based learning algorithms. Let's take the general CART decision tree algorithm. Without going into much depth regarding information gain and impurity measures, we can think of the decision as "is feature x_i &gt;= some_val?" Intuitively, we can see that it really doesn't matter on which scale this feature is (centimeters, Fahrenheit, a standardized scale -- it really doesn't matter).</p>
 <p>Some examples of algorithms where feature scaling matters are:</p>
 <ul>

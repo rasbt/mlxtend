@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name="author" content="Sebastian Raschka"> 
     <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/feature_extraction/RBFKernelPCA/"> 
-    <link rel="shortcut icon" href="../../../../../../favicon.ico">
+    <link rel="shortcut icon" href="../../../favicon.ico">
 
     <title>RBFKernelPCA - mlxtend</title>
 
@@ -893,50 +893,50 @@
 <p>The “classic” PCA approach described above is a linear projection technique that works well if the data is linearly separable. However, in the case of linearly inseparable data, a nonlinear technique is required if the task is to reduce the dimensionality of a dataset.</p>
 <p><img alt="" src="../RBFKernelPCA_files/linear_vs_nonlinear.png" /></p>
 <h3 id="kernel-functions-and-the-kernel-trick">Kernel functions and the kernel trick</h3>
-<p>The basic idea to deal with linearly inseparable data is to project it onto a higher dimensional space where it becomes linearly separable. Let us call this nonlinear mapping function <mathjax>$\phi$</mathjax> so that the mapping of a sample <mathjax>$\mathbf{x}$</mathjax> can be written as <mathjax>$\mathbf{x} \rightarrow \phi (\mathbf{x})$</mathjax>, which is called "kernel function."</p>
-<p>Now, the term "kernel" describes a function that calculates the dot product of the images of the samples <mathjax>$\mathbf{x}$</mathjax> under <mathjax>$\phi$</mathjax>.</p>
-<p><mathjax>$$\kappa(\mathbf{x_i, x_j}) =  \phi (\mathbf{x_i}) \phi (\mathbf{x_j})^T$$</mathjax></p>
+<p>The basic idea to deal with linearly inseparable data is to project it onto a higher dimensional space where it becomes linearly separable. Let us call this nonlinear mapping function $\phi$ so that the mapping of a sample $\mathbf{x}$ can be written as $\mathbf{x} \rightarrow \phi (\mathbf{x})$, which is called "kernel function."</p>
+<p>Now, the term "kernel" describes a function that calculates the dot product of the images of the samples $\mathbf{x}$ under $\phi$.</p>
+<p>$$\kappa(\mathbf{x_i, x_j}) =  \phi (\mathbf{x_i}) \phi (\mathbf{x_j})^T$$</p>
 <p>More details about the derivation of this equation are provided in this excellent review article by Quan Wang: <a href="http://arxiv.org/abs/1207.3538">Kernel Principal Component Analysis and its Applications in Face Recognition and Active Shape Models</a>.[<a href="#References">1</a>]</p>
-<p>In other words, the function <mathjax>$\phi$</mathjax> maps the original d-dimensional features into a larger, k-dimensional feature space by creating nononlinear combinations of the original features. For example, if <mathjax>$\mathbf{x}$</mathjax> consists of 2 features:</p>
-<p><mathjax>$$
+<p>In other words, the function $\phi$ maps the original d-dimensional features into a larger, k-dimensional feature space by creating nononlinear combinations of the original features. For example, if $\mathbf{x}$ consists of 2 features:</p>
+<p>$$
 \mathbf{x} = \big[x_1 \quad x_2\big]^T \quad \quad \mathbf{x} \in I\!R^d
-$$</mathjax></p>
-<p><mathjax>$$
+$$</p>
+<p>$$
 \Downarrow \phi
-$$</mathjax></p>
-<p><mathjax>$$
+$$</p>
+<p>$$
 \mathbf{x}' = \big[x_1 \quad x_2 \quad x_1 x_2 \quad x_{1}^2 \quad x_1 x_{2}^3 \quad \dots \big]^T \quad \quad \mathbf{x} \in I\!R^k (k &gt;&gt; d)
-$$</mathjax></p>
+$$</p>
 <p>Often, the mathematical definition of the RBF kernel is written and implemented as</p>
-<p><mathjax>$$
+<p>$$
 \kappa(\mathbf{x_i, x_j}) = exp\bigg(- \gamma \; \lVert\mathbf{x_i - x_j }\rVert^{2}_{2} \bigg)
-$$</mathjax></p>
-<p>where <mathjax>$\textstyle\gamma = \tfrac{1}{2\sigma^2}$</mathjax> is a free parameter that is to be optimized.</p>
+$$</p>
+<p>where $\textstyle\gamma = \tfrac{1}{2\sigma^2}$ is a free parameter that is to be optimized.</p>
 <h3 id="gaussian-radial-basis-function-rbf-kernel-pca">Gaussian radial basis function (RBF) Kernel PCA</h3>
 <p>In the linear PCA approach, we are interested in the principal components that maximize the variance in the dataset. This is done by extracting the eigenvectors (principle components) that correspond to the largest eigenvalues based on the covariance matrix:</p>
-<p><mathjax>$$\text{Cov} = \frac{1}{N} \sum_{i=1}^{N} \mathbf{x_i} \mathbf{x_i}^T$$</mathjax></p>
+<p>$$\text{Cov} = \frac{1}{N} \sum_{i=1}^{N} \mathbf{x_i} \mathbf{x_i}^T$$</p>
 <p>Bernhard Scholkopf (<a href="http://dl.acm.org/citation.cfm?id=299113">Kernel Principal Component Analysis</a> [<a href="#References">2</a>]) generalized this approach for data that was mapped onto the higher dimensional space via a kernel function:</p>
-<p><mathjax>$$\text{Cov} = \frac{1}{N} \sum_{i=1}^{N} \phi(\mathbf{x_i}) \phi(\mathbf{x_i})^T$$</mathjax></p>
+<p>$$\text{Cov} = \frac{1}{N} \sum_{i=1}^{N} \phi(\mathbf{x_i}) \phi(\mathbf{x_i})^T$$</p>
 <p>However, in practice the the covariance matrix in the higher dimensional space is not calculated explicitly (kernel trick). Therefore, the implementation of RBF kernel PCA does not yield the principal component axes (in contrast to the standard PCA), but the obtained eigenvectors can be understood as projections of the data onto the principal components.</p>
 <h3 id="rbf-kernel-pca-step-by-step">RBF kernel PCA step-by-step</h3>
 <h4 id="1-computation-of-the-kernel-similarity-matrix">1. Computation of the kernel (similarity) matrix.</h4>
 <p>In this first step, we need to calculate</p>
-<p><mathjax>$$\kappa(\mathbf{x_i, x_j}) = exp\bigg(- \gamma \; \lVert\mathbf{x_i - x_j }\rVert^{2}_{2} \bigg)$$</mathjax></p>
+<p>$$\kappa(\mathbf{x_i, x_j}) = exp\bigg(- \gamma \; \lVert\mathbf{x_i - x_j }\rVert^{2}_{2} \bigg)$$</p>
 <p>for every pair of points. E.g., if we have a dataset of 100 samples, this step would result in a symmetric 100x100 kernel matrix.</p>
 <h4 id="2-eigendecomposition-of-the-kernel-matrix">2. Eigendecomposition of the kernel matrix.</h4>
 <p>Since it is not guaranteed that the kernel matrix is centered, we can apply the following equation to do so:</p>
-<p><mathjax>$$K' = K - \mathbf{1_N} K - K \mathbf{1_N} + \mathbf{1_N} K \mathbf{1_N}$$</mathjax></p>
-<p>where <mathjax>$\mathbf{1_N}$</mathjax> is (like the kernel matrix) a <mathjax>$N\times N$</mathjax> matrix with all values equal to <mathjax>$\frac{1}{N}$</mathjax>. [<a href="#References">3</a>]</p>
+<p>$$K' = K - \mathbf{1_N} K - K \mathbf{1_N} + \mathbf{1_N} K \mathbf{1_N}$$</p>
+<p>where $\mathbf{1_N}$ is (like the kernel matrix) a $N\times N$ matrix with all values equal to $\frac{1}{N}$. [<a href="#References">3</a>]</p>
 <p>Now, we have to obtain the eigenvectors of the centered kernel matrix that correspond to the largest eigenvalues. Those eigenvectors are the data points already projected onto the respective principal components.</p>
 <h3 id="projecting-new-data">Projecting new data</h3>
 <p>So far, so good, in the sections above, we have been projecting an dataset onto a new feature subspace. However, in a real application, we are usually interested in mapping new data points onto the same new feature subspace (e.g., if are working with a training and a test dataset in pattern classification tasks).</p>
-<p>Remember, when we computed the eigenvectors <mathjax>$\mathbf{\alpha}$</mathjax> of the centered kernel matrix, those values were actually already the projected datapoints onto the principal component axis <mathjax>$\mathbf{g}$</mathjax>.</p>
-<p>If we want to project a new data point <mathjax>$\mathbf{x}$</mathjax> onto this principal component axis, we'd need to compute <mathjax>$\phi(\mathbf{x})^T  \mathbf{g}$</mathjax>.</p>
-<p>Fortunately, also here, we don't have to compute <mathjax>$\phi(\mathbf{x})^T  \mathbf{g}$</mathjax> explicitely but use the kernel trick to calculate the RBF kernel between the new data point and every data point <mathjax>$j$</mathjax> in the training dataset:</p>
-<p><mathjax>$$\phi(\mathbf{x})^T  \mathbf{g}  = \sum_j \alpha_{i} \; \phi(\mathbf{x}) \; \phi(\mathbf{x_j})^T$$</mathjax></p>
-<p><mathjax>$$=  \sum_j \alpha_{i} \; \kappa(\mathbf{x}, \mathbf{x_j})$$</mathjax></p>
-<p>and the eigenvectors <mathjax>$\alpha$</mathjax> and eigenvalues <mathjax>$\lambda$</mathjax> of the Kernel matrix <mathjax>$\mathbf{K}$</mathjax> satisfy the equation
-<mathjax>$\mathbf{K} \alpha = \lambda \alpha$</mathjax>, we just need to normalize the eigenvector by the corresponding eigenvalue.</p>
+<p>Remember, when we computed the eigenvectors $\mathbf{\alpha}$ of the centered kernel matrix, those values were actually already the projected datapoints onto the principal component axis $\mathbf{g}$.</p>
+<p>If we want to project a new data point $\mathbf{x}$ onto this principal component axis, we'd need to compute $\phi(\mathbf{x})^T  \mathbf{g}$.</p>
+<p>Fortunately, also here, we don't have to compute $\phi(\mathbf{x})^T  \mathbf{g}$ explicitely but use the kernel trick to calculate the RBF kernel between the new data point and every data point $j$ in the training dataset:</p>
+<p>$$\phi(\mathbf{x})^T  \mathbf{g}  = \sum_j \alpha_{i} \; \phi(\mathbf{x}) \; \phi(\mathbf{x_j})^T$$</p>
+<p>$$=  \sum_j \alpha_{i} \; \kappa(\mathbf{x}, \mathbf{x_j})$$</p>
+<p>and the eigenvectors $\alpha$ and eigenvalues $\lambda$ of the Kernel matrix $\mathbf{K}$ satisfy the equation
+$\mathbf{K} \alpha = \lambda \alpha$, we just need to normalize the eigenvector by the corresponding eigenvalue.</p>
 <h3 id="references">References</h3>
 <p>[1] Q. Wang. <a href="http://arxiv.org/abs/1207.3538">Kernel principal component analysis and its applications in face recognition and active shape models</a>. CoRR, abs/1207.3538, 2012.</p>
 <p>[2] B. Scholkopf, A. Smola, and K.-R. Muller. <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.128.7613">Kernel principal component analysis</a>. pages 583–588, 1997.</p>
@@ -978,8 +978,8 @@ plt.show()
 
 <p><img alt="png" src="../RBFKernelPCA_files/RBFKernelPCA_18_0.png" /></p>
 <p>As we can see, the resulting principal components do not yield a subspace where the data is linearly separated well. Note that PCA is a unsupervised method and does not “consider” class labels in order to maximize the variance in contrast to Linear Discriminant Analysis. Here, the colors blue and red are just added for visualization purposes to indicate the degree of separation.</p>
-<p>Next, we will perform dimensionality reduction via RBF kernel PCA on our half-moon data. The choice of <mathjax>$\gamma$</mathjax>
-depends on the dataset and can be obtained via hyperparameter tuning techniques like Grid Search. Hyperparameter tuning is a broad topic itself, and here I will just use a <mathjax>$\gamma$</mathjax>-value that I found to produce “good” results.</p>
+<p>Next, we will perform dimensionality reduction via RBF kernel PCA on our half-moon data. The choice of $\gamma$
+depends on the dataset and can be obtained via hyperparameter tuning techniques like Grid Search. Hyperparameter tuning is a broad topic itself, and here I will just use a $\gamma$-value that I found to produce “good” results.</p>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.preprocessing import standardize
 from mlxtend.feature_extraction import RBFKernelPCA as KPCA

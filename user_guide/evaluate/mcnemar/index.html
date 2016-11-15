@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name="author" content="Sebastian Raschka"> 
     <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/evaluate/mcnemar/"> 
-    <link rel="shortcut icon" href="../../../../../../favicon.ico">
+    <link rel="shortcut icon" href="../../../favicon.ico">
 
     <title>Mcnemar - mlxtend</title>
 
@@ -865,18 +865,18 @@
 <h2 id="overview">Overview</h2>
 <p>McNemar's Test [1] (sometimes also called "within-subjects chi-squared test") is a statistical test for paired nominal data. In context of machine learning (or statistical) models, we can use McNemar's Test to compare the predictive accuracy of two models. McNemar's test is based on a 2 times 2 contigency table of the two model's predictions.</p>
 <h3 id="mcnemars-test-statistic">McNemar's Test Statistic</h3>
-<p>In McNemar's Test, we formulate the null hypothesis that the probabilities <mathjax>$p(b)$</mathjax> and <mathjax>$p(c)$</mathjax> are the same, or in simplified terms: None of the two models performs better than the other. Thus, the alternative hypothesis is that the performances of the two models are not equal.</p>
+<p>In McNemar's Test, we formulate the null hypothesis that the probabilities $p(b)$ and $p(c)$ are the same, or in simplified terms: None of the two models performs better than the other. Thus, the alternative hypothesis is that the performances of the two models are not equal.</p>
 <p><img alt="" src="../mcnemar_table_files/mcnemar_contingency_table.png" /></p>
 <p>The McNemar test statistic ("chi-squared") can be computed as follows:</p>
-<p><mathjax>$$\chi^2 = \frac{(b - c)^2}{(b + c)},$$</mathjax></p>
-<p>If the sum of cell c and b is sufficiently large, the <mathjax>$\chi^2$</mathjax> value follows a chi-squared distribution with one degree of freedom. After setting a significance threshold, e.g,. <mathjax>$\alpha=0.05$</mathjax> we can compute the p-value -- assuming that the null hypothesis is true, the p-value is the probability of observing this empirical (or a larger) chi-squared value. If the p-value is lower than our chosen significance level, we can reject the null hypothesis that the two model's performances are equal.</p>
+<p>$$\chi^2 = \frac{(b - c)^2}{(b + c)},$$</p>
+<p>If the sum of cell c and b is sufficiently large, the $\chi^2$ value follows a chi-squared distribution with one degree of freedom. After setting a significance threshold, e.g,. $\alpha=0.05$ we can compute the p-value -- assuming that the null hypothesis is true, the p-value is the probability of observing this empirical (or a larger) chi-squared value. If the p-value is lower than our chosen significance level, we can reject the null hypothesis that the two model's performances are equal.</p>
 <h3 id="continuity-correction">Continuity Correction</h3>
 <p>Approximately 1 year after Quinn McNemar published the McNemar Test [1], Edwards [2] proposed a continuity corrected version, which is the more commonly used variant today:</p>
-<p><mathjax>$$\chi^2 = \frac{( \mid b - c \mid - 1)^2}{(b + c)}.$$</mathjax></p>
+<p>$$\chi^2 = \frac{( \mid b - c \mid - 1)^2}{(b + c)}.$$</p>
 <h3 id="exact-p-values">Exact p-values</h3>
-<p>As mentioned earlier, an exact binomial test is recommended for small sample sizes (<mathjax>$b + c &lt; 25$</mathjax> [3]), since the chi-squared value is may not be well-approximated by the chi-squared distribution. The exact p-value can be computed as follows:</p>
-<p><mathjax>$$p = 2 \sum^{n}_{i=b} \binom{n}{i} 0.5^i (1 - 0.5)^{n-i},$$</mathjax></p>
-<p>where <mathjax>$n = b + c$</mathjax>, and the factor <mathjax>$2$</mathjax> is used to compute the two-sided p-value.</p>
+<p>As mentioned earlier, an exact binomial test is recommended for small sample sizes ($b + c &lt; 25$ [3]), since the chi-squared value is may not be well-approximated by the chi-squared distribution. The exact p-value can be computed as follows:</p>
+<p>$$p = 2 \sum^{n}_{i=b} \binom{n}{i} 0.5^i (1 - 0.5)^{n-i},$$</p>
+<p>where $n = b + c$, and the factor $2$ is used to compute the two-sided p-value.</p>
 <h3 id="example">Example</h3>
 <p>For instance, given that 2 models have a accuracy of with a 99.7% and 99.6% a 2x2 contigency table can provide further insights for model selection.</p>
 <p><img alt="" src="../mcnemar_table_files/mcnemar_contingency_table_ex1.png" /></p>
@@ -928,7 +928,7 @@ tb_b = np.array([[9945, 25],
                  [15, 15]])
 </code></pre>
 
-<p>To test the null hypothesis that the predictive performance of two models are equal (using a significance level of <mathjax>$\alpha=0.05$</mathjax>), we can conduct a corrected McNemar Test for computing the chi-squared and p-value as follows:</p>
+<p>To test the null hypothesis that the predictive performance of two models are equal (using a significance level of $\alpha=0.05$), we can conduct a corrected McNemar Test for computing the chi-squared and p-value as follows:</p>
 <pre><code class="python">from mlxtend.evaluate import mcnemar
 
 chi2, p = mcnemar(ary=tb_b, corrected=True)
@@ -939,7 +939,7 @@ print('p-value:', p)
 <pre><code>chi-squared: 2.025
 p-value: 0.154728923485
 </code></pre>
-<p>Since the p-value is larger than our assumed significance threshold (<mathjax>$\alpha=0.05$</mathjax>), we cannot reject our null hypothesis and assume that there is no significant difference between the two predictive models.</p>
+<p>Since the p-value is larger than our assumed significance threshold ($\alpha=0.05$), we cannot reject our null hypothesis and assume that there is no significant difference between the two predictive models.</p>
 <h2 id="example-3-mcnemars-test-for-scenario-a">Example 3 - McNemar's Test for Scenario A</h2>
 <p>In contrast to scenario B (Example 2), the sample size in scenario A is relatively small (b + c = 11  + 1 = 12) and smaller than the recommended 25 [3] to approximate the computed chi-square value by the chi-square distribution well.</p>
 <p><img alt="" src="../mcnemar_files/mcnemar_scenario_a.png" /></p>
@@ -959,7 +959,7 @@ print('p-value:', p)
 <pre><code>chi-squared: None
 p-value: 0.005859375
 </code></pre>
-<p>Assuming that we conducted this test also with a significance level of <mathjax>$\alpha=0.05$</mathjax>, we can reject the null-hypothesis that both models perform equally well on this dataset, since the p-value (<mathjax>$p \approx 0.006$</mathjax>) is smaller than <mathjax>$\alpha$</mathjax>.</p>
+<p>Assuming that we conducted this test also with a significance level of $\alpha=0.05$, we can reject the null-hypothesis that both models perform equally well on this dataset, since the p-value ($p \approx 0.006$) is smaller than $\alpha$.</p>
 <h2 id="api">API</h2>
 <p><em>mcnemar(ary, corrected=True, exact=False)</em></p>
 <p>McNemar test for paired nominal data</p>

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name="author" content="Sebastian Raschka"> 
     <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/feature_selection/SequentialFeatureSelector/"> 
-    <link rel="shortcut icon" href="../../../../../../favicon.ico">
+    <link rel="shortcut icon" href="../../../favicon.ico">
 
     <title>SequentialFeatureSelector - mlxtend</title>
 
@@ -890,125 +890,125 @@
 <hr />
 <p>The SFAs  are outlined in pseudo code below:</p>
 <h3 id="sequential-forward-selection-sfs">Sequential Forward Selection (SFS)</h3>
-<p><strong>Input:</strong> <mathjax>$Y = \{y_1, y_2, ..., y_d\}$</mathjax>  </p>
+<p><strong>Input:</strong> $Y = \{y_1, y_2, ..., y_d\}$  </p>
 <ul>
-<li>The <strong><em>SFS</em></strong> algorithm takes the whole <mathjax>$d$</mathjax>-dimensional feature set as input.</li>
+<li>The <strong><em>SFS</em></strong> algorithm takes the whole $d$-dimensional feature set as input.</li>
 </ul>
-<p><strong>Output:</strong> <mathjax>$X_k = \{x_j \; | \;j = 1, 2, ..., k; \; x_j \in Y\}$</mathjax>, where <mathjax>$k = (0, 1, 2, ..., d)$</mathjax></p>
+<p><strong>Output:</strong> $X_k = \{x_j \; | \;j = 1, 2, ..., k; \; x_j \in Y\}$, where $k = (0, 1, 2, ..., d)$</p>
 <ul>
-<li>SFS returns a subset of features; the number of selected features <mathjax>$k$</mathjax>, where <mathjax>$k &lt; d$</mathjax>, has to be specified <em>a priori</em>.</li>
+<li>SFS returns a subset of features; the number of selected features $k$, where $k &lt; d$, has to be specified <em>a priori</em>.</li>
 </ul>
-<p><strong>Initialization:</strong> <mathjax>$X_0 = \emptyset$</mathjax>, <mathjax>$k = 0$</mathjax></p>
+<p><strong>Initialization:</strong> $X_0 = \emptyset$, $k = 0$</p>
 <ul>
-<li>We initialize the algorithm with an empty set <mathjax>$\emptyset$</mathjax> ("null set") so that <mathjax>$k = 0$</mathjax> (where <mathjax>$k$</mathjax> is the size of the subset).</li>
+<li>We initialize the algorithm with an empty set $\emptyset$ ("null set") so that $k = 0$ (where $k$ is the size of the subset).</li>
 </ul>
 <p><strong>Step 1 (Inclusion):</strong>  </p>
-<p><mathjax>$x^+ = \text{ arg max } J(x_k + x), \text{ where }  x \in Y - X_k$</mathjax><br />
-<mathjax>$X_k+1 = X_k + x^+$</mathjax><br />
-<mathjax>$k = k + 1$</mathjax>  <br />
+<p>$x^+ = \text{ arg max } J(x_k + x), \text{ where }  x \in Y - X_k$<br />
+  $X_k+1 = X_k + x^+$<br />
+  $k = k + 1$  <br />
 <em>Go to Step 1</em> </p>
 <ul>
-<li>in this step, we add an additional feature, <mathjax>$x^+$</mathjax>, to our feature subset <mathjax>$X_k$</mathjax>.</li>
-<li><mathjax>$x^+$</mathjax> is the feature that maximizes our criterion function, that is, the feature that is associated with the best classifier performance if it is added to <mathjax>$X_k$</mathjax>.</li>
+<li>in this step, we add an additional feature, $x^+$, to our feature subset $X_k$.</li>
+<li>$x^+$ is the feature that maximizes our criterion function, that is, the feature that is associated with the best classifier performance if it is added to $X_k$.</li>
 <li>We repeat this procedure until the termination criterion is satisfied.</li>
 </ul>
-<p><strong>Termination:</strong> <mathjax>$k = p$</mathjax></p>
+<p><strong>Termination:</strong> $k = p$</p>
 <ul>
-<li>We add features from the feature subset <mathjax>$X_k$</mathjax> until the feature subset of size <mathjax>$k$</mathjax> contains the number of desired features <mathjax>$p$</mathjax> that we specified <em>a priori</em>.</li>
+<li>We add features from the feature subset $X_k$ until the feature subset of size $k$ contains the number of desired features $p$ that we specified <em>a priori</em>.</li>
 </ul>
 <h3 id="sequential-floating-backward-sbs">Sequential Floating Backward (SBS)</h3>
-<p><strong>Input:</strong> the set of all features, <mathjax>$Y = \{y_1, y_2, ..., y_d\}$</mathjax>  </p>
+<p><strong>Input:</strong> the set of all features, $Y = \{y_1, y_2, ..., y_d\}$  </p>
 <ul>
 <li>The SBS algorithm takes the whole feature set as input.</li>
 </ul>
-<p><strong>Output:</strong> <mathjax>$X_k = \{x_j \; | \;j = 1, 2, ..., k; \; x_j \in Y\}$</mathjax>, where <mathjax>$k = (0, 1, 2, ..., d)$</mathjax></p>
+<p><strong>Output:</strong> $X_k = \{x_j \; | \;j = 1, 2, ..., k; \; x_j \in Y\}$, where $k = (0, 1, 2, ..., d)$</p>
 <ul>
-<li>SBS returns a subset of features; the number of selected features <mathjax>$k$</mathjax>, where <mathjax>$k &lt; d$</mathjax>, has to be specified <em>a priori</em>.</li>
+<li>SBS returns a subset of features; the number of selected features $k$, where $k &lt; d$, has to be specified <em>a priori</em>.</li>
 </ul>
-<p><strong>Initialization:</strong> <mathjax>$X_0 = Y$</mathjax>, <mathjax>$k = d$</mathjax></p>
+<p><strong>Initialization:</strong> $X_0 = Y$, $k = d$</p>
 <ul>
-<li>We initialize the algorithm with the given feature set so that the <mathjax>$k = d$</mathjax>.</li>
+<li>We initialize the algorithm with the given feature set so that the $k = d$.</li>
 </ul>
 <p><strong>Step 1 (Exclusion):</strong>  </p>
-<p><mathjax>$x^- = \text{ arg max } J(x_k - x), \text{  where } x \in X_k$</mathjax><br />
-<mathjax>$X_k-1 = X_k - x^-$</mathjax><br />
-<mathjax>$k = k - 1$</mathjax><br />
+<p>$x^- = \text{ arg max } J(x_k - x), \text{  where } x \in X_k$<br />
+$X_k-1 = X_k - x^-$<br />
+$k = k - 1$<br />
 <em>Go to Step 1</em>  </p>
 <ul>
-<li>In this step, we remove a feature, <mathjax>$x^-$</mathjax> from our feature subset <mathjax>$X_k$</mathjax>.</li>
-<li><mathjax>$x^-$</mathjax> is the feature that maximizes our criterion function upon re,oval, that is, the feature that is associated with the best classifier performance if it is removed from <mathjax>$X_k$</mathjax>.</li>
+<li>In this step, we remove a feature, $x^-$ from our feature subset $X_k$.</li>
+<li>$x^-$ is the feature that maximizes our criterion function upon re,oval, that is, the feature that is associated with the best classifier performance if it is removed from $X_k$.</li>
 <li>We repeat this procedure until the termination criterion is satisfied.</li>
 </ul>
-<p><strong>Termination:</strong> <mathjax>$k = p$</mathjax></p>
+<p><strong>Termination:</strong> $k = p$</p>
 <ul>
-<li>We add features from the feature subset <mathjax>$X_k$</mathjax> until the feature subset of size <mathjax>$k$</mathjax> contains the number of desired features <mathjax>$p$</mathjax> that we specified <em>a priori</em>.</li>
+<li>We add features from the feature subset $X_k$ until the feature subset of size $k$ contains the number of desired features $p$ that we specified <em>a priori</em>.</li>
 </ul>
 <h3 id="sequential-floating-backward-selection-sfbs">Sequential Floating Backward Selection (SFBS)</h3>
-<p><strong>Input:</strong> the set of all features, <mathjax>$Y = \{y_1, y_2, ..., y_d\}$</mathjax>  </p>
+<p><strong>Input:</strong> the set of all features, $Y = \{y_1, y_2, ..., y_d\}$  </p>
 <ul>
 <li>The SFBS algorithm takes the whole feature set as input.</li>
 </ul>
-<p><strong>Output:</strong> <mathjax>$X_k = \{x_j \; | \;j = 1, 2, ..., k; \; x_j \in Y\}$</mathjax>, where <mathjax>$k = (0, 1, 2, ..., d)$</mathjax></p>
+<p><strong>Output:</strong> $X_k = \{x_j \; | \;j = 1, 2, ..., k; \; x_j \in Y\}$, where $k = (0, 1, 2, ..., d)$</p>
 <ul>
-<li>SFBS returns a subset of features; the number of selected features <mathjax>$k$</mathjax>, where <mathjax>$k &lt; d$</mathjax>, has to be specified <em>a priori</em>.</li>
+<li>SFBS returns a subset of features; the number of selected features $k$, where $k &lt; d$, has to be specified <em>a priori</em>.</li>
 </ul>
-<p><strong>Initialization:</strong> <mathjax>$X_0 = Y$</mathjax>, <mathjax>$k = d$</mathjax></p>
+<p><strong>Initialization:</strong> $X_0 = Y$, $k = d$</p>
 <ul>
-<li>We initialize the algorithm with the given feature set so that the <mathjax>$k = d$</mathjax>.</li>
+<li>We initialize the algorithm with the given feature set so that the $k = d$.</li>
 </ul>
 <p><strong>Step 1 (Exclusion):</strong>  </p>
-<p><mathjax>$x^- = \text{ arg max } J(x_k - x), \text{  where } x \in X_k$</mathjax><br />
-<mathjax>$X_k-1 = X_k - x^-$</mathjax><br />
-<mathjax>$k = k - 1$</mathjax><br />
+<p>$x^- = \text{ arg max } J(x_k - x), \text{  where } x \in X_k$<br />
+$X_k-1 = X_k - x^-$<br />
+$k = k - 1$<br />
 <em>Go to Step 2</em>  </p>
 <ul>
-<li>In this step, we remove a feature, <mathjax>$x^-$</mathjax> from our feature subset <mathjax>$X_k$</mathjax>.</li>
-<li><mathjax>$x^-$</mathjax> is the feature that maximizes our criterion function upon re,oval, that is, the feature that is associated with the best classifier performance if it is removed from <mathjax>$X_k$</mathjax>.</li>
+<li>In this step, we remove a feature, $x^-$ from our feature subset $X_k$.</li>
+<li>$x^-$ is the feature that maximizes our criterion function upon re,oval, that is, the feature that is associated with the best classifier performance if it is removed from $X_k$.</li>
 </ul>
 <p><strong>Step 2 (Conditional Inclusion):</strong><br />
 <br>
-<mathjax>$x^+ = \text{ arg max } J(x_k + x), \text{ where } x \in Y - X_k$</mathjax><br />
+$x^+ = \text{ arg max } J(x_k + x), \text{ where } x \in Y - X_k$<br />
 <em>if J(x_k + x) &gt; J(x_k + x)</em>:  <br />
-&nbsp;&nbsp;&nbsp;&nbsp; <mathjax>$X_k+1 = X_k + x^+$</mathjax><br />
-&nbsp;&nbsp;&nbsp;&nbsp; <mathjax>$k = k + 1$</mathjax><br />
+&nbsp;&nbsp;&nbsp;&nbsp; $X_k+1 = X_k + x^+$<br />
+&nbsp;&nbsp;&nbsp;&nbsp; $k = k + 1$<br />
 <em>Go to Step 1</em>  </p>
 <ul>
-<li>In Step 2, we search for features that improve the classifier performance if they are added back to the feature subset. If such features exist, we add the feature <mathjax>$x^+$</mathjax> for which the performance improvement is max.</li>
+<li>In Step 2, we search for features that improve the classifier performance if they are added back to the feature subset. If such features exist, we add the feature $x^+$ for which the performance improvement is max.</li>
 <li>Steps 1 and 2 are repeated until the <strong>Termination</strong> criterion is reached.</li>
 </ul>
-<p><strong>Termination:</strong> <mathjax>$k = p$</mathjax></p>
+<p><strong>Termination:</strong> $k = p$</p>
 <ul>
-<li>We add features from the feature subset <mathjax>$X_k$</mathjax> until the feature subset of size <mathjax>$k$</mathjax> contains the number of desired features <mathjax>$p$</mathjax> that we specified <em>a priori</em>.</li>
+<li>We add features from the feature subset $X_k$ until the feature subset of size $k$ contains the number of desired features $p$ that we specified <em>a priori</em>.</li>
 </ul>
 <h3 id="sequential-floating-forward-selection-sffs">Sequential Floating Forward Selection (SFFS)</h3>
-<p><strong>Input:</strong> the set of all features, <mathjax>$Y = \{y_1, y_2, ..., y_d\}$</mathjax>  </p>
+<p><strong>Input:</strong> the set of all features, $Y = \{y_1, y_2, ..., y_d\}$  </p>
 <ul>
 <li>The <strong><em>SFFS</em></strong> algorithm takes the whole feature set as input, if our feature space consists of, e.g. 10, if our feature space consists of 10 dimensions (<strong><em>d = 10</em></strong>).
 <br><br></li>
 </ul>
-<p><strong>Output:</strong> a subset of features, <mathjax>$X_k = \{x_j \; | \;j = 1, 2, ..., k; \; x_j \in Y\}$</mathjax>, where <mathjax>$k = (0, 1, 2, ..., d)$</mathjax></p>
+<p><strong>Output:</strong> a subset of features, $X_k = \{x_j \; | \;j = 1, 2, ..., k; \; x_j \in Y\}$, where $k = (0, 1, 2, ..., d)$</p>
 <ul>
 <li>The returned output of the algorithm is a subset of the feature space of a specified size. E.g., a subset of 5 features from a 10-dimensional feature space (<strong><em>k = 5, d = 10</em></strong>).
 <br><br></li>
 </ul>
-<p><strong>Initialization:</strong> <mathjax>$X_0 = Y$</mathjax>, <mathjax>$k = d$</mathjax></p>
+<p><strong>Initialization:</strong> $X_0 = Y$, $k = d$</p>
 <ul>
 <li>We initialize the algorithm with an empty set ("null set") so that the <strong><em>k = 0</em></strong> (where <strong><em>k</em></strong> is the size of the subset)
 <br><br></li>
 </ul>
 <p><strong>Step 1 (Inclusion):</strong><br />
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp; <mathjax>$x^+ = \text{ arg max } J(x_k + x), \text{ where }  x \in Y - X_k$</mathjax><br />
-&nbsp;&nbsp;&nbsp;&nbsp; <mathjax>$X_k+1 = X_k + x^+$</mathjax><br />
-&nbsp;&nbsp;&nbsp;&nbsp; <mathjax>$k = k + 1$</mathjax>  <br />
+&nbsp;&nbsp;&nbsp;&nbsp; $x^+ = \text{ arg max } J(x_k + x), \text{ where }  x \in Y - X_k$<br />
+&nbsp;&nbsp;&nbsp;&nbsp; $X_k+1 = X_k + x^+$<br />
+&nbsp;&nbsp;&nbsp;&nbsp; $k = k + 1$  <br />
 &nbsp;&nbsp;&nbsp;&nbsp;<em>Go to Step 2</em><br />
 <br> <br>
 <strong>Step 2 (Conditional Exclusion):</strong><br />
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp; <mathjax>$x^- = \text{ arg max } J(x_k - x), \text{ where } x \in X_k$</mathjax><br />
-&nbsp;&nbsp;&nbsp;&nbsp;<mathjax>$if \; J(x_k - x) &gt; J(x_k - x)$</mathjax>:  <br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <mathjax>$X_k-1 = X_k - x^- $</mathjax><br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <mathjax>$k = k - 1$</mathjax>  <br />
+&nbsp;&nbsp;&nbsp;&nbsp; $x^- = \text{ arg max } J(x_k - x), \text{ where } x \in X_k$<br />
+&nbsp;&nbsp;&nbsp;&nbsp;$if \; J(x_k - x) &gt; J(x_k - x)$:  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $X_k-1 = X_k - x^- $<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $k = k - 1$  <br />
 &nbsp;&nbsp;&nbsp;&nbsp;<em>Go to Step 1</em>  </p>
 <ul>
 <li>In step 1, we include the feature from the <strong><em>feature space</em></strong> that leads to the best performance increase for our <strong><em>feature subset</em></strong> (assessed by the <strong><em>criterion function</em></strong>). Then, we go over to step 2</li>

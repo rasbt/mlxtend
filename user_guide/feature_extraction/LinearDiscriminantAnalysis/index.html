@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name="author" content="Sebastian Raschka"> 
     <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/feature_extraction/LinearDiscriminantAnalysis/"> 
-    <link rel="shortcut icon" href="../../../../../../favicon.ico">
+    <link rel="shortcut icon" href="../../../favicon.ico">
 
     <title>LinearDiscriminantAnalysis - mlxtend</title>
 
@@ -861,16 +861,16 @@
 The goal is to project a dataset onto a lower-dimensional space with good class-separability in order avoid overfitting ("curse of dimensionality") and also reduce computational costs.</p>
 <p>Ronald A. Fisher formulated the <em>Linear Discriminant</em> in 1936 (<a href="http://onlinelibrary.wiley.com/doi/10.1111/j.1469-1809.1936.tb02137.x/abstract">The Use of Multiple  Measurements in Taxonomic Problems</a>), and it also has some practical uses as classifier. The original Linear discriminant was described for a 2-class problem, and it was then later generalized as "multi-class Linear Discriminant Analysis" or "Multiple Discriminant Analysis" by C. R. Rao in 1948 (<a href="http://www.jstor.org/stable/2983775">The utilization of multiple measurements in problems of biological classification</a>)</p>
 <p><strong>The general LDA approach is very similar to a Principal Component Analysis, but in addition to finding the component axes that maximize the variance of our data (PCA), we are additionally interested in the axes that maximize the separation between multiple classes (LDA).</strong></p>
-<p>So, in a nutshell, often the goal of an LDA is to project a feature space (a dataset n-dimensional samples) onto a smaller subspace <mathjax>$k$</mathjax> (where <mathjax>$k \leq n-1$</mathjax>) while maintaining the class-discriminatory information. <br />
+<p>So, in a nutshell, often the goal of an LDA is to project a feature space (a dataset n-dimensional samples) onto a smaller subspace $k$ (where $k \leq n-1$) while maintaining the class-discriminatory information. <br />
 In general, dimensionality reduction does not only help reducing computational costs for a given classification task, but it can also be helpful to avoid overfitting by minimizing the error in parameter estimation ("curse of dimensionality").</p>
 <h4 id="summarizing-the-lda-approach-in-5-steps">Summarizing the LDA approach in 5 steps</h4>
 <p>Listed below are the 5 general steps for performing a linear discriminant analysis.</p>
 <ol>
-<li>Compute the <mathjax>$d$</mathjax>-dimensional mean vectors for the different classes from the dataset.</li>
+<li>Compute the $d$-dimensional mean vectors for the different classes from the dataset.</li>
 <li>Compute the scatter matrices (in-between-class and within-class scatter matrix).</li>
-<li>Compute the eigenvectors (<mathjax>$\mathbf{e_1}, \; \mathbf{e_2}, \; ..., \; \mathbf{e_d}$</mathjax>) and corresponding eigenvalues (<mathjax>$\mathbf{\lambda_1}, \; \mathbf{\lambda_2}, \; ..., \; \mathbf{\lambda_d}$</mathjax>) for the scatter matrices.</li>
-<li>Sort the eigenvectors by decreasing eigenvalues and choose <mathjax>$k$</mathjax> eigenvectors with the largest eigenvalues to form a <mathjax>$k \times d$</mathjax> dimensional matrix <mathjax>$\mathbf{W}$</mathjax> (where every column represents an eigenvector).</li>
-<li>Use this <mathjax>$k \times d$</mathjax> eigenvector matrix to transform the samples onto the new subspace. This can be summarized by the mathematical equation: <mathjax>$\mathbf{Y} = \mathbf{X} \times \mathbf{W}$</mathjax> (where <mathjax>$\mathbf{X}$</mathjax> is a <mathjax>$n \times d$</mathjax>-dimensional matrix representing the <mathjax>$n$</mathjax> samples, and <mathjax>$\mathbf{y}$</mathjax> are the transformed <mathjax>$n \times k$</mathjax>-dimensional samples in the new subspace).</li>
+<li>Compute the eigenvectors ($\mathbf{e_1}, \; \mathbf{e_2}, \; ..., \; \mathbf{e_d}$) and corresponding eigenvalues ($\mathbf{\lambda_1}, \; \mathbf{\lambda_2}, \; ..., \; \mathbf{\lambda_d}$) for the scatter matrices.</li>
+<li>Sort the eigenvectors by decreasing eigenvalues and choose $k$ eigenvectors with the largest eigenvalues to form a $k \times d$ dimensional matrix $\mathbf{W}$ (where every column represents an eigenvector).</li>
+<li>Use this $k \times d$ eigenvector matrix to transform the samples onto the new subspace. This can be summarized by the mathematical equation: $\mathbf{Y} = \mathbf{X} \times \mathbf{W}$ (where $\mathbf{X}$ is a $n \times d$-dimensional matrix representing the $n$ samples, and $\mathbf{y}$ are the transformed $n \times k$-dimensional samples in the new subspace).</li>
 </ol>
 <h3 id="references">References</h3>
 <ul>

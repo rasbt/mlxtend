@@ -29,7 +29,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         Invoking the `fit` method on the `VotingClassifier` will fit clones
         of those original classifiers that will
         be stored in the class attribute
-        `self.clfs_`.
+        `self.clfs_` if `refit=True` (default).
     voting : str, {'hard', 'soft'} (default='hard')
         If 'hard', uses predicted class labels for majority rule voting.
         Else if 'soft', predicts the class label based on the argmax of
@@ -46,6 +46,14 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         - `verbose=2`: Prints info about the parameters of the clf being fitted
         - `verbose>2`: Changes `verbose` param of the underlying clf to
            self.verbose - 2
+    refit : bool (default: True)
+        Refits classifiers in `clfs` if True; uses references to the `clfs`,
+        otherwise (assumes that the classifiers were already fit).
+        Note: refit=False is incompatible to mist scikit-learn wrappers!
+        For instance, if any form of cross-validation is performed
+        this would require the re-fitting classifiers to training folds, which
+        would raise a NotFitterError if refit=False.
+        (New in mlxtend v0.6.)
 
     Attributes
     ----------
@@ -84,13 +92,15 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     [1 1 1 2 2 2]
     >>>
     """
-    def __init__(self, clfs, voting='hard', weights=None, verbose=0):
+    def __init__(self, clfs, voting='hard',
+                 weights=None, verbose=0, refit=True):
 
         self.clfs = clfs
         self.named_clfs = {key: value for key, value in _name_estimators(clfs)}
         self.voting = voting
         self.weights = weights
         self.verbose = verbose
+        self.refit = refit
 
     def fit(self, X, y):
         """Learn weight coefficients from training data for each classifier.
@@ -125,26 +135,32 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.le_ = LabelEncoder()
         self.le_.fit(y)
         self.classes_ = self.le_.classes_
-        self.clfs_ = [clone(clf) for clf in self.clfs]
 
-        if self.verbose > 0:
-            print("Fitting %d classifiers..." % (len(self.clfs)))
+        if not self.refit:
+            self.clfs_ = [clf for clf in self.clfs]
 
-        for clf in self.clfs_:
+        else:
+            self.clfs_ = [clone(clf) for clf in self.clfs]
 
             if self.verbose > 0:
-                i = self.clfs_.index(clf) + 1
-                print("Fitting clf%d: %s (%d/%d)" %
-                      (i, _name_estimators((clf,))[0][0], i, len(self.clfs_)))
+                print("Fitting %d classifiers..." % (len(self.clfs)))
 
-            if self.verbose > 2:
-                if hasattr(clf, 'verbose'):
-                    clf.set_params(verbose=self.verbose - 2)
+            for clf in self.clfs_:
 
-            if self.verbose > 1:
-                print(_name_estimators((clf,))[0][1])
+                if self.verbose > 0:
+                    i = self.clfs_.index(clf) + 1
+                    print("Fitting clf%d: %s (%d/%d)" %
+                          (i, _name_estimators((clf,))[0][0], i,
+                           len(self.clfs_)))
 
-            clf.fit(X, self.le_.transform(y))
+                if self.verbose > 2:
+                    if hasattr(clf, 'verbose'):
+                        clf.set_params(verbose=self.verbose - 2)
+
+                if self.verbose > 1:
+                    print(_name_estimators((clf,))[0][1])
+
+                clf.fit(X, self.le_.transform(y))
         return self
 
     def predict(self, X):

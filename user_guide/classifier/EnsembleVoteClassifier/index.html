@@ -858,6 +858,9 @@
                     <li><a href="#manual-approach">Manual Approach</a></li>
              -->
         
+            <li><a href="#example-5-using-pre-fitted-classifiers">Example 5 - Using Pre-fitted Classifiers</a></li>
+                <!--  -->
+        
             <li><a href="#api">API</a></li>
                 <!-- 
                     <li><a href="#methods">Methods</a></li>
@@ -1136,18 +1139,18 @@ for r, _ in enumerate(grid.cv_results_['mean_test_score']):
              grid.cv_results_[cv_keys[2]][r]))
 </code></pre>
 
-<pre><code>0.953 +/- 0.01 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 20}
-0.947 +/- 0.02 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 200}
-0.953 +/- 0.01 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 20}
-0.947 +/- 0.02 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 200}
-0.953 +/- 0.01 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 20}
-0.953 +/- 0.02 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 200}
-0.947 +/- 0.02 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 20}
-0.953 +/- 0.02 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 200}
-0.947 +/- 0.02 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 20}
-0.947 +/- 0.02 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 200}
-0.960 +/- 0.01 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 20}
-0.953 +/- 0.02 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 200}
+<pre><code>0.953 +/- 0.01 {'pipeline__sfs__k_features': 1, 'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 20}
+0.947 +/- 0.02 {'pipeline__sfs__k_features': 1, 'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 200}
+0.953 +/- 0.01 {'pipeline__sfs__k_features': 2, 'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 20}
+0.947 +/- 0.02 {'pipeline__sfs__k_features': 2, 'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 200}
+0.953 +/- 0.01 {'pipeline__sfs__k_features': 3, 'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 20}
+0.953 +/- 0.02 {'pipeline__sfs__k_features': 3, 'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 200}
+0.947 +/- 0.02 {'pipeline__sfs__k_features': 1, 'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 20}
+0.953 +/- 0.02 {'pipeline__sfs__k_features': 1, 'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 200}
+0.947 +/- 0.02 {'pipeline__sfs__k_features': 2, 'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 20}
+0.947 +/- 0.02 {'pipeline__sfs__k_features': 2, 'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 200}
+0.960 +/- 0.01 {'pipeline__sfs__k_features': 3, 'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 20}
+0.953 +/- 0.02 {'pipeline__sfs__k_features': 3, 'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 200}
 </code></pre>
 <p>The best parameters determined via GridSearch are:</p>
 <pre><code class="python">grid.best_params_
@@ -1187,7 +1190,7 @@ eclf.fit(X, y).predict(X[[1, 51, 149]])
                                  forward=True, 
                                  floating=False, 
                                  scoring='accuracy',
-                                 print_progress=True,
+                                 verbose=1,
                                  cv=0)
 
 sfs1.fit(X, y)
@@ -1211,8 +1214,45 @@ eclf.fit(X, y).predict(X[[1, 51, 149]])
 
 <pre><code>array([0, 1, 2])
 </code></pre>
+<h2 id="example-5-using-pre-fitted-classifiers">Example 5 - Using Pre-fitted Classifiers</h2>
+<pre><code class="python">from sklearn import datasets
+
+iris = datasets.load_iris()
+X, y = iris.data[:, 1:3], iris.target
+</code></pre>
+
+<p>Assume that we previously fitted our classifiers:</p>
+<pre><code class="python">from sklearn import model_selection
+from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import GaussianNB 
+from sklearn.ensemble import RandomForestClassifier
+import numpy as np
+
+clf1 = LogisticRegression(random_state=1)
+clf2 = RandomForestClassifier(random_state=1)
+clf3 = GaussianNB()
+
+for clf in (clf1, clf2, clf3):
+    clf.fit(X, y)
+</code></pre>
+
+<p>By setting <code>refit=False</code>, the <code>EnsembleVoteClassifier</code> will not re-fit these classifers to save computational time:</p>
+<pre><code class="python">from mlxtend.classifier import EnsembleVoteClassifier
+import copy
+eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], weights=[1,1,1], refit=False)
+
+labels = ['Logistic Regression', 'Random Forest', 'Naive Bayes', 'Ensemble']
+
+eclf.fit(X, y)
+
+print('accuracy:', np.mean(y == eclf.predict(X)))
+</code></pre>
+
+<pre><code>accuracy: 0.973333333333
+</code></pre>
+<p>However, please note that <code>refit=False</code> is incompatible to any form of cross-validation that is done in e.g., <code>model_selection.cross_val_score</code> or <code>model_selection.GridSearchCV</code>, etc., since it would require the classifiers to be refit to the training folds. Thus, only use <code>refit=False</code> if you want to make a prediction directly without cross-validation.</p>
 <h2 id="api">API</h2>
-<p><em>EnsembleVoteClassifier(clfs, voting='hard', weights=None, verbose=0)</em></p>
+<p><em>EnsembleVoteClassifier(clfs, voting='hard', weights=None, verbose=0, refit=True)</em></p>
 <p>Soft Voting/Majority Rule classifier for scikit-learn estimators.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1222,7 +1262,7 @@ eclf.fit(X, y).predict(X[[1, 51, 149]])
 Invoking the <code>fit</code> method on the <code>VotingClassifier</code> will fit clones
 of those original classifiers that will
 be stored in the class attribute
-<code>self.clfs_</code>.</p>
+<code>self.clfs_</code> if <code>refit=True</code> (default).</p>
 </li>
 <li>
 <p><code>voting</code> : str, {'hard', 'soft'} (default='hard')</p>
@@ -1245,6 +1285,16 @@ before averaging (<code>soft</code> voting). Uses uniform weights if <code>None<
 - <code>verbose=2</code>: Prints info about the parameters of the clf being fitted
 - <code>verbose&gt;2</code>: Changes <code>verbose</code> param of the underlying clf to
 self.verbose - 2</p>
+</li>
+<li>
+<p><code>refit</code> : bool (default: True)</p>
+<p>Refits classifiers in <code>clfs</code> if True; uses references to the <code>clfs</code>,
+otherwise (assumes that the classifiers were already fit).
+Note: refit=False is incompatible to mist scikit-learn wrappers!
+For instance, if any form of cross-validation is performed
+this would require the re-fitting classifiers to training folds, which
+would raise a NotFitterError if refit=False.
+(New in mlxtend v0.6.)</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>

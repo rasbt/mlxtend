@@ -880,7 +880,7 @@ iris = datasets.load_iris()
 X, y = iris.data[:, 1:3], iris.target
 </code></pre>
 
-<pre><code class="python">from sklearn import cross_validation
+<pre><code class="python">from sklearn import model_selection
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB 
@@ -903,17 +903,13 @@ for clf, label in zip([clf1, clf2, clf3, sclf],
                        'Naive Bayes',
                        'StackingClassifier']):
 
-    scores = cross_validation.cross_val_score(clf, X, y, 
+    scores = model_selection.cross_val_score(clf, X, y, 
                                               cv=3, scoring='accuracy')
     print(&quot;Accuracy: %0.2f (+/- %0.2f) [%s]&quot; 
           % (scores.mean(), scores.std(), label))
 </code></pre>
 
-<pre><code>/Users/Sebastian/miniconda3/lib/python3.5/site-packages/sklearn/cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
-  "This module will be removed in 0.20.", DeprecationWarning)
-
-
-3-fold cross validation:
+<pre><code>3-fold cross validation:
 
 Accuracy: 0.91 (+/- 0.01) [KNN]
 Accuracy: 0.91 (+/- 0.06) [Random Forest]
@@ -944,7 +940,7 @@ for clf, lab, grd in zip([clf1, clf2, clf3, sclf],
 
 <p><img alt="png" src="../StackingClassifier_files/StackingClassifier_14_0.png" /></p>
 <h2 id="example-2-using-probabilities-as-meta-features">Example 2 - Using Probabilities as Meta-Features</h2>
-<p>Alternatively, the class-probabilities of the first-level classifiers can be used to train the meta-classifier (2nd-level classifier) by setting <code>use_probas=True</code>. If <code>average_probas=False</code>, the probabilities of the level-1 classifiers are averaged, if <code>average_probas=False</code>, the probabilities are stacked (recommended). For example, in a 3-class setting with 2 level-1 classifiers, these classifiers may make the following "probability" predictions for 1 training sample:</p>
+<p>Alternatively, the class-probabilities of the first-level classifiers can be used to train the meta-classifier (2nd-level classifier) by setting <code>use_probas=True</code>. If <code>average_probas=True</code>, the probabilities of the level-1 classifiers are averaged, if <code>average_probas=False</code>, the probabilities are stacked (recommended). For example, in a 3-class setting with 2 level-1 classifiers, these classifiers may make the following "probability" predictions for 1 training sample:</p>
 <ul>
 <li>classifier 1: [0.2, 0.5, 0.3]</li>
 <li>classifier 2: [0.3, 0.4, 0.4]</li>
@@ -974,7 +970,7 @@ for clf, label in zip([clf1, clf2, clf3, sclf],
                        'Naive Bayes',
                        'StackingClassifier']):
 
-    scores = cross_validation.cross_val_score(clf, X, y, 
+    scores = model_selection.cross_val_score(clf, X, y, 
                                               cv=3, scoring='accuracy')
     print(&quot;Accuracy: %0.2f (+/- %0.2f) [%s]&quot; 
           % (scores.mean(), scores.std(), label))
@@ -993,7 +989,7 @@ Accuracy: 0.94 (+/- 0.03) [StackingClassifier]
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB 
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.grid_search import GridSearchCV
+from sklearn.model_selection import GridSearchCV
 from mlxtend.classifier import StackingClassifier
 
 # Initializing models
@@ -1015,26 +1011,31 @@ grid = GridSearchCV(estimator=sclf,
                     refit=True)
 grid.fit(X, y)
 
-for params, mean_score, scores in grid.grid_scores_:
-    print(&quot;%0.3f (+/-%0.03f) for %r&quot;
-        % (mean_score, scores.std() / 2.0, params))
+cv_keys = ('mean_test_score', 'std_test_score', 'params')
+
+for r, _ in enumerate(grid.cv_results_['mean_test_score']):
+    print(&quot;%0.3f +/- %0.2f %r&quot;
+          % (grid.cv_results_[cv_keys[0]][r],
+             grid.cv_results_[cv_keys[1]][r] / 2.0,
+             grid.cv_results_[cv_keys[2]][r]))
+
+print('Best parameters: %s' % grid.best_params_)
+print('Accuracy: %.2f' % grid.best_score_)
 </code></pre>
 
-<pre><code>/Users/Sebastian/miniconda3/lib/python3.5/site-packages/sklearn/grid_search.py:43: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. This module will be removed in 0.20.
-  DeprecationWarning)
-
-
-0.667 (+/-0.000) for {'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10}
-0.667 (+/-0.000) for {'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50}
-0.927 (+/-0.022) for {'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10}
-0.913 (+/-0.027) for {'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50}
-0.667 (+/-0.000) for {'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10}
-0.667 (+/-0.000) for {'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50}
-0.933 (+/-0.024) for {'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10}
-0.940 (+/-0.019) for {'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50}
+<pre><code>0.667 +/- 0.00 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.667 +/- 0.00 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.927 +/- 0.02 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.913 +/- 0.03 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+0.667 +/- 0.00 {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.667 +/- 0.00 {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.933 +/- 0.02 {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.940 +/- 0.02 {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+Best parameters: {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+Accuracy: 0.94
 </code></pre>
 <p>In case we are planning to use a regression algorithm multiple times, all we need to do is to add an additional number suffix in the parameter grid as shown below:</p>
-<pre><code class="python">from sklearn.grid_search import GridSearchCV
+<pre><code class="python">from sklearn.model_selection import GridSearchCV
 
 # Initializing models
 
@@ -1056,30 +1057,39 @@ grid = GridSearchCV(estimator=sclf,
                     refit=True)
 grid.fit(X, y)
 
-for params, mean_score, scores in grid.grid_scores_:
-    print(&quot;%0.3f (+/-%0.03f) for %r&quot;
-        % (mean_score, scores.std() / 2, params))
+cv_keys = ('mean_test_score', 'std_test_score', 'params')
+
+for r, _ in enumerate(grid.cv_results_['mean_test_score']):
+    print(&quot;%0.3f +/- %0.2f %r&quot;
+          % (grid.cv_results_[cv_keys[0]][r],
+             grid.cv_results_[cv_keys[1]][r] / 2.0,
+             grid.cv_results_[cv_keys[2]][r]))
+
+print('Best parameters: %s' % grid.best_params_)
+print('Accuracy: %.2f' % grid.best_score_)
 </code></pre>
 
-<pre><code>0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
-0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
-0.907 (+/-0.029) for {'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
-0.913 (+/-0.027) for {'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
-0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
-0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
-0.927 (+/-0.022) for {'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
-0.913 (+/-0.027) for {'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
-0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
-0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
-0.927 (+/-0.022) for {'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
-0.913 (+/-0.027) for {'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
-0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
-0.667 (+/-0.000) for {'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
-0.933 (+/-0.024) for {'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
-0.940 (+/-0.019) for {'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+<pre><code>0.667 +/- 0.00 {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 0.1}
+0.667 +/- 0.00 {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 0.1}
+0.907 +/- 0.03 {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 10.0}
+0.913 +/- 0.03 {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 10.0}
+0.667 +/- 0.00 {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 0.1}
+0.667 +/- 0.00 {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 0.1}
+0.927 +/- 0.02 {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 10.0}
+0.913 +/- 0.03 {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 10.0}
+0.667 +/- 0.00 {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 0.1}
+0.667 +/- 0.00 {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 0.1}
+0.927 +/- 0.02 {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 10.0}
+0.913 +/- 0.03 {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 10.0}
+0.667 +/- 0.00 {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 0.1}
+0.667 +/- 0.00 {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 0.1}
+0.933 +/- 0.02 {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 10.0}
+0.940 +/- 0.02 {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 10.0}
+Best parameters: {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 10.0}
+Accuracy: 0.94
 </code></pre>
 <h1 id="api">API</h1>
-<p><em>StackingClassifier(classifiers, meta_classifier, use_probas=False, average_probas=True, verbose=0)</em></p>
+<p><em>StackingClassifier(classifiers, meta_classifier, use_probas=False, average_probas=False, verbose=0)</em></p>
 <p>A Stacking classifier for scikit-learn estimators for classification.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1102,9 +1112,8 @@ classifiers</p>
 instead of class labels.</p>
 </li>
 <li>
-<p><code>average_probas</code> : bool (default: True)</p>
-<p><code>average_probas=True</code> is deprecated and will be changed to
-<code>average_probas=False</code> in v0.5.0.</p>
+<p><code>average_probas</code> : bool (default: False)</p>
+<p>Averages the probabilities as meta features if True.</p>
 </li>
 <li>
 <p><code>verbose</code> : int, optional (default=0)</p>

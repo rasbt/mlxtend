@@ -62,7 +62,7 @@ To install mlxtend, just execute
 pip install mlxtend  
 ```
 
-Alternatively, you download the package manually from the Python Package Index [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend), unzip it, navigate into the package, and use the command:
+Alternatively, you could download the package manually from the Python Package Index [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend), unzip it, navigate into the package, and use the command:
 
 ```bash
 python setup.py install
@@ -70,7 +70,7 @@ python setup.py install
 
 #### Dev Version
 
-The mlxtend version on PyPI may always one step behind; you can install the latest development version from the GitHub repository by executing
+The mlxtend version on PyPI may always be one step behind; you can install the latest development version from the GitHub repository by executing
 
 ```bash
 pip install git+git://github.com/rasbt/mlxtend.git#egg=mlxtend

@@ -34,6 +34,18 @@ def dict_compare_utility(d1, d2):
                                      " != d2[%s]['cv_scores']" % (i, i)))
 
 
+def test_run_default():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier()
+    sfs = SFS(estimator=knn,
+              k_features=1,
+              verbose=0)
+    sfs.fit(X, y)
+    assert sfs.k_feature_idx_ == (3, )
+
+
 def test_kfeatures_type_1():
     iris = load_iris()
     X = iris.data
@@ -42,6 +54,7 @@ def test_kfeatures_type_1():
     expect = ('k_features must be a positive integer between 1 and X.shape[1],'
               ' got 0')
     sfs = SFS(estimator=knn,
+              verbose=0,
               k_features=0)
     assert_raises(AttributeError,
                   expect,
@@ -57,6 +70,7 @@ def test_kfeatures_type_2():
     knn = KNeighborsClassifier()
     expect = 'k_features must be a positive integer or tuple'
     sfs = SFS(estimator=knn,
+              verbose=0,
               k_features='abc')
     assert_raises(AttributeError,
                   expect,
@@ -72,6 +86,7 @@ def test_kfeatures_type_3():
     knn = KNeighborsClassifier()
     expect = ('k_features tuple min value must be in range(1, X.shape[1]+1).')
     sfs = SFS(estimator=knn,
+              verbose=0,
               k_features=(0, 5))
     assert_raises(AttributeError,
                   expect,
@@ -87,6 +102,7 @@ def test_kfeatures_type_4():
     knn = KNeighborsClassifier()
     expect = ('k_features tuple max value must be in range(1, X.shape[1]+1).')
     sfs = SFS(estimator=knn,
+              verbose=0,
               k_features=(1, 5))
     assert_raises(AttributeError,
                   expect,
@@ -103,6 +119,7 @@ def test_kfeatures_type_5():
     expect = ('he min k_features value must be'
               ' larger than the max k_features value.')
     sfs = SFS(estimator=knn,
+              verbose=0,
               k_features=(3, 1))
     assert_raises(AttributeError,
                   expect,
@@ -363,8 +380,7 @@ def test_knn_scoring_metric():
                floating=True,
                scoring='f1_macro',
                cv=4,
-               skip_if_stuck=True,
-    )
+               skip_if_stuck=True)
     sfs7 = sfs7.fit(X, y)
     assert round(sfs7.k_score_, 4) == 0.9727, sfs7.k_score_
 

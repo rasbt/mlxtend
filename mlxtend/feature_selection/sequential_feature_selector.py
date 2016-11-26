@@ -102,7 +102,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
               'avg_score' (average cross-validation score)
 
     """
-    def __init__(self, estimator, k_features='best',
+    def __init__(self, estimator, k_features=1,
                  forward=True, floating=False,
                  verbose=1, scoring=None,
                  cv=5, skip_if_stuck=True, n_jobs=1,

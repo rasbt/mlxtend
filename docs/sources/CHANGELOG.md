@@ -23,7 +23,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Bug Fixes
 
-- -
+- Fixed wrong default value for `k_features` in `SequentialFeatureSelector`
 
 
 

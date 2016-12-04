@@ -842,9 +842,6 @@
             <li><a href="#references">References</a></li>
                 <!--  -->
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
             <li><a href="#example-1-classifying-iris-flowers-using-different-classification-models">Example 1 -  Classifying Iris Flowers Using Different Classification Models</a></li>
                 <!-- 
                     <li><a href="#plotting-decision-regions">Plotting Decision Regions</a></li>
@@ -861,10 +858,11 @@
             <li><a href="#example-5-using-pre-fitted-classifiers">Example 5 - Using Pre-fitted Classifiers</a></li>
                 <!--  -->
         
-            <li><a href="#api">API</a></li>
-                <!-- 
-                    <li><a href="#methods">Methods</a></li>
-             -->
+    
+        <li class="main "><a href="#api">API</a></li>
+        
+            <li><a href="#methods">Methods</a></li>
+                <!--  -->
         
     
     </ul>
@@ -928,7 +926,6 @@ p(i_1 \mid \mathbf{x}) = {0.1 \times 0.1 + 0.2 \times 0.1 + 0.8 \times 0.6} = 0.
 <ul>
 <li>[1] S. Raschka. <a href="https://github.com/rasbt/python-machine-learning-book">Python Machine Learning</a>. Packt Publishing Ltd., 2015.</li>
 </ul>
-<h1 id="examples">Examples</h1>
 <h2 id="example-1-classifying-iris-flowers-using-different-classification-models">Example 1 -  Classifying Iris Flowers Using Different Classification Models</h2>
 <pre><code class="python">from sklearn import datasets
 
@@ -1005,7 +1002,7 @@ for clf, lab, grd in zip([clf1, clf2, clf3, eclf],
     plt.title(lab)
 </code></pre>
 
-<p><img alt="png" src="../EnsembleVoteClassifier_files/EnsembleVoteClassifier_25_0.png" /></p>
+<p><img alt="png" src="../EnsembleVoteClassifier_files/EnsembleVoteClassifier_24_0.png" /></p>
 <pre><code class="python">import matplotlib.pyplot as plt
 from mlxtend.plotting import plot_decision_regions
 import matplotlib.gridspec as gridspec
@@ -1026,7 +1023,7 @@ for clf, lab, grd in zip([clf1, clf2, clf3, eclf],
     plt.title(lab)
 </code></pre>
 
-<p><img alt="png" src="../EnsembleVoteClassifier_files/EnsembleVoteClassifier_26_0.png" /></p>
+<p><img alt="png" src="../EnsembleVoteClassifier_files/EnsembleVoteClassifier_25_0.png" /></p>
 <h2 id="example-2-grid-search">Example 2 - Grid Search</h2>
 <pre><code class="python">from sklearn import datasets
 
@@ -1251,7 +1248,7 @@ print('accuracy:', np.mean(y == eclf.predict(X)))
 <pre><code>accuracy: 0.973333333333
 </code></pre>
 <p>However, please note that <code>refit=False</code> is incompatible to any form of cross-validation that is done in e.g., <code>model_selection.cross_val_score</code> or <code>model_selection.GridSearchCV</code>, etc., since it would require the classifiers to be refit to the training folds. Thus, only use <code>refit=False</code> if you want to make a prediction directly without cross-validation.</p>
-<h2 id="api">API</h2>
+<h1 id="api">API</h1>
 <p><em>EnsembleVoteClassifier(clfs, voting='hard', weights=None, verbose=0, refit=True)</em></p>
 <p>Soft Voting/Majority Rule classifier for scikit-learn estimators.</p>
 <p><strong>Parameters</strong></p>

@@ -832,9 +832,13 @@
                     <li><a href="#references">References</a></li>
              -->
         
-            <li><a href="#examples">Examples</a></li>
+            <li><a href="#example-1-three-blobs">Example 1 - Three Blobs</a></li>
                 <!-- 
-                    <li><a href="#example-1-three-blobs">Example 1 - Three Blobs</a></li>
+                    <li><a href="#load-some-sample-data">Load some sample data:</a></li>
+            
+                    <li><a href="#compute-the-cluster-centroids">Compute the cluster centroids:</a></li>
+            
+                    <li><a href="#visualize-the-cluster-memberships">Visualize the cluster memberships:</a></li>
              -->
         
             <li><a href="#api">API</a></li>
@@ -865,9 +869,8 @@
 <ul>
 <li>MacQueen, J. B. (1967). <a href="http://projecteuclid.org/euclid.bsmsp/1200512992">Some Methods for classification and Analysis of Multivariate Observations</a>. Proceedings of 5th Berkeley Symposium on Mathematical Statistics and Probability. University of California Press. pp. 281–297. MR 0214227. Zbl 0214.46201. Retrieved 2009-04-07.</li>
 </ul>
-<h2 id="examples">Examples</h2>
-<h3 id="example-1-three-blobs">Example 1 - Three Blobs</h3>
-<h4 id="load-some-sample-data">Load some sample data:</h4>
+<h2 id="example-1-three-blobs">Example 1 - Three Blobs</h2>
+<h3 id="load-some-sample-data">Load some sample data:</h3>
 <pre><code class="python">import matplotlib.pyplot as plt
 from mlxtend.data import three_blobs_data
 
@@ -876,8 +879,8 @@ plt.scatter(X[:, 0], X[:, 1], c='white')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../TfKmeans_files/TfKmeans_11_0.png" /></p>
-<h4 id="compute-the-cluster-centroids">Compute the cluster centroids:</h4>
+<p><img alt="png" src="../TfKmeans_files/TfKmeans_10_0.png" /></p>
+<h3 id="compute-the-cluster-centroids">Compute the cluster centroids:</h3>
 <pre><code class="python">from mlxtend.tf_cluster import TfKmeans
 
 km = TfKmeans(k=3, 
@@ -899,7 +902,7 @@ Final centroids:
  [ 2.06521749  0.96137404]
  [ 0.93296534  4.35420704]]
 </code></pre>
-<h4 id="visualize-the-cluster-memberships">Visualize the cluster memberships:</h4>
+<h3 id="visualize-the-cluster-memberships">Visualize the cluster memberships:</h3>
 <pre><code class="python">y_clust = km.predict(X)
 
 plt.scatter(X[y_clust == 0, 0],
@@ -937,7 +940,7 @@ plt.grid()
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../TfKmeans_files/TfKmeans_15_0.png" /></p>
+<p><img alt="png" src="../TfKmeans_files/TfKmeans_14_0.png" /></p>
 <h2 id="api">API</h2>
 <p><em>TfKmeans(k, max_iter=10, convergence_tolerance=1e-05, random_seed=None, print_progress=0, dtype=None)</em></p>
 <p>TensorFlow K-means clustering class.</p>

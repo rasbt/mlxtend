@@ -832,12 +832,11 @@
                     <li><a href="#references">References</a></li>
              -->
         
-            <li><a href="#examples">Examples</a></li>
-                <!-- 
-                    <li><a href="#example-1-compute-the-number-of-permutations">Example 1 - Compute the number of permutations</a></li>
-            
-                    <li><a href="#example-2-a-progress-tracking-use-case">Example 2 - A progress tracking use-case</a></li>
-             -->
+            <li><a href="#example-1-compute-the-number-of-permutations">Example 1 - Compute the number of permutations</a></li>
+                <!--  -->
+        
+            <li><a href="#example-2-a-progress-tracking-use-case">Example 2 - A progress tracking use-case</a></li>
+                <!--  -->
         
             <li><a href="#api">API</a></li>
                 <!--  -->
@@ -875,8 +874,7 @@ $$</p>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Permutation">https://en.wikipedia.org/wiki/Permutation</a></li>
 </ul>
-<h2 id="examples">Examples</h2>
-<h3 id="example-1-compute-the-number-of-permutations">Example 1 - Compute the number of permutations</h3>
+<h2 id="example-1-compute-the-number-of-permutations">Example 1 - Compute the number of permutations</h2>
 <pre><code class="python">from mlxtend.math import num_permutations
 
 c = num_permutations(n=20, k=8, with_replacement=False)
@@ -895,7 +893,7 @@ print('Number of ways to combine 20 elements'
 
 <pre><code>Number of ways to combine 20 elements into 8 subelements (with replacement): 25600000000
 </code></pre>
-<h3 id="example-2-a-progress-tracking-use-case">Example 2 - A progress tracking use-case</h3>
+<h2 id="example-2-a-progress-tracking-use-case">Example 2 - A progress tracking use-case</h2>
 <p>It is often quite useful to track the progress of a computational expensive tasks to estimate its runtime. Here, the <code>num_combination</code> function can be used to compute the maximum number of loops of a <code>permutations</code> iterable from itertools:</p>
 <pre><code class="python">import itertools
 import sys

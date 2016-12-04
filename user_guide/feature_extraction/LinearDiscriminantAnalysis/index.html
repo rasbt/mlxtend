@@ -834,12 +834,11 @@
                     <li><a href="#references">References</a></li>
              -->
         
-            <li><a href="#examples">Examples</a></li>
-                <!-- 
-                    <li><a href="#example-1-lda-on-iris">Example 1 - LDA on Iris</a></li>
-            
-                    <li><a href="#example-2-plotting-the-between-class-variance-explained-ratio">Example 2 - Plotting the Between-Class Variance Explained Ratio</a></li>
-             -->
+            <li><a href="#example-1-lda-on-iris">Example 1 - LDA on Iris</a></li>
+                <!--  -->
+        
+            <li><a href="#example-2-plotting-the-between-class-variance-explained-ratio">Example 2 - Plotting the Between-Class Variance Explained Ratio</a></li>
+                <!--  -->
         
             <li><a href="#api">API</a></li>
                 <!-- 
@@ -877,8 +876,7 @@ In general, dimensionality reduction does not only help reducing computational c
 <li>Fisher, Ronald A. "<a href="http://onlinelibrary.wiley.com/doi/10.1111/j.1469-1809.1936.tb02137.x/abstract">The use of multiple measurements in taxonomic problems.</a>" Annals of eugenics 7.2 (1936): 179-188.</li>
 <li>Rao, C. Radhakrishna. "<a href="http://www.jstor.org/stable/2983775">The utilization of multiple measurements in problems of biological classification.</a>" Journal of the Royal Statistical Society. Series B (Methodological) 10.2 (1948): 159-203.</li>
 </ul>
-<h2 id="examples">Examples</h2>
-<h3 id="example-1-lda-on-iris">Example 1 - LDA on Iris</h3>
+<h2 id="example-1-lda-on-iris">Example 1 - LDA on Iris</h2>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.preprocessing import standardize
 from mlxtend.feature_extraction import LinearDiscriminantAnalysis
@@ -908,8 +906,8 @@ with plt.style.context('seaborn-whitegrid'):
     plt.show()
 </code></pre>
 
-<p><img alt="png" src="../LinearDiscriminantAnalysis_files/LinearDiscriminantAnalysis_12_0.png" /></p>
-<h3 id="example-2-plotting-the-between-class-variance-explained-ratio">Example 2 - Plotting the Between-Class Variance Explained Ratio</h3>
+<p><img alt="png" src="../LinearDiscriminantAnalysis_files/LinearDiscriminantAnalysis_11_0.png" /></p>
+<h2 id="example-2-plotting-the-between-class-variance-explained-ratio">Example 2 - Plotting the Between-Class Variance Explained Ratio</h2>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.preprocessing import standardize
 from mlxtend.feature_extraction import LinearDiscriminantAnalysis
@@ -943,7 +941,7 @@ cum_var_exp = np.cumsum(var_exp)
     plt.tight_layout()
 </code></pre>
 
-<p><img alt="png" src="../LinearDiscriminantAnalysis_files/LinearDiscriminantAnalysis_16_0.png" /></p>
+<p><img alt="png" src="../LinearDiscriminantAnalysis_files/LinearDiscriminantAnalysis_15_0.png" /></p>
 <h2 id="api">API</h2>
 <p><em>LinearDiscriminantAnalysis(n_discriminants=None)</em></p>
 <p>Linear Discriminant Analysis Class</p>

@@ -832,12 +832,11 @@
                     <li><a href="#references">References</a></li>
              -->
         
-            <li><a href="#examples">Examples</a></li>
-                <!-- 
-                    <li><a href="#example-1-compute-the-number-of-combinations">Example 1 - Compute the number of combinations</a></li>
-            
-                    <li><a href="#example-2-a-progress-tracking-use-case">Example 2 - A progress tracking use-case</a></li>
-             -->
+            <li><a href="#example-1-compute-the-number-of-combinations">Example 1 - Compute the number of combinations</a></li>
+                <!--  -->
+        
+            <li><a href="#example-2-a-progress-tracking-use-case">Example 2 - A progress tracking use-case</a></li>
+                <!--  -->
         
             <li><a href="#api">API</a></li>
                 <!--  -->
@@ -883,8 +882,7 @@ k
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Combination">https://en.wikipedia.org/wiki/Combination</a></li>
 </ul>
-<h2 id="examples">Examples</h2>
-<h3 id="example-1-compute-the-number-of-combinations">Example 1 - Compute the number of combinations</h3>
+<h2 id="example-1-compute-the-number-of-combinations">Example 1 - Compute the number of combinations</h2>
 <pre><code class="python">from mlxtend.math import num_combinations
 
 c = num_combinations(n=20, k=8, with_replacement=False)
@@ -903,7 +901,7 @@ print('Number of ways to combine 20 elements'
 
 <pre><code>Number of ways to combine 20 elements into 8 subelements (with replacement): 2220075
 </code></pre>
-<h3 id="example-2-a-progress-tracking-use-case">Example 2 - A progress tracking use-case</h3>
+<h2 id="example-2-a-progress-tracking-use-case">Example 2 - A progress tracking use-case</h2>
 <p>It is often quite useful to track the progress of a computational expensive tasks to estimate its runtime. Here, the <code>num_combination</code> function can be used to compute the maximum number of loops of a <code>combinations</code> iterable from itertools:</p>
 <pre><code class="python">import itertools
 import sys

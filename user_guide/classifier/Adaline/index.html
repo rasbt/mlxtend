@@ -836,21 +836,23 @@
                     <li><a href="#references">References</a></li>
              -->
         
-            <li><a href="#examples">Examples</a></li>
-                <!-- 
-                    <li><a href="#example-1-closed-form-solution">Example 1 - Closed Form Solution</a></li>
-            
-                    <li><a href="#example-2-gradient-descent">Example 2 - Gradient Descent</a></li>
-            
-                    <li><a href="#example-3-stochastic-gradient-descent">Example 3 - Stochastic Gradient Descent</a></li>
-            
-                    <li><a href="#example-4-stochastic-gradient-descent-with-minibatches">Example 4 - Stochastic Gradient Descent with Minibatches</a></li>
-             -->
+            <li><a href="#example-1-closed-form-solution">Example 1 - Closed Form Solution</a></li>
+                <!--  -->
         
-            <li><a href="#api">API</a></li>
-                <!-- 
-                    <li><a href="#methods">Methods</a></li>
-             -->
+            <li><a href="#example-2-gradient-descent">Example 2 - Gradient Descent</a></li>
+                <!--  -->
+        
+            <li><a href="#example-3-stochastic-gradient-descent">Example 3 - Stochastic Gradient Descent</a></li>
+                <!--  -->
+        
+            <li><a href="#example-4-stochastic-gradient-descent-with-minibatches">Example 4 - Stochastic Gradient Descent with Minibatches</a></li>
+                <!--  -->
+        
+    
+        <li class="main "><a href="#api">API</a></li>
+        
+            <li><a href="#methods">Methods</a></li>
+                <!--  -->
         
     
     </ul>
@@ -908,8 +910,7 @@ $$</p>
 <ul>
 <li>B. Widrow, M. E. Hoff, et al. <a href="http://www.rob.uni-luebeck.de/index.php?id=267">Adaptive switching circuits</a>. 1960.</li>
 </ul>
-<h2 id="examples">Examples</h2>
-<h3 id="example-1-closed-form-solution">Example 1 - Closed Form Solution</h3>
+<h2 id="example-1-closed-form-solution">Example 1 - Closed Form Solution</h2>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.plotting import plot_decision_regions
 from mlxtend.classifier import Adaline
@@ -938,8 +939,8 @@ plt.title('Adaline - Stochastic Gradient Descent')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../Adaline_files/Adaline_16_0.png" /></p>
-<h3 id="example-2-gradient-descent">Example 2 - Gradient Descent</h3>
+<p><img alt="png" src="../Adaline_files/Adaline_15_0.png" /></p>
+<h2 id="example-2-gradient-descent">Example 2 - Gradient Descent</h2>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.plotting import plot_decision_regions
 from mlxtend.classifier import Adaline
@@ -975,11 +976,11 @@ plt.ylabel('Cost')
 
 <pre><code>Iteration: 30/30 | Cost 3.79 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
-<p><img alt="png" src="../Adaline_files/Adaline_18_1.png" /></p>
+<p><img alt="png" src="../Adaline_files/Adaline_17_1.png" /></p>
 <pre><code>&lt;matplotlib.text.Text at 0x10eb32908&gt;
 </code></pre>
-<p><img alt="png" src="../Adaline_files/Adaline_18_3.png" /></p>
-<h3 id="example-3-stochastic-gradient-descent">Example 3 - Stochastic Gradient Descent</h3>
+<p><img alt="png" src="../Adaline_files/Adaline_17_3.png" /></p>
+<h2 id="example-3-stochastic-gradient-descent">Example 3 - Stochastic Gradient Descent</h2>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.plotting import plot_decision_regions
 from mlxtend.classifier import Adaline
@@ -1016,9 +1017,9 @@ plt.show()
 
 <pre><code>Iteration: 15/15 | Cost 3.81 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
-<p><img alt="png" src="../Adaline_files/Adaline_20_1.png" /></p>
-<p><img alt="png" src="../Adaline_files/Adaline_20_2.png" /></p>
-<h3 id="example-4-stochastic-gradient-descent-with-minibatches">Example 4 - Stochastic Gradient Descent with Minibatches</h3>
+<p><img alt="png" src="../Adaline_files/Adaline_19_1.png" /></p>
+<p><img alt="png" src="../Adaline_files/Adaline_19_2.png" /></p>
+<h2 id="example-4-stochastic-gradient-descent-with-minibatches">Example 4 - Stochastic Gradient Descent with Minibatches</h2>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.plotting import plot_decision_regions
 from mlxtend.classifier import Adaline
@@ -1055,9 +1056,9 @@ plt.show()
 
 <pre><code>Iteration: 15/15 | Cost 3.87 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
-<p><img alt="png" src="../Adaline_files/Adaline_22_1.png" /></p>
-<p><img alt="png" src="../Adaline_files/Adaline_22_2.png" /></p>
-<h2 id="api">API</h2>
+<p><img alt="png" src="../Adaline_files/Adaline_21_1.png" /></p>
+<p><img alt="png" src="../Adaline_files/Adaline_21_2.png" /></p>
+<h1 id="api">API</h1>
 <p><em>Adaline(eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0)</em></p>
 <p>ADAptive LInear NEuron classifier.</p>
 <p>Note that this implementation of Adaline expects binary class labels

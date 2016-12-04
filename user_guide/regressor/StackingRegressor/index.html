@@ -832,12 +832,11 @@
                     <li><a href="#references">References</a></li>
              -->
         
-            <li><a href="#examples">Examples</a></li>
-                <!-- 
-                    <li><a href="#example-1-simple-stacked-regression">Example 1 - Simple Stacked Regression</a></li>
-            
-                    <li><a href="#example-2-stacked-regression-and-gridsearch">Example 2 - Stacked Regression and GridSearch</a></li>
-             -->
+            <li><a href="#example-1-simple-stacked-regression">Example 1 - Simple Stacked Regression</a></li>
+                <!--  -->
+        
+            <li><a href="#example-2-stacked-regression-and-gridsearch">Example 2 - Stacked Regression and GridSearch</a></li>
+                <!--  -->
         
             <li><a href="#api">API</a></li>
                 <!-- 
@@ -863,8 +862,7 @@
 <ul>
 <li>Breiman, Leo. "<a href="http://link.springer.com/article/10.1023/A:1018046112532#page-1">Stacked regressions.</a>" Machine learning 24.1 (1996): 49-64.</li>
 </ul>
-<h2 id="examples">Examples</h2>
-<h3 id="example-1-simple-stacked-regression">Example 1 - Simple Stacked Regression</h3>
+<h2 id="example-1-simple-stacked-regression">Example 1 - Simple Stacked Regression</h2>
 <pre><code class="python">from mlxtend.regressor import StackingRegressor
 from mlxtend.data import boston_housing_data
 from sklearn.linear_model import LinearRegression
@@ -911,7 +909,7 @@ plt.show()
 <pre><code>Mean Squared Error: 0.2039
 Variance Score: 0.7049
 </code></pre>
-<p><img alt="png" src="../StackingRegressor_files/StackingRegressor_12_1.png" /></p>
+<p><img alt="png" src="../StackingRegressor_files/StackingRegressor_11_1.png" /></p>
 <pre><code class="python">stregr
 </code></pre>
 
@@ -922,7 +920,7 @@ Variance Score: 0.7049
    normalize=False, random_state=1, solver='auto', tol=0.001)],
          verbose=0)
 </code></pre>
-<h3 id="example-2-stacked-regression-and-gridsearch">Example 2 - Stacked Regression and GridSearch</h3>
+<h2 id="example-2-stacked-regression-and-gridsearch">Example 2 - Stacked Regression and GridSearch</h2>
 <p>To set up a parameter grid for scikit-learn's <code>GridSearch</code>, we simply provide the estimator's names in the parameter grid -- in the special case of the meta-regressor, we append the <code>'meta-'</code> prefix.</p>
 <pre><code class="python">from sklearn.model_selection import GridSearchCV
 from sklearn.linear_model import Lasso
@@ -1299,7 +1297,7 @@ plt.show()
 <pre><code>Mean Squared Error: 0.1844
 Variance Score: 0.7331
 </code></pre>
-<p><img alt="png" src="../StackingRegressor_files/StackingRegressor_17_1.png" /></p>
+<p><img alt="png" src="../StackingRegressor_files/StackingRegressor_16_1.png" /></p>
 <p>In case we are planning to use a regression algorithm multiple times, all we need to do is to add an additional number suffix in the parameter grid as shown below:</p>
 <h2 id="api">API</h2>
 <p><em>StackingRegressor(regressors, meta_regressor, verbose=0)</em></p>

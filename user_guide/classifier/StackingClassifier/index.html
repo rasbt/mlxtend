@@ -833,9 +833,6 @@
             <li><a href="#references">References</a></li>
                 <!--  -->
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
             <li><a href="#example-1-simple-stacked-classification">Example 1 - Simple Stacked Classification</a></li>
                 <!--  -->
         
@@ -872,7 +869,6 @@ The meta-classifier can either be trained on the predicted class labels or proba
 <li>[1] Tang, J., S. Alelyani, and H. Liu. "<a href="https://books.google.com/books?id=nwQZCwAAQBAJ&amp;lpg=PA500&amp;dq=stacking%20classifier%20subsets&amp;pg=PA499#v=onepage&amp;q&amp;f=false">Data Classification: Algorithms and Applications.</a>" Data Mining and Knowledge Discovery Series, CRC Press (2015): pp. 498-500.</li>
 <li>[2] Wolpert, David H. "<a href="http://www.sciencedirect.com/science/article/pii/S0893608005800231">Stacked generalization.</a>" Neural networks 5.2 (1992): 241-259.</li>
 </ul>
-<h1 id="examples">Examples</h1>
 <h2 id="example-1-simple-stacked-classification">Example 1 - Simple Stacked Classification</h2>
 <pre><code class="python">from sklearn import datasets
 
@@ -938,7 +934,7 @@ for clf, lab, grd in zip([clf1, clf2, clf3, sclf],
     plt.title(lab)
 </code></pre>
 
-<p><img alt="png" src="../StackingClassifier_files/StackingClassifier_14_0.png" /></p>
+<p><img alt="png" src="../StackingClassifier_files/StackingClassifier_13_0.png" /></p>
 <h2 id="example-2-using-probabilities-as-meta-features">Example 2 - Using Probabilities as Meta-Features</h2>
 <p>Alternatively, the class-probabilities of the first-level classifiers can be used to train the meta-classifier (2nd-level classifier) by setting <code>use_probas=True</code>. If <code>average_probas=True</code>, the probabilities of the level-1 classifiers are averaged, if <code>average_probas=False</code>, the probabilities are stacked (recommended). For example, in a 3-class setting with 2 level-1 classifiers, these classifiers may make the following "probability" predictions for 1 training sample:</p>
 <ul>

@@ -830,9 +830,6 @@
             <li><a href="#references">References</a></li>
                 <!--  -->
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
             <li><a href="#example-1-decision-regions-in-2d">Example 1 - Decision regions in 2D</a></li>
                 <!--  -->
         
@@ -871,7 +868,6 @@
 <ul>
 <li></li>
 </ul>
-<h1 id="examples">Examples</h1>
 <h2 id="example-1-decision-regions-in-2d">Example 1 - Decision regions in 2D</h2>
 <pre><code class="python">from mlxtend.plotting import plot_decision_regions
 import matplotlib.pyplot as plt
@@ -899,7 +895,7 @@ plt.title('SVM on Iris')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_7_0.png" /></p>
+<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_6_0.png" /></p>
 <h2 id="example-2-decision-regions-in-1d">Example 2 - Decision regions in 1D</h2>
 <pre><code class="python">from mlxtend.plotting import plot_decision_regions
 import matplotlib.pyplot as plt
@@ -927,7 +923,7 @@ plt.title('SVM on Iris')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_9_0.png" /></p>
+<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_8_0.png" /></p>
 <h2 id="example-3-decision-region-grids">Example 3 - Decision Region Grids</h2>
 <pre><code class="python">from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB 
@@ -969,7 +965,7 @@ for clf, lab, grd in zip([clf1, clf2, clf3, clf4],
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_12_0.png" /></p>
+<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_11_0.png" /></p>
 <h2 id="example-4-highlighting-test-data-points">Example 4 - Highlighting Test Data Points</h2>
 <pre><code class="python">from mlxtend.plotting import plot_decision_regions
 from mlxtend.preprocessing import shuffle_arrays_unison
@@ -1001,7 +997,7 @@ plt.title('SVM on Iris')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_14_0.png" /></p>
+<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_13_0.png" /></p>
 <h2 id="example-5-evaluating-classifier-behavior-on-non-linear-problems">Example 5 - Evaluating Classifier Behavior on Non-Linear Problems</h2>
 <pre><code class="python">from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB 
@@ -1024,7 +1020,7 @@ from mlxtend.plotting import plot_decision_regions
 import numpy as np
 </code></pre>
 
-<h4 id="xor">XOR</h4>
+<h3 id="xor">XOR</h3>
 <pre><code class="python">xx, yy = np.meshgrid(np.linspace(-3, 3, 50),
                      np.linspace(-3, 3, 50))
 rng = np.random.RandomState(0)
@@ -1050,8 +1046,8 @@ for clf, lab, grd in zip([clf1, clf2, clf3, clf4],
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_20_0.png" /></p>
-<h4 id="half-moons">Half-Moons</h4>
+<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_19_0.png" /></p>
+<h3 id="half-moons">Half-Moons</h3>
 <pre><code class="python">from sklearn.datasets import make_moons
 X, y = make_moons(n_samples=100, random_state=123)
 
@@ -1072,8 +1068,8 @@ for clf, lab, grd in zip([clf1, clf2, clf3, clf4],
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_22_0.png" /></p>
-<h4 id="concentric-circles">Concentric Circles</h4>
+<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_21_0.png" /></p>
+<h3 id="concentric-circles">Concentric Circles</h3>
 <pre><code class="python">from sklearn.datasets import make_circles
 X, y = make_circles(n_samples=1000, random_state=123, noise=0.1, factor=0.2)
 
@@ -1094,7 +1090,7 @@ for clf, lab, grd in zip([clf1, clf2, clf3, clf4],
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_24_0.png" /></p>
+<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_23_0.png" /></p>
 <h1 id="api">API</h1>
 <p><em>plot_decision_regions(X, y, clf, ax=None, X_highlight=None, res=0.02, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors='red,blue,limegreen,gray,cyan')</em></p>
 <p>Plot decision regions of a classifier.</p>

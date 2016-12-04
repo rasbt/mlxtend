@@ -830,9 +830,6 @@
             <li><a href="#overview">Overview</a></li>
                 <!--  -->
         
-    
-        <li class="main "><a href="#examples">Examples</a></li>
-        
             <li><a href="#example-1-a-simple-iris-example">Example 1 - A simple Iris Example</a></li>
                 <!--  -->
         
@@ -850,11 +847,10 @@
                     <li><a href="#obtaining-the-best-k-feature-indices-after-gridsearch">Obtaining the best k feature indices after GridSearch</a></li>
              -->
         
-    
-        <li class="main "><a href="#api">API</a></li>
-        
-            <li><a href="#methods">Methods</a></li>
-                <!--  -->
+            <li><a href="#api">API</a></li>
+                <!-- 
+                    <li><a href="#methods">Methods</a></li>
+             -->
         
     
     </ul>
@@ -886,7 +882,6 @@
 <li>{0, 1, 2, 3}</li>
 </ul>
 <p>and select the one that results in the best performance (e.g., classification accuracy) of the logistic regression classifier.</p>
-<h1 id="examples">Examples</h1>
 <h2 id="example-1-a-simple-iris-example">Example 1 - A simple Iris Example</h2>
 <p>Initializing a simple classifier from scikit-learn:</p>
 <pre><code class="python">from sklearn.neighbors import KNeighborsClassifier
@@ -1180,7 +1175,7 @@ plt.xticks(k_feat,
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../ExhaustiveFeatureSelector_files/ExhaustiveFeatureSelector_16_0.png" /></p>
+<p><img alt="png" src="../ExhaustiveFeatureSelector_files/ExhaustiveFeatureSelector_15_0.png" /></p>
 <h2 id="example-3-exhaustive-feature-selection-for-regression">Example 3 - Exhaustive Feature Selection for Regression</h2>
 <p>Similar to the classification examples above, the <code>SequentialFeatureSelector</code> also supports scikit-learn's estimators
 for regression.</p>
@@ -1997,7 +1992,7 @@ print('Best features:', pipe.steps[0][1].best_idx_)
 
 <pre><code>Best features: (2, 3)
 </code></pre>
-<h1 id="api">API</h1>
+<h2 id="api">API</h2>
 <p><em>ExhaustiveFeatureSelector(estimator, min_features=1, max_features=1, print_progress=True, scoring='accuracy', cv=5, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
 <p>Exhaustive Feature Selection for Classification and Regression.
 (new in v0.4.3)</p>

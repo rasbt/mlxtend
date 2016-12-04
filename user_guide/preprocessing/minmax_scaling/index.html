@@ -827,12 +827,11 @@
     
         <li class="main active"><a href="#minmax-scaling">MinMax Scaling</a></li>
         
-            <li><a href="#examples">Examples</a></li>
-                <!-- 
-                    <li><a href="#example-1-scaling-a-pandas-dataframe">Example 1 - Scaling a Pandas DataFrame</a></li>
-            
-                    <li><a href="#example-2-scaling-a-numpy-array">Example 2 - Scaling a NumPy Array</a></li>
-             -->
+            <li><a href="#example-1-scaling-a-pandas-dataframe">Example 1 - Scaling a Pandas DataFrame</a></li>
+                <!--  -->
+        
+            <li><a href="#example-2-scaling-a-numpy-array">Example 2 - Scaling a NumPy Array</a></li>
+                <!--  -->
         
             <li><a href="#api">API</a></li>
                 <!--  -->
@@ -863,8 +862,7 @@ The cost of having this bounded range - in contrast to standardization - is that
 <p>There are many more cases than I can possibly list here ... I always recommend you to think about the algorithm and what it's doing, and then it typically becomes obvious whether we want to scale your features or not.</p>
 <p>In addition, we'd also want to think about whether we want to "standardize" or "normalize" (here: scaling to [0, 1] range) our data. Some algorithms assume that our data is centered at 0. For example, if we initialize the weights of a small multi-layer perceptron with tanh activation units to 0 or small random values centered around zero, we want to update the model weights "equally."
 As a rule of thumb I'd say: When in doubt, just standardize the data, it shouldn't hurt.   </p>
-<h2 id="examples">Examples</h2>
-<h3 id="example-1-scaling-a-pandas-dataframe">Example 1 - Scaling a Pandas DataFrame</h3>
+<h2 id="example-1-scaling-a-pandas-dataframe">Example 1 - Scaling a Pandas DataFrame</h2>
 <pre><code class="python">import pandas as pd
 
 s1 = pd.Series([1, 2, 3, 4, 5, 6], index=(range(6)))
@@ -967,7 +965,7 @@ minmax_scaling(df, columns=['s1', 's2'])
 </table>
 </div>
 
-<h3 id="example-2-scaling-a-numpy-array">Example 2 - Scaling a NumPy Array</h3>
+<h2 id="example-2-scaling-a-numpy-array">Example 2 - Scaling a NumPy Array</h2>
 <pre><code class="python">import numpy as np
 
 X = np.array([[1, 10], [2, 9], [3, 8], 

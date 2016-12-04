@@ -836,16 +836,17 @@
                     <li><a href="#references">References</a></li>
              -->
         
-            <li><a href="#examples">Examples</a></li>
-                <!-- 
-                    <li><a href="#example-1-closed-form-solution">Example 1 - Closed Form Solution</a></li>
-            
-                    <li><a href="#example-2-gradient-descent">Example 2 - Gradient Descent</a></li>
-            
-                    <li><a href="#example-3-stochastic-gradient-descent">Example 3 - Stochastic Gradient Descent</a></li>
-            
-                    <li><a href="#example-3-stochastic-gradient-descent-with-minibatches">Example 3 - Stochastic Gradient Descent with Minibatches</a></li>
-             -->
+            <li><a href="#example-1-closed-form-solution">Example 1 - Closed Form Solution</a></li>
+                <!--  -->
+        
+            <li><a href="#example-2-gradient-descent">Example 2 - Gradient Descent</a></li>
+                <!--  -->
+        
+            <li><a href="#example-3-stochastic-gradient-descent">Example 3 - Stochastic Gradient Descent</a></li>
+                <!--  -->
+        
+            <li><a href="#example-3-stochastic-gradient-descent-with-minibatches">Example 3 - Stochastic Gradient Descent with Minibatches</a></li>
+                <!--  -->
         
             <li><a href="#api">API</a></li>
                 <!-- 
@@ -902,8 +903,7 @@
 <li>A. I. Khuri. <a href="http://onlinelibrary.wiley.com/doi/10.1111/insr.12020_10/abstract">Introduction to linear regression analysis</a>, by Douglas C. Montgomery, Elizabeth A. Peck, G. Geoffrey Vining. International Statistical Review, 81(2):318–319, 2013.</li>
 <li>D. S. G. Pollock. <a href="http://www.le.ac.uk/users/dsgp1/COURSES/MESOMET/ECMETXT/06mesmet.pdf">The Classical Linear Regression Model</a>.</li>
 </ul>
-<h2 id="examples">Examples</h2>
-<h3 id="example-1-closed-form-solution">Example 1 - Closed Form Solution</h3>
+<h2 id="example-1-closed-form-solution">Example 1 - Closed Form Solution</h2>
 <pre><code class="python">import numpy as np
 import matplotlib.pyplot as plt
 from mlxtend.regressor import LinearRegression
@@ -929,8 +929,8 @@ plt.show()
 <pre><code>Intercept: 0.25
 Slope: 0.81
 </code></pre>
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_15_1.png" /></p>
-<h3 id="example-2-gradient-descent">Example 2 - Gradient Descent</h3>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_14_1.png" /></p>
+<h2 id="example-2-gradient-descent">Example 2 - Gradient Descent</h2>
 <pre><code class="python">import numpy as np
 import matplotlib.pyplot as plt
 from mlxtend.regressor import LinearRegression
@@ -962,7 +962,7 @@ plt.show()
 Intercept: 0.82
 Slope: 0.22
 </code></pre>
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_17_2.png" /></p>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_16_2.png" /></p>
 <pre><code class="python"># Visualizing the cost to check for convergence and plotting the linear model:
 
 plt.plot(range(1, gd_lr.epochs+1), gd_lr.cost_)
@@ -973,8 +973,8 @@ plt.tight_layout()
 plt.show()    
 </code></pre>
 
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_18_0.png" /></p>
-<h3 id="example-3-stochastic-gradient-descent">Example 3 - Stochastic Gradient Descent</h3>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_17_0.png" /></p>
+<h2 id="example-3-stochastic-gradient-descent">Example 3 - Stochastic Gradient Descent</h2>
 <pre><code class="python">import numpy as np
 import matplotlib.pyplot as plt
 from mlxtend.regressor import LinearRegression
@@ -1003,7 +1003,7 @@ plt.show()
 <pre><code>Intercept: 0.24
 Slope: 0.82
 </code></pre>
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_20_1.png" /></p>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_19_1.png" /></p>
 <pre><code class="python">plt.plot(range(1, sgd_lr.epochs+1), sgd_lr.cost_)
 plt.xlabel('Epochs')
 plt.ylabel('Cost')
@@ -1012,8 +1012,8 @@ plt.tight_layout()
 plt.show()  
 </code></pre>
 
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_21_0.png" /></p>
-<h3 id="example-3-stochastic-gradient-descent-with-minibatches">Example 3 - Stochastic Gradient Descent with Minibatches</h3>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_20_0.png" /></p>
+<h2 id="example-3-stochastic-gradient-descent-with-minibatches">Example 3 - Stochastic Gradient Descent with Minibatches</h2>
 <pre><code class="python">import numpy as np
 import matplotlib.pyplot as plt
 from mlxtend.regressor import LinearRegression
@@ -1042,7 +1042,7 @@ plt.show()
 <pre><code>Intercept: 0.24
 Slope: 0.82
 </code></pre>
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_23_1.png" /></p>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_22_1.png" /></p>
 <pre><code class="python">plt.plot(range(1, sgd_lr.epochs+1), sgd_lr.cost_)
 plt.xlabel('Epochs')
 plt.ylabel('Cost')
@@ -1051,7 +1051,7 @@ plt.tight_layout()
 plt.show()  
 </code></pre>
 
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_24_0.png" /></p>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_23_0.png" /></p>
 <h2 id="api">API</h2>
 <p><em>LinearRegression(eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0)</em></p>
 <p>Ordinary least squares linear regression.</p>

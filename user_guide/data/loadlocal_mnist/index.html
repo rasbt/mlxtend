@@ -832,11 +832,12 @@
                     <li><a href="#references">References</a></li>
              -->
         
-            <li><a href="#examples">Examples</a></li>
+            <li><a href="#example-1-part-1-downloading-the-mnist-dataset">Example 1 Part 1 - Downloading the MNIST dataset</a></li>
+                <!--  -->
+        
+            <li><a href="#example-1-part-2-loading-mnist-into-numpy-arrays">Example 1 Part 2 - Loading MNIST into NumPy Arrays</a></li>
                 <!-- 
-                    <li><a href="#downloading-the-mnist-dataset">Downloading the MNIST dataset</a></li>
-            
-                    <li><a href="#example-1-loading-mnist-into-numpy-arrays">Example 1 - Loading MNIST into NumPy Arrays</a></li>
+                    <li><a href="#store-as-csv-files">Store as CSV Files</a></li>
              -->
         
             <li><a href="#api">API</a></li>
@@ -874,8 +875,7 @@
 <li>Source: <a href="http://yann.lecun.com/exdb/mnist">http://yann.lecun.com/exdb/mnist/</a></li>
 <li>Y. LeCun and C. Cortes. Mnist handwritten digit database. AT&amp;T Labs [Online]. Available: http://yann. lecun. com/exdb/mnist, 2010.</li>
 </ul>
-<h2 id="examples">Examples</h2>
-<h3 id="downloading-the-mnist-dataset">Downloading the MNIST dataset</h3>
+<h2 id="example-1-part-1-downloading-the-mnist-dataset">Example 1 Part 1 - Downloading the MNIST dataset</h2>
 <p>1) Download the MNIST files from Y. LeCun's website</p>
 <ul>
 <li>http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz</li>
@@ -890,7 +890,7 @@
 <p>for example, via</p>
 <pre><code>gunzip t*-ubyte.gz
 </code></pre>
-<h3 id="example-1-loading-mnist-into-numpy-arrays">Example 1 - Loading MNIST into NumPy Arrays</h3>
+<h2 id="example-1-part-2-loading-mnist-into-numpy-arrays">Example 1 Part 2 - Loading MNIST into NumPy Arrays</h2>
 <pre><code class="python">from mlxtend.data import loadlocal_mnist
 </code></pre>
 
@@ -964,7 +964,7 @@ print('Class distribution: %s' % np.bincount(y))
 labels: [0 1 2 3 4 5 6 7 8 9]
 Class distribution: [5923 6742 5958 6131 5842 5421 5918 6265 5851 5949]
 </code></pre>
-<h4 id="store-as-csv-files">Store as CSV Files</h4>
+<h3 id="store-as-csv-files">Store as CSV Files</h3>
 <pre><code class="python">np.savetxt(fname='/Users/Sebastian/Desktop/images.csv', 
            X=X, delimiter=',', fmt='%d')
 np.savetxt(fname='/Users/Sebastian/Desktop/labels.csv', 

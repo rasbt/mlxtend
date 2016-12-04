@@ -832,12 +832,11 @@
                     <li><a href="#references">References</a></li>
              -->
         
-            <li><a href="#examples">Examples</a></li>
-                <!-- 
-                    <li><a href="#example-dataset-overview">Example - Dataset overview</a></li>
-            
-                    <li><a href="#example-visualize-mnist">Example - Visualize MNIST</a></li>
-             -->
+            <li><a href="#example-1-dataset-overview">Example 1 - Dataset overview</a></li>
+                <!--  -->
+        
+            <li><a href="#example-2-visualize-mnist">Example 2 - Visualize MNIST</a></li>
+                <!--  -->
         
             <li><a href="#api">API</a></li>
                 <!--  -->
@@ -869,8 +868,7 @@
 <li>Source: <a href="http://yann.lecun.com/exdb/mnist/">http://yann.lecun.com/exdb/mnist/</a></li>
 <li>Y. LeCun and C. Cortes. Mnist handwritten digit database. AT&amp;T Labs [Online]. Available: <a href="http://yann.lecun.com/exdb/mnist">http://yann.lecun.com/exdb/mnist</a>, 2010.</li>
 </ul>
-<h2 id="examples">Examples</h2>
-<h3 id="example-dataset-overview">Example - Dataset overview</h3>
+<h2 id="example-1-dataset-overview">Example 1 - Dataset overview</h2>
 <pre><code class="python">from mlxtend.data import mnist_data
 X, y = mnist_data()
 
@@ -956,7 +954,7 @@ print('Class distribution: %s' % np.bincount(y))
 [0 1 2 3 4 5 6 7 8 9]
 Class distribution: [500 500 500 500 500 500 500 500 500 500]
 </code></pre>
-<h3 id="example-visualize-mnist">Example - Visualize MNIST</h3>
+<h2 id="example-2-visualize-mnist">Example 2 - Visualize MNIST</h2>
 <pre><code class="python">%matplotlib inline
 import matplotlib.pyplot as plt
 def plot_digit(X, y, idx):
@@ -967,7 +965,7 @@ def plot_digit(X, y, idx):
 plot_digit(X, y, 4)       
 </code></pre>
 
-<p><img alt="png" src="../mnist_data_files/mnist_data_11_0.png" /></p>
+<p><img alt="png" src="../mnist_data_files/mnist_data_10_0.png" /></p>
 <h2 id="api">API</h2>
 <p><em>mnist_data()</em></p>
 <p>5000 samples from the MNIST handwritten digits dataset.</p>

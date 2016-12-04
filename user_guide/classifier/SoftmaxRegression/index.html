@@ -830,17 +830,21 @@
             <li><a href="#overview">Overview</a></li>
                 <!--  -->
         
-            <li><a href="#examples">Examples</a></li>
+            <li><a href="#example-1-gradient-descent">Example 1 - Gradient Descent</a></li>
                 <!-- 
-                    <li><a href="#example-1-gradient-descent">Example 1 - Gradient Descent</a></li>
+                    <li><a href="#predicting-class-labels">Predicting Class Labels</a></li>
             
-                    <li><a href="#example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</a></li>
+                    <li><a href="#predicting-class-probabilities">Predicting Class Probabilities</a></li>
              -->
         
-            <li><a href="#api">API</a></li>
-                <!-- 
-                    <li><a href="#methods">Methods</a></li>
-             -->
+            <li><a href="#example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</a></li>
+                <!--  -->
+        
+    
+        <li class="main "><a href="#api">API</a></li>
+        
+            <li><a href="#methods">Methods</a></li>
+                <!--  -->
         
     
     </ul>
@@ -1032,8 +1036,7 @@ print('Cost: ', J_cost)
 <p>and we define the "regularized" weight update as</p>
 <p>$$\mathbf{w}_j := \mathbf{w}_j -  \eta \big[\nabla \mathbf{w}_j \, J(\mathbf{W}) + \lambda \mathbf{w}_j \big].$$</p>
 <p>(Please note that we don't regularize the bias term.)</p>
-<h2 id="examples">Examples</h2>
-<h3 id="example-1-gradient-descent">Example 1 - Gradient Descent</h3>
+<h2 id="example-1-gradient-descent">Example 1 - Gradient Descent</h2>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.plotting import plot_decision_regions
 from mlxtend.classifier import SoftmaxRegression
@@ -1067,8 +1070,8 @@ plt.show()
 
 <pre><code>Iteration: 500/500 | Cost 0.06 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
-<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_32_1.png" /></p>
-<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_32_2.png" /></p>
+<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_31_1.png" /></p>
+<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_31_2.png" /></p>
 <h4 id="predicting-class-labels">Predicting Class Labels</h4>
 <pre><code class="python">y_pred = lr.predict(X)
 print('Last 3 Class Labels: %s' % y_pred[-3:])
@@ -1086,7 +1089,7 @@ print('Last 3 Class Labels:\n %s' % y_pred[-3:])
  [  2.97052325e-11   7.26356627e-04   9.99273643e-01]
  [  1.57464093e-06   1.57779528e-01   8.42218897e-01]]
 </code></pre>
-<h3 id="example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</h3>
+<h2 id="example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</h2>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.plotting import plot_decision_regions
 from mlxtend.classifier import SoftmaxRegression
@@ -1114,9 +1117,9 @@ plt.ylabel('Cost')
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_38_0.png" /></p>
-<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_38_1.png" /></p>
-<h2 id="api">API</h2>
+<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_37_0.png" /></p>
+<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_37_1.png" /></p>
+<h1 id="api">API</h1>
 <p><em>SoftmaxRegression(eta=0.01, epochs=50, l2=0.0, minibatches=1, n_classes=None, random_seed=None, print_progress=0)</em></p>
 <p>Softmax regression classifier.</p>
 <p><strong>Parameters</strong></p>

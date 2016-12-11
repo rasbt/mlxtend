@@ -261,7 +261,10 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                         'cv_scores': cv_scores,
                         'avg_score': k_score
                     }
-                sdq.append(k_idx)
+
+                #k_idx must be a set otherwise different permutations would not be found as
+                #equal in _is_stuck
+                sdq.append(set(k_idx))
 
                 if self.verbose == 1:
                     sys.stderr.write('\rFeatures: %d/%s' % (

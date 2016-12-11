@@ -262,8 +262,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                         'avg_score': k_score
                     }
 
-                #k_idx must be a set otherwise different permutations would not be found as
-                #equal in _is_stuck
+                # k_idx must be a set otherwise different permutations
+                # would not be found as equal in _is_stuck
                 sdq.append(set(k_idx))
 
                 if self.verbose == 1:

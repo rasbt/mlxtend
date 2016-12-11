@@ -24,7 +24,7 @@ The CHANGELOG for the current development version is available at
 ##### Bug Fixes
 
 - Fixed wrong default value for `k_features` in `SequentialFeatureSelector`
-- Fixed sdq so that it will not stay stuck if the k_idx are different permutations of the same combination.
+- Fixed sdq so that it will not stay stuck if the k_idx are different permutations of the same combination(via [zacwellmer](https://github.com/zacwellmer)).
 
 
 

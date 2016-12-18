@@ -55,8 +55,8 @@ def lift_score(y_target, y_predicted, binary=True, positive_label=0):
 def support(y_target, y_predicted=None):
     if y_predicted is None:
         if y_target.ndim == 1:
-            return (y_target == 1).sum() / y_target.shape[0]
-        return (y_target == 1).all(axis=1).sum() / y_target.shape[0]
+            return (y_target == 1).sum() / float(y_target.shape[0])
+        return (y_target == 1).all(axis=1).sum() / float(y_target.shape[0])
     else:
         all_prod = np.column_stack([y_target, y_predicted])
-        return (all_prod == 1).all(axis=1).sum() / all_prod.shape[0]
+        return (all_prod == 1).all(axis=1).sum() / float(all_prod.shape[0])

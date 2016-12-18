@@ -39,6 +39,7 @@
 
 ## `evaluate`
 - [confusion_matrix](user_guide/evaluate/confusion_matrix.md)
+- [lift_score](user_guide/evaluate/lift_score.md)
 - [mcnemar_table](user_guide/evaluate/mcnemar_table.md)
 - [mcnemar](user_guide/evaluate/mcnemar.md)
 - [scoring](user_guide/evaluate/scoring.md)

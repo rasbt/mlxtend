@@ -12,4 +12,4 @@ from .mcnemar import mcnemar
 
 
 __all__ = ["scoring", "confusion_matrix",
-           "mcnemar_table", "mcnemar","lift_score"]
+           "mcnemar_table", "mcnemar", "lift_score"]

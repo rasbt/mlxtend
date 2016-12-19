@@ -16,6 +16,7 @@ The CHANGELOG for the current development version is available at
 ##### New Features
 
 - The `EnsembleVoteClassifier` has a new `refit` attribute that prevents refitting classifiers if `refit=False` to save computational time.
+- Added a new `lift_score` function in `evaluate` to compute lift score.
 
 ##### Changes
 

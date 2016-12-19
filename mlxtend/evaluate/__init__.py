@@ -6,9 +6,10 @@
 
 from .scoring import scoring
 from .confusion_matrix import confusion_matrix
+from .lift_score import lift_score
 from .mcnemar import mcnemar_table
 from .mcnemar import mcnemar
 
 
 __all__ = ["scoring", "confusion_matrix",
-           "mcnemar_table", "mcnemar"]
+           "mcnemar_table", "mcnemar","lift_score"]

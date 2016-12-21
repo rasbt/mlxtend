@@ -10,7 +10,8 @@ import numpy as np
 
 
 def lift_score(y_target, y_predicted, binary=True, positive_label=1):
-    """Compute a lift score.
+    """Lift measures the degree to which the predictions of a
+    classification model are better than randomly-generated predictions.
 
     Parameters
     -----------
@@ -28,7 +29,8 @@ def lift_score(y_target, y_predicted, binary=True, positive_label=1):
 
     Returns
     ----------
-    mat : array-like, shape=[n_classes, n_classes]
+    score : float
+        Lift score in the range [0, \infty]
 
     """
 
@@ -62,7 +64,8 @@ def lift_score(y_target, y_predicted, binary=True, positive_label=1):
 
 
 def support(y_target, y_predicted=None):
-    """Compute a support score.
+    """Support is the fraction of the true value
+        in predictions and target values.
 
     Parameters
     -----------
@@ -74,8 +77,10 @@ def support(y_target, y_predicted=None):
     Returns
     ----------
     score : float
+        Support score in the range [0, 1]
 
     """
+
     if y_predicted is None:
         if y_target.ndim == 1:
             return (y_target == 1).sum() / float(y_target.shape[0])

@@ -79,7 +79,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
-        y : array-like, shape = [n_samples]
+        y : array-like, shape = [n_samples] or [n_samples, n_outputs]
             Target values.
 
         Returns
@@ -137,7 +137,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             else:
                 vals = np.concatenate(probas, axis=1)
         else:
-            vals = np.asarray([clf.predict(X) for clf in self.clfs_]).T
+            vals = np.column_stack([clf.predict(X) for clf in self.clfs_])
         return vals
 
     def predict(self, X):
@@ -151,7 +151,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         Returns
         ----------
-        labels : array-like, shape = [n_samples]
+        labels : array-like, shape = [n_samples] or [n_samples, n_outputs]
             Predicted class labels.
 
         """
@@ -170,7 +170,8 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         Returns
         ----------
-        proba : array-like, shape = [n_samples, n_classes]
+        proba : array-like, shape = [n_samples, n_classes] or a list of \
+                n_outputs of such arrays if n_outputs > 1.
             Probability for each class per sample.
 
         """

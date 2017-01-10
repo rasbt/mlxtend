@@ -8,6 +8,7 @@ from mlxtend.classifier import StackingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import cross_val_score
 from sklearn.exceptions import NotFittedError
@@ -19,6 +20,7 @@ from nose.tools import assert_almost_equal
 
 iris = datasets.load_iris()
 X, y = iris.data[:, 1:3], iris.target
+y2 = np.c_[y, y]
 
 
 def test_StackingClassifier():
@@ -102,6 +104,18 @@ def test_StackingClassifier_avg_vs_concat():
     assert_almost_equal(np.sum(r2[0]), 2.0, places=6)
     assert_almost_equal(np.sum(r2[1]), 2.0, places=6)
     np.array_equal(r2[0][:3], r2[0][3:])
+
+
+def test_multivariate_class():
+    np.random.seed(123)
+    meta = KNeighborsClassifier()
+    clf1 = RandomForestClassifier()
+    clf2 = KNeighborsClassifier()
+    sclf = StackingClassifier(classifiers=[clf1, clf2],
+                              meta_classifier=meta)
+    y_pred = sclf.fit(X, y2).predict(X)
+    ca = .973
+    assert round((y_pred == y2).mean(), 3) == ca
 
 
 def test_gridsearch():

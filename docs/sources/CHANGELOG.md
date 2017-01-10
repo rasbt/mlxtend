@@ -25,7 +25,7 @@ The CHANGELOG for the current development version is available at
 
 - Fixed wrong default value for `k_features` in `SequentialFeatureSelector`
 - Cast selected feature subsets in the SequentialFeautureSubsets as sets to prevent the iterator from getting stuck if the k_idx are different permutations of the same combination (via [zacwellmer](https://github.com/zacwellmer)).
-
+- Fixed an issue with learning curves that caused the performance metrics to be reversed (via [ipashchenko](https://github.com/ipashchenko))
 
 
 

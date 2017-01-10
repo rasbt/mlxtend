@@ -272,8 +272,8 @@ def test_knn_option_sfbs_tuplerange_1():
                skip_if_stuck=True,
                verbose=0)
     sfs4 = sfs4.fit(X, y)
-    assert round(sfs4.k_score_, 3) == 0.966, sfs4.k_score_
-    assert sfs4.k_feature_idx_ == (1, 2, 3), sfs4.k_feature_idx_
+    assert round(sfs4.k_score_, 3) == 0.967, sfs4.k_score_
+    assert sfs4.k_feature_idx_ == (0, 2, 3), sfs4.k_feature_idx_
 
 
 def test_knn_option_sfbs_tuplerange_2():
@@ -290,8 +290,8 @@ def test_knn_option_sfbs_tuplerange_2():
                skip_if_stuck=True,
                verbose=0)
     sfs4 = sfs4.fit(X, y)
-    assert round(sfs4.k_score_, 3) == 0.966, sfs4.k_score_
-    assert sfs4.k_feature_idx_ == (1, 2, 3), sfs4.k_feature_idx_
+    assert round(sfs4.k_score_, 3) == 0.967, sfs4.k_score_
+    assert sfs4.k_feature_idx_ == (0, 2, 3), sfs4.k_feature_idx_
 
 
 def test_knn_option_sffs_tuplerange_1():

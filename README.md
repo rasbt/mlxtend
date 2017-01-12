@@ -22,7 +22,7 @@
 
 <br>
 
-Sebastian Raschka 2014-2016
+Sebastian Raschka 2014-2017
 
 <br>
 

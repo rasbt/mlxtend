@@ -7,7 +7,7 @@ matrix:
           env: LATEST="true" TENSORFLOW="false" COVERAGE="true" NOTEBOOKS="false"
         - python: 3.5
           env: LATEST="true" TENSORFLOW="true" COVERAGE="false" NOTEBOOKS="true"
-        - python: 3.4
+        - python: 3.6
           env: LATEST="true" TENSORFLOW="false" COVERAGE="false" NOTEBOOKS="false"
         - python: 2.7
           env: LATEST="true" TENSORFLOW="false" COVERAGE="false" NOTEBOOKS="false"

@@ -1,6 +1,6 @@
 # Stacking classifier
 
-# Sebastian Raschka 2014-2016
+# Sebastian Raschka 2014-2017
 # mlxtend Machine Learning Library Extensions
 #
 # An ensemble-learning meta-classifier for stacking
@@ -37,9 +37,8 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     use_probas : bool (default: False)
         If True, trains meta-classifier based on predicted probabilities
         instead of class labels.
-    average_probas : bool (default: True)
-        `average_probas=True` is deprecated and will be changed to
-        `average_probas=False` in v0.5.0.
+    average_probas : bool (default: False)
+        Averages the probabilities as meta features if True.
     verbose : int, optional (default=0)
         Controls the verbosity of the building process.
         - `verbose=0` (default): Prints nothing
@@ -58,7 +57,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
     """
     def __init__(self, classifiers, meta_classifier,
-                 use_probas=False, average_probas=True, verbose=0):
+                 use_probas=False, average_probas=False, verbose=0):
 
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier
@@ -69,11 +68,6 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                                       key, value in
                                       _name_estimators([meta_classifier])}
         self.use_probas = use_probas
-        if average_probas and use_probas:
-            warnings.simplefilter('always', DeprecationWarning)
-            warnings.warn("`average_probas=True` has been deprecated and will "
-                          "be changed to `average_probas=False` in v0.5.0.",
-                          DeprecationWarning)
         self.average_probas = average_probas
         self.verbose = verbose
 
@@ -85,7 +79,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
-        y : array-like, shape = [n_samples]
+        y : array-like, shape = [n_samples] or [n_samples, n_outputs]
             Target values.
 
         Returns
@@ -143,7 +137,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             else:
                 vals = np.concatenate(probas, axis=1)
         else:
-            vals = np.asarray([clf.predict(X) for clf in self.clfs_]).T
+            vals = np.column_stack([clf.predict(X) for clf in self.clfs_])
         return vals
 
     def predict(self, X):
@@ -157,7 +151,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         Returns
         ----------
-        labels : array-like, shape = [n_samples]
+        labels : array-like, shape = [n_samples] or [n_samples, n_outputs]
             Predicted class labels.
 
         """
@@ -176,7 +170,8 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         Returns
         ----------
-        proba : array-like, shape = [n_samples, n_classes]
+        proba : array-like, shape = [n_samples, n_classes] or a list of \
+                n_outputs of such arrays if n_outputs > 1.
             Probability for each class per sample.
 
         """

@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2016
+# Sebastian Raschka 2014-2017
 # mlxtend Machine Learning Library Extensions
 #
 # Object for selecting a dataset column in scikit-learn pipelines.
@@ -11,12 +11,7 @@ from mlxtend.feature_selection import ColumnSelector
 from sklearn.linear_model import LogisticRegression
 from sklearn.datasets import load_iris
 from sklearn.pipeline import make_pipeline
-from distutils.version import LooseVersion as Version
-from sklearn import __version__ as sklearn_version
-if Version(sklearn_version) < '0.18':
-    from sklearn.grid_search import GridSearchCV
-else:
-    from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import GridSearchCV
 
 
 def test_ColumnSelector():

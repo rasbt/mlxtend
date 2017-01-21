@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2016
+# Sebastian Raschka 2014-2017
 # mlxtend Machine Learning Library Extensions
 #
 # Algorithm for sequential feature selection.
@@ -6,10 +6,11 @@
 #
 # License: BSD 3 clause
 
-
+import datetime
 import numpy as np
 import scipy as sp
 import scipy.stats
+import warnings
 import sys
 from copy import deepcopy
 from itertools import combinations
@@ -19,12 +20,7 @@ from sklearn.base import clone
 from sklearn.base import BaseEstimator
 from sklearn.base import MetaEstimatorMixin
 from ..externals.name_estimators import _name_estimators
-from distutils.version import LooseVersion as Version
-from sklearn import __version__ as sklearn_version
-if Version(sklearn_version) < '0.18':
-    from sklearn.cross_validation import cross_val_score
-else:
-    from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import cross_val_score
 
 
 class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
@@ -47,9 +43,10 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         backward selection otherwise
     floating : bool (default: False)
         Adds a conditional exclusion/inclusion if True.
-    print_progress : bool (default: True)
-        Prints progress as the number of epochs
-        to stderr.
+    verbose : int (default: 0), level of verbosity to use in logging.
+        If 0, no output,
+        if 1 number of features in current set, if 2 detailed logging i
+        ncluding timestamp and cv scores at step.
     scoring : str or callable (default='accuracy')
         Scoring metric in {accuracy, f1, precision, recall, roc_auc}
         for classifiers,
@@ -105,12 +102,13 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
               'avg_score' (average cross-validation score)
 
     """
-    def __init__(self, estimator, k_features='best',
+    def __init__(self, estimator, k_features=1,
                  forward=True, floating=False,
-                 print_progress=True, scoring=None,
+                 verbose=0, scoring=None,
                  cv=5, skip_if_stuck=True, n_jobs=1,
                  pre_dispatch='2*n_jobs',
                  clone_estimator=True):
+
         self.estimator = estimator
         self.k_features = k_features
         self.forward = forward
@@ -123,8 +121,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             self.scorer = scoring
         self.skip_if_stuck = skip_if_stuck
         self.cv = cv
-        self.print_progress = print_progress
         self.n_jobs = n_jobs
+        self.verbose = verbose
         self.named_est = {key: value for key, value in
                           _name_estimators([self.estimator])}
         self.clone_estimator = clone_estimator
@@ -133,6 +131,11 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         else:
             self.est_ = self.estimator
         self.fitted = False
+        self.subsets_ = {}
+        self.interrupted_ = False
+
+        # don't mess with this unless testing
+        self._TESTING_INTERRUPT_MODE = False
 
     def fit(self, X, y):
         """Perform feature selection and learn model from training data.
@@ -160,7 +163,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                                                  self.k_features > X.shape[1]):
             raise AttributeError('k_features must be a positive integer'
                                  ' between 1 and X.shape[1], got %s'
-                                 % (self.k_features))
+                                 % (self.k_features, ))
 
         if isinstance(self.k_features, tuple):
             if len(self.k_features) != 2:
@@ -203,51 +206,86 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             k_idx = tuple(range(X.shape[1]))
             k = len(k_idx)
             k_score = self._calc_score(X, y, k_idx)
-            self.subsets_[k] = {'feature_idx': k_idx,
-                                'cv_scores': k_score,
-                                'avg_score': k_score.mean()}
+            self.subsets_[k] = {
+                'feature_idx': k_idx,
+                'cv_scores': k_score,
+                'avg_score': k_score.mean()
+            }
 
-        while k != k_to_select:
-            prev_subset = set(k_idx)
-            if self.forward:
-                k_idx, k_score, cv_scores = \
-                    self._inclusion(orig_set=orig_set,
-                                    subset=prev_subset,
-                                    X=X, y=y)
-            else:
-                k_idx, k_score, cv_scores = \
-                    self._exclusion(feature_set=prev_subset, X=X, y=y)
-
-            if self.floating and not self._is_stuck(sdq):
-                (new_feature,) = set(k_idx) ^ prev_subset
+        best_subset = None
+        k_score = 0
+        try:
+            while k != k_to_select:
+                prev_subset = set(k_idx)
                 if self.forward:
-                    k_idx_c, k_score_c, cv_scores_c = \
-                        self._exclusion(feature_set=k_idx,
-                                        fixed_feature=new_feature,
-                                        X=X, y=y)
+                    k_idx, k_score, cv_scores = self._inclusion(
+                        orig_set=orig_set,
+                        subset=prev_subset,
+                        X=X,
+                        y=y
+                    )
                 else:
-                    k_idx_c, k_score_c, cv_scores_c = \
-                        self._inclusion(orig_set=orig_set - {new_feature},
-                                        subset=set(k_idx),
-                                        X=X, y=y)
+                    k_idx, k_score, cv_scores = self._exclusion(
+                        feature_set=prev_subset,
+                        X=X,
+                        y=y
+                    )
 
-                if k_score_c and k_score_c > k_score:
-                    k_idx, k_score, cv_scores = \
-                        k_idx_c, k_score_c, cv_scores_c
+                if self.floating and not self._is_stuck(sdq):
+                    (new_feature,) = set(k_idx) ^ prev_subset
+                    if self.forward:
+                        k_idx_c, k_score_c, cv_scores_c = self._exclusion(
+                            feature_set=k_idx,
+                            fixed_feature=new_feature,
+                            X=X,
+                            y=y
+                        )
+                    else:
+                        k_idx_c, k_score_c, cv_scores_c = self._inclusion(
+                            orig_set=orig_set - {new_feature},
+                            subset=set(k_idx),
+                            X=X,
+                            y=y
+                        )
 
-            k = len(k_idx)
-            # floating can lead to multiple same-sized subsets
-            if k not in self.subsets_ or (self.subsets_[k]['avg_score'] >
-                                          k_score):
-                self.subsets_[k] = {'feature_idx': k_idx,
-                                    'cv_scores': cv_scores,
-                                    'avg_score': k_score}
-            sdq.append(k_idx)
+                    if k_score_c and k_score_c > k_score:
+                        k_idx, k_score, cv_scores = \
+                            k_idx_c, k_score_c, cv_scores_c
 
-            if self.print_progress:
-                sys.stderr.write('\rFeatures: %d/%d' % (
-                    len(k_idx), k_to_select))
-                sys.stderr.flush()
+                k = len(k_idx)
+                # floating can lead to multiple same-sized subsets
+                if k not in self.subsets_ or (self.subsets_[k]['avg_score'] <
+                                              k_score):
+                    self.subsets_[k] = {
+                        'feature_idx': k_idx,
+                        'cv_scores': cv_scores,
+                        'avg_score': k_score
+                    }
+
+                # k_idx must be a set otherwise different permutations
+                # would not be found as equal in _is_stuck
+                sdq.append(set(k_idx))
+
+                if self.verbose == 1:
+                    sys.stderr.write('\rFeatures: %d/%s' % (
+                        len(k_idx),
+                        k_to_select
+                    ))
+                    sys.stderr.flush()
+                elif self.verbose > 1:
+                    sys.stderr.write('\n[%s] Features: %d/%s -- score: %s' % (
+                        datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                        len(k_idx),
+                        k_to_select,
+                        k_score
+                    ))
+
+                if self._TESTING_INTERRUPT_MODE:
+                    raise KeyboardInterrupt
+
+        except KeyboardInterrupt as e:
+            self.interrupted_ = True
+            sys.stderr.write('\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...')
 
         if select_in_range:
             max_score = float('-inf')

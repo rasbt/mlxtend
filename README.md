@@ -22,7 +22,7 @@
 
 <br>
 
-Sebastian Raschka 2014-2016
+Sebastian Raschka 2014-2017
 
 <br>
 
@@ -62,7 +62,7 @@ To install mlxtend, just execute
 pip install mlxtend  
 ```
 
-Alternatively, you download the package manually from the Python Package Index [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend), unzip it, navigate into the package, and use the command:
+Alternatively, you could download the package manually from the Python Package Index [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend), unzip it, navigate into the package, and use the command:
 
 ```bash
 python setup.py install
@@ -70,7 +70,7 @@ python setup.py install
 
 #### Dev Version
 
-The mlxtend version on PyPI may always one step behind; you can install the latest development version from the GitHub repository by executing
+The mlxtend version on PyPI may always be one step behind; you can install the latest development version from the GitHub repository by executing
 
 ```bash
 pip install git+git://github.com/rasbt/mlxtend.git#egg=mlxtend
@@ -81,15 +81,6 @@ Or, you can fork the GitHub repository from https://github.com/rasbt/mlxtend and
 ```bash
 python setup.py install
 ```
-
-#### Anaconda/Conda
-
-Conda packages are now available for Mac, Windows, and Linux. You can install mlxtend using conda by executing
-
-```bash
-conda install -c rasbt mlxtend
-```
-
 
 <br>
 <br>
@@ -107,7 +98,7 @@ from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
 from mlxtend.classifier import EnsembleVoteClassifier
 from mlxtend.data import iris_data
-from mlxtend.evaluate import plot_decision_regions
+from mlxtend.plotting import plot_decision_regions
 
 # Initializing Classifiers
 clf1 = LogisticRegression(random_state=0)
@@ -156,7 +147,7 @@ If you use mlxtend as part of your workflow in a scientific publication, please 
 
 ## License
 
-- This project is released under a permissive new BSD open source [license](`[LICENSE-BSD3.txt](https://github.com/rasbt/mlxtend/blob/master/LICENSE-BSD3.txt)`) and commercially usable. There is no warranty; not even for merchantability or fitness for a particular purpose.
+- This project is released under a permissive new BSD open source license ([LICENSE-BSD3.txt](https://github.com/rasbt/mlxtend/blob/master/LICENSE-BSD3.txt)) and commercially usable. There is no warranty; not even for merchantability or fitness for a particular purpose.
 - In addition, you may use, copy, modify and redistribute all artistic creative works (figures and images) included in this distribution under the directory
 according to the terms and conditions of the Creative Commons Attribution 4.0 International License.  See the file [LICENSE-CC-BY.txt](https://github.com/rasbt/mlxtend/blob/master/LICENSE-CC-BY.txt) for details. (Computer-generated graphics such as the plots produced by matplotlib fall under the BSD license mentioned above).
 

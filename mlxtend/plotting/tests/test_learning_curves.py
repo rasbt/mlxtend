@@ -1,19 +1,14 @@
-# Sebastian Raschka 2014-2016
+# Sebastian Raschka 2014-2017
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
 
+import numpy as np
 from mlxtend.plotting import plot_learning_curves
 from sklearn import datasets
 from sklearn.tree import DecisionTreeClassifier
-import numpy as np
-from distutils.version import LooseVersion as Version
-from sklearn import __version__ as sklearn_version
-if Version(sklearn_version) < '0.18':
-    from sklearn.cross_validation import train_test_split
-else:
-    from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split
 
 
 def test_training_size():

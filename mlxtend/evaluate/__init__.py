@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2016
+# Sebastian Raschka 2014-2017
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
@@ -6,6 +6,9 @@
 
 from .scoring import scoring
 from .confusion_matrix import confusion_matrix
+from .mcnemar import mcnemar_table
+from .mcnemar import mcnemar
 
 
-__all__ = ["scoring", "confusion_matrix"]
+__all__ = ["scoring", "confusion_matrix",
+           "mcnemar_table", "mcnemar"]

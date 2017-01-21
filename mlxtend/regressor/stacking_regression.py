@@ -1,6 +1,6 @@
 # Stacking regressor
 
-# Sebastian Raschka 2014-2016
+# Sebastian Raschka 2014-2017
 # mlxtend Machine Learning Library Extensions
 #
 # An ensemble-learning meta-regressor for stacking regression
@@ -73,7 +73,7 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
-        y : array-like, shape = [n_samples]
+        y : array-like, shape = [n_samples] or [n_samples, n_targets]
             Target values.
 
         Returns
@@ -131,7 +131,7 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             return out
 
     def _predict_meta_features(self, X):
-        return np.asarray([r.predict(X) for r in self.regr_]).T
+        return np.column_stack([r.predict(X) for r in self.regr_])
 
     def predict(self, X):
         """ Predict target values for X.
@@ -144,7 +144,7 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
 
         Returns
         ----------
-        y_target : array-like, shape = [n_samples]
+        y_target : array-like, shape = [n_samples] or [n_samples, n_targets]
             Predicted target values.
         """
         meta_features = self._predict_meta_features(X)

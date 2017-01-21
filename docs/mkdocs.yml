@@ -34,6 +34,7 @@ pages:
   - classifier:
     - user_guide/classifier/EnsembleVoteClassifier.md
     - user_guide/classifier/StackingClassifier.md
+    - user_guide/classifier/StackingCVClassifier.md
     - user_guide/classifier/Perceptron.md
     - user_guide/classifier/Adaline.md
     - user_guide/classifier/LogisticRegression.md
@@ -61,6 +62,8 @@ pages:
     - user_guide/tf_cluster/TfKmeans.md
   - evaluate:
     - user_guide/evaluate/confusion_matrix.md
+    - user_guide/evaluate/mcnemar_table.md
+    - user_guide/evaluate/mcnemar.md
     - user_guide/evaluate/scoring.md
   - preprocessing:
     - user_guide/preprocessing/MeanCenterer.md
@@ -68,6 +71,7 @@ pages:
     - user_guide/preprocessing/shuffle_arrays_unison.md
     - user_guide/preprocessing/standardize.md
     - user_guide/preprocessing/one-hot_encoding.md
+    - user_guide/preprocessing/OnehotTransactions.md
     - user_guide/preprocessing/DenseTransformer.md
     - user_guide/preprocessing/CopyTransformer.md
   - data:
@@ -78,6 +82,8 @@ pages:
     - user_guide/data/loadlocal_mnist.md
     - user_guide/data/wine_data.md
     - user_guide/data/three_blobs_data.md
+  - association:
+    - user_guide/association/apriori.md
   - file_io:
     - user_guide/file_io/find_filegroups.md
     - user_guide/file_io/find_files.md
@@ -90,6 +96,7 @@ pages:
     - user_guide/plotting/category_scatter.md
     - user_guide/plotting/enrichment_plot.md
     - user_guide/plotting/stacked_barplot.md
+    - user_guide/plotting/checkerboard_plot.md
   - math:
     - user_guide/math/num_combinations.md
     - user_guide/math/num_permutations.md

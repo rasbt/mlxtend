@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2016
+# Sebastian Raschka 2014-2017
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
@@ -11,12 +11,7 @@ from sklearn.svm import SVR
 import numpy as np
 from numpy.testing import assert_almost_equal
 from nose.tools import raises
-from distutils.version import LooseVersion as Version
-from sklearn import __version__ as sklearn_version
-if Version(sklearn_version) < '0.18':
-    from sklearn.grid_search import GridSearchCV
-else:
-    from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import GridSearchCV
 
 # Generating a sample dataset
 np.random.seed(1)
@@ -24,6 +19,7 @@ X1 = np.sort(5 * np.random.rand(40, 1), axis=0)
 X2 = np.sort(5 * np.random.rand(40, 2), axis=0)
 y = np.sin(X1).ravel()
 y[::5] += 3 * (0.5 - np.random.rand(8))
+y2 = np.sin(X2)
 
 
 def test_different_models():
@@ -49,7 +45,18 @@ def test_multivariate():
     stregr.fit(X2, y).predict(X2)
     mse = 0.218
     got = np.mean((stregr.predict(X2) - y) ** 2)
-    print(got)
+    assert round(got, 3) == mse
+
+
+def test_multivariate_class():
+    lr = LinearRegression()
+    ridge = Ridge(random_state=1)
+    meta = LinearRegression(normalize=True)
+    stregr = StackingRegressor(regressors=[lr, ridge],
+                               meta_regressor=meta)
+    stregr.fit(X2, y2).predict(X2)
+    mse = 0.122
+    got = np.mean((stregr.predict(X2) - y2) ** 2)
     assert round(got, 3) == mse
 
 

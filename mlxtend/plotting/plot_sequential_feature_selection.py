@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2016
+# Sebastian Raschka 2014-2017
 # mlxtend Machine Learning Library Extensions
 #
 # Algorithm for plotting sequential feature selection.
@@ -7,7 +7,6 @@
 # License: BSD 3 clause
 
 import matplotlib.pyplot as plt
-
 
 def plot_sequential_feature_selection(metric_dict,
                                       kind='std_dev',
@@ -45,6 +44,7 @@ def plot_sequential_feature_selection(metric_dict,
     fig : matplotlib.pyplot.figure() object
 
     """
+
     allowed = {'std_dev', 'std_err', 'ci', None}
     if kind not in allowed:
         raise AttributeError('kind not in %s' % allowed)

@@ -1,6 +1,6 @@
 # API generator script
 #
-# Sebastian Raschka 2014-2016
+# Sebastian Raschka 2014-2017
 # mlxtend Machine Learning Library Extensions
 #
 # Author: Sebastian Raschka <sebastianraschka.com>
@@ -406,4 +406,4 @@ if __name__ == "__main__":
                                      clean=args.clean,
                                      str_above_header=('mlxtend'
                                                        ' version: %s \n' % (
-                                                        package.__version__)))
+                                                       package.__version__)))

@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2016
+# Sebastian Raschka 2014-2017
 # mlxtend Machine Learning Library Extensions
 #
 # Implementation of a Multi-layer Perceptron in Tensorflow
@@ -316,6 +316,7 @@ class TfMultiLayerPerceptron(_BaseModel, _IterativeModel,
                                        seed=self.random_seed)
         if len(tf_weights) > 2:
             for layer in range(2, len(tf_weights)):
+                layer = str(layer)
                 prev_layer = self.activations[layer](tf.add(tf.matmul(
                     prev_layer, tf_weights[layer]), tf_biases[layer]))
                 if dropout:

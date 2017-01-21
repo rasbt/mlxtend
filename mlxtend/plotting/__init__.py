@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2016
+# Sebastian Raschka 2014-2017
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
@@ -14,6 +14,7 @@ from .remove_chartjunk import remove_borders
 from .scatter import category_scatter
 from .stacked_barplot import stacked_barplot
 from .enrichment_plot import enrichment_plot
+from .checkerboard import checkerboard_plot
 
 __all__ = ["plot_learning_curves",
            "plot_decision_regions",
@@ -23,4 +24,5 @@ __all__ = ["plot_learning_curves",
            "remove_borders",
            "category_scatter",
            "stacked_barplot",
-           "enrichment_plot"]
+           "enrichment_plot",
+           "checkerboard_plot"]

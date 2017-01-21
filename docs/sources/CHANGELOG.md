@@ -21,6 +21,7 @@ The CHANGELOG for the current development version is available at
 ##### Changes
 
 - Changed default verbosity level in `SequentialFeatureSelector` to 0
+- The `EnsembleVoteClassifier` now raises a `NotFittedError` if the estimator wasn't `fit` before calling `predict`. (via [Anton Loss](https://github.com/avloss))
 
 ##### Bug Fixes
 

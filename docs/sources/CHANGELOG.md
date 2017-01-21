@@ -2,32 +2,64 @@
 
 ---
 
-### Version 0.4.3dev0
 
-The CHANGELOG for the current development version is available via
+### Version 0.5.1dev0
+
+The CHANGELOG for the current development version is available at
 [https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md](https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md).
 
 ##### Downloads
 
-- -
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/0.5.0.zip)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.5.0.tar.gz)
+
+##### New Features
+
+- The `EnsembleVoteClassifier` has a new `refit` attribute that prevents refitting classifiers if `refit=False` to save computational time.
+- `StackingClassifier` and `StackingRegressor` support multivariate targets if the underlying models do (via [kernc](https://github.com/kernc)).
+
+##### Changes
+
+- Changed default verbosity level in `SequentialFeatureSelector` to 0
+- The `EnsembleVoteClassifier` now raises a `NotFittedError` if the estimator wasn't `fit` before calling `predict`. (via [Anton Loss](https://github.com/avloss))
+
+##### Bug Fixes
+
+- Fixed wrong default value for `k_features` in `SequentialFeatureSelector`
+- Cast selected feature subsets in the `SequentialFeautureSelector` as sets to prevent the iterator from getting stuck if the `k_idx` are different permutations of the same combination (via [Zac Wellmer](https://github.com/zacwellmer)).
+- Fixed an issue with learning curves that caused the performance metrics to be reversed (via [ipashchenko](https://github.com/ipashchenko))
+- Fixed a bug that could occur in the `SequentialFeatureSelector` if there are similarly-well performing subsets in the floating variants (via [Zac Wellmer](https://github.com/zacwellmer)).
+
+
+
+### Version 0.5.0 (2016-11-09)
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/0.5.0.zip)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.5.0.tar.gz)
 
 ##### New Features
 
 - New `ExhaustiveFeatureSelector` estimator in `mlxtend.feature_selection` for evaluating all feature combinations in a specified range
-- The `StackingClassifier` has a new parameter `average_probas` that is set to `True` by default to maintain the current behavior. A deprecation warning was added though, and it will default to `False` in future releases (0.5.0); `average_probas=False` will result in stacking of the level-1 predicted probabilities rather than averaging these.
-- New 'StackingCVClassifier' estimator in 'mlxtend.classifier' for implementing a stacking ensemble that uses cross-validation techniques for training the meta-estimator to avoid overfitting. (via [Reiichiro Nakano](https://github.com/reiinakano))
+- The `StackingClassifier` has a new parameter `average_probas` that is set to `True` by default to maintain the current behavior. A deprecation warning was added though, and it will default to `False` in future releases (0.6.0); `average_probas=False` will result in stacking of the level-1 predicted probabilities rather than averaging these.
+- New `StackingCVClassifier` estimator in 'mlxtend.classifier' for implementing a stacking ensemble that uses cross-validation techniques for training the meta-estimator to avoid overfitting ([Reiichiro Nakano](https://github.com/reiinakano))
+- New `OnehotTransactions` encoder class added to the `preprocessing` submodule for transforming transaction data into a one-hot encoded array
+- The `SequentialFeatureSelector` estimator in `mlxtend.feature_selection` now is safely stoppable mid-process by control+c, and deprecated print_progress in favor of a more tunable verbose parameter ([Will McGinnis](https://github.com/wdm0006))
+- New `apriori` function in `association` to extract frequent itemsets from transaction data for association rule mining
+- New `checkerboard_plot` function in `plotting` to plot checkerboard tables / heat maps
+- New `mcnemar_table` and `mcnemar` functions in `evaluate` to compute 2x2 contingency tables and McNemar's test
 
 ##### Changes
 
-- All plotting functions have been moved to `mlxtend.plotting` for compatibility reasons with continuous integration services and to make the installation of `matplotlib` optional for users of mlxtend's core functionality.
-- Added a compatibility layer for scikit-learn 0.18 using the new `model_selection` module  while maintaining backwards compatibility to scikit-learn 0.17
-The `EnsembleVoteClassifier` now raises a `NotFittedError` if the estimator wasn't `fit` before calling `predict`. (via [Anton Loss](https://github.com/avloss))
+- All plotting functions have been moved to `mlxtend.plotting` for compatibility reasons with continuous integration services and to make the installation of `matplotlib` optional for users of `mlxtend`'s core functionality
+- Added a compatibility layer for `scikit-learn 0.18` using the new `model_selection` module  while maintaining backwards compatibility to scikit-learn 0.17.
 
 ##### Bug Fixes
 
 - `mlxtend.plotting.plot_decision_regions` now draws decision regions correctly if more than 4 class labels are present
-- Raise `AttributeError` in `plot_decision_regions` when the `X_higlight` argument is a 1D array. (via [chkoar](https://github.com/chkoar)).
-- The `EnsembleVoteClassifier` now raises a `NotFittedError` if the estimator wasn't `fit` before calling `predict`. (via [Anton Loss](https://github.com/avloss))
+- Raise `AttributeError` in `plot_decision_regions` when the `X_higlight` argument is a 1D array ([chkoar](https://github.com/chkoar))
+
 
 
 ### Version 0.4.2 (2016-08-24)
@@ -58,7 +90,7 @@ imput arrays via `transform` and `fit_transform`
 
 ##### Bug Fixes
 
-- Fixed a problem when a tuple-range was provided as argument to the `SequentialFeatureSelector`'s `k_features` parameter and the scoring metric was more negative than -1 (e.g., as in scikit-learn's MSE scoring function) via [wahutch](https://github.com/wahutch)
+- Fixed a problem when a tuple-range was provided as argument to the `SequentialFeatureSelector`'s `k_features` parameter and the scoring metric was more negative than -1 (e.g., as in scikit-learn's MSE scoring function) (wahutch](https://github.com/wahutch))
 - Fixed an `AttributeError` issue when `verbose` > 1 in `StackingClassifier`
 - Fixed a bug in `classifier.SoftmaxRegression` where the mean values of the offsets were used to update the bias units rather than their sum
 - Fixed rare bug in MLP `_layer_mapping` functions that caused a swap between the random number generation seed when initializing weights and biases

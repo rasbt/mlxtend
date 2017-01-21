@@ -15,7 +15,7 @@ The CHANGELOG for the current development version is available via
 
 - New `ExhaustiveFeatureSelector` estimator in `mlxtend.feature_selection` for evaluating all feature combinations in a specified range
 - The `StackingClassifier` has a new parameter `average_probas` that is set to `True` by default to maintain the current behavior. A deprecation warning was added though, and it will default to `False` in future releases (0.5.0); `average_probas=False` will result in stacking of the level-1 predicted probabilities rather than averaging these.
-- New 'StackingCVClassifier' estimator in 'mlxtend.classifier' for implementing a stacking ensemble that uses cross-validation techniques for training the meta-estimator to avoid overfitting. [Reiichiro Nakano](https://github.com/reiinakano)
+- New 'StackingCVClassifier' estimator in 'mlxtend.classifier' for implementing a stacking ensemble that uses cross-validation techniques for training the meta-estimator to avoid overfitting. (via [Reiichiro Nakano](https://github.com/reiinakano))
 
 ##### Changes
 
@@ -25,8 +25,8 @@ The CHANGELOG for the current development version is available via
 ##### Bug Fixes
 
 - `mlxtend.plotting.plot_decision_regions` now draws decision regions correctly if more than 4 class labels are present
-- Raise `AttributeError` in `plot_decision_regions` when the `X_higlight` argument is a 1D array (via [chkoar](https://github.com/chkoar)).
-
+- Raise `AttributeError` in `plot_decision_regions` when the `X_higlight` argument is a 1D array. (via [chkoar](https://github.com/chkoar)).
+- The `EnsembleVoteClassifier` now raises a `NotFittedError` if the estimator wasn't `fit` before calling `predict`. (via [Anton Loss](https://github.com/avloss))
 
 
 ### Version 0.4.2 (2016-08-24)

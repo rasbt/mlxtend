@@ -122,7 +122,7 @@ class TfKmeans(_BaseModel, _Cluster, _IterativeModel):
                 centroids.append(centroid)
             centroids = tf.concat(0, centroids)
 
-            train_init = tf.initialize_all_variables()
+            train_init = tf.global_variables_initializer()
 
         tf.reset_default_graph()
 
@@ -184,7 +184,7 @@ class TfKmeans(_BaseModel, _Cluster, _IterativeModel):
             distance_matrices = tf.reshape(tf.concat(0, distance_matrices),
                                            shape=(self.k, n_samples))
             assignments = tf.argmin(distance_matrices, 0)
-            pred_init = tf.initialize_all_variables()
+            pred_init = tf.global_variables_initializer()
 
         tf.reset_default_graph()
 

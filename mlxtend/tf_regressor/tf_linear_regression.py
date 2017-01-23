@@ -100,7 +100,7 @@ class TfLinearRegression(_BaseModel, _IterativeModel, _Regressor):
             optimizer = tf.train.GradientDescentOptimizer(
                 learning_rate=self.eta)
             train = optimizer.minimize(mse_cost)
-            train_init = tf.initialize_all_variables()
+            train_init = tf.global_variables_initializer()
 
         sess = tf.Session(graph=g_train)
         with sess:
@@ -145,7 +145,7 @@ class TfLinearRegression(_BaseModel, _IterativeModel, _Regressor):
                                      dtype=self.dtype)
             b = tf.convert_to_tensor(value=self.b_, dtype=self.dtype)
             tf_X = tf.convert_to_tensor(value=X, dtype=self.dtype)
-            predict_init = tf.initialize_all_variables()
+            predict_init = tf.global_variables_initializer()
 
         sess = tf.Session(graph=g_predict)
         with sess:

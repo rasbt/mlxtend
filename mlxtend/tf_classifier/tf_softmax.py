@@ -121,7 +121,7 @@ class TfSoftmaxRegression(_BaseModel, _IterativeModel, _MultiClass,
             train = optimizer.minimize(cost)
 
             # Initializing the variables
-            init = tf.initialize_all_variables()
+            init = tf.global_variables_initializer()
 
         # Launch the graph
         with tf.Session(graph=g) as sess:
@@ -192,7 +192,7 @@ class TfSoftmaxRegression(_BaseModel, _IterativeModel, _MultiClass,
             raise AttributeError('The model has not been fitted, yet.')
 
         with tf.Session():
-            tf.initialize_all_variables().run()
+            tf.global_variables_initializer().run()
             tf_X = tf.convert_to_tensor(value=X, dtype=self.dtype)
             logits = tf.nn.softmax(tf.matmul(tf_X, self.w_) +
                                    self.b_)

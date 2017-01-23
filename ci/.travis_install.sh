@@ -35,7 +35,7 @@ python -c "import numpy; print('numpy %s' % numpy.__version__)"
 python -c "import scipy; print('scipy %s' % scipy.__version__)"
 
 if [ "${TENSORFLOW}" = "true" ]; then
-    conda install tensorflow=0.10
+    conda install -c conda-forge tensorflow
     python -c "import tensorflow; print('tensorflow %s' % tensorflow.__version__)";
 else
     python -c "import sklearn; print('sklearn %s' % sklearn.__version__)";

@@ -35,6 +35,8 @@ python -c "import numpy; print('numpy %s' % numpy.__version__)"
 python -c "import scipy; print('scipy %s' % scipy.__version__)"
 
 if [ "${TENSORFLOW}" = "true" ]; then
+    pip uninstall protobuf
+    conda uninstall protobuf
     conda install -c conda-forge tensorflow
     python -c "import tensorflow; print('tensorflow %s' % tensorflow.__version__)";
 else

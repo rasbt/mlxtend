@@ -22,6 +22,7 @@ The CHANGELOG for the current development version is available at
 
 - Changed default verbosity level in `SequentialFeatureSelector` to 0
 - The `EnsembleVoteClassifier` now raises a `NotFittedError` if the estimator wasn't `fit` before calling `predict`. (via [Anton Loss](https://github.com/avloss))
+- Added new TensorFlow variable initialization syntax to guarantee compatibility with TensorFlow 1.0
 
 ##### Bug Fixes
 

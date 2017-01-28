@@ -16,7 +16,6 @@ from sklearn.utils.validation import check_is_fitted
 from ..externals.name_estimators import _name_estimators
 from ..externals import six
 import numpy as np
-import warnings
 
 
 class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
@@ -62,7 +61,8 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
     """
     def __init__(self, classifiers, meta_classifier,
-                 use_probas=False, average_probas=False, verbose=0, use_features_in_secondary=False):
+                 use_probas=False, average_probas=False, verbose=0,
+                 use_features_in_secondary=False):
 
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier

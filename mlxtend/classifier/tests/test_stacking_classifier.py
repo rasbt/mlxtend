@@ -206,3 +206,20 @@ def test_verbose():
                               meta_classifier=meta,
                               verbose=3)
     sclf.fit(iris.data, iris.target)
+
+def test_use_features():
+    np.random.seed(123)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingClassifier(classifiers=[clf1, clf2],
+                              use_features_in_secondary=True,
+                              meta_classifier=meta)
+
+    scores = cross_val_score(sclf,
+                             X,
+                             y,
+                             cv=5,
+                             scoring='accuracy')
+    scores_mean = (round(scores.mean(), 2))
+    assert scores_mean == 0.95, scores_mean

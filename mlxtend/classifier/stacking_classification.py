@@ -47,6 +47,11 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                        regressor being fitted
         - `verbose>2`: Changes `verbose` param of the underlying regressor to
            self.verbose - 2
+    use_features_in_secondary : bool (default: False)
+        If True, the meta-classifier will be trained both on the predictions
+        of the original classifiers and the original dataset.
+        If False, the meta-classifier will be trained only on the predictions
+        of the original classifiers.
 
     Attributes
     ----------
@@ -57,7 +62,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
     """
     def __init__(self, classifiers, meta_classifier,
-                 use_probas=False, average_probas=False, verbose=0):
+                 use_probas=False, average_probas=False, verbose=0, use_features_in_secondary=False):
 
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier
@@ -70,6 +75,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.use_probas = use_probas
         self.average_probas = average_probas
         self.verbose = verbose
+        self.use_features_in_secondary = use_features_in_secondary
 
     def fit(self, X, y):
         """ Fit ensemble classifers and the meta-classifier.
@@ -109,7 +115,12 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             clf.fit(X, y)
 
         meta_features = self._predict_meta_features(X)
-        self.meta_clf_.fit(meta_features, y)
+
+        if not self.use_features_in_secondary:
+            self.meta_clf_.fit(meta_features, y)
+        else:
+            self.meta_clf_.fit(np.hstack((X, meta_features)), y)
+
         return self
 
     def get_params(self, deep=True):
@@ -157,7 +168,11 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         """
         check_is_fitted(self, 'clfs_')
         meta_features = self._predict_meta_features(X)
-        return self.meta_clf_.predict(meta_features)
+
+        if not self.use_features_in_secondary:
+            return self.meta_clf_.predict(meta_features)
+        else:
+            return self.meta_clf_.predict(np.hstack((X, meta_features)))
 
     def predict_proba(self, X):
         """ Predict class probabilities for X.
@@ -177,4 +192,8 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         """
         check_is_fitted(self, 'clfs_')
         meta_features = self._predict_meta_features(X)
-        return self.meta_clf_.predict_proba(meta_features)
+
+        if not self.use_features_in_secondary:
+            return self.meta_clf_.predict_proba(meta_features)
+        else:
+            return self.meta_clf_.predict_proba(np.hstack((X, meta_features)))

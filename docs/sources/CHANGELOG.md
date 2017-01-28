@@ -17,6 +17,7 @@ The CHANGELOG for the current development version is available at
 
 - The `EnsembleVoteClassifier` has a new `refit` attribute that prevents refitting classifiers if `refit=False` to save computational time.
 - `StackingClassifier` and `StackingRegressor` support multivariate targets if the underlying models do (via [kernc](https://github.com/kernc)).
+- `StackingClassifier` has a new `use_features_in_secondary` attribute like `StackingCVClassifier`.
 
 ##### Changes
 

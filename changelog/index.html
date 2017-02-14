@@ -2,12 +2,13 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <meta name="author" content="Sebastian Raschka"> 
+    <page.page.meta charset="utf-8">
+    <page.page.meta http-equiv="X-UA-Compatible" page.content="IE=edge">
+    <page.page.meta name="viewport" page.content="width=device-width, initial-scale=1.0">
+    <page.page.meta name="description" page.content="A library consisting of useful tools and extensions for the day-to-day data science tasks."> 
+    <page.page.meta name="author" page.content="Sebastian Raschka"> 
     <link rel="canonical" href="http://rasbt.github.io/mlxtend/changelog/"> 
-    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="shortcut icon" href="../img/favicon.ico">
 
     <title>Release Notes - mlxtend</title>
 
@@ -320,6 +321,12 @@
             
 <li >
     <a href="../user_guide/evaluate/mcnemar/">Mcnemar</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/evaluate/lift_score/">Lift score</a>
 </li>
 
         
@@ -806,15 +813,6 @@
                     </li>
                 
                 
-                    <li>
-                        <a href="https://github.com/rasbt/mlxtend">
-                            
-                                <i class="fa fa-github"></i>
-                            
-                            GitHub
-                        </a>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -827,7 +825,7 @@
     
         <li class="main active"><a href="#release-notes">Release Notes</a></li>
         
-            <li><a href="#version-051dev0">Version 0.5.1dev0</a></li>
+            <li><a href="#version-051-2017-02-14">Version 0.5.1 (2017-02-14)</a></li>
                 <!-- 
                     <li><a href="#downloads">Downloads</a></li>
             
@@ -955,30 +953,41 @@
 
 <h1 id="release-notes">Release Notes</h1>
 <hr />
-<h3 id="version-051dev0">Version 0.5.1dev0</h3>
+<p>The CHANGELOG for the current development version is available at
+<a href="https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md">https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md</a>.</p>
+<hr />
+<h3 id="version-051-2017-02-14">Version 0.5.1 (2017-02-14)</h3>
 <p>The CHANGELOG for the current development version is available at
 <a href="https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md">https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md</a>.</p>
 <h5 id="downloads">Downloads</h5>
 <ul>
-<li><a href="https://github.com/rasbt/mlxtend/archive/0.5.0.zip">Source code (zip)</a></li>
-<li><a href="https://github.com/rasbt/mlxtend/archive/v0.5.0.tar.gz">Source code (tar.gz)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.5.1.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.5.1.tar.gz">Source code (tar.gz)</a></li>
 </ul>
 <h5 id="new-features">New Features</h5>
 <ul>
 <li>The <code>EnsembleVoteClassifier</code> has a new <code>refit</code> attribute that prevents refitting classifiers if <code>refit=False</code> to save computational time.</li>
+<li>Added a new <code>lift_score</code> function in <code>evaluate</code> to compute lift score (via <a href="https://github.com/bbardakk">Batuhan Bardak</a>).</li>
+<li><code>StackingClassifier</code> and <code>StackingRegressor</code> support multivariate targets if the underlying models do (via <a href="https://github.com/kernc">kernc</a>).</li>
+<li><code>StackingClassifier</code> has a new <code>use_features_in_secondary</code> attribute like <code>StackingCVClassifier</code>.</li>
 </ul>
 <h5 id="changes">Changes</h5>
 <ul>
-<li>-</li>
+<li>Changed default verbosity level in <code>SequentialFeatureSelector</code> to 0</li>
+<li>The <code>EnsembleVoteClassifier</code> now raises a <code>NotFittedError</code> if the estimator wasn't <code>fit</code> before calling <code>predict</code>. (via <a href="https://github.com/avloss">Anton Loss</a>)</li>
+<li>Added new TensorFlow variable initialization syntax to guarantee compatibility with TensorFlow 1.0</li>
 </ul>
 <h5 id="bug-fixes">Bug Fixes</h5>
 <ul>
 <li>Fixed wrong default value for <code>k_features</code> in <code>SequentialFeatureSelector</code></li>
+<li>Cast selected feature subsets in the <code>SequentialFeautureSelector</code> as sets to prevent the iterator from getting stuck if the <code>k_idx</code> are different permutations of the same combination (via <a href="https://github.com/zacwellmer">Zac Wellmer</a>).</li>
+<li>Fixed an issue with learning curves that caused the performance metrics to be reversed (via <a href="https://github.com/ipashchenko">ipashchenko</a>)</li>
+<li>Fixed a bug that could occur in the <code>SequentialFeatureSelector</code> if there are similarly-well performing subsets in the floating variants (via <a href="https://github.com/zacwellmer">Zac Wellmer</a>).</li>
 </ul>
 <h3 id="version-050-2016-11-09">Version 0.5.0 (2016-11-09)</h3>
 <h5 id="downloads_1">Downloads</h5>
 <ul>
-<li><a href="https://github.com/rasbt/mlxtend/archive/0.5.0.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.5.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.5.0.tar.gz">Source code (tar.gz)</a></li>
 </ul>
 <h5 id="new-features_1">New Features</h5>
@@ -1005,7 +1014,7 @@
 <h3 id="version-042-2016-08-24">Version 0.4.2 (2016-08-24)</h3>
 <h5 id="downloads_2">Downloads</h5>
 <ul>
-<li><a href="https://github.com/rasbt/mlxtend/archive/0.4.2.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.4.2.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.4.2.tar.gz">Source code (tar.gz)</a></li>
 <li><a href="http://sebastianraschka.com/pdf/mlxtend-latest.pdf">PDF documentation</a></li>
 </ul>
@@ -1037,7 +1046,7 @@ imput arrays via <code>transform</code> and <code>fit_transform</code></li>
 <h3 id="version-041-2016-05-01">Version 0.4.1 (2016-05-01)</h3>
 <h5 id="downloads_3">Downloads</h5>
 <ul>
-<li><a href="https://github.com/rasbt/mlxtend/archive/0.4.1.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.4.1.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.4.1.tar.gz">Source code (tar.gz)</a></li>
 <li><a href="http://sebastianraschka.com/pdf/mlxtend-0.4.1.pdf">PDF documentation</a></li>
 </ul>

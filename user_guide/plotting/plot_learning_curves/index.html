@@ -2,12 +2,13 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <meta name="author" content="Sebastian Raschka"> 
+    <page.page.meta charset="utf-8">
+    <page.page.meta http-equiv="X-UA-Compatible" page.content="IE=edge">
+    <page.page.meta name="viewport" page.content="width=device-width, initial-scale=1.0">
+    <page.page.meta name="description" page.content="A library consisting of useful tools and extensions for the day-to-day data science tasks."> 
+    <page.page.meta name="author" page.content="Sebastian Raschka"> 
     <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/plotting/plot_learning_curves/"> 
-    <link rel="shortcut icon" href="../../../favicon.ico">
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
 
     <title>Plot learning curves - mlxtend</title>
 
@@ -320,6 +321,12 @@
             
 <li >
     <a href="../../evaluate/mcnemar/">Mcnemar</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/lift_score/">Lift score</a>
 </li>
 
         
@@ -806,15 +813,6 @@
                     </li>
                 
                 
-                    <li>
-                        <a href="https://github.com/rasbt/mlxtend">
-                            
-                                <i class="fa fa-github"></i>
-                            
-                            GitHub
-                        </a>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -904,13 +902,12 @@ plt.show()
 </li>
 <li>
 <p><code>scoring</code> : str (default: 'misclassification error')</p>
-<p>If not 'misclassification error', accepts the following metrics
-(from scikit-learn):
-{'accuracy', 'average_precision', 'f1_micro', 'f1_macro',
-'f1_weighted', 'f1_samples', 'log_loss',
-'precision', 'recall', 'roc_auc',
-'adjusted_rand_score', 'mean_absolute_error', 'mean_squared_error',
-'median_absolute_error', 'r2'}</p>
+<p _accuracy_="'accuracy'," _average_precision_="'average_precision'," _f1_macro_f1_weighted_="'f1_macro',
+'f1_weighted'," _f1_micro_="'f1_micro'," _f1_samples_="'f1_samples'," _log_loss_precision_="'log_loss',
+'precision'," _mean_absolute_error_="'mean_absolute_error'," _mean_squared_error_median_absolute_error_="'mean_squared_error',
+'median_absolute_error'," _r2_="'r2'" _recall_="'recall'," _roc_auc_adjusted_rand_score_="'roc_auc',
+'adjusted_rand_score',">If not 'misclassification error', accepts the following metrics
+(from scikit-learn):</p>
 </li>
 <li>
 <p><code>suppress_plot=False</code> : bool (default: False)</p>

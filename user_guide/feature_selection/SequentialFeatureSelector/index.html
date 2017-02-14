@@ -2,12 +2,13 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <meta name="author" content="Sebastian Raschka"> 
+    <page.page.meta charset="utf-8">
+    <page.page.meta http-equiv="X-UA-Compatible" page.content="IE=edge">
+    <page.page.meta name="viewport" page.content="width=device-width, initial-scale=1.0">
+    <page.page.meta name="description" page.content="A library consisting of useful tools and extensions for the day-to-day data science tasks."> 
+    <page.page.meta name="author" page.content="Sebastian Raschka"> 
     <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/feature_selection/SequentialFeatureSelector/"> 
-    <link rel="shortcut icon" href="../../../favicon.ico">
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
 
     <title>SequentialFeatureSelector - mlxtend</title>
 
@@ -320,6 +321,12 @@
             
 <li >
     <a href="../../evaluate/mcnemar/">Mcnemar</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/lift_score/">Lift score</a>
 </li>
 
         
@@ -806,15 +813,6 @@
                     </li>
                 
                 
-                    <li>
-                        <a href="https://github.com/rasbt/mlxtend">
-                            
-                                <i class="fa fa-github"></i>
-                            
-                            GitHub
-                        </a>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1032,6 +1030,7 @@ $x^+ = \text{ arg max } J(x_k + x), \text{ where } x \in Y - X_k$<br />
 <p>Initializing a simple classifier from scikit-learn:</p>
 <pre><code class="python">from sklearn.neighbors import KNeighborsClassifier
 from sklearn.datasets import load_iris
+
 iris = load_iris()
 X = iris.data
 y = iris.target
@@ -1045,12 +1044,16 @@ sfs1 = SFS(knn,
            k_features=3, 
            forward=True, 
            floating=False, 
+           verbose=2,
            scoring='accuracy',
            cv=0)
+
 sfs1 = sfs1.fit(X, y)
 </code></pre>
 
-<pre><code>Features: 3/3
+<pre><code>[2017-01-10 00:13:18] Features: 1/3 -- score: 0.96
+[2017-01-10 00:13:18] Features: 2/3 -- score: 0.973333333333
+[2017-01-10 00:13:18] Features: 3/3 -- score: 0.973333333333
 </code></pre>
 <p>Via the <code>subsets_</code> attribute, we can take a look at the selected feature indices at each step:</p>
 <pre><code class="python">sfs1.subsets_
@@ -1086,7 +1089,6 @@ sfs = SFS(knn,
           forward=True, 
           floating=False, 
           scoring='accuracy',
-          print_progress=False,
           cv=4,
           n_jobs=-1)
 sfs = sfs.fit(X, y)
@@ -1104,7 +1106,6 @@ sbs = SFS(knn,
           forward=False, 
           floating=False, 
           scoring='accuracy',
-          print_progress=False,
           cv=4,
           n_jobs=-1)
 sbs = sbs.fit(X, y)
@@ -1122,7 +1123,6 @@ sffs = SFS(knn,
            forward=True, 
            floating=True, 
            scoring='accuracy',
-           print_progress=False,
            cv=4,
            n_jobs=-1)
 sffs = sffs.fit(X, y)
@@ -1140,7 +1140,6 @@ sfbs = SFS(knn,
            forward=False, 
            floating=True, 
            scoring='accuracy',
-           print_progress=False,
            cv=4,
            n_jobs=-1)
 sfbs = sfbs.fit(X, y)
@@ -1151,35 +1150,20 @@ print('CV Score:')
 print(sfbs.k_score_)
 </code></pre>
 
-<pre><code>Features: 3/3
-
-
-Sequential Forward Selection (k=3):
+<pre><code>Sequential Forward Selection (k=3):
 (1, 2, 3)
 CV Score:
 0.972756410256
-
-
-Features: 3/3
-
 
 Sequential Backward Selection (k=3):
 (1, 2, 3)
 CV Score:
 0.972756410256
 
-
-Features: 3/3
-
-
 Sequential Floating Forward Selection (k=3):
 (1, 2, 3)
 CV Score:
 0.972756410256
-
-
-Features: 3/3
-
 
 Sequential Floating Backward Selection (k=3):
 (1, 2, 3)
@@ -1330,6 +1314,7 @@ sfs = SFS(knn,
           forward=True, 
           floating=False, 
           scoring='accuracy',
+          verbose=2,
           cv=5)
 
 sfs = sfs.fit(X, y)
@@ -1342,7 +1327,10 @@ plt.grid()
 plt.show()
 </code></pre>
 
-<pre><code>Features: 4/4
+<pre><code>[2017-01-10 00:13:26] Features: 1/4 -- score: 0.96
+[2017-01-10 00:13:26] Features: 2/4 -- score: 0.966666666667
+[2017-01-10 00:13:26] Features: 3/4 -- score: 0.953333333333
+[2017-01-10 00:13:26] Features: 4/4 -- score: 0.973333333333
 </code></pre>
 <p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_39_1.png" /></p>
 <h2 id="example-5-sequential-feature-selection-for-regression">Example 5 - Sequential Feature Selection for Regression</h2>
@@ -1371,9 +1359,7 @@ plt.grid()
 plt.show()
 </code></pre>
 
-<pre><code>Features: 13/13
-</code></pre>
-<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_42_1.png" /></p>
+<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_42_0.png" /></p>
 <h2 id="example-6-using-the-selected-feature-subset-for-making-new-predictions">Example 6 -- Using the Selected Feature Subset For Making New Predictions</h2>
 <pre><code class="python"># Initialize the dataset
 
@@ -1403,8 +1389,6 @@ sfs1 = SFS(knn,
 sfs1 = sfs1.fit(X_train, y_train)
 </code></pre>
 
-<pre><code>Features: 3/3
-</code></pre>
 <pre><code class="python">print('Selected features:', sfs1.k_feature_idx_)
 </code></pre>
 
@@ -1424,7 +1408,7 @@ y_pred = knn.predict(X_test_sfs)
 
 # Compute the accuracy of the prediction
 acc = float((y_test == y_pred).sum()) / y_pred.shape[0]
-print('Test set accuracy: %.2f %%' % (acc*100))
+print('Test set accuracy: %.2f %%' % (acc * 100))
 </code></pre>
 
 <pre><code>Test set accuracy: 96.00 %
@@ -1455,7 +1439,6 @@ sfs1 = SFS(estimator=knn,
            forward=True, 
            floating=False, 
            scoring='accuracy',
-           print_progress=False,
            cv=5)
 
 pipe = Pipeline([('sfs', sfs1), 
@@ -1470,26 +1453,18 @@ gs = GridSearchCV(estimator=pipe,
                   param_grid=param_grid, 
                   scoring='accuracy', 
                   n_jobs=1, 
-                  cv=5, 
-                  verbose=1, 
+                  cv=5,  
                   refit=False)
 
 # run gridearch
 gs = gs.fit(X_train, y_train)
 </code></pre>
 
-<pre><code>Features: 1/1
-
-Fitting 5 folds for each of 16 candidates, totalling 80 fits
-
-
-Features: 4/4[Parallel(n_jobs=1)]: Done  80 out of  80 | elapsed:    6.8s finished
-</code></pre>
 <p>... and the "best" parameters determined by GridSearch are ...</p>
 <pre><code class="python">print(&quot;Best parameters via GridSearch&quot;, gs.best_params_)
 </code></pre>
 
-<pre><code>Best parameters via GridSearch {'sfs__estimator__n_neighbors': 1, 'sfs__k_features': 3}
+<pre><code>Best parameters via GridSearch {'sfs__k_features': 3, 'sfs__estimator__n_neighbors': 1}
 </code></pre>
 <h4 id="obtaining-the-best-k-feature-indices-after-gridsearch">Obtaining the best <em>k</em> feature indices after GridSearch</h4>
 <p>If we are interested in the best <em>k</em> feature indices via <code>SequentialFeatureSelection.k_feature_idx_</code>, we have to initialize a <code>GridSearchCV</code> object with <code>refit=True</code>. Now, the grid search object will take the complete training dataset and the best parameters, which it found via cross-validation, to train the estimator pipeline.</p>
@@ -1498,19 +1473,10 @@ Features: 4/4[Parallel(n_jobs=1)]: Done  80 out of  80 | elapsed:    6.8s finish
                   scoring='accuracy', 
                   n_jobs=1, 
                   cv=5, 
-                  verbose=1, 
                   refit=True)
 gs = gs.fit(X_train, y_train)
 </code></pre>
 
-<pre><code>Features: 1/1
-
-Fitting 5 folds for each of 16 candidates, totalling 80 fits
-
-
-Features: 4/4[Parallel(n_jobs=1)]: Done  80 out of  80 | elapsed:    8.1s finished
-Features: 3/3
-</code></pre>
 <p>After running the grid search, we can access the individual pipeline objects of the <code>best_estimator_</code> via the <code>steps</code> attribute.</p>
 <pre><code class="python">gs.best_estimator_.steps
 </code></pre>
@@ -1520,8 +1486,8 @@ Features: 3/3
              metric_params=None, n_jobs=1, n_neighbors=1, p=2,
              weights='uniform'),
                floating=False, forward=True, k_features=3, n_jobs=1,
-               pre_dispatch='2*n_jobs', print_progress=None,
-               scoring='accuracy', skip_if_stuck=True, verbose=1)),
+               pre_dispatch='2*n_jobs', scoring='accuracy',
+               skip_if_stuck=True, verbose=0)),
  ('knn',
   KNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',
              metric_params=None, n_jobs=1, n_neighbors=2, p=2,
@@ -1549,9 +1515,7 @@ Features: 3/3
 print('Best features:', pipe.steps[0][1].k_feature_idx_)
 </code></pre>
 
-<pre><code>Features: 3/3
-
-Best features: (0, 1, 3)
+<pre><code>Best features: (0, 1, 3)
 </code></pre>
 <h2 id="example-8-selecting-the-best-feature-combination-in-a-k-range">Example 8 -- Selecting the "best"  feature combination in a k-range</h2>
 <p>If <code>k_features</code> is set to to a tuple <code>(min_k, max_k)</code> (new in 0.4.2), the SFS will now select the best feature combination that it discovered by iterating from <code>k=1</code> to <code>max_k</code> (forward), or <code>max_k</code> to <code>min_k</code> (backward). The size of the returned feature subset is then within <code>max_k</code> to <code>min_k</code>, depending on which combination scored best during cross validation.</p>
@@ -1580,7 +1544,6 @@ sfs1 = SFS(estimator=knn,
            forward=True, 
            floating=False, 
            scoring='accuracy',
-           print_progress=False,
            cv=5)
 
 pipe = make_pipeline(StandardScaler(), sfs1)
@@ -1592,16 +1555,14 @@ print('all subsets:\n', sfs1.subsets_)
 plot_sfs(sfs1.get_metric_dict(), kind='std_err');
 </code></pre>
 
-<pre><code>Features: 10/10
-
-best combination (ACC: 0.992): (0, 1, 2, 3, 6, 8, 9, 10, 11, 12)
+<pre><code>best combination (ACC: 0.992): (0, 1, 2, 3, 6, 8, 9, 10, 11, 12)
 
 all subsets:
- {1: {'avg_score': 0.7985641025641026, 'feature_idx': (6,), 'cv_scores': array([ 0.84615385,  0.6       ,  0.88      ,  0.79166667,  0.875     ])}, 2: {'avg_score': 0.93561538461538463, 'feature_idx': (9, 6), 'cv_scores': array([ 0.92307692,  0.88      ,  1.        ,  0.95833333,  0.91666667])}, 3: {'avg_score': 0.95228205128205123, 'feature_idx': (9, 12, 6), 'cv_scores': array([ 0.92307692,  0.92      ,  0.96      ,  1.        ,  0.95833333])}, 4: {'avg_score': 0.96797435897435891, 'feature_idx': (9, 3, 12, 6), 'cv_scores': array([ 0.96153846,  0.96      ,  0.96      ,  1.        ,  0.95833333])}, 5: {'avg_score': 0.97661538461538466, 'feature_idx': (9, 10, 3, 12, 6), 'cv_scores': array([ 0.92307692,  0.96      ,  1.        ,  1.        ,  1.        ])}, 6: {'avg_score': 0.96828205128205125, 'feature_idx': (2, 3, 6, 9, 10, 12), 'cv_scores': array([ 0.92307692,  0.96      ,  1.        ,  0.95833333,  1.        ])}, 7: {'avg_score': 0.96861538461538466, 'feature_idx': (0, 2, 3, 6, 9, 10, 12), 'cv_scores': array([ 0.92307692,  0.92      ,  1.        ,  1.        ,  1.        ])}, 8: {'avg_score': 0.98399999999999999, 'feature_idx': (0, 2, 3, 6, 8, 9, 10, 12), 'cv_scores': array([ 1.  ,  0.92,  1.  ,  1.  ,  1.  ])}, 9: {'avg_score': 0.98399999999999999, 'feature_idx': (0, 2, 3, 6, 8, 9, 10, 11, 12), 'cv_scores': array([ 1.  ,  0.92,  1.  ,  1.  ,  1.  ])}, 10: {'avg_score': 0.99199999999999999, 'feature_idx': (0, 1, 2, 3, 6, 8, 9, 10, 11, 12), 'cv_scores': array([ 1.  ,  0.96,  1.  ,  1.  ,  1.  ])}}
+ {1: {'feature_idx': (6,), 'avg_score': 0.7985641025641026, 'cv_scores': array([ 0.84615385,  0.6       ,  0.88      ,  0.79166667,  0.875     ])}, 2: {'feature_idx': (9, 6), 'avg_score': 0.93561538461538463, 'cv_scores': array([ 0.92307692,  0.88      ,  1.        ,  0.95833333,  0.91666667])}, 3: {'feature_idx': (9, 12, 6), 'avg_score': 0.95228205128205123, 'cv_scores': array([ 0.92307692,  0.92      ,  0.96      ,  1.        ,  0.95833333])}, 4: {'feature_idx': (9, 3, 12, 6), 'avg_score': 0.96797435897435891, 'cv_scores': array([ 0.96153846,  0.96      ,  0.96      ,  1.        ,  0.95833333])}, 5: {'feature_idx': (9, 10, 3, 12, 6), 'avg_score': 0.97661538461538466, 'cv_scores': array([ 0.92307692,  0.96      ,  1.        ,  1.        ,  1.        ])}, 6: {'feature_idx': (2, 3, 6, 9, 10, 12), 'avg_score': 0.96828205128205125, 'cv_scores': array([ 0.92307692,  0.96      ,  1.        ,  0.95833333,  1.        ])}, 7: {'feature_idx': (0, 2, 3, 6, 9, 10, 12), 'avg_score': 0.96861538461538466, 'cv_scores': array([ 0.92307692,  0.92      ,  1.        ,  1.        ,  1.        ])}, 8: {'feature_idx': (0, 2, 3, 6, 8, 9, 10, 12), 'avg_score': 0.98399999999999999, 'cv_scores': array([ 1.  ,  0.92,  1.  ,  1.  ,  1.  ])}, 9: {'feature_idx': (0, 2, 3, 6, 8, 9, 10, 11, 12), 'avg_score': 0.98399999999999999, 'cv_scores': array([ 1.  ,  0.92,  1.  ,  1.  ,  1.  ])}, 10: {'feature_idx': (0, 1, 2, 3, 6, 8, 9, 10, 11, 12), 'avg_score': 0.99199999999999999, 'cv_scores': array([ 1.  ,  0.96,  1.  ,  1.  ,  1.  ])}}
 </code></pre>
-<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_69_2.png" /></p>
+<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_69_1.png" /></p>
 <h1 id="api">API</h1>
-<p><em>SequentialFeatureSelector(estimator, k_features=1, forward=True, floating=False, verbose=1, scoring=None, cv=5, skip_if_stuck=True, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
+<p><em>SequentialFeatureSelector(estimator, k_features=1, forward=True, floating=False, verbose=0, scoring=None, cv=5, skip_if_stuck=True, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
 <p>Sequential Feature Selection for Classification and Regression.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1628,7 +1589,7 @@ backward selection otherwise</p>
 <p>Adds a conditional exclusion/inclusion if True.</p>
 </li>
 <li>
-<p><code>verbose</code> : int (default: 1), level of verbosity to use in logging.</p>
+<p><code>verbose</code> : int (default: 0), level of verbosity to use in logging.</p>
 <p>If 0, no output,
 if 1 number of features in current set, if 2 detailed logging i
 ncluding timestamp and cv scores at step.</p>

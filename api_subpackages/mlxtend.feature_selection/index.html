@@ -2,12 +2,13 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <meta name="author" content="Sebastian Raschka"> 
+    <page.page.meta charset="utf-8">
+    <page.page.meta http-equiv="X-UA-Compatible" page.content="IE=edge">
+    <page.page.meta name="viewport" page.content="width=device-width, initial-scale=1.0">
+    <page.page.meta name="description" page.content="A library consisting of useful tools and extensions for the day-to-day data science tasks."> 
+    <page.page.meta name="author" page.content="Sebastian Raschka"> 
     <link rel="canonical" href="http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.feature_selection/"> 
-    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="shortcut icon" href="../../img/favicon.ico">
 
     <title>Mlxtend.feature selection - mlxtend</title>
 
@@ -320,6 +321,12 @@
             
 <li >
     <a href="../../user_guide/evaluate/mcnemar/">Mcnemar</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/lift_score/">Lift score</a>
 </li>
 
         
@@ -806,15 +813,6 @@
                     </li>
                 
                 
-                    <li>
-                        <a href="https://github.com/rasbt/mlxtend">
-                            
-                                <i class="fa fa-github"></i>
-                            
-                            GitHub
-                        </a>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1143,7 +1141,7 @@ deprecated and will not longer be supported in mlxtend 0.6.
 Please use <code>from mlxtend.plotting import plot_sequential_feature_selection</code>
 instead.</p>
 <h2 id="sequentialfeatureselector">SequentialFeatureSelector</h2>
-<p><em>SequentialFeatureSelector(estimator, k_features=1, forward=True, floating=False, verbose=1, scoring=None, cv=5, skip_if_stuck=True, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
+<p><em>SequentialFeatureSelector(estimator, k_features=1, forward=True, floating=False, verbose=0, scoring=None, cv=5, skip_if_stuck=True, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
 <p>Sequential Feature Selection for Classification and Regression.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1170,7 +1168,7 @@ backward selection otherwise</p>
 <p>Adds a conditional exclusion/inclusion if True.</p>
 </li>
 <li>
-<p><code>verbose</code> : int (default: 1), level of verbosity to use in logging.</p>
+<p><code>verbose</code> : int (default: 0), level of verbosity to use in logging.</p>
 <p>If 0, no output,
 if 1 number of features in current set, if 2 detailed logging i
 ncluding timestamp and cv scores at step.</p>

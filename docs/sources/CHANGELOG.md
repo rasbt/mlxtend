@@ -16,6 +16,7 @@ The CHANGELOG for the current development version is available at
 ##### New Features
 
 - The `EnsembleVoteClassifier` has a new `refit` attribute that prevents refitting classifiers if `refit=False` to save computational time.
+- Added a new `lift_score` function in `evaluate` to compute lift score (via [Batuhan Bardak](https://github.com/bbardakk)).
 - `StackingClassifier` and `StackingRegressor` support multivariate targets if the underlying models do (via [kernc](https://github.com/kernc)).
 - `StackingClassifier` has a new `use_features_in_secondary` attribute like `StackingCVClassifier`.
 

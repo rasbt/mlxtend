@@ -40,7 +40,6 @@ def test_run_default():
     y = iris.target
     knn = KNeighborsClassifier()
     sfs = SFS(estimator=knn,
-              k_features=1,
               verbose=0)
     sfs.fit(X, y)
     assert sfs.k_feature_idx_ == (3, )

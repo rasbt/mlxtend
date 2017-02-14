@@ -2,16 +2,16 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">{% if page_description %}
-    <meta name="description" content="{{ page_description }}">{% endif %} {% if site_author %}
-    <meta name="author" content="{{ site_author }}">{% endif %} {% if canonical_url %}
-    <link rel="canonical" href="{{ canonical_url }}">{% endif %} {% if favicon %}
-    <link rel="shortcut icon" href="{{ base_url }}/{{ favicon }}">{% else %}
+    <page.page.meta charset="utf-8">
+    <page.page.meta http-equiv="X-UA-Compatible" page.content="IE=edge">
+    <page.page.meta name="viewport" page.content="width=device-width, initial-scale=1.0">{% if config.site_description %}
+    <page.page.meta name="description" page.content="{{ config.site_description }}">{% endif %} {% if config.site_author %}
+    <page.page.meta name="author" page.content="{{ config.site_author }}">{% endif %} {% if page.canonical_url %}
+    <link rel="canonical" href="{{ page.canonical_url }}">{% endif %} {% if "{{ base_url }}/img/favicon.ico" %}
+    <link rel="shortcut icon" href="{{ base_url }}/img/favicon.ico">{% else %}
     <link rel="shortcut icon" href="{{ base_url }}/img/favicon.ico">{% endif %}
 
-    <title>{% if page_title %}{{ page_title }} - {% endif %}{{ site_name }}</title>
+    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ config.site_name }}</title>
 
     <link href="{{ base_url }}/css/bootstrap-custom.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
@@ -40,7 +40,7 @@
     });
     </script>
 
-    {% if google_analytics %}
+    {% if config.google_analytics %}
     <script>
     (function(i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
@@ -54,13 +54,13 @@
         m.parentNode.insertBefore(a, m)
     })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-    ga('create', '{{ google_analytics[0] }}', '{{ google_analytics[1] }}');
+    ga('create', '{{ config.google_analytics[0] }}', '{{ config.google_analytics[1] }}');
     ga('send', 'pageview');
     </script>
     {% endif %}
 </head>
 
-<body{% if current_page and current_page.is_homepage %} class="homepage" {% endif %}>
+<body{% if page and page.is_homepage %} class="homepage" {% endif %}>
 
     {% include "nav.html" %}
 
@@ -73,8 +73,8 @@
 
     <footer class="col-md-12 text-center">
         <hr>
-        <p>{% if copyright %}
-        <small>{{ copyright }}<br></small>
+        <p>{% if config.copyright %}
+        <small>{{ config.copyright }}<br></small>
         {% endif %}
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>
@@ -122,7 +122,7 @@
     </body>
 
 </html>
-{% if current_page and current_page.is_homepage %}
+{% if page and page.is_homepage %}
 <!--
 MkDocs version : {{ mkdocs_version }}
 Build Date UTC : {{ build_date_utc }}

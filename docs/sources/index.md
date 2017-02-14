@@ -1,7 +1,7 @@
 
 ![](./img/logo.png)
 
-### Welcome to mlxtend’s documentation!
+### Welcome to mlxtend's documentation!
 
 **Mlxtend (machine learning extensions) is a Python library of useful tools for the day-to-day data science tasks.**
 

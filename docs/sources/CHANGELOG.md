@@ -16,7 +16,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Downloads
 
-- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/0.5.1.zip)
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.5.1.zip)
 - [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.5.1.tar.gz)
 
 ##### New Features
@@ -45,7 +45,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Downloads
 
-- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/0.5.0.zip)
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.5.0.zip)
 - [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.5.0.tar.gz)
 
 ##### New Features
@@ -75,7 +75,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Downloads
 
-- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/0.4.2.zip)
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.4.2.zip)
 - [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.4.2.tar.gz)
 - [PDF documentation](http://sebastianraschka.com/pdf/mlxtend-latest.pdf)
 
@@ -108,7 +108,7 @@ imput arrays via `transform` and `fit_transform`
 
 ##### Downloads
 
-- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/0.4.1.zip)
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.4.1.zip)
 - [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.4.1.tar.gz)
 - [PDF documentation](http://sebastianraschka.com/pdf/mlxtend-0.4.1.pdf)
 

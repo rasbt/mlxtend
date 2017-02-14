@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2016
+# Sebastian Raschka 2014-2017
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
@@ -8,6 +8,7 @@ from mlxtend.classifier import StackingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import cross_val_score
 from sklearn.exceptions import NotFittedError
@@ -19,6 +20,7 @@ from nose.tools import assert_almost_equal
 
 iris = datasets.load_iris()
 X, y = iris.data[:, 1:3], iris.target
+y2 = np.c_[y, y]
 
 
 def test_StackingClassifier():
@@ -102,6 +104,18 @@ def test_StackingClassifier_avg_vs_concat():
     assert_almost_equal(np.sum(r2[0]), 2.0, places=6)
     assert_almost_equal(np.sum(r2[1]), 2.0, places=6)
     np.array_equal(r2[0][:3], r2[0][3:])
+
+
+def test_multivariate_class():
+    np.random.seed(123)
+    meta = KNeighborsClassifier()
+    clf1 = RandomForestClassifier()
+    clf2 = KNeighborsClassifier()
+    sclf = StackingClassifier(classifiers=[clf1, clf2],
+                              meta_classifier=meta)
+    y_pred = sclf.fit(X, y2).predict(X)
+    ca = .973
+    assert round((y_pred == y2).mean(), 3) == ca
 
 
 def test_gridsearch():
@@ -192,3 +206,37 @@ def test_verbose():
                               meta_classifier=meta,
                               verbose=3)
     sclf.fit(iris.data, iris.target)
+
+
+def test_use_features_in_secondary_predict():
+    np.random.seed(123)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingClassifier(classifiers=[clf1, clf2],
+                              use_features_in_secondary=True,
+                              meta_classifier=meta)
+
+    scores = cross_val_score(sclf,
+                             X,
+                             y,
+                             cv=5,
+                             scoring='accuracy')
+    scores_mean = (round(scores.mean(), 2))
+    assert scores_mean == 0.95, scores_mean
+
+
+def test_use_features_in_secondary_predict_proba():
+    np.random.seed(123)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingClassifier(classifiers=[clf1, clf2],
+                              use_features_in_secondary=True,
+                              meta_classifier=meta)
+
+    sclf.fit(X, y)
+    idx = [0, 1, 2]
+    y_pred = sclf.predict_proba(X[idx])[:, 0]
+    expect = np.array([0.911, 0.829, 0.885])
+    np.testing.assert_almost_equal(y_pred, expect, 3)

@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2016
+# Sebastian Raschka 2014-2017
 # mlxtend Machine Learning Library Extensions
 #
 # A function for plotting learning curves of classifiers.
@@ -94,7 +94,7 @@ def plot_learning_curves(X_train, y_train,
     training_errors = []
     test_errors = []
 
-    rng = [int(i) for i in np.linspace(0, X_train.shape[0], 11)][1:][::-1]
+    rng = [int(i) for i in np.linspace(0, X_train.shape[0], 11)][1:]
     for r in rng:
         model = clf.fit(X_train[:r], y_train[:r])
 

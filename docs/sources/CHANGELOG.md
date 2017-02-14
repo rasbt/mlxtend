@@ -17,16 +17,21 @@ The CHANGELOG for the current development version is available at
 
 - The `EnsembleVoteClassifier` has a new `refit` attribute that prevents refitting classifiers if `refit=False` to save computational time.
 - Added a new `lift_score` function in `evaluate` to compute lift score (via [Batuhan Bardak](https://github.com/bbardakk)).
+- `StackingClassifier` and `StackingRegressor` support multivariate targets if the underlying models do (via [kernc](https://github.com/kernc)).
+- `StackingClassifier` has a new `use_features_in_secondary` attribute like `StackingCVClassifier`.
 
 ##### Changes
 
-- -
+- Changed default verbosity level in `SequentialFeatureSelector` to 0
+- The `EnsembleVoteClassifier` now raises a `NotFittedError` if the estimator wasn't `fit` before calling `predict`. (via [Anton Loss](https://github.com/avloss))
+- Added new TensorFlow variable initialization syntax to guarantee compatibility with TensorFlow 1.0
 
 ##### Bug Fixes
 
 - Fixed wrong default value for `k_features` in `SequentialFeatureSelector`
-- Cast selected feature subsets in the SequentialFeautureSubsets as sets to prevent the iterator from getting stuck if the k_idx are different permutations of the same combination (via [zacwellmer](https://github.com/zacwellmer)).
-
+- Cast selected feature subsets in the `SequentialFeautureSelector` as sets to prevent the iterator from getting stuck if the `k_idx` are different permutations of the same combination (via [Zac Wellmer](https://github.com/zacwellmer)).
+- Fixed an issue with learning curves that caused the performance metrics to be reversed (via [ipashchenko](https://github.com/ipashchenko))
+- Fixed a bug that could occur in the `SequentialFeatureSelector` if there are similarly-well performing subsets in the floating variants (via [Zac Wellmer](https://github.com/zacwellmer)).
 
 
 

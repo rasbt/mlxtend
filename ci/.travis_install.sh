@@ -35,8 +35,14 @@ python -c "import numpy; print('numpy %s' % numpy.__version__)"
 python -c "import scipy; print('scipy %s' % scipy.__version__)"
 
 if [ "${TENSORFLOW}" = "true" ]; then
-    conda install tensorflow=0.10
+    #conda install -c conda-forge tensorflow
+    if [ "${TRAVIS_PYTHON_VERSION}" == "2.7" ]; then
+        pip install https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.12.1-cp27-none-linux_x86_64.whl;
+    else
+        pip install https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.12.1-cp35-cp35m-linux_x86_64.whl;
+    fi
     python -c "import tensorflow; print('tensorflow %s' % tensorflow.__version__)";
+
 else
     python -c "import sklearn; print('sklearn %s' % sklearn.__version__)";
 fi

@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2016
+# Sebastian Raschka 2014-2017
 # mlxtend Machine Learning Library Extensions
 #
 # Algorithm for sequential feature selection.
@@ -43,7 +43,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         backward selection otherwise
     floating : bool (default: False)
         Adds a conditional exclusion/inclusion if True.
-    verbose : int (default: 1), level of verbosity to use in logging.
+    verbose : int (default: 0), level of verbosity to use in logging.
         If 0, no output,
         if 1 number of features in current set, if 2 detailed logging i
         ncluding timestamp and cv scores at step.
@@ -104,7 +104,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     """
     def __init__(self, estimator, k_features=1,
                  forward=True, floating=False,
-                 verbose=1, scoring=None,
+                 verbose=0, scoring=None,
                  cv=5, skip_if_stuck=True, n_jobs=1,
                  pre_dispatch='2*n_jobs',
                  clone_estimator=True):
@@ -254,7 +254,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
                 k = len(k_idx)
                 # floating can lead to multiple same-sized subsets
-                if k not in self.subsets_ or (self.subsets_[k]['avg_score'] >
+                if k not in self.subsets_ or (self.subsets_[k]['avg_score'] <
                                               k_score):
                     self.subsets_[k] = {
                         'feature_idx': k_idx,

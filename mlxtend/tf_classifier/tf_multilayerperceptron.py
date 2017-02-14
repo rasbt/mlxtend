@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2016
+# Sebastian Raschka 2014-2017
 # mlxtend Machine Learning Library Extensions
 #
 # Implementation of a Multi-layer Perceptron in Tensorflow
@@ -222,7 +222,7 @@ class TfMultiLayerPerceptron(_BaseModel, _IterativeModel,
                                              global_step=self.global_step_)
 
             # Initializing the variables
-            init = tf.initialize_all_variables()
+            init = tf.global_variables_initializer()
 
         # random seed for shuffling and dropout
         rgen = np.random.RandomState(self.random_seed)
@@ -295,7 +295,7 @@ class TfMultiLayerPerceptron(_BaseModel, _IterativeModel,
             raise AttributeError('The model has not been fitted, yet.')
 
         with tf.Session():
-            tf.initialize_all_variables().run()
+            tf.global_variables_initializer().run()
             tf_X = tf.convert_to_tensor(value=X, dtype=self.dtype)
             net = self._predict(tf_X=tf_X,
                                 tf_weights=self.w_,

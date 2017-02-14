@@ -1,6 +1,6 @@
 # Stacking classifier
 
-# Sebastian Raschka 2014-2016
+# Sebastian Raschka 2014-2017
 # mlxtend Machine Learning Library Extensions
 #
 # An ensemble-learning meta-classifier for stacking
@@ -16,7 +16,6 @@ from sklearn.utils.validation import check_is_fitted
 from ..externals.name_estimators import _name_estimators
 from ..externals import six
 import numpy as np
-import warnings
 
 
 class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
@@ -47,6 +46,11 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                        regressor being fitted
         - `verbose>2`: Changes `verbose` param of the underlying regressor to
            self.verbose - 2
+    use_features_in_secondary : bool (default: False)
+        If True, the meta-classifier will be trained both on the predictions
+        of the original classifiers and the original dataset.
+        If False, the meta-classifier will be trained only on the predictions
+        of the original classifiers.
 
     Attributes
     ----------
@@ -57,7 +61,8 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
     """
     def __init__(self, classifiers, meta_classifier,
-                 use_probas=False, average_probas=False, verbose=0):
+                 use_probas=False, average_probas=False, verbose=0,
+                 use_features_in_secondary=False):
 
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier
@@ -70,6 +75,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.use_probas = use_probas
         self.average_probas = average_probas
         self.verbose = verbose
+        self.use_features_in_secondary = use_features_in_secondary
 
     def fit(self, X, y):
         """ Fit ensemble classifers and the meta-classifier.
@@ -79,7 +85,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
-        y : array-like, shape = [n_samples]
+        y : array-like, shape = [n_samples] or [n_samples, n_outputs]
             Target values.
 
         Returns
@@ -109,7 +115,12 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             clf.fit(X, y)
 
         meta_features = self._predict_meta_features(X)
-        self.meta_clf_.fit(meta_features, y)
+
+        if not self.use_features_in_secondary:
+            self.meta_clf_.fit(meta_features, y)
+        else:
+            self.meta_clf_.fit(np.hstack((X, meta_features)), y)
+
         return self
 
     def get_params(self, deep=True):
@@ -137,7 +148,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             else:
                 vals = np.concatenate(probas, axis=1)
         else:
-            vals = np.asarray([clf.predict(X) for clf in self.clfs_]).T
+            vals = np.column_stack([clf.predict(X) for clf in self.clfs_])
         return vals
 
     def predict(self, X):
@@ -151,13 +162,17 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         Returns
         ----------
-        labels : array-like, shape = [n_samples]
+        labels : array-like, shape = [n_samples] or [n_samples, n_outputs]
             Predicted class labels.
 
         """
         check_is_fitted(self, 'clfs_')
         meta_features = self._predict_meta_features(X)
-        return self.meta_clf_.predict(meta_features)
+
+        if not self.use_features_in_secondary:
+            return self.meta_clf_.predict(meta_features)
+        else:
+            return self.meta_clf_.predict(np.hstack((X, meta_features)))
 
     def predict_proba(self, X):
         """ Predict class probabilities for X.
@@ -170,10 +185,15 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         Returns
         ----------
-        proba : array-like, shape = [n_samples, n_classes]
+        proba : array-like, shape = [n_samples, n_classes] or a list of \
+                n_outputs of such arrays if n_outputs > 1.
             Probability for each class per sample.
 
         """
         check_is_fitted(self, 'clfs_')
         meta_features = self._predict_meta_features(X)
-        return self.meta_clf_.predict_proba(meta_features)
+
+        if not self.use_features_in_secondary:
+            return self.meta_clf_.predict_proba(meta_features)
+        else:
+            return self.meta_clf_.predict_proba(np.hstack((X, meta_features)))

@@ -13,6 +13,12 @@ def lift_score(y_target, y_predicted, binary=True, positive_label=1):
     """Lift measures the degree to which the predictions of a
     classification model are better than randomly-generated predictions.
 
+    The in terms of True Positives (TP), True Negatives (TN),
+    False Positives (TP), and False Negatives (FN), the lift score is
+    computed as:
+    [ TP/(TP+FN) ] / [ (TP+FP) / (TP+TN+FP+FN) ]
+
+
     Parameters
     -----------
     y_target : array-like, shape=[n_samples]
@@ -60,7 +66,8 @@ def lift_score(y_target, y_predicted, binary=True, positive_label=1):
         raise AttributeError('`y_target` and `y_predicted`'
                              ' have different elements from 0 and 1.')
 
-    return (support(targ_tmp, pred_tmp)/(support(targ_tmp)*support(pred_tmp)))
+    return (support(targ_tmp, pred_tmp) /
+            (support(targ_tmp) * support(pred_tmp)))
 
 
 def support(y_target, y_predicted=None):

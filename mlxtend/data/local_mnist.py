@@ -6,7 +6,6 @@
 #
 # License: BSD 3 clause
 
-import os
 import struct
 import numpy as np
 
@@ -36,7 +35,7 @@ def loadlocal_mnist(images_path, labels_path):
                              dtype=np.uint8)
     with open(images_path, 'rb') as imgpath:
         magic, num, rows, cols = struct.unpack(">IIII",
-                                        imgpath.read(16))
+                                               imgpath.read(16))
         images = np.fromfile(imgpath,
                              dtype=np.uint8).reshape(len(labels), 784)
 

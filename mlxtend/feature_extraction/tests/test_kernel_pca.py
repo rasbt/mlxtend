@@ -63,4 +63,4 @@ def test_fail_array_fit():
 def test_fail_array_transform():
     pca = KPCA(n_components=2)
     pca.fit(X1)
-    exp = pca.transform(X1[1])
+    pca.transform(X1[1])

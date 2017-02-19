@@ -37,7 +37,7 @@ def boston_housing_data():
         - 9) RAD       index of accessibility to radial highways
         - 10) TAX      full-value property-tax rate per $10,000
         - 11) PTRATIO  pupil-teacher ratio by town
-        - 12) B        1000(Bk - 0.63)^2 where Bk is the proportion of b. by town
+        - 12) B        1000(Bk - 0.63)^2 where Bk is the prop. of b. by town
         - 13) LSTAT    % lower status of the population
 
     Returns

@@ -221,7 +221,8 @@ class MultiLayerPerceptron(_BaseModel, _IterativeModel,
 
     def _compute_cost(self, cross_entropy):
         L2_term = (self.l2 *
-                   (np.sum(self.w_['1'] ** 2.0) + np.sum(self.w_['out'] ** 2.0)))
+                   (np.sum(self.w_['1'] ** 2.0) +
+                    np.sum(self.w_['out'] ** 2.0)))
 
         L1_term = (self.l1 *
                    (np.abs(self.w_['1']).sum() + np.abs(self.w_['out']).sum()))

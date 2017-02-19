@@ -52,6 +52,7 @@ def test_input_binary_all_right():
                        y_model2=y_model2)
     expect = np.array([[8, 0],
                        [0, 0]])
+    np.testing.assert_array_equal(tb, expect)
 
 
 def test_input_binary_all_wrong():

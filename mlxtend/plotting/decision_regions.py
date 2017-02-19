@@ -133,6 +133,7 @@ def plot_decision_regions(X, y, clf,
                    alpha=0.8,
                    c=colors[idx],
                    marker=next(marker_gen),
+                   edgecolor='black',
                    label=c)
 
     if hide_spines:

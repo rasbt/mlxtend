@@ -5,7 +5,29 @@
 The CHANGELOG for the current development version is available at
 [https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md](https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md).
 
----
+
+
+### Version 0.6.0 (TBD)
+
+The CHANGELOG for the current development version is available at
+[https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md](https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md).
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.6.0.zip)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.6.0.tar.gz)
+
+##### New Features
+
+- -
+
+##### Changes
+
+- Adds a black `edgecolor` to plots via `plotting.plot_decision_regions` to make markers more distinguishable from the background in `matplotlib>=2.0`.
+
+##### Bug Fixes
+
+- -
 
 
 ### Version 0.5.1 (2017-02-14)

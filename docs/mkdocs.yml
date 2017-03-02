@@ -4,6 +4,7 @@ site_author: Sebastian Raschka
 site_description: A library consisting of useful tools and extensions for the day-to-day data science tasks.
 
 repo_url: https://github.com/rasbt/mlxtend
+repo_name: GitHub
 
 #include_search: true # not necessary for this theme
 docs_dir: sources
@@ -24,7 +25,7 @@ extra_javascript:
 #extra_css:
 #  - extra.css
 
-copyright: Copyright &copy; 2014-2016 <a href="http://sebastianraschka.com">Sebastian Raschka</a>
+copyright: Copyright &copy; 2014-2017 <a href="http://sebastianraschka.com">Sebastian Raschka</a>
 google_analytics: ['UA-38457794-2', 'rasbt.github.io/mlxtend/']
 
 pages:

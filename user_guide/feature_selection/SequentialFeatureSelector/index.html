@@ -1062,9 +1062,9 @@ sfs1 = SFS(knn,
 sfs1 = sfs1.fit(X, y)
 </code></pre>
 
-<pre><code>[2017-01-10 00:13:18] Features: 1/3 -- score: 0.96
-[2017-01-10 00:13:18] Features: 2/3 -- score: 0.973333333333
-[2017-01-10 00:13:18] Features: 3/3 -- score: 0.973333333333
+<pre><code>[2017-03-14 16:43:01] Features: 1/3 -- score: 0.96
+[2017-03-14 16:43:01] Features: 2/3 -- score: 0.973333333333
+[2017-03-14 16:43:01] Features: 3/3 -- score: 0.973333333333
 </code></pre>
 <p>Via the <code>subsets_</code> attribute, we can take a look at the selected feature indices at each step:</p>
 <pre><code class="python">sfs1.subsets_
@@ -1338,10 +1338,10 @@ plt.grid()
 plt.show()
 </code></pre>
 
-<pre><code>[2017-01-10 00:13:26] Features: 1/4 -- score: 0.96
-[2017-01-10 00:13:26] Features: 2/4 -- score: 0.966666666667
-[2017-01-10 00:13:26] Features: 3/4 -- score: 0.953333333333
-[2017-01-10 00:13:26] Features: 4/4 -- score: 0.973333333333
+<pre><code>[2017-03-14 16:43:21] Features: 1/4 -- score: 0.96
+[2017-03-14 16:43:21] Features: 2/4 -- score: 0.966666666667
+[2017-03-14 16:43:21] Features: 3/4 -- score: 0.953333333333
+[2017-03-14 16:43:21] Features: 4/4 -- score: 0.973333333333
 </code></pre>
 <p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_39_1.png" /></p>
 <h2 id="example-5-sequential-feature-selection-for-regression">Example 5 - Sequential Feature Selection for Regression</h2>
@@ -1365,7 +1365,7 @@ sfs = SFS(lr,
 sfs = sfs.fit(X, y)
 fig = plot_sfs(sfs.get_metric_dict(), kind='std_err')
 
-plt.title('Sequential Forward Selection (w. StdDev)')
+plt.title('Sequential Forward Selection (w. StdErr)')
 plt.grid()
 plt.show()
 </code></pre>

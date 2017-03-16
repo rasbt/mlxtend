@@ -1,18 +1,20 @@
 def generate_rules(df, metric="confidence", min_threshold=0.8):
     """"""
+    
     # Metrics for association rules
     metric_dict = {
-        "confidence": lambda sXY, sX, _:  sXY/sX,
-        "lift": lambda sXY, sX, sY: metric_dict["confidence"](sXY, sX, sY)/sY,
-        "conviction": lambda sXY, sX, sY: \
-        float("inf") if  metric_dict["confidence"](sXY, sX, sY) == 1 \
-        else (1-sY) / (1-metric_dict["confidence"](sXY, sX, sY))
+        "confidence": lambda sXY, sX, _: \
+        sXY/sX,
+        "lift": lambda sXY, sX, sY:\
+        metric_dict["confidence"](sXY, sX, sY)/sY,
+        "conviction": lambda sXY, sX, sY:\
+        np.array((1-sY)) / (1-metric_dict["confidence"](sXY, sX, sY))
         }
     
     # check for metric compliance
     if metric not in metric_dict.keys():
-        pass # raise error
-    
+        raise ValueError("Metric must be 'confidence', 'lift' or 'conviction, got'{}'".format(metric))
+        
     # get dict of {frequent itemset} -> support
     frozenset_vect = np.vectorize(lambda x: frozenset(x))
     keys = df.values.T[1]
@@ -45,10 +47,6 @@ def generate_rules(df, metric="confidence", min_threshold=0.8):
     if not rule_supports:
         return
     else:
-        # Change conviction calculation to support broadcasting
-        metric_dict["conviction"] = lambda sXY, sX, sY: \
-        (1-sY) / (1-metric_dict["confidence"](sXY, sX, sY))
-        
         # generate ALL the metrics
         rule_supports = np.array(rule_supports).T
         sXY = rule_supports[0]
@@ -59,4 +57,4 @@ def generate_rules(df, metric="confidence", min_threshold=0.8):
         for m in metric_dict.keys():
             df_res[m] = metric_dict[m](sXY, sX, sY)
         
-        return df_res.replace(np.nan, np.inf)
+        return df_res

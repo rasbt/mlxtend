@@ -1,19 +1,20 @@
-def generate_rules(df, metric="confidence", min_threshold=0.8):
+import numpy as np
+import pandas as pd
+from itertools import combinations
+
+def association_rules(df, metric="confidence", min_threshold=0.8):
     """"""
-    
     # Metrics for association rules
     metric_dict = {
         "confidence": lambda sXY, sX, _: \
         sXY/sX,
         "lift": lambda sXY, sX, sY:\
-        metric_dict["confidence"](sXY, sX, sY)/sY,
-        "conviction": lambda sXY, sX, sY:\
-        np.array((1-sY)) / (1-metric_dict["confidence"](sXY, sX, sY))
+        metric_dict["confidence"](sXY, sX, sY)/sY
         }
     
     # check for metric compliance
     if metric not in metric_dict.keys():
-        raise ValueError("Metric must be 'confidence', 'lift' or 'conviction, got'{}'".format(metric))
+        raise ValueError("Metric must be 'confidence' or 'lift', got '{}'".format(metric))
         
     # get dict of {frequent itemset} -> support
     frozenset_vect = np.vectorize(lambda x: frozenset(x))

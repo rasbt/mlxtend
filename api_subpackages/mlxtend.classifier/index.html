@@ -105,6 +105,27 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">frequent_patterns</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/frequent_patterns/apriori/">Apriori</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/frequent_patterns/association_rules/">Association rules</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">classifier</a>
     <ul class="dropdown-menu">
         
@@ -450,21 +471,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">association</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../user_guide/association/apriori/">Apriori</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -653,6 +659,12 @@
                         <ul class="dropdown-menu">
                         
                             
+<li >
+    <a href="../mlxtend.frequent_patterns/">Mlxtend.frequent patterns</a>
+</li>
+
+                        
+                            
 <li class="active">
     <a href="./">Mlxtend.classifier</a>
 </li>
@@ -802,7 +814,7 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../../user_guide/general_concepts/regularization-linear/">
+                        <a rel="next" href="../mlxtend.frequent_patterns/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
@@ -886,7 +898,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.5.1.dev0 </p>
+<p>mlxtend version: 0.6.0 </p>
 <h2 id="adaline">Adaline</h2>
 <p><em>Adaline(eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0)</em></p>
 <p>ADAptive LInear NEuron classifier.</p>
@@ -1821,7 +1833,7 @@ between 0.0 and 1.0 (perfect score).</p>
 </li>
 </ul>
 <h2 id="stackingclassifier">StackingClassifier</h2>
-<p><em>StackingClassifier(classifiers, meta_classifier, use_probas=False, average_probas=False, verbose=0)</em></p>
+<p><em>StackingClassifier(classifiers, meta_classifier, use_probas=False, average_probas=False, verbose=0, use_features_in_secondary=False)</em></p>
 <p>A Stacking classifier for scikit-learn estimators for classification.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1857,6 +1869,13 @@ regressor being fitted
 - <code>verbose&gt;2</code>: Changes <code>verbose</code> param of the underlying regressor to
 self.verbose - 2</p>
 </li>
+<li>
+<p><code>use_features_in_secondary</code> : bool (default: False)</p>
+<p>If True, the meta-classifier will be trained both on the predictions
+of the original classifiers and the original dataset.
+If False, the meta-classifier will be trained only on the predictions
+of the original classifiers.</p>
+</li>
 </ul>
 <p><strong>Attributes</strong></p>
 <ul>
@@ -1882,7 +1901,7 @@ self.verbose - 2</p>
 n_features is the number of features.</p>
 </li>
 <li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p><code>y</code> : array-like, shape = [n_samples] or [n_samples, n_outputs]</p>
 <p>Target values.</p>
 </li>
 </ul>
@@ -1933,7 +1952,7 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>labels</code> : array-like, shape = [n_samples]</p>
+<p><code>labels</code> : array-like, shape = [n_samples] or [n_samples, n_outputs]</p>
 <p>Predicted class labels.</p>
 </li>
 </ul>
@@ -1952,7 +1971,7 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>proba</code> : array-like, shape = [n_samples, n_classes]</p>
+<p><code>proba</code> : array-like, shape = [n_samples, n_classes] or a list of                 n_outputs of such arrays if n_outputs &gt; 1.</p>
 <p>Probability for each class per sample.</p>
 </li>
 </ul>

@@ -105,6 +105,27 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">frequent_patterns</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../user_guide/frequent_patterns/apriori/">Apriori</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/frequent_patterns/association_rules/">Association rules</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">classifier</a>
     <ul class="dropdown-menu">
         
@@ -450,21 +471,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">association</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../user_guide/association/apriori/">Apriori</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -654,6 +660,12 @@
                         
                             
 <li >
+    <a href="../api_subpackages/mlxtend.frequent_patterns/">Mlxtend.frequent patterns</a>
+</li>
+
+                        
+                            
+<li >
     <a href="../api_subpackages/mlxtend.classifier/">Mlxtend.classifier</a>
 </li>
 
@@ -836,7 +848,7 @@
     
         <li class="main active"><a href="#release-notes">Release Notes</a></li>
         
-            <li><a href="#version-060-tbd">Version 0.6.0 (TBD)</a></li>
+            <li><a href="#version-060-2017-03-18">Version 0.6.0 (2017-03-18)</a></li>
                 <!-- 
                     <li><a href="#downloads">Downloads</a></li>
             
@@ -977,9 +989,7 @@
 <hr />
 <p>The CHANGELOG for the current development version is available at
 <a href="https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md">https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md</a>.</p>
-<h3 id="version-060-tbd">Version 0.6.0 (TBD)</h3>
-<p>The CHANGELOG for the current development version is available at
-<a href="https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md">https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md</a>.</p>
+<h3 id="version-060-2017-03-18">Version 0.6.0 (2017-03-18)</h3>
 <h5 id="downloads">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.6.0.zip">Source code (zip)</a></li>
@@ -987,15 +997,16 @@
 </ul>
 <h5 id="new-features">New Features</h5>
 <ul>
-<li>-</li>
+<li>An <code>association_rules</code> function is implemented that allows to generate rules based on a list of frequent itemsets (via <a href="https://github.com/JoshuaGoerner">Joshua Goerner</a>).</li>
 </ul>
 <h5 id="changes">Changes</h5>
 <ul>
 <li>Adds a black <code>edgecolor</code> to plots via <code>plotting.plot_decision_regions</code> to make markers more distinguishable from the background in <code>matplotlib&gt;=2.0</code>.</li>
+<li>The <code>association</code> submodule was renamed to <code>frequent_patterns</code>.</li>
 </ul>
 <h5 id="bug-fixes">Bug Fixes</h5>
 <ul>
-<li>-</li>
+<li>The <code>DataFrame</code> index of <code>apriori</code> results are now unique and ordered.</li>
 </ul>
 <h3 id="version-051-2017-02-14">Version 0.5.1 (2017-02-14)</h3>
 <p>The CHANGELOG for the current development version is available at

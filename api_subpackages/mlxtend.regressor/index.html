@@ -105,6 +105,27 @@
                         
                             
   <li class="dropdown-submenu">
+    <a tabindex="-1" href="">frequent_patterns</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user_guide/frequent_patterns/apriori/">Apriori</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/frequent_patterns/association_rules/">Association rules</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
     <a tabindex="-1" href="">classifier</a>
     <ul class="dropdown-menu">
         
@@ -450,21 +471,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">association</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../user_guide/association/apriori/">Apriori</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -651,6 +657,12 @@
                     <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
                         <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../mlxtend.frequent_patterns/">Mlxtend.frequent patterns</a>
+</li>
+
                         
                             
 <li >
@@ -853,7 +865,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.5.1.dev0 </p>
+<p>mlxtend version: 0.6.0 </p>
 <h2 id="linearregression">LinearRegression</h2>
 <p><em>LinearRegression(eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0)</em></p>
 <p>Ordinary least squares linear regression.</p>
@@ -1013,7 +1025,7 @@ self.verbose - 2</p>
 n_features is the number of features.</p>
 </li>
 <li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p><code>y</code> : array-like, shape = [n_samples] or [n_samples, n_targets]</p>
 <p>Target values.</p>
 </li>
 </ul>
@@ -1064,7 +1076,7 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>y_target</code> : array-like, shape = [n_samples]</p>
+<p><code>y_target</code> : array-like, shape = [n_samples] or [n_samples, n_targets]</p>
 <p>Predicted target values.</p>
 </li>
 </ul>

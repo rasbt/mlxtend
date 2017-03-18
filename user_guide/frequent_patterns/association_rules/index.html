@@ -7,10 +7,10 @@
     <page.page.meta name="viewport" page.content="width=device-width, initial-scale=1.0">
     <page.page.meta name="description" page.content="A library consisting of useful tools and extensions for the day-to-day data science tasks."> 
     <page.page.meta name="author" page.content="Sebastian Raschka"> 
-    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/association/apriori/"> 
+    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/"> 
     <link rel="shortcut icon" href="../../../img/favicon.ico">
 
-    <title>Apriori - mlxtend</title>
+    <title>Association rules - mlxtend</title>
 
     <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
@@ -101,6 +101,27 @@
 <li >
     <a href="../../../USER_GUIDE_INDEX/">USER GUIDE INDEX</a>
 </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">frequent_patterns</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../apriori/">Apriori</a>
+</li>
+
+        
+            
+<li class="active">
+    <a href="./">Association rules</a>
+</li>
+
+        
+    </ul>
+  </li>
 
                         
                             
@@ -450,21 +471,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">association</a>
-    <ul class="dropdown-menu">
-        
-            
-<li class="active">
-    <a href="./">Apriori</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">file_io</a>
     <ul class="dropdown-menu">
         
@@ -654,6 +660,12 @@
                         
                             
 <li >
+    <a href="../../../api_subpackages/mlxtend.frequent_patterns/">Mlxtend.frequent patterns</a>
+</li>
+
+                        
+                            
+<li >
     <a href="../../../api_subpackages/mlxtend.classifier/">Mlxtend.classifier</a>
 </li>
 
@@ -802,12 +814,12 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../../data/three_blobs_data/">
+                        <a rel="next" href="../apriori/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../../file_io/find_filegroups/">
+                        <a rel="prev" href="../../classifier/EnsembleVoteClassifier/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -834,7 +846,7 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#frequent-itemsets-via-apriori-algorithm">Frequent Itemsets via Apriori Algorithm</a></li>
+        <li class="main active"><a href="#association-rules-generation-from-frequent-itemsets">Association Rules Generation from Frequent Itemsets</a></li>
         
     
         <li class="main "><a href="#overview">Overview</a></li>
@@ -846,6 +858,9 @@
         <li class="main "><a href="#example-1">Example 1</a></li>
         
     
+        <li class="main "><a href="#example-2">Example 2</a></li>
+        
+    
         <li class="main "><a href="#api">API</a></li>
         
     
@@ -853,132 +868,34 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<h2 id="frequent-itemsets-via-apriori-algorithm">Frequent Itemsets via Apriori Algorithm</h2>
-<p>Apriori function to extract frequent itemsets for association rule mining</p>
+<h2 id="association-rules-generation-from-frequent-itemsets">Association Rules Generation from Frequent Itemsets</h2>
+<p>Function to generate association rules from frequent itemsets</p>
 <blockquote>
-<p>from mlxtend.association import apriori</p>
+<p>from mlxtend.frequent_patterns import association_rules</p>
 </blockquote>
 <h2 id="overview">Overview</h2>
-<p>Apriori is a popular algorithm [1] for extracting frequent itemsets with applications in association rule learning. The apriori algorithm has been designed to operate on databases containing transactions, such as purchases by customers of a store. A itemset is considered as "frequent" if it meets a user-specified support threshold. For instance, if the support threshold is set to 0.5 (50%), a frequent itemset is defined as a set of items that occur togehter in at least 50% of all transactions in the database.</p>
+<p>Rule generation is a common task in the mining of frequent patterns. <em>An association rule is an implication expression of the form $X \rightarrow Y$, where $X$ and $Y$ are disjoint itemsets</em> [1]. A more concrete example based on consumer behaviour would be  $\{Diapers\} \rightarrow \{Beer\}$ suggesting that people who buy diapers are also likely to buy beer. To evaluate the "interest" of such an association rule, different metrics have been developed. The current implementation make use of the <code>confidence</code> and <code>lift</code> metrics. </p>
 <h2 id="references">References</h2>
-<p>[1] Agrawal, Rakesh, and Ramakrishnan Srikant. "<a href="https://www.it.uu.se/edu/course/homepage/infoutv/ht08/vldb94_rj.pdf">Fast algorithms for mining association rules</a>." Proc. 20th int. conf. very large data bases, VLDB. Vol. 1215. 1994.</p>
+<p>[1] Tan, Steinbach, Kumar. Introduction to Data Mining. Pearson New International Edition. Harlow: Pearson Education Ltd., 2014. (pp. 327-414).</p>
 <h2 id="example-1">Example 1</h2>
-<p>The <code>apriori</code> function expects data in a one-hot encoded pandas DataFrame.
-Suppose we have the following transaction data:</p>
-<pre><code class="python">dataset = [['Milk', 'Onion', 'Nutmeg', 'Kidney Beans', 'Eggs', 'Yogurt'],
+<p>The <code>generate_rules</code> takes dataframes of frequent itemsets as produced by the <code>apriori</code> function in <em>mlxtend.association</em>. To demonstrate the usage of the <code>generate_rules</code> method, we first create a pandas <code>DataFrame</code> of frequent itemsets as generated by the <a href="../apriori/"><code>apriori</code></a> function:</p>
+<pre><code class="python">import pandas as pd
+from mlxtend.preprocessing import OnehotTransactions
+from mlxtend.frequent_patterns import apriori
+
+
+dataset = [['Milk', 'Onion', 'Nutmeg', 'Kidney Beans', 'Eggs', 'Yogurt'],
            ['Dill', 'Onion', 'Nutmeg', 'Kidney Beans', 'Eggs', 'Yogurt'],
            ['Milk', 'Apple', 'Kidney Beans', 'Eggs'],
            ['Milk', 'Unicorn', 'Corn', 'Kidney Beans', 'Yogurt'],
            ['Corn', 'Onion', 'Onion', 'Kidney Beans', 'Ice cream', 'Eggs']]
-</code></pre>
-
-<p>We can transform it into the right format via the <code>OnehotTransactions</code> encoder as follows:</p>
-<pre><code class="python">import pandas as pd
-from mlxtend.preprocessing import OnehotTransactions
 
 oht = OnehotTransactions()
 oht_ary = oht.fit(dataset).transform(dataset)
 df = pd.DataFrame(oht_ary, columns=oht.columns_)
-df
-</code></pre>
+frequent_itemsets = apriori(df, min_support=0.6, use_colnames=True)
 
-<div>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Apple</th>
-      <th>Corn</th>
-      <th>Dill</th>
-      <th>Eggs</th>
-      <th>Ice cream</th>
-      <th>Kidney Beans</th>
-      <th>Milk</th>
-      <th>Nutmeg</th>
-      <th>Onion</th>
-      <th>Unicorn</th>
-      <th>Yogurt</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<p>Now, let us return the items and itemsets with at least 60% support:</p>
-<pre><code class="python">from mlxtend.association import apriori
-
-apriori(df, min_support=0.6)
+frequent_itemsets
 </code></pre>
 
 <div>
@@ -988,92 +905,6 @@ apriori(df, min_support=0.6)
       <th></th>
       <th>support</th>
       <th>itemsets</th>
-      <th>length</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.8</td>
-      <td>[3]</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1.0</td>
-      <td>[5]</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.6</td>
-      <td>[6]</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.6</td>
-      <td>[8]</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.6</td>
-      <td>[10]</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>0.8</td>
-      <td>[3, 5]</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.6</td>
-      <td>[3, 8]</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.6</td>
-      <td>[5, 6]</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.6</td>
-      <td>[5, 8]</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.6</td>
-      <td>[5, 10]</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>0.6</td>
-      <td>[3, 5, 8]</td>
-      <td>3</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<p>By default, <code>apriori</code> returns the column indices of the items, which may be useful in downstream operations such as association rule mining. For better readability, we can set <code>use_colnames=True</code> to convert these integer values into the respective item names: </p>
-<pre><code class="python">apriori(df, min_support=0.6, use_colnames=True)
-</code></pre>
-
-<div>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>support</th>
-      <th>itemsets</th>
-      <th>length</th>
     </tr>
   </thead>
   <tbody>
@@ -1081,105 +912,361 @@ apriori(df, min_support=0.6)
       <th>0</th>
       <td>0.8</td>
       <td>[Eggs]</td>
-      <td>1</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1.0</td>
       <td>[Kidney Beans]</td>
-      <td>1</td>
     </tr>
     <tr>
       <th>2</th>
       <td>0.6</td>
       <td>[Milk]</td>
-      <td>1</td>
     </tr>
     <tr>
       <th>3</th>
       <td>0.6</td>
       <td>[Onion]</td>
-      <td>1</td>
     </tr>
     <tr>
       <th>4</th>
       <td>0.6</td>
       <td>[Yogurt]</td>
-      <td>1</td>
     </tr>
     <tr>
-      <th>0</th>
+      <th>5</th>
       <td>0.8</td>
       <td>[Eggs, Kidney Beans]</td>
-      <td>2</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.6</td>
+      <td>[Eggs, Onion]</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.6</td>
+      <td>[Kidney Beans, Milk]</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.6</td>
+      <td>[Kidney Beans, Onion]</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.6</td>
+      <td>[Kidney Beans, Yogurt]</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.6</td>
+      <td>[Eggs, Kidney Beans, Onion]</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>The <code>generate_rules()</code> function allows you to (1) specify your metric of interest and (2) the according threshold. Currently implemented measures are <strong>confidence</strong> and <strong>lift</strong>. Let's say you are interesting in rules derived from the frequent itemsets only if the level of confidence is above the 90 percent threshold (<code>min_threshold=0.9</code>):</p>
+<pre><code class="python">from mlxtend.frequent_patterns import association_rules
+
+association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshold=0.9)
+</code></pre>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>antecedants</th>
+      <th>consequents</th>
+      <th>support</th>
+      <th>confidence</th>
+      <th>lift</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>(Eggs)</td>
+      <td>(Kidney Beans)</td>
+      <td>0.8</td>
+      <td>1.0</td>
+      <td>1.00</td>
     </tr>
     <tr>
       <th>1</th>
+      <td>(Onion)</td>
+      <td>(Eggs)</td>
       <td>0.6</td>
-      <td>[Eggs, Onion]</td>
-      <td>2</td>
+      <td>1.0</td>
+      <td>1.25</td>
     </tr>
     <tr>
       <th>2</th>
+      <td>(Milk)</td>
+      <td>(Kidney Beans)</td>
       <td>0.6</td>
-      <td>[Kidney Beans, Milk]</td>
+      <td>1.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>(Onion)</td>
+      <td>(Kidney Beans)</td>
+      <td>0.6</td>
+      <td>1.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>(Yogurt)</td>
+      <td>(Kidney Beans)</td>
+      <td>0.6</td>
+      <td>1.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>(Eggs, Onion)</td>
+      <td>(Kidney Beans)</td>
+      <td>0.6</td>
+      <td>1.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>(Kidney Beans, Onion)</td>
+      <td>(Eggs)</td>
+      <td>0.6</td>
+      <td>1.0</td>
+      <td>1.25</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>(Onion)</td>
+      <td>(Eggs, Kidney Beans)</td>
+      <td>0.6</td>
+      <td>1.0</td>
+      <td>1.25</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="example-2">Example 2</h2>
+<p>If you are interested in rules fulfilling a different interest metric, you can simply adjust the parameters. E.g. if you are interested only in rules that have a lift score of &gt;= 1.2, you would do the following:</p>
+<pre><code class="python">rules = association_rules(frequent_itemsets, metric=&quot;lift&quot;, min_threshold=1.2)
+rules
+</code></pre>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>antecedants</th>
+      <th>consequents</th>
+      <th>support</th>
+      <th>confidence</th>
+      <th>lift</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>(Eggs)</td>
+      <td>(Onion)</td>
+      <td>0.8</td>
+      <td>0.75</td>
+      <td>1.25</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>(Onion)</td>
+      <td>(Eggs)</td>
+      <td>0.6</td>
+      <td>1.00</td>
+      <td>1.25</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>(Eggs, Kidney Beans)</td>
+      <td>(Onion)</td>
+      <td>0.8</td>
+      <td>0.75</td>
+      <td>1.25</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>(Kidney Beans, Onion)</td>
+      <td>(Eggs)</td>
+      <td>0.6</td>
+      <td>1.00</td>
+      <td>1.25</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>(Eggs)</td>
+      <td>(Kidney Beans, Onion)</td>
+      <td>0.8</td>
+      <td>0.75</td>
+      <td>1.25</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>(Onion)</td>
+      <td>(Eggs, Kidney Beans)</td>
+      <td>0.6</td>
+      <td>1.00</td>
+      <td>1.25</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Pandas <code>DataFrames</code> make it easy to filter the results further. Let's say we are ony interested in rules that satisfy the following criteria:</p>
+<ol>
+<li>at least 2 antecedants</li>
+<li>a confidence &gt; 0.75</li>
+<li>a lift score &gt; 1.2</li>
+</ol>
+<p>We could compute the antecedent length as follows:</p>
+<pre><code class="python">rules[&quot;antecedant_len&quot;] = rules[&quot;antecedants&quot;].apply(lambda x: len(x))
+rules
+</code></pre>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>antecedants</th>
+      <th>consequents</th>
+      <th>support</th>
+      <th>confidence</th>
+      <th>lift</th>
+      <th>antecedant_len</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>(Eggs)</td>
+      <td>(Onion)</td>
+      <td>0.8</td>
+      <td>0.75</td>
+      <td>1.25</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>(Onion)</td>
+      <td>(Eggs)</td>
+      <td>0.6</td>
+      <td>1.00</td>
+      <td>1.25</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>(Eggs, Kidney Beans)</td>
+      <td>(Onion)</td>
+      <td>0.8</td>
+      <td>0.75</td>
+      <td>1.25</td>
       <td>2</td>
     </tr>
     <tr>
       <th>3</th>
+      <td>(Kidney Beans, Onion)</td>
+      <td>(Eggs)</td>
       <td>0.6</td>
-      <td>[Kidney Beans, Onion]</td>
+      <td>1.00</td>
+      <td>1.25</td>
       <td>2</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.6</td>
-      <td>[Kidney Beans, Yogurt]</td>
-      <td>2</td>
+      <td>(Eggs)</td>
+      <td>(Kidney Beans, Onion)</td>
+      <td>0.8</td>
+      <td>0.75</td>
+      <td>1.25</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>0</th>
+      <th>5</th>
+      <td>(Onion)</td>
+      <td>(Eggs, Kidney Beans)</td>
       <td>0.6</td>
-      <td>[Eggs, Kidney Beans, Onion]</td>
-      <td>3</td>
+      <td>1.00</td>
+      <td>1.25</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Then, we can use pandas' selection syntax as shown below:</p>
+<pre><code class="python">rules[ (rules['antecedant_len'] &gt;= 2) &amp;
+       (rules['confidence'] &gt; 0.75) &amp;
+       (rules['lift'] &gt; 1.2) ]
+</code></pre>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>antecedants</th>
+      <th>consequents</th>
+      <th>support</th>
+      <th>confidence</th>
+      <th>lift</th>
+      <th>antecedant_len</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3</th>
+      <td>(Kidney Beans, Onion)</td>
+      <td>(Eggs)</td>
+      <td>0.6</td>
+      <td>1.0</td>
+      <td>1.25</td>
+      <td>2</td>
     </tr>
   </tbody>
 </table>
 </div>
 
 <h2 id="api">API</h2>
-<p><em>apriori(df, min_support=0.5, use_colnames=False)</em></p>
-<p>Get frequent itemsets from a one-hot DataFrame</p>
+<p><em>association_rules(df, metric='confidence', min_threshold=0.8)</em></p>
+<p>Generates a dataframe of association rules including
+metrics 'score', 'confidence' &amp; lift</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
 <p><code>df</code> : pandas DataFrame</p>
-<p>pandas DataFrame in one-hot encoded format. For example
-Apple  Bananas  Beer  Chicken  Milk  Rice
-0      1        0     1        1     0     1
-1      1        0     1        0     0     1
-2      1        0     1        0     0     0
-3      1        1     0        0     0     0
-4      0        0     1        1     1     1
-5      0        0     1        0     1     1
-6      0        0     1        0     1     0
-7      1        1     0        0     0     0</p>
+<p>pandas DataFrame of frequent itemsets
+with columns ['support', 'itemsets']</p>
 </li>
 <li>
-<p><code>min_support</code> : float (default: 0.5)</p>
-<p>A float between 0 and 1 for minumum support of the itemsets returned.
-The support is computed as the fraction
-transactions_where_item(s)_occur / total_transactions.</p>
+<p><code>metric</code> : string (default: 'confidence')</p>
+<p>Metric to evaluate if a rule is of interest.
+Supported metrics are 'confidence' and 'lift'</p>
 </li>
 <li>
-<p><code>use_colnames</code> : bool (default: False)</p>
-<p>If true, uses the DataFrames' column names in the returned DataFrame
-instead of column indices.</p>
+<p><code>min_threshold</code> : float (default: 0.8)</p>
+<p>Minimal threshold for the evaluation metric
+to decide whether a candidate rule is of interest.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
-<p>pandas DataFrame with columns ['support', 'itemsets'] of all itemsets
-    that are &gt;= min_support.</p></div>
+<p>pandas DataFrame with columns ['antecedants', 'consequents',
+    'support', 'lift', 'confidence'] of all rules for which
+    metric(rule) &gt;= min_threshold.</p></div>
         
     </div>
 

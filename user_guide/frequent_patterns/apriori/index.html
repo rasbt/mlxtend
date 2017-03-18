@@ -7,10 +7,10 @@
     <page.page.meta name="viewport" page.content="width=device-width, initial-scale=1.0">
     <page.page.meta name="description" page.content="A library consisting of useful tools and extensions for the day-to-day data science tasks."> 
     <page.page.meta name="author" page.content="Sebastian Raschka"> 
-    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/classifier/SoftmaxRegression/"> 
+    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/"> 
     <link rel="shortcut icon" href="../../../img/favicon.ico">
 
-    <title>SoftmaxRegression - mlxtend</title>
+    <title>Apriori - mlxtend</title>
 
     <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
@@ -109,14 +109,14 @@
     <ul class="dropdown-menu">
         
             
-<li >
-    <a href="../../frequent_patterns/apriori/">Apriori</a>
+<li class="active">
+    <a href="./">Apriori</a>
 </li>
 
         
             
 <li >
-    <a href="../../frequent_patterns/association_rules/">Association rules</a>
+    <a href="../association_rules/">Association rules</a>
 </li>
 
         
@@ -131,49 +131,49 @@
         
             
 <li >
-    <a href="../EnsembleVoteClassifier/">EnsembleVoteClassifier</a>
+    <a href="../../classifier/EnsembleVoteClassifier/">EnsembleVoteClassifier</a>
 </li>
 
         
             
 <li >
-    <a href="../StackingClassifier/">StackingClassifier</a>
+    <a href="../../classifier/StackingClassifier/">StackingClassifier</a>
 </li>
 
         
             
 <li >
-    <a href="../StackingCVClassifier/">StackingCVClassifier</a>
+    <a href="../../classifier/StackingCVClassifier/">StackingCVClassifier</a>
 </li>
 
         
             
 <li >
-    <a href="../Perceptron/">Perceptron</a>
+    <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
         
             
 <li >
-    <a href="../Adaline/">Adaline</a>
+    <a href="../../classifier/Adaline/">Adaline</a>
 </li>
 
         
             
 <li >
-    <a href="../LogisticRegression/">LogisticRegression</a>
-</li>
-
-        
-            
-<li class="active">
-    <a href="./">SoftmaxRegression</a>
+    <a href="../../classifier/LogisticRegression/">LogisticRegression</a>
 </li>
 
         
             
 <li >
-    <a href="../MultiLayerPerceptron/">MultiLayerPerceptron</a>
+    <a href="../../classifier/SoftmaxRegression/">SoftmaxRegression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/MultiLayerPerceptron/">MultiLayerPerceptron</a>
 </li>
 
         
@@ -814,12 +814,12 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../LogisticRegression/">
+                        <a rel="next" href="../../../USER_GUIDE_INDEX/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../MultiLayerPerceptron/">
+                        <a rel="prev" href="../association_rules/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -846,447 +846,445 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#softmax-regression">Softmax Regression</a></li>
+        <li class="main active"><a href="#frequent-itemsets-via-apriori-algorithm">Frequent Itemsets via Apriori Algorithm</a></li>
         
-            <li><a href="#overview">Overview</a></li>
-                <!--  -->
+    
+        <li class="main "><a href="#overview">Overview</a></li>
         
-            <li><a href="#example-1-gradient-descent">Example 1 - Gradient Descent</a></li>
-                <!-- 
-                    <li><a href="#predicting-class-labels">Predicting Class Labels</a></li>
-            
-                    <li><a href="#predicting-class-probabilities">Predicting Class Probabilities</a></li>
-             -->
+    
+        <li class="main "><a href="#references">References</a></li>
         
-            <li><a href="#example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</a></li>
-                <!--  -->
+    
+        <li class="main "><a href="#example-1">Example 1</a></li>
+        
+    
+        <li class="main "><a href="#example-2">Example 2</a></li>
         
     
         <li class="main "><a href="#api">API</a></li>
-        
-            <li><a href="#methods">Methods</a></li>
-                <!--  -->
         
     
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="softmax-regression">Softmax Regression</h1>
-<p>A logistic regression class for multi-class classification tasks.</p>
+<h2 id="frequent-itemsets-via-apriori-algorithm">Frequent Itemsets via Apriori Algorithm</h2>
+<p>Apriori function to extract frequent itemsets for association rule mining</p>
 <blockquote>
-<p>from mlxtend.classifier import SoftmaxRegression</p>
+<p>from mlxtend.frequent_patterns import apriori</p>
 </blockquote>
 <h2 id="overview">Overview</h2>
-<p><em>Softmax Regression</em> (synonyms: <em>Multinomial Logistic</em>, <em>Maximum Entropy Classifier</em>, or just <em>Multi-class Logistic Regression</em>) is a generalization of logistic regression that we can use for multi-class classification (under the assumption that the classes are  mutually exclusive). In contrast, we use the (standard) <em>Logistic Regression</em> model in binary classification tasks.</p>
-<p>Below is a schematic of a <em>Logistic Regression</em> model, for more details, please see the <a href="../LogisticRegression/"><code>LogisticRegression</code> manual</a>.</p>
-<p><img alt="" src="../SoftmaxRegression_files/logistic_regression_schematic.png" /></p>
-<p>In <em>Softmax Regression</em> (SMR), we replace the sigmoid logistic function by the so-called <em>softmax</em> function $\phi_{softmax}(\cdot)$.</p>
-<p>$$P(y=j \mid z^{(i)}) = \phi_{softmax}(z^{(i)}) = \frac{e^{z^{(i)}}}{\sum_{j=0}^{k} e^{z_{k}^{(i)}}},$$</p>
-<p>where we define the net input <em>z</em> as </p>
-<p>$$z = w_1x_1 + ... + w_mx_m  + b= \sum_{l=0}^{m} w_l x_l + b= \mathbf{w}^T\mathbf{x} + b.$$ </p>
-<p>(<strong>w</strong> is the weight vector, $\mathbf{x}$ is the feature vector of 1 training sample, and $b$ is the bias unit.) <br />
-Now, this softmax function computes the probability that this training sample $\mathbf{x}^{(i)}$ belongs to class $j$ given the weight and net input $z^{(i)}$. So, we compute the probability $p(y = j \mid \mathbf{x^{(i)}; w}_j)$ for each class label in  $j = 1, \ldots, k.$. Note the normalization term in the denominator which causes these class probabilities to sum up to one.</p>
-<p><img alt="" src="../SoftmaxRegression_files/softmax_schematic_1.png" /></p>
-<p>To illustrate the concept of softmax, let us walk through a concrete example. Let's assume we have a training set consisting of 4 samples from 3 different classes (0, 1, and 2)</p>
+<p>Apriori is a popular algorithm [1] for extracting frequent itemsets with applications in association rule learning. The apriori algorithm has been designed to operate on databases containing transactions, such as purchases by customers of a store. A itemset is considered as "frequent" if it meets a user-specified support threshold. For instance, if the support threshold is set to 0.5 (50%), a frequent itemset is defined as a set of items that occur togehter in at least 50% of all transactions in the database.</p>
+<h2 id="references">References</h2>
+<p>[1] Agrawal, Rakesh, and Ramakrishnan Srikant. "<a href="https://www.it.uu.se/edu/course/homepage/infoutv/ht08/vldb94_rj.pdf">Fast algorithms for mining association rules</a>." Proc. 20th int. conf. very large data bases, VLDB. Vol. 1215. 1994.</p>
+<h2 id="example-1">Example 1</h2>
+<p>The <code>apriori</code> function expects data in a one-hot encoded pandas DataFrame.
+Suppose we have the following transaction data:</p>
+<pre><code class="python">dataset = [['Milk', 'Onion', 'Nutmeg', 'Kidney Beans', 'Eggs', 'Yogurt'],
+           ['Dill', 'Onion', 'Nutmeg', 'Kidney Beans', 'Eggs', 'Yogurt'],
+           ['Milk', 'Apple', 'Kidney Beans', 'Eggs'],
+           ['Milk', 'Unicorn', 'Corn', 'Kidney Beans', 'Yogurt'],
+           ['Corn', 'Onion', 'Onion', 'Kidney Beans', 'Ice cream', 'Eggs']]
+</code></pre>
+
+<p>We can transform it into the right format via the <code>OnehotTransactions</code> encoder as follows:</p>
+<pre><code class="python">import pandas as pd
+from mlxtend.preprocessing import OnehotTransactions
+
+oht = OnehotTransactions()
+oht_ary = oht.fit(dataset).transform(dataset)
+df = pd.DataFrame(oht_ary, columns=oht.columns_)
+df
+</code></pre>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Apple</th>
+      <th>Corn</th>
+      <th>Dill</th>
+      <th>Eggs</th>
+      <th>Ice cream</th>
+      <th>Kidney Beans</th>
+      <th>Milk</th>
+      <th>Nutmeg</th>
+      <th>Onion</th>
+      <th>Unicorn</th>
+      <th>Yogurt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Now, let us return the items and itemsets with at least 60% support:</p>
+<pre><code class="python">from mlxtend.frequent_patterns import apriori
+
+apriori(df, min_support=0.6)
+</code></pre>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>support</th>
+      <th>itemsets</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.8</td>
+      <td>[3]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>[5]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.6</td>
+      <td>[6]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.6</td>
+      <td>[8]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.6</td>
+      <td>[10]</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.8</td>
+      <td>[3, 5]</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.6</td>
+      <td>[3, 8]</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.6</td>
+      <td>[5, 6]</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.6</td>
+      <td>[5, 8]</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.6</td>
+      <td>[5, 10]</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.6</td>
+      <td>[3, 5, 8]</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>By default, <code>apriori</code> returns the column indices of the items, which may be useful in downstream operations such as association rule mining. For better readability, we can set <code>use_colnames=True</code> to convert these integer values into the respective item names: </p>
+<pre><code class="python">apriori(df, min_support=0.6, use_colnames=True)
+</code></pre>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>support</th>
+      <th>itemsets</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.8</td>
+      <td>[Eggs]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>[Kidney Beans]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.6</td>
+      <td>[Milk]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.6</td>
+      <td>[Onion]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.6</td>
+      <td>[Yogurt]</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.8</td>
+      <td>[Eggs, Kidney Beans]</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.6</td>
+      <td>[Eggs, Onion]</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.6</td>
+      <td>[Kidney Beans, Milk]</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.6</td>
+      <td>[Kidney Beans, Onion]</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.6</td>
+      <td>[Kidney Beans, Yogurt]</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.6</td>
+      <td>[Eggs, Kidney Beans, Onion]</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="example-2">Example 2</h2>
+<p>The advantage of working with pandas <code>DataFrames</code> is that we can use its convenient features to filter the results. For instance, let's assume we are only interested in itemsets of length 2 that have a support of at least 80 percent. First, we create the frequent itemsets via <code>apriori</code> and add a new column that stores the length of each itemset:</p>
+<pre><code class="python">frequent_itemsets = apriori(df, min_support=0.6, use_colnames=True)
+frequent_itemsets['length'] = frequent_itemsets['itemsets'].apply(lambda x: len(x))
+frequent_itemsets
+</code></pre>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>support</th>
+      <th>itemsets</th>
+      <th>length</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.8</td>
+      <td>[Eggs]</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>[Kidney Beans]</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.6</td>
+      <td>[Milk]</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.6</td>
+      <td>[Onion]</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.6</td>
+      <td>[Yogurt]</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.8</td>
+      <td>[Eggs, Kidney Beans]</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.6</td>
+      <td>[Eggs, Onion]</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.6</td>
+      <td>[Kidney Beans, Milk]</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.6</td>
+      <td>[Kidney Beans, Onion]</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.6</td>
+      <td>[Kidney Beans, Yogurt]</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.6</td>
+      <td>[Eggs, Kidney Beans, Onion]</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Then, we can select the results that satisfy our desired criteria as follows:</p>
+<pre><code class="python">frequent_itemsets[ (frequent_itemsets['length'] == 2) &amp;
+                   (frequent_itemsets['support'] &gt;= 0.8) ]
+</code></pre>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>support</th>
+      <th>itemsets</th>
+      <th>length</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5</th>
+      <td>0.8</td>
+      <td>[Eggs, Kidney Beans]</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="api">API</h2>
+<p><em>apriori(df, min_support=0.5, use_colnames=False)</em></p>
+<p>Get frequent itemsets from a one-hot DataFrame
+<strong>Parameters</strong></p>
 <ul>
-<li>$x_0 \rightarrow \text{class }0$</li>
-<li>$x_1 \rightarrow \text{class }1$</li>
-<li>$x_2 \rightarrow \text{class }2$</li>
-<li>$x_3 \rightarrow \text{class }2$</li>
+<li>
+<p><code>df</code> : pandas DataFrame</p>
+<p>pandas DataFrame in one-hot encoded format. For example
+Apple  Bananas  Beer  Chicken  Milk  Rice
+0      1        0     1        1     0     1
+1      1        0     1        0     0     1
+2      1        0     1        0     0     0
+3      1        1     0        0     0     0
+4      0        0     1        1     1     1
+5      0        0     1        0     1     1
+6      0        0     1        0     1     0
+7      1        1     0        0     0     0</p>
+</li>
+<li>
+<p><code>min_support</code> : float (default: 0.5)</p>
+<p>A float between 0 and 1 for minumum support of the itemsets returned.
+The support is computed as the fraction
+transactions_where_item(s)_occur / total_transactions.</p>
+</li>
+<li>
+<p><code>use_colnames</code> : bool (default: False)</p>
+<p>If true, uses the DataFrames' column names in the returned DataFrame
+instead of column indices.
+<strong>Returns</strong></p>
+</li>
 </ul>
-<pre><code class="python">import numpy as np
-
-y = np.array([0, 1, 2, 2])
-</code></pre>
-
-<p>First, we want to encode the class labels into a format that we can more easily work with; we apply one-hot encoding:</p>
-<pre><code class="python">y_enc = (np.arange(np.max(y) + 1) == y[:, None]).astype(float)
-
-print('one-hot encoding:\n', y_enc)
-</code></pre>
-
-<pre><code>one-hot encoding:
- [[ 1.  0.  0.]
- [ 0.  1.  0.]
- [ 0.  0.  1.]
- [ 0.  0.  1.]]
-</code></pre>
-<p>A sample that belongs to class 0 (the first row) has a 1 in the first cell, a sample that belongs to class 2 has a 1 in the second cell of its row, and so forth.</p>
-<p>Next, let us define the feature matrix of our 4 training samples. Here, we assume that our dataset consists of 2 features; thus, we create a 4x2 dimensional matrix of our samples and features.
-Similarly, we create a 2x3 dimensional weight matrix (one row per feature and one column for each class).</p>
-<pre><code class="python">X = np.array([[0.1, 0.5],
-              [1.1, 2.3],
-              [-1.1, -2.3],
-              [-1.5, -2.5]])
-
-W = np.array([[0.1, 0.2, 0.3],
-              [0.1, 0.2, 0.3]])
-
-bias = np.array([0.01, 0.1, 0.1])
-
-print('Inputs X:\n', X)
-print('\nWeights W:\n', W)
-print('\nbias:\n', bias)
-</code></pre>
-
-<pre><code>Inputs X:
- [[ 0.1  0.5]
- [ 1.1  2.3]
- [-1.1 -2.3]
- [-1.5 -2.5]]
-
-Weights W:
- [[ 0.1  0.2  0.3]
- [ 0.1  0.2  0.3]]
-
-bias:
- [ 0.01  0.1   0.1 ]
-</code></pre>
-<p>To compute the net input, we multiply the 4x2 matrix feature matrix <code>X</code> with the 2x3 (n_features x n_classes) weight matrix <code>W</code>, which yields a 4x3 output matrix (n_samples x n_classes) to which we then add the bias unit: </p>
-<p>$$\mathbf{Z} = \mathbf{X}\mathbf{W} + \mathbf{b}.$$</p>
-<pre><code class="python">X = np.array([[0.1, 0.5],
-              [1.1, 2.3],
-              [-1.1, -2.3],
-              [-1.5, -2.5]])
-
-W = np.array([[0.1, 0.2, 0.3],
-              [0.1, 0.2, 0.3]])
-
-bias = np.array([0.01, 0.1, 0.1])
-
-print('Inputs X:\n', X)
-print('\nWeights W:\n', W)
-print('\nbias:\n', bias)
-</code></pre>
-
-<pre><code>Inputs X:
- [[ 0.1  0.5]
- [ 1.1  2.3]
- [-1.1 -2.3]
- [-1.5 -2.5]]
-
-Weights W:
- [[ 0.1  0.2  0.3]
- [ 0.1  0.2  0.3]]
-
-bias:
- [ 0.01  0.1   0.1 ]
-</code></pre>
-<pre><code class="python">def net_input(X, W, b):
-    return (X.dot(W) + b)
-
-net_in = net_input(X, W, bias)
-print('net input:\n', net_in)
-</code></pre>
-
-<pre><code>net input:
- [[ 0.07  0.22  0.28]
- [ 0.35  0.78  1.12]
- [-0.33 -0.58 -0.92]
- [-0.39 -0.7  -1.1 ]]
-</code></pre>
-<p>Now, it's time to compute the softmax activation that we discussed earlier:</p>
-<p>$$P(y=j \mid z^{(i)}) = \phi_{softmax}(z^{(i)}) = \frac{e^{z^{(i)}}}{\sum_{j=0}^{k} e^{z_{k}^{(i)}}}.$$</p>
-<pre><code class="python">def softmax(z):
-    return (np.exp(z.T) / np.sum(np.exp(z), axis=1)).T
-
-smax = softmax(net_in)
-print('softmax:\n', smax)
-</code></pre>
-
-<pre><code>softmax:
- [[ 0.29450637  0.34216758  0.36332605]
- [ 0.21290077  0.32728332  0.45981591]
- [ 0.42860913  0.33380113  0.23758974]
- [ 0.44941979  0.32962558  0.22095463]]
-</code></pre>
-<p>As we can see, the values for each sample (row) nicely sum up to 1 now. E.g., we can say that the first sample <br />
-<code>[ 0.29450637  0.34216758  0.36332605]</code> has a 29.45% probability to belong to class 0.</p>
-<p>Now, in order to turn these probabilities back into class labels, we could simply take the argmax-index position of each row:</p>
-<p>[[ 0.29450637  0.34216758  <strong>0.36332605</strong>] -&gt; 2 <br />
-[ 0.21290077  0.32728332  <strong>0.45981591</strong>]  -&gt; 2<br />
-[ <strong>0.42860913</strong>  0.33380113  0.23758974]  -&gt; 0<br />
-[ <strong>0.44941979</strong>  0.32962558  0.22095463]] -&gt; 0  </p>
-<pre><code class="python">def to_classlabel(z):
-    return z.argmax(axis=1)
-
-print('predicted class labels: ', to_classlabel(smax))
-</code></pre>
-
-<pre><code>predicted class labels:  [2 2 0 0]
-</code></pre>
-<p>As we can see, our predictions are terribly wrong, since the correct class labels are <code>[0, 1, 2, 2]</code>. Now, in order to train our logistic model (e.g., via an optimization algorithm such as gradient descent), we need to define a cost function $J(\cdot)$ that we want to minimize:</p>
-<p>$$J(\mathbf{W}; \mathbf{b}) = \frac{1}{n} \sum_{i=1}^{n} H(T_i, O_i),$$</p>
-<p>which is the average of all cross-entropies over our $n$ training samples. The cross-entropy  function is defined as</p>
-<p>$$H(T_i, O_i) = -\sum_m T_i \cdot log(O_i).$$</p>
-<p>Here the $T$ stands for "target" (i.e., the <em>true</em> class labels) and the $O$ stands for output -- the computed <em>probability</em> via softmax; <strong>not</strong> the predicted class label.</p>
-<pre><code class="python">def cross_entropy(output, y_target):
-    return - np.sum(np.log(output) * (y_target), axis=1)
-
-xent = cross_entropy(smax, y_enc)
-print('Cross Entropy:', xent)
-</code></pre>
-
-<pre><code>Cross Entropy: [ 1.22245465  1.11692907  1.43720989  1.50979788]
-</code></pre>
-<pre><code class="python">def cost(output, y_target):
-    return np.mean(cross_entropy(output, y_target))
-
-J_cost = cost(smax, y_enc)
-print('Cost: ', J_cost)
-</code></pre>
-
-<pre><code>Cost:  1.32159787159
-</code></pre>
-<p>In order to learn our softmax model -- determining the weight coefficients -- via gradient descent, we then need to compute the derivative </p>
-<p>$$\nabla \mathbf{w}_j \, J(\mathbf{W}; \mathbf{b}).$$</p>
-<p>I don't want to walk through the tedious details here, but this cost derivative turns out to be simply:</p>
-<p>$$\nabla \mathbf{w}_j \, J(\mathbf{W}; \mathbf{b}) = \frac{1}{n} \sum^{n}_{i=0} \big[\mathbf{x}^{(i)}\ \big(O_i - T_i \big) \big]$$</p>
-<p>We can then use the cost derivate to update the weights in opposite direction of the cost gradient with learning rate $\eta$:</p>
-<p>$$\mathbf{w}_j := \mathbf{w}_j - \eta \nabla \mathbf{w}_j \, J(\mathbf{W}; \mathbf{b})$$ </p>
-<p>for each class $$j \in \{0, 1, ..., k\}$$</p>
-<p>(note that $\mathbf{w}_j$ is the weight vector for the class $y=j$), and we update the bias units</p>
-<p>$$\mathbf{b}_j := \mathbf{b}_j   - \eta \bigg[ \frac{1}{n} \sum^{n}_{i=0} \big(O_i - T_i  \big) \bigg].$$ </p>
-<p>As a penalty against complexity, an approach to reduce the variance of our model and decrease the degree of overfitting by adding additional bias, we can further add a regularization term such as the L2 term with the regularization parameter $\lambda$:</p>
-<p>L2:        $\frac{\lambda}{2} ||\mathbf{w}||_{2}^{2}$, </p>
-<p>where </p>
-<p>$$||\mathbf{w}||_{2}^{2} = \sum^{m}_{l=0} \sum^{k}_{j=0} w_{i, j}$$</p>
-<p>so that our cost function becomes</p>
-<p>$$J(\mathbf{W}; \mathbf{b}) = \frac{1}{n} \sum_{i=1}^{n} H(T_i, O_i) + \frac{\lambda}{2} ||\mathbf{w}||_{2}^{2}$$</p>
-<p>and we define the "regularized" weight update as</p>
-<p>$$\mathbf{w}_j := \mathbf{w}_j -  \eta \big[\nabla \mathbf{w}_j \, J(\mathbf{W}) + \lambda \mathbf{w}_j \big].$$</p>
-<p>(Please note that we don't regularize the bias term.)</p>
-<h2 id="example-1-gradient-descent">Example 1 - Gradient Descent</h2>
-<pre><code class="python">from mlxtend.data import iris_data
-from mlxtend.plotting import plot_decision_regions
-from mlxtend.classifier import SoftmaxRegression
-import matplotlib.pyplot as plt
-
-# Loading Data
-
-X, y = iris_data()
-X = X[:, [0, 3]] # sepal length and petal width
-
-# standardize
-X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
-X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
-
-lr = SoftmaxRegression(eta=0.01, 
-                       epochs=500, 
-                       minibatches=1, 
-                       random_seed=1,
-                       print_progress=3)
-lr.fit(X, y)
-
-plot_decision_regions(X, y, clf=lr)
-plt.title('Softmax Regression - Gradient Descent')
-plt.show()
-
-plt.plot(range(len(lr.cost_)), lr.cost_)
-plt.xlabel('Iterations')
-plt.ylabel('Cost')
-plt.show()
-</code></pre>
-
-<pre><code>Iteration: 500/500 | Cost 0.06 | Elapsed: 0:00:00 | ETA: 0:00:00
-</code></pre>
-<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_31_1.png" /></p>
-<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_31_2.png" /></p>
-<h4 id="predicting-class-labels">Predicting Class Labels</h4>
-<pre><code class="python">y_pred = lr.predict(X)
-print('Last 3 Class Labels: %s' % y_pred[-3:])
-</code></pre>
-
-<pre><code>Last 3 Class Labels: [2 2 2]
-</code></pre>
-<h4 id="predicting-class-probabilities">Predicting Class Probabilities</h4>
-<pre><code class="python">y_pred = lr.predict_proba(X)
-print('Last 3 Class Labels:\n %s' % y_pred[-3:])
-</code></pre>
-
-<pre><code>Last 3 Class Labels:
- [[  9.18728149e-09   1.68894679e-02   9.83110523e-01]
- [  2.97052325e-11   7.26356627e-04   9.99273643e-01]
- [  1.57464093e-06   1.57779528e-01   8.42218897e-01]]
-</code></pre>
-<h2 id="example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</h2>
-<pre><code class="python">from mlxtend.data import iris_data
-from mlxtend.plotting import plot_decision_regions
-from mlxtend.classifier import SoftmaxRegression
-import matplotlib.pyplot as plt
-
-# Loading Data
-
-X, y = iris_data()
-X = X[:, [0, 3]] # sepal length and petal width
-
-# standardize
-X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
-X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
-
-lr = SoftmaxRegression(eta=0.01, epochs=300, minibatches=len(y), random_seed=1)
-lr.fit(X, y)
-
-plot_decision_regions(X, y, clf=lr)
-plt.title('Softmax Regression - Stochastic Gradient Descent')
-plt.show()
-
-plt.plot(range(len(lr.cost_)), lr.cost_)
-plt.xlabel('Iterations')
-plt.ylabel('Cost')
-plt.show()
-</code></pre>
-
-<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_37_0.png" /></p>
-<p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_37_1.png" /></p>
-<h1 id="api">API</h1>
-<p><em>SoftmaxRegression(eta=0.01, epochs=50, l2=0.0, minibatches=1, n_classes=None, random_seed=None, print_progress=0)</em></p>
-<p>Softmax regression classifier.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>eta</code> : float (default: 0.01)</p>
-<p>Learning rate (between 0.0 and 1.0)</p>
-</li>
-<li>
-<p><code>epochs</code> : int (default: 50)</p>
-<p>Passes over the training dataset.
-Prior to each epoch, the dataset is shuffled
-if <code>minibatches &gt; 1</code> to prevent cycles in stochastic gradient descent.</p>
-</li>
-<li>
-<p><code>l2</code> : float</p>
-<p>Regularization parameter for L2 regularization.
-No regularization if l2=0.0.</p>
-</li>
-<li>
-<p><code>minibatches</code> : int (default: 1)</p>
-<p>The number of minibatches for gradient-based optimization.
-If 1: Gradient Descent learning
-If len(y): Stochastic Gradient Descent (SGD) online learning
-If 1 &lt; minibatches &lt; len(y): SGD Minibatch learning</p>
-</li>
-<li>
-<p><code>n_classes</code> : int (default: None)</p>
-<p>A positive integer to declare the number of class labels
-if not all class labels are present in a partial training set.
-Gets the number of class labels automatically if None.</p>
-</li>
-<li>
-<p><code>random_seed</code> : int (default: None)</p>
-<p>Set random state for shuffling and initializing the weights.</p>
-</li>
-<li>
-<p><code>print_progress</code> : int (default: 0)</p>
-<p>Prints progress in fitting to stderr.
-0: No output
-1: Epochs elapsed and cost
-2: 1 plus time elapsed
-3: 2 plus estimated time until completion</p>
-</li>
-</ul>
-<p><strong>Attributes</strong></p>
-<ul>
-<li>
-<p><code>w_</code> : 2d-array, shape={n_features, 1}</p>
-<p>Model weights after fitting.</p>
-</li>
-<li>
-<p><code>b_</code> : 1d-array, shape={1,}</p>
-<p>Bias unit after fitting.</p>
-</li>
-<li>
-<p><code>cost_</code> : list</p>
-<p>List of floats, the average cross_entropy for each epoch.</p>
-</li>
-</ul>
-<h3 id="methods">Methods</h3>
-<hr>
-
-<p><em>fit(X, y, init_params=True)</em></p>
-<p>Learn model from training data.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values.</p>
-</li>
-<li>
-<p><code>init_params</code> : bool (default: True)</p>
-<p>Re-initializes model parameters prior to fitting.
-Set False to continue training with weights from
-a previous model fitting.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
-<hr>
-
-<p><em>predict(X)</em></p>
-<p>Predict targets from X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>target_values</code> : array-like, shape = [n_samples]</p>
-<p>Predicted target values.</p>
-</li>
-</ul>
-<hr>
-
-<p><em>predict_proba(X)</em></p>
-<p>Predict class probabilities of X from the net input.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>Class probabilties</code> : array-like, shape= [n_samples, n_classes]</li>
-</ul>
-<hr>
-
-<p><em>score(X, y)</em></p>
-<p>Compute the prediction accuracy</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values (true class labels).</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>acc</code> : float</p>
-<p>The prediction accuracy as a float
-between 0.0 and 1.0 (perfect score).</p>
-</li>
-</ul></div>
+<p>pandas DataFrame with columns ['support', 'itemsets'] of all itemsets
+    that are &gt;= min_support.</p></div>
         
     </div>
 

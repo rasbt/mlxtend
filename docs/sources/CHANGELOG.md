@@ -19,7 +19,7 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
-- An `association_rules` function is implemented that allows to generate rules based on a list of frequent itemsets.
+- An `association_rules` function is implemented that allows to generate rules based on a list of frequent itemsets (via [Joshua Goerner](https://github.com/JoshuaGoerner)).
 
 ##### Changes
 

@@ -32,13 +32,18 @@
         },
         {
             "location": "/USER_GUIDE_INDEX/",
-            "text": "User Guide Index\n\n\nclassifier\n\n\n\n\nEnsembleVoteClassifier\n\n\nStackingClassifier\n\n\nStackingCVClassifier\n\n\nPerceptron\n\n\nAdaline\n\n\nLogisticRegression\n\n\nSoftmaxRegression\n\n\nMultiLayerPerceptron\n\n\n\n\ntf_classifier\n\n\n\n\nTfMultiLayerPerceptron\n\n\nTfSoftmaxRegression\n\n\n\n\nregressor\n\n\n\n\nLinearRegression\n\n\nStackingRegressor\n\n\n\n\ntf_regressor\n\n\n\n\nTfLinearRegression\n\n\n\n\nfeature_selection\n\n\n\n\nSequentialFeatureSelector\n\n\nExhaustiveFeatureSelector\n\n\nColumnSelector\n\n\n\n\nfeature_extraction\n\n\n\n\nPrincipalComponentAnalysis\n\n\nLinearDiscriminantAnalysis\n\n\nRBFKernelPCA\n\n\n\n\ncluster\n\n\n\n\nKmeans\n\n\n\n\ntf_cluster\n\n\n\n\nTfKmeans\n\n\n\n\nevaluate\n\n\n\n\nconfusion_matrix\n\n\nlift_score\n\n\nmcnemar_table\n\n\nmcnemar\n\n\nscoring\n\n\n\n\npreprocessing\n\n\n\n\nMeanCenterer\n\n\nminmax_scaling\n\n\nshuffle_arrays_unison\n\n\nstandardize\n\n\none-hot_encoding\n\n\nOnehotTransactions\n\n\nDenseTransformer\n\n\nCopyTransformer\n\n\n\n\ndata\n\n\n\n\nautompg_data\n\n\nboston_housing_data\n\n\niris_data\n\n\nmnist_data\n\n\nloadlocal_mnist\n\n\nwine_data\n\n\nthree_blobs_data\n\n\n\n\nassociation\n\n\n\n\napriori\n\n\n\n\nfile_io\n\n\n\n\nfind_filegroups\n\n\nfind_files\n\n\n\n\nplotting\n\n\n\n\nplot_decision_regions\n\n\nplot_learning_curves\n\n\nplot_sequential_feature_selection\n\n\nplot_confusion_matrix\n\n\nplot_linear_regression\n\n\ncategory_scatter\n\n\nenrichment_plot\n\n\nstacked_barplot\n\n\ncheckerboard_plot\n\n\n\n\nmath\n\n\n\n\nnum_combinations\n\n\nnum_permutations\n\n\n\n\ntext\n\n\n\n\ngeneralize_names\n\n\ngeneralize_names_duplcheck\n\n\ntokenizer\n\n\n\n\nutils\n\n\n\n\nCounter\n\n\n\n\ngeneral concepts\n\n\n\n\nactivation-functions\n\n\ngradient-optimization\n\n\nlinear-gradient-derivative\n\n\nregularization-linear",
+            "text": "User Guide Index\n\n\nfrequent_patterns\n\n\n\n\napriori\n\n\nassociation_rules\n\n\n\n\nclassifier\n\n\n\n\nEnsembleVoteClassifier\n\n\nStackingClassifier\n\n\nStackingCVClassifier\n\n\nPerceptron\n\n\nAdaline\n\n\nLogisticRegression\n\n\nSoftmaxRegression\n\n\nMultiLayerPerceptron\n\n\n\n\ntf_classifier\n\n\n\n\nTfMultiLayerPerceptron\n\n\nTfSoftmaxRegression\n\n\n\n\nregressor\n\n\n\n\nLinearRegression\n\n\nStackingRegressor\n\n\n\n\ntf_regressor\n\n\n\n\nTfLinearRegression\n\n\n\n\nfeature_selection\n\n\n\n\nSequentialFeatureSelector\n\n\nExhaustiveFeatureSelector\n\n\nColumnSelector\n\n\n\n\nfeature_extraction\n\n\n\n\nPrincipalComponentAnalysis\n\n\nLinearDiscriminantAnalysis\n\n\nRBFKernelPCA\n\n\n\n\ncluster\n\n\n\n\nKmeans\n\n\n\n\ntf_cluster\n\n\n\n\nTfKmeans\n\n\n\n\nevaluate\n\n\n\n\nconfusion_matrix\n\n\nlift_score\n\n\nmcnemar_table\n\n\nmcnemar\n\n\nscoring\n\n\n\n\npreprocessing\n\n\n\n\nMeanCenterer\n\n\nminmax_scaling\n\n\nshuffle_arrays_unison\n\n\nstandardize\n\n\none-hot_encoding\n\n\nOnehotTransactions\n\n\nDenseTransformer\n\n\nCopyTransformer\n\n\n\n\ndata\n\n\n\n\nautompg_data\n\n\nboston_housing_data\n\n\niris_data\n\n\nmnist_data\n\n\nloadlocal_mnist\n\n\nwine_data\n\n\nthree_blobs_data\n\n\n\n\nfile_io\n\n\n\n\nfind_filegroups\n\n\nfind_files\n\n\n\n\nplotting\n\n\n\n\nplot_decision_regions\n\n\nplot_learning_curves\n\n\nplot_sequential_feature_selection\n\n\nplot_confusion_matrix\n\n\nplot_linear_regression\n\n\ncategory_scatter\n\n\nenrichment_plot\n\n\nstacked_barplot\n\n\ncheckerboard_plot\n\n\n\n\nmath\n\n\n\n\nnum_combinations\n\n\nnum_permutations\n\n\n\n\ntext\n\n\n\n\ngeneralize_names\n\n\ngeneralize_names_duplcheck\n\n\ntokenizer\n\n\n\n\nutils\n\n\n\n\nCounter\n\n\n\n\ngeneral concepts\n\n\n\n\nactivation-functions\n\n\ngradient-optimization\n\n\nlinear-gradient-derivative\n\n\nregularization-linear",
             "title": "USER GUIDE INDEX"
         },
         {
             "location": "/USER_GUIDE_INDEX/#user-guide-index",
             "text": "",
             "title": "User Guide Index"
+        },
+        {
+            "location": "/USER_GUIDE_INDEX/#frequent_patterns",
+            "text": "apriori  association_rules",
+            "title": "frequent_patterns"
         },
         {
             "location": "/USER_GUIDE_INDEX/#classifier",
@@ -94,11 +99,6 @@
             "location": "/USER_GUIDE_INDEX/#data",
             "text": "autompg_data  boston_housing_data  iris_data  mnist_data  loadlocal_mnist  wine_data  three_blobs_data",
             "title": "data"
-        },
-        {
-            "location": "/USER_GUIDE_INDEX/#association",
-            "text": "apriori",
-            "title": "association"
         },
         {
             "location": "/USER_GUIDE_INDEX/#file_io",

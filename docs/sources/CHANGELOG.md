@@ -7,10 +7,8 @@ The CHANGELOG for the current development version is available at
 
 
 
-### Version 0.6.0 (TBD)
+### Version 0.6.0 (2017-03-18)
 
-The CHANGELOG for the current development version is available at
-[https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md](https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md).
 
 ##### Downloads
 
@@ -24,10 +22,11 @@ The CHANGELOG for the current development version is available at
 ##### Changes
 
 - Adds a black `edgecolor` to plots via `plotting.plot_decision_regions` to make markers more distinguishable from the background in `matplotlib>=2.0`.
+- The `association` submodule was renamed to `frequent_patterns`.
 
 ##### Bug Fixes
 
-- -
+- The `DataFrame` index of `apriori` results are now unique and ordered.
 
 
 ### Version 0.5.1 (2017-02-14)

@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from mlxtend.association import apriori, association_rules
+from mlxtend.frequent_patterns import apriori, association_rules
 from numpy.testing import assert_array_equal, assert_raises
 
 one_ary = np.array([[0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1],

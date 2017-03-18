@@ -21,7 +21,7 @@ install:
 script:
     - bash ci/.travis_test.sh
 after_success:
-    - if [[ "${COVERAGE}" == "true" ]]; then coveralls; codecov; else echo "failed"; fi
+    - if [[ "$COVERAGE" == "true" ]]; then coveralls || echo "failed"; fi
 notifications:
     email:
       recipients:

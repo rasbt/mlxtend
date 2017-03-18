@@ -1,3 +1,13 @@
+# Sebastian Raschka 2014-2017
+# mlxtend Machine Learning Library Extensions
+#
+# Function for generating association rules
+#
+# Author: Joshua Goerner <https://github.com/JoshuaGoerner>
+#         Sebastian Raschka <sebastianraschka.com>
+#
+# License: BSD 3 clause
+
 from itertools import combinations
 import numpy as np
 import pandas as pd

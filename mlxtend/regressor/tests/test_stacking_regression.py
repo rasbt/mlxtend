@@ -56,8 +56,10 @@ def test_multivariate_class():
                                meta_regressor=meta)
     stregr.fit(X2, y2).predict(X2)
     mse = 0.12
-    got = np.mean((stregr.predict(X2) - y2) ** 2)
-    assert round(got, 2) == mse
+    got = np.mean((stregr.predict(X2) - y2) ** 2.)
+    # there seems to be an issue with the following test on Windows
+    # sometimes via Appveyor
+    assert round(got, 2) == mse, print(got)
 
 
 def test_gridsearch():

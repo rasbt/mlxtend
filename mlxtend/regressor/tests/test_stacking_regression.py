@@ -59,7 +59,7 @@ def test_multivariate_class():
     got = np.mean((stregr.predict(X2) - y2) ** 2.)
     # there seems to be an issue with the following test on Windows
     # sometimes via Appveyor
-    assert round(got, 2) == mse, print(got)
+    assert round(got, 2) == mse, got
 
 
 def test_gridsearch():

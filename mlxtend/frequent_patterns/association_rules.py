@@ -14,8 +14,8 @@ import pandas as pd
 
 
 def association_rules(df, metric="confidence", min_threshold=0.8):
-    """Generates a dataframe of association rules including
-    metrics 'score', 'confidence' & lift
+    """Generates a DataFrame of association rules including the
+    metrics 'score', 'confidence', and 'lift'
 
     Parameters
     -----------

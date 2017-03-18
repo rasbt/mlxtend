@@ -5,6 +5,6 @@
 # License: BSD 3 clause
 
 from .apriori import apriori
+from .association_rules import association_rules
 
-
-__all__ = ["apriori"]
+__all__ = ["apriori", "association_rules"]

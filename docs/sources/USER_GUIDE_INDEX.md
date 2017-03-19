@@ -1,5 +1,9 @@
 # User Guide Index
 
+## `frequent_patterns`
+- [apriori](user_guide/frequent_patterns/apriori.md)
+- [association_rules](user_guide/frequent_patterns/association_rules.md)
+
 ## `classifier`
 - [EnsembleVoteClassifier](user_guide/classifier/EnsembleVoteClassifier.md)
 - [StackingClassifier](user_guide/classifier/StackingClassifier.md)
@@ -62,9 +66,6 @@
 - [loadlocal_mnist](user_guide/data/loadlocal_mnist.md)
 - [wine_data](user_guide/data/wine_data.md)
 - [three_blobs_data](user_guide/data/three_blobs_data.md)
-
-## `association`
-- [apriori](user_guide/association/apriori.md)
 
 ## `file_io`
 - [find_filegroups](user_guide/file_io/find_filegroups.md)

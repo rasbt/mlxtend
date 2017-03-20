@@ -47,6 +47,7 @@ The CHANGELOG for the current development version is available at
 ##### Bug Fixes
 
 - The `DataFrame` index of `apriori` results are now unique and ordered.
+- Fixed typos in autompg and wine datasets (via [James Bourbeau](https://github.com/jrbourbeau)).
 
 
 ### Version 0.5.1 (2017-02-14)

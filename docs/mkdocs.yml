@@ -32,6 +32,9 @@ pages:
 - Home: index.md
 - User Guide:
   - USER_GUIDE_INDEX.md
+  - frequent_patterns:
+    - user_guide/frequent_patterns/apriori.md
+    - user_guide/frequent_patterns/association_rules.md
   - classifier:
     - user_guide/classifier/EnsembleVoteClassifier.md
     - user_guide/classifier/StackingClassifier.md
@@ -84,8 +87,6 @@ pages:
     - user_guide/data/loadlocal_mnist.md
     - user_guide/data/wine_data.md
     - user_guide/data/three_blobs_data.md
-  - association:
-    - user_guide/association/apriori.md
   - file_io:
     - user_guide/file_io/find_filegroups.md
     - user_guide/file_io/find_files.md
@@ -114,6 +115,7 @@ pages:
     - user_guide/general_concepts/linear-gradient-derivative.md
     - user_guide/general_concepts/regularization-linear.md
 - API:
+  - api_subpackages/mlxtend.frequent_patterns.md
   - api_subpackages/mlxtend.classifier.md
   - api_subpackages/mlxtend.tf_classifier.md
   - api_subpackages/mlxtend.data.md

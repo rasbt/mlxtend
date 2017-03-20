@@ -11,7 +11,6 @@ import pandas as pd
 
 def apriori(df, min_support=0.5, use_colnames=False):
     """Get frequent itemsets from a one-hot DataFrame
-
     Parameters
     -----------
     df : pandas DataFrame
@@ -34,12 +33,10 @@ def apriori(df, min_support=0.5, use_colnames=False):
     use_colnames : bool (default: False)
       If true, uses the DataFrames' column names in the returned DataFrame
       instead of column indices.
-
     Returns
     -----------
     pandas DataFrame with columns ['support', 'itemsets'] of all itemsets
     that are >= min_support.
-
     """
 
     X = df.values
@@ -84,6 +81,6 @@ def apriori(df, min_support=0.5, use_colnames=False):
         mapping = {idx: item for idx, item in enumerate(df.columns)}
         res_df['itemsets'] = res_df['itemsets'].apply(lambda x: [mapping[i]
                                                       for i in x])
-    res_df['length'] = res_df['itemsets'].apply(lambda x: len(x))
+    res_df = res_df.reset_index(drop=True)
 
     return res_df

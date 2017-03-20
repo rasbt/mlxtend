@@ -7,7 +7,7 @@
 
 
 ![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)
-![Python 3.5](https://img.shields.io/badge/python-3.5-blue.svg)
+![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)
 [![License](https://img.shields.io/badge/license-BSD-blue.svg)](./license)
 [![PyPI version](https://badge.fury.io/py/mlxtend.svg)](http://badge.fury.io/py/mlxtend)
 [![Join the chat at https://gitter.im/rasbt/mlxtend](https://badges.gitter.im/rasbt/mlxtend.svg)](https://gitter.im/rasbt/mlxtend?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)

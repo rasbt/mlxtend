@@ -1,7 +1,14 @@
 <!-- Please read the following guidelines for new Pull Requests -- thank you! -->
 
 <!--
-Make sure that you submit this pull request as a separate topic branch (and not to "master")
+Make sure that you submit this pull request as a separate topic or feature branch and not as master branch. The new feature branch of your fork will then be merged to the master branch of the original repository, following the "Fork-and-Branch Git Workflow:"
+
+1. Fork the original GitHub project
+2. Clone the fork to your local machine
+3. Create a new topic branch
+4. Make your code changes to this new topic branch
+5. Commit the changes and push the commit to the topic branch to your fork upstream on GitHub
+6. Create a new pull request from the upstream topic branch to the master branch of the original repo
 -->
 
 <!-- Provide a small summary describing the Pull Request below -->

@@ -24,7 +24,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Bug Fixes
 
-- -
+- `SequentialFeatureSelector` now correclty accepts a `None` argument for the `scoring` parameter to infer the default scoring metric from scikit-learn classifiers and regressors
 
 
 ### Version 0.6.0 (2017-03-18)

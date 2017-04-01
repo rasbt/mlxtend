@@ -13,7 +13,11 @@ from mlxtend.classifier import SoftmaxRegression
 from sklearn.datasets import load_iris
 from sklearn.linear_model import LinearRegression
 from sklearn.datasets import load_boston
+from sklearn.model_selection import GridSearchCV
+from sklearn.pipeline import Pipeline
 from mlxtend.utils import assert_raises
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import make_scorer
 
 
 def dict_compare_utility(d1, d2):
@@ -136,7 +140,6 @@ def test_knn_wo_cv():
                k_features=3,
                forward=True,
                floating=False,
-               scoring='accuracy',
                cv=0,
                skip_if_stuck=True,
                verbose=0)
@@ -162,7 +165,6 @@ def test_knn_cv3():
                k_features=3,
                forward=True,
                floating=False,
-               scoring='accuracy',
                cv=4,
                skip_if_stuck=True,
                verbose=0)
@@ -198,7 +200,6 @@ def test_knn_option_sfs():
                k_features=3,
                forward=True,
                floating=False,
-               scoring='accuracy',
                cv=4,
                skip_if_stuck=True,
                verbose=0)
@@ -215,7 +216,6 @@ def test_knn_option_sffs():
                k_features=3,
                forward=True,
                floating=True,
-               scoring='accuracy',
                cv=4,
                skip_if_stuck=True,
                verbose=0)
@@ -232,7 +232,6 @@ def test_knn_option_sbs():
                k_features=3,
                forward=False,
                floating=False,
-               scoring='accuracy',
                cv=4,
                skip_if_stuck=True,
                verbose=0)
@@ -249,7 +248,6 @@ def test_knn_option_sfbs():
                k_features=3,
                forward=False,
                floating=True,
-               scoring='accuracy',
                cv=4,
                skip_if_stuck=True,
                verbose=0)
@@ -266,7 +264,6 @@ def test_knn_option_sfbs_tuplerange_1():
                k_features=(1, 3),
                forward=False,
                floating=True,
-               scoring='accuracy',
                cv=4,
                skip_if_stuck=True,
                verbose=0)
@@ -284,7 +281,6 @@ def test_knn_option_sfbs_tuplerange_2():
                k_features=(1, 4),
                forward=False,
                floating=True,
-               scoring='accuracy',
                cv=4,
                skip_if_stuck=True,
                verbose=0)
@@ -302,7 +298,6 @@ def test_knn_option_sffs_tuplerange_1():
                k_features=(1, 3),
                forward=True,
                floating=True,
-               scoring='accuracy',
                cv=4,
                skip_if_stuck=True,
                verbose=0)
@@ -320,7 +315,6 @@ def test_knn_option_sfs_tuplerange_1():
                k_features=(1, 3),
                forward=True,
                floating=False,
-               scoring='accuracy',
                cv=4,
                skip_if_stuck=True,
                verbose=0)
@@ -338,7 +332,6 @@ def test_knn_option_sbs_tuplerange_1():
                k_features=(1, 3),
                forward=False,
                floating=False,
-               scoring='accuracy',
                cv=4,
                skip_if_stuck=True,
                verbose=0)
@@ -356,7 +349,6 @@ def test_knn_scoring_metric():
                k_features=3,
                forward=False,
                floating=True,
-               scoring='accuracy',
                cv=4,
                skip_if_stuck=True,
                verbose=0)
@@ -439,6 +431,7 @@ def test_clone_params_fail():
                   expect,
                   SFS,
                   SoftmaxRegression,
+                  scoring='accuracy',
                   k_features=3,
                   clone_estimator=True)
 
@@ -472,7 +465,6 @@ def test_transform_not_fitted():
                k_features=2,
                forward=True,
                floating=False,
-               scoring='accuracy',
                cv=0,
                skip_if_stuck=True,
                clone_estimator=False,
@@ -497,7 +489,6 @@ def test_get_metric_dict_not_fitted():
                k_features=2,
                forward=True,
                floating=False,
-               scoring='accuracy',
                cv=0,
                skip_if_stuck=True,
                clone_estimator=False,
@@ -522,7 +513,6 @@ def test_keyboard_interrupt():
         k_features=3,
         forward=True,
         floating=False,
-        scoring='accuracy',
         cv=3,
         skip_if_stuck=True,
         clone_estimator=False,
@@ -535,3 +525,61 @@ def test_keyboard_interrupt():
 
     assert len(out.subsets_.keys()) > 0
     assert sfs1.interrupted_
+
+
+def test_gridsearch():
+
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=2)
+
+    sfs1 = SFS(estimator=knn,
+               k_features=3,
+               forward=True,
+               floating=False,
+               cv=5)
+
+    pipe = Pipeline([('sfs', sfs1),
+                     ('knn', knn)])
+
+    param_grid = [
+      {'sfs__k_features': [1, 2, 3, 4],
+       'sfs__estimator__n_neighbors': [1, 2, 3, 4]}
+      ]
+
+    gs = GridSearchCV(estimator=pipe,
+                      param_grid=param_grid,
+                      n_jobs=1,
+                      cv=5,
+                      refit=False)
+
+    gs = gs.fit(X, y)
+
+    assert gs.best_params_['sfs__k_features'] == 3
+
+
+def test_string_scoring_clf():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=4)
+    sfs1 = SFS(knn,
+               k_features=3,
+               cv=0)
+    sfs1 = sfs1.fit(X, y)
+
+    sfs2 = SFS(knn,
+               k_features=3,
+               scoring='accuracy',
+               cv=0)
+    sfs2 = sfs2.fit(X, y)
+
+    sfs3 = SFS(knn,
+               k_features=3,
+               scoring=make_scorer(accuracy_score),
+               cv=0)
+    sfs3 = sfs2.fit(X, y)
+
+    assert sfs1.k_score_ == sfs2.k_score_
+    assert sfs1.k_score_ == sfs3.k_score_

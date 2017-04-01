@@ -47,13 +47,15 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         If 0, no output,
         if 1 number of features in current set, if 2 detailed logging i
         ncluding timestamp and cv scores at step.
-    scoring : str or callable (default='accuracy')
-        Scoring metric in {accuracy, f1, precision, recall, roc_auc}
-        for classifiers,
+    scoring : str, callable, or None (default: None)
+        If None (default), uses 'accuracy' for sklearn classifiers
+        and 'r2' for sklearn regressors.
+        If str, uses a sklearn scoring metric string identifier, for example
+        {accuracy, f1, precision, recall, roc_auc} for classifiers,
         {'mean_absolute_error', 'mean_squared_error'/'neg_mean_squared_error',
-        'median_absolute_error', 'r2'} for regressors,
-        or a callable object or function with
-        signature ``scorer(estimator, X, y)``; see
+        'median_absolute_error', 'r2'} for regressors.
+        If a callable object or function is provided, it has to be conform with
+        sklearn's signature ``scorer(estimator, X, y)``; see
         http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
         for more information.
     cv : int (default: 5)
@@ -114,11 +116,10 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.forward = forward
         self.floating = floating
         self.pre_dispatch = pre_dispatch
-        self.scoring = scoring
-        if isinstance(scoring, str):
-            self.scorer = get_scorer(scoring)
-        else:
-            self.scorer = scoring
+        self.cv = cv
+        self.n_jobs = n_jobs
+        self.named_est = {key: value for key, value in
+                          _name_estimators([self.estimator])}
         self.skip_if_stuck = skip_if_stuck
         self.cv = cv
         self.n_jobs = n_jobs
@@ -126,10 +127,26 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.named_est = {key: value for key, value in
                           _name_estimators([self.estimator])}
         self.clone_estimator = clone_estimator
+
         if self.clone_estimator:
             self.est_ = clone(self.estimator)
         else:
             self.est_ = self.estimator
+        self.scoring = scoring
+
+        if scoring is None:
+            if self.est_._estimator_type == 'classifier':
+                scoring = 'accuracy'
+            elif self.est_._estimator_type == 'regressor':
+                scoring = 'r2'
+            else:
+                raise AttributeError('Estimator must '
+                                     'be a Classifier or Regressor.')
+        if isinstance(scoring, str):
+            self.scorer = get_scorer(scoring)
+        else:
+            self.scorer = scoring
+
         self.fitted = False
         self.subsets_ = {}
         self.interrupted_ = False

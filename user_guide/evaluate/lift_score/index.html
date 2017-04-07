@@ -879,7 +879,7 @@
 <p><code>from mlxtend.evaluate import lift_score</code>    </p>
 </blockquote>
 <h2 id="overview">Overview</h2>
-<p>In the context of classification, <em>lift</em> [1] compares model predictions to randomly generated predictions. Lift is often used in marketing research combined with <em>gain and lift</em> charts as a visual aid [2]. For example, assuming a 10% customer response as a baseline, a lift value of 3 would correspond to a 30% customer response when using the predictive model. (Note that <em>lift</em> has the range $[0, \infty]$.)</p>
+<p>In the context of classification, <em>lift</em> [1] compares model predictions to randomly generated predictions. Lift is often used in marketing research combined with <em>gain and lift</em> charts as a visual aid [2]. For example, assuming a 10% customer response as a baseline, a lift value of 3 would correspond to a 30% customer response when using the predictive model. (Note that <em>lift</em> has the range $ \lbrack 0, \infty \rbrack$ .)</p>
 <p>There are many strategies to compute <em>lift</em>, and below, we will illustrate the computation of the lift score using a classic confusion matrix. For instance, let's assume the following prediction and target labels, where "1" is the positive class:</p>
 <ul>
 <li>$\text{true labels}: [0, 0, 1, 0, 0, 1, 1, 1, 1, 1]$</li>

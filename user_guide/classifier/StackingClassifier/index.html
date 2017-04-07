@@ -1046,15 +1046,15 @@ print('Best parameters: %s' % grid.best_params_)
 print('Accuracy: %.2f' % grid.best_score_)
 </code></pre>
 
-<pre><code>0.667 +/- 0.00 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
-0.667 +/- 0.00 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
-0.927 +/- 0.02 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
-0.913 +/- 0.03 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
-0.667 +/- 0.00 {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
-0.667 +/- 0.00 {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
-0.933 +/- 0.02 {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
-0.940 +/- 0.02 {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
-Best parameters: {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+<pre><code>0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10}
+0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50}
+0.927 +/- 0.02 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10}
+0.913 +/- 0.03 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50}
+0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10}
+0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50}
+0.933 +/- 0.02 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10}
+0.940 +/- 0.02 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50}
+Best parameters: {'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50}
 Accuracy: 0.94
 </code></pre>
 <p>In case we are planning to use a regression algorithm multiple times, all we need to do is to add an additional number suffix in the parameter grid as shown below:</p>
@@ -1092,27 +1092,27 @@ print('Best parameters: %s' % grid.best_params_)
 print('Accuracy: %.2f' % grid.best_score_)
 </code></pre>
 
-<pre><code>0.667 +/- 0.00 {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 0.1}
-0.667 +/- 0.00 {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 0.1}
-0.907 +/- 0.03 {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 10.0}
-0.913 +/- 0.03 {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 10.0}
-0.667 +/- 0.00 {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 0.1}
-0.667 +/- 0.00 {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 0.1}
-0.927 +/- 0.02 {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 10.0}
-0.913 +/- 0.03 {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 1, 'meta-logisticregression__C': 10.0}
-0.667 +/- 0.00 {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 0.1}
-0.667 +/- 0.00 {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 0.1}
-0.927 +/- 0.02 {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 10.0}
-0.913 +/- 0.03 {'kneighborsclassifier-2__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 10.0}
-0.667 +/- 0.00 {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 0.1}
-0.667 +/- 0.00 {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 0.1}
-0.933 +/- 0.02 {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 10.0}
-0.940 +/- 0.02 {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 10.0}
-Best parameters: {'kneighborsclassifier-2__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50, 'kneighborsclassifier-1__n_neighbors': 5, 'meta-logisticregression__C': 10.0}
+<pre><code>0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10}
+0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50}
+0.907 +/- 0.03 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10}
+0.913 +/- 0.03 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50}
+0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10}
+0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50}
+0.927 +/- 0.02 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10}
+0.913 +/- 0.03 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50}
+0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10}
+0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50}
+0.927 +/- 0.02 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10}
+0.913 +/- 0.03 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50}
+0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10}
+0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50}
+0.933 +/- 0.02 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10}
+0.940 +/- 0.02 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50}
+Best parameters: {'meta-logisticregression__C': 10.0, 'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50}
 Accuracy: 0.94
 </code></pre>
 <h1 id="api">API</h1>
-<p><em>StackingClassifier(classifiers, meta_classifier, use_probas=False, average_probas=False, verbose=0)</em></p>
+<p><em>StackingClassifier(classifiers, meta_classifier, use_probas=False, average_probas=False, verbose=0, use_features_in_secondary=False)</em></p>
 <p>A Stacking classifier for scikit-learn estimators for classification.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1148,6 +1148,13 @@ regressor being fitted
 - <code>verbose&gt;2</code>: Changes <code>verbose</code> param of the underlying regressor to
 self.verbose - 2</p>
 </li>
+<li>
+<p><code>use_features_in_secondary</code> : bool (default: False)</p>
+<p>If True, the meta-classifier will be trained both on the predictions
+of the original classifiers and the original dataset.
+If False, the meta-classifier will be trained only on the predictions
+of the original classifiers.</p>
+</li>
 </ul>
 <p><strong>Attributes</strong></p>
 <ul>
@@ -1173,7 +1180,7 @@ self.verbose - 2</p>
 n_features is the number of features.</p>
 </li>
 <li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p><code>y</code> : array-like, shape = [n_samples] or [n_samples, n_outputs]</p>
 <p>Target values.</p>
 </li>
 </ul>
@@ -1224,7 +1231,7 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>labels</code> : array-like, shape = [n_samples]</p>
+<p><code>labels</code> : array-like, shape = [n_samples] or [n_samples, n_outputs]</p>
 <p>Predicted class labels.</p>
 </li>
 </ul>
@@ -1243,7 +1250,7 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>proba</code> : array-like, shape = [n_samples, n_classes]</p>
+<p><code>proba</code> : array-like, shape = [n_samples, n_classes] or a list of                 n_outputs of such arrays if n_outputs &gt; 1.</p>
 <p>Probability for each class per sample.</p>
 </li>
 </ul>

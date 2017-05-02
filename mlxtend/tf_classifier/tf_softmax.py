@@ -113,8 +113,8 @@ class TfSoftmaxRegression(_BaseModel, _IterativeModel, _MultiClass,
 
             # Setup the graph for minimizing cross entropy cost
             net = tf.matmul(X_batch, tf_w_) + tf_b_
-            cross_entropy = tf.nn.softmax_cross_entropy_with_logits(net,
-                                                                    y_batch)
+            cross_entropy = tf.nn.softmax_cross_entropy_with_logits(labels=net,
+                                                                    logits=y_batch)
             cost = tf.reduce_mean(cross_entropy)
             optimizer = tf.train.GradientDescentOptimizer(
                 learning_rate=self.eta)

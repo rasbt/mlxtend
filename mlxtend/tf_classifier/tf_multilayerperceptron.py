@@ -215,8 +215,8 @@ class TfMultiLayerPerceptron(_BaseModel, _IterativeModel,
                                 dropout=True)
 
             # Define loss and optimizer
-            cross_entropy = tf.nn.softmax_cross_entropy_with_logits(net,
-                                                                    y_batch)
+            cross_entropy = tf.nn.softmax_cross_entropy_with_logits(labels=net,
+                                                                    logits=y_batch)
             cost = tf.reduce_mean(cross_entropy)
             train = self.optimizer_.minimize(cost,
                                              global_step=self.global_step_)

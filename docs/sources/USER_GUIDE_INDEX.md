@@ -14,16 +14,9 @@
 - [SoftmaxRegression](user_guide/classifier/SoftmaxRegression.md)
 - [MultiLayerPerceptron](user_guide/classifier/MultiLayerPerceptron.md)
 
-## `tf_classifier`
-- [TfMultiLayerPerceptron](user_guide/tf_classifier/TfMultiLayerPerceptron.md)
-- [TfSoftmaxRegression](user_guide/tf_classifier/TfSoftmaxRegression.md)
-
 ## `regressor`
 - [LinearRegression](user_guide/regressor/LinearRegression.md)
 - [StackingRegressor](user_guide/regressor/StackingRegressor.md)
-
-## `tf_regressor`
-- [TfLinearRegression](user_guide/tf_regressor/TfLinearRegression.md)
 
 ## `feature_selection`
 - [SequentialFeatureSelector](user_guide/feature_selection/SequentialFeatureSelector.md)
@@ -37,9 +30,6 @@
 
 ## `cluster`
 - [Kmeans](user_guide/cluster/Kmeans.md)
-
-## `tf_cluster`
-- [TfKmeans](user_guide/tf_cluster/TfKmeans.md)
 
 ## `evaluate`
 - [confusion_matrix](user_guide/evaluate/confusion_matrix.md)

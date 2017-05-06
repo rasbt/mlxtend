@@ -20,11 +20,11 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- -
+- The TensorFlow estimator have been removed from mlxtend, since TensorFlow has now very convenient ways to build on estimators, which render those implementations obsolete.
 
 ##### Bug Fixes
 
-- `SequentialFeatureSelector` now correctly accepts a `None` argument for the `scoring` parameter to infer the default scoring metric from scikit-learn classifiers and regressors
+- `SequentialFeatureSelector` now correctly accepts a `None` argument for the `scoring` parameter to infer the default scoring metric from scikit-learn classifiers and regressors.
 
 
 ### Version 0.6.0 (2017-03-18)
@@ -156,18 +156,18 @@ imput arrays via `transform` and `fit_transform`
 
 ##### New Features
 
-- New TensorFlow estimator for Linear Regression ([`tf_regressor.TfLinearRegression`](./user_guide/tf_regressor/TfLinearRegression.md))
+- New TensorFlow estimator for Linear Regression (`tf_regressor.TfLinearRegression`)
 - New k-means clustering estimator ([`cluster.Kmeans`](./user_guide/cluster/Kmeans.md))
-- New TensorFlow k-means clustering estimator ([`tf_cluster.Kmeans`](./user_guide/tf_cluster/TfKmeans.md))
+- New TensorFlow k-means clustering estimator (`tf_cluster.Kmeans`)
 
 ##### Changes
 
 - Due to refactoring of the estimator classes, the `init_weights` parameter of the `fit` methods was globally renamed to `init_params`
 - Overall performance improvements of estimators due to code clean-up and refactoring
 - Added several additional checks for correct array types and more meaningful exception messages
-- Added optional `dropout` to the [`tf_classifier.TfMultiLayerPerceptron`](./user_guide/tf_classifier/TfMultiLayerPerceptron.md) classifier for regularization
-- Added an optional `decay` parameter to the [`tf_classifier.TfMultiLayerPerceptron`](./user_guide/tf_classifier/TfMultiLayerPerceptron.md) classifier for adaptive learning via an exponential decay of the learning rate eta
-- Replaced old `NeuralNetMLP` by more streamlined `MultiLayerPerceptron` ([`classifier.MultiLayerPerceptron`](./user_guide/classifier/MultiLayerPerceptron.md)); now also with softmax in the output layer and categorical cross-entropy loss.
+- Added optional `dropout` to the `tf_classifier.TfMultiLayerPerceptron` classifier for regularization
+- Added an optional `decay` parameter to the `tf_classifier.TfMultiLayerPerceptron` classifier for adaptive learning via an exponential decay of the learning rate eta
+- Replaced old `NeuralNetMLP` by more streamlined `MultiLayerPerceptron` (`classifier.MultiLayerPerceptron`); now also with softmax in the output layer and categorical cross-entropy loss.
 - Unified `init_params` parameter for fit functions to continue training where the algorithm left off (if supported)
 
 ### Version 0.4.0 (2016-04-09)
@@ -175,9 +175,9 @@ imput arrays via `transform` and `fit_transform`
 ##### New Features
 
 
-- New `TfSoftmaxRegression` classifier using Tensorflow ([`tf_classifier.TfSoftmaxRegression`](./user_guide/tf_classifier/TfSoftmaxRegression.md))
-- New `SoftmaxRegression` classifier ([`classifier.SoftmaxRegression`](./user_guide/classifier/SoftmaxRegression.md))
-- New `TfMultiLayerPerceptron` classifier using Tensorflow ([`tf_classifier.TfMultiLayerPerceptron`](./user_guide/tf_classifier/TfMultiLayerPerceptron.md))
+- New `TfSoftmaxRegression` classifier using Tensorflow (`tf_classifier.TfSoftmaxRegression`)
+- New `SoftmaxRegression` classifier (`classifier.SoftmaxRegression`)
+- New `TfMultiLayerPerceptron` classifier using Tensorflow (`tf_classifier.TfMultiLayerPerceptron`)
 - New `StackingRegressor` ([`regressor.StackingRegressor`](./user_guide/regressor/StackingRegressor.md))
 - New `StackingClassifier` ([`classifier.StackingClassifier`](./user_guide/classifier/StackingClassifier.md))
 - New function for one-hot encoding of class labels ([`preprocessing.one_hot`](./user_guide/preprocessing/one-hot_encoding.md))

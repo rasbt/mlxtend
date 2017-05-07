@@ -9,7 +9,6 @@
 from itertools import cycle
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.colors import ListedColormap
 
 
 def plot_decision_regions(X, y, clf,
@@ -147,14 +146,8 @@ def plot_decision_regions(X, y, clf,
         ax.axes.get_yaxis().set_ticks([])
 
     if legend:
-        legend = plt.legend(loc=legend,
-                            fancybox=True,
-                            framealpha=0.3,
-                            scatterpoints=1,
-                            handletextpad=-0.25,
-                            borderaxespad=0.9)
-
-        ax.add_artist(legend)
+        handles, labels = ax.get_legend_handles_labels()
+        ax.legend(handles, labels, framealpha=0.3, scatterpoints=1, loc=legend)
 
     if plot_testdata:
         if dim == '2d':

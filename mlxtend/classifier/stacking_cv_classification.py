@@ -81,6 +81,7 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     def __init__(self, classifiers, meta_classifier,
                  use_probas=False, n_folds=2,
                  use_features_in_secondary=False,
+                 collinearity_guard=False,
                  stratify=True, random_state=None,
                  shuffle=True, verbose=0):
 
@@ -164,7 +165,9 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                     prediction = model.predict(X[test_index])
                     prediction = prediction.reshape(prediction.shape[0], 1)
                 else:
-                    prediction = model.predict_proba(X[test_index])
+                    prediction = model.predict_proba(X[test_index]) if not\
+                    self.collinearity_guard else \
+                    model.predict_proba(X[test_index])[:, :-1]
                 single_model_prediction = np.vstack([single_model_prediction.
                                                     astype(prediction.dtype),
                                                      prediction])
@@ -241,7 +244,8 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                 single_model_prediction = single_model_prediction\
                     .reshape(single_model_prediction.shape[0], 1)
             else:
-                single_model_prediction = model.predict_proba(X)
+                single_model_prediction = model.predict_proba(X) if not\
+                self.collinearity_guard else model.predict_proba(X)[:, :-1]
             all_model_predictions = np.hstack((all_model_predictions.
                                                astype(single_model_prediction
                                                       .dtype),
@@ -275,7 +279,9 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                 single_model_prediction = single_model_prediction\
                     .reshape(single_model_prediction.shape[0], 1)
             else:
-                single_model_prediction = model.predict_proba(X)
+                single_model_prediction = model.predict_proba(X) if not\
+                        self.collinearity_guard else model.predict_proba(X)[:,\
+                                :-1] 
             all_model_predictions = np.hstack((all_model_predictions.
                                                astype(single_model_prediction.
                                                       dtype),

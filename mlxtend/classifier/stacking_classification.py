@@ -144,10 +144,10 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         if self.use_probas:
             if collinearity_guard:
                 probas = np.asarray([clf.predict_proba(X)[:, :-1]
-                                 for clf in self.clfs_])
+                                    for clf in self.clfs_])
             else:
                 probas = np.asarray([clf.predict_proba(X)
-                                 for clf in self.clfs_])
+                                    for clf in self.clfs_])
             if self.average_probas:
                 vals = np.average(probas, axis=0)
             else:

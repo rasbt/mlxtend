@@ -81,7 +81,7 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     def __init__(self, classifiers, meta_classifier,
                  use_probas=False, n_folds=2,
                  use_features_in_secondary=False,
-                 collinearity_guard=False,
+                 collinearity_guard=None,
                  stratify=True, random_state=None,
                  shuffle=True, verbose=0):
 
@@ -97,6 +97,7 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.verbose = verbose
         self.n_folds = n_folds
         self.use_features_in_secondary = use_features_in_secondary
+        self.collinearity_guard = collinearity_guard
         self.stratify = stratify
         self.shuffle = shuffle
         self.random_state = random_state
@@ -165,10 +166,15 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                     prediction = model.predict(X[test_index])
                     prediction = prediction.reshape(prediction.shape[0], 1)
                 else:
-                    if self.collinearity_guard:
-                        prediction = model.predict_proba(X[test_index])[:, :-1]
-                    else:
+                    if self.collinearity_guard is None:
                         prediction = model.predict_proba(X[test_index])
+                    else:
+                        if self.collinearity_guard == -1:
+                            prediction = model.predict_proba(X[test_index])[:, :-1]
+                        elif self.collinearity_guard > 0:
+                            prediction = model.predict_proba(X[test_index])[:, :-1]
+                    elif self.collinearity_guard == -1:
+                        prediction = model.predict_proba(X[test_index])[:, :-1]
                 single_model_prediction = np.vstack([single_model_prediction.
                                                     astype(prediction.dtype),
                                                      prediction])

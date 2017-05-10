@@ -77,6 +77,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.average_probas = average_probas
         self.verbose = verbose
         self.use_features_in_secondary = use_features_in_secondary
+        self.collinearity_guard = collinearity_guard
 
     def fit(self, X, y):
         """ Fit ensemble classifers and the meta-classifier.

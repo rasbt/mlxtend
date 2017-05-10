@@ -172,9 +172,15 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                         if self.collinearity_guard == -1:
                             prediction = model.predict_proba(X[test_index])[:, :-1]
                         elif self.collinearity_guard > 0:
-                            prediction = model.predict_proba(X[test_index])[:, :-1]
-                    elif self.collinearity_guard == -1:
-                        prediction = model.predict_proba(X[test_index])[:, :-1]
+                            #TODO (soumyadsanyal) drop column indexed by
+                            #self.collinearity_guard
+                            pass
+                        elif self.collinearity_guard == "random":
+                            #TODO (soumyadsanyal) drop random column
+                            pass
+                        else:
+                            #TODO (soumyadsanyal) raise error
+                            pass
                 single_model_prediction = np.vstack([single_model_prediction.
                                                     astype(prediction.dtype),
                                                      prediction])

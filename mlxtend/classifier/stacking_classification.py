@@ -143,7 +143,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
     def _predict_meta_features(self, X):
         if self.use_probas:
-            if collinearity_guard:
+            if self.collinearity_guard:
                 probas = np.asarray([clf.predict_proba(X)[:, :-1]
                                     for clf in self.clfs_])
             else:

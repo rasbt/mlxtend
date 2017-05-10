@@ -62,6 +62,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     """
     def __init__(self, classifiers, meta_classifier,
                  use_probas=False, average_probas=False, verbose=0,
+                 collinearity_guard=False,
                  use_features_in_secondary=False):
 
         self.classifiers = classifiers
@@ -141,7 +142,11 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
     def _predict_meta_features(self, X):
         if self.use_probas:
-            probas = np.asarray([clf.predict_proba(X)
+            if collinearity_guard:
+                probas = np.asarray([clf.predict_proba(X)[:, :-1]
+                                 for clf in self.clfs_])
+            else:
+                probas = np.asarray([clf.predict_proba(X)
                                  for clf in self.clfs_])
             if self.average_probas:
                 vals = np.average(probas, axis=0)

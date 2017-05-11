@@ -4,7 +4,7 @@
 #
 # License: BSD 3 clause
 
-from .decision_regions import plot_decision_regions
+from .decision_regions import plot_decision_regions, plot_decision_region_slices
 from .learning_curves import plot_learning_curves
 from .plot_confusion_matrix import plot_confusion_matrix
 from .plot_sequential_feature_selection\
@@ -18,6 +18,7 @@ from .checkerboard import checkerboard_plot
 
 __all__ = ["plot_learning_curves",
            "plot_decision_regions",
+           "plot_decision_region_slices",
            "plot_confusion_matrix",
            "plot_sequential_feature_selection",
            "plot_linear_regression",

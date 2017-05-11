@@ -9,6 +9,8 @@
 from itertools import cycle
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
+import collections
 
 
 def plot_decision_regions(X, y, clf,
@@ -168,5 +170,110 @@ def plot_decision_regions(X, y, clf,
                        linewidths=1,
                        marker='o',
                        s=80)
+
+    return ax
+
+
+def plot_decision_region_slices(xkey, ykey, data, training_features, target_feature, clf,
+        filler_feature_dict=None, xres=0.1, yres=0.1, xlim=None, ylim=None,
+        colors='C0,C1,C2,C3,C4', ax=None):
+    '''Function to plot 2D decision region of a scikit-learn classifier
+
+    Parameters
+    ----------
+    xkey : str
+        Key for feature on x-axis.
+    ykey : str
+        Key for feature on y-axis.
+    data : pandas.DataFrame
+        DataFrame containing the training dataset. Must contain columns with training features and target used in training the classifier clf.
+    training_features : list
+        List of the training features used to train clf.
+    target_feature : str
+        Target feature column name.
+    clf : fitted scikit-learn classifier or pipeline
+        The fitted scikit-learn classifier for which you would like to vizulaize the decision regions
+    filler_feature_dict : dict, optional
+        Dictionary containing key-value pairs for the training features other than those given by xkey and ykey. Required if number of training features is larger than two.
+    xres : float, optional
+        The grid spacing used along the x-axis when evaluating the decision region (default is 0.1).
+    yres : float, optional
+        The grid spacing used along the y-axis when evaluating the decision region (default is 0.1).
+    xlim : tuple, int, optional
+        If specified, will be used to set the x-axis limit.
+    ylim : tuple, int, optional
+        If specified, will be used to set the y-axis limit.
+    colors: str, optional
+        Comma separated list of colors. (default is 'C0,C1,C2,C3,C4')
+    ax : matplotlib.axes
+        If specified, will plot decision region on ax. Otherwise will create an ax instance.
+
+    Returns
+    -------
+    matplotlib.axes
+        Matplotlib axes with the classifier decision region added.
+
+    '''
+    # Validate input types
+    if not isinstance(data, pd.DataFrame):
+        raise ValueError('data must be a pandas DataFrame')
+    if not all([key in data.columns for key in [xkey, ykey]]):
+        raise ValueError('Both xkey and ykey must be in data.columns')
+    if not isinstance(filler_feature_dict, dict):
+        raise ValueError('filler_feature_dict must be a dictionary')
+
+    n_features = len(training_features)
+    # Check to see that all the specified featues are consistant
+    compare = lambda x, y: collections.Counter(x) == collections.Counter(y)
+    # If less than 3 training features, use plot_decision_regions
+    if n_features <= 2:
+        plot_decision_regions(data[training_features].values,
+                              data[target_feature].values, clf,
+                              ax=ax,
+                              X_highlight=None,
+                              res=xres, legend=1,
+                              markers='s^oxv<>',
+                              colors=colors)
+    else:
+        if not filler_feature_dict:
+            raise ValueError('filler_feature_dict must be provided if using more than 2 training features')
+        if not compare(training_features, list(filler_feature_dict.keys()) + [xkey, ykey]):
+            raise ValueError('The xkey, ykey, and filler feature keys are not the same as data.columns')
+
+    # Extract the minimum and maximum values of the x-y decision region features
+    x_min = data[xkey].min()
+    x_max = data[xkey].max()
+    y_min = data[ykey].min()
+    y_max = data[ykey].max()
+    # Construct x-y meshgrid for the specified features
+    x_array = np.arange(x_min, x_max, xres)
+    y_array = np.arange(y_min, y_max, yres)
+    xx1, xx2 = np.meshgrid(x_array, y_array)
+    # X should have a row for each x-y point in the meshgrid (will be used in pipeline.predict later)
+    X = np.array([xx1.ravel(), xx2.ravel()]).T
+    # Now we need to include the filler values for the other training features
+    # Construct a DataFrame from X
+    df_temp = pd.DataFrame({xkey: X[:, 0], ykey: X[:, 1]}, columns=[xkey, ykey])
+    # Add a new column for each other the other non-plotted training features
+    for key in filler_feature_dict:
+        df_temp[key] = filler_feature_dict[key]
+    # Reorder the columns of df_temp to match those used in training clf
+    df_temp = df_temp[training_features]
+    X_predict = df_temp.values
+
+    Z = clf.predict(X_predict)
+    Z = Z.reshape(xx1.shape)
+
+    if ax is None:
+        ax = plt.gca()
+
+    n_classes = np.unique(data[target_feature]).shape[0]
+    colors = colors.split(',')
+    colors_gen = cycle(colors)
+    colors = [next(colors_gen) for c in range(n_classes)]
+    ax.contourf(xx1, xx2, Z, alpha=0.3, colors=colors, levels=np.arange(Z.max() + 2) - 0.5)
+
+    if xlim: ax.set_xlim(xlim)
+    if ylim: ax.set_ylim(ylim)
 
     return ax

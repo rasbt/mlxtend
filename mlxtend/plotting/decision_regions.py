@@ -14,6 +14,8 @@ import collections
 
 
 def plot_decision_regions(X, y, clf,
+                          feature_index=None,
+                          filler_feature_dict=None,
                           ax=None,
                           X_highlight=None,
                           res=0.02, legend=1,
@@ -37,6 +39,13 @@ def plot_decision_regions(X, y, clf,
         True class labels.
     clf : Classifier object.
         Must have a .predict method.
+    feature_index : array-like (default: (0,) for 1D, (0, 1) otherwise)
+        Feature indices to use for plotting. The first index in
+        feature_index will be on the x-axis, the second index will be
+        on the y-axis.
+    filler_feature_dict : dict (default: None)
+        Only needed for number features > 2. Dictionary of feature
+        index-value pairs for the features not being plotted.
     ax : matplotlib.axes.Axes (default: None)
         An existing matplotlib Axes. Creates
         one if ax=None.
@@ -81,16 +90,23 @@ def plot_decision_regions(X, y, clf,
 
     if len(X.shape) != 2:
         raise ValueError('X must be a 2D array')
-    if X.shape[1] > 2:
-        raise ValueError('X cannot have more than 2 feature columns')
     elif isinstance(X_highlight, np.ndarray) and len(X_highlight.shape) < 2:
         raise ValueError('X_highlight must be a 2D array')
     elif len(y.shape) > 1:
         raise ValueError('y must be a 1D array')
-    elif len(X.shape) == 2 and X.shape[1] > 1:
-        dim = '2d'
     else:
-        dim = '1d'
+        dim = X.shape[1]
+
+    # Extra input validations for higher number of training features
+    if dim > 2:
+        if filler_feature_dict is None:
+            raise ValueError('Filler values must be provided when X has more than 2 features. ')
+        if feature_index is not None:
+            try:
+                x_index, y_index = feature_index
+            except ValueError:
+                raise ValueError('Unable to unpack feature_index. '
+                                 'Make sure feature_index has two dimensions.')
 
     marker_gen = cycle(list(markers))
 
@@ -99,21 +115,36 @@ def plot_decision_regions(X, y, clf,
     colors_gen = cycle(colors)
     colors = [next(colors_gen) for c in range(n_classes)]
 
-    if dim == '2d':
-        y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
-    else:
+    if dim == 1:
         y_min, y_max = -1, 1
+        x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+    elif dim == 2:
+        y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+        x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+    else:
+        if feature_index is None:
+            feature_index = (0, 1)
+        x_index, y_index = feature_index
+        y_min, y_max = X[:, y_index].min() - 1, X[:, y_index].max() + 1
+        x_min, x_max = X[:, x_index].min() - 1, X[:, x_index].max() + 1
 
-    x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+
     xx, yy = np.meshgrid(np.arange(x_min, x_max, res),
                          np.arange(y_min, y_max, res))
 
-    if dim == '2d':
-        y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+    if dim == 1:
+        Z = clf.predict(np.array([xx.ravel()]).T)
+    elif dim == 2:
         Z = clf.predict(np.array([xx.ravel(), yy.ravel()]).T)
     else:
-        y_min, y_max = -1, 1
-        Z = clf.predict(np.array([xx.ravel()]).T)
+        # Need to create feature array with filled in values
+        X = np.array([xx.ravel(), yy.ravel()]).T
+        X_predict = np.zeros((X.shape[0], dim))
+        X_predict[:, x_index] = X[:, 0]
+        X_predict[:, y_index] = X[:, 1]
+        for feature_index in filler_feature_dict:
+            X_predict[:, feature_index] = filler_feature_dict[feature_index]
+        Z = clf.predict(X_predict)
 
     Z = Z.reshape(xx.shape)
     ax.contourf(xx, yy, Z,
@@ -123,19 +154,20 @@ def plot_decision_regions(X, y, clf,
 
     ax.axis(xmin=xx.min(), xmax=xx.max(), y_min=yy.min(), y_max=yy.max())
 
-    for idx, c in enumerate(np.unique(y)):
-        if dim == '2d':
-            y_data = X[y == c, 1]
-        else:
-            y_data = [0 for i in X[y == c]]
+    if dim <= 2:
+        for idx, c in enumerate(np.unique(y)):
+            if dim == 2:
+                y_data = X[y == c, 1]
+            else:
+                y_data = [0 for i in X[y == c]]
 
-        ax.scatter(x=X[y == c, 0],
-                   y=y_data,
-                   alpha=0.8,
-                   c=colors[idx],
-                   marker=next(marker_gen),
-                   edgecolor='black',
-                   label=c)
+            ax.scatter(x=X[y == c, 0],
+                       y=y_data,
+                       alpha=0.8,
+                       c=colors[idx],
+                       marker=next(marker_gen),
+                       edgecolor='black',
+                       label=c)
 
     if hide_spines:
         ax.spines['right'].set_visible(False)
@@ -144,15 +176,15 @@ def plot_decision_regions(X, y, clf,
         ax.spines['bottom'].set_visible(False)
     ax.yaxis.set_ticks_position('left')
     ax.xaxis.set_ticks_position('bottom')
-    if not dim == '2d':
+    if dim == 1:
         ax.axes.get_yaxis().set_ticks([])
 
-    if legend:
+    if legend and dim <= 2:
         handles, labels = ax.get_legend_handles_labels()
         ax.legend(handles, labels, framealpha=0.3, scatterpoints=1, loc=legend)
 
-    if plot_testdata:
-        if dim == '2d':
+    if plot_testdata and dim <= 2:
+        if dim == 2:
             ax.scatter(X_highlight[:, 0],
                        X_highlight[:, 1],
                        c='',

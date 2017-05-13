@@ -81,6 +81,25 @@ def plot_learning_curves(X_train, y_train,
             'median_absolute_error': metrics.median_absolute_error,
             'r2': metrics.r2_score}
 
+        prediction_methods = {
+            'accuracy': [clf.predict],
+            'average_precision': [clf.predict_proba],
+            'f1': [clf.predict],
+            'f1_micro': [clf.predict],
+            'f1_macro': [clf.predict],
+            'f1_weighted': [clf.predict],
+            'f1_samples': [clf.predict],
+            'log_loss': [clf.predict_proba],
+            'precision': [clf.predict],
+            'recall': [clf.predict],
+            'roc_auc': [clf.predict_proba],
+            'adjusted_rand_score': [clf.predict, clf.fit_predict],
+            'mean_absolute_error': [clf.predict],
+            'mean_squared_error': [clf.predict],
+            'median_absolute_error': [clf.predict],
+            'r2': [clf.predict]}
+
+
         if scoring not in scoring_func.keys():
             raise AttributeError('scoring must be in', scoring_func.keys())
 
@@ -93,13 +112,27 @@ def plot_learning_curves(X_train, y_train,
 
     training_errors = []
     test_errors = []
+    y_train_predict = None
+    y_test_predict = None
 
     rng = [int(i) for i in np.linspace(0, X_train.shape[0], 11)][1:]
     for r in rng:
         model = clf.fit(X_train[:r], y_train[:r])
 
-        y_train_predict = clf.predict(X_train[:r])
-        y_test_predict = clf.predict(X_test)
+        for method in prediction_methods[scoring]:
+
+            try:
+                y_train_predict = method(X_train[:r])
+                y_test_predict = method(X_test)
+
+                break
+            
+            except Exception as e:
+                continue
+
+        if not (y_train_predict and y_test_predict):
+            raise ValueError("inferred classifier predict methods failed to \
+                            apply at step %s for model %s"(r, model.__str_()))
 
         train_misclf = scoring_func[scoring](y_train[:r], y_train_predict)
         training_errors.append(train_misclf)

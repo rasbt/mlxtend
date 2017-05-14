@@ -100,7 +100,8 @@ def plot_decision_regions(X, y, clf,
     # Extra input validations for higher number of training features
     if dim > 2:
         if filler_feature_dict is None:
-            raise ValueError('Filler values must be provided when X has more than 2 features. ')
+            raise ValueError('Filler values must be provided when '
+                             'X has more than 2 training features.')
         if feature_index is not None:
             try:
                 x_index, y_index = feature_index
@@ -127,7 +128,6 @@ def plot_decision_regions(X, y, clf,
         x_index, y_index = feature_index
         y_min, y_max = X[:, y_index].min() - 1, X[:, y_index].max() + 1
         x_min, x_max = X[:, x_index].min() - 1, X[:, x_index].max() + 1
-
 
     xx, yy = np.meshgrid(np.arange(x_min, x_max, res),
                          np.arange(y_min, y_max, res))

@@ -29,12 +29,23 @@ def test_ylist():
                   X[:, :2], list(y), sr)
 
 
-def test_X_column_fail():
+def test_filler_feature_dict_fail():
     sr.fit(X, y)
     assert_raises(ValueError,
-                  'X cannot have more than 2 feature columns',
+                  'Filler values must be provided when '
+                  'X has more than 2 training features.',
                   plot_decision_regions,
                   X, y, sr)
+
+
+def test_feature_index_fail():
+    sr.fit(X, y)
+    assert_raises(ValueError,
+                  'Unable to unpack feature_index. '
+                  'Make sure feature_index has two dimensions.',
+                  plot_decision_regions,
+                  X, y, sr, feature_index=(0, 1, 2),
+                  filler_feature_dict={2: 0.5})
 
 
 def test_X_dim_fail():

@@ -4,7 +4,7 @@
 #
 # License: BSD 3 clause
 
-from .decision_regions import plot_decision_regions, plot_decision_region_slices
+from .decision_regions import plot_decision_regions,plot_decision_region_slices
 from .learning_curves import plot_learning_curves
 from .plot_confusion_matrix import plot_confusion_matrix
 from .plot_sequential_feature_selection\

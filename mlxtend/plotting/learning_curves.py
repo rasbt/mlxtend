@@ -81,24 +81,6 @@ def plot_learning_curves(X_train, y_train,
             'median_absolute_error': metrics.median_absolute_error,
             'r2': metrics.r2_score}
 
-        prediction_methods = {
-            'accuracy': [clf.predict],
-            'average_precision': [clf.predict_proba],
-            'f1': [clf.predict],
-            'f1_micro': [clf.predict],
-            'f1_macro': [clf.predict],
-            'f1_weighted': [clf.predict],
-            'f1_samples': [clf.predict],
-            'log_loss': [clf.predict_proba],
-            'precision': [clf.predict],
-            'recall': [clf.predict],
-            'roc_auc': [clf.predict_proba],
-            'adjusted_rand_score': [clf.predict, clf.fit_predict],
-            'mean_absolute_error': [clf.predict],
-            'mean_squared_error': [clf.predict],
-            'median_absolute_error': [clf.predict],
-            'r2': [clf.predict]}
-
         if scoring not in scoring_func.keys():
             raise AttributeError('scoring must be in', scoring_func.keys())
 
@@ -109,34 +91,43 @@ def plot_learning_curves(X_train, y_train,
         scoring_func = {
             'misclassification error': misclf_err}
 
+
+    needs_proba_hints = {
+            'accuracy': False,
+            'average_precision': True,
+            'f1': False,
+            'f1_micro': False,
+            'f1_macro': False,
+            'f1_weighted': False,
+            'f1_samples': False,
+            'log_loss': True,
+            'precision': False,
+            'recall': False,
+            'roc_auc': True,
+            'adjusted_rand_score': False,
+            'mean_absolute_error': False,
+            'mean_squared_error': False,
+            'median_absolute_error': False,
+            'misclassification error': False,
+            'r2': False}
+
+    scorer = metrics.make_scorer(
+                                scoring_func[scoring], 
+                                needs_proba = needs_proba_hints[scoring]
+                                )
+
     training_errors = []
     test_errors = []
-    y_train_predict = None
-    y_test_predict = None
 
     rng = [int(i) for i in np.linspace(0, X_train.shape[0], 11)][1:]
     for r in rng:
+
         model = clf.fit(X_train[:r], y_train[:r])
 
-        for method in prediction_methods[scoring]:
-
-            try:
-                y_train_predict = method(X_train[:r])
-                y_test_predict = method(X_test)
-
-                break
-
-            except Exception as e:
-                continue
-
-        if not (y_train_predict and y_test_predict):
-            raise ValueError("inferred classifier predict methods failed to \
-                            apply at step %s for model %s"(r, model.__str_()))
-
-        train_misclf = scoring_func[scoring](y_train[:r], y_train_predict)
+        train_misclf = scorer(model, X_train[:r], y_train[:r])
         training_errors.append(train_misclf)
 
-        test_misclf = scoring_func[scoring](y_test, y_test_predict)
+        test_misclf = scorer(model, X_test, y_test)
         test_errors.append(test_misclf)
 
     if not suppress_plot:

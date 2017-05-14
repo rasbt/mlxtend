@@ -331,7 +331,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                                      X[:, indices], y,
                                      cv=self.cv,
                                      scoring=self.scorer,
-                                     n_jobs=self.n_jobs,
+                                     n_jobs=1,
                                      pre_dispatch=self.pre_dispatch)
         else:
             self.est_.fit(X[:, indices], y)

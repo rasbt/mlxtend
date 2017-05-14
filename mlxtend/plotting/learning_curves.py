@@ -19,7 +19,7 @@ def plot_learning_curves(X_train, y_train,
                          suppress_plot=False, print_model=True,
                          style='fivethirtyeight',
                          legend_loc='best'):
-    """Plots learning curves of a classifier.
+    """Plots learning curves of a classifier or regressor.
 
     Parameters
     ----------
@@ -99,7 +99,6 @@ def plot_learning_curves(X_train, y_train,
             'median_absolute_error': [clf.predict],
             'r2': [clf.predict]}
 
-
         if scoring not in scoring_func.keys():
             raise AttributeError('scoring must be in', scoring_func.keys())
 
@@ -126,7 +125,7 @@ def plot_learning_curves(X_train, y_train,
                 y_test_predict = method(X_test)
 
                 break
-            
+
             except Exception as e:
                 continue
 

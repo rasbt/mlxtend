@@ -148,7 +148,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.subsets_ = {}
         all_comb = len(candidates)
         for iteration, c in enumerate(candidates):
-            cv_scores = self._calc_score(X=X, y=y, indices=c)
+            c, cv_scores = self._calc_score(X=X, y=y, indices=c)
 
             self.subsets_[iteration] = {'feature_idx': c,
                                         'cv_scores': cv_scores,
@@ -184,7 +184,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         else:
             self.est_.fit(X[:, indices], y)
             scores = np.array([self.scorer(self.est_, X[:, indices], y)])
-        return scores
+        return indices, scores
 
     def transform(self, X):
         """Return the best selected features from X.

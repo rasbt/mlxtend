@@ -8,6 +8,7 @@
 
 import matplotlib.pyplot as plt
 
+
 def plot_sequential_feature_selection(metric_dict,
                                       kind='std_dev',
                                       color='blue',

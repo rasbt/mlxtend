@@ -91,7 +91,6 @@ def plot_learning_curves(X_train, y_train,
         scoring_func = {
             'misclassification error': misclf_err}
 
-
     needs_proba_hints = {
             'accuracy': False,
             'average_precision': True,
@@ -112,8 +111,8 @@ def plot_learning_curves(X_train, y_train,
             'r2': False}
 
     scorer = metrics.make_scorer(
-                                scoring_func[scoring], 
-                                needs_proba = needs_proba_hints[scoring]
+                                scoring_func[scoring],
+                                needs_proba=needs_proba_hints[scoring]
                                 )
 
     training_errors = []

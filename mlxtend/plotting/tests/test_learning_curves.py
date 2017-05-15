@@ -8,7 +8,7 @@ import numpy as np
 from mlxtend.plotting import plot_learning_curves
 from sklearn import datasets
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.linear_model import LogisticRegression 
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 
 
@@ -41,7 +41,7 @@ def test_log_loss():
 
     clf = LogisticRegression(random_state=1)
     training_errors, test_errors = (plot_learning_curves(X_train, y_train,
-                                    X_test, y_test, clf, scoring = "log_loss",
+                                    X_test, y_test, clf, scoring="log_loss",
                                     suppress_plot=True))
 
     desired1 = [0.61, 0.49, 0.41, 0.39, 0.38, 0.37, 0.39, 0.37, 0.36, 0.34]

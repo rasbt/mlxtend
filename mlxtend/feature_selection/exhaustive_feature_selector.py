@@ -20,6 +20,7 @@ from sklearn.base import BaseEstimator
 from sklearn.base import MetaEstimatorMixin
 from ..externals.name_estimators import _name_estimators
 from sklearn.model_selection import cross_val_score
+from joblib import Parallel, delayed
 
 
 class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
@@ -147,8 +148,13 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
         self.subsets_ = {}
         all_comb = len(candidates)
-        for iteration, c in enumerate(candidates):
-            c, cv_scores = self._calc_score(X=X, y=y, indices=c)
+        n_jobs = min(self.n_jobs, all_comb)
+        parallel = Parallel(n_jobs=n_jobs, pre_dispatch=self.pre_dispatch)
+
+
+        for iteration, (c, cv_scores) in enumerate(parallel(delayed(self._calc_score)
+                                                                        (X, y, c)
+                                                for c in candidates)):
 
             self.subsets_[iteration] = {'feature_idx': c,
                                         'cv_scores': cv_scores,

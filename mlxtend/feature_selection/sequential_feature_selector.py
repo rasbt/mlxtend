@@ -21,6 +21,7 @@ from sklearn.base import BaseEstimator
 from sklearn.base import MetaEstimatorMixin
 from ..externals.name_estimators import _name_estimators
 from sklearn.model_selection import cross_val_score
+from joblib import Parallel, delayed
 
 
 class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
@@ -345,12 +346,19 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         res = (None, None, None)
         remaining = orig_set - subset
         if remaining:
-            for feature in remaining:
-                new_subset = tuple(subset | {feature})
-                new_subset, cv_scores = self._calc_score(X, y, new_subset)
+            features = len(remaining)
+            n_jobs = min(self.n_jobs, features)
+            parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
+                                pre_dispatch=self.pre_dispatch)
+
+
+            for new_subset, cv_scores in parallel(delayed(self._calc_score)
+                                                                        (X, y, tuple(subset | {feature}))
+                                                for feature in remaining):
                 all_avg_scores.append(cv_scores.mean())
                 all_cv_scores.append(cv_scores)
                 all_subsets.append(new_subset)
+
             best = np.argmax(all_avg_scores)
             res = (all_subsets[best],
                    all_avg_scores[best],
@@ -364,13 +372,19 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             all_avg_scores = []
             all_cv_scores = []
             all_subsets = []
-            for p in combinations(feature_set, r=n - 1):
-                if fixed_feature and fixed_feature not in set(p):
-                    continue
-                p, cv_scores = self._calc_score(X, y, p)
+            features = n
+            n_jobs = min(self.n_jobs, features)
+            parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
+                                pre_dispatch=self.pre_dispatch)
+
+            for p, cv_scores in parallel(delayed(self._calc_score)
+                                                                        (X, y, p)
+                                                for p in combinations(feature_set, r=n - 1)
+                                                if not fixed_feature or fixed_feature in set(p)):
                 all_avg_scores.append(cv_scores.mean())
                 all_cv_scores.append(cv_scores)
                 all_subsets.append(p)
+
             best = np.argmax(all_avg_scores)
             res = (all_subsets[best],
                    all_avg_scores[best],

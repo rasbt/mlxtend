@@ -24,8 +24,8 @@ def test_training_size():
     training_errors, test_errors = (plot_learning_curves(X_train, y_train,
                                     X_test, y_test, clf, suppress_plot=True))
 
-    desired1 = [0.32, 0.33, 0.32, 0.33, 0.30, 0.31, 0.31, 0.22, 0.22, 0.22]
-    desired2 = [0.35, 0.35, 0.35, 0.35, 0.43, 0.45, 0.35, 0.35, 0.45, 0.45]
+    desired1 = [0.22, 0.22, 0.22, 0.31, 0.31, 0.3, 0.33, 0.32, 0.33, 0.32]
+    desired2 = [0.45, 0.45, 0.35, 0.35, 0.45, 0.43, 0.35, 0.35, 0.35, 0.35]
 
     np.testing.assert_almost_equal(training_errors, desired1, decimal=2)
     np.testing.assert_almost_equal(test_errors, desired2, decimal=2)
@@ -69,8 +69,8 @@ def test_scikit_metrics():
                                                         suppress_plot=True,
                                                         scoring='accuracy')
 
-    desired1 = [0.68, 0.67, 0.68, 0.67, 0.7, 0.69, 0.69, 0.78, 0.78, 0.78]
-    desired2 = [0.65, 0.65, 0.65, 0.65, 0.57, 0.55, 0.65, 0.65, 0.55, 0.55]
+    desired1 = [0.78, 0.78, 0.78, 0.69, 0.69, 0.7, 0.67, 0.68, 0.67, 0.68]
+    desired2 = [0.55, 0.55, 0.65, 0.65, 0.55, 0.57, 0.65, 0.65, 0.65, 0.65]
 
     np.testing.assert_almost_equal(training_errors, desired1, decimal=2)
     np.testing.assert_almost_equal(test_errors, desired2, decimal=2)

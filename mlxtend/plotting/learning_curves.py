@@ -8,6 +8,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn import metrics
 
 
 def plot_learning_curves(X_train, y_train,
@@ -61,7 +62,6 @@ def plot_learning_curves(X_train, y_train,
 
     """
     if scoring != 'misclassification error':
-        from sklearn import metrics
 
         scoring_func = {
             'accuracy': metrics.accuracy_score,

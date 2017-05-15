@@ -222,7 +222,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 k_to_select = self.k_features[0]
             k_idx = tuple(range(X.shape[1]))
             k = len(k_idx)
-            k_score = self._calc_score(X, y, k_idx)
+            k_idx, k_score = self._calc_score(X, y, k_idx)
             self.subsets_[k] = {
                 'feature_idx': k_idx,
                 'cv_scores': k_score,
@@ -336,7 +336,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         else:
             self.est_.fit(X[:, indices], y)
             scores = np.array([self.scorer(self.est_, X[:, indices], y)])
-        return scores
+        return indices, scores
 
     def _inclusion(self, orig_set, subset, X, y):
         all_avg_scores = []
@@ -347,7 +347,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         if remaining:
             for feature in remaining:
                 new_subset = tuple(subset | {feature})
-                cv_scores = self._calc_score(X, y, new_subset)
+                new_subset, cv_scores = self._calc_score(X, y, new_subset)
                 all_avg_scores.append(cv_scores.mean())
                 all_cv_scores.append(cv_scores)
                 all_subsets.append(new_subset)
@@ -367,7 +367,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             for p in combinations(feature_set, r=n - 1):
                 if fixed_feature and fixed_feature not in set(p):
                     continue
-                cv_scores = self._calc_score(X, y, p)
+                p, cv_scores = self._calc_score(X, y, p)
                 all_avg_scores.append(cv_scores.mean())
                 all_cv_scores.append(cv_scores)
                 all_subsets.append(p)

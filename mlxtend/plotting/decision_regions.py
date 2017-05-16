@@ -185,8 +185,8 @@ def plot_decision_regions(X, y, clf,
     else:
         y_min, y_max = X[:, y_index].min() - 1, X[:, y_index].max() + 1
 
-    xx, yy = np.meshgrid(np.arange(x_min, x_max, res),
-                         np.arange(y_min, y_max, res))
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, xres),
+                         np.arange(y_min, y_max, yres))
 
     if dim == 1:
         X_predict = np.array([xx.ravel()]).T

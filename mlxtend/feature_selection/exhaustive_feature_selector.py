@@ -22,6 +22,19 @@ from ..externals.name_estimators import _name_estimators
 from sklearn.model_selection import cross_val_score
 from joblib import Parallel, delayed
 
+def _calc_score(selector, X, y, indices):
+    if selector.cv:
+        scores = cross_val_score(selector.est_,
+                                 X[:, indices], y,
+                                 cv=selector.cv,
+                                 scoring=selector.scorer,
+                                 n_jobs=1,
+                                 pre_dispatch=selector.pre_dispatch)
+    else:
+        selector.est_.fit(X[:, indices], y)
+        scores = np.array([selector.scorer(selector.est_, X[:, indices], y)])
+    return indices, scores
+
 
 class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
@@ -150,7 +163,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         all_comb = len(candidates)
         n_jobs = min(self.n_jobs, all_comb)
         parallel = Parallel(n_jobs=n_jobs, pre_dispatch=self.pre_dispatch)
-        work = enumerate(parallel(delayed(self._calc_score)(X, y, c)
+        work = enumerate(parallel(delayed(_calc_score)(self, X, y, c)
                                   for c in candidates))
 
         for iteration, (c, cv_scores) in work:
@@ -177,19 +190,6 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.subsets_plus_ = dict()
         self.fitted = True
         return self
-
-    def _calc_score(self, X, y, indices):
-        if self.cv:
-            scores = cross_val_score(self.est_,
-                                     X[:, indices], y,
-                                     cv=self.cv,
-                                     scoring=self.scorer,
-                                     n_jobs=1,
-                                     pre_dispatch=self.pre_dispatch)
-        else:
-            self.est_.fit(X[:, indices], y)
-            scores = np.array([self.scorer(self.est_, X[:, indices], y)])
-        return indices, scores
 
     def transform(self, X):
         """Return the best selected features from X.

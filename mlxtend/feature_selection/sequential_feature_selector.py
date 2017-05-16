@@ -23,6 +23,7 @@ from ..externals.name_estimators import _name_estimators
 from sklearn.model_selection import cross_val_score
 from joblib import Parallel, delayed
 
+
 def _calc_score(selector, X, y, indices):
     if selector.cv:
         scores = cross_val_score(selector.est_,

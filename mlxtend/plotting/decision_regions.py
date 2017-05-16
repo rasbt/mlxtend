@@ -81,8 +81,10 @@ def plot_decision_regions(X, y, clf,
         one if ax=None.
     X_highlight : array-like, shape = [n_samples, n_features] (default: None)
         An array with data points that are used to highlight samples in `X`.
-    res : float (default: 0.02)
-        Grid width. Lower values increase the resolution but
+    res : float or array-like, shape = (2,) (default: 0.02)
+        Grid width. If float, same resolution is used for both the x- and
+        y-axis. If array-like, the first item is used on the x-axis, the
+        second is used on the y-axis. Lower values increase the resolution but
         slow down the plotting.
     hide_spines : bool (default: True)
         Hide axis spines if True.
@@ -106,12 +108,23 @@ def plot_decision_regions(X, y, clf,
     if ax is None:
         ax = plt.gca()
 
+    if isinstance(res, float):
+        xres, yres = res, res
+    else:
+        try:
+            xres, yres = res
+        except ValueError:
+            raise ValueError(
+            'Unable to unpack res. Expecting array-like input of length 2.')
+
     plot_testdata = True
     if not isinstance(X_highlight, np.ndarray):
         if X_highlight is not None:
             raise ValueError('X_highlight must be a NumPy array or None')
         else:
             plot_testdata = False
+    elif len(X_highlight.shape) < 2:
+        raise ValueError('X_highlight must be a 2D array')
 
     if feature_index is not None:
         # Unpack and validate the feature_index values

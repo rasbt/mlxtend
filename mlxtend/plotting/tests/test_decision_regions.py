@@ -24,12 +24,12 @@ def test_pass():
 def test_ylist():
     sr.fit(X[:, :2], y)
     assert_raises(ValueError,
-                  'y must be a 1D NumPy array',
+                  'y must be a NumPy array. Found {}'.format(type([])),
                   plot_decision_regions,
                   X[:, :2], list(y), sr)
 
 
-def test_filler_feature_dict_fail():
+def test_filler_feature_values_fail():
     sr.fit(X, y)
     assert_raises(ValueError,
                   'Filler values must be provided when '
@@ -41,11 +41,11 @@ def test_filler_feature_dict_fail():
 def test_feature_index_fail():
     sr.fit(X, y)
     assert_raises(ValueError,
-                  'Unable to unpack feature_index. '
-                  'Make sure feature_index has two dimensions.',
+                  'Unable to unpack feature_index. Make sure feature_index '
+                  'only has two dimensions.',
                   plot_decision_regions,
                   X, y, sr, feature_index=(0, 1, 2),
-                  filler_feature_dict={2: 0.5})
+                  filler_feature_values={2: 0.5})
 
 
 def test_X_dim_fail():
@@ -67,7 +67,7 @@ def test_X_highlight_fail_if_1d():
 def test_y_int_ary():
     sr.fit(X[:, :2], y)
     assert_raises(ValueError,
-                  'y must have be an integer array. '
+                  'y must be an integer array. Found float64. '
                   'Try passing the array as y.astype(np.integer)',
                   plot_decision_regions,
                   X[:, :2], y.astype(np.float), sr)
@@ -79,3 +79,13 @@ def test_y_ary_dim():
                   'y must be a 1D array',
                   plot_decision_regions,
                   X[:, :2], y[:, np.newaxis], sr)
+
+
+def test_res_fail_if_3d():
+    sr.fit(X[:, :2], y)
+    assert_raises(ValueError,
+                  'Unable to unpack res. Expecting array-like input of '
+                  'length 2.',
+                  plot_decision_regions,
+                  X[:, :2], y, sr,
+                  res=(1, 2, 3))

@@ -21,6 +21,8 @@ The CHANGELOG for the current development version is available at
 ##### Changes
 
 - The TensorFlow estimator have been removed from mlxtend, since TensorFlow has now very convenient ways to build on estimators, which render those implementations obsolete.
+- `plot_decision_regions` now supports plotting decision regions for more than 2 training features. (via [James Bourbeau](https://github.com/jrbourbeau)).
+
 
 ##### Bug Fixes
 

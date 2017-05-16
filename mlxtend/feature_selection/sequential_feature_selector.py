@@ -23,6 +23,19 @@ from ..externals.name_estimators import _name_estimators
 from sklearn.model_selection import cross_val_score
 from joblib import Parallel, delayed
 
+def _calc_score(selector, X, y, indices):
+    if selector.cv:
+        scores = cross_val_score(selector.est_,
+                                 X[:, indices], y,
+                                 cv=selector.cv,
+                                 scoring=selector.scorer,
+                                 n_jobs=1,
+                                 pre_dispatch=selector.pre_dispatch)
+    else:
+        selector.est_.fit(X[:, indices], y)
+        scores = np.array([selector.scorer(selector.est_, X[:, indices], y)])
+    return indices, scores
+
 
 class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
@@ -223,7 +236,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 k_to_select = self.k_features[0]
             k_idx = tuple(range(X.shape[1]))
             k = len(k_idx)
-            k_idx, k_score = self._calc_score(X, y, k_idx)
+            k_idx, k_score = _calc_score(self, X, y, k_idx)
             self.subsets_[k] = {
                 'feature_idx': k_idx,
                 'cv_scores': k_score,
@@ -326,19 +339,6 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             stuck = True
         return stuck
 
-    def _calc_score(self, X, y, indices):
-        if self.cv:
-            scores = cross_val_score(self.est_,
-                                     X[:, indices], y,
-                                     cv=self.cv,
-                                     scoring=self.scorer,
-                                     n_jobs=1,
-                                     pre_dispatch=self.pre_dispatch)
-        else:
-            self.est_.fit(X[:, indices], y)
-            scores = np.array([self.scorer(self.est_, X[:, indices], y)])
-        return indices, scores
-
     def _inclusion(self, orig_set, subset, X, y):
         all_avg_scores = []
         all_cv_scores = []
@@ -350,8 +350,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             n_jobs = min(self.n_jobs, features)
             parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
                                 pre_dispatch=self.pre_dispatch)
-            work = parallel(delayed(self._calc_score)
-                            (X, y, tuple(subset | {feature}))
+            work = parallel(delayed(_calc_score)
+                            (self, X, y, tuple(subset | {feature}))
                             for feature in remaining)
 
             for new_subset, cv_scores in work:
@@ -376,7 +376,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             n_jobs = min(self.n_jobs, features)
             parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
                                 pre_dispatch=self.pre_dispatch)
-            work = parallel(delayed(self._calc_score)(X, y, p)
+            work = parallel(delayed(_calc_score)(self, X, y, p)
                             for p in combinations(feature_set, r=n - 1)
                             if not fixed_feature or fixed_feature in set(p))
 

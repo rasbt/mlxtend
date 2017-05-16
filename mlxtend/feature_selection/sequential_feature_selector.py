@@ -350,11 +350,11 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             n_jobs = min(self.n_jobs, features)
             parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
                                 pre_dispatch=self.pre_dispatch)
+            work = parallel(delayed(self._calc_score)
+                            (X, y, tuple(subset | {feature}))
+                            for feature in remaining)
 
-
-            for new_subset, cv_scores in parallel(delayed(self._calc_score)
-                                                                        (X, y, tuple(subset | {feature}))
-                                                for feature in remaining):
+            for new_subset, cv_scores in work:
                 all_avg_scores.append(cv_scores.mean())
                 all_cv_scores.append(cv_scores)
                 all_subsets.append(new_subset)
@@ -376,11 +376,11 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             n_jobs = min(self.n_jobs, features)
             parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
                                 pre_dispatch=self.pre_dispatch)
+            work = parallel(delayed(self._calc_score)(X, y, p)
+                            for p in combinations(feature_set, r=n - 1)
+                            if not fixed_feature or fixed_feature in set(p))
 
-            for p, cv_scores in parallel(delayed(self._calc_score)
-                                                                        (X, y, p)
-                                                for p in combinations(feature_set, r=n - 1)
-                                                if not fixed_feature or fixed_feature in set(p)):
+            for p, cv_scores in work:
                 all_avg_scores.append(cv_scores.mean())
                 all_cv_scores.append(cv_scores)
                 all_subsets.append(p)

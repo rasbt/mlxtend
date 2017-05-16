@@ -114,8 +114,8 @@ def plot_decision_regions(X, y, clf,
         try:
             xres, yres = res
         except ValueError:
-            raise ValueError(
-            'Unable to unpack res. Expecting array-like input of length 2.')
+            raise ValueError('Unable to unpack res. Expecting '
+                             'array-like input of length 2.')
 
     plot_testdata = True
     if not isinstance(X_highlight, np.ndarray):

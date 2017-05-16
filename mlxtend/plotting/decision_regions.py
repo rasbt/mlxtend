@@ -244,8 +244,8 @@ def plot_decision_regions(X, y, clf,
             x_data = X_highlight
             y_data = [0 for i in X_highlight]
         elif dim == 2:
-            x_data = X_highlight[:, 0]
-            y_data = X_highlight[:, 1]
+            x_data = X_highlight[:, x_index]
+            y_data = X_highlight[:, y_index]
         else:
             feature_range_mask = get_feature_range_mask(
                     X_highlight, filler_feature_values=filler_feature_values,

@@ -150,11 +150,10 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         all_comb = len(candidates)
         n_jobs = min(self.n_jobs, all_comb)
         parallel = Parallel(n_jobs=n_jobs, pre_dispatch=self.pre_dispatch)
+        work = enumerate(parallel(delayed(self._calc_score)(X, y, c)
+                                  for c in candidates))
 
-
-        for iteration, (c, cv_scores) in enumerate(parallel(delayed(self._calc_score)
-                                                                        (X, y, c)
-                                                for c in candidates)):
+        for iteration, (c, cv_scores) in work:
 
             self.subsets_[iteration] = {'feature_idx': c,
                                         'cv_scores': cv_scores,

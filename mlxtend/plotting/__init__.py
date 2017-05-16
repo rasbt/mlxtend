@@ -18,7 +18,6 @@ from .checkerboard import checkerboard_plot
 
 __all__ = ["plot_learning_curves",
            "plot_decision_regions",
-           "plot_decision_region_slices",
            "plot_confusion_matrix",
            "plot_sequential_feature_selection",
            "plot_linear_regression",

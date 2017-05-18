@@ -9,6 +9,7 @@ The CHANGELOG for the current development version is available at
 ### Version 0.6.1 (TBD)
 
 
+
 ##### Downloads
 
 - [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.6.1.zip)
@@ -21,6 +22,8 @@ The CHANGELOG for the current development version is available at
 ##### Changes
 
 - The TensorFlow estimator have been removed from mlxtend, since TensorFlow has now very convenient ways to build on estimators, which render those implementations obsolete.
+
+- Parallel execution in `mlxtend.feature_selection.SequentialFeatureSelector` and `mlxtend.feature_selection.ExhaustiveFeatureSelector` is now performed over different feature subsets instead of the different cross-validation folds to better utilize machines with multiple processors if the number of features is large ([#193](https://github.com/rasbt/mlxtend/pull/193), via [@whalebot-helmsman](https://github.com/whalebot-helmsman)).
 
 ##### Bug Fixes
 

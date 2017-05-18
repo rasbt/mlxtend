@@ -88,7 +88,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         in parallel. -1 means 'all CPUs'.
     pre_dispatch : int, or string (default: '2*n_jobs')
         Controls the number of jobs that get dispatched
-        during parallel execution in cross_val_score.
+        during parallel execution if `n_jobs > 1` or `n_jobs=-1`.
         Reducing this number can be useful to avoid an explosion of
         memory consumption when more jobs get dispatched than CPUs can process.
         This parameter can be:

@@ -21,6 +21,21 @@ from sklearn.base import BaseEstimator
 from sklearn.base import MetaEstimatorMixin
 from ..externals.name_estimators import _name_estimators
 from sklearn.model_selection import cross_val_score
+from sklearn.externals.joblib import Parallel, delayed
+
+
+def _calc_score(selector, X, y, indices):
+    if selector.cv:
+        scores = cross_val_score(selector.est_,
+                                 X[:, indices], y,
+                                 cv=selector.cv,
+                                 scoring=selector.scorer,
+                                 n_jobs=1,
+                                 pre_dispatch=selector.pre_dispatch)
+    else:
+        selector.est_.fit(X[:, indices], y)
+        scores = np.array([selector.scorer(selector.est_, X[:, indices], y)])
+    return indices, scores
 
 
 class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
@@ -69,10 +84,11 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         exclusion/inclusion if floating=True and
         algorithm gets stuck in cycles.
     n_jobs : int (default: 1)
-        The number of CPUs to use for cross validation. -1 means 'all CPUs'.
+        The number of CPUs to use for evaluating different feature subsets
+        in parallel. -1 means 'all CPUs'.
     pre_dispatch : int, or string (default: '2*n_jobs')
         Controls the number of jobs that get dispatched
-        during parallel execution in cross_val_score.
+        during parallel execution if `n_jobs > 1` or `n_jobs=-1`.
         Reducing this number can be useful to avoid an explosion of
         memory consumption when more jobs get dispatched than CPUs can process.
         This parameter can be:
@@ -222,7 +238,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 k_to_select = self.k_features[0]
             k_idx = tuple(range(X.shape[1]))
             k = len(k_idx)
-            k_score = self._calc_score(X, y, k_idx)
+            k_idx, k_score = _calc_score(self, X, y, k_idx)
             self.subsets_[k] = {
                 'feature_idx': k_idx,
                 'cv_scores': k_score,
@@ -325,19 +341,6 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             stuck = True
         return stuck
 
-    def _calc_score(self, X, y, indices):
-        if self.cv:
-            scores = cross_val_score(self.est_,
-                                     X[:, indices], y,
-                                     cv=self.cv,
-                                     scoring=self.scorer,
-                                     n_jobs=self.n_jobs,
-                                     pre_dispatch=self.pre_dispatch)
-        else:
-            self.est_.fit(X[:, indices], y)
-            scores = np.array([self.scorer(self.est_, X[:, indices], y)])
-        return scores
-
     def _inclusion(self, orig_set, subset, X, y):
         all_avg_scores = []
         all_cv_scores = []
@@ -345,12 +348,19 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         res = (None, None, None)
         remaining = orig_set - subset
         if remaining:
-            for feature in remaining:
-                new_subset = tuple(subset | {feature})
-                cv_scores = self._calc_score(X, y, new_subset)
+            features = len(remaining)
+            n_jobs = min(self.n_jobs, features)
+            parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
+                                pre_dispatch=self.pre_dispatch)
+            work = parallel(delayed(_calc_score)
+                            (self, X, y, tuple(subset | {feature}))
+                            for feature in remaining)
+
+            for new_subset, cv_scores in work:
                 all_avg_scores.append(cv_scores.mean())
                 all_cv_scores.append(cv_scores)
                 all_subsets.append(new_subset)
+
             best = np.argmax(all_avg_scores)
             res = (all_subsets[best],
                    all_avg_scores[best],
@@ -364,13 +374,19 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             all_avg_scores = []
             all_cv_scores = []
             all_subsets = []
-            for p in combinations(feature_set, r=n - 1):
-                if fixed_feature and fixed_feature not in set(p):
-                    continue
-                cv_scores = self._calc_score(X, y, p)
+            features = n
+            n_jobs = min(self.n_jobs, features)
+            parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
+                                pre_dispatch=self.pre_dispatch)
+            work = parallel(delayed(_calc_score)(self, X, y, p)
+                            for p in combinations(feature_set, r=n - 1)
+                            if not fixed_feature or fixed_feature in set(p))
+
+            for p, cv_scores in work:
                 all_avg_scores.append(cv_scores.mean())
                 all_cv_scores.append(cv_scores)
                 all_subsets.append(p)
+
             best = np.argmax(all_avg_scores)
             res = (all_subsets[best],
                    all_avg_scores[best],

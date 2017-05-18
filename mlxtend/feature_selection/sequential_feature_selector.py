@@ -84,7 +84,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         exclusion/inclusion if floating=True and
         algorithm gets stuck in cycles.
     n_jobs : int (default: 1)
-        The number of CPUs to use for cross validation. -1 means 'all CPUs'.
+        The number of CPUs to use for evaluating different feature subsets
+        in parallel. -1 means 'all CPUs'.
     pre_dispatch : int, or string (default: '2*n_jobs')
         Controls the number of jobs that get dispatched
         during parallel execution in cross_val_score.

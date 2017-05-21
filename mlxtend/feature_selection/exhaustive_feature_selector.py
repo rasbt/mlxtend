@@ -173,7 +173,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             denom = reduce(op.mul, range(1, r+1))
             return numer//denom
         
-        all_comb = np.sum([ncr(X.shape[1], i)
+        all_comb = np.sum([ncr(n=X.shape[1], r=i)
                            for i in range(self.min_features,
                                           self.max_features + 1)])
         

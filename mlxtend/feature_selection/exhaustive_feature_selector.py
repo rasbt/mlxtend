@@ -166,20 +166,21 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.subsets_ = {}
         
         def ncr(n, r):
-        """Return the number of combinations of length r from n items.
-        
-        Parameters
-        ----------
-        n : {integer}
+            """Return the number of combinations of length r from n items.
+            
+            Parameters
+            ----------
+            n : {integer}
             Total number of items
-        r : {integer}
+            r : {integer}
             Number of items to select from n
             
-        Returns
-        -------
-        Number of combinations, integer
-        
-        """
+            Returns
+            -------
+            Number of combinations, integer
+            
+            """
+            
             r = min(r, n-r)
             if r == 0:
                 return 1

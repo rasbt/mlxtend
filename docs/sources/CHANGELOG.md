@@ -17,7 +17,7 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
-- -
+- Adds [mlxtend.plotting.ecdf](http://rasbt.github.io/mlxtend/user_guide/plotting/ecdf/) function for plotting empirical cumulative distribution functions.
 
 ##### Changes
 

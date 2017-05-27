@@ -91,6 +91,7 @@ pages:
     - user_guide/plotting/enrichment_plot.md
     - user_guide/plotting/stacked_barplot.md
     - user_guide/plotting/checkerboard_plot.md
+    - user_guide/plotting/ecdf.md    
   - math:
     - user_guide/math/num_combinations.md
     - user_guide/math/num_permutations.md

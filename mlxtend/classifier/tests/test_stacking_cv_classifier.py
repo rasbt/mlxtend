@@ -7,6 +7,7 @@
 
 from mlxtend.classifier import StackingCVClassifier
 
+import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
@@ -20,6 +21,7 @@ from sklearn.model_selection import cross_val_score
 iris = datasets.load_iris()
 X, y = iris.data[:, 1:3], iris.target
 
+"""
 
 def test_StackingClassifier():
     np.random.seed(123)
@@ -188,3 +190,45 @@ def test_verbose():
                                 shuffle=False,
                                 verbose=3)
     sclf.fit(iris.data, iris.target)
+
+"""
+
+
+def test_list_of_lists():
+    X_list = [i for i in X]
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingCVClassifier(classifiers=[clf1, clf2],
+                                use_probas=True,
+                                meta_classifier=meta,
+                                shuffle=False,
+                                verbose=0)
+
+    assert_raises(TypeError,
+                  ('only integer scalar arrays can be converted'
+                   ' to a scalar index'
+                   '\nPlease check that X and y'
+                   'are NumPy arrays. If X and y are lists'
+                   ' of lists,\ntry passing them as'
+                   ' numpy.array(X)'
+                   ' and numpy.array(y).'),
+                  sclf.fit,
+                  X_list,
+                  iris.target)
+
+
+def test_pandas():
+    X_df = pd.DataFrame(X)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingCVClassifier(classifiers=[clf1, clf2],
+                                use_probas=True,
+                                meta_classifier=meta,
+                                shuffle=False,
+                                verbose=0)
+    try:
+        sclf.fit(X_df, iris.target)
+    except KeyError as e:
+        assert 'are NumPy arrays. If X and y are pandas DataFrames' in str(e)

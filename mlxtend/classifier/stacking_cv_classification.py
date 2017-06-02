@@ -105,10 +105,11 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         Parameters
         ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+        X : numpy array, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
-        y : array-like, shape = [n_samples]
+
+        y : numpy array, shape = [n_samples]
             Target values.
 
         Returns
@@ -158,7 +159,20 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                     print("Training and fitting fold %d of %d..." %
                           ((num + 1), self.n_folds))
 
-                model.fit(X[train_index], y[train_index])
+                try:
+                    model.fit(X[train_index], y[train_index])
+                except TypeError as e:
+                    raise TypeError(str(e) + '\nPlease check that X and y'
+                                    'are NumPy arrays. If X and y are lists'
+                                    ' of lists,\ntry passing them as'
+                                    ' numpy.array(X)'
+                                    ' and numpy.array(y).')
+                except KeyError as e:
+                    raise KeyError(str(e) + '\nPlease check that X and y'
+                                   ' are NumPy arrays. If X and y are pandas'
+                                   ' DataFrames,\ntry passing them as'
+                                   ' X.values'
+                                   ' and y.values.')
 
                 if not self.use_probas:
                     prediction = model.predict(X[test_index])
@@ -223,7 +237,7 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         Parameters
         ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+        X : numpy array, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
 
@@ -257,7 +271,7 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         Parameters
         ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+        X : numpy array, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
 

@@ -23,9 +23,8 @@ The CHANGELOG for the current development version is available at
 
 - The TensorFlow estimator have been removed from mlxtend, since TensorFlow has now very convenient ways to build on estimators, which render those implementations obsolete.
 - `plot_decision_regions` now supports plotting decision regions for more than 2 training features. (via [James Bourbeau](https://github.com/jrbourbeau)).
-
-
 - Parallel execution in `mlxtend.feature_selection.SequentialFeatureSelector` and `mlxtend.feature_selection.ExhaustiveFeatureSelector` is now performed over different feature subsets instead of the different cross-validation folds to better utilize machines with multiple processors if the number of features is large ([#193](https://github.com/rasbt/mlxtend/pull/193), via [@whalebot-helmsman](https://github.com/whalebot-helmsman)).
+- Raise meaningful error messages if pandas `DataFrame`s or Python lists of lists are fed into the StackingCVClassifer as a `fit` arguments.
 
 ##### Bug Fixes
 

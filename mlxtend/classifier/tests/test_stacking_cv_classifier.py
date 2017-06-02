@@ -7,6 +7,7 @@
 
 from mlxtend.classifier import StackingCVClassifier
 
+import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
@@ -188,3 +189,36 @@ def test_verbose():
                                 shuffle=False,
                                 verbose=3)
     sclf.fit(iris.data, iris.target)
+
+
+def test_list_of_lists():
+    X_list = [i for i in X]
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingCVClassifier(classifiers=[clf1, clf2],
+                                use_probas=True,
+                                meta_classifier=meta,
+                                shuffle=False,
+                                verbose=0)
+
+    try:
+        sclf.fit(X_list, iris.target)
+    except TypeError as e:
+        assert 'are NumPy arrays. If X and y are lists' in str(e)
+
+
+def test_pandas():
+    X_df = pd.DataFrame(X)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingCVClassifier(classifiers=[clf1, clf2],
+                                use_probas=True,
+                                meta_classifier=meta,
+                                shuffle=False,
+                                verbose=0)
+    try:
+        sclf.fit(X_df, iris.target)
+    except KeyError as e:
+        assert 'are NumPy arrays. If X and y are pandas DataFrames' in str(e)

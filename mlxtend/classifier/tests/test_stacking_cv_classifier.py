@@ -202,17 +202,10 @@ def test_list_of_lists():
                                 shuffle=False,
                                 verbose=0)
 
-    assert_raises(TypeError,
-                  ('only integer scalar arrays can be converted'
-                   ' to a scalar index'
-                   '\nPlease check that X and y'
-                   'are NumPy arrays. If X and y are lists'
-                   ' of lists,\ntry passing them as'
-                   ' numpy.array(X)'
-                   ' and numpy.array(y).'),
-                  sclf.fit,
-                  X_list,
-                  iris.target)
+    try:
+        sclf.fit(X_list, iris.target)
+    except TypeError as e:
+        assert 'are NumPy arrays. If X and y are lists' in str(e)
 
 
 def test_pandas():

@@ -21,7 +21,6 @@ from sklearn.model_selection import cross_val_score
 iris = datasets.load_iris()
 X, y = iris.data[:, 1:3], iris.target
 
-"""
 
 def test_StackingClassifier():
     np.random.seed(123)
@@ -190,8 +189,6 @@ def test_verbose():
                                 shuffle=False,
                                 verbose=3)
     sclf.fit(iris.data, iris.target)
-
-"""
 
 
 def test_list_of_lists():

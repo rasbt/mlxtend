@@ -77,9 +77,9 @@ def test_invalid_dim_y():
 
 def test_invalid_dim_X():
     if sys.version_info[:2] == (2, 7) and os.name == 'nt':
-        s = 'y must be a 1D array. Found (4L,)'
+        s = 'y must be a 2D array. Found (4L,)'
     else:
-        s = 'y must be a 1D array. Found (4,)'
+        s = 'y must be a 2D array. Found (4,)'
     assert_raises(ValueError,
                   s,
                   check_Xy,

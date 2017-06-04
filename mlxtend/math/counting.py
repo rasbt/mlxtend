@@ -38,7 +38,7 @@ def num_combinations(n, k, with_replacement=False):
     else:
         numerator = factorial(n)
         denominator = factorial(k) * factorial(n-k)
-    comb = int(numerator/denominator)
+    comb = numerator//denominator
     return comb
 
 
@@ -66,5 +66,5 @@ def num_permutations(n, k, with_replacement=False):
     else:
         numerator = factorial(n)
         denominator = factorial(n-k)
-        permut = int(numerator/denominator)
+        permut = numerator//denominator
     return permut

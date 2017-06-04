@@ -30,6 +30,7 @@ The CHANGELOG for the current development version is available at
 
 - `SequentialFeatureSelector` now correctly accepts a `None` argument for the `scoring` parameter to infer the default scoring metric from scikit-learn classifiers and regressors.
 - The `plot_decision_regions` function now supports pre-existing axes objects generated via matplotlib's `plt.subplots`. ([See example](http://rasbt.github.io/mlxtend/user_guide/plotting/plot_decision_regions/#example-6-working-with-existing-axes-objects-using-subplots))
+- Made `math.num_combinations` and `math.num_permutations` numerically stable for large numbers of combinations and permutations
 
 
 ### Version 0.6.0 (2017-03-18)

@@ -1,6 +1,7 @@
 # Out-of-fold stacking regressor
 #
-# For explanation of approach, see: https://mlwave.com/kaggle-ensembling-guide/
+# For explanation of approach, see:
+# - https://dnc1994.com/2016/05/rank-10-percent-in-first-kaggle-competition-en/#Stacking
 #
 # Sebastian Raschka 2014-2017
 # mlxtend Machine Learning Library Extensions

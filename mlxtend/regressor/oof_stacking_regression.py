@@ -41,19 +41,20 @@ class OutOfFoldStackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin
         out_of_fold_predictions = np.zeros((X.shape[0], len(self.regressors)))
 
         #
-        # The outer loop iterates over the base-regressors. Each regressor is trained
-        # and makes predictions, after which we train the meta-regressor on their
-        # combined results.
+        # The outer loop iterates over the base-regressors. Each regressor
+        # is trained and makes predictions, after which we train the
+        # meta-regressor on their combined results.
         #
         for i, clf in enumerate(self.regressors):
             #
-            # In the inner loop, each model is trained n_folds times on the training-part
-            # of this fold of data; and the holdout-part of data is used for predictions.
-            # This is repeated n_folds times, so in the end we have predictions for each
-            # data point.
+            # In the inner loop, each model is trained n_folds times on the
+            # training-part of this fold of data; and the holdout-part of data
+            # is used for predictions. This is repeated n_folds times, so in
+            # the end we have predictions for each data point.
             #
-            # Advantage of this complex approach is that data points we're predicting for
-            # have not been seen by the algorithm, so it's less susceptible to overfitting.
+            # Advantage of this complex approach is that data points we're
+            # predicting for have not been seen by the algorithm, so it's less
+            # susceptible to overfitting.
             #
             for train_idx, holdout_idx in kfold.split(X, y):
                 instance = clone(clf)
@@ -69,12 +70,12 @@ class OutOfFoldStackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin
 
     def predict(self, X):
         #
-        # First we make predictions with the base-models (n_folds times per model, averaged)
-        # then we predict with the meta-model from that info.
+        # First we make predictions with the base-models (n_folds times per
+        # model, averaged) then we predict with the meta-model from that info.
         #
         meta_features = np.column_stack([
-            np.column_stack([r.predict(X) for r in regr_instances]).mean(axis=1)
-            for regr_instances in self.regr_
+            np.column_stack([r.predict(X) for r in regrs]).mean(axis=1)
+            for regrs in self.regr_
         ])
 
         return self.meta_regr_.predict(meta_features)
@@ -82,7 +83,8 @@ class OutOfFoldStackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin
     def get_params(self, deep=True):
         """Return estimator parameter names for GridSearch support."""
         if not deep:
-            return super(OutOfFoldStackingRegressor, self).get_params(deep=False)
+            return super(OutOfFoldStackingRegressor, self)\
+                .get_params(deep=False)
         else:
             out = self.named_regressors.copy()
             for name, step in six.iteritems(self.named_regressors):

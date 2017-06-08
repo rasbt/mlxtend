@@ -19,7 +19,7 @@ from sklearn.model_selection import GridSearchCV
 np.random.seed(1)
 X1 = np.sort(5 * np.random.rand(40, 1), axis=0)
 X2 = np.sort(5 * np.random.rand(40, 2), axis=0)
-X3 = np.zeros((40,3))
+X3 = np.zeros((40, 3))
 y = np.sin(X1).ravel()
 y[::5] += 3 * (0.5 - np.random.rand(8))
 y2 = np.zeros((40,))
@@ -65,7 +65,7 @@ def test_internals():
     assert stack.meta_regr_.coef_[1] == 0.0
     assert stack.meta_regr_.coef_[2] == 0.0
     assert len(stack.regr_) == len(regressors)
-    for i,_ in enumerate(regressors):
+    for i, _ in enumerate(regressors):
         assert len(stack.regr_[i]) == n_folds
 
 

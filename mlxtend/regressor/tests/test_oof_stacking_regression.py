@@ -87,6 +87,6 @@ def test_gridsearch_numerate_regr():
                         refit=True,
                         verbose=0)
     grid = grid.fit(X1, y)
-    best = 0.12
-    got = round(grid.best_score_, 2)
+    best = 0.1
+    got = round(grid.best_score_, 1)
     assert best == got

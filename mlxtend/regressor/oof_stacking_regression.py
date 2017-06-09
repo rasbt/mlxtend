@@ -1,7 +1,7 @@
 # Out-of-fold stacking regressor
 #
 # For explanation of approach, see:
-# - https://dnc1994.com/2016/05/rank-10-percent-in-first-kaggle-competition-en/#Stacking
+# dnc1994.com/2016/05/rank-10-percent-in-first-kaggle-competition-en/#Stacking
 #
 # Sebastian Raschka 2014-2017
 # mlxtend Machine Learning Library Extensions
@@ -11,9 +11,9 @@
 #
 # License: BSD 3 clause
 
-from sklearn.base import BaseEstimator
-from sklearn.base import RegressorMixin
-from sklearn.base import TransformerMixin
+from sklearn.base import BaseEstimator as BaseEst
+from sklearn.base import RegressorMixin as RegMix
+from sklearn.base import TransformerMixin as TFMix
 from sklearn.base import clone
 from sklearn.model_selection import KFold
 from ..externals import six
@@ -21,7 +21,7 @@ from ..externals.name_estimators import _name_estimators
 import numpy as np
 
 
-class OutOfFoldStackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
+class OutOfFoldStackingRegressor(BaseEst, RegMix, TFMix):
     def __init__(self, regressors, meta_regressor, n_folds=5):
         self.regressors = regressors
         self.meta_regressor = meta_regressor

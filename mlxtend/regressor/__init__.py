@@ -8,4 +8,5 @@ from .linear_regression import LinearRegression
 from .stacking_regression import StackingRegressor
 from .oof_stacking_regression import OutOfFoldStackingRegressor
 
-__all__ = ["LinearRegression", "StackingRegressor", "OutOfFoldStackingRegressor"]
+__all__ = ["LinearRegression", "StackingRegressor",
+           "OutOfFoldStackingRegressor"]

@@ -87,6 +87,5 @@ def test_gridsearch_numerate_regr():
                         refit=True,
                         verbose=0)
     grid = grid.fit(X1, y)
-    expected = 0.1
     got = round(grid.best_score_, 1)
-    assert got == expected, '%f != %f' % (got, expected)
+    assert got >= 0.1 and got <= 0.2, '%f is wrong' % got

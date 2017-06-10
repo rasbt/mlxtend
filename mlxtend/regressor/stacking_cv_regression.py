@@ -11,9 +11,9 @@
 #
 # License: BSD 3 clause
 
-from sklearn.base import BaseEstimator as BaseEst
-from sklearn.base import RegressorMixin as RegMix
-from sklearn.base import TransformerMixin as TFMix
+from sklearn.base import BaseEstimator
+from sklearn.base import RegressorMixin
+from sklearn.base import TransformerMixin
 from sklearn.base import clone
 from sklearn.model_selection import KFold
 from ..externals import six
@@ -21,7 +21,7 @@ from ..externals.name_estimators import _name_estimators
 import numpy as np
 
 
-class OutOfFoldStackingRegressor(BaseEst, RegMix, TFMix):
+class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
     def __init__(self, regressors, meta_regressor, n_folds=5):
         self.regressors = regressors
         self.meta_regressor = meta_regressor
@@ -84,8 +84,7 @@ class OutOfFoldStackingRegressor(BaseEst, RegMix, TFMix):
     def get_params(self, deep=True):
         """Return estimator parameter names for GridSearch support."""
         if not deep:
-            return super(OutOfFoldStackingRegressor, self)\
-                .get_params(deep=False)
+            return super(StackingCVRegressor, self).get_params(deep=False)
         else:
             out = self.named_regressors.copy()
             for name, step in six.iteritems(self.named_regressors):

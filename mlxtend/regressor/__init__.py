@@ -6,7 +6,6 @@
 
 from .linear_regression import LinearRegression
 from .stacking_regression import StackingRegressor
-from .oof_stacking_regression import OutOfFoldStackingRegressor
+from .stacking_cv_regression import StackingCVRegressor
 
-__all__ = ["LinearRegression", "StackingRegressor",
-           "OutOfFoldStackingRegressor"]
+__all__ = ["LinearRegression", "StackingRegressor", "StackingCVRegressor"]

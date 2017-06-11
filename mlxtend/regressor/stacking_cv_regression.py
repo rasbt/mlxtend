@@ -22,7 +22,8 @@ import numpy as np
 
 
 class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
-    def __init__(self, regressors, meta_regressor, n_folds=5, use_features_in_secondary=False):
+    def __init__(self, regressors, meta_regressor, n_folds=5,
+                 use_features_in_secondary=False):
         self.regressors = regressors
         self.meta_regressor = meta_regressor
         self.named_regressors = {key: value for

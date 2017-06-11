@@ -38,6 +38,21 @@ def test_different_models():
     assert round(got, 2) == mse
 
 
+def test_use_features_in_secondary():
+    lr = LinearRegression()
+    svr_lin = SVR(kernel='linear')
+    ridge = Ridge(random_state=1)
+    svr_rbf = SVR(kernel='rbf')
+    stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
+                                meta_regressor=svr_rbf,
+                                n_folds=3,
+                                use_features_in_secondary=True)
+    stack.fit(X1, y).predict(X1)
+    mse = 0.2
+    got = np.mean((stack.predict(X1) - y) ** 2)
+    assert round(got, 2) == mse, '%f != %f' % (round(got, 2), mse)
+
+
 def test_multivariate():
     lr = LinearRegression()
     svr_lin = SVR(kernel='linear')
@@ -46,9 +61,9 @@ def test_multivariate():
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
                                 meta_regressor=svr_rbf)
     stack.fit(X2, y).predict(X2)
-    mse = 0.20
+    mse = 0.19
     got = np.mean((stack.predict(X2) - y) ** 2)
-    assert round(got, 2) == mse
+    assert round(got, 2) == mse, '%f != %f' % (round(got, 2), mse)
 
 
 def test_internals():
@@ -65,8 +80,6 @@ def test_internals():
     assert stack.meta_regr_.coef_[1] == 0.0
     assert stack.meta_regr_.coef_[2] == 0.0
     assert len(stack.regr_) == len(regressors)
-    for i, _ in enumerate(regressors):
-        assert len(stack.regr_[i]) == n_folds
 
 
 def test_gridsearch_numerate_regr():

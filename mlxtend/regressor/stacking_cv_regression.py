@@ -22,7 +22,7 @@ import numpy as np
 
 
 class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
-    def __init__(self, regressors, meta_regressor, n_folds=5):
+    def __init__(self, regressors, meta_regressor, n_folds=5, use_features_in_secondary=False):
         self.regressors = regressors
         self.meta_regressor = meta_regressor
         self.named_regressors = {key: value for
@@ -32,21 +32,22 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
                                      key, value in
                                      _name_estimators([meta_regressor])}
         self.n_folds = n_folds
+        self.use_features_in_secondary = use_features_in_secondary
 
     def fit(self, X, y):
-        self.regr_ = [list() for x in self.regressors]
+        self.regr_ = [clone(x) for x in self.regressors]
         self.meta_regr_ = clone(self.meta_regressor)
 
         kfold = KFold(n_splits=self.n_folds, shuffle=True)
 
-        out_of_fold_predictions = np.zeros((X.shape[0], len(self.regressors)))
+        meta_features = np.zeros((X.shape[0], len(self.regressors)))
 
         #
         # The outer loop iterates over the base-regressors. Each regressor
-        # is trained and makes predictions, after which we train the
-        # meta-regressor on their combined results.
+        # is trained n_folds times and makes predictions, after which we train
+        # the meta-regressor on their combined results.
         #
-        for i, clf in enumerate(self.regressors):
+        for i, regr in enumerate(self.regressors):
             #
             # In the inner loop, each model is trained n_folds times on the
             # training-part of this fold of data; and the holdout-part of data
@@ -54,35 +55,45 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             # the end we have predictions for each data point.
             #
             # Advantage of this complex approach is that data points we're
-            # predicting for have not been seen by the algorithm, so it's less
-            # susceptible to overfitting.
+            # predicting have not been trained on by the algorithm, so it's
+            # less susceptible to overfitting.
             #
             for train_idx, holdout_idx in kfold.split(X, y):
-                instance = clone(clf)
-                self.regr_[i].append(instance)
-
+                instance = clone(regr)
                 instance.fit(X[train_idx], y[train_idx])
                 y_pred = instance.predict(X[holdout_idx])
-                out_of_fold_predictions[holdout_idx, i] = y_pred
+                meta_features[holdout_idx, i] = y_pred
 
-        self.meta_regr_.fit(out_of_fold_predictions, y)
+        # Train meta-model on the out-of-fold predictions
+        if self.use_features_in_secondary:
+            self.meta_regr_.fit(np.hstack((X, meta_features)), y)
+        else:
+            self.meta_regr_.fit(meta_features, y)
+
+        # Retrain base models on all data
+        for regr in self.regr_:
+            regr.fit(X, y)
 
         return self
 
     def predict(self, X):
         #
-        # First we make predictions with the base-models (n_folds times per
-        # model, averaged) then we predict with the meta-model from that info.
+        # First we make predictions with the base-models then we predict with
+        # the meta-model from that info.
         #
         meta_features = np.column_stack([
-            np.column_stack([r.predict(X) for r in regrs]).mean(axis=1)
-            for regrs in self.regr_
+            regr.predict(X) for regr in self.regr_
         ])
 
-        return self.meta_regr_.predict(meta_features)
+        if self.use_features_in_secondary:
+            return self.meta_regr_.predict(np.hstack((X, meta_features)))
+        else:
+            return self.meta_regr_.predict(meta_features)
 
     def get_params(self, deep=True):
-        """Return estimator parameter names for GridSearch support."""
+        #
+        # Return estimator parameter names for GridSearch support.
+        #
         if not deep:
             return super(StackingCVRegressor, self).get_params(deep=False)
         else:

@@ -45,6 +45,7 @@ pages:
   - regressor:
     - user_guide/regressor/LinearRegression.md
     - user_guide/regressor/StackingRegressor.md
+    - user_guide/regressor/StackingCVRegressor.md
   - feature_selection:
     - user_guide/feature_selection/SequentialFeatureSelector.md
     - user_guide/feature_selection/ExhaustiveFeatureSelector.md

@@ -18,7 +18,7 @@ The CHANGELOG for the current development version is available at
 ##### New Features
 
 - New [mlxtend.plotting.ecdf](http://rasbt.github.io/mlxtend/user_guide/plotting/ecdf/) function for plotting empirical cumulative distribution functions.
-- New [`StackingCVRegressor`](http://rasbt.github.io/mlxtend/user_guide/plotting/ecdf/) for stacking regressors with robust out-of-bag sampling to prevent overfitting (via [Eike Dehling](https://github.com/EikeDehling)).
+- New [`StackingCVRegressor`](http://rasbt.github.io/mlxtend/user_guide/plotting/ecdf/) for stacking regressors with out-of-fold predictions to prevent overfitting (via [Eike Dehling](https://github.com/EikeDehling)).
 
 ##### Changes
 

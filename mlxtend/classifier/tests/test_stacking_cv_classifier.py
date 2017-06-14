@@ -15,6 +15,7 @@ import numpy as np
 from sklearn import datasets
 from mlxtend.utils import assert_raises
 from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import KFold
 from sklearn.exceptions import NotFittedError
 from sklearn.model_selection import cross_val_score
 
@@ -144,6 +145,28 @@ def test_do_not_stratify():
     sclf = StackingCVClassifier(classifiers=[clf1, clf2],
                                 meta_classifier=meta,
                                 stratify=False)
+
+    scores = cross_val_score(sclf,
+                             X,
+                             y,
+                             cv=5,
+                             scoring='accuracy')
+    scores_mean = (round(scores.mean(), 2))
+    assert scores_mean == 0.94
+
+
+def test_cross_validation_technique():
+    # This is like the `test_do_not_stratify` but instead
+    # autogenerating the cross validation strategy it provides
+    # a pre-created object
+    np.random.seed(123)
+    cv = KFold(n_splits=2, shuffle=True)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingCVClassifier(classifiers=[clf1, clf2],
+                                meta_classifier=meta,
+                                cv=cv)
 
     scores = cross_val_score(sclf,
                              X,

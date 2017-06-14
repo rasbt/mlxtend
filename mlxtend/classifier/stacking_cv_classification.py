@@ -18,6 +18,7 @@ from sklearn.utils.validation import check_is_fitted
 from sklearn.externals import six
 from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import KFold
+from sklearn.model_selection._split import check_cv
 import numpy as np
 
 
@@ -41,22 +42,30 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     use_probas : bool (default: False)
         If True, trains meta-classifier based on predicted probabilities
         instead of class labels.
-    n_folds : int (default=2)
-        The number of folds used for while creating training data for the
-        meta-classifier during fitting.
+    cv : int, cross-validation generator or an iterable, optional (default: 2)
+        Determines the cross-validation splitting strategy.
+        Possible inputs for cv are:
+          - None, to use the default 3-fold cross validation,
+          - integer, to specify the number of folds in a `(Stratified)KFold`,
+          - An object to be used as a cross-validation generator.
+          - An iterable yielding train, test splits.
+        For integer/None inputs, it will use either a `KFold` or
+        `StratifiedKFold` cross validation depending the value of `stratify`
+        argument.
     use_features_in_secondary : bool (default: False)
         If True, the meta-classifier will be trained both on the predictions
         of the original classifiers and the original dataset.
         If False, the meta-classifier will be trained only on the predictions
         of the original classifiers.
     stratify : bool (default: True)
-        If True, the cross-validation technique used for fitting the classifier
-        will be Stratified K-Fold.
-        If False, the cross-validation technique used will be Regular K-Fold.
-        It is highly recommended to use Stratified K-Fold.
+        If True, and the `cv` argument is integer it will follow a stratified
+        K-Fold cross validation technique. If the `cv` argument is a specific
+        cross validation technique, this argument is omitted.
     shuffle : bool (default: True)
-        If True, when fitting, the training data will be shuffled prior to
-        cross-validation.
+        If True,  and the `cv` argument is integer, the training data will be
+        shuffled at fitting stage prior to cross-validation. If the `cv`
+        argument is a specific cross validation technique, this argument is
+        omitted.
     random_state: None, int, or RandomState
         When shuffle=True, pseudo-random number generator state used for
         shuffling. If None, use default numpy RNG for shuffling.
@@ -79,7 +88,7 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
     """
     def __init__(self, classifiers, meta_classifier,
-                 use_probas=False, n_folds=2,
+                 use_probas=False, cv=2,
                  use_features_in_secondary=False,
                  stratify=True, random_state=None,
                  shuffle=True, verbose=0):
@@ -94,13 +103,13 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                                       _name_estimators([meta_classifier])}
         self.use_probas = use_probas
         self.verbose = verbose
-        self.n_folds = n_folds
+        self.cv = cv
         self.use_features_in_secondary = use_features_in_secondary
         self.stratify = stratify
         self.shuffle = shuffle
         self.random_state = random_state
 
-    def fit(self, X, y):
+    def fit(self, X, y, groups=None):
         """ Fit ensemble classifers and the meta-classifier.
 
         Parameters
@@ -112,6 +121,10 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         y : numpy array, shape = [n_samples]
             Target values.
 
+        groups : numpy array/None, shape = [n_samples]
+            The group that each sample belongs to. This is used by specific
+            folding strategies such as GroupKFold()
+
         Returns
         -------
         self : object
@@ -122,15 +135,12 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         if self.verbose > 0:
             print("Fitting %d classifiers..." % (len(self.classifiers)))
 
-        if self.stratify:
-            skf = list(StratifiedKFold(n_splits=self.n_folds,
-                                       shuffle=self.shuffle,
-                                       random_state=self.random_state)
-                       .split(X, y))
-        else:
-            skf = list(KFold(n_splits=self.n_folds,
-                       shuffle=self.shuffle,
-                       random_state=self.random_state).split(X))
+        final_cv = check_cv(self.cv, y, classifier=self.stratify)
+        if isinstance(self.cv, int):
+            # Override shuffle parameter in case of self generated
+            # cross-validation strategy
+            final_cv.shuffle = self.shuffle
+        skf = list(final_cv.split(X, y, groups))
 
         all_model_predictions = np.array([]).reshape(len(y), 0)
         for model in self.clfs_:
@@ -157,7 +167,7 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
                 if self.verbose > 0:
                     print("Training and fitting fold %d of %d..." %
-                          ((num + 1), self.n_folds))
+                          ((num + 1), final_cv.get_n_splits()))
 
                 try:
                     model.fit(X[train_index], y[train_index])

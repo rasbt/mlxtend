@@ -58,12 +58,9 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         be shuffled at fitting stage prior to cross-validation. If the `cv`
         argument is a specific cross validation technique, this argument is
         omitted.
-    random_state: None, int, or RandomState
-        When shuffle=True, pseudo-random number generator state used for
-        shuffling. If None, use default numpy RNG for shuffling.
     """
     def __init__(self, regressors, meta_regressor, cv=5,
-                 random_state=None, shuffle=True,
+                 shuffle=True,
                  use_features_in_secondary=False):
 
         self.regressors = regressors
@@ -76,7 +73,6 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
                                      _name_estimators([meta_regressor])}
         self.cv = cv
         self.shuffle = shuffle
-        self.random_state = random_state
         self.use_features_in_secondary = use_features_in_secondary
 
     def fit(self, X, y, groups=None):
@@ -103,12 +99,11 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         self.regr_ = [clone(x) for x in self.regressors]
         self.meta_regr_ = clone(self.meta_regressor)
 
-        final_cv = check_cv(self.cv, y)
+        kfold = check_cv(self.cv, y)
         if isinstance(self.cv, int):
             # Override shuffle parameter in case of self generated
             # cross-validation strategy
-            final_cv.shuffle = self.shuffle
-        kfold = list(final_cv.split(X, y, groups))
+            kfold.shuffle = self.shuffle
 
         meta_features = np.zeros((X.shape[0], len(self.regressors)))
 
@@ -128,7 +123,7 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             # predicting have not been trained on by the algorithm, so it's
             # less susceptible to overfitting.
             #
-            for train_idx, holdout_idx in kfold:
+            for train_idx, holdout_idx in kfold.split(X, y, groups):
                 instance = clone(regr)
                 instance.fit(X[train_idx], y[train_idx])
                 y_pred = instance.predict(X[holdout_idx])

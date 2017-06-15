@@ -26,6 +26,7 @@ The CHANGELOG for the current development version is available at
 - `plot_decision_regions` now supports plotting decision regions for more than 2 training features. (via [James Bourbeau](https://github.com/jrbourbeau)).
 - Parallel execution in `mlxtend.feature_selection.SequentialFeatureSelector` and `mlxtend.feature_selection.ExhaustiveFeatureSelector` is now performed over different feature subsets instead of the different cross-validation folds to better utilize machines with multiple processors if the number of features is large ([#193](https://github.com/rasbt/mlxtend/pull/193), via [@whalebot-helmsman](https://github.com/whalebot-helmsman)).
 - Raise meaningful error messages if pandas `DataFrame`s or Python lists of lists are fed into the StackingCVClassifer as a `fit` arguments.
+- The `n_folds` parameter of the `StackingCVClassifier` was changed to `cv` and can now accept any kind of cross validation technique that is available from scikit-learn. For example, `StackingCVClassifier(..., cv=StratifiedKFold(n_splits=3)) or StackingCVClassifier(..., cv=GroupKFold(n_splits=3))` (via [Konstantinos Paliouras](https://github.com/sque)).
 
 ##### Bug Fixes
 

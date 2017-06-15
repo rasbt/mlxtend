@@ -7,7 +7,9 @@
 # mlxtend Machine Learning Library Extensions
 #
 # An ensemble-learning meta-regressor for out-of-fold stacking regression
-# Author: Eike Dehling <e.e.dehling@gmail.com>
+# Authors:
+#  Eike Dehling <e.e.dehling@gmail.com>
+#  Sebastian Raschka <https://sebastianraschka.com>
 #
 # License: BSD 3 clause
 
@@ -16,14 +18,51 @@ from sklearn.base import RegressorMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
 from sklearn.model_selection import KFold
+from sklearn.model_selection._split import check_cv
 from ..externals import six
 from ..externals.name_estimators import _name_estimators
 import numpy as np
 
 
 class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
-    def __init__(self, regressors, meta_regressor, n_folds=5,
+    """A 'Stacking Cross-Validation' regressor for scikit-learn estimators.
+
+    New in mlxtend v0.7.0
+
+    Parameters
+    ----------
+    regressors : array-like, shape = [n_regressors]
+        A list of classifiers.
+        Invoking the `fit` method on the `StackingCVRegressor` will fit clones
+        of these original regressors that will
+        be stored in the class attribute `self.regr_`.
+    meta_regressor : object
+        The meta-classifier to be fitted on the ensemble of
+        classifiers
+    cv : int, cross-validation generator or iterable, optional (default: 5)
+        Determines the cross-validation splitting strategy.
+        Possible inputs for cv are:
+        - None, to use the default 5-fold cross validation,
+        - integer, to specify the number of folds in a `KFold`,
+        - An object to be used as a cross-validation generator.
+        - An iterable yielding train, test splits.
+        For integer/None inputs, it will use `KFold` cross-validation
+    use_features_in_secondary : bool (default: False)
+        If True, the meta-classifier will be trained both on
+        the predictions of the original regressors and the
+        original dataset.
+        If False, the meta-regressor will be trained only on
+        the predictions of the original regressors.
+    shuffle : bool (default: True)
+        If True,  and the `cv` argument is integer, the training data will
+        be shuffled at fitting stage prior to cross-validation. If the `cv`
+        argument is a specific cross validation technique, this argument is
+        omitted.
+    """
+    def __init__(self, regressors, meta_regressor, cv=5,
+                 shuffle=True,
                  use_features_in_secondary=False):
+
         self.regressors = regressors
         self.meta_regressor = meta_regressor
         self.named_regressors = {key: value for
@@ -32,34 +71,59 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         self.named_meta_regressor = {'meta-%s' % key: value for
                                      key, value in
                                      _name_estimators([meta_regressor])}
-        self.n_folds = n_folds
+        self.cv = cv
+        self.shuffle = shuffle
         self.use_features_in_secondary = use_features_in_secondary
 
-    def fit(self, X, y):
+    def fit(self, X, y, groups=None):
+        """ Fit ensemble regressors and the meta-regressor.
+
+        Parameters
+        ----------
+        X : numpy array, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+
+        y : numpy array, shape = [n_samples]
+            Target values.
+
+        groups : numpy array/None, shape = [n_samples]
+            The group that each sample belongs to. This is used by specific
+            folding strategies such as GroupKFold()
+
+        Returns
+        -------
+        self : object
+
+        """
         self.regr_ = [clone(x) for x in self.regressors]
         self.meta_regr_ = clone(self.meta_regressor)
 
-        kfold = KFold(n_splits=self.n_folds, shuffle=True)
+        kfold = check_cv(self.cv, y)
+        if isinstance(self.cv, int):
+            # Override shuffle parameter in case of self generated
+            # cross-validation strategy
+            kfold.shuffle = self.shuffle
 
         meta_features = np.zeros((X.shape[0], len(self.regressors)))
 
         #
         # The outer loop iterates over the base-regressors. Each regressor
-        # is trained n_folds times and makes predictions, after which we train
+        # is trained cv times and makes predictions, after which we train
         # the meta-regressor on their combined results.
         #
         for i, regr in enumerate(self.regressors):
             #
-            # In the inner loop, each model is trained n_folds times on the
+            # In the inner loop, each model is trained cv times on the
             # training-part of this fold of data; and the holdout-part of data
-            # is used for predictions. This is repeated n_folds times, so in
+            # is used for predictions. This is repeated cv times, so in
             # the end we have predictions for each data point.
             #
             # Advantage of this complex approach is that data points we're
             # predicting have not been trained on by the algorithm, so it's
             # less susceptible to overfitting.
             #
-            for train_idx, holdout_idx in kfold.split(X, y):
+            for train_idx, holdout_idx in kfold.split(X, y, groups):
                 instance = clone(regr)
                 instance.fit(X[train_idx], y[train_idx])
                 y_pred = instance.predict(X[holdout_idx])

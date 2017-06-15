@@ -45,7 +45,7 @@ def test_use_features_in_secondary():
     svr_rbf = SVR(kernel='rbf')
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
                                 meta_regressor=svr_rbf,
-                                n_folds=3,
+                                cv=3,
                                 use_features_in_secondary=True)
     stack.fit(X1, y).predict(X1)
     mse = 0.2
@@ -69,10 +69,10 @@ def test_multivariate():
 def test_internals():
     lr = LinearRegression()
     regressors = [lr, lr, lr, lr, lr]
-    n_folds = 10
+    cv = 10
     stack = StackingCVRegressor(regressors=[lr, lr, lr, lr, lr],
                                 meta_regressor=lr,
-                                n_folds=n_folds)
+                                cv=cv)
     stack.fit(X3, y2)
     assert stack.predict(X3).mean() == y2.mean()
     assert stack.meta_regr_.intercept_ == 0.0

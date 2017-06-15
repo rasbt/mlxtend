@@ -32,10 +32,9 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     ----------
     classifiers : array-like, shape = [n_classifiers]
         A list of classifiers.
-        Invoking the `fit` method on the `StackingClassifer` will fit clones
+        Invoking the `fit` method on the `StackingCVClassifer` will fit clones
         of these original classifiers that will
-        be stored in the class attribute
-        `self.clfs_`.
+        be stored in the class attribute `self.clfs_`.
     meta_classifier : object
         The meta-classifier to be fitted on the ensemble of
         classifiers
@@ -45,7 +44,7 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     cv : int, cross-validation generator or an iterable, optional (default: 2)
         Determines the cross-validation splitting strategy.
         Possible inputs for cv are:
-          - None, to use the default 3-fold cross validation,
+          - None, to use the default 2-fold cross validation,
           - integer, to specify the number of folds in a `(Stratified)KFold`,
           - An object to be used as a cross-validation generator.
           - An iterable yielding train, test splits.
@@ -66,9 +65,6 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         shuffled at fitting stage prior to cross-validation. If the `cv`
         argument is a specific cross validation technique, this argument is
         omitted.
-    random_state: None, int, or RandomState
-        When shuffle=True, pseudo-random number generator state used for
-        shuffling. If None, use default numpy RNG for shuffling.
     verbose : int, optional (default=0)
         Controls the verbosity of the building process.
         - `verbose=0` (default): Prints nothing
@@ -90,7 +86,7 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     def __init__(self, classifiers, meta_classifier,
                  use_probas=False, cv=2,
                  use_features_in_secondary=False,
-                 stratify=True, random_state=None,
+                 stratify=True,
                  shuffle=True, verbose=0):
 
         self.classifiers = classifiers
@@ -107,7 +103,6 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.use_features_in_secondary = use_features_in_secondary
         self.stratify = stratify
         self.shuffle = shuffle
-        self.random_state = random_state
 
     def fit(self, X, y, groups=None):
         """ Fit ensemble classifers and the meta-classifier.

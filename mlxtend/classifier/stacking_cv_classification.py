@@ -90,6 +90,7 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     def __init__(self, classifiers, meta_classifier,
                  use_probas=False, cv=2,
                  use_features_in_secondary=False,
+                 collinearity_guard=None,
                  stratify=True, random_state=None,
                  shuffle=True, verbose=0):
 
@@ -105,6 +106,7 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.verbose = verbose
         self.cv = cv
         self.use_features_in_secondary = use_features_in_secondary
+        self.collinearity_guard = collinearity_guard
         self.stratify = stratify
         self.shuffle = shuffle
         self.random_state = random_state
@@ -188,7 +190,21 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                     prediction = model.predict(X[test_index])
                     prediction = prediction.reshape(prediction.shape[0], 1)
                 else:
-                    prediction = model.predict_proba(X[test_index])
+                    if self.collinearity_guard is None:
+                        prediction = model.predict_proba(X[test_index])
+                    else:
+                        if self.collinearity_guard == -1:
+                            prediction = model.predict_proba(X[test_index])[:, :-1]
+                        elif self.collinearity_guard > 0:
+                            #TODO (soumyadsanyal) drop column indexed by
+                            #self.collinearity_guard
+                            pass
+                        elif self.collinearity_guard == "random":
+                            #TODO (soumyadsanyal) drop random column
+                            pass
+                        else:
+                            #TODO (soumyadsanyal) raise error
+                            pass
                 single_model_prediction = np.vstack([single_model_prediction.
                                                     astype(prediction.dtype),
                                                      prediction])
@@ -265,7 +281,10 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                 single_model_prediction = single_model_prediction\
                     .reshape(single_model_prediction.shape[0], 1)
             else:
-                single_model_prediction = model.predict_proba(X)
+                if self.collinearity_guard:
+                    single_model_prediction = model.predict_proba(X)[:, :-1]
+                else:
+                    single_model_prediction = model.predict_proba(X)
             all_model_predictions = np.hstack((all_model_predictions.
                                                astype(single_model_prediction
                                                       .dtype),
@@ -299,7 +318,10 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                 single_model_prediction = single_model_prediction\
                     .reshape(single_model_prediction.shape[0], 1)
             else:
-                single_model_prediction = model.predict_proba(X)
+                if self.collinearity_guard:
+                    single_model_prediction = model.predict_proba(X)[:, :-1]
+                else:
+                    single_model_prediction = model.predict_proba(X)
             all_model_predictions = np.hstack((all_model_predictions.
                                                astype(single_model_prediction.
                                                       dtype),

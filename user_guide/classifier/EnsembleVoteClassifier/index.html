@@ -21,8 +21,8 @@
     <link href="../../../css/cinder.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../css/highlight.css">
 
-
-    <link href="../../../extra.css" rel="stylesheet">
+    <!--
+    <link href="../../../extra.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -183,27 +183,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_classifier</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">regressor</a>
     <ul class="dropdown-menu">
         
@@ -219,18 +198,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_regressor</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
+    <a href="../../regressor/StackingCVRegressor/">StackingCVRegressor</a>
 </li>
 
         
@@ -300,21 +270,6 @@
             
 <li >
     <a href="../../cluster/Kmeans/">Kmeans</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_cluster</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_cluster/TfKmeans/">TfKmeans</a>
 </li>
 
         
@@ -549,6 +504,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../plotting/ecdf/">Ecdf</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -672,12 +633,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_classifier/">Mlxtend.tf classifier</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
 </li>
 
@@ -708,12 +663,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_cluster/">Mlxtend.tf cluster</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
 </li>
 
@@ -733,12 +682,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
 </li>
 
                         
@@ -909,46 +852,70 @@
 <p><strong>Note</strong></p>
 <p>If you are interested in using the <code>EnsembleVoteClassifier</code>, please note that it is now also available through scikit learn (&gt;0.17) as <a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.VotingClassifier.html"><code>VotingClassifier</code></a>.</p>
 <h3 id="majority-voting-hard-voting">Majority Voting / Hard Voting</h3>
-<p>Hard voting is the simplest case of majority voting. Here, we predict the class label $\hat{y}$ via majority (plurality) voting of each classifier $C_j$:</p>
-<p>$$\hat{y}=mode\{C_1(\mathbf{x}), C_2(\mathbf{x}), ..., C_m(\mathbf{x})\}$$</p>
+<p>Hard voting is the simplest case of majority voting. Here, we predict the class label <script type="math/tex">\hat{y}</script> via majority (plurality) voting of each classifier <script type="math/tex">C_j</script>:</p>
+<p>
+<script type="math/tex; mode=display">\hat{y}=mode\{C_1(\mathbf{x}), C_2(\mathbf{x}), ..., C_m(\mathbf{x})\}</script>
+</p>
 <p>Assuming that we combine three classifiers that classify a training sample as follows:</p>
 <ul>
 <li>classifier 1 -&gt; class 0</li>
 <li>classifier 2 -&gt; class 0</li>
 <li>classifier 3 -&gt; class 1</li>
 </ul>
-<p>$$\hat{y}=mode\{0, 0, 1\} = 0$$</p>
+<p>
+<script type="math/tex; mode=display">\hat{y}=mode\{0, 0, 1\} = 0</script>
+</p>
 <p>Via majority vote, we would we would classify the sample as "class 0."</p>
 <h3 id="weighted-majority-vote">Weighted Majority Vote</h3>
-<p>In addition to the simple majority vote (hard voting) as described in the previous section, we can compute a weighted majority vote by associating a weight $w_j$ with classifier $C_j$:</p>
-<p>$$\hat{y} = \arg \max_i \sum^{m}_{j=1} w_j \chi_A \big(C_j(\mathbf{x})=i\big),$$</p>
-<p>where $\chi_A$ is the characteristic function $[C_j(\mathbf{x}) = i \; \in A]$, and $A$ is the set of unique class labels. </p>
+<p>In addition to the simple majority vote (hard voting) as described in the previous section, we can compute a weighted majority vote by associating a weight <script type="math/tex">w_j</script> with classifier <script type="math/tex">C_j</script>:</p>
+<p>
+<script type="math/tex; mode=display">\hat{y} = \arg \max_i \sum^{m}_{j=1} w_j \chi_A \big(C_j(\mathbf{x})=i\big),</script>
+</p>
+<p>where <script type="math/tex">\chi_A</script> is the characteristic function <script type="math/tex">[C_j(\mathbf{x}) = i \; \in A]</script>, and <script type="math/tex">A</script> is the set of unique class labels. </p>
 <p>Continuing with the example from the previous section</p>
 <ul>
 <li>classifier 1 -&gt; class 0</li>
 <li>classifier 2 -&gt; class 0</li>
 <li>classifier 3 -&gt; class 1</li>
 </ul>
-<p>assigning the weights {0.2, 0.2, 0.6} would yield a prediction $\hat{y} = 1$:</p>
-<p>$$\arg \max_i [0.2 \times i_0 + 0.2 \times i_0 + 0.6 \times i_1] = 1$$</p>
+<p>assigning the weights {0.2, 0.2, 0.6} would yield a prediction <script type="math/tex">\hat{y} = 1</script>:</p>
+<p>
+<script type="math/tex; mode=display">\arg \max_i [0.2 \times i_0 + 0.2 \times i_0 + 0.6 \times i_1] = 1</script>
+</p>
 <h3 id="soft-voting">Soft Voting</h3>
-<p>In soft voting, we predict the class labels based on the predicted probabilities $p$ for classifier -- this approach is only recommended if the classifiers are well-calibrated.</p>
-<p>$$\hat{y} = \arg \max_i \sum^{m}_{j=1} w_j p_{ij},$$</p>
-<p>where $w_j$ is the weight that can be assigned to the $j$th classifier.</p>
-<p>Assuming the example in the previous section was a binary classification task with class labels $i \in \{0, 1\}$, our ensemble could make the following prediction:</p>
+<p>In soft voting, we predict the class labels based on the predicted probabilities <script type="math/tex">p</script> for classifier -- this approach is only recommended if the classifiers are well-calibrated.</p>
+<p>
+<script type="math/tex; mode=display">\hat{y} = \arg \max_i \sum^{m}_{j=1} w_j p_{ij},</script>
+</p>
+<p>where <script type="math/tex">w_j</script> is the weight that can be assigned to the <script type="math/tex">j</script>th classifier.</p>
+<p>Assuming the example in the previous section was a binary classification task with class labels <script type="math/tex">i \in \{0, 1\}</script>, our ensemble could make the following prediction:</p>
 <ul>
-<li>$C_1(\mathbf{x}) \rightarrow [0.9, 0.1]$</li>
-<li>$C_2(\mathbf{x}) \rightarrow [0.8, 0.2]$</li>
-<li>$C_3(\mathbf{x}) \rightarrow [0.4, 0.6]$</li>
+<li>
+<script type="math/tex">C_1(\mathbf{x}) \rightarrow [0.9, 0.1]</script>
+</li>
+<li>
+<script type="math/tex">C_2(\mathbf{x}) \rightarrow [0.8, 0.2]</script>
+</li>
+<li>
+<script type="math/tex">C_3(\mathbf{x}) \rightarrow [0.4, 0.6]</script>
+</li>
 </ul>
 <p>Using uniform weights, we compute the average probabilities:</p>
-<p>$$p(i_0 \mid \mathbf{x}) = \frac{0.9 + 0.8 + 0.4}{3} = 0.7 \\\\
-p(i_1 \mid \mathbf{x}) = \frac{0.1 + 0.2 + 0.6}{3} = 0.3$$</p>
-<p>$$\hat{y} = \arg \max_i \big[p(i_0 \mid \mathbf{x}), p(i_1 \mid \mathbf{x}) \big] = 0$$</p>
-<p>However, assigning the weights {0.1, 0.1, 0.8} would yield a prediction $\hat{y} = 1$:</p>
-<p>$$p(i_0 \mid \mathbf{x}) = {0.1 \times 0.9 + 0.1 \times 0.8 + 0.8 \times  0.4} = 0.49 \\\\
-p(i_1 \mid \mathbf{x}) = {0.1 \times 0.1 + 0.2 \times 0.1 + 0.8 \times 0.6} = 0.51$$</p>
-<p>$$\hat{y} = \arg \max_i \big[p(i_0 \mid \mathbf{x}), p(i_1 \mid \mathbf{x}) \big] = 1$$</p>
+<p>
+<script type="math/tex; mode=display">p(i_0 \mid \mathbf{x}) = \frac{0.9 + 0.8 + 0.4}{3} = 0.7 \\\\
+p(i_1 \mid \mathbf{x}) = \frac{0.1 + 0.2 + 0.6}{3} = 0.3</script>
+</p>
+<p>
+<script type="math/tex; mode=display">\hat{y} = \arg \max_i \big[p(i_0 \mid \mathbf{x}), p(i_1 \mid \mathbf{x}) \big] = 0</script>
+</p>
+<p>However, assigning the weights {0.1, 0.1, 0.8} would yield a prediction <script type="math/tex">\hat{y} = 1</script>:</p>
+<p>
+<script type="math/tex; mode=display">p(i_0 \mid \mathbf{x}) = {0.1 \times 0.9 + 0.1 \times 0.8 + 0.8 \times  0.4} = 0.49 \\\\
+p(i_1 \mid \mathbf{x}) = {0.1 \times 0.1 + 0.2 \times 0.1 + 0.8 \times 0.6} = 0.51</script>
+</p>
+<p>
+<script type="math/tex; mode=display">\hat{y} = \arg \max_i \big[p(i_0 \mid \mathbf{x}), p(i_1 \mid \mathbf{x}) \big] = 1</script>
+</p>
 <h3 id="references">References</h3>
 <ul>
 <li>[1] S. Raschka. <a href="https://github.com/rasbt/python-machine-learning-book">Python Machine Learning</a>. Packt Publishing Ltd., 2015.</li>

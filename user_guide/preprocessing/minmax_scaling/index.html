@@ -21,8 +21,8 @@
     <link href="../../../css/cinder.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../css/highlight.css">
 
-
-    <link href="../../../extra.css" rel="stylesheet">
+    <!--
+    <link href="../../../extra.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -183,27 +183,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_classifier</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">regressor</a>
     <ul class="dropdown-menu">
         
@@ -219,18 +198,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_regressor</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
+    <a href="../../regressor/StackingCVRegressor/">StackingCVRegressor</a>
 </li>
 
         
@@ -300,21 +270,6 @@
             
 <li >
     <a href="../../cluster/Kmeans/">Kmeans</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_cluster</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_cluster/TfKmeans/">TfKmeans</a>
 </li>
 
         
@@ -549,6 +504,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../plotting/ecdf/">Ecdf</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -672,12 +633,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_classifier/">Mlxtend.tf classifier</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
 </li>
 
@@ -708,12 +663,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_cluster/">Mlxtend.tf cluster</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
 </li>
 
@@ -733,12 +682,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
 </li>
 
                         
@@ -877,7 +820,9 @@
 In this approach, the data is scaled to a fixed range - usually 0 to 1.
 The cost of having this bounded range - in contrast to standardization - is that we will end up with smaller standard deviations, which can suppress the effect of outliers.</p>
 <p>A Min-Max scaling is typically done via the following equation:</p>
-<p>$$X_{sc} = \frac{X - X_{min}}{X_{max} - X_{min}}.$$</p>
+<p>
+<script type="math/tex; mode=display">X_{sc} = \frac{X - X_{min}}{X_{max} - X_{min}}.</script>
+</p>
 <p>One family of algorithms that is scale-invariant encompasses tree-based learning algorithms. Let's take the general CART decision tree algorithm. Without going into much depth regarding information gain and impurity measures, we can think of the decision as "is feature x_i &gt;= some_val?" Intuitively, we can see that it really doesn't matter on which scale this feature is (centimeters, Fahrenheit, a standardized scale -- it really doesn't matter).</p>
 <p>Some examples of algorithms where feature scaling matters are:</p>
 <ul>

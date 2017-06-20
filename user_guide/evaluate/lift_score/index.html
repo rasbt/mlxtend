@@ -21,8 +21,8 @@
     <link href="../../../css/cinder.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../css/highlight.css">
 
-
-    <link href="../../../extra.css" rel="stylesheet">
+    <!--
+    <link href="../../../extra.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -183,27 +183,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_classifier</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">regressor</a>
     <ul class="dropdown-menu">
         
@@ -219,18 +198,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_regressor</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
+    <a href="../../regressor/StackingCVRegressor/">StackingCVRegressor</a>
 </li>
 
         
@@ -300,21 +270,6 @@
             
 <li >
     <a href="../../cluster/Kmeans/">Kmeans</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_cluster</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_cluster/TfKmeans/">TfKmeans</a>
 </li>
 
         
@@ -549,6 +504,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../plotting/ecdf/">Ecdf</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -672,12 +633,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_classifier/">Mlxtend.tf classifier</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
 </li>
 
@@ -708,12 +663,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_cluster/">Mlxtend.tf cluster</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
 </li>
 
@@ -733,12 +682,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
 </li>
 
                         
@@ -879,30 +822,42 @@
 <p><code>from mlxtend.evaluate import lift_score</code>    </p>
 </blockquote>
 <h2 id="overview">Overview</h2>
-<p>In the context of classification, <em>lift</em> [1] compares model predictions to randomly generated predictions. Lift is often used in marketing research combined with <em>gain and lift</em> charts as a visual aid [2]. For example, assuming a 10% customer response as a baseline, a lift value of 3 would correspond to a 30% customer response when using the predictive model. (Note that <em>lift</em> has the range $ \lbrack 0, \infty \rbrack$ .)</p>
+<p>In the context of classification, <em>lift</em> [1] compares model predictions to randomly generated predictions. Lift is often used in marketing research combined with <em>gain and lift</em> charts as a visual aid [2]. For example, assuming a 10% customer response as a baseline, a lift value of 3 would correspond to a 30% customer response when using the predictive model. Note that <em>lift</em> has the range <script type="math/tex">\lbrack 0, \infty \rbrack</script>.</p>
 <p>There are many strategies to compute <em>lift</em>, and below, we will illustrate the computation of the lift score using a classic confusion matrix. For instance, let's assume the following prediction and target labels, where "1" is the positive class:</p>
 <ul>
-<li>$\text{true labels}: [0, 0, 1, 0, 0, 1, 1, 1, 1, 1]$</li>
-<li>$\text{prediction}: [1, 0, 1, 0, 0, 0, 0, 1, 0, 0]$</li>
+<li>
+<script type="math/tex">\text{true labels}: [0, 0, 1, 0, 0, 1, 1, 1, 1, 1]</script>
+</li>
+<li>
+<script type="math/tex">\text{prediction}: [1, 0, 1, 0, 0, 0, 0, 1, 0, 0]</script>
+</li>
 </ul>
 <p>Then, our confusion matrix would look as follows:</p>
 <p><img alt="" src="../lift_score_files/lift_cm_1.png" /></p>
 <p>Based on the confusion matrix above, with "1" as positive label, we compute <em>lift</em> as follows:</p>
-<p>$$
+<p>
+<script type="math/tex; mode=display">
 \text{lift} = \frac{(TP/(TP+FN)}{(TP+FP)/(TP+TN+FP+FN)}
-$$</p>
+</script>
+</p>
 <p>Plugging in the actual values from the example above, we arrive at the following lift value:</p>
-<p>$$
+<p>
+<script type="math/tex; mode=display">
 \frac{2/(2+4)}{(2+1)/(2+3+1+4)} = 1.11.
-$$</p>
+</script>
+</p>
 <p>An alternative way to computing lift is by using the <em>support</em> metric [3]:</p>
-<p>$$
+<p>
+<script type="math/tex; mode=display">
 \text{lift} = \frac{\text{support}(\text{true labels} \cup \text{prediction})/N}{\text{support}(\text{true labels})/N \times \text{support}(\text{prediction})/N},
-$$</p>
-<p>where $N$ is the number of samples in the datset. Plugging the values from our example into the equation above, we arrive at</p>
-<p>$$
+</script>
+</p>
+<p>where <script type="math/tex">N</script> is the number of samples in the datset. Plugging the values from our example into the equation above, we arrive at</p>
+<p>
+<script type="math/tex; mode=display">
 \frac{2/10}{(6/10 \times 3/10)} = 1.11.
-$$</p>
+</script>
+</p>
 <h3 id="references">References</h3>
 <ul>
 <li>[1]  S. Brin, R. Motwani, J. D. Ullman, and S. Tsur. <a href="http://dl.acm.org/citation.cfm?id=253325">Dynamic itemset counting and implication rules for market basket data</a>. In Proc. of the ACM SIGMOD Int'l Conf. on Management of Data (ACM SIGMOD '97), pages 265-276, 1997.</li>
@@ -953,12 +908,16 @@ print(clf.best_params_)
 </code></pre>
 
 <pre><code>3.0
-{'gamma': 0.001, 'C': 1000, 'kernel': 'rbf'}
+{'gamma': 0.001, 'kernel': 'rbf', 'C': 1000}
 </code></pre>
 <h2 id="api">API</h2>
 <p><em>lift_score(y_target, y_predicted, binary=True, positive_label=1)</em></p>
 <p>Lift measures the degree to which the predictions of a
 classification model are better than randomly-generated predictions.</p>
+<p>The in terms of True Positives (TP), True Negatives (TN),
+False Positives (TP), and False Negatives (FN), the lift score is
+computed as:
+[ TP/(TP+FN) ] / [ (TP+FP) / (TP+TN+FP+FN) ]</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -985,7 +944,7 @@ all other classes are 0.</p>
 <ul>
 <li>
 <p><code>score</code> : float</p>
-<p>Lift score in the range [0, \infty]</p>
+<p>Lift score in the range [0, infinity]</p>
 </li>
 </ul></div>
         

@@ -21,8 +21,8 @@
     <link href="../../../css/cinder.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../css/highlight.css">
 
-
-    <link href="../../../extra.css" rel="stylesheet">
+    <!--
+    <link href="../../../extra.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -183,27 +183,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_classifier</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">regressor</a>
     <ul class="dropdown-menu">
         
@@ -219,18 +198,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_regressor</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
+    <a href="../../regressor/StackingCVRegressor/">StackingCVRegressor</a>
 </li>
 
         
@@ -300,21 +270,6 @@
             
 <li >
     <a href="../../cluster/Kmeans/">Kmeans</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_cluster</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_cluster/TfKmeans/">TfKmeans</a>
 </li>
 
         
@@ -549,6 +504,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../plotting/ecdf/">Ecdf</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -672,12 +633,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_classifier/">Mlxtend.tf classifier</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
 </li>
 
@@ -708,12 +663,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_cluster/">Mlxtend.tf cluster</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
 </li>
 
@@ -733,12 +682,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
 </li>
 
                         
@@ -886,17 +829,23 @@
 A perceptron receives multiple input signals, and if the sum of the input signals exceed a certain threshold it either returns a signal or remains "silent" otherwise. What made this a "machine learning" algorithm was Frank Rosenblatt's idea of the perceptron learning rule: The perceptron algorithm is about learning the weights for the input signals in order to draw linear decision boundary that allows us to discriminate between the two linearly separable classes +1 and -1.</p>
 <p><img alt="" src="../Perceptron_files/perceptron_schematic.png" /></p>
 <h4 id="basic-notation">Basic Notation</h4>
-<p>Before we dive deeper into the algorithm(s) for learning the weights of the perceptron classifier, let us take a brief look at the basic notation. In the following sections, we will label the <em>positive</em> and <em>negative</em> class in our binary classification setting as "1" and "-1", respectively. Next, we define an activation function $g(\mathbf{z})$ that takes a linear combination of the input values $\mathbf{x}$ and weights $\mathbf{w}$ as input ($\mathbf{z} = w_1x_{1} + \dots + w_mx_{m}$), and if $g(\mathbf{z})$ is greater than a defined threshold $\theta$ we predict 1 and -1 otherwise; in this case, this activation function $g$ is a simple "unit step function," which is sometimes also called "Heaviside step function." </p>
-<p>$$
+<p>Before we dive deeper into the algorithm(s) for learning the weights of the perceptron classifier, let us take a brief look at the basic notation. In the following sections, we will label the <em>positive</em> and <em>negative</em> class in our binary classification setting as "1" and "-1", respectively. Next, we define an activation function <script type="math/tex">g(\mathbf{z})</script> that takes a linear combination of the input values <script type="math/tex">\mathbf{x}</script> and weights <script type="math/tex">\mathbf{w}</script> as input (<script type="math/tex">\mathbf{z} = w_1x_{1} + \dots + w_mx_{m}</script>), and if <script type="math/tex">g(\mathbf{z})</script> is greater than a defined threshold <script type="math/tex">\theta</script> we predict 1 and -1 otherwise; in this case, this activation function <script type="math/tex">g</script> is a simple "unit step function," which is sometimes also called "Heaviside step function." </p>
+<p>
+<script type="math/tex; mode=display">
  g(z) =\begin{cases}
-    1 &amp; \text{if $z \ge \theta$}\\
+    1 & \text{if <script type="math/tex">z \ge \theta</script>}\\
     -1 &amp; \text{otherwise}.
   \end{cases}
-$$</p>
+</script>
+</p>
 <p>where</p>
-<p>$$z =  w_1x_{1} + \dots + w_mx_{m} = \sum_{j=1}^{m} x_{j}w_{j} \\ = \mathbf{w}^T\mathbf{x}$$</p>
-<p>$\mathbf{w}$ is the feature vector, and $\mathbf{x}$ is an $m$-dimensional sample from the training dataset:</p>
-<p>$$ 
+<p>
+<script type="math/tex; mode=display">z =  w_1x_{1} + \dots + w_mx_{m} = \sum_{j=1}^{m} x_{j}w_{j} \\ = \mathbf{w}^T\mathbf{x}</script>
+</p>
+<p>
+<script type="math/tex">\mathbf{w}</script> is the feature vector, and <script type="math/tex">\mathbf{x}</script> is an <script type="math/tex">m</script>-dimensional sample from the training dataset:</p>
+<p>
+<script type="math/tex; mode=display"> 
 \mathbf{w} = \begin{bmatrix}
     w_{1}  \\
     \vdots \\
@@ -906,44 +855,64 @@ $$</p>
     x_{1}  \\
     \vdots \\
     x_{m}
-\end{bmatrix}$$</p>
-<p>In order to simplify the notation, we bring $\theta$ to the left side of the equation and define $w_0 = -\theta  \text{ and } x_0=1$ </p>
+\end{bmatrix}</script>
+</p>
+<p>In order to simplify the notation, we bring <script type="math/tex">\theta</script> to the left side of the equation and define <script type="math/tex">w_0 = -\theta  \text{ and } x_0=1</script>
+</p>
 <p>so that </p>
-<p>$$
+<p>
+<script type="math/tex; mode=display">
  g({z}) =\begin{cases}
-    1 &amp; \text{if $z \ge 0$}\\
+    1 & \text{if <script type="math/tex">z \ge 0</script>}\\
     -1 &amp; \text{otherwise}.
   \end{cases}
-$$</p>
+</script>
+</p>
 <p>and</p>
-<p>$$z = w_0x_{0} + w_1x_{1} + \dots + w_mx_{m} = \sum_{j=0}^{m} x_{j}w_{j} \\ = \mathbf{w}^T\mathbf{x}.$$</p>
+<p>
+<script type="math/tex; mode=display">z = w_0x_{0} + w_1x_{1} + \dots + w_mx_{m} = \sum_{j=0}^{m} x_{j}w_{j} \\ = \mathbf{w}^T\mathbf{x}.</script>
+</p>
 <h4 id="perceptron-rule">Perceptron Rule</h4>
 <p>Rosenblatt's initial perceptron rule is fairly simple and can be summarized by the following steps: </p>
 <ol>
 <li>Initialize the weights to 0 or small random numbers.</li>
-<li>For each training sample $\mathbf{x^{(i)}}$:<ol>
+<li>For each training sample <script type="math/tex">\mathbf{x^{(i)}}</script>:<ol>
 <li>Calculate the <em>output</em> value.</li>
 <li>Update the weights.</li>
 </ol>
 </li>
 </ol>
-<p>The output value is the class label predicted by the unit step function that we defined earlier (output $=g(\mathbf{z})$) and the weight update can be written more formally as  $w_j := w_j + \Delta w_j$.</p>
+<p>The output value is the class label predicted by the unit step function that we defined earlier (output <script type="math/tex">=g(\mathbf{z})</script>) and the weight update can be written more formally as  <script type="math/tex">w_j := w_j + \Delta w_j</script>.</p>
 <p>The value for updating the weights at each increment is calculated by the learning rule</p>
-<p>$\Delta w_j = \eta \; (\text{target}^{(i)} - \text{output}^{(i)})\;x^{(i)}_{j}$</p>
-<p>where $\eta$ is the learning rate (a constant between 0.0 and 1.0), "target" is the true class label, and the "output" is the predicted class label.</p>
+<p>
+<script type="math/tex">\Delta w_j = \eta \; (\text{target}^{(i)} - \text{output}^{(i)})\;x^{(i)}_{j}</script>
+</p>
+<p>where <script type="math/tex">\eta</script> is the learning rate (a constant between 0.0 and 1.0), "target" is the true class label, and the "output" is the predicted class label.</p>
 <p>aIt is important to note that all weights in the weight vector are being updated simultaneously. Concretely, for a 2-dimensional dataset, we would write the update as:</p>
-<p>$\Delta w_0 = \eta(\text{target}^{(i)} - \text{output}^{(i)})$<br />
-$\Delta w_1 = \eta(\text{target}^{(i)} - \text{output}^{(i)})\;x^{(i)}_{1}$<br />
-$\Delta w_2 = \eta(\text{target}^{(i)} - \text{output}^{(i)})\;x^{(i)}_{2}$  </p>
+<p>
+<script type="math/tex">\Delta w_0 = \eta(\text{target}^{(i)} - \text{output}^{(i)})</script>
+<br />
+<script type="math/tex">\Delta w_1 = \eta(\text{target}^{(i)} - \text{output}^{(i)})\;x^{(i)}_{1}</script>
+<br />
+<script type="math/tex">\Delta w_2 = \eta(\text{target}^{(i)} - \text{output}^{(i)})\;x^{(i)}_{2}</script>
+</p>
 <p>Before we implement the perceptron rule in Python, let us make a simple thought experiment to illustrate how beautifully simple this learning rule really is. In the two scenarios where the perceptron predicts the class label correctly, the weights remain unchanged:</p>
 <ul>
-<li>$\Delta w_j = \eta(-1^{(i)} - -1^{(i)})\;x^{(i)}_{j} = 0$ </li>
-<li>$\Delta w_j = \eta(1^{(i)} - 1^{(i)})\;x^{(i)}_{j} = 0$ </li>
+<li>
+<script type="math/tex">\Delta w_j = \eta(-1^{(i)} - -1^{(i)})\;x^{(i)}_{j} = 0</script>
+</li>
+<li>
+<script type="math/tex">\Delta w_j = \eta(1^{(i)} - 1^{(i)})\;x^{(i)}_{j} = 0</script>
+</li>
 </ul>
 <p>However, in case of a wrong prediction, the weights are being "pushed" towards the direction of the positive or negative target class, respectively:</p>
 <ul>
-<li>$\Delta w_j = \eta(1^{(i)} - -1^{(i)})\;x^{(i)}_{j} = \eta(2)\;x^{(i)}_{j}$ </li>
-<li>$\Delta w_j = \eta(-1^{(i)} - 1^{(i)})\;x^{(i)}_{j} = \eta(-2)\;x^{(i)}_{j}$ </li>
+<li>
+<script type="math/tex">\Delta w_j = \eta(1^{(i)} - -1^{(i)})\;x^{(i)}_{j} = \eta(2)\;x^{(i)}_{j}</script>
+</li>
+<li>
+<script type="math/tex">\Delta w_j = \eta(-1^{(i)} - 1^{(i)})\;x^{(i)}_{j} = \eta(-2)\;x^{(i)}_{j}</script>
+</li>
 </ul>
 <p>It is important to note that the convergence of the perceptron is only guaranteed if the two classes are linearly separable. If the two classes can't be separated by a linear decision boundary, we can set a maximum number of passes over the training dataset ("epochs") and/or a threshold for the number of tolerated misclassifications.</p>
 <h3 id="references">References</h3>

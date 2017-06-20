@@ -21,8 +21,8 @@
     <link href="../../../css/cinder.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../css/highlight.css">
 
-
-    <link href="../../../extra.css" rel="stylesheet">
+    <!--
+    <link href="../../../extra.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -183,27 +183,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_classifier</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">regressor</a>
     <ul class="dropdown-menu">
         
@@ -219,18 +198,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_regressor</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
+    <a href="../StackingCVRegressor/">StackingCVRegressor</a>
 </li>
 
         
@@ -300,21 +270,6 @@
             
 <li >
     <a href="../../cluster/Kmeans/">Kmeans</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_cluster</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_cluster/TfKmeans/">TfKmeans</a>
 </li>
 
         
@@ -549,6 +504,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../plotting/ecdf/">Ecdf</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -672,12 +633,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_classifier/">Mlxtend.tf classifier</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
 </li>
 
@@ -708,12 +663,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_cluster/">Mlxtend.tf cluster</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
 </li>
 
@@ -733,12 +682,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
 </li>
 
                         
@@ -820,7 +763,7 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../../tf_classifier/TfSoftmaxRegression/">
+                        <a rel="next" href="../../classifier/MultiLayerPerceptron/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
@@ -893,9 +836,13 @@
 <h2 id="overview">Overview</h2>
 <p>Illustration of a simple linear regression model:</p>
 <p><img alt="" src="../LinearRegression_files/simple_regression.png" /></p>
-<p>In Ordinary Least Squares (OLS) Linear Regression, our goal is to find the line (or hyperplane) that minimizes the vertical offsets. Or in other words, we define the best-fitting line as the line that minimizes the sum of squared errors (SSE) or mean squared error (MSE) between our target variable (y) and our predicted output over all samples $i$ in our dataset of size $n$.</p>
-<p>$$SSE =  \sum_i \big(\text{target}^{(i)} - \text{output}^{(i)}\big)^2$$</p>
-<p>$$MSE = \frac{1}{n} \times SSE$$</p>
+<p>In Ordinary Least Squares (OLS) Linear Regression, our goal is to find the line (or hyperplane) that minimizes the vertical offsets. Or in other words, we define the best-fitting line as the line that minimizes the sum of squared errors (SSE) or mean squared error (MSE) between our target variable (y) and our predicted output over all samples <script type="math/tex">i</script> in our dataset of size <script type="math/tex">n</script>.</p>
+<p>
+<script type="math/tex; mode=display">SSE =  \sum_i \big(\text{target}^{(i)} - \text{output}^{(i)}\big)^2</script>
+</p>
+<p>
+<script type="math/tex; mode=display">MSE = \frac{1}{n} \times SSE</script>
+</p>
 <p>Now, <code>LinearRegression</code> implements a linear regression model for performing ordinary least squares regression using one of the following three approaches:</p>
 <ul>
 <li>Normal Equations</li>
@@ -903,12 +850,16 @@
 <li>Stochastic Gradient Descent</li>
 </ul>
 <h3 id="normal-equations-closed-form-solution">Normal Equations (closed-form solution)</h3>
-<p>The closed-form solution should be preferred for "smaller" datasets where calculating (a "costly") matrix inverse is not a concern. For very large datasets, or datasets where the inverse of $[X^T X]$ may not exist (the matrix is non-invertible or singular, e.g., in case of perfect multicollinearity), the gradient descent or stochastic gradient descent approaches are to be preferred.</p>
+<p>The closed-form solution should be preferred for "smaller" datasets where calculating (a "costly") matrix inverse is not a concern. For very large datasets, or datasets where the inverse of <script type="math/tex">[X^T X]</script> may not exist (the matrix is non-invertible or singular, e.g., in case of perfect multicollinearity), the gradient descent or stochastic gradient descent approaches are to be preferred.</p>
 <p>The linear function (linear regression model) is defined as:</p>
-<p>$$y = w_0x_0 + w_1x_1 + ... + w_mx_m = \sum_{i=0}^{n} = \mathbf{w}^T\mathbf{x}$$</p>
-<p>where $y$ is the response variable, $\mathbf{x}$ is an $m$-dimensional sample vector, and $\mathbf{w}$ is the weight vector (vector of coefficients). Note that $w_0$ represents the y-axis intercept of the model and therefore $x_0=1$.  </p>
+<p>
+<script type="math/tex; mode=display">y = w_0x_0 + w_1x_1 + ... + w_mx_m = \sum_{i=0}^{n} = \mathbf{w}^T\mathbf{x}</script>
+</p>
+<p>where <script type="math/tex">y</script> is the response variable, <script type="math/tex">\mathbf{x}</script> is an <script type="math/tex">m</script>-dimensional sample vector, and <script type="math/tex">\mathbf{w}</script> is the weight vector (vector of coefficients). Note that <script type="math/tex">w_0</script> represents the y-axis intercept of the model and therefore <script type="math/tex">x_0=1</script>.  </p>
 <p>Using the closed-form solution (normal equation), we compute the weights of the model as follows:</p>
-<p>$$ \mathbf{w} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^Ty$$</p>
+<p>
+<script type="math/tex; mode=display"> \mathbf{w} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^Ty</script>
+</p>
 <h3 id="gradient-descent-gd-and-stochastic-gradient-descent-sgd">Gradient Descent (GD)  and Stochastic Gradient Descent (SGD)</h3>
 <p>See <a href="../../general_concepts/gradient-optimization/">Gradient Descent and Stochastic Gradient Descent</a> and <a href="../../general_concepts/linear-gradient-derivative/">Deriving the Gradient Descent Rule for Linear Regression and Adaline</a> for details.</p>
 <p>Random shuffling is implemented as:</p>

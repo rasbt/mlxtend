@@ -21,8 +21,8 @@
     <link href="../../../css/cinder.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../css/highlight.css">
 
-
-    <link href="../../../extra.css" rel="stylesheet">
+    <!--
+    <link href="../../../extra.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -183,27 +183,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_classifier</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">regressor</a>
     <ul class="dropdown-menu">
         
@@ -219,18 +198,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_regressor</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
+    <a href="../../regressor/StackingCVRegressor/">StackingCVRegressor</a>
 </li>
 
         
@@ -300,21 +270,6 @@
             
 <li >
     <a href="../../cluster/Kmeans/">Kmeans</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_cluster</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_cluster/TfKmeans/">TfKmeans</a>
 </li>
 
         
@@ -549,6 +504,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../plotting/ecdf/">Ecdf</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -672,12 +633,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_classifier/">Mlxtend.tf classifier</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
 </li>
 
@@ -708,12 +663,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_cluster/">Mlxtend.tf cluster</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
 </li>
 
@@ -733,12 +682,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
 </li>
 
                         
@@ -825,7 +768,7 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../../tf_classifier/TfMultiLayerPerceptron/">
+                        <a rel="prev" href="../../regressor/LinearRegression/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -893,22 +836,27 @@
 <p><em>Although the code is fully working and can be used for common classification tasks, this implementation is not geared towards efficiency but clarity – the original code was written for demonstration purposes.</em></p>
 <h3 id="basic-architecture">Basic Architecture</h3>
 <p><img alt="" src="../NeuralNetMLP_files/neuralnet_mlp_1.png" />  </p>
-<p>The neurons $x_0$ and $a_0$ represent the bias units ($x_0=1$, $a_0=1$). </p>
-<p>The $i$th superscript denotes the $i$th layer, and the <em>j</em>th subscripts stands for the index of the respective unit. For example, $a_{1}^{(2)}$ refers to the first activation unit <strong>after</strong> the bias unit (i.e., 2nd activation unit) in the 2nd layer (here: the hidden layer)</p>
-<p>\begin{align}
-    \mathbf{a^{(2)}} &amp;= \begin{bmatrix}
-           a_{0}^{(2)} \
-           a_{1}^{(2)} \
-           \vdots \
+<p>The neurons <script type="math/tex">x_0</script> and <script type="math/tex">a_0</script> represent the bias units (<script type="math/tex">x_0=1</script>, <script type="math/tex">a_0=1</script>). </p>
+<p>The <script type="math/tex">i</script>th superscript denotes the <script type="math/tex">i</script>th layer, and the <em>j</em>th subscripts stands for the index of the respective unit. For example, <script type="math/tex">a_{1}^{(2)}</script> refers to the first activation unit <strong>after</strong> the bias unit (i.e., 2nd activation unit) in the 2nd layer (here: the hidden layer)</p>
+<p>
+<script type="math/tex; mode=display">\begin{align}
+    \mathbf{a^{(2)}} &= \begin{bmatrix}
+           a_{0}^{(2)} \\
+           a_{1}^{(2)} \\
+           \vdots \\
            a_{m}^{(2)}
          \end{bmatrix}.
-  \end{align}</p>
-<p>Each layer $(l)$ in a multi-layer perceptron, a directed graph, is fully connected to the next layer $(l+1)$. We write the weight coefficient that connects the $k$th unit in the $l$th layer to the $j$th unit in layer $l+1$ as $w^{(l)}_{j, k}$.</p>
+  \end{align}</script>
+</p>
+<p>Each layer <script type="math/tex">(l)</script> in a multi-layer perceptron, a directed graph, is fully connected to the next layer <script type="math/tex">(l+1)</script>. We write the weight coefficient that connects the <script type="math/tex">k</script>th unit in the <script type="math/tex">l</script>th layer to the <script type="math/tex">j</script>th unit in layer <script type="math/tex">l+1</script> as <script type="math/tex">w^{(l)}_{j, k}</script>.</p>
 <p>For example, the weight coefficient that connects the units</p>
-<p>$a_0^{(2)} \rightarrow a_1^{(3)}$</p>
-<p>would be written as $w_{1,0}^{(2)}$.</p>
+<p>
+<script type="math/tex">a_0^{(2)} \rightarrow a_1^{(3)}</script>
+</p>
+<p>would be written as <script type="math/tex">w_{1,0}^{(2)}</script>.</p>
 <h3 id="activation">Activation</h3>
-<p>In the current implementation, the activations of the hidden layer(s) are computed via the logistic (sigmoid) function $\phi(z) = \frac{1}{1 + e^{-z}}.$</p>
+<p>In the current implementation, the activations of the hidden layer(s) are computed via the logistic (sigmoid) function <script type="math/tex">\phi(z) = \frac{1}{1 + e^{-z}}.</script>
+</p>
 <p><img alt="" src="../NeuralNetMLP_files/logistic_function.png" /></p>
 <p>(For more details on the logistic function, please see <a href="../LogisticRegression/"><code>classifier.LogisticRegression</code></a>; a general overview of different activation function can be found <a href="../../general_concepts/activation-functions/">here</a>.)</p>
 <p>Furthermore, the MLP uses the softmax function in the output layer, For more details on the logistic function, please see <a href="../SoftmaxRegression/"><code>classifier.SoftmaxRegression</code></a>.</p>

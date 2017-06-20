@@ -21,8 +21,8 @@
     <link href="../../css/cinder.css" rel="stylesheet">
     <link rel="stylesheet" href="../../css/highlight.css">
 
-
-    <link href="../../extra.css" rel="stylesheet">
+    <!--
+    <link href="../../extra.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -183,27 +183,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_classifier</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../user_guide/tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../user_guide/tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">regressor</a>
     <ul class="dropdown-menu">
         
@@ -219,18 +198,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_regressor</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../../user_guide/tf_regressor/TfLinearRegression/">TfLinearRegression</a>
+    <a href="../../user_guide/regressor/StackingCVRegressor/">StackingCVRegressor</a>
 </li>
 
         
@@ -300,21 +270,6 @@
             
 <li >
     <a href="../../user_guide/cluster/Kmeans/">Kmeans</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_cluster</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../user_guide/tf_cluster/TfKmeans/">TfKmeans</a>
 </li>
 
         
@@ -549,6 +504,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../user_guide/plotting/ecdf/">Ecdf</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -672,12 +633,6 @@
                         
                             
 <li >
-    <a href="../mlxtend.tf_classifier/">Mlxtend.tf classifier</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../mlxtend.data/">Mlxtend.data</a>
 </li>
 
@@ -708,12 +663,6 @@
                         
                             
 <li >
-    <a href="../mlxtend.tf_cluster/">Mlxtend.tf cluster</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../mlxtend.file_io/">Mlxtend.file io</a>
 </li>
 
@@ -733,12 +682,6 @@
                             
 <li >
     <a href="../mlxtend.regressor/">Mlxtend.regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
 </li>
 
                         
@@ -825,7 +768,7 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../mlxtend.tf_classifier/">
+                        <a rel="prev" href="../mlxtend.data/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -2021,7 +1964,7 @@ component of a nested object.</p>
 <p><strong>Returns</strong></p>
 <p>self</p>
 <h2 id="stackingcvclassifier">StackingCVClassifier</h2>
-<p><em>StackingCVClassifier(classifiers, meta_classifier, use_probas=False, n_folds=2, use_features_in_secondary=False, stratify=True, random_state=None, shuffle=True, verbose=0)</em></p>
+<p><em>StackingCVClassifier(classifiers, meta_classifier, use_probas=False, cv=2, use_features_in_secondary=False, stratify=True, shuffle=True, verbose=0)</em></p>
 <p>A 'Stacking Cross-Validation' classifier for scikit-learn estimators.</p>
 <p>New in mlxtend v0.4.3</p>
 <p><strong>Parameters</strong></p>
@@ -2029,10 +1972,9 @@ component of a nested object.</p>
 <li>
 <p><code>classifiers</code> : array-like, shape = [n_classifiers]</p>
 <p>A list of classifiers.
-Invoking the <code>fit</code> method on the <code>StackingClassifer</code> will fit clones
+Invoking the <code>fit</code> method on the <code>StackingCVClassifer</code> will fit clones
 of these original classifiers that will
-be stored in the class attribute
-<code>self.clfs_</code>.</p>
+be stored in the class attribute <code>self.clfs_</code>.</p>
 </li>
 <li>
 <p><code>meta_classifier</code> : object</p>
@@ -2045,9 +1987,16 @@ classifiers</p>
 instead of class labels.</p>
 </li>
 <li>
-<p><code>n_folds</code> : int (default=2)</p>
-<p>The number of folds used for while creating training data for the
-meta-classifier during fitting.</p>
+<p><code>cv</code> : int, cross-validation generator or an iterable, optional (default: 2)</p>
+<p>Determines the cross-validation splitting strategy.
+Possible inputs for cv are:
+- None, to use the default 2-fold cross validation,
+- integer, to specify the number of folds in a <code>(Stratified)KFold</code>,
+- An object to be used as a cross-validation generator.
+- An iterable yielding train, test splits.
+For integer/None inputs, it will use either a <code>KFold</code> or
+<code>StratifiedKFold</code> cross validation depending the value of <code>stratify</code>
+argument.</p>
 </li>
 <li>
 <p><code>use_features_in_secondary</code> : bool (default: False)</p>
@@ -2058,18 +2007,16 @@ of the original classifiers.</p>
 </li>
 <li>
 <p><code>stratify</code> : bool (default: True)</p>
-<p>If True, the cross-validation technique used for fitting the classifier
-will be Stratified K-Fold.
-If False, the cross-validation technique used will be Regular K-Fold.
-It is highly recommended to use Stratified K-Fold.</p>
+<p>If True, and the <code>cv</code> argument is integer it will follow a stratified
+K-Fold cross validation technique. If the <code>cv</code> argument is a specific
+cross validation technique, this argument is omitted.</p>
 </li>
 <li>
 <p><code>shuffle</code> : bool (default: True)</p>
-<p>If True, when fitting, the training data will be shuffled prior to
-cross-validation.
-random_state: None, int, or RandomState
-When shuffle=True, pseudo-random number generator state used for
-shuffling. If None, use default numpy RNG for shuffling.</p>
+<p>If True,  and the <code>cv</code> argument is integer, the training data will be
+shuffled at fitting stage prior to cross-validation. If the <code>cv</code>
+argument is a specific cross validation technique, this argument is
+omitted.</p>
 </li>
 <li>
 <p><code>verbose</code> : int, optional (default=0)</p>
@@ -2097,18 +2044,23 @@ self.verbose - 2</p>
 <h3 id="methods_7">Methods</h3>
 <hr>
 
-<p><em>fit(X, y)</em></p>
+<p><em>fit(X, y, groups=None)</em></p>
 <p>Fit ensemble classifers and the meta-classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
 <p>Training vectors, where n_samples is the number of samples and
 n_features is the number of features.</p>
 </li>
 <li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p><code>y</code> : numpy array, shape = [n_samples]</p>
 <p>Target values.</p>
+</li>
+<li>
+<p><code>groups</code> : numpy array/None, shape = [n_samples]</p>
+<p>The group that each sample belongs to. This is used by specific
+folding strategies such as GroupKFold()</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
@@ -2150,7 +2102,7 @@ and returns a transformed version of X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
 <p>Training vectors, where n_samples is the number of samples and
 n_features is the number of features.</p>
 </li>
@@ -2169,7 +2121,7 @@ n_features is the number of features.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
 <p>Training vectors, where n_samples is the number of samples and
 n_features is the number of features.</p>
 </li>

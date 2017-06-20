@@ -21,8 +21,8 @@
     <link href="../../../css/cinder.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../css/highlight.css">
 
-
-    <link href="../../../extra.css" rel="stylesheet">
+    <!--
+    <link href="../../../extra.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -183,27 +183,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_classifier</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">regressor</a>
     <ul class="dropdown-menu">
         
@@ -219,18 +198,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_regressor</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
+    <a href="../../regressor/StackingCVRegressor/">StackingCVRegressor</a>
 </li>
 
         
@@ -300,21 +270,6 @@
             
 <li >
     <a href="../../cluster/Kmeans/">Kmeans</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_cluster</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_cluster/TfKmeans/">TfKmeans</a>
 </li>
 
         
@@ -549,6 +504,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../plotting/ecdf/">Ecdf</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -672,12 +633,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_classifier/">Mlxtend.tf classifier</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
 </li>
 
@@ -708,12 +663,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_cluster/">Mlxtend.tf cluster</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
 </li>
 
@@ -733,12 +682,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
 </li>
 
                         
@@ -890,15 +833,15 @@
 <h2 id="overview">Overview</h2>
 <p>The sheer size of data in the modern age is not only a challenge for computer hardware but also a main bottleneck for the performance of many machine learning algorithms. The main goal of a PCA analysis is to identify patterns in data; PCA aims to detect the correlation between variables. If a strong correlation between variables exists, the attempt to reduce the dimensionality only makes sense. In a nutshell, this is what PCA is all about: Finding the directions of maximum variance in high-dimensional data and project it onto a smaller dimensional subspace while retaining most of the information.</p>
 <h3 id="pca-and-dimensionality-reduction">PCA and Dimensionality Reduction</h3>
-<p>Often, the desired goal is to reduce the dimensions of a $d$-dimensional dataset by projecting it onto a $(k)$-dimensional subspace (where $k\;&lt;\;d$) in order to increase the computational efficiency while retaining most of the information. An important question is "what is the size of $k$ that represents the data 'well'?"</p>
+<p>Often, the desired goal is to reduce the dimensions of a <script type="math/tex">d</script>-dimensional dataset by projecting it onto a <script type="math/tex">(k)</script>-dimensional subspace (where <script type="math/tex">k\;<\;d</script>) in order to increase the computational efficiency while retaining most of the information. An important question is "what is the size of <script type="math/tex">k</script> that represents the data 'well'?"</p>
 <p>Later, we will compute eigenvectors (the principal components) of a dataset and collect them in a projection matrix. Each of those eigenvectors is associated with an eigenvalue which can be interpreted as the "length" or "magnitude" of the corresponding eigenvector. If some eigenvalues have a significantly larger magnitude than others that the reduction of the dataset via PCA onto a smaller dimensional subspace by dropping the "less informative" eigenpairs is reasonable.</p>
 <h3 id="a-summary-of-the-pca-approach">A Summary of the PCA Approach</h3>
 <ul>
 <li>Standardize the data.</li>
 <li>Obtain the Eigenvectors and Eigenvalues from the covariance matrix or correlation matrix, or perform Singular Vector Decomposition.</li>
-<li>Sort eigenvalues in descending order and choose the $k$ eigenvectors that correspond to the $k$ largest eigenvalues where $k$ is the number of dimensions of the new feature subspace ($k \le d$).</li>
-<li>Construct the projection matrix $\mathbf{W}$ from the selected $k$ eigenvectors.</li>
-<li>Transform the original dataset $\mathbf{X}$ via $\mathbf{W}$ to obtain a $k$-dimensional feature subspace $\mathbf{Y}$.</li>
+<li>Sort eigenvalues in descending order and choose the <script type="math/tex">k</script> eigenvectors that correspond to the <script type="math/tex">k</script> largest eigenvalues where <script type="math/tex">k</script> is the number of dimensions of the new feature subspace (<script type="math/tex">k \le d</script>).</li>
+<li>Construct the projection matrix <script type="math/tex">\mathbf{W}</script> from the selected <script type="math/tex">k</script> eigenvectors.</li>
+<li>Transform the original dataset <script type="math/tex">\mathbf{X}</script> via <script type="math/tex">\mathbf{W}</script> to obtain a <script type="math/tex">k</script>-dimensional feature subspace <script type="math/tex">\mathbf{Y}</script>.</li>
 </ul>
 <h3 id="references">References</h3>
 <ul>
@@ -1003,11 +946,15 @@ with plt.style.context('seaborn-whitegrid'):
 
 <p><img alt="png" src="../PrincipalComponentAnalysis_files/PrincipalComponentAnalysis_19_0.png" /></p>
 <p>If we compare this PCA projection to the previous plot in example 1, we notice that they are mirror images of each other. Note that this is not due to an error in any of those two implementations, but the reason for this difference is that, depending on the eigensolver, eigenvectors can have either negative or positive signs.</p>
-<p>For instance, if $v$ is an eigenvector of a matrix $\Sigma$, we have</p>
-<p>$$\Sigma v = \lambda v,$$</p>
-<p>where $\lambda$ is our eigenvalue</p>
-<p>then $-v$ is also an eigenvector that has the same eigenvalue, since</p>
-<p>$$\Sigma(-v) = -\Sigma v = -\lambda v = \lambda(-v).$$</p>
+<p>For instance, if <script type="math/tex">v</script> is an eigenvector of a matrix <script type="math/tex">\Sigma</script>, we have</p>
+<p>
+<script type="math/tex; mode=display">\Sigma v = \lambda v,</script>
+</p>
+<p>where <script type="math/tex">\lambda</script> is our eigenvalue</p>
+<p>then <script type="math/tex">-v</script> is also an eigenvector that has the same eigenvalue, since</p>
+<p>
+<script type="math/tex; mode=display">\Sigma(-v) = -\Sigma v = -\lambda v = \lambda(-v).</script>
+</p>
 <h2 id="api">API</h2>
 <p><em>PrincipalComponentAnalysis(n_components=None, solver='eigen')</em></p>
 <p>Principal Component Analysis Class</p>

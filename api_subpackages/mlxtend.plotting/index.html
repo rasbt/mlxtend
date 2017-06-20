@@ -21,8 +21,8 @@
     <link href="../../css/cinder.css" rel="stylesheet">
     <link rel="stylesheet" href="../../css/highlight.css">
 
-
-    <link href="../../extra.css" rel="stylesheet">
+    <!--
+    <link href="../../extra.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -183,27 +183,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_classifier</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../user_guide/tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../user_guide/tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">regressor</a>
     <ul class="dropdown-menu">
         
@@ -219,18 +198,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_regressor</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../../user_guide/tf_regressor/TfLinearRegression/">TfLinearRegression</a>
+    <a href="../../user_guide/regressor/StackingCVRegressor/">StackingCVRegressor</a>
 </li>
 
         
@@ -300,21 +270,6 @@
             
 <li >
     <a href="../../user_guide/cluster/Kmeans/">Kmeans</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_cluster</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../user_guide/tf_cluster/TfKmeans/">TfKmeans</a>
 </li>
 
         
@@ -549,6 +504,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../user_guide/plotting/ecdf/">Ecdf</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -672,12 +633,6 @@
                         
                             
 <li >
-    <a href="../mlxtend.tf_classifier/">Mlxtend.tf classifier</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../mlxtend.data/">Mlxtend.data</a>
 </li>
 
@@ -708,12 +663,6 @@
                         
                             
 <li >
-    <a href="../mlxtend.tf_cluster/">Mlxtend.tf cluster</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../mlxtend.file_io/">Mlxtend.file io</a>
 </li>
 
@@ -733,12 +682,6 @@
                             
 <li >
     <a href="../mlxtend.regressor/">Mlxtend.regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
 </li>
 
                         
@@ -856,6 +799,9 @@
         
     
         <li class="main "><a href="#checkerboard_plot">checkerboard_plot</a></li>
+        
+    
+        <li class="main "><a href="#ecdf">ecdf</a></li>
         
     
         <li class="main "><a href="#enrichment_plot">enrichment_plot</a></li>
@@ -980,6 +926,67 @@ Uses matplotlib's default if None.</p>
 <ul>
 <li><code>fig</code> : matplotlib Figure object.</li>
 </ul>
+<h2 id="ecdf">ecdf</h2>
+<p><em>ecdf(x, y_label='ECDF', x_label=None, ax=None, percentile=None, ecdf_color=None, ecdf_marker='o', percentile_color='black', percentile_linestyle='--')</em></p>
+<p>Plots an Empirical Cumulative Distribution Function</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>x</code> : array or list, shape=[n_samples,]</p>
+<p>Array-like object containing the feature values</p>
+</li>
+<li>
+<p><code>y_label</code> : str (default='ECDF')</p>
+<p>Text label for the y-axis</p>
+</li>
+<li>
+<p><code>x_label</code> : str (default=None)</p>
+<p>Text label for the x-axis</p>
+</li>
+<li>
+<p><code>ax</code> : matplotlib.axes.Axes (default: None)</p>
+<p>An existing matplotlib Axes. Creates
+one if ax=None</p>
+</li>
+<li>
+<p><code>percentile</code> : float (default=None)</p>
+<p>Float between 0 and 1 for plotting a percentile
+threshold line</p>
+</li>
+<li>
+<p><code>ecdf_color</code> : matplotlib color (default=None)</p>
+<p>Color for the ECDF plot; uses matplotlib defaults
+if None</p>
+</li>
+<li>
+<p><code>ecdf_marker</code> : matplotlib marker (default='o')</p>
+<p>Marker style for the ECDF plot</p>
+</li>
+<li>
+<p><code>percentile_color</code> : matplotlib color (default='black')</p>
+<p>Color for the percentile threshold if percentile is not None</p>
+</li>
+<li>
+<p><code>percentile_linestyle</code> : matplotlib linestyle (default='--')</p>
+<p>Line style for the percentile threshold if percentile is not None</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>ax</code> : matplotlib.axes.Axes object</p>
+</li>
+<li>
+<p><code>percentile_threshold</code> : float</p>
+<p>Feature threshold at the percentile or None if <code>percentile=None</code></p>
+</li>
+<li>
+<p><code>percentile_count</code> : Number of if percentile is not None</p>
+<p>Number of samples that have a feature less or equal than
+the feature threshold at a percentile threshold
+or None if <code>percentile=None</code></p>
+</li>
+</ul>
 <h2 id="enrichment_plot">enrichment_plot</h2>
 <p><em>enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-', alpha=0.5, lw=2, where='post', grid=True, count_label='Count', xlim='auto', ylim='auto', invert_axes=False, legend_loc='best', ax=None)</em></p>
 <p>Plot stacked barplots</p>
@@ -1083,7 +1090,7 @@ No legend if legend_loc=False</p>
 </li>
 </ul>
 <h2 id="plot_decision_regions">plot_decision_regions</h2>
-<p><em>plot_decision_regions(X, y, clf, ax=None, X_highlight=None, res=0.02, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors='red,blue,limegreen,gray,cyan')</em></p>
+<p><em>plot_decision_regions(X, y, clf, feature_index=None, filler_feature_values=None, filler_feature_ranges=None, ax=None, X_highlight=None, res=0.02, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors='red,blue,limegreen,gray,cyan')</em></p>
 <p>Plot decision regions of a classifier.</p>
 <p>Please note that this functions assumes that class labels are
 labeled consecutively, e.g,. 0, 1, 2, 3, 4, and 5. If you have class
@@ -1106,6 +1113,23 @@ information.</p>
 <p>Must have a .predict method.</p>
 </li>
 <li>
+<p><code>feature_index</code> : array-like (default: (0,) for 1D, (0, 1) otherwise)</p>
+<p>Feature indices to use for plotting. The first index in
+<code>feature_index</code> will be on the x-axis, the second index will be
+on the y-axis.</p>
+</li>
+<li>
+<p><code>filler_feature_values</code> : dict (default: None)</p>
+<p>Only needed for number features &gt; 2. Dictionary of feature
+index-value pairs for the features not being plotted.</p>
+</li>
+<li>
+<p><code>filler_feature_ranges</code> : dict (default: None)</p>
+<p>Only needed for number features &gt; 2. Dictionary of feature
+index-value pairs for the features not being plotted. Will use the
+ranges provided to select training samples for plotting.</p>
+</li>
+<li>
 <p><code>ax</code> : matplotlib.axes.Axes (default: None)</p>
 <p>An existing matplotlib Axes. Creates
 one if ax=None.</p>
@@ -1115,8 +1139,10 @@ one if ax=None.</p>
 <p>An array with data points that are used to highlight samples in <code>X</code>.</p>
 </li>
 <li>
-<p><code>res</code> : float (default: 0.02)</p>
-<p>Grid width. Lower values increase the resolution but
+<p><code>res</code> : float or array-like, shape = (2,) (default: 0.02)</p>
+<p>Grid width. If float, same resolution is used for both the x- and
+y-axis. If array-like, the first item is used on the x-axis, the
+second is used on the y-axis. Lower values increase the resolution but
 slow down the plotting.</p>
 </li>
 <li>
@@ -1129,7 +1155,7 @@ slow down the plotting.</p>
 No legend if legend is 0.</p>
 </li>
 <li>
-<p><code>markers</code> : list</p>
+<p><code>markers</code> : str (default 's^oxv&lt;&gt;')</p>
 <p>Scatterplot markers.</p>
 </li>
 <li>
@@ -1175,12 +1201,13 @@ No legend if legend is 0.</p>
 </li>
 <li>
 <p><code>scoring</code> : str (default: 'misclassification error')</p>
-<p _accuracy_="'accuracy'," _average_precision_="'average_precision'," _f1_macro_f1_weighted_="'f1_macro',
-'f1_weighted'," _f1_micro_="'f1_micro'," _f1_samples_="'f1_samples'," _log_loss_precision_="'log_loss',
-'precision'," _mean_absolute_error_="'mean_absolute_error'," _mean_squared_error_median_absolute_error_="'mean_squared_error',
-'median_absolute_error'," _r2_="'r2'" _recall_="'recall'," _roc_auc_adjusted_rand_score_="'roc_auc',
-'adjusted_rand_score',">If not 'misclassification error', accepts the following metrics
-(from scikit-learn):</p>
+<p>If not 'misclassification error', accepts the following metrics
+(from scikit-learn):
+{'accuracy', 'average_precision', 'f1_micro', 'f1_macro',
+'f1_weighted', 'f1_samples', 'log_loss',
+'precision', 'recall', 'roc_auc',
+'adjusted_rand_score', 'mean_absolute_error', 'mean_squared_error',
+'median_absolute_error', 'r2'}</p>
 </li>
 <li>
 <p><code>suppress_plot=False</code> : bool (default: False)</p>

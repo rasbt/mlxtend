@@ -21,8 +21,8 @@
     <link href="../../../css/cinder.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../css/highlight.css">
 
-
-    <link href="../../../extra.css" rel="stylesheet">
+    <!--
+    <link href="../../../extra.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -183,27 +183,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_classifier</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">regressor</a>
     <ul class="dropdown-menu">
         
@@ -219,18 +198,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_regressor</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
+    <a href="../../regressor/StackingCVRegressor/">StackingCVRegressor</a>
 </li>
 
         
@@ -300,21 +270,6 @@
             
 <li >
     <a href="../../cluster/Kmeans/">Kmeans</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_cluster</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_cluster/TfKmeans/">TfKmeans</a>
 </li>
 
         
@@ -549,6 +504,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../plotting/ecdf/">Ecdf</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -672,12 +633,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_classifier/">Mlxtend.tf classifier</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
 </li>
 
@@ -708,12 +663,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_cluster/">Mlxtend.tf cluster</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
 </li>
 
@@ -733,12 +682,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
 </li>
 
                         
@@ -820,7 +763,7 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../../tf_regressor/TfLinearRegression/">
+                        <a rel="next" href="../../regressor/StackingCVRegressor/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
@@ -924,125 +867,164 @@
 <hr />
 <p>The SFAs  are outlined in pseudo code below:</p>
 <h3 id="sequential-forward-selection-sfs">Sequential Forward Selection (SFS)</h3>
-<p><strong>Input:</strong> $Y = \{y_1, y_2, ..., y_d\}$  </p>
+<p><strong>Input:</strong> <script type="math/tex">Y = \{y_1, y_2, ..., y_d\}</script>
+</p>
 <ul>
-<li>The <strong><em>SFS</em></strong> algorithm takes the whole $d$-dimensional feature set as input.</li>
+<li>The <strong><em>SFS</em></strong> algorithm takes the whole <script type="math/tex">d</script>-dimensional feature set as input.</li>
 </ul>
-<p><strong>Output:</strong> $X_k = \{x_j \; | \;j = 1, 2, ..., k; \; x_j \in Y\}$, where $k = (0, 1, 2, ..., d)$</p>
+<p><strong>Output:</strong> <script type="math/tex">X_k = \{x_j \; | \;j = 1, 2, ..., k; \; x_j \in Y\}</script>, where <script type="math/tex">k = (0, 1, 2, ..., d)</script>
+</p>
 <ul>
-<li>SFS returns a subset of features; the number of selected features $k$, where $k &lt; d$, has to be specified <em>a priori</em>.</li>
+<li>SFS returns a subset of features; the number of selected features <script type="math/tex">k</script>, where <script type="math/tex">k < d</script>, has to be specified <em>a priori</em>.</li>
 </ul>
-<p><strong>Initialization:</strong> $X_0 = \emptyset$, $k = 0$</p>
+<p><strong>Initialization:</strong> <script type="math/tex">X_0 = \emptyset</script>, <script type="math/tex">k = 0</script>
+</p>
 <ul>
-<li>We initialize the algorithm with an empty set $\emptyset$ ("null set") so that $k = 0$ (where $k$ is the size of the subset).</li>
+<li>We initialize the algorithm with an empty set <script type="math/tex">\emptyset</script> ("null set") so that <script type="math/tex">k = 0</script> (where <script type="math/tex">k</script> is the size of the subset).</li>
 </ul>
 <p><strong>Step 1 (Inclusion):</strong>  </p>
-<p>$x^+ = \text{ arg max } J(x_k + x), \text{ where }  x \in Y - X_k$<br />
-  $X_k+1 = X_k + x^+$<br />
-  $k = k + 1$  <br />
+<p>
+<script type="math/tex">x^+ = \text{ arg max } J(x_k + x), \text{ where }  x \in Y - X_k</script>
+<br />
+<script type="math/tex">X_k+1 = X_k + x^+</script>
+<br />
+<script type="math/tex">k = k + 1</script>
+<br />
 <em>Go to Step 1</em> </p>
 <ul>
-<li>in this step, we add an additional feature, $x^+$, to our feature subset $X_k$.</li>
-<li>$x^+$ is the feature that maximizes our criterion function, that is, the feature that is associated with the best classifier performance if it is added to $X_k$.</li>
+<li>in this step, we add an additional feature, <script type="math/tex">x^+</script>, to our feature subset <script type="math/tex">X_k</script>.</li>
+<li>
+<script type="math/tex">x^+</script> is the feature that maximizes our criterion function, that is, the feature that is associated with the best classifier performance if it is added to <script type="math/tex">X_k</script>.</li>
 <li>We repeat this procedure until the termination criterion is satisfied.</li>
 </ul>
-<p><strong>Termination:</strong> $k = p$</p>
+<p><strong>Termination:</strong> <script type="math/tex">k = p</script>
+</p>
 <ul>
-<li>We add features from the feature subset $X_k$ until the feature subset of size $k$ contains the number of desired features $p$ that we specified <em>a priori</em>.</li>
+<li>We add features from the feature subset <script type="math/tex">X_k</script> until the feature subset of size <script type="math/tex">k</script> contains the number of desired features <script type="math/tex">p</script> that we specified <em>a priori</em>.</li>
 </ul>
 <h3 id="sequential-floating-backward-sbs">Sequential Floating Backward (SBS)</h3>
-<p><strong>Input:</strong> the set of all features, $Y = \{y_1, y_2, ..., y_d\}$  </p>
+<p><strong>Input:</strong> the set of all features, <script type="math/tex">Y = \{y_1, y_2, ..., y_d\}</script>
+</p>
 <ul>
 <li>The SBS algorithm takes the whole feature set as input.</li>
 </ul>
-<p><strong>Output:</strong> $X_k = \{x_j \; | \;j = 1, 2, ..., k; \; x_j \in Y\}$, where $k = (0, 1, 2, ..., d)$</p>
+<p><strong>Output:</strong> <script type="math/tex">X_k = \{x_j \; | \;j = 1, 2, ..., k; \; x_j \in Y\}</script>, where <script type="math/tex">k = (0, 1, 2, ..., d)</script>
+</p>
 <ul>
-<li>SBS returns a subset of features; the number of selected features $k$, where $k &lt; d$, has to be specified <em>a priori</em>.</li>
+<li>SBS returns a subset of features; the number of selected features <script type="math/tex">k</script>, where <script type="math/tex">k < d</script>, has to be specified <em>a priori</em>.</li>
 </ul>
-<p><strong>Initialization:</strong> $X_0 = Y$, $k = d$</p>
+<p><strong>Initialization:</strong> <script type="math/tex">X_0 = Y</script>, <script type="math/tex">k = d</script>
+</p>
 <ul>
-<li>We initialize the algorithm with the given feature set so that the $k = d$.</li>
+<li>We initialize the algorithm with the given feature set so that the <script type="math/tex">k = d</script>.</li>
 </ul>
 <p><strong>Step 1 (Exclusion):</strong>  </p>
-<p>$x^- = \text{ arg max } J(x_k - x), \text{  where } x \in X_k$<br />
-$X_k-1 = X_k - x^-$<br />
-$k = k - 1$<br />
+<p>
+<script type="math/tex">x^- = \text{ arg max } J(x_k - x), \text{  where } x \in X_k</script>
+<br />
+<script type="math/tex">X_k-1 = X_k - x^-</script>
+<br />
+<script type="math/tex">k = k - 1</script>
+<br />
 <em>Go to Step 1</em>  </p>
 <ul>
-<li>In this step, we remove a feature, $x^-$ from our feature subset $X_k$.</li>
-<li>$x^-$ is the feature that maximizes our criterion function upon re,oval, that is, the feature that is associated with the best classifier performance if it is removed from $X_k$.</li>
+<li>In this step, we remove a feature, <script type="math/tex">x^-</script> from our feature subset <script type="math/tex">X_k</script>.</li>
+<li>
+<script type="math/tex">x^-</script> is the feature that maximizes our criterion function upon re,oval, that is, the feature that is associated with the best classifier performance if it is removed from <script type="math/tex">X_k</script>.</li>
 <li>We repeat this procedure until the termination criterion is satisfied.</li>
 </ul>
-<p><strong>Termination:</strong> $k = p$</p>
+<p><strong>Termination:</strong> <script type="math/tex">k = p</script>
+</p>
 <ul>
-<li>We add features from the feature subset $X_k$ until the feature subset of size $k$ contains the number of desired features $p$ that we specified <em>a priori</em>.</li>
+<li>We add features from the feature subset <script type="math/tex">X_k</script> until the feature subset of size <script type="math/tex">k</script> contains the number of desired features <script type="math/tex">p</script> that we specified <em>a priori</em>.</li>
 </ul>
 <h3 id="sequential-floating-backward-selection-sfbs">Sequential Floating Backward Selection (SFBS)</h3>
-<p><strong>Input:</strong> the set of all features, $Y = \{y_1, y_2, ..., y_d\}$  </p>
+<p><strong>Input:</strong> the set of all features, <script type="math/tex">Y = \{y_1, y_2, ..., y_d\}</script>
+</p>
 <ul>
 <li>The SFBS algorithm takes the whole feature set as input.</li>
 </ul>
-<p><strong>Output:</strong> $X_k = \{x_j \; | \;j = 1, 2, ..., k; \; x_j \in Y\}$, where $k = (0, 1, 2, ..., d)$</p>
+<p><strong>Output:</strong> <script type="math/tex">X_k = \{x_j \; | \;j = 1, 2, ..., k; \; x_j \in Y\}</script>, where <script type="math/tex">k = (0, 1, 2, ..., d)</script>
+</p>
 <ul>
-<li>SFBS returns a subset of features; the number of selected features $k$, where $k &lt; d$, has to be specified <em>a priori</em>.</li>
+<li>SFBS returns a subset of features; the number of selected features <script type="math/tex">k</script>, where <script type="math/tex">k < d</script>, has to be specified <em>a priori</em>.</li>
 </ul>
-<p><strong>Initialization:</strong> $X_0 = Y$, $k = d$</p>
+<p><strong>Initialization:</strong> <script type="math/tex">X_0 = Y</script>, <script type="math/tex">k = d</script>
+</p>
 <ul>
-<li>We initialize the algorithm with the given feature set so that the $k = d$.</li>
+<li>We initialize the algorithm with the given feature set so that the <script type="math/tex">k = d</script>.</li>
 </ul>
 <p><strong>Step 1 (Exclusion):</strong>  </p>
-<p>$x^- = \text{ arg max } J(x_k - x), \text{  where } x \in X_k$<br />
-$X_k-1 = X_k - x^-$<br />
-$k = k - 1$<br />
+<p>
+<script type="math/tex">x^- = \text{ arg max } J(x_k - x), \text{  where } x \in X_k</script>
+<br />
+<script type="math/tex">X_k-1 = X_k - x^-</script>
+<br />
+<script type="math/tex">k = k - 1</script>
+<br />
 <em>Go to Step 2</em>  </p>
 <ul>
-<li>In this step, we remove a feature, $x^-$ from our feature subset $X_k$.</li>
-<li>$x^-$ is the feature that maximizes our criterion function upon re,oval, that is, the feature that is associated with the best classifier performance if it is removed from $X_k$.</li>
+<li>In this step, we remove a feature, <script type="math/tex">x^-</script> from our feature subset <script type="math/tex">X_k</script>.</li>
+<li>
+<script type="math/tex">x^-</script> is the feature that maximizes our criterion function upon re,oval, that is, the feature that is associated with the best classifier performance if it is removed from <script type="math/tex">X_k</script>.</li>
 </ul>
 <p><strong>Step 2 (Conditional Inclusion):</strong><br />
 <br>
-$x^+ = \text{ arg max } J(x_k + x), \text{ where } x \in Y - X_k$<br />
+<script type="math/tex">x^+ = \text{ arg max } J(x_k + x), \text{ where } x \in Y - X_k</script>
+<br />
 <em>if J(x_k + x) &gt; J(x_k + x)</em>:  <br />
-&nbsp;&nbsp;&nbsp;&nbsp; $X_k+1 = X_k + x^+$<br />
-&nbsp;&nbsp;&nbsp;&nbsp; $k = k + 1$<br />
+&nbsp;&nbsp;&nbsp;&nbsp; <script type="math/tex">X_k+1 = X_k + x^+</script>
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp; <script type="math/tex">k = k + 1</script>
+<br />
 <em>Go to Step 1</em>  </p>
 <ul>
-<li>In Step 2, we search for features that improve the classifier performance if they are added back to the feature subset. If such features exist, we add the feature $x^+$ for which the performance improvement is max.</li>
+<li>In Step 2, we search for features that improve the classifier performance if they are added back to the feature subset. If such features exist, we add the feature <script type="math/tex">x^+</script> for which the performance improvement is max.</li>
 <li>Steps 1 and 2 are repeated until the <strong>Termination</strong> criterion is reached.</li>
 </ul>
-<p><strong>Termination:</strong> $k = p$</p>
+<p><strong>Termination:</strong> <script type="math/tex">k = p</script>
+</p>
 <ul>
-<li>We add features from the feature subset $X_k$ until the feature subset of size $k$ contains the number of desired features $p$ that we specified <em>a priori</em>.</li>
+<li>We add features from the feature subset <script type="math/tex">X_k</script> until the feature subset of size <script type="math/tex">k</script> contains the number of desired features <script type="math/tex">p</script> that we specified <em>a priori</em>.</li>
 </ul>
 <h3 id="sequential-floating-forward-selection-sffs">Sequential Floating Forward Selection (SFFS)</h3>
-<p><strong>Input:</strong> the set of all features, $Y = \{y_1, y_2, ..., y_d\}$  </p>
+<p><strong>Input:</strong> the set of all features, <script type="math/tex">Y = \{y_1, y_2, ..., y_d\}</script>
+</p>
 <ul>
 <li>The <strong><em>SFFS</em></strong> algorithm takes the whole feature set as input, if our feature space consists of, e.g. 10, if our feature space consists of 10 dimensions (<strong><em>d = 10</em></strong>).
 <br><br></li>
 </ul>
-<p><strong>Output:</strong> a subset of features, $X_k = \{x_j \; | \;j = 1, 2, ..., k; \; x_j \in Y\}$, where $k = (0, 1, 2, ..., d)$</p>
+<p><strong>Output:</strong> a subset of features, <script type="math/tex">X_k = \{x_j \; | \;j = 1, 2, ..., k; \; x_j \in Y\}</script>, where <script type="math/tex">k = (0, 1, 2, ..., d)</script>
+</p>
 <ul>
 <li>The returned output of the algorithm is a subset of the feature space of a specified size. E.g., a subset of 5 features from a 10-dimensional feature space (<strong><em>k = 5, d = 10</em></strong>).
 <br><br></li>
 </ul>
-<p><strong>Initialization:</strong> $X_0 = Y$, $k = d$</p>
+<p><strong>Initialization:</strong> <script type="math/tex">X_0 = Y</script>, <script type="math/tex">k = d</script>
+</p>
 <ul>
 <li>We initialize the algorithm with an empty set ("null set") so that the <strong><em>k = 0</em></strong> (where <strong><em>k</em></strong> is the size of the subset)
 <br><br></li>
 </ul>
 <p><strong>Step 1 (Inclusion):</strong><br />
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp; $x^+ = \text{ arg max } J(x_k + x), \text{ where }  x \in Y - X_k$<br />
-&nbsp;&nbsp;&nbsp;&nbsp; $X_k+1 = X_k + x^+$<br />
-&nbsp;&nbsp;&nbsp;&nbsp; $k = k + 1$  <br />
+&nbsp;&nbsp;&nbsp;&nbsp; <script type="math/tex">x^+ = \text{ arg max } J(x_k + x), \text{ where }  x \in Y - X_k</script>
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp; <script type="math/tex">X_k+1 = X_k + x^+</script>
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp; <script type="math/tex">k = k + 1</script>
+<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<em>Go to Step 2</em><br />
 <br> <br>
 <strong>Step 2 (Conditional Exclusion):</strong><br />
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp; $x^- = \text{ arg max } J(x_k - x), \text{ where } x \in X_k$<br />
-&nbsp;&nbsp;&nbsp;&nbsp;$if \; J(x_k - x) &gt; J(x_k - x)$:  <br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $X_k-1 = X_k - x^- $<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $k = k - 1$  <br />
+&nbsp;&nbsp;&nbsp;&nbsp; <script type="math/tex">x^- = \text{ arg max } J(x_k - x), \text{ where } x \in X_k</script>
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<script type="math/tex">if \; J(x_k - x) > J(x_k - x)</script>:  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <script type="math/tex">X_k-1 = X_k - x^- </script>
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <script type="math/tex">k = k - 1</script>
+<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<em>Go to Step 1</em>  </p>
 <ul>
 <li>In step 1, we include the feature from the <strong><em>feature space</em></strong> that leads to the best performance increase for our <strong><em>feature subset</em></strong> (assessed by the <strong><em>criterion function</em></strong>). Then, we go over to step 2</li>

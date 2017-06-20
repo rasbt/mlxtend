@@ -21,8 +21,8 @@
     <link href="../../../css/cinder.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../css/highlight.css">
 
-
-    <link href="../../../extra.css" rel="stylesheet">
+    <!--
+    <link href="../../../extra.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -183,27 +183,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_classifier</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">regressor</a>
     <ul class="dropdown-menu">
         
@@ -219,18 +198,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_regressor</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
+    <a href="../../regressor/StackingCVRegressor/">StackingCVRegressor</a>
 </li>
 
         
@@ -300,21 +270,6 @@
             
 <li >
     <a href="../../cluster/Kmeans/">Kmeans</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_cluster</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_cluster/TfKmeans/">TfKmeans</a>
 </li>
 
         
@@ -549,6 +504,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../ecdf/">Ecdf</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -672,12 +633,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_classifier/">Mlxtend.tf classifier</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
 </li>
 
@@ -708,12 +663,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_cluster/">Mlxtend.tf cluster</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
 </li>
 
@@ -733,12 +682,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
 </li>
 
                         
@@ -877,6 +820,9 @@
             
                     <li><a href="#concentric-circles">Concentric Circles</a></li>
              -->
+        
+            <li><a href="#example-6-working-with-existing-axes-objects-using-subplots">Example 6 - Working with existing axes objects using subplots</a></li>
+                <!--  -->
         
     
         <li class="main "><a href="#api">API</a></li>
@@ -1118,6 +1064,36 @@ plt.show()
 </code></pre>
 
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_23_0.png" /></p>
+<h2 id="example-6-working-with-existing-axes-objects-using-subplots">Example 6 - Working with existing axes objects using subplots</h2>
+<pre><code class="python">import matplotlib.pyplot as plt
+from mlxtend.plotting import plot_decision_regions
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import GaussianNB 
+from sklearn import datasets
+import numpy as np
+
+# Loading some example data
+iris = datasets.load_iris()
+X = iris.data[:, 2]
+X = X[:, None]
+y = iris.target
+
+# Initializing and fitting classifiers
+clf1 = LogisticRegression(random_state=1)
+clf2 = GaussianNB()
+clf1.fit(X, y)
+clf2.fit(X, y)
+
+fig, axes = plt.subplots(1, 2, figsize=(10, 3))
+
+fig = plot_decision_regions(X=X, y=y, clf=clf1, ax=axes[0], legend=2)
+fig = plot_decision_regions(X=X, y=y, clf=clf2, ax=axes[1], legend=1)
+
+plt.show()
+</code></pre>
+
+<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_25_0.png" /></p>
 <h1 id="api">API</h1>
 <p><em>plot_decision_regions(X, y, clf, ax=None, X_highlight=None, res=0.02, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors='red,blue,limegreen,gray,cyan')</em></p>
 <p>Plot decision regions of a classifier.</p>

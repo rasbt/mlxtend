@@ -21,8 +21,8 @@
     <link href="../../../css/cinder.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../css/highlight.css">
 
-
-    <link href="../../../extra.css" rel="stylesheet">
+    <!--
+    <link href="../../../extra.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -183,27 +183,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_classifier</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">regressor</a>
     <ul class="dropdown-menu">
         
@@ -219,18 +198,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_regressor</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
+    <a href="../../regressor/StackingCVRegressor/">StackingCVRegressor</a>
 </li>
 
         
@@ -300,21 +270,6 @@
             
 <li >
     <a href="../../cluster/Kmeans/">Kmeans</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_cluster</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_cluster/TfKmeans/">TfKmeans</a>
 </li>
 
         
@@ -549,6 +504,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../plotting/ecdf/">Ecdf</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -672,12 +633,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_classifier/">Mlxtend.tf classifier</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
 </li>
 
@@ -708,12 +663,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_cluster/">Mlxtend.tf cluster</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
 </li>
 
@@ -733,12 +682,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
 </li>
 
                         
@@ -885,11 +828,13 @@
 <h1 id="gradient-descent-and-stochastic-gradient-descent">Gradient Descent and Stochastic Gradient Descent</h1>
 <h3 id="gradient-descent-gd-optimization">Gradient Descent (GD) Optimization</h3>
 <p>Using the Gradient Decent optimization algorithm, the weights are updated incrementally after each epoch (= pass over the training dataset).</p>
-<p>Compatible cost functions $J(\cdot)$</p>
+<p>Compatible cost functions <script type="math/tex">J(\cdot)</script>
+</p>
 <ul>
 <li>
 <p>Sum of squared errors (SSE) [ <a href="../regressor/linear_regression.html">mlxtend.regressor.LinearRegression</a>, <a href="../classifier/adaline.html">mlxtend.classfier.Adaline</a> ]:
-$$J(\mathbf{w}) = \frac{1}{2} \sum_i (\text{target}^{(i)} - \text{output}^{(i)})^2$$</p>
+<script type="math/tex; mode=display">J(\mathbf{w}) = \frac{1}{2} \sum_i (\text{target}^{(i)} - \text{output}^{(i)})^2</script>
+</p>
 </li>
 <li>
 <p>Logistic Cost (cross-entropy) [ <a href="../classifier/logisitic_regression.html">mlxtend.classfier.LogisticRegression</a> ]:
@@ -897,13 +842,19 @@ $$J(\mathbf{w}) = \frac{1}{2} \sum_i (\text{target}^{(i)} - \text{output}^{(i)})
 </li>
 </ul>
 <p>The magnitude and direction of the weight update is computed by taking a step in the opposite direction of the cost gradient</p>
-<p>$$\Delta w_j = -\eta \frac{\partial J}{\partial w_j},$$</p>
-<p>where $\eta$ is the learning rate. The weights are then updated after each epoch via the following update rule:</p>
-<p>$$\mathbf{w} := \mathbf{w} + \Delta\mathbf{w},$$</p>
-<p>where $\Delta\mathbf{w}$ is a vector that contains the weight updates of each weight coefficient ${w}$, which are computed as follows:</p>
-<p>$$\Delta w_j = -\eta \frac{\partial J}{\partial w_j}\\
+<p>
+<script type="math/tex; mode=display">\Delta w_j = -\eta \frac{\partial J}{\partial w_j},</script>
+</p>
+<p>where <script type="math/tex">\eta</script> is the learning rate. The weights are then updated after each epoch via the following update rule:</p>
+<p>
+<script type="math/tex; mode=display">\mathbf{w} := \mathbf{w} + \Delta\mathbf{w},</script>
+</p>
+<p>where <script type="math/tex">\Delta\mathbf{w}</script> is a vector that contains the weight updates of each weight coefficient <script type="math/tex">{w}</script>, which are computed as follows:</p>
+<p>
+<script type="math/tex; mode=display">\Delta w_j = -\eta \frac{\partial J}{\partial w_j}\\
 = -\eta \sum_i (\text{target}^{(i)} - \text{output}^{(i)})(-x_{j}^{(i)})\\
-= \eta \sum_i (\text{target}^{(i)} - \text{output}^{(i)})x_{j}^{(i)}.$$</p>
+= \eta \sum_i (\text{target}^{(i)} - \text{output}^{(i)})x_{j}^{(i)}.</script>
+</p>
 <p>Essentially, we can picture Gradient Descent optimization as a hiker (the weight coefficient) who wants to climb down a mountain (cost function) into valley (cost minimum), and each step is determined by the steepness of the slope (gradient) and the leg length of the hiker (learning rate). Considering a cost function with only a single weight coefficient, we can illustrate this concept as follows:</p>
 <p><img alt="" src="../gradient-optimization_files/ball.png" /></p>
 <h3 id="stochastic-gradient-descent-sgd">Stochastic Gradient Descent (SGD)</h3>
@@ -911,8 +862,11 @@ $$J(\mathbf{w}) = \frac{1}{2} \sum_i (\text{target}^{(i)} - \text{output}^{(i)})
 <p>In Stochastic Gradient Descent (sometimes also referred to as <em>iterative</em> or <em>on-line</em> gradient descent), we <strong>don't</strong> accumulate the weight updates as we've seen above for Gradient Descent:</p>
 <ul>
 <li>for one or more epochs:<ul>
-<li>for each weight $j$<ul>
-<li>$w_j := w + \Delta w_j$,   where:   $\Delta w_j= \eta \sum_i (\text{target}^{(i)} - \text{output}^{(i)})x_{j}^{(i)}$</li>
+<li>for each weight <script type="math/tex">j</script>
+<ul>
+<li>
+<script type="math/tex">w_j := w + \Delta w_j</script>,   where:   <script type="math/tex">\Delta w_j= \eta \sum_i (\text{target}^{(i)} - \text{output}^{(i)})x_{j}^{(i)}</script>
+</li>
 </ul>
 </li>
 </ul>
@@ -921,9 +875,12 @@ $$J(\mathbf{w}) = \frac{1}{2} \sum_i (\text{target}^{(i)} - \text{output}^{(i)})
 <p>Instead, we update the weights after each training sample:</p>
 <ul>
 <li>for one or more epochs, or until approx. cost minimum is reached:<ul>
-<li>for training sample $i$:<ul>
-<li>for each weight $j$<ul>
-<li>$w_j := w + \Delta w_j$,   where:   $\Delta w_j= \eta (\text{target}^{(i)} - \text{output}^{(i)})x_{j}^{(i)}$</li>
+<li>for training sample <script type="math/tex">i</script>:<ul>
+<li>for each weight <script type="math/tex">j</script>
+<ul>
+<li>
+<script type="math/tex">w_j := w + \Delta w_j</script>,   where:   <script type="math/tex">\Delta w_j= \eta (\text{target}^{(i)} - \text{output}^{(i)})x_{j}^{(i)}</script>
+</li>
 </ul>
 </li>
 </ul>
@@ -973,15 +930,17 @@ $$J(\mathbf{w}) = \frac{1}{2} \sum_i (\text{target}^{(i)} - \text{output}^{(i)})
 <p>In scenario A [3], we shuffle the training set only one time in the beginning; whereas in scenario B, we shuffle the training set after each epoch to prevent repeating update cycles. In both scenario A and scenario B, each training sample is only used once per epoch to update the model weights.</p>
 <p>In scenario C, we draw the training samples randomly with replacement from the training set [2]. If the number of iterations <em>t</em> is equal to the number of training samples, we learn the model based on a <em>bootstrap sample</em> of the training set.</p>
 <h3 id="mini-batch-gradient-descent-mb-gd">Mini-Batch Gradient Descent (MB-GD)</h3>
-<p>Mini-Batch Gradient Descent (MB-GD) a compromise between batch GD and SGD. In MB-GD, we update the model based on smaller groups of training samples; instead of computing the gradient from 1 sample (SGD) or all <em>n</em> training samples (GD), we compute the gradient from $1 &lt; k &lt; n$ training samples (a common mini-batch size is $k=50$).</p>
+<p>Mini-Batch Gradient Descent (MB-GD) a compromise between batch GD and SGD. In MB-GD, we update the model based on smaller groups of training samples; instead of computing the gradient from 1 sample (SGD) or all <em>n</em> training samples (GD), we compute the gradient from <script type="math/tex">1 < k < n</script> training samples (a common mini-batch size is <script type="math/tex">k=50</script>).</p>
 <p>MB-GD converges in fewer iterations than GD because we update the weights more frequently; however, MB-GD let's us utilize vectorized operation, which typically results in a computational performance gain over SGD.</p>
 <h3 id="learning-rates">Learning Rates</h3>
 <ul>
 <li>
-<p>An adaptive learning rate $\eta$: Choosing a decrease constant <em>d</em> that shrinks the learning rate over time:  $\eta(t+1) := \eta(t) / (1 + t \times d)$</p>
+<p>An adaptive learning rate <script type="math/tex">\eta</script>: Choosing a decrease constant <em>d</em> that shrinks the learning rate over time:  <script type="math/tex">\eta(t+1) := \eta(t) / (1 + t \times d)</script>
+</p>
 </li>
 <li>
-<p>Momentum learning by adding a factor of the previous gradient to the weight update for faster updates: $\Delta \mathbf{w}_{t+1} := \eta \nabla J(\mathbf{w}_{t+1}) + \alpha \Delta {w}_{t}$</p>
+<p>Momentum learning by adding a factor of the previous gradient to the weight update for faster updates: <script type="math/tex">\Delta \mathbf{w}_{t+1} := \eta \nabla J(\mathbf{w}_{t+1}) + \alpha \Delta {w}_{t}</script>
+</p>
 </li>
 </ul>
 <h3 id="references">References</h3>

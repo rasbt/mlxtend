@@ -21,8 +21,8 @@
     <link href="../../../css/cinder.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../css/highlight.css">
 
-
-    <link href="../../../extra.css" rel="stylesheet">
+    <!--
+    <link href="../../../extra.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -183,27 +183,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_classifier</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">regressor</a>
     <ul class="dropdown-menu">
         
@@ -219,18 +198,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_regressor</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
+    <a href="../../regressor/StackingCVRegressor/">StackingCVRegressor</a>
 </li>
 
         
@@ -300,21 +270,6 @@
             
 <li >
     <a href="../../cluster/Kmeans/">Kmeans</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_cluster</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_cluster/TfKmeans/">TfKmeans</a>
 </li>
 
         
@@ -549,6 +504,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../plotting/ecdf/">Ecdf</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -672,12 +633,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_classifier/">Mlxtend.tf classifier</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
 </li>
 
@@ -708,12 +663,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_cluster/">Mlxtend.tf cluster</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
 </li>
 
@@ -733,12 +682,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
 </li>
 
                         
@@ -860,27 +803,35 @@
         <div class="col-md-9" role="main">
 
 <h1 id="deriving-the-gradient-descent-rule-for-linear-regression-and-adaline">Deriving the Gradient Descent Rule for Linear Regression and Adaline</h1>
-<p>Linear Regression and Adaptive Linear Neurons (Adalines) are closely related to each other. In fact, the Adaline algorithm is a identical to linear regression except for a threshold function $\phi(\cdot)_T$ that converts the continuous output into a categorical class label</p>
-<p>$$\phi(z)_T = \begin{cases} 
-      1 &amp; if \; z \geq 0 \\
-      0 &amp; if \; z &lt; 0 
-   \end{cases},$$</p>
-<p>where $z$ is the net input, which is computed as the sum of the input features $\mathbf{x}$ multiplied by the model weights $\mathbf{w}$:</p>
-<p>$$z = w_0x_0 + w_1x_1 \dots w_mx_m = \sum_{j=0}^{m} x_j w_j = \mathbf{w}^T \mathbf{x}$$</p>
-<p>(Note that $x_0$ refers to the bias unit so that $x_0=1$.)</p>
-<p>In the case of linear regression and Adaline, the activation function $\phi(\cdot)_A$ is simply the identity function so that $\phi(z)_A = z$.</p>
+<p>Linear Regression and Adaptive Linear Neurons (Adalines) are closely related to each other. In fact, the Adaline algorithm is a identical to linear regression except for a threshold function <script type="math/tex">\phi(\cdot)_T</script> that converts the continuous output into a categorical class label</p>
+<p>
+<script type="math/tex; mode=display">\phi(z)_T = \begin{cases} 
+      1 & if \; z \geq 0 \\
+      0 & if \; z < 0 
+   \end{cases},</script>
+</p>
+<p>where <script type="math/tex">z</script> is the net input, which is computed as the sum of the input features <script type="math/tex">\mathbf{x}</script> multiplied by the model weights <script type="math/tex">\mathbf{w}</script>:</p>
+<p>
+<script type="math/tex; mode=display">z = w_0x_0 + w_1x_1 \dots w_mx_m = \sum_{j=0}^{m} x_j w_j = \mathbf{w}^T \mathbf{x}</script>
+</p>
+<p>(Note that <script type="math/tex">x_0</script> refers to the bias unit so that <script type="math/tex">x_0=1</script>.)</p>
+<p>In the case of linear regression and Adaline, the activation function <script type="math/tex">\phi(\cdot)_A</script> is simply the identity function so that <script type="math/tex">\phi(z)_A = z</script>.</p>
 <p><img alt="" src="../linear-gradient-derivative_files/regression-vs-adaline.png" /></p>
-<p>Now, in order to learn the optimal model weights $\mathbf{w}$, we need to define a cost function that we can optimize. Here, our cost function $J({\cdot})$ is the sum of squared errors (SSE), which we multiply by $\frac{1}{2}$ to make the derivation easier:</p>
-<p>$$J({\mathbf{w}}) = \frac{1}{2} \sum_i \big(y^{(i)} - \phi(z)_{A}^{(i)}\big)^2,$$</p>
-<p>where $y^{(i)}$ is the label or target label of the $i$th training point $x^{(i)}$.</p>
+<p>Now, in order to learn the optimal model weights <script type="math/tex">\mathbf{w}</script>, we need to define a cost function that we can optimize. Here, our cost function <script type="math/tex">J({\cdot})</script> is the sum of squared errors (SSE), which we multiply by <script type="math/tex">\frac{1}{2}</script> to make the derivation easier:</p>
+<p>
+<script type="math/tex; mode=display">J({\mathbf{w}}) = \frac{1}{2} \sum_i \big(y^{(i)} - \phi(z)_{A}^{(i)}\big)^2,</script>
+</p>
+<p>where <script type="math/tex">y^{(i)}</script> is the label or target label of the <script type="math/tex">i</script>th training point <script type="math/tex">x^{(i)}</script>.</p>
 <p>(Note that the SSE cost function is convex and therefore differentiable.)</p>
 <p>In simple words, we can summarize the gradient descent learning as follows:</p>
 <ol>
 <li>Initialize the weights to 0 or small random numbers.</li>
-<li>For $k$ epochs (passes over the training set)<ol>
-<li>For each training sample $x^{(i)}$<ol>
-<li>Compute the predicted output value $\hat{y}^{(i)}$</li>
-<li>Compare $\hat{y}^{(i)}$ to the actual output $y^{(i)}$ and Compute the "weight update" value</li>
+<li>For <script type="math/tex">k</script> epochs (passes over the training set)<ol>
+<li>For each training sample <script type="math/tex">x^{(i)}</script>
+<ol>
+<li>Compute the predicted output value <script type="math/tex">\hat{y}^{(i)}</script>
+</li>
+<li>Compare <script type="math/tex">\hat{y}^{(i)}</script> to the actual output <script type="math/tex">y^{(i)}</script> and Compute the "weight update" value</li>
 <li>Update the "weight update" value</li>
 </ol>
 </li>
@@ -892,40 +843,58 @@
 <ol>
 <li>Initialize the weights to 0 or small random numbers.</li>
 <li>
-<p>For $k$ epochs</p>
+<p>For <script type="math/tex">k</script> epochs</p>
 <ol>
 <li>
-<p>For each training sample $x^{(i)}$</p>
+<p>For each training sample <script type="math/tex">x^{(i)}</script>
+</p>
 <ol>
-<li>$\phi(z^{(i)})_A = \hat{y}^{(i)}$</li>
-<li>$\Delta w_{(t+1), \; j} = \eta (y^{(i)} - \hat{y}^{(i)}) x_{j}^{(i)}\;$  (where $\eta$ is the learning rate); </li>
-<li>$\Delta w_{j} :=  \Delta w_j\; + \Delta w_{(t+1), \;j}$ </li>
+<li>
+<script type="math/tex">\phi(z^{(i)})_A = \hat{y}^{(i)}</script>
+</li>
+<li>
+<script type="math/tex">\Delta w_{(t+1), \; j} = \eta (y^{(i)} - \hat{y}^{(i)}) x_{j}^{(i)}\;</script>  (where <script type="math/tex">\eta</script> is the learning rate); </li>
+<li>
+<script type="math/tex">\Delta w_{j} :=  \Delta w_j\; + \Delta w_{(t+1), \;j}</script>
+</li>
 </ol>
 </li>
 <li>
-<p>$\mathbf{w} := \mathbf{w} + \Delta \mathbf{w}$</p>
+<p>
+<script type="math/tex">\mathbf{w} := \mathbf{w} + \Delta \mathbf{w}</script>
+</p>
 </li>
 </ol>
 </li>
 </ol>
 <p>Performing this global weight update</p>
-<p>$$\mathbf{w} := \mathbf{w} + \Delta \mathbf{w},$$</p>
-<p>can be understood as "updating the model weights by taking an opposite step towards the cost gradient scaled by the learning rate $\eta$" </p>
-<p>$$\Delta \mathbf{w} = - \eta \nabla J(\mathbf{w}),$$</p>
-<p>where the partial derivative with respect to each $w_j$ can be written as</p>
-<p>$$\frac{\partial J}{\partial w_j} = - \sum_i \big(y^{(i)} - \phi(z)_{A}^{(i)}\big) x_{j}^{(i)}.$$</p>
-<p>To summarize: in order to use gradient descent to learn the model coefficients, we simply update the weights $\mathbf{w}$ by taking a step into the opposite direction of the gradient for each pass over the training set -- that's basically it. But how do we get to the equation</p>
-<p>$$\frac{\partial J}{\partial w_j} = - \sum_i \big(y^{(i)} - \phi(z)_{A}^{(i)}\big) x_{j}^{(i)}?$$</p>
+<p>
+<script type="math/tex; mode=display">\mathbf{w} := \mathbf{w} + \Delta \mathbf{w},</script>
+</p>
+<p>can be understood as "updating the model weights by taking an opposite step towards the cost gradient scaled by the learning rate <script type="math/tex">\eta</script>" </p>
+<p>
+<script type="math/tex; mode=display">\Delta \mathbf{w} = - \eta \nabla J(\mathbf{w}),</script>
+</p>
+<p>where the partial derivative with respect to each <script type="math/tex">w_j</script> can be written as</p>
+<p>
+<script type="math/tex; mode=display">\frac{\partial J}{\partial w_j} = - \sum_i \big(y^{(i)} - \phi(z)_{A}^{(i)}\big) x_{j}^{(i)}.</script>
+</p>
+<p>To summarize: in order to use gradient descent to learn the model coefficients, we simply update the weights <script type="math/tex">\mathbf{w}</script> by taking a step into the opposite direction of the gradient for each pass over the training set -- that's basically it. But how do we get to the equation</p>
+<p>
+<script type="math/tex; mode=display">\frac{\partial J}{\partial w_j} = - \sum_i \big(y^{(i)} - \phi(z)_{A}^{(i)}\big) x_{j}^{(i)}?</script>
+</p>
 <p>Let's walk through the derivation step by step.</p>
-<p>$$\begin{aligned}
-&amp; \frac{\partial J}{\partial w_j} \\
-&amp; = \frac{\partial}{\partial w_j} \frac{1}{2} \sum_i \big(y^{(i)} - \phi(z)_{A}^{(i)}\big)^2 \\
-&amp; = \frac{1}{2} \frac{\partial}{\partial w_j} \sum_i \big(y^{(i)} - \phi(z)_{A}^{(i)}\big)^2 \\
-&amp; = \frac{1}{2} \sum_i  \big(y^{(i)} - \phi(z)_{A}^{(i)}\big) \frac{\partial}{\partial w_j}  \big(y^{(i)} - \phi(z)_{A}^{(i)}\big) \\
-&amp; = \sum_i  \big(y^{(i)} - \phi(z)_{A}^{(i)}\big) \frac{\partial}{\partial w_j} \bigg(y^{(i)} - \sum_i \big(w_{j}^{(i)} x_{j}^{(i)} \big) \bigg) \\
-&amp; = \sum_i \big(y^{(i)} - \phi(z)_{A}^{(i)}\big)(-x_{j}^{(i)}) \\
-&amp; = - \sum_i \big(y^{(i)} - \phi(z)_{A}^{(i)}\big)x_{j}^{(i)} 
-\end{aligned}$$</p></div>
+<p>
+<script type="math/tex; mode=display">\begin{aligned}
+& \frac{\partial J}{\partial w_j} \\
+& = \frac{\partial}{\partial w_j} \frac{1}{2} \sum_i \big(y^{(i)} - \phi(z)_{A}^{(i)}\big)^2 \\
+& = \frac{1}{2} \frac{\partial}{\partial w_j} \sum_i \big(y^{(i)} - \phi(z)_{A}^{(i)}\big)^2 \\
+& = \frac{1}{2} \sum_i 2 \big(y^{(i)} - \phi(z)_{A}^{(i)}\big) \frac{\partial}{\partial w_j}  \big(y^{(i)} - \phi(z)_{A}^{(i)}\big) \\
+& = \sum_i  \big(y^{(i)} - \phi(z)_{A}^{(i)}\big) \frac{\partial}{\partial w_j} \bigg(y^{(i)} - \sum_i \big(w_{j}^{(i)} x_{j}^{(i)} \big) \bigg) \\
+& = \sum_i \big(y^{(i)} - \phi(z)_{A}^{(i)}\big)(-x_{j}^{(i)}) \\
+& = - \sum_i \big(y^{(i)} - \phi(z)_{A}^{(i)}\big)x_{j}^{(i)} 
+\end{aligned}</script>
+</p></div>
         
     </div>
 

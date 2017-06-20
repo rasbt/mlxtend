@@ -21,8 +21,8 @@
     <link href="../css/cinder.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/highlight.css">
 
-
-    <link href="../extra.css" rel="stylesheet">
+    <!--
+    <link href="../extra.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -183,27 +183,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_classifier</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../user_guide/tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
-</li>
-
-        
-            
-<li >
-    <a href="../user_guide/tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">regressor</a>
     <ul class="dropdown-menu">
         
@@ -219,18 +198,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_regressor</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../user_guide/tf_regressor/TfLinearRegression/">TfLinearRegression</a>
+    <a href="../user_guide/regressor/StackingCVRegressor/">StackingCVRegressor</a>
 </li>
 
         
@@ -300,21 +270,6 @@
             
 <li >
     <a href="../user_guide/cluster/Kmeans/">Kmeans</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_cluster</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../user_guide/tf_cluster/TfKmeans/">TfKmeans</a>
 </li>
 
         
@@ -549,6 +504,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../user_guide/plotting/ecdf/">Ecdf</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -672,12 +633,6 @@
                         
                             
 <li >
-    <a href="../api_subpackages/mlxtend.tf_classifier/">Mlxtend.tf classifier</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../api_subpackages/mlxtend.data/">Mlxtend.data</a>
 </li>
 
@@ -708,12 +663,6 @@
                         
                             
 <li >
-    <a href="../api_subpackages/mlxtend.tf_cluster/">Mlxtend.tf cluster</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
 </li>
 
@@ -733,12 +682,6 @@
                             
 <li >
     <a href="../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
 </li>
 
                         
@@ -1014,15 +957,22 @@
 </ul>
 <h5 id="new-features">New Features</h5>
 <ul>
-<li>-</li>
+<li>New <a href="http://rasbt.github.io/mlxtend/user_guide/plotting/ecdf/">mlxtend.plotting.ecdf</a> function for plotting empirical cumulative distribution functions.</li>
+<li>New <a href="http://rasbt.github.io/mlxtend/user_guide/plotting/ecdf/"><code>StackingCVRegressor</code></a> for stacking regressors with out-of-fold predictions to prevent overfitting (via <a href="https://github.com/EikeDehling">Eike Dehling</a>).</li>
 </ul>
 <h5 id="changes">Changes</h5>
 <ul>
-<li>-</li>
+<li>The TensorFlow estimator have been removed from mlxtend, since TensorFlow has now very convenient ways to build on estimators, which render those implementations obsolete.</li>
+<li><code>plot_decision_regions</code> now supports plotting decision regions for more than 2 training features. (via <a href="https://github.com/jrbourbeau">James Bourbeau</a>).</li>
+<li>Parallel execution in <code>mlxtend.feature_selection.SequentialFeatureSelector</code> and <code>mlxtend.feature_selection.ExhaustiveFeatureSelector</code> is now performed over different feature subsets instead of the different cross-validation folds to better utilize machines with multiple processors if the number of features is large (<a href="https://github.com/rasbt/mlxtend/pull/193">#193</a>, via <a href="https://github.com/whalebot-helmsman">@whalebot-helmsman</a>).</li>
+<li>Raise meaningful error messages if pandas <code>DataFrame</code>s or Python lists of lists are fed into the StackingCVClassifer as a <code>fit</code> arguments.</li>
+<li>The <code>n_folds</code> parameter of the <code>StackingCVClassifier</code> was changed to <code>cv</code> and can now accept any kind of cross validation technique that is available from scikit-learn. For example, <code>StackingCVClassifier(..., cv=StratifiedKFold(n_splits=3)) or StackingCVClassifier(..., cv=GroupKFold(n_splits=3))</code> (via <a href="https://github.com/sque">Konstantinos Paliouras</a>).</li>
 </ul>
 <h5 id="bug-fixes">Bug Fixes</h5>
 <ul>
-<li><code>SequentialFeatureSelector</code> now correctly accepts a <code>None</code> argument for the <code>scoring</code> parameter to infer the default scoring metric from scikit-learn classifiers and regressors</li>
+<li><code>SequentialFeatureSelector</code> now correctly accepts a <code>None</code> argument for the <code>scoring</code> parameter to infer the default scoring metric from scikit-learn classifiers and regressors.</li>
+<li>The <code>plot_decision_regions</code> function now supports pre-existing axes objects generated via matplotlib's <code>plt.subplots</code>. (<a href="http://rasbt.github.io/mlxtend/user_guide/plotting/plot_decision_regions/#example-6-working-with-existing-axes-objects-using-subplots">See example</a>)</li>
+<li>Made <code>math.num_combinations</code> and <code>math.num_permutations</code> numerically stable for large numbers of combinations and permutations</li>
 </ul>
 <h3 id="version-060-2017-03-18">Version 0.6.0 (2017-03-18)</h3>
 <h5 id="downloads_1">Downloads</h5>
@@ -1140,26 +1090,26 @@ imput arrays via <code>transform</code> and <code>fit_transform</code></li>
 </ul>
 <h5 id="new-features_5">New Features</h5>
 <ul>
-<li>New TensorFlow estimator for Linear Regression (<a href="../user_guide/tf_regressor/TfLinearRegression/"><code>tf_regressor.TfLinearRegression</code></a>)</li>
+<li>New TensorFlow estimator for Linear Regression (<code>tf_regressor.TfLinearRegression</code>)</li>
 <li>New k-means clustering estimator (<a href="../user_guide/cluster/Kmeans/"><code>cluster.Kmeans</code></a>)</li>
-<li>New TensorFlow k-means clustering estimator (<a href="../user_guide/tf_cluster/TfKmeans/"><code>tf_cluster.Kmeans</code></a>)</li>
+<li>New TensorFlow k-means clustering estimator (<code>tf_cluster.Kmeans</code>)</li>
 </ul>
 <h5 id="changes_5">Changes</h5>
 <ul>
 <li>Due to refactoring of the estimator classes, the <code>init_weights</code> parameter of the <code>fit</code> methods was globally renamed to <code>init_params</code></li>
 <li>Overall performance improvements of estimators due to code clean-up and refactoring</li>
 <li>Added several additional checks for correct array types and more meaningful exception messages</li>
-<li>Added optional <code>dropout</code> to the <a href="../user_guide/tf_classifier/TfMultiLayerPerceptron/"><code>tf_classifier.TfMultiLayerPerceptron</code></a> classifier for regularization</li>
-<li>Added an optional <code>decay</code> parameter to the <a href="../user_guide/tf_classifier/TfMultiLayerPerceptron/"><code>tf_classifier.TfMultiLayerPerceptron</code></a> classifier for adaptive learning via an exponential decay of the learning rate eta</li>
-<li>Replaced old <code>NeuralNetMLP</code> by more streamlined <code>MultiLayerPerceptron</code> (<a href="../user_guide/classifier/MultiLayerPerceptron/"><code>classifier.MultiLayerPerceptron</code></a>); now also with softmax in the output layer and categorical cross-entropy loss.</li>
+<li>Added optional <code>dropout</code> to the <code>tf_classifier.TfMultiLayerPerceptron</code> classifier for regularization</li>
+<li>Added an optional <code>decay</code> parameter to the <code>tf_classifier.TfMultiLayerPerceptron</code> classifier for adaptive learning via an exponential decay of the learning rate eta</li>
+<li>Replaced old <code>NeuralNetMLP</code> by more streamlined <code>MultiLayerPerceptron</code> (<code>classifier.MultiLayerPerceptron</code>); now also with softmax in the output layer and categorical cross-entropy loss.</li>
 <li>Unified <code>init_params</code> parameter for fit functions to continue training where the algorithm left off (if supported)</li>
 </ul>
 <h3 id="version-040-2016-04-09">Version 0.4.0 (2016-04-09)</h3>
 <h5 id="new-features_6">New Features</h5>
 <ul>
-<li>New <code>TfSoftmaxRegression</code> classifier using Tensorflow (<a href="../user_guide/tf_classifier/TfSoftmaxRegression/"><code>tf_classifier.TfSoftmaxRegression</code></a>)</li>
-<li>New <code>SoftmaxRegression</code> classifier (<a href="../user_guide/classifier/SoftmaxRegression/"><code>classifier.SoftmaxRegression</code></a>)</li>
-<li>New <code>TfMultiLayerPerceptron</code> classifier using Tensorflow (<a href="../user_guide/tf_classifier/TfMultiLayerPerceptron/"><code>tf_classifier.TfMultiLayerPerceptron</code></a>)</li>
+<li>New <code>TfSoftmaxRegression</code> classifier using Tensorflow (<code>tf_classifier.TfSoftmaxRegression</code>)</li>
+<li>New <code>SoftmaxRegression</code> classifier (<code>classifier.SoftmaxRegression</code>)</li>
+<li>New <code>TfMultiLayerPerceptron</code> classifier using Tensorflow (<code>tf_classifier.TfMultiLayerPerceptron</code>)</li>
 <li>New <code>StackingRegressor</code> (<a href="../user_guide/regressor/StackingRegressor/"><code>regressor.StackingRegressor</code></a>)</li>
 <li>New <code>StackingClassifier</code> (<a href="../user_guide/classifier/StackingClassifier/"><code>classifier.StackingClassifier</code></a>)</li>
 <li>New function for one-hot encoding of class labels (<a href="../user_guide/preprocessing/one-hot_encoding/"><code>preprocessing.one_hot</code></a>)</li>

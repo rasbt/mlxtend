@@ -21,8 +21,8 @@
     <link href="../../../css/cinder.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../css/highlight.css">
 
-
-    <link href="../../../extra.css" rel="stylesheet">
+    <!--
+    <link href="../../../extra.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -183,27 +183,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_classifier</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">regressor</a>
     <ul class="dropdown-menu">
         
@@ -219,18 +198,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_regressor</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
+    <a href="../../regressor/StackingCVRegressor/">StackingCVRegressor</a>
 </li>
 
         
@@ -300,21 +270,6 @@
             
 <li >
     <a href="../../cluster/Kmeans/">Kmeans</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_cluster</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_cluster/TfKmeans/">TfKmeans</a>
 </li>
 
         
@@ -549,6 +504,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../plotting/ecdf/">Ecdf</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -672,12 +633,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_classifier/">Mlxtend.tf classifier</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
 </li>
 
@@ -708,12 +663,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_cluster/">Mlxtend.tf cluster</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
 </li>
 
@@ -733,12 +682,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
 </li>
 
                         
@@ -892,18 +835,24 @@
 <h2 id="overview">Overview</h2>
 <p>McNemar's Test [1] (sometimes also called "within-subjects chi-squared test") is a statistical test for paired nominal data. In context of machine learning (or statistical) models, we can use McNemar's Test to compare the predictive accuracy of two models. McNemar's test is based on a 2 times 2 contigency table of the two model's predictions.</p>
 <h3 id="mcnemars-test-statistic">McNemar's Test Statistic</h3>
-<p>In McNemar's Test, we formulate the null hypothesis that the probabilities $p(b)$ and $p(c)$ are the same, or in simplified terms: None of the two models performs better than the other. Thus, the alternative hypothesis is that the performances of the two models are not equal.</p>
+<p>In McNemar's Test, we formulate the null hypothesis that the probabilities <script type="math/tex">p(b)</script> and <script type="math/tex">p(c)</script> are the same, or in simplified terms: None of the two models performs better than the other. Thus, the alternative hypothesis is that the performances of the two models are not equal.</p>
 <p><img alt="" src="../mcnemar_table_files/mcnemar_contingency_table.png" /></p>
 <p>The McNemar test statistic ("chi-squared") can be computed as follows:</p>
-<p>$$\chi^2 = \frac{(b - c)^2}{(b + c)},$$</p>
-<p>If the sum of cell c and b is sufficiently large, the $\chi^2$ value follows a chi-squared distribution with one degree of freedom. After setting a significance threshold, e.g,. $\alpha=0.05$ we can compute the p-value -- assuming that the null hypothesis is true, the p-value is the probability of observing this empirical (or a larger) chi-squared value. If the p-value is lower than our chosen significance level, we can reject the null hypothesis that the two model's performances are equal.</p>
+<p>
+<script type="math/tex; mode=display">\chi^2 = \frac{(b - c)^2}{(b + c)},</script>
+</p>
+<p>If the sum of cell c and b is sufficiently large, the <script type="math/tex">\chi^2</script> value follows a chi-squared distribution with one degree of freedom. After setting a significance threshold, e.g,. <script type="math/tex">\alpha=0.05</script> we can compute the p-value -- assuming that the null hypothesis is true, the p-value is the probability of observing this empirical (or a larger) chi-squared value. If the p-value is lower than our chosen significance level, we can reject the null hypothesis that the two model's performances are equal.</p>
 <h3 id="continuity-correction">Continuity Correction</h3>
 <p>Approximately 1 year after Quinn McNemar published the McNemar Test [1], Edwards [2] proposed a continuity corrected version, which is the more commonly used variant today:</p>
-<p>$$\chi^2 = \frac{( \mid b - c \mid - 1)^2}{(b + c)}.$$</p>
+<p>
+<script type="math/tex; mode=display">\chi^2 = \frac{( \mid b - c \mid - 1)^2}{(b + c)}.</script>
+</p>
 <h3 id="exact-p-values">Exact p-values</h3>
-<p>As mentioned earlier, an exact binomial test is recommended for small sample sizes ($b + c &lt; 25$ [3]), since the chi-squared value is may not be well-approximated by the chi-squared distribution. The exact p-value can be computed as follows:</p>
-<p>$$p = 2 \sum^{n}_{i=b} \binom{n}{i} 0.5^i (1 - 0.5)^{n-i},$$</p>
-<p>where $n = b + c$, and the factor $2$ is used to compute the two-sided p-value.</p>
+<p>As mentioned earlier, an exact binomial test is recommended for small sample sizes (<script type="math/tex">b + c < 25</script> [3]), since the chi-squared value is may not be well-approximated by the chi-squared distribution. The exact p-value can be computed as follows:</p>
+<p>
+<script type="math/tex; mode=display">p = 2 \sum^{n}_{i=b} \binom{n}{i} 0.5^i (1 - 0.5)^{n-i},</script>
+</p>
+<p>where <script type="math/tex">n = b + c</script>, and the factor <script type="math/tex">2</script> is used to compute the two-sided p-value.</p>
 <h3 id="example">Example</h3>
 <p>For instance, given that 2 models have a accuracy of with a 99.7% and 99.6% a 2x2 contigency table can provide further insights for model selection.</p>
 <p><img alt="" src="../mcnemar_table_files/mcnemar_contingency_table_ex1.png" /></p>
@@ -955,7 +904,7 @@ tb_b = np.array([[9945, 25],
                  [15, 15]])
 </code></pre>
 
-<p>To test the null hypothesis that the predictive performance of two models are equal (using a significance level of $\alpha=0.05$), we can conduct a corrected McNemar Test for computing the chi-squared and p-value as follows:</p>
+<p>To test the null hypothesis that the predictive performance of two models are equal (using a significance level of <script type="math/tex">\alpha=0.05</script>), we can conduct a corrected McNemar Test for computing the chi-squared and p-value as follows:</p>
 <pre><code class="python">from mlxtend.evaluate import mcnemar
 
 chi2, p = mcnemar(ary=tb_b, corrected=True)
@@ -966,7 +915,7 @@ print('p-value:', p)
 <pre><code>chi-squared: 2.025
 p-value: 0.154728923485
 </code></pre>
-<p>Since the p-value is larger than our assumed significance threshold ($\alpha=0.05$), we cannot reject our null hypothesis and assume that there is no significant difference between the two predictive models.</p>
+<p>Since the p-value is larger than our assumed significance threshold (<script type="math/tex">\alpha=0.05</script>), we cannot reject our null hypothesis and assume that there is no significant difference between the two predictive models.</p>
 <h2 id="example-3-mcnemars-test-for-scenario-a">Example 3 - McNemar's Test for Scenario A</h2>
 <p>In contrast to scenario B (Example 2), the sample size in scenario A is relatively small (b + c = 11  + 1 = 12) and smaller than the recommended 25 [3] to approximate the computed chi-square value by the chi-square distribution well.</p>
 <p><img alt="" src="../mcnemar_files/mcnemar_scenario_a.png" /></p>
@@ -986,7 +935,7 @@ print('p-value:', p)
 <pre><code>chi-squared: None
 p-value: 0.005859375
 </code></pre>
-<p>Assuming that we conducted this test also with a significance level of $\alpha=0.05$, we can reject the null-hypothesis that both models perform equally well on this dataset, since the p-value ($p \approx 0.006$) is smaller than $\alpha$.</p>
+<p>Assuming that we conducted this test also with a significance level of <script type="math/tex">\alpha=0.05</script>, we can reject the null-hypothesis that both models perform equally well on this dataset, since the p-value (<script type="math/tex">p \approx 0.006</script>) is smaller than <script type="math/tex">\alpha</script>.</p>
 <h2 id="api">API</h2>
 <p><em>mcnemar(ary, corrected=True, exact=False)</em></p>
 <p>McNemar test for paired nominal data</p>

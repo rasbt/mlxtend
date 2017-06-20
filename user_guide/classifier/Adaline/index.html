@@ -21,8 +21,8 @@
     <link href="../../../css/cinder.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../css/highlight.css">
 
-
-    <link href="../../../extra.css" rel="stylesheet">
+    <!--
+    <link href="../../../extra.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -183,27 +183,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_classifier</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">regressor</a>
     <ul class="dropdown-menu">
         
@@ -219,18 +198,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_regressor</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
+    <a href="../../regressor/StackingCVRegressor/">StackingCVRegressor</a>
 </li>
 
         
@@ -300,21 +270,6 @@
             
 <li >
     <a href="../../cluster/Kmeans/">Kmeans</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_cluster</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_cluster/TfKmeans/">TfKmeans</a>
 </li>
 
         
@@ -549,6 +504,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../plotting/ecdf/">Ecdf</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -672,12 +633,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_classifier/">Mlxtend.tf classifier</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
 </li>
 
@@ -708,12 +663,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_cluster/">Mlxtend.tf cluster</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
 </li>
 
@@ -733,12 +682,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
 </li>
 
                         
@@ -894,16 +837,22 @@
 <h2 id="overview">Overview</h2>
 <p>An illustration of the ADAptive LInear NEuron (Adaline) -- a single-layer artificial linear neuron with a threshold unit:</p>
 <p><img alt="" src="../Adaline_files/adaline_schematic.png" /></p>
-<p>The Adaline classifier is closely related to the Ordinary Least Squares (OLS) Linear Regression algorithm; in OLS regression we find the line (or hyperplane) that minimizes the vertical offsets. Or in other words, we define the best-fitting line as the line that minimizes the sum of squared errors (SSE) or mean squared error (MSE) between our target variable (y) and our predicted output over all samples $i$ in our dataset of size $n$.</p>
-<p>$$ SSE =  \sum_i (\text{target}^{(i)} - \text{output}^{(i)})^2$$</p>
-<p>$$MSE = \frac{1}{n} \times SSE$$</p>
-<p><a href="../../regressor/LinearRegression/"><code>LinearRegression</code></a> implements a linear regression model for performing ordinary least squares regression, and in Adaline, we add a threshold function $g(\cdot)$ to convert the continuous outcome to a categorical class label:</p>
-<p>$$y = g({z}) =
+<p>The Adaline classifier is closely related to the Ordinary Least Squares (OLS) Linear Regression algorithm; in OLS regression we find the line (or hyperplane) that minimizes the vertical offsets. Or in other words, we define the best-fitting line as the line that minimizes the sum of squared errors (SSE) or mean squared error (MSE) between our target variable (y) and our predicted output over all samples <script type="math/tex">i</script> in our dataset of size <script type="math/tex">n</script>.</p>
+<p>
+<script type="math/tex; mode=display"> SSE =  \sum_i (\text{target}^{(i)} - \text{output}^{(i)})^2</script>
+</p>
+<p>
+<script type="math/tex; mode=display">MSE = \frac{1}{n} \times SSE</script>
+</p>
+<p><a href="../../regressor/LinearRegression/"><code>LinearRegression</code></a> implements a linear regression model for performing ordinary least squares regression, and in Adaline, we add a threshold function <script type="math/tex">g(\cdot)</script> to convert the continuous outcome to a categorical class label:</p>
+<p>
+<script type="math/tex; mode=display">y = g({z}) =
 \begin{cases}
-1 &amp; \text{if z $\ge$ 0}\\
+1 & \text{if z <script type="math/tex">\ge</script> 0}\\
 -1 &amp; \text{otherwise}.
 \end{cases}
-$$</p>
+</script>
+</p>
 <p>An Adaline model can be trained by one of the following three approaches:</p>
 <ul>
 <li>Normal Equations</li>
@@ -911,12 +860,16 @@ $$</p>
 <li>Stochastic Gradient Descent</li>
 </ul>
 <h3 id="normal-equations-closed-form-solution">Normal Equations (closed-form solution)</h3>
-<p>The closed-form solution should be preferred for "smaller" datasets where calculating (a "costly") matrix inverse is not a concern. For very large datasets, or datasets where the inverse of $[X^T X]$ may not exist (the matrix is non-invertible or singular, e.g., in case of perfect multicollinearity), the gradient descent or stochastic gradient descent approaches are to be preferred.</p>
+<p>The closed-form solution should be preferred for "smaller" datasets where calculating (a "costly") matrix inverse is not a concern. For very large datasets, or datasets where the inverse of <script type="math/tex">[X^T X]</script> may not exist (the matrix is non-invertible or singular, e.g., in case of perfect multicollinearity), the gradient descent or stochastic gradient descent approaches are to be preferred.</p>
 <p>The linear function (linear regression model) is defined as:</p>
-<p>$$z = w_0x_0 + w_1x_1 + ... + w_mx_m = \sum_{j=0}^{m} w_j x_j = \mathbf{w}^T\mathbf{x}$$</p>
-<p>where $y$ is the response variable, $\mathbf{x}$ is an $m$-dimensional sample vector, and $\mathbf{w}$ is the weight vector (vector of coefficients). Note that $w_0$ represents the y-axis intercept of the model and therefore $x_0=1$.  </p>
+<p>
+<script type="math/tex; mode=display">z = w_0x_0 + w_1x_1 + ... + w_mx_m = \sum_{j=0}^{m} w_j x_j = \mathbf{w}^T\mathbf{x}</script>
+</p>
+<p>where <script type="math/tex">y</script> is the response variable, <script type="math/tex">\mathbf{x}</script> is an <script type="math/tex">m</script>-dimensional sample vector, and <script type="math/tex">\mathbf{w}</script> is the weight vector (vector of coefficients). Note that <script type="math/tex">w_0</script> represents the y-axis intercept of the model and therefore <script type="math/tex">x_0=1</script>.  </p>
 <p>Using the closed-form solution (normal equation), we compute the weights of the model as follows:</p>
-<p>$$ \mathbf{w} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^Ty$$</p>
+<p>
+<script type="math/tex; mode=display"> \mathbf{w} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^Ty</script>
+</p>
 <h3 id="gradient-descent-gd-and-stochastic-gradient-descent-sgd">Gradient Descent (GD)  and Stochastic Gradient Descent (SGD)</h3>
 <p>In the current implementation, the Adaline model is learned via Gradient Descent or Stochastic Gradient Descent.</p>
 <p>See <a href="../../general_concepts/gradient-optimization/">Gradient Descent and Stochastic Gradient Descent</a> and <a href="../../general_concepts/linear-gradient-derivative/">Deriving the Gradient Descent Rule for Linear Regression and Adaline</a> for details.</p>

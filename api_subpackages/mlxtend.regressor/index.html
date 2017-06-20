@@ -21,8 +21,8 @@
     <link href="../../css/cinder.css" rel="stylesheet">
     <link rel="stylesheet" href="../../css/highlight.css">
 
-
-    <link href="../../extra.css" rel="stylesheet">
+    <!--
+    <link href="../../extra.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -183,27 +183,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_classifier</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../user_guide/tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../user_guide/tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">regressor</a>
     <ul class="dropdown-menu">
         
@@ -219,18 +198,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_regressor</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../../user_guide/tf_regressor/TfLinearRegression/">TfLinearRegression</a>
+    <a href="../../user_guide/regressor/StackingCVRegressor/">StackingCVRegressor</a>
 </li>
 
         
@@ -300,21 +270,6 @@
             
 <li >
     <a href="../../user_guide/cluster/Kmeans/">Kmeans</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_cluster</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../user_guide/tf_cluster/TfKmeans/">TfKmeans</a>
 </li>
 
         
@@ -549,6 +504,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../user_guide/plotting/ecdf/">Ecdf</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -672,12 +633,6 @@
                         
                             
 <li >
-    <a href="../mlxtend.tf_classifier/">Mlxtend.tf classifier</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../mlxtend.data/">Mlxtend.data</a>
 </li>
 
@@ -708,12 +663,6 @@
                         
                             
 <li >
-    <a href="../mlxtend.tf_cluster/">Mlxtend.tf cluster</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../mlxtend.file_io/">Mlxtend.file io</a>
 </li>
 
@@ -733,12 +682,6 @@
                             
 <li class="active">
     <a href="./">Mlxtend.regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
 </li>
 
                         
@@ -825,7 +768,7 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../mlxtend.tf_regressor/">
+                        <a rel="prev" href="../mlxtend.text/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -858,9 +801,15 @@
                 <!--  -->
         
     
-        <li class="main "><a href="#stackingregressor">StackingRegressor</a></li>
+        <li class="main "><a href="#stackingcvregressor">StackingCVRegressor</a></li>
         
             <li><a href="#methods_1">Methods</a></li>
+                <!--  -->
+        
+    
+        <li class="main "><a href="#stackingregressor">StackingRegressor</a></li>
+        
+            <li><a href="#methods_2">Methods</a></li>
                 <!--  -->
         
             <li><a href="#properties">Properties</a></li>
@@ -970,6 +919,166 @@ n_features is the number of features.</p>
 <p>Predicted target values.</p>
 </li>
 </ul>
+<h2 id="stackingcvregressor">StackingCVRegressor</h2>
+<p><em>StackingCVRegressor(regressors, meta_regressor, cv=5, shuffle=True, use_features_in_secondary=False)</em></p>
+<p>A 'Stacking Cross-Validation' regressor for scikit-learn estimators.</p>
+<p>New in mlxtend v0.7.0</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>regressors</code> : array-like, shape = [n_regressors]</p>
+<p>A list of classifiers.
+Invoking the <code>fit</code> method on the <code>StackingCVRegressor</code> will fit clones
+of these original regressors that will
+be stored in the class attribute <code>self.regr_</code>.</p>
+</li>
+<li>
+<p><code>meta_regressor</code> : object</p>
+<p>The meta-classifier to be fitted on the ensemble of
+classifiers</p>
+</li>
+<li>
+<p><code>cv</code> : int, cross-validation generator or iterable, optional (default: 5)</p>
+<p>Determines the cross-validation splitting strategy.
+Possible inputs for cv are:
+- None, to use the default 5-fold cross validation,
+- integer, to specify the number of folds in a <code>KFold</code>,
+- An object to be used as a cross-validation generator.
+- An iterable yielding train, test splits.
+For integer/None inputs, it will use <code>KFold</code> cross-validation</p>
+</li>
+<li>
+<p><code>use_features_in_secondary</code> : bool (default: False)</p>
+<p>If True, the meta-classifier will be trained both on
+the predictions of the original regressors and the
+original dataset.
+If False, the meta-regressor will be trained only on
+the predictions of the original regressors.</p>
+</li>
+<li>
+<p><code>shuffle</code> : bool (default: True)</p>
+<p>If True,  and the <code>cv</code> argument is integer, the training data will
+be shuffled at fitting stage prior to cross-validation. If the <code>cv</code>
+argument is a specific cross validation technique, this argument is
+omitted.</p>
+</li>
+</ul>
+<h3 id="methods_1">Methods</h3>
+<hr>
+
+<p><em>fit(X, y, groups=None)</em></p>
+<p>Fit ensemble regressors and the meta-regressor.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : numpy array, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>groups</code> : numpy array/None, shape = [n_samples]</p>
+<p>The group that each sample belongs to. This is used by specific
+folding strategies such as GroupKFold()</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
+<hr>
+
+<p><em>fit_transform(X, y=None, </em><em>fit_params)</em></p>
+<p>Fit to data, then transform it.</p>
+<p>Fits transformer to X and y with optional parameters fit_params
+and returns a transformed version of X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : numpy array of shape [n_samples, n_features]</p>
+<p>Training set.</p>
+</li>
+<li>
+<p><code>y</code> : numpy array of shape [n_samples]</p>
+<p>Target values.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>X_new</code> : numpy array of shape [n_samples, n_features_new]</p>
+<p>Transformed array.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>get_params(deep=True)</em></p>
+<p>Get parameters for this estimator.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>deep</code> : boolean, optional</p>
+<p>If True, will return the parameters for this estimator and
+contained subobjects that are estimators.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>params</code> : mapping of string to any</p>
+<p>Parameter names mapped to their values.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>predict(X)</em></p>
+<p>None</p>
+<hr>
+
+<p><em>score(X, y, sample_weight=None)</em></p>
+<p>Returns the coefficient of determination R^2 of the prediction.</p>
+<p>The coefficient R^2 is defined as (1 - u/v), where u is the regression
+sum of squares ((y_true - y_pred) <strong> 2).sum() and v is the residual
+sum of squares ((y_true - y_true.mean()) </strong> 2).sum().</p>
+<p>Best possible score is 1.0 and it can be negative (because the</p>
+<p>model can be arbitrarily worse). A constant model that always
+predicts the expected value of y, disregarding the input features,
+would get a R^2 score of 0.0.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : array-like, shape = (n_samples, n_features)</p>
+<p>Test samples.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = (n_samples) or (n_samples, n_outputs)</p>
+<p>True values for X.</p>
+</li>
+<li>
+<p><code>sample_weight</code> : array-like, shape = [n_samples], optional</p>
+<p>Sample weights.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>score</code> : float</p>
+<p>R^2 of self.predict(X) wrt. y.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.</p>
+<p>The method works on simple estimators as well as on nested objects
+(such as pipelines). The latter have parameters of the form
+<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
+component of a nested object.</p>
+<p><strong>Returns</strong></p>
+<p>self</p>
 <h2 id="stackingregressor">StackingRegressor</h2>
 <p><em>StackingRegressor(regressors, meta_regressor, verbose=0)</em></p>
 <p>A Stacking regressor for scikit-learn estimators for regression.</p>
@@ -1018,7 +1127,7 @@ self.verbose - 2</p>
 <p>Intercept of the fitted meta-estimator</p>
 </li>
 </ul>
-<h3 id="methods_1">Methods</h3>
+<h3 id="methods_2">Methods</h3>
 <hr>
 
 <p><em>fit(X, y)</em></p>

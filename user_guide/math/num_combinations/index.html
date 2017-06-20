@@ -21,8 +21,8 @@
     <link href="../../../css/cinder.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../css/highlight.css">
 
-
-    <link href="../../../extra.css" rel="stylesheet">
+    <!--
+    <link href="../../../extra.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -183,27 +183,6 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_classifier</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_classifier/TfMultiLayerPerceptron/">TfMultiLayerPerceptron</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../tf_classifier/TfSoftmaxRegression/">TfSoftmaxRegression</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
     <a tabindex="-1" href="">regressor</a>
     <ul class="dropdown-menu">
         
@@ -219,18 +198,9 @@
 </li>
 
         
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_regressor</a>
-    <ul class="dropdown-menu">
-        
             
 <li >
-    <a href="../../tf_regressor/TfLinearRegression/">TfLinearRegression</a>
+    <a href="../../regressor/StackingCVRegressor/">StackingCVRegressor</a>
 </li>
 
         
@@ -300,21 +270,6 @@
             
 <li >
     <a href="../../cluster/Kmeans/">Kmeans</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">tf_cluster</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../tf_cluster/TfKmeans/">TfKmeans</a>
 </li>
 
         
@@ -549,6 +504,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../plotting/ecdf/">Ecdf</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -672,12 +633,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_classifier/">Mlxtend.tf classifier</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
 </li>
 
@@ -708,12 +663,6 @@
                         
                             
 <li >
-    <a href="../../../api_subpackages/mlxtend.tf_cluster/">Mlxtend.tf cluster</a>
-</li>
-
-                        
-                            
-<li >
     <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
 </li>
 
@@ -733,12 +682,6 @@
                             
 <li >
     <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../api_subpackages/mlxtend.tf_regressor/">Mlxtend.tf regressor</a>
 </li>
 
                         
@@ -820,7 +763,7 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../../plotting/checkerboard_plot/">
+                        <a rel="next" href="../../plotting/ecdf/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
@@ -890,21 +833,25 @@
 </ul>
 <p>In the example above the combinations 1a, 1b, and 1c, are the "same combination" and counted as "1 possible way to combine items 1, 3, and 5" -- in combinations, the order does not matter.</p>
 <p>The number of ways to combine elements (<strong>without replacement</strong>)  from a collection with size <em>n</em> into subsets of size <em>k</em> is computed via the binomial coefficient ("<em>n</em> choose <em>k</em>"):</p>
-<p>$$
+<p>
+<script type="math/tex; mode=display">
 \begin{pmatrix} 
 n  \\
 k 
 \end{pmatrix} = \frac{n(n-1)\ldots(n-k+1)}{k(k-1)\dots1} = \frac{n!}{k!(n-k)!}
-$$</p>
+</script>
+</p>
 <p>To compute the number of combinations <strong>with replacement</strong>, the following, alternative equation 
 is used ("<em>n</em> multichoose <em>k</em>"):</p>
-<p>$$\begin{pmatrix} 
+<p>
+<script type="math/tex; mode=display">\begin{pmatrix} 
 n  \\
 k 
 \end{pmatrix} = \begin{pmatrix} 
 n + k -1  \\
 k 
-\end{pmatrix}$$</p>
+\end{pmatrix}</script>
+</p>
 <h3 id="references">References</h3>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Combination">https://en.wikipedia.org/wiki/Combination</a></li>

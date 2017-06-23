@@ -797,7 +797,7 @@
     
         <li class="main active"><a href="#release-notes">Release Notes</a></li>
         
-            <li><a href="#version-061-tbd">Version 0.6.1 (TBD)</a></li>
+            <li><a href="#version-070-2017-06-22">Version 0.7.0 (2017-06-22)</a></li>
                 <!-- 
                     <li><a href="#downloads">Downloads</a></li>
             
@@ -949,30 +949,30 @@
 <hr />
 <p>The CHANGELOG for the current development version is available at
 <a href="https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md">https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md</a>.</p>
-<h3 id="version-061-tbd">Version 0.6.1 (TBD)</h3>
+<h3 id="version-070-2017-06-22">Version 0.7.0 (2017-06-22)</h3>
 <h5 id="downloads">Downloads</h5>
 <ul>
-<li><a href="https://github.com/rasbt/mlxtend/archive/v0.6.1.zip">Source code (zip)</a></li>
-<li><a href="https://github.com/rasbt/mlxtend/archive/v0.6.1.tar.gz">Source code (tar.gz)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.7.0.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.7.0.tar.gz">Source code (tar.gz)</a></li>
 </ul>
 <h5 id="new-features">New Features</h5>
 <ul>
-<li>New <a href="http://rasbt.github.io/mlxtend/user_guide/plotting/ecdf/">mlxtend.plotting.ecdf</a> function for plotting empirical cumulative distribution functions.</li>
-<li>New <a href="http://rasbt.github.io/mlxtend/user_guide/plotting/ecdf/"><code>StackingCVRegressor</code></a> for stacking regressors with out-of-fold predictions to prevent overfitting (via <a href="https://github.com/EikeDehling">Eike Dehling</a>).</li>
+<li>New <a href="http://rasbt.github.io/mlxtend/user_guide/plotting/ecdf/">mlxtend.plotting.ecdf</a> function for plotting empirical cumulative distribution functions (<a href="https://github.com/rasbt/mlxtend/pull/196">#196</a>).</li>
+<li>New <a href="http://rasbt.github.io/mlxtend/user_guide/plotting/ecdf/"><code>StackingCVRegressor</code></a> for stacking regressors with out-of-fold predictions to prevent overfitting (<a href="https://github.com/rasbt/mlxtend/pull/201">#201</a>via <a href="https://github.com/EikeDehling">Eike Dehling</a>).</li>
 </ul>
 <h5 id="changes">Changes</h5>
 <ul>
 <li>The TensorFlow estimator have been removed from mlxtend, since TensorFlow has now very convenient ways to build on estimators, which render those implementations obsolete.</li>
-<li><code>plot_decision_regions</code> now supports plotting decision regions for more than 2 training features. (via <a href="https://github.com/jrbourbeau">James Bourbeau</a>).</li>
+<li><code>plot_decision_regions</code> now supports plotting decision regions for more than 2 training features. (<a href="https://github.com/rasbt/mlxtend/pull/189">#189</a> via <a href="https://github.com/jrbourbeau">James Bourbeau</a>).</li>
 <li>Parallel execution in <code>mlxtend.feature_selection.SequentialFeatureSelector</code> and <code>mlxtend.feature_selection.ExhaustiveFeatureSelector</code> is now performed over different feature subsets instead of the different cross-validation folds to better utilize machines with multiple processors if the number of features is large (<a href="https://github.com/rasbt/mlxtend/pull/193">#193</a>, via <a href="https://github.com/whalebot-helmsman">@whalebot-helmsman</a>).</li>
-<li>Raise meaningful error messages if pandas <code>DataFrame</code>s or Python lists of lists are fed into the StackingCVClassifer as a <code>fit</code> arguments.</li>
-<li>The <code>n_folds</code> parameter of the <code>StackingCVClassifier</code> was changed to <code>cv</code> and can now accept any kind of cross validation technique that is available from scikit-learn. For example, <code>StackingCVClassifier(..., cv=StratifiedKFold(n_splits=3)) or StackingCVClassifier(..., cv=GroupKFold(n_splits=3))</code> (via <a href="https://github.com/sque">Konstantinos Paliouras</a>).</li>
+<li>Raise meaningful error messages if pandas <code>DataFrame</code>s or Python lists of lists are fed into the <code>StackingCVClassifer</code> as a <code>fit</code> arguments (<a href="https://github.com/rasbt/mlxtend/pull/198">198</a>).</li>
+<li>The <code>n_folds</code> parameter of the <code>StackingCVClassifier</code> was changed to <code>cv</code> and can now accept any kind of cross validation technique that is available from scikit-learn. For example, <code>StackingCVClassifier(..., cv=StratifiedKFold(n_splits=3))</code> or <code>StackingCVClassifier(..., cv=GroupKFold(n_splits=3))</code> (<a href="https://github.com/rasbt/mlxtend/pull/203">#203</a>, via <a href="https://github.com/sque">Konstantinos Paliouras</a>).</li>
 </ul>
 <h5 id="bug-fixes">Bug Fixes</h5>
 <ul>
-<li><code>SequentialFeatureSelector</code> now correctly accepts a <code>None</code> argument for the <code>scoring</code> parameter to infer the default scoring metric from scikit-learn classifiers and regressors.</li>
-<li>The <code>plot_decision_regions</code> function now supports pre-existing axes objects generated via matplotlib's <code>plt.subplots</code>. (<a href="http://rasbt.github.io/mlxtend/user_guide/plotting/plot_decision_regions/#example-6-working-with-existing-axes-objects-using-subplots">See example</a>)</li>
-<li>Made <code>math.num_combinations</code> and <code>math.num_permutations</code> numerically stable for large numbers of combinations and permutations</li>
+<li><code>SequentialFeatureSelector</code> now correctly accepts a <code>None</code> argument for the <code>scoring</code> parameter to infer the default scoring metric from scikit-learn classifiers and regressors (<a href="https://github.com/rasbt/mlxtend/pull/171">#171</a>).</li>
+<li>The <code>plot_decision_regions</code> function now supports pre-existing axes objects generated via matplotlib's <code>plt.subplots</code>. (<a href="https://github.com/rasbt/mlxtend/pull/184">#184</a>, <a href="http://rasbt.github.io/mlxtend/user_guide/plotting/plot_decision_regions/#example-6-working-with-existing-axes-objects-using-subplots">see example</a>)</li>
+<li>Made <code>math.num_combinations</code> and <code>math.num_permutations</code> numerically stable for large numbers of combinations and permutations (<a href="https://github.com/rasbt/mlxtend/pull/200">#200</a>.</li>
 </ul>
 <h3 id="version-060-2017-03-18">Version 0.6.0 (2017-03-18)</h3>
 <h5 id="downloads_1">Downloads</h5>

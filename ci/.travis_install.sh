@@ -21,8 +21,6 @@ else
     conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy=$NUMPY_VERSION scipy=$SCIPY_VERSION pandas=$PANDAS_VERSION scikit-learn=$SKLEARN_VERSION;
 fi
 
-conda install matplotlib;
-
 source activate test-environment
 
 pip install nose;

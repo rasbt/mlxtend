@@ -5,7 +5,10 @@
 # License: BSD 3 clause
 
 from mlxtend.plotting import checkerboard_plot
+import matplotlib.pyplot as plt
 import numpy as np
+
+plt.switch_backend('agg')
 
 
 def test_runs():

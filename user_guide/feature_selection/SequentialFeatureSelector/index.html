@@ -1062,9 +1062,9 @@ sfs1 = SFS(knn,
 sfs1 = sfs1.fit(X, y)
 </code></pre>
 
-<pre><code>[2017-03-14 16:43:01] Features: 1/3 -- score: 0.96
-[2017-03-14 16:43:01] Features: 2/3 -- score: 0.973333333333
-[2017-03-14 16:43:01] Features: 3/3 -- score: 0.973333333333
+<pre><code>[2017-04-01 03:13:42] Features: 1/3 -- score: 0.96
+[2017-04-01 03:13:42] Features: 2/3 -- score: 0.973333333333
+[2017-04-01 03:13:42] Features: 3/3 -- score: 0.973333333333
 </code></pre>
 <p>Via the <code>subsets_</code> attribute, we can take a look at the selected feature indices at each step:</p>
 <pre><code class="python">sfs1.subsets_
@@ -1338,10 +1338,10 @@ plt.grid()
 plt.show()
 </code></pre>
 
-<pre><code>[2017-03-14 16:43:21] Features: 1/4 -- score: 0.96
-[2017-03-14 16:43:21] Features: 2/4 -- score: 0.966666666667
-[2017-03-14 16:43:21] Features: 3/4 -- score: 0.953333333333
-[2017-03-14 16:43:21] Features: 4/4 -- score: 0.973333333333
+<pre><code>[2017-04-01 03:13:49] Features: 1/4 -- score: 0.96
+[2017-04-01 03:13:49] Features: 2/4 -- score: 0.966666666667
+[2017-04-01 03:13:49] Features: 3/4 -- score: 0.953333333333
+[2017-04-01 03:13:49] Features: 4/4 -- score: 0.973333333333
 </code></pre>
 <p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_39_1.png" /></p>
 <h2 id="example-5-sequential-feature-selection-for-regression">Example 5 - Sequential Feature Selection for Regression</h2>
@@ -1569,7 +1569,7 @@ plot_sfs(sfs1.get_metric_dict(), kind='std_err');
 <pre><code>best combination (ACC: 0.992): (0, 1, 2, 3, 6, 8, 9, 10, 11, 12)
 
 all subsets:
- {1: {'feature_idx': (6,), 'avg_score': 0.7985641025641026, 'cv_scores': array([ 0.84615385,  0.6       ,  0.88      ,  0.79166667,  0.875     ])}, 2: {'feature_idx': (9, 6), 'avg_score': 0.93561538461538463, 'cv_scores': array([ 0.92307692,  0.88      ,  1.        ,  0.95833333,  0.91666667])}, 3: {'feature_idx': (9, 12, 6), 'avg_score': 0.95228205128205123, 'cv_scores': array([ 0.92307692,  0.92      ,  0.96      ,  1.        ,  0.95833333])}, 4: {'feature_idx': (9, 3, 12, 6), 'avg_score': 0.96797435897435891, 'cv_scores': array([ 0.96153846,  0.96      ,  0.96      ,  1.        ,  0.95833333])}, 5: {'feature_idx': (9, 10, 3, 12, 6), 'avg_score': 0.97661538461538466, 'cv_scores': array([ 0.92307692,  0.96      ,  1.        ,  1.        ,  1.        ])}, 6: {'feature_idx': (2, 3, 6, 9, 10, 12), 'avg_score': 0.96828205128205125, 'cv_scores': array([ 0.92307692,  0.96      ,  1.        ,  0.95833333,  1.        ])}, 7: {'feature_idx': (0, 2, 3, 6, 9, 10, 12), 'avg_score': 0.96861538461538466, 'cv_scores': array([ 0.92307692,  0.92      ,  1.        ,  1.        ,  1.        ])}, 8: {'feature_idx': (0, 2, 3, 6, 8, 9, 10, 12), 'avg_score': 0.98399999999999999, 'cv_scores': array([ 1.  ,  0.92,  1.  ,  1.  ,  1.  ])}, 9: {'feature_idx': (0, 2, 3, 6, 8, 9, 10, 11, 12), 'avg_score': 0.98399999999999999, 'cv_scores': array([ 1.  ,  0.92,  1.  ,  1.  ,  1.  ])}, 10: {'feature_idx': (0, 1, 2, 3, 6, 8, 9, 10, 11, 12), 'avg_score': 0.99199999999999999, 'cv_scores': array([ 1.  ,  0.96,  1.  ,  1.  ,  1.  ])}}
+ {1: {'avg_score': 0.7985641025641026, 'cv_scores': array([ 0.84615385,  0.6       ,  0.88      ,  0.79166667,  0.875     ]), 'feature_idx': (6,)}, 2: {'avg_score': 0.93561538461538463, 'cv_scores': array([ 0.92307692,  0.88      ,  1.        ,  0.95833333,  0.91666667]), 'feature_idx': (9, 6)}, 3: {'avg_score': 0.95228205128205123, 'cv_scores': array([ 0.92307692,  0.92      ,  0.96      ,  1.        ,  0.95833333]), 'feature_idx': (9, 12, 6)}, 4: {'avg_score': 0.96797435897435891, 'cv_scores': array([ 0.96153846,  0.96      ,  0.96      ,  1.        ,  0.95833333]), 'feature_idx': (9, 3, 12, 6)}, 5: {'avg_score': 0.97661538461538466, 'cv_scores': array([ 0.92307692,  0.96      ,  1.        ,  1.        ,  1.        ]), 'feature_idx': (9, 10, 3, 12, 6)}, 6: {'avg_score': 0.96828205128205125, 'cv_scores': array([ 0.92307692,  0.96      ,  1.        ,  0.95833333,  1.        ]), 'feature_idx': (2, 3, 6, 9, 10, 12)}, 7: {'avg_score': 0.96861538461538466, 'cv_scores': array([ 0.92307692,  0.92      ,  1.        ,  1.        ,  1.        ]), 'feature_idx': (0, 2, 3, 6, 9, 10, 12)}, 8: {'avg_score': 0.98399999999999999, 'cv_scores': array([ 1.  ,  0.92,  1.  ,  1.  ,  1.  ]), 'feature_idx': (0, 2, 3, 6, 8, 9, 10, 12)}, 9: {'avg_score': 0.98399999999999999, 'cv_scores': array([ 1.  ,  0.92,  1.  ,  1.  ,  1.  ]), 'feature_idx': (0, 2, 3, 6, 8, 9, 10, 11, 12)}, 10: {'avg_score': 0.99199999999999999, 'cv_scores': array([ 1.  ,  0.96,  1.  ,  1.  ,  1.  ]), 'feature_idx': (0, 1, 2, 3, 6, 8, 9, 10, 11, 12)}}
 </code></pre>
 <p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_69_1.png" /></p>
 <h1 id="api">API</h1>
@@ -1606,13 +1606,15 @@ if 1 number of features in current set, if 2 detailed logging i
 ncluding timestamp and cv scores at step.</p>
 </li>
 <li>
-<p><code>scoring</code> : str or callable (default='accuracy')</p>
-<p>Scoring metric in {accuracy, f1, precision, recall, roc_auc}
-for classifiers,
+<p><code>scoring</code> : str, callable, or None (default: None)</p>
+<p>If None (default), uses 'accuracy' for sklearn classifiers
+and 'r2' for sklearn regressors.
+If str, uses a sklearn scoring metric string identifier, for example
+{accuracy, f1, precision, recall, roc_auc} for classifiers,
 {'mean_absolute_error', 'mean_squared_error'/'neg_mean_squared_error',
-'median_absolute_error', 'r2'} for regressors,
-or a callable object or function with
-signature <code>scorer(estimator, X, y)</code>; see
+'median_absolute_error', 'r2'} for regressors.
+If a callable object or function is provided, it has to be conform with
+sklearn's signature <code>scorer(estimator, X, y)</code>; see
 http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
 for more information.</p>
 </li>
@@ -1630,12 +1632,13 @@ algorithm gets stuck in cycles.</p>
 </li>
 <li>
 <p><code>n_jobs</code> : int (default: 1)</p>
-<p>The number of CPUs to use for cross validation. -1 means 'all CPUs'.</p>
+<p>The number of CPUs to use for evaluating different feature subsets
+in parallel. -1 means 'all CPUs'.</p>
 </li>
 <li>
 <p><code>pre_dispatch</code> : int, or string (default: '2*n_jobs')</p>
 <p>Controls the number of jobs that get dispatched
-during parallel execution in cross_val_score.
+during parallel execution if <code>n_jobs &gt; 1</code> or <code>n_jobs=-1</code>.
 Reducing this number can be useful to avoid an explosion of
 memory consumption when more jobs get dispatched than CPUs can process.
 This parameter can be:

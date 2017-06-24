@@ -824,6 +824,12 @@
             <li><a href="#example-6-working-with-existing-axes-objects-using-subplots">Example 6 - Working with existing axes objects using subplots</a></li>
                 <!--  -->
         
+            <li><a href="#example-7-decision-regions-with-more-than-two-training-features">Example 7 - Decision regions with more than two training features</a></li>
+                <!--  -->
+        
+            <li><a href="#example-8-grid-of-decision-region-slices">Example 8 - Grid of decision region slices</a></li>
+                <!--  -->
+        
     
         <li class="main "><a href="#api">API</a></li>
         
@@ -858,7 +864,7 @@ svm.fit(X, y)
 
 
 # Plotting decision regions
-plot_decision_regions(X, y, clf=svm, 
+plot_decision_regions(X, y, clf=svm,
                       res=0.02, legend=2)
 
 # Adding axes annotations
@@ -960,7 +966,7 @@ svm = SVC(C=0.5, kernel='linear')
 svm.fit(X_train, y_train)
 
 # Plotting decision regions
-plot_decision_regions(X, y, clf=svm, res=0.02, 
+plot_decision_regions(X, y, clf=svm, res=0.02,
                       legend=2, X_highlight=X_test)
 
 # Adding axes annotations
@@ -1094,8 +1100,76 @@ plt.show()
 </code></pre>
 
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_25_0.png" /></p>
+<h2 id="example-7-decision-regions-with-more-than-two-training-features">Example 7 - Decision regions with more than two training features</h2>
+<pre><code class="python">from mlxtend.plotting import plot_decision_regions
+import matplotlib.pyplot as plt
+from sklearn import datasets
+from sklearn.svm import SVC
+
+# Loading some example data
+X, y = datasets.make_blobs(n_samples=600, n_features=3,
+                           centers=[[2, 2, -2],[-2, -2, 2]],
+                           cluster_std=[2, 2], random_state=2)
+
+# Training a classifier
+svm = SVC()
+svm.fit(X, y)
+
+# Plotting decision regions
+fig, ax = plt.subplots()
+# Decision region for feature 3 = 1.5
+value = 1.5
+# Plot training sample with feature 3 = 1.5 +/- 0.75
+width = 0.75
+plot_decision_regions(X, y, clf=svm,
+                      filler_feature_values={2: value},
+                      filler_feature_ranges={2: width},
+                      res=0.02, legend=2, ax=ax)
+ax.set_xlabel('Feature 1')
+ax.set_ylabel('Feature 2')
+ax.set_title('Feature 3 = {}'.format(value))
+
+# Adding axes annotations
+fig.suptitle('SVM on make_blobs')
+plt.show()
+</code></pre>
+
+<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_27_0.png" /></p>
+<h2 id="example-8-grid-of-decision-region-slices">Example 8 - Grid of decision region slices</h2>
+<pre><code class="python">from mlxtend.plotting import plot_decision_regions
+import matplotlib.pyplot as plt
+from sklearn import datasets
+from sklearn.svm import SVC
+
+# Loading some example data
+X, y = datasets.make_blobs(n_samples=500, n_features=3, centers=[[2, 2, -2],[-2, -2, 2]],
+                           cluster_std=[2, 2], random_state=2)
+
+# Training a classifier
+svm = SVC()
+svm.fit(X, y)
+
+# Plotting decision regions
+fig, axarr = plt.subplots(2, 2, figsize=(10,8), sharex=True, sharey=True)
+values = [-4.0, -1.0, 1.0, 4.0]
+width = 0.75
+for value, ax in zip(values, axarr.flat):
+    plot_decision_regions(X, y, clf=svm,
+                          filler_feature_values={2: value},
+                          filler_feature_ranges={2: width},
+                          res=0.02, legend=2, ax=ax)
+    ax.set_xlabel('Feature 1')
+    ax.set_ylabel('Feature 2')
+    ax.set_title('Feature 3 = {}'.format(value))
+
+# Adding axes annotations
+fig.suptitle('SVM on make_blobs')
+plt.show()
+</code></pre>
+
+<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_29_0.png" /></p>
 <h1 id="api">API</h1>
-<p><em>plot_decision_regions(X, y, clf, ax=None, X_highlight=None, res=0.02, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors='red,blue,limegreen,gray,cyan')</em></p>
+<p><em>plot_decision_regions(X, y, clf, feature_index=None, filler_feature_values=None, filler_feature_ranges=None, ax=None, X_highlight=None, res=0.02, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors='red,blue,limegreen,gray,cyan')</em></p>
 <p>Plot decision regions of a classifier.</p>
 <p>Please note that this functions assumes that class labels are
 labeled consecutively, e.g,. 0, 1, 2, 3, 4, and 5. If you have class
@@ -1118,6 +1192,23 @@ information.</p>
 <p>Must have a .predict method.</p>
 </li>
 <li>
+<p><code>feature_index</code> : array-like (default: (0,) for 1D, (0, 1) otherwise)</p>
+<p>Feature indices to use for plotting. The first index in
+<code>feature_index</code> will be on the x-axis, the second index will be
+on the y-axis.</p>
+</li>
+<li>
+<p><code>filler_feature_values</code> : dict (default: None)</p>
+<p>Only needed for number features &gt; 2. Dictionary of feature
+index-value pairs for the features not being plotted.</p>
+</li>
+<li>
+<p><code>filler_feature_ranges</code> : dict (default: None)</p>
+<p>Only needed for number features &gt; 2. Dictionary of feature
+index-value pairs for the features not being plotted. Will use the
+ranges provided to select training samples for plotting.</p>
+</li>
+<li>
 <p><code>ax</code> : matplotlib.axes.Axes (default: None)</p>
 <p>An existing matplotlib Axes. Creates
 one if ax=None.</p>
@@ -1127,8 +1218,10 @@ one if ax=None.</p>
 <p>An array with data points that are used to highlight samples in <code>X</code>.</p>
 </li>
 <li>
-<p><code>res</code> : float (default: 0.02)</p>
-<p>Grid width. Lower values increase the resolution but
+<p><code>res</code> : float or array-like, shape = (2,) (default: 0.02)</p>
+<p>Grid width. If float, same resolution is used for both the x- and
+y-axis. If array-like, the first item is used on the x-axis, the
+second is used on the y-axis. Lower values increase the resolution but
 slow down the plotting.</p>
 </li>
 <li>
@@ -1141,7 +1234,7 @@ slow down the plotting.</p>
 No legend if legend is 0.</p>
 </li>
 <li>
-<p><code>markers</code> : list</p>
+<p><code>markers</code> : str (default 's^oxv&lt;&gt;')</p>
 <p>Scatterplot markers.</p>
 </li>
 <li>

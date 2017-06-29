@@ -5,22 +5,34 @@
 # License: BSD 3 clause
 
 import sys
+
 import numpy as np
+import pandas as pd
 from numpy.testing import assert_almost_equal
-from mlxtend.feature_selection import SequentialFeatureSelector as SFS
-from sklearn.neighbors import KNeighborsClassifier
-from mlxtend.classifier import SoftmaxRegression
-from sklearn.datasets import load_iris
-from sklearn.linear_model import LinearRegression
 from sklearn.datasets import load_boston
-from sklearn.model_selection import GridSearchCV
-from sklearn.pipeline import Pipeline
-from mlxtend.utils import assert_raises
-from sklearn.metrics import accuracy_score
+from sklearn.datasets import load_iris
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import accuracy_score, roc_auc_score
 from sklearn.metrics import make_scorer
+from sklearn.model_selection import GridSearchCV, GroupKFold
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.pipeline import Pipeline
+from numpy import nan
+
+from mlxtend.classifier import SoftmaxRegression
+from mlxtend.feature_selection import SequentialFeatureSelector as SFS
+from mlxtend.utils import assert_raises
 
 
-def dict_compare_utility(d1, d2):
+def nan_roc_auc_score(y_true, y_score, average='macro', sample_weight=None):
+    if len(np.unique(y_true)) != 2:
+        return np.nan
+    else:
+        return roc_auc_score(y_true, y_score, average=average, sample_weight=sample_weight)
+
+    
+def dict_compare_utility(d1, d2, decimal=3):
     assert d1.keys() == d2.keys(), "%s != %s" % (d1, d2)
     for i in d1:
         err_msg = ("d1[%s]['feature_idx']"
@@ -28,12 +40,12 @@ def dict_compare_utility(d1, d2):
         assert d1[i]['feature_idx'] == d1[i]["feature_idx"], err_msg
         assert_almost_equal(d1[i]['avg_score'],
                             d2[i]['avg_score'],
-                            decimal=3,
+                            decimal=decimal,
                             err_msg=("d1[%s]['avg_score']"
                                      " != d2[%s]['avg_score']" % (i, i)))
         assert_almost_equal(d1[i]['cv_scores'],
                             d2[i]['cv_scores'],
-                            decimal=3,
+                            decimal=decimal,
                             err_msg=("d1[%s]['cv_scores']"
                                      " != d2[%s]['cv_scores']" % (i, i)))
 
@@ -46,7 +58,7 @@ def test_run_default():
     sfs = SFS(estimator=knn,
               verbose=0)
     sfs.fit(X, y)
-    assert sfs.k_feature_idx_ == (3, )
+    assert sfs.k_feature_idx_ == (3,)
 
 
 def test_kfeatures_type_1():
@@ -189,6 +201,55 @@ def test_knn_cv3():
                                          0.97222222]),
                   'feature_idx': (1, 2, 3)}}
     dict_compare_utility(d1=expect, d2=sfs1.subsets_)
+
+
+def test_knn_cv_groupkfold():
+    nan_roc_auc_scorer = make_scorer(nan_roc_auc_score)
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    # knn = KNeighborsClassifier(n_neighbors=4)
+    forest = RandomForestClassifier(n_estimators=100)
+    bool_01 = [True if item == 0 else False for item in iris['target']]
+    bool_02 = [True if (item == 1 or item == 2) else False for item in iris['target']]
+    groups = []
+    y_new = []
+    for ind, _ in enumerate(bool_01):
+        if bool_01[ind]:
+            groups.append('attribute_A')
+            y_new.append(0)
+        if bool_02[ind]:
+            throw = np.random.rand()
+            if throw < 0.5:
+                groups.append('attribute_B')
+            else:
+                groups.append('attribute_C')
+            throw2 = np.random.rand()
+            if throw2 < 0.5:
+                y_new.append(0)
+            else:
+                y_new.append(1)
+    y_new_bool = [True if item is 1 else False for item in y_new]
+    df_groups = pd.DataFrame({'classes': y_new, 'groups': groups})
+    cv_obj = GroupKFold(n_splits=3)
+    cv_obj_list = list(cv_obj.split(X, np.array(y_new_bool), groups))
+    sfs1 = SFS(forest,
+               k_features=3,
+               forward=True,
+               floating=False,
+               cv=cv_obj_list,
+               scoring=nan_roc_auc_scorer,
+               verbose=0
+               )
+    sfs1 = sfs1.fit(X, y_new)
+    expect = {
+        1: {'cv_scores': np.array([0.488, nan, 0.51]), 'avg_score': 0.499047, 'feature_idx': (3,)},
+        2: {'cv_scores': np.array([0.54563, nan, 0.585]), 'avg_score': 0.56531,
+            'feature_idx': (2, 3)},
+        3: {'cv_scores': np.array([0.48875661, nan, 0.515]), 'avg_score': 0.50187,
+            'feature_idx': (1, 2, 3)}}
+
+    dict_compare_utility(d1=expect, d2=sfs1.subsets_, decimal=1)
 
 
 def test_knn_option_sfs():
@@ -452,7 +513,7 @@ def test_clone_params_pass():
                verbose=0,
                n_jobs=1)
     sfs1 = sfs1.fit(X, y)
-    assert(sfs1.k_feature_idx_ == (1, 3))
+    assert (sfs1.k_feature_idx_ == (1, 3))
 
 
 def test_transform_not_fitted():
@@ -528,7 +589,6 @@ def test_keyboard_interrupt():
 
 
 def test_gridsearch():
-
     iris = load_iris()
     X = iris.data
     y = iris.target
@@ -544,9 +604,9 @@ def test_gridsearch():
                      ('knn', knn)])
 
     param_grid = [
-      {'sfs__k_features': [1, 2, 3, 4],
-       'sfs__estimator__n_neighbors': [1, 2, 3, 4]}
-      ]
+        {'sfs__k_features': [1, 2, 3, 4],
+         'sfs__estimator__n_neighbors': [1, 2, 3, 4]}
+    ]
 
     gs = GridSearchCV(estimator=pipe,
                       param_grid=param_grid,

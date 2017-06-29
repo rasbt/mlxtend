@@ -7,7 +7,7 @@
 import sys
 
 import numpy as np
-import pandas as pd
+from numpy import nan
 from numpy.testing import assert_almost_equal
 from sklearn.datasets import load_boston
 from sklearn.datasets import load_iris
@@ -18,7 +18,6 @@ from sklearn.metrics import make_scorer
 from sklearn.model_selection import GridSearchCV, GroupKFold
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.pipeline import Pipeline
-from numpy import nan
 
 from mlxtend.classifier import SoftmaxRegression
 from mlxtend.feature_selection import SequentialFeatureSelector as SFS
@@ -29,9 +28,10 @@ def nan_roc_auc_score(y_true, y_score, average='macro', sample_weight=None):
     if len(np.unique(y_true)) != 2:
         return np.nan
     else:
-        return roc_auc_score(y_true, y_score, average=average, sample_weight=sample_weight)
+        return roc_auc_score(y_true, y_score,
+                             average=average, sample_weight=sample_weight)
 
-    
+
 def dict_compare_utility(d1, d2, decimal=3):
     assert d1.keys() == d2.keys(), "%s != %s" % (d1, d2)
     for i in d1:
@@ -207,11 +207,11 @@ def test_knn_cv_groupkfold():
     nan_roc_auc_scorer = make_scorer(nan_roc_auc_score)
     iris = load_iris()
     X = iris.data
-    y = iris.target
     # knn = KNeighborsClassifier(n_neighbors=4)
     forest = RandomForestClassifier(n_estimators=100)
     bool_01 = [True if item == 0 else False for item in iris['target']]
-    bool_02 = [True if (item == 1 or item == 2) else False for item in iris['target']]
+    bool_02 = [True if (item == 1 or item == 2) else False for item in
+               iris['target']]
     groups = []
     y_new = []
     for ind, _ in enumerate(bool_01):
@@ -230,7 +230,6 @@ def test_knn_cv_groupkfold():
             else:
                 y_new.append(1)
     y_new_bool = [True if item is 1 else False for item in y_new]
-    df_groups = pd.DataFrame({'classes': y_new, 'groups': groups})
     cv_obj = GroupKFold(n_splits=3)
     cv_obj_list = list(cv_obj.split(X, np.array(y_new_bool), groups))
     sfs1 = SFS(forest,
@@ -243,10 +242,12 @@ def test_knn_cv_groupkfold():
                )
     sfs1 = sfs1.fit(X, y_new)
     expect = {
-        1: {'cv_scores': np.array([0.488, nan, 0.51]), 'avg_score': 0.499047, 'feature_idx': (3,)},
+        1: {'cv_scores': np.array([0.488, nan, 0.51]), 'avg_score': 0.499047,
+            'feature_idx': (3,)},
         2: {'cv_scores': np.array([0.54563, nan, 0.585]), 'avg_score': 0.56531,
             'feature_idx': (2, 3)},
-        3: {'cv_scores': np.array([0.48875661, nan, 0.515]), 'avg_score': 0.50187,
+        3: {'cv_scores': np.array([0.48875661, nan, 0.515]),
+            'avg_score': 0.50187,
             'feature_idx': (1, 2, 3)}}
 
     dict_compare_utility(d1=expect, d2=sfs1.subsets_, decimal=1)

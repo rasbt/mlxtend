@@ -20,7 +20,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- /
+- `SFS` now uses `np.nanmean` over normal mean to support scorers that may return `np.nan` 
 
 ##### Bug Fixes
 

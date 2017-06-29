@@ -203,7 +203,7 @@ def test_knn_cv3():
     dict_compare_utility(d1=expect, d2=sfs1.subsets_)
 
 
-def test_knn_cv_groupkfold():
+def test_knn_rbf_groupkfold():
     nan_roc_auc_scorer = make_scorer(nan_roc_auc_score)
     iris = load_iris()
     X = iris.data

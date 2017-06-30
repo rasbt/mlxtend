@@ -1,5 +1,5 @@
 dist: trusty
-sudo: required
+sudo: true
 language: python
 matrix:
     include:
@@ -17,7 +17,7 @@ script:
 after_success:
     - if [[ "$COVERAGE" == "true" ]]; then coveralls || echo "failed"; fi
 notifications:
-    email: 
+    email:
       recipients:
           - mail@sebastianraschka.com
     on_success: always

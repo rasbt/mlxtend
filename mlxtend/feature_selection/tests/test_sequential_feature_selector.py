@@ -119,8 +119,8 @@ def test_kfeatures_type_5():
     X = iris.data
     y = iris.target
     knn = KNeighborsClassifier()
-    expect = ('he min k_features value must be'
-              ' larger than the max k_features value.')
+    expect = ('The min k_features value must be'
+              ' smaller than the max k_features value.')
     sfs = SFS(estimator=knn,
               verbose=0,
               k_features=(3, 1))
@@ -583,3 +583,20 @@ def test_string_scoring_clf():
 
     assert sfs1.k_score_ == sfs2.k_score_
     assert sfs1.k_score_ == sfs3.k_score_
+
+
+def test_max_feature_subset_size_in_tuple_range():
+    boston = load_boston()
+    X, y = boston.data, boston.target
+
+    lr = LinearRegression()
+
+    sfs = SFS(lr,
+              k_features=(1, 5),
+              forward=False,
+              floating=True,
+              scoring='neg_mean_squared_error',
+              cv=10)
+
+    sfs = sfs.fit(X, y)
+    assert len(sfs.k_feature_idx_) == 5

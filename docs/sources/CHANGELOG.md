@@ -24,7 +24,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Bug Fixes
 
-- /
+- Fixed a bug where the `SequentialFeatureSelector` selected a feature subset larger than then specified via the `k_features` tuple max-value
 
 
 ### Version 0.7.0 (2017-06-22)

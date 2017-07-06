@@ -212,7 +212,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                                      ' range(1, X.shape[1]+1).')
 
             if self.k_features[0] > self.k_features[1]:
-                raise AttributeError('The min k_features value must be larger'
+                raise AttributeError('The min k_features value must be smaller'
                                      ' than the max k_features value.')
 
         if self.skip_if_stuck:
@@ -244,7 +244,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 'cv_scores': k_score,
                 'avg_score': k_score.mean()
             }
-
+        print(' k_to_select',  k_to_select)
         best_subset = None
         k_score = 0
         try:
@@ -323,6 +323,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         if select_in_range:
             max_score = float('-inf')
             for k in self.subsets_:
+                if k < self.k_features[0] or k > self.k_features[1]:
+                    continue
                 if self.subsets_[k]['avg_score'] > max_score:
                     max_score = self.subsets_[k]['avg_score']
                     best_subset = k

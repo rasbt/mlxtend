@@ -356,7 +356,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                             for feature in remaining)
 
             for new_subset, cv_scores in work:
-                all_avg_scores.append(np.nanmean(cv_scores))
+                all_avg_scores.append(np.nanmean(cv_scores)) 
                 all_cv_scores.append(cv_scores)
                 all_subsets.append(new_subset)
 

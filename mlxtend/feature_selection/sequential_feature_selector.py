@@ -10,7 +10,6 @@ import datetime
 import numpy as np
 import scipy as sp
 import scipy.stats
-import warnings
 import sys
 from copy import deepcopy
 from itertools import combinations
@@ -242,7 +241,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             self.subsets_[k] = {
                 'feature_idx': k_idx,
                 'cv_scores': k_score,
-                'avg_score': k_score.mean()
+                'avg_score': np.nanmean(k_score)
             }
         print(' k_to_select',  k_to_select)
         best_subset = None
@@ -359,7 +358,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                             for feature in remaining)
 
             for new_subset, cv_scores in work:
-                all_avg_scores.append(cv_scores.mean())
+                all_avg_scores.append(np.nanmean(cv_scores)) 
                 all_cv_scores.append(cv_scores)
                 all_subsets.append(new_subset)
 
@@ -385,7 +384,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                             if not fixed_feature or fixed_feature in set(p))
 
             for p, cv_scores in work:
-                all_avg_scores.append(cv_scores.mean())
+                all_avg_scores.append(np.nanmean(cv_scores))
                 all_cv_scores.append(cv_scores)
                 all_subsets.append(p)
 

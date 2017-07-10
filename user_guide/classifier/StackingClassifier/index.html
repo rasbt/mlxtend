@@ -989,15 +989,15 @@ print('Best parameters: %s' % grid.best_params_)
 print('Accuracy: %.2f' % grid.best_score_)
 </code></pre>
 
-<pre><code>0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10}
-0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50}
-0.927 +/- 0.02 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10}
-0.913 +/- 0.03 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50}
-0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10}
-0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50}
-0.933 +/- 0.02 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10}
-0.940 +/- 0.02 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50}
-Best parameters: {'meta-logisticregression__C': 10.0, 'kneighborsclassifier__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50}
+<pre><code>0.667 +/- 0.00 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.667 +/- 0.00 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.927 +/- 0.02 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.913 +/- 0.03 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+0.667 +/- 0.00 {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.667 +/- 0.00 {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.933 +/- 0.02 {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.940 +/- 0.02 {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+Best parameters: {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
 Accuracy: 0.94
 </code></pre>
 <p>In case we are planning to use a regression algorithm multiple times, all we need to do is to add an additional number suffix in the parameter grid as shown below:</p>
@@ -1035,23 +1035,23 @@ print('Best parameters: %s' % grid.best_params_)
 print('Accuracy: %.2f' % grid.best_score_)
 </code></pre>
 
-<pre><code>0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10}
-0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50}
-0.907 +/- 0.03 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10}
-0.913 +/- 0.03 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50}
-0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10}
-0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50}
-0.927 +/- 0.02 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 1, 'randomforestclassifier__n_estimators': 10}
-0.913 +/- 0.03 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 1, 'randomforestclassifier__n_estimators': 50}
-0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10}
-0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50}
-0.927 +/- 0.02 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10}
-0.913 +/- 0.03 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier-2__n_neighbors': 1, 'kneighborsclassifier-1__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50}
-0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10}
-0.667 +/- 0.00 {'meta-logisticregression__C': 0.1, 'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50}
-0.933 +/- 0.02 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 5, 'randomforestclassifier__n_estimators': 10}
-0.940 +/- 0.02 {'meta-logisticregression__C': 10.0, 'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50}
-Best parameters: {'meta-logisticregression__C': 10.0, 'kneighborsclassifier-2__n_neighbors': 5, 'kneighborsclassifier-1__n_neighbors': 5, 'randomforestclassifier__n_estimators': 50}
+<pre><code>0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.907 +/- 0.03 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.913 +/- 0.03 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.927 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.913 +/- 0.03 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.927 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.913 +/- 0.03 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.933 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.940 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+Best parameters: {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
 Accuracy: 0.94
 </code></pre>
 <h1 id="api">API</h1>

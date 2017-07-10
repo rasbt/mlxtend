@@ -847,7 +847,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.7.0 </p>
+<p>mlxtend version: 0.7.1dev </p>
 <h2 id="adaline">Adaline</h2>
 <p><em>Adaline(eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0)</em></p>
 <p>ADAptive LInear NEuron classifier.</p>
@@ -1967,6 +1967,13 @@ component of a nested object.</p>
 <p><em>StackingCVClassifier(classifiers, meta_classifier, use_probas=False, cv=2, use_features_in_secondary=False, stratify=True, shuffle=True, verbose=0)</em></p>
 <p>A 'Stacking Cross-Validation' classifier for scikit-learn estimators.</p>
 <p>New in mlxtend v0.4.3</p>
+<p><strong>Notes</strong></p>
+<p>The StackingCVClassifier uses scikit-learn's check_cv
+internally, which doesn't support a random seed. Thus
+NumPy's random seed need to be specified explicitely for
+deterministic behavior, for instance, by setting
+np.random.seed(RANDOM_SEED)
+prior to fitting the StackingCVClassifier</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>

@@ -854,13 +854,20 @@ from sklearn.ensemble import RandomForestClassifier
 from mlxtend.classifier import StackingCVClassifier
 import numpy as np
 
+RANDOM_SEED = 42
+
 clf1 = KNeighborsClassifier(n_neighbors=1)
-clf2 = RandomForestClassifier(random_state=42)
+clf2 = RandomForestClassifier(random_state=RANDOM_SEED)
 clf3 = GaussianNB()
 lr = LogisticRegression()
+
+# The StackingCVClassifier uses scikit-learn's check_cv
+# internally, which doesn't support a random seed. Thus
+# NumPy's random seed need to be specified explicitely for
+# deterministic behavior
+np.random.seed(RANDOM_SEED)
 sclf = StackingCVClassifier(classifiers=[clf1, clf2, clf3], 
-                            meta_classifier=lr,
-                            random_state=42)
+                            meta_classifier=lr)
 
 print('3-fold cross validation:\n')
 
@@ -921,10 +928,15 @@ plt.show()
 clf2 = RandomForestClassifier(random_state=1)
 clf3 = GaussianNB()
 lr = LogisticRegression()
+
+# The StackingCVClassifier uses scikit-learn's check_cv
+# internally, which doesn't support a random seed. Thus
+# NumPy's random seed need to be specified explicitely for
+# deterministic behavior
+np.random.seed(RANDOM_SEED)
 sclf = StackingCVClassifier(classifiers=[clf1, clf2, clf3],
                             use_probas=True,
-                            meta_classifier=lr,
-                            random_state=42)
+                            meta_classifier=lr)
 
 print('3-fold cross validation:\n')
 
@@ -945,7 +957,7 @@ for clf, label in zip([clf1, clf2, clf3, sclf],
 Accuracy: 0.91 (+/- 0.01) [KNN]
 Accuracy: 0.91 (+/- 0.06) [Random Forest]
 Accuracy: 0.92 (+/- 0.03) [Naive Bayes]
-Accuracy: 0.94 (+/- 0.03) [StackingClassifier]
+Accuracy: 0.95 (+/- 0.04) [StackingClassifier]
 </code></pre>
 <h2 id="example-3-stacked-cv-classification-and-gridsearch">Example 3 - Stacked CV Classification and GridSearch</h2>
 <p>To set up a parameter grid for scikit-learn's <code>GridSearch</code>, we simply provide the estimator's names in the parameter grid -- in the special case of the meta-regressor, we append the <code>'meta-'</code> prefix.</p>
@@ -959,12 +971,17 @@ from mlxtend.classifier import StackingCVClassifier
 # Initializing models
 
 clf1 = KNeighborsClassifier(n_neighbors=1)
-clf2 = RandomForestClassifier(random_state=42)
+clf2 = RandomForestClassifier(random_state=RANDOM_SEED)
 clf3 = GaussianNB()
 lr = LogisticRegression()
+
+# The StackingCVClassifier uses scikit-learn's check_cv
+# internally, which doesn't support a random seed. Thus
+# NumPy's random seed need to be specified explicitely for
+# deterministic behavior
+np.random.seed(RANDOM_SEED)
 sclf = StackingCVClassifier(classifiers=[clf1, clf2, clf3], 
-                            meta_classifier=lr,
-                            random_state=42)
+                            meta_classifier=lr)
 
 params = {'kneighborsclassifier__n_neighbors': [1, 5],
           'randomforestclassifier__n_estimators': [10, 50],
@@ -988,16 +1005,16 @@ print('Best parameters: %s' % grid.best_params_)
 print('Accuracy: %.2f' % grid.best_score_)
 </code></pre>
 
-<pre><code>0.667 +/- 0.00 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+<pre><code>0.673 +/- 0.01 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
 0.667 +/- 0.00 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
-0.940 +/- 0.02 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
-0.927 +/- 0.02 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+0.920 +/- 0.02 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.893 +/- 0.02 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
 0.667 +/- 0.00 {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
 0.667 +/- 0.00 {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
-0.933 +/- 0.03 {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
-0.933 +/- 0.03 {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
-Best parameters: {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
-Accuracy: 0.94
+0.947 +/- 0.02 {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.947 +/- 0.02 {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+Best parameters: {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+Accuracy: 0.95
 </code></pre>
 <p>In case we are planning to use a regression algorithm multiple times, all we need to do is to add an additional number suffix in the parameter grid as shown below:</p>
 <pre><code class="python">from sklearn.model_selection import GridSearchCV
@@ -1005,12 +1022,17 @@ Accuracy: 0.94
 # Initializing models
 
 clf1 = KNeighborsClassifier(n_neighbors=1)
-clf2 = RandomForestClassifier(random_state=1)
+clf2 = RandomForestClassifier(random_state=RANDOM_SEED)
 clf3 = GaussianNB()
 lr = LogisticRegression()
+
+# The StackingCVClassifier uses scikit-learn's check_cv
+# internally, which doesn't support a random seed. Thus
+# NumPy's random seed need to be specified explicitely for
+# deterministic behavior
+np.random.seed(RANDOM_SEED)
 sclf = StackingCVClassifier(classifiers=[clf1, clf1, clf2, clf3], 
-                            meta_classifier=lr,
-                            random_state=42)
+                            meta_classifier=lr)
 
 params = {'kneighborsclassifier-1__n_neighbors': [1, 5],
           'kneighborsclassifier-2__n_neighbors': [1, 5],
@@ -1035,29 +1057,36 @@ print('Best parameters: %s' % grid.best_params_)
 print('Accuracy: %.2f' % grid.best_score_)
 </code></pre>
 
-<pre><code>0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+<pre><code>0.673 +/- 0.01 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
 0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
-0.927 +/- 0.03 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
-0.933 +/- 0.03 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+0.920 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.893 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
 0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
 0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
-0.927 +/- 0.03 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
-0.933 +/- 0.03 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+0.947 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.940 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
 0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
 0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
-0.927 +/- 0.03 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
-0.933 +/- 0.03 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+0.953 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.927 +/- 0.03 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
 0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
 0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
-0.927 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
-0.933 +/- 0.03 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
-Best parameters: {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
-Accuracy: 0.93
+0.940 +/- 0.03 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.940 +/- 0.03 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+Best parameters: {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+Accuracy: 0.95
 </code></pre>
 <h1 id="api">API</h1>
 <p><em>StackingCVClassifier(classifiers, meta_classifier, use_probas=False, cv=2, use_features_in_secondary=False, stratify=True, shuffle=True, verbose=0)</em></p>
 <p>A 'Stacking Cross-Validation' classifier for scikit-learn estimators.</p>
 <p>New in mlxtend v0.4.3</p>
+<p><strong>Notes</strong></p>
+<p>The StackingCVClassifier uses scikit-learn's check_cv
+internally, which doesn't support a random seed. Thus
+NumPy's random seed need to be specified explicitely for
+deterministic behavior, for instance, by setting
+np.random.seed(RANDOM_SEED)
+prior to fitting the StackingCVClassifier</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>

@@ -972,11 +972,11 @@
 </ul>
 <h5 id="changes">Changes</h5>
 <ul>
-<li>/</li>
+<li><code>SFS</code> now uses <code>np.nanmean</code> over normal mean to support scorers that may return <code>np.nan</code> </li>
 </ul>
 <h5 id="bug-fixes">Bug Fixes</h5>
 <ul>
-<li>/</li>
+<li>Fixed a bug where the <code>SequentialFeatureSelector</code> selected a feature subset larger than then specified via the <code>k_features</code> tuple max-value</li>
 </ul>
 <h3 id="version-070-2017-06-22">Version 0.7.0 (2017-06-22)</h3>
 <h5 id="downloads_1">Downloads</h5>

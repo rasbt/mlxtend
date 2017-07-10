@@ -820,7 +820,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.7.0 </p>
+<p>mlxtend version: 0.7.1dev </p>
 <h2 id="linearregression">LinearRegression</h2>
 <p><em>LinearRegression(eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0)</em></p>
 <p>Ordinary least squares linear regression.</p>
@@ -923,6 +923,13 @@ n_features is the number of features.</p>
 <p><em>StackingCVRegressor(regressors, meta_regressor, cv=5, shuffle=True, use_features_in_secondary=False)</em></p>
 <p>A 'Stacking Cross-Validation' regressor for scikit-learn estimators.</p>
 <p>New in mlxtend v0.7.0</p>
+<p><strong>Notes</strong></p>
+<p>The StackingCVRegressor uses scikit-learn's check_cv
+internally, which doesn't support a random seed. Thus
+NumPy's random seed need to be specified explicitely for
+deterministic behavior, for instance, by setting
+np.random.seed(RANDOM_SEED)
+prior to fitting the StackingCVRegressor</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>

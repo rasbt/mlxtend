@@ -840,13 +840,22 @@ from sklearn.svm import SVR
 from sklearn.linear_model import Lasso
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import cross_val_score
+import numpy as np
+
+RANDOM_SEED = 42
 
 X, y = load_boston(return_X_y=True)
 
 svr = SVR(kernel='linear')
 lasso = Lasso()
-rf = RandomForestRegressor(n_estimators=5)
+rf = RandomForestRegressor(n_estimators=5, 
+                           random_state=RANDOM_SEED)
 
+# The StackingCVRegressor uses scikit-learn's check_cv
+# internally, which doesn't support a random seed. Thus
+# NumPy's random seed need to be specified explicitely for
+# deterministic behavior
+np.random.seed(RANDOM_SEED)
 stack = StackingCVRegressor(regressors=(svr, lasso, rf),
                             meta_regressor=lasso)
 
@@ -864,10 +873,15 @@ for clf, label in zip([svr, lasso, rf, stack], ['SVM', 'Lasso',
 
 R^2 Score: 0.45 (+/- 0.29) [SVM]
 R^2 Score: 0.43 (+/- 0.14) [Lasso]
-R^2 Score: 0.48 (+/- 0.37) [Random Forest]
-R^2 Score: 0.54 (+/- 0.31) [StackingClassifier]
+R^2 Score: 0.52 (+/- 0.28) [Random Forest]
+R^2 Score: 0.58 (+/- 0.24) [StackingClassifier]
 </code></pre>
-<pre><code class="python">stack = StackingCVRegressor(regressors=(svr, lasso, rf),
+<pre><code class="python"># The StackingCVRegressor uses scikit-learn's check_cv
+# internally, which doesn't support a random seed. Thus
+# NumPy's random seed need to be specified explicitely for
+# deterministic behavior
+np.random.seed(RANDOM_SEED)
+stack = StackingCVRegressor(regressors=(svr, lasso, rf),
                             meta_regressor=lasso)
 
 print('5-fold cross validation scores:\n')
@@ -884,8 +898,8 @@ for clf, label in zip([svr, lasso, rf, stack], ['SVM', 'Lasso',
 
 Neg. MSE Score: -33.69 (+/- 22.36) [SVM]
 Neg. MSE Score: -35.53 (+/- 16.99) [Lasso]
-Neg. MSE Score: -21.92 (+/- 11.10) [Random Forest]
-Neg. MSE Score: -21.73 (+/- 14.09) [StackingClassifier]
+Neg. MSE Score: -27.32 (+/- 16.62) [Random Forest]
+Neg. MSE Score: -25.64 (+/- 18.11) [StackingClassifier]
 </code></pre>
 <h2 id="example-2-gridsearchcv-with-stacking">Example 2: GridSearchCV with Stacking</h2>
 <p>In this second example we demonstrate how <code>StackingCVRegressor</code> works in combination with <code>GridSearchCV</code>. The stack still allows tuning hyper parameters of the base and meta models!</p>
@@ -901,8 +915,13 @@ X, y = load_boston(return_X_y=True)
 
 ridge = Ridge()
 lasso = Lasso()
-rf = RandomForestRegressor()
+rf = RandomForestRegressor(random_state=RANDOM_SEED)
 
+# The StackingCVRegressor uses scikit-learn's check_cv
+# internally, which doesn't support a random seed. Thus
+# NumPy's random seed need to be specified explicitely for
+# deterministic behavior
+np.random.seed(RANDOM_SEED)
 stack = StackingCVRegressor(regressors=(lasso, ridge),
                             meta_regressor=rf, 
                             use_features_in_secondary=True)
@@ -926,7 +945,7 @@ grid.fit(X, y)
 print(&quot;Best: %f using %s&quot; % (grid.best_score_, grid.best_params_))
 </code></pre>
 
-<pre><code>Best: 0.677605 using {'lasso__alpha': 1.6, 'meta-randomforestregressor__n_estimators': 100, 'ridge__alpha': 0.15}
+<pre><code>Best: 0.673590 using {'lasso__alpha': 0.4, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.3}
 </code></pre>
 <pre><code class="python">cv_keys = ('mean_test_score', 'std_test_score', 'params')
 
@@ -943,26 +962,33 @@ print('Best parameters: %s' % grid.best_params_)
 print('Accuracy: %.2f' % grid.best_score_)
 </code></pre>
 
-<pre><code>0.579 +/- 0.11 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.05}
-0.615 +/- 0.10 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.1}
-0.604 +/- 0.10 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.15}
-0.605 +/- 0.10 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.2}
-0.580 +/- 0.10 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.25}
-0.566 +/- 0.10 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.3}
-0.627 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.35}
-0.617 +/- 0.10 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.4}
-0.553 +/- 0.14 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.45}
-0.651 +/- 0.10 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 100, 'ridge__alpha': 0.05}
-0.647 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 100, 'ridge__alpha': 0.1}
-0.648 +/- 0.10 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 100, 'ridge__alpha': 0.15}
+<pre><code>0.622 +/- 0.10 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.05}
+0.649 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.1}
+0.650 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.15}
+0.667 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.2}
+0.629 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.25}
+0.663 +/- 0.08 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.3}
+0.633 +/- 0.08 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.35}
+0.637 +/- 0.08 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.4}
+0.649 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.45}
+0.653 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 100, 'ridge__alpha': 0.05}
+0.648 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 100, 'ridge__alpha': 0.1}
+0.645 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 100, 'ridge__alpha': 0.15}
 ...
-Best parameters: {'lasso__alpha': 1.6, 'meta-randomforestregressor__n_estimators': 100, 'ridge__alpha': 0.15}
-Accuracy: 0.68
+Best parameters: {'lasso__alpha': 0.4, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.3}
+Accuracy: 0.67
 </code></pre>
 <h2 id="api">API</h2>
 <p><em>StackingCVRegressor(regressors, meta_regressor, cv=5, shuffle=True, use_features_in_secondary=False)</em></p>
 <p>A 'Stacking Cross-Validation' regressor for scikit-learn estimators.</p>
 <p>New in mlxtend v0.7.0</p>
+<p><strong>Notes</strong></p>
+<p>The StackingCVRegressor uses scikit-learn's check_cv
+internally, which doesn't support a random seed. Thus
+NumPy's random seed need to be specified explicitely for
+deterministic behavior, for instance, by setting
+np.random.seed(RANDOM_SEED)
+prior to fitting the StackingCVRegressor</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>

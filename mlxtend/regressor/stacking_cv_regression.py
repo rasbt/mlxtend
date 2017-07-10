@@ -17,7 +17,6 @@ from sklearn.base import BaseEstimator
 from sklearn.base import RegressorMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
-from sklearn.model_selection import KFold
 from sklearn.model_selection._split import check_cv
 from ..externals import six
 from ..externals.name_estimators import _name_estimators
@@ -28,6 +27,15 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
     """A 'Stacking Cross-Validation' regressor for scikit-learn estimators.
 
     New in mlxtend v0.7.0
+
+    Notes
+    -------
+    The StackingCVRegressor uses scikit-learn's check_cv
+    internally, which doesn't support a random seed. Thus
+    NumPy's random seed need to be specified explicitely for
+    deterministic behavior, for instance, by setting
+    np.random.seed(RANDOM_SEED)
+    prior to fitting the StackingCVRegressor
 
     Parameters
     ----------

@@ -16,8 +16,6 @@ from sklearn.base import TransformerMixin
 from sklearn.base import clone
 from sklearn.utils.validation import check_is_fitted
 from sklearn.externals import six
-from sklearn.model_selection import StratifiedKFold
-from sklearn.model_selection import KFold
 from sklearn.model_selection._split import check_cv
 import numpy as np
 
@@ -27,6 +25,15 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     """A 'Stacking Cross-Validation' classifier for scikit-learn estimators.
 
     New in mlxtend v0.4.3
+
+    Notes
+    -------
+    The StackingCVClassifier uses scikit-learn's check_cv
+    internally, which doesn't support a random seed. Thus
+    NumPy's random seed need to be specified explicitely for
+    deterministic behavior, for instance, by setting
+    np.random.seed(RANDOM_SEED)
+    prior to fitting the StackingCVClassifier
 
     Parameters
     ----------

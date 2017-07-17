@@ -812,6 +812,9 @@
             <li><a href="#example-3-stacked-cv-classification-and-gridsearch">Example 3 - Stacked CV Classification and GridSearch</a></li>
                 <!--  -->
         
+            <li><a href="#example-4-stacking-of-classifiers-that-operate-on-different-feature-subsets">Example 4 - Stacking of Classifiers that Operate on Different Feature Subsets</a></li>
+                <!--  -->
+        
     
         <li class="main "><a href="#api">API</a></li>
         
@@ -1075,6 +1078,41 @@ print('Accuracy: %.2f' % grid.best_score_)
 0.940 +/- 0.03 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
 Best parameters: {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
 Accuracy: 0.95
+</code></pre>
+<h2 id="example-4-stacking-of-classifiers-that-operate-on-different-feature-subsets">Example 4 - Stacking of Classifiers that Operate on Different Feature Subsets</h2>
+<p>The different level-1 classifiers can be fit to different subsets of features in the training dataset. The following example illustrates how this can be done on a technical level using scikit-learn pipelines and the <code>ColumnSelector</code>:</p>
+<pre><code class="python">from sklearn.datasets import load_iris
+from mlxtend.classifier import StackingCVClassifier
+from mlxtend.feature_selection import ColumnSelector
+from sklearn.pipeline import make_pipeline
+from sklearn.linear_model import LogisticRegression
+
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+pipe1 = make_pipeline(ColumnSelector(cols=(0, 2)),
+                      LogisticRegression())
+pipe2 = make_pipeline(ColumnSelector(cols=(1, 2, 3)),
+                      LogisticRegression())
+
+sclf = StackingCVClassifier(classifiers=[pipe1, pipe2], 
+                            meta_classifier=LogisticRegression())
+
+sclf.fit(X, y)
+</code></pre>
+
+<pre><code>StackingCVClassifier(classifiers=[Pipeline(steps=[('columnselector', ColumnSelector(cols=(0, 2))), ('logisticregression', LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
+          intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
+          penalty='l2', random_state=None, solve...='l2', random_state=None, solver='liblinear', tol=0.0001,
+          verbose=0, warm_start=False))])],
+           cv=2,
+           meta_classifier=LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
+          intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
+          penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
+          verbose=0, warm_start=False),
+           shuffle=True, stratify=True, use_features_in_secondary=False,
+           use_probas=False, verbose=0)
 </code></pre>
 <h1 id="api">API</h1>
 <p><em>StackingCVClassifier(classifiers, meta_classifier, use_probas=False, cv=2, use_features_in_secondary=False, stratify=True, shuffle=True, verbose=0)</em></p>

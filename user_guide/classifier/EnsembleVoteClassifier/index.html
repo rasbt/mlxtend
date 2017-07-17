@@ -828,6 +828,9 @@
             <li><a href="#example-5-using-pre-fitted-classifiers">Example 5 - Using Pre-fitted Classifiers</a></li>
                 <!--  -->
         
+            <li><a href="#example-6-ensembles-of-classifiers-that-operate-on-different-feature-subsets">Example 6 - Ensembles of Classifiers that Operate on Different Feature Subsets</a></li>
+                <!--  -->
+        
     
         <li class="main "><a href="#api">API</a></li>
         
@@ -1242,6 +1245,34 @@ print('accuracy:', np.mean(y == eclf.predict(X)))
 <pre><code>accuracy: 0.973333333333
 </code></pre>
 <p>However, please note that <code>refit=False</code> is incompatible to any form of cross-validation that is done in e.g., <code>model_selection.cross_val_score</code> or <code>model_selection.GridSearchCV</code>, etc., since it would require the classifiers to be refit to the training folds. Thus, only use <code>refit=False</code> if you want to make a prediction directly without cross-validation.</p>
+<h2 id="example-6-ensembles-of-classifiers-that-operate-on-different-feature-subsets">Example 6 - Ensembles of Classifiers that Operate on Different Feature Subsets</h2>
+<p>If desired, the different classifiers can be fit to different subsets of features in the training dataset. The following example illustrates how this can be done on a technical level using scikit-learn pipelines and the <code>ColumnSelector</code>:</p>
+<pre><code class="python">from sklearn.datasets import load_iris
+from mlxtend.classifier import EnsembleVoteClassifier
+from mlxtend.feature_selection import ColumnSelector
+from sklearn.pipeline import make_pipeline
+from sklearn.linear_model import LogisticRegression
+
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+pipe1 = make_pipeline(ColumnSelector(cols=(0, 2)),
+                      LogisticRegression())
+pipe2 = make_pipeline(ColumnSelector(cols=(1, 2, 3)),
+                      LogisticRegression())
+
+eclf = EnsembleVoteClassifier(clfs=[pipe1, pipe2])
+
+eclf.fit(X, y)
+</code></pre>
+
+<pre><code>EnsembleVoteClassifier(clfs=[Pipeline(steps=[('columnselector', ColumnSelector(cols=(0, 2))), ('logisticregression', LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
+          intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
+          penalty='l2', random_state=None, solver='libl...='l2', random_state=None, solver='liblinear', tol=0.0001,
+          verbose=0, warm_start=False))])],
+            refit=True, verbose=0, voting='hard', weights=None)
+</code></pre>
 <h1 id="api">API</h1>
 <p><em>EnsembleVoteClassifier(clfs, voting='hard', weights=None, verbose=0, refit=True)</em></p>
 <p>Soft Voting/Majority Rule classifier for scikit-learn estimators.</p>

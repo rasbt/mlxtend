@@ -14,7 +14,7 @@ def lift_score(y_target, y_predicted, binary=True, positive_label=1):
     classification model are better than randomly-generated predictions.
 
     The in terms of True Positives (TP), True Negatives (TN),
-    False Positives (TP), and False Negatives (FN), the lift score is
+    False Positives (FP), and False Negatives (FN), the lift score is
     computed as:
     [ TP/(TP+FN) ] / [ (TP+FP) / (TP+TN+FP+FN) ]
 

@@ -23,7 +23,7 @@ fi
 
 source activate test-environment
 
-pip install nose nose-exclude;
+pip install nose;
 
 if [ "${COVERAGE}" = "true" ]; then
     pip install coverage coveralls codecov;

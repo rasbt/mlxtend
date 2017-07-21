@@ -18,6 +18,9 @@ def test_factorial():
 def test_num_combinations():
     assert(num_combinations(n=20, k=8, with_replacement=False) == 125970)
     assert(num_combinations(n=20, k=8, with_replacement=True) == 2220075)
+    print(num_combinations(n=300, k=10))
+    assert(num_combinations(n=300, k=10, with_replacement=False)
+           == 1398320233241701770)
 
 
 def test_num_permutations():

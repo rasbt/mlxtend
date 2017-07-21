@@ -5,12 +5,12 @@ If you use mlxtend as part of your workflow in a scientific publication, please 
 [![](https://zenodo.org/badge/doi/10.5281/zenodo.49235.svg)](https://zenodo.org/record/49235#.VwWISmNh23c)
 
 ```
-@misc{raschkas_2016_49235,
+@misc{raschkas_2016_594432,
   author       = {Raschka, Sebastian},
   title        = {Mlxtend},
   month        = apr,
   year         = 2016,
-  doi          = {10.5281/zenodo.49235},
-  url          = {http://dx.doi.org/10.5281/zenodo.49235}
+  doi          = {10.5281/zenodo.594432},
+  url          = {http://dx.doi.org/10.5281/zenodo.594432}
 }
 ```

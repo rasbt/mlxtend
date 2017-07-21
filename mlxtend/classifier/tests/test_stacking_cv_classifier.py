@@ -7,6 +7,7 @@
 
 from mlxtend.classifier import StackingCVClassifier
 
+import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
@@ -14,6 +15,7 @@ import numpy as np
 from sklearn import datasets
 from mlxtend.utils import assert_raises
 from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import KFold
 from sklearn.exceptions import NotFittedError
 from sklearn.model_selection import cross_val_score
 
@@ -153,6 +155,28 @@ def test_do_not_stratify():
     assert scores_mean == 0.94
 
 
+def test_cross_validation_technique():
+    # This is like the `test_do_not_stratify` but instead
+    # autogenerating the cross validation strategy it provides
+    # a pre-created object
+    np.random.seed(123)
+    cv = KFold(n_splits=2, shuffle=True)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingCVClassifier(classifiers=[clf1, clf2],
+                                meta_classifier=meta,
+                                cv=cv)
+
+    scores = cross_val_score(sclf,
+                             X,
+                             y,
+                             cv=5,
+                             scoring='accuracy')
+    scores_mean = (round(scores.mean(), 2))
+    assert scores_mean == 0.94
+
+
 def test_not_fitted():
     np.random.seed(123)
     meta = LogisticRegression()
@@ -188,3 +212,36 @@ def test_verbose():
                                 shuffle=False,
                                 verbose=3)
     sclf.fit(iris.data, iris.target)
+
+
+def test_list_of_lists():
+    X_list = [i for i in X]
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingCVClassifier(classifiers=[clf1, clf2],
+                                use_probas=True,
+                                meta_classifier=meta,
+                                shuffle=False,
+                                verbose=0)
+
+    try:
+        sclf.fit(X_list, iris.target)
+    except TypeError as e:
+        assert 'are NumPy arrays. If X and y are lists' in str(e)
+
+
+def test_pandas():
+    X_df = pd.DataFrame(X)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingCVClassifier(classifiers=[clf1, clf2],
+                                use_probas=True,
+                                meta_classifier=meta,
+                                shuffle=False,
+                                verbose=0)
+    try:
+        sclf.fit(X_df, iris.target)
+    except KeyError as e:
+        assert 'are NumPy arrays. If X and y are pandas DataFrames' in str(e)

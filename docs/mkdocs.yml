@@ -18,7 +18,8 @@ markdown_extensions:
   - extra
   - tables
   - fenced_code
-  - mathjax
+  - mdx_math:
+      enable_dollar_delimiter: True #for use of inline $..$
 extra_javascript:
   - https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML
   - mathjaxhelper.js
@@ -45,6 +46,7 @@ pages:
   - regressor:
     - user_guide/regressor/LinearRegression.md
     - user_guide/regressor/StackingRegressor.md
+    - user_guide/regressor/StackingCVRegressor.md
   - feature_selection:
     - user_guide/feature_selection/SequentialFeatureSelector.md
     - user_guide/feature_selection/ExhaustiveFeatureSelector.md
@@ -91,6 +93,7 @@ pages:
     - user_guide/plotting/enrichment_plot.md
     - user_guide/plotting/stacked_barplot.md
     - user_guide/plotting/checkerboard_plot.md
+    - user_guide/plotting/ecdf.md    
   - math:
     - user_guide/math/num_combinations.md
     - user_guide/math/num_permutations.md

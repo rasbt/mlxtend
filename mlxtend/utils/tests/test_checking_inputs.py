@@ -8,6 +8,7 @@ from mlxtend.utils import assert_raises
 from mlxtend.utils import check_Xy
 import numpy as np
 import sys
+import os
 
 y = np.array([1, 2, 3, 4])
 X = np.array([[1., 2.], [3., 4.], [5., 6.], [7., 8.]])
@@ -63,16 +64,24 @@ def test_invalid_dtype_y():
 
 
 def test_invalid_dim_y():
+    if sys.version_info[:2] == (2, 7) and os.name == 'nt':
+        s = 'y must be a 1D array. Found (4L, 2L)'
+    else:
+        s = 'y must be a 1D array. Found (4, 2)'
     assert_raises(ValueError,
-                  'y must be a 1D array. Found (4, 2)',
+                  s,
                   check_Xy,
                   X,
                   X.astype(np.integer))
 
 
 def test_invalid_dim_X():
+    if sys.version_info[:2] == (2, 7) and os.name == 'nt':
+        s = 'X must be a 2D array. Found (4L,)'
+    else:
+        s = 'X must be a 2D array. Found (4,)'
     assert_raises(ValueError,
-                  'X must be a 2D array. Found (4,)',
+                  s,
                   check_Xy,
                   y,
                   y)

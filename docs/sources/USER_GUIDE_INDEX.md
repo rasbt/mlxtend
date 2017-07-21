@@ -17,6 +17,7 @@
 ## `regressor`
 - [LinearRegression](user_guide/regressor/LinearRegression.md)
 - [StackingRegressor](user_guide/regressor/StackingRegressor.md)
+- [StackingCVRegressor](user_guide/regressor/StackingCVRegressor.md)
 
 ## `feature_selection`
 - [SequentialFeatureSelector](user_guide/feature_selection/SequentialFeatureSelector.md)
@@ -33,9 +34,9 @@
 
 ## `evaluate`
 - [confusion_matrix](user_guide/evaluate/confusion_matrix.md)
-- [lift_score](user_guide/evaluate/lift_score.md)
 - [mcnemar_table](user_guide/evaluate/mcnemar_table.md)
 - [mcnemar](user_guide/evaluate/mcnemar.md)
+- [lift_score](user_guide/evaluate/lift_score.md)
 - [scoring](user_guide/evaluate/scoring.md)
 
 ## `preprocessing`
@@ -71,6 +72,7 @@
 - [enrichment_plot](user_guide/plotting/enrichment_plot.md)
 - [stacked_barplot](user_guide/plotting/stacked_barplot.md)
 - [checkerboard_plot](user_guide/plotting/checkerboard_plot.md)
+- [ecdf](user_guide/plotting/ecdf.md)
 
 ## `math`
 - [num_combinations](user_guide/math/num_combinations.md)

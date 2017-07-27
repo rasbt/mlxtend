@@ -87,8 +87,8 @@ about:
 
 
     '
-  doc_url: ''
-  dev_url: ''
+  doc_url: 'http://rasbt.github.io/mlxtend/'
+  dev_url: 'https://github.com/rasbt/mlxtend'
 
 extra:
   recipe-maintainers: ''

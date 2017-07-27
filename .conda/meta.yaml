@@ -1,30 +1,20 @@
+{% set name = "mlxtend" %}
+{% set version = "0.7.0" %}
+{% set hash_type = "sha256" %}
+{% set hash_value = "8c9206449d3e77ff52a288cd2741c10361bc39924b6101a777bda475b05e7f16" %}
+
 package:
-  name: mlxtend
-  version: "0.4.1"
+  name: '{{ name|lower }}'
+  version: '{{ version }}'
 
 source:
-  fn: mlxtend-0.4.1.tar.gz
-  url: https://files.pythonhosted.org/packages/e2/e5/12927e24d3161460a651b7ed1724a45e39b7bb5e6854b1d63812dd9977a6/mlxtend-0.4.1.tar.gz
-  md5: 113df88a3b3881f3d209705fdc156696
-#  patches:
-   # List any patch files here
-   # - fix.patch
+  fn: '{{ name }}-{{ version }}.tar.gz'
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  '{{ hash_type }}': '{{ hash_value }}'
 
-# build:
-  # noarch_python: True
-  # preserve_egg_dir: True
-  # entry_points:
-    # Put any entry points (scripts to be generated automatically) here. The
-    # syntax is module:function.  For example
-    #
-    # - mlxtend = mlxtend:main
-    #
-    # Would create an entry point called mlxtend that calls mlxtend.main()
-
-
-  # If this is a new build for the same version, increment the build
-  # number. If you do not include this key, it defaults to 0.
-  # number: 1
+build:
+  number: 0
+  script: python setup.py install  --single-version-externally-managed --record=record.txt
 
 requirements:
   build:
@@ -32,20 +22,18 @@ requirements:
     - setuptools
     - numpy >=1.10.4
     - scipy >=0.17
-    - scikit-learn >=0.17.1
-    - pandas >=0.17
-    - matplotlib
-
+    - scikit-learn >=0.18
+    - pandas >=0.17.1
+    - matplotlib >=1.5.1
   run:
     - python
     - numpy >=1.10.4
     - scipy >=0.17
-    - scikit-learn >=0.17.1
-    - pandas >=0.17
-    - matplotlib
+    - scikit-learn >=0.18
+    - pandas >=0.17.1
+    - matplotlib >=1.5.1
 
 test:
-  # Python imports
   imports:
     - mlxtend
     - mlxtend._base
@@ -57,23 +45,50 @@ test:
     - mlxtend.feature_extraction
     - mlxtend.feature_selection
     - mlxtend.file_io
-    - mlxtend.general_plotting
+    - mlxtend.frequent_patterns
     - mlxtend.math
+    - mlxtend.plotting
     - mlxtend.preprocessing
-    - mlxtend.regression_utils
     - mlxtend.regressor
     - mlxtend.text
-    #- mlxtend.tf_classifier
-    #- mlxtend.tf_cluster
-    #- mlxtend.tf_regressor
     - mlxtend.utils
-
 
 about:
   home: https://github.com/rasbt/mlxtend
   license: BSD License
-  summary: 'Machine Learning Library Extensions'
+  license_family: BSD
+  license_file: ''
+  summary: Machine Learning Library Extensions
+  description: '
 
-# See
-# http://docs.continuum.io/conda/build.html for
-# more information about meta.yaml
+
+    A library of Python tools and extensions for data science.
+
+
+
+    Contact
+
+    =============
+
+
+    If you have any questions or comments about mlxtend,
+
+    please feel free to contact me via
+
+    eMail: mail@sebastianraschka.com
+
+    or Twitter: https://twitter.com/rasbt
+
+
+    This project is hosted at https://github.com/rasbt/mlxtend
+
+
+    The documentation can be found at http://rasbt.github.io/mlxtend/
+
+
+    '
+  doc_url: ''
+  dev_url: ''
+
+extra:
+  recipe-maintainers: ''

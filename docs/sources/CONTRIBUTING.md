@@ -424,3 +424,7 @@ Finally, to cleanup our local drive, remove the virtual testing environment via
 ```bash
 $ conda remove --name 'mlxtend-testing' --all
 ```
+
+### 5. Updating the conda-forge recipe
+
+Once a new version of mlxtend has been uploaded to PyPI, update the conda-forge build recipe at https://github.com/conda-forge/mlxtend-feedstock by changing the version number in the `recipe/meta.yaml` file appropriately.

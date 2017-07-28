@@ -802,6 +802,9 @@
                     <li><a href="#upgrading-via-pip">Upgrading via pip</a></li>
              -->
         
+            <li><a href="#conda">Conda</a></li>
+                <!--  -->
+        
             <li><a href="#dev-version">Dev Version</a></li>
                 <!--  -->
         
@@ -827,6 +830,15 @@
 </code></pre>
 
 <p>Please note that the dependencies (NumPy and SciPy) will also be upgraded if you omit the <code>--no-deps</code> flag; use the <code>--no-deps</code> ("no dependencies") flag if you don't want this.</p>
+<h3 id="conda">Conda</h3>
+<p>The mlxtend package is also <a href="https://github.com/conda-forge/mlxtend-feedstock">available through conda forge</a>. </p>
+<p>To install mlxtend using conda, use the following command:</p>
+<pre><code>conda install mlxtend --channel conda-forge
+</code></pre>
+<p>or simply </p>
+<pre><code>conda install mlxtend
+</code></pre>
+<p>if you added conda-forge to your channels (<code>conda config --add channels conda-forge</code>).</p>
 <h3 id="dev-version">Dev Version</h3>
 <p>The mlxtend version on PyPI may always one step behind; you can install the latest development version from the GitHub repository by executing</p>
 <pre><code class="bash">pip install git+git://github.com/rasbt/mlxtend.git

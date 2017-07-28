@@ -857,6 +857,8 @@
                     <li><a href="#3-deploying-the-package">3. Deploying the package</a></li>
             
                     <li><a href="#4-removing-the-virtual-environment">4. Removing the virtual environment</a></li>
+            
+                    <li><a href="#5-updating-the-conda-forge-recipe">5. Updating the conda-forge recipe</a></li>
              -->
         
     
@@ -1153,7 +1155,10 @@ squash 046e3af fixed setup.py
 <h3 id="4-removing-the-virtual-environment">4. Removing the virtual environment</h3>
 <p>Finally, to cleanup our local drive, remove the virtual testing environment via</p>
 <pre><code class="bash">$ conda remove --name 'mlxtend-testing' --all
-</code></pre></div>
+</code></pre>
+
+<h3 id="5-updating-the-conda-forge-recipe">5. Updating the conda-forge recipe</h3>
+<p>Once a new version of mlxtend has been uploaded to PyPI, update the conda-forge build recipe at https://github.com/conda-forge/mlxtend-feedstock by changing the version number in the <code>recipe/meta.yaml</code> file appropriately.</p></div>
         
     </div>
 

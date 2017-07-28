@@ -55,14 +55,15 @@ test:
 
 about:
   home: https://github.com/rasbt/mlxtend
-  license: BSD License
+  license: BSD v3
   license_family: BSD
-  license_file: ''
+  license_file: LICENSE-BSD3.txt
   summary: Machine Learning Library Extensions
   description: '
 
 
-    A library of Python tools and extensions for data science.
+    A library of Python tools and extensions for data science
+    and machine learning.
 
 
 
@@ -91,4 +92,5 @@ about:
   dev_url: 'https://github.com/rasbt/mlxtend'
 
 extra:
-  recipe-maintainers: ''
+  recipe-maintainers:
+    - Sebastian Raschka

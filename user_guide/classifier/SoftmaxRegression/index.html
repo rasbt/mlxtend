@@ -836,7 +836,7 @@
 </p>
 <p>where we define the net input <em>z</em> as </p>
 <p>
-<script type="math/tex; mode=display">z = w_1x_1 + ... + w_mx_m  + b= \sum_{l=0}^{m} w_l x_l + b= \mathbf{w}^T\mathbf{x} + b.</script>
+<script type="math/tex; mode=display">z = w_1x_1 + ... + w_mx_m  + b= \sum_{l=1}^{m} w_l x_l + b= \mathbf{w}^T\mathbf{x} + b.</script>
 </p>
 <p>(<strong>w</strong> is the weight vector, <script type="math/tex">\mathbf{x}</script> is the feature vector of 1 training sample, and <script type="math/tex">b</script> is the bias unit.) <br />
 Now, this softmax function computes the probability that this training sample <script type="math/tex">\mathbf{x}^{(i)}</script> belongs to class <script type="math/tex">j</script> given the weight and net input <script type="math/tex">z^{(i)}</script>. So, we compute the probability <script type="math/tex">p(y = j \mid \mathbf{x^{(i)}; w}_j)</script> for each class label in  <script type="math/tex">j = 1, \ldots, k.</script>. Note the normalization term in the denominator which causes these class probabilities to sum up to one.</p>

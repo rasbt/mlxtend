@@ -802,7 +802,10 @@
                     <li><a href="#references">References</a></li>
              -->
         
-            <li><a href="#example-1-feature-selection-via-gridsearch">Example 1 - Feature Selection via GridSearch</a></li>
+            <li><a href="#example-1-fitting-an-estimator-on-a-feature-subset">Example 1 - Fitting an Estimator on a Feature Subset</a></li>
+                <!--  -->
+        
+            <li><a href="#example-2-feature-selection-via-gridsearch">Example 2 - Feature Selection via GridSearch</a></li>
                 <!--  -->
         
             <li><a href="#api">API</a></li>
@@ -824,7 +827,48 @@
 <p>The <code>ColumnSelector</code> can be used for "manual" feature selection, e.g., as part of a grid search via a scikit-learn pipeline.</p>
 <h3 id="references">References</h3>
 <p>-</p>
-<h2 id="example-1-feature-selection-via-gridsearch">Example 1 - Feature Selection via GridSearch</h2>
+<h2 id="example-1-fitting-an-estimator-on-a-feature-subset">Example 1 - Fitting an Estimator on a Feature Subset</h2>
+<p>Load a simple benchmark dataset:</p>
+<pre><code class="python">from sklearn.datasets import load_iris
+
+iris = load_iris()
+X = iris.data
+y = iris.target
+</code></pre>
+
+<p>The <code>ColumnSelector</code> is a simple transformer class that selects specific columns (features) from a datast. For instance, using the <code>transform</code> method returns a reduced dataset that only contains two features (here: the first two features via the indices 0 and 1, respectively):</p>
+<pre><code class="python">from mlxtend.feature_selection import ColumnSelector
+
+col_selector = ColumnSelector(cols=(0, 1))
+# col_selector.fit(X) # optional, does not do anything
+col_selector.transform(X).shape
+</code></pre>
+
+<pre><code>(150, 2)
+</code></pre>
+<p>Similarly, we can use the <code>ColumnSelector</code> as part of a scikit-learn <code>Pipeline</code>:</p>
+<pre><code class="python">from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+
+
+pipe = make_pipeline(StandardScaler(),
+                     ColumnSelector(cols=(0, 1)),
+                     KNeighborsClassifier())
+
+pipe.fit(X, y)
+pipe.score(X, y)
+</code></pre>
+
+<pre><code>0.83999999999999997
+</code></pre>
+<h2 id="example-2-feature-selection-via-gridsearch">Example 2 - Feature Selection via GridSearch</h2>
+<p>Example 1 showed a simple useage example of the <code>ColumnSelector</code>; however, selecting columns from a dataset is trivial and does not require a specific transformer class since we could have achieved the same results via</p>
+<pre><code class="python">classifier.fit(X[:, :2], y)
+classifier.score(X[:, :2], y)
+</code></pre>
+
+<p>However, the <code>ColumnSelector</code> becomes really useful for feature selection as part of a grid search as shown in this example.</p>
 <p>Load a simple benchmark dataset:</p>
 <pre><code class="python">from sklearn.datasets import load_iris
 

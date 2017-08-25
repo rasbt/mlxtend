@@ -132,7 +132,8 @@ def test_get_intercept():
     assert round(got, 2) == expect
 
 
-@raises(ValueError)
+# ValueError was changed to AttributeError in sklearn >= 0.19
+@raises(AttributeError, ValueError)
 def test_get_coeff_fail():
     lr = LinearRegression()
     svr_rbf = SVR(kernel='rbf')

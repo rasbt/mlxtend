@@ -55,6 +55,13 @@ Alternatively, you could download the package manually from the Python Package I
 python setup.py install
 ```
 
+#### Conda
+If you use conda, to install mlxtend just execute
+
+```bash
+conda install -c conda-forge mlxtend 
+```
+
 #### Dev Version
 
 The mlxtend version on PyPI may always be one step behind; you can install the latest development version from the GitHub repository by executing

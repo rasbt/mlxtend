@@ -93,7 +93,7 @@ def bootstrap(x, func, num_rounds=1000, ci=0.95, ddof=1, seed=None):
             rank = x.shape[0]
         elif rank <= 0:
             rank = 0
-        rank = round(rank)
+        rank = int(round(rank))
         return x[rank]
 
     sample_idx = np.arange(x.shape[0])

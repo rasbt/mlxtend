@@ -16,7 +16,7 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
-- /
+- Added a `mlxtend.evaluate.bootstrap` that implements the ordinary nonparametric bootstrap to bootstrap a single statistic (for example, the mean. median, R^2 of a regression fit, and so forth)
 
 ##### Changes
 

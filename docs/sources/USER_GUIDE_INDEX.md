@@ -36,6 +36,7 @@
 - [confusion_matrix](user_guide/evaluate/confusion_matrix.md)
 - [mcnemar_table](user_guide/evaluate/mcnemar_table.md)
 - [mcnemar](user_guide/evaluate/mcnemar.md)
+- [bootstrap](user_guide/evaluate/bootstrap.md)
 - [lift_score](user_guide/evaluate/lift_score.md)
 - [scoring](user_guide/evaluate/scoring.md)
 

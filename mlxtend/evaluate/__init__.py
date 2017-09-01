@@ -9,7 +9,9 @@ from .confusion_matrix import confusion_matrix
 from .lift_score import lift_score
 from .mcnemar import mcnemar_table
 from .mcnemar import mcnemar
+from .bootstrap import bootstrap
 
 
 __all__ = ["scoring", "confusion_matrix",
-           "mcnemar_table", "mcnemar", "lift_score"]
+           "mcnemar_table", "mcnemar", "lift_score",
+           "bootstrap"]

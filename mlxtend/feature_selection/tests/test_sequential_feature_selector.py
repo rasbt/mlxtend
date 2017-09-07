@@ -203,10 +203,11 @@ def test_knn_cv3():
 
 def test_knn_rbf_groupkfold():
     nan_roc_auc_scorer = make_scorer(nan_roc_auc_score)
+    rng = np.random.RandomState(123)
     iris = load_iris()
     X = iris.data
     # knn = KNeighborsClassifier(n_neighbors=4)
-    forest = RandomForestClassifier(n_estimators=100)
+    forest = RandomForestClassifier(n_estimators=100, random_state=123)
     bool_01 = [True if item == 0 else False for item in iris['target']]
     bool_02 = [True if (item == 1 or item == 2) else False for item in
                iris['target']]
@@ -217,12 +218,12 @@ def test_knn_rbf_groupkfold():
             groups.append('attribute_A')
             y_new.append(0)
         if bool_02[ind]:
-            throw = np.random.rand()
+            throw = rng.rand()
             if throw < 0.5:
                 groups.append('attribute_B')
             else:
                 groups.append('attribute_C')
-            throw2 = np.random.rand()
+            throw2 = rng.rand()
             if throw2 < 0.5:
                 y_new.append(0)
             else:
@@ -240,12 +241,12 @@ def test_knn_rbf_groupkfold():
                )
     sfs1 = sfs1.fit(X, y_new)
     expect = {
-        1: {'cv_scores': np.array([0.488, nan, 0.51]), 'avg_score': 0.499047,
-            'feature_idx': (3,)},
-        2: {'cv_scores': np.array([0.54563, nan, 0.585]), 'avg_score': 0.56531,
-            'feature_idx': (2, 3)},
-        3: {'cv_scores': np.array([0.48875661, nan, 0.515]),
-            'avg_score': 0.50187,
+        1: {'cv_scores': np.array([0.52, nan, 0.72]), 'avg_score': 0.62,
+            'feature_idx': (1,)},
+        2: {'cv_scores': np.array([0.42, nan, 0.65]), 'avg_score': 0.53,
+            'feature_idx': (1, 2)},
+        3: {'cv_scores': np.array([0.47, nan, 0.63]),
+            'avg_score': 0.55,
             'feature_idx': (1, 2, 3)}}
 
     dict_compare_utility(d1=expect, d2=sfs1.subsets_, decimal=1)

@@ -153,7 +153,6 @@ def test_knn_wo_cv():
                forward=True,
                floating=False,
                cv=0,
-               skip_if_stuck=True,
                verbose=0)
     sfs1 = sfs1.fit(X, y)
     expect = {1: {'avg_score': 0.95999999999999996,
@@ -178,7 +177,6 @@ def test_knn_cv3():
                forward=True,
                floating=False,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs1 = sfs1.fit(X, y)
     sfs1.subsets_
@@ -263,7 +261,6 @@ def test_knn_option_sfs():
                forward=True,
                floating=False,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs1 = sfs1.fit(X, y)
     assert sfs1.k_feature_idx_ == (1, 2, 3)
@@ -279,7 +276,6 @@ def test_knn_option_sffs():
                forward=True,
                floating=True,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs2 = sfs2.fit(X, y)
     assert sfs2.k_feature_idx_ == (1, 2, 3)
@@ -295,7 +291,6 @@ def test_knn_option_sbs():
                forward=False,
                floating=False,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs3 = sfs3.fit(X, y)
     assert sfs3.k_feature_idx_ == (1, 2, 3)
@@ -311,7 +306,6 @@ def test_knn_option_sfbs():
                forward=False,
                floating=True,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs4 = sfs4.fit(X, y)
     assert sfs4.k_feature_idx_ == (1, 2, 3)
@@ -327,7 +321,6 @@ def test_knn_option_sfbs_tuplerange_1():
                forward=False,
                floating=True,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs4 = sfs4.fit(X, y)
     assert round(sfs4.k_score_, 3) == 0.967, sfs4.k_score_
@@ -344,7 +337,6 @@ def test_knn_option_sfbs_tuplerange_2():
                forward=False,
                floating=True,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs4 = sfs4.fit(X, y)
     assert round(sfs4.k_score_, 3) == 0.967, sfs4.k_score_
@@ -361,7 +353,6 @@ def test_knn_option_sffs_tuplerange_1():
                forward=True,
                floating=True,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs4 = sfs4.fit(X, y)
     assert round(sfs4.k_score_, 3) == 0.967, sfs4.k_score_
@@ -378,7 +369,6 @@ def test_knn_option_sfs_tuplerange_1():
                forward=True,
                floating=False,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs4 = sfs4.fit(X, y)
     assert round(sfs4.k_score_, 3) == 0.967, sfs4.k_score_
@@ -395,7 +385,6 @@ def test_knn_option_sbs_tuplerange_1():
                forward=False,
                floating=False,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs4 = sfs4.fit(X, y)
     assert round(sfs4.k_score_, 3) == 0.967, sfs4.k_score_
@@ -412,7 +401,6 @@ def test_knn_scoring_metric():
                forward=False,
                floating=True,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs5 = sfs5.fit(X, y)
     assert round(sfs5.k_score_, 4) == 0.9728
@@ -422,7 +410,6 @@ def test_knn_scoring_metric():
                forward=False,
                floating=True,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs6 = sfs6.fit(X, y)
     assert round(sfs6.k_score_, 4) == 0.9728
@@ -432,8 +419,7 @@ def test_knn_scoring_metric():
                forward=False,
                floating=True,
                scoring='f1_macro',
-               cv=4,
-               skip_if_stuck=True)
+               cv=4)
     sfs7 = sfs7.fit(X, y)
     assert round(sfs7.k_score_, 4) == 0.9727, sfs7.k_score_
 
@@ -448,7 +434,6 @@ def test_regression():
                 floating=False,
                 scoring='neg_mean_squared_error',
                 cv=10,
-                skip_if_stuck=True,
                 verbose=0)
     sfs_r = sfs_r.fit(X, y)
     assert len(sfs_r.k_feature_idx_) == 13
@@ -465,7 +450,6 @@ def test_regression_in_range():
                 floating=False,
                 scoring='neg_mean_squared_error',
                 cv=10,
-                skip_if_stuck=True,
                 verbose=0)
     sfs_r = sfs_r.fit(X, y)
     assert len(sfs_r.k_feature_idx_) == 9
@@ -509,7 +493,6 @@ def test_clone_params_pass():
                floating=False,
                scoring='accuracy',
                cv=0,
-               skip_if_stuck=True,
                clone_estimator=False,
                verbose=0,
                n_jobs=1)
@@ -528,7 +511,6 @@ def test_transform_not_fitted():
                forward=True,
                floating=False,
                cv=0,
-               skip_if_stuck=True,
                clone_estimator=False,
                verbose=0,
                n_jobs=1)
@@ -552,7 +534,6 @@ def test_get_metric_dict_not_fitted():
                forward=True,
                floating=False,
                cv=0,
-               skip_if_stuck=True,
                clone_estimator=False,
                verbose=0,
                n_jobs=1)
@@ -576,7 +557,6 @@ def test_keyboard_interrupt():
         forward=True,
         floating=False,
         cv=3,
-        skip_if_stuck=True,
         clone_estimator=False,
         verbose=5,
         n_jobs=1

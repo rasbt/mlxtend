@@ -282,7 +282,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                         else:
                             cached_score = None
 
-                        if cached_score and k_score_c > cached_score:
+                        if cached_score is None or k_score_c > cached_score:
                             k_idx, k_score, cv_scores = \
                                 k_idx_c, k_score_c, cv_scores_c
 

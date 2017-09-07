@@ -20,7 +20,8 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- `SFS` now uses `np.nanmean` over normal mean to support scorers that may return `np.nan` 
+- `SequentialFeatureSelector` now uses `np.nanmean` over normal mean to support scorers that may return `np.nan` 
+- The `skip_if_stuck` parameter was removed from `SequentialFeatureSelector` in favor of a more efficient implementation comparing the conditional inclusion/exclusion results (in the floating versions) to the performances of previously sampled feature sets that were cached
 
 ##### Bug Fixes
 

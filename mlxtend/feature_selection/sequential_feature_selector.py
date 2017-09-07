@@ -13,7 +13,6 @@ import scipy.stats
 import sys
 from copy import deepcopy
 from itertools import combinations
-from collections import deque
 from sklearn.metrics import get_scorer
 from sklearn.base import clone
 from sklearn.base import BaseEstimator
@@ -78,10 +77,6 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         stratified k-fold is performed, and regular k-fold cross-validation
         otherwise.
         No cross-validation if cv is None, False, or 0.
-    skip_if_stuck: bool (default: True)
-        Set to True to skip conditional
-        exclusion/inclusion if floating=True and
-        algorithm gets stuck in cycles.
     n_jobs : int (default: 1)
         The number of CPUs to use for evaluating different feature subsets
         in parallel. -1 means 'all CPUs'.
@@ -122,7 +117,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     def __init__(self, estimator, k_features=1,
                  forward=True, floating=False,
                  verbose=0, scoring=None,
-                 cv=5, skip_if_stuck=True, n_jobs=1,
+                 cv=5, n_jobs=1,
                  pre_dispatch='2*n_jobs',
                  clone_estimator=True):
 
@@ -135,7 +130,6 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.n_jobs = n_jobs
         self.named_est = {key: value for key, value in
                           _name_estimators([self.estimator])}
-        self.skip_if_stuck = skip_if_stuck
         self.cv = cv
         self.n_jobs = n_jobs
         self.verbose = verbose
@@ -214,11 +208,6 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 raise AttributeError('The min k_features value must be smaller'
                                      ' than the max k_features value.')
 
-        if self.skip_if_stuck:
-            sdq = deque(maxlen=4)
-        else:
-            sdq = deque(maxlen=0)
-
         if isinstance(self.k_features, tuple):
             select_in_range = True
         else:
@@ -243,12 +232,13 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 'cv_scores': k_score,
                 'avg_score': np.nanmean(k_score)
             }
-        print(' k_to_select',  k_to_select)
         best_subset = None
         k_score = 0
+
         try:
             while k != k_to_select:
                 prev_subset = set(k_idx)
+
                 if self.forward:
                     k_idx, k_score, cv_scores = self._inclusion(
                         orig_set=orig_set,
@@ -257,14 +247,17 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                         y=y
                     )
                 else:
+
                     k_idx, k_score, cv_scores = self._exclusion(
                         feature_set=prev_subset,
                         X=X,
                         y=y
                     )
 
-                if self.floating and not self._is_stuck(sdq):
+                if self.floating:
+                    k_score_c = None
                     (new_feature,) = set(k_idx) ^ prev_subset
+
                     if self.forward:
                         k_idx_c, k_score_c, cv_scores_c = self._exclusion(
                             feature_set=k_idx,
@@ -272,6 +265,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                             X=X,
                             y=y
                         )
+
                     else:
                         k_idx_c, k_score_c, cv_scores_c = self._inclusion(
                             orig_set=orig_set - {new_feature},
@@ -280,23 +274,27 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                             y=y
                         )
 
-                    if k_score_c and k_score_c > k_score:
-                        k_idx, k_score, cv_scores = \
-                            k_idx_c, k_score_c, cv_scores_c
+                    if k_score_c is not None and k_score_c > k_score:
+
+                        if len(k_idx_c) in self.subsets_:
+                            cached_score = self.subsets_[len(
+                                k_idx_c)]['avg_score']
+                        else:
+                            cached_score = None
+
+                        if cached_score is None or k_score_c > cached_score:
+                            k_idx, k_score, cv_scores = \
+                                k_idx_c, k_score_c, cv_scores_c
 
                 k = len(k_idx)
                 # floating can lead to multiple same-sized subsets
-                if k not in self.subsets_ or (self.subsets_[k]['avg_score'] <
-                                              k_score):
+                if k not in self.subsets_ or (k_score >
+                                              self.subsets_[k]['avg_score']):
                     self.subsets_[k] = {
                         'feature_idx': k_idx,
                         'cv_scores': cv_scores,
                         'avg_score': k_score
                     }
-
-                # k_idx must be a set otherwise different permutations
-                # would not be found as equal in _is_stuck
-                sdq.append(set(k_idx))
 
                 if self.verbose == 1:
                     sys.stderr.write('\rFeatures: %d/%s' % (
@@ -336,13 +334,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.fitted = True
         return self
 
-    def _is_stuck(self, sdq):
-        stuck = False
-        if len(sdq) == 4 and (sdq[0] == sdq[2] or sdq[1] == sdq[3]):
-            stuck = True
-        return stuck
-
-    def _inclusion(self, orig_set, subset, X, y):
+    def _inclusion(self, orig_set, subset, X, y, ignore_feature=None):
         all_avg_scores = []
         all_cv_scores = []
         all_subsets = []
@@ -355,10 +347,11 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                                 pre_dispatch=self.pre_dispatch)
             work = parallel(delayed(_calc_score)
                             (self, X, y, tuple(subset | {feature}))
-                            for feature in remaining)
+                            for feature in remaining
+                            if feature != ignore_feature)
 
             for new_subset, cv_scores in work:
-                all_avg_scores.append(np.nanmean(cv_scores)) 
+                all_avg_scores.append(np.nanmean(cv_scores))
                 all_cv_scores.append(cv_scores)
                 all_subsets.append(new_subset)
 

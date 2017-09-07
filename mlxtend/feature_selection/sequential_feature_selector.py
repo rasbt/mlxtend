@@ -274,8 +274,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                         )
                     else:
                         k_idx_c, k_score_c, cv_scores_c = self._inclusion(
-                            orig_set=orig_set - {new_feature},
-                            subset=set(k_idx),
+                            orig_set=orig_set,
+                            subset=set(k_idx) - {new_feature},
                             X=X,
                             y=y
                         )

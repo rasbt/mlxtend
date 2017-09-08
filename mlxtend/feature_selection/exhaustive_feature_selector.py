@@ -11,9 +11,11 @@ import numpy as np
 import scipy as sp
 import scipy.stats
 import sys
+import operator as op
 from copy import deepcopy
 from itertools import combinations
 from itertools import chain
+from functools import reduce
 from sklearn.metrics import get_scorer
 from sklearn.base import clone
 from sklearn.base import BaseEstimator
@@ -157,12 +159,39 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         if self.max_features < self.min_features:
             raise AttributeError('min_features must be <= max_features')
 
-        candidates = list(chain(*((combinations(range(X.shape[1]), r=i))
+        candidates = chain(*((combinations(range(X.shape[1]), r=i))
                           for i in range(self.min_features,
-                                         self.max_features + 1))))
+                                         self.max_features + 1)))
 
         self.subsets_ = {}
-        all_comb = len(candidates)
+        
+        def ncr(n, r):
+            """Return the number of combinations of length r from n items.
+            
+            Parameters
+            ----------
+            n : {integer}
+            Total number of items
+            r : {integer}
+            Number of items to select from n
+            
+            Returns
+            -------
+            Number of combinations, integer
+            
+            """
+            
+            r = min(r, n-r)
+            if r == 0:
+                return 1
+            numer = reduce(op.mul, range(n, n-r, -1))
+            denom = reduce(op.mul, range(1, r+1))
+            return numer//denom
+        
+        all_comb = np.sum([ncr(n=X.shape[1], r=i)
+                           for i in range(self.min_features,
+                                          self.max_features + 1)])
+        
         n_jobs = min(self.n_jobs, all_comb)
         parallel = Parallel(n_jobs=n_jobs, pre_dispatch=self.pre_dispatch)
         work = enumerate(parallel(delayed(_calc_score)(self, X, y, c)

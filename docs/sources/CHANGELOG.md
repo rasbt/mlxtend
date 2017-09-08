@@ -16,16 +16,17 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
-- Added a `mlxtend.evaluate.bootstrap` that implements the ordinary nonparametric bootstrap to bootstrap a single statistic (for example, the mean. median, R^2 of a regression fit, and so forth)
+- Added a `mlxtend.evaluate.bootstrap` that implements the ordinary nonparametric bootstrap to bootstrap a single statistic (for example, the mean. median, R^2 of a regression fit, and so forth) [#232](https://github.com/rasbt/mlxtend/pull/232)
 
 ##### Changes
 
-- `SequentialFeatureSelector` now uses `np.nanmean` over normal mean to support scorers that may return `np.nan` 
-- The `skip_if_stuck` parameter was removed from `SequentialFeatureSelector` in favor of a more efficient implementation comparing the conditional inclusion/exclusion results (in the floating versions) to the performances of previously sampled feature sets that were cached
+- `SequentialFeatureSelector` now uses `np.nanmean` over normal mean to support scorers that may return `np.nan`  [#211](https://github.com/rasbt/mlxtend/pull/211), via [mrkaiser](https://github.com/mrkaiser))
+- The `skip_if_stuck` parameter was removed from `SequentialFeatureSelector` in favor of a more efficient implementation comparing the conditional inclusion/exclusion results (in the floating versions) to the performances of previously sampled feature sets that were cached [#237](https://github.com/rasbt/mlxtend/pull/237)
+- `ExhaustiveFeatureSelector` was modified to consume substantially less memory [#195](https://github.com/rasbt/mlxtend/pull/195), via [Adam Erickson](https://github.com/adam-erickson))
 
 ##### Bug Fixes
 
-- Fixed a bug where the `SequentialFeatureSelector` selected a feature subset larger than then specified via the `k_features` tuple max-value
+- Fixed a bug where the `SequentialFeatureSelector` selected a feature subset larger than then specified via the `k_features` tuple max-value [#213](https://github.com/rasbt/mlxtend/pull/213)
 
 
 ### Version 0.7.0 (2017-06-22)

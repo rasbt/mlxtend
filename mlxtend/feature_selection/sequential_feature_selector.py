@@ -43,7 +43,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     Parameters
     ----------
     estimator : scikit-learn classifier or regressor
-    k_features : int or tuple (new in 0.4.2) (default: 1)
+    k_features : int or tuple or str (default: 1)
         Number of features to select,
         where k_features < the full feature set.
         New in 0.4.2: A tuple containing a min and max value can be provided,
@@ -51,6 +51,12 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             min and max that scored highest in cross-validtion. For example,
             the tuple (1, 4) will return any combination from
             1 up to 4 features instead of a fixed number of features k.
+        New in 0.8.0: A string argument "best" or "parsimonious".
+            If "best" is provided, the feature selector will return the
+            feature subset with the best cross-validation performance.
+            If "parsimonious" is provided as an argument, the smallest
+            feature subset that is within one standard error of the
+            cross-validation performance will be selected.
     forward : bool (default: True)
         Forward selection if True,
         backward selection otherwise
@@ -179,11 +185,11 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self : object
 
         """
-
         if not isinstance(self.k_features, int) and\
-                not isinstance(self.k_features, tuple):
-            raise AttributeError('k_features must be a positive integer'
-                                 ' or tuple')
+                not isinstance(self.k_features, tuple)\
+                and not isinstance(self.k_features, str):
+                raise AttributeError('k_features must be a positive integer'
+                                     ', tuple, or string')
 
         if isinstance(self.k_features, int) and (self.k_features < 1 or
                                                  self.k_features > X.shape[1]):
@@ -208,8 +214,22 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 raise AttributeError('The min k_features value must be smaller'
                                      ' than the max k_features value.')
 
-        if isinstance(self.k_features, tuple):
+        if isinstance(self.k_features, tuple) or\
+                isinstance(self.k_features, str):
+
             select_in_range = True
+
+            if isinstance(self.k_features, str):
+                if self.k_features not in {'best', 'parsimonious'}:
+                    raise AttributeError('If a string argument is provided, '
+                                         'it must be "best" or "parsimonious"')
+                else:
+                    min_k = 1
+                    max_k = X.shape[1]
+            else:
+                min_k = self.k_features[0]
+                max_k = self.k_features[1]
+
         else:
             select_in_range = False
             k_to_select = self.k_features
@@ -218,12 +238,12 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         orig_set = set(range(X.shape[1]))
         if self.forward:
             if select_in_range:
-                k_to_select = self.k_features[1]
+                k_to_select = max_k
             k_idx = ()
             k = 0
         else:
             if select_in_range:
-                k_to_select = self.k_features[0]
+                k_to_select = min_k
             k_idx = tuple(range(X.shape[1]))
             k = len(k_idx)
             k_idx, k_score = _calc_score(self, X, y, k_idx)
@@ -319,14 +339,28 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
         if select_in_range:
             max_score = float('-inf')
+
+            max_score = float('-inf')
             for k in self.subsets_:
-                if k < self.k_features[0] or k > self.k_features[1]:
+                if k < min_k or k > max_k:
                     continue
                 if self.subsets_[k]['avg_score'] > max_score:
                     max_score = self.subsets_[k]['avg_score']
                     best_subset = k
             k_score = max_score
             k_idx = self.subsets_[best_subset]['feature_idx']
+
+            if self.k_features == 'parsimonious':
+                for k in self.subsets_:
+                    if k >= best_subset:
+                        continue
+                    if self.subsets_[k]['avg_score'] >= (
+                            max_score - np.std(self.subsets_[k]['cv_scores']) /
+                            self.subsets_[k]['cv_scores'].shape[0]):
+                        max_score = self.subsets_[k]['avg_score']
+                        best_subset = k
+                k_score = max_score
+                k_idx = self.subsets_[best_subset]['feature_idx']
 
         self.k_feature_idx_ = k_idx
         self.k_score_ = k_score

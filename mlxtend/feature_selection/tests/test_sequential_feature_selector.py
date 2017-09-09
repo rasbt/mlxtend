@@ -83,10 +83,10 @@ def test_kfeatures_type_2():
     X = iris.data
     y = iris.target
     knn = KNeighborsClassifier()
-    expect = 'k_features must be a positive integer or tuple'
+    expect = 'k_features must be a positive integer, tuple, or string'
     sfs = SFS(estimator=knn,
               verbose=0,
-              k_features='abc')
+              k_features=set())
     assert_raises(AttributeError,
                   expect,
                   sfs.fit,
@@ -458,10 +458,6 @@ def test_regression_in_range():
 
 
 def test_clone_params_fail():
-    iris = load_iris()
-    X = iris.data
-    y = iris.target
-
     if sys.version_info >= (3, 0):
         objtype = 'class'
     else:
@@ -504,7 +500,6 @@ def test_clone_params_pass():
 def test_transform_not_fitted():
     iris = load_iris()
     X = iris.data
-    y = iris.target
     knn = KNeighborsClassifier(n_neighbors=4)
 
     sfs1 = SFS(knn,
@@ -525,9 +520,6 @@ def test_transform_not_fitted():
 
 
 def test_get_metric_dict_not_fitted():
-    iris = load_iris()
-    X = iris.data
-    y = iris.target
     knn = KNeighborsClassifier(n_neighbors=4)
 
     sfs1 = SFS(knn,
@@ -642,3 +634,33 @@ def test_max_feature_subset_size_in_tuple_range():
 
     sfs = sfs.fit(X, y)
     assert len(sfs.k_feature_idx_) == 5
+
+
+def test_max_feature_subset_best():
+    boston = load_boston()
+    X, y = boston.data, boston.target
+    lr = LinearRegression()
+
+    sfs = SFS(lr,
+              k_features='best',
+              forward=True,
+              floating=False,
+              cv=10)
+
+    sfs = sfs.fit(X, y)
+    assert sfs.k_feature_idx_ == (1, 3, 5, 7, 8, 9, 10, 11, 12)
+
+
+def test_max_feature_subset_parsimonious():
+    boston = load_boston()
+    X, y = boston.data, boston.target
+    lr = LinearRegression()
+
+    sfs = SFS(lr,
+              k_features='parsimonious',
+              forward=True,
+              floating=False,
+              cv=10)
+
+    sfs = sfs.fit(X, y)
+    assert sfs.k_feature_idx_ == (10, 11, 12, 5)

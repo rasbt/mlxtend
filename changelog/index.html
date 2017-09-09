@@ -233,6 +233,12 @@
         
             
 <li >
+    <a href="../user_guide/evaluate/bootstrap/">Bootstrap</a>
+</li>
+
+        
+            
+<li >
     <a href="../user_guide/evaluate/confusion_matrix/">Confusion matrix</a>
 </li>
 
@@ -797,7 +803,7 @@
     
         <li class="main active"><a href="#release-notes">Release Notes</a></li>
         
-            <li><a href="#version-071dev-tbd">Version 0.7.1dev (TBD)</a></li>
+            <li><a href="#version-080-2017-09-09">Version 0.8.0 (2017-09-09)</a></li>
                 <!-- 
                     <li><a href="#downloads">Downloads</a></li>
             
@@ -960,23 +966,26 @@
 <hr />
 <p>The CHANGELOG for the current development version is available at
 <a href="https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md">https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md</a>.</p>
-<h3 id="version-071dev-tbd">Version 0.7.1dev (TBD)</h3>
+<h3 id="version-080-2017-09-09">Version 0.8.0 (2017-09-09)</h3>
 <h5 id="downloads">Downloads</h5>
 <ul>
-<li><a href="https://github.com/rasbt/mlxtend/archive/v0.7.1.zip">Source code (zip)</a></li>
-<li><a href="https://github.com/rasbt/mlxtend/archive/v0.7.1.tar.gz">Source code (tar.gz)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.8.0.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.8.0.tar.gz">Source code (tar.gz)</a></li>
 </ul>
 <h5 id="new-features">New Features</h5>
 <ul>
-<li>Added a <code>mlxtend.evaluate.bootstrap</code> that implements the ordinary nonparametric bootstrap to bootstrap a single statistic (for example, the mean. median, R^2 of a regression fit, and so forth)</li>
+<li>Added a <code>mlxtend.evaluate.bootstrap</code> that implements the ordinary nonparametric bootstrap to bootstrap a single statistic (for example, the mean. median, R^2 of a regression fit, and so forth) <a href="https://github.com/rasbt/mlxtend/pull/232">#232</a></li>
+<li><code>SequentialFeatureSelecor</code>'s <code>k_features</code> now accepts a string argument "best" or "parsimonious" for more "automated" feature selection. For instance, if "best" is provided, the feature selector will return the feature subset with the best cross-validation performance. If "parsimonious" is provided as an argument, the smallest feature subset that is within one standard error of the cross-validation performance will be selected. <a href="https://github.com/rasbt/mlxtend/pull/238">#238</a></li>
 </ul>
 <h5 id="changes">Changes</h5>
 <ul>
-<li><code>SFS</code> now uses <code>np.nanmean</code> over normal mean to support scorers that may return <code>np.nan</code> </li>
+<li><code>SequentialFeatureSelector</code> now uses <code>np.nanmean</code> over normal mean to support scorers that may return <code>np.nan</code>  <a href="https://github.com/rasbt/mlxtend/pull/211">#211</a> (via <a href="https://github.com/mrkaiser">mrkaiser</a>)</li>
+<li>The <code>skip_if_stuck</code> parameter was removed from <code>SequentialFeatureSelector</code> in favor of a more efficient implementation comparing the conditional inclusion/exclusion results (in the floating versions) to the performances of previously sampled feature sets that were cached <a href="https://github.com/rasbt/mlxtend/pull/237">#237</a></li>
+<li><code>ExhaustiveFeatureSelector</code> was modified to consume substantially less memory <a href="https://github.com/rasbt/mlxtend/pull/195">#195</a> (via <a href="https://github.com/adam-erickson">Adam Erickson</a>)</li>
 </ul>
 <h5 id="bug-fixes">Bug Fixes</h5>
 <ul>
-<li>Fixed a bug where the <code>SequentialFeatureSelector</code> selected a feature subset larger than then specified via the <code>k_features</code> tuple max-value</li>
+<li>Fixed a bug where the <code>SequentialFeatureSelector</code> selected a feature subset larger than then specified via the <code>k_features</code> tuple max-value <a href="https://github.com/rasbt/mlxtend/pull/213">#213</a></li>
 </ul>
 <h3 id="version-070-2017-06-22">Version 0.7.0 (2017-06-22)</h3>
 <h5 id="downloads_1">Downloads</h5>

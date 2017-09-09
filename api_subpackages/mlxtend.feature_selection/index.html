@@ -233,6 +233,12 @@
         
             
 <li >
+    <a href="../../user_guide/evaluate/bootstrap/">Bootstrap</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/evaluate/confusion_matrix/">Confusion matrix</a>
 </li>
 
@@ -1114,7 +1120,7 @@ deprecated and will not longer be supported in mlxtend 0.6.
 Please use <code>from mlxtend.plotting import plot_sequential_feature_selection</code>
 instead.</p>
 <h2 id="sequentialfeatureselector">SequentialFeatureSelector</h2>
-<p><em>SequentialFeatureSelector(estimator, k_features=1, forward=True, floating=False, verbose=0, scoring=None, cv=5, skip_if_stuck=True, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
+<p><em>SequentialFeatureSelector(estimator, k_features=1, forward=True, floating=False, verbose=0, scoring=None, cv=5, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
 <p>Sequential Feature Selection for Classification and Regression.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1122,14 +1128,20 @@ instead.</p>
 <p><code>estimator</code> : scikit-learn classifier or regressor</p>
 </li>
 <li>
-<p><code>k_features</code> : int or tuple (new in 0.4.2) (default: 1)</p>
+<p><code>k_features</code> : int or tuple or str (default: 1)</p>
 <p>Number of features to select,
 where k_features &lt; the full feature set.
 New in 0.4.2: A tuple containing a min and max value can be provided,
 and the SFS will consider return any feature combination between
 min and max that scored highest in cross-validtion. For example,
 the tuple (1, 4) will return any combination from
-1 up to 4 features instead of a fixed number of features k.</p>
+1 up to 4 features instead of a fixed number of features k.
+New in 0.8.0: A string argument "best" or "parsimonious".
+If "best" is provided, the feature selector will return the
+feature subset with the best cross-validation performance.
+If "parsimonious" is provided as an argument, the smallest
+feature subset that is within one standard error of the
+cross-validation performance will be selected.</p>
 </li>
 <li>
 <p><code>forward</code> : bool (default: True)</p>
@@ -1165,11 +1177,7 @@ for more information.</p>
 If estimator is a classifier (or y consists of integer class labels),
 stratified k-fold is performed, and regular k-fold cross-validation
 otherwise.
-No cross-validation if cv is None, False, or 0.
-skip_if_stuck: bool (default: True)
-Set to True to skip conditional
-exclusion/inclusion if floating=True and
-algorithm gets stuck in cycles.</p>
+No cross-validation if cv is None, False, or 0.</p>
 </li>
 <li>
 <p><code>n_jobs</code> : int (default: 1)</p>

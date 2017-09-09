@@ -5,24 +5,24 @@
 The CHANGELOG for the current development version is available at
 [https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md](https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md).
 
-### Version 0.7.1dev (TBD)
-
+### Version 0.8.0 (2017-09-09)
 
 
 ##### Downloads
 
-- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.7.1.zip)
-- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.7.1.tar.gz)
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.8.0.zip)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.8.0.tar.gz)
 
 ##### New Features
 
 - Added a `mlxtend.evaluate.bootstrap` that implements the ordinary nonparametric bootstrap to bootstrap a single statistic (for example, the mean. median, R^2 of a regression fit, and so forth) [#232](https://github.com/rasbt/mlxtend/pull/232)
+- `SequentialFeatureSelecor`'s `k_features` now accepts a string argument "best" or "parsimonious" for more "automated" feature selection. For instance, if "best" is provided, the feature selector will return the feature subset with the best cross-validation performance. If "parsimonious" is provided as an argument, the smallest feature subset that is within one standard error of the cross-validation performance will be selected. [#238](https://github.com/rasbt/mlxtend/pull/238)
 
 ##### Changes
 
-- `SequentialFeatureSelector` now uses `np.nanmean` over normal mean to support scorers that may return `np.nan`  [#211](https://github.com/rasbt/mlxtend/pull/211), via [mrkaiser](https://github.com/mrkaiser))
+- `SequentialFeatureSelector` now uses `np.nanmean` over normal mean to support scorers that may return `np.nan`  [#211](https://github.com/rasbt/mlxtend/pull/211) (via [mrkaiser](https://github.com/mrkaiser))
 - The `skip_if_stuck` parameter was removed from `SequentialFeatureSelector` in favor of a more efficient implementation comparing the conditional inclusion/exclusion results (in the floating versions) to the performances of previously sampled feature sets that were cached [#237](https://github.com/rasbt/mlxtend/pull/237)
-- `ExhaustiveFeatureSelector` was modified to consume substantially less memory [#195](https://github.com/rasbt/mlxtend/pull/195), via [Adam Erickson](https://github.com/adam-erickson))
+- `ExhaustiveFeatureSelector` was modified to consume substantially less memory [#195](https://github.com/rasbt/mlxtend/pull/195) (via [Adam Erickson](https://github.com/adam-erickson))
 
 ##### Bug Fixes
 

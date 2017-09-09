@@ -1041,7 +1041,12 @@
 <p><strong>Termination:</strong> stop when <strong><em>k</em></strong> equals the number of desired features</p>
 <h3 id="references">References</h3>
 <ul>
-<li>Ferri, F., et al. <a href="https://books.google.com/books?hl=en&amp;lr=&amp;id=sbajBQAAQBAJ&amp;oi=fnd&amp;pg=PA403&amp;dq=comparative+study+of+techniques+for+large+scale&amp;ots=KdIOYpA8wj&amp;sig=hdOsBP1HX4hcDjx4RLg_chheojc#v=onepage&amp;q=comparative%20study%20of%20techniques%20for%20large%20scale&amp;f=false"><em>"Comparative study of techniques for large-scale feature selection."</em></a> Pattern Recognition in Practice IV (1994): 403-413.</li>
+<li>
+<p>Ferri, F., et al. (1994). <a href="https://books.google.com/books?hl=en&amp;lr=&amp;id=sbajBQAAQBAJ&amp;oi=fnd&amp;pg=PA403&amp;dq=comparative+study+of+techniques+for+large+scale&amp;ots=KdIOYpA8wj&amp;sig=hdOsBP1HX4hcDjx4RLg_chheojc#v=onepage&amp;q=comparative%20study%20of%20techniques%20for%20large%20scale&amp;f=false"><em>"Comparative study of techniques for large-scale feature selection."</em></a> Pattern Recognition in Practice IV : 403-413.</p>
+</li>
+<li>
+<p>Pudil, P., Novovičová, J., &amp; Kittler, J. (1994). <a href="http://www.sciencedirect.com/science/article/pii/0167865594901279"><em>"Floating search methods in feature selection."</em></a> Pattern recognition letters 15.11 (1994): 1119-1125.</p>
+</li>
 </ul>
 <h2 id="example-1-a-simple-sequential-forward-selection-example">Example 1 - A simple Sequential Forward Selection example</h2>
 <p>Initializing a simple classifier from scikit-learn:</p>
@@ -1068,9 +1073,16 @@ sfs1 = SFS(knn,
 sfs1 = sfs1.fit(X, y)
 </code></pre>
 
-<pre><code>[2017-04-01 03:13:42] Features: 1/3 -- score: 0.96
-[2017-04-01 03:13:42] Features: 2/3 -- score: 0.973333333333
-[2017-04-01 03:13:42] Features: 3/3 -- score: 0.973333333333
+<pre><code>[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
+
+[2017-09-07 06:40:45] Features: 1/3 -- score: 0.96[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s finished
+
+[2017-09-07 06:40:45] Features: 2/3 -- score: 0.973333333333[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
+
+[2017-09-07 06:40:45] Features: 3/3 -- score: 0.973333333333
 </code></pre>
 <p>Via the <code>subsets_</code> attribute, we can take a look at the selected feature indices at each step:</p>
 <pre><code class="python">sfs1.subsets_
@@ -1196,6 +1208,19 @@ pd.DataFrame.from_dict(sfs.get_metric_dict()).T
 </code></pre>
 
 <div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1245,6 +1270,19 @@ pd.DataFrame.from_dict(sfs.get_metric_dict()).T
 </code></pre>
 
 <div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1286,6 +1324,19 @@ pd.DataFrame.from_dict(sfs.get_metric_dict()).T
 </code></pre>
 
 <div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1344,10 +1395,19 @@ plt.grid()
 plt.show()
 </code></pre>
 
-<pre><code>[2017-04-01 03:13:49] Features: 1/4 -- score: 0.96
-[2017-04-01 03:13:49] Features: 2/4 -- score: 0.966666666667
-[2017-04-01 03:13:49] Features: 3/4 -- score: 0.953333333333
-[2017-04-01 03:13:49] Features: 4/4 -- score: 0.973333333333
+<pre><code>[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
+
+[2017-09-07 06:40:48] Features: 1/4 -- score: 0.96[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s finished
+
+[2017-09-07 06:40:48] Features: 2/4 -- score: 0.966666666667[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
+
+[2017-09-07 06:40:48] Features: 3/4 -- score: 0.953333333333[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s finished
+
+[2017-09-07 06:40:48] Features: 4/4 -- score: 0.973333333333
 </code></pre>
 <p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_39_1.png" /></p>
 <h2 id="example-5-sequential-feature-selection-for-regression">Example 5 - Sequential Feature Selection for Regression</h2>
@@ -1481,7 +1541,7 @@ gs = gs.fit(X_train, y_train)
 <pre><code class="python">print(&quot;Best parameters via GridSearch&quot;, gs.best_params_)
 </code></pre>
 
-<pre><code>Best parameters via GridSearch {'sfs__k_features': 3, 'sfs__estimator__n_neighbors': 1}
+<pre><code>Best parameters via GridSearch {'sfs__estimator__n_neighbors': 1, 'sfs__k_features': 3}
 </code></pre>
 <h4 id="obtaining-the-best-k-feature-indices-after-gridsearch">Obtaining the best <em>k</em> feature indices after GridSearch</h4>
 <p>If we are interested in the best <em>k</em> feature indices via <code>SequentialFeatureSelection.k_feature_idx_</code>, we have to initialize a <code>GridSearchCV</code> object with <code>refit=True</code>. Now, the grid search object will take the complete training dataset and the best parameters, which it found via cross-validation, to train the estimator pipeline.</p>
@@ -1503,8 +1563,7 @@ gs = gs.fit(X_train, y_train)
              metric_params=None, n_jobs=1, n_neighbors=1, p=2,
              weights='uniform'),
                floating=False, forward=True, k_features=3, n_jobs=1,
-               pre_dispatch='2*n_jobs', scoring='accuracy',
-               skip_if_stuck=True, verbose=0)),
+               pre_dispatch='2*n_jobs', scoring='accuracy', verbose=0)),
  ('knn',
   KNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',
              metric_params=None, n_jobs=1, n_neighbors=2, p=2,
@@ -1575,11 +1634,11 @@ plot_sfs(sfs1.get_metric_dict(), kind='std_err');
 <pre><code>best combination (ACC: 0.992): (0, 1, 2, 3, 6, 8, 9, 10, 11, 12)
 
 all subsets:
- {1: {'avg_score': 0.7985641025641026, 'cv_scores': array([ 0.84615385,  0.6       ,  0.88      ,  0.79166667,  0.875     ]), 'feature_idx': (6,)}, 2: {'avg_score': 0.93561538461538463, 'cv_scores': array([ 0.92307692,  0.88      ,  1.        ,  0.95833333,  0.91666667]), 'feature_idx': (9, 6)}, 3: {'avg_score': 0.95228205128205123, 'cv_scores': array([ 0.92307692,  0.92      ,  0.96      ,  1.        ,  0.95833333]), 'feature_idx': (9, 12, 6)}, 4: {'avg_score': 0.96797435897435891, 'cv_scores': array([ 0.96153846,  0.96      ,  0.96      ,  1.        ,  0.95833333]), 'feature_idx': (9, 3, 12, 6)}, 5: {'avg_score': 0.97661538461538466, 'cv_scores': array([ 0.92307692,  0.96      ,  1.        ,  1.        ,  1.        ]), 'feature_idx': (9, 10, 3, 12, 6)}, 6: {'avg_score': 0.96828205128205125, 'cv_scores': array([ 0.92307692,  0.96      ,  1.        ,  0.95833333,  1.        ]), 'feature_idx': (2, 3, 6, 9, 10, 12)}, 7: {'avg_score': 0.96861538461538466, 'cv_scores': array([ 0.92307692,  0.92      ,  1.        ,  1.        ,  1.        ]), 'feature_idx': (0, 2, 3, 6, 9, 10, 12)}, 8: {'avg_score': 0.98399999999999999, 'cv_scores': array([ 1.  ,  0.92,  1.  ,  1.  ,  1.  ]), 'feature_idx': (0, 2, 3, 6, 8, 9, 10, 12)}, 9: {'avg_score': 0.98399999999999999, 'cv_scores': array([ 1.  ,  0.92,  1.  ,  1.  ,  1.  ]), 'feature_idx': (0, 2, 3, 6, 8, 9, 10, 11, 12)}, 10: {'avg_score': 0.99199999999999999, 'cv_scores': array([ 1.  ,  0.96,  1.  ,  1.  ,  1.  ]), 'feature_idx': (0, 1, 2, 3, 6, 8, 9, 10, 11, 12)}}
+ {1: {'feature_idx': (6,), 'cv_scores': array([ 0.84615385,  0.6       ,  0.88      ,  0.79166667,  0.875     ]), 'avg_score': 0.7985641025641026}, 2: {'feature_idx': (9, 6), 'cv_scores': array([ 0.92307692,  0.88      ,  1.        ,  0.95833333,  0.91666667]), 'avg_score': 0.93561538461538463}, 3: {'feature_idx': (9, 12, 6), 'cv_scores': array([ 0.92307692,  0.92      ,  0.96      ,  1.        ,  0.95833333]), 'avg_score': 0.95228205128205123}, 4: {'feature_idx': (9, 3, 12, 6), 'cv_scores': array([ 0.96153846,  0.96      ,  0.96      ,  1.        ,  0.95833333]), 'avg_score': 0.96797435897435891}, 5: {'feature_idx': (3, 6, 9, 10, 12), 'cv_scores': array([ 0.92307692,  0.96      ,  1.        ,  1.        ,  1.        ]), 'avg_score': 0.97661538461538466}, 6: {'feature_idx': (2, 3, 6, 9, 10, 12), 'cv_scores': array([ 0.92307692,  0.96      ,  1.        ,  0.95833333,  1.        ]), 'avg_score': 0.96828205128205125}, 7: {'feature_idx': (0, 2, 3, 6, 9, 10, 12), 'cv_scores': array([ 0.92307692,  0.92      ,  1.        ,  1.        ,  1.        ]), 'avg_score': 0.96861538461538466}, 8: {'feature_idx': (0, 2, 3, 6, 8, 9, 10, 12), 'cv_scores': array([ 1.  ,  0.92,  1.  ,  1.  ,  1.  ]), 'avg_score': 0.98399999999999999}, 9: {'feature_idx': (0, 2, 3, 6, 8, 9, 10, 11, 12), 'cv_scores': array([ 1.  ,  0.92,  1.  ,  1.  ,  1.  ]), 'avg_score': 0.98399999999999999}, 10: {'feature_idx': (0, 1, 2, 3, 6, 8, 9, 10, 11, 12), 'cv_scores': array([ 1.  ,  0.96,  1.  ,  1.  ,  1.  ]), 'avg_score': 0.99199999999999999}}
 </code></pre>
 <p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_69_1.png" /></p>
 <h1 id="api">API</h1>
-<p><em>SequentialFeatureSelector(estimator, k_features=1, forward=True, floating=False, verbose=0, scoring=None, cv=5, skip_if_stuck=True, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
+<p><em>SequentialFeatureSelector(estimator, k_features=1, forward=True, floating=False, verbose=0, scoring=None, cv=5, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
 <p>Sequential Feature Selection for Classification and Regression.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1587,14 +1646,20 @@ all subsets:
 <p><code>estimator</code> : scikit-learn classifier or regressor</p>
 </li>
 <li>
-<p><code>k_features</code> : int or tuple (new in 0.4.2) (default: 1)</p>
+<p><code>k_features</code> : int or tuple or str (default: 1)</p>
 <p>Number of features to select,
 where k_features &lt; the full feature set.
 New in 0.4.2: A tuple containing a min and max value can be provided,
 and the SFS will consider return any feature combination between
 min and max that scored highest in cross-validtion. For example,
 the tuple (1, 4) will return any combination from
-1 up to 4 features instead of a fixed number of features k.</p>
+1 up to 4 features instead of a fixed number of features k.
+New in 0.8.0: A string argument "best" or "parsimonious".
+If "best" is provided, the feature selector will return the
+feature subset with the best cross-validation performance.
+If "parsimonious" is provided as an argument, the smallest
+feature subset that is within one standard error of the
+cross-validation performance will be selected.</p>
 </li>
 <li>
 <p><code>forward</code> : bool (default: True)</p>
@@ -1630,11 +1695,7 @@ for more information.</p>
 If estimator is a classifier (or y consists of integer class labels),
 stratified k-fold is performed, and regular k-fold cross-validation
 otherwise.
-No cross-validation if cv is None, False, or 0.
-skip_if_stuck: bool (default: True)
-Set to True to skip conditional
-exclusion/inclusion if floating=True and
-algorithm gets stuck in cycles.</p>
+No cross-validation if cv is None, False, or 0.</p>
 </li>
 <li>
 <p><code>n_jobs</code> : int (default: 1)</p>

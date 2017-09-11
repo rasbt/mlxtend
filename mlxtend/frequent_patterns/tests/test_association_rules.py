@@ -16,24 +16,43 @@ df = pd.DataFrame(one_ary, columns=cols)
 
 df_freq_items = apriori(df, min_support=0.6)
 
+columns_ordered = ['antecedants', 'consequents',
+                   'antecedent support', 'consequent support',
+                   'confidence', 'lift']
+
 
 def test_default():
     res_df = association_rules(df_freq_items)
+    #res_df['antecedants'] = res_df['antecedants'].apply(lambda x: str(x))
+    res_df['antecedants'] = res_df['antecedants'].apply(lambda x: str(frozenset(x)))
+    res_df['consequents'] = res_df['consequents'].apply(lambda x: str(frozenset(x)))
+    res_df.sort_values(columns_ordered, inplace=True)
+    res_df.reset_index(inplace=True, drop=True)
+
     expect = pd.DataFrame([
-        [(8), (5), 0.6, 1.0, 1.0],
-        [(6), (5), 0.6, 1.0, 1.0],
-        [(8, 3), (5), 0.6, 1.0, 1.0],
-        [(8, 5), (3), 0.6, 1.0, 1.25],
-        [(8), (3, 5), 0.6, 1.0, 1.25],
-        [(3), (5), 0.8, 1.0, 1.0],
-        [(5), (3), 1.0, 0.8, 1.0],
-        [(10), (5), 0.6, 1.0, 1.0],
-        [(8), (3), 0.6, 1.0, 1.25]],
-        columns=['antecedants', 'consequents', 'support', 'confidence', 'lift']
+        [(8,), (5,), 0.6, 1.0, 1.0, 1.0],
+        [(6,), (5,), 0.6, 1.0, 1.0, 1.0],
+        [(8, 3), (5,), 0.6, 1.0, 1.0, 1.0],
+        [(8, 5), (3,), 0.6, 0.8, 1.0, 1.25],
+        [(8,), (3, 5), 0.6, 0.8, 1.0, 1.25],
+        [(3,), (5,), 0.8, 1.0, 1.0, 1.0],
+        [(5,), (3,), 1.0, 0.8, 0.8, 1.0],
+        [(10,), (5,), 0.6, 1.0, 1.0, 1.0],
+        [(8,), (3,), 0.6, 0.8, 1.0, 1.25]],
+        columns=columns_ordered
     )
 
-    for a, b in zip(res_df, expect):
-        assert_array_equal(a, b)
+    #expect['antecedants'] = expect['antecedants'].apply(lambda x: str(tuple(x)))
+    #print(expect['antecedants'].values)
+    expect['antecedants'] = expect['antecedants'].apply(lambda x: str(frozenset(x)))
+    expect['consequents'] = expect['consequents'].apply(lambda x: str(frozenset(x)))
+    expect.sort_values(columns_ordered, inplace=True)
+    expect.reset_index(inplace=True, drop=True)
+
+    print(res_df)
+    print(expect)
+
+    assert res_df.equals(expect)
 
 
 def test_no_support_col():
@@ -52,9 +71,13 @@ def test_wrong_metric():
 
 def test_empty_result():
     expect = pd.DataFrame(
-        columns=['antecedants', 'consequents', 'support', 'confidence', 'lift']
+        columns=['antecedants', 'consequents',
+                 'antecedent support', 'consequent support',
+                 'confidence', 'lift']
     )
     res_df = association_rules(df_freq_items, min_threshold=2)
 
-    for a, b in zip(res_df, expect):
-        assert_array_equal(a, b)
+    print(res_df)
+    print(expect)
+
+    assert res_df.equals(expect)

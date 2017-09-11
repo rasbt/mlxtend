@@ -44,11 +44,14 @@ def association_rules(df, metric="confidence", min_threshold=0.8):
 
     # metrics for association rules
     metric_dict = {
-        "confidence": lambda sXY, sX, _:
-        sXY/sX,
-        "lift": lambda sXY, sX, sY:
-        metric_dict["confidence"](sXY, sX, sY)/sY
+        "antecedent support": lambda _, sX, __: sX,
+        "consequent support": lambda _, __, sY: sY,
+        "confidence": lambda sXY, sX, _: sXY/sX,
+        "lift": lambda sXY, sX, sY: metric_dict["confidence"](sXY, sX, sY)/sY
         }
+
+    columns_ordered = ["antecedent support", "consequent support",
+                       "confidence", "lift"]
 
     # check for metric compliance
     if metric not in metric_dict.keys():
@@ -86,8 +89,7 @@ def association_rules(df, metric="confidence", min_threshold=0.8):
     # check if frequent rule was generated
     if not rule_supports:
         return pd.DataFrame(
-            columns=["antecedants", "consequents", "support"]
-            .append(list(metric_dict.keys())))
+            columns=["antecedants", "consequents"] + columns_ordered)
     else:
         # generate metrics
         rule_supports = np.array(rule_supports).T
@@ -95,9 +97,9 @@ def association_rules(df, metric="confidence", min_threshold=0.8):
         sX = rule_supports[1]
         sY = rule_supports[2]
         df_res = pd.DataFrame(
-            data=list(zip(rule_antecedants, rule_consequents, sX)),
-            columns=["antecedants", "consequents", "support"])
-        for m in sorted(metric_dict.keys()):
+            data=list(zip(rule_antecedants, rule_consequents)),
+            columns=["antecedants", "consequents"])
+        for m in columns_ordered:
             df_res[m] = metric_dict[m](sXY, sX, sY)
 
         return df_res

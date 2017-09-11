@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from mlxtend.frequent_patterns import apriori, association_rules
-from numpy.testing import assert_array_equal, assert_raises
+from numpy.testing import assert_raises
 
 one_ary = np.array([[0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1],
                     [0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1],
@@ -23,9 +23,10 @@ columns_ordered = ['antecedants', 'consequents',
 
 def test_default():
     res_df = association_rules(df_freq_items)
-    #res_df['antecedants'] = res_df['antecedants'].apply(lambda x: str(x))
-    res_df['antecedants'] = res_df['antecedants'].apply(lambda x: str(frozenset(x)))
-    res_df['consequents'] = res_df['consequents'].apply(lambda x: str(frozenset(x)))
+    res_df['antecedants'] = res_df['antecedants'].apply(
+        lambda x: str(frozenset(x)))
+    res_df['consequents'] = res_df['consequents'].apply(
+        lambda x: str(frozenset(x)))
     res_df.sort_values(columns_ordered, inplace=True)
     res_df.reset_index(inplace=True, drop=True)
 
@@ -42,10 +43,10 @@ def test_default():
         columns=columns_ordered
     )
 
-    #expect['antecedants'] = expect['antecedants'].apply(lambda x: str(tuple(x)))
-    #print(expect['antecedants'].values)
-    expect['antecedants'] = expect['antecedants'].apply(lambda x: str(frozenset(x)))
-    expect['consequents'] = expect['consequents'].apply(lambda x: str(frozenset(x)))
+    expect['antecedants'] = expect['antecedants'].apply(
+        lambda x: str(frozenset(x)))
+    expect['consequents'] = expect['consequents'].apply(
+        lambda x: str(frozenset(x)))
     expect.sort_values(columns_ordered, inplace=True)
     expect.reset_index(inplace=True, drop=True)
 

@@ -10,8 +10,9 @@ from .lift_score import lift_score
 from .mcnemar import mcnemar_table
 from .mcnemar import mcnemar
 from .bootstrap import bootstrap
+from .permutation import permutation_test
 
 
 __all__ = ["scoring", "confusion_matrix",
            "mcnemar_table", "mcnemar", "lift_score",
-           "bootstrap"]
+           "bootstrap", "permutation_test"]

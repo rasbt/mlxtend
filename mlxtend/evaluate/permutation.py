@@ -61,7 +61,7 @@ def permutation_test(x, y, alt_hypothesis='x > y', method='exact',
     def one_sided_statistic(comb, x):
         # equivalent to np.mean(x) - np.mean(y)
         # where comb = np.vstack(x, y)
-        sum_comb, sum_x = sum(comb), sum(x)
+        sum_comb, sum_x = float(sum(comb)), float(sum(x))  # float for Py27
         return (sum_x / len(x) - (sum_comb - sum_x) / (len(comb) - len(x)))
 
     def two_sided_statistic(comb, x):

@@ -15,7 +15,7 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
-- 
+- Added `evaluate.permutation_test`, a permutation test for hypothesis testing (or A/B testing) to test if two samples come from the same distribution. Or in other words, a procedure to test the null hypothesis that that two groups are not significantly different (e.g., a treatment and a control group). 
 
 ##### Changes
 

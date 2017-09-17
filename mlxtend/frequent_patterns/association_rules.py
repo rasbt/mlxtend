@@ -24,7 +24,12 @@ def association_rules(df, metric="confidence", min_threshold=0.8):
       with columns ['support', 'itemsets']
     metric : string (default: 'confidence')
       Metric to evaluate if a rule is of interest.
-      Supported metrics are 'confidence' and 'lift'
+      Supported metrics are 'support', 'confidence', 'lift', and 'leverage'.
+      These metrics are computed as follows:
+      - support(A->C) = support(A+C) [aka 'support']
+      - confidence(A->C) = support(A+C) / support(A)
+      - lift(A->C) = confidence(A->C) / support(C)
+      - leverage(A->C) = support(A->C) - support(A)*support(C)
     min_threshold : float (default: 0.8)
       Minimal threshold for the evaluation metric
       to decide whether a candidate rule is of interest.
@@ -46,14 +51,17 @@ def association_rules(df, metric="confidence", min_threshold=0.8):
     metric_dict = {
         "antecedent support": lambda _, sX, __: sX,
         "consequent support": lambda _, __, sY: sY,
-        "a & c support": lambda sXY, _, __: sXY,
+        "support": lambda sXY, _, __: sXY,
         "confidence": lambda sXY, sX, _: sXY/sX,
-        "lift": lambda sXY, sX, sY: metric_dict["confidence"](sXY, sX, sY)/sY
+        "lift": lambda sXY, sX, sY: metric_dict["confidence"](sXY, sX, sY)/sY,
+        "leverage": lambda sXY, sX, sY: metric_dict["support"](
+             sXY, sX, sY) - sX*sY
         }
 
     columns_ordered = ["antecedent support", "consequent support",
-                       "a & c support",
-                       "confidence", "lift"]
+                       "support",
+                       "confidence", "lift",
+                       "leverage"]
 
     # check for metric compliance
     if metric not in metric_dict.keys():

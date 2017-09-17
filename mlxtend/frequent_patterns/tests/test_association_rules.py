@@ -18,8 +18,8 @@ df_freq_items = apriori(df, min_support=0.6)
 
 columns_ordered = ['antecedants', 'consequents',
                    'antecedent support', 'consequent support',
-                   'a & c support',
-                   'confidence', 'lift']
+                   'support',
+                   'confidence', 'lift', 'leverage']
 
 
 def test_default():
@@ -32,15 +32,15 @@ def test_default():
     res_df.reset_index(inplace=True, drop=True)
 
     expect = pd.DataFrame([
-        [(8,), (5,), 0.6, 1.0, 0.6, 1.0, 1.0],
-        [(6,), (5,), 0.6, 1.0, 0.6, 1.0, 1.0],
-        [(8, 3), (5,), 0.6, 1.0, 0.6, 1.0, 1.0],
-        [(8, 5), (3,), 0.6, 0.8, 0.6, 1.0, 1.25],
-        [(8,), (3, 5), 0.6, 0.8, 0.6, 1.0, 1.25],
-        [(3,), (5,), 0.8, 1.0, 0.8, 1.0, 1.0],
-        [(5,), (3,), 1.0, 0.8, 0.8, 0.8, 1.0],
-        [(10,), (5,), 0.6, 1.0, 0.6, 1.0, 1.0],
-        [(8,), (3,), 0.6, 0.8, 0.6, 1.0, 1.25]],
+        [(8,), (5,), 0.6, 1.0, 0.6, 1.0, 1.0, 0.00],
+        [(6,), (5,), 0.6, 1.0, 0.6, 1.0, 1.0, 0.00],
+        [(8, 3), (5,), 0.6, 1.0, 0.6, 1.0, 1.0, 0.00],
+        [(8, 5), (3,), 0.6, 0.8, 0.6, 1.0, 1.25, 0.12],
+        [(8,), (3, 5), 0.6, 0.8, 0.6, 1.0, 1.25, 0.12],
+        [(3,), (5,), 0.8, 1.0, 0.8, 1.0, 1.0, 0.00],
+        [(5,), (3,), 1.0, 0.8, 0.8, 0.8, 1.0, 0.00],
+        [(10,), (5,), 0.6, 1.0, 0.6, 1.0, 1.0, 0.00],
+        [(8,), (3,), 0.6, 0.8, 0.6, 1.0, 1.25, 0.12]],
         columns=columns_ordered
     )
 
@@ -51,6 +51,7 @@ def test_default():
     expect.sort_values(columns_ordered, inplace=True)
     expect.reset_index(inplace=True, drop=True)
 
+    print(res_df)
     assert res_df.equals(expect)
 
 
@@ -73,12 +74,9 @@ def test_empty_result():
         columns=['antecedants', 'consequents',
                  'antecedent support',
                  'consequent support',
-                 'a & c support',
-                 'confidence', 'lift']
+                 'support',
+                 'confidence', 'lift', 'leverage']
     )
     res_df = association_rules(df_freq_items, min_threshold=2)
-
-    print(res_df)
-    print(expect)
 
     assert res_df.equals(expect)

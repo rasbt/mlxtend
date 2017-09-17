@@ -19,7 +19,8 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- The `'support'` column returned by `frequent_patterns.association_rules` was renamed to `'antecedant support'`, and additional `'consequent support'` column was added, as well as an `'a & c'` column, to avoid ambiguity. 
+- The `'support'` column returned by `frequent_patterns.association_rules` was changed to compute the support of "antecedant union consequent", and new `antecedant support'` and `'consequent support'` column were added to avoid ambiguity. 
+- Added `'leverage'` as an evaluation metric for `frequent_patterns.association_rules`
 
 ##### Bug Fixes
 

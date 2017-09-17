@@ -46,11 +46,13 @@ def association_rules(df, metric="confidence", min_threshold=0.8):
     metric_dict = {
         "antecedent support": lambda _, sX, __: sX,
         "consequent support": lambda _, __, sY: sY,
+        "a & c support": lambda sXY, _, __: sXY,
         "confidence": lambda sXY, sX, _: sXY/sX,
         "lift": lambda sXY, sX, sY: metric_dict["confidence"](sXY, sX, sY)/sY
         }
 
     columns_ordered = ["antecedent support", "consequent support",
+                       "a & c support",
                        "confidence", "lift"]
 
     # check for metric compliance

@@ -19,7 +19,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- The `'support'` column returned by `frequent_patterns.association_rules` was renamed to `'antecedant support'`, and an additional `'consequent support'` column was added, to avoid ambiguity. 
+- The `'support'` column returned by `frequent_patterns.association_rules` was renamed to `'antecedant support'`, and additional `'consequent support'` column was added, as well as an `'a & c'` column, to avoid ambiguity. 
 
 ##### Bug Fixes
 

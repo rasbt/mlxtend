@@ -19,8 +19,8 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- The `'support'` column returned by `frequent_patterns.association_rules` was changed to compute the support of "antecedant union consequent", and new `antecedant support'` and `'consequent support'` column were added to avoid ambiguity. 
-- Added `'leverage'` as an evaluation metric for `frequent_patterns.association_rules`
+- The `'support'` column returned by `frequent_patterns.association_rules` was changed to compute the support of "antecedant union consequent", and new `antecedant support'` and `'consequent support'` column were added to avoid ambiguity. [#245](https://github.com/rasbt/mlxtend/pull/245)
+- Added `'leverage'` and `'conviction` as evaluation metrics to the `frequent_patterns.association_rules` function. [#246](https://github.com/rasbt/mlxtend/pull/246) & [#247](https://github.com/rasbt/mlxtend/pull/247)
 
 ##### Bug Fixes
 

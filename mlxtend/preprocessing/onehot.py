@@ -5,6 +5,7 @@
 # License: BSD 3 clause
 
 import numpy as np
+from sklearn.base import BaseEstimator, TransformerMixin
 
 
 def one_hot(y, num_labels='auto', dtype='float'):
@@ -51,7 +52,7 @@ def one_hot(y, num_labels='auto', dtype='float'):
     return ary.astype(dtype)
 
 
-class OnehotTransactions(object):
+class OnehotTransactions(BaseEstimator, TransformerMixin):
     """One-hot encoder class for transaction data in Python lists
 
     Parameters

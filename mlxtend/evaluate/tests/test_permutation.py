@@ -13,56 +13,49 @@ treatment = [689, 656, 668, 660, 679, 663, 664, 647]
 control = [657, 623, 652, 654, 658, 660, 670, 620]
 
 
-def test_one_sided():
-    p = permutation_test(treatment, control, alt_hypothesis='x > y')
-    assert round(p, 4) == 0.0274
+def test_one_sided_x_greater_y():
+    p = permutation_test(treatment, control,
+                         func=lambda x, y: np.mean(x) - np.mean(y))
+    assert round(p, 4) == 0.0274, p
+
+    p = permutation_test(treatment, control,
+                         func="x_mean > y_mean")
+    assert round(p, 4) == 0.0274, p
 
 
-def test_numpy_array():
-    p = permutation_test(np.array(treatment),
-                         np.array(control),
-                         alt_hypothesis='x > y')
-    assert round(p, 4) == 0.0274
+def test_one_sided_y_greater_x():
+    p = permutation_test(treatment, control,
+                         func=lambda x, y: np.mean(y) - np.mean(x))
+    assert round(p, 3) == 1 - 0.03, p
 
-
-def test_invert_alt_hypothesis():
-    p = permutation_test(treatment,
-                         control,
-                         alt_hypothesis='x < y')
-    assert round(p, 2) == 1 - 0.03
+    p = permutation_test(treatment, control,
+                         func="x_mean < y_mean")
+    assert round(p, 3) == 1 - 0.03, p
 
 
 def test_two_sided():
+    p = permutation_test(treatment, control,
+                         func=lambda x, y: np.abs(np.mean(x) - np.mean(y)))
+    assert round(p, 3) == 0.055, p
+
+    p = permutation_test(treatment, control,
+                         func="x_mean != y_mean")
+    assert round(p, 3) == 0.055, p
+
+
+def test_default():
+    p = permutation_test(treatment, control)
+    assert round(p, 3) == 0.055, p
+
+
+def test_approximateone_sided_x_greater_y():
     p = permutation_test(treatment,
                          control,
-                         alt_hypothesis='x != y')
-    assert round(p, 2) == round(2*0.027, 2)
-
-
-def test_defaults():
-    p = permutation_test(treatment,
-                         control)
-    assert round(p, 2) == round(2*0.027, 2)
-
-
-def test_approximate():
-    p = permutation_test(treatment,
-                         control,
+                         func=lambda x, y: np.mean(x) - np.mean(y),
                          method='approximate',
-                         alt_hypothesis='x > y',
-                         num_permutations=5000,
+                         num_rounds=5000,
                          seed=123)
-    assert round(p, 3) == 0.028, round(p, 4)
-
-
-def test_invalid_alt_hypothesis():
-    msg = "alt_hypothesis be 'x > y', 'y > x', or 'x != y', got y > x"
-    assert_raises(AttributeError,
-                  msg,
-                  permutation_test,
-                  [1, 2, 3],
-                  [3, 4, 5],
-                  alt_hypothesis='y > x')
+    assert round(p, 3) == 0.028, p
 
 
 def test_invalid_method():
@@ -72,23 +65,17 @@ def test_invalid_method():
                   permutation_test,
                   [1, 2, 3],
                   [3, 4, 5],
-                  alt_hypothesis='x > y',
+                  lambda x, y: np.mean(x) - np.mean(y),
                   method='na')
 
 
-def test_invalid_array_dim_x():
-    msg = 'x must be one-dimensional'
+def test_invalid_func():
+    msg = ('Provide a custom function lambda x,y: ... '
+           'or a string in ("x_mean != y_mean", '
+           '"x_mean > y_mean", "x_mean < y_mean")')
     assert_raises(AttributeError,
                   msg,
                   permutation_test,
-                  np.array([[1, 2, 3]]),
-                  [3, 4, 5])
-
-
-def test_invalid_array_dim_y():
-    msg = 'y must be one-dimensional'
-    assert_raises(AttributeError,
-                  msg,
-                  permutation_test,
+                  [1, 2, 3],
                   [3, 4, 5],
-                  np.array([[1, 2, 3]]),)
+                  'myfunc')

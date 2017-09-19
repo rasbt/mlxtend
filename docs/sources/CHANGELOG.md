@@ -21,10 +21,11 @@ The CHANGELOG for the current development version is available at
 
 - The `'support'` column returned by `frequent_patterns.association_rules` was changed to compute the support of "antecedant union consequent", and new `antecedant support'` and `'consequent support'` column were added to avoid ambiguity. [#245](https://github.com/rasbt/mlxtend/pull/245)
 - Added `'leverage'` and `'conviction` as evaluation metrics to the `frequent_patterns.association_rules` function. [#246](https://github.com/rasbt/mlxtend/pull/246) & [#247](https://github.com/rasbt/mlxtend/pull/247)
+- Allow the `OnehotTransactions` to be cloned via scikit-learn's `clone` function, which is required by e.g., scikit-learn's `FeatureUnion` or `GridSearchCV` (via [Iaroslav Shcherbatyi](https://github.com/iaroslav-ai)). [#249](https://github.com/rasbt/mlxtend/pull/249)
 
 ##### Bug Fixes
 
-- 
+- Allow `OneHot`
 
 
 ### Version 0.8.0 (2017-09-09)

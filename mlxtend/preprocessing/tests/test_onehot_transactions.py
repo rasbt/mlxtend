@@ -6,6 +6,8 @@
 
 import numpy as np
 from mlxtend.preprocessing import OnehotTransactions
+from sklearn.base import clone
+from mlxtend.utils import assert_raises
 
 
 dataset = [['Apple', 'Beer', 'Rice', 'Chicken'],
@@ -63,3 +65,19 @@ def test_inverse_transform():
     oht.fit(dataset)
     np.testing.assert_array_equal(np.array(data_sorted),
                                   np.array(oht.inverse_transform(expect)))
+
+
+def test_cloning():
+
+    oht = OnehotTransactions()
+    oht.fit(dataset)
+    oht2 = clone(oht)
+
+    msg = ("'OnehotTransactions' object has no attribute 'columns_'")
+    assert_raises(AttributeError,
+                  msg,
+                  oht2.transform,
+                  dataset)
+
+    trans = oht2.fit_transform(dataset)
+    np.testing.assert_array_equal(expect, trans)

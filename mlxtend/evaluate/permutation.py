@@ -8,14 +8,15 @@
 
 import numpy as np
 from itertools import combinations
+from math import factorial
 from nose.tools import nottest
 
 
 # decorator to prevent nose to consider
 # this as a unit test due to "test" in the name
 @nottest
-def permutation_test(x, y, alt_hypothesis='x != y', method='exact',
-                     num_permutations=1000, seed=None):
+def permutation_test(x, y, func='x_mean != y_mean', method='exact',
+                     num_rounds=1000, seed=None):
     """
     Nonparametric permutation test
 
@@ -27,19 +28,24 @@ def permutation_test(x, y, alt_hypothesis='x != y', method='exact',
     y : list or numpy array with shape (n_datapoints,)
         A list or 1D numpy array of the second sample
         (e.g., the control group).
-    alt_hypothesis : str (default='x != y')
-        The alternativ hypothesis. It 'x > y' or 'x < y',
-        a one-sided permutation test is performerd to test, and
-        a two-sided permutation test is performed if 'x != y' (default),
-        to test the null hypothesis that both x and y are samples
-        from the same population.
+    func : custom function or str (default: 'x_mean != y_mean')
+        function to compute the statistic for the permutation test.
+        - If 'x_mean != y_mean', uses
+          `func=lambda x, y: np.abs(np.mean(x) - np.mean(y)))`
+           for a two-sided test.
+        - If 'x_mean > y_mean', uses
+          `func=lambda x, y: np.mean(x) - np.mean(y))`
+           for a one-sided test.
+        - If 'x_mean < y_mean', uses
+          `func=lambda x, y: np.mean(y) - np.mean(x))`
+           for a one-sided test.
     method : 'approximate' or 'exact' (default: 'exact')
         If 'exact' (default), all possible permutations are considered.
         If 'approximate' the number of drawn samples is
-        given by `num_permutations`.
+        given by `num_rounds`.
         Note that 'exact' is typically not feasible unless the dataset
         size is relatively small.
-    num_permutations : int (default: 1000)
+    num_rounds : int (default: 1000)
         The number of permutation samples if `method='approximate'`.
     seed : int or None (default: None)
         The random seed for generating permutation samples if
@@ -50,54 +56,55 @@ def permutation_test(x, y, alt_hypothesis='x != y', method='exact',
     p-value under the null hypothesis
 
     """
-    if alt_hypothesis not in ('x > y', 'x < y', 'x != y'):
-        raise AttributeError("alt_hypothesis be 'x > y',"
-                             " 'y > x', or 'x != y', got %s" % alt_hypothesis)
 
     if method not in ('approximate', 'exact'):
         raise AttributeError('method must be "approximate"'
                              ' or "exact", got %s' % method)
 
-    if isinstance(x, np.ndarray) and len(x.shape) != 1:
-        raise AttributeError('x must be one-dimensional')
+    if isinstance(func, str):
 
-    if isinstance(y, np.ndarray) and len(y.shape) != 1:
-        raise AttributeError('y must be one-dimensional')
+        if func not in (
+                'x_mean != y_mean', 'x_mean > y_mean', 'x_mean < y_mean'):
+            raise AttributeError('Provide a custom function'
+                                 ' lambda x,y: ... or a string'
+                                 ' in ("x_mean != y_mean", '
+                                 '"x_mean > y_mean", "x_mean < y_mean")')
 
-    def one_sided_statistic(comb, x):
-        # equivalent to np.mean(x) - np.mean(y)
-        # where comb = np.vstack(x, y)
-        sum_comb, sum_x = float(sum(comb)), float(sum(x))  # float for Py27
-        return (sum_x / len(x) - (sum_comb - sum_x) / (len(comb) - len(x)))
+        elif func == 'x_mean != y_mean':
+            def func(x, y):
+                return np.abs(np.mean(x) - np.mean(y))
 
-    def two_sided_statistic(comb, x):
-        # equivalent to np.abs(np.mean(x) - np.mean(y))
-        # where comb = np.vstack(x, y)
-        return np.abs(one_sided_statistic(comb, x))
+        elif func == 'x_mean > y_mean':
+            def func(x, y):
+                return np.mean(x) - np.mean(y)
 
-    if alt_hypothesis == 'x > y':
-        fun = one_sided_statistic
-    elif alt_hypothesis == 'x < y':
-        fun = one_sided_statistic
-        x, y = y, x
-    else:
-        fun = two_sided_statistic
+        else:
+            def func(x, y):
+                return np.mean(y) - np.mean(x)
 
     rng = np.random.RandomState(seed)
+
+    m, n = len(x), len(y)
     combined = np.hstack((x, y))
-    reference_stat = fun(combined, x)
 
     more_extreme = 0.
+    reference_stat = func(x, y)
 
     if method == 'exact':
-        for count, perm in enumerate(combinations(combined, len(x)), 1):
-            if fun(combined, perm) > reference_stat:
+        for indices_x in combinations(range(m + n), m):
+
+            indices_y = [i for i in range(m + n) if i not in indices_x]
+            diff = func(combined[list(indices_x)], combined[indices_y])
+
+            if diff > reference_stat:
                 more_extreme += 1.
+
+        num_rounds = factorial(m + n) / (factorial(m)*factorial(n))
 
     else:
-        for count in range(num_permutations):
+        for i in range(num_rounds):
             rng.shuffle(combined)
-            if fun(combined, combined[0:len(x)]) > reference_stat:
+            if func(combined[:m], combined[m:]) > reference_stat:
                 more_extreme += 1.
 
-    return more_extreme / count
+    return more_extreme / num_rounds

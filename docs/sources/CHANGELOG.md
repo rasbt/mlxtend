@@ -17,7 +17,7 @@ The CHANGELOG for the current development version is available at
 
 - Added `evaluate.permutation_test`, a permutation test for hypothesis testing (or A/B testing) to test if two samples come from the same distribution. Or in other words, a procedure to test the null hypothesis that that two groups are not significantly different (e.g., a treatment and a control group). 
 - Added `'leverage'` and `'conviction` as evaluation metrics to the `frequent_patterns.association_rules` function. [#246](https://github.com/rasbt/mlxtend/pull/246) & [#247](https://github.com/rasbt/mlxtend/pull/247)
-- Added a `loadings_` attribute to `PrincipalComponentAnalysis` to compute the factor loadings of the features on the principal components. [#250](https://github.com/rasbt/mlxtend/pull/250)
+- Added a `loadings_` attribute to `PrincipalComponentAnalysis` to compute the factor loadings of the features on the principal components. [#251](https://github.com/rasbt/mlxtend/pull/251)
 
 ##### Changes
 
@@ -26,7 +26,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Bug Fixes
 
-- the "S" vector from SVD in `PrincipalComponentAnalysis` are now scaled so that the eigenvalues via `solver='eigen'` and `solver='svd'` now store eigenvalues that have the same magnitudes. [#250](https://github.com/rasbt/mlxtend/pull/250)
+- the "S" vector from SVD in `PrincipalComponentAnalysis` are now scaled so that the eigenvalues via `solver='eigen'` and `solver='svd'` now store eigenvalues that have the same magnitudes. [#251](https://github.com/rasbt/mlxtend/pull/251)
 
 ### Version 0.8.0 (2017-09-09)
 

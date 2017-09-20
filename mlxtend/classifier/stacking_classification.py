@@ -125,6 +125,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
     def get_params(self, deep=True):
         """Return estimator parameter names for GridSearch support."""
+
         if not deep:
             return super(StackingClassifier, self).get_params(deep=False)
         else:
@@ -137,6 +138,14 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             for name, step in six.iteritems(self.named_meta_classifier):
                 for key, value in six.iteritems(step.get_params(deep=True)):
                     out['%s__%s' % (name, key)] = value
+
+            for key, value in six.iteritems(super(StackingClassifier,
+                                            self).get_params(deep=False)):
+                if key in ('classifiers', 'meta-classifier'):
+                    continue
+                else:
+                    out['%s' % key] = value
+
             return out
 
     def _predict_meta_features(self, X):

@@ -252,6 +252,13 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             for name, step in six.iteritems(self.named_clfs):
                 for key, value in six.iteritems(step.get_params(deep=True)):
                     out['%s__%s' % (name, key)] = value
+
+            for key, value in six.iteritems(super(EnsembleVoteClassifier,
+                                            self).get_params(deep=False)):
+                if key == 'clfs':
+                    continue
+                else:
+                    out['%s' % key] = value
             return out
 
     def _predict(self, X):

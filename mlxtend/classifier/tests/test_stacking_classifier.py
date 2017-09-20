@@ -148,7 +148,8 @@ def test_gridsearch_enumerate_names():
 
     params = {'meta-logisticregression__C': [1.0, 100.0],
               'randomforestclassifier-1__n_estimators': [5, 10],
-              'randomforestclassifier-2__n_estimators': [5, 20]}
+              'randomforestclassifier-2__n_estimators': [5, 20],
+              'use_probas': [True, False]}
 
     grid = GridSearchCV(estimator=sclf, param_grid=params, cv=5)
     grid = grid.fit(iris.data, iris.target)

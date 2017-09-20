@@ -77,11 +77,12 @@ def test_EnsembleVoteClassifier_gridsearch_enumerate_names():
 
     clf1 = LogisticRegression(random_state=1)
     clf2 = RandomForestClassifier(random_state=1)
-    eclf = EnsembleVoteClassifier(clfs=[clf1, clf1, clf2], voting='soft')
+    eclf = EnsembleVoteClassifier(clfs=[clf1, clf1, clf2])
 
     params = {'logisticregression-1__C': [1.0, 100.0],
               'logisticregression-2__C': [1.0, 100.0],
-              'randomforestclassifier__n_estimators': [5, 20]}
+              'randomforestclassifier__n_estimators': [5, 20],
+              'voting': ['hard', 'soft']}
 
     grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
     grid = grid.fit(iris.data, iris.target)

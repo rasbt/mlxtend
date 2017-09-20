@@ -92,7 +92,8 @@ def test_gridsearch_numerate_regr():
     params = {'ridge-1__alpha': [0.01, 1.0],
               'ridge-2__alpha': [0.01, 1.0],
               'svr__C': [0.01, 1.0],
-              'meta-svr__C': [0.01, 1.0]}
+              'meta-svr__C': [0.01, 1.0],
+              'use_features_in_secondary': [True, False]}
 
     grid = GridSearchCV(estimator=stack,
                         param_grid=params,

@@ -128,6 +128,13 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             for name, step in six.iteritems(self.named_meta_regressor):
                 for key, value in six.iteritems(step.get_params(deep=True)):
                     out['%s__%s' % (name, key)] = value
+
+            for key, value in six.iteritems(super(StackingRegressor, self).get_params(deep=False)):
+                if key in ('regressors', 'meta-regressor'):
+                    continue
+                else:
+                    out['%s' % key] = value
+
             return out
 
     def _predict_meta_features(self, X):

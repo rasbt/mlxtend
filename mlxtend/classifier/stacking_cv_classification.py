@@ -242,6 +242,13 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             for name, step in six.iteritems(self.named_meta_classifier):
                 for key, value in six.iteritems(step.get_params(deep=True)):
                     out['%s__%s' % (name, key)] = value
+
+            for key, value in six.iteritems(super(StackingCVClassifier, self).get_params(deep=False)):
+                if key in ('classifiers', 'meta-classifier'):
+                    continue
+                else:
+                    out['%s' % key] = value
+                    
             return out
 
     def predict(self, X):

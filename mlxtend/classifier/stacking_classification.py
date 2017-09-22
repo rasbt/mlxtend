@@ -130,17 +130,17 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         meta_features = self._predict_meta_features(X)
         # Extract fit_params for meta_clf_
-        meta_clf_fit_params = {}
+        meta_fit_params = {}
         meta_clf_name = list(self.named_meta_clf_.keys())[0]
         for key, value in six.iteritems(fit_params):
             if meta_clf_name in key and 'meta-' in meta_clf_name:
-                meta_clf_fit_params[key.replace(meta_clf_name+'__', '')] = value
+                meta_fit_params[key.replace(meta_clf_name+'__', '')] = value
 
         if not self.use_features_in_secondary:
-            self.meta_clf_.fit(meta_features, y, **meta_clf_fit_params)
+            self.meta_clf_.fit(meta_features, y, **meta_fit_params)
         else:
             self.meta_clf_.fit(np.hstack((X, meta_features)), y,
-                               **meta_clf_fit_params)
+                               **meta_fit_params)
 
         return self
 

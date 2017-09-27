@@ -11,7 +11,7 @@ from sklearn.svm import SVR
 import numpy as np
 from numpy.testing import assert_almost_equal
 from nose.tools import raises
-from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import GridSearchCV, cross_val_score
 
 # Generating a sample dataset
 np.random.seed(1)
@@ -106,6 +106,23 @@ def test_gridsearch_numerate_regr():
     best = 0.1
     got = round(grid.best_score_, 2)
     assert best == got
+
+
+def test_StackingRegressor_fit_params():
+    lr = LinearRegression()
+    svr_lin = SVR(kernel='linear')
+    ridge = Ridge(random_state=1)
+    svr_rbf = SVR(kernel='rbf')
+    stregr = StackingRegressor(regressors=[svr_lin, lr, ridge],
+                               meta_regressor=svr_rbf)
+
+    fit_params = {'ridge__sample_weight': np.ones(X1.shape[0]),
+                  'svr__sample_weight': np.ones(X1.shape[0]),
+                  'meta-svr__sample_weight': np.ones(X1.shape[0])}
+
+    scores = cross_val_score(stregr, X1, y, cv=5, fit_params=fit_params)
+    scores_mean = (round(scores.mean(), 1))
+    assert scores_mean == 0.1
 
 
 def test_get_coeff():

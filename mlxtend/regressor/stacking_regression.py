@@ -65,7 +65,7 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
                                      _name_estimators([meta_regressor])}
         self.verbose = verbose
 
-    def fit(self, X, y):
+    def fit(self, X, y, **fit_params):
         """Learn weight coefficients from training data for each regressor.
 
         Parameters
@@ -75,6 +75,9 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             n_features is the number of features.
         y : array-like, shape = [n_samples] or [n_samples, n_targets]
             Target values.
+        fit_params : dict, optional
+            Parameters to pass to the fit methods of `regressors` and
+            `meta_regressor`.
 
         Returns
         -------
@@ -82,11 +85,15 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
 
         """
         self.regr_ = [clone(regr) for regr in self.regressors]
+        self.named_regr_ = {key: value for key, value in
+                            _name_estimators(self.regr_)}
         self.meta_regr_ = clone(self.meta_regressor)
+        self.named_meta_regr_ = {'meta-%s' % key: value for key, value in
+                                 _name_estimators([self.meta_regr_])}
         if self.verbose > 0:
             print("Fitting %d regressors..." % (len(self.regressors)))
 
-        for regr in self.regr_:
+        for name, regr in six.iteritems(self.named_regr_):
 
             if self.verbose > 0:
                 i = self.regr_.index(regr) + 1
@@ -100,10 +107,23 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             if self.verbose > 1:
                 print(_name_estimators((regr,))[0][1])
 
-            regr.fit(X, y)
+            # Extract fit_params for regr
+            regr_fit_params = {}
+            for key, value in six.iteritems(fit_params):
+                if name in key and 'meta-' not in key:
+                    regr_fit_params[key.replace(name+'__', '')] = value
+
+            regr.fit(X, y, **regr_fit_params)
 
         meta_features = self._predict_meta_features(X)
-        self.meta_regr_.fit(meta_features, y)
+        # Extract fit_params for meta_regr_
+        meta_fit_params = {}
+        meta_regr_name = list(self.named_meta_regr_.keys())[0]
+        for key, value in six.iteritems(fit_params):
+            if meta_regr_name in key and 'meta-' in meta_regr_name:
+                meta_fit_params[key.replace(meta_regr_name+'__', '')] = value
+        self.meta_regr_.fit(meta_features, y, **meta_fit_params)
+
         return self
 
     @property

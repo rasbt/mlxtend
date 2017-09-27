@@ -88,8 +88,8 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         y : array-like, shape = [n_samples] or [n_samples, n_outputs]
             Target values.
         fit_params : dict, optional
-            Parameters to pass to the fit methods of the classifiers and
-            meta_classifier.
+            Parameters to pass to the fit methods of `classifiers` and
+            `meta_classifier`.
 
         Returns
         -------

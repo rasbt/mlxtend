@@ -51,6 +51,33 @@ def test_univariate_gradient_descent():
     assert_almost_equal(gd_lr.b_, b_exp, decimal=1)
 
 
+def test_progress_1():
+    gd_lr = LinearRegression(minibatches=1,
+                             eta=0.001,
+                             epochs=1,
+                             print_progress=1,
+                             random_seed=0)
+    gd_lr.fit(X_rm_std, y_std)
+
+
+def test_progress_2():
+    gd_lr = LinearRegression(minibatches=1,
+                             eta=0.001,
+                             epochs=1,
+                             print_progress=2,
+                             random_seed=0)
+    gd_lr.fit(X_rm_std, y_std)
+
+
+def test_progress_3():
+    gd_lr = LinearRegression(minibatches=1,
+                             eta=0.001,
+                             epochs=1,
+                             print_progress=2,
+                             random_seed=0)
+    gd_lr.fit(X_rm_std, y_std)
+
+
 def test_univariate_stochastic_gradient_descent():
     w_exp = np.array([[0.7]])
     b_exp = np.array([0.0])

@@ -58,6 +58,9 @@ class Kmeans(_BaseModel, _Cluster, _IterativeModel):
                  convergence_tolerance=1e-05,
                  random_seed=None, print_progress=0):
 
+        _BaseModel.__init__(self)
+        _Cluster.__init__(self)
+        _IterativeModel.__init__(self)
         self.k = k
         self.max_iter = max_iter
         self.convergence_tolerance = convergence_tolerance
@@ -71,7 +74,6 @@ class Kmeans(_BaseModel, _Cluster, _IterativeModel):
         Called in self.fit
 
         """
-
         n_samples = X.shape[0]
 
         if init_params:

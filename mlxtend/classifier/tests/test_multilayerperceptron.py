@@ -34,6 +34,36 @@ def test_multiclass_gd_acc():
     assert (y == mlp.predict(X)).all()
 
 
+def test_progress_1():
+    mlp = MLP(epochs=1,
+              eta=0.05,
+              hidden_layers=[10],
+              minibatches=1,
+              print_progress=1,
+              random_seed=1)
+    mlp.fit(X, y)
+
+
+def test_progress_2():
+    mlp = MLP(epochs=1,
+              eta=0.05,
+              hidden_layers=[10],
+              minibatches=1,
+              print_progress=2,
+              random_seed=1)
+    mlp.fit(X, y)
+
+
+def test_progress_3():
+    mlp = MLP(epochs=1,
+              eta=0.05,
+              hidden_layers=[10],
+              minibatches=1,
+              print_progress=3,
+              random_seed=1)
+    mlp.fit(X, y)
+
+
 def test_predict_proba():
     mlp = MLP(epochs=20,
               eta=0.05,

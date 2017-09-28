@@ -80,6 +80,36 @@ def test_binary_logistic_regression_sgd():
     assert (y_bin == lr.predict(X_bin)).all()
 
 
+def test_progress_1():
+    lr = SoftmaxRegression(epochs=1,
+                           eta=0.005,
+                           minibatches=1,
+                           print_progress=1,
+                           random_seed=1)
+
+    lr.fit(X_bin, y_bin)  # 0, 1 class
+
+
+def test_progress_2():
+    lr = SoftmaxRegression(epochs=1,
+                           eta=0.005,
+                           minibatches=1,
+                           print_progress=2,
+                           random_seed=1)
+
+    lr.fit(X_bin, y_bin)  # 0, 1 class
+
+
+def test_progress_3():
+    lr = SoftmaxRegression(epochs=1,
+                           eta=0.005,
+                           minibatches=1,
+                           print_progress=3,
+                           random_seed=1)
+
+    lr.fit(X_bin, y_bin)  # 0, 1 class
+
+
 def test_binary_l2_regularization_gd():
     t = np.array([[-0.17, 0.17],
                   [-2.26, 2.26]])

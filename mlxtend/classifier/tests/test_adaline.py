@@ -79,6 +79,33 @@ def test_gradient_descent():
     assert((y1 == ada.predict(X_std)).all())
 
 
+def test_print_progress_1():
+    ada = Adaline(epochs=30,
+                  eta=0.01,
+                  minibatches=1,
+                  print_progress=1,
+                  random_seed=1)
+    ada.fit(X_std, y1)
+
+
+def test_print_progress_2():
+    ada = Adaline(epochs=30,
+                  eta=0.01,
+                  minibatches=1,
+                  print_progress=2,
+                  random_seed=1)
+    ada.fit(X_std, y1)
+
+
+def test_print_progress_3():
+    ada = Adaline(epochs=30,
+                  eta=0.01,
+                  minibatches=1,
+                  print_progress=3,
+                  random_seed=1)
+    ada.fit(X_std, y1)
+
+
 def test_score_function():
     ada = Adaline(epochs=30,
                   eta=0.01,

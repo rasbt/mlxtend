@@ -49,6 +49,10 @@ class Perceptron(_BaseModel, _IterativeModel, _Classifier):
     def __init__(self, eta=0.1, epochs=50, random_seed=None,
                  print_progress=0):
 
+        _BaseModel.__init__(self)
+        _IterativeModel.__init__(self)
+        _Classifier.__init__(self)
+
         self.eta = eta
         self.epochs = epochs
         self.random_seed = random_seed

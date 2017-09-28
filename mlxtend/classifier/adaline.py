@@ -57,6 +57,10 @@ class Adaline(_BaseModel, _IterativeModel, _Classifier):
                  minibatches=None, random_seed=None,
                  print_progress=0):
 
+        _BaseModel.__init__(self)
+        _IterativeModel.__init__(self)
+        _Classifier.__init__(self)
+
         self.eta = eta
         self.minibatches = minibatches
         self.epochs = epochs

@@ -6,11 +6,13 @@
 #
 # License: BSD 3 clause
 
+from time import time
+
 
 class _BaseModel(object):
 
     def __init__(self):
-        pass
+        self._init_time = time()
 
     def _check_arrays(self, X, y=None):
         if isinstance(X, list):

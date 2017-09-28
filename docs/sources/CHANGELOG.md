@@ -28,6 +28,7 @@ The CHANGELOG for the current development version is available at
 
 - the "S" vector from SVD in `PrincipalComponentAnalysis` are now scaled so that the eigenvalues via `solver='eigen'` and `solver='svd'` now store eigenvalues that have the same magnitudes. [#251](https://github.com/rasbt/mlxtend/pull/251)
 - The parameters for `StackingClassifier`, `StackingCVClassifier`, `StackingRegressor`, `StackingCVRegressor`, and `EnsembleVoteClassifier` can now be tuned using scikit-learn's `GridSearchCV` ([#254](https://github.com/rasbt/mlxtend/pull/254) via [James Bourbeau](https://github.com/jrbourbeau))
+- Fix issues with `self._init_time` parameter in `_IterativeModel` subclasses. [#256](https://github.com/rasbt/mlxtend/pull/256)
 
 ### Version 0.8.0 (2017-09-09)
 

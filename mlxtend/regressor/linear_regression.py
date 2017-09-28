@@ -55,6 +55,9 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
                  minibatches=None, random_seed=None,
                  print_progress=0):
 
+        _BaseModel.__init__(self)
+        _IterativeModel.__init__(self)
+        _Regressor.__init__(self)
         self.eta = eta
         self.epochs = epochs
         self.minibatches = minibatches

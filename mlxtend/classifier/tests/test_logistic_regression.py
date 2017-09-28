@@ -67,6 +67,33 @@ def test_logistic_regression_gd():
     assert acc == 1.0, "Acc: %s" % acc
 
 
+def test_print_progress_1():
+    lr = LogisticRegression(epochs=100,
+                            eta=0.01,
+                            minibatches=1,
+                            print_progress=1,
+                            random_seed=1)
+    lr.fit(X, y)
+
+
+def test_print_progress_2():
+    lr = LogisticRegression(epochs=100,
+                            eta=0.01,
+                            minibatches=1,
+                            print_progress=2,
+                            random_seed=1)
+    lr.fit(X, y)
+
+
+def test_print_progress_3():
+    lr = LogisticRegression(epochs=100,
+                            eta=0.01,
+                            minibatches=1,
+                            print_progress=3,
+                            random_seed=1)
+    lr.fit(X, y)
+
+
 def test_score_function():
     lr = LogisticRegression(epochs=100,
                             eta=0.01,

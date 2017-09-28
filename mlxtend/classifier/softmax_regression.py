@@ -16,7 +16,7 @@ from .._base import _MultiClass
 from .._base import _Classifier
 
 
-class SoftmaxRegression(_BaseModel, _IterativeModel, _MultiClass, _Classifier):
+class SoftmaxRegression(_BaseModel, _IterativeModel, _Classifier,  _MultiClass):
 
     """Softmax regression classifier.
 
@@ -65,6 +65,11 @@ class SoftmaxRegression(_BaseModel, _IterativeModel, _MultiClass, _Classifier):
                  n_classes=None,
                  random_seed=None,
                  print_progress=0):
+
+        _BaseModel.__init__(self)
+        _IterativeModel.__init__(self)
+        _Classifier.__init__(self)
+        _MultiClass.__init__(self)
 
         self.eta = eta
         self.epochs = epochs

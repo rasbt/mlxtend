@@ -59,6 +59,21 @@ def test_standardized_iris_data():
     assert (y0 == ppn.predict(X_std)).all(), ppn.predict(X_std)
 
 
+def test_progress_1():
+    ppn = Perceptron(epochs=15, eta=0.01, random_seed=1, print_progress=1)
+    ppn = ppn.fit(X_std, y0)
+
+
+def test_progress_2():
+    ppn = Perceptron(epochs=15, eta=0.01, random_seed=1, print_progress=2)
+    ppn = ppn.fit(X_std, y0)
+
+
+def test_progress_3():
+    ppn = Perceptron(epochs=15, eta=0.01, random_seed=1, print_progress=3)
+    ppn = ppn.fit(X_std, y0)
+
+
 def test_score_function():
     ppn = Perceptron(epochs=15, eta=0.01, random_seed=1)
     ppn = ppn.fit(X_std, y0)

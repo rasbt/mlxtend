@@ -241,3 +241,44 @@ def test_use_features_in_secondary_predict_proba():
     y_pred = sclf.predict_proba(X[idx])[:, 0]
     expect = np.array([0.911, 0.829, 0.885])
     np.testing.assert_almost_equal(y_pred, expect, 3)
+
+
+def test_get_params():
+    clf1 = KNeighborsClassifier(n_neighbors=1)
+    clf2 = RandomForestClassifier(random_state=1)
+    clf3 = GaussianNB()
+    lr = LogisticRegression()
+    sclf = StackingClassifier(classifiers=[clf1, clf2, clf3],
+                              meta_classifier=lr)
+
+    got = sorted(list({s.split('__')[0] for s in sclf.get_params().keys()}))
+    expect = ['average_probas',
+              'classifiers',
+              'gaussiannb',
+              'kneighborsclassifier',
+              'meta-logisticregression',
+              'meta_classifier',
+              'randomforestclassifier',
+              'use_features_in_secondary',
+              'use_probas',
+              'verbose']
+    assert got == expect, got
+
+
+def test_classifier_gridsearch():
+    clf1 = KNeighborsClassifier(n_neighbors=1)
+    clf2 = RandomForestClassifier(random_state=1)
+    clf3 = GaussianNB()
+    lr = LogisticRegression()
+    sclf = StackingClassifier(classifiers=[clf1, clf2, clf3],
+                              meta_classifier=lr)
+
+    params = {'classifiers': [[clf1, clf1, clf1], [clf2, clf3]]}
+
+    grid = GridSearchCV(estimator=sclf,
+                        param_grid=params,
+                        cv=5,
+                        refit=True)
+    grid.fit(X, y)
+
+    assert len(grid.best_params_['classifiers']) == 2

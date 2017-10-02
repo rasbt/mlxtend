@@ -11,6 +11,7 @@ import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
 import numpy as np
 from sklearn import datasets
 from mlxtend.utils import assert_raises
@@ -246,3 +247,46 @@ def test_pandas():
         sclf.fit(X_df, iris.target)
     except KeyError as e:
         assert 'are NumPy arrays. If X and y are pandas DataFrames' in str(e)
+
+
+def test_get_params():
+    clf1 = KNeighborsClassifier(n_neighbors=1)
+    clf2 = RandomForestClassifier(random_state=1)
+    clf3 = GaussianNB()
+    lr = LogisticRegression()
+    sclf = StackingCVClassifier(classifiers=[clf1, clf2, clf3],
+                                meta_classifier=lr)
+
+    got = sorted(list({s.split('__')[0] for s in sclf.get_params().keys()}))
+    expect = ['classifiers',
+              'cv',
+              'gaussiannb',
+              'kneighborsclassifier',
+              'meta-logisticregression',
+              'meta_classifier',
+              'randomforestclassifier',
+              'shuffle',
+              'stratify',
+              'use_features_in_secondary',
+              'use_probas',
+              'verbose']
+    assert got == expect, got
+
+
+def test_classifier_gridsearch():
+    clf1 = KNeighborsClassifier(n_neighbors=1)
+    clf2 = RandomForestClassifier(random_state=1)
+    clf3 = GaussianNB()
+    lr = LogisticRegression()
+    sclf = StackingCVClassifier(classifiers=[clf1],
+                                meta_classifier=lr)
+
+    params = {'classifiers': [[clf1], [clf1, clf2, clf3]]}
+
+    grid = GridSearchCV(estimator=sclf,
+                        param_grid=params,
+                        cv=5,
+                        refit=True)
+    grid.fit(X, y)
+
+    assert len(grid.best_params_['classifiers']) == 3

@@ -143,3 +143,38 @@ def test_get_coeff_fail():
     stregr = stregr.fit(X1, y)
     r = stregr.coef_
     assert r
+
+
+def test_get_params():
+    lr = LinearRegression()
+    svr_rbf = SVR(kernel='rbf')
+    ridge = Ridge(random_state=1)
+    stregr = StackingRegressor(regressors=[ridge, lr],
+                               meta_regressor=svr_rbf)
+
+    got = sorted(list({s.split('__')[0] for s in stregr.get_params().keys()}))
+    expect = ['linearregression',
+              'meta-svr',
+              'meta_regressor',
+              'regressors',
+              'ridge',
+              'verbose']
+    assert got == expect, got
+
+
+def test_regressor_gridsearch():
+    lr = LinearRegression()
+    svr_rbf = SVR(kernel='rbf')
+    ridge = Ridge(random_state=1)
+    stregr = StackingRegressor(regressors=[lr],
+                               meta_regressor=svr_rbf)
+
+    params = {'regressors': [[lr], [lr, ridge]]}
+
+    grid = GridSearchCV(estimator=stregr,
+                        param_grid=params,
+                        cv=5,
+                        refit=True)
+    grid.fit(X1, y)
+
+    assert len(grid.best_params_['regressors']) == 2

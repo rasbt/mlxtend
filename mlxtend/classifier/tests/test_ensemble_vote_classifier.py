@@ -8,6 +8,7 @@ from mlxtend.classifier import EnsembleVoteClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
 import numpy as np
 from sklearn import datasets
 from sklearn.model_selection import GridSearchCV
@@ -86,3 +87,38 @@ def test_EnsembleVoteClassifier_gridsearch_enumerate_names():
 
     grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
     grid = grid.fit(iris.data, iris.target)
+
+
+def test_get_params():
+    clf1 = KNeighborsClassifier(n_neighbors=1)
+    clf2 = RandomForestClassifier(random_state=1)
+    clf3 = GaussianNB()
+    eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3])
+
+    got = sorted(list({s.split('__')[0] for s in eclf.get_params().keys()}))
+    expect = ['clfs',
+              'gaussiannb',
+              'kneighborsclassifier',
+              'randomforestclassifier',
+              'refit',
+              'verbose',
+              'voting',
+              'weights']
+    assert got == expect, got
+
+
+def test_classifier_gridsearch():
+    clf1 = KNeighborsClassifier(n_neighbors=1)
+    clf2 = RandomForestClassifier(random_state=1)
+    clf3 = GaussianNB()
+    eclf = EnsembleVoteClassifier(clfs=[clf1])
+
+    params = {'clfs': [[clf1, clf1, clf1], [clf2, clf3]]}
+
+    grid = GridSearchCV(estimator=eclf,
+                        param_grid=params,
+                        cv=5,
+                        refit=True)
+    grid.fit(X, y)
+
+    assert len(grid.best_params_['clfs']) == 2

@@ -103,3 +103,40 @@ def test_gridsearch_numerate_regr():
     grid = grid.fit(X1, y)
     got = round(grid.best_score_, 1)
     assert got >= 0.1 and got <= 0.2, '%f is wrong' % got
+
+
+def test_get_params():
+    lr = LinearRegression()
+    svr_rbf = SVR(kernel='rbf')
+    ridge = Ridge(random_state=1)
+    stregr = StackingCVRegressor(regressors=[ridge, lr],
+                                 meta_regressor=svr_rbf)
+
+    got = sorted(list({s.split('__')[0] for s in stregr.get_params().keys()}))
+    expect = ['cv',
+              'linearregression',
+              'meta-svr',
+              'meta_regressor',
+              'regressors',
+              'ridge',
+              'shuffle',
+              'use_features_in_secondary']
+    assert got == expect, got
+
+
+def test_regressor_gridsearch():
+    lr = LinearRegression()
+    svr_rbf = SVR(kernel='rbf')
+    ridge = Ridge(random_state=1)
+    stregr = StackingCVRegressor(regressors=[lr],
+                                 meta_regressor=svr_rbf)
+
+    params = {'regressors': [[ridge, lr], [lr, ridge, lr]]}
+
+    grid = GridSearchCV(estimator=stregr,
+                        param_grid=params,
+                        cv=5,
+                        refit=True)
+    grid.fit(X1, y)
+
+    assert len(grid.best_params_['regressors']) == 3

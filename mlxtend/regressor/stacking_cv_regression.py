@@ -182,9 +182,6 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
 
             for key, value in six.iteritems(super(StackingCVRegressor,
                                             self).get_params(deep=False)):
-                if key in ('regressors', 'meta-regressor'):
-                    continue
-                else:
-                    out['%s' % key] = value
+                out['%s' % key] = value
 
             return out

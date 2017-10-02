@@ -18,6 +18,7 @@ The CHANGELOG for the current development version is available at
 - Added `evaluate.permutation_test`, a permutation test for hypothesis testing (or A/B testing) to test if two samples come from the same distribution. Or in other words, a procedure to test the null hypothesis that that two groups are not significantly different (e.g., a treatment and a control group).
 - Added `'leverage'` and `'conviction` as evaluation metrics to the `frequent_patterns.association_rules` function. [#246](https://github.com/rasbt/mlxtend/pull/246) & [#247](https://github.com/rasbt/mlxtend/pull/247)
 - Added a `loadings_` attribute to `PrincipalComponentAnalysis` to compute the factor loadings of the features on the principal components. [#251](https://github.com/rasbt/mlxtend/pull/251)
+- Allow grid search over classifiers/regressors in ensemble and stacking estimators [#259](https://github.com/rasbt/mlxtend/pull/259)
 
 ##### Changes
 

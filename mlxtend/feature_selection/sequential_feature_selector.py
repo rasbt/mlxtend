@@ -416,7 +416,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                         continue
                     if self.subsets_[k]['avg_score'] >= (
                             max_score - np.std(self.subsets_[k]['cv_scores']) /
-                            self.subsets_[k]['cv_scores'].shape[0]):
+                            float(self.subsets_[k]['cv_scores'].shape[0])):
                         max_score = self.subsets_[k]['avg_score']
                         best_subset = k
                 k_score = max_score

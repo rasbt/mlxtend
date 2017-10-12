@@ -500,7 +500,7 @@ def test_regression_sbfs():
                 cv=10,
                 verbose=0)
     sfs_r = sfs_r.fit(X, y)
-    assert sfs_r.k_feature_idx_ == (10, 12, 7)
+    assert sfs_r.k_feature_idx_ == (10, 12, 7), sfs_r.k_feature_idx_
 
 
 def test_regression_sbfs_recursive_floating():
@@ -516,7 +516,7 @@ def test_regression_sbfs_recursive_floating():
                 recursive_floating=True,
                 verbose=0)
     sfs_r = sfs_r.fit(X, y)
-    assert sfs_r.k_feature_idx_ == (10, 12, 7)
+    assert sfs_r.k_feature_idx_ == (10, 12, 7), sfs_r.k_feature_idx_
 
 
 def test_regression_in_range():

@@ -103,6 +103,17 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         if False. Set to False if the estimator doesn't
         implement scikit-learn's set_params and get_params methods.
         In addition, it is required to set cv=0, and n_jobs=1.
+    recursive_floating : bool (default=False)
+        If `True`, uses the floating behavior described in
+        Novovicova & Kittler (1994) for the `floating=True` variants.
+        That is, the continuation of conditional exclusion in SFFS
+        (skipping inclusion if feature removal leads to better performance).
+        Similarly, the conditional inclusion is continued in SFBS
+        (and consequently the the exclusion is skipped) as long as it leads
+        to improvements in performance.
+        Note: `recursive_floating` will be set `True` in future versions
+        of mlxtend (mlxtend > 0.10).
+
 
     Attributes
     ----------
@@ -125,7 +136,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                  verbose=0, scoring=None,
                  cv=5, n_jobs=1,
                  pre_dispatch='2*n_jobs',
-                 clone_estimator=True):
+                 clone_estimator=True,
+                 recursive_floating=False):
 
         self.estimator = estimator
         self.k_features = k_features
@@ -142,6 +154,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.named_est = {key: value for key, value in
                           _name_estimators([self.estimator])}
         self.clone_estimator = clone_estimator
+        self.recursive_floating = recursive_floating
 
         if self.clone_estimator:
             self.est_ = clone(self.estimator)
@@ -255,44 +268,80 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         best_subset = None
         k_score = 0
 
+        # to check for continuation of exlusion
+        # self.forward is True
+        # (or equivalent for backward selection)
+        continuation = False
+
         try:
+
             while k != k_to_select:
+
                 prev_subset = set(k_idx)
 
                 if self.forward:
-                    k_idx, k_score, cv_scores = self._inclusion(
-                        orig_set=orig_set,
-                        subset=prev_subset,
-                        X=X,
-                        y=y
-                    )
+                    # allows continuation of exclusion
+                    # if both recursive_floating and floating are true
+                    # and k > 2
+                    if (not self.floating or
+                            (self.floating and not self.recursive_floating) or
+                            (self.floating and self.recursive_floating
+                                and not continuation)):
+
+                        k_idx, k_score, cv_scores = self._inclusion(
+                            orig_set=orig_set,
+                            subset=prev_subset,
+                            X=X,
+                            y=y)
                 else:
 
-                    k_idx, k_score, cv_scores = self._exclusion(
-                        feature_set=prev_subset,
-                        X=X,
-                        y=y
-                    )
+                    # allows continuation of inclusion
+                    # if both recursive_floating and floating are true
+                    # and more than 2 features have been removed
+                    if (not self.floating or
+                            (self.floating and not self.recursive_floating) or
+                            (self.floating and self.recursive_floating
+                                and not continuation)):
+
+                        k_idx, k_score, cv_scores = self._exclusion(
+                            feature_set=prev_subset,
+                            X=X,
+                            y=y)
 
                 if self.floating:
                     k_score_c = None
-                    (new_feature,) = set(k_idx) ^ prev_subset
+
+                    if not self.recursive_floating:
+                        (new_feature,) = set(k_idx) ^ prev_subset
+                    else:
+                        new_feature = None
 
                     if self.forward:
+
+                        if self.recursive_floating and len(k_idx) <= 2:
+                            continuation = False
+                            continue
+
                         k_idx_c, k_score_c, cv_scores_c = self._exclusion(
                             feature_set=k_idx,
                             fixed_feature=new_feature,
                             X=X,
-                            y=y
-                        )
+                            y=y)
 
                     else:
+
+                        if self.recursive_floating:
+                            num_features_removed = len(orig_set) - len(k_idx)
+                            print(num_features_removed)
+                            if num_features_removed <= 2:
+                                continuation = False
+                                continue
+
                         k_idx_c, k_score_c, cv_scores_c = self._inclusion(
                             orig_set=orig_set - {new_feature},
                             subset=set(k_idx),
                             X=X,
-                            y=y
-                        )
+                            y=y)
 
                     if k_score_c is not None and k_score_c > k_score:
 
@@ -315,6 +364,18 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                         'cv_scores': cv_scores,
                         'avg_score': k_score
                     }
+
+                    # this will skip the non-conditional
+                    # inclusion/exclusion
+                    # if recursive_floating is True
+                    if self.recursive_floating:
+                        continuation = True
+                else:
+                    # never set to true anyway
+                    # if self.recursive_floating is False
+                    # and only disables continuation for
+                    # recursive_floating
+                    continuation = False
 
                 if self.verbose == 1:
                     sys.stderr.write('\rFeatures: %d/%s' % (

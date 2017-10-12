@@ -19,11 +19,13 @@ The CHANGELOG for the current development version is available at
 - Added `'leverage'` and `'conviction` as evaluation metrics to the `frequent_patterns.association_rules` function. [#246](https://github.com/rasbt/mlxtend/pull/246) & [#247](https://github.com/rasbt/mlxtend/pull/247)
 - Added a `loadings_` attribute to `PrincipalComponentAnalysis` to compute the factor loadings of the features on the principal components. [#251](https://github.com/rasbt/mlxtend/pull/251)
 - Allow grid search over classifiers/regressors in ensemble and stacking estimators [#259](https://github.com/rasbt/mlxtend/pull/259)
+- Added a `recursive_floating` parameter to the `SequentialFeatureSelector` to enable the continuation of the floating inclusion/exclusion as described in Novovicova & Kittler (1994) [#262](https://github.com/rasbt/mlxtend/pull/262)
 
 ##### Changes
 
 - The `'support'` column returned by `frequent_patterns.association_rules` was changed to compute the support of "antecedant union consequent", and new `antecedant support'` and `'consequent support'` column were added to avoid ambiguity. [#245](https://github.com/rasbt/mlxtend/pull/245)
 - Allow the `OnehotTransactions` to be cloned via scikit-learn's `clone` function, which is required by e.g., scikit-learn's `FeatureUnion` or `GridSearchCV` (via [Iaroslav Shcherbatyi](https://github.com/iaroslav-ai)). [#249](https://github.com/rasbt/mlxtend/pull/249)
+- All feature indix tuples in `SequentialFeatureSelector` or now in sorted order [#262](https://github.com/rasbt/mlxtend/pull/262)
 
 ##### Bug Fixes
 

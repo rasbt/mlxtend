@@ -358,6 +358,9 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 # floating can lead to multiple same-sized subsets
                 if k not in self.subsets_ or (k_score >
                                               self.subsets_[k]['avg_score']):
+
+                    k_idx = tuple(sorted(k_idx))
+
                     self.subsets_[k] = {
                         'feature_idx': k_idx,
                         'cv_scores': cv_scores,
@@ -424,7 +427,6 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
         self.k_feature_idx_ = k_idx
         self.k_score_ = k_score
-        self.subsets_plus_ = dict()
         self.fitted = True
         return self
 

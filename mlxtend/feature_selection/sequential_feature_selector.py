@@ -332,7 +332,6 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
                         if self.recursive_floating:
                             num_features_removed = len(orig_set) - len(k_idx)
-                            print(num_features_removed)
                             if num_features_removed <= 2:
                                 continuation = False
                                 continue

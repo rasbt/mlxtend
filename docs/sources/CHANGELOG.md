@@ -25,7 +25,7 @@ The CHANGELOG for the current development version is available at
 
 - The `'support'` column returned by `frequent_patterns.association_rules` was changed to compute the support of "antecedant union consequent", and new `antecedant support'` and `'consequent support'` column were added to avoid ambiguity. [#245](https://github.com/rasbt/mlxtend/pull/245)
 - Allow the `OnehotTransactions` to be cloned via scikit-learn's `clone` function, which is required by e.g., scikit-learn's `FeatureUnion` or `GridSearchCV` (via [Iaroslav Shcherbatyi](https://github.com/iaroslav-ai)). [#249](https://github.com/rasbt/mlxtend/pull/249)
-- All feature indix tuples in `SequentialFeatureSelector` or now in sorted order [#262](https://github.com/rasbt/mlxtend/pull/262)
+- All feature index tuples in `SequentialFeatureSelector` or now in sorted order [#262](https://github.com/rasbt/mlxtend/pull/262)
 
 ##### Bug Fixes
 

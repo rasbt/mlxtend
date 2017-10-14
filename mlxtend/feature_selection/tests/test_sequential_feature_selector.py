@@ -282,22 +282,6 @@ def test_knn_option_sffs():
     assert sfs2.k_feature_idx_ == (1, 2, 3)
 
 
-def test_knn_option_sffs_recursive_floating():
-    iris = load_iris()
-    X = iris.data
-    y = iris.target
-    knn = KNeighborsClassifier(n_neighbors=4)
-    sfs2 = SFS(knn,
-               k_features=3,
-               forward=True,
-               floating=True,
-               cv=4,
-               verbose=0,
-               recursive_floating=True)
-    sfs2 = sfs2.fit(X, y)
-    assert sfs2.k_feature_idx_ == (1, 2, 3)
-
-
 def test_knn_option_sbs():
     iris = load_iris()
     X = iris.data
@@ -472,22 +456,6 @@ def test_regression_sffs():
     assert sfs_r.k_feature_idx_ == (0, 1, 3, 4, 6, 7, 8, 9, 10, 11, 12)
 
 
-def test_regression_sffs_recursive_floating():
-    boston = load_boston()
-    X, y = boston.data, boston.target
-    lr = LinearRegression()
-    sfs_r = SFS(lr,
-                k_features=11,
-                forward=True,
-                floating=True,
-                scoring='neg_mean_squared_error',
-                cv=10,
-                recursive_floating=True,
-                verbose=0)
-    sfs_r = sfs_r.fit(X, y)
-    assert sfs_r.k_feature_idx_ == (0, 1, 3, 4, 6, 7, 8, 9, 10, 11, 12)
-
-
 def test_regression_sbfs():
     boston = load_boston()
     X, y = boston.data, boston.target
@@ -498,22 +466,6 @@ def test_regression_sbfs():
                 floating=True,
                 scoring='neg_mean_squared_error',
                 cv=10,
-                verbose=0)
-    sfs_r = sfs_r.fit(X, y)
-    assert sfs_r.k_feature_idx_ == (7, 10, 12), sfs_r.k_feature_idx_
-
-
-def test_regression_sbfs_recursive_floating():
-    boston = load_boston()
-    X, y = boston.data, boston.target
-    lr = LinearRegression()
-    sfs_r = SFS(lr,
-                k_features=3,
-                forward=False,
-                floating=True,
-                scoring='neg_mean_squared_error',
-                cv=10,
-                recursive_floating=True,
                 verbose=0)
     sfs_r = sfs_r.fit(X, y)
     assert sfs_r.k_feature_idx_ == (7, 10, 12), sfs_r.k_feature_idx_

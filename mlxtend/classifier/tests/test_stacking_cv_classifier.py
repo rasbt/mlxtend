@@ -8,7 +8,7 @@
 from mlxtend.classifier import StackingCVClassifier
 
 import pandas as pd
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LogisticRegression, SGDClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
@@ -59,6 +59,29 @@ def test_StackingClassifier_proba():
                              scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
     assert scores_mean == 0.93
+
+
+def test_StackingClassifier_fit_params():
+    np.random.seed(123)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = SGDClassifier(random_state=2)
+    sclf = StackingCVClassifier(classifiers=[clf1, clf2],
+                                meta_classifier=meta,
+                                shuffle=False)
+    fit_params = {
+        'sgdclassifier__intercept_init': np.unique(y),
+        'meta-logisticregression__sample_weight': np.full(X.shape[0], 2)
+        }
+
+    scores = cross_val_score(sclf,
+                             X,
+                             y,
+                             cv=5,
+                             scoring='accuracy',
+                             fit_params=fit_params)
+    scores_mean = (round(scores.mean(), 2))
+    assert scores_mean == 0.86
 
 
 def test_gridsearch():

@@ -303,7 +303,7 @@ The documents containing code examples for the "User Guide" are generated from I
 3. Convert the notebook to markdown using the `ipynb2markdown.py` converter
 
 ```python
-~/github/mlxtend/docs$ python ipynb2markdown.py --ipynb_path ./sources/user_guide/subpackage/notebookname.ipynb
+~/github/mlxtend/docs$ python ipynb2markdown.py --ipynb ./sources/user_guide/subpackage/notebookname.ipynb
 ```
 
 **Note**  

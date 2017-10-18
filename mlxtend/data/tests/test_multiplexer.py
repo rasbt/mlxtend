@@ -7,6 +7,7 @@
 
 
 import numpy as np
+import sys
 from mlxtend.data import make_multiplexer_dataset
 from mlxtend.utils import assert_raises
 
@@ -26,7 +27,8 @@ def test_invalid_address_bits():
     msg_1 = "address_bits must be an integer. Got <class 'float'>."
 
     # for Python 2.7:
-    msg_1 = msg_1.replace('<type', '<class')
+    if sys.version_info[0] == 2:
+        msg_1 = msg_1.replace('<class', '<type')
 
     assert_raises(AttributeError,
                   msg_1,

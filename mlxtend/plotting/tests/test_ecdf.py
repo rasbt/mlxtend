@@ -14,5 +14,5 @@ def test_threshold():
     ax, threshold, count = ecdf(x=X[:, 0],
                                 x_label='sepal length (cm)',
                                 percentile=0.8)
-    assert threshold == 6.5, threshold
+    assert threshold == 6.5
     assert count == 120

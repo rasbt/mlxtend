@@ -18,6 +18,7 @@
 - [boston_housing_data](user_guide/data/boston_housing_data.md)
 - [iris_data](user_guide/data/iris_data.md)
 - [loadlocal_mnist](user_guide/data/loadlocal_mnist.md)
+- [make_multiplexer_dataset](user_guide/data/make_multiplexer_dataset.md)
 - [mnist_data](user_guide/data/mnist_data.md)
 - [three_blobs_data](user_guide/data/three_blobs_data.md)
 - [wine_data](user_guide/data/wine_data.md)

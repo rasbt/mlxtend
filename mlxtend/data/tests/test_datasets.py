@@ -1,3 +1,11 @@
+# Sebastian Raschka 2014-2017
+# mlxtend Machine Learning Library Extensions
+#
+# Author: Sebastian Raschka <sebastianraschka.com>
+#
+# License: BSD 3 clause
+
+
 from mlxtend.data import iris_data
 from mlxtend.data import wine_data
 from mlxtend.data import autompg_data

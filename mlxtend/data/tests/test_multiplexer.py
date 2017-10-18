@@ -26,7 +26,7 @@ def test_invalid_address_bits():
     msg_1 = "address_bits must be an integer. Got <class 'float'>."
 
     # for Python 2.7:
-    msg_1.replace('<type', '<class')
+    msg_1 = msg_1.replace('<type', '<class')
 
     assert_raises(AttributeError,
                   msg_1,

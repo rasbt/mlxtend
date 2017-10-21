@@ -23,7 +23,6 @@ The CHANGELOG for the current development version is available at
 - Added a new `BootstrapOutOfBag` class, an implementation of the out-of-bag bootstrap to evaluate supervised learning algorithms. ([#265](https://github.com/rasbt/mlxtend/pull/265))
 - The parameters for `StackingClassifier`, `StackingCVClassifier`, `StackingRegressor`, `StackingCVRegressor`, and `EnsembleVoteClassifier` can now be tuned using scikit-learn's `GridSearchCV` ([#254](https://github.com/rasbt/mlxtend/pull/254) via [James Bourbeau](https://github.com/jrbourbeau))
 
-
 ##### Changes
 
 - The `'support'` column returned by `frequent_patterns.association_rules` was changed to compute the support of "antecedant union consequent", and new `antecedant support'` and `'consequent support'` column were added to avoid ambiguity. ([#245](https://github.com/rasbt/mlxtend/pull/245))

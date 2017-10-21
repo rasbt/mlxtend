@@ -9,7 +9,7 @@
 import numpy as np
 
 
-class OutOfBagBootstrap(object):
+class BootstrapOutOfBag(object):
     """
     Parameters
     ----------

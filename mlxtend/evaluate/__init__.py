@@ -10,10 +10,10 @@ from .lift_score import lift_score
 from .mcnemar import mcnemar_table
 from .mcnemar import mcnemar
 from .bootstrap import bootstrap
-from .outofbag_bootstrap import OutOfBagBootstrap
+from .bootstrap_outofbag import BootstrapOutOfBag
 from .permutation import permutation_test
 
 
 __all__ = ["scoring", "confusion_matrix",
            "mcnemar_table", "mcnemar", "lift_score",
-           "bootstrap", "permutation_test", "OutOfBagBootstrap"]
+           "bootstrap", "permutation_test", "BootstrapOutOfBag"]

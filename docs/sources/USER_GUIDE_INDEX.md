@@ -25,11 +25,11 @@
 
 ## `evaluate`
 - [bootstrap](user_guide/evaluate/bootstrap.md)
+- [BootstrapOutOfBag](user_guide/evaluate/BootstrapOutOfBag.md)
 - [confusion_matrix](user_guide/evaluate/confusion_matrix.md)
 - [lift_score](user_guide/evaluate/lift_score.md)
 - [mcnemar_table](user_guide/evaluate/mcnemar_table.md)
 - [mcnemar](user_guide/evaluate/mcnemar.md)
-- [OutOufBagBootstrap](user_guide/evaluate/OutOfBagBootstrap.md)
 - [permutation_test](user_guide/evaluate/permutation_test.md)
 - [scoring](user_guide/evaluate/scoring.md)
 

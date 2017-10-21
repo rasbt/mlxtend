@@ -5,18 +5,18 @@
 # License: BSD 3 clause
 
 import numpy as np
-from mlxtend.evaluate import OutOfBagBootstrap
+from mlxtend.evaluate import BootstrapOutOfBag
 from mlxtend.utils import assert_raises
 
 
 def test_defaults():
-    oob = OutOfBagBootstrap()
+    oob = BootstrapOutOfBag()
     results = list(oob.split(np.array([1, 2, 3, 4, 5])))
     assert len(results) == 200
 
 
 def test_splits():
-    oob = OutOfBagBootstrap(n_splits=3, random_seed=123)
+    oob = BootstrapOutOfBag(n_splits=3, random_seed=123)
     results = list(oob.split(np.array([1, 2, 3, 4, 5])))
     assert len(results) == 3
     assert np.array_equal(results[0][0], np.array([2, 4, 2, 1, 3]))
@@ -28,10 +28,10 @@ def test_splits():
 def test_invalid_splits():
     assert_raises(ValueError,
                   'Number of splits must be greater than 1.',
-                  OutOfBagBootstrap,
+                  BootstrapOutOfBag,
                   0)
 
 
 def test_get_n_splits():
-    oob = OutOfBagBootstrap(n_splits=3, random_seed=123)
+    oob = BootstrapOutOfBag(n_splits=3, random_seed=123)
     assert oob.n_splits == 3

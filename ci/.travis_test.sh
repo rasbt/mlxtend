@@ -6,7 +6,7 @@ set -e
 if [[ "$COVERAGE" == "true" ]]; then
     nosetests -s -v --with-coverage
 else
-	nosetests -s -v --with-doctest
+	nosetests -s -v
 fi
 
 if [[ "$NOTEBOOKS" == "true" ]]; then

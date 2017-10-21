@@ -30,12 +30,6 @@ class OutOfBagBootstrap(object):
 
     test_idx : ndarray
         The testing set indices for that split.
-
-
-    Examples
-    ---------
-    >>> raise ValueError('test')
-
     """
 
     def __init__(self, n_splits=200, random_seed=None):

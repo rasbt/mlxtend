@@ -29,6 +29,7 @@
 - [lift_score](user_guide/evaluate/lift_score.md)
 - [mcnemar_table](user_guide/evaluate/mcnemar_table.md)
 - [mcnemar](user_guide/evaluate/mcnemar.md)
+- [OutOufBagBootstrap](user_guide/evaluate/OutOfBagBootstrap.md)
 - [permutation_test](user_guide/evaluate/permutation_test.md)
 - [scoring](user_guide/evaluate/scoring.md)
 

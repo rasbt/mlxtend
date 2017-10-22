@@ -32,7 +32,7 @@ The CHANGELOG for the current development version is available at
 
 - Fix issues with `self._init_time` parameter in `_IterativeModel` subclasses. ([#256](https://github.com/rasbt/mlxtend/pull/256))
 - Fix imprecision bug that occurred in `plot_ecdf` when run on Python 2.7. ([264](https://github.com/rasbt/mlxtend/pull/264))
-- The vectors from SVD in `PrincipalComponentAnalysis` are no being scaled so that the eigenvalues via `solver='eigen'` and `solver='svd'` now store eigenvalues that have the same magnitudes. ([#251](https://github.com/rasbt/mlxtend/pull/251))
+- The vectors from SVD in `PrincipalComponentAnalysis` are now being scaled so that the eigenvalues via `solver='eigen'` and `solver='svd'` now store eigenvalues that have the same magnitudes. ([#251](https://github.com/rasbt/mlxtend/pull/251))
 
 ### Version 0.8.0 (2017-09-09)
 

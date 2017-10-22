@@ -206,6 +206,12 @@
         
             
 <li >
+    <a href="../../user_guide/data/make_multiplexer_dataset/">Make multiplexer dataset</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/data/mnist_data/">Mnist data</a>
 </li>
 
@@ -239,6 +245,12 @@
         
             
 <li >
+    <a href="../../user_guide/evaluate/BootstrapOutOfBag/">BootstrapOutOfBag</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/evaluate/confusion_matrix/">Confusion matrix</a>
 </li>
 
@@ -258,6 +270,12 @@
             
 <li >
     <a href="../../user_guide/evaluate/mcnemar/">Mcnemar</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/permutation_test/">Permutation test</a>
 </li>
 
         
@@ -859,7 +877,14 @@ with columns ['support', 'itemsets']</p>
 <li>
 <p><code>metric</code> : string (default: 'confidence')</p>
 <p>Metric to evaluate if a rule is of interest.
-Supported metrics are 'confidence' and 'lift'</p>
+Supported metrics are 'support', 'confidence', 'lift',
+'leverage', and 'conviction'
+These metrics are computed as follows:
+- support(A-&gt;C) = support(A+C) [aka 'support'], range: [0, 1]
+- confidence(A-&gt;C) = support(A+C) / support(A), range: [0, 1]
+- lift(A-&gt;C) = confidence(A-&gt;C) / support(C), range: [0, inf]
+- leverage(A-&gt;C) = support(A-&gt;C) - support(A)*support(C), range: [-1, 1]
+- conviction = [1 - support(C)] / [1 - confidence(A-&gt;C)], range: [0, inf]</p>
 </li>
 <li>
 <p><code>min_threshold</code> : float (default: 0.8)</p>
@@ -868,8 +893,11 @@ to decide whether a candidate rule is of interest.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
-<p>pandas DataFrame with columns ['antecedants', 'consequents',
-    'support', 'lift', 'confidence'] of all rules for which
+<p>pandas DataFrame with columns "antecedent support",
+    "consequent support",
+    "support", "confidence", "lift",
+    "leverage", "conviction"
+    of all rules for which
     metric(rule) &gt;= min_threshold.</p></div>
         
     </div>

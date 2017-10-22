@@ -206,6 +206,12 @@
         
             
 <li >
+    <a href="../../user_guide/data/make_multiplexer_dataset/">Make multiplexer dataset</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/data/mnist_data/">Mnist data</a>
 </li>
 
@@ -239,6 +245,12 @@
         
             
 <li >
+    <a href="../../user_guide/evaluate/BootstrapOutOfBag/">BootstrapOutOfBag</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/evaluate/confusion_matrix/">Confusion matrix</a>
 </li>
 
@@ -258,6 +270,12 @@
             
 <li >
     <a href="../../user_guide/evaluate/mcnemar/">Mcnemar</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/permutation_test/">Permutation test</a>
 </li>
 
         
@@ -801,19 +819,16 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#columnselector">ColumnSelector</a></li>
+        <li class="main active"><a href="#exhaustivefeatureselector">ExhaustiveFeatureSelector</a></li>
         
             <li><a href="#methods">Methods</a></li>
                 <!--  -->
         
     
-        <li class="main "><a href="#exhaustivefeatureselector">ExhaustiveFeatureSelector</a></li>
+        <li class="main "><a href="#columnselector">ColumnSelector</a></li>
         
             <li><a href="#methods_1">Methods</a></li>
                 <!--  -->
-        
-    
-        <li class="main "><a href="#plot_sequential_feature_selection">plot_sequential_feature_selection</a></li>
         
     
         <li class="main "><a href="#sequentialfeatureselector">SequentialFeatureSelector</a></li>
@@ -822,109 +837,14 @@
                 <!--  -->
         
     
+        <li class="main "><a href="#plot_sequential_feature_selection">plot_sequential_feature_selection</a></li>
+        
+    
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
 <p>mlxtend version: 0.8.1dev </p>
-<h2 id="columnselector">ColumnSelector</h2>
-<p><em>ColumnSelector(cols=None)</em></p>
-<p>Base class for all estimators in scikit-learn</p>
-<p><strong>Notes</strong></p>
-<p>All estimators should specify all the parameters that can be set
-at the class level in their <code>__init__</code> as explicit keyword
-arguments (no <code>*args</code> or <code>**kwargs</code>).</p>
-<h3 id="methods">Methods</h3>
-<hr>
-
-<p><em>fit(X, y=None)</em></p>
-<p>Mock method. Does nothing.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<p>self</p>
-<hr>
-
-<p><em>fit_transform(X, y=None)</em></p>
-<p>Return a slice of the input array.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>X_slice</code> : shape = [n_samples, k_features]</p>
-<p>Subset of the feature space where k_features &lt;= n_features</p>
-</li>
-</ul>
-<hr>
-
-<p><em>get_params(deep=True)</em></p>
-<p>Get parameters for this estimator.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>deep</code> : boolean, optional</p>
-<p>If True, will return the parameters for this estimator and
-contained subobjects that are estimators.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>params</code> : mapping of string to any</p>
-<p>Parameter names mapped to their values.</p>
-</li>
-</ul>
-<hr>
-
-<p><em>set_params(</em><em>params)</em></p>
-<p>Set the parameters of this estimator.</p>
-<p>The method works on simple estimators as well as on nested objects
-(such as pipelines). The latter have parameters of the form
-<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
-component of a nested object.</p>
-<p><strong>Returns</strong></p>
-<p>self</p>
-<hr>
-
-<p><em>transform(X, y=None)</em></p>
-<p>Return a slice of the input array.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>X_slice</code> : shape = [n_samples, k_features]</p>
-<p>Subset of the feature space where k_features &lt;= n_features</p>
-</li>
-</ul>
 <h2 id="exhaustivefeatureselector">ExhaustiveFeatureSelector</h2>
 <p><em>ExhaustiveFeatureSelector(estimator, min_features=1, max_features=1, print_progress=True, scoring='accuracy', cv=5, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
 <p>Exhaustive Feature Selection for Classification and Regression.
@@ -1012,7 +932,7 @@ keys: 'feature_idx' (tuple of indices of the feature subset)
 'avg_score' (average cross-validation score)</p>
 </li>
 </ul>
-<h3 id="methods_1">Methods</h3>
+<h3 id="methods">Methods</h3>
 <hr>
 
 <p><em>fit(X, y)</em></p>
@@ -1113,12 +1033,104 @@ n_features is the number of features.</p>
 </ul>
 <p><strong>Returns</strong></p>
 <p>Feature subset of X, shape={n_samples, k_features}</p>
-<h2 id="plot_sequential_feature_selection">plot_sequential_feature_selection</h2>
-<p><em>plot_sequential_feature_selection(</em><em>args)</em></p>
-<p>Note that importing this function from mlxtend.evaluate has been
-deprecated and will not longer be supported in mlxtend 0.6.
-Please use <code>from mlxtend.plotting import plot_sequential_feature_selection</code>
-instead.</p>
+<h2 id="columnselector">ColumnSelector</h2>
+<p><em>ColumnSelector(cols=None)</em></p>
+<p>Base class for all estimators in scikit-learn</p>
+<p><strong>Notes</strong></p>
+<p>All estimators should specify all the parameters that can be set
+at the class level in their <code>__init__</code> as explicit keyword
+arguments (no <code>*args</code> or <code>**kwargs</code>).</p>
+<h3 id="methods_1">Methods</h3>
+<hr>
+
+<p><em>fit(X, y=None)</em></p>
+<p>Mock method. Does nothing.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>self</p>
+<hr>
+
+<p><em>fit_transform(X, y=None)</em></p>
+<p>Return a slice of the input array.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>X_slice</code> : shape = [n_samples, k_features]</p>
+<p>Subset of the feature space where k_features &lt;= n_features</p>
+</li>
+</ul>
+<hr>
+
+<p><em>get_params(deep=True)</em></p>
+<p>Get parameters for this estimator.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>deep</code> : boolean, optional</p>
+<p>If True, will return the parameters for this estimator and
+contained subobjects that are estimators.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>params</code> : mapping of string to any</p>
+<p>Parameter names mapped to their values.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.</p>
+<p>The method works on simple estimators as well as on nested objects
+(such as pipelines). The latter have parameters of the form
+<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
+component of a nested object.</p>
+<p><strong>Returns</strong></p>
+<p>self</p>
+<hr>
+
+<p><em>transform(X, y=None)</em></p>
+<p>Return a slice of the input array.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>X_slice</code> : shape = [n_samples, k_features]</p>
+<p>Subset of the feature space where k_features &lt;= n_features</p>
+</li>
+</ul>
 <h2 id="sequentialfeatureselector">SequentialFeatureSelector</h2>
 <p><em>SequentialFeatureSelector(estimator, k_features=1, forward=True, floating=False, verbose=0, scoring=None, cv=5, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
 <p>Sequential Feature Selection for Classification and Regression.</p>
@@ -1327,7 +1339,13 @@ n_features is the number of features.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
-<p>Reduced feature subset of X, shape={n_samples, k_features}</p></div>
+<p>Reduced feature subset of X, shape={n_samples, k_features}</p>
+<h2 id="plot_sequential_feature_selection">plot_sequential_feature_selection</h2>
+<p><em>plot_sequential_feature_selection(</em><em>args)</em></p>
+<p>Note that importing this function from mlxtend.evaluate has been
+deprecated and will not longer be supported in mlxtend 0.6.
+Please use <code>from mlxtend.plotting import plot_sequential_feature_selection</code>
+instead.</p></div>
         
     </div>
 

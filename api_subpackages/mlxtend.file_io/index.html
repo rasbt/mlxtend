@@ -206,6 +206,12 @@
         
             
 <li >
+    <a href="../../user_guide/data/make_multiplexer_dataset/">Make multiplexer dataset</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/data/mnist_data/">Mnist data</a>
 </li>
 
@@ -239,6 +245,12 @@
         
             
 <li >
+    <a href="../../user_guide/evaluate/BootstrapOutOfBag/">BootstrapOutOfBag</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/evaluate/confusion_matrix/">Confusion matrix</a>
 </li>
 
@@ -258,6 +270,12 @@
             
 <li >
     <a href="../../user_guide/evaluate/mcnemar/">Mcnemar</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/permutation_test/">Permutation test</a>
 </li>
 
         
@@ -801,10 +819,10 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#find_filegroups">find_filegroups</a></li>
+        <li class="main active"><a href="#find_files">find_files</a></li>
         
     
-        <li class="main "><a href="#find_files">find_files</a></li>
+        <li class="main "><a href="#find_filegroups">find_filegroups</a></li>
         
     
     </ul>
@@ -812,6 +830,45 @@
         <div class="col-md-9" role="main">
 
 <p>mlxtend version: 0.8.1dev </p>
+<h2 id="find_files">find_files</h2>
+<p><em>find_files(substring, path, recursive=False, check_ext=None, ignore_invisible=True, ignore_substring=None)</em></p>
+<p>Find files in a directory based on substring matching.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>substring</code> : <code>str</code></p>
+<p>Substring of the file to be matched.</p>
+</li>
+<li>
+<p><code>path</code> : <code>str</code></p>
+<p>Path where to look.</p>
+</li>
+<li>
+<p><code>recursive</code> : <code>bool</code></p>
+<p>If true, searches subdirectories recursively.</p>
+</li>
+<li>
+<p><code>check_ext</code> : <code>str</code></p>
+<p>If string (e.g., '.txt'), only returns files that
+match the specified file extension.</p>
+</li>
+<li>
+<p><code>ignore_invisible</code> : <code>bool</code></p>
+<p>If <code>True</code>, ignores invisible files
+(i.e., files starting with a period).</p>
+</li>
+<li>
+<p><code>ignore_substring</code> : <code>str</code></p>
+<p>Ignores files that contain the specified substring.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>results</code> : <code>list</code></p>
+<p>List of the matched files.</p>
+</li>
+</ul>
 <h2 id="find_filegroups">find_filegroups</h2>
 <p><em>find_filegroups(paths, substring='', extensions=None, validity_check=True, ignore_invisible=True, rstrip='', ignore_substring=None)</em></p>
 <p>Find and collect files from different directories in a python dictionary.</p>
@@ -862,45 +919,6 @@ the stem "abc_d" if rstrip is set to "_".</p>
 <p>Dictionary of files paths. Keys are the file names
 found in the first directory listed
 in <code>paths</code> (without file extension).</p>
-</li>
-</ul>
-<h2 id="find_files">find_files</h2>
-<p><em>find_files(substring, path, recursive=False, check_ext=None, ignore_invisible=True, ignore_substring=None)</em></p>
-<p>Find files in a directory based on substring matching.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>substring</code> : <code>str</code></p>
-<p>Substring of the file to be matched.</p>
-</li>
-<li>
-<p><code>path</code> : <code>str</code></p>
-<p>Path where to look.</p>
-</li>
-<li>
-<p><code>recursive</code> : <code>bool</code></p>
-<p>If true, searches subdirectories recursively.</p>
-</li>
-<li>
-<p><code>check_ext</code> : <code>str</code></p>
-<p>If string (e.g., '.txt'), only returns files that
-match the specified file extension.</p>
-</li>
-<li>
-<p><code>ignore_invisible</code> : <code>bool</code></p>
-<p>If <code>True</code>, ignores invisible files
-(i.e., files starting with a period).</p>
-</li>
-<li>
-<p><code>ignore_substring</code> : <code>str</code></p>
-<p>Ignores files that contain the specified substring.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>results</code> : <code>list</code></p>
-<p>List of the matched files.</p>
 </li>
 </ul></div>
         

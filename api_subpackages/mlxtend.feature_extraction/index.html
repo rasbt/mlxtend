@@ -206,6 +206,12 @@
         
             
 <li >
+    <a href="../../user_guide/data/make_multiplexer_dataset/">Make multiplexer dataset</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/data/mnist_data/">Mnist data</a>
 </li>
 
@@ -239,6 +245,12 @@
         
             
 <li >
+    <a href="../../user_guide/evaluate/BootstrapOutOfBag/">BootstrapOutOfBag</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/evaluate/confusion_matrix/">Confusion matrix</a>
 </li>
 
@@ -258,6 +270,12 @@
             
 <li >
     <a href="../../user_guide/evaluate/mcnemar/">Mcnemar</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/permutation_test/">Permutation test</a>
 </li>
 
         
@@ -801,19 +819,19 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#lineardiscriminantanalysis">LinearDiscriminantAnalysis</a></li>
+        <li class="main active"><a href="#rbfkernelpca">RBFKernelPCA</a></li>
         
             <li><a href="#methods">Methods</a></li>
                 <!--  -->
         
     
-        <li class="main "><a href="#principalcomponentanalysis">PrincipalComponentAnalysis</a></li>
+        <li class="main "><a href="#lineardiscriminantanalysis">LinearDiscriminantAnalysis</a></li>
         
             <li><a href="#methods_1">Methods</a></li>
                 <!--  -->
         
     
-        <li class="main "><a href="#rbfkernelpca">RBFKernelPCA</a></li>
+        <li class="main "><a href="#principalcomponentanalysis">PrincipalComponentAnalysis</a></li>
         
             <li><a href="#methods_2">Methods</a></li>
                 <!--  -->
@@ -824,6 +842,77 @@
         <div class="col-md-9" role="main">
 
 <p>mlxtend version: 0.8.1dev </p>
+<h2 id="rbfkernelpca">RBFKernelPCA</h2>
+<p><em>RBFKernelPCA(gamma=15.0, n_components=None, copy_X=True)</em></p>
+<p>RBF Kernel Principal Component Analysis for dimensionality reduction.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>gamma</code> : float (default: 15.0)</p>
+<p>Free parameter (coefficient) of the RBF kernel.</p>
+</li>
+<li>
+<p><code>n_components</code> : int (default: None)</p>
+<p>The number of principal components for transformation.
+Keeps the original dimensions of the dataset if <code>None</code>.</p>
+</li>
+<li>
+<p><code>copy_X</code> : bool (default: True)</p>
+<p>Copies training data, which is required to compute the projection
+of new data via the transform method. Uses a reference to X if False.</p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>e_vals_</code> : array-like, shape=[n_features]</p>
+<p>Eigenvalues in sorted order.</p>
+</li>
+<li>
+<p><code>e_vecs_</code> : array-like, shape=[n_features]</p>
+<p>Eigenvectors in sorted order.</p>
+</li>
+<li>
+<p><code>X_projected_</code> : array-like, shape=[n_samples, n_components]</p>
+<p>Training samples projected along the component axes.</p>
+</li>
+</ul>
+<h3 id="methods">Methods</h3>
+<hr>
+
+<p><em>fit(X)</em></p>
+<p>Learn model from training data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
+<hr>
+
+<p><em>transform(X)</em></p>
+<p>Apply the non-linear transformation on X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>X_projected</code> : np.ndarray, shape = [n_samples, n_components]</p>
+<p>Projected training vectors.</p>
+</li>
+</ul>
 <h2 id="lineardiscriminantanalysis">LinearDiscriminantAnalysis</h2>
 <p><em>LinearDiscriminantAnalysis(n_discriminants=None)</em></p>
 <p>Linear Discriminant Analysis Class</p>
@@ -850,7 +939,7 @@ Keeps the original dimensions of the dataset if <code>None</code>.</p>
 <p>Eigenvectors in sorted order.</p>
 </li>
 </ul>
-<h3 id="methods">Methods</h3>
+<h3 id="methods_1">Methods</h3>
 <hr>
 
 <p><em>fit(X, y, n_classes=None)</em></p>
@@ -925,76 +1014,16 @@ Keeps the original dimensions of the dataset if <code>None</code>.</p>
 <p><code>e_vecs_</code> : array-like, shape=[n_features]</p>
 <p>Eigenvectors in sorted order.</p>
 </li>
-</ul>
-<h3 id="methods_1">Methods</h3>
-<hr>
-
-<p><em>fit(X)</em></p>
-<p>Learn model from training data.</p>
-<p><strong>Parameters</strong></p>
-<ul>
 <li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
-<hr>
-
-<p><em>transform(X)</em></p>
-<p>Apply the linear transformation on X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>X_projected</code> : np.ndarray, shape = [n_samples, n_components]</p>
-<p>Projected training vectors.</p>
-</li>
-</ul>
-<h2 id="rbfkernelpca">RBFKernelPCA</h2>
-<p><em>RBFKernelPCA(gamma=15.0, n_components=None, copy_X=True)</em></p>
-<p>RBF Kernel Principal Component Analysis for dimensionality reduction.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>gamma</code> : float (default: 15.0)</p>
-<p>Free parameter (coefficient) of the RBF kernel.</p>
-</li>
-<li>
-<p><code>n_components</code> : int (default: None)</p>
-<p>The number of principal components for transformation.
-Keeps the original dimensions of the dataset if <code>None</code>.</p>
-</li>
-<li>
-<p><code>copy_X</code> : bool (default: True)</p>
-<p>Copies training data, which is required to compute the projection
-of new data via the transform method. Uses a reference to X if False.</p>
-</li>
-</ul>
-<p><strong>Attributes</strong></p>
-<ul>
-<li>
-<p><code>e_vals_</code> : array-like, shape=[n_features]</p>
-<p>Eigenvalues in sorted order.</p>
-</li>
-<li>
-<p><code>e_vecs_</code> : array-like, shape=[n_features]</p>
-<p>Eigenvectors in sorted order.</p>
-</li>
-<li>
-<p><code>X_projected_</code> : array-like, shape=[n_samples, n_components]</p>
-<p>Training samples projected along the component axes.</p>
+<p><code>loadings_</code> : array_like, shape=[n_features, n_features]</p>
+<p>The factor loadings of the original variables onto
+the principal components. The columns are the principal
+components, and the rows are the features loadings.
+For instance, the first column contains the loadings onto
+the first principal component. Note that the signs may
+be flipped depending on whether you use the 'eigen' or
+'svd' solver; this does not affect the interpretation
+of the loadings though.</p>
 </li>
 </ul>
 <h3 id="methods_2">Methods</h3>
@@ -1017,7 +1046,7 @@ n_features is the number of features.</p>
 <hr>
 
 <p><em>transform(X)</em></p>
-<p>Apply the non-linear transformation on X.</p>
+<p>Apply the linear transformation on X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>

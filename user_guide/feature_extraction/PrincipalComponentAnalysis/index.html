@@ -206,6 +206,12 @@
         
             
 <li >
+    <a href="../../data/make_multiplexer_dataset/">Make multiplexer dataset</a>
+</li>
+
+        
+            
+<li >
     <a href="../../data/mnist_data/">Mnist data</a>
 </li>
 
@@ -239,6 +245,12 @@
         
             
 <li >
+    <a href="../../evaluate/BootstrapOutOfBag/">BootstrapOutOfBag</a>
+</li>
+
+        
+            
+<li >
     <a href="../../evaluate/confusion_matrix/">Confusion matrix</a>
 </li>
 
@@ -258,6 +270,12 @@
             
 <li >
     <a href="../../evaluate/mcnemar/">Mcnemar</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/permutation_test/">Permutation test</a>
 </li>
 
         
@@ -821,6 +839,9 @@
             <li><a href="#example-3-pca-via-svd">Example 3 - PCA via SVD</a></li>
                 <!--  -->
         
+            <li><a href="#example-4-factor-loadings">Example 4 - Factor Loadings</a></li>
+                <!--  -->
+        
             <li><a href="#api">API</a></li>
                 <!-- 
                     <li><a href="#methods">Methods</a></li>
@@ -961,6 +982,42 @@ with plt.style.context('seaborn-whitegrid'):
 <p>
 <script type="math/tex; mode=display">\Sigma(-v) = -\Sigma v = -\lambda v = \lambda(-v).</script>
 </p>
+<h2 id="example-4-factor-loadings">Example 4 - Factor Loadings</h2>
+<p>After evoking the <code>fit</code> method, the factor loadings are available via the <code>loadings_</code> attribute. In simple terms, the the loadings are the unstandardized values of the eigenvectors. Or in other words, we can interpret the loadings as the covariances (or correlation in case we standardized the input features) between the input features and the and the principal components (or eigenvectors), which have been scaled to unit length.</p>
+<p>By having the loadings scaled, they become comparable by magnitude and we can assess how much variance in a component is attributed to the input features (as the components are  just a weighted linear combination of the input features).</p>
+<pre><code class="python">from mlxtend.data import iris_data
+from mlxtend.preprocessing import standardize
+from mlxtend.feature_extraction import PrincipalComponentAnalysis
+import matplotlib.pyplot as plt
+
+X, y = iris_data()
+X = standardize(X)
+
+pca = PrincipalComponentAnalysis(n_components=2,
+                                 solver='eigen')
+pca.fit(X);
+</code></pre>
+
+<pre><code class="python">xlabels = ['sepal length', 'sepal width', 'petal length', 'petal width']
+
+fig, ax = plt.subplots(1, 2, figsize=(8, 3))
+
+ax[0].bar(range(4), pca.loadings_[:, 0], align='center')
+ax[1].bar(range(4), pca.loadings_[:, 1], align='center')
+
+ax[0].set_ylabel('Factor loading onto PC1')
+ax[1].set_ylabel('Factor loading onto PC2')
+
+ax[0].set_xticks(range(4))
+ax[1].set_xticks(range(4))
+ax[0].set_xticklabels(xlabels, rotation=45)
+ax[1].set_xticklabels(xlabels, rotation=45)
+plt.ylim([-1, 1])
+plt.tight_layout()
+</code></pre>
+
+<p><img alt="png" src="../PrincipalComponentAnalysis_files/PrincipalComponentAnalysis_24_0.png" /></p>
+<p>For instance, we may say that most of the variance in the first component is attributed to the petal features (although the loading of sepal length on PC1 is also not much less in magnitude). In contrast, the remaining variance captured by PC2 is mostly due to the sepal width. Note that we know from Example 2 that PC1 explains most of the variance, and based on the information from the loading plots, we may say that petal features combined with sepal length may explain most of the spread in the data.</p>
 <h2 id="api">API</h2>
 <p><em>PrincipalComponentAnalysis(n_components=None, solver='eigen')</em></p>
 <p>Principal Component Analysis Class</p>

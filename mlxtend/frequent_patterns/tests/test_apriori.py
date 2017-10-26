@@ -28,7 +28,7 @@ df = pd.DataFrame(one_ary, columns=cols)
 
 
 def test_default():
-    res_df = apriori(df, min_support=0.6)
+    res_df = apriori(df)
     expect = pd.DataFrame([[0.8, np.array([3]), 1],
                            [1.0, np.array([5]), 1],
                            [0.6, np.array([6]), 1],
@@ -44,3 +44,11 @@ def test_default():
 
     for a, b in zip(res_df, expect):
         assert_array_equal(a, b)
+
+
+def test_max_len():
+    res_df1 = apriori(df)
+    assert len(res_df1.iloc[-1, -1]) == 3
+
+    res_df2 = apriori(df, max_len=2)
+    assert len(res_df2.iloc[-1, -1]) == 2

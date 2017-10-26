@@ -12,13 +12,9 @@ The CHANGELOG for the current development version is available at
 - [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.9.1.zip)
 - [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.9.1.tar.gz)
 
-##### Downloads
-
--
-
 ##### New Features
 
--
+- New `max_len` parameter for the frequent itemset generation via the `apriori` function to allow for early stopping. ([#270](https://github.com/rasbt/mlxtend/pull/270))
 
 ##### Changes
 

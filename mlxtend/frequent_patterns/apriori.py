@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 
 
-def apriori(df, min_support=0.5, use_colnames=False):
+def apriori(df, min_support=0.5, use_colnames=False, max_len=None):
     """Get frequent itemsets from a one-hot DataFrame
     Parameters
     -----------
@@ -30,13 +30,19 @@ def apriori(df, min_support=0.5, use_colnames=False):
       A float between 0 and 1 for minumum support of the itemsets returned.
       The support is computed as the fraction
       transactions_where_item(s)_occur / total_transactions.
+
     use_colnames : bool (default: False)
       If true, uses the DataFrames' column names in the returned DataFrame
       instead of column indices.
+
+    max_len : int (default: None)
+      Maximum length of the itemsets generated. If `None` (default) all
+      possible itemsets lengths (under the apriori condition) are evaluated.
+
     Returns
     -----------
     pandas DataFrame with columns ['support', 'itemsets'] of all itemsets
-    that are >= min_support.
+    that are >= `min_support` and < than `max_len` (if `max_len` is not None).
     """
 
     X = df.values
@@ -46,7 +52,10 @@ def apriori(df, min_support=0.5, use_colnames=False):
     itemset_dict = {1: ary_col_idx[support >= min_support].reshape(-1, 1)}
     max_itemset = 1
 
-    while max_itemset:
+    if max_len is None:
+        max_len = float('inf')
+
+    while max_itemset and max_itemset < max_len:
         next_max_itemset = max_itemset + 1
         combin = combinations(np.unique(itemset_dict[max_itemset].flatten()),
                               r=next_max_itemset)

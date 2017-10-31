@@ -441,6 +441,36 @@ def test_regression():
     assert round(sfs_r.k_score_, 4) == -34.7631
 
 
+def test_regression_sffs():
+    boston = load_boston()
+    X, y = boston.data, boston.target
+    lr = LinearRegression()
+    sfs_r = SFS(lr,
+                k_features=11,
+                forward=True,
+                floating=True,
+                scoring='neg_mean_squared_error',
+                cv=10,
+                verbose=0)
+    sfs_r = sfs_r.fit(X, y)
+    assert sfs_r.k_feature_idx_ == (0, 1, 3, 4, 6, 7, 8, 9, 10, 11, 12)
+
+
+def test_regression_sbfs():
+    boston = load_boston()
+    X, y = boston.data, boston.target
+    lr = LinearRegression()
+    sfs_r = SFS(lr,
+                k_features=3,
+                forward=False,
+                floating=True,
+                scoring='neg_mean_squared_error',
+                cv=10,
+                verbose=0)
+    sfs_r = sfs_r.fit(X, y)
+    assert sfs_r.k_feature_idx_ == (7, 10, 12), sfs_r.k_feature_idx_
+
+
 def test_regression_in_range():
     boston = load_boston()
     X, y = boston.data, boston.target
@@ -663,4 +693,4 @@ def test_max_feature_subset_parsimonious():
               cv=10)
 
     sfs = sfs.fit(X, y)
-    assert sfs.k_feature_idx_ == (10, 11, 12, 5)
+    assert sfs.k_feature_idx_ == (5, 10, 11, 12)

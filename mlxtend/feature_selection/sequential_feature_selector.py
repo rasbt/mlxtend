@@ -236,6 +236,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
         self.subsets_ = {}
         orig_set = set(range(X.shape[1]))
+        n_features = X.shape[1]
+
         if self.forward:
             if select_in_range:
                 k_to_select = max_k
@@ -275,41 +277,66 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                     )
 
                 if self.floating:
-                    k_score_c = None
-                    (new_feature,) = set(k_idx) ^ prev_subset
 
                     if self.forward:
-                        k_idx_c, k_score_c, cv_scores_c = self._exclusion(
-                            feature_set=k_idx,
-                            fixed_feature=new_feature,
-                            X=X,
-                            y=y
-                        )
-
+                        continuation_cond_1 = len(k_idx)
                     else:
-                        k_idx_c, k_score_c, cv_scores_c = self._inclusion(
-                            orig_set=orig_set - {new_feature},
-                            subset=set(k_idx),
-                            X=X,
-                            y=y
-                        )
+                        continuation_cond_1 = n_features - len(k_idx)
 
-                    if k_score_c is not None and k_score_c > k_score:
+                    continuation_cond_2 = True
+                    ran_step_1 = True
+                    new_feature = None
 
-                        if len(k_idx_c) in self.subsets_:
-                            cached_score = self.subsets_[len(
-                                k_idx_c)]['avg_score']
+                    while continuation_cond_1 >= 2 and continuation_cond_2:
+                        k_score_c = None
+
+                        if ran_step_1:
+                            (new_feature,) = set(k_idx) ^ prev_subset
+
+                        if self.forward:
+                            k_idx_c, k_score_c, cv_scores_c = self._exclusion(
+                                feature_set=k_idx,
+                                fixed_feature=new_feature,
+                                X=X,
+                                y=y
+                            )
+
                         else:
-                            cached_score = None
+                            k_idx_c, k_score_c, cv_scores_c = self._inclusion(
+                                orig_set=orig_set - {new_feature},
+                                subset=set(k_idx),
+                                X=X,
+                                y=y
+                            )
 
-                        if cached_score is None or k_score_c > cached_score:
-                            k_idx, k_score, cv_scores = \
-                                k_idx_c, k_score_c, cv_scores_c
+                        if k_score_c is not None and k_score_c > k_score:
+
+                            if len(k_idx_c) in self.subsets_:
+                                cached_score = self.subsets_[len(
+                                    k_idx_c)]['avg_score']
+                            else:
+                                cached_score = None
+
+                            if cached_score is None or \
+                                    k_score_c > cached_score:
+                                prev_subset = set(k_idx)
+                                k_idx, k_score, cv_scores = \
+                                    k_idx_c, k_score_c, cv_scores_c
+                                continuation_cond_1 = len(k_idx)
+                                ran_step_1 = False
+
+                            else:
+                                continuation_cond_2 = False
+
+                        else:
+                            continuation_cond_2 = False
 
                 k = len(k_idx)
                 # floating can lead to multiple same-sized subsets
                 if k not in self.subsets_ or (k_score >
                                               self.subsets_[k]['avg_score']):
+
+                    k_idx = tuple(sorted(k_idx))
                     self.subsets_[k] = {
                         'feature_idx': k_idx,
                         'cv_scores': cv_scores,
@@ -411,6 +438,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                             if not fixed_feature or fixed_feature in set(p))
 
             for p, cv_scores in work:
+
                 all_avg_scores.append(np.nanmean(cv_scores))
                 all_cv_scores.append(cv_scores)
                 all_subsets.append(p)

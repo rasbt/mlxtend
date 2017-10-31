@@ -90,6 +90,20 @@ def permutation_test(x, y, func='x_mean != y_mean', method='exact',
     more_extreme = 0.
     reference_stat = func(x, y)
 
+    # Note that whether we compute the combinations or permutations
+    # does not affect the results, since the number of permutations
+    # n_A specific objects in A and n_B specific objects in B is the
+    # same for all combinations in x_1, ... x_{n_A} and
+    # x_{n_{A+1}}, ... x_{n_A + n_B}
+    # In other words, for any given number of combinations, we get
+    # n_A! x n_B! times as many permutations; hoewever, the computed
+    # value of those permutations that are merely re-arranged combinations
+    # does not change. Hence, the result, since we divide by the number of
+    # combinations or permutations is the same, the permutations simply have
+    # "n_A! x n_B!" as a scaling factor in the numerator and denominator
+    # and using combinations instead of permutations simply saves computational
+    # time
+
     if method == 'exact':
         for indices_x in combinations(range(m + n), m):
 

@@ -47,11 +47,13 @@ pages:
     - user_guide/data/boston_housing_data.md
     - user_guide/data/iris_data.md
     - user_guide/data/loadlocal_mnist.md
+    - user_guide/data/make_multiplexer_dataset.md
     - user_guide/data/mnist_data.md
     - user_guide/data/three_blobs_data.md
     - user_guide/data/wine_data.md
   - evaluate:
     - user_guide/evaluate/bootstrap.md
+    - user_guide/evaluate/BootstrapOutOfBag.md
     - user_guide/evaluate/confusion_matrix.md
     - user_guide/evaluate/lift_score.md
     - user_guide/evaluate/mcnemar_table.md

@@ -54,7 +54,7 @@ def ecdf(x, y_label='ECDF', x_label=None, ax=None, percentile=None,
         ax = plt.gca()
 
     x = np.sort(x)
-    y = np.arange(1, x.shape[0] + 1) / x.shape[0]
+    y = np.arange(1, x.shape[0] + 1) / float(x.shape[0])
 
     ax.plot(x, y,
             marker=ecdf_marker,

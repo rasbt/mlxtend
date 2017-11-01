@@ -108,9 +108,9 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         implement scikit-learn's set_params and get_params methods.
         In addition, it is required to set cv=0, and n_jobs=1.
     n_cv_repeats : int (default = 0)
-    	The number of times cross-validation will be repeated. If 0 then it's 
-    	not repeated. Negative numbers raise an exception. Uses Scikit-learn 
-    	RepeatedStratifiedKFold for a classifier or RepeatedKFold otherwise. 
+        The number of times cross-validation will be repeated. If 0 then it's 
+        not repeated. Negative numbers raise an exception. Uses Scikit-learn 
+        RepeatedStratifiedKFold for a classifier or RepeatedKFold otherwise. 
 
 
     Attributes
@@ -134,7 +134,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                  verbose=0, scoring=None,
                  cv=5, n_jobs=1,
                  pre_dispatch='2*n_jobs',
-                 clone_estimator=True):
+                 clone_estimator=True,
+                 n_cv_repeats = 0):
 
         self.estimator = estimator
         self.k_features = k_features
@@ -158,7 +159,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             self.est_ = self.estimator
         self.scoring = scoring
 
-		self.n_cv_repeats = n_cv_repeats
+        self.n_cv_repeats = n_cv_repeats
         if self.n_cv_repeats < 0:
             raise AttributeError('Number of cross-validation repeats should be >= 0.')
         if not self.cv and self.n_cv_repeats > 0:

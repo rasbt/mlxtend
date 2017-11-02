@@ -19,6 +19,13 @@ class LinearDiscriminantAnalysis(_BaseModel):
     n_discriminants : int (default: None)
         The number of discrimants for transformation.
         Keeps the original dimensions of the dataset if `None`.
+        Note that the number of meaningful discriminants is
+        is max. n_classes - 1. In other words,
+        in LDA, the number of linear discriminants is at
+        most c−1, where c is the number of class labels,
+        since the in-between scatter matrix SB is
+        the sum of c matrices with rank 1 or less.
+        We can indeed see that we only have two nonzero eigenvalues
 
     Attributes
     ----------
@@ -87,6 +94,7 @@ class LinearDiscriminantAnalysis(_BaseModel):
         self.w_ = self._projection_matrix(eig_vals=self.e_vals_,
                                           eig_vecs=self.e_vecs_,
                                           n_discriminants=n_discriminants)
+        self.loadings_ = self._loadings()
         return self
 
     def transform(self, X):
@@ -147,3 +155,8 @@ class LinearDiscriminantAnalysis(_BaseModel):
         matrix_w = np.vstack([eig_vecs[:, i] for
                               i in range(n_discriminants)]).T
         return matrix_w
+
+    def _loadings(self):
+        """Compute factor loadings"""
+        return (self.e_vecs_ *
+                np.sqrt(np.abs(self.e_vals_)))

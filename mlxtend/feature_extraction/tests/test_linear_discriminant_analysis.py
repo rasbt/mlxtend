@@ -18,7 +18,7 @@ X = standardize(X)
 def test_default_components():
     lda = LDA()
     lda.fit(X, y)
-    res = lda.fit(X).transform(X)
+    res = lda.fit(X, y).transform(X)
     assert res.shape[1] == 4
 
 
@@ -30,15 +30,14 @@ def test_default_2components():
 
 
 @raises(AttributeError)
-def test_default_components():
+def test_default_components_0():
     lda = LDA(n_discriminants=0)
     lda.fit(X, y)
-    res = lda.fit(X).transform(X)
 
 
 def test_evals():
     lda = LDA(n_discriminants=2)
-    res = lda.fit(X, y).transform(X)
+    lda.fit(X, y).transform(X)
     np.set_printoptions(suppress=True)
     print('%s' % lda.e_vals_)
     assert_almost_equal(lda.e_vals_, [20.90, 0.14, 0.0, 0.0], decimal=2)
@@ -54,4 +53,16 @@ def test_fail_array_fit():
 def test_fail_array_transform():
     lda = LDA()
     lda.fit(X, y)
-    exp = lda.transform(X[1])
+    lda.transform(X[1])
+
+
+def test_loadings():
+
+    expect = np.array([[-0.7, -0., 0., -0.],
+                       [-0.7, 0.1, -0., -0.],
+                       [2.1, 0.3, 0., 0.],
+                       [3.9, -0.2, -0., -0.]])
+
+    lda = LDA()
+    lda.fit(X, y)
+    assert_almost_equal(lda.loadings_, expect, decimal=1)

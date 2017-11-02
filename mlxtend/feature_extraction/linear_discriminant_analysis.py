@@ -26,7 +26,7 @@ class LinearDiscriminantAnalysis(_BaseModel):
         since the in-between scatter matrix SB is
         the sum of c matrices with rank 1 or less.
         We can indeed see that we only have two nonzero eigenvalues
-    tol : float (default: 1-e15)
+    tol : float (default: 1-e8)
         Tolerance value for thresholding small eigenvalues, which
         are due to floating point imprecision, to zero.
 
@@ -40,7 +40,7 @@ class LinearDiscriminantAnalysis(_BaseModel):
        Eigenvectors in sorted order.
 
     """
-    def __init__(self, n_discriminants=None, tol=1e-15):
+    def __init__(self, n_discriminants=None, tol=1e-8):
         if n_discriminants is not None and n_discriminants < 1:
             raise AttributeError('n_discriminants must be > 1 or None')
         self.n_discriminants = n_discriminants

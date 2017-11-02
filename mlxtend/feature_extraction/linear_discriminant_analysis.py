@@ -166,5 +166,5 @@ class LinearDiscriminantAnalysis(_BaseModel):
     def _loadings(self):
         """Compute factor loadings"""
 
-        return (self.e_vecs_ *
-                np.sqrt(np.abs(self.e_vals_)))
+        return (self.e_vecs_.real *
+                np.sqrt(np.abs(self.e_vals_.real)))

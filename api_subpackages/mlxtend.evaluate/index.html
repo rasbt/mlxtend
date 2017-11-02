@@ -819,7 +819,13 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#confusion_matrix">confusion_matrix</a></li>
+        <li class="main active"><a href="#bootstrapoutofbag">BootstrapOutOfBag</a></li>
+        
+            <li><a href="#methods">Methods</a></li>
+                <!--  -->
+        
+    
+        <li class="main "><a href="#confusion_matrix">confusion_matrix</a></li>
         
     
         <li class="main "><a href="#permutation_test">permutation_test</a></li>
@@ -846,12 +852,6 @@
         <li class="main "><a href="#mcnemar_table">mcnemar_table</a></li>
         
     
-        <li class="main "><a href="#bootstrapoutofbag">BootstrapOutOfBag</a></li>
-        
-            <li><a href="#methods">Methods</a></li>
-                <!--  -->
-        
-    
         <li class="main "><a href="#scoring">scoring</a></li>
         
     
@@ -859,7 +859,73 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.8.1dev </p>
+<p>mlxtend version: 0.9.1dev </p>
+<h2 id="bootstrapoutofbag">BootstrapOutOfBag</h2>
+<p><em>BootstrapOutOfBag(n_splits=200, random_seed=None)</em></p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>n_splits</code> : int (default=200)</p>
+<p>Number of bootstrap iterations.
+Must be larger than 1.</p>
+</li>
+<li>
+<p><code>random_seed</code> : int (default=None)</p>
+<p>If int, random_seed is the seed used by
+the random number generator.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>train_idx</code> : ndarray</p>
+<p>The training set indices for that split.</p>
+</li>
+<li>
+<p><code>test_idx</code> : ndarray</p>
+<p>The testing set indices for that split.</p>
+</li>
+</ul>
+<h3 id="methods">Methods</h3>
+<hr>
+
+<p><em>get_n_splits(X=None, y=None, groups=None)</em></p>
+<p>Returns the number of splitting iterations in the cross-validator</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : object</p>
+<p>Always ignored, exists for compatibility with scikit-learn.</p>
+</li>
+<li>
+<p><code>y</code> : object</p>
+<p>Always ignored, exists for compatibility with scikit-learn.</p>
+</li>
+<li>
+<p><code>groups</code> : object</p>
+<p>Always ignored, exists for compatibility with scikit-learn.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>n_splits</code> : int</p>
+<p>Returns the number of splitting iterations in the cross-validator.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>split(X, y=None, groups=None)</em></p>
+<p>y : array-like or None (default: None)
+Argument is not used and only included as parameter
+for compatibility, similar to <code>KFold</code> in scikit-learn.</p>
+<ul>
+<li>
+<p><code>groups</code> : array-like or None (default: None)</p>
+<p>Argument is not used and only included as parameter
+for compatibility, similar to <code>KFold</code> in scikit-learn.</p>
+</li>
+</ul>
 <h2 id="confusion_matrix">confusion_matrix</h2>
 <p><em>confusion_matrix(y_target, y_predicted, binary=False, positive_label=1)</em></p>
 <p>Compute a confusion matrix/contingency table.</p>
@@ -1116,80 +1182,6 @@ a: tb[0, 0]: # of samples that both models predicted correctly
 b: tb[0, 1]: # of samples that model 1 got right and model 2 got wrong
 c: tb[1, 0]: # of samples that model 2 got right and model 1 got wrong
 d: tb[1, 1]: # of samples that both models predicted incorrectly</p>
-</li>
-</ul>
-<h2 id="bootstrapoutofbag">BootstrapOutOfBag</h2>
-<p><em>BootstrapOutOfBag(n_splits=200, random_seed=None)</em></p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>n_splits</code> : int (default=200)</p>
-<p>Number of bootstrap iterations.
-Must be larger than 1.</p>
-</li>
-<li>
-<p><code>random_seed</code> : int (default=None)</p>
-<p>If int, random_seed is the seed used by
-the random number generator.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>train_idx</code> : ndarray</p>
-<p>The training set indices for that split.</p>
-</li>
-<li>
-<p><code>test_idx</code> : ndarray</p>
-<p>The testing set indices for that split.</p>
-</li>
-</ul>
-<p><strong>Examples</strong></p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>raise ValueError('test')</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<h3 id="methods">Methods</h3>
-<hr>
-
-<p><em>get_n_splits(X=None, y=None, groups=None)</em></p>
-<p>Returns the number of splitting iterations in the cross-validator</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : object</p>
-<p>Always ignored, exists for compatibility with scikit-learn.</p>
-</li>
-<li>
-<p><code>y</code> : object</p>
-<p>Always ignored, exists for compatibility with scikit-learn.</p>
-</li>
-<li>
-<p><code>groups</code> : object</p>
-<p>Always ignored, exists for compatibility with scikit-learn.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>n_splits</code> : int</p>
-<p>Returns the number of splitting iterations in the cross-validator.</p>
-</li>
-</ul>
-<hr>
-
-<p><em>split(X, y=None, groups=None)</em></p>
-<p>y : array-like or None (default: None)
-Argument is not used and only included as parameter
-for compatibility, similar to <code>KFold</code> in scikit-learn.</p>
-<ul>
-<li>
-<p><code>groups</code> : array-like or None (default: None)</p>
-<p>Argument is not used and only included as parameter
-for compatibility, similar to <code>KFold</code> in scikit-learn.</p>
 </li>
 </ul>
 <h2 id="scoring">scoring</h2>

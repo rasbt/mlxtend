@@ -871,6 +871,19 @@ df
 </code></pre>
 
 <div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -970,6 +983,19 @@ apriori(df, min_support=0.6)
 </code></pre>
 
 <div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1043,6 +1069,19 @@ apriori(df, min_support=0.6)
 </code></pre>
 
 <div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1119,6 +1158,19 @@ frequent_itemsets
 </code></pre>
 
 <div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1205,6 +1257,19 @@ frequent_itemsets
 </code></pre>
 
 <div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1226,7 +1291,7 @@ frequent_itemsets
 </div>
 
 <h2 id="api">API</h2>
-<p><em>apriori(df, min_support=0.5, use_colnames=False)</em></p>
+<p><em>apriori(df, min_support=0.5, use_colnames=False, max_len=None)</em></p>
 <p>Get frequent itemsets from a one-hot DataFrame
 <strong>Parameters</strong></p>
 <ul>
@@ -1252,12 +1317,17 @@ transactions_where_item(s)_occur / total_transactions.</p>
 <li>
 <p><code>use_colnames</code> : bool (default: False)</p>
 <p>If true, uses the DataFrames' column names in the returned DataFrame
-instead of column indices.
-<strong>Returns</strong></p>
+instead of column indices.</p>
+</li>
+<li>
+<p><code>max_len</code> : int (default: None)</p>
+<p>Maximum length of the itemsets generated. If <code>None</code> (default) all
+possible itemsets lengths (under the apriori condition) are evaluated.</p>
 </li>
 </ul>
+<p><strong>Returns</strong></p>
 <p>pandas DataFrame with columns ['support', 'itemsets'] of all itemsets
-    that are &gt;= min_support.</p></div>
+    that are &gt;= <code>min_support</code> and &lt; than <code>max_len</code> (if <code>max_len</code> is not None).</p></div>
         
     </div>
 

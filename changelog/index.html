@@ -825,8 +825,6 @@
                 <!-- 
                     <li><a href="#downloads">Downloads</a></li>
             
-                    <li><a href="#downloads_1">Downloads</a></li>
-            
                     <li><a href="#new-features">New Features</a></li>
             
                     <li><a href="#changes">Changes</a></li>
@@ -834,7 +832,7 @@
         
             <li><a href="#version-090-2017-10-21">Version 0.9.0 (2017-10-21)</a></li>
                 <!-- 
-                    <li><a href="#downloads_2">Downloads</a></li>
+                    <li><a href="#downloads_1">Downloads</a></li>
             
                     <li><a href="#new-features_1">New Features</a></li>
             
@@ -845,7 +843,7 @@
         
             <li><a href="#version-080-2017-09-09">Version 0.8.0 (2017-09-09)</a></li>
                 <!-- 
-                    <li><a href="#downloads_3">Downloads</a></li>
+                    <li><a href="#downloads_2">Downloads</a></li>
             
                     <li><a href="#new-features_2">New Features</a></li>
             
@@ -856,7 +854,7 @@
         
             <li><a href="#version-070-2017-06-22">Version 0.7.0 (2017-06-22)</a></li>
                 <!-- 
-                    <li><a href="#downloads_4">Downloads</a></li>
+                    <li><a href="#downloads_3">Downloads</a></li>
             
                     <li><a href="#new-features_3">New Features</a></li>
             
@@ -867,7 +865,7 @@
         
             <li><a href="#version-060-2017-03-18">Version 0.6.0 (2017-03-18)</a></li>
                 <!-- 
-                    <li><a href="#downloads_5">Downloads</a></li>
+                    <li><a href="#downloads_4">Downloads</a></li>
             
                     <li><a href="#new-features_4">New Features</a></li>
             
@@ -878,7 +876,7 @@
         
             <li><a href="#version-051-2017-02-14">Version 0.5.1 (2017-02-14)</a></li>
                 <!-- 
-                    <li><a href="#downloads_6">Downloads</a></li>
+                    <li><a href="#downloads_5">Downloads</a></li>
             
                     <li><a href="#new-features_5">New Features</a></li>
             
@@ -889,7 +887,7 @@
         
             <li><a href="#version-050-2016-11-09">Version 0.5.0 (2016-11-09)</a></li>
                 <!-- 
-                    <li><a href="#downloads_7">Downloads</a></li>
+                    <li><a href="#downloads_6">Downloads</a></li>
             
                     <li><a href="#new-features_6">New Features</a></li>
             
@@ -900,7 +898,7 @@
         
             <li><a href="#version-042-2016-08-24">Version 0.4.2 (2016-08-24)</a></li>
                 <!-- 
-                    <li><a href="#downloads_8">Downloads</a></li>
+                    <li><a href="#downloads_7">Downloads</a></li>
             
                     <li><a href="#new-features_7">New Features</a></li>
             
@@ -911,7 +909,7 @@
         
             <li><a href="#version-041-2016-05-01">Version 0.4.1 (2016-05-01)</a></li>
                 <!-- 
-                    <li><a href="#downloads_9">Downloads</a></li>
+                    <li><a href="#downloads_8">Downloads</a></li>
             
                     <li><a href="#new-features_8">New Features</a></li>
             
@@ -927,7 +925,7 @@
         
             <li><a href="#version-030-2016-01-31">Version 0.3.0 (2016-01-31)</a></li>
                 <!-- 
-                    <li><a href="#downloads_10">Downloads</a></li>
+                    <li><a href="#downloads_9">Downloads</a></li>
             
                     <li><a href="#new-features_10">New Features</a></li>
             
@@ -936,7 +934,7 @@
         
             <li><a href="#version-029-2015-07-14">Version 0.2.9 (2015-07-14)</a></li>
                 <!-- 
-                    <li><a href="#downloads_11">Downloads</a></li>
+                    <li><a href="#downloads_10">Downloads</a></li>
             
                     <li><a href="#new-features_11">New Features</a></li>
             
@@ -1012,14 +1010,19 @@
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.9.1.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.9.1.tar.gz">Source code (tar.gz)</a></li>
 </ul>
-<h5 id="downloads_1">Downloads</h5>
-<p>-</p>
 <h5 id="new-features">New Features</h5>
-<p>-</p>
+<ul>
+<li>New <code>max_len</code> parameter for the frequent itemset generation via the <code>apriori</code> function to allow for early stopping. (<a href="https://github.com/rasbt/mlxtend/pull/270">#270</a>)</li>
+</ul>
 <h5 id="changes">Changes</h5>
-<p>-</p>
+<ul>
+<li>All feature index tuples in <code>SequentialFeatureSelector</code> or now in sorted order <a href="https://github.com/rasbt/mlxtend/pull/262">#262</a></li>
+<li>The <code>SequentialFeatureSelector</code> now runs the continuation of the floating inclusion/exclusion as described in Novovicova &amp; Kittler (1994). 
+Note that this didn't cause any difference in performance on any of the test scenarios but could lead to better performance in certain edge cases. 
+<a href="https://github.com/rasbt/mlxtend/pull/262">#262</a></li>
+</ul>
 <h3 id="version-090-2017-10-21">Version 0.9.0 (2017-10-21)</h3>
-<h5 id="downloads_2">Downloads</h5>
+<h5 id="downloads_1">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.9.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.9.0.tar.gz">Source code (tar.gz)</a></li>
@@ -1046,7 +1049,7 @@
 <li>The vectors from SVD in <code>PrincipalComponentAnalysis</code> are now being scaled so that the eigenvalues via <code>solver='eigen'</code> and <code>solver='svd'</code> now store eigenvalues that have the same magnitudes. (<a href="https://github.com/rasbt/mlxtend/pull/251">#251</a>)</li>
 </ul>
 <h3 id="version-080-2017-09-09">Version 0.8.0 (2017-09-09)</h3>
-<h5 id="downloads_3">Downloads</h5>
+<h5 id="downloads_2">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.8.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.8.0.tar.gz">Source code (tar.gz)</a></li>
@@ -1067,7 +1070,7 @@
 <li>Fixed a bug where the <code>SequentialFeatureSelector</code> selected a feature subset larger than then specified via the <code>k_features</code> tuple max-value <a href="https://github.com/rasbt/mlxtend/pull/213">#213</a></li>
 </ul>
 <h3 id="version-070-2017-06-22">Version 0.7.0 (2017-06-22)</h3>
-<h5 id="downloads_4">Downloads</h5>
+<h5 id="downloads_3">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.7.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.7.0.tar.gz">Source code (tar.gz)</a></li>
@@ -1092,7 +1095,7 @@
 <li>Made <code>math.num_combinations</code> and <code>math.num_permutations</code> numerically stable for large numbers of combinations and permutations (<a href="https://github.com/rasbt/mlxtend/pull/200">#200</a>).</li>
 </ul>
 <h3 id="version-060-2017-03-18">Version 0.6.0 (2017-03-18)</h3>
-<h5 id="downloads_5">Downloads</h5>
+<h5 id="downloads_4">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.6.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.6.0.tar.gz">Source code (tar.gz)</a></li>
@@ -1112,7 +1115,7 @@
 <li>Fixed typos in autompg and wine datasets (via <a href="https://github.com/jrbourbeau">James Bourbeau</a>).</li>
 </ul>
 <h3 id="version-051-2017-02-14">Version 0.5.1 (2017-02-14)</h3>
-<h5 id="downloads_6">Downloads</h5>
+<h5 id="downloads_5">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.5.1.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.5.1.tar.gz">Source code (tar.gz)</a></li>
@@ -1138,7 +1141,7 @@
 <li>Fixed a bug that could occur in the <code>SequentialFeatureSelector</code> if there are similarly-well performing subsets in the floating variants (via <a href="https://github.com/zacwellmer">Zac Wellmer</a>).</li>
 </ul>
 <h3 id="version-050-2016-11-09">Version 0.5.0 (2016-11-09)</h3>
-<h5 id="downloads_7">Downloads</h5>
+<h5 id="downloads_6">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.5.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.5.0.tar.gz">Source code (tar.gz)</a></li>
@@ -1165,7 +1168,7 @@
 <li>Raise <code>AttributeError</code> in <code>plot_decision_regions</code> when the <code>X_higlight</code> argument is a 1D array (<a href="https://github.com/chkoar">chkoar</a>)</li>
 </ul>
 <h3 id="version-042-2016-08-24">Version 0.4.2 (2016-08-24)</h3>
-<h5 id="downloads_8">Downloads</h5>
+<h5 id="downloads_7">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.4.2.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.4.2.tar.gz">Source code (tar.gz)</a></li>
@@ -1197,7 +1200,7 @@ imput arrays via <code>transform</code> and <code>fit_transform</code></li>
 <li>Fixed rare bug in MLP <code>_layer_mapping</code> functions that caused a swap between the random number generation seed when initializing weights and biases</li>
 </ul>
 <h3 id="version-041-2016-05-01">Version 0.4.1 (2016-05-01)</h3>
-<h5 id="downloads_9">Downloads</h5>
+<h5 id="downloads_8">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.4.1.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.4.1.tar.gz">Source code (tar.gz)</a></li>
@@ -1246,7 +1249,7 @@ imput arrays via <code>transform</code> and <code>fit_transform</code></li>
 <li>The <code>column</code> parameter in <code>mlxtend.preprocessing.standardize</code> now defaults to <code>None</code> to standardize all columns more conveniently</li>
 </ul>
 <h3 id="version-030-2016-01-31">Version 0.3.0 (2016-01-31)</h3>
-<h5 id="downloads_10">Downloads</h5>
+<h5 id="downloads_9">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.3.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.3.0.tar.gz">Source code (tar.gz)</a></li>
@@ -1277,7 +1280,7 @@ imput arrays via <code>transform</code> and <code>fit_transform</code></li>
 <li>Renaming <code>mlxtend.plotting</code> to <code>mlxtend.general_plotting</code> in order to distinguish general plotting function from specialized utility function such as <code>evaluate.plot_decision_regions</code></li>
 </ul>
 <h3 id="version-029-2015-07-14">Version 0.2.9 (2015-07-14)</h3>
-<h5 id="downloads_11">Downloads</h5>
+<h5 id="downloads_10">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.2.9.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.2.9.tar.gz">Source code (tar.gz)</a></li>

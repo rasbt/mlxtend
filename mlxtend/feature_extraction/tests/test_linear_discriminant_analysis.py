@@ -58,11 +58,11 @@ def test_fail_array_transform():
 
 def test_loadings():
 
-    expect = np.array([[-0.7, -0., 0., -0.],
-                       [-0.7, 0.1, -0., -0.],
-                       [2.1, 0.3, 0., 0.],
-                       [3.9, -0.2, -0., -0.]])
+    expect = np.abs(np.array([[-0.7, -0., 0., -0.],
+                              [-0.7, 0.1, -0., -0.],
+                              [2.1, 0.3, 0., 0.],
+                              [3.9, -0.2, -0., -0.]]))
 
     lda = LDA()
     lda.fit(X, y)
-    assert_almost_equal(lda.loadings_, expect, decimal=1)
+    assert_almost_equal(np.abs(lda.loadings_), expect, decimal=1)

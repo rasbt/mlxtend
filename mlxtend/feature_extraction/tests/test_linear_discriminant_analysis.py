@@ -63,6 +63,6 @@ def test_loadings():
                               [2.1, 0.3, 0., 0.],
                               [3.9, -0.2, -0., -0.]]))
 
-    lda = LDA()
+    lda = LDA(n_discriminants=2)
     lda.fit(X, y)
     assert_almost_equal(np.abs(lda.loadings_), expect, decimal=1)

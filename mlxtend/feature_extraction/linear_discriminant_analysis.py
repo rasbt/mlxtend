@@ -22,7 +22,7 @@ class LinearDiscriminantAnalysis(_BaseModel):
         Note that the number of meaningful discriminants is
         is max. n_classes - 1. In other words,
         in LDA, the number of linear discriminants is at
-        most c−1, where c is the number of class labels,
+        most c-1, where c is the number of class labels,
         since the in-between scatter matrix SB is
         the sum of c matrices with rank 1 or less.
         We can indeed see that we only have two nonzero eigenvalues

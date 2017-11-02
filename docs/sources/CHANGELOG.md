@@ -16,6 +16,7 @@ The CHANGELOG for the current development version is available at
 
 - New `max_len` parameter for the frequent itemset generation via the `apriori` function to allow for early stopping. ([#270](https://github.com/rasbt/mlxtend/pull/270))
 - Added a `loadings_` attribute to `LinearDiscriminantAnalysis` to compute the factor loadings of the features on the components (discrimnants). ([#277](https://github.com/rasbt/mlxtend/pull/277))
+- Added a `tol` parameter to `LinearDiscriminantAnalysis` to threshold small eigenvalues, which are due to floating point imprecision, to zero for numerical stability. ([#277](https://github.com/rasbt/mlxtend/pull/277))
 
 ##### Changes
 

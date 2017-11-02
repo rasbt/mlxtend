@@ -26,6 +26,9 @@ class LinearDiscriminantAnalysis(_BaseModel):
         since the in-between scatter matrix SB is
         the sum of c matrices with rank 1 or less.
         We can indeed see that we only have two nonzero eigenvalues
+    tol : float (default: 1-e15)
+        Tolerance value for thresholding small eigenvalues, which
+        are due to floating point imprecision, to zero.
 
     Attributes
     ----------
@@ -37,10 +40,11 @@ class LinearDiscriminantAnalysis(_BaseModel):
        Eigenvectors in sorted order.
 
     """
-    def __init__(self, n_discriminants=None):
+    def __init__(self, n_discriminants=None, tol=1e-15):
         if n_discriminants is not None and n_discriminants < 1:
             raise AttributeError('n_discriminants must be > 1 or None')
         self.n_discriminants = n_discriminants
+        self.tol = tol
 
     def fit(self, X, y, n_classes=None):
         """ Fit the LDA model with X.
@@ -91,6 +95,9 @@ class LinearDiscriminantAnalysis(_BaseModel):
                                                 mean_vectors=mean_vecs)
         self.e_vals_, self.e_vecs_ = self._eigendecom(
             within_scatter=within_scatter, between_scatter=between_scatter)
+
+        self.e_vals_ = self.e_vals_.copy()
+        self.e_vals_[abs(self.e_vals_) < self.tol] = 0.0
         self.w_ = self._projection_matrix(eig_vals=self.e_vals_,
                                           eig_vecs=self.e_vecs_,
                                           n_discriminants=n_discriminants)
@@ -158,5 +165,6 @@ class LinearDiscriminantAnalysis(_BaseModel):
 
     def _loadings(self):
         """Compute factor loadings"""
+
         return (self.e_vecs_ *
                 np.sqrt(np.abs(self.e_vals_)))

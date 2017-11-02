@@ -24,6 +24,9 @@ The CHANGELOG for the current development version is available at
 - The `SequentialFeatureSelector` now runs the continuation of the floating inclusion/exclusion as described in Novovicova & Kittler (1994). 
 Note that this didn't cause any difference in performance on any of the test scenarios but could lead to better performance in certain edge cases. 
 [#262](https://github.com/rasbt/mlxtend/pull/262)
+- Added "SVD solver" option to the `LinearDiscriminantAnalysis`. ([#277](https://github.com/rasbt/mlxtend/pull/277))
+- `LinearDiscriminantAnalysis` now uses NumPy's `cov` function instead of computing the scatter matrices manually to improve numerical stability. ([#277](https://github.com/rasbt/mlxtend/pull/277))
+
 
 
 ### Version 0.9.0 (2017-10-21)

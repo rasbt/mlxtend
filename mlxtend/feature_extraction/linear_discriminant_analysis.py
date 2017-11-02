@@ -26,6 +26,9 @@ class LinearDiscriminantAnalysis(_BaseModel):
         since the in-between scatter matrix SB is
         the sum of c matrices with rank 1 or less.
         We can indeed see that we only have two nonzero eigenvalues
+    solver : str (default: 'eigen')
+        Method for performing the matrix decomposition.
+        {'eigen', 'svd'}
     tol : float (default: 1-e8)
         Tolerance value for thresholding small eigenvalues, which
         are due to floating point imprecision, to zero.
@@ -40,7 +43,13 @@ class LinearDiscriminantAnalysis(_BaseModel):
        Eigenvectors in sorted order.
 
     """
-    def __init__(self, n_discriminants=None, tol=1e-8):
+    def __init__(self, n_discriminants=None, solver='eigen', tol=1e-8):
+        valid_solver = {'eigen', 'svd'}
+        if solver not in valid_solver:
+            raise AttributeError('Must be in %s. Found %s'
+                                 % (valid_solver, solver))
+        self.solver = solver
+
         if n_discriminants is not None and n_discriminants < 1:
             raise AttributeError('n_discriminants must be > 1 or None')
         self.n_discriminants = n_discriminants
@@ -74,6 +83,7 @@ class LinearDiscriminantAnalysis(_BaseModel):
 
     def _fit(self, X, y, n_classes=None):
 
+        n_samples = X.shape[0]
         if self.n_discriminants is None or self.n_discriminants > X.shape[1]:
             n_discriminants = X.shape[1]
         else:
@@ -93,8 +103,10 @@ class LinearDiscriminantAnalysis(_BaseModel):
         between_scatter = self._between_scatter(X=X,
                                                 y=y,
                                                 mean_vectors=mean_vecs)
-        self.e_vals_, self.e_vecs_ = self._eigendecom(
-            within_scatter=within_scatter, between_scatter=between_scatter)
+        self.e_vals_, self.e_vecs_ = self._decomposition(
+            within_scatter=within_scatter,
+            between_scatter=between_scatter,
+            n_samples=n_samples)
 
         self.e_vals_ = self.e_vals_.copy()
         self.e_vals_[abs(self.e_vals_) < self.tol] = 0.0
@@ -133,11 +145,13 @@ class LinearDiscriminantAnalysis(_BaseModel):
     def _within_scatter(self, X, y, n_classes, mean_vectors):
         S_W = np.zeros((X.shape[1], X.shape[1]))
         for cl, mv in zip(range(n_classes), mean_vectors):
-            class_sc_mat = np.zeros((X.shape[1], X.shape[1]))
-            for row in X[y == cl]:
-                row, mv = row.reshape(X.shape[1], 1), mv.reshape(X.shape[1], 1)
-                class_sc_mat += (row - mv).dot((row - mv).T)
-            S_W += class_sc_mat
+            class_sc_mat = np.cov((X[y == cl] - mv).T)
+            # class_sc_mat = np.zeros((X.shape[1], X.shape[1]))
+            # for row in X[y == cl]:
+            #    row, mv = row.reshape(X.shape[1], 1),
+            #                          mv.reshape(X.shape[1], 1)
+            #    class_sc_mat += (row - mv).dot((row - mv).T)
+            S_W += y[y == cl].shape[0] * class_sc_mat
         return S_W
 
     def _between_scatter(self, X, y, mean_vectors):
@@ -151,9 +165,15 @@ class LinearDiscriminantAnalysis(_BaseModel):
                 (mean_vec - overall_mean).T)
         return S_B
 
-    def _eigendecom(self, within_scatter, between_scatter):
-        e_vals, e_vecs = np.linalg.eig(np.linalg.inv(within_scatter).dot(
-            between_scatter))
+    def _decomposition(self, within_scatter, between_scatter, n_samples):
+        combined_scatter = np.linalg.inv(within_scatter).dot(
+            between_scatter)
+        if self.solver == 'eigen':
+            e_vals, e_vecs = np.linalg.eig(combined_scatter)
+        elif self.solver == 'svd':
+            u, s, v = np.linalg.svd(combined_scatter)
+            e_vecs, e_vals = u, s
+            e_vals = e_vals ** 2 / n_samples
         sort_idx = np.argsort(e_vals)[::-1]
         e_vals, e_vecs = e_vals[sort_idx], e_vecs[sort_idx]
         return e_vals, e_vecs

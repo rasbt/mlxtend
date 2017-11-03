@@ -123,14 +123,19 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     def __init__(self, estimator, k_features=1,
                  forward=True, floating=False,
                  verbose=0, scoring=None,
+                 fuzzy=False,
+                 threshold=None,
                  cv=5, n_jobs=1,
                  pre_dispatch='2*n_jobs',
-                 clone_estimator=True):
+                 clone_estimator=True,
+                 random_seed=0):
 
         self.estimator = estimator
         self.k_features = k_features
         self.forward = forward
         self.floating = floating
+        self.fuzzy = fuzzy
+        self.threshold = threshold
         self.pre_dispatch = pre_dispatch
         self.cv = cv
         self.n_jobs = n_jobs
@@ -142,6 +147,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.named_est = {key: value for key, value in
                           _name_estimators([self.estimator])}
         self.clone_estimator = clone_estimator
+        np.random.seed(random_seed)
 
         if self.clone_estimator:
             self.est_ = clone(self.estimator)
@@ -256,18 +262,29 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             }
         best_subset = None
         k_score = 0
+        cv_scores = None
 
         try:
             while k != k_to_select:
                 prev_subset = set(k_idx)
 
                 if self.forward:
-                    k_idx, k_score, cv_scores = self._inclusion(
-                        orig_set=orig_set,
-                        subset=prev_subset,
-                        X=X,
-                        y=y
-                    )
+                    if not self.fuzzy:
+                        k_idx, k_score, cv_scores = self._inclusion(
+                            orig_set=orig_set,
+                            subset=prev_subset,
+                            X=X,
+                            y=y
+                        )
+                    else:
+                        k_idx, k_score, cv_scores = self._inclusion_fuzzy(
+                            orig_set=orig_set,
+                            subset=prev_subset,
+                            X=X,
+                            y=y,
+                            prev_score=k_score,
+                            prev_cv_scores=cv_scores
+                        )
                 else:
 
                     k_idx, k_score, cv_scores = self._exclusion(
@@ -330,6 +347,11 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
                         else:
                             continuation_cond_2 = False
+
+                if k == len(k_idx):
+                    # Fuzzy condition can lead to no additional features selected in a round,
+                    # if no additional features led to an increase by > threshold
+                    break
 
                 k = len(k_idx)
                 # floating can lead to multiple same-sized subsets
@@ -421,6 +443,25 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                    all_avg_scores[best],
                    all_cv_scores[best])
         return res
+
+    def _inclusion_fuzzy(self, orig_set, subset, X, y, prev_score,
+                         prev_cv_scores, ignore_feature=None):
+        remaining = orig_set - subset
+        if remaining:
+            features = list(remaining)
+            indices = np.arange(len(features))
+            np.random.shuffle(indices)
+            for i in indices:
+                if features[i] == ignore_feature:
+                    continue
+                feature = features[i]
+                new_subset, cv_scores = _calc_score(self, X, y,
+                                                    tuple(subset | {feature}))
+                avg_score = np.nanmean(cv_scores)
+                if avg_score > prev_score + self.threshold:
+                    return new_subset, avg_score, cv_scores
+        return subset, prev_score, prev_cv_scores
+
 
     def _exclusion(self, feature_set, X, y, fixed_feature=None):
         n = len(feature_set)

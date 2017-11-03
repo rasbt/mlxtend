@@ -21,7 +21,7 @@ class Counter(object):
     start_newline : bool (default: True)
         Prepends a new line to the counter, which prevents overwriting counters
         if multiple counters are printed in succession.
-    name : string (default : None)
+    name : string (default: None)
         Prepends the specified name before the counter to allow distinguishing
         between multiple counters.
 

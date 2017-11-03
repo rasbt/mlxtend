@@ -30,11 +30,12 @@ class Counter(object):
         The system's time in seconds when the Counter was initialized.
 
     """
-    def __init__(self, stderr=False, start_newline=True):
+    def __init__(self, stderr=False, start_newline=True, name=None):
         if stderr:
             self.stream = sys.stderr
         else:
             self.stream = sys.stdout
+        self.name = name
         self.start_time = time.time()
         self.curr_iter = 0
         if start_newline:
@@ -43,7 +44,10 @@ class Counter(object):
     def update(self):
         """Print current iteration and time elapsed."""
         self.curr_iter += 1
-        out = '%d iter | %d sec' % (self.curr_iter, time.time() -
+        out = '%d iter | %.2f sec' % (self.curr_iter, time.time() -
                                     self.start_time)
-        self.stream.write('\r%s' % out)
+        if self.name is None:
+            self.stream.write('\r%s' % out)
+        else:
+            self.stream.write('\r %s: %s' % (self.name, out))
         self.stream.flush()

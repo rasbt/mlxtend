@@ -45,7 +45,7 @@ class Counter(object):
         """Print current iteration and time elapsed."""
         self.curr_iter += 1
         out = '%d iter | %.2f sec' % (self.curr_iter, time.time() -
-                                    self.start_time)
+                                      self.start_time)
         if self.name is None:
             self.stream.write('\r%s' % out)
         else:

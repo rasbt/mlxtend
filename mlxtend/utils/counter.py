@@ -22,7 +22,8 @@ class Counter(object):
         Prepends a new line to the counter, which prevents overwriting counters
         if multiple counters are printed in succession.
     precision: int (default: 0)
-        Sets the precison of the displayed iteration time.
+        Sets the number of decimal places when displaying the time elapsed in
+        seconds.
     name : string (default: None)
         Prepends the specified name before the counter to allow distinguishing
         between multiple counters.

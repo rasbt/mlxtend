@@ -1,3 +1,15 @@
+# Sebastian Raschka 2014-2017
+# mlxtend Machine Learning Library Extensions
+#
+# A counter class for printing the progress of an iterator.
+# Author: Sebastian Raschka <sebastianraschka.com>
+#
+# License: BSD 3 clause
+
+import time
+import sys
+
+
 class Counter(object):
 
     """Class to display the progress of for-loop iterators.

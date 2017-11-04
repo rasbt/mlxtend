@@ -44,8 +44,7 @@ class Counter(object):
     ...     # do some computation
     ...     time.sleep(0.1)
     ...     cnt.update()
-    ...
-    ... 20 iter | 2 sec
+    20 iter | 2 sec
     >>> print('The counter was initialized.'
               ' %d seconds ago.' % (time.time() - cnt.start_time))
     The counter was initialized 2 seconds ago

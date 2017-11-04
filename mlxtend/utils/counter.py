@@ -29,10 +29,14 @@ class Counter(object):
     ----------
     curr_iter : int
         The current iteration.
-    start_time : int
+    start_time : float
         The system's time in seconds when the Counter was initialized.
-    iteration_time : int
+    iteration_time : float
         The system's time in seconds when the Counter was last updated.
+    total_elapsed : float
+        Time in seconds since the Counter was initialized.
+    iteration_elapsed : float
+        Time in seconds since the Counter was last updated.
     """
     def __init__(self, stderr=False, start_newline=True, precision=0,
                  name=None):

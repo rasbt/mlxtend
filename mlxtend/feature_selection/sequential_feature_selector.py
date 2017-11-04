@@ -127,6 +127,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                  threshold=None,
                  cv=5, n_jobs=1,
                  pre_dispatch='2*n_jobs',
+                 scoring_function=None,
                  clone_estimator=True,
                  random_seed=0):
 
@@ -147,6 +148,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.named_est = {key: value for key, value in
                           _name_estimators([self.estimator])}
         self.clone_estimator = clone_estimator
+        self.scoring_function = scoring_function or _calc_score
+        self.random_seed = random_seed
         np.random.seed(random_seed)
 
         if self.clone_estimator:
@@ -254,7 +257,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 k_to_select = min_k
             k_idx = tuple(range(X.shape[1]))
             k = len(k_idx)
-            k_idx, k_score = _calc_score(self, X, y, k_idx)
+            k_idx, k_score = self.scoring_function(self, X, y, k_idx)
             self.subsets_[k] = {
                 'feature_idx': k_idx,
                 'cv_scores': k_score,
@@ -293,6 +296,11 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                         y=y
                     )
 
+                if k == len(k_idx):
+                    # Fuzzy condition can lead to no additional features selected in a round,
+                    # if no additional features led to an increase by > threshold
+                    break
+
                 if self.floating:
 
                     if self.forward:
@@ -308,7 +316,10 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                         k_score_c = None
 
                         if ran_step_1:
-                            (new_feature,) = set(k_idx) ^ prev_subset
+                            try:
+                                (new_feature,) = set(k_idx) ^ prev_subset
+                            except:
+                                import pdb; pdb.set_trace()
 
                         if self.forward:
                             k_idx_c, k_score_c, cv_scores_c = self._exclusion(
@@ -347,11 +358,6 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
                         else:
                             continuation_cond_2 = False
-
-                if k == len(k_idx):
-                    # Fuzzy condition can lead to no additional features selected in a round,
-                    # if no additional features led to an increase by > threshold
-                    break
 
                 k = len(k_idx)
                 # floating can lead to multiple same-sized subsets
@@ -428,7 +434,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             n_jobs = min(self.n_jobs, features)
             parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
                                 pre_dispatch=self.pre_dispatch)
-            work = parallel(delayed(_calc_score)
+            work = parallel(delayed(self.scoring_function)
                             (self, X, y, tuple(subset | {feature}))
                             for feature in remaining
                             if feature != ignore_feature)
@@ -455,12 +461,12 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 if features[i] == ignore_feature:
                     continue
                 feature = features[i]
-                new_subset, cv_scores = _calc_score(self, X, y,
+                new_subset, cv_scores = self.scoring_function(self, X, y,
                                                     tuple(subset | {feature}))
                 avg_score = np.nanmean(cv_scores)
                 if avg_score > prev_score + self.threshold:
                     return new_subset, avg_score, cv_scores
-        return subset, prev_score, prev_cv_scores
+        return tuple(sorted(subset)), prev_score, prev_cv_scores
 
 
     def _exclusion(self, feature_set, X, y, fixed_feature=None):
@@ -474,7 +480,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             n_jobs = min(self.n_jobs, features)
             parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
                                 pre_dispatch=self.pre_dispatch)
-            work = parallel(delayed(_calc_score)(self, X, y, p)
+            work = parallel(delayed(self.scoring_function)(self, X, y, p)
                             for p in combinations(feature_set, r=n - 1)
                             if not fixed_feature or fixed_feature in set(p))
 

@@ -22,7 +22,7 @@ The CHANGELOG for the current development version is available at
 - The `SequentialFeatureSelector` now runs the continuation of the floating inclusion/exclusion as described in Novovicova & Kittler (1994). 
 Note that this didn't cause any difference in performance on any of the test scenarios but could lead to better performance in certain edge cases. 
 [#262](https://github.com/rasbt/mlxtend/pull/262)
-- utils.Counter now accepts a name variable to help distinguish between multiple counters, time precision has been updated to .00 seconds [#278](https://github.com/rasbt/mlxtend/pull/278)
+- utils.Counter now accepts a name variable to help distinguish between multiple counters, and time precision can be set with the 'precision' kwarg [#278](https://github.com/rasbt/mlxtend/pull/278)
 
 
 ### Version 0.9.0 (2017-10-21)

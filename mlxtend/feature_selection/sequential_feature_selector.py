@@ -124,13 +124,15 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                  forward=True, floating=False,
                  verbose=0, scoring=None,
                  fuzzy=False,
-                 threshold=None,
+                 threshold=.01,
                  cv=5, n_jobs=1,
                  pre_dispatch='2*n_jobs',
                  scoring_function=None,
                  clone_estimator=True,
                  random_seed=0):
 
+        if fuzzy and not forward:
+            raise NotImplementedError("Fuzzy backward selection not yet implemented")
         self.estimator = estimator
         self.k_features = k_features
         self.forward = forward
@@ -264,7 +266,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 'avg_score': np.nanmean(k_score)
             }
         best_subset = None
-        k_score = 0
+        k_score = -np.inf
         cv_scores = None
 
         try:
@@ -297,8 +299,9 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                     )
 
                 if k == len(k_idx):
-                    # Fuzzy condition can lead to no additional features selected in a round,
-                    # if no additional features led to an increase by > threshold
+                    # Fuzzy condition can lead to no additional features
+                    # selected in a round, if no additional features led to
+                    # an increase by > threshold
                     break
 
                 if self.floating:

@@ -132,7 +132,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                  random_seed=0):
 
         if fuzzy and not forward:
-            raise NotImplementedError("Fuzzy backward selection not yet implemented")
+            msg = "Fuzzy backward selection not yet implemented"
+            raise NotImplementedError(msg)
         self.estimator = estimator
         self.k_features = k_features
         self.forward = forward
@@ -319,10 +320,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                         k_score_c = None
 
                         if ran_step_1:
-                            try:
-                                (new_feature,) = set(k_idx) ^ prev_subset
-                            except:
-                                import pdb; pdb.set_trace()
+                            (new_feature,) = set(k_idx) ^ prev_subset
 
                         if self.forward:
                             k_idx_c, k_score_c, cv_scores_c = self._exclusion(
@@ -391,7 +389,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 if self._TESTING_INTERRUPT_MODE:
                     raise KeyboardInterrupt
 
-        except KeyboardInterrupt as e:
+        except KeyboardInterrupt:
             self.interrupted_ = True
             sys.stderr.write('\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...')
 
@@ -464,13 +462,13 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 if features[i] == ignore_feature:
                     continue
                 feature = features[i]
+                new_subset_tuple = tuple(subset | {feature})
                 new_subset, cv_scores = self.scoring_function(self, X, y,
-                                                    tuple(subset | {feature}))
+                                                              new_subset_tuple)
                 avg_score = np.nanmean(cv_scores)
                 if avg_score > prev_score + self.threshold:
                     return new_subset, avg_score, cv_scores
         return tuple(sorted(subset)), prev_score, prev_cv_scores
-
 
     def _exclusion(self, feature_set, X, y, fixed_feature=None):
         n = len(feature_set)

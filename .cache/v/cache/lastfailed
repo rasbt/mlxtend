@@ -1,0 +1,3 @@
+{
+  "mlxtend/feature_selection/tests/test_sequential_feature_selector.py::test_regression_in_range_fuzzy_no_subsets": true
+}

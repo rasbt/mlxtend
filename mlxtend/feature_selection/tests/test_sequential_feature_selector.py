@@ -297,6 +297,21 @@ def test_knn_option_sbs():
     assert sfs3.k_feature_idx_ == (1, 2, 3)
 
 
+def test_knn_option_sbs_fuzzy():
+    knn = KNeighborsClassifier(n_neighbors=4)
+    expect = "Fuzzy backward selection not yet implemented"
+    assert_raises(NotImplementedError,
+                  expect,
+                  SFS,
+                  knn,
+                  k_features=3,
+                  forward=False,
+                  floating=False,
+                  fuzzy=True,
+                  cv=4,
+                  verbose=0)
+
+
 def test_knn_option_sfbs():
     iris = load_iris()
     X = iris.data
@@ -310,6 +325,57 @@ def test_knn_option_sfbs():
                verbose=0)
     sfs4 = sfs4.fit(X, y)
     assert sfs4.k_feature_idx_ == (1, 2, 3)
+
+
+def test_knn_option_sfbs_fuzzy():
+    knn = KNeighborsClassifier(n_neighbors=4)
+    expect = "Fuzzy backward selection not yet implemented"
+    assert_raises(NotImplementedError,
+                  expect,
+                  SFS,
+                  knn,
+                  k_features=3,
+                  forward=False,
+                  floating=True,
+                  fuzzy=True,
+                  cv=4,
+                  verbose=0)
+
+
+def test_knn_option_sfs_fuzzy():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=4)
+    sfs5 = SFS(knn,
+               k_features=3,
+               forward=True,
+               floating=False,
+               fuzzy=True,
+               threshold=0.01,
+               cv=4,
+               random_seed=0,
+               verbose=0)
+    sfs5 = sfs5.fit(X, y)
+    assert sfs5.k_feature_idx_ == (0, 2, 3)
+
+
+def test_knn_option_sffs_fuzzy():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=4)
+    sfs5 = SFS(knn,
+               k_features=3,
+               forward=True,
+               floating=True,
+               fuzzy=True,
+               threshold=0.01,
+               cv=4,
+               random_seed=0,
+               verbose=0)
+    sfs5 = sfs5.fit(X, y)
+    assert sfs5.k_feature_idx_ == (1, 2, 3)
 
 
 def test_knn_option_sfbs_tuplerange_1():
@@ -360,6 +426,25 @@ def test_knn_option_sffs_tuplerange_1():
     assert sfs4.k_feature_idx_ == (0, 2, 3), sfs4.k_feature_idx_
 
 
+def test_knn_option_sffs_tuplerange_1_fuzzy():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=3)
+    sfs4 = SFS(knn,
+               k_features=(1, 3),
+               forward=True,
+               floating=True,
+               fuzzy=True,
+               threshold=0.01,
+               cv=4,
+               random_seed=0,
+               verbose=0)
+    sfs4 = sfs4.fit(X, y)
+    assert round(sfs4.k_score_, 3) == 0.960, sfs4.k_score_
+    assert sfs4.k_feature_idx_ == (2, 3), sfs4.k_feature_idx_
+
+
 def test_knn_option_sfs_tuplerange_1():
     iris = load_iris()
     X = iris.data
@@ -374,6 +459,25 @@ def test_knn_option_sfs_tuplerange_1():
     sfs4 = sfs4.fit(X, y)
     assert round(sfs4.k_score_, 3) == 0.967, sfs4.k_score_
     assert sfs4.k_feature_idx_ == (0, 2, 3), sfs4.k_feature_idx_
+
+
+def test_knn_option_sfs_tuplerange_1_fuzzy():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=3)
+    sfs4 = SFS(knn,
+               k_features=(1, 3),
+               forward=True,
+               floating=False,
+               fuzzy=True,
+               threshold=0.01,
+               cv=4,
+               random_seed=0,
+               verbose=0)
+    sfs4 = sfs4.fit(X, y)
+    assert round(sfs4.k_score_, 3) == 0.960, sfs4.k_score_
+    assert sfs4.k_feature_idx_ == (2, 3), sfs4.k_feature_idx_
 
 
 def test_knn_option_sbs_tuplerange_1():
@@ -441,6 +545,25 @@ def test_regression():
     assert round(sfs_r.k_score_, 4) == -34.7631
 
 
+def test_regression_fuzzy():
+    boston = load_boston()
+    X, y = boston.data, boston.target
+    lr = LinearRegression()
+    sfs_r = SFS(lr,
+                k_features=13,
+                forward=True,
+                floating=False,
+                scoring='neg_mean_squared_error',
+                fuzzy=True,
+                threshold=0.01,
+                random_seed=0,
+                cv=10,
+                verbose=0)
+    sfs_r = sfs_r.fit(X, y)
+    assert len(sfs_r.k_feature_idx_) == 11
+    assert round(sfs_r.k_score_, 4) == -33.0844
+
+
 def test_regression_sffs():
     boston = load_boston()
     X, y = boston.data, boston.target
@@ -454,6 +577,24 @@ def test_regression_sffs():
                 verbose=0)
     sfs_r = sfs_r.fit(X, y)
     assert sfs_r.k_feature_idx_ == (0, 1, 3, 4, 6, 7, 8, 9, 10, 11, 12)
+
+
+def test_regression_sffs_fuzzy():
+    boston = load_boston()
+    X, y = boston.data, boston.target
+    lr = LinearRegression()
+    sfs_r = SFS(lr,
+                k_features=11,
+                forward=True,
+                floating=True,
+                fuzzy=True,
+                threshold=0.01,
+                random_seed=0,
+                scoring='neg_mean_squared_error',
+                cv=10,
+                verbose=0)
+    sfs_r = sfs_r.fit(X, y)
+    assert sfs_r.k_feature_idx_ == (0, 1, 2, 3, 5, 7, 10, 12)
 
 
 def test_regression_sbfs():
@@ -485,6 +626,25 @@ def test_regression_in_range():
     sfs_r = sfs_r.fit(X, y)
     assert len(sfs_r.k_feature_idx_) == 9
     assert round(sfs_r.k_score_, 4) == -31.1537
+
+
+def test_regression_in_range_fuzzy():
+    boston = load_boston()
+    X, y = boston.data, boston.target
+    lr = LinearRegression()
+    sfs_r = SFS(lr,
+                k_features=(1, 13),
+                forward=True,
+                floating=False,
+                fuzzy=True,
+                threshold=0.01,
+                random_seed=0,
+                scoring='neg_mean_squared_error',
+                cv=10,
+                verbose=0)
+    sfs_r = sfs_r.fit(X, y)
+    assert len(sfs_r.k_feature_idx_) == 11
+    assert round(sfs_r.k_score_, 4) == -33.0844
 
 
 def test_clone_params_fail():
@@ -667,6 +827,21 @@ def test_max_feature_subset_size_in_tuple_range():
 
 
 def test_max_feature_subset_best():
+    boston = load_boston()
+    X, y = boston.data, boston.target
+    lr = LinearRegression()
+
+    sfs = SFS(lr,
+              k_features='best',
+              forward=True,
+              floating=False,
+              cv=10)
+
+    sfs = sfs.fit(X, y)
+    assert sfs.k_feature_idx_ == (1, 3, 5, 7, 8, 9, 10, 11, 12)
+
+
+def test_max_feature_subset_best_fuzzy():
     boston = load_boston()
     X, y = boston.data, boston.target
     lr = LinearRegression()

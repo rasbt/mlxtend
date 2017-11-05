@@ -24,6 +24,10 @@ from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 from mlxtend.utils import assert_raises
 
 
+def test_fail():
+    assert 1 == 2
+
+
 def nan_roc_auc_score(y_true, y_score, average='macro', sample_weight=None):
     if len(np.unique(y_true)) != 2:
         return np.nan

@@ -64,6 +64,12 @@ class Counter(object):
         else:
             self.precision = '%d'
         self.name = name
+
+        if self.name is None:
+            self._print_name = ''
+        else:
+            self._print_name = '%s: ' % self.name
+
         self.start_time = time.time()
         self.curr_iter = 0
         if start_newline:
@@ -78,8 +84,6 @@ class Counter(object):
         out = '%d iter | %s sec' % (self.curr_iter,
                                     self.precision % (self.end_time
                                                       - self.start_time))
-        if self.name is None:
-            self.stream.write('\r%s' % out)
-        else:
-            self.stream.write('\r %s: %s' % (self.name, out))
+
+        self.stream.write('\r%s%s' % (self._print_name, out))
         self.stream.flush()

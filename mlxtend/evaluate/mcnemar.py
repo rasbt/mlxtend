@@ -6,8 +6,7 @@
 # License: BSD 3 clause
 
 import numpy as np
-from scipy.stats import chisqprob
-from scipy.stats import binom
+import scipy.stats
 
 
 def mcnemar_table(y_target, y_model1, y_model2):
@@ -102,10 +101,11 @@ def mcnemar(ary, corrected=True, exact=False):
             chi2 = (abs(ary[0, 1] - ary[1, 0]) - 1.0)**2 / float(n)
         else:
             chi2 = (ary[0, 1] - ary[1, 0])**2 / float(n)
-        p = chisqprob(chi2, 1)
+        p = scipy.stats.distributions.chi2.sf(chi2, 1)
 
     else:
-        p = 2. * sum([binom.pmf(k=i, n=n, p=0.5, loc=0) for i in range(b, n)])
+        p = 2. * sum([scipy.stats.binom.pmf(k=i, n=n, p=0.5, loc=0)
+                      for i in range(b, n)])
         chi2 = None
 
     return chi2, p

@@ -104,7 +104,8 @@ def mcnemar(ary, corrected=True, exact=False):
         p = scipy.stats.distributions.chi2.sf(chi2, 1)
 
     else:
-        p = 2. * sum([scipy.stats.binom.pmf(k=i, n=n, p=0.5, loc=0) for i in range(b, n)])
+        p = 2. * sum([scipy.stats.binom.pmf(k=i, n=n, p=0.5, loc=0)
+                      for i in range(b, n)])
         chi2 = None
 
     return chi2, p

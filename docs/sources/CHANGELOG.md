@@ -14,6 +14,7 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
+- Added `mlxtend.evaluate.bootstrap_point632_score` to evaluate the performance of estimators using the .632 bootstrap [#283](https://github.com/rasbt/mlxtend/pull/283)
 - New `max_len` parameter for the frequent itemset generation via the `apriori` function to allow for early stopping. ([#270](https://github.com/rasbt/mlxtend/pull/270))
 
 ##### Changes
@@ -23,6 +24,10 @@ The CHANGELOG for the current development version is available at
 Note that this didn't cause any difference in performance on any of the test scenarios but could lead to better performance in certain edge cases. 
 [#262](https://github.com/rasbt/mlxtend/pull/262)
 - utils.Counter now accepts a name variable to help distinguish between multiple counters, time precision can be set with the 'precision' kwarg and the new attribute end_time holds the time the last iteration completed. [#278](https://github.com/rasbt/mlxtend/pull/278)
+
+##### Bug Fixes
+
+- Fixed an issue that occured with McNemar test when using SciPy 1.0. [#283](https://github.com/rasbt/mlxtend/pull/283)
 
 
 ### Version 0.9.0 (2017-10-21)

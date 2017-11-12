@@ -102,12 +102,12 @@ def bootstrap_point632_score(estimator, X, y, n_splits=200,
                          ' greater than 1. Got %s.' % n_splits)
 
     allowed_methods = ('.632', '.632+')
-    if not isinstance(method, str) and method not in allowed_methods:
+    if not isinstance(method, str) or method not in allowed_methods:
         raise ValueError('The `method` must '
                          'be in %s. Got %s.' % (allowed_methods, method))
 
-    if method == '0.632+':
-        raise NotImplementedError('The 0.632+ method is not implemented, yet.')
+    if method == '.632+':
+        raise NotImplementedError('The .632+ method is not implemented, yet.')
 
     _check_arrays(X, y)
 

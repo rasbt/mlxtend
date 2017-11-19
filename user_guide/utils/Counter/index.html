@@ -245,6 +245,12 @@
         
             
 <li >
+    <a href="../../evaluate/bootstrap_point632_score/">Bootstrap point632 score</a>
+</li>
+
+        
+            
+<li >
     <a href="../../evaluate/BootstrapOutOfBag/">BootstrapOutOfBag</a>
 </li>
 
@@ -867,7 +873,7 @@ for i in range(20):
 </code></pre>
 <p>Note that the first number displays the current iteration, and the second number shows the time elapsed after initializing the <code>Counter</code>.</p>
 <h2 id="api">API</h2>
-<p><em>Counter(stderr=False, start_newline=True)</em></p>
+<p><em>Counter(stderr=False, start_newline=True, precision=0, name=None)</em></p>
 <p>Class to display the progress of for-loop iterators.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -878,7 +884,15 @@ for i in range(20):
 <li>
 <p><code>start_newline</code> : bool (default: True)</p>
 <p>Prepends a new line to the counter, which prevents overwriting counters
-if multiple counters are printed in succession.</p>
+if multiple counters are printed in succession.
+precision: int (default: 0)
+Sets the number of decimal places when displaying the time elapsed in
+seconds.</p>
+</li>
+<li>
+<p><code>name</code> : string (default: None)</p>
+<p>Prepends the specified name before the counter to allow distinguishing
+between multiple counters.</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>
@@ -888,10 +902,33 @@ if multiple counters are printed in succession.</p>
 <p>The current iteration.</p>
 </li>
 <li>
-<p><code>start_time</code> : int</p>
+<p><code>start_time</code> : float</p>
 <p>The system's time in seconds when the Counter was initialized.</p>
 </li>
+<li>
+<p><code>end_time</code> : float</p>
+<p>The system's time in seconds when the Counter was last updated.</p>
+</li>
 </ul>
+<p><strong>Examples</strong></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>cnt = Counter()
+    &gt;&gt;&gt; for i in range(20):
+    ...     # do some computation
+    ...     time.sleep(0.1)
+    ...     cnt.update()
+    20 iter | 2 sec
+    &gt;&gt;&gt; print('The counter was initialized.'
+    ' %d seconds ago.' % (time.time() - cnt.start_time))
+    The counter was initialized 2 seconds ago
+    &gt;&gt;&gt; print('The counter was last updated'
+    ' %d seconds ago.' % (time.time() - cnt.end_time))
+    The counter was last updated 0 seconds ago.</p>
+</blockquote>
+</blockquote>
+</blockquote>
 <h3 id="methods">Methods</h3>
 <hr>
 

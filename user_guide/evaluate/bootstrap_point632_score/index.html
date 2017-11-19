@@ -7,10 +7,10 @@
     <page.page.meta name="viewport" page.content="width=device-width, initial-scale=1.0">
     <page.page.meta name="description" page.content="A library consisting of useful tools and extensions for the day-to-day data science tasks."> 
     <page.page.meta name="author" page.content="Sebastian Raschka"> 
-    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/regressor/StackingCVRegressor/"> 
+    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/evaluate/bootstrap_point632_score/"> 
     <link rel="shortcut icon" href="../../../img/favicon.ico">
 
-    <title>StackingCVRegressor - mlxtend</title>
+    <title>Bootstrap point632 score - mlxtend</title>
 
     <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
@@ -239,55 +239,55 @@
         
             
 <li >
-    <a href="../../evaluate/bootstrap/">Bootstrap</a>
+    <a href="../bootstrap/">Bootstrap</a>
+</li>
+
+        
+            
+<li class="active">
+    <a href="./">Bootstrap point632 score</a>
 </li>
 
         
             
 <li >
-    <a href="../../evaluate/bootstrap_point632_score/">Bootstrap point632 score</a>
+    <a href="../BootstrapOutOfBag/">BootstrapOutOfBag</a>
 </li>
 
         
             
 <li >
-    <a href="../../evaluate/BootstrapOutOfBag/">BootstrapOutOfBag</a>
+    <a href="../confusion_matrix/">Confusion matrix</a>
 </li>
 
         
             
 <li >
-    <a href="../../evaluate/confusion_matrix/">Confusion matrix</a>
+    <a href="../lift_score/">Lift score</a>
 </li>
 
         
             
 <li >
-    <a href="../../evaluate/lift_score/">Lift score</a>
+    <a href="../mcnemar_table/">Mcnemar table</a>
 </li>
 
         
             
 <li >
-    <a href="../../evaluate/mcnemar_table/">Mcnemar table</a>
+    <a href="../mcnemar/">Mcnemar</a>
 </li>
 
         
             
 <li >
-    <a href="../../evaluate/mcnemar/">Mcnemar</a>
+    <a href="../permutation_test/">Permutation test</a>
 </li>
 
         
             
 <li >
-    <a href="../../evaluate/permutation_test/">Permutation test</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../evaluate/scoring/">Scoring</a>
+    <a href="../scoring/">Scoring</a>
 </li>
 
         
@@ -578,19 +578,19 @@
         
             
 <li >
-    <a href="../LinearRegression/">LinearRegression</a>
-</li>
-
-        
-            
-<li class="active">
-    <a href="./">StackingCVRegressor</a>
+    <a href="../../regressor/LinearRegression/">LinearRegression</a>
 </li>
 
         
             
 <li >
-    <a href="../StackingRegressor/">StackingRegressor</a>
+    <a href="../../regressor/StackingCVRegressor/">StackingCVRegressor</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../regressor/StackingRegressor/">StackingRegressor</a>
 </li>
 
         
@@ -793,12 +793,12 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="../LinearRegression/">
+                        <a rel="next" href="../bootstrap/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../StackingRegressor/">
+                        <a rel="prev" href="../BootstrapOutOfBag/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -825,356 +825,152 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#stackingcvregressor">StackingCVRegressor</a></li>
+        <li class="main active"><a href="#bootstrap_point632_score">bootstrap_point632_score</a></li>
         
             <li><a href="#overview">Overview</a></li>
                 <!-- 
                     <li><a href="#references">References</a></li>
              -->
         
-            <li><a href="#example-1-boston-housing-data-predictions">Example 1: Boston Housing Data Predictions</a></li>
-                <!--  -->
-        
-            <li><a href="#example-2-gridsearchcv-with-stacking">Example 2: GridSearchCV with Stacking</a></li>
+            <li><a href="#example-1-evaluating-the-predictive-performance-of-a-model">Example 1 -- Evaluating the predictive performance of a model</a></li>
                 <!--  -->
         
             <li><a href="#api">API</a></li>
-                <!-- 
-                    <li><a href="#methods">Methods</a></li>
-             -->
+                <!--  -->
         
     
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="stackingcvregressor">StackingCVRegressor</h1>
-<p>An ensemble-learning meta-regressor for stacking regression</p>
+<h1 id="bootstrap_point632_score">bootstrap_point632_score</h1>
+<p>An implementation of the .632 bootstrap to evaluate supervised learning algorithms.</p>
 <blockquote>
-<p>from mlxtend.regressor import StackingCVRegressor</p>
+<p><code>from mlxtend.evaluate import bootstrap_point632_score</code>    </p>
 </blockquote>
 <h2 id="overview">Overview</h2>
-<p>Stacking is an ensemble learning technique to combine multiple regression models via a meta-regressor. The <code>StackingCVRegressor</code> extends the standard stacking algorithm (implemented as <a href="../StackingRegressor/"><code>StackingRegressor</code></a>) using out-of-fold predictions to prepare the input data for the level-2 classifier.</p>
-<p>In the standard stacking procedure, the first-level regressors are fit to the same training set that is used prepare the inputs for the second-level regressor, which may lead to overfitting. The <code>StackingCVRegressor</code>, however, uses the concept of out-of-fold predictions: the dataset is split into k folds, and in k successive rounds, k-1 folds are used to fit the first level regressor. In each round, the first-level regressors are then applied to the remaining 1 subset that was not used for model fitting in each iteration. The resulting predictions are then stacked and provided -- as input data -- to the second-level regressor. After the training of the <code>StackingCVRegressor</code>, the first-level regressors are fit to the entire dataset for optimal predicitons.</p>
-<p><img alt="" src="../StackingCVRegressor_files/stacking_cv_regressor_overview.png" /></p>
+<p>Originally, the bootstrap method aims to determine the statistical properties of an estimator when the underlying distribution was unknown and additional samples are not available. Now, in order to exploit this method for the evaluation of predictive models, such as hypotheses for classification and regression, we may prefer a slightly different approach to bootstrapping using the so-called Out-Of-Bag (OOB) or Leave-One-Out Bootstrap (LOOB) technique. Here, we use out-of-bag samples as test sets for evaluation instead of evaluating the model on the training data. Out-of-bag samples are the unique sets of instances that are not used for model fitting as shown in the figure below [1].</p>
+<p><img alt="" src="../BootstrapOutOfBag_files/bootstrap_concept.png" /></p>
+<p>The figure above illustrates how three random bootstrap samples drawn from an exemplary ten-sample dataset (<script type="math/tex">X_1,X_2, ..., X_{10}</script>) and their out-of-bag sample for testing may look like. In practice, Bradley Efron and Robert Tibshirani recommend drawing 50 to 200 bootstrap samples as being sufficient for reliable estimates [2].</p>
+<p>In 1983, Bradley Efron described the <em>.632 Estimate</em>, a further improvement to address the pessimistic bias of the bootstrap cross-validation approach described above (Efron, 1983). The pessimistic bias in the "classic" bootstrap method can be attributed to the fact that the bootstrap samples only contain approximately 63.2% of the unique samples from the original dataset. For instance, we can compute the probability that a given sample from a dataset of size <em>n</em> is <em>not</em> drawn as a bootstrap sample as</p>
+<p>
+<script type="math/tex; mode=display">P (\text{not chosen}) =  \bigg(1 - \frac{1}{n}\bigg)^n,</script>
+</p>
+<p>which is asymptotically equivalent to <script type="math/tex">\frac{1}{e} \approx 0.368</script> as <script type="math/tex">n \rightarrow \infty.</script>
+</p>
+<p>Vice versa, we can then compute the probability that a sample <em>is</em> chosen as <script type="math/tex">P (\text{chosen}) = 1 - \bigg(1 - \frac{1}{n}\bigg)^n \approx 0.632</script> for reasonably large datasets, so that we'd select approximately <script type="math/tex">0.632 \times n</script> uniques samples as bootstrap training sets and reserve <script type="math/tex"> 0.368 \times n </script> out-of-bag samples for testing in each iteration.</p>
+<p>Now, to address the bias that is due to this the sampling with replacement, Bradley Efron proposed the <em>.632 Estimate</em> that we mentioned earlier, which is computed via the following equation:</p>
+<p>
+<script type="math/tex; mode=display">\text{ACC}_{boot} = \frac{1}{b} \sum_{i=1}^b \big(0.632 \cdot \text{ACC}_{h, i} + 0.368 \cdot \text{ACC}_{r, i}\big), </script>
+</p>
+<p>where <script type="math/tex">\text{ACC}_{r, i}</script> is the resubstitution accuracy, and <script type="math/tex">\text{ACC}_{h, i}</script> is the accuracy on the out-of-bag sample.</p>
 <h3 id="references">References</h3>
 <ul>
-<li>Breiman, Leo. "<a href="http://link.springer.com/article/10.1023/A:1018046112532#page-1">Stacked regressions.</a>" Machine learning 24.1 (1996): 49-64.</li>
-<li>Analogous implementation: <a href="../../classifier/StackingCVClassifier/"><code>StackingCVClassifier</code></a></li>
+<li>[1]  https://sebastianraschka.com/blog/2016/model-evaluation-selection-part2.html</li>
+<li>[2] Efron, Bradley, and Robert J. Tibshirani. An introduction to the bootstrap. CRC press, 1994. Management of Data (ACM SIGMOD '97), pages 265-276, 1997.</li>
 </ul>
-<h2 id="example-1-boston-housing-data-predictions">Example 1: Boston Housing Data Predictions</h2>
-<p>In this example we evaluate some basic prediction models on the boston housing dataset and see how the <script type="math/tex">R^2</script> and MSE scores are affected by combining the models with <code>StackingCVRegressor</code>. The code output below demonstrates that the stacked model performs the best on this dataset -- slightly better than the best single regression model.</p>
-<pre><code class="python">from mlxtend.regressor import StackingCVRegressor
-from sklearn.datasets import load_boston
-from sklearn.svm import SVR
-from sklearn.linear_model import Lasso
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import cross_val_score
+<h2 id="example-1-evaluating-the-predictive-performance-of-a-model">Example 1 -- Evaluating the predictive performance of a model</h2>
+<p>The <code>bootstrap_point632_score</code> function mimics the behavior of scikit-learn's `cross_val_score, and a typically usage example is shown below:</p>
+<pre><code class="python">from sklearn import datasets, linear_model
+from mlxtend.evaluate import bootstrap_point632_score
 import numpy as np
 
-RANDOM_SEED = 42
+iris = datasets.load_iris()
+X = iris.data
+y = iris.target
+lr = linear_model.LogisticRegression()
 
-X, y = load_boston(return_X_y=True)
+# Model accuracy
+scores = bootstrap_point632_score(lr, X, y)
+acc = np.mean(scores)
+print('Accuracy: %.2f%%' % (100*acc))
 
-svr = SVR(kernel='linear')
-lasso = Lasso()
-rf = RandomForestRegressor(n_estimators=5, 
-                           random_state=RANDOM_SEED)
 
-# The StackingCVRegressor uses scikit-learn's check_cv
-# internally, which doesn't support a random seed. Thus
-# NumPy's random seed need to be specified explicitely for
-# deterministic behavior
-np.random.seed(RANDOM_SEED)
-stack = StackingCVRegressor(regressors=(svr, lasso, rf),
-                            meta_regressor=lasso)
-
-print('5-fold cross validation scores:\n')
-
-for clf, label in zip([svr, lasso, rf, stack], ['SVM', 'Lasso', 
-                                                'Random Forest', 
-                                                'StackingClassifier']):
-    scores = cross_val_score(clf, X, y, cv=5)
-    print(&quot;R^2 Score: %0.2f (+/- %0.2f) [%s]&quot; % (
-        scores.mean(), scores.std(), label))
+# Confidence interval
+lower = np.percentile(scores, 2.5)
+upper = np.percentile(scores, 97.5)
+print('95%% Confidence interval: [%.2f, %.2f]' % (100*lower, 100*upper))
 </code></pre>
 
-<pre><code>5-fold cross validation scores:
-
-R^2 Score: 0.45 (+/- 0.29) [SVM]
-R^2 Score: 0.43 (+/- 0.14) [Lasso]
-R^2 Score: 0.52 (+/- 0.28) [Random Forest]
-R^2 Score: 0.58 (+/- 0.24) [StackingClassifier]
-</code></pre>
-<pre><code class="python"># The StackingCVRegressor uses scikit-learn's check_cv
-# internally, which doesn't support a random seed. Thus
-# NumPy's random seed need to be specified explicitely for
-# deterministic behavior
-np.random.seed(RANDOM_SEED)
-stack = StackingCVRegressor(regressors=(svr, lasso, rf),
-                            meta_regressor=lasso)
-
-print('5-fold cross validation scores:\n')
-
-for clf, label in zip([svr, lasso, rf, stack], ['SVM', 'Lasso', 
-                                                'Random Forest', 
-                                                'StackingClassifier']):
-    scores = cross_val_score(clf, X, y, cv=5, scoring='neg_mean_squared_error')
-    print(&quot;Neg. MSE Score: %0.2f (+/- %0.2f) [%s]&quot; % (
-        scores.mean(), scores.std(), label))
-</code></pre>
-
-<pre><code>5-fold cross validation scores:
-
-Neg. MSE Score: -33.69 (+/- 22.36) [SVM]
-Neg. MSE Score: -35.53 (+/- 16.99) [Lasso]
-Neg. MSE Score: -27.32 (+/- 16.62) [Random Forest]
-Neg. MSE Score: -25.64 (+/- 18.11) [StackingClassifier]
-</code></pre>
-<h2 id="example-2-gridsearchcv-with-stacking">Example 2: GridSearchCV with Stacking</h2>
-<p>In this second example we demonstrate how <code>StackingCVRegressor</code> works in combination with <code>GridSearchCV</code>. The stack still allows tuning hyper parameters of the base and meta models!</p>
-<p>To set up a parameter grid for scikit-learn's <code>GridSearch</code>, we simply provide the estimator's names in the parameter grid -- in the special case of the meta-regressor, we append the <code>'meta-'</code> prefix.</p>
-<pre><code class="python">from mlxtend.regressor import StackingCVRegressor
-from sklearn.datasets import load_boston
-from sklearn.linear_model import Lasso
-from sklearn.linear_model import Ridge
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import GridSearchCV
-
-X, y = load_boston(return_X_y=True)
-
-ridge = Ridge()
-lasso = Lasso()
-rf = RandomForestRegressor(random_state=RANDOM_SEED)
-
-# The StackingCVRegressor uses scikit-learn's check_cv
-# internally, which doesn't support a random seed. Thus
-# NumPy's random seed need to be specified explicitely for
-# deterministic behavior
-np.random.seed(RANDOM_SEED)
-stack = StackingCVRegressor(regressors=(lasso, ridge),
-                            meta_regressor=rf, 
-                            use_features_in_secondary=True)
-
-params = {'lasso__alpha': [0.1, 1.0, 10.0],
-          'ridge__alpha': [0.1, 1.0, 10.0]}
-
-grid = GridSearchCV(
-    estimator=stack, 
-    param_grid={
-        'lasso__alpha': [x/5.0 for x in range(1, 10)],
-        'ridge__alpha': [x/20.0 for x in range(1, 10)],
-        'meta-randomforestregressor__n_estimators': [10, 100]
-    }, 
-    cv=5,
-    refit=True
-)
-
-grid.fit(X, y)
-
-print(&quot;Best: %f using %s&quot; % (grid.best_score_, grid.best_params_))
-</code></pre>
-
-<pre><code>Best: 0.673590 using {'lasso__alpha': 0.4, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.3}
-</code></pre>
-<pre><code class="python">cv_keys = ('mean_test_score', 'std_test_score', 'params')
-
-for r, _ in enumerate(grid.cv_results_['mean_test_score']):
-    print(&quot;%0.3f +/- %0.2f %r&quot;
-          % (grid.cv_results_[cv_keys[0]][r],
-             grid.cv_results_[cv_keys[1]][r] / 2.0,
-             grid.cv_results_[cv_keys[2]][r]))
-    if r &gt; 10:
-        break
-print('...')
-
-print('Best parameters: %s' % grid.best_params_)
-print('Accuracy: %.2f' % grid.best_score_)
-</code></pre>
-
-<pre><code>0.622 +/- 0.10 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.05}
-0.649 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.1}
-0.650 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.15}
-0.667 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.2}
-0.629 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.25}
-0.663 +/- 0.08 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.3}
-0.633 +/- 0.08 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.35}
-0.637 +/- 0.08 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.4}
-0.649 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.45}
-0.653 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 100, 'ridge__alpha': 0.05}
-0.648 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 100, 'ridge__alpha': 0.1}
-0.645 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 100, 'ridge__alpha': 0.15}
-...
-Best parameters: {'lasso__alpha': 0.4, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.3}
-Accuracy: 0.67
+<pre><code>Accuracy: 94.99%
+95% Confidence interval: [90.76, 98.28]
 </code></pre>
 <h2 id="api">API</h2>
-<p><em>StackingCVRegressor(regressors, meta_regressor, cv=5, shuffle=True, use_features_in_secondary=False)</em></p>
-<p>A 'Stacking Cross-Validation' regressor for scikit-learn estimators.</p>
-<p>New in mlxtend v0.7.0</p>
-<p><strong>Notes</strong></p>
-<p>The StackingCVRegressor uses scikit-learn's check_cv
-internally, which doesn't support a random seed. Thus
-NumPy's random seed need to be specified explicitely for
-deterministic behavior, for instance, by setting
-np.random.seed(RANDOM_SEED)
-prior to fitting the StackingCVRegressor</p>
+<p><em>bootstrap_point632_score(estimator, X, y, n_splits=200, method='.632', scoring=None, random_seed=None)</em></p>
+<p>Implementation of the 0.632 bootstrap for supervised learning</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>regressors</code> : array-like, shape = [n_regressors]</p>
-<p>A list of classifiers.
-Invoking the <code>fit</code> method on the <code>StackingCVRegressor</code> will fit clones
-of these original regressors that will
-be stored in the class attribute <code>self.regr_</code>.</p>
+<p><code>estimator</code> : object</p>
+<p>An estimator for classification or regression that
+follows the scikit-learn API and implements "fit" and "predict"
+methods.</p>
 </li>
 <li>
-<p><code>meta_regressor</code> : object</p>
-<p>The meta-classifier to be fitted on the ensemble of
-classifiers</p>
+<p><code>X</code> : array-like</p>
+<p>The data to fit. Can be, for example a list, or an array at least 2d.</p>
 </li>
 <li>
-<p><code>cv</code> : int, cross-validation generator or iterable, optional (default: 5)</p>
-<p>Determines the cross-validation splitting strategy.
-Possible inputs for cv are:
-- None, to use the default 5-fold cross validation,
-- integer, to specify the number of folds in a <code>KFold</code>,
-- An object to be used as a cross-validation generator.
-- An iterable yielding train, test splits.
-For integer/None inputs, it will use <code>KFold</code> cross-validation</p>
+<p><code>y</code> : array-like, optional, default: None</p>
+<p>The target variable to try to predict in the case of
+supervised learning.</p>
 </li>
 <li>
-<p><code>use_features_in_secondary</code> : bool (default: False)</p>
-<p>If True, the meta-classifier will be trained both on
-the predictions of the original regressors and the
-original dataset.
-If False, the meta-regressor will be trained only on
-the predictions of the original regressors.</p>
+<p><code>n_splits</code> : int (default=200)</p>
+<p>Number of bootstrap iterations.
+Must be larger than 1.</p>
 </li>
 <li>
-<p><code>shuffle</code> : bool (default: True)</p>
-<p>If True,  and the <code>cv</code> argument is integer, the training data will
-be shuffled at fitting stage prior to cross-validation. If the <code>cv</code>
-argument is a specific cross validation technique, this argument is
-omitted.</p>
-</li>
-</ul>
-<h3 id="methods">Methods</h3>
-<hr>
-
-<p><em>fit(X, y, groups=None)</em></p>
-<p>Fit ensemble regressors and the meta-regressor.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
+<p><code>method</code> : str (default='.632')</p>
+<p>The bootstrap method, which can be either the
+regular '.632' bootstrap (default) or the '.632+'
+bootstrap (not implemented, yet).</p>
 </li>
 <li>
-<p><code>y</code> : numpy array, shape = [n_samples]</p>
-<p>Target values.</p>
+<p><code>scoring</code> : str, callable, or None (default: None)</p>
+<p>If None (default), uses 'accuracy' for sklearn classifiers
+and 'r2' for sklearn regressors.
+If str, uses a sklearn scoring metric string identifier, for example
+{'accuracy', 'f1', 'precision', 'recall', 'roc_auc', etc.}
+for classifiers,
+{'mean_absolute_error', 'mean_squared_error'/'neg_mean_squared_error',
+'median_absolute_error', 'r2', etc.} for regressors.
+If a callable object or function is provided, it has to be conform with
+sklearn's signature <code>scorer(estimator, X, y)</code>; see
+http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
+for more information.</p>
 </li>
 <li>
-<p><code>groups</code> : numpy array/None, shape = [n_samples]</p>
-<p>The group that each sample belongs to. This is used by specific
-folding strategies such as GroupKFold()</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
-<hr>
-
-<p><em>fit_transform(X, y=None, </em><em>fit_params)</em></p>
-<p>Fit to data, then transform it.</p>
-<p>Fits transformer to X and y with optional parameters fit_params
-and returns a transformed version of X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : numpy array of shape [n_samples, n_features]</p>
-<p>Training set.</p>
-</li>
-<li>
-<p><code>y</code> : numpy array of shape [n_samples]</p>
-<p>Target values.</p>
+<p><code>random_seed</code> : int (default=None)</p>
+<p>If int, random_seed is the seed used by
+the random number generator.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>X_new</code> : numpy array of shape [n_samples, n_features_new]</p>
-<p>Transformed array.</p>
+<p><code>scores</code> : array of float, shape=(len(list(n_splits)),)</p>
+<p>Array of scores of the estimator for each bootstrap
+replicate.</p>
 </li>
 </ul>
-<hr>
-
-<p><em>get_params(deep=True)</em></p>
-<p>Get parameters for this estimator.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>deep</code> : boolean, optional</p>
-<p>If True, will return the parameters for this estimator and
-contained subobjects that are estimators.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>params</code> : mapping of string to any</p>
-<p>Parameter names mapped to their values.</p>
-</li>
-</ul>
-<hr>
-
-<p><em>predict(X)</em></p>
-<p>None</p>
-<hr>
-
-<p><em>score(X, y, sample_weight=None)</em></p>
-<p>Returns the coefficient of determination R^2 of the prediction.</p>
-<p>The coefficient R^2 is defined as (1 - u/v), where u is the regression
-sum of squares ((y_true - y_pred) <strong> 2).sum() and v is the residual
-sum of squares ((y_true - y_true.mean()) </strong> 2).sum().</p>
-<p>Best possible score is 1.0 and it can be negative (because the</p>
-<p>model can be arbitrarily worse). A constant model that always
-predicts the expected value of y, disregarding the input features,
-would get a R^2 score of 0.0.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : array-like, shape = (n_samples, n_features)</p>
-<p>Test samples.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = (n_samples) or (n_samples, n_outputs)</p>
-<p>True values for X.</p>
-</li>
-<li>
-<p><code>sample_weight</code> : array-like, shape = [n_samples], optional</p>
-<p>Sample weights.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>score</code> : float</p>
-<p>R^2 of self.predict(X) wrt. y.</p>
-</li>
-</ul>
-<hr>
-
-<p><em>set_params(</em><em>params)</em></p>
-<p>Set the parameters of this estimator.</p>
-<p>The method works on simple estimators as well as on nested objects
-(such as pipelines). The latter have parameters of the form
-<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
-component of a nested object.</p>
-<p><strong>Returns</strong></p>
-<p>self</p></div>
+<p><strong>Examples</strong></p>
+<pre><code>&gt;&gt;&gt; from sklearn import datasets, linear_model
+&gt;&gt;&gt; from mlxtend.evaluate import bootstrap_point632_score
+&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; iris = datasets.load_iris()
+&gt;&gt;&gt; X = iris.data
+&gt;&gt;&gt; y = iris.target
+&gt;&gt;&gt; lr = linear_model.LogisticRegression()
+&gt;&gt;&gt; scores = bootstrap_point632_score(lr, X, y)
+&gt;&gt;&gt; acc = np.mean(scores)
+&gt;&gt;&gt; print('Accuracy:', acc)
+Accuracy: 0.953023146884
+&gt;&gt;&gt; lower = np.percentile(scores, 2.5)
+&gt;&gt;&gt; upper = np.percentile(scores, 97.5)
+&gt;&gt;&gt; print('95%% Confidence interval: [%.2f, %.2f]' % (lower, upper))
+95% Confidence interval: [0.90, 0.98]
+</code></pre></div>
         
     </div>
 

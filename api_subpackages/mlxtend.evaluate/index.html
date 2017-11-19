@@ -245,6 +245,12 @@
         
             
 <li >
+    <a href="../../user_guide/evaluate/bootstrap_point632_score/">Bootstrap point632 score</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/evaluate/BootstrapOutOfBag/">BootstrapOutOfBag</a>
 </li>
 
@@ -837,6 +843,9 @@
         <li class="main "><a href="#plot_decision_regions">plot_decision_regions</a></li>
         
     
+        <li class="main "><a href="#bootstrap_point632_score">bootstrap_point632_score</a></li>
+        
+    
         <li class="main "><a href="#lift_score">lift_score</a></li>
         
     
@@ -1044,6 +1053,86 @@ if <code>exact=True</code> (default: <code>False</code>), <code>chi2</code> is <
 <p>Note that importing this function from mlxtend.evaluate has been
 deprecated and will not longer be supported in mlxtend 0.6.
 Please use <code>from mlxtend.plotting import plot_decision_regions</code> instead.</p>
+<h2 id="bootstrap_point632_score">bootstrap_point632_score</h2>
+<p><em>bootstrap_point632_score(estimator, X, y, n_splits=200, method='.632', scoring=None, random_seed=None)</em></p>
+<p>Implementation of the 0.632 bootstrap for supervised learning</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>estimator</code> : object</p>
+<p>An estimator for classification or regression that
+follows the scikit-learn API and implements "fit" and "predict"
+methods.</p>
+</li>
+<li>
+<p><code>X</code> : array-like</p>
+<p>The data to fit. Can be, for example a list, or an array at least 2d.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, optional, default: None</p>
+<p>The target variable to try to predict in the case of
+supervised learning.</p>
+</li>
+<li>
+<p><code>n_splits</code> : int (default=200)</p>
+<p>Number of bootstrap iterations.
+Must be larger than 1.</p>
+</li>
+<li>
+<p><code>method</code> : str (default='.632')</p>
+<p>The bootstrap method, which can be either the
+regular '.632' bootstrap (default) or the '.632+'
+bootstrap (not implemented, yet).</p>
+</li>
+<li>
+<p><code>scoring</code> : str, callable, or None (default: None)</p>
+<p>If None (default), uses 'accuracy' for sklearn classifiers
+and 'r2' for sklearn regressors.
+If str, uses a sklearn scoring metric string identifier, for example
+{'accuracy', 'f1', 'precision', 'recall', 'roc_auc', etc.}
+for classifiers,
+{'mean_absolute_error', 'mean_squared_error'/'neg_mean_squared_error',
+'median_absolute_error', 'r2', etc.} for regressors.
+If a callable object or function is provided, it has to be conform with
+sklearn's signature <code>scorer(estimator, X, y)</code>; see
+http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
+for more information.</p>
+</li>
+<li>
+<p><code>random_seed</code> : int (default=None)</p>
+<p>If int, random_seed is the seed used by
+the random number generator.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>scores</code> : array of float, shape=(len(list(n_splits)),)</p>
+<p>Array of scores of the estimator for each bootstrap
+replicate.</p>
+</li>
+</ul>
+<p><strong>Examples</strong></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from sklearn import datasets, linear_model
+    &gt;&gt;&gt; from mlxtend.evaluate import bootstrap_point632_score
+    &gt;&gt;&gt; iris = datasets.load_iris()
+    &gt;&gt;&gt; X = iris.data
+    &gt;&gt;&gt; y = iris.target
+    &gt;&gt;&gt; lr = linear_model.LogisticRegression()
+    &gt;&gt;&gt; scores = bootstrap_point632_score(lr, X, y)
+    &gt;&gt;&gt; acc = np.mean(scores)
+    &gt;&gt;&gt; print('Accuracy:', acc)
+    0.953023146884
+    &gt;&gt;&gt; lower = np.percentile(scores, 2.5)
+    &gt;&gt;&gt; upper = np.percentile(scores, 97.5)
+    &gt;&gt;&gt; print('95%% Confidence interval: [%.2f, %.2f]' % (lower, upper))
+    95% Confidence interval: [0.90, 0.98]</p>
+</blockquote>
+</blockquote>
+</blockquote>
 <h2 id="lift_score">lift_score</h2>
 <p><em>lift_score(y_target, y_predicted, binary=True, positive_label=1)</em></p>
 <p>Lift measures the degree to which the predictions of a
@@ -1078,7 +1167,7 @@ all other classes are 0.</p>
 <ul>
 <li>
 <p><code>score</code> : float</p>
-<p>Lift score in the range [0, \infty]</p>
+<p>Lift score in the range [0, <script type="math/tex">\infty</script>]</p>
 </li>
 </ul>
 <h2 id="plot_learning_curves">plot_learning_curves</h2>

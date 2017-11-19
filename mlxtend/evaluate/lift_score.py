@@ -36,7 +36,7 @@ def lift_score(y_target, y_predicted, binary=True, positive_label=1):
     Returns
     ----------
     score : float
-        Lift score in the range [0, \infty]
+        Lift score in the range [0, $\infty$]
 
     """
 

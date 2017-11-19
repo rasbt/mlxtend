@@ -27,9 +27,7 @@ Sebastian Raschka 2014-2017
 
 ## Links
 
-- **Documentation:**
-    - html: [http://rasbt.github.io/mlxtend/](http://rasbt.github.io/mlxtend/)
-    - pdf: [http://sebastianraschka.com/pdf/software/mlxtend-latest.pdf](http://sebastianraschka.com/pdf/software/mlxtend-latest.pdf)
+- **Documentation:** [http://rasbt.github.io/mlxtend](http://rasbt.github.io/mlxtend)
 - PyPI: [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend)
 - Changelog: [http://rasbt.github.io/mlxtend/changelog](http://rasbt.github.io/mlxtend/changelog)
 - Contributing: [http://rasbt.github.io/mlxtend/contributing](http://rasbt.github.io/mlxtend/contributing)

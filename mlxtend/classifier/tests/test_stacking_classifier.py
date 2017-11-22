@@ -79,6 +79,29 @@ def test_StackingClassifier_proba_concat_1():
     assert scores_mean == 0.93, scores_mean
 
 
+def test_StackingClassifier_fit_params():
+    np.random.seed(123)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingClassifier(classifiers=[clf1, clf2],
+                              meta_classifier=meta)
+    n_samples = X.shape[0]
+    fit_params = {
+        'randomforestclassifier__sample_weight': np.ones(n_samples),
+        'meta-logisticregression__sample_weight': np.arange(n_samples)
+        }
+
+    scores = cross_val_score(sclf,
+                             X,
+                             y,
+                             cv=5,
+                             scoring='accuracy',
+                             fit_params=fit_params)
+    scores_mean = (round(scores.mean(), 2))
+    assert scores_mean == 0.95
+
+
 def test_StackingClassifier_avg_vs_concat():
     np.random.seed(123)
     lr1 = LogisticRegression()

@@ -147,7 +147,7 @@ def test_predict_meta_features():
     lr = LinearRegression()
     svr_rbf = SVR(kernel='rbf')
     ridge = Ridge(random_state=1)
-    stregr = StackingCVRegressor(regressors=[lr],
+    stregr = StackingCVRegressor(regressors=[lr, ridge],
                                  meta_regressor=svr_rbf)
     X_train, X_test, y_train, y_test = train_test_split(X2, y, test_size=0.3)
     stregr.fit(X_train, y_train)
@@ -159,7 +159,7 @@ def test_train_meta_features_():
     lr = LinearRegression()
     svr_rbf = SVR(kernel='rbf')
     ridge = Ridge(random_state=1)
-    stregr = StackingCVRegressor(regressors=[lr],
+    stregr = StackingCVRegressor(regressors=[lr, ridge],
                                  meta_regressor=svr_rbf,
                                  store_train_meta_features=True)
     X_train, X_test, y_train, y_test = train_test_split(X2, y, test_size=0.3)

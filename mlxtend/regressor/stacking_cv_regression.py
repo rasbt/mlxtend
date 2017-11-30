@@ -66,10 +66,14 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         be shuffled at fitting stage prior to cross-validation. If the `cv`
         argument is a specific cross validation technique, this argument is
         omitted.
+    store_train_meta_features : bool (default: False)
+        If True, meta-features for training data is stored when you `fit`
+        training data. You can get them by `self.train_meta_features_`.
     """
     def __init__(self, regressors, meta_regressor, cv=5,
                  shuffle=True,
-                 use_features_in_secondary=False):
+                 use_features_in_secondary=False,
+                 store_train_meta_features=False):
 
         self.regressors = regressors
         self.meta_regressor = meta_regressor
@@ -82,6 +86,7 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         self.cv = cv
         self.shuffle = shuffle
         self.use_features_in_secondary = use_features_in_secondary
+        self.store_train_meta_features = store_train_meta_features
 
     def fit(self, X, y, groups=None):
         """ Fit ensemble regressors and the meta-regressor.
@@ -137,6 +142,10 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
                 y_pred = instance.predict(X[holdout_idx])
                 meta_features[holdout_idx, i] = y_pred
 
+        # save meta-features for training data
+        if self.store_train_meta_features:
+            self.train_meta_features_ = meta_features
+
         # Train meta-model on the out-of-fold predictions
         if self.use_features_in_secondary:
             self.meta_regr_.fit(np.hstack((X, meta_features)), y)
@@ -162,6 +171,14 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             return self.meta_regr_.predict(np.hstack((X, meta_features)))
         else:
             return self.meta_regr_.predict(meta_features)
+
+    def predict_meta_features(self, X):
+        #
+        # If you pass test data, you can get test meta-features.
+        # If you would like to get training meta-features,
+        # please use self.train_meta_features_
+        #
+        return np.column_stack([regr.predict(X) for regr in self.regr_])
 
     def get_params(self, deep=True):
         #

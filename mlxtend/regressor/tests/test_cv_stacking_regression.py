@@ -164,4 +164,4 @@ def test_train_meta_features_():
     X_train, X_test, y_train, y_test = train_test_split(X2, y, test_size=0.3)
     stregr.fit(X_train, y_train)
     train_meta_features = stregr.train_meta_features_
-    assert train_meta_features.shape[0] == X_train.shape[0] 
+    assert train_meta_features.shape[0] == X_train.shape[0]

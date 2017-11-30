@@ -120,7 +120,8 @@ def test_get_params():
               'regressors',
               'ridge',
               'shuffle',
-              'use_features_in_secondary']
+              'store_train_meta_features',
+              'use_features_in_secondary',]
     assert got == expect, got
 
 

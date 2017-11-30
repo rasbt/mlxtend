@@ -15,6 +15,8 @@ The CHANGELOG for the current development version is available at
 ##### New Features
 
 - New `max_len` parameter for the frequent itemset generation via the `apriori` function to allow for early stopping. ([#270](https://github.com/rasbt/mlxtend/pull/270))
+- New `store_train_meta_features` parameter for `fit` in StackingCVRegressor. if True, train meta-features are stored in `self.train_meta_features_`.
+    New `pred_meta_features` method for StackingCVRegressor. People can get test meta-features using this method. ([#294](https://github.com/rasbt/mlxtend/pull/294))
 
 ##### Changes
 

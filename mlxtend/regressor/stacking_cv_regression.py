@@ -173,11 +173,21 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             return self.meta_regr_.predict(meta_features)
 
     def predict_meta_features(self, X):
-        #
-        # If you pass test data, you can get test meta-features.
-        # If you would like to get training meta-features,
-        # please use self.train_meta_features_
-        #
+        """ Get meta-features of test-data.
+
+        Parameters
+        ----------
+        X : numpy array, shape = [n_samples, n_features]
+            Test vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+
+        Returns
+        -------
+        meta-features : numpy array, shape = [n_samples, len(self.regressors)]
+            meta-features for test data, where n_samples is the number of
+            samples in test data and len(self.regressors) is the number of regressors.
+
+        """
         return np.column_stack([regr.predict(X) for regr in self.regr_])
 
     def get_params(self, deep=True):

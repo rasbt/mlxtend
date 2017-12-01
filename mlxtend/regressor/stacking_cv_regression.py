@@ -67,8 +67,16 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         argument is a specific cross validation technique, this argument is
         omitted.
     store_train_meta_features : bool (default: False)
-        If True, meta-features for training data is stored when you `fit`
-        training data. You can get them by `self.train_meta_features_`.
+        If True, the meta-features computed from the training data used for fitting the
+        meta-regressor stored in the `self.train_meta_features_` array, which can be
+        accessed after calling `fit`.
+
+    Attributes
+    ----------
+    train_meta_features : numpy array, shape = [n_samples, len(self.regressors)]
+        meta-features for training data, where n_samples is the number of samples
+        in training data and len(self.regressors) is the number of regressors.
+
     """
     def __init__(self, regressors, meta_regressor, cv=5,
                  shuffle=True,

@@ -7,6 +7,33 @@ The CHANGELOG for the current development version is available at
 
 ---
 
+
+
+
+
+### Version 0.9.2dev
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.9.2.zip)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.9.2.tar.gz)
+
+##### New Features
+
+- New `store_train_meta_features` parameter for `fit` in StackingCVRegressor. if True, train meta-features are stored in `self.train_meta_features_`.
+    New `pred_meta_features` method for `StackingCVRegressor`. People can get test meta-features using this method. ([#294](https://github.com/rasbt/mlxtend/pull/294))
+    via [takashioya](https://github.com/takashioya))
+- The new `store_train_meta_features` attribute and `pred_meta_features` method for the `StackingCVRegressor` were also added to the `StackingRegressor` ([#299](https://github.com/rasbt/mlxtend/pull/299)) 
+
+##### Changes
+
+- -
+
+
+##### Bug Fixes
+
+- -
+
 ### Version 0.9.1 (2017-11-19)
 
 ##### Downloads
@@ -18,9 +45,6 @@ The CHANGELOG for the current development version is available at
 
 - Added `mlxtend.evaluate.bootstrap_point632_score` to evaluate the performance of estimators using the .632 bootstrap. ([#283](https://github.com/rasbt/mlxtend/pull/283))
 - New `max_len` parameter for the frequent itemset generation via the `apriori` function to allow for early stopping. ([#270](https://github.com/rasbt/mlxtend/pull/270))
-- New `store_train_meta_features` parameter for `fit` in StackingCVRegressor. if True, train meta-features are stored in `self.train_meta_features_`.
-    New `pred_meta_features` method for StackingCVRegressor. People can get test meta-features using this method. ([#294](https://github.com/rasbt/mlxtend/pull/294))
-    via [takashioya](https://github.com/takashioya))
 
 ##### Changes
 

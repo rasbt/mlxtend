@@ -81,6 +81,11 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                        regressor being fitted
         - `verbose>2`: Changes `verbose` param of the underlying regressor to
            self.verbose - 2
+    store_train_meta_features : bool (default: False)
+        If True, the meta-features computed from the training data used
+        for fitting the meta-classifier stored in the
+        `self.train_meta_features_` array, which can be
+        accessed after calling `fit`.
 
     Attributes
     ----------
@@ -88,13 +93,18 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         Fitted classifiers (clones of the original classifiers)
     meta_clf_ : estimator
         Fitted meta-classifier (clone of the original meta-estimator)
+    train_meta_features : numpy array, shape = [n_samples, n_classifiers]
+        meta-features for training data, where n_samples is the
+        number of samples
+        in training data and n_classifiers is the number of classfiers.
 
     """
     def __init__(self, classifiers, meta_classifier,
                  use_probas=False, cv=2,
                  use_features_in_secondary=False,
                  stratify=True,
-                 shuffle=True, verbose=0):
+                 shuffle=True, verbose=0,
+                 store_train_meta_features=False):
 
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier
@@ -110,6 +120,7 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.use_features_in_secondary = use_features_in_secondary
         self.stratify = stratify
         self.shuffle = shuffle
+        self.store_train_meta_features = store_train_meta_features
 
     def fit(self, X, y, groups=None):
         """ Fit ensemble classifers and the meta-classifier.
@@ -200,6 +211,9 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                                                       dtype),
                                                single_model_prediction])
 
+        if self.store_train_meta_features:
+            self.train_meta_features_ = all_model_predictions
+
         # We have to shuffle the labels in the same order as we generated
         # predictions during CV (we kinda shuffled them when we did
         # Stratified CV).
@@ -249,19 +263,19 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
             return out
 
-    def predict(self, X):
-        """ Predict target values for X.
+    def predict_meta_features(self, X):
+        """ Get meta-features of test-data.
 
         Parameters
         ----------
         X : numpy array, shape = [n_samples, n_features]
-            Training vectors, where n_samples is the number of samples and
+            Test vectors, where n_samples is the number of samples and
             n_features is the number of features.
 
         Returns
-        ----------
-        labels : array-like, shape = [n_samples]
-            Predicted class labels.
+        -------
+        meta-features : numpy array, shape = [n_samples, n_classifiers]
+            Returns the meta-features for test data.
 
         """
         check_is_fitted(self, 'clfs_')
@@ -277,6 +291,24 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                                                astype(single_model_prediction
                                                       .dtype),
                                                single_model_prediction))
+        return all_model_predictions
+
+    def predict(self, X):
+        """ Predict target values for X.
+
+        Parameters
+        ----------
+        X : numpy array, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+
+        Returns
+        ----------
+        labels : array-like, shape = [n_samples]
+            Predicted class labels.
+
+        """
+        all_model_predictions = self.predict_meta_features(X)
         if not self.use_features_in_secondary:
             return self.meta_clf_.predict(all_model_predictions)
         else:

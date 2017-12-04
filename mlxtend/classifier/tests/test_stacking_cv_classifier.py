@@ -19,6 +19,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import KFold
 from sklearn.exceptions import NotFittedError
 from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import train_test_split
 
 iris = datasets.load_iris()
 X, y = iris.data[:, 1:3], iris.target
@@ -266,6 +267,7 @@ def test_get_params():
               'meta_classifier',
               'randomforestclassifier',
               'shuffle',
+              'store_train_meta_features',
               'stratify',
               'use_features_in_secondary',
               'use_probas',
@@ -290,3 +292,31 @@ def test_classifier_gridsearch():
     grid.fit(X, y)
 
     assert len(grid.best_params_['classifiers']) == 3
+
+
+def test_train_meta_features_():
+    knn = KNeighborsClassifier()
+    lr = LogisticRegression()
+    gnb = GaussianNB()
+    stclf = StackingCVClassifier(classifiers=[knn, gnb],
+                                 meta_classifier=lr,
+                                 store_train_meta_features=True)
+    X_train, X_test, y_train,  y_test = train_test_split(X, y, test_size=0.3)
+    stclf.fit(X_train, y_train)
+    train_meta_features = stclf.train_meta_features_
+    assert train_meta_features.shape == (X_train.shape[0], 2)
+
+
+def test_predict_meta_features():
+    knn = KNeighborsClassifier()
+    lr = LogisticRegression()
+    gnb = GaussianNB()
+    X_train, X_test, y_train,  y_test = train_test_split(X, y, test_size=0.3)
+
+    #  test default (class labels)
+    stclf = StackingCVClassifier(classifiers=[knn, gnb],
+                                 meta_classifier=lr,
+                                 store_train_meta_features=True)
+    stclf.fit(X_train, y_train)
+    test_meta_features = stclf.predict(X_test)
+    assert test_meta_features.shape == (X_test.shape[0],)

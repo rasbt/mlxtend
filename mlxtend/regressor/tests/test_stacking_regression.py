@@ -12,6 +12,7 @@ import numpy as np
 from numpy.testing import assert_almost_equal
 from nose.tools import raises
 from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import train_test_split
 
 # Generating a sample dataset
 np.random.seed(1)
@@ -158,6 +159,7 @@ def test_get_params():
               'meta_regressor',
               'regressors',
               'ridge',
+              'store_train_meta_features',
               'verbose']
     assert got == expect, got
 
@@ -178,3 +180,28 @@ def test_regressor_gridsearch():
     grid.fit(X1, y)
 
     assert len(grid.best_params_['regressors']) == 2
+
+
+def test_predict_meta_features():
+    lr = LinearRegression()
+    svr_rbf = SVR(kernel='rbf')
+    ridge = Ridge(random_state=1)
+    stregr = StackingRegressor(regressors=[lr, ridge],
+                               meta_regressor=svr_rbf)
+    X_train, X_test, y_train, y_test = train_test_split(X2, y, test_size=0.3)
+    stregr.fit(X_train, y_train)
+    test_meta_features = stregr.predict(X_test)
+    assert test_meta_features.shape[0] == X_test.shape[0]
+
+
+def test_train_meta_features_():
+    lr = LinearRegression()
+    svr_rbf = SVR(kernel='rbf')
+    ridge = Ridge(random_state=1)
+    stregr = StackingRegressor(regressors=[lr, ridge],
+                               meta_regressor=svr_rbf,
+                               store_train_meta_features=True)
+    X_train, X_test, y_train, y_test = train_test_split(X2, y, test_size=0.3)
+    stregr.fit(X_train, y_train)
+    train_meta_features = stregr.train_meta_features_
+    assert train_meta_features.shape[0] == X_train.shape[0]

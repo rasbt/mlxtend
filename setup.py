@@ -4,10 +4,20 @@
 #
 # License: BSD 3 clause
 
+from os.path import realpath, dirname, join
 from setuptools import setup, find_packages
 import mlxtend
 
 VERSION = mlxtend.__version__
+PROJECT_ROOT = dirname(realpath(__file__))
+
+REQUIREMENTS_FILE = join(PROJECT_ROOT, 'requirements.txt')
+
+with open(REQUIREMENTS_FILE) as f:
+    install_reqs = f.read().splitlines()
+
+install_reqs.append('setuptools')
+
 
 setup(name='mlxtend',
       version=VERSION,
@@ -22,9 +32,8 @@ setup(name='mlxtend',
                          'requirements.txt']
                     },
       include_package_data=True,
-      install_requires=['setuptools'],
-      extras_require={'testing': ['nose', 'numpy', 'scipy',
-                                  'scikit-learn', 'pandas', 'matplotlib'],
+      install_requires=install_reqs,
+      extras_require={'testing': ['nose'],
                       'docs': ['mkdocs']},
       license='BSD 3-Clause',
       platforms='any',

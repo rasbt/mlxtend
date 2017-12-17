@@ -9,7 +9,12 @@
 import numpy as np
 from itertools import combinations
 from math import factorial
-from nose.tools import nottest
+try:
+    from nose.tools import nottest
+except ImportError:
+    # Use a no-op decorator if nose is not available
+    def nottest(f):
+        return f
 
 
 # decorator to prevent nose to consider

@@ -27,7 +27,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- -
+- Added `requirements.txt` to `setup.py`.
 
 
 ##### Bug Fixes

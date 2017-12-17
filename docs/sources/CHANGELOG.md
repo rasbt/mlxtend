@@ -32,7 +32,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Bug Fixes
 
-- -
+- `nose` is not required to use the library ([#302](https://github.com/rasbt/mlxtend/issues/302))
 
 ### Version 0.9.1 (2017-11-19)
 

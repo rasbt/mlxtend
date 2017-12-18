@@ -32,6 +32,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Bug Fixes
 
+- Improved numerical stability for p-values computed via the the exact McNemar test ([#306](https://github.com/rasbt/mlxtend/issues/306))
 - `nose` is not required to use the library ([#302](https://github.com/rasbt/mlxtend/issues/302))
 
 ### Version 0.9.1 (2017-11-19)

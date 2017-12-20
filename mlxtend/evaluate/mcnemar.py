@@ -110,7 +110,8 @@ def mcnemar_tables(y_target, *y_model_predictions):
 
     """
     model_lens = set()
-    for ary in (y_target, *y_model_predictions):
+    y_model_predictions = list(y_model_predictions)
+    for ary in ([y_target] + y_model_predictions):
         if len(ary.shape) != 1:
             raise ValueError('One or more input arrays are not 1-dimensional.')
         model_lens.add(ary.shape[0])

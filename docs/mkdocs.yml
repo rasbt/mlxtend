@@ -58,6 +58,7 @@ pages:
     - user_guide/evaluate/confusion_matrix.md
     - user_guide/evaluate/lift_score.md
     - user_guide/evaluate/mcnemar_table.md
+    - user_guide/evaluate/mcnemar_tables.md
     - user_guide/evaluate/mcnemar.md
     - user_guide/evaluate/permutation_test.md
     - user_guide/evaluate/scoring.md

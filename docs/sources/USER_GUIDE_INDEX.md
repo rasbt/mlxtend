@@ -30,6 +30,7 @@
 - [confusion_matrix](user_guide/evaluate/confusion_matrix.md)
 - [lift_score](user_guide/evaluate/lift_score.md)
 - [mcnemar_table](user_guide/evaluate/mcnemar_table.md)
+- [mcnemar_tables](user_guide/evaluate/mcnemar_tables.md)
 - [mcnemar](user_guide/evaluate/mcnemar.md)
 - [permutation_test](user_guide/evaluate/permutation_test.md)
 - [scoring](user_guide/evaluate/scoring.md)

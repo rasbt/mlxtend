@@ -257,6 +257,12 @@
         
             
 <li >
+    <a href="../../evaluate/cochrans_q/">Cochrans q</a>
+</li>
+
+        
+            
+<li >
     <a href="../../evaluate/confusion_matrix/">Confusion matrix</a>
 </li>
 
@@ -270,6 +276,12 @@
             
 <li >
     <a href="../../evaluate/mcnemar_table/">Mcnemar table</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/mcnemar_tables/">Mcnemar tables</a>
 </li>
 
         
@@ -854,7 +866,7 @@
 <p>from mlxtend.regressor import StackingCVRegressor</p>
 </blockquote>
 <h2 id="overview">Overview</h2>
-<p>Stacking is an ensemble learning technique to combine multiple regression models via a meta-regressor. The <code>StackingCVRegressor</code> extends the standard stacking algorithm (implemented as <a href="../StackingRegressor/"><code>StackingRegressor</code></a>) using out-of-fold predictions to prepare the input data for the level-2 classifier.</p>
+<p>Stacking is an ensemble learning technique to combine multiple regression models via a meta-regressor. The <code>StackingCVRegressor</code> extends the standard stacking algorithm (implemented as <a href="../StackingRegressor/"><code>StackingRegressor</code></a>) using out-of-fold predictions to prepare the input data for the level-2 regressor.</p>
 <p>In the standard stacking procedure, the first-level regressors are fit to the same training set that is used prepare the inputs for the second-level regressor, which may lead to overfitting. The <code>StackingCVRegressor</code>, however, uses the concept of out-of-fold predictions: the dataset is split into k folds, and in k successive rounds, k-1 folds are used to fit the first level regressor. In each round, the first-level regressors are then applied to the remaining 1 subset that was not used for model fitting in each iteration. The resulting predictions are then stacked and provided -- as input data -- to the second-level regressor. After the training of the <code>StackingCVRegressor</code>, the first-level regressors are fit to the entire dataset for optimal predicitons.</p>
 <p><img alt="" src="../StackingCVRegressor_files/stacking_cv_regressor_overview.png" /></p>
 <h3 id="references">References</h3>
@@ -893,7 +905,7 @@ print('5-fold cross validation scores:\n')
 
 for clf, label in zip([svr, lasso, rf, stack], ['SVM', 'Lasso', 
                                                 'Random Forest', 
-                                                'StackingClassifier']):
+                                                'StackingCVRegressor']):
     scores = cross_val_score(clf, X, y, cv=5)
     print(&quot;R^2 Score: %0.2f (+/- %0.2f) [%s]&quot; % (
         scores.mean(), scores.std(), label))
@@ -904,7 +916,7 @@ for clf, label in zip([svr, lasso, rf, stack], ['SVM', 'Lasso',
 R^2 Score: 0.45 (+/- 0.29) [SVM]
 R^2 Score: 0.43 (+/- 0.14) [Lasso]
 R^2 Score: 0.52 (+/- 0.28) [Random Forest]
-R^2 Score: 0.58 (+/- 0.24) [StackingClassifier]
+R^2 Score: 0.58 (+/- 0.24) [StackingCVRegressor]
 </code></pre>
 <pre><code class="python"># The StackingCVRegressor uses scikit-learn's check_cv
 # internally, which doesn't support a random seed. Thus
@@ -918,7 +930,7 @@ print('5-fold cross validation scores:\n')
 
 for clf, label in zip([svr, lasso, rf, stack], ['SVM', 'Lasso', 
                                                 'Random Forest', 
-                                                'StackingClassifier']):
+                                                'StackingCVRegressor']):
     scores = cross_val_score(clf, X, y, cv=5, scoring='neg_mean_squared_error')
     print(&quot;Neg. MSE Score: %0.2f (+/- %0.2f) [%s]&quot; % (
         scores.mean(), scores.std(), label))
@@ -929,7 +941,7 @@ for clf, label in zip([svr, lasso, rf, stack], ['SVM', 'Lasso',
 Neg. MSE Score: -33.69 (+/- 22.36) [SVM]
 Neg. MSE Score: -35.53 (+/- 16.99) [Lasso]
 Neg. MSE Score: -27.32 (+/- 16.62) [Random Forest]
-Neg. MSE Score: -25.64 (+/- 18.11) [StackingClassifier]
+Neg. MSE Score: -25.64 (+/- 18.11) [StackingCVRegressor]
 </code></pre>
 <h2 id="example-2-gridsearchcv-with-stacking">Example 2: GridSearchCV with Stacking</h2>
 <p>In this second example we demonstrate how <code>StackingCVRegressor</code> works in combination with <code>GridSearchCV</code>. The stack still allows tuning hyper parameters of the base and meta models!</p>
@@ -1008,8 +1020,14 @@ print('Accuracy: %.2f' % grid.best_score_)
 Best parameters: {'lasso__alpha': 0.4, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.3}
 Accuracy: 0.67
 </code></pre>
+<p><strong>Note</strong></p>
+<p>The <code>StackingCVRegressor</code> also enables grid search over the <code>regressors</code> argument. However, due to the current implementation of <code>GridSearchCV</code> in scikit-learn, it is not possible to search over both, different regressors and regressor parameters at the same time. For instance, while the following parameter dictionary works</p>
+<pre><code>params = {'randomforestregressor__n_estimators': [1, 100],
+'regressors': [(regr1, regr1, regr1), (regr2, regr3)]}
+</code></pre>
+<p>it will use the instance settings of <code>regr1</code>, <code>regr2</code>, and <code>regr3</code> and not overwrite it with the <code>'n_estimators'</code> settings from <code>'randomforestregressor__n_estimators': [1, 100]</code>.</p>
 <h2 id="api">API</h2>
-<p><em>StackingCVRegressor(regressors, meta_regressor, cv=5, shuffle=True, use_features_in_secondary=False)</em></p>
+<p><em>StackingCVRegressor(regressors, meta_regressor, cv=5, shuffle=True, use_features_in_secondary=False, store_train_meta_features=False)</em></p>
 <p>A 'Stacking Cross-Validation' regressor for scikit-learn estimators.</p>
 <p>New in mlxtend v0.7.0</p>
 <p><strong>Notes</strong></p>
@@ -1023,15 +1041,15 @@ prior to fitting the StackingCVRegressor</p>
 <ul>
 <li>
 <p><code>regressors</code> : array-like, shape = [n_regressors]</p>
-<p>A list of classifiers.
+<p>A list of regressors.
 Invoking the <code>fit</code> method on the <code>StackingCVRegressor</code> will fit clones
 of these original regressors that will
 be stored in the class attribute <code>self.regr_</code>.</p>
 </li>
 <li>
 <p><code>meta_regressor</code> : object</p>
-<p>The meta-classifier to be fitted on the ensemble of
-classifiers</p>
+<p>The meta-regressor to be fitted on the ensemble of
+regressor</p>
 </li>
 <li>
 <p><code>cv</code> : int, cross-validation generator or iterable, optional (default: 5)</p>
@@ -1045,7 +1063,7 @@ For integer/None inputs, it will use <code>KFold</code> cross-validation</p>
 </li>
 <li>
 <p><code>use_features_in_secondary</code> : bool (default: False)</p>
-<p>If True, the meta-classifier will be trained both on
+<p>If True, the meta-regressor will be trained both on
 the predictions of the original regressors and the
 original dataset.
 If False, the meta-regressor will be trained only on
@@ -1057,6 +1075,23 @@ the predictions of the original regressors.</p>
 be shuffled at fitting stage prior to cross-validation. If the <code>cv</code>
 argument is a specific cross validation technique, this argument is
 omitted.</p>
+</li>
+<li>
+<p><code>store_train_meta_features</code> : bool (default: False)</p>
+<p>If True, the meta-features computed from the training data
+used for fitting the
+meta-regressor stored in the <code>self.train_meta_features_</code> array,
+which can be
+accessed after calling <code>fit</code>.</p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>train_meta_features</code> : numpy array, shape = [n_samples, len(self.regressors)]</p>
+<p>meta-features for training data, where n_samples is the
+number of samples
+in training data and len(self.regressors) is the number of regressors.</p>
 </li>
 </ul>
 <h3 id="methods">Methods</h3>
@@ -1131,15 +1166,51 @@ contained subobjects that are estimators.</p>
 <hr>
 
 <p><em>predict(X)</em></p>
-<p>None</p>
+<p>Predict target values for X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>y_target</code> : array-like, shape = [n_samples] or [n_samples, n_targets]</p>
+<p>Predicted target values.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>predict_meta_features(X)</em></p>
+<p>Get meta-features of test-data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
+<p>Test vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>meta-features</code> : numpy array, shape = [n_samples, len(self.regressors)]</p>
+<p>meta-features for test data, where n_samples is the number of
+samples in test data and len(self.regressors) is the number
+of regressors.</p>
+</li>
+</ul>
 <hr>
 
 <p><em>score(X, y, sample_weight=None)</em></p>
 <p>Returns the coefficient of determination R^2 of the prediction.</p>
-<p>The coefficient R^2 is defined as (1 - u/v), where u is the regression
-sum of squares ((y_true - y_pred) <strong> 2).sum() and v is the residual
+<p>The coefficient R^2 is defined as (1 - u/v), where u is the residual
+sum of squares ((y_true - y_pred) <strong> 2).sum() and v is the total
 sum of squares ((y_true - y_true.mean()) </strong> 2).sum().</p>
-<p>Best possible score is 1.0 and it can be negative (because the</p>
+<p>The best possible score is 1.0 and it can be negative (because the</p>
 <p>model can be arbitrarily worse). A constant model that always
 predicts the expected value of y, disregarding the input features,
 would get a R^2 score of 0.0.</p>

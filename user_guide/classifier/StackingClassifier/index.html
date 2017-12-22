@@ -257,6 +257,12 @@
         
             
 <li >
+    <a href="../../evaluate/cochrans_q/">Cochrans q</a>
+</li>
+
+        
+            
+<li >
     <a href="../../evaluate/confusion_matrix/">Confusion matrix</a>
 </li>
 
@@ -270,6 +276,12 @@
             
 <li >
     <a href="../../evaluate/mcnemar_table/">Mcnemar table</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/mcnemar_tables/">Mcnemar tables</a>
 </li>
 
         
@@ -1087,6 +1099,12 @@ print('Accuracy: %.2f' % grid.best_score_)
 Best parameters: {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
 Accuracy: 0.94
 </code></pre>
+<p><strong>Note</strong></p>
+<p>The <code>StackingClassifier</code> also enables grid search over the <code>classifiers</code> argument. However, due to the current implementation of <code>GridSearchCV</code> in scikit-learn, it is not possible to search over both, differenct classifiers and classifier parameters at the same time. For instance, while the following parameter dictionary works</p>
+<pre><code>params = {'randomforestclassifier__n_estimators': [1, 100],
+'classifiers': [(clf1, clf1, clf1), (clf2, clf3)]}
+</code></pre>
+<p>it will use the instance settings of <code>clf1</code>, <code>clf2</code>, and <code>clf3</code> and not overwrite it with the <code>'n_estimators'</code> settings from <code>'randomforestclassifier__n_estimators': [1, 100]</code>.</p>
 <h2 id="example-4-stacking-of-classifiers-that-operate-on-different-feature-subsets">Example 4 - Stacking of Classifiers that Operate on Different Feature Subsets</h2>
 <p>The different level-1 classifiers can be fit to different subsets of features in the training dataset. The following example illustrates how this can be done on a technical level using scikit-learn pipelines and the <code>ColumnSelector</code>:</p>
 <pre><code class="python">from sklearn.datasets import load_iris
@@ -1122,7 +1140,7 @@ sclf.fit(X, y)
           use_features_in_secondary=False, use_probas=False, verbose=0)
 </code></pre>
 <h1 id="api">API</h1>
-<p><em>StackingClassifier(classifiers, meta_classifier, use_probas=False, average_probas=False, verbose=0, use_features_in_secondary=False)</em></p>
+<p><em>StackingClassifier(classifiers, meta_classifier, use_probas=False, average_probas=False, verbose=0, use_features_in_secondary=False, store_train_meta_features=False)</em></p>
 <p>A Stacking classifier for scikit-learn estimators for classification.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1165,6 +1183,13 @@ of the original classifiers and the original dataset.
 If False, the meta-classifier will be trained only on the predictions
 of the original classifiers.</p>
 </li>
+<li>
+<p><code>store_train_meta_features</code> : bool (default: False)</p>
+<p>If True, the meta-features computed from the training data used
+for fitting the meta-classifier stored in the
+<code>self.train_meta_features_</code> array, which can be
+accessed after calling <code>fit</code>.</p>
+</li>
 </ul>
 <p><strong>Attributes</strong></p>
 <ul>
@@ -1175,6 +1200,12 @@ of the original classifiers.</p>
 <li>
 <p><code>meta_clf_</code> : estimator</p>
 <p>Fitted meta-classifier (clone of the original meta-estimator)</p>
+</li>
+<li>
+<p><code>train_meta_features</code> : numpy array, shape = [n_samples, n_classifiers]</p>
+<p>meta-features for training data, where n_samples is the
+number of samples
+in training data and n_classifiers is the number of classfiers.</p>
 </li>
 </ul>
 <h3 id="methods">Methods</h3>
@@ -1243,6 +1274,31 @@ n_features is the number of features.</p>
 <li>
 <p><code>labels</code> : array-like, shape = [n_samples] or [n_samples, n_outputs]</p>
 <p>Predicted class labels.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>predict_meta_features(X)</em></p>
+<p>Get meta-features of test-data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
+<p>Test vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>meta-features</code> : numpy array</p>
+<p>Returns the meta-features for test data. The shape of the
+returned numpy array is
+- [n_samples, n_classifiers] if <code>self.use_probas=False</code>
+- [n_samples, n_classifiers*n_unique_classlabels] if
+<code>self.use_probas=True</code> and <code>self.average_probas=False</code>
+- [n_samples, n_unique_classlabels] if
+<code>self.use_probas=True</code> and <code>self.average_probas=True</code></p>
 </li>
 </ul>
 <hr>

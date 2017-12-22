@@ -257,6 +257,12 @@
         
             
 <li >
+    <a href="../../user_guide/evaluate/cochrans_q/">Cochrans q</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/evaluate/confusion_matrix/">Confusion matrix</a>
 </li>
 
@@ -270,6 +276,12 @@
             
 <li >
     <a href="../../user_guide/evaluate/mcnemar_table/">Mcnemar table</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/mcnemar_tables/">Mcnemar tables</a>
 </li>
 
         
@@ -831,7 +843,13 @@
                 <!--  -->
         
     
+        <li class="main "><a href="#cochrans_q">cochrans_q</a></li>
+        
+    
         <li class="main "><a href="#confusion_matrix">confusion_matrix</a></li>
+        
+    
+        <li class="main "><a href="#mcnemar_tables">mcnemar_tables</a></li>
         
     
         <li class="main "><a href="#permutation_test">permutation_test</a></li>
@@ -868,7 +886,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.9.1dev </p>
+<p>mlxtend version: 0.9.2dev </p>
 <h2 id="bootstrapoutofbag">BootstrapOutOfBag</h2>
 <p><em>BootstrapOutOfBag(n_splits=200, random_seed=None)</em></p>
 <p><strong>Parameters</strong></p>
@@ -935,6 +953,29 @@ for compatibility, similar to <code>KFold</code> in scikit-learn.</p>
 for compatibility, similar to <code>KFold</code> in scikit-learn.</p>
 </li>
 </ul>
+<h2 id="cochrans_q">cochrans_q</h2>
+<p><em>cochrans_q(y_target, </em>y_model_predictions)*</p>
+<p>Cochran's Q test to compare 2 or more models.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>y_target</code> : array-like, shape=[n_samples]</p>
+<p>True class labels as 1D NumPy array.</p>
+</li>
+<li>
+<p><code>*y_model_predictions</code> : array-likes, shape=[n_samples]</p>
+<p>Variable number of 2 or more arrays that
+contain the predicted class labels
+from models as 1D NumPy array.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>q, p</code> : float or None, float</p>
+<p>Returns the Q (chi-squared) value and the p-value</p>
+</li>
+</ul>
 <h2 id="confusion_matrix">confusion_matrix</h2>
 <p><em>confusion_matrix(y_target, y_predicted, binary=False, positive_label=1)</em></p>
 <p>Compute a confusion matrix/contingency table.</p>
@@ -963,6 +1004,54 @@ all other classes are 0.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li><code>mat</code> : array-like, shape=[n_classes, n_classes]</li>
+</ul>
+<h2 id="mcnemar_tables">mcnemar_tables</h2>
+<p><em>mcnemar_tables(y_target, </em>y_model_predictions)*</p>
+<p>Compute multiple 2x2 contigency tables for McNemar's
+test or Cochran's Q test.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>y_target</code> : array-like, shape=[n_samples]</p>
+<p>True class labels as 1D NumPy array.</p>
+</li>
+<li>
+<p><code>y_model_predictions</code> : array-like, shape=[n_samples]</p>
+<p>Predicted class labels for a model.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>tables</code> : dict</p>
+<p>Dictionary of NumPy arrays with shape=[2, 2]. Each dictionary
+key names the two models to be compared based on the order the
+models were passed as <code>*y_model_predictions</code>. The number of
+dictionary entries is equal to the number of pairwise combinations
+between the m models, i.e., "m choose 2."</p>
+<p>For example the following target array (containing the true labels)
+and 3 models</p>
+<ul>
+<li>y_true = np.array([0, 0, 0, 0, 0, 1, 1, 1, 1, 1])</li>
+<li>y_mod0 = np.array([0, 1, 0, 0, 0, 1, 1, 0, 0, 0])</li>
+<li>y_mod0 = np.array([0, 0, 1, 1, 0, 1, 1, 0, 0, 0])</li>
+<li>y_mod0 = np.array([0, 1, 1, 1, 0, 1, 0, 0, 0, 0])</li>
+</ul>
+<p>would result in the following dictionary:</p>
+<p>{'model_0 vs model_1': array([[ 4.,  1.],
+[ 2.,  3.]]),
+'model_0 vs model_2': array([[ 3.,  0.],
+[ 3.,  4.]]),
+'model_1 vs model_2': array([[ 3.,  0.],
+[ 2.,  5.]])}</p>
+<p>Each array is structured in the following way:</p>
+<ul>
+<li>tb[0, 0]: # of samples that both models predicted correctly</li>
+<li>tb[0, 1]: # of samples that model a got right and model b got wrong</li>
+<li>tb[1, 0]: # of samples that model b got right and model a got wrong</li>
+<li>tb[1, 1]: # of samples that both models predicted incorrectly</li>
+</ul>
+</li>
 </ul>
 <h2 id="permutation_test">permutation_test</h2>
 <p><em>permutation_test(x, y, func='x_mean != y_mean', method='exact', num_rounds=1000, seed=None)</em></p>

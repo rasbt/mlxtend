@@ -257,6 +257,12 @@
         
             
 <li >
+    <a href="../../user_guide/evaluate/cochrans_q/">Cochrans q</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/evaluate/confusion_matrix/">Confusion matrix</a>
 </li>
 
@@ -270,6 +276,12 @@
             
 <li >
     <a href="../../user_guide/evaluate/mcnemar_table/">Mcnemar table</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/mcnemar_tables/">Mcnemar tables</a>
 </li>
 
         
@@ -850,7 +862,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.9.1dev </p>
+<p>mlxtend version: 0.9.2dev </p>
 <h2 id="linearregression">LinearRegression</h2>
 <p><em>LinearRegression(eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0)</em></p>
 <p>Ordinary least squares linear regression.</p>
@@ -950,7 +962,7 @@ n_features is the number of features.</p>
 </li>
 </ul>
 <h2 id="stackingcvregressor">StackingCVRegressor</h2>
-<p><em>StackingCVRegressor(regressors, meta_regressor, cv=5, shuffle=True, use_features_in_secondary=False)</em></p>
+<p><em>StackingCVRegressor(regressors, meta_regressor, cv=5, shuffle=True, use_features_in_secondary=False, store_train_meta_features=False)</em></p>
 <p>A 'Stacking Cross-Validation' regressor for scikit-learn estimators.</p>
 <p>New in mlxtend v0.7.0</p>
 <p><strong>Notes</strong></p>
@@ -964,15 +976,15 @@ prior to fitting the StackingCVRegressor</p>
 <ul>
 <li>
 <p><code>regressors</code> : array-like, shape = [n_regressors]</p>
-<p>A list of classifiers.
+<p>A list of regressors.
 Invoking the <code>fit</code> method on the <code>StackingCVRegressor</code> will fit clones
 of these original regressors that will
 be stored in the class attribute <code>self.regr_</code>.</p>
 </li>
 <li>
 <p><code>meta_regressor</code> : object</p>
-<p>The meta-classifier to be fitted on the ensemble of
-classifiers</p>
+<p>The meta-regressor to be fitted on the ensemble of
+regressor</p>
 </li>
 <li>
 <p><code>cv</code> : int, cross-validation generator or iterable, optional (default: 5)</p>
@@ -986,7 +998,7 @@ For integer/None inputs, it will use <code>KFold</code> cross-validation</p>
 </li>
 <li>
 <p><code>use_features_in_secondary</code> : bool (default: False)</p>
-<p>If True, the meta-classifier will be trained both on
+<p>If True, the meta-regressor will be trained both on
 the predictions of the original regressors and the
 original dataset.
 If False, the meta-regressor will be trained only on
@@ -998,6 +1010,23 @@ the predictions of the original regressors.</p>
 be shuffled at fitting stage prior to cross-validation. If the <code>cv</code>
 argument is a specific cross validation technique, this argument is
 omitted.</p>
+</li>
+<li>
+<p><code>store_train_meta_features</code> : bool (default: False)</p>
+<p>If True, the meta-features computed from the training data
+used for fitting the
+meta-regressor stored in the <code>self.train_meta_features_</code> array,
+which can be
+accessed after calling <code>fit</code>.</p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>train_meta_features</code> : numpy array, shape = [n_samples, len(self.regressors)]</p>
+<p>meta-features for training data, where n_samples is the
+number of samples
+in training data and len(self.regressors) is the number of regressors.</p>
 </li>
 </ul>
 <h3 id="methods_1">Methods</h3>
@@ -1072,7 +1101,43 @@ contained subobjects that are estimators.</p>
 <hr>
 
 <p><em>predict(X)</em></p>
-<p>None</p>
+<p>Predict target values for X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>y_target</code> : array-like, shape = [n_samples] or [n_samples, n_targets]</p>
+<p>Predicted target values.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>predict_meta_features(X)</em></p>
+<p>Get meta-features of test-data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
+<p>Test vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>meta-features</code> : numpy array, shape = [n_samples, len(self.regressors)]</p>
+<p>meta-features for test data, where n_samples is the number of
+samples in test data and len(self.regressors) is the number
+of regressors.</p>
+</li>
+</ul>
 <hr>
 
 <p><em>score(X, y, sample_weight=None)</em></p>
@@ -1117,7 +1182,7 @@ component of a nested object.</p>
 <p><strong>Returns</strong></p>
 <p>self</p>
 <h2 id="stackingregressor">StackingRegressor</h2>
-<p><em>StackingRegressor(regressors, meta_regressor, verbose=0)</em></p>
+<p><em>StackingRegressor(regressors, meta_regressor, verbose=0, store_train_meta_features=False)</em></p>
 <p>A Stacking regressor for scikit-learn estimators for regression.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1144,6 +1209,14 @@ regressor being fitted
 - <code>verbose&gt;2</code>: Changes <code>verbose</code> param of the underlying regressor to
 self.verbose - 2</p>
 </li>
+<li>
+<p><code>store_train_meta_features</code> : bool (default: False)</p>
+<p>If True, the meta-features computed from the training data
+used for fitting the
+meta-regressor stored in the <code>self.train_meta_features_</code> array,
+which can be
+accessed after calling <code>fit</code>.</p>
+</li>
 </ul>
 <p><strong>Attributes</strong></p>
 <ul>
@@ -1162,6 +1235,12 @@ self.verbose - 2</p>
 <li>
 <p><code>intercept_</code> : float</p>
 <p>Intercept of the fitted meta-estimator</p>
+</li>
+<li>
+<p><code>train_meta_features</code> : numpy array, shape = [n_samples, len(self.regressors)]</p>
+<p>meta-features for training data, where n_samples is the
+number of samples
+in training data and len(self.regressors) is the number of regressors.</p>
 </li>
 </ul>
 <h3 id="methods_2">Methods</h3>
@@ -1230,6 +1309,27 @@ n_features is the number of features.</p>
 <li>
 <p><code>y_target</code> : array-like, shape = [n_samples] or [n_samples, n_targets]</p>
 <p>Predicted target values.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>predict_meta_features(X)</em></p>
+<p>Get meta-features of test-data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
+<p>Test vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>meta-features</code> : numpy array, shape = [n_samples, len(self.regressors)]</p>
+<p>meta-features for test data, where n_samples is the number of
+samples in test data and len(self.regressors) is the number
+of regressors.</p>
 </li>
 </ul>
 <hr>

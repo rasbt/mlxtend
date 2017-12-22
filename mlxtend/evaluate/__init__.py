@@ -14,10 +14,12 @@ from .bootstrap import bootstrap
 from .bootstrap_outofbag import BootstrapOutOfBag
 from .bootstrap_point632 import bootstrap_point632_score
 from .permutation import permutation_test
+from .cochrans_q import cochrans_q
 
 
 __all__ = ["scoring", "confusion_matrix",
            "mcnemar_table", "mcnemar_tables",
            "mcnemar", "lift_score",
            "bootstrap", "permutation_test",
-           "BootstrapOutOfBag", "bootstrap_point632_score"]
+           "BootstrapOutOfBag", "bootstrap_point632_score",
+           "cochrans_q"]

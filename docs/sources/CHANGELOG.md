@@ -25,6 +25,7 @@ The CHANGELOG for the current development version is available at
     via [takashioya](https://github.com/takashioya))
 - The new `store_train_meta_features` attribute and `pred_meta_features` method for the `StackingCVRegressor` were also added to the `StackingRegressor`, `StackingClassifier`, and `StackingCVClassifier` ([#299](https://github.com/rasbt/mlxtend/pull/299) & [#300](https://github.com/rasbt/mlxtend/pull/300)) 
 - New function (`evaluate.mcnemar_tables`) for creating multiple 2x2 contigency from model predictions arrays that can be used in multiple McNemar (post-hoc) tests or Cochran's Q or F tests, etc. ([#307](https://github.com/rasbt/mlxtend/issues/307))
+- New function (`evaluate.cochrans_q`) for performing Cochran's Q test to compare the accuracy of multiple classifiers. ([#310](https://github.com/rasbt/mlxtend/issues/310))
 
 ##### Changes
 

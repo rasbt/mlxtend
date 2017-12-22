@@ -10,6 +10,7 @@ from itertools import cycle
 import matplotlib.pyplot as plt
 import numpy as np
 from ..utils import check_Xy
+import warnings
 
 
 def get_feature_range_mask(X, filler_feature_values=None,
@@ -44,7 +45,8 @@ def plot_decision_regions(X, y, clf,
                           filler_feature_ranges=None,
                           ax=None,
                           X_highlight=None,
-                          res=0.02, legend=1,
+                          num=300,
+                          res=None, legend=1,
                           hide_spines=True,
                           markers='s^oxv<>',
                           colors='red,blue,limegreen,gray,cyan'):
@@ -81,11 +83,15 @@ def plot_decision_regions(X, y, clf,
         one if ax=None.
     X_highlight : array-like, shape = [n_samples, n_features] (default: None)
         An array with data points that are used to highlight samples in `X`.
-    res : float or array-like, shape = (2,) (default: 0.02)
-        Grid width. If float, same resolution is used for both the x- and
-        y-axis. If array-like, the first item is used on the x-axis, the
-        second is used on the y-axis. Lower values increase the resolution but
+    num : int or array-like, shape = (2,) (default: 300)
+        Number of points to draw. If float the same number will be used for the
+        x- and y-axis. If array-like, the first item is used on the x-axis, the
+        second is used on the y-axis. Higher values increase the resolution, but
         slow down the plotting.
+    res : float or array-like, shape = (2,) (default: 0.02)
+        Use to be the grid width, but has been deprecated in favour of 'num'.
+        This currently does nothing considering that the default value should
+        look good independently of the min/max range.
     hide_spines : bool (default: True)
         Hide axis spines if True.
     legend : int (default: 1)
@@ -108,13 +114,17 @@ def plot_decision_regions(X, y, clf,
     if ax is None:
         ax = plt.gca()
 
-    if isinstance(res, float):
-        xres, yres = res, res
+    if res is not None:
+        warnings.warn('The \'res\' parameter has been deprecated in favour of'
+                      '\'num\'', DeprecationWarning)
+
+    if isinstance(num, int):
+        xnum, ynum = num, num
     else:
         try:
-            xres, yres = res
+            xnum, ynum = num
         except ValueError:
-            raise ValueError('Unable to unpack res. Expecting '
+            raise ValueError('Unable to unpack num. Expecting '
                              'array-like input of length 2.')
 
     plot_testdata = True
@@ -185,8 +195,8 @@ def plot_decision_regions(X, y, clf,
     else:
         y_min, y_max = X[:, y_index].min() - 1, X[:, y_index].max() + 1
 
-    xx, yy = np.meshgrid(np.arange(x_min, x_max, xres),
-                         np.arange(y_min, y_max, yres))
+    xx, yy = np.meshgrid(np.linspace(x_min, x_max, num=xnum),
+                         np.linspace(y_min, y_max, num=ynum))
 
     if dim == 1:
         X_predict = np.array([xx.ravel()]).T

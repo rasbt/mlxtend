@@ -45,7 +45,7 @@ def plot_decision_regions(X, y, clf,
                           filler_feature_ranges=None,
                           ax=None,
                           X_highlight=None,
-                          num=300,
+                          num=None,
                           res=None, legend=1,
                           hide_spines=True,
                           markers='s^oxv<>',
@@ -83,11 +83,12 @@ def plot_decision_regions(X, y, clf,
         one if ax=None.
     X_highlight : array-like, shape = [n_samples, n_features] (default: None)
         An array with data points that are used to highlight samples in `X`.
-    num : int or array-like, shape = (2,) (default: 300)
+    num : int or array-like, shape = (2,) (default: None)
         Number of points to draw. If float the same number will be used for the
         x- and y-axis. If array-like, the first item is used on the x-axis, the
         second is used on the y-axis. Higher values increase the resolution, but
-        slow down the plotting.
+        slow down the plotting. It will default on the number of dots on the
+        current figure.
     res : float or array-like, shape = (2,) (default: 0.02)
         Use to be the grid width, but has been deprecated in favour of 'num'.
         This currently does nothing considering that the default value should
@@ -117,6 +118,9 @@ def plot_decision_regions(X, y, clf,
     if res is not None:
         warnings.warn('The \'res\' parameter has been deprecated in favour of'
                       '\'num\'', DeprecationWarning)
+
+    if num is None:
+        num = plt.gcf().dpi * plt.gcf().get_size_inches()
 
     if isinstance(num, int):
         xnum, ynum = num, num

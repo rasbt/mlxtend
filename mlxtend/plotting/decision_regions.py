@@ -45,7 +45,8 @@ def plot_decision_regions(X, y, clf,
                           filler_feature_ranges=None,
                           ax=None,
                           X_highlight=None,
-                          res=None, legend=1,
+                          res=None,
+                          legend=1,
                           hide_spines=True,
                           markers='s^oxv<>',
                           colors='red,blue,limegreen,gray,cyan'):
@@ -83,9 +84,12 @@ def plot_decision_regions(X, y, clf,
     X_highlight : array-like, shape = [n_samples, n_features] (default: None)
         An array with data points that are used to highlight samples in `X`.
     res : float or array-like, shape = (2,) (default: None)
-        Use to be the grid width, but has been deprecated in favour of
+        This parameter was used to define the grid width,
+        but it has been deprecated in favor of
         determining the number of points given the figure DPI and size
-        automatically.  If you need more resolution, set plt.figure(dpi=600).
+        automatically for optimal results and computational efficiency.
+        To increase the resolution, it's is recommended to use to provide
+        a `dpi argument via matplotlib, e.g., `plt.figure(dpi=600)`.
     hide_spines : bool (default: True)
         Hide axis spines if True.
     legend : int (default: 1)
@@ -109,8 +113,11 @@ def plot_decision_regions(X, y, clf,
         ax = plt.gca()
 
     if res is not None:
-        warnings.warn('The \'res\' parameter has been deprecated in favour of'
-                      '\'num\'', DeprecationWarning)
+        warnings.warn("The 'res' parameter has been deprecated."
+                      "To increase the resolution, it's is recommended"
+                      "to use to provide a `dpi argument via matplotlib,"
+                      "e.g., `plt.figure(dpi=600)`.",
+                      DeprecationWarning)
 
     plot_testdata = True
     if not isinstance(X_highlight, np.ndarray):

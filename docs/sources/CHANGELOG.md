@@ -7,28 +7,45 @@ The CHANGELOG for the current development version is available at
 
 ---
 
-
-
-
-
-### Version 0.9.2dev
+### Version 0.10.1dev
 
 ##### Downloads
 
-- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.9.2.zip)
-- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.9.2.tar.gz)
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.10.1.zip)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.10.1.tar.gz)
+
+##### New Features
+
+- -
+
+##### Changes
+
+- The `plot_decision_regions` function now automatically determines the optimal setting based on the feature dimensions and supports anti-aliasing. The old `res`  parameter has been deprecated. ([#309](https://github.com/rasbt/mlxtend/pull/309) by [Guillaume Poirier-Morency](https://github.com/arteymix))
+
+##### Bug Fixes
+
+- -
+
+
+
+### Version 0.10.0 (2017-12-22)
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.10.0.zip)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.10.0.tar.gz)
 
 ##### New Features
 
 - New `store_train_meta_features` parameter for `fit` in StackingCVRegressor. if True, train meta-features are stored in `self.train_meta_features_`.
-    New `pred_meta_features` method for `StackingCVRegressor`. People can get test meta-features using this method. ([#294](https://github.com/rasbt/mlxtend/pull/294))
-    via [takashioya](https://github.com/takashioya))
+    New `pred_meta_features` method for `StackingCVRegressor`. People can get test meta-features using this method. ([#294](https://github.com/rasbt/mlxtend/pull/294) via [takashioya](https://github.com/takashioya))
 - The new `store_train_meta_features` attribute and `pred_meta_features` method for the `StackingCVRegressor` were also added to the `StackingRegressor`, `StackingClassifier`, and `StackingCVClassifier` ([#299](https://github.com/rasbt/mlxtend/pull/299) & [#300](https://github.com/rasbt/mlxtend/pull/300)) 
 - New function (`evaluate.mcnemar_tables`) for creating multiple 2x2 contigency from model predictions arrays that can be used in multiple McNemar (post-hoc) tests or Cochran's Q or F tests, etc. ([#307](https://github.com/rasbt/mlxtend/issues/307))
+- New function (`evaluate.cochrans_q`) for performing Cochran's Q test to compare the accuracy of multiple classifiers. ([#310](https://github.com/rasbt/mlxtend/issues/310))
 
 ##### Changes
 
-- Added `requirements.txt` to `setup.py`.
+- Added `requirements.txt` to `setup.py`. ([#304](https://github.com/rasbt/mlxtend/issues/304) via [Colin Carrol](https://github.com/ColCarroll))
 
 
 ##### Bug Fixes

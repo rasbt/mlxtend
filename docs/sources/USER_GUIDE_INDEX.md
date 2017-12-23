@@ -27,6 +27,7 @@
 - [bootstrap](user_guide/evaluate/bootstrap.md)
 - [bootstrap_point632_score](user_guide/evaluate/bootstrap_point632_score.md)
 - [BootstrapOutOfBag](user_guide/evaluate/BootstrapOutOfBag.md)
+- [cochrans_q](user_guide/evaluate/cochrans_q.md)
 - [confusion_matrix](user_guide/evaluate/confusion_matrix.md)
 - [lift_score](user_guide/evaluate/lift_score.md)
 - [mcnemar_table](user_guide/evaluate/mcnemar_table.md)

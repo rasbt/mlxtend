@@ -20,7 +20,8 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- -
+- Raises an informative error message if `predict` or `predict_meta_features` is called prior to calling the `fit` method in `StackingRegressor` and `StackingCVRegressor`. ([#315](https://github.com/rasbt/mlxtend/issues/315))
+
 ##### Bug Fixes
 
 - -

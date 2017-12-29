@@ -7,12 +7,14 @@
 #
 # License: BSD 3 clause
 
+import numpy as np
 from mlxtend.regressor import StackingCVRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import Ridge
 from sklearn.svm import SVR
-import numpy as np
+from sklearn.exceptions import NotFittedError
 from sklearn.model_selection import GridSearchCV, train_test_split
+from mlxtend.utils import assert_raises
 
 
 # Some test data
@@ -121,7 +123,7 @@ def test_get_params():
               'ridge',
               'shuffle',
               'store_train_meta_features',
-              'use_features_in_secondary',]
+              'use_features_in_secondary']
     assert got == expect, got
 
 
@@ -166,3 +168,39 @@ def test_train_meta_features_():
     stregr.fit(X_train, y_train)
     train_meta_features = stregr.train_meta_features_
     assert train_meta_features.shape[0] == X_train.shape[0]
+
+
+def test_not_fitted_predict():
+    lr = LinearRegression()
+    svr_rbf = SVR(kernel='rbf')
+    ridge = Ridge(random_state=1)
+    stregr = StackingCVRegressor(regressors=[lr, ridge],
+                                 meta_regressor=svr_rbf,
+                                 store_train_meta_features=True)
+    X_train, X_test, y_train, y_test = train_test_split(X2, y, test_size=0.3)
+
+    expect = ("Estimator not fitted, "
+              "call `fit` before exploiting the model.")
+
+    assert_raises(NotFittedError,
+                  expect,
+                  stregr.predict,
+                  X_train)
+
+
+def test_not_fitted_predict_meta_features():
+    lr = LinearRegression()
+    svr_rbf = SVR(kernel='rbf')
+    ridge = Ridge(random_state=1)
+    stregr = StackingCVRegressor(regressors=[lr, ridge],
+                                 meta_regressor=svr_rbf,
+                                 store_train_meta_features=True)
+    X_train, X_test, y_train, y_test = train_test_split(X2, y, test_size=0.3)
+
+    expect = ("Estimator not fitted, "
+              "call `fit` before exploiting the model.")
+
+    assert_raises(NotFittedError,
+                  expect,
+                  stregr.predict_meta_features,
+                  X_train)

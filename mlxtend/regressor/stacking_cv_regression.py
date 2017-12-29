@@ -17,6 +17,7 @@ from sklearn.base import BaseEstimator
 from sklearn.base import RegressorMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
+from sklearn.exceptions import NotFittedError
 from sklearn.model_selection._split import check_cv
 from ..externals import six
 from ..externals.name_estimators import _name_estimators
@@ -75,7 +76,7 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
 
     Attributes
     ----------
-    train_meta_features : numpy array, shape = [n_samples, len(self.regressors)]
+    train_meta_features : numpy array, shape = [n_samples, n_regressors]
         meta-features for training data, where n_samples is the
         number of samples
         in training data and len(self.regressors) is the number of regressors.
@@ -188,6 +189,11 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         # First we make predictions with the base-models then we predict with
         # the meta-model from that info.
         #
+
+        if not hasattr(self, 'regr_'):
+            raise NotFittedError("Estimator not fitted, "
+                                 "call `fit` before exploiting the model.")
+
         meta_features = np.column_stack([
             regr.predict(X) for regr in self.regr_
         ])
@@ -214,6 +220,9 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             of regressors.
 
         """
+        if not hasattr(self, 'regr_'):
+            raise NotFittedError("Estimator not fitted, "
+                                 "call `fit` before exploiting the model.")
         return np.column_stack([regr.predict(X) for regr in self.regr_])
 
     def get_params(self, deep=True):

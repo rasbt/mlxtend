@@ -12,6 +12,7 @@ from sklearn.base import BaseEstimator
 from sklearn.base import RegressorMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
+from sklearn.exceptions import NotFittedError
 from ..externals.name_estimators import _name_estimators
 from ..externals import six
 import numpy as np
@@ -168,6 +169,9 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             of regressors.
 
         """
+        if not hasattr(self, 'regr_'):
+            raise NotFittedError("Estimator not fitted, "
+                                 "call `fit` before exploiting the model.")
         return np.column_stack([r.predict(X) for r in self.regr_])
 
     def predict(self, X):

@@ -20,6 +20,8 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
+
+- Raises an informative error message if `predict` or `predict_meta_features` is called prior to calling the `fit` method in `StackingRegressor` and `StackingCVRegressor`. ([#315](https://github.com/rasbt/mlxtend/issues/315))
 - The `plot_decision_regions` function now automatically determines the optimal setting based on the feature dimensions and supports anti-aliasing. The old `res`  parameter has been deprecated. ([#309](https://github.com/rasbt/mlxtend/pull/309) by [Guillaume Poirier-Morency](https://github.com/arteymix))
 
 ##### Bug Fixes

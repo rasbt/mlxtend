@@ -10,6 +10,7 @@ from itertools import cycle
 import matplotlib.pyplot as plt
 import numpy as np
 from ..utils import check_Xy
+import warnings
 
 
 def get_feature_range_mask(X, filler_feature_values=None,
@@ -44,7 +45,8 @@ def plot_decision_regions(X, y, clf,
                           filler_feature_ranges=None,
                           ax=None,
                           X_highlight=None,
-                          res=0.02, legend=1,
+                          res=None,
+                          legend=1,
                           hide_spines=True,
                           markers='s^oxv<>',
                           colors='red,blue,limegreen,gray,cyan'):
@@ -81,11 +83,13 @@ def plot_decision_regions(X, y, clf,
         one if ax=None.
     X_highlight : array-like, shape = [n_samples, n_features] (default: None)
         An array with data points that are used to highlight samples in `X`.
-    res : float or array-like, shape = (2,) (default: 0.02)
-        Grid width. If float, same resolution is used for both the x- and
-        y-axis. If array-like, the first item is used on the x-axis, the
-        second is used on the y-axis. Lower values increase the resolution but
-        slow down the plotting.
+    res : float or array-like, shape = (2,) (default: None)
+        This parameter was used to define the grid width,
+        but it has been deprecated in favor of
+        determining the number of points given the figure DPI and size
+        automatically for optimal results and computational efficiency.
+        To increase the resolution, it's is recommended to use to provide
+        a `dpi argument via matplotlib, e.g., `plt.figure(dpi=600)`.
     hide_spines : bool (default: True)
         Hide axis spines if True.
     legend : int (default: 1)
@@ -108,14 +112,12 @@ def plot_decision_regions(X, y, clf,
     if ax is None:
         ax = plt.gca()
 
-    if isinstance(res, float):
-        xres, yres = res, res
-    else:
-        try:
-            xres, yres = res
-        except ValueError:
-            raise ValueError('Unable to unpack res. Expecting '
-                             'array-like input of length 2.')
+    if res is not None:
+        warnings.warn("The 'res' parameter has been deprecated."
+                      "To increase the resolution, it's is recommended"
+                      "to use to provide a `dpi argument via matplotlib,"
+                      "e.g., `plt.figure(dpi=600)`.",
+                      DeprecationWarning)
 
     plot_testdata = True
     if not isinstance(X_highlight, np.ndarray):
@@ -185,8 +187,9 @@ def plot_decision_regions(X, y, clf,
     else:
         y_min, y_max = X[:, y_index].min() - 1, X[:, y_index].max() + 1
 
-    xx, yy = np.meshgrid(np.arange(x_min, x_max, xres),
-                         np.arange(y_min, y_max, yres))
+    xnum, ynum = plt.gcf().dpi * plt.gcf().get_size_inches()
+    xx, yy = np.meshgrid(np.linspace(x_min, x_max, num=xnum),
+                         np.linspace(y_min, y_max, num=ynum))
 
     if dim == 1:
         X_predict = np.array([xx.ravel()]).T
@@ -204,7 +207,8 @@ def plot_decision_regions(X, y, clf,
     ax.contourf(xx, yy, Z,
                 alpha=0.3,
                 colors=colors,
-                levels=np.arange(Z.max() + 2) - 0.5)
+                levels=np.arange(Z.max() + 2) - 0.5,
+                antialiased=True)
 
     ax.axis(xmin=xx.min(), xmax=xx.max(), y_min=yy.min(), y_max=yy.max())
 

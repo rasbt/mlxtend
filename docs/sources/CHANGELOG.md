@@ -5,26 +5,133 @@
 The CHANGELOG for the current development version is available at
 [https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md](https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md).
 
-### Version 0.7.1dev (TBD)
+---
 
+### Version 0.10.1dev
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.10.1.zip)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.10.1.tar.gz)
+
+##### New Features
+
+- -
+
+##### Changes
+
+
+- Raises an informative error message if `predict` or `predict_meta_features` is called prior to calling the `fit` method in `StackingRegressor` and `StackingCVRegressor`. ([#315](https://github.com/rasbt/mlxtend/issues/315))
+- The `plot_decision_regions` function now automatically determines the optimal setting based on the feature dimensions and supports anti-aliasing. The old `res`  parameter has been deprecated. ([#309](https://github.com/rasbt/mlxtend/pull/309) by [Guillaume Poirier-Morency](https://github.com/arteymix))
+
+##### Bug Fixes
+
+- -
+
+
+
+### Version 0.10.0 (2017-12-22)
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.10.0.zip)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.10.0.tar.gz)
+
+##### New Features
+
+- New `store_train_meta_features` parameter for `fit` in StackingCVRegressor. if True, train meta-features are stored in `self.train_meta_features_`.
+    New `pred_meta_features` method for `StackingCVRegressor`. People can get test meta-features using this method. ([#294](https://github.com/rasbt/mlxtend/pull/294) via [takashioya](https://github.com/takashioya))
+- The new `store_train_meta_features` attribute and `pred_meta_features` method for the `StackingCVRegressor` were also added to the `StackingRegressor`, `StackingClassifier`, and `StackingCVClassifier` ([#299](https://github.com/rasbt/mlxtend/pull/299) & [#300](https://github.com/rasbt/mlxtend/pull/300)) 
+- New function (`evaluate.mcnemar_tables`) for creating multiple 2x2 contigency from model predictions arrays that can be used in multiple McNemar (post-hoc) tests or Cochran's Q or F tests, etc. ([#307](https://github.com/rasbt/mlxtend/issues/307))
+- New function (`evaluate.cochrans_q`) for performing Cochran's Q test to compare the accuracy of multiple classifiers. ([#310](https://github.com/rasbt/mlxtend/issues/310))
+
+##### Changes
+
+- Added `requirements.txt` to `setup.py`. ([#304](https://github.com/rasbt/mlxtend/issues/304) via [Colin Carrol](https://github.com/ColCarroll))
+
+
+##### Bug Fixes
+
+- Improved numerical stability for p-values computed via the the exact McNemar test ([#306](https://github.com/rasbt/mlxtend/issues/306))
+- `nose` is not required to use the library ([#302](https://github.com/rasbt/mlxtend/issues/302))
+
+### Version 0.9.1 (2017-11-19)
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.9.1.zip)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.9.1.tar.gz)
+
+##### New Features
+
+- Added `mlxtend.evaluate.bootstrap_point632_score` to evaluate the performance of estimators using the .632 bootstrap. ([#283](https://github.com/rasbt/mlxtend/pull/283))
+- New `max_len` parameter for the frequent itemset generation via the `apriori` function to allow for early stopping. ([#270](https://github.com/rasbt/mlxtend/pull/270))
+
+##### Changes
+
+- All feature index tuples in `SequentialFeatureSelector` or now in sorted order. ([#262](https://github.com/rasbt/mlxtend/pull/262))
+- The `SequentialFeatureSelector` now runs the continuation of the floating inclusion/exclusion as described in Novovicova & Kittler (1994). 
+Note that this didn't cause any difference in performance on any of the test scenarios but could lead to better performance in certain edge cases. 
+([#262](https://github.com/rasbt/mlxtend/pull/262))
+- `utils.Counter` now accepts a name variable to help distinguish between multiple counters, time precision can be set with the 'precision' kwarg and the new attribute end_time holds the time the last iteration completed. ([#278](https://github.com/rasbt/mlxtend/pull/278) via [Mathew Savage](https://github.com/matsavage))
+
+
+##### Bug Fixes
+
+- Fixed an deprecation error that occured with McNemar test when using SciPy 1.0. ([#283](https://github.com/rasbt/mlxtend/pull/283))
+
+
+### Version 0.9.0 (2017-10-21)
 
 
 ##### Downloads
 
-- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.7.1.zip)
-- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.7.1.tar.gz)
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.9.0.zip)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.9.0.tar.gz)
 
 ##### New Features
 
-- Added a `mlxtend.evaluate.bootstrap` that implements the ordinary nonparametric bootstrap to bootstrap a single statistic (for example, the mean. median, R^2 of a regression fit, and so forth)
+- Added `evaluate.permutation_test`, a permutation test for hypothesis testing (or A/B testing) to test if two samples come from the same distribution. Or in other words, a procedure to test the null hypothesis that that two groups are not significantly different (e.g., a treatment and a control group). ([#250](https://github.com/rasbt/mlxtend/pull/250))
+- Added `'leverage'` and `'conviction` as evaluation metrics to the `frequent_patterns.association_rules` function. ([#246](https://github.com/rasbt/mlxtend/pull/246) & [#247](https://github.com/rasbt/mlxtend/pull/247))
+- Added a `loadings_` attribute to `PrincipalComponentAnalysis` to compute the factor loadings of the features on the principal components. ([#251](https://github.com/rasbt/mlxtend/pull/251))
+- Allow grid search over classifiers/regressors in ensemble and stacking estimators. ([#259](https://github.com/rasbt/mlxtend/pull/259))
+- New `make_multiplexer_dataset` function that creates a dataset generated by a n-bit Boolean multiplexer for evaluating supervised learning algorithms. ([#263](https://github.com/rasbt/mlxtend/pull/263))
+- Added a new `BootstrapOutOfBag` class, an implementation of the out-of-bag bootstrap to evaluate supervised learning algorithms. ([#265](https://github.com/rasbt/mlxtend/pull/265))
+- The parameters for `StackingClassifier`, `StackingCVClassifier`, `StackingRegressor`, `StackingCVRegressor`, and `EnsembleVoteClassifier` can now be tuned using scikit-learn's `GridSearchCV` ([#254](https://github.com/rasbt/mlxtend/pull/254) via [James Bourbeau](https://github.com/jrbourbeau))
 
 ##### Changes
 
-- `SFS` now uses `np.nanmean` over normal mean to support scorers that may return `np.nan` 
+- The `'support'` column returned by `frequent_patterns.association_rules` was changed to compute the support of "antecedant union consequent", and new `antecedant support'` and `'consequent support'` column were added to avoid ambiguity. ([#245](https://github.com/rasbt/mlxtend/pull/245))
+- Allow the `OnehotTransactions` to be cloned via scikit-learn's `clone` function, which is required by e.g., scikit-learn's `FeatureUnion` or `GridSearchCV` (via [Iaroslav Shcherbatyi](https://github.com/iaroslav-ai)). ([#249](https://github.com/rasbt/mlxtend/pull/249))
 
 ##### Bug Fixes
 
-- Fixed a bug where the `SequentialFeatureSelector` selected a feature subset larger than then specified via the `k_features` tuple max-value
+- Fix issues with `self._init_time` parameter in `_IterativeModel` subclasses. ([#256](https://github.com/rasbt/mlxtend/pull/256))
+- Fix imprecision bug that occurred in `plot_ecdf` when run on Python 2.7. ([264](https://github.com/rasbt/mlxtend/pull/264))
+- The vectors from SVD in `PrincipalComponentAnalysis` are now being scaled so that the eigenvalues via `solver='eigen'` and `solver='svd'` now store eigenvalues that have the same magnitudes. ([#251](https://github.com/rasbt/mlxtend/pull/251))
+
+### Version 0.8.0 (2017-09-09)
+
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.8.0.zip)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.8.0.tar.gz)
+
+##### New Features
+
+- Added a `mlxtend.evaluate.bootstrap` that implements the ordinary nonparametric bootstrap to bootstrap a single statistic (for example, the mean. median, R^2 of a regression fit, and so forth) [#232](https://github.com/rasbt/mlxtend/pull/232)
+- `SequentialFeatureSelecor`'s `k_features` now accepts a string argument "best" or "parsimonious" for more "automated" feature selection. For instance, if "best" is provided, the feature selector will return the feature subset with the best cross-validation performance. If "parsimonious" is provided as an argument, the smallest feature subset that is within one standard error of the cross-validation performance will be selected. [#238](https://github.com/rasbt/mlxtend/pull/238)
+
+##### Changes
+
+- `SequentialFeatureSelector` now uses `np.nanmean` over normal mean to support scorers that may return `np.nan`  [#211](https://github.com/rasbt/mlxtend/pull/211) (via [mrkaiser](https://github.com/mrkaiser))
+- The `skip_if_stuck` parameter was removed from `SequentialFeatureSelector` in favor of a more efficient implementation comparing the conditional inclusion/exclusion results (in the floating versions) to the performances of previously sampled feature sets that were cached [#237](https://github.com/rasbt/mlxtend/pull/237)
+- `ExhaustiveFeatureSelector` was modified to consume substantially less memory [#195](https://github.com/rasbt/mlxtend/pull/195) (via [Adam Erickson](https://github.com/adam-erickson))
+
+##### Bug Fixes
+
+- Fixed a bug where the `SequentialFeatureSelector` selected a feature subset larger than then specified via the `k_features` tuple max-value [#213](https://github.com/rasbt/mlxtend/pull/213)
 
 
 ### Version 0.7.0 (2017-06-22)
@@ -81,9 +188,6 @@ The CHANGELOG for the current development version is available at
 
 ### Version 0.5.1 (2017-02-14)
 
-
-The CHANGELOG for the current development version is available at
-[https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md](https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md).
 
 ##### Downloads
 

@@ -16,6 +16,7 @@ import numpy as np
 from sklearn import datasets
 from mlxtend.utils import assert_raises
 from nose.tools import assert_almost_equal
+from sklearn.model_selection import train_test_split
 
 
 iris = datasets.load_iris()
@@ -88,7 +89,7 @@ def test_StackingClassifier_avg_vs_concat():
                                meta_classifier=lr1)
 
     sclf1.fit(X, y)
-    r1 = sclf1._predict_meta_features(X[:2])
+    r1 = sclf1.predict_meta_features(X[:2])
     assert r1.shape == (2, 3)
     assert_almost_equal(np.sum(r1[0]), 1.0, places=6)
     assert_almost_equal(np.sum(r1[1]), 1.0, places=6)
@@ -99,7 +100,7 @@ def test_StackingClassifier_avg_vs_concat():
                                meta_classifier=lr1)
 
     sclf2.fit(X, y)
-    r2 = sclf2._predict_meta_features(X[:2])
+    r2 = sclf2.predict_meta_features(X[:2])
     assert r2.shape == (2, 6)
     assert_almost_equal(np.sum(r2[0]), 2.0, places=6)
     assert_almost_equal(np.sum(r2[1]), 2.0, places=6)
@@ -148,7 +149,8 @@ def test_gridsearch_enumerate_names():
 
     params = {'meta-logisticregression__C': [1.0, 100.0],
               'randomforestclassifier-1__n_estimators': [5, 10],
-              'randomforestclassifier-2__n_estimators': [5, 20]}
+              'randomforestclassifier-2__n_estimators': [5, 20],
+              'use_probas': [True, False]}
 
     grid = GridSearchCV(estimator=sclf, param_grid=params, cv=5)
     grid = grid.fit(iris.data, iris.target)
@@ -240,3 +242,73 @@ def test_use_features_in_secondary_predict_proba():
     y_pred = sclf.predict_proba(X[idx])[:, 0]
     expect = np.array([0.911, 0.829, 0.885])
     np.testing.assert_almost_equal(y_pred, expect, 3)
+
+
+def test_get_params():
+    clf1 = KNeighborsClassifier(n_neighbors=1)
+    clf2 = RandomForestClassifier(random_state=1)
+    clf3 = GaussianNB()
+    lr = LogisticRegression()
+    sclf = StackingClassifier(classifiers=[clf1, clf2, clf3],
+                              meta_classifier=lr)
+
+    got = sorted(list({s.split('__')[0] for s in sclf.get_params().keys()}))
+    expect = ['average_probas',
+              'classifiers',
+              'gaussiannb',
+              'kneighborsclassifier',
+              'meta-logisticregression',
+              'meta_classifier',
+              'randomforestclassifier',
+              'store_train_meta_features',
+              'use_features_in_secondary',
+              'use_probas',
+              'verbose']
+    assert got == expect, got
+
+
+def test_classifier_gridsearch():
+    clf1 = KNeighborsClassifier(n_neighbors=1)
+    clf2 = RandomForestClassifier(random_state=1)
+    clf3 = GaussianNB()
+    lr = LogisticRegression()
+    sclf = StackingClassifier(classifiers=[clf1, clf2, clf3],
+                              meta_classifier=lr)
+
+    params = {'classifiers': [[clf1, clf1, clf1], [clf2, clf3]]}
+
+    grid = GridSearchCV(estimator=sclf,
+                        param_grid=params,
+                        cv=5,
+                        refit=True)
+    grid.fit(X, y)
+
+    assert len(grid.best_params_['classifiers']) == 2
+
+
+def test_train_meta_features_():
+    knn = KNeighborsClassifier()
+    lr = LogisticRegression()
+    gnb = GaussianNB()
+    stclf = StackingClassifier(classifiers=[knn, gnb],
+                               meta_classifier=lr,
+                               store_train_meta_features=True)
+    X_train, X_test, y_train,  y_test = train_test_split(X, y, test_size=0.3)
+    stclf.fit(X_train, y_train)
+    train_meta_features = stclf.train_meta_features_
+    assert train_meta_features.shape == (X_train.shape[0], 2)
+
+
+def test_predict_meta_features():
+    knn = KNeighborsClassifier()
+    lr = LogisticRegression()
+    gnb = GaussianNB()
+    X_train, X_test, y_train,  y_test = train_test_split(X, y, test_size=0.3)
+
+    #  test default (class labels)
+    stclf = StackingClassifier(classifiers=[knn, gnb],
+                               meta_classifier=lr,
+                               store_train_meta_features=True)
+    stclf.fit(X_train, y_train)
+    test_meta_features = stclf.predict(X_test)
+    assert test_meta_features.shape == (X_test.shape[0],)

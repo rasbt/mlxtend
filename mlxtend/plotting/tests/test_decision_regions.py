@@ -79,13 +79,3 @@ def test_y_ary_dim():
                   'y must be a 1D array',
                   plot_decision_regions,
                   X[:, :2], y[:, np.newaxis], sr)
-
-
-def test_res_fail_if_3d():
-    sr.fit(X[:, :2], y)
-    assert_raises(ValueError,
-                  'Unable to unpack res. Expecting array-like input of '
-                  'length 2.',
-                  plot_decision_regions,
-                  X[:, :2], y, sr,
-                  res=(1, 2, 3))

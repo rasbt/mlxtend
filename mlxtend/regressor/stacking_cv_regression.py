@@ -17,6 +17,7 @@ from sklearn.base import BaseEstimator
 from sklearn.base import RegressorMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
+from sklearn.exceptions import NotFittedError
 from sklearn.model_selection._split import check_cv
 from ..externals import six
 from ..externals.name_estimators import _name_estimators
@@ -40,13 +41,13 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
     Parameters
     ----------
     regressors : array-like, shape = [n_regressors]
-        A list of classifiers.
+        A list of regressors.
         Invoking the `fit` method on the `StackingCVRegressor` will fit clones
         of these original regressors that will
         be stored in the class attribute `self.regr_`.
     meta_regressor : object
-        The meta-classifier to be fitted on the ensemble of
-        classifiers
+        The meta-regressor to be fitted on the ensemble of
+        regressor
     cv : int, cross-validation generator or iterable, optional (default: 5)
         Determines the cross-validation splitting strategy.
         Possible inputs for cv are:
@@ -56,7 +57,7 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         - An iterable yielding train, test splits.
         For integer/None inputs, it will use `KFold` cross-validation
     use_features_in_secondary : bool (default: False)
-        If True, the meta-classifier will be trained both on
+        If True, the meta-regressor will be trained both on
         the predictions of the original regressors and the
         original dataset.
         If False, the meta-regressor will be trained only on
@@ -66,10 +67,25 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         be shuffled at fitting stage prior to cross-validation. If the `cv`
         argument is a specific cross validation technique, this argument is
         omitted.
+    store_train_meta_features : bool (default: False)
+        If True, the meta-features computed from the training data
+        used for fitting the
+        meta-regressor stored in the `self.train_meta_features_` array,
+        which can be
+        accessed after calling `fit`.
+
+    Attributes
+    ----------
+    train_meta_features : numpy array, shape = [n_samples, n_regressors]
+        meta-features for training data, where n_samples is the
+        number of samples
+        in training data and len(self.regressors) is the number of regressors.
+
     """
     def __init__(self, regressors, meta_regressor, cv=5,
                  shuffle=True,
-                 use_features_in_secondary=False):
+                 use_features_in_secondary=False,
+                 store_train_meta_features=False):
 
         self.regressors = regressors
         self.meta_regressor = meta_regressor
@@ -82,6 +98,7 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         self.cv = cv
         self.shuffle = shuffle
         self.use_features_in_secondary = use_features_in_secondary
+        self.store_train_meta_features = store_train_meta_features
 
     def fit(self, X, y, groups=None):
         """ Fit ensemble regressors and the meta-regressor.
@@ -137,6 +154,10 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
                 y_pred = instance.predict(X[holdout_idx])
                 meta_features[holdout_idx, i] = y_pred
 
+        # save meta-features for training data
+        if self.store_train_meta_features:
+            self.train_meta_features_ = meta_features
+
         # Train meta-model on the out-of-fold predictions
         if self.use_features_in_secondary:
             self.meta_regr_.fit(np.hstack((X, meta_features)), y)
@@ -150,10 +171,29 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         return self
 
     def predict(self, X):
+        """ Predict target values for X.
+
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+
+        Returns
+        ----------
+        y_target : array-like, shape = [n_samples] or [n_samples, n_targets]
+            Predicted target values.
+        """
+
         #
         # First we make predictions with the base-models then we predict with
         # the meta-model from that info.
         #
+
+        if not hasattr(self, 'regr_'):
+            raise NotFittedError("Estimator not fitted, "
+                                 "call `fit` before exploiting the model.")
+
         meta_features = np.column_stack([
             regr.predict(X) for regr in self.regr_
         ])
@@ -162,6 +202,28 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             return self.meta_regr_.predict(np.hstack((X, meta_features)))
         else:
             return self.meta_regr_.predict(meta_features)
+
+    def predict_meta_features(self, X):
+        """ Get meta-features of test-data.
+
+        Parameters
+        ----------
+        X : numpy array, shape = [n_samples, n_features]
+            Test vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+
+        Returns
+        -------
+        meta-features : numpy array, shape = [n_samples, len(self.regressors)]
+            meta-features for test data, where n_samples is the number of
+            samples in test data and len(self.regressors) is the number
+            of regressors.
+
+        """
+        if not hasattr(self, 'regr_'):
+            raise NotFittedError("Estimator not fitted, "
+                                 "call `fit` before exploiting the model.")
+        return np.column_stack([regr.predict(X) for regr in self.regr_])
 
     def get_params(self, deep=True):
         #
@@ -179,4 +241,9 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             for name, step in six.iteritems(self.named_meta_regressor):
                 for key, value in six.iteritems(step.get_params(deep=True)):
                     out['%s__%s' % (name, key)] = value
+
+            for key, value in six.iteritems(super(StackingCVRegressor,
+                                            self).get_params(deep=False)):
+                out['%s' % key] = value
+
             return out

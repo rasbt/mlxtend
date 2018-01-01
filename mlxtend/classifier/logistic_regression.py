@@ -61,6 +61,10 @@ class LogisticRegression(_BaseModel, _IterativeModel, _Classifier):
                  random_seed=None,
                  print_progress=0):
 
+        _BaseModel.__init__(self)
+        _IterativeModel.__init__(self)
+        _Classifier.__init__(self)
+
         self.eta = eta
         self.epochs = epochs
         self.l2_lambda = l2_lambda

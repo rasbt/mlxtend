@@ -44,10 +44,35 @@ def test_default_components_zero():
 
 
 def test_evals():
+
     pca = PCA(n_components=2, solver='eigen')
     pca.fit(X)
-    res = pca.fit(X).transform(X)
-    assert_almost_equal(pca.e_vals_, [2.93, 0.93, 0.15, 0.02], decimal=2)
+    assert_almost_equal(pca.e_vals_, [2.9, 0.9, 0.2, 0.02], decimal=1)
+
+    pca = PCA(n_components=2, solver='svd')
+    pca.fit(X)
+    assert_almost_equal(pca.e_vals_, [2.9, 0.9, 0.2, 0.02], decimal=1)
+
+
+def test_loadings():
+
+    expect = np.array([[0.9, -0.4, -0.3, 0.],
+                       [-0.5, -0.9, 0.1, -0.],
+                       [1., -0., 0.1, -0.1],
+                       [1., -0.1, 0.2, 0.1]])
+
+    pca = PCA(solver='eigen')
+    pca.fit(X)
+    assert_almost_equal(pca.loadings_, expect, decimal=1)
+
+    expect = np.array([[-0.9, -0.4, 0.3, 0.],
+                       [0.4, -0.9, -0.1, -0.],
+                       [-1., -0., -0.1, -0.1],
+                       [-1., -0.1, -0.2, 0.1]])
+
+    pca = PCA(solver='svd')
+    pca.fit(X)
+    assert_almost_equal(pca.loadings_, expect, decimal=1)
 
 
 def test_fail_array_dimension():
@@ -58,7 +83,7 @@ def test_fail_array_dimension():
                   X[1])
 
 
-def test_fail_array_dimension():
+def test_fail_array_dimension_2():
     pca = PCA(n_components=2)
     assert_raises(ValueError,
                   'X must be a 2D array. Try X[:, numpy.newaxis]',

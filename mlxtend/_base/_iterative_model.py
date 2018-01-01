@@ -31,7 +31,7 @@ class _IterativeModel(object):
                 if not hasattr(self, 'ela_str_'):
                     self.ela_str_ = '00:00:00'
                 if not iteration % time_interval:
-                    ela_sec = time() - self.init_time_
+                    ela_sec = time() - self._init_time
                     self.ela_str_ = self._to_hhmmss(ela_sec)
                 s += ' | Elapsed: %s' % self.ela_str_
                 if self.print_progress > 2:

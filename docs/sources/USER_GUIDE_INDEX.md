@@ -18,16 +18,22 @@
 - [boston_housing_data](user_guide/data/boston_housing_data.md)
 - [iris_data](user_guide/data/iris_data.md)
 - [loadlocal_mnist](user_guide/data/loadlocal_mnist.md)
+- [make_multiplexer_dataset](user_guide/data/make_multiplexer_dataset.md)
 - [mnist_data](user_guide/data/mnist_data.md)
 - [three_blobs_data](user_guide/data/three_blobs_data.md)
 - [wine_data](user_guide/data/wine_data.md)
 
 ## `evaluate`
 - [bootstrap](user_guide/evaluate/bootstrap.md)
+- [bootstrap_point632_score](user_guide/evaluate/bootstrap_point632_score.md)
+- [BootstrapOutOfBag](user_guide/evaluate/BootstrapOutOfBag.md)
+- [cochrans_q](user_guide/evaluate/cochrans_q.md)
 - [confusion_matrix](user_guide/evaluate/confusion_matrix.md)
 - [lift_score](user_guide/evaluate/lift_score.md)
 - [mcnemar_table](user_guide/evaluate/mcnemar_table.md)
+- [mcnemar_tables](user_guide/evaluate/mcnemar_tables.md)
 - [mcnemar](user_guide/evaluate/mcnemar.md)
+- [permutation_test](user_guide/evaluate/permutation_test.md)
 - [scoring](user_guide/evaluate/scoring.md)
 
 ## `feature_extraction`

@@ -31,6 +31,15 @@ class PrincipalComponentAnalysis(_BaseModel):
         Eigenvalues in sorted order.
     e_vecs_ : array-like, shape=[n_features]
        Eigenvectors in sorted order.
+    loadings_ : array_like, shape=[n_features, n_features]
+       The factor loadings of the original variables onto
+       the principal components. The columns are the principal
+       components, and the rows are the features loadings.
+       For instance, the first column contains the loadings onto
+       the first principal component. Note that the signs may
+       be flipped depending on whether you use the 'eigen' or
+       'svd' solver; this does not affect the interpretation
+       of the loadings though.
 
     """
     def __init__(self, n_components=None, solver='eigen'):
@@ -66,20 +75,24 @@ class PrincipalComponentAnalysis(_BaseModel):
         return self
 
     def _fit(self, X):
-        if self.n_components is None or self.n_components > X.shape[1]:
-            n_components = X.shape[1]
+        n_samples = X.shape[0]
+        n_features = X.shape[1]
+        if self.n_components is None or self.n_components > n_features:
+            n_components = n_features
         else:
             n_components = self.n_components
 
         if self.solver == 'eigen':
             cov_mat = self._covariance_matrix(X)
-            self.e_vals_, self.e_vecs_ = self._decomposition(cov_mat)
+            self.e_vals_, self.e_vecs_ =\
+                self._decomposition(cov_mat, n_samples)
         elif self.solver == 'svd':
-            self.e_vals_, self.e_vecs_ = self._decomposition(X)
+            self.e_vals_, self.e_vecs_ = self._decomposition(X, n_samples)
 
         self.w_ = self._projection_matrix(eig_vals=self.e_vals_,
                                           eig_vecs=self.e_vecs_,
                                           n_components=n_components)
+        self.loadings_ = self._loadings()
         return self
 
     def transform(self, X):
@@ -107,16 +120,21 @@ class PrincipalComponentAnalysis(_BaseModel):
         cov_mat = (X - mean_vec).T.dot((X - mean_vec)) / (X.shape[0] - 1)
         return cov_mat
 
-    def _decomposition(self, mat):
+    def _decomposition(self, mat, n_samples):
         if self.solver == 'eigen':
             e_vals, e_vecs = np.linalg.eig(mat)
         elif self.solver == 'svd':
             u, s, v = np.linalg.svd(mat.T)
             e_vecs, e_vals = u, s
+            e_vals = e_vals ** 2 / n_samples
 
         sort_idx = np.argsort(e_vals)[::-1]
         e_vals, e_vecs = e_vals[sort_idx], e_vecs[sort_idx]
         return e_vals, e_vecs
+
+    def _loadings(self):
+        """Compute factor loadings"""
+        return self.e_vecs_ * np.sqrt(self.e_vals_)
 
     def _projection_matrix(self, eig_vals, eig_vecs, n_components):
         matrix_w = np.vstack([eig_vecs[:, i] for i in range(n_components)]).T

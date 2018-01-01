@@ -83,10 +83,10 @@ def test_kfeatures_type_2():
     X = iris.data
     y = iris.target
     knn = KNeighborsClassifier()
-    expect = 'k_features must be a positive integer or tuple'
+    expect = 'k_features must be a positive integer, tuple, or string'
     sfs = SFS(estimator=knn,
               verbose=0,
-              k_features='abc')
+              k_features=set())
     assert_raises(AttributeError,
                   expect,
                   sfs.fit,
@@ -153,7 +153,6 @@ def test_knn_wo_cv():
                forward=True,
                floating=False,
                cv=0,
-               skip_if_stuck=True,
                verbose=0)
     sfs1 = sfs1.fit(X, y)
     expect = {1: {'avg_score': 0.95999999999999996,
@@ -178,7 +177,6 @@ def test_knn_cv3():
                forward=True,
                floating=False,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs1 = sfs1.fit(X, y)
     sfs1.subsets_
@@ -205,10 +203,11 @@ def test_knn_cv3():
 
 def test_knn_rbf_groupkfold():
     nan_roc_auc_scorer = make_scorer(nan_roc_auc_score)
+    rng = np.random.RandomState(123)
     iris = load_iris()
     X = iris.data
     # knn = KNeighborsClassifier(n_neighbors=4)
-    forest = RandomForestClassifier(n_estimators=100)
+    forest = RandomForestClassifier(n_estimators=100, random_state=123)
     bool_01 = [True if item == 0 else False for item in iris['target']]
     bool_02 = [True if (item == 1 or item == 2) else False for item in
                iris['target']]
@@ -219,12 +218,12 @@ def test_knn_rbf_groupkfold():
             groups.append('attribute_A')
             y_new.append(0)
         if bool_02[ind]:
-            throw = np.random.rand()
+            throw = rng.rand()
             if throw < 0.5:
                 groups.append('attribute_B')
             else:
                 groups.append('attribute_C')
-            throw2 = np.random.rand()
+            throw2 = rng.rand()
             if throw2 < 0.5:
                 y_new.append(0)
             else:
@@ -242,12 +241,12 @@ def test_knn_rbf_groupkfold():
                )
     sfs1 = sfs1.fit(X, y_new)
     expect = {
-        1: {'cv_scores': np.array([0.488, nan, 0.51]), 'avg_score': 0.499047,
-            'feature_idx': (3,)},
-        2: {'cv_scores': np.array([0.54563, nan, 0.585]), 'avg_score': 0.56531,
-            'feature_idx': (2, 3)},
-        3: {'cv_scores': np.array([0.48875661, nan, 0.515]),
-            'avg_score': 0.50187,
+        1: {'cv_scores': np.array([0.52, nan, 0.72]), 'avg_score': 0.62,
+            'feature_idx': (1,)},
+        2: {'cv_scores': np.array([0.42, nan, 0.65]), 'avg_score': 0.53,
+            'feature_idx': (1, 2)},
+        3: {'cv_scores': np.array([0.47, nan, 0.63]),
+            'avg_score': 0.55,
             'feature_idx': (1, 2, 3)}}
 
     dict_compare_utility(d1=expect, d2=sfs1.subsets_, decimal=1)
@@ -263,7 +262,6 @@ def test_knn_option_sfs():
                forward=True,
                floating=False,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs1 = sfs1.fit(X, y)
     assert sfs1.k_feature_idx_ == (1, 2, 3)
@@ -279,7 +277,6 @@ def test_knn_option_sffs():
                forward=True,
                floating=True,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs2 = sfs2.fit(X, y)
     assert sfs2.k_feature_idx_ == (1, 2, 3)
@@ -295,7 +292,6 @@ def test_knn_option_sbs():
                forward=False,
                floating=False,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs3 = sfs3.fit(X, y)
     assert sfs3.k_feature_idx_ == (1, 2, 3)
@@ -311,7 +307,6 @@ def test_knn_option_sfbs():
                forward=False,
                floating=True,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs4 = sfs4.fit(X, y)
     assert sfs4.k_feature_idx_ == (1, 2, 3)
@@ -327,7 +322,6 @@ def test_knn_option_sfbs_tuplerange_1():
                forward=False,
                floating=True,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs4 = sfs4.fit(X, y)
     assert round(sfs4.k_score_, 3) == 0.967, sfs4.k_score_
@@ -344,7 +338,6 @@ def test_knn_option_sfbs_tuplerange_2():
                forward=False,
                floating=True,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs4 = sfs4.fit(X, y)
     assert round(sfs4.k_score_, 3) == 0.967, sfs4.k_score_
@@ -361,7 +354,6 @@ def test_knn_option_sffs_tuplerange_1():
                forward=True,
                floating=True,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs4 = sfs4.fit(X, y)
     assert round(sfs4.k_score_, 3) == 0.967, sfs4.k_score_
@@ -378,7 +370,6 @@ def test_knn_option_sfs_tuplerange_1():
                forward=True,
                floating=False,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs4 = sfs4.fit(X, y)
     assert round(sfs4.k_score_, 3) == 0.967, sfs4.k_score_
@@ -395,7 +386,6 @@ def test_knn_option_sbs_tuplerange_1():
                forward=False,
                floating=False,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs4 = sfs4.fit(X, y)
     assert round(sfs4.k_score_, 3) == 0.967, sfs4.k_score_
@@ -412,7 +402,6 @@ def test_knn_scoring_metric():
                forward=False,
                floating=True,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs5 = sfs5.fit(X, y)
     assert round(sfs5.k_score_, 4) == 0.9728
@@ -422,7 +411,6 @@ def test_knn_scoring_metric():
                forward=False,
                floating=True,
                cv=4,
-               skip_if_stuck=True,
                verbose=0)
     sfs6 = sfs6.fit(X, y)
     assert round(sfs6.k_score_, 4) == 0.9728
@@ -432,8 +420,7 @@ def test_knn_scoring_metric():
                forward=False,
                floating=True,
                scoring='f1_macro',
-               cv=4,
-               skip_if_stuck=True)
+               cv=4)
     sfs7 = sfs7.fit(X, y)
     assert round(sfs7.k_score_, 4) == 0.9727, sfs7.k_score_
 
@@ -448,11 +435,40 @@ def test_regression():
                 floating=False,
                 scoring='neg_mean_squared_error',
                 cv=10,
-                skip_if_stuck=True,
                 verbose=0)
     sfs_r = sfs_r.fit(X, y)
     assert len(sfs_r.k_feature_idx_) == 13
     assert round(sfs_r.k_score_, 4) == -34.7631
+
+
+def test_regression_sffs():
+    boston = load_boston()
+    X, y = boston.data, boston.target
+    lr = LinearRegression()
+    sfs_r = SFS(lr,
+                k_features=11,
+                forward=True,
+                floating=True,
+                scoring='neg_mean_squared_error',
+                cv=10,
+                verbose=0)
+    sfs_r = sfs_r.fit(X, y)
+    assert sfs_r.k_feature_idx_ == (0, 1, 3, 4, 6, 7, 8, 9, 10, 11, 12)
+
+
+def test_regression_sbfs():
+    boston = load_boston()
+    X, y = boston.data, boston.target
+    lr = LinearRegression()
+    sfs_r = SFS(lr,
+                k_features=3,
+                forward=False,
+                floating=True,
+                scoring='neg_mean_squared_error',
+                cv=10,
+                verbose=0)
+    sfs_r = sfs_r.fit(X, y)
+    assert sfs_r.k_feature_idx_ == (7, 10, 12), sfs_r.k_feature_idx_
 
 
 def test_regression_in_range():
@@ -465,7 +481,6 @@ def test_regression_in_range():
                 floating=False,
                 scoring='neg_mean_squared_error',
                 cv=10,
-                skip_if_stuck=True,
                 verbose=0)
     sfs_r = sfs_r.fit(X, y)
     assert len(sfs_r.k_feature_idx_) == 9
@@ -473,10 +488,6 @@ def test_regression_in_range():
 
 
 def test_clone_params_fail():
-    iris = load_iris()
-    X = iris.data
-    y = iris.target
-
     if sys.version_info >= (3, 0):
         objtype = 'class'
     else:
@@ -509,7 +520,6 @@ def test_clone_params_pass():
                floating=False,
                scoring='accuracy',
                cv=0,
-               skip_if_stuck=True,
                clone_estimator=False,
                verbose=0,
                n_jobs=1)
@@ -520,7 +530,6 @@ def test_clone_params_pass():
 def test_transform_not_fitted():
     iris = load_iris()
     X = iris.data
-    y = iris.target
     knn = KNeighborsClassifier(n_neighbors=4)
 
     sfs1 = SFS(knn,
@@ -528,7 +537,6 @@ def test_transform_not_fitted():
                forward=True,
                floating=False,
                cv=0,
-               skip_if_stuck=True,
                clone_estimator=False,
                verbose=0,
                n_jobs=1)
@@ -542,9 +550,6 @@ def test_transform_not_fitted():
 
 
 def test_get_metric_dict_not_fitted():
-    iris = load_iris()
-    X = iris.data
-    y = iris.target
     knn = KNeighborsClassifier(n_neighbors=4)
 
     sfs1 = SFS(knn,
@@ -552,7 +557,6 @@ def test_get_metric_dict_not_fitted():
                forward=True,
                floating=False,
                cv=0,
-               skip_if_stuck=True,
                clone_estimator=False,
                verbose=0,
                n_jobs=1)
@@ -576,7 +580,6 @@ def test_keyboard_interrupt():
         forward=True,
         floating=False,
         cv=3,
-        skip_if_stuck=True,
         clone_estimator=False,
         verbose=5,
         n_jobs=1
@@ -661,3 +664,33 @@ def test_max_feature_subset_size_in_tuple_range():
 
     sfs = sfs.fit(X, y)
     assert len(sfs.k_feature_idx_) == 5
+
+
+def test_max_feature_subset_best():
+    boston = load_boston()
+    X, y = boston.data, boston.target
+    lr = LinearRegression()
+
+    sfs = SFS(lr,
+              k_features='best',
+              forward=True,
+              floating=False,
+              cv=10)
+
+    sfs = sfs.fit(X, y)
+    assert sfs.k_feature_idx_ == (1, 3, 5, 7, 8, 9, 10, 11, 12)
+
+
+def test_max_feature_subset_parsimonious():
+    boston = load_boston()
+    X, y = boston.data, boston.target
+    lr = LinearRegression()
+
+    sfs = SFS(lr,
+              k_features='parsimonious',
+              forward=True,
+              floating=False,
+              cv=10)
+
+    sfs = sfs.fit(X, y)
+    assert sfs.k_feature_idx_ == (5, 10, 11, 12)

@@ -17,9 +17,7 @@
 
 ## Links
 
-- Documentation:
-    - html: [http://rasbt.github.io/mlxtend/](http://rasbt.github.io/mlxtend/)
-    - pdf: [http://sebastianraschka.com/pdf/software/mlxtend-latest.pdf](http://sebastianraschka.com/pdf/software/mlxtend-latest.pdf)
+- **Documentation:** [http://rasbt.github.io/mlxtend](http://rasbt.github.io/mlxtend)
 - Source code repository: [https://github.com/rasbt/mlxtend](https://github.com/rasbt/mlxtend)
 - PyPI: [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend)
 - Questions? Check out the [Google Groups mailing list](https://groups.google.com/forum/#!forum/mlxtend)

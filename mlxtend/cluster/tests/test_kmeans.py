@@ -35,6 +35,30 @@ def test_three_blobs_multi():
     assert (y_pred == y).all()
 
 
+def test_print_progress_1():
+    km = Kmeans(k=3,
+                max_iter=50,
+                random_seed=1,
+                print_progress=1)
+    km.fit(X)
+
+
+def test_print_progress_2():
+    km = Kmeans(k=3,
+                max_iter=50,
+                random_seed=1,
+                print_progress=2)
+    km.fit(X)
+
+
+def test_print_progress_3():
+    km = Kmeans(k=3,
+                max_iter=50,
+                random_seed=1,
+                print_progress=3)
+    km.fit(X)
+
+
 def test_three_blobs_1sample():
     km = Kmeans(k=3,
                 max_iter=50,

@@ -82,6 +82,12 @@ class MultiLayerPerceptron(_BaseModel, _IterativeModel,
                  minibatches=1, random_seed=None,
                  print_progress=0):
 
+        _BaseModel.__init__(self)
+        _Classifier.__init__(self)
+        _IterativeModel.__init__(self)
+        _MultiClass.__init__(self)
+        _MultiLayer.__init__(self)
+
         if len(hidden_layers) > 1:
             raise AttributeError('Currently, only 1 hidden layer is supported')
         self.hidden_layers = hidden_layers

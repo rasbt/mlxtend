@@ -6,8 +6,8 @@
 # License: BSD 3 clause
 
 import numpy as np
-from scipy.stats import chisqprob
-from scipy.stats import binom
+import scipy.stats
+from itertools import combinations
 
 
 def mcnemar_table(y_target, y_model1, y_model2):
@@ -60,6 +60,92 @@ def mcnemar_table(y_target, y_model1, y_model2):
     return tb
 
 
+def mcnemar_tables(y_target, *y_model_predictions):
+    """
+    Compute multiple 2x2 contigency tables for McNemar's
+    test or Cochran's Q test.
+
+    Parameters
+    -----------
+    y_target : array-like, shape=[n_samples]
+        True class labels as 1D NumPy array.
+
+    y_model_predictions : array-like, shape=[n_samples]
+        Predicted class labels for a model.
+
+    Returns
+    ----------
+
+    tables : dict
+        Dictionary of NumPy arrays with shape=[2, 2]. Each dictionary
+        key names the two models to be compared based on the order the
+        models were passed as `*y_model_predictions`. The number of
+        dictionary entries is equal to the number of pairwise combinations
+        between the m models, i.e., "m choose 2."
+
+        For example the following target array (containing the true labels)
+        and 3 models
+
+        - y_true = np.array([0, 0, 0, 0, 0, 1, 1, 1, 1, 1])
+        - y_mod0 = np.array([0, 1, 0, 0, 0, 1, 1, 0, 0, 0])
+        - y_mod0 = np.array([0, 0, 1, 1, 0, 1, 1, 0, 0, 0])
+        - y_mod0 = np.array([0, 1, 1, 1, 0, 1, 0, 0, 0, 0])
+
+        would result in the following dictionary:
+
+
+        {'model_0 vs model_1': array([[ 4.,  1.],
+                                      [ 2.,  3.]]),
+         'model_0 vs model_2': array([[ 3.,  0.],
+                                      [ 3.,  4.]]),
+         'model_1 vs model_2': array([[ 3.,  0.],
+                                      [ 2.,  5.]])}
+
+        Each array is structured in the following way:
+
+        - tb[0, 0]: # of samples that both models predicted correctly
+        - tb[0, 1]: # of samples that model a got right and model b got wrong
+        - tb[1, 0]: # of samples that model b got right and model a got wrong
+        - tb[1, 1]: # of samples that both models predicted incorrectly
+
+    """
+    model_lens = set()
+    y_model_predictions = list(y_model_predictions)
+    for ary in ([y_target] + y_model_predictions):
+        if len(ary.shape) != 1:
+            raise ValueError('One or more input arrays are not 1-dimensional.')
+        model_lens.add(ary.shape[0])
+
+    if len(model_lens) > 1:
+        raise ValueError('Each prediction array must have the '
+                         'same number of samples.')
+
+    num_models = len(y_model_predictions)
+
+    if num_models < 2:
+        raise ValueError('Provide at least 2 model prediction arrays.')
+
+    tables = {}
+
+    for comb in combinations(range(num_models), 2):
+
+        tb = np.zeros((2, 2))
+        model1_vs_true = (y_target == y_model_predictions[comb[0]]).astype(int)
+        model2_vs_true = (y_target == y_model_predictions[comb[1]]).astype(int)
+        plus_true = model1_vs_true + model2_vs_true
+        minus_true = model1_vs_true - model2_vs_true
+
+        tb[0, 0] = np.sum(plus_true == 2)
+        tb[1, 1] = np.sum(plus_true == 0)
+        tb[1, 0] = np.sum(minus_true == 1)
+        tb[0, 1] = np.sum(minus_true == -1)
+
+        name_str = 'model_%s vs model_%s' % (comb[0], comb[1])
+        tables[name_str] = tb
+
+    return tables
+
+
 def mcnemar(ary, corrected=True, exact=False):
     """
     McNemar test for paired nominal data
@@ -102,10 +188,10 @@ def mcnemar(ary, corrected=True, exact=False):
             chi2 = (abs(ary[0, 1] - ary[1, 0]) - 1.0)**2 / float(n)
         else:
             chi2 = (ary[0, 1] - ary[1, 0])**2 / float(n)
-        p = chisqprob(chi2, 1)
+        p = scipy.stats.distributions.chi2.sf(chi2, 1)
 
     else:
-        p = 2. * sum([binom.pmf(k=i, n=n, p=0.5, loc=0) for i in range(b, n)])
-        chi2 = None
+        chi2 = min(b, c)
+        p = min(scipy.stats.binom.cdf(chi2, b + c, .5) * 2., 1.)
 
     return chi2, p

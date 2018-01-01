@@ -51,6 +51,11 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         of the original classifiers and the original dataset.
         If False, the meta-classifier will be trained only on the predictions
         of the original classifiers.
+    store_train_meta_features : bool (default: False)
+        If True, the meta-features computed from the training data used
+        for fitting the meta-classifier stored in the
+        `self.train_meta_features_` array, which can be
+        accessed after calling `fit`.
 
     Attributes
     ----------
@@ -58,11 +63,16 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         Fitted classifiers (clones of the original classifiers)
     meta_clf_ : estimator
         Fitted meta-classifier (clone of the original meta-estimator)
+    train_meta_features : numpy array, shape = [n_samples, n_classifiers]
+        meta-features for training data, where n_samples is the
+        number of samples
+        in training data and n_classifiers is the number of classfiers.
 
     """
     def __init__(self, classifiers, meta_classifier,
                  use_probas=False, average_probas=False, verbose=0,
-                 use_features_in_secondary=False):
+                 use_features_in_secondary=False,
+                 store_train_meta_features=False):
 
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier
@@ -76,6 +86,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.average_probas = average_probas
         self.verbose = verbose
         self.use_features_in_secondary = use_features_in_secondary
+        self.store_train_meta_features = store_train_meta_features
 
     def fit(self, X, y):
         """ Fit ensemble classifers and the meta-classifier.
@@ -114,7 +125,10 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
             clf.fit(X, y)
 
-        meta_features = self._predict_meta_features(X)
+        meta_features = self.predict_meta_features(X)
+
+        if self.store_train_meta_features:
+            self.train_meta_features_ = meta_features
 
         if not self.use_features_in_secondary:
             self.meta_clf_.fit(meta_features, y)
@@ -125,6 +139,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
     def get_params(self, deep=True):
         """Return estimator parameter names for GridSearch support."""
+
         if not deep:
             return super(StackingClassifier, self).get_params(deep=False)
         else:
@@ -137,9 +152,28 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             for name, step in six.iteritems(self.named_meta_classifier):
                 for key, value in six.iteritems(step.get_params(deep=True)):
                     out['%s__%s' % (name, key)] = value
+
+            for key, value in six.iteritems(super(StackingClassifier,
+                                            self).get_params(deep=False)):
+                out['%s' % key] = value
+
             return out
 
-    def _predict_meta_features(self, X):
+    def predict_meta_features(self, X):
+        """ Get meta-features of test-data.
+
+        Parameters
+        ----------
+        X : numpy array, shape = [n_samples, n_features]
+            Test vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+
+        Returns
+        -------
+        meta-features : numpy array, shape = [n_samples, n_classifiers]
+            Returns the meta-features for test data.
+
+        """
         if self.use_probas:
             probas = np.asarray([clf.predict_proba(X)
                                  for clf in self.clfs_])
@@ -167,7 +201,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         """
         check_is_fitted(self, 'clfs_')
-        meta_features = self._predict_meta_features(X)
+        meta_features = self.predict_meta_features(X)
 
         if not self.use_features_in_secondary:
             return self.meta_clf_.predict(meta_features)
@@ -191,7 +225,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         """
         check_is_fitted(self, 'clfs_')
-        meta_features = self._predict_meta_features(X)
+        meta_features = self.predict_meta_features(X)
 
         if not self.use_features_in_secondary:
             return self.meta_clf_.predict_proba(meta_features)

@@ -12,6 +12,10 @@ import numpy as np
 from numpy.testing import assert_almost_equal
 from nose.tools import raises
 from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import train_test_split
+from sklearn.exceptions import NotFittedError
+from mlxtend.utils import assert_raises
+
 
 # Generating a sample dataset
 np.random.seed(1)
@@ -143,3 +147,100 @@ def test_get_coeff_fail():
     stregr = stregr.fit(X1, y)
     r = stregr.coef_
     assert r
+
+
+def test_get_params():
+    lr = LinearRegression()
+    svr_rbf = SVR(kernel='rbf')
+    ridge = Ridge(random_state=1)
+    stregr = StackingRegressor(regressors=[ridge, lr],
+                               meta_regressor=svr_rbf)
+
+    got = sorted(list({s.split('__')[0] for s in stregr.get_params().keys()}))
+    expect = ['linearregression',
+              'meta-svr',
+              'meta_regressor',
+              'regressors',
+              'ridge',
+              'store_train_meta_features',
+              'verbose']
+    assert got == expect, got
+
+
+def test_regressor_gridsearch():
+    lr = LinearRegression()
+    svr_rbf = SVR(kernel='rbf')
+    ridge = Ridge(random_state=1)
+    stregr = StackingRegressor(regressors=[lr],
+                               meta_regressor=svr_rbf)
+
+    params = {'regressors': [[lr], [lr, ridge]]}
+
+    grid = GridSearchCV(estimator=stregr,
+                        param_grid=params,
+                        cv=5,
+                        refit=True)
+    grid.fit(X1, y)
+
+    assert len(grid.best_params_['regressors']) == 2
+
+
+def test_predict_meta_features():
+    lr = LinearRegression()
+    svr_rbf = SVR(kernel='rbf')
+    ridge = Ridge(random_state=1)
+    stregr = StackingRegressor(regressors=[lr, ridge],
+                               meta_regressor=svr_rbf)
+    X_train, X_test, y_train, y_test = train_test_split(X2, y, test_size=0.3)
+    stregr.fit(X_train, y_train)
+    test_meta_features = stregr.predict(X_test)
+    assert test_meta_features.shape[0] == X_test.shape[0]
+
+
+def test_train_meta_features_():
+    lr = LinearRegression()
+    svr_rbf = SVR(kernel='rbf')
+    ridge = Ridge(random_state=1)
+    stregr = StackingRegressor(regressors=[lr, ridge],
+                               meta_regressor=svr_rbf,
+                               store_train_meta_features=True)
+    X_train, X_test, y_train, y_test = train_test_split(X2, y, test_size=0.3)
+    stregr.fit(X_train, y_train)
+    train_meta_features = stregr.train_meta_features_
+    assert train_meta_features.shape[0] == X_train.shape[0]
+
+
+def test_not_fitted_predict():
+    lr = LinearRegression()
+    svr_rbf = SVR(kernel='rbf')
+    ridge = Ridge(random_state=1)
+    stregr = StackingRegressor(regressors=[lr, ridge],
+                               meta_regressor=svr_rbf,
+                               store_train_meta_features=True)
+    X_train, X_test, y_train, y_test = train_test_split(X2, y, test_size=0.3)
+
+    expect = ("Estimator not fitted, "
+              "call `fit` before exploiting the model.")
+
+    assert_raises(NotFittedError,
+                  expect,
+                  stregr.predict,
+                  X_train)
+
+
+def test_not_fitted_predict_meta_features():
+    lr = LinearRegression()
+    svr_rbf = SVR(kernel='rbf')
+    ridge = Ridge(random_state=1)
+    stregr = StackingRegressor(regressors=[lr, ridge],
+                               meta_regressor=svr_rbf,
+                               store_train_meta_features=True)
+    X_train, X_test, y_train, y_test = train_test_split(X2, y, test_size=0.3)
+
+    expect = ("Estimator not fitted, "
+              "call `fit` before exploiting the model.")
+
+    assert_raises(NotFittedError,
+                  expect,
+                  stregr.predict_meta_features,
+                  X_train)

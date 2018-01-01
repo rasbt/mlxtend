@@ -12,6 +12,7 @@ from sklearn.base import BaseEstimator
 from sklearn.base import RegressorMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
+from sklearn.exceptions import NotFittedError
 from ..externals.name_estimators import _name_estimators
 from ..externals import six
 import numpy as np
@@ -40,6 +41,12 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
                        regressor being fitted
         - `verbose>2`: Changes `verbose` param of the underlying regressor to
            self.verbose - 2
+    store_train_meta_features : bool (default: False)
+        If True, the meta-features computed from the training data
+        used for fitting the
+        meta-regressor stored in the `self.train_meta_features_` array,
+        which can be
+        accessed after calling `fit`.
 
     Attributes
     ----------
@@ -51,9 +58,14 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         Model coefficients of the fitted meta-estimator
     intercept_ : float
         Intercept of the fitted meta-estimator
+    train_meta_features : numpy array, shape = [n_samples, len(self.regressors)]
+        meta-features for training data, where n_samples is the
+        number of samples
+        in training data and len(self.regressors) is the number of regressors.
 
     """
-    def __init__(self, regressors, meta_regressor, verbose=0):
+    def __init__(self, regressors, meta_regressor, verbose=0,
+                 store_train_meta_features=False):
 
         self.regressors = regressors
         self.meta_regressor = meta_regressor
@@ -64,6 +76,7 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
                                      key, value in
                                      _name_estimators([meta_regressor])}
         self.verbose = verbose
+        self.store_train_meta_features = store_train_meta_features
 
     def fit(self, X, y):
         """Learn weight coefficients from training data for each regressor.
@@ -102,8 +115,12 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
 
             regr.fit(X, y)
 
-        meta_features = self._predict_meta_features(X)
+        meta_features = self.predict_meta_features(X)
         self.meta_regr_.fit(meta_features, y)
+
+        # save meta-features for training data
+        if self.store_train_meta_features:
+            self.train_meta_features_ = meta_features
         return self
 
     @property
@@ -128,9 +145,33 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             for name, step in six.iteritems(self.named_meta_regressor):
                 for key, value in six.iteritems(step.get_params(deep=True)):
                     out['%s__%s' % (name, key)] = value
+
+            for key, value in six.iteritems(super(StackingRegressor,
+                                            self).get_params(deep=False)):
+                out['%s' % key] = value
+
             return out
 
-    def _predict_meta_features(self, X):
+    def predict_meta_features(self, X):
+        """ Get meta-features of test-data.
+
+        Parameters
+        ----------
+        X : numpy array, shape = [n_samples, n_features]
+            Test vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+
+        Returns
+        -------
+        meta-features : numpy array, shape = [n_samples, len(self.regressors)]
+            meta-features for test data, where n_samples is the number of
+            samples in test data and len(self.regressors) is the number
+            of regressors.
+
+        """
+        if not hasattr(self, 'regr_'):
+            raise NotFittedError("Estimator not fitted, "
+                                 "call `fit` before exploiting the model.")
         return np.column_stack([r.predict(X) for r in self.regr_])
 
     def predict(self, X):
@@ -147,5 +188,5 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         y_target : array-like, shape = [n_samples] or [n_samples, n_targets]
             Predicted target values.
         """
-        meta_features = self._predict_meta_features(X)
+        meta_features = self.predict_meta_features(X)
         return self.meta_regr_.predict(meta_features)

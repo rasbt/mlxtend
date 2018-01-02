@@ -10,7 +10,7 @@ according to the terms and conditions of the Creative Commons Attribution 4.0 In
 
 New BSD License
 
-Copyright (c) 2014-2017, Sebastian Raschka. All rights reserved.
+Copyright (c) 2014-2018, Sebastian Raschka. All rights reserved.
 
 
 Redistribution and use in source and binary forms, with or without

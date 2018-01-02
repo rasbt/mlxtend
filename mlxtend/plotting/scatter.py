@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2017
+# Sebastian Raschka 2014-2018
 # mlxtend Machine Learning Library Extensions
 #
 # Matplotlib wrapper for creating scatterplots from data w. mult. categories.

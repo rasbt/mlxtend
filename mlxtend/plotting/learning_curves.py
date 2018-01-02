@@ -12,7 +12,7 @@ from sklearn import metrics
 
 def plot_learning_curves(X_train, y_train,
                          X_test, y_test,
-                         clf,
+                         estimator,
                          train_marker='o',
                          test_marker='^',
                          scoring='misclassification error',
@@ -31,7 +31,7 @@ def plot_learning_curves(X_train, y_train,
         Feature matrix of the test dataset.
     y_test : array-like, shape = [n_samples]
         True class labels of the test dataset.
-    clf : Classifier object. Must have a .predict .fit method.
+    estimator : Classifier object. Must have a .predict .fit method.
     train_marker : str (default: 'o')
         Marker for the training set line plot.
     test_marker : str (default: '^')
@@ -104,7 +104,7 @@ def plot_learning_curves(X_train, y_train,
     rng = [int(i) for i in np.linspace(0, X_train.shape[0], 11)][1:]
     for r in rng:
 
-        model = clf.fit(X_train[:r], y_train[:r])
+        model = estimator.fit(X_train[:r], y_train[:r])
 
         train_misclf = scorer(model, X_train[:r], y_train[:r])
         training_errors.append(train_misclf)

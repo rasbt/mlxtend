@@ -36,7 +36,7 @@ def plot_learning_curves(X_train, y_train,
         Marker for the training set line plot.
     test_marker : str (default: '^')
         Marker for the test set line plot.
-    scoring : str, callable or None (default="misclassification_error")
+    scoring : str, callable or None (default="misclassification error")
         Scoring-function based on scikit-learn:
         - None: Uses the estimator's default scoring function 
         - String (see http://scikit-learn.org/stable/modules/

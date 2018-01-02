@@ -70,21 +70,21 @@ def plot_learning_curves(X_train, y_train,
     else:
 
         def complement_scorer(scorer):
-        """Returns a scorer that computes the complement of the scorer argument
-        in the sense of 1 - scorer(*args)
-    
-        Parameters
-        ----------
-        scorer : Any callable that evaluates to a float or int between 0 and 1, e.g.
-        accuracy scorer. Required signature for scorer is (estimator, X,
-        y_true), keyword args optional (scorer will not be invoked with keyword
-        args; in particular sample_weights is not currently supported).
-    
-        Returns
-        ---------
-        complemented_scorer : callable
-    
-        """
+            """Returns a scorer that computes the complement of the scorer argument
+            in the sense of 1 - scorer(*args)
+        
+            Parameters
+            ----------
+            scorer : Any callable that evaluates to a float or int between 0 and 1, e.g.
+            accuracy scorer. Required signature for scorer is (estimator, X,
+            y_true), keyword args optional (scorer will not be invoked with keyword
+            args; in particular sample_weights is not currently supported).
+        
+            Returns
+            ---------
+            complemented_scorer : callable
+        
+            """
             def complemented_scorer(estimator, X, y_true):
                 return 1 - scorer(estimator, X, y_true)
 

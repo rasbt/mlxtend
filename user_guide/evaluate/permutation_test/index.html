@@ -847,6 +847,9 @@
             <li><a href="#example-1-two-sided-permutation-test">Example 1 -- Two-sided permutation test</a></li>
                 <!--  -->
         
+            <li><a href="#example-2-calculating-the-p-value-for-correlation-analysis-pearsons-r">Example 2 -- Calculating the p-value for correlation analysis (Pearson's R)</a></li>
+                <!--  -->
+        
             <li><a href="#api">API</a></li>
                 <!--  -->
         
@@ -909,6 +912,27 @@ print(p_value)
 <pre><code>0.0066
 </code></pre>
 <p>Since p-value &lt; alpha, we can reject the null hypothesis that the two samples come from the same distribution.</p>
+<h2 id="example-2-calculating-the-p-value-for-correlation-analysis-pearsons-r">Example 2 -- Calculating the p-value for correlation analysis (Pearson's R)</h2>
+<p>Note: this is a one-sided hypothesis testing as we conduct the permutation test as "how many times obtain a correlation coefficient that is greater than the observed value?"</p>
+<pre><code class="python">import numpy as np
+from mlxtend.evaluate import permutation_test
+
+x = np.array([1, 2, 3, 4, 5, 6])
+y = np.array([2, 4, 1, 5, 6, 7])
+
+print('Observed pearson R: %.2f' % np.corrcoef(x, y)[1][0])
+
+
+p_value = permutation_test(x, y,
+                           method='exact',
+                           func=lambda x, y: np.corrcoef(x, y)[1][0],
+                           seed=0)
+print('P value: %.2f' % p_value)
+</code></pre>
+
+<pre><code>Observed pearson R: 0.81
+P value: 0.09
+</code></pre>
 <h2 id="api">API</h2>
 <p><em>permutation_test(x, y, func='x_mean != y_mean', method='exact', num_rounds=1000, seed=None)</em></p>
 <p>Nonparametric permutation test</p>

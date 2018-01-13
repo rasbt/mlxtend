@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2017
+# Sebastian Raschka 2014-2018
 # mlxtend Machine Learning Library Extensions
 #
 # A function for creating a multiplexer dataset for classification.

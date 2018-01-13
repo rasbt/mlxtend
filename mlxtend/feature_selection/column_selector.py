@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2017
+# Sebastian Raschka 2014-2018
 # mlxtend Machine Learning Library Extensions
 #
 # Object for selecting a dataset column in scikit-learn pipelines.

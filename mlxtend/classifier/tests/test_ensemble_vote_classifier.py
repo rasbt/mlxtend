@@ -164,3 +164,34 @@ def test_string_labels_python_list():
                              scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
     assert(scores_mean == 0.94)
+
+
+def test_string_labels_refit_false():
+    np.random.seed(123)
+    clf1 = LogisticRegression()
+    clf2 = RandomForestClassifier()
+    clf3 = GaussianNB()
+
+    y_str = y.copy()
+    y_str = y_str.astype(str)
+    y_str[:50] = 'a'
+    y_str[50:100] = 'b'
+    y_str[100:150] = 'c'
+
+    clf1.fit(X, y_str)
+    clf2.fit(X, y_str)
+    clf3.fit(X, y_str)
+
+    eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
+                                  voting='hard',
+                                  refit=False)
+
+    eclf.fit(X, y_str)
+    assert round(eclf.score(X, y_str), 2) == 0.97
+
+    eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
+                                  voting='soft',
+                                  refit=False)
+
+    eclf.fit(X, y_str)
+    assert round(eclf.score(X, y_str), 2) == 0.97

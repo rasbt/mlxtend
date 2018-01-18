@@ -26,7 +26,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Bug Fixes
 
-- -
+- Fixed issue when class labels were provided to the `EnsembleVoteClassifier` when `refit` was set to `false`. ([#322](https://github.com/rasbt/mlxtend/issues/322))
 
 
 

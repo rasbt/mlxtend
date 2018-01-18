@@ -122,3 +122,76 @@ def test_classifier_gridsearch():
     grid.fit(X, y)
 
     assert len(grid.best_params_['clfs']) == 2
+
+
+def test_string_labels_numpy_array():
+    np.random.seed(123)
+    clf1 = LogisticRegression()
+    clf2 = RandomForestClassifier()
+    clf3 = GaussianNB()
+    eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting='hard')
+
+    y_str = y.copy()
+    y_str = y_str.astype(str)
+    y_str[:50] = 'a'
+    y_str[50:100] = 'b'
+    y_str[100:150] = 'c'
+
+    scores = cross_val_score(eclf,
+                             X,
+                             y_str,
+                             cv=5,
+                             scoring='accuracy')
+    scores_mean = (round(scores.mean(), 2))
+    assert(scores_mean == 0.94)
+
+
+def test_string_labels_python_list():
+    np.random.seed(123)
+    clf1 = LogisticRegression()
+    clf2 = RandomForestClassifier()
+    clf3 = GaussianNB()
+    eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting='hard')
+
+    y_str = (['a' for a in range(50)] +
+             ['b' for a in range(50)] +
+             ['c' for a in range(50)])
+
+    scores = cross_val_score(eclf,
+                             X,
+                             y_str,
+                             cv=5,
+                             scoring='accuracy')
+    scores_mean = (round(scores.mean(), 2))
+    assert(scores_mean == 0.94)
+
+
+def test_string_labels_refit_false():
+    np.random.seed(123)
+    clf1 = LogisticRegression()
+    clf2 = RandomForestClassifier()
+    clf3 = GaussianNB()
+
+    y_str = y.copy()
+    y_str = y_str.astype(str)
+    y_str[:50] = 'a'
+    y_str[50:100] = 'b'
+    y_str[100:150] = 'c'
+
+    clf1.fit(X, y_str)
+    clf2.fit(X, y_str)
+    clf3.fit(X, y_str)
+
+    eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
+                                  voting='hard',
+                                  refit=False)
+
+    eclf.fit(X, y_str)
+    assert round(eclf.score(X, y_str), 2) == 0.97
+
+    eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
+                                  voting='soft',
+                                  refit=False)
+
+    eclf.fit(X, y_str)
+    assert round(eclf.score(X, y_str), 2) == 0.97

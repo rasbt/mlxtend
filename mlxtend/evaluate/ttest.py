@@ -18,7 +18,7 @@ def paired_ttest_resampled(estimator1, estimator2, X, y,
     """
     Implements the resampled paired t-test procedure
     to compare the performance of two models
-    (also called K-hold-out paired t-test).
+    (also called k-hold-out paired t-test).
 
     Parameters
     ----------

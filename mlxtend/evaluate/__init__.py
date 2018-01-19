@@ -15,6 +15,7 @@ from .bootstrap_outofbag import BootstrapOutOfBag
 from .bootstrap_point632 import bootstrap_point632_score
 from .permutation import permutation_test
 from .cochrans_q import cochrans_q
+from .ttest import paired_ttest_resampled
 
 
 __all__ = ["scoring", "confusion_matrix",
@@ -22,4 +23,4 @@ __all__ = ["scoring", "confusion_matrix",
            "mcnemar", "lift_score",
            "bootstrap", "permutation_test",
            "BootstrapOutOfBag", "bootstrap_point632_score",
-           "cochrans_q"]
+           "cochrans_q", "paired_ttest_resampled"]

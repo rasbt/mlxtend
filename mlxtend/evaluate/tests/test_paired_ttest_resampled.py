@@ -4,6 +4,7 @@
 #
 # License: BSD 3 clause
 
+import sys
 from mlxtend.evaluate import paired_ttest_resampled
 from mlxtend.utils import assert_raises
 from mlxtend.data import iris_data
@@ -22,6 +23,9 @@ def test_train_size():
 
     expected_err_msg = ("train_size must be of type int or float. "
                         "Got <class 'NoneType'>.")
+
+    if sys.version_info < (3, 0):
+        expected_err_msg = expected_err_msg.replace('<class', '<type')
 
     assert_raises(ValueError,
                   expected_err_msg,

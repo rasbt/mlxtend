@@ -7,7 +7,7 @@ The CHANGELOG for the current development version is available at
 
 ---
 
-### Version 0.10.1dev
+### Version 0.11.0dev
 
 ##### Downloads
 
@@ -16,7 +16,9 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
-- -
+-   New function implementing the resampled paired t-test procedure
+    to compare the performance of two models
+    (also called k-hold-out paired t-test). ([#323](https://github.com/rasbt/mlxtend/issues/323))
 
 ##### Changes
 

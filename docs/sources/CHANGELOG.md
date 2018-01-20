@@ -16,9 +16,12 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
--   New function implementing the resampled paired t-test procedure
+-   New function implementing the resampled paired t-test procedure (`paired_ttest_resampled`)
     to compare the performance of two models
     (also called k-hold-out paired t-test). ([#323](https://github.com/rasbt/mlxtend/issues/323))
+-   New function implementing the k-fold paired t-test procedure (`paired_ttest_kfold_cv`)
+    to compare the performance of two models
+    (also called k-hold-out paired t-test). ([#324](https://github.com/rasbt/mlxtend/issues/324))
 
 ##### Changes
 

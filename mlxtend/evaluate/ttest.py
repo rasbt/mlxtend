@@ -17,9 +17,9 @@ def paired_ttest_resampled(estimator1, estimator2, X, y,
                            scoring=None,
                            random_seed=None):
     """
-    Implements the resampled paired t-test procedure
+    Implements the resampled paired t test procedure
     to compare the performance of two models
-    (also called k-hold-out paired t-test).
+    (also called k-hold-out paired t test).
 
     Parameters
     ----------
@@ -124,7 +124,7 @@ def paired_ttest_kfold_cv(estimator1, estimator2, X, y,
                           shuffle=False,
                           random_seed=None):
     """
-    Implements the k-fold paired t-test procedure
+    Implements the k-fold paired t test procedure
     to compare the performance of two models.
 
     Parameters

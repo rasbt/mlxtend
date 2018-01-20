@@ -33,6 +33,7 @@
 - [mcnemar_table](user_guide/evaluate/mcnemar_table.md)
 - [mcnemar_tables](user_guide/evaluate/mcnemar_tables.md)
 - [mcnemar](user_guide/evaluate/mcnemar.md)
+- [paired_ttest_5x2cv](user_guide/evaluate/paired_ttest_5x2cv.md)
 - [paired_ttest_kfold_cv](user_guide/evaluate/paired_ttest_kfold_cv.md)
 - [paired_ttest_resampled](user_guide/evaluate/paired_ttest_resampled.md)
 - [permutation_test](user_guide/evaluate/permutation_test.md)

@@ -4,7 +4,7 @@
 #
 # License: BSD 3 clause
 
-from mlxtend.evaluate import paired_ttest_kfold_cv
+from mlxtend.evaluate import paired_ttest_5x2cv
 from mlxtend.data import iris_data
 from mlxtend.data import boston_housing_data
 from sklearn.linear_model import LogisticRegression
@@ -29,13 +29,13 @@ def test_classifier_defaults():
     assert round(score1, 2) == 0.97
     assert round(score2, 2) == 0.95
 
-    t, p = paired_ttest_kfold_cv(estimator1=clf1,
-                                 estimator2=clf2,
-                                 X=X, y=y,
-                                 random_seed=1)
+    t, p = paired_ttest_5x2cv(estimator1=clf1,
+                              estimator2=clf2,
+                              X=X, y=y,
+                              random_seed=1)
 
-    assert round(t, 3) == -1.861, t
-    assert round(p, 3) == 0.096, p
+    assert round(t, 3) == -1.539, t
+    assert round(p, 3) == 0.184, p
 
     # change maxdepth of decision tree classifier
 
@@ -45,13 +45,13 @@ def test_classifier_defaults():
 
     assert round(score3, 2) == 0.63
 
-    t, p = paired_ttest_kfold_cv(estimator1=clf1,
-                                 estimator2=clf2,
-                                 X=X, y=y,
-                                 random_seed=1)
+    t, p = paired_ttest_5x2cv(estimator1=clf1,
+                              estimator2=clf2,
+                              X=X, y=y,
+                              random_seed=1)
 
-    assert round(t, 3) == 13.491, t
-    assert round(p, 3) == 0.000, p
+    assert round(t, 3) == 5.386, t
+    assert round(p, 3) == 0.003, p
 
 
 def test_scoring():
@@ -69,23 +69,23 @@ def test_scoring():
     assert round(score1, 2) == 0.97
     assert round(score2, 2) == 0.95
 
-    t, p = paired_ttest_kfold_cv(estimator1=clf1,
-                                 estimator2=clf2,
-                                 X=X, y=y,
-                                 scoring='accuracy',
-                                 random_seed=1)
+    t, p = paired_ttest_5x2cv(estimator1=clf1,
+                              estimator2=clf2,
+                              X=X, y=y,
+                              scoring='accuracy',
+                              random_seed=1)
 
-    assert round(t, 3) == -1.861, t
-    assert round(p, 3) == 0.096, p
+    assert round(t, 3) == -1.539, t
+    assert round(p, 3) == 0.184, p
 
-    t, p = paired_ttest_kfold_cv(estimator1=clf1,
-                                 estimator2=clf2,
-                                 X=X, y=y,
-                                 scoring='f1_macro',
-                                 random_seed=1)
+    t, p = paired_ttest_5x2cv(estimator1=clf1,
+                              estimator2=clf2,
+                              X=X, y=y,
+                              scoring='f1_macro',
+                              random_seed=1)
 
-    assert round(t, 3) == -1.872, t
-    assert round(p, 3) == 0.094, p
+    assert round(t, 3) == -1.510, t
+    assert round(p, 3) == 0.191, p
 
 
 def test_regressor():
@@ -103,10 +103,10 @@ def test_regressor():
     assert round(score1, 2) == 0.66, score1
     assert round(score2, 2) == 0.68, score2
 
-    t, p = paired_ttest_kfold_cv(estimator1=reg1,
-                                 estimator2=reg2,
-                                 X=X, y=y,
-                                 random_seed=1)
+    t, p = paired_ttest_5x2cv(estimator1=reg1,
+                              estimator2=reg2,
+                              X=X, y=y,
+                              random_seed=1)
 
-    assert round(t, 3) == -0.549, t
-    assert round(p, 3) == 0.596, p
+    assert round(t, 3) == -0.599, t
+    assert round(p, 3) == 0.575, p

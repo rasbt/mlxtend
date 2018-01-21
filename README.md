@@ -116,7 +116,7 @@ for clf, lab, grd in zip([clf1, clf2, clf3, eclf],
 plt.show()
 ```
 
-![](./docs/sources/img/ensemble_decision_regions_2d.png)
+![](./docs/sources/img/ensemble_decision_regions_2d.jpg)
 
 ---
 

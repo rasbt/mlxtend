@@ -119,6 +119,7 @@ def test_get_params():
               'linearregression',
               'meta-svr',
               'meta_regressor',
+              'refit',
               'regressors',
               'ridge',
               'shuffle',

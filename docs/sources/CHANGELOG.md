@@ -24,6 +24,7 @@ The CHANGELOG for the current development version is available at
     (also called k-hold-out paired t-test). ([#324](https://github.com/rasbt/mlxtend/issues/324))
 -   New function implementing the 5x2cv paired t-test procedure (`paired_ttest_5x2cv`) proposed by Dieterrich (1998)
     to compare the performance of two models. ([#325](https://github.com/rasbt/mlxtend/issues/325))
+- A `refit` parameter was added to stacking classes (similar to the `refit` parameter in the `EnsembleVoteClassifier`), to support classifiers and regressors that follow the scikit-learn API but are not compatible with scikit-learn's `clone` function ([#325](https://github.com/rasbt/mlxtend/issues/324))
 
 ##### Changes
 

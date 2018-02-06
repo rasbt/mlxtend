@@ -56,6 +56,13 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         for fitting the meta-classifier stored in the
         `self.train_meta_features_` array, which can be
         accessed after calling `fit`.
+    refit : bool (default: True)
+        Clones the classifiers for stacking classification if True (default)
+        or else uses the original ones, which will be refitted on the dataset
+        upon calling the `fit` method. Setting refit=False is
+        recommended if you are working with estimators that are supporting
+        the scikit-learn fit/predict API interface but are not compatible
+        to scikit-learn's `clone` function.
 
     Attributes
     ----------
@@ -72,7 +79,8 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     def __init__(self, classifiers, meta_classifier,
                  use_probas=False, average_probas=False, verbose=0,
                  use_features_in_secondary=False,
-                 store_train_meta_features=False):
+                 store_train_meta_features=False,
+                 refit=True):
 
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier
@@ -87,6 +95,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.verbose = verbose
         self.use_features_in_secondary = use_features_in_secondary
         self.store_train_meta_features = store_train_meta_features
+        self.refit = refit
 
     def fit(self, X, y):
         """ Fit ensemble classifers and the meta-classifier.
@@ -104,8 +113,13 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self : object
 
         """
-        self.clfs_ = [clone(clf) for clf in self.classifiers]
-        self.meta_clf_ = clone(self.meta_classifier)
+        if self.refit:
+            self.clfs_ = [clone(clf) for clf in self.classifiers]
+            self.meta_clf_ = clone(self.meta_classifier)
+        else:
+            self.clfs_ = self.classifiers
+            self.meta_clf_ = self.meta_classifier
+
         if self.verbose > 0:
             print("Fitting %d classifiers..." % (len(self.classifiers)))
 

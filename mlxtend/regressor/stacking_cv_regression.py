@@ -73,6 +73,13 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         meta-regressor stored in the `self.train_meta_features_` array,
         which can be
         accessed after calling `fit`.
+    refit : bool (default: True)
+        Clones the regressors for stacking regression if True (default)
+        or else uses the original ones, which will be refitted on the dataset
+        upon calling the `fit` method. Setting refit=False is
+        recommended if you are working with estimators that are supporting
+        the scikit-learn fit/predict API interface but are not compatible
+        to scikit-learn's `clone` function.
 
     Attributes
     ----------
@@ -85,7 +92,8 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
     def __init__(self, regressors, meta_regressor, cv=5,
                  shuffle=True,
                  use_features_in_secondary=False,
-                 store_train_meta_features=False):
+                 store_train_meta_features=False,
+                 refit=True):
 
         self.regressors = regressors
         self.meta_regressor = meta_regressor
@@ -99,6 +107,7 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         self.shuffle = shuffle
         self.use_features_in_secondary = use_features_in_secondary
         self.store_train_meta_features = store_train_meta_features
+        self.refit = refit
 
     def fit(self, X, y, groups=None):
         """ Fit ensemble regressors and the meta-regressor.
@@ -121,8 +130,12 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         self : object
 
         """
-        self.regr_ = [clone(x) for x in self.regressors]
-        self.meta_regr_ = clone(self.meta_regressor)
+        if self.refit:
+            self.regr_ = [clone(clf) for clf in self.regressors]
+            self.meta_regr_ = clone(self.meta_regressor)
+        else:
+            self.clfs_ = self.regressors
+            self.meta_clf_ = self.meta_regressor
 
         kfold = check_cv(self.cv, y)
         if isinstance(self.cv, int):

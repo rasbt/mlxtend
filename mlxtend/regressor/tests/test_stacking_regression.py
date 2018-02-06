@@ -160,6 +160,7 @@ def test_get_params():
     expect = ['linearregression',
               'meta-svr',
               'meta_regressor',
+              'refit',
               'regressors',
               'ridge',
               'store_train_meta_features',

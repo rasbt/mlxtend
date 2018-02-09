@@ -12,9 +12,11 @@ import pandas as pd
 def generate_new_combinations(old_combinations, items_in_previous_step):
     """
     Generator of all combinations based on the last state of Apriori algorithm
-    :param old_combinations: All combinations with enough support in the last step
+    :param old_combinations: All combinations with enough support
+     in the last step
     :param items_in_previous_step: All items in the previous step
-    :return: Generator of all combinations from last step x items from the previous step
+    :return: Generator of all combinations from last step x items
+     from the previous step
     """
     for old_combination in old_combinations:
         max_combination = max(old_combination)
@@ -73,7 +75,9 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None):
 
     while max_itemset and max_itemset < max_len:
         next_max_itemset = max_itemset + 1
-        combin = generate_new_combinations(itemset_dict[max_itemset], np.unique(itemset_dict[max_itemset].flatten()))
+        combin = generate_new_combinations(
+            itemset_dict[max_itemset],
+            np.unique(itemset_dict[max_itemset].flatten()))
         frequent_items = []
         frequent_items_support = []
 

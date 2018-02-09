@@ -94,6 +94,10 @@ class OnehotTransactions(BaseEstimator, TransformerMixin):
             for item in transaction:
                 unique_items.add(item)
         self.columns_ = sorted(unique_items)
+        columns_mapping = {}
+        for col_idx, item in enumerate(self.columns_):
+            columns_mapping[item] = col_idx
+        self.columns_mapping_ = columns_mapping
         return self
 
     def transform(self, X):
@@ -115,7 +119,6 @@ class OnehotTransactions(BaseEstimator, TransformerMixin):
            ['Milk', 'Beer', 'Rice'],
            ['Milk', 'Beer'],
            ['Apple', 'Bananas']]
-
         Returns
         ------------
         onehot : NumPy array [n_transactions, n_unique_items]
@@ -138,8 +141,9 @@ class OnehotTransactions(BaseEstimator, TransformerMixin):
         """
         onehot = np.zeros((len(X), len(self.columns_)), dtype=int)
         for row_idx, transaction in enumerate(X):
-            for col_idx, item in enumerate(self.columns_):
-                onehot[row_idx, col_idx] = int(item in transaction)
+            for item in transaction:
+                col_idx = self.columns_mapping_[item]
+                onehot[row_idx, col_idx] = 1
         return onehot
 
     def inverse_transform(self, onehot):

@@ -9,6 +9,21 @@ import numpy as np
 import pandas as pd
 
 
+def generate_new_combinations(old_combinations, items_in_previous_step):
+    """
+    Generator of all combinations based on the last state of Apriori algorithm
+    :param old_combinations: All combinations with enough support in the last step
+    :param items_in_previous_step: All items in the previous step
+    :return: Generator of all combinations from last step x items from the previous step
+    """
+    for old_combination in old_combinations:
+        max_combination = max(old_combination)
+        for item in items_in_previous_step:
+            if item > max_combination:
+                res = tuple(old_combination) + (item,)
+                yield res
+
+
 def apriori(df, min_support=0.5, use_colnames=False, max_len=None):
     """Get frequent itemsets from a one-hot DataFrame
     Parameters
@@ -51,20 +66,20 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None):
     support_dict = {1: support[support >= min_support]}
     itemset_dict = {1: ary_col_idx[support >= min_support].reshape(-1, 1)}
     max_itemset = 1
+    rows_count = float(X.shape[0])
 
     if max_len is None:
         max_len = float('inf')
 
     while max_itemset and max_itemset < max_len:
         next_max_itemset = max_itemset + 1
-        combin = combinations(np.unique(itemset_dict[max_itemset].flatten()),
-                              r=next_max_itemset)
+        combin = generate_new_combinations(itemset_dict[max_itemset], np.unique(itemset_dict[max_itemset].flatten()))
         frequent_items = []
         frequent_items_support = []
 
         for c in combin:
-            together = X[:, c].sum(axis=1) == len(c)
-            support = together.sum() / float(X.shape[0])
+            together = X[:, c].all(axis=1)
+            support = together.sum() / rows_count
             if support >= min_support:
                 frequent_items.append(c)
                 frequent_items_support.append(support)

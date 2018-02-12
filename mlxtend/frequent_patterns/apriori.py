@@ -9,18 +9,38 @@ import numpy as np
 import pandas as pd
 
 
-def generate_new_combinations(old_combinations, items_in_previous_step):
+def generate_new_combinations(old_combinations):
     """
     Generator of all combinations based on the last state of Apriori algorithm
-    :param old_combinations: All combinations with enough support
-     in the last step
-    :param items_in_previous_step: All items in the previous step
-    :return: Generator of all combinations from last step x items
-     from the previous step
+    Parameters
+    -----------
+    old_combinations: np.array
+        All combinations with enough support in the last step
+        Combinations are represented by a matrix.
+        Number of columns is equal to the combination size
+        of the previous step.
+        Each row represents one combination
+        and contains item type ids in the ascending order
+        ```
+               0        1
+        0      15       20
+        1      15       22
+        2      17       19
+        ```
+
+    Returns
+    -----------
+    Generator of all combinations from the last step x items
+    from the previous step. Every combination is a tuple
+    of item type ids in the ascending order.
+    No combination other than generated
+    do not have a chance to get enough support
     """
+
+    items_types_in_previous_step = np.unique(old_combinations.flatten())
     for old_combination in old_combinations:
         max_combination = max(old_combination)
-        for item in items_in_previous_step:
+        for item in items_types_in_previous_step:
             if item > max_combination:
                 res = tuple(old_combination) + (item,)
                 yield res
@@ -75,9 +95,7 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None):
 
     while max_itemset and max_itemset < max_len:
         next_max_itemset = max_itemset + 1
-        combin = generate_new_combinations(
-            itemset_dict[max_itemset],
-            np.unique(itemset_dict[max_itemset].flatten()))
+        combin = generate_new_combinations(itemset_dict[max_itemset])
         frequent_items = []
         frequent_items_support = []
 

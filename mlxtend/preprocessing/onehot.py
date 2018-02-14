@@ -131,7 +131,8 @@ class OnehotTransactions(BaseEstimator, TransformerMixin):
                  Compressed Sparse Row matrix if Sparse
            The one-hot encoded integer array of the input transactions,
            where the columns represent the unique items found in the input
-           array in alphabetic order. Exact representation depends on the sparse argument
+           array in alphabetic order. Exact representation depends
+           on the sparse argument
 
            For example,
            array([[1, 0, 1, 1, 0, 1],
@@ -154,7 +155,8 @@ class OnehotTransactions(BaseEstimator, TransformerMixin):
                     indices.append(col_idx)
                 indptr.append(len(indices))
             non_sparse_values = [1]*len(indices)
-            onehot = csr_matrix((non_sparse_values, indices, indptr), dtype=int)
+            onehot = csr_matrix((non_sparse_values, indices, indptr),
+                                dtype=int)
         else:
             onehot = np.zeros((len(X), len(self.columns_)), dtype=int)
             for row_idx, transaction in enumerate(X):

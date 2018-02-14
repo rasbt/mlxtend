@@ -47,11 +47,17 @@ def test_fit():
 
 
 def test_transform():
-
     oht = OnehotTransactions()
     oht.fit(dataset)
     trans = oht.transform(dataset)
     np.testing.assert_array_equal(expect, trans)
+
+
+def test_transform_sparse():
+    oht = OnehotTransactions()
+    oht.fit(dataset)
+    trans = oht.transform(dataset, sparse=True)
+    np.testing.assert_array_equal(expect, trans.todense())
 
 
 def test_fit_transform():

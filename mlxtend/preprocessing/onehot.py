@@ -121,14 +121,15 @@ class OnehotTransactions(BaseEstimator, TransformerMixin):
            ['Milk', 'Beer'],
            ['Apple', 'Bananas']]
 
-        sparse: bool
+        sparse: bool (default=False)
           If True, transform will return Compressed Sparse Row matrix
           instead of the regular one.
 
         Returns
         ------------
-        onehot : NumPy array [n_transactions, n_unique_items] If not sparse
-                 Compressed Sparse Row matrix if Sparse
+        onehot : NumPy array [n_transactions, n_unique_items]
+                 if sparse=False (default).
+                 Compressed Sparse Row matrix otherwise
            The one-hot encoded integer array of the input transactions,
            where the columns represent the unique items found in the input
            array in alphabetic order. Exact representation depends

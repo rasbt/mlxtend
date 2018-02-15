@@ -5,6 +5,8 @@
 # License: BSD 3 clause
 
 import numpy as np
+from scipy.sparse import csr_matrix
+
 from mlxtend.preprocessing import OnehotTransactions
 from sklearn.base import clone
 from mlxtend.utils import assert_raises
@@ -57,6 +59,7 @@ def test_transform_sparse():
     oht = OnehotTransactions()
     oht.fit(dataset)
     trans = oht.transform(dataset, sparse=True)
+    assert(isinstance(trans, csr_matrix))
     np.testing.assert_array_equal(expect, trans.todense())
 
 

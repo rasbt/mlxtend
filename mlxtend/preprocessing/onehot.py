@@ -130,20 +130,20 @@ class OnehotTransactions(BaseEstimator, TransformerMixin):
         onehot : NumPy array [n_transactions, n_unique_items]
                  if sparse=False (default).
                  Compressed Sparse Row matrix otherwise
-           The one-hot encoded integer array of the input transactions,
+           The one-hot encoded boolean array of the input transactions,
            where the columns represent the unique items found in the input
            array in alphabetic order. Exact representation depends
            on the sparse argument
 
            For example,
-           array([[1, 0, 1, 1, 0, 1],
-                  [1, 0, 1, 0, 0, 1],
-                  [1, 0, 1, 0, 0, 0],
-                  [1, 1, 0, 0, 0, 0],
-                  [0, 0, 1, 1, 1, 1],
-                  [0, 0, 1, 0, 1, 1],
-                  [0, 0, 1, 0, 1, 0],
-                  [1, 1, 0, 0, 0, 0]])
+           array([[True , False, True , True , False, True ],
+                  [True , False, True , False, False, True ],
+                  [True , False, True , False, False, False],
+                  [True , True , False, False, False, False],
+                  [False, False, True , True , True , True ],
+                  [False, False, True , False, True , True ],
+                  [False, False, True , False, True , False],
+                  [True , True , False, False, False, False]])
           The corresponding column labels are available as self.columns_, e.g.,
           ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']
         """
@@ -151,19 +151,21 @@ class OnehotTransactions(BaseEstimator, TransformerMixin):
             indptr = [0]
             indices = []
             for transaction in X:
-                for item in transaction:
+                # set is necessary because conversion to SparseDataFrame
+                # will fail if there are duplicate items
+                for item in set(transaction):
                     col_idx = self.columns_mapping_[item]
                     indices.append(col_idx)
                 indptr.append(len(indices))
-            non_sparse_values = [1]*len(indices)
+            non_sparse_values = [True]*len(indices)
             onehot = csr_matrix((non_sparse_values, indices, indptr),
-                                dtype=int)
+                                dtype=bool)
         else:
-            onehot = np.zeros((len(X), len(self.columns_)), dtype=int)
+            onehot = np.zeros((len(X), len(self.columns_)), dtype=bool)
             for row_idx, transaction in enumerate(X):
                 for item in transaction:
                     col_idx = self.columns_mapping_[item]
-                    onehot[row_idx, col_idx] = 1
+                    onehot[row_idx, col_idx] = True
         return onehot
 
     def inverse_transform(self, onehot):
@@ -172,20 +174,20 @@ class OnehotTransactions(BaseEstimator, TransformerMixin):
         Parameters
         ------------
         onehot : NumPy array [n_transactions, n_unique_items]
-           The NumPy one-hot encoded integer array of the input transactions,
+           The NumPy one-hot encoded boolean array of the input transactions,
            where the columns represent the unique items found in the input
            array in alphabetic order
 
            For example,
            ```
-           array([[1, 0, 1, 1, 0, 1],
-                  [1, 0, 1, 0, 0, 1],
-                  [1, 0, 1, 0, 0, 0],
-                  [1, 1, 0, 0, 0, 0],
-                  [0, 0, 1, 1, 1, 1],
-                  [0, 0, 1, 0, 1, 1],
-                  [0, 0, 1, 0, 1, 0],
-                  [1, 1, 0, 0, 0, 0]])
+           array([[True , False, True , True , False, True ],
+                  [True , False, True , False, False, True ],
+                  [True , False, True , False, False, False],
+                  [True , True , False, False, False, False],
+                  [False, False, True , True , True , True ],
+                  [False, False, True , False, True , True ],
+                  [False, False, True , False, True , False],
+                  [True , True , False, False, False, False]])
           ```
           The corresponding column labels are available as self.columns_, e.g.,
           ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']

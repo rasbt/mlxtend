@@ -5,6 +5,7 @@
 # License: BSD 3 clause
 
 import numpy as np
+from scipy.sparse import csr_matrix
 from sklearn.base import BaseEstimator, TransformerMixin
 
 
@@ -100,7 +101,7 @@ class OnehotTransactions(BaseEstimator, TransformerMixin):
         self.columns_mapping_ = columns_mapping
         return self
 
-    def transform(self, X):
+    def transform(self, X, sparse=False):
         """Transform transactions into a one-hot encoded NumPy array.
 
         Parameters
@@ -119,31 +120,52 @@ class OnehotTransactions(BaseEstimator, TransformerMixin):
            ['Milk', 'Beer', 'Rice'],
            ['Milk', 'Beer'],
            ['Apple', 'Bananas']]
+
+        sparse: bool (default=False)
+          If True, transform will return Compressed Sparse Row matrix
+          instead of the regular one.
+
         Returns
         ------------
         onehot : NumPy array [n_transactions, n_unique_items]
-           The NumPy one-hot encoded integer array of the input transactions,
+                 if sparse=False (default).
+                 Compressed Sparse Row matrix otherwise
+           The one-hot encoded boolean array of the input transactions,
            where the columns represent the unique items found in the input
-           array in alphabetic order
+           array in alphabetic order. Exact representation depends
+           on the sparse argument
 
            For example,
-           array([[1, 0, 1, 1, 0, 1],
-                  [1, 0, 1, 0, 0, 1],
-                  [1, 0, 1, 0, 0, 0],
-                  [1, 1, 0, 0, 0, 0],
-                  [0, 0, 1, 1, 1, 1],
-                  [0, 0, 1, 0, 1, 1],
-                  [0, 0, 1, 0, 1, 0],
-                  [1, 1, 0, 0, 0, 0]])
+           array([[True , False, True , True , False, True ],
+                  [True , False, True , False, False, True ],
+                  [True , False, True , False, False, False],
+                  [True , True , False, False, False, False],
+                  [False, False, True , True , True , True ],
+                  [False, False, True , False, True , True ],
+                  [False, False, True , False, True , False],
+                  [True , True , False, False, False, False]])
           The corresponding column labels are available as self.columns_, e.g.,
           ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']
-
         """
-        onehot = np.zeros((len(X), len(self.columns_)), dtype=int)
-        for row_idx, transaction in enumerate(X):
-            for item in transaction:
-                col_idx = self.columns_mapping_[item]
-                onehot[row_idx, col_idx] = 1
+        if sparse:
+            indptr = [0]
+            indices = []
+            for transaction in X:
+                # set is necessary because conversion to SparseDataFrame
+                # will fail if there are duplicate items
+                for item in set(transaction):
+                    col_idx = self.columns_mapping_[item]
+                    indices.append(col_idx)
+                indptr.append(len(indices))
+            non_sparse_values = [True]*len(indices)
+            onehot = csr_matrix((non_sparse_values, indices, indptr),
+                                dtype=bool)
+        else:
+            onehot = np.zeros((len(X), len(self.columns_)), dtype=bool)
+            for row_idx, transaction in enumerate(X):
+                for item in transaction:
+                    col_idx = self.columns_mapping_[item]
+                    onehot[row_idx, col_idx] = True
         return onehot
 
     def inverse_transform(self, onehot):
@@ -152,20 +174,20 @@ class OnehotTransactions(BaseEstimator, TransformerMixin):
         Parameters
         ------------
         onehot : NumPy array [n_transactions, n_unique_items]
-           The NumPy one-hot encoded integer array of the input transactions,
+           The NumPy one-hot encoded boolean array of the input transactions,
            where the columns represent the unique items found in the input
            array in alphabetic order
 
            For example,
            ```
-           array([[1, 0, 1, 1, 0, 1],
-                  [1, 0, 1, 0, 0, 1],
-                  [1, 0, 1, 0, 0, 0],
-                  [1, 1, 0, 0, 0, 0],
-                  [0, 0, 1, 1, 1, 1],
-                  [0, 0, 1, 0, 1, 1],
-                  [0, 0, 1, 0, 1, 0],
-                  [1, 1, 0, 0, 0, 0]])
+           array([[True , False, True , True , False, True ],
+                  [True , False, True , False, False, True ],
+                  [True , False, True , False, False, False],
+                  [True , True , False, False, False, False],
+                  [False, False, True , True , True , True ],
+                  [False, False, True , False, True , True ],
+                  [False, False, True , False, True , False],
+                  [True , True , False, False, False, False]])
           ```
           The corresponding column labels are available as self.columns_, e.g.,
           ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']

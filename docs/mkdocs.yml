@@ -105,9 +105,9 @@ pages:
     - user_guide/preprocessing/MeanCenterer.md
     - user_guide/preprocessing/minmax_scaling.md
     - user_guide/preprocessing/one-hot_encoding.md
-    - user_guide/preprocessing/OnehotTransactions.md
     - user_guide/preprocessing/shuffle_arrays_unison.md
     - user_guide/preprocessing/standardize.md
+    - user_guide/preprocessing/TransactionEncoder.md
   - regressor:
     - user_guide/regressor/LinearRegression.md
     - user_guide/regressor/StackingCVRegressor.md

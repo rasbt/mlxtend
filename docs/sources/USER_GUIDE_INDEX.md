@@ -85,9 +85,9 @@
 - [MeanCenterer](user_guide/preprocessing/MeanCenterer.md)
 - [minmax_scaling](user_guide/preprocessing/minmax_scaling.md)
 - [one-hot_encoding](user_guide/preprocessing/one-hot_encoding.md)
-- [OnehotTransactions](user_guide/preprocessing/OnehotTransactions.md)
 - [shuffle_arrays_unison](user_guide/preprocessing/shuffle_arrays_unison.md)
 - [standardize](user_guide/preprocessing/standardize.md)
+- [TransactionEncoder](user_guide/preprocessing/TransactionEncoder.md)
 
 ## `regressor`
 - [LinearRegression](user_guide/regressor/LinearRegression.md)

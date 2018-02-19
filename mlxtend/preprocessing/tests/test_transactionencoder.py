@@ -6,8 +6,7 @@
 
 import numpy as np
 from scipy.sparse import csr_matrix
-
-from mlxtend.preprocessing import OnehotTransactions
+from mlxtend.preprocessing import TransactionEncoder
 from sklearn.base import clone
 from mlxtend.utils import assert_raises
 
@@ -42,21 +41,21 @@ expect = np.array([[1, 0, 1, 1, 0, 1],
 
 
 def test_fit():
-    oht = OnehotTransactions()
+    oht = TransactionEncoder()
     oht.fit(dataset)
     assert(oht.columns_ == ['Apple', 'Bananas', 'Beer',
                             'Chicken', 'Milk', 'Rice'])
 
 
 def test_transform():
-    oht = OnehotTransactions()
+    oht = TransactionEncoder()
     oht.fit(dataset)
     trans = oht.transform(dataset)
     np.testing.assert_array_equal(expect, trans)
 
 
 def test_transform_sparse():
-    oht = OnehotTransactions()
+    oht = TransactionEncoder()
     oht.fit(dataset)
     trans = oht.transform(dataset, sparse=True)
     assert(isinstance(trans, csr_matrix))
@@ -64,13 +63,13 @@ def test_transform_sparse():
 
 
 def test_fit_transform():
-    oht = OnehotTransactions()
+    oht = TransactionEncoder()
     trans = oht.fit_transform(dataset)
     np.testing.assert_array_equal(expect, trans)
 
 
 def test_inverse_transform():
-    oht = OnehotTransactions()
+    oht = TransactionEncoder()
     oht.fit(dataset)
     np.testing.assert_array_equal(np.array(data_sorted),
                                   np.array(oht.inverse_transform(expect)))
@@ -78,11 +77,11 @@ def test_inverse_transform():
 
 def test_cloning():
 
-    oht = OnehotTransactions()
+    oht = TransactionEncoder()
     oht.fit(dataset)
     oht2 = clone(oht)
 
-    msg = ("'OnehotTransactions' object has no attribute 'columns_'")
+    msg = ("'TransactionEncoder' object has no attribute 'columns_'")
     assert_raises(AttributeError,
                   msg,
                   oht2.transform,

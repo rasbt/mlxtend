@@ -70,6 +70,9 @@ class ColumnSelector(BaseEstimator):
 
         """
         t = X[:, self.cols]
+
+        if t.shape[-1] == 1 and self.drop_axis:
+            t = t.reshape(-1)
         if len(t.shape) == 1 and not self.drop_axis:
             t = t[:, np.newaxis]
         return t

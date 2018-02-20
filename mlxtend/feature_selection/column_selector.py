@@ -13,7 +13,7 @@ import numpy as np
 
 class ColumnSelector(BaseEstimator):
 
-    def __init__(self, cols=None):
+    def __init__(self, cols=None, drop_axis=False):
         """Object for selecting specific columns from a data set.
 
         Parameters
@@ -22,8 +22,18 @@ class ColumnSelector(BaseEstimator):
             A list specifying the feature indices to be selected. For example,
             [1, 4, 5] to select the 2nd, 5th, and 6th feature columns.
             If None, returns all columns in the array.
+
+        drop_axis : bool (default=False)
+            Drops last axis if True and the only one column is selected. This
+            is useful, e.g., when the ColumnSelector is used for selecting
+            only one column and the resulting array should be fed to e.g.,
+            a scikit-learn column selector. E.g., instead of returning an
+            array with shape (n_samples, 1), drop_axis=True will return an
+            aray with shape (n_samples,).
+
         """
         self.cols = cols
+        self.drop_axis = drop_axis
 
     def fit_transform(self, X, y=None):
         """ Return a slice of the input array.
@@ -60,7 +70,7 @@ class ColumnSelector(BaseEstimator):
 
         """
         t = X[:, self.cols]
-        if len(t.shape) == 1:
+        if len(t.shape) == 1 and not self.drop_axis:
             t = t[:, np.newaxis]
         return t
 

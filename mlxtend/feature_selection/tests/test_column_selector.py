@@ -17,7 +17,16 @@ from sklearn.model_selection import GridSearchCV
 def test_ColumnSelector():
     X1_in = np.ones((4, 8))
     X1_out = ColumnSelector(cols=(1, 3)).transform(X1_in)
-    assert(X1_out.shape == (4, 2))
+    assert X1_out.shape == (4, 2)
+
+
+def test_ColumnSelector_drop_axis():
+    X1_in = np.ones((4, 8))
+    X1_out = ColumnSelector(cols=(1), drop_axis=True).transform(X1_in)
+    assert X1_out.shape == (4,)
+
+    X1_out = ColumnSelector(cols=(1)).transform(X1_in)
+    assert X1_out.shape == (4, 1)
 
 
 def test_ColumnSelector_in_gridsearch():

@@ -22,10 +22,16 @@ def test_ColumnSelector():
 
 def test_ColumnSelector_drop_axis():
     X1_in = np.ones((4, 8))
-    X1_out = ColumnSelector(cols=(1), drop_axis=True).transform(X1_in)
+    X1_out = ColumnSelector(cols=1, drop_axis=True).transform(X1_in)
     assert X1_out.shape == (4,)
 
-    X1_out = ColumnSelector(cols=(1)).transform(X1_in)
+    X1_out = ColumnSelector(cols=(1,), drop_axis=True).transform(X1_in)
+    assert X1_out.shape == (4,)
+
+    X1_out = ColumnSelector(cols=1).transform(X1_in)
+    assert X1_out.shape == (4, 1)
+
+    X1_out = ColumnSelector(cols=(1,)).transform(X1_in)
     assert X1_out.shape == (4, 1)
 
 

@@ -201,7 +201,7 @@ def plot_decision_regions(X, y, clf,
         if dim > 2:
             for feature_idx in filler_feature_values:
                 X_predict[:, feature_idx] = filler_feature_values[feature_idx]
-    Z = clf.predict(X_predict)
+    Z = clf.predict(X_predict.astype(X.dtype))
     Z = Z.reshape(xx.shape)
     # Plot decisoin region
     ax.contourf(xx, yy, Z,

@@ -17,12 +17,12 @@ def check_Xy(X, y, y_int=True):
     if not isinstance(y, np.ndarray):
         raise ValueError('y must be a NumPy array. Found %s' % type(y))
 
-    if y_int and not np.issubdtype(y.dtype, np.integer):
+    if 'int' not in str(y.dtype):
         raise ValueError('y must be an integer array. Found %s. '
                          'Try passing the array as y.astype(np.integer)'
                          % y.dtype)
 
-    if X.dtype not in (np.float, np.int):
+    if not ('float' in str(X.dtype) or 'int' in str(X.dtype)):
         raise ValueError('X must be an integer or float array. Found %s.'
                          % X.dtype)
 

@@ -29,6 +29,14 @@ def test_invalid_type_X():
                   y)
 
 
+def test_float16_X():
+    check_Xy(X.astype(np.float16), y)
+
+
+def test_float16_y():
+    check_Xy(X, y.astype(np.int16))
+
+
 def test_invalid_type_y():
     expect = "y must be a NumPy array. Found <class 'list'>"
     if (sys.version_info < (3, 0)):

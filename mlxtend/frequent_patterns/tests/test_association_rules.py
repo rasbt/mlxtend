@@ -80,3 +80,17 @@ def test_empty_result():
     res_df = association_rules(df_freq_items, min_threshold=2)
 
     assert res_df.equals(expect)
+
+
+def test_leverage():
+    res_df = association_rules(df_freq_items,
+                               min_threshold=0.1,
+                               metric='leverage')
+    assert res_df.values.shape[0] == 6
+
+
+def test_conviction():
+    res_df = association_rules(df_freq_items,
+                               min_threshold=1.5,
+                               metric='conviction')
+    assert res_df.values.shape[0] == 11

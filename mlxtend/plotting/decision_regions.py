@@ -49,7 +49,10 @@ def plot_decision_regions(X, y, clf,
                           legend=1,
                           hide_spines=True,
                           markers='s^oxv<>',
-                          colors='red,blue,limegreen,gray,cyan'):
+                          colors='red,blue,limegreen,gray,cyan',
+                          scatter_kwargs=None,
+                          contourf_kwargs=None,
+                          scatter_highlight_kwargs=None):
     """Plot decision regions of a classifier.
 
     Please note that this functions assumes that class labels are
@@ -95,10 +98,16 @@ def plot_decision_regions(X, y, clf,
     legend : int (default: 1)
         Integer to specify the legend location.
         No legend if legend is 0.
-    markers : str (default 's^oxv<>')
+    markers : str (default: 's^oxv<>')
         Scatterplot markers.
-    colors : str (default 'red,blue,limegreen,gray,cyan')
+    colors : str (default: 'red,blue,limegreen,gray,cyan')
         Comma separated list of colors.
+    scatter_kwargs : dict (default: None)
+        Keyword arguments for underlying matplotlib scatter function.
+    contourf_kwargs : dict (default: None)
+        Keyword arguments for underlying matplotlib contourf function.
+    scatter_highlight_kwargs : dict (default: None)
+        Keyword arguments for underlying matplotlib scatter function.
 
     Returns
     ---------
@@ -204,15 +213,20 @@ def plot_decision_regions(X, y, clf,
     Z = clf.predict(X_predict.astype(X.dtype))
     Z = Z.reshape(xx.shape)
     # Plot decisoin region
+    # Make sure contourf_kwargs has backwards compatible defaults
+    contourf_kwargs_default = {'alpha': 0.3, 'antialiased': True}
+    contourf_kwargs = merge_dicts(contourf_kwargs_default, contourf_kwargs)
     ax.contourf(xx, yy, Z,
-                alpha=0.3,
                 colors=colors,
                 levels=np.arange(Z.max() + 2) - 0.5,
-                antialiased=True)
+                **contourf_kwargs)
 
     ax.axis(xmin=xx.min(), xmax=xx.max(), y_min=yy.min(), y_max=yy.max())
 
     # Scatter training data samples
+    # Make sure scatter_kwargs has backwards compatible defaults
+    scatter_kwargs_default = {'alpha': 0.8, 'edgecolor': 'black'}
+    scatter_kwargs = merge_dicts(scatter_kwargs_default, scatter_kwargs)
     for idx, c in enumerate(np.unique(y)):
         if dim == 1:
             y_data = [0 for i in X[y == c]]
@@ -232,11 +246,10 @@ def plot_decision_regions(X, y, clf,
 
         ax.scatter(x=x_data,
                    y=y_data,
-                   alpha=0.8,
                    c=colors[idx],
                    marker=next(marker_gen),
-                   edgecolor='black',
-                   label=c)
+                   label=c,
+                   **scatter_kwargs)
 
     if hide_spines:
         ax.spines['right'].set_visible(False)
@@ -247,14 +260,6 @@ def plot_decision_regions(X, y, clf,
     ax.xaxis.set_ticks_position('bottom')
     if dim == 1:
         ax.axes.get_yaxis().set_ticks([])
-
-    if legend:
-        if dim > 2 and filler_feature_ranges is None:
-            pass
-        else:
-            handles, labels = ax.get_legend_handles_labels()
-            ax.legend(handles, labels,
-                      framealpha=0.3, scatterpoints=1, loc=legend)
 
     if plot_testdata:
         if dim == 1:
@@ -270,13 +275,54 @@ def plot_decision_regions(X, y, clf,
             y_data = X_highlight[feature_range_mask, y_index]
             x_data = X_highlight[feature_range_mask, x_index]
 
+        # Make sure scatter_highlight_kwargs backwards compatible defaults
+        scatter_highlight_defaults = {'c': '',
+                                      'edgecolor': 'black',
+                                      'alpha': 1.0,
+                                      'linewidths': 1,
+                                      'marker': 'o',
+                                      's': 80}
+        scatter_highlight_kwargs = merge_dicts(scatter_highlight_defaults,
+                                               scatter_highlight_kwargs)
         ax.scatter(x_data,
                    y_data,
-                   c='',
-                   edgecolor='black',
-                   alpha=1.0,
-                   linewidths=1,
-                   marker='o',
-                   s=80)
+                   **scatter_highlight_kwargs)
+
+    if legend:
+        if dim > 2 and filler_feature_ranges is None:
+            pass
+        else:
+            handles, labels = ax.get_legend_handles_labels()
+            ax.legend(handles, labels,
+                      framealpha=0.3, scatterpoints=1, loc=legend)
 
     return ax
+
+
+def merge_dicts(*dicts):
+    """Function to merge dictionaries
+
+    Precedence goes to key value pairs in latter dicts.
+
+    Parameters
+    ----------
+    *dicts
+        Variable number of dictionaries to be merged together.
+
+    Returns
+    -------
+    merged_dict : dict
+        Merged dictionary.
+
+    Examples
+    --------
+    >>> d1 = {'a': 1, 'b':2}
+    >>> d2 = {'b': 3, 'c':4}
+    >>> merge_dicts(d1, d2)
+    {'a': 1, 'b':3, 'c':4}
+    """
+    merged_dict = {}
+    for d in dicts:
+        if isinstance(d, dict):
+            merged_dict.update(d)
+    return merged_dict

@@ -9,7 +9,7 @@
 from itertools import cycle
 import matplotlib.pyplot as plt
 import numpy as np
-from ..utils import check_Xy
+from ..utils import check_Xy, format_kwarg_dictionaries
 import warnings
 
 
@@ -215,7 +215,7 @@ def plot_decision_regions(X, y, clf,
     # Plot decisoin region
     # Make sure contourf_kwargs has backwards compatible defaults
     contourf_kwargs_default = {'alpha': 0.3, 'antialiased': True}
-    contourf_kwargs = format_plotting_kwargs(
+    contourf_kwargs = format_kwarg_dictionaries(
                         default_kwargs=contourf_kwargs_default,
                         user_kwargs=contourf_kwargs,
                         protected_keys=['colors', 'levels'])
@@ -229,7 +229,7 @@ def plot_decision_regions(X, y, clf,
     # Scatter training data samples
     # Make sure scatter_kwargs has backwards compatible defaults
     scatter_kwargs_default = {'alpha': 0.8, 'edgecolor': 'black'}
-    scatter_kwargs = format_plotting_kwargs(
+    scatter_kwargs = format_kwarg_dictionaries(
                         default_kwargs=scatter_kwargs_default,
                         user_kwargs=scatter_kwargs,
                         protected_keys=['c', 'marker', 'label'])
@@ -288,7 +288,7 @@ def plot_decision_regions(X, y, clf,
                                       'linewidths': 1,
                                       'marker': 'o',
                                       's': 80}
-        scatter_highlight_kwargs = format_plotting_kwargs(
+        scatter_highlight_kwargs = format_kwarg_dictionaries(
                                     default_kwargs=scatter_highlight_defaults,
                                     user_kwargs=scatter_highlight_kwargs)
         ax.scatter(x_data,
@@ -304,36 +304,3 @@ def plot_decision_regions(X, y, clf,
                       framealpha=0.3, scatterpoints=1, loc=legend)
 
     return ax
-
-
-def format_plotting_kwargs(default_kwargs=None, user_kwargs=None,
-                           protected_keys=None):
-    """Function to combine default and user specified plotting kwargs
-
-    Parameters
-    ----------
-    default_kwargs : dict, optional
-        Default kwargs (default is None).
-    user_kwargs : dict, optional
-        User specified kwargs (default is None).
-    protected_keys : array_like, optional
-        Sequence of keys to be removed from the returned dictionary
-        (default is None).
-
-    Returns
-    -------
-    plotting_dict : dict
-        Formatted plotting dictionary.
-    """
-    plotting_dict = {}
-    for d in [default_kwargs, user_kwargs]:
-        if not isinstance(d, (dict, type(None))):
-            raise TypeError('d must be of type dict or None, but '
-                            'got {} instead'.format(type(d)))
-        if d is not None:
-            plotting_dict.update(d)
-    if protected_keys is not None:
-        for key in protected_keys:
-            plotting_dict.pop(key, None)
-
-    return plotting_dict

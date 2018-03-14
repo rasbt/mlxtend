@@ -215,7 +215,10 @@ def plot_decision_regions(X, y, clf,
     # Plot decisoin region
     # Make sure contourf_kwargs has backwards compatible defaults
     contourf_kwargs_default = {'alpha': 0.3, 'antialiased': True}
-    contourf_kwargs = merge_dicts(contourf_kwargs_default, contourf_kwargs)
+    contourf_kwargs = format_plotting_kwargs(
+                        default_kwargs=contourf_kwargs_default,
+                        user_kwargs=contourf_kwargs,
+                        protected_keys=['colors', 'levels'])
     ax.contourf(xx, yy, Z,
                 colors=colors,
                 levels=np.arange(Z.max() + 2) - 0.5,
@@ -226,7 +229,10 @@ def plot_decision_regions(X, y, clf,
     # Scatter training data samples
     # Make sure scatter_kwargs has backwards compatible defaults
     scatter_kwargs_default = {'alpha': 0.8, 'edgecolor': 'black'}
-    scatter_kwargs = merge_dicts(scatter_kwargs_default, scatter_kwargs)
+    scatter_kwargs = format_plotting_kwargs(
+                        default_kwargs=scatter_kwargs_default,
+                        user_kwargs=scatter_kwargs,
+                        protected_keys=['c', 'marker', 'label'])
     for idx, c in enumerate(np.unique(y)):
         if dim == 1:
             y_data = [0 for i in X[y == c]]
@@ -282,8 +288,9 @@ def plot_decision_regions(X, y, clf,
                                       'linewidths': 1,
                                       'marker': 'o',
                                       's': 80}
-        scatter_highlight_kwargs = merge_dicts(scatter_highlight_defaults,
-                                               scatter_highlight_kwargs)
+        scatter_highlight_kwargs = format_plotting_kwargs(
+                                    default_kwargs=scatter_highlight_defaults,
+                                    user_kwargs=scatter_highlight_kwargs)
         ax.scatter(x_data,
                    y_data,
                    **scatter_highlight_kwargs)
@@ -299,30 +306,34 @@ def plot_decision_regions(X, y, clf,
     return ax
 
 
-def merge_dicts(*dicts):
-    """Function to merge dictionaries
-
-    Precedence goes to key value pairs in latter dicts.
+def format_plotting_kwargs(default_kwargs=None, user_kwargs=None,
+                           protected_keys=None):
+    """Function to combine default and user specified plotting kwargs
 
     Parameters
     ----------
-    *dicts
-        Variable number of dictionaries to be merged together.
+    default_kwargs : dict, optional
+        Default kwargs (default is None).
+    user_kwargs : dict, optional
+        User specified kwargs (default is None).
+    protected_keys : array_like, optional
+        Sequence of keys to be removed from the returned dictionary
+        (default is None).
 
     Returns
     -------
-    merged_dict : dict
-        Merged dictionary.
-
-    Examples
-    --------
-    >>> d1 = {'a': 1, 'b':2}
-    >>> d2 = {'b': 3, 'c':4}
-    >>> merge_dicts(d1, d2)
-    {'a': 1, 'b':3, 'c':4}
+    plotting_dict : dict
+        Formatted plotting dictionary.
     """
-    merged_dict = {}
-    for d in dicts:
-        if isinstance(d, dict):
-            merged_dict.update(d)
-    return merged_dict
+    plotting_dict = {}
+    for d in [default_kwargs, user_kwargs]:
+        if not isinstance(d, (dict, type(None))):
+            raise TypeError('d must be of type dict or None, but '
+                            'got {} instead'.format(type(d)))
+        if d is not None:
+            plotting_dict.update(d)
+    if protected_keys is not None:
+        for key in protected_keys:
+            plotting_dict.pop(key, None)
+
+    return plotting_dict

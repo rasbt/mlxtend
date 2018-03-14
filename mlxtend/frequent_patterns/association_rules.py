@@ -55,6 +55,12 @@ def association_rules(df, metric="confidence", min_threshold=0.8):
     def conviction_helper(sAC, sA, sC):
         confidence = sAC/sA
         conviction = np.empty(confidence.shape, dtype=float)
+        if not len(conviction.shape):
+            conviction = conviction[np.newaxis]
+            confidence = confidence[np.newaxis]
+            sAC = sAC[np.newaxis]
+            sA = sA[np.newaxis]
+            sC = sC[np.newaxis]
         conviction[:] = np.inf
         conviction[confidence < 1.] = ((1. - sC[confidence < 1.]) /
                                        (1. - confidence[confidence < 1.]))

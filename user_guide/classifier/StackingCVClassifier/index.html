@@ -293,6 +293,24 @@
         
             
 <li >
+    <a href="../../evaluate/paired_ttest_5x2cv/">Paired ttest 5x2cv</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/paired_ttest_kfold_cv/">Paired ttest kfold cv</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/paired_ttest_resampled/">Paired ttest resampled</a>
+</li>
+
+        
+            
+<li >
     <a href="../../evaluate/permutation_test/">Permutation test</a>
 </li>
 
@@ -563,12 +581,6 @@
         
             
 <li >
-    <a href="../../preprocessing/OnehotTransactions/">OnehotTransactions</a>
-</li>
-
-        
-            
-<li >
     <a href="../../preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
 </li>
 
@@ -576,6 +588,12 @@
             
 <li >
     <a href="../../preprocessing/standardize/">Standardize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/TransactionEncoder/">TransactionEncoder</a>
 </li>
 
         
@@ -1163,7 +1181,7 @@ sclf.fit(X, y)
            use_probas=False, verbose=0)
 </code></pre>
 <h1 id="api">API</h1>
-<p><em>StackingCVClassifier(classifiers, meta_classifier, use_probas=False, cv=2, use_features_in_secondary=False, stratify=True, shuffle=True, verbose=0, store_train_meta_features=False)</em></p>
+<p><em>StackingCVClassifier(classifiers, meta_classifier, use_probas=False, cv=2, use_features_in_secondary=False, stratify=True, shuffle=True, verbose=0, store_train_meta_features=False, refit=True)</em></p>
 <p>A 'Stacking Cross-Validation' classifier for scikit-learn estimators.</p>
 <p>New in mlxtend v0.4.3</p>
 <p><strong>Notes</strong></p>
@@ -1241,6 +1259,15 @@ self.verbose - 2</p>
 for fitting the meta-classifier stored in the
 <code>self.train_meta_features_</code> array, which can be
 accessed after calling <code>fit</code>.</p>
+</li>
+<li>
+<p><code>refit</code> : bool (default: True)</p>
+<p>Clones the classifiers for stacking classification if True (default)
+or else uses the original ones, which will be refitted on the dataset
+upon calling the <code>fit</code> method. Setting refit=False is
+recommended if you are working with estimators that are supporting
+the scikit-learn fit/predict API interface but are not compatible
+to scikit-learn's <code>clone</code> function.</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>
@@ -1348,11 +1375,8 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>meta-features</code> : numpy array</p>
-<p>Returns the meta-features for test data. The shape of the
-returned numpy array is [n_samples, n_classifiers] if
-<code>self.use_probas=False</code> and
-[n_samples, n_classifiers*n_unique_classlabels] otherwise.</p>
+<p><code>meta-features</code> : numpy array, shape = [n_samples, n_classifiers]</p>
+<p>Returns the meta-features for test data.</p>
 </li>
 </ul>
 <hr>

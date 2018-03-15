@@ -293,6 +293,24 @@
         
             
 <li >
+    <a href="../../user_guide/evaluate/paired_ttest_5x2cv/">Paired ttest 5x2cv</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/paired_ttest_kfold_cv/">Paired ttest kfold cv</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/paired_ttest_resampled/">Paired ttest resampled</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/evaluate/permutation_test/">Permutation test</a>
 </li>
 
@@ -563,12 +581,6 @@
         
             
 <li >
-    <a href="../../user_guide/preprocessing/OnehotTransactions/">OnehotTransactions</a>
-</li>
-
-        
-            
-<li >
     <a href="../../user_guide/preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
 </li>
 
@@ -576,6 +588,12 @@
             
 <li >
     <a href="../../user_guide/preprocessing/standardize/">Standardize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/TransactionEncoder/">TransactionEncoder</a>
 </li>
 
         
@@ -862,7 +880,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.9.2dev </p>
+<p>mlxtend version: 0.11.0 </p>
 <h2 id="linearregression">LinearRegression</h2>
 <p><em>LinearRegression(eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0)</em></p>
 <p>Ordinary least squares linear regression.</p>
@@ -962,7 +980,7 @@ n_features is the number of features.</p>
 </li>
 </ul>
 <h2 id="stackingcvregressor">StackingCVRegressor</h2>
-<p><em>StackingCVRegressor(regressors, meta_regressor, cv=5, shuffle=True, use_features_in_secondary=False, store_train_meta_features=False)</em></p>
+<p><em>StackingCVRegressor(regressors, meta_regressor, cv=5, shuffle=True, use_features_in_secondary=False, store_train_meta_features=False, refit=True)</em></p>
 <p>A 'Stacking Cross-Validation' regressor for scikit-learn estimators.</p>
 <p>New in mlxtend v0.7.0</p>
 <p><strong>Notes</strong></p>
@@ -1019,11 +1037,20 @@ meta-regressor stored in the <code>self.train_meta_features_</code> array,
 which can be
 accessed after calling <code>fit</code>.</p>
 </li>
+<li>
+<p><code>refit</code> : bool (default: True)</p>
+<p>Clones the regressors for stacking regression if True (default)
+or else uses the original ones, which will be refitted on the dataset
+upon calling the <code>fit</code> method. Setting refit=False is
+recommended if you are working with estimators that are supporting
+the scikit-learn fit/predict API interface but are not compatible
+to scikit-learn's <code>clone</code> function.</p>
+</li>
 </ul>
 <p><strong>Attributes</strong></p>
 <ul>
 <li>
-<p><code>train_meta_features</code> : numpy array, shape = [n_samples, len(self.regressors)]</p>
+<p><code>train_meta_features</code> : numpy array, shape = [n_samples, n_regressors]</p>
 <p>meta-features for training data, where n_samples is the
 number of samples
 in training data and len(self.regressors) is the number of regressors.</p>
@@ -1182,7 +1209,7 @@ component of a nested object.</p>
 <p><strong>Returns</strong></p>
 <p>self</p>
 <h2 id="stackingregressor">StackingRegressor</h2>
-<p><em>StackingRegressor(regressors, meta_regressor, verbose=0, store_train_meta_features=False)</em></p>
+<p><em>StackingRegressor(regressors, meta_regressor, verbose=0, store_train_meta_features=False, refit=True)</em></p>
 <p>A Stacking regressor for scikit-learn estimators for regression.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1241,6 +1268,15 @@ accessed after calling <code>fit</code>.</p>
 <p>meta-features for training data, where n_samples is the
 number of samples
 in training data and len(self.regressors) is the number of regressors.</p>
+</li>
+<li>
+<p><code>refit</code> : bool (default: True)</p>
+<p>Clones the regressors for stacking regression if True (default)
+or else uses the original ones, which will be refitted on the dataset
+upon calling the <code>fit</code> method. Setting refit=False is
+recommended if you are working with estimators that are supporting
+the scikit-learn fit/predict API interface but are not compatible
+to scikit-learn's <code>clone</code> function.</p>
 </li>
 </ul>
 <h3 id="methods_2">Methods</h3>

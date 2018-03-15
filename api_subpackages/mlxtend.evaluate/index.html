@@ -293,6 +293,24 @@
         
             
 <li >
+    <a href="../../user_guide/evaluate/paired_ttest_5x2cv/">Paired ttest 5x2cv</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/paired_ttest_kfold_cv/">Paired ttest kfold cv</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/paired_ttest_resampled/">Paired ttest resampled</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/evaluate/permutation_test/">Permutation test</a>
 </li>
 
@@ -563,12 +581,6 @@
         
             
 <li >
-    <a href="../../user_guide/preprocessing/OnehotTransactions/">OnehotTransactions</a>
-</li>
-
-        
-            
-<li >
     <a href="../../user_guide/preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
 </li>
 
@@ -576,6 +588,12 @@
             
 <li >
     <a href="../../user_guide/preprocessing/standardize/">Standardize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/TransactionEncoder/">TransactionEncoder</a>
 </li>
 
         
@@ -837,13 +855,19 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#bootstrapoutofbag">BootstrapOutOfBag</a></li>
+        <li class="main active"><a href="#paired_ttest_kfold_cv">paired_ttest_kfold_cv</a></li>
+        
+    
+        <li class="main "><a href="#bootstrapoutofbag">BootstrapOutOfBag</a></li>
         
             <li><a href="#methods">Methods</a></li>
                 <!--  -->
         
     
         <li class="main "><a href="#cochrans_q">cochrans_q</a></li>
+        
+    
+        <li class="main "><a href="#paired_ttest_5x2cv">paired_ttest_5x2cv</a></li>
         
     
         <li class="main "><a href="#confusion_matrix">confusion_matrix</a></li>
@@ -853,6 +877,9 @@
         
     
         <li class="main "><a href="#permutation_test">permutation_test</a></li>
+        
+    
+        <li class="main "><a href="#paired_ttest_resampled">paired_ttest_resampled</a></li>
         
     
         <li class="main "><a href="#mcnemar">mcnemar</a></li>
@@ -886,7 +913,73 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.9.2dev </p>
+<p>mlxtend version: 0.11.0 </p>
+<h2 id="paired_ttest_kfold_cv">paired_ttest_kfold_cv</h2>
+<p><em>paired_ttest_kfold_cv(estimator1, estimator2, X, y, cv=10, scoring=None, shuffle=False, random_seed=None)</em></p>
+<p>Implements the k-fold paired t test procedure
+to compare the performance of two models.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>estimator1</code> : scikit-learn classifier or regressor</p>
+</li>
+<li>
+<p><code>estimator2</code> : scikit-learn classifier or regressor</p>
+</li>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>cv</code> : int (default: 10)</p>
+<p>Number of splits and iteration for the
+cross-validation procedure</p>
+</li>
+<li>
+<p><code>scoring</code> : str, callable, or None (default: None)</p>
+<p>If None (default), uses 'accuracy' for sklearn classifiers
+and 'r2' for sklearn regressors.
+If str, uses a sklearn scoring metric string identifier, for example
+{accuracy, f1, precision, recall, roc_auc} for classifiers,
+{'mean_absolute_error', 'mean_squared_error'/'neg_mean_squared_error',
+'median_absolute_error', 'r2'} for regressors.
+If a callable object or function is provided, it has to be conform with
+sklearn's signature <code>scorer(estimator, X, y)</code>; see
+http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
+for more information.</p>
+</li>
+<li>
+<p><code>shuffle</code> : bool (default: True)</p>
+<p>Whether to shuffle the dataset for generating
+the k-fold splits.</p>
+</li>
+<li>
+<p><code>random_seed</code> : int or None (default: None)</p>
+<p>Random seed for shuffling the dataset
+for generating the k-fold splits.
+Ignored if shuffle=False.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>t</code> : float</p>
+<p>The t-statistic</p>
+</li>
+<li>
+<p><code>pvalue</code> : float</p>
+<p>Two-tailed p-value.
+If the chosen significance level is larger
+than the p-value, we reject the null hypothesis
+and accept that there are significant differences
+in the two compared models.</p>
+</li>
+</ul>
 <h2 id="bootstrapoutofbag">BootstrapOutOfBag</h2>
 <p><em>BootstrapOutOfBag(n_splits=200, random_seed=None)</em></p>
 <p><strong>Parameters</strong></p>
@@ -974,6 +1067,61 @@ from models as 1D NumPy array.</p>
 <li>
 <p><code>q, p</code> : float or None, float</p>
 <p>Returns the Q (chi-squared) value and the p-value</p>
+</li>
+</ul>
+<h2 id="paired_ttest_5x2cv">paired_ttest_5x2cv</h2>
+<p><em>paired_ttest_5x2cv(estimator1, estimator2, X, y, scoring=None, random_seed=None)</em></p>
+<p>Implements the 5x2cv paired t test proposed
+by Dieterrich (1998)
+to compare the performance of two models.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>estimator1</code> : scikit-learn classifier or regressor</p>
+</li>
+<li>
+<p><code>estimator2</code> : scikit-learn classifier or regressor</p>
+</li>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>scoring</code> : str, callable, or None (default: None)</p>
+<p>If None (default), uses 'accuracy' for sklearn classifiers
+and 'r2' for sklearn regressors.
+If str, uses a sklearn scoring metric string identifier, for example
+{accuracy, f1, precision, recall, roc_auc} for classifiers,
+{'mean_absolute_error', 'mean_squared_error'/'neg_mean_squared_error',
+'median_absolute_error', 'r2'} for regressors.
+If a callable object or function is provided, it has to be conform with
+sklearn's signature <code>scorer(estimator, X, y)</code>; see
+http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
+for more information.</p>
+</li>
+<li>
+<p><code>random_seed</code> : int or None (default: None)</p>
+<p>Random seed for creating the test/train splits.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>t</code> : float</p>
+<p>The t-statistic</p>
+</li>
+<li>
+<p><code>pvalue</code> : float</p>
+<p>Two-tailed p-value.
+If the chosen significance level is larger
+than the p-value, we reject the null hypothesis
+and accept that there are significant differences
+in the two compared models.</p>
 </li>
 </ul>
 <h2 id="confusion_matrix">confusion_matrix</h2>
@@ -1101,6 +1249,73 @@ size is relatively small.</p>
 </ul>
 <p><strong>Returns</strong></p>
 <p>p-value under the null hypothesis</p>
+<h2 id="paired_ttest_resampled">paired_ttest_resampled</h2>
+<p><em>paired_ttest_resampled(estimator1, estimator2, X, y, num_rounds=30, test_size=0.3, scoring=None, random_seed=None)</em></p>
+<p>Implements the resampled paired t test procedure
+to compare the performance of two models
+(also called k-hold-out paired t test).</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>estimator1</code> : scikit-learn classifier or regressor</p>
+</li>
+<li>
+<p><code>estimator2</code> : scikit-learn classifier or regressor</p>
+</li>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>num_rounds</code> : int (default: 30)</p>
+<p>Number of resampling iterations
+(i.e., train/test splits)</p>
+</li>
+<li>
+<p><code>test_size</code> : float or int (default: 0.3)</p>
+<p>If float, should be between 0.0 and 1.0 and
+represent the proportion of the dataset to use
+as a test set.
+If int, represents the absolute number of test exsamples.</p>
+</li>
+<li>
+<p><code>scoring</code> : str, callable, or None (default: None)</p>
+<p>If None (default), uses 'accuracy' for sklearn classifiers
+and 'r2' for sklearn regressors.
+If str, uses a sklearn scoring metric string identifier, for example
+{accuracy, f1, precision, recall, roc_auc} for classifiers,
+{'mean_absolute_error', 'mean_squared_error'/'neg_mean_squared_error',
+'median_absolute_error', 'r2'} for regressors.
+If a callable object or function is provided, it has to be conform with
+sklearn's signature <code>scorer(estimator, X, y)</code>; see
+http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
+for more information.</p>
+</li>
+<li>
+<p><code>random_seed</code> : int or None (default: None)</p>
+<p>Random seed for creating the test/train splits.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>t</code> : float</p>
+<p>The t-statistic</p>
+</li>
+<li>
+<p><code>pvalue</code> : float</p>
+<p>Two-tailed p-value.
+If the chosen significance level is larger
+than the p-value, we reject the null hypothesis
+and accept that there are significant differences
+in the two compared models.</p>
+</li>
+</ul>
 <h2 id="mcnemar">mcnemar</h2>
 <p><em>mcnemar(ary, corrected=True, exact=False)</em></p>
 <p>McNemar test for paired nominal data</p>

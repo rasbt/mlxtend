@@ -293,6 +293,24 @@
         
             
 <li >
+    <a href="../../user_guide/evaluate/paired_ttest_5x2cv/">Paired ttest 5x2cv</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/paired_ttest_kfold_cv/">Paired ttest kfold cv</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/paired_ttest_resampled/">Paired ttest resampled</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/evaluate/permutation_test/">Permutation test</a>
 </li>
 
@@ -563,12 +581,6 @@
         
             
 <li >
-    <a href="../../user_guide/preprocessing/OnehotTransactions/">OnehotTransactions</a>
-</li>
-
-        
-            
-<li >
     <a href="../../user_guide/preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
 </li>
 
@@ -576,6 +588,12 @@
             
 <li >
     <a href="../../user_guide/preprocessing/standardize/">Standardize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/TransactionEncoder/">TransactionEncoder</a>
 </li>
 
         
@@ -849,11 +867,14 @@
         <li class="main "><a href="#assert_raises">assert_raises</a></li>
         
     
+        <li class="main "><a href="#format_kwarg_dictionaries">format_kwarg_dictionaries</a></li>
+        
+    
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.9.2dev </p>
+<p>mlxtend version: 0.11.0 </p>
 <h2 id="check_xy">check_Xy</h2>
 <p><em>check_Xy(X, y, y_int=True)</em></p>
 <p>None</p>
@@ -941,6 +962,32 @@ between multiple counters.</p>
 </li>
 <li>
 <p><code>**kwargs</code> : keyword arguments to <code>func</code></p>
+</li>
+</ul>
+<h2 id="format_kwarg_dictionaries">format_kwarg_dictionaries</h2>
+<p><em>format_kwarg_dictionaries(default_kwargs=None, user_kwargs=None, protected_keys=None)</em></p>
+<p>Function to combine default and user specified kwargs dictionaries</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>default_kwargs</code> : dict, optional</p>
+<p>Default kwargs (default is None).</p>
+</li>
+<li>
+<p><code>user_kwargs</code> : dict, optional</p>
+<p>User specified kwargs (default is None).</p>
+</li>
+<li>
+<p><code>protected_keys</code> : array_like, optional</p>
+<p>Sequence of keys to be removed from the returned dictionary
+(default is None).</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>formatted_kwargs</code> : dict</p>
+<p>Formatted kwargs dictionary.</p>
 </li>
 </ul></div>
         

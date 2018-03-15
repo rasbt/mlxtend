@@ -293,6 +293,24 @@
         
             
 <li >
+    <a href="../../evaluate/paired_ttest_5x2cv/">Paired ttest 5x2cv</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/paired_ttest_kfold_cv/">Paired ttest kfold cv</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/paired_ttest_resampled/">Paired ttest resampled</a>
+</li>
+
+        
+            
+<li >
     <a href="../../evaluate/permutation_test/">Permutation test</a>
 </li>
 
@@ -563,12 +581,6 @@
         
             
 <li >
-    <a href="../../preprocessing/OnehotTransactions/">OnehotTransactions</a>
-</li>
-
-        
-            
-<li >
     <a href="../../preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
 </li>
 
@@ -576,6 +588,12 @@
             
 <li >
     <a href="../../preprocessing/standardize/">Standardize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/TransactionEncoder/">TransactionEncoder</a>
 </li>
 
         
@@ -852,6 +870,9 @@
         <li class="main "><a href="#example-2">Example 2</a></li>
         
     
+        <li class="main "><a href="#example-3-sparse-representation">Example 3 - Sparse Representation</a></li>
+        
+    
         <li class="main "><a href="#api">API</a></li>
         
     
@@ -865,7 +886,7 @@
 <p>from mlxtend.frequent_patterns import apriori</p>
 </blockquote>
 <h2 id="overview">Overview</h2>
-<p>Apriori is a popular algorithm [1] for extracting frequent itemsets with applications in association rule learning. The apriori algorithm has been designed to operate on databases containing transactions, such as purchases by customers of a store. A itemset is considered as "frequent" if it meets a user-specified support threshold. For instance, if the support threshold is set to 0.5 (50%), a frequent itemset is defined as a set of items that occur togehter in at least 50% of all transactions in the database.</p>
+<p>Apriori is a popular algorithm [1] for extracting frequent itemsets with applications in association rule learning. The apriori algorithm has been designed to operate on databases containing transactions, such as purchases by customers of a store. An itemset is considered as "frequent" if it meets a user-specified support threshold. For instance, if the support threshold is set to 0.5 (50%), a frequent itemset is defined as a set of items that occur together in at least 50% of all transactions in the database.</p>
 <h2 id="references">References</h2>
 <p>[1] Agrawal, Rakesh, and Ramakrishnan Srikant. "<a href="https://www.it.uu.se/edu/course/homepage/infoutv/ht08/vldb94_rj.pdf">Fast algorithms for mining association rules</a>." Proc. 20th int. conf. very large data bases, VLDB. Vol. 1215. 1994.</p>
 <h2 id="example-1">Example 1</h2>
@@ -878,28 +899,28 @@ Suppose we have the following transaction data:</p>
            ['Corn', 'Onion', 'Onion', 'Kidney Beans', 'Ice cream', 'Eggs']]
 </code></pre>
 
-<p>We can transform it into the right format via the <code>OnehotTransactions</code> encoder as follows:</p>
+<p>We can transform it into the right format via the <code>TransactionEncoder</code> as follows:</p>
 <pre><code class="python">import pandas as pd
-from mlxtend.preprocessing import OnehotTransactions
+from mlxtend.preprocessing import TransactionEncoder
 
-oht = OnehotTransactions()
-oht_ary = oht.fit(dataset).transform(dataset)
-df = pd.DataFrame(oht_ary, columns=oht.columns_)
+te = TransactionEncoder()
+te_ary = te.fit(dataset).transform(dataset)
+df = pd.DataFrame(te_ary, columns=te.columns_)
 df
 </code></pre>
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
@@ -922,73 +943,73 @@ df
   <tbody>
     <tr>
       <th>0</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
     </tr>
   </tbody>
 </table>
@@ -1001,17 +1022,17 @@ apriori(df, min_support=0.6)
 </code></pre>
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
@@ -1087,17 +1108,17 @@ apriori(df, min_support=0.6)
 </code></pre>
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
@@ -1176,17 +1197,17 @@ frequent_itemsets
 </code></pre>
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
@@ -1275,17 +1296,17 @@ frequent_itemsets
 </code></pre>
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
@@ -1303,6 +1324,205 @@ frequent_itemsets
       <td>0.8</td>
       <td>[Eggs, Kidney Beans]</td>
       <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="example-3-sparse-representation">Example 3 - Sparse Representation</h2>
+<p>To save memory, you may want to represent your transaction data in the sparse format.
+This is especially useful if you have lots of products and small transactions.</p>
+<pre><code class="python">oht_ary = te.fit(dataset).transform(dataset, sparse=True)
+sparse_df = pd.SparseDataFrame(te_ary, columns=te.columns_, default_fill_value=False)
+sparse_df
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Apple</th>
+      <th>Corn</th>
+      <th>Dill</th>
+      <th>Eggs</th>
+      <th>Ice cream</th>
+      <th>Kidney Beans</th>
+      <th>Milk</th>
+      <th>Nutmeg</th>
+      <th>Onion</th>
+      <th>Unicorn</th>
+      <th>Yogurt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="python">apriori(sparse_df, min_support=0.6, use_colnames=True)
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>support</th>
+      <th>itemsets</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.8</td>
+      <td>[Eggs]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>[Kidney Beans]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.6</td>
+      <td>[Milk]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.6</td>
+      <td>[Onion]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.6</td>
+      <td>[Yogurt]</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.8</td>
+      <td>[Eggs, Kidney Beans]</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.6</td>
+      <td>[Eggs, Onion]</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.6</td>
+      <td>[Kidney Beans, Milk]</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.6</td>
+      <td>[Kidney Beans, Onion]</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.6</td>
+      <td>[Kidney Beans, Yogurt]</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.6</td>
+      <td>[Eggs, Kidney Beans, Onion]</td>
     </tr>
   </tbody>
 </table>

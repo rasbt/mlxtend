@@ -293,6 +293,24 @@
         
             
 <li >
+    <a href="../../evaluate/paired_ttest_5x2cv/">Paired ttest 5x2cv</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/paired_ttest_kfold_cv/">Paired ttest kfold cv</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/paired_ttest_resampled/">Paired ttest resampled</a>
+</li>
+
+        
+            
+<li >
     <a href="../../evaluate/permutation_test/">Permutation test</a>
 </li>
 
@@ -563,12 +581,6 @@
         
             
 <li >
-    <a href="../../preprocessing/OnehotTransactions/">OnehotTransactions</a>
-</li>
-
-        
-            
-<li >
     <a href="../../preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
 </li>
 
@@ -576,6 +588,12 @@
             
 <li >
     <a href="../../preprocessing/standardize/">Standardize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/TransactionEncoder/">TransactionEncoder</a>
 </li>
 
         
@@ -872,6 +890,9 @@
             <li><a href="#example-8-grid-of-decision-region-slices">Example 8 - Grid of decision region slices</a></li>
                 <!--  -->
         
+            <li><a href="#example-9-customizing-the-plotting-style">Example 9 - Customizing the plotting style</a></li>
+                <!--  -->
+        
     
         <li class="main "><a href="#api">API</a></li>
         
@@ -906,8 +927,7 @@ svm.fit(X, y)
 
 
 # Plotting decision regions
-plot_decision_regions(X, y, clf=svm,
-                      res=0.02, legend=2)
+plot_decision_regions(X, y, clf=svm, legend=2)
 
 # Adding axes annotations
 plt.xlabel('sepal length [cm]')
@@ -934,8 +954,7 @@ svm = SVC(C=0.5, kernel='linear')
 svm.fit(X, y)
 
 # Plotting decision regions
-plot_decision_regions(X, y, clf=svm, 
-                      res=0.02, legend=2)
+plot_decision_regions(X, y, clf=svm, legend=2)
 
 # Adding axes annotations
 plt.xlabel('sepal length [cm]')
@@ -1008,8 +1027,8 @@ svm = SVC(C=0.5, kernel='linear')
 svm.fit(X_train, y_train)
 
 # Plotting decision regions
-plot_decision_regions(X, y, clf=svm, res=0.02,
-                      legend=2, X_highlight=X_test)
+plot_decision_regions(X, y, clf=svm, legend=2, 
+                      X_highlight=X_test)
 
 # Adding axes annotations
 plt.xlabel('sepal length [cm]')
@@ -1166,7 +1185,7 @@ width = 0.75
 plot_decision_regions(X, y, clf=svm,
                       filler_feature_values={2: value},
                       filler_feature_ranges={2: width},
-                      res=0.02, legend=2, ax=ax)
+                      legend=2, ax=ax)
 ax.set_xlabel('Feature 1')
 ax.set_ylabel('Feature 2')
 ax.set_title('Feature 3 = {}'.format(value))
@@ -1199,7 +1218,7 @@ for value, ax in zip(values, axarr.flat):
     plot_decision_regions(X, y, clf=svm,
                           filler_feature_values={2: value},
                           filler_feature_ranges={2: width},
-                          res=0.02, legend=2, ax=ax)
+                          legend=2, ax=ax)
     ax.set_xlabel('Feature 1')
     ax.set_ylabel('Feature 2')
     ax.set_title('Feature 3 = {}'.format(value))
@@ -1210,8 +1229,46 @@ plt.show()
 </code></pre>
 
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_29_0.png" /></p>
+<h2 id="example-9-customizing-the-plotting-style">Example 9 - Customizing the plotting style</h2>
+<pre><code class="python">from mlxtend.plotting import plot_decision_regions
+from mlxtend.preprocessing import shuffle_arrays_unison
+import matplotlib.pyplot as plt
+from sklearn import datasets
+from sklearn.svm import SVC
+
+# Loading some example data
+iris = datasets.load_iris()
+X = iris.data[:, [0, 2]]
+y = iris.target
+X, y = shuffle_arrays_unison(arrays=[X, y], random_seed=3)
+X_train, y_train = X[:100], y[:100]
+X_test, y_test = X[100:], y[100:]
+
+# Training a classifier
+svm = SVC(C=0.5, kernel='linear')
+svm.fit(X_train, y_train)
+
+# Specify keyword arguments to be passed to underlying plotting functions
+scatter_kwargs = {'s': 120, 'edgecolor': None, 'alpha': 0.7}
+contourf_kwargs = {'alpha': 0.2}
+scatter_highlight_kwargs = {'s': 120, 'label': 'Test data', 'alpha': 0.7}
+# Plotting decision regions
+plot_decision_regions(X, y, clf=svm, legend=2,
+                      X_highlight=X_test,
+                      scatter_kwargs=scatter_kwargs,
+                      contourf_kwargs=contourf_kwargs,
+                      scatter_highlight_kwargs=scatter_highlight_kwargs)
+
+# Adding axes annotations
+plt.xlabel('sepal length [cm]')
+plt.ylabel('petal length [cm]')
+plt.title('SVM on Iris')
+plt.show()
+</code></pre>
+
+<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_31_0.png" /></p>
 <h1 id="api">API</h1>
-<p><em>plot_decision_regions(X, y, clf, feature_index=None, filler_feature_values=None, filler_feature_ranges=None, ax=None, X_highlight=None, res=0.02, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors='red,blue,limegreen,gray,cyan')</em></p>
+<p><em>plot_decision_regions(X, y, clf, feature_index=None, filler_feature_values=None, filler_feature_ranges=None, ax=None, X_highlight=None, res=None, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors='red,blue,limegreen,gray,cyan', scatter_kwargs=None, contourf_kwargs=None, scatter_highlight_kwargs=None)</em></p>
 <p>Plot decision regions of a classifier.</p>
 <p>Please note that this functions assumes that class labels are
 labeled consecutively, e.g,. 0, 1, 2, 3, 4, and 5. If you have class
@@ -1260,11 +1317,13 @@ one if ax=None.</p>
 <p>An array with data points that are used to highlight samples in <code>X</code>.</p>
 </li>
 <li>
-<p><code>res</code> : float or array-like, shape = (2,) (default: 0.02)</p>
-<p>Grid width. If float, same resolution is used for both the x- and
-y-axis. If array-like, the first item is used on the x-axis, the
-second is used on the y-axis. Lower values increase the resolution but
-slow down the plotting.</p>
+<p><code>res</code> : float or array-like, shape = (2,) (default: None)</p>
+<p>This parameter was used to define the grid width,
+but it has been deprecated in favor of
+determining the number of points given the figure DPI and size
+automatically for optimal results and computational efficiency.
+To increase the resolution, it's is recommended to use to provide
+a <code>dpi argument via matplotlib, e.g.,</code>plt.figure(dpi=600)`.</p>
 </li>
 <li>
 <p><code>hide_spines</code> : bool (default: True)</p>
@@ -1276,12 +1335,24 @@ slow down the plotting.</p>
 No legend if legend is 0.</p>
 </li>
 <li>
-<p><code>markers</code> : str (default 's^oxv&lt;&gt;')</p>
+<p><code>markers</code> : str (default: 's^oxv&lt;&gt;')</p>
 <p>Scatterplot markers.</p>
 </li>
 <li>
-<p><code>colors</code> : str (default 'red,blue,limegreen,gray,cyan')</p>
+<p><code>colors</code> : str (default: 'red,blue,limegreen,gray,cyan')</p>
 <p>Comma separated list of colors.</p>
+</li>
+<li>
+<p><code>scatter_kwargs</code> : dict (default: None)</p>
+<p>Keyword arguments for underlying matplotlib scatter function.</p>
+</li>
+<li>
+<p><code>contourf_kwargs</code> : dict (default: None)</p>
+<p>Keyword arguments for underlying matplotlib contourf function.</p>
+</li>
+<li>
+<p><code>scatter_highlight_kwargs</code> : dict (default: None)</p>
+<p>Keyword arguments for underlying matplotlib scatter function.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>

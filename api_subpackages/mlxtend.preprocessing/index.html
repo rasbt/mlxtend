@@ -293,6 +293,24 @@
         
             
 <li >
+    <a href="../../user_guide/evaluate/paired_ttest_5x2cv/">Paired ttest 5x2cv</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/paired_ttest_kfold_cv/">Paired ttest kfold cv</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/paired_ttest_resampled/">Paired ttest resampled</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/evaluate/permutation_test/">Permutation test</a>
 </li>
 
@@ -563,12 +581,6 @@
         
             
 <li >
-    <a href="../../user_guide/preprocessing/OnehotTransactions/">OnehotTransactions</a>
-</li>
-
-        
-            
-<li >
     <a href="../../user_guide/preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
 </li>
 
@@ -576,6 +588,12 @@
             
 <li >
     <a href="../../user_guide/preprocessing/standardize/">Standardize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/TransactionEncoder/">TransactionEncoder</a>
 </li>
 
         
@@ -867,9 +885,15 @@
                 <!--  -->
         
     
-        <li class="main "><a href="#onehottransactions">OnehotTransactions</a></li>
+        <li class="main "><a href="#transactionencoder">TransactionEncoder</a></li>
         
             <li><a href="#methods_3">Methods</a></li>
+                <!--  -->
+        
+    
+        <li class="main "><a href="#onehottransactions">OnehotTransactions</a></li>
+        
+            <li><a href="#methods_4">Methods</a></li>
                 <!--  -->
         
     
@@ -877,7 +901,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.9.2dev </p>
+<p>mlxtend version: 0.11.0 </p>
 <h2 id="one_hot">one_hot</h2>
 <p><em>one_hot(y, num_labels='auto', dtype='float')</em></p>
 <p>One-hot encoding of class labels</p>
@@ -1248,9 +1272,9 @@ n_features is the number of features.</p>
 <p>A copy of the input array with the columns centered.</p>
 </li>
 </ul>
-<h2 id="onehottransactions">OnehotTransactions</h2>
-<p><em>OnehotTransactions()</em></p>
-<p>One-hot encoder class for transaction data in Python lists</p>
+<h2 id="transactionencoder">TransactionEncoder</h2>
+<p><em>TransactionEncoder()</em></p>
+<p>Encoder class for transaction data in Python lists</p>
 <p><strong>Parameters</strong></p>
 <p>None</p>
 <p><strong>Attributes</strong></p>
@@ -1281,8 +1305,8 @@ transaction.</p>
 </ul>
 <hr>
 
-<p><em>fit_transform(X)</em></p>
-<p>Fit a OnehotTransactions encoder and transform a dataset.</p>
+<p><em>fit_transform(X, sparse=False)</em></p>
+<p>Fit a TransactionEncoder encoder and transform a dataset.</p>
 <hr>
 
 <p><em>get_params(deep=True)</em></p>
@@ -1304,26 +1328,26 @@ contained subobjects that are estimators.</p>
 </ul>
 <hr>
 
-<p><em>inverse_transform(onehot)</em></p>
-<p>Transforms a one-hot encoded NumPy array back into transactions.</p>
+<p><em>inverse_transform(array)</em></p>
+<p>Transforms an encoded NumPy array back into transactions.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>onehot</code> : NumPy array [n_transactions, n_unique_items]</p>
-<p>The NumPy one-hot encoded integer array of the input transactions,
+<p><code>array</code> : NumPy array [n_transactions, n_unique_items]</p>
+<p>The NumPy one-hot encoded boolean array of the input transactions,
 where the columns represent the unique items found in the input
 array in alphabetic order</p>
 <p>For example,
-<code>array([[1, 0, 1, 1, 0, 1],
-[1, 0, 1, 0, 0, 1],
-[1, 0, 1, 0, 0, 0],
-[1, 1, 0, 0, 0, 0],
-[0, 0, 1, 1, 1, 1],
-[0, 0, 1, 0, 1, 1],
-[0, 0, 1, 0, 1, 0],
-[1, 1, 0, 0, 0, 0]])</code>
-The corresponding column labels are available as self.columns_, e.g.,
-['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']</p>
+<code>array([[True , False, True , True , False, True ],
+[True , False, True , False, False, True ],
+[True , False, True , False, False, False],
+[True , True , False, False, False, False],
+[False, False, True , True , True , True ],
+[False, False, True , False, True , True ],
+[False, False, True , False, True , False],
+[True , True , False, False, False, False]])</code>
+The corresponding column labels are available as self.columns_,
+e.g., ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
@@ -1356,8 +1380,65 @@ component of a nested object.</p>
 <p>self</p>
 <hr>
 
-<p><em>transform(X)</em></p>
+<p><em>transform(X, sparse=False)</em></p>
 <p>Transform transactions into a one-hot encoded NumPy array.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : list of lists</p>
+<p>A python list of lists, where the outer list stores the
+n transactions and the inner list stores the items in each
+transaction.</p>
+<p>For example,
+[['Apple', 'Beer', 'Rice', 'Chicken'],
+['Apple', 'Beer', 'Rice'],
+['Apple', 'Beer'],
+['Apple', 'Bananas'],
+['Milk', 'Beer', 'Rice', 'Chicken'],
+['Milk', 'Beer', 'Rice'],
+['Milk', 'Beer'],
+['Apple', 'Bananas']]</p>
+<p>sparse: bool (default=False)
+If True, transform will return Compressed Sparse Row matrix
+instead of the regular one.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>array</code> : NumPy array [n_transactions, n_unique_items]</p>
+<p>if sparse=False (default).
+Compressed Sparse Row matrix otherwise
+The one-hot encoded boolean array of the input transactions,
+where the columns represent the unique items found in the input
+array in alphabetic order. Exact representation depends
+on the sparse argument</p>
+<p>For example,
+array([[True , False, True , True , False, True ],
+[True , False, True , False, False, True ],
+[True , False, True , False, False, False],
+[True , True , False, False, False, False],
+[False, False, True , True , True , True ],
+[False, False, True , False, True , True ],
+[False, False, True , False, True , False],
+[True , True , False, False, False, False]])
+The corresponding column labels are available as self.columns_, e.g.,
+['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']</p>
+</li>
+</ul>
+<h2 id="onehottransactions">OnehotTransactions</h2>
+<p><em>OnehotTransactions(</em>args, *<em>kwargs)</em></p>
+<p>Encoder class for transaction data in Python lists</p>
+<p><strong>Parameters</strong></p>
+<p>None</p>
+<p><strong>Attributes</strong></p>
+<p>columns_: list
+List of unique names in the <code>X</code> input list of lists</p>
+<h3 id="methods_4">Methods</h3>
+<hr>
+
+<p><em>fit(X)</em></p>
+<p>Learn unique column names from transaction DataFrame</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1376,22 +1457,125 @@ transaction.</p>
 ['Apple', 'Bananas']]</p>
 </li>
 </ul>
+<hr>
+
+<p><em>fit_transform(X, sparse=False)</em></p>
+<p>Fit a TransactionEncoder encoder and transform a dataset.</p>
+<hr>
+
+<p><em>get_params(deep=True)</em></p>
+<p>Get parameters for this estimator.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>deep</code> : boolean, optional</p>
+<p>If True, will return the parameters for this estimator and
+contained subobjects that are estimators.</p>
+</li>
+</ul>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>onehot</code> : NumPy array [n_transactions, n_unique_items]</p>
-<p>The NumPy one-hot encoded integer array of the input transactions,
+<p><code>params</code> : mapping of string to any</p>
+<p>Parameter names mapped to their values.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>inverse_transform(array)</em></p>
+<p>Transforms an encoded NumPy array back into transactions.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>array</code> : NumPy array [n_transactions, n_unique_items]</p>
+<p>The NumPy one-hot encoded boolean array of the input transactions,
 where the columns represent the unique items found in the input
 array in alphabetic order</p>
 <p>For example,
-array([[1, 0, 1, 1, 0, 1],
-[1, 0, 1, 0, 0, 1],
-[1, 0, 1, 0, 0, 0],
-[1, 1, 0, 0, 0, 0],
-[0, 0, 1, 1, 1, 1],
-[0, 0, 1, 0, 1, 1],
-[0, 0, 1, 0, 1, 0],
-[1, 1, 0, 0, 0, 0]])
+<code>array([[True , False, True , True , False, True ],
+[True , False, True , False, False, True ],
+[True , False, True , False, False, False],
+[True , True , False, False, False, False],
+[False, False, True , True , True , True ],
+[False, False, True , False, True , True ],
+[False, False, True , False, True , False],
+[True , True , False, False, False, False]])</code>
+The corresponding column labels are available as self.columns_,
+e.g., ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>X</code> : list of lists</p>
+<p>A python list of lists, where the outer list stores the
+n transactions and the inner list stores the items in each
+transaction.</p>
+<p>For example,
+<code>[['Apple', 'Beer', 'Rice', 'Chicken'],
+['Apple', 'Beer', 'Rice'],
+['Apple', 'Beer'],
+['Apple', 'Bananas'],
+['Milk', 'Beer', 'Rice', 'Chicken'],
+['Milk', 'Beer', 'Rice'],
+['Milk', 'Beer'],
+['Apple', 'Bananas']]</code></p>
+</li>
+</ul>
+<hr>
+
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.</p>
+<p>The method works on simple estimators as well as on nested objects
+(such as pipelines). The latter have parameters of the form
+<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
+component of a nested object.</p>
+<p><strong>Returns</strong></p>
+<p>self</p>
+<hr>
+
+<p><em>transform(X, sparse=False)</em></p>
+<p>Transform transactions into a one-hot encoded NumPy array.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : list of lists</p>
+<p>A python list of lists, where the outer list stores the
+n transactions and the inner list stores the items in each
+transaction.</p>
+<p>For example,
+[['Apple', 'Beer', 'Rice', 'Chicken'],
+['Apple', 'Beer', 'Rice'],
+['Apple', 'Beer'],
+['Apple', 'Bananas'],
+['Milk', 'Beer', 'Rice', 'Chicken'],
+['Milk', 'Beer', 'Rice'],
+['Milk', 'Beer'],
+['Apple', 'Bananas']]</p>
+<p>sparse: bool (default=False)
+If True, transform will return Compressed Sparse Row matrix
+instead of the regular one.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>array</code> : NumPy array [n_transactions, n_unique_items]</p>
+<p>if sparse=False (default).
+Compressed Sparse Row matrix otherwise
+The one-hot encoded boolean array of the input transactions,
+where the columns represent the unique items found in the input
+array in alphabetic order. Exact representation depends
+on the sparse argument</p>
+<p>For example,
+array([[True , False, True , True , False, True ],
+[True , False, True , False, False, True ],
+[True , False, True , False, False, False],
+[True , True , False, False, False, False],
+[False, False, True , True , True , True ],
+[False, False, True , False, True , True ],
+[False, False, True , False, True , False],
+[True , True , False, False, False, False]])
 The corresponding column labels are available as self.columns_, e.g.,
 ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']</p>
 </li>

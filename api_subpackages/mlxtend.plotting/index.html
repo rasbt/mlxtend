@@ -293,6 +293,24 @@
         
             
 <li >
+    <a href="../../user_guide/evaluate/paired_ttest_5x2cv/">Paired ttest 5x2cv</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/paired_ttest_kfold_cv/">Paired ttest kfold cv</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/paired_ttest_resampled/">Paired ttest resampled</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/evaluate/permutation_test/">Permutation test</a>
 </li>
 
@@ -563,12 +581,6 @@
         
             
 <li >
-    <a href="../../user_guide/preprocessing/OnehotTransactions/">OnehotTransactions</a>
-</li>
-
-        
-            
-<li >
     <a href="../../user_guide/preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
 </li>
 
@@ -576,6 +588,12 @@
             
 <li >
     <a href="../../user_guide/preprocessing/standardize/">Standardize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/preprocessing/TransactionEncoder/">TransactionEncoder</a>
 </li>
 
         
@@ -874,7 +892,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.9.2dev </p>
+<p>mlxtend version: 0.11.0 </p>
 <h2 id="category_scatter">category_scatter</h2>
 <p><em>category_scatter(x, y, label_col, data, markers='sxo^v', colors=('blue', 'green', 'red', 'purple', 'gray', 'cyan'), alpha=0.7, markersize=20.0, legend_loc='best')</em></p>
 <p>Scatter plot to plot categories in different colors/markerstyles.</p>
@@ -1048,7 +1066,7 @@ X-axis limits for the linear line fit.</p>
 </li>
 </ul>
 <h2 id="plot_decision_regions">plot_decision_regions</h2>
-<p><em>plot_decision_regions(X, y, clf, feature_index=None, filler_feature_values=None, filler_feature_ranges=None, ax=None, X_highlight=None, res=0.02, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors='red,blue,limegreen,gray,cyan')</em></p>
+<p><em>plot_decision_regions(X, y, clf, feature_index=None, filler_feature_values=None, filler_feature_ranges=None, ax=None, X_highlight=None, res=None, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors='red,blue,limegreen,gray,cyan', scatter_kwargs=None, contourf_kwargs=None, scatter_highlight_kwargs=None)</em></p>
 <p>Plot decision regions of a classifier.</p>
 <p>Please note that this functions assumes that class labels are
 labeled consecutively, e.g,. 0, 1, 2, 3, 4, and 5. If you have class
@@ -1097,11 +1115,13 @@ one if ax=None.</p>
 <p>An array with data points that are used to highlight samples in <code>X</code>.</p>
 </li>
 <li>
-<p><code>res</code> : float or array-like, shape = (2,) (default: 0.02)</p>
-<p>Grid width. If float, same resolution is used for both the x- and
-y-axis. If array-like, the first item is used on the x-axis, the
-second is used on the y-axis. Lower values increase the resolution but
-slow down the plotting.</p>
+<p><code>res</code> : float or array-like, shape = (2,) (default: None)</p>
+<p>This parameter was used to define the grid width,
+but it has been deprecated in favor of
+determining the number of points given the figure DPI and size
+automatically for optimal results and computational efficiency.
+To increase the resolution, it's is recommended to use to provide
+a <code>dpi argument via matplotlib, e.g.,</code>plt.figure(dpi=600)`.</p>
 </li>
 <li>
 <p><code>hide_spines</code> : bool (default: True)</p>
@@ -1113,12 +1133,24 @@ slow down the plotting.</p>
 No legend if legend is 0.</p>
 </li>
 <li>
-<p><code>markers</code> : str (default 's^oxv&lt;&gt;')</p>
+<p><code>markers</code> : str (default: 's^oxv&lt;&gt;')</p>
 <p>Scatterplot markers.</p>
 </li>
 <li>
-<p><code>colors</code> : str (default 'red,blue,limegreen,gray,cyan')</p>
+<p><code>colors</code> : str (default: 'red,blue,limegreen,gray,cyan')</p>
 <p>Comma separated list of colors.</p>
+</li>
+<li>
+<p><code>scatter_kwargs</code> : dict (default: None)</p>
+<p>Keyword arguments for underlying matplotlib scatter function.</p>
+</li>
+<li>
+<p><code>contourf_kwargs</code> : dict (default: None)</p>
+<p>Keyword arguments for underlying matplotlib contourf function.</p>
+</li>
+<li>
+<p><code>scatter_highlight_kwargs</code> : dict (default: None)</p>
+<p>Keyword arguments for underlying matplotlib scatter function.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>

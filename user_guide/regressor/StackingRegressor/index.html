@@ -293,6 +293,24 @@
         
             
 <li >
+    <a href="../../evaluate/paired_ttest_5x2cv/">Paired ttest 5x2cv</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/paired_ttest_kfold_cv/">Paired ttest kfold cv</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/paired_ttest_resampled/">Paired ttest resampled</a>
+</li>
+
+        
+            
+<li >
     <a href="../../evaluate/permutation_test/">Permutation test</a>
 </li>
 
@@ -563,12 +581,6 @@
         
             
 <li >
-    <a href="../../preprocessing/OnehotTransactions/">OnehotTransactions</a>
-</li>
-
-        
-            
-<li >
     <a href="../../preprocessing/shuffle_arrays_unison/">Shuffle arrays unison</a>
 </li>
 
@@ -576,6 +588,12 @@
             
 <li >
     <a href="../../preprocessing/standardize/">Standardize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/TransactionEncoder/">TransactionEncoder</a>
 </li>
 
         
@@ -1310,9 +1328,14 @@ plt.show()
 Variance Score: 0.7331
 </code></pre>
 <p><img alt="png" src="../StackingRegressor_files/StackingRegressor_16_1.png" /></p>
-<p>In case we are planning to use a regression algorithm multiple times, all we need to do is to add an additional number suffix in the parameter grid as shown below:</p>
+<p><strong>Note</strong></p>
+<p>The <code>StackingRegressor</code> also enables grid search over the <code>regressors</code> argument. However, due to the current implementation of <code>GridSearchCV</code> in scikit-learn, it is not possible to search over both, differenct classifiers and classifier parameters at the same time. For instance, while the following parameter dictionary works</p>
+<pre><code>params = {'randomforestregressor__n_estimators': [1, 100],
+'regressors': [(regr1, regr1, regr1), (regr2, regr3)]}
+</code></pre>
+<p>it will use the instance settings of <code>regr1</code>, <code>regr2</code>, and <code>regr3</code> and not overwrite it with the <code>'n_estimators'</code> settings from <code>'randomforestregressor__n_estimators': [1, 100]</code>.</p>
 <h2 id="api">API</h2>
-<p><em>StackingRegressor(regressors, meta_regressor, verbose=0)</em></p>
+<p><em>StackingRegressor(regressors, meta_regressor, verbose=0, store_train_meta_features=False, refit=True)</em></p>
 <p>A Stacking regressor for scikit-learn estimators for regression.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1339,6 +1362,14 @@ regressor being fitted
 - <code>verbose&gt;2</code>: Changes <code>verbose</code> param of the underlying regressor to
 self.verbose - 2</p>
 </li>
+<li>
+<p><code>store_train_meta_features</code> : bool (default: False)</p>
+<p>If True, the meta-features computed from the training data
+used for fitting the
+meta-regressor stored in the <code>self.train_meta_features_</code> array,
+which can be
+accessed after calling <code>fit</code>.</p>
+</li>
 </ul>
 <p><strong>Attributes</strong></p>
 <ul>
@@ -1357,6 +1388,21 @@ self.verbose - 2</p>
 <li>
 <p><code>intercept_</code> : float</p>
 <p>Intercept of the fitted meta-estimator</p>
+</li>
+<li>
+<p><code>train_meta_features</code> : numpy array, shape = [n_samples, len(self.regressors)]</p>
+<p>meta-features for training data, where n_samples is the
+number of samples
+in training data and len(self.regressors) is the number of regressors.</p>
+</li>
+<li>
+<p><code>refit</code> : bool (default: True)</p>
+<p>Clones the regressors for stacking regression if True (default)
+or else uses the original ones, which will be refitted on the dataset
+upon calling the <code>fit</code> method. Setting refit=False is
+recommended if you are working with estimators that are supporting
+the scikit-learn fit/predict API interface but are not compatible
+to scikit-learn's <code>clone</code> function.</p>
 </li>
 </ul>
 <h3 id="methods">Methods</h3>
@@ -1429,12 +1475,33 @@ n_features is the number of features.</p>
 </ul>
 <hr>
 
+<p><em>predict_meta_features(X)</em></p>
+<p>Get meta-features of test-data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
+<p>Test vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>meta-features</code> : numpy array, shape = [n_samples, len(self.regressors)]</p>
+<p>meta-features for test data, where n_samples is the number of
+samples in test data and len(self.regressors) is the number
+of regressors.</p>
+</li>
+</ul>
+<hr>
+
 <p><em>score(X, y, sample_weight=None)</em></p>
 <p>Returns the coefficient of determination R^2 of the prediction.</p>
-<p>The coefficient R^2 is defined as (1 - u/v), where u is the regression
-sum of squares ((y_true - y_pred) <strong> 2).sum() and v is the residual
+<p>The coefficient R^2 is defined as (1 - u/v), where u is the residual
+sum of squares ((y_true - y_pred) <strong> 2).sum() and v is the total
 sum of squares ((y_true - y_true.mean()) </strong> 2).sum().</p>
-<p>Best possible score is 1.0 and it can be negative (because the</p>
+<p>The best possible score is 1.0 and it can be negative (because the</p>
 <p>model can be arbitrarily worse). A constant model that always
 predicts the expected value of y, disregarding the input features,
 would get a R^2 score of 0.0.</p>

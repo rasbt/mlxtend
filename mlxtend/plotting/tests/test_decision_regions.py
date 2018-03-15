@@ -79,3 +79,37 @@ def test_y_ary_dim():
                   'y must be a 1D array',
                   plot_decision_regions,
                   X[:, :2], y[:, np.newaxis], sr)
+
+
+def test_scatter_kwargs_type():
+    kwargs = 'not a dictionary'
+    sr.fit(X[:, :2], y)
+    message = ('d must be of type dict or None, but got '
+               '{} instead'.format(type(kwargs)))
+    assert_raises(TypeError,
+                  message,
+                  plot_decision_regions,
+                  X[:, :2], y, sr, scatter_kwargs=kwargs)
+
+
+def test_contourf_kwargs_type():
+    kwargs = 'not a dictionary'
+    sr.fit(X[:, :2], y)
+    message = ('d must be of type dict or None, but got '
+               '{} instead'.format(type(kwargs)))
+    assert_raises(TypeError,
+                  message,
+                  plot_decision_regions,
+                  X[:, :2], y, sr, contourf_kwargs=kwargs)
+
+
+def test_scatter_highlight_kwargs_type():
+    kwargs = 'not a dictionary'
+    sr.fit(X[:, :2], y)
+    message = ('d must be of type dict or None, but got '
+               '{} instead'.format(type(kwargs)))
+    assert_raises(TypeError,
+                  message,
+                  plot_decision_regions,
+                  X[:, :2], y, sr, X_highlight=X[:, :2],
+                  scatter_highlight_kwargs=kwargs)

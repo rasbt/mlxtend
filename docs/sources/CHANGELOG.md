@@ -7,7 +7,30 @@ The CHANGELOG for the current development version is available at
 
 ---
 
-### Version 0.11.0 (2017-03-14)
+
+### Version 0.12.0dev (TBD)
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.12.0.zip)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.12.0.tar.gz)
+
+##### New Features
+
+- -
+
+##### Changes
+
+
+- -
+
+
+##### Bug Fixes
+
+- -
+
+
+### Version 0.11.0 (2018-03-14)
 
 ##### Downloads
 

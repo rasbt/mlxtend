@@ -7,7 +7,7 @@ The CHANGELOG for the current development version is available at
 
 ---
 
-### Version 0.11.0dev
+### Version 0.11.0 (2017-03-14)
 
 ##### Downloads
 
@@ -25,7 +25,7 @@ The CHANGELOG for the current development version is available at
 -   New function implementing the 5x2cv paired t-test procedure (`paired_ttest_5x2cv`) proposed by Dieterrich (1998)
     to compare the performance of two models. ([#325](https://github.com/rasbt/mlxtend/issues/325))
 - A `refit` parameter was added to stacking classes (similar to the `refit` parameter in the `EnsembleVoteClassifier`), to support classifiers and regressors that follow the scikit-learn API but are not compatible with scikit-learn's `clone` function. ([#325](https://github.com/rasbt/mlxtend/issues/324))
-- The `ColumnSelector` now has a `drop_axis` argument to use it in pipelines with `CountVectorizers`. ([#333](https://github.com/rasbt/mlxtend/pull/333)
+- The `ColumnSelector` now has a `drop_axis` argument to use it in pipelines with `CountVectorizers`. ([#333](https://github.com/rasbt/mlxtend/pull/333))
 
 ##### Changes
 

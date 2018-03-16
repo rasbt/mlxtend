@@ -1,5 +1,5 @@
 ---
-title: 'MLxtend: Providing machine learning and data science utilities and extensions to Python's scientific computing stack'
+title: "MLxtend: Providing machine learning and data science utilities and extensions to Python's scientific computing stack"
 tags:
 - machine learning
 - data science

@@ -22,7 +22,7 @@ The CHANGELOG for the current development version is available at
 ##### Changes
 
 
-- -
+- Replaces `plot_decision_regions` colors by a colorblind-friendly palette and adds contour lines for decision regions. ([#348](https://github.com/rasbt/mlxtend/issues/348))
 
 
 ##### Bug Fixes

@@ -229,7 +229,10 @@ def plot_decision_regions(X, y, clf,
                        levels=np.arange(Z.max() + 2) - 0.5,
                        **contourf_kwargs)
 
-    ax.contour(xx, yy, Z, cset.levels, colors='k')
+    ax.contour(xx, yy, Z, cset.levels,
+               colors='k',
+               linewidths=0.5,
+               antialiased=True)
 
     ax.axis(xmin=xx.min(), xmax=xx.max(), y_min=yy.min(), y_max=yy.max())
 

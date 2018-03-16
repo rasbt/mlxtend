@@ -75,7 +75,7 @@ plt.show()
 
 ---
 
-![](./img/ensemble_decision_regions_2d.jpg)
+![](./img/ensemble_decision_regions_2d.png)
 
 If you use mlxtend as part of your workflow in a scientific publication, please consider citing the mlxtend repository with the following DOI:
 

@@ -9,8 +9,10 @@
 from itertools import cycle
 import matplotlib.pyplot as plt
 import numpy as np
-from ..utils import check_Xy, format_kwarg_dictionaries
+from mlxtend.utils import check_Xy, format_kwarg_dictionaries
 import warnings
+from math import floor
+from math import ceil
 
 
 def get_feature_range_mask(X, filler_feature_values=None,
@@ -49,7 +51,9 @@ def plot_decision_regions(X, y, clf,
                           legend=1,
                           hide_spines=True,
                           markers='s^oxv<>',
-                          colors='red,blue,limegreen,gray,cyan',
+                          colors=('#1f77b4,#ff7f0e,#3ca02c,#d62728,'
+                                  '#9467bd,#8c564b,#e377c2,'
+                                  '#7f7f7f,#bcbd22,#17becf'),
                           scatter_kwargs=None,
                           contourf_kwargs=None,
                           scatter_highlight_kwargs=None):
@@ -197,6 +201,7 @@ def plot_decision_regions(X, y, clf,
         y_min, y_max = X[:, y_index].min() - 1, X[:, y_index].max() + 1
 
     xnum, ynum = plt.gcf().dpi * plt.gcf().get_size_inches()
+    xnum, ynum = floor(xnum), ceil(ynum)
     xx, yy = np.meshgrid(np.linspace(x_min, x_max, num=xnum),
                          np.linspace(y_min, y_max, num=ynum))
 
@@ -214,15 +219,17 @@ def plot_decision_regions(X, y, clf,
     Z = Z.reshape(xx.shape)
     # Plot decisoin region
     # Make sure contourf_kwargs has backwards compatible defaults
-    contourf_kwargs_default = {'alpha': 0.3, 'antialiased': True}
+    contourf_kwargs_default = {'alpha': 0.45, 'antialiased': True}
     contourf_kwargs = format_kwarg_dictionaries(
                         default_kwargs=contourf_kwargs_default,
                         user_kwargs=contourf_kwargs,
                         protected_keys=['colors', 'levels'])
-    ax.contourf(xx, yy, Z,
-                colors=colors,
-                levels=np.arange(Z.max() + 2) - 0.5,
-                **contourf_kwargs)
+    cset = ax.contourf(xx, yy, Z,
+                       colors=colors,
+                       levels=np.arange(Z.max() + 2) - 0.5,
+                       **contourf_kwargs)
+
+    ax.contour(xx, yy, Z, cset.levels, colors='k')
 
     ax.axis(xmin=xx.min(), xmax=xx.max(), y_min=yy.min(), y_max=yy.max())
 

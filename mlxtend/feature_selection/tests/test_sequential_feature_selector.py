@@ -61,6 +61,18 @@ def test_run_default():
     assert sfs.k_feature_idx_ == (3,)
 
 
+def test_fit_params():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    sample_weight = np.ones(X.shape[0])
+    forest = RandomForestClassifier(n_estimators=100, random_state=123)
+    sfs = SFS(estimator=forest,
+              verbose=0)
+    sfs.fit(X, y, sample_weight=sample_weight)
+    assert sfs.k_feature_idx_ == (3,)
+
+
 def test_kfeatures_type_1():
     iris = load_iris()
     X = iris.data

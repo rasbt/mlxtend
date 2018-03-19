@@ -22,16 +22,17 @@ from sklearn.model_selection import cross_val_score
 from sklearn.externals.joblib import Parallel, delayed
 
 
-def _calc_score(selector, X, y, indices):
+def _calc_score(selector, X, y, indices, **fit_params):
     if selector.cv:
         scores = cross_val_score(selector.est_,
                                  X[:, indices], y,
                                  cv=selector.cv,
                                  scoring=selector.scorer,
                                  n_jobs=1,
-                                 pre_dispatch=selector.pre_dispatch)
+                                 pre_dispatch=selector.pre_dispatch,
+                                 fit_params=fit_params)
     else:
-        selector.est_.fit(X[:, indices], y)
+        selector.est_.fit(X[:, indices], y, **fit_params)
         scores = np.array([selector.scorer(selector.est_, X[:, indices], y)])
     return indices, scores
 
@@ -169,7 +170,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         # don't mess with this unless testing
         self._TESTING_INTERRUPT_MODE = False
 
-    def fit(self, X, y):
+    def fit(self, X, y, **fit_params):
         """Perform feature selection and learn model from training data.
 
         Parameters
@@ -179,6 +180,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             n_features is the number of features.
         y : array-like, shape = [n_samples]
             Target values.
+        fit_params : dict of string -> object, optional
+            Parameters to pass to to the fit method of classifier.
 
         Returns
         -------
@@ -248,7 +251,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 k_to_select = min_k
             k_idx = tuple(range(X.shape[1]))
             k = len(k_idx)
-            k_idx, k_score = _calc_score(self, X, y, k_idx)
+            k_idx, k_score = _calc_score(self, X, y, k_idx, **fit_params)
             self.subsets_[k] = {
                 'feature_idx': k_idx,
                 'cv_scores': k_score,
@@ -266,14 +269,16 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                         orig_set=orig_set,
                         subset=prev_subset,
                         X=X,
-                        y=y
+                        y=y,
+                        **fit_params
                     )
                 else:
 
                     k_idx, k_score, cv_scores = self._exclusion(
                         feature_set=prev_subset,
                         X=X,
-                        y=y
+                        y=y,
+                        **fit_params
                     )
 
                 if self.floating:
@@ -298,7 +303,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                                 feature_set=k_idx,
                                 fixed_feature=new_feature,
                                 X=X,
-                                y=y
+                                y=y,
+                                **fit_params
                             )
 
                         else:
@@ -306,7 +312,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                                 orig_set=orig_set - {new_feature},
                                 subset=set(k_idx),
                                 X=X,
-                                y=y
+                                y=y,
+                                **fit_params
                             )
 
                         if k_score_c is not None and k_score_c > k_score:
@@ -395,7 +402,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.fitted = True
         return self
 
-    def _inclusion(self, orig_set, subset, X, y, ignore_feature=None):
+    def _inclusion(self, orig_set, subset, X, y, ignore_feature=None, **fit_params):
         all_avg_scores = []
         all_cv_scores = []
         all_subsets = []
@@ -407,7 +414,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
                                 pre_dispatch=self.pre_dispatch)
             work = parallel(delayed(_calc_score)
-                            (self, X, y, tuple(subset | {feature}))
+                            (self, X, y, tuple(subset | {feature}), **fit_params)
                             for feature in remaining
                             if feature != ignore_feature)
 
@@ -422,7 +429,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                    all_cv_scores[best])
         return res
 
-    def _exclusion(self, feature_set, X, y, fixed_feature=None):
+    def _exclusion(self, feature_set, X, y, fixed_feature=None, **fit_params):
         n = len(feature_set)
         res = (None, None, None)
         if n > 1:
@@ -433,7 +440,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             n_jobs = min(self.n_jobs, features)
             parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
                                 pre_dispatch=self.pre_dispatch)
-            work = parallel(delayed(_calc_score)(self, X, y, p)
+            work = parallel(delayed(_calc_score)(self, X, y, p, **fit_params)
                             for p in combinations(feature_set, r=n - 1)
                             if not fixed_feature or fixed_feature in set(p))
 
@@ -466,7 +473,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self._check_fitted()
         return X[:, self.k_feature_idx_]
 
-    def fit_transform(self, X, y):
+    def fit_transform(self, X, y, **fit_params):
         """Fit to training data then reduce X to its most important features.
 
         Parameters
@@ -474,13 +481,15 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
+        fit_params : dict of string -> object, optional
+            Parameters to pass to to the fit method of classifier.
 
         Returns
         -------
         Reduced feature subset of X, shape={n_samples, k_features}
 
         """
-        self.fit(X, y)
+        self.fit(X, y, **fit_params)
         return self.transform(X)
 
     def get_metric_dict(self, confidence_interval=0.95):

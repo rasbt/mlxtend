@@ -17,6 +17,10 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
+
+The fit method of the SequentialFeatureSelector now optionally accepts **fit_params for the estimator that is used for the feature selection. ([#350](https://github.com/rasbt/mlxtend/pull/350) by Zach Griffith)
+
+
 - -
 
 ##### Changes

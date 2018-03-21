@@ -21,7 +21,7 @@ source activate test-environment
 if [ "${LATEST}" = "true" ]; then
     pip install ".[testing]"
 else
-    pip install numpy==$NUMPY_VERSION scipy==$SCIPY_VERSION pandas==$PANDAS_VERSION scikit-learn==$SKLEARN_VERSION
+    conda install numpy=$NUMPY_VERSION scipy=$SCIPY_VERSION pandas=$PANDAS_VERSION scikit-learn=$SKLEARN_VERSION
     pip install ".[testing]"
 fi
 

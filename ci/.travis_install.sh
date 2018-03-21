@@ -25,7 +25,7 @@ else
     pip install ".[testing]"
 fi
 
-conda install jupyter matplotlib
+conda install jupyter
 
 if [ "${COVERAGE}" = "true" ]; then
     pip install coverage coveralls codecov

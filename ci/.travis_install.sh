@@ -15,16 +15,17 @@ conda config --set always_yes yes --set changeps1 no
 conda update -q conda
 conda info -a
 
-if [ "${LATEST}" = "true" ]; then
-    conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy scipy pandas scikit-learn
-else
-    conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy=$NUMPY_VERSION scipy=$SCIPY_VERSION pandas=$PANDAS_VERSION scikit-learn=$SKLEARN_VERSION
-fi
-
+conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
 source activate test-environment
 
+if [ "${LATEST}" = "true" ]; then
+    pip install ".[testing]"
+else
+    pip install numpy==$NUMPY_VERSION scipy==$SCIPY_VERSION pandas==$PANDAS_VERSION scikit-learn==$SKLEARN_VERSION
+    pip install ".[testing]"
+fi
+
 conda install jupyter matplotlib
-pip install nose
 
 if [ "${COVERAGE}" = "true" ]; then
     pip install coverage coveralls codecov
@@ -35,8 +36,3 @@ python -c "import pandas; print('pandas %s' % pandas.__version__)"
 python -c "import numpy; print('numpy %s' % numpy.__version__)"
 python -c "import scipy; print('scipy %s' % scipy.__version__)"
 python -c "import sklearn; print('sklearn %s' % sklearn.__version__)"
-
-
-
-
-python setup.py install;

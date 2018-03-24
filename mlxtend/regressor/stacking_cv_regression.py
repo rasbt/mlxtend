@@ -13,14 +13,15 @@
 #
 # License: BSD 3 clause
 
+from ..externals.estimator_checks import check_is_fitted
+from ..externals import six
+from ..externals.name_estimators import _name_estimators
 from sklearn.base import BaseEstimator
 from sklearn.base import RegressorMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
-from sklearn.exceptions import NotFittedError
 from sklearn.model_selection._split import check_cv
-from ..externals import six
-from ..externals.name_estimators import _name_estimators
+
 import numpy as np
 
 
@@ -203,9 +204,7 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         # the meta-model from that info.
         #
 
-        if not hasattr(self, 'regr_'):
-            raise NotFittedError("Estimator not fitted, "
-                                 "call `fit` before exploiting the model.")
+        check_is_fitted(self, 'regr_')
 
         meta_features = np.column_stack([
             regr.predict(X) for regr in self.regr_
@@ -233,9 +232,7 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             of regressors.
 
         """
-        if not hasattr(self, 'regr_'):
-            raise NotFittedError("Estimator not fitted, "
-                                 "call `fit` before exploiting the model.")
+        check_is_fitted(self, 'regr_')
         return np.column_stack([regr.predict(X) for regr in self.regr_])
 
     def get_params(self, deep=True):

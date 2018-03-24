@@ -5,19 +5,18 @@
 #
 # License: BSD 3 clause
 
-from mlxtend.classifier import StackingCVClassifier
-
 import pandas as pd
+import numpy as np
+from mlxtend.classifier import StackingCVClassifier
+from mlxtend.externals.estimator_checks import NotFittedError
+from mlxtend.utils import assert_raises
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
-import numpy as np
 from sklearn import datasets
-from mlxtend.utils import assert_raises
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import KFold
-from sklearn.exceptions import NotFittedError
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import train_test_split
 
@@ -201,6 +200,13 @@ def test_not_fitted():
                   " Call 'fit' with appropriate arguments"
                   " before using this method.",
                   sclf.predict_proba,
+                  iris.data)
+
+    assert_raises(NotFittedError,
+                  "This StackingCVClassifier instance is not fitted yet."
+                  " Call 'fit' with appropriate arguments"
+                  " before using this method.",
+                  sclf.predict_meta_features,
                   iris.data)
 
 

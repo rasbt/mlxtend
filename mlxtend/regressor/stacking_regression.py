@@ -8,13 +8,13 @@
 #
 # License: BSD 3 clause
 
+from ..externals.estimator_checks import check_is_fitted
+from ..externals.name_estimators import _name_estimators
+from ..externals import six
 from sklearn.base import BaseEstimator
 from sklearn.base import RegressorMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
-from sklearn.exceptions import NotFittedError
-from ..externals.name_estimators import _name_estimators
-from ..externals import six
 import numpy as np
 
 
@@ -183,9 +183,7 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             of regressors.
 
         """
-        if not hasattr(self, 'regr_'):
-            raise NotFittedError("Estimator not fitted, "
-                                 "call `fit` before exploiting the model.")
+        check_is_fitted(self, 'regr_')
         return np.column_stack([r.predict(X) for r in self.regr_])
 
     def predict(self, X):
@@ -202,5 +200,6 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         y_target : array-like, shape = [n_samples] or [n_samples, n_targets]
             Predicted target values.
         """
+        check_is_fitted(self, 'regr_')
         meta_features = self.predict_meta_features(X)
         return self.meta_regr_.predict(meta_features)

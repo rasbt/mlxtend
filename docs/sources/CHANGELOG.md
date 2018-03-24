@@ -27,11 +27,13 @@ The fit method of the SequentialFeatureSelector now optionally accepts **fit_par
 
 
 - Replaces `plot_decision_regions` colors by a colorblind-friendly palette and adds contour lines for decision regions. ([#348](https://github.com/rasbt/mlxtend/issues/348))
+- All stacking estimators now raise `NonFittedErrors` if any method for inference is called prior to fitting the estimator. ([#353](https://github.com/rasbt/mlxtend/issues/353))
 
 
 ##### Bug Fixes
 
-- -
+
+
 
 
 ### Version 0.11.0 (2018-03-14)

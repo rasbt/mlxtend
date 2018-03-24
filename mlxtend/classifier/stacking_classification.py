@@ -8,13 +8,13 @@
 #
 # License: BSD 3 clause
 
+from ..externals.estimator_checks import check_is_fitted
+from ..externals.name_estimators import _name_estimators
+from ..externals import six
 from sklearn.base import BaseEstimator
 from sklearn.base import ClassifierMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
-from sklearn.utils.validation import check_is_fitted
-from ..externals.name_estimators import _name_estimators
-from ..externals import six
 import numpy as np
 
 
@@ -188,6 +188,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             Returns the meta-features for test data.
 
         """
+        check_is_fitted(self, 'clfs_')
         if self.use_probas:
             probas = np.asarray([clf.predict_proba(X)
                                  for clf in self.clfs_])

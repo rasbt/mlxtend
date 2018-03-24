@@ -10,11 +10,11 @@
 # License: BSD 3 clause
 
 from ..externals.name_estimators import _name_estimators
+from ..externals.estimator_checks import check_is_fitted
 from sklearn.base import BaseEstimator
 from sklearn.base import ClassifierMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
-from sklearn.utils.validation import check_is_fitted
 from sklearn.externals import six
 from sklearn.model_selection._split import check_cv
 import numpy as np
@@ -321,6 +321,7 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             Predicted class labels.
 
         """
+        check_is_fitted(self, 'clfs_')
         all_model_predictions = self.predict_meta_features(X)
         if not self.use_features_in_secondary:
             return self.meta_clf_.predict(all_model_predictions)

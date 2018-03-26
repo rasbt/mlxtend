@@ -8,6 +8,7 @@ import sys
 import numpy as np
 from numpy.testing import assert_almost_equal
 from mlxtend.feature_selection import ExhaustiveFeatureSelector as EFS
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from mlxtend.classifier import SoftmaxRegression
 from sklearn.datasets import load_iris
@@ -162,6 +163,40 @@ def test_knn_cv3():
     dict_compare_utility(d1=expect, d2=efs1.subsets_)
     assert efs1.best_idx_ == (1, 2, 3)
     assert round(efs1.best_score_, 4) == 0.9728
+
+
+def test_fit_params():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    sample_weight = np.ones(X.shape[0])
+    forest = RandomForestClassifier(n_estimators=100, random_state=123)
+    efs1 = EFS(forest,
+               min_features=3,
+               max_features=3,
+               scoring='accuracy',
+               cv=4,
+               print_progress=False)
+    efs1 = efs1.fit(X, y, sample_weight=sample_weight)
+    expect = {0: {'feature_idx': (0, 1, 2),
+                  'cv_scores': np.array([0.94871795, 0.92307692,
+                                         0.91666667, 0.97222222]),
+                  'avg_score': 0.9401709401709402},
+              1: {'feature_idx': (0, 1, 3),
+                  'cv_scores': np.array([0.92307692, 0.92307692,
+                                         0.88888889, 1.]),
+                  'avg_score': 0.9337606837606838},
+              2: {'feature_idx': (0, 2, 3),
+                  'cv_scores': np.array([0.97435897, 0.94871795,
+                                         0.94444444, 0.97222222]),
+                  'avg_score': 0.9599358974358974},
+              3: {'feature_idx': (1, 2, 3),
+                  'cv_scores': np.array([0.97435897, 0.94871795,
+                                         0.91666667, 1.]),
+                  'avg_score': 0.9599358974358974}}
+    dict_compare_utility(d1=expect, d2=efs1.subsets_)
+    assert efs1.best_idx_ == (0, 2, 3)
+    assert round(efs1.best_score_, 4) == 0.9599
 
 
 def test_regression():

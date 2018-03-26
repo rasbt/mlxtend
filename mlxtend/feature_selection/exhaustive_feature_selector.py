@@ -25,16 +25,17 @@ from sklearn.model_selection import cross_val_score
 from sklearn.externals.joblib import Parallel, delayed
 
 
-def _calc_score(selector, X, y, indices):
+def _calc_score(selector, X, y, indices, **fit_params):
     if selector.cv:
         scores = cross_val_score(selector.est_,
                                  X[:, indices], y,
                                  cv=selector.cv,
                                  scoring=selector.scorer,
                                  n_jobs=1,
-                                 pre_dispatch=selector.pre_dispatch)
+                                 pre_dispatch=selector.pre_dispatch,
+                                 fit_params=fit_params)
     else:
-        selector.est_.fit(X[:, indices], y)
+        selector.est_.fit(X[:, indices], y, **fit_params)
         scores = np.array([selector.scorer(selector.est_, X[:, indices], y)])
     return indices, scores
 
@@ -127,7 +128,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             self.est_ = self.estimator
         self.fitted = False
 
-    def fit(self, X, y):
+    def fit(self, X, y, **fit_params):
         """Perform feature selection and learn model from training data.
 
         Parameters
@@ -137,6 +138,8 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             n_features is the number of features.
         y : array-like, shape = [n_samples]
             Target values.
+        fit_params : dict of string -> object, optional
+            Parameters to pass to to the fit method of classifier.
 
         Returns
         -------
@@ -160,41 +163,42 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             raise AttributeError('min_features must be <= max_features')
 
         candidates = chain(*((combinations(range(X.shape[1]), r=i))
-                          for i in range(self.min_features,
-                                         self.max_features + 1)))
+                           for i in range(self.min_features,
+                                          self.max_features + 1)))
 
         self.subsets_ = {}
-        
+
         def ncr(n, r):
             """Return the number of combinations of length r from n items.
-            
+
             Parameters
             ----------
             n : {integer}
             Total number of items
             r : {integer}
             Number of items to select from n
-            
+
             Returns
             -------
             Number of combinations, integer
-            
+
             """
-            
+
             r = min(r, n-r)
             if r == 0:
                 return 1
             numer = reduce(op.mul, range(n, n-r, -1))
             denom = reduce(op.mul, range(1, r+1))
             return numer//denom
-        
+
         all_comb = np.sum([ncr(n=X.shape[1], r=i)
                            for i in range(self.min_features,
                                           self.max_features + 1)])
-        
+
         n_jobs = min(self.n_jobs, all_comb)
         parallel = Parallel(n_jobs=n_jobs, pre_dispatch=self.pre_dispatch)
-        work = enumerate(parallel(delayed(_calc_score)(self, X, y, c)
+        work = enumerate(parallel(delayed(_calc_score)
+                                  (self, X, y, c, **fit_params)
                                   for c in candidates))
 
         for iteration, (c, cv_scores) in work:
@@ -239,7 +243,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self._check_fitted()
         return X[:, self.best_idx_]
 
-    def fit_transform(self, X, y):
+    def fit_transform(self, X, y, **fit_params):
         """Fit to training data and return the best selected features from X.
 
         Parameters
@@ -247,13 +251,15 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
+        fit_params : dict of string -> object, optional
+            Parameters to pass to to the fit method of classifier.
 
         Returns
         -------
         Feature subset of X, shape={n_samples, k_features}
 
         """
-        self.fit(X, y)
+        self.fit(X, y, **fit_params)
         return self.transform(X)
 
     def get_metric_dict(self, confidence_interval=0.95):

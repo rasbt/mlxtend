@@ -4,17 +4,18 @@
 #
 # License: BSD 3 clause
 
+from mlxtend.externals.estimator_checks import NotFittedError
+from mlxtend.utils import assert_raises
 from mlxtend.regressor import StackingRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import Ridge
 from sklearn.svm import SVR
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import train_test_split
 import numpy as np
 from numpy.testing import assert_almost_equal
 from nose.tools import raises
-from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import train_test_split
-from sklearn.exceptions import NotFittedError
-from mlxtend.utils import assert_raises
+
 
 
 # Generating a sample dataset
@@ -220,26 +221,13 @@ def test_not_fitted_predict():
                                store_train_meta_features=True)
     X_train, X_test, y_train, y_test = train_test_split(X2, y, test_size=0.3)
 
-    expect = ("Estimator not fitted, "
-              "call `fit` before exploiting the model.")
+    expect = ("This StackingRegressor instance is not fitted yet. Call "
+              "'fit' with appropriate arguments before using this method.")
 
     assert_raises(NotFittedError,
                   expect,
                   stregr.predict,
                   X_train)
-
-
-def test_not_fitted_predict_meta_features():
-    lr = LinearRegression()
-    svr_rbf = SVR(kernel='rbf')
-    ridge = Ridge(random_state=1)
-    stregr = StackingRegressor(regressors=[lr, ridge],
-                               meta_regressor=svr_rbf,
-                               store_train_meta_features=True)
-    X_train, X_test, y_train, y_test = train_test_split(X2, y, test_size=0.3)
-
-    expect = ("Estimator not fitted, "
-              "call `fit` before exploiting the model.")
 
     assert_raises(NotFittedError,
                   expect,

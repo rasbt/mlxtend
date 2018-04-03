@@ -29,6 +29,7 @@
 - [BootstrapOutOfBag](user_guide/evaluate/BootstrapOutOfBag.md)
 - [cochrans_q](user_guide/evaluate/cochrans_q.md)
 - [confusion_matrix](user_guide/evaluate/confusion_matrix.md)
+- [feature_importance_permutation](user_guide/evaluate/feature_importance_permutation.md)
 - [lift_score](user_guide/evaluate/lift_score.md)
 - [mcnemar_table](user_guide/evaluate/mcnemar_table.md)
 - [mcnemar_tables](user_guide/evaluate/mcnemar_tables.md)

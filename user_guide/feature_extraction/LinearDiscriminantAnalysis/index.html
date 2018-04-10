@@ -870,9 +870,6 @@
             <li><a href="#example-2-plotting-the-between-class-variance-explained-ratio">Example 2 - Plotting the Between-Class Variance Explained Ratio</a></li>
                 <!--  -->
         
-            <li><a href="#example-3-factor-loadings">Example 3 - Factor Loadings</a></li>
-                <!--  -->
-        
             <li><a href="#api">API</a></li>
                 <!-- 
                     <li><a href="#methods">Methods</a></li>
@@ -928,7 +925,7 @@ with plt.style.context('seaborn-whitegrid'):
     plt.figure(figsize=(6, 4))
     for lab, col in zip((0, 1, 2),
                         ('blue', 'red', 'green')):
-        plt.scatter(X_lda[y == lab, 0]*(-1),
+        plt.scatter(X_lda[y == lab, 0],
                     X_lda[y == lab, 1],
                     label=lab,
                     c=col)
@@ -948,7 +945,7 @@ from mlxtend.feature_extraction import LinearDiscriminantAnalysis
 X, y = iris_data()
 X = standardize(X)
 
-lda = LinearDiscriminantAnalysis(n_discriminants=2)
+lda = LinearDiscriminantAnalysis(n_discriminants=None)
 lda.fit(X, y)
 X_lda = lda.transform(X)
 </code></pre>
@@ -967,7 +964,7 @@ cum_var_exp = np.cumsum(var_exp)
     plt.step(range(4), cum_var_exp, where='mid',
              label='cumulative explained variance')
     plt.ylabel('Explained variance ratio')
-    plt.xlabel('Components')
+    plt.xlabel('Principal components')
     plt.xticks(range(4))
     ax.set_xticklabels(np.arange(1, X.shape[1] + 1))
     plt.legend(loc='best')
@@ -975,67 +972,15 @@ cum_var_exp = np.cumsum(var_exp)
 </code></pre>
 
 <p><img alt="png" src="../LinearDiscriminantAnalysis_files/LinearDiscriminantAnalysis_15_0.png" /></p>
-<p>In LDA, the number of linear discriminants is at most c−1, where c is the number of class labels, since the in-between scatter matrix SB is the sum of c matrices with rank 1 or less. We can indeed see that we only have two nonzero eigenvalues (the eigenvalues 2-4 are not exactly zero, but this is due to the  oating point arithmetic in NumPy).</p>
-<h2 id="example-3-factor-loadings">Example 3 - Factor Loadings</h2>
-<p>After evoking the <code>fit</code> method, the factor loadings are available via the <code>loadings_</code> attribute. In simple terms, the the loadings are the unstandardized values of the eigenvectors. Or in other words, we can interpret the loadings as the covariances (or correlation in case we standardized the input features) between the input features and the and the components (or eigenvectors), which have been scaled to unit length.</p>
-<p>By having the loadings scaled, they become comparable by magnitude and we can assess how much variance in a component is attributed to the input features (as the components are  just a weighted linear combination of the input features).</p>
-<pre><code class="python">from mlxtend.data import iris_data
-from mlxtend.preprocessing import standardize
-from mlxtend.feature_extraction import LinearDiscriminantAnalysis
-import matplotlib.pyplot as plt
-
-X, y = iris_data()
-X = standardize(X)
-
-lda = LinearDiscriminantAnalysis(n_discriminants=2)
-
-lda.fit(X, y);
-</code></pre>
-
-<pre><code class="python">xlabels = ['sepal length', 'sepal width', 'petal length', 'petal width']
-
-fig, ax = plt.subplots(1, 2, figsize=(8, 3))
-
-ax[0].bar(range(4), lda.loadings_[:, 0], align='center')
-ax[1].bar(range(4), lda.loadings_[:, 1], align='center')
-
-ax[0].set_ylabel('Factor loading onto component 1')
-ax[1].set_ylabel('Factor loading onto component 2')
-
-ax[0].set_xticks(range(4))
-ax[1].set_xticks(range(4))
-ax[0].set_xticklabels(xlabels, rotation=45)
-ax[1].set_xticklabels(xlabels, rotation=45)
-plt.ylim([-1, 1])
-plt.tight_layout()
-</code></pre>
-
-<p><img alt="png" src="../LinearDiscriminantAnalysis_files/LinearDiscriminantAnalysis_20_0.png" /></p>
 <h2 id="api">API</h2>
-<p><em>LinearDiscriminantAnalysis(n_discriminants=None, solver='eigen', tol=1e-08)</em></p>
+<p><em>LinearDiscriminantAnalysis(n_discriminants=None)</em></p>
 <p>Linear Discriminant Analysis Class</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
 <p><code>n_discriminants</code> : int (default: None)</p>
 <p>The number of discrimants for transformation.
-Keeps the original dimensions of the dataset if <code>None</code>.
-Note that the number of meaningful discriminants is
-is max. n_classes - 1. In other words,
-in LDA, the number of linear discriminants is at
-most c-1, where c is the number of class labels,
-since the in-between scatter matrix SB is
-the sum of c matrices with rank 1 or less.
-We can indeed see that we only have two nonzero eigenvalues</p>
-</li>
-<li>
-<p><code>solver</code> : str (default: 'eigen')</p>
-<p _eigen_="'eigen'," _svd_="'svd'">Method for performing the matrix decomposition.</p>
-</li>
-<li>
-<p><code>tol</code> : float (default: 1-e8)</p>
-<p>Tolerance value for thresholding small eigenvalues, which
-are due to floating point imprecision, to zero.</p>
+Keeps the original dimensions of the dataset if <code>None</code>.</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>

@@ -1112,18 +1112,6 @@ association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshol
     </tr>
     <tr>
       <th>2</th>
-      <td>(Onion)</td>
-      <td>(Eggs)</td>
-      <td>0.6</td>
-      <td>0.8</td>
-      <td>0.6</td>
-      <td>1.00</td>
-      <td>1.25</td>
-      <td>0.12</td>
-      <td>inf</td>
-    </tr>
-    <tr>
-      <th>3</th>
       <td>(Eggs)</td>
       <td>(Onion)</td>
       <td>0.8</td>
@@ -1133,6 +1121,18 @@ association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshol
       <td>1.25</td>
       <td>0.12</td>
       <td>1.600000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>(Onion)</td>
+      <td>(Eggs)</td>
+      <td>0.6</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>1.00</td>
+      <td>1.25</td>
+      <td>0.12</td>
+      <td>inf</td>
     </tr>
     <tr>
       <th>4</th>
@@ -1172,7 +1172,19 @@ association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshol
     </tr>
     <tr>
       <th>7</th>
-      <td>(Onion, Eggs)</td>
+      <td>(Eggs, Kidney Beans)</td>
+      <td>(Onion)</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>0.6</td>
+      <td>0.75</td>
+      <td>1.25</td>
+      <td>0.12</td>
+      <td>1.600000</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>(Eggs, Onion)</td>
       <td>(Kidney Beans)</td>
       <td>0.6</td>
       <td>1.0</td>
@@ -1183,8 +1195,8 @@ association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshol
       <td>inf</td>
     </tr>
     <tr>
-      <th>8</th>
-      <td>(Onion, Kidney Beans)</td>
+      <th>9</th>
+      <td>(Kidney Beans, Onion)</td>
       <td>(Eggs)</td>
       <td>0.6</td>
       <td>0.8</td>
@@ -1193,21 +1205,21 @@ association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshol
       <td>1.25</td>
       <td>0.12</td>
       <td>inf</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>(Eggs, Kidney Beans)</td>
-      <td>(Onion)</td>
-      <td>0.8</td>
-      <td>0.6</td>
-      <td>0.6</td>
-      <td>0.75</td>
-      <td>1.25</td>
-      <td>0.12</td>
-      <td>1.600000</td>
     </tr>
     <tr>
       <th>10</th>
+      <td>(Eggs)</td>
+      <td>(Kidney Beans, Onion)</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>0.6</td>
+      <td>0.75</td>
+      <td>1.25</td>
+      <td>0.12</td>
+      <td>1.600000</td>
+    </tr>
+    <tr>
+      <th>11</th>
       <td>(Onion)</td>
       <td>(Eggs, Kidney Beans)</td>
       <td>0.6</td>
@@ -1217,18 +1229,6 @@ association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshol
       <td>1.25</td>
       <td>0.12</td>
       <td>inf</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>(Eggs)</td>
-      <td>(Onion, Kidney Beans)</td>
-      <td>0.8</td>
-      <td>0.6</td>
-      <td>0.6</td>
-      <td>0.75</td>
-      <td>1.25</td>
-      <td>0.12</td>
-      <td>1.600000</td>
     </tr>
   </tbody>
 </table>
@@ -1272,56 +1272,44 @@ rules
   <tbody>
     <tr>
       <th>0</th>
-      <td>(Onion)</td>
       <td>(Eggs)</td>
-      <td>0.6</td>
+      <td>(Onion)</td>
       <td>0.8</td>
       <td>0.6</td>
-      <td>1.00</td>
+      <td>0.6</td>
+      <td>0.75</td>
       <td>1.25</td>
       <td>0.12</td>
-      <td>inf</td>
+      <td>1.600000</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>(Eggs)</td>
       <td>(Onion)</td>
+      <td>(Eggs)</td>
+      <td>0.6</td>
       <td>0.8</td>
       <td>0.6</td>
-      <td>0.6</td>
-      <td>0.75</td>
+      <td>1.00</td>
       <td>1.25</td>
       <td>0.12</td>
-      <td>1.600000</td>
+      <td>inf</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>(Onion, Kidney Beans)</td>
-      <td>(Eggs)</td>
-      <td>0.6</td>
+      <td>(Eggs, Kidney Beans)</td>
+      <td>(Onion)</td>
       <td>0.8</td>
       <td>0.6</td>
-      <td>1.00</td>
+      <td>0.6</td>
+      <td>0.75</td>
       <td>1.25</td>
       <td>0.12</td>
-      <td>inf</td>
+      <td>1.600000</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>(Eggs, Kidney Beans)</td>
-      <td>(Onion)</td>
-      <td>0.8</td>
-      <td>0.6</td>
-      <td>0.6</td>
-      <td>0.75</td>
-      <td>1.25</td>
-      <td>0.12</td>
-      <td>1.600000</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>(Onion)</td>
-      <td>(Eggs, Kidney Beans)</td>
+      <td>(Kidney Beans, Onion)</td>
+      <td>(Eggs)</td>
       <td>0.6</td>
       <td>0.8</td>
       <td>0.6</td>
@@ -1331,9 +1319,9 @@ rules
       <td>inf</td>
     </tr>
     <tr>
-      <th>5</th>
+      <th>4</th>
       <td>(Eggs)</td>
-      <td>(Onion, Kidney Beans)</td>
+      <td>(Kidney Beans, Onion)</td>
       <td>0.8</td>
       <td>0.6</td>
       <td>0.6</td>
@@ -1341,6 +1329,18 @@ rules
       <td>1.25</td>
       <td>0.12</td>
       <td>1.600000</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>(Onion)</td>
+      <td>(Eggs, Kidney Beans)</td>
+      <td>0.6</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>1.00</td>
+      <td>1.25</td>
+      <td>0.12</td>
+      <td>inf</td>
     </tr>
   </tbody>
 </table>
@@ -1390,33 +1390,20 @@ rules
   <tbody>
     <tr>
       <th>0</th>
-      <td>(Onion)</td>
       <td>(Eggs)</td>
-      <td>0.6</td>
+      <td>(Onion)</td>
       <td>0.8</td>
       <td>0.6</td>
-      <td>1.00</td>
+      <td>0.6</td>
+      <td>0.75</td>
       <td>1.25</td>
       <td>0.12</td>
-      <td>inf</td>
+      <td>1.600000</td>
       <td>1</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>(Eggs)</td>
       <td>(Onion)</td>
-      <td>0.8</td>
-      <td>0.6</td>
-      <td>0.6</td>
-      <td>0.75</td>
-      <td>1.25</td>
-      <td>0.12</td>
-      <td>1.600000</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>(Onion, Kidney Beans)</td>
       <td>(Eggs)</td>
       <td>0.6</td>
       <td>0.8</td>
@@ -1425,12 +1412,38 @@ rules
       <td>1.25</td>
       <td>0.12</td>
       <td>inf</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>(Eggs, Kidney Beans)</td>
+      <td>(Onion)</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>0.6</td>
+      <td>0.75</td>
+      <td>1.25</td>
+      <td>0.12</td>
+      <td>1.600000</td>
       <td>2</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>(Eggs, Kidney Beans)</td>
-      <td>(Onion)</td>
+      <td>(Kidney Beans, Onion)</td>
+      <td>(Eggs)</td>
+      <td>0.6</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>1.00</td>
+      <td>1.25</td>
+      <td>0.12</td>
+      <td>inf</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>(Eggs)</td>
+      <td>(Kidney Beans, Onion)</td>
       <td>0.8</td>
       <td>0.6</td>
       <td>0.6</td>
@@ -1438,10 +1451,10 @@ rules
       <td>1.25</td>
       <td>0.12</td>
       <td>1.600000</td>
-      <td>2</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>4</th>
+      <th>5</th>
       <td>(Onion)</td>
       <td>(Eggs, Kidney Beans)</td>
       <td>0.6</td>
@@ -1451,19 +1464,6 @@ rules
       <td>1.25</td>
       <td>0.12</td>
       <td>inf</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>(Eggs)</td>
-      <td>(Onion, Kidney Beans)</td>
-      <td>0.8</td>
-      <td>0.6</td>
-      <td>0.6</td>
-      <td>0.75</td>
-      <td>1.25</td>
-      <td>0.12</td>
-      <td>1.600000</td>
       <td>1</td>
     </tr>
   </tbody>
@@ -1508,8 +1508,8 @@ rules
   </thead>
   <tbody>
     <tr>
-      <th>2</th>
-      <td>(Onion, Kidney Beans)</td>
+      <th>3</th>
+      <td>(Kidney Beans, Onion)</td>
       <td>(Eggs)</td>
       <td>0.6</td>
       <td>0.8</td>
@@ -1540,12 +1540,24 @@ with columns ['support', 'itemsets']</p>
 <p>Metric to evaluate if a rule is of interest.
 Supported metrics are 'support', 'confidence', 'lift',
 'leverage', and 'conviction'
-These metrics are computed as follows:
-- support(A-&gt;C) = support(A+C) [aka 'support'], range: [0, 1]
-- confidence(A-&gt;C) = support(A+C) / support(A), range: [0, 1]
-- lift(A-&gt;C) = confidence(A-&gt;C) / support(C), range: [0, inf]
-- leverage(A-&gt;C) = support(A-&gt;C) - support(A)*support(C), range: [-1, 1]
-- conviction = [1 - support(C)] / [1 - confidence(A-&gt;C)], range: [0, inf]</p>
+These metrics are computed as follows:</p>
+<ul>
+<li>
+<p>support(A-&gt;C) = support(A+C) [aka 'support'], range: [0, 1]</p>
+</li>
+<li>
+<p>confidence(A-&gt;C) = support(A+C) / support(A), range: [0, 1]</p>
+</li>
+<li>
+<p>lift(A-&gt;C) = confidence(A-&gt;C) / support(C), range: [0, inf]</p>
+</li>
+<li>
+<p>leverage(A-&gt;C) = support(A-&gt;C) - support(A)*support(C), range: [-1, 1]</p>
+</li>
+<li>
+<p>conviction = [1 - support(C)] / [1 - confidence(A-&gt;C)], range: [0, inf]</p>
+</li>
+</ul>
 </li>
 <li>
 <p><code>min_threshold</code> : float (default: 0.8)</p>
@@ -1554,12 +1566,13 @@ to decide whether a candidate rule is of interest.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
-<p>pandas DataFrame with columns "antecedent support",
-    "consequent support",
-    "support", "confidence", "lift",
-    "leverage", "conviction"
-    of all rules for which
-    metric(rule) &gt;= min_threshold.</p></div>
+<pre><code>pandas DataFrame with columns "antecedent support",
+"consequent support",
+"support", "confidence", "lift",
+"leverage", "conviction"
+of all rules for which
+metric(rule) &gt;= min_threshold.
+</code></pre></div>
         
     </div>
 

@@ -987,7 +987,6 @@ replicate.</p>
 <p><strong>Examples</strong></p>
 <pre><code>&gt;&gt;&gt; from sklearn import datasets, linear_model
 &gt;&gt;&gt; from mlxtend.evaluate import bootstrap_point632_score
-&gt;&gt;&gt; import numpy as np
 &gt;&gt;&gt; iris = datasets.load_iris()
 &gt;&gt;&gt; X = iris.data
 &gt;&gt;&gt; y = iris.target
@@ -995,7 +994,7 @@ replicate.</p>
 &gt;&gt;&gt; scores = bootstrap_point632_score(lr, X, y)
 &gt;&gt;&gt; acc = np.mean(scores)
 &gt;&gt;&gt; print('Accuracy:', acc)
-Accuracy: 0.953023146884
+0.953023146884
 &gt;&gt;&gt; lower = np.percentile(scores, 2.5)
 &gt;&gt;&gt; upper = np.percentile(scores, 97.5)
 &gt;&gt;&gt; print('95%% Confidence interval: [%.2f, %.2f]' % (lower, upper))

@@ -941,24 +941,19 @@ between multiple counters.</p>
 </li>
 </ul>
 <p><strong>Examples</strong></p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>cnt = Counter()
-    &gt;&gt;&gt; for i in range(20):
-    ...     # do some computation
-    ...     time.sleep(0.1)
-    ...     cnt.update()
-    20 iter | 2 sec
-    &gt;&gt;&gt; print('The counter was initialized.'
-    ' %d seconds ago.' % (time.time() - cnt.start_time))
-    The counter was initialized 2 seconds ago
-    &gt;&gt;&gt; print('The counter was last updated'
-    ' %d seconds ago.' % (time.time() - cnt.end_time))
-    The counter was last updated 0 seconds ago.</p>
-</blockquote>
-</blockquote>
-</blockquote>
+<pre><code>&gt;&gt;&gt; cnt = Counter()
+&gt;&gt;&gt; for i in range(20):
+...     # do some computation
+...     time.sleep(0.1)
+...     cnt.update()
+20 iter | 2 sec
+&gt;&gt;&gt; print('The counter was initialized.'
+' %d seconds ago.' % (time.time() - cnt.start_time))
+The counter was initialized 2 seconds ago
+&gt;&gt;&gt; print('The counter was last updated'
+' %d seconds ago.' % (time.time() - cnt.end_time))
+The counter was last updated 0 seconds ago.
+</code></pre>
 <h3 id="methods">Methods</h3>
 <hr>
 

@@ -1133,6 +1133,12 @@ grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
 grid = grid.fit(iris.data, iris.target)
 </code></pre>
 
+<p><strong>Note</strong></p>
+<p>The <code>EnsembleVoteClass</code> also enables grid search over the <code>clfs</code> argument. However, due to the current implementation of <code>GridSearchCV</code> in scikit-learn, it is not possible to search over both, differenct classifiers and classifier parameters at the same time. For instance, while the following parameter dictionary works</p>
+<pre><code>params = {'randomforestclassifier__n_estimators': [1, 100],
+'clfs': [(clf1, clf1, clf1), (clf2, clf3)]}
+</code></pre>
+<p>it will use the instance settings of <code>clf1</code>, <code>clf2</code>, and <code>clf3</code> and not overwrite it with the <code>'n_estimators'</code> settings from <code>'randomforestclassifier__n_estimators': [1, 100]</code>.</p>
 <h2 id="example-3-majority-voting-with-classifiers-trained-on-different-feature-subsets">Example 3 - Majority voting with classifiers trained on different feature subsets</h2>
 <p>Feature selection algorithms implemented in scikit-learn as well as the <code>SequentialFeatureSelector</code> implement a <code>transform</code> method that passes the reduced feature subset to the next item in a <code>Pipeline</code>.</p>
 <p>For example, the method</p>

@@ -41,6 +41,7 @@ def docstring_to_markdown(docstring):
         line = line.strip()
         if set(line) in ({'-'}, {'='}):
             new_docstring_lst[idx - 1] = '**%s**' % new_docstring_lst[idx - 1]
+
         elif line.startswith('>>>'):
             line = '    %s' % line
         new_docstring_lst.append(line)
@@ -62,8 +63,12 @@ def docstring_to_markdown(docstring):
 
     clean_lst = []
     for line in new_docstring_lst:
-        if set(line.strip()) not in ({'-'}, {'='}):
+        if line.startswith('\n>>>'):
+            clean_lst.append('\n')
+            clean_lst.append('    ' + line[1:])
+        elif set(line.strip()) not in ({'-'}, {'='}):
             clean_lst.append(line)
+
     return clean_lst
 
 

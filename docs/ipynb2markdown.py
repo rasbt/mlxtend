@@ -54,8 +54,9 @@ def ipynb_to_md(ipynb_path):
             if line.lstrip().startswith('#'):
                 break
         for line in f:
-            if line.lstrip().startswith('```'):
-                continue
+
+            if line.startswith('        ```'):
+                new_s.append(line[8:])
             else:
                 new_s.append(line[4:])
 

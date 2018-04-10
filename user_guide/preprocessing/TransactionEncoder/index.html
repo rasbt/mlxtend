@@ -1113,19 +1113,22 @@ contained subobjects that are estimators.</p>
 <p>The NumPy one-hot encoded boolean array of the input transactions,
 where the columns represent the unique items found in the input
 array in alphabetic order</p>
-<p>For example,
-array([[True , False, True , True , False, True ],
-[True , False, True , False, False, True ],
-[True , False, True , False, False, False],
-[True , True , False, False, False, False],
-[False, False, True , True , True , True ],
-[False, False, True , False, True , True ],
-[False, False, True , False, True , False],
-[True , True , False, False, False, False]])
-The corresponding column labels are available as self.columns_,
-e.g., ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']</p>
+<p>For example,</p>
 </li>
 </ul>
+<pre><code>    array([[True , False, True , True , False, True ],
+    [True , False, True , False, False, True ],
+    [True , False, True , False, False, False],
+    [True , True , False, False, False, False],
+    [False, False, True , True , True , True ],
+    [False, False, True , False, True , True ],
+    [False, False, True , False, True , False],
+    [True , True , False, False, False, False]])
+</code></pre>
+
+<pre><code>The corresponding column labels are available as self.columns_,
+e.g., ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']
+</code></pre>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
@@ -1133,17 +1136,19 @@ e.g., ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']</p>
 <p>A python list of lists, where the outer list stores the
 n transactions and the inner list stores the items in each
 transaction.</p>
-<p>For example,
-[['Apple', 'Beer', 'Rice', 'Chicken'],
-['Apple', 'Beer', 'Rice'],
-['Apple', 'Beer'],
-['Apple', 'Bananas'],
-['Milk', 'Beer', 'Rice', 'Chicken'],
-['Milk', 'Beer', 'Rice'],
-['Milk', 'Beer'],
-['Apple', 'Bananas']]</p>
+<p>For example,</p>
 </li>
 </ul>
+<pre><code>    [['Apple', 'Beer', 'Rice', 'Chicken'],
+    ['Apple', 'Beer', 'Rice'],
+    ['Apple', 'Beer'],
+    ['Apple', 'Bananas'],
+    ['Milk', 'Beer', 'Rice', 'Chicken'],
+    ['Milk', 'Beer', 'Rice'],
+    ['Milk', 'Beer'],
+    ['Apple', 'Bananas']]
+</code></pre>
+
 <hr>
 
 <p><em>set_params(</em><em>params)</em></p>

@@ -41,6 +41,7 @@ def docstring_to_markdown(docstring):
         line = line.strip()
         if set(line) in ({'-'}, {'='}):
             new_docstring_lst[idx - 1] = '**%s**' % new_docstring_lst[idx - 1]
+
         elif line.startswith('>>>'):
             line = '    %s' % line
         new_docstring_lst.append(line)
@@ -62,8 +63,16 @@ def docstring_to_markdown(docstring):
 
     clean_lst = []
     for line in new_docstring_lst:
-        if set(line.strip()) not in ({'-'}, {'='}):
+        if line.startswith('\n>>>'):
+            clean_lst.append('\n')
+            clean_lst.append('    ' + line[1:])
+        elif line.startswith('        ```'):
+            clean_lst.append(line[8:])
+        elif line.startswith('    ```'):
+            clean_lst.append(line[4:])
+        elif set(line.strip()) not in ({'-'}, {'='}):
             clean_lst.append(line)
+
     return clean_lst
 
 
@@ -338,7 +347,7 @@ def summarize_methdods_and_functions(api_modules, out_dir,
         new_output = []
         if str_above_header:
             new_output.append(str_above_header)
-        for p in module_paths:
+        for p in sorted(module_paths):
             with open(p, 'r') as r:
                 new_output.extend(r.readlines())
 
@@ -406,4 +415,4 @@ if __name__ == "__main__":
                                      clean=args.clean,
                                      str_above_header=('mlxtend'
                                                        ' version: %s \n' % (
-                                                       package.__version__)))
+                                                        package.__version__)))

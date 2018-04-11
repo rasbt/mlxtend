@@ -22,16 +22,19 @@ def association_rules(df, metric="confidence", min_threshold=0.8):
     df : pandas DataFrame
       pandas DataFrame of frequent itemsets
       with columns ['support', 'itemsets']
+
     metric : string (default: 'confidence')
       Metric to evaluate if a rule is of interest.
       Supported metrics are 'support', 'confidence', 'lift',
       'leverage', and 'conviction'
       These metrics are computed as follows:
-      - support(A->C) = support(A+C) [aka 'support'], range: [0, 1]
-      - confidence(A->C) = support(A+C) / support(A), range: [0, 1]
-      - lift(A->C) = confidence(A->C) / support(C), range: [0, inf]
-      - leverage(A->C) = support(A->C) - support(A)*support(C), range: [-1, 1]
-      - conviction = [1 - support(C)] / [1 - confidence(A->C)], range: [0, inf]
+
+      - support(A->C) = support(A+C) [aka 'support'], range: [0, 1]\n
+      - confidence(A->C) = support(A+C) / support(A), range: [0, 1]\n
+      - lift(A->C) = confidence(A->C) / support(C), range: [0, inf]\n
+      - leverage(A->C) = support(A->C) - support(A)*support(C), range: [-1, 1]\n
+      - conviction = [1 - support(C)] / [1 - confidence(A->C)], range: [0, inf]\n
+
     min_threshold : float (default: 0.8)
       Minimal threshold for the evaluation metric
       to decide whether a candidate rule is of interest.

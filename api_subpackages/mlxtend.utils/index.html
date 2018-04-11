@@ -855,16 +855,16 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#check_xy">check_Xy</a></li>
-        
-    
-        <li class="main "><a href="#counter">Counter</a></li>
+        <li class="main active"><a href="#counter">Counter</a></li>
         
             <li><a href="#methods">Methods</a></li>
                 <!--  -->
         
     
         <li class="main "><a href="#assert_raises">assert_raises</a></li>
+        
+    
+        <li class="main "><a href="#check_xy">check_Xy</a></li>
         
     
         <li class="main "><a href="#format_kwarg_dictionaries">format_kwarg_dictionaries</a></li>
@@ -875,9 +875,6 @@
         <div class="col-md-9" role="main">
 
 <p>mlxtend version: 0.11.0 </p>
-<h2 id="check_xy">check_Xy</h2>
-<p><em>check_Xy(X, y, y_int=True)</em></p>
-<p>None</p>
 <h2 id="counter">Counter</h2>
 <p><em>Counter(stderr=False, start_newline=True, precision=0, name=None)</em></p>
 <p>Class to display the progress of for-loop iterators.</p>
@@ -917,24 +914,19 @@ between multiple counters.</p>
 </li>
 </ul>
 <p><strong>Examples</strong></p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>cnt = Counter()
-    &gt;&gt;&gt; for i in range(20):
-    ...     # do some computation
-    ...     time.sleep(0.1)
-    ...     cnt.update()
-    20 iter | 2 sec
-    &gt;&gt;&gt; print('The counter was initialized.'
-    ' %d seconds ago.' % (time.time() - cnt.start_time))
-    The counter was initialized 2 seconds ago
-    &gt;&gt;&gt; print('The counter was last updated'
-    ' %d seconds ago.' % (time.time() - cnt.end_time))
-    The counter was last updated 0 seconds ago.</p>
-</blockquote>
-</blockquote>
-</blockquote>
+<pre><code>&gt;&gt;&gt; cnt = Counter()
+&gt;&gt;&gt; for i in range(20):
+...     # do some computation
+...     time.sleep(0.1)
+...     cnt.update()
+20 iter | 2 sec
+&gt;&gt;&gt; print('The counter was initialized.'
+' %d seconds ago.' % (time.time() - cnt.start_time))
+The counter was initialized 2 seconds ago
+&gt;&gt;&gt; print('The counter was last updated'
+' %d seconds ago.' % (time.time() - cnt.end_time))
+The counter was last updated 0 seconds ago.
+</code></pre>
 <h3 id="methods">Methods</h3>
 <hr>
 
@@ -964,6 +956,9 @@ between multiple counters.</p>
 <p><code>**kwargs</code> : keyword arguments to <code>func</code></p>
 </li>
 </ul>
+<h2 id="check_xy">check_Xy</h2>
+<p><em>check_Xy(X, y, y_int=True)</em></p>
+<p>None</p>
 <h2 id="format_kwarg_dictionaries">format_kwarg_dictionaries</h2>
 <p><em>format_kwarg_dictionaries(default_kwargs=None, user_kwargs=None, protected_keys=None)</em></p>
 <p>Function to combine default and user specified kwargs dictionaries</p>

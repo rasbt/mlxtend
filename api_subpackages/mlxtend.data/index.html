@@ -858,25 +858,25 @@
         <li class="main active"><a href="#autompg_data">autompg_data</a></li>
         
     
+        <li class="main "><a href="#boston_housing_data">boston_housing_data</a></li>
+        
+    
         <li class="main "><a href="#iris_data">iris_data</a></li>
+        
+    
+        <li class="main "><a href="#loadlocal_mnist">loadlocal_mnist</a></li>
+        
+    
+        <li class="main "><a href="#make_multiplexer_dataset">make_multiplexer_dataset</a></li>
+        
+    
+        <li class="main "><a href="#mnist_data">mnist_data</a></li>
         
     
         <li class="main "><a href="#three_blobs_data">three_blobs_data</a></li>
         
     
         <li class="main "><a href="#wine_data">wine_data</a></li>
-        
-    
-        <li class="main "><a href="#loadlocal_mnist">loadlocal_mnist</a></li>
-        
-    
-        <li class="main "><a href="#mnist_data">mnist_data</a></li>
-        
-    
-        <li class="main "><a href="#boston_housing_data">boston_housing_data</a></li>
-        
-    
-        <li class="main "><a href="#make_multiplexer_dataset">make_multiplexer_dataset</a></li>
         
     
     </ul>
@@ -918,6 +918,48 @@ and 8 feature columns (6 rows with NaNs removed).
 y is a 1-dimensional array of the target MPG values.</p>
 </li>
 </ul>
+<h2 id="boston_housing_data">boston_housing_data</h2>
+<p><em>boston_housing_data()</em></p>
+<p>Boston Housing dataset.</p>
+<ul>
+<li>
+<p><code>Source</code> : https://archive.ics.uci.edu/ml/datasets/Housing</p>
+</li>
+<li>
+<p><code>Number of samples</code> : 506</p>
+</li>
+<li>
+<p><code>Continuous target variable</code> : MEDV</p>
+<p>MEDV = Median value of owner-occupied homes in $1000's</p>
+<p>Dataset Attributes:</p>
+<ul>
+<li>1) CRIM      per capita crime rate by town</li>
+<li>2) ZN        proportion of residential land zoned for lots over
+25,000 sq.ft.</li>
+<li>3) INDUS     proportion of non-retail business acres per town</li>
+<li>4) CHAS      Charles River dummy variable (= 1 if tract bounds
+river; 0 otherwise)</li>
+<li>5) NOX       nitric oxides concentration (parts per 10 million)</li>
+<li>6) RM        average number of rooms per dwelling</li>
+<li>7) AGE       proportion of owner-occupied units built prior to 1940</li>
+<li>8) DIS       weighted distances to five Boston employment centres</li>
+<li>9) RAD       index of accessibility to radial highways</li>
+<li>10) TAX      full-value property-tax rate per $10,000</li>
+<li>11) PTRATIO  pupil-teacher ratio by town</li>
+<li>12) B        1000(Bk - 0.63)^2 where Bk is the prop. of b. by town</li>
+<li>13) LSTAT    % lower status of the population</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>X, y</code> : [n_samples, n_features], [n_class_labels]</p>
+<p>X is the feature matrix with 506 housing samples as rows
+and 13 feature columns.
+y is a 1-dimensional array of the continuous target variable MEDV</p>
+</li>
+</ul>
 <h2 id="iris_data">iris_data</h2>
 <p><em>iris_data()</em></p>
 <p>Iris flower dataset.</p>
@@ -948,6 +990,102 @@ y is a 1-dimensional array of the target MPG values.</p>
 and 4 feature columns sepal length, sepal width,
 petal length, and petal width.
 y is a 1-dimensional array of the class labels {0, 1, 2}</p>
+</li>
+</ul>
+<h2 id="loadlocal_mnist">loadlocal_mnist</h2>
+<p><em>loadlocal_mnist(images_path, labels_path)</em></p>
+<p>Read MNIST from ubyte files.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>images_path</code> : str</p>
+<p>path to the test or train MNIST ubyte file</p>
+</li>
+<li>
+<p><code>labels_path</code> : str</p>
+<p>path to the test or train MNIST class labels file</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>images</code> : [n_samples, n_pixels] numpy.array</p>
+<p>Pixel values of the images.</p>
+</li>
+<li>
+<p><code>labels</code> : [n_samples] numpy array</p>
+<p>Target class labels</p>
+</li>
+</ul>
+<h2 id="make_multiplexer_dataset">make_multiplexer_dataset</h2>
+<p><em>make_multiplexer_dataset(address_bits=2, sample_size=100, positive_class_ratio=0.5, shuffle=False, random_seed=None)</em></p>
+<p>Function to create a binary n-bit multiplexer dataset.</p>
+<p>New in mlxtend v0.9</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>address_bits</code> : int (default: 2)</p>
+<p>A positive integer that determines the number of address
+bits in the multiplexer, which in turn determine the
+n-bit capacity of the multiplexer and therefore the
+number of features. The number of features is determined by
+the number of address bits. For example, 2 address bits
+will result in a 6 bit multiplexer and consequently
+6 features (2 + 2^2 = 6). If <code>address_bits=3</code>, then
+this results in an 11-bit multiplexer as (2 + 2^3 = 11)
+with 11 features.</p>
+</li>
+<li>
+<p><code>sample_size</code> : int (default: 100)</p>
+<p>The total number of samples generated.</p>
+</li>
+<li>
+<p><code>positive_class_ratio</code> : float (default: 0.5)</p>
+<p>The fraction (a float between 0 and 1)
+of samples in the <code>sample_size</code>d dataset
+that have class label 1.
+If <code>positive_class_ratio=0.5</code> (default), then
+the ratio of class 0 and class 1 samples is perfectly balanced.</p>
+</li>
+<li>
+<p><code>shuffle</code> : Bool (default: False)</p>
+<p>Whether or not to shuffle the features and labels.
+If <code>False</code> (default), the samples are returned in sorted
+order starting with <code>sample_size</code>/2 samples with class label 0
+and followed by <code>sample_size</code>/2 samples with class label 1.</p>
+</li>
+<li>
+<p><code>random_seed</code> : int (default: None)</p>
+<p>Random seed used for generating the multiplexer samples and shuffling.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>X, y</code> : [n_samples, n_features], [n_class_labels]</p>
+<p>X is the feature matrix with the number of samples equal
+to <code>sample_size</code>. The number of features is determined by
+the number of address bits. For instance, 2 address bits
+will result in a 6 bit multiplexer and consequently
+6 features (2 + 2^2 = 6).
+All features are binary (values in {0, 1}).
+y is a 1-dimensional array of class labels in {0, 1}.</p>
+</li>
+</ul>
+<h2 id="mnist_data">mnist_data</h2>
+<p><em>mnist_data()</em></p>
+<p>5000 samples from the MNIST handwritten digits dataset.</p>
+<ul>
+<li><code>Data Source</code> : http://yann.lecun.com/exdb/mnist/</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>X, y</code> : [n_samples, n_features], [n_class_labels]</p>
+<p>X is the feature matrix with 5000 image samples as rows,
+each row consists of 28x28 pixels that were unrolled into
+784 pixel feature vectors.
+y contains the 10 unique class labels 0-9.</p>
 </li>
 </ul>
 <h2 id="three_blobs_data">three_blobs_data</h2>
@@ -1007,144 +1145,6 @@ y is a 1-dimensional array of the 3 suggested cluster labels 0, 1, 2</p>
 <p>X is the feature matrix with 178 wine samples as rows
 and 13 feature columns.
 y is a 1-dimensional array of the 3 class labels 0, 1, 2</p>
-</li>
-</ul>
-<h2 id="loadlocal_mnist">loadlocal_mnist</h2>
-<p><em>loadlocal_mnist(images_path, labels_path)</em></p>
-<p>Read MNIST from ubyte files.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>images_path</code> : str</p>
-<p>path to the test or train MNIST ubyte file</p>
-</li>
-<li>
-<p><code>labels_path</code> : str</p>
-<p>path to the test or train MNIST class labels file</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>images</code> : [n_samples, n_pixels] numpy.array</p>
-<p>Pixel values of the images.</p>
-</li>
-<li>
-<p><code>labels</code> : [n_samples] numpy array</p>
-<p>Target class labels</p>
-</li>
-</ul>
-<h2 id="mnist_data">mnist_data</h2>
-<p><em>mnist_data()</em></p>
-<p>5000 samples from the MNIST handwritten digits dataset.</p>
-<ul>
-<li><code>Data Source</code> : http://yann.lecun.com/exdb/mnist/</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>X, y</code> : [n_samples, n_features], [n_class_labels]</p>
-<p>X is the feature matrix with 5000 image samples as rows,
-each row consists of 28x28 pixels that were unrolled into
-784 pixel feature vectors.
-y contains the 10 unique class labels 0-9.</p>
-</li>
-</ul>
-<h2 id="boston_housing_data">boston_housing_data</h2>
-<p><em>boston_housing_data()</em></p>
-<p>Boston Housing dataset.</p>
-<ul>
-<li>
-<p><code>Source</code> : https://archive.ics.uci.edu/ml/datasets/Housing</p>
-</li>
-<li>
-<p><code>Number of samples</code> : 506</p>
-</li>
-<li>
-<p><code>Continuous target variable</code> : MEDV</p>
-<p>MEDV = Median value of owner-occupied homes in $1000's</p>
-<p>Dataset Attributes:</p>
-<ul>
-<li>1) CRIM      per capita crime rate by town</li>
-<li>2) ZN        proportion of residential land zoned for lots over
-25,000 sq.ft.</li>
-<li>3) INDUS     proportion of non-retail business acres per town</li>
-<li>4) CHAS      Charles River dummy variable (= 1 if tract bounds
-river; 0 otherwise)</li>
-<li>5) NOX       nitric oxides concentration (parts per 10 million)</li>
-<li>6) RM        average number of rooms per dwelling</li>
-<li>7) AGE       proportion of owner-occupied units built prior to 1940</li>
-<li>8) DIS       weighted distances to five Boston employment centres</li>
-<li>9) RAD       index of accessibility to radial highways</li>
-<li>10) TAX      full-value property-tax rate per $10,000</li>
-<li>11) PTRATIO  pupil-teacher ratio by town</li>
-<li>12) B        1000(Bk - 0.63)^2 where Bk is the prop. of b. by town</li>
-<li>13) LSTAT    % lower status of the population</li>
-</ul>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>X, y</code> : [n_samples, n_features], [n_class_labels]</p>
-<p>X is the feature matrix with 506 housing samples as rows
-and 13 feature columns.
-y is a 1-dimensional array of the continuous target variable MEDV</p>
-</li>
-</ul>
-<h2 id="make_multiplexer_dataset">make_multiplexer_dataset</h2>
-<p><em>make_multiplexer_dataset(address_bits=2, sample_size=100, positive_class_ratio=0.5, shuffle=False, random_seed=None)</em></p>
-<p>Function to create a binary n-bit multiplexer dataset.</p>
-<p>New in mlxtend v0.9</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>address_bits</code> : int (default: 2)</p>
-<p>A positive integer that determines the number of address
-bits in the multiplexer, which in turn determine the
-n-bit capacity of the multiplexer and therefore the
-number of features. The number of features is determined by
-the number of address bits. For example, 2 address bits
-will result in a 6 bit multiplexer and consequently
-6 features (2 + 2^2 = 6). If <code>address_bits=3</code>, then
-this results in an 11-bit multiplexer as (2 + 2^3 = 11)
-with 11 features.</p>
-</li>
-<li>
-<p><code>sample_size</code> : int (default: 100)</p>
-<p>The total number of samples generated.</p>
-</li>
-<li>
-<p><code>positive_class_ratio</code> : float (default: 0.5)</p>
-<p>The fraction (a float between 0 and 1)
-of samples in the <code>sample_size</code>d dataset
-that have class label 1.
-If <code>positive_class_ratio=0.5</code> (default), then
-the ratio of class 0 and class 1 samples is perfectly balanced.</p>
-</li>
-<li>
-<p><code>shuffle</code> : Bool (default: False)</p>
-<p>Whether or not to shuffle the features and labels.
-If <code>False</code> (default), the samples are returned in sorted
-order starting with <code>sample_size</code>/2 samples with class label 0
-and followed by <code>sample_size</code>/2 samples with class label 1.</p>
-</li>
-<li>
-<p><code>random_seed</code> : int (default: None)</p>
-<p>Random seed used for generating the multiplexer samples and shuffling.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>X, y</code> : [n_samples, n_features], [n_class_labels]</p>
-<p>X is the feature matrix with the number of samples equal
-to <code>sample_size</code>. The number of features is determined by
-the number of address bits. For instance, 2 address bits
-will result in a 6 bit multiplexer and consequently
-6 features (2 + 2^2 = 6).
-All features are binary (values in {0, 1}).
-y is a 1-dimensional array of class labels in {0, 1}.</p>
 </li>
 </ul></div>
         

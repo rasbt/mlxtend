@@ -858,34 +858,34 @@
         <li class="main active"><a href="#category_scatter">category_scatter</a></li>
         
     
+        <li class="main "><a href="#checkerboard_plot">checkerboard_plot</a></li>
+        
+    
         <li class="main "><a href="#ecdf">ecdf</a></li>
-        
-    
-        <li class="main "><a href="#remove_borders">remove_borders</a></li>
-        
-    
-        <li class="main "><a href="#plot_linear_regression">plot_linear_regression</a></li>
-        
-    
-        <li class="main "><a href="#plot_decision_regions">plot_decision_regions</a></li>
-        
-    
-        <li class="main "><a href="#stacked_barplot">stacked_barplot</a></li>
-        
-    
-        <li class="main "><a href="#plot_learning_curves">plot_learning_curves</a></li>
-        
-    
-        <li class="main "><a href="#plot_confusion_matrix">plot_confusion_matrix</a></li>
         
     
         <li class="main "><a href="#enrichment_plot">enrichment_plot</a></li>
         
     
-        <li class="main "><a href="#checkerboard_plot">checkerboard_plot</a></li>
+        <li class="main "><a href="#plot_confusion_matrix">plot_confusion_matrix</a></li>
+        
+    
+        <li class="main "><a href="#plot_decision_regions">plot_decision_regions</a></li>
+        
+    
+        <li class="main "><a href="#plot_learning_curves">plot_learning_curves</a></li>
+        
+    
+        <li class="main "><a href="#plot_linear_regression">plot_linear_regression</a></li>
         
     
         <li class="main "><a href="#plot_sequential_feature_selection">plot_sequential_feature_selection</a></li>
+        
+    
+        <li class="main "><a href="#remove_borders">remove_borders</a></li>
+        
+    
+        <li class="main "><a href="#stacked_barplot">stacked_barplot</a></li>
         
     
     </ul>
@@ -937,6 +937,54 @@ No legend if legend_loc=False</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li><code>fig</code> : matplotlig.pyplot figure object</li>
+</ul>
+<h2 id="checkerboard_plot">checkerboard_plot</h2>
+<p><em>checkerboard_plot(ary, cell_colors=('white', 'black'), font_colors=('black', 'white'), fmt='%.1f', figsize=None, row_labels=None, col_labels=None, fontsize=None)</em></p>
+<p>Plot a checkerboard table / heatmap via matplotlib.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>ary</code> : array-like, shape = [n, m]</p>
+<p>A 2D Nnumpy array.</p>
+</li>
+<li>
+<p><code>cell_colors</code> : tuple or list (default: ('white', 'black'))</p>
+<p>Tuple or list containing the two colors of the
+checkerboard pattern.</p>
+</li>
+<li>
+<p><code>font_colors</code> : tuple or list (default: ('black', 'white'))</p>
+<p>Font colors corresponding to the cell colors.</p>
+</li>
+<li>
+<p><code>figsize</code> : tuple (default: (2.5, 2.5))</p>
+<p>Height and width of the figure</p>
+</li>
+<li>
+<p><code>fmt</code> : str (default: '%.1f')</p>
+<p>Python string formatter for cell values.
+The default '%.1f' results in floats with 1 digit after
+the decimal point. Use '%d' to show numbers as integers.</p>
+</li>
+<li>
+<p><code>row_labels</code> : list (default: None)</p>
+<p>List of the row labels. Uses the array row
+indices 0 to n by default.</p>
+</li>
+<li>
+<p><code>col_labels</code> : list (default: None)</p>
+<p>List of the column labels. Uses the array column
+indices 0 to m by default.</p>
+</li>
+<li>
+<p><code>fontsize</code> : int (default: None)</p>
+<p>Specifies the font size of the checkerboard table.
+Uses matplotlib's default if None.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>fig</code> : matplotlib Figure object.</li>
 </ul>
 <h2 id="ecdf">ecdf</h2>
 <p><em>ecdf(x, y_label='ECDF', x_label=None, ax=None, percentile=None, ecdf_color=None, ecdf_marker='o', percentile_color='black', percentile_linestyle='--')</em></p>
@@ -999,70 +1047,106 @@ the feature threshold at a percentile threshold
 or None if <code>percentile=None</code></p>
 </li>
 </ul>
-<h2 id="remove_borders">remove_borders</h2>
-<p><em>remove_borders(axes, left=False, bottom=False, right=True, top=True)</em></p>
-<p>Remove chart junk from matplotlib plots.</p>
+<h2 id="enrichment_plot">enrichment_plot</h2>
+<p><em>enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-', alpha=0.5, lw=2, where='post', grid=True, count_label='Count', xlim='auto', ylim='auto', invert_axes=False, legend_loc='best', ax=None)</em></p>
+<p>Plot stacked barplots</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>axes</code> : iterable</p>
-<p>An iterable containing plt.gca()
-or plt.subplot() objects, e.g. [plt.gca()].</p>
+<p><code>df</code> : pandas.DataFrame</p>
+<p>A pandas DataFrame where columns represent the different categories.
+colors: str (default: 'bgrcky')
+The colors of the bars.</p>
 </li>
 <li>
-<p><code>left</code> : bool (default: <code>False</code>)</p>
-<p>Hide left axis spine if True.</p>
+<p><code>markers</code> : str (default: ' ')</p>
+<p>Matplotlib markerstyles, e.g,
+'sov' for square,circle, and triangle markers.</p>
 </li>
 <li>
-<p><code>bottom</code> : bool (default: <code>False</code>)</p>
-<p>Hide bottom axis spine if True.</p>
+<p><code>linestyles</code> : str (default: '-')</p>
+<p>Matplotlib linestyles, e.g.,
+'-,--' to cycle normal and dashed lines. Note
+that the different linestyles need to be separated by commas.</p>
 </li>
 <li>
-<p><code>right</code> : bool (default: <code>True</code>)</p>
-<p>Hide right axis spine if True.</p>
+<p><code>alpha</code> : float (default: 0.5)</p>
+<p>Transparency level from 0.0 to 1.0.</p>
 </li>
 <li>
-<p><code>top</code> : bool (default: <code>True</code>)</p>
-<p>Hide top axis spine if True.</p>
+<p><code>lw</code> : int or float (default: 2)</p>
+<p>Linewidth parameter.</p>
+</li>
+<li>
+<p><code>where</code> : {'post', 'pre', 'mid'} (default: 'post')</p>
+<p>Starting location of the steps.</p>
+</li>
+<li>
+<p><code>grid</code> : bool (default: <code>True</code>)</p>
+<p>Plots a grid if True.</p>
+</li>
+<li>
+<p><code>count_label</code> : str (default: 'Count')</p>
+<p>Label for the "Count"-axis.</p>
+</li>
+<li>
+<p><code>xlim</code> : 'auto' or array-like [min, max] (default: 'auto')</p>
+<p>Min and maximum position of the x-axis range.</p>
+</li>
+<li>
+<p><code>ylim</code> : 'auto' or array-like [min, max] (default: 'auto')</p>
+<p>Min and maximum position of the y-axis range.</p>
+</li>
+<li>
+<p><code>invert_axes</code> : bool (default: False)</p>
+<p>Plots count on the x-axis if True.</p>
+</li>
+<li>
+<p><code>legend_loc</code> : str (default: 'best')</p>
+<p>Location of the plot legend
+{best, upper left, upper right, lower left, lower right}
+No legend if legend_loc=False</p>
+</li>
+<li>
+<p><code>ax</code> : matplotlib axis, optional (default: None)</p>
+<p>Use this axis for plotting or make a new one otherwise</p>
 </li>
 </ul>
-<h2 id="plot_linear_regression">plot_linear_regression</h2>
-<p><em>plot_linear_regression(X, y, model=LinearRegression(copy_X=True, fit_intercept=True, n_jobs=1, normalize=False), corr_func='pearsonr', scattercolor='blue', fit_style='k--', legend=True, xlim='auto')</em></p>
-<p>Plot a linear regression line fit.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>ax</code> : matplotlib axis</li>
+</ul>
+<h2 id="plot_confusion_matrix">plot_confusion_matrix</h2>
+<p><em>plot_confusion_matrix(conf_mat, hide_spines=False, hide_ticks=False, figsize=(2.5, 2.5), cmap=None, alpha=0.3)</em></p>
+<p>Plot a confusion matrix via matplotlib.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>X</code> : numpy array, shape = [n_samples,]</p>
-<p>Samples.</p>
+<p><code>conf_mat</code> : array-like, shape = [n_classes, n_classes]</p>
+<p>Confusion matrix from evaluate.confusion matrix.</p>
 </li>
 <li>
-<p><code>y</code> : numpy array, shape (n_samples,)</p>
-<p>Target values
-model: object (default: sklearn.linear_model.LinearRegression)
-Estimator object for regression. Must implement
-a .fit() and .predict() method.
-corr_func: str or function (default: 'pearsonr')
-Uses <code>pearsonr</code> from scipy.stats if corr_func='pearsonr'.
-to compute the regression slope. If not 'pearsonr', the <code>corr_func</code>,
-the <code>corr_func</code> parameter expects a function of the form
-func(<x-array>, <y-array>) as inputs, which is expected to return
-a tuple <code>(&lt;correlation_coefficient&gt;, &lt;some_unused_value&gt;)</code>.
-scattercolor: string (default: blue)
-Color of scatter plot points.
-fit_style: string (default: k--)
-Style for the line fit.
-legend: bool (default: True)
-Plots legend with corr_coeff coef.,
-fit coef., and intercept values.
-xlim: array-like (x_min, x_max) or 'auto' (default: 'auto')
-X-axis limits for the linear line fit.</p>
+<p><code>hide_spines</code> : bool (default: False)</p>
+<p>Hides axis spines if True.</p>
+</li>
+<li>
+<p><code>hide_ticks</code> : bool (default: False)</p>
+<p>Hides axis ticks if True</p>
+</li>
+<li>
+<p><code>figsize</code> : tuple (default: (2.5, 2.5))</p>
+<p>Height and width of the figure</p>
+</li>
+<li>
+<p><code>cmap</code> : matplotlib colormap (default: <code>None</code>)</p>
+<p>Uses matplotlib.pyplot.cm.Blues if <code>None</code></p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>regression_fit</code> : tuple</p>
-<p>intercept, slope, corr_coeff (float, float, float)</p>
+<p><code>fig, ax</code> : matplotlib.pyplot subplot objects</p>
+<p>Figure and axis elements of the subplot.</p>
 </li>
 </ul>
 <h2 id="plot_decision_regions">plot_decision_regions</h2>
@@ -1157,39 +1241,6 @@ No legend if legend is 0.</p>
 <ul>
 <li><code>ax</code> : matplotlib.axes.Axes object</li>
 </ul>
-<h2 id="stacked_barplot">stacked_barplot</h2>
-<p><em>stacked_barplot(df, bar_width='auto', colors='bgrcky', labels='index', rotation=90, legend_loc='best')</em></p>
-<p>Function to plot stacked barplots</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>df</code> : pandas.DataFrame</p>
-<p>A pandas DataFrame where the index denotes the
-x-axis labels, and the columns contain the different
-measurements for each row.
-bar_width: 'auto' or float (default: 'auto')
-Parameter to set the widths of the bars. if
-'auto', the width is automatically determined by
-the number of columns in the dataset.
-colors: str (default: 'bgrcky')
-The colors of the bars.
-labels: 'index' or iterable (default: 'index')
-If 'index', the DataFrame index will be used as
-x-tick labels.
-rotation: int (default: 90)
-Parameter to rotate the x-axis labels.</p>
-</li>
-<li>
-<p><code>legend_loc</code> : str (default: 'best')</p>
-<p>Location of the plot legend
-{best, upper left, upper right, lower left, lower right}
-No legend if legend_loc=False</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>fig</code> : matplotlib.pyplot figure object</li>
-</ul>
 <h2 id="plot_learning_curves">plot_learning_curves</h2>
 <p><em>plot_learning_curves(X_train, y_train, X_test, y_test, clf, train_marker='o', test_marker='^', scoring='misclassification error', suppress_plot=False, print_model=True, style='fivethirtyeight', legend_loc='best')</em></p>
 <p>Plots learning curves of a classifier.</p>
@@ -1254,155 +1305,44 @@ for testing purposes.</p>
 <ul>
 <li><code>errors</code> : (training_error, test_error): tuple of lists</li>
 </ul>
-<h2 id="plot_confusion_matrix">plot_confusion_matrix</h2>
-<p><em>plot_confusion_matrix(conf_mat, hide_spines=False, hide_ticks=False, figsize=(2.5, 2.5), cmap=None, alpha=0.3)</em></p>
-<p>Plot a confusion matrix via matplotlib.</p>
+<h2 id="plot_linear_regression">plot_linear_regression</h2>
+<p><em>plot_linear_regression(X, y, model=LinearRegression(copy_X=True, fit_intercept=True, n_jobs=1, normalize=False), corr_func='pearsonr', scattercolor='blue', fit_style='k--', legend=True, xlim='auto')</em></p>
+<p>Plot a linear regression line fit.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>conf_mat</code> : array-like, shape = [n_classes, n_classes]</p>
-<p>Confusion matrix from evaluate.confusion matrix.</p>
+<p><code>X</code> : numpy array, shape = [n_samples,]</p>
+<p>Samples.</p>
 </li>
 <li>
-<p><code>hide_spines</code> : bool (default: False)</p>
-<p>Hides axis spines if True.</p>
-</li>
-<li>
-<p><code>hide_ticks</code> : bool (default: False)</p>
-<p>Hides axis ticks if True</p>
-</li>
-<li>
-<p><code>figsize</code> : tuple (default: (2.5, 2.5))</p>
-<p>Height and width of the figure</p>
-</li>
-<li>
-<p><code>cmap</code> : matplotlib colormap (default: <code>None</code>)</p>
-<p>Uses matplotlib.pyplot.cm.Blues if <code>None</code></p>
+<p><code>y</code> : numpy array, shape (n_samples,)</p>
+<p>Target values
+model: object (default: sklearn.linear_model.LinearRegression)
+Estimator object for regression. Must implement
+a .fit() and .predict() method.
+corr_func: str or function (default: 'pearsonr')
+Uses <code>pearsonr</code> from scipy.stats if corr_func='pearsonr'.
+to compute the regression slope. If not 'pearsonr', the <code>corr_func</code>,
+the <code>corr_func</code> parameter expects a function of the form
+func(<x-array>, <y-array>) as inputs, which is expected to return
+a tuple <code>(&lt;correlation_coefficient&gt;, &lt;some_unused_value&gt;)</code>.
+scattercolor: string (default: blue)
+Color of scatter plot points.
+fit_style: string (default: k--)
+Style for the line fit.
+legend: bool (default: True)
+Plots legend with corr_coeff coef.,
+fit coef., and intercept values.
+xlim: array-like (x_min, x_max) or 'auto' (default: 'auto')
+X-axis limits for the linear line fit.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>fig, ax</code> : matplotlib.pyplot subplot objects</p>
-<p>Figure and axis elements of the subplot.</p>
+<p><code>regression_fit</code> : tuple</p>
+<p>intercept, slope, corr_coeff (float, float, float)</p>
 </li>
-</ul>
-<h2 id="enrichment_plot">enrichment_plot</h2>
-<p><em>enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-', alpha=0.5, lw=2, where='post', grid=True, count_label='Count', xlim='auto', ylim='auto', invert_axes=False, legend_loc='best', ax=None)</em></p>
-<p>Plot stacked barplots</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>df</code> : pandas.DataFrame</p>
-<p>A pandas DataFrame where columns represent the different categories.
-colors: str (default: 'bgrcky')
-The colors of the bars.</p>
-</li>
-<li>
-<p><code>markers</code> : str (default: ' ')</p>
-<p>Matplotlib markerstyles, e.g,
-'sov' for square,circle, and triangle markers.</p>
-</li>
-<li>
-<p><code>linestyles</code> : str (default: '-')</p>
-<p>Matplotlib linestyles, e.g.,
-'-,--' to cycle normal and dashed lines. Note
-that the different linestyles need to be separated by commas.</p>
-</li>
-<li>
-<p><code>alpha</code> : float (default: 0.5)</p>
-<p>Transparency level from 0.0 to 1.0.</p>
-</li>
-<li>
-<p><code>lw</code> : int or float (default: 2)</p>
-<p>Linewidth parameter.</p>
-</li>
-<li>
-<p><code>where</code> : {'post', 'pre', 'mid'} (default: 'post')</p>
-<p>Starting location of the steps.</p>
-</li>
-<li>
-<p><code>grid</code> : bool (default: <code>True</code>)</p>
-<p>Plots a grid if True.</p>
-</li>
-<li>
-<p><code>count_label</code> : str (default: 'Count')</p>
-<p>Label for the "Count"-axis.</p>
-</li>
-<li>
-<p><code>xlim</code> : 'auto' or array-like [min, max] (default: 'auto')</p>
-<p>Min and maximum position of the x-axis range.</p>
-</li>
-<li>
-<p><code>ylim</code> : 'auto' or array-like [min, max] (default: 'auto')</p>
-<p>Min and maximum position of the y-axis range.</p>
-</li>
-<li>
-<p><code>invert_axes</code> : bool (default: False)</p>
-<p>Plots count on the x-axis if True.</p>
-</li>
-<li>
-<p><code>legend_loc</code> : str (default: 'best')</p>
-<p>Location of the plot legend
-{best, upper left, upper right, lower left, lower right}
-No legend if legend_loc=False</p>
-</li>
-<li>
-<p><code>ax</code> : matplotlib axis, optional (default: None)</p>
-<p>Use this axis for plotting or make a new one otherwise</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>ax</code> : matplotlib axis</li>
-</ul>
-<h2 id="checkerboard_plot">checkerboard_plot</h2>
-<p><em>checkerboard_plot(ary, cell_colors=('white', 'black'), font_colors=('black', 'white'), fmt='%.1f', figsize=None, row_labels=None, col_labels=None, fontsize=None)</em></p>
-<p>Plot a checkerboard table / heatmap via matplotlib.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>ary</code> : array-like, shape = [n, m]</p>
-<p>A 2D Nnumpy array.</p>
-</li>
-<li>
-<p><code>cell_colors</code> : tuple or list (default: ('white', 'black'))</p>
-<p>Tuple or list containing the two colors of the
-checkerboard pattern.</p>
-</li>
-<li>
-<p><code>font_colors</code> : tuple or list (default: ('black', 'white'))</p>
-<p>Font colors corresponding to the cell colors.</p>
-</li>
-<li>
-<p><code>figsize</code> : tuple (default: (2.5, 2.5))</p>
-<p>Height and width of the figure</p>
-</li>
-<li>
-<p><code>fmt</code> : str (default: '%.1f')</p>
-<p>Python string formatter for cell values.
-The default '%.1f' results in floats with 1 digit after
-the decimal point. Use '%d' to show numbers as integers.</p>
-</li>
-<li>
-<p><code>row_labels</code> : list (default: None)</p>
-<p>List of the row labels. Uses the array row
-indices 0 to n by default.</p>
-</li>
-<li>
-<p><code>col_labels</code> : list (default: None)</p>
-<p>List of the column labels. Uses the array column
-indices 0 to m by default.</p>
-</li>
-<li>
-<p><code>fontsize</code> : int (default: None)</p>
-<p>Specifies the font size of the checkerboard table.
-Uses matplotlib's default if None.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>fig</code> : matplotlib Figure object.</li>
 </ul>
 <h2 id="plot_sequential_feature_selection">plot_sequential_feature_selection</h2>
 <p><em>plot_sequential_feature_selection(metric_dict, kind='std_dev', color='blue', bcolor='steelblue', marker='o', alpha=0.2, ylabel='Performance', confidence_interval=0.95)</em></p>
@@ -1447,6 +1387,66 @@ Uses matplotlib's default if None.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li><code>fig</code> : matplotlib.pyplot.figure() object</li>
+</ul>
+<h2 id="remove_borders">remove_borders</h2>
+<p><em>remove_borders(axes, left=False, bottom=False, right=True, top=True)</em></p>
+<p>Remove chart junk from matplotlib plots.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>axes</code> : iterable</p>
+<p>An iterable containing plt.gca()
+or plt.subplot() objects, e.g. [plt.gca()].</p>
+</li>
+<li>
+<p><code>left</code> : bool (default: <code>False</code>)</p>
+<p>Hide left axis spine if True.</p>
+</li>
+<li>
+<p><code>bottom</code> : bool (default: <code>False</code>)</p>
+<p>Hide bottom axis spine if True.</p>
+</li>
+<li>
+<p><code>right</code> : bool (default: <code>True</code>)</p>
+<p>Hide right axis spine if True.</p>
+</li>
+<li>
+<p><code>top</code> : bool (default: <code>True</code>)</p>
+<p>Hide top axis spine if True.</p>
+</li>
+</ul>
+<h2 id="stacked_barplot">stacked_barplot</h2>
+<p><em>stacked_barplot(df, bar_width='auto', colors='bgrcky', labels='index', rotation=90, legend_loc='best')</em></p>
+<p>Function to plot stacked barplots</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>df</code> : pandas.DataFrame</p>
+<p>A pandas DataFrame where the index denotes the
+x-axis labels, and the columns contain the different
+measurements for each row.
+bar_width: 'auto' or float (default: 'auto')
+Parameter to set the widths of the bars. if
+'auto', the width is automatically determined by
+the number of columns in the dataset.
+colors: str (default: 'bgrcky')
+The colors of the bars.
+labels: 'index' or iterable (default: 'index')
+If 'index', the DataFrame index will be used as
+x-tick labels.
+rotation: int (default: 90)
+Parameter to rotate the x-axis labels.</p>
+</li>
+<li>
+<p><code>legend_loc</code> : str (default: 'best')</p>
+<p>Location of the plot legend
+{best, upper left, upper right, lower left, lower right}
+No legend if legend_loc=False</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>fig</code> : matplotlib.pyplot figure object</li>
 </ul></div>
         
     </div>

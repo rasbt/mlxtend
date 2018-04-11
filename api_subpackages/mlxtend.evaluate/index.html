@@ -855,46 +855,46 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#paired_ttest_kfold_cv">paired_ttest_kfold_cv</a></li>
-        
-    
-        <li class="main "><a href="#bootstrapoutofbag">BootstrapOutOfBag</a></li>
+        <li class="main active"><a href="#bootstrapoutofbag">BootstrapOutOfBag</a></li>
         
             <li><a href="#methods">Methods</a></li>
                 <!--  -->
         
     
-        <li class="main "><a href="#cochrans_q">cochrans_q</a></li>
-        
-    
-        <li class="main "><a href="#paired_ttest_5x2cv">paired_ttest_5x2cv</a></li>
-        
-    
-        <li class="main "><a href="#confusion_matrix">confusion_matrix</a></li>
-        
-    
-        <li class="main "><a href="#mcnemar_tables">mcnemar_tables</a></li>
-        
-    
-        <li class="main "><a href="#permutation_test">permutation_test</a></li>
-        
-    
-        <li class="main "><a href="#paired_ttest_resampled">paired_ttest_resampled</a></li>
-        
-    
-        <li class="main "><a href="#mcnemar">mcnemar</a></li>
+        <li class="main "><a href="#bootstrap">bootstrap</a></li>
         
     
         <li class="main "><a href="#bootstrap_point632_score">bootstrap_point632_score</a></li>
         
     
+        <li class="main "><a href="#cochrans_q">cochrans_q</a></li>
+        
+    
+        <li class="main "><a href="#confusion_matrix">confusion_matrix</a></li>
+        
+    
         <li class="main "><a href="#lift_score">lift_score</a></li>
         
     
-        <li class="main "><a href="#bootstrap">bootstrap</a></li>
+        <li class="main "><a href="#mcnemar">mcnemar</a></li>
         
     
         <li class="main "><a href="#mcnemar_table">mcnemar_table</a></li>
+        
+    
+        <li class="main "><a href="#mcnemar_tables">mcnemar_tables</a></li>
+        
+    
+        <li class="main "><a href="#paired_ttest_5x2cv">paired_ttest_5x2cv</a></li>
+        
+    
+        <li class="main "><a href="#paired_ttest_kfold_cv">paired_ttest_kfold_cv</a></li>
+        
+    
+        <li class="main "><a href="#paired_ttest_resampled">paired_ttest_resampled</a></li>
+        
+    
+        <li class="main "><a href="#permutation_test">permutation_test</a></li>
         
     
         <li class="main "><a href="#scoring">scoring</a></li>
@@ -905,72 +905,6 @@
         <div class="col-md-9" role="main">
 
 <p>mlxtend version: 0.11.0 </p>
-<h2 id="paired_ttest_kfold_cv">paired_ttest_kfold_cv</h2>
-<p><em>paired_ttest_kfold_cv(estimator1, estimator2, X, y, cv=10, scoring=None, shuffle=False, random_seed=None)</em></p>
-<p>Implements the k-fold paired t test procedure
-to compare the performance of two models.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>estimator1</code> : scikit-learn classifier or regressor</p>
-</li>
-<li>
-<p><code>estimator2</code> : scikit-learn classifier or regressor</p>
-</li>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values.</p>
-</li>
-<li>
-<p><code>cv</code> : int (default: 10)</p>
-<p>Number of splits and iteration for the
-cross-validation procedure</p>
-</li>
-<li>
-<p><code>scoring</code> : str, callable, or None (default: None)</p>
-<p>If None (default), uses 'accuracy' for sklearn classifiers
-and 'r2' for sklearn regressors.
-If str, uses a sklearn scoring metric string identifier, for example
-{accuracy, f1, precision, recall, roc_auc} for classifiers,
-{'mean_absolute_error', 'mean_squared_error'/'neg_mean_squared_error',
-'median_absolute_error', 'r2'} for regressors.
-If a callable object or function is provided, it has to be conform with
-sklearn's signature <code>scorer(estimator, X, y)</code>; see
-http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
-for more information.</p>
-</li>
-<li>
-<p><code>shuffle</code> : bool (default: True)</p>
-<p>Whether to shuffle the dataset for generating
-the k-fold splits.</p>
-</li>
-<li>
-<p><code>random_seed</code> : int or None (default: None)</p>
-<p>Random seed for shuffling the dataset
-for generating the k-fold splits.
-Ignored if shuffle=False.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>t</code> : float</p>
-<p>The t-statistic</p>
-</li>
-<li>
-<p><code>pvalue</code> : float</p>
-<p>Two-tailed p-value.
-If the chosen significance level is larger
-than the p-value, we reject the null hypothesis
-and accept that there are significant differences
-in the two compared models.</p>
-</li>
-</ul>
 <h2 id="bootstrapoutofbag">BootstrapOutOfBag</h2>
 <p><em>BootstrapOutOfBag(n_splits=200, random_seed=None)</em></p>
 <p><strong>Parameters</strong></p>
@@ -1037,6 +971,145 @@ for compatibility, similar to <code>KFold</code> in scikit-learn.</p>
 for compatibility, similar to <code>KFold</code> in scikit-learn.</p>
 </li>
 </ul>
+<h2 id="bootstrap">bootstrap</h2>
+<p><em>bootstrap(x, func, num_rounds=1000, ci=0.95, ddof=1, seed=None)</em></p>
+<p>Implements the ordinary nonparametric bootstrap</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>x</code> : NumPy array, shape=(n_samples, [n_columns])</p>
+<p>An one or multidimensional array of data records</p>
+</li>
+<li>
+<p><code>func</code> : <func></p>
+<p>A function which computes a statistic that is used
+to compute the bootstrap replicates (the statistic computed
+from the bootstrap samples). This function must return a
+scalar value. For example, <code>np.mean</code> or <code>np.median</code> would be
+an acceptable argument for <code>func</code> if <code>x</code> is a 1-dimensional array
+or vector.</p>
+</li>
+<li>
+<p><code>num_rounds</code> : int (default=1000)</p>
+<p>The number of bootstrap samnples to draw where each
+bootstrap sample has the same number of records as the
+original dataset.</p>
+</li>
+<li>
+<p><code>ci</code> : int (default=0.95)</p>
+<p>An integer in the range (0, 1) that represents the
+confidence level for computing the confidence interval.
+For example, <code>ci=0.95</code> (default)
+will compute the 95% confidence
+interval from the bootstrap replicates.</p>
+</li>
+<li>
+<p><code>ddof</code> : int</p>
+<p>The delta degrees of freedom used when computing the
+standard error.</p>
+</li>
+<li>
+<p><code>seed</code> : int or None (default=None)</p>
+<p>Random seed for generating bootstrap samples.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<pre><code>original, standard_error, (lower_ci, upper_ci)
+Returns the statistic of the original sample (`original`),
+the standard error of the estimate, and the
+respective confidence interval bounds.
+</code></pre>
+<p><strong>Examples</strong></p>
+<pre><code>&gt;&gt;&gt; from mlxtend.evaluate import bootstrap
+&gt;&gt;&gt; rng = np.random.RandomState(123)
+&gt;&gt;&gt; x = rng.normal(loc=5., size=100)
+&gt;&gt;&gt; original, std_err, ci_bounds = bootstrap(x,
+...                                          num_rounds=1000,
+...                                          func=np.mean,
+...                                          ci=0.95,
+...                                          seed=123)
+&gt;&gt;&gt; print('Mean: %.2f, SE: +/- %.2f, CI95: [%.2f, %.2f]' % (original,
+...                                                         std_err,
+...                                                         ci_bounds[0],
+...                                                         ci_bounds[1]))
+Mean: 5.03, SE: +/- 0.11, CI95: [4.80, 5.26]
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="bootstrap_point632_score">bootstrap_point632_score</h2>
+<p><em>bootstrap_point632_score(estimator, X, y, n_splits=200, method='.632', scoring=None, random_seed=None)</em></p>
+<p>Implementation of the 0.632 bootstrap for supervised learning</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>estimator</code> : object</p>
+<p>An estimator for classification or regression that
+follows the scikit-learn API and implements "fit" and "predict"
+methods.</p>
+</li>
+<li>
+<p><code>X</code> : array-like</p>
+<p>The data to fit. Can be, for example a list, or an array at least 2d.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, optional, default: None</p>
+<p>The target variable to try to predict in the case of
+supervised learning.</p>
+</li>
+<li>
+<p><code>n_splits</code> : int (default=200)</p>
+<p>Number of bootstrap iterations.
+Must be larger than 1.</p>
+</li>
+<li>
+<p><code>method</code> : str (default='.632')</p>
+<p>The bootstrap method, which can be either the
+regular '.632' bootstrap (default) or the '.632+'
+bootstrap (not implemented, yet).</p>
+</li>
+<li>
+<p><code>scoring</code> : str, callable, or None (default: None)</p>
+<p>If None (default), uses 'accuracy' for sklearn classifiers
+and 'r2' for sklearn regressors.
+If str, uses a sklearn scoring metric string identifier, for example
+{'accuracy', 'f1', 'precision', 'recall', 'roc_auc', etc.}
+for classifiers,
+{'mean_absolute_error', 'mean_squared_error'/'neg_mean_squared_error',
+'median_absolute_error', 'r2', etc.} for regressors.
+If a callable object or function is provided, it has to be conform with
+sklearn's signature <code>scorer(estimator, X, y)</code>; see
+http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
+for more information.</p>
+</li>
+<li>
+<p><code>random_seed</code> : int (default=None)</p>
+<p>If int, random_seed is the seed used by
+the random number generator.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>scores</code> : array of float, shape=(len(list(n_splits)),)</p>
+<p>Array of scores of the estimator for each bootstrap
+replicate.</p>
+</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code>&gt;&gt;&gt; from sklearn import datasets, linear_model
+&gt;&gt;&gt; from mlxtend.evaluate import bootstrap_point632_score
+&gt;&gt;&gt; iris = datasets.load_iris()
+&gt;&gt;&gt; X = iris.data
+&gt;&gt;&gt; y = iris.target
+&gt;&gt;&gt; lr = linear_model.LogisticRegression()
+&gt;&gt;&gt; scores = bootstrap_point632_score(lr, X, y)
+&gt;&gt;&gt; acc = np.mean(scores)
+&gt;&gt;&gt; print('Accuracy:', acc)
+0.953023146884
+&gt;&gt;&gt; lower = np.percentile(scores, 2.5)
+&gt;&gt;&gt; upper = np.percentile(scores, 97.5)
+&gt;&gt;&gt; print('95%% Confidence interval: [%.2f, %.2f]' % (lower, upper))
+95% Confidence interval: [0.90, 0.98]
+</code></pre>
 <h2 id="cochrans_q">cochrans_q</h2>
 <p><em>cochrans_q(y_target, </em>y_model_predictions)*</p>
 <p>Cochran's Q test to compare 2 or more models.</p>
@@ -1058,6 +1131,184 @@ from models as 1D NumPy array.</p>
 <li>
 <p><code>q, p</code> : float or None, float</p>
 <p>Returns the Q (chi-squared) value and the p-value</p>
+</li>
+</ul>
+<h2 id="confusion_matrix">confusion_matrix</h2>
+<p><em>confusion_matrix(y_target, y_predicted, binary=False, positive_label=1)</em></p>
+<p>Compute a confusion matrix/contingency table.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>y_target</code> : array-like, shape=[n_samples]</p>
+<p>True class labels.</p>
+</li>
+<li>
+<p><code>y_predicted</code> : array-like, shape=[n_samples]</p>
+<p>Predicted class labels.</p>
+</li>
+<li>
+<p><code>binary</code> : bool (default: False)</p>
+<p>Maps a multi-class problem onto a
+binary confusion matrix, where
+the positive class is 1 and
+all other classes are 0.</p>
+</li>
+<li>
+<p><code>positive_label</code> : int (default: 1)</p>
+<p>Class label of the positive class.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>mat</code> : array-like, shape=[n_classes, n_classes]</li>
+</ul>
+<h2 id="lift_score">lift_score</h2>
+<p><em>lift_score(y_target, y_predicted, binary=True, positive_label=1)</em></p>
+<p>Lift measures the degree to which the predictions of a
+classification model are better than randomly-generated predictions.</p>
+<p>The in terms of True Positives (TP), True Negatives (TN),
+False Positives (FP), and False Negatives (FN), the lift score is
+computed as:
+[ TP/(TP+FN) ] / [ (TP+FP) / (TP+TN+FP+FN) ]</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>y_target</code> : array-like, shape=[n_samples]</p>
+<p>True class labels.</p>
+</li>
+<li>
+<p><code>y_predicted</code> : array-like, shape=[n_samples]</p>
+<p>Predicted class labels.</p>
+</li>
+<li>
+<p><code>binary</code> : bool (default: True)</p>
+<p>Maps a multi-class problem onto a
+binary, where
+the positive class is 1 and
+all other classes are 0.</p>
+</li>
+<li>
+<p><code>positive_label</code> : int (default: 0)</p>
+<p>Class label of the positive class.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>score</code> : float</p>
+<p>Lift score in the range [0, <script type="math/tex">\infty</script>]</p>
+</li>
+</ul>
+<h2 id="mcnemar">mcnemar</h2>
+<p><em>mcnemar(ary, corrected=True, exact=False)</em></p>
+<p>McNemar test for paired nominal data</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>ary</code> : array-like, shape=[2, 2]</p>
+<p>2 x 2 contigency table (as returned by evaluate.mcnemar_table),
+where
+a: ary[0, 0]: # of samples that both models predicted correctly
+b: ary[0, 1]: # of samples that model 1 got right and model 2 got wrong
+c: ary[1, 0]: # of samples that model 2 got right and model 1 got wrong
+d: aryCell [1, 1]: # of samples that both models predicted incorrectly</p>
+</li>
+<li>
+<p><code>corrected</code> : array-like, shape=[n_samples] (default: True)</p>
+<p>Uses Edward's continuity correction for chi-squared if <code>True</code></p>
+</li>
+<li>
+<p><code>exact</code> : bool, (default: False)</p>
+<p>If <code>True</code>, uses an exact binomial test comparing b to
+a binomial distribution with n = b + c and p = 0.5.
+It is highly recommended to use <code>exact=True</code> for sample sizes &lt; 25
+since chi-squared is not well-approximated
+by the chi-squared distribution!</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>chi2, p</code> : float or None, float</p>
+<p>Returns the chi-squared value and the p-value;
+if <code>exact=True</code> (default: <code>False</code>), <code>chi2</code> is <code>None</code></p>
+</li>
+</ul>
+<h2 id="mcnemar_table">mcnemar_table</h2>
+<p><em>mcnemar_table(y_target, y_model1, y_model2)</em></p>
+<p>Compute a 2x2 contigency table for McNemar's test.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>y_target</code> : array-like, shape=[n_samples]</p>
+<p>True class labels as 1D NumPy array.</p>
+</li>
+<li>
+<p><code>y_model1</code> : array-like, shape=[n_samples]</p>
+<p>Predicted class labels from model as 1D NumPy array.</p>
+</li>
+<li>
+<p><code>y_model2</code> : array-like, shape=[n_samples]</p>
+<p>Predicted class labels from model 2 as 1D NumPy array.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>tb</code> : array-like, shape=[2, 2]</p>
+<p>2x2 contingency table with the following contents:
+a: tb[0, 0]: # of samples that both models predicted correctly
+b: tb[0, 1]: # of samples that model 1 got right and model 2 got wrong
+c: tb[1, 0]: # of samples that model 2 got right and model 1 got wrong
+d: tb[1, 1]: # of samples that both models predicted incorrectly</p>
+</li>
+</ul>
+<h2 id="mcnemar_tables">mcnemar_tables</h2>
+<p><em>mcnemar_tables(y_target, </em>y_model_predictions)*</p>
+<p>Compute multiple 2x2 contigency tables for McNemar's
+test or Cochran's Q test.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>y_target</code> : array-like, shape=[n_samples]</p>
+<p>True class labels as 1D NumPy array.</p>
+</li>
+<li>
+<p><code>y_model_predictions</code> : array-like, shape=[n_samples]</p>
+<p>Predicted class labels for a model.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>tables</code> : dict</p>
+<p>Dictionary of NumPy arrays with shape=[2, 2]. Each dictionary
+key names the two models to be compared based on the order the
+models were passed as <code>*y_model_predictions</code>. The number of
+dictionary entries is equal to the number of pairwise combinations
+between the m models, i.e., "m choose 2."</p>
+<p>For example the following target array (containing the true labels)
+and 3 models</p>
+<ul>
+<li>y_true = np.array([0, 0, 0, 0, 0, 1, 1, 1, 1, 1])</li>
+<li>y_mod0 = np.array([0, 1, 0, 0, 0, 1, 1, 0, 0, 0])</li>
+<li>y_mod0 = np.array([0, 0, 1, 1, 0, 1, 1, 0, 0, 0])</li>
+<li>y_mod0 = np.array([0, 1, 1, 1, 0, 1, 0, 0, 0, 0])</li>
+</ul>
+<p>would result in the following dictionary:</p>
+<p>{'model_0 vs model_1': array([[ 4.,  1.],
+[ 2.,  3.]]),
+'model_0 vs model_2': array([[ 3.,  0.],
+[ 3.,  4.]]),
+'model_1 vs model_2': array([[ 3.,  0.],
+[ 2.,  5.]])}</p>
+<p>Each array is structured in the following way:</p>
+<ul>
+<li>tb[0, 0]: # of samples that both models predicted correctly</li>
+<li>tb[0, 1]: # of samples that model a got right and model b got wrong</li>
+<li>tb[1, 0]: # of samples that model b got right and model a got wrong</li>
+<li>tb[1, 1]: # of samples that both models predicted incorrectly</li>
+</ul>
 </li>
 </ul>
 <h2 id="paired_ttest_5x2cv">paired_ttest_5x2cv</h2>
@@ -1115,131 +1366,72 @@ and accept that there are significant differences
 in the two compared models.</p>
 </li>
 </ul>
-<h2 id="confusion_matrix">confusion_matrix</h2>
-<p><em>confusion_matrix(y_target, y_predicted, binary=False, positive_label=1)</em></p>
-<p>Compute a confusion matrix/contingency table.</p>
+<h2 id="paired_ttest_kfold_cv">paired_ttest_kfold_cv</h2>
+<p><em>paired_ttest_kfold_cv(estimator1, estimator2, X, y, cv=10, scoring=None, shuffle=False, random_seed=None)</em></p>
+<p>Implements the k-fold paired t test procedure
+to compare the performance of two models.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>y_target</code> : array-like, shape=[n_samples]</p>
-<p>True class labels.</p>
+<p><code>estimator1</code> : scikit-learn classifier or regressor</p>
 </li>
 <li>
-<p><code>y_predicted</code> : array-like, shape=[n_samples]</p>
-<p>Predicted class labels.</p>
+<p><code>estimator2</code> : scikit-learn classifier or regressor</p>
 </li>
 <li>
-<p><code>binary</code> : bool (default: False)</p>
-<p>Maps a multi-class problem onto a
-binary confusion matrix, where
-the positive class is 1 and
-all other classes are 0.</p>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
 </li>
 <li>
-<p><code>positive_label</code> : int (default: 1)</p>
-<p>Class label of the positive class.</p>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>cv</code> : int (default: 10)</p>
+<p>Number of splits and iteration for the
+cross-validation procedure</p>
+</li>
+<li>
+<p><code>scoring</code> : str, callable, or None (default: None)</p>
+<p>If None (default), uses 'accuracy' for sklearn classifiers
+and 'r2' for sklearn regressors.
+If str, uses a sklearn scoring metric string identifier, for example
+{accuracy, f1, precision, recall, roc_auc} for classifiers,
+{'mean_absolute_error', 'mean_squared_error'/'neg_mean_squared_error',
+'median_absolute_error', 'r2'} for regressors.
+If a callable object or function is provided, it has to be conform with
+sklearn's signature <code>scorer(estimator, X, y)</code>; see
+http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
+for more information.</p>
+</li>
+<li>
+<p><code>shuffle</code> : bool (default: True)</p>
+<p>Whether to shuffle the dataset for generating
+the k-fold splits.</p>
+</li>
+<li>
+<p><code>random_seed</code> : int or None (default: None)</p>
+<p>Random seed for shuffling the dataset
+for generating the k-fold splits.
+Ignored if shuffle=False.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
 <ul>
-<li><code>mat</code> : array-like, shape=[n_classes, n_classes]</li>
-</ul>
-<h2 id="mcnemar_tables">mcnemar_tables</h2>
-<p><em>mcnemar_tables(y_target, </em>y_model_predictions)*</p>
-<p>Compute multiple 2x2 contigency tables for McNemar's
-test or Cochran's Q test.</p>
-<p><strong>Parameters</strong></p>
-<ul>
 <li>
-<p><code>y_target</code> : array-like, shape=[n_samples]</p>
-<p>True class labels as 1D NumPy array.</p>
+<p><code>t</code> : float</p>
+<p>The t-statistic</p>
 </li>
 <li>
-<p><code>y_model_predictions</code> : array-like, shape=[n_samples]</p>
-<p>Predicted class labels for a model.</p>
+<p><code>pvalue</code> : float</p>
+<p>Two-tailed p-value.
+If the chosen significance level is larger
+than the p-value, we reject the null hypothesis
+and accept that there are significant differences
+in the two compared models.</p>
 </li>
 </ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>tables</code> : dict</p>
-<p>Dictionary of NumPy arrays with shape=[2, 2]. Each dictionary
-key names the two models to be compared based on the order the
-models were passed as <code>*y_model_predictions</code>. The number of
-dictionary entries is equal to the number of pairwise combinations
-between the m models, i.e., "m choose 2."</p>
-<p>For example the following target array (containing the true labels)
-and 3 models</p>
-<ul>
-<li>y_true = np.array([0, 0, 0, 0, 0, 1, 1, 1, 1, 1])</li>
-<li>y_mod0 = np.array([0, 1, 0, 0, 0, 1, 1, 0, 0, 0])</li>
-<li>y_mod0 = np.array([0, 0, 1, 1, 0, 1, 1, 0, 0, 0])</li>
-<li>y_mod0 = np.array([0, 1, 1, 1, 0, 1, 0, 0, 0, 0])</li>
-</ul>
-<p>would result in the following dictionary:</p>
-<p>{'model_0 vs model_1': array([[ 4.,  1.],
-[ 2.,  3.]]),
-'model_0 vs model_2': array([[ 3.,  0.],
-[ 3.,  4.]]),
-'model_1 vs model_2': array([[ 3.,  0.],
-[ 2.,  5.]])}</p>
-<p>Each array is structured in the following way:</p>
-<ul>
-<li>tb[0, 0]: # of samples that both models predicted correctly</li>
-<li>tb[0, 1]: # of samples that model a got right and model b got wrong</li>
-<li>tb[1, 0]: # of samples that model b got right and model a got wrong</li>
-<li>tb[1, 1]: # of samples that both models predicted incorrectly</li>
-</ul>
-</li>
-</ul>
-<h2 id="permutation_test">permutation_test</h2>
-<p><em>permutation_test(x, y, func='x_mean != y_mean', method='exact', num_rounds=1000, seed=None)</em></p>
-<p>Nonparametric permutation test</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>x</code> : list or numpy array with shape (n_datapoints,)</p>
-<p>A list or 1D numpy array of the first sample
-(e.g., the treatment group).</p>
-</li>
-<li>
-<p><code>y</code> : list or numpy array with shape (n_datapoints,)</p>
-<p>A list or 1D numpy array of the second sample
-(e.g., the control group).</p>
-</li>
-<li>
-<p><code>func</code> : custom function or str (default: 'x_mean != y_mean')</p>
-<p>function to compute the statistic for the permutation test.
-- If 'x_mean != y_mean', uses
-<code>func=lambda x, y: np.abs(np.mean(x) - np.mean(y)))</code>
-for a two-sided test.
-- If 'x_mean &gt; y_mean', uses
-<code>func=lambda x, y: np.mean(x) - np.mean(y))</code>
-for a one-sided test.
-- If 'x_mean &lt; y_mean', uses
-<code>func=lambda x, y: np.mean(y) - np.mean(x))</code>
-for a one-sided test.</p>
-</li>
-<li>
-<p><code>method</code> : 'approximate' or 'exact' (default: 'exact')</p>
-<p>If 'exact' (default), all possible permutations are considered.
-If 'approximate' the number of drawn samples is
-given by <code>num_rounds</code>.
-Note that 'exact' is typically not feasible unless the dataset
-size is relatively small.</p>
-</li>
-<li>
-<p><code>num_rounds</code> : int (default: 1000)</p>
-<p>The number of permutation samples if <code>method='approximate'</code>.</p>
-</li>
-<li>
-<p><code>seed</code> : int or None (default: None)</p>
-<p>The random seed for generating permutation samples if
-<code>method='approximate'</code>.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<p>p-value under the null hypothesis</p>
 <h2 id="paired_ttest_resampled">paired_ttest_resampled</h2>
 <p><em>paired_ttest_resampled(estimator1, estimator2, X, y, num_rounds=30, test_size=0.3, scoring=None, random_seed=None)</em></p>
 <p>Implements the resampled paired t test procedure
@@ -1307,251 +1499,54 @@ and accept that there are significant differences
 in the two compared models.</p>
 </li>
 </ul>
-<h2 id="mcnemar">mcnemar</h2>
-<p><em>mcnemar(ary, corrected=True, exact=False)</em></p>
-<p>McNemar test for paired nominal data</p>
+<h2 id="permutation_test">permutation_test</h2>
+<p><em>permutation_test(x, y, func='x_mean != y_mean', method='exact', num_rounds=1000, seed=None)</em></p>
+<p>Nonparametric permutation test</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>ary</code> : array-like, shape=[2, 2]</p>
-<p>2 x 2 contigency table (as returned by evaluate.mcnemar_table),
-where
-a: ary[0, 0]: # of samples that both models predicted correctly
-b: ary[0, 1]: # of samples that model 1 got right and model 2 got wrong
-c: ary[1, 0]: # of samples that model 2 got right and model 1 got wrong
-d: aryCell [1, 1]: # of samples that both models predicted incorrectly</p>
+<p><code>x</code> : list or numpy array with shape (n_datapoints,)</p>
+<p>A list or 1D numpy array of the first sample
+(e.g., the treatment group).</p>
 </li>
 <li>
-<p><code>corrected</code> : array-like, shape=[n_samples] (default: True)</p>
-<p>Uses Edward's continuity correction for chi-squared if <code>True</code></p>
+<p><code>y</code> : list or numpy array with shape (n_datapoints,)</p>
+<p>A list or 1D numpy array of the second sample
+(e.g., the control group).</p>
 </li>
 <li>
-<p><code>exact</code> : bool, (default: False)</p>
-<p>If <code>True</code>, uses an exact binomial test comparing b to
-a binomial distribution with n = b + c and p = 0.5.
-It is highly recommended to use <code>exact=True</code> for sample sizes &lt; 25
-since chi-squared is not well-approximated
-by the chi-squared distribution!</p>
+<p><code>func</code> : custom function or str (default: 'x_mean != y_mean')</p>
+<p>function to compute the statistic for the permutation test.
+- If 'x_mean != y_mean', uses
+<code>func=lambda x, y: np.abs(np.mean(x) - np.mean(y)))</code>
+for a two-sided test.
+- If 'x_mean &gt; y_mean', uses
+<code>func=lambda x, y: np.mean(x) - np.mean(y))</code>
+for a one-sided test.
+- If 'x_mean &lt; y_mean', uses
+<code>func=lambda x, y: np.mean(y) - np.mean(x))</code>
+for a one-sided test.</p>
+</li>
+<li>
+<p><code>method</code> : 'approximate' or 'exact' (default: 'exact')</p>
+<p>If 'exact' (default), all possible permutations are considered.
+If 'approximate' the number of drawn samples is
+given by <code>num_rounds</code>.
+Note that 'exact' is typically not feasible unless the dataset
+size is relatively small.</p>
+</li>
+<li>
+<p><code>num_rounds</code> : int (default: 1000)</p>
+<p>The number of permutation samples if <code>method='approximate'</code>.</p>
+</li>
+<li>
+<p><code>seed</code> : int or None (default: None)</p>
+<p>The random seed for generating permutation samples if
+<code>method='approximate'</code>.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>chi2, p</code> : float or None, float</p>
-<p>Returns the chi-squared value and the p-value;
-if <code>exact=True</code> (default: <code>False</code>), <code>chi2</code> is <code>None</code></p>
-</li>
-</ul>
-<h2 id="bootstrap_point632_score">bootstrap_point632_score</h2>
-<p><em>bootstrap_point632_score(estimator, X, y, n_splits=200, method='.632', scoring=None, random_seed=None)</em></p>
-<p>Implementation of the 0.632 bootstrap for supervised learning</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>estimator</code> : object</p>
-<p>An estimator for classification or regression that
-follows the scikit-learn API and implements "fit" and "predict"
-methods.</p>
-</li>
-<li>
-<p><code>X</code> : array-like</p>
-<p>The data to fit. Can be, for example a list, or an array at least 2d.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, optional, default: None</p>
-<p>The target variable to try to predict in the case of
-supervised learning.</p>
-</li>
-<li>
-<p><code>n_splits</code> : int (default=200)</p>
-<p>Number of bootstrap iterations.
-Must be larger than 1.</p>
-</li>
-<li>
-<p><code>method</code> : str (default='.632')</p>
-<p>The bootstrap method, which can be either the
-regular '.632' bootstrap (default) or the '.632+'
-bootstrap (not implemented, yet).</p>
-</li>
-<li>
-<p><code>scoring</code> : str, callable, or None (default: None)</p>
-<p>If None (default), uses 'accuracy' for sklearn classifiers
-and 'r2' for sklearn regressors.
-If str, uses a sklearn scoring metric string identifier, for example
-{'accuracy', 'f1', 'precision', 'recall', 'roc_auc', etc.}
-for classifiers,
-{'mean_absolute_error', 'mean_squared_error'/'neg_mean_squared_error',
-'median_absolute_error', 'r2', etc.} for regressors.
-If a callable object or function is provided, it has to be conform with
-sklearn's signature <code>scorer(estimator, X, y)</code>; see
-http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
-for more information.</p>
-</li>
-<li>
-<p><code>random_seed</code> : int (default=None)</p>
-<p>If int, random_seed is the seed used by
-the random number generator.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>scores</code> : array of float, shape=(len(list(n_splits)),)</p>
-<p>Array of scores of the estimator for each bootstrap
-replicate.</p>
-</li>
-</ul>
-<p><strong>Examples</strong></p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>from sklearn import datasets, linear_model
-    &gt;&gt;&gt; from mlxtend.evaluate import bootstrap_point632_score
-    &gt;&gt;&gt; iris = datasets.load_iris()
-    &gt;&gt;&gt; X = iris.data
-    &gt;&gt;&gt; y = iris.target
-    &gt;&gt;&gt; lr = linear_model.LogisticRegression()
-    &gt;&gt;&gt; scores = bootstrap_point632_score(lr, X, y)
-    &gt;&gt;&gt; acc = np.mean(scores)
-    &gt;&gt;&gt; print('Accuracy:', acc)
-    0.953023146884
-    &gt;&gt;&gt; lower = np.percentile(scores, 2.5)
-    &gt;&gt;&gt; upper = np.percentile(scores, 97.5)
-    &gt;&gt;&gt; print('95%% Confidence interval: [%.2f, %.2f]' % (lower, upper))
-    95% Confidence interval: [0.90, 0.98]</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<h2 id="lift_score">lift_score</h2>
-<p><em>lift_score(y_target, y_predicted, binary=True, positive_label=1)</em></p>
-<p>Lift measures the degree to which the predictions of a
-classification model are better than randomly-generated predictions.</p>
-<p>The in terms of True Positives (TP), True Negatives (TN),
-False Positives (FP), and False Negatives (FN), the lift score is
-computed as:
-[ TP/(TP+FN) ] / [ (TP+FP) / (TP+TN+FP+FN) ]</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>y_target</code> : array-like, shape=[n_samples]</p>
-<p>True class labels.</p>
-</li>
-<li>
-<p><code>y_predicted</code> : array-like, shape=[n_samples]</p>
-<p>Predicted class labels.</p>
-</li>
-<li>
-<p><code>binary</code> : bool (default: True)</p>
-<p>Maps a multi-class problem onto a
-binary, where
-the positive class is 1 and
-all other classes are 0.</p>
-</li>
-<li>
-<p><code>positive_label</code> : int (default: 0)</p>
-<p>Class label of the positive class.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>score</code> : float</p>
-<p>Lift score in the range [0, <script type="math/tex">\infty</script>]</p>
-</li>
-</ul>
-<h2 id="bootstrap">bootstrap</h2>
-<p><em>bootstrap(x, func, num_rounds=1000, ci=0.95, ddof=1, seed=None)</em></p>
-<p>Implements the ordinary nonparametric bootstrap</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>x</code> : NumPy array, shape=(n_samples, [n_columns])</p>
-<p>An one or multidimensional array of data records</p>
-</li>
-<li>
-<p><code>func</code> : <func></p>
-<p>A function which computes a statistic that is used
-to compute the bootstrap replicates (the statistic computed
-from the bootstrap samples). This function must return a
-scalar value. For example, <code>np.mean</code> or <code>np.median</code> would be
-an acceptable argument for <code>func</code> if <code>x</code> is a 1-dimensional array
-or vector.</p>
-</li>
-<li>
-<p><code>num_rounds</code> : int (default=1000)</p>
-<p>The number of bootstrap samnples to draw where each
-bootstrap sample has the same number of records as the
-original dataset.</p>
-</li>
-<li>
-<p><code>ci</code> : int (default=0.95)</p>
-<p>An integer in the range (0, 1) that represents the
-confidence level for computing the confidence interval.
-For example, <code>ci=0.95</code> (default)
-will compute the 95% confidence
-interval from the bootstrap replicates.</p>
-</li>
-<li>
-<p><code>ddof</code> : int</p>
-<p>The delta degrees of freedom used when computing the
-standard error.</p>
-</li>
-<li>
-<p><code>seed</code> : int or None (default=None)</p>
-<p>Random seed for generating bootstrap samples.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<pre><code>original, standard_error, (lower_ci, upper_ci)
-Returns the statistic of the original sample (`original`),
-the standard error of the estimate, and the
-respective confidence interval bounds.
-</code></pre>
-<p><strong>Examples</strong></p>
-<pre><code>&gt;&gt;&gt; from mlxtend.evaluate import bootstrap
-&gt;&gt;&gt; rng = np.random.RandomState(123)
-&gt;&gt;&gt; x = rng.normal(loc=5., size=100)
-&gt;&gt;&gt; original, std_err, ci_bounds = bootstrap(x,
-...                                          num_rounds=1000,
-...                                          func=np.mean,
-...                                          ci=0.95,
-...                                          seed=123)
-&gt;&gt;&gt; print('Mean: %.2f, SE: +/- %.2f, CI95: [%.2f, %.2f]' % (original,
-...                                                         std_err,
-...                                                         ci_bounds[0],
-...                                                         ci_bounds[1]))
-Mean: 5.03, SE: +/- 0.11, CI95: [4.80, 5.26]
-&gt;&gt;&gt;
-</code></pre>
-<h2 id="mcnemar_table">mcnemar_table</h2>
-<p><em>mcnemar_table(y_target, y_model1, y_model2)</em></p>
-<p>Compute a 2x2 contigency table for McNemar's test.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>y_target</code> : array-like, shape=[n_samples]</p>
-<p>True class labels as 1D NumPy array.</p>
-</li>
-<li>
-<p><code>y_model1</code> : array-like, shape=[n_samples]</p>
-<p>Predicted class labels from model as 1D NumPy array.</p>
-</li>
-<li>
-<p><code>y_model2</code> : array-like, shape=[n_samples]</p>
-<p>Predicted class labels from model 2 as 1D NumPy array.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>tb</code> : array-like, shape=[2, 2]</p>
-<p>2x2 contingency table with the following contents:
-a: tb[0, 0]: # of samples that both models predicted correctly
-b: tb[0, 1]: # of samples that model 1 got right and model 2 got wrong
-c: tb[1, 0]: # of samples that model 2 got right and model 1 got wrong
-d: tb[1, 1]: # of samples that both models predicted incorrectly</p>
-</li>
-</ul>
+<p>p-value under the null hypothesis</p>
 <h2 id="scoring">scoring</h2>
 <p><em>scoring(y_target, y_predicted, metric='error', positive_label=1, unique_labels='auto')</em></p>
 <p>Compute a scoring metric for supervised learning.</p>

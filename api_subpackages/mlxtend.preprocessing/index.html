@@ -855,19 +855,7 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#one_hot">one_hot</a></li>
-        
-    
-        <li class="main "><a href="#standardize">standardize</a></li>
-        
-    
-        <li class="main "><a href="#minmax_scaling">minmax_scaling</a></li>
-        
-    
-        <li class="main "><a href="#shuffle_arrays_unison">shuffle_arrays_unison</a></li>
-        
-    
-        <li class="main "><a href="#copytransformer">CopyTransformer</a></li>
+        <li class="main active"><a href="#copytransformer">CopyTransformer</a></li>
         
             <li><a href="#methods">Methods</a></li>
                 <!--  -->
@@ -885,16 +873,28 @@
                 <!--  -->
         
     
-        <li class="main "><a href="#transactionencoder">TransactionEncoder</a></li>
+        <li class="main "><a href="#onehottransactions">OnehotTransactions</a></li>
         
             <li><a href="#methods_3">Methods</a></li>
                 <!--  -->
         
     
-        <li class="main "><a href="#onehottransactions">OnehotTransactions</a></li>
+        <li class="main "><a href="#transactionencoder">TransactionEncoder</a></li>
         
             <li><a href="#methods_4">Methods</a></li>
                 <!--  -->
+        
+    
+        <li class="main "><a href="#minmax_scaling">minmax_scaling</a></li>
+        
+    
+        <li class="main "><a href="#one_hot">one_hot</a></li>
+        
+    
+        <li class="main "><a href="#shuffle_arrays_unison">shuffle_arrays_unison</a></li>
+        
+    
+        <li class="main "><a href="#standardize">standardize</a></li>
         
     
     </ul>
@@ -902,136 +902,6 @@
         <div class="col-md-9" role="main">
 
 <p>mlxtend version: 0.11.0 </p>
-<h2 id="one_hot">one_hot</h2>
-<p><em>one_hot(y, num_labels='auto', dtype='float')</em></p>
-<p>One-hot encoding of class labels</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>y</code> : array-like, shape = [n_classlabels]</p>
-<p>Python list or numpy array consisting of class labels.</p>
-</li>
-<li>
-<p><code>num_labels</code> : int or 'auto'</p>
-<p>Number of unique labels in the class label array. Infers the number
-of unique labels from the input array if set to 'auto'.</p>
-</li>
-<li>
-<p><code>dtype</code> : str</p>
-<p>NumPy array type (float, float32, float64) of the output array.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>ary</code> : numpy.ndarray, shape = [n_classlabels]</p>
-<p>One-hot encoded array, where each sample is represented as
-a row vector in the returned array.</p>
-</li>
-</ul>
-<h2 id="standardize">standardize</h2>
-<p><em>standardize(array, columns=None, ddof=0, return_params=False, params=None)</em></p>
-<p>Standardize columns in pandas DataFrames.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>array</code> : pandas DataFrame or NumPy ndarray, shape = [n_rows, n_columns].</p>
-</li>
-<li>
-<p><code>columns</code> : array-like, shape = [n_columns] (default: None)</p>
-<p>Array-like with column names, e.g., ['col1', 'col2', ...]
-or column indices [0, 2, 4, ...]
-If None, standardizes all columns.</p>
-</li>
-<li>
-<p><code>ddof</code> : int (default: 0)</p>
-<p>Delta Degrees of Freedom. The divisor used in calculations
-is N - ddof, where N represents the number of elements.</p>
-</li>
-<li>
-<p><code>return_params</code> : dict (default: False)</p>
-<p>If set to True, a dictionary is returned in addition to the
-standardized array. The parameter dictionary contains the
-column means ('avgs') and standard deviations ('stds') of
-the individual columns.</p>
-</li>
-<li>
-<p><code>params</code> : dict (default: None)</p>
-<p>A dictionary with column means and standard deviations as
-returned by the <code>standardize</code> function if <code>return_params</code>
-was set to True. If a <code>params</code> dictionary is provided, the
-<code>standardize</code> function will use these instead of computing
-them from the current array.</p>
-</li>
-</ul>
-<p><strong>Notes</strong></p>
-<p>If all values in a given column are the same, these values are all
-    set to <code>0.0</code>. The standard deviation in the <code>parameters</code> dictionary
-    is consequently set to <code>1.0</code> to avoid dividing by zero.</p>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>df_new</code> : pandas DataFrame object.</p>
-<p>Copy of the array or DataFrame with standardized columns.</p>
-</li>
-</ul>
-<h2 id="minmax_scaling">minmax_scaling</h2>
-<p><em>minmax_scaling(array, columns, min_val=0, max_val=1)</em></p>
-<p>Min max scaling of pandas' DataFrames.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>array</code> : pandas DataFrame or NumPy ndarray, shape = [n_rows, n_columns].</p>
-</li>
-<li>
-<p><code>columns</code> : array-like, shape = [n_columns]</p>
-<p>Array-like with column names, e.g., ['col1', 'col2', ...]
-or column indices [0, 2, 4, ...]</p>
-</li>
-<li>
-<p><code>min_val</code> : <code>int</code> or <code>float</code>, optional (default=<code>0</code>)</p>
-<p>minimum value after rescaling.</p>
-</li>
-<li>
-<p><code>min_val</code> : <code>int</code> or <code>float</code>, optional (default=<code>1</code>)</p>
-<p>maximum value after rescaling.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>df_new</code> : pandas DataFrame object.</p>
-<p>Copy of the array or DataFrame with rescaled columns.</p>
-</li>
-</ul>
-<h2 id="shuffle_arrays_unison">shuffle_arrays_unison</h2>
-<p><em>shuffle_arrays_unison(arrays, random_seed=None)</em></p>
-<p>Shuffle NumPy arrays in unison.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>arrays</code> : array-like, shape = [n_arrays]</p>
-<p>A list of NumPy arrays.</p>
-</li>
-<li>
-<p><code>random_seed</code> : int (default: None)</p>
-<p>Sets the random state.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>shuffled_arrays</code> : A list of NumPy arrays after shuffling.</li>
-</ul>
-<p><strong>Examples</strong></p>
-<pre><code>&gt;&gt;&gt; import numpy as np
-&gt;&gt;&gt; from mlxtend.preprocessing import shuffle_arrays_unison
-&gt;&gt;&gt; X1 = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
-&gt;&gt;&gt; y1 = np.array([1, 2, 3])
-&gt;&gt;&gt; X2, y2 = shuffle_arrays_unison(arrays=[X1, y1], random_seed=3)
-&gt;&gt;&gt; assert(X2.all() == np.array([[4, 5, 6], [1, 2, 3], [7, 8, 9]]).all())
-&gt;&gt;&gt; assert(y2.all() == np.array([2, 1, 3]).all())
-&gt;&gt;&gt;
-</code></pre>
 <h2 id="copytransformer">CopyTransformer</h2>
 <p><em>CopyTransformer()</em></p>
 <p>Transformer that returns a copy of the input array</p>
@@ -1272,8 +1142,8 @@ n_features is the number of features.</p>
 <p>A copy of the input array with the columns centered.</p>
 </li>
 </ul>
-<h2 id="transactionencoder">TransactionEncoder</h2>
-<p><em>TransactionEncoder()</em></p>
+<h2 id="onehottransactions">OnehotTransactions</h2>
+<p><em>OnehotTransactions(</em>args, *<em>kwargs)</em></p>
 <p>Encoder class for transaction data in Python lists</p>
 <p><strong>Parameters</strong></p>
 <p>None</p>
@@ -1337,19 +1207,22 @@ contained subobjects that are estimators.</p>
 <p>The NumPy one-hot encoded boolean array of the input transactions,
 where the columns represent the unique items found in the input
 array in alphabetic order</p>
-<p>For example,
-<code>array([[True , False, True , True , False, True ],
-[True , False, True , False, False, True ],
-[True , False, True , False, False, False],
-[True , True , False, False, False, False],
-[False, False, True , True , True , True ],
-[False, False, True , False, True , True ],
-[False, False, True , False, True , False],
-[True , True , False, False, False, False]])</code>
-The corresponding column labels are available as self.columns_,
-e.g., ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']</p>
+<p>For example,</p>
 </li>
 </ul>
+<pre><code>    array([[True , False, True , True , False, True ],
+    [True , False, True , False, False, True ],
+    [True , False, True , False, False, False],
+    [True , True , False, False, False, False],
+    [False, False, True , True , True , True ],
+    [False, False, True , False, True , True ],
+    [False, False, True , False, True , False],
+    [True , True , False, False, False, False]])
+</code></pre>
+
+<pre><code>The corresponding column labels are available as self.columns_,
+e.g., ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']
+</code></pre>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
@@ -1357,17 +1230,19 @@ e.g., ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']</p>
 <p>A python list of lists, where the outer list stores the
 n transactions and the inner list stores the items in each
 transaction.</p>
-<p>For example,
-<code>[['Apple', 'Beer', 'Rice', 'Chicken'],
-['Apple', 'Beer', 'Rice'],
-['Apple', 'Beer'],
-['Apple', 'Bananas'],
-['Milk', 'Beer', 'Rice', 'Chicken'],
-['Milk', 'Beer', 'Rice'],
-['Milk', 'Beer'],
-['Apple', 'Bananas']]</code></p>
+<p>For example,</p>
 </li>
 </ul>
+<pre><code>    [['Apple', 'Beer', 'Rice', 'Chicken'],
+    ['Apple', 'Beer', 'Rice'],
+    ['Apple', 'Beer'],
+    ['Apple', 'Bananas'],
+    ['Milk', 'Beer', 'Rice', 'Chicken'],
+    ['Milk', 'Beer', 'Rice'],
+    ['Milk', 'Beer'],
+    ['Apple', 'Bananas']]
+</code></pre>
+
 <hr>
 
 <p><em>set_params(</em><em>params)</em></p>
@@ -1426,8 +1301,8 @@ The corresponding column labels are available as self.columns_, e.g.,
 ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']</p>
 </li>
 </ul>
-<h2 id="onehottransactions">OnehotTransactions</h2>
-<p><em>OnehotTransactions(</em>args, *<em>kwargs)</em></p>
+<h2 id="transactionencoder">TransactionEncoder</h2>
+<p><em>TransactionEncoder()</em></p>
 <p>Encoder class for transaction data in Python lists</p>
 <p><strong>Parameters</strong></p>
 <p>None</p>
@@ -1491,19 +1366,22 @@ contained subobjects that are estimators.</p>
 <p>The NumPy one-hot encoded boolean array of the input transactions,
 where the columns represent the unique items found in the input
 array in alphabetic order</p>
-<p>For example,
-<code>array([[True , False, True , True , False, True ],
-[True , False, True , False, False, True ],
-[True , False, True , False, False, False],
-[True , True , False, False, False, False],
-[False, False, True , True , True , True ],
-[False, False, True , False, True , True ],
-[False, False, True , False, True , False],
-[True , True , False, False, False, False]])</code>
-The corresponding column labels are available as self.columns_,
-e.g., ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']</p>
+<p>For example,</p>
 </li>
 </ul>
+<pre><code>    array([[True , False, True , True , False, True ],
+    [True , False, True , False, False, True ],
+    [True , False, True , False, False, False],
+    [True , True , False, False, False, False],
+    [False, False, True , True , True , True ],
+    [False, False, True , False, True , True ],
+    [False, False, True , False, True , False],
+    [True , True , False, False, False, False]])
+</code></pre>
+
+<pre><code>The corresponding column labels are available as self.columns_,
+e.g., ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']
+</code></pre>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
@@ -1511,17 +1389,19 @@ e.g., ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']</p>
 <p>A python list of lists, where the outer list stores the
 n transactions and the inner list stores the items in each
 transaction.</p>
-<p>For example,
-<code>[['Apple', 'Beer', 'Rice', 'Chicken'],
-['Apple', 'Beer', 'Rice'],
-['Apple', 'Beer'],
-['Apple', 'Bananas'],
-['Milk', 'Beer', 'Rice', 'Chicken'],
-['Milk', 'Beer', 'Rice'],
-['Milk', 'Beer'],
-['Apple', 'Bananas']]</code></p>
+<p>For example,</p>
 </li>
 </ul>
+<pre><code>    [['Apple', 'Beer', 'Rice', 'Chicken'],
+    ['Apple', 'Beer', 'Rice'],
+    ['Apple', 'Beer'],
+    ['Apple', 'Bananas'],
+    ['Milk', 'Beer', 'Rice', 'Chicken'],
+    ['Milk', 'Beer', 'Rice'],
+    ['Milk', 'Beer'],
+    ['Apple', 'Bananas']]
+</code></pre>
+
 <hr>
 
 <p><em>set_params(</em><em>params)</em></p>
@@ -1578,6 +1458,136 @@ array([[True , False, True , True , False, True ],
 [True , True , False, False, False, False]])
 The corresponding column labels are available as self.columns_, e.g.,
 ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']</p>
+</li>
+</ul>
+<h2 id="minmax_scaling">minmax_scaling</h2>
+<p><em>minmax_scaling(array, columns, min_val=0, max_val=1)</em></p>
+<p>Min max scaling of pandas' DataFrames.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>array</code> : pandas DataFrame or NumPy ndarray, shape = [n_rows, n_columns].</p>
+</li>
+<li>
+<p><code>columns</code> : array-like, shape = [n_columns]</p>
+<p>Array-like with column names, e.g., ['col1', 'col2', ...]
+or column indices [0, 2, 4, ...]</p>
+</li>
+<li>
+<p><code>min_val</code> : <code>int</code> or <code>float</code>, optional (default=<code>0</code>)</p>
+<p>minimum value after rescaling.</p>
+</li>
+<li>
+<p><code>min_val</code> : <code>int</code> or <code>float</code>, optional (default=<code>1</code>)</p>
+<p>maximum value after rescaling.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>df_new</code> : pandas DataFrame object.</p>
+<p>Copy of the array or DataFrame with rescaled columns.</p>
+</li>
+</ul>
+<h2 id="one_hot">one_hot</h2>
+<p><em>one_hot(y, num_labels='auto', dtype='float')</em></p>
+<p>One-hot encoding of class labels</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>y</code> : array-like, shape = [n_classlabels]</p>
+<p>Python list or numpy array consisting of class labels.</p>
+</li>
+<li>
+<p><code>num_labels</code> : int or 'auto'</p>
+<p>Number of unique labels in the class label array. Infers the number
+of unique labels from the input array if set to 'auto'.</p>
+</li>
+<li>
+<p><code>dtype</code> : str</p>
+<p>NumPy array type (float, float32, float64) of the output array.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>ary</code> : numpy.ndarray, shape = [n_classlabels]</p>
+<p>One-hot encoded array, where each sample is represented as
+a row vector in the returned array.</p>
+</li>
+</ul>
+<h2 id="shuffle_arrays_unison">shuffle_arrays_unison</h2>
+<p><em>shuffle_arrays_unison(arrays, random_seed=None)</em></p>
+<p>Shuffle NumPy arrays in unison.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>arrays</code> : array-like, shape = [n_arrays]</p>
+<p>A list of NumPy arrays.</p>
+</li>
+<li>
+<p><code>random_seed</code> : int (default: None)</p>
+<p>Sets the random state.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>shuffled_arrays</code> : A list of NumPy arrays after shuffling.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code>&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; from mlxtend.preprocessing import shuffle_arrays_unison
+&gt;&gt;&gt; X1 = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+&gt;&gt;&gt; y1 = np.array([1, 2, 3])
+&gt;&gt;&gt; X2, y2 = shuffle_arrays_unison(arrays=[X1, y1], random_seed=3)
+&gt;&gt;&gt; assert(X2.all() == np.array([[4, 5, 6], [1, 2, 3], [7, 8, 9]]).all())
+&gt;&gt;&gt; assert(y2.all() == np.array([2, 1, 3]).all())
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="standardize">standardize</h2>
+<p><em>standardize(array, columns=None, ddof=0, return_params=False, params=None)</em></p>
+<p>Standardize columns in pandas DataFrames.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>array</code> : pandas DataFrame or NumPy ndarray, shape = [n_rows, n_columns].</p>
+</li>
+<li>
+<p><code>columns</code> : array-like, shape = [n_columns] (default: None)</p>
+<p>Array-like with column names, e.g., ['col1', 'col2', ...]
+or column indices [0, 2, 4, ...]
+If None, standardizes all columns.</p>
+</li>
+<li>
+<p><code>ddof</code> : int (default: 0)</p>
+<p>Delta Degrees of Freedom. The divisor used in calculations
+is N - ddof, where N represents the number of elements.</p>
+</li>
+<li>
+<p><code>return_params</code> : dict (default: False)</p>
+<p>If set to True, a dictionary is returned in addition to the
+standardized array. The parameter dictionary contains the
+column means ('avgs') and standard deviations ('stds') of
+the individual columns.</p>
+</li>
+<li>
+<p><code>params</code> : dict (default: None)</p>
+<p>A dictionary with column means and standard deviations as
+returned by the <code>standardize</code> function if <code>return_params</code>
+was set to True. If a <code>params</code> dictionary is provided, the
+<code>standardize</code> function will use these instead of computing
+them from the current array.</p>
+</li>
+</ul>
+<p><strong>Notes</strong></p>
+<p>If all values in a given column are the same, these values are all
+    set to <code>0.0</code>. The standard deviation in the <code>parameters</code> dictionary
+    is consequently set to <code>1.0</code> to avoid dividing by zero.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>df_new</code> : pandas DataFrame object.</p>
+<p>Copy of the array or DataFrame with standardized columns.</p>
 </li>
 </ul></div>
         

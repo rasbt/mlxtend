@@ -855,7 +855,10 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#generalize_names_duplcheck">generalize_names_duplcheck</a></li>
+        <li class="main active"><a href="#generalize_names">generalize_names</a></li>
+        
+    
+        <li class="main "><a href="#generalize_names_duplcheck">generalize_names_duplcheck</a></li>
         
     
         <li class="main "><a href="#tokenizer_emoticons">tokenizer_emoticons</a></li>
@@ -864,14 +867,38 @@
         <li class="main "><a href="#tokenizer_words_and_emoticons">tokenizer_words_and_emoticons</a></li>
         
     
-        <li class="main "><a href="#generalize_names">generalize_names</a></li>
-        
-    
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
 <p>mlxtend version: 0.11.0 </p>
+<h2 id="generalize_names">generalize_names</h2>
+<p><em>generalize_names(name, output_sep=' ', firstname_output_letters=1)</em></p>
+<p>Generalize a person's first and last name.</p>
+<p>Returns a person's name in the format
+<code>&lt;last_name&gt;&lt;separator&gt;&lt;firstname letter(s)&gt; (all lowercase)</code></p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>name</code> : <code>str</code></p>
+<p>Name of the player</p>
+</li>
+<li>
+<p><code>output_sep</code> : <code>str</code> (default: ' ')</p>
+<p>String for separating last name and first name in the output.</p>
+</li>
+<li>
+<p><code>firstname_output_letters</code> : <code>int</code></p>
+<p>Number of letters in the abbreviated first name.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>gen_name</code> : <code>str</code></p>
+<p>The generalized name.</p>
+</li>
+</ul>
 <h2 id="generalize_names_duplcheck">generalize_names_duplcheck</h2>
 <p><em>generalize_names_duplcheck(df, col_name)</em></p>
 <p>Generalizes names and removes duplicates.</p>
@@ -910,34 +937,7 @@ been applied without duplicates.</p>
 <p>Convert text to lowercase words and emoticons.</p>
 <p>Example:
     &gt;&gt;&gt; tokenizer_words_and_emoticons('</a>This :) is :( a test :-)!')
-['this', 'is', 'a', 'test', ':)', ':(', ':-)']</p>
-<h2 id="generalize_names">generalize_names</h2>
-<p><em>generalize_names(name, output_sep=' ', firstname_output_letters=1)</em></p>
-<p>Generalize a person's first and last name.</p>
-<p>Returns a person's name in the format
-<code>&lt;last_name&gt;&lt;separator&gt;&lt;firstname letter(s)&gt; (all lowercase)</code></p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>name</code> : <code>str</code></p>
-<p>Name of the player</p>
-</li>
-<li>
-<p><code>output_sep</code> : <code>str</code> (default: ' ')</p>
-<p>String for separating last name and first name in the output.</p>
-</li>
-<li>
-<p><code>firstname_output_letters</code> : <code>int</code></p>
-<p>Number of letters in the abbreviated first name.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>gen_name</code> : <code>str</code></p>
-<p>The generalized name.</p>
-</li>
-</ul></div>
+['this', 'is', 'a', 'test', ':)', ':(', ':-)']</p></div>
         
     </div>
 

@@ -19,7 +19,6 @@ def association_rules(df, metric="confidence", min_threshold=0.8):
 
     Parameters
     -----------
-
     df : pandas DataFrame
       pandas DataFrame of frequent itemsets
       with columns ['support', 'itemsets']
@@ -42,7 +41,6 @@ def association_rules(df, metric="confidence", min_threshold=0.8):
 
     Returns
     ----------
-
     pandas DataFrame with columns "antecedent support",
       "consequent support",
       "support", "confidence", "lift",

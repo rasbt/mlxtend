@@ -66,6 +66,10 @@ def docstring_to_markdown(docstring):
         if line.startswith('\n>>>'):
             clean_lst.append('\n')
             clean_lst.append('    ' + line[1:])
+        elif line.startswith('        ```'):
+            clean_lst.append(line[8:])
+        elif line.startswith('    ```'):
+            clean_lst.append(line[4:])
         elif set(line.strip()) not in ({'-'}, {'='}):
             clean_lst.append(line)
 
@@ -343,7 +347,7 @@ def summarize_methdods_and_functions(api_modules, out_dir,
         new_output = []
         if str_above_header:
             new_output.append(str_above_header)
-        for p in module_paths:
+        for p in sorted(module_paths):
             with open(p, 'r') as r:
                 new_output.extend(r.readlines())
 

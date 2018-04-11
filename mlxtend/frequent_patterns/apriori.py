@@ -4,7 +4,6 @@
 #
 # License: BSD 3 clause
 
-from itertools import combinations
 import numpy as np
 import pandas as pd
 
@@ -81,7 +80,9 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None):
     Returns
     -----------
     pandas DataFrame with columns ['support', 'itemsets'] of all itemsets
-    that are >= `min_support` and < than `max_len` (if `max_len` is not None).
+      that are >= `min_support` and < than `max_len`
+      (if `max_len` is not None).
+
     """
 
     X = df.values

@@ -56,10 +56,13 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         for fitting the meta-classifier stored in the
         `self.train_meta_features_` array, which can be
         accessed after calling `fit`.
-    refit : bool (default: True)
+    use_clones : bool (default: True)
         Clones the classifiers for stacking classification if True (default)
         or else uses the original ones, which will be refitted on the dataset
-        upon calling the `fit` method. Setting refit=False is
+        upon calling the `fit` method. Hence, if use_clones=True, the original
+        input classifiers will remain unmodified upon using the
+        StackingClassifier's `fit` method.
+        Setting `use_clones=False` is
         recommended if you are working with estimators that are supporting
         the scikit-learn fit/predict API interface but are not compatible
         to scikit-learn's `clone` function.
@@ -80,7 +83,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                  use_probas=False, average_probas=False, verbose=0,
                  use_features_in_secondary=False,
                  store_train_meta_features=False,
-                 refit=True):
+                 use_clones=True):
 
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier
@@ -95,7 +98,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.verbose = verbose
         self.use_features_in_secondary = use_features_in_secondary
         self.store_train_meta_features = store_train_meta_features
-        self.refit = refit
+        self.use_clones = use_clones
 
     def fit(self, X, y):
         """ Fit ensemble classifers and the meta-classifier.
@@ -113,7 +116,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self : object
 
         """
-        if self.refit:
+        if self.use_clones:
             self.clfs_ = [clone(clf) for clf in self.classifiers]
             self.meta_clf_ = clone(self.meta_classifier)
         else:

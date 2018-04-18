@@ -267,8 +267,8 @@ def test_get_params():
               'meta-logisticregression',
               'meta_classifier',
               'randomforestclassifier',
-              'refit',
               'store_train_meta_features',
+              'use_clones',
               'use_features_in_secondary',
               'use_probas',
               'verbose']

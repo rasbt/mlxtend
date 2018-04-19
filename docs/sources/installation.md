@@ -26,6 +26,16 @@ pip install mlxtend --upgrade --no-deps
 
 Please note that the dependencies (NumPy and SciPy) will also be upgraded if you omit the `--no-deps` flag; use the `--no-deps` ("no dependencies") flag if you don't want this.
 
+##### Installing mlxtend from the source distribution
+
+In rare cases, users reported problems on certain systems with the default `pip` installation command, which installs mlxtend from the binary distribution ("wheels") on PyPI. If you should encounter similar problems, you could try to install mlxtend from the source distribution instead via
+
+```bash
+pip install --no-binary :all: mlxtend
+```
+
+Also, I would appreciate it if you could report any issues that occur when using `pip install mlxtend` in hope that we can fix these in future releases.
+
 ### Conda
 
 The mlxtend package is also [available through conda forge](https://github.com/conda-forge/mlxtend-feedstock). 

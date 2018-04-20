@@ -19,9 +19,13 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import KFold
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_auc_score
 
 iris = datasets.load_iris()
-X, y = iris.data[:, 1:3], iris.target
+X_iris, y_iris = iris.data[:, 1:3], iris.target
+
+breast_cancer = datasets.load_breast_cancer()
+X_breast, y_breast = breast_cancer.data[:, 1:3], breast_cancer.target
 
 
 def test_StackingClassifier():
@@ -34,8 +38,8 @@ def test_StackingClassifier():
                                 shuffle=False)
 
     scores = cross_val_score(sclf,
-                             X,
-                             y,
+                             X_iris,
+                             y_iris,
                              cv=5,
                              scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
@@ -53,8 +57,8 @@ def test_StackingClassifier_proba():
                                 shuffle=False)
 
     scores = cross_val_score(sclf,
-                             X,
-                             y,
+                             X_iris,
+                             y_iris,
                              cv=5,
                              scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
@@ -112,8 +116,8 @@ def test_use_probas():
                                 shuffle=False)
 
     scores = cross_val_score(sclf,
-                             X,
-                             y,
+                             X_iris,
+                             y_iris,
                              cv=5,
                              scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
@@ -131,8 +135,8 @@ def test_use_features_in_secondary():
                                 shuffle=False)
 
     scores = cross_val_score(sclf,
-                             X,
-                             y,
+                             X_iris,
+                             y_iris,
                              cv=5,
                              scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
@@ -149,8 +153,8 @@ def test_do_not_stratify():
                                 stratify=False)
 
     scores = cross_val_score(sclf,
-                             X,
-                             y,
+                             X_iris,
+                             y_iris,
                              cv=5,
                              scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
@@ -171,8 +175,8 @@ def test_cross_validation_technique():
                                 cv=cv)
 
     scores = cross_val_score(sclf,
-                             X,
-                             y,
+                             X_iris,
+                             y_iris,
                              cv=5,
                              scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
@@ -224,7 +228,7 @@ def test_verbose():
 
 
 def test_list_of_lists():
-    X_list = [i for i in X]
+    X_list = [i for i in X_iris]
     meta = LogisticRegression()
     clf1 = RandomForestClassifier()
     clf2 = GaussianNB()
@@ -241,7 +245,7 @@ def test_list_of_lists():
 
 
 def test_pandas():
-    X_df = pd.DataFrame(X)
+    X_df = pd.DataFrame(X_iris)
     meta = LogisticRegression()
     clf1 = RandomForestClassifier()
     clf2 = GaussianNB()
@@ -296,7 +300,7 @@ def test_classifier_gridsearch():
                         param_grid=params,
                         cv=5,
                         refit=True)
-    grid.fit(X, y)
+    grid.fit(X_iris, y_iris)
 
     assert len(grid.best_params_['classifiers']) == 3
 
@@ -308,7 +312,8 @@ def test_train_meta_features_():
     stclf = StackingCVClassifier(classifiers=[knn, gnb],
                                  meta_classifier=lr,
                                  store_train_meta_features=True)
-    X_train, X_test, y_train,  y_test = train_test_split(X, y, test_size=0.3)
+    X_train, X_test, y_train,  y_test = train_test_split(X_iris, y_iris,
+                                                         test_size=0.3)
     stclf.fit(X_train, y_train)
     train_meta_features = stclf.train_meta_features_
     assert train_meta_features.shape == (X_train.shape[0], 2)
@@ -318,8 +323,8 @@ def test_predict_meta_features():
     knn = KNeighborsClassifier()
     lr = LogisticRegression()
     gnb = GaussianNB()
-    X_train, X_test, y_train,  y_test = train_test_split(X, y, test_size=0.3)
-
+    X_train, X_test, y_train,  y_test = train_test_split(X_iris, y_iris,
+                                                         test_size=0.3)
     #  test default (class labels)
     stclf = StackingCVClassifier(classifiers=[knn, gnb],
                                  meta_classifier=lr,
@@ -327,3 +332,19 @@ def test_predict_meta_features():
     stclf.fit(X_train, y_train)
     test_meta_features = stclf.predict(X_test)
     assert test_meta_features.shape == (X_test.shape[0],)
+
+
+def test_meta_feat_reordering():
+    knn = KNeighborsClassifier()
+    lr = LogisticRegression()
+    gnb = GaussianNB()
+    stclf = StackingCVClassifier(classifiers=[knn, gnb],
+                                 meta_classifier=lr,
+                                 shuffle=True,
+                                 store_train_meta_features=True)
+    X_train, X_test, y_train,  y_test = train_test_split(X_breast, y_breast,
+                                                         test_size=0.3)
+    stclf.fit(X_train, y_train)
+
+    assert round(roc_auc_score(y_train,
+                 stclf.train_meta_features_[:, 1]), 2) == 0.88

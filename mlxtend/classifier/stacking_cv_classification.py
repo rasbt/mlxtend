@@ -229,7 +229,14 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                                                single_model_prediction])
 
         if self.store_train_meta_features:
-            self.train_meta_features_ = all_model_predictions
+            # Store the meta features in the order of the
+            # original X,y arrays
+            reodered_indices = np.array([]).astype(y.dtype)
+            for train_index, test_index in skf:
+                reodered_indices = np.concatenate((reodered_indices,
+                                                   test_index))
+            self.train_meta_features_ = all_model_predictions[np.argsort(
+                reodered_indices)]
 
         # We have to shuffle the labels in the same order as we generated
         # predictions during CV (we kinda shuffled them when we did

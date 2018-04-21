@@ -52,7 +52,9 @@ class Adaline(_BaseModel, _IterativeModel, _Classifier):
     cost_ : list
       Sum of squared errors after each epoch.
 
-    For more examples, please see
+    Examples
+    -----------
+    For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/classifier/Adaline/
 
     """

@@ -71,6 +71,8 @@ def paired_ttest_resampled(estimator1, estimator2, X, y,
         and accept that there are significant differences
         in the two compared models.
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/evaluate/paired_ttest_resampled/
 
@@ -180,6 +182,8 @@ def paired_ttest_kfold_cv(estimator1, estimator2, X, y,
         and accept that there are significant differences
         in the two compared models.
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/evaluate/paired_ttest_kfold_cv/
 
@@ -272,6 +276,8 @@ def paired_ttest_5x2cv(estimator1, estimator2, X, y,
         and accept that there are significant differences
         in the two compared models.
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/evaluate/paired_ttest_5x2cv/
 

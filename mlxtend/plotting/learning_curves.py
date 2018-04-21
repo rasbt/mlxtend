@@ -59,6 +59,8 @@ def plot_learning_curves(X_train, y_train,
     ---------
     errors : (training_error, test_error): tuple of lists
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/plotting/learning_curves/
 

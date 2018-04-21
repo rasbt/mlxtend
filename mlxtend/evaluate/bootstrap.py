@@ -48,7 +48,7 @@ def bootstrap(x, func, num_rounds=1000, ci=0.95, ddof=1, seed=None):
     Returns
     -------
 
-    original, standard_error, (lower_ci, upper_ci)
+    original, standard_error, (lower_ci, upper_ci) : tuple
         Returns the statistic of the original sample (`original`),
         the standard error of the estimate, and the
         respective confidence interval bounds.

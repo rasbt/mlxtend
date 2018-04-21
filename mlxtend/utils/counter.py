@@ -52,6 +52,9 @@ class Counter(object):
               ' %d seconds ago.' % (time.time() - cnt.end_time))
     The counter was last updated 0 seconds ago.
 
+    For more usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/utils/Counter/
+
     """
     def __init__(self, stderr=False, start_newline=True, precision=0,
                  name=None):

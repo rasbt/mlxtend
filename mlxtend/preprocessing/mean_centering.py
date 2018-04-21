@@ -19,6 +19,8 @@ class MeanCenterer(object):
         NumPy array storing the mean values for centering after fitting
         the MeanCenterer object.
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/preprocessing/MeanCenterer/
 

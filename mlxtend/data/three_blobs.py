@@ -26,6 +26,8 @@ def three_blobs_data():
         and 2 feature columns.
         y is a 1-dimensional array of the 3 suggested cluster labels 0, 1, 2
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/data/three_blobs_data
 

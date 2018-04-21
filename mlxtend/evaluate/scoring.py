@@ -66,6 +66,8 @@ def scoring(y_target, y_predicted, metric='error',
     ------------
     score : float
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/evaluate/scoring/
 

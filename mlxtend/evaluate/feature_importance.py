@@ -53,6 +53,8 @@ def feature_importance_permutation(X, y, predict_method,
       the feature importance for each repetition. If num_rounds=1,
       it contains the same values as the first array, mean_importance_vals.
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/evaluate/feature_importance_permutation/
 

@@ -43,6 +43,8 @@ def wine_data():
         and 13 feature columns.
         y is a 1-dimensional array of the 3 class labels 0, 1, 2
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/data/wine_data
 

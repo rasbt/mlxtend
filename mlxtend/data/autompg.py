@@ -39,6 +39,8 @@ def autompg_data():
         and 8 feature columns (6 rows with NaNs removed).
         y is a 1-dimensional array of the target MPG values.
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/data/autompg_data/
 

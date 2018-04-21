@@ -45,6 +45,8 @@ class Perceptron(_BaseModel, _IterativeModel, _Classifier):
     cost_ : list
         Number of misclassifications in every epoch.
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/classifier/Perceptron/
 

@@ -32,6 +32,8 @@ def mcnemar_table(y_target, y_model1, y_model2):
        c: tb[1, 0]: # of samples that model 2 got right and model 1 got wrong
        d: tb[1, 1]: # of samples that both models predicted incorrectly
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/evaluate/mcnemar_table/
 
@@ -112,6 +114,9 @@ def mcnemar_tables(y_target, *y_model_predictions):
         - tb[1, 0]: # of samples that model b got right and model a got wrong
         - tb[1, 1]: # of samples that both models predicted incorrectly
 
+    Examples
+    -----------
+
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/evaluate/mcnemar_tables/
 
@@ -180,6 +185,9 @@ def mcnemar(ary, corrected=True, exact=False):
     chi2, p : float or None, float
         Returns the chi-squared value and the p-value;
         if `exact=True` (default: `False`), `chi2` is `None`
+
+    Examples
+    -----------
 
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/evaluate/mcnemar/

@@ -31,6 +31,8 @@ def confusion_matrix(y_target, y_predicted, binary=False, positive_label=1):
     ----------
     mat : array-like, shape=[n_classes, n_classes]
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/evaluate/confusion_matrix/
 

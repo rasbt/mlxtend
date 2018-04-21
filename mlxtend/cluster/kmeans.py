@@ -52,6 +52,8 @@ class Kmeans(_BaseModel, _Cluster, _IterativeModel):
     iterations_ : int
         Number of iterations until convergence.
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/classifier/Kmeans/
 

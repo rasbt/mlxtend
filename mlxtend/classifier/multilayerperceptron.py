@@ -72,6 +72,8 @@ class MultiLayerPerceptron(_BaseModel, _IterativeModel,
         List of floats; the mean categorical cross entropy
         cost after each epoch.
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/classifier/MultiLayerPerceptron/
 

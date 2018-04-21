@@ -21,6 +21,8 @@ class TransactionEncoder(BaseEstimator, TransformerMixin):
     columns_: list
       List of unique names in the `X` input list of lists
 
+    Examples
+    ------------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/preprocessing/TransactionEncoder/
 

@@ -27,6 +27,8 @@ def loadlocal_mnist(images_path, labels_path):
     labels : [n_samples] numpy array
         Target class labels
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/data/loadlocal_mnist/
 

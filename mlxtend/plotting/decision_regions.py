@@ -119,6 +119,8 @@ def plot_decision_regions(X, y, clf,
     ---------
     ax : matplotlib.axes.Axes object
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/plotting/plot_decision_regions/
 

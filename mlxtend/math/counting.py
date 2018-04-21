@@ -32,6 +32,8 @@ def num_combinations(n, k, with_replacement=False):
     comb : `int`
         Number of possible combinations.
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/math/num_combinations/
 
@@ -64,6 +66,8 @@ def num_permutations(n, k, with_replacement=False):
     permut : `int`
       Number of possible permutations.
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/math/num_permutations/
 

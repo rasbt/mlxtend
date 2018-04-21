@@ -28,6 +28,8 @@ def one_hot(y, num_labels='auto', dtype='float'):
         One-hot encoded array, where each sample is represented as
         a row vector in the returned array.
 
+    Examples
+    ----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/preprocessing/one_hot/
 

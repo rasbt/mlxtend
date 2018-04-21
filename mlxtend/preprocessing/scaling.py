@@ -29,6 +29,8 @@ def minmax_scaling(array, columns, min_val=0, max_val=1):
     df_new : pandas DataFrame object.
         Copy of the array or DataFrame with rescaled columns.
 
+    Examples
+    ----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/preprocessing/minmax_scaling/
 
@@ -93,6 +95,8 @@ def standardize(array, columns=None, ddof=0, return_params=False, params=None):
     df_new : pandas DataFrame object.
         Copy of the array or DataFrame with standardized columns.
 
+    Examples
+    ----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/preprocessing/standardize/
 

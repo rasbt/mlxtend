@@ -49,6 +49,8 @@ def ecdf(x, y_label='ECDF', x_label=None, ax=None, percentile=None,
         the feature threshold at a percentile threshold
         or None if `percentile=None`
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/plotting/ecdf/
 

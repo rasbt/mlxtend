@@ -47,6 +47,8 @@ def boston_housing_data():
         and 13 feature columns.
         y is a 1-dimensional array of the continuous target variable MEDV
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/data/boston_housing_data/
 

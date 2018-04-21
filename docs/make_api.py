@@ -21,6 +21,21 @@ def _obj_name(obj):
         return obj.__name__
 
 
+def make_markdown_url(line_string, s):
+    """
+    Turns an URL starting with s into
+    a markdown link
+    """
+    new_line = []
+    old_line = line_string.split(' ')
+    for token in old_line:
+        if not token.startswith(s):
+            new_line.append(token)
+        else:
+            new_line.append('[%s](%s)' % (token, token))
+    return ' '.join(new_line)
+
+
 def docstring_to_markdown(docstring):
     """Convert a Python object's docstring to markdown
 
@@ -44,6 +59,7 @@ def docstring_to_markdown(docstring):
 
         elif line.startswith('>>>'):
             line = '    %s' % line
+
         new_docstring_lst.append(line)
 
     param_encountered = False
@@ -63,6 +79,17 @@ def docstring_to_markdown(docstring):
 
     clean_lst = []
     for line in new_docstring_lst:
+
+        if 'http://rasbt.github.io/' in line:
+            line = make_markdown_url(line_string=line,
+                                     s='http://rasbt.github.io/')
+
+            if len(clean_lst) > 0 and \
+                    clean_lst[-1].lstrip().startswith(
+                        'For more usage examples'):
+                clean_lst[-1] = clean_lst[-1].lstrip()
+                line = line.lstrip()
+
         if line.startswith('\n>>>'):
             clean_lst.append('\n')
             clean_lst.append('    ' + line[1:])
@@ -72,7 +99,6 @@ def docstring_to_markdown(docstring):
             clean_lst.append(line[4:])
         elif set(line.strip()) not in ({'-'}, {'='}):
             clean_lst.append(line)
-
     return clean_lst
 
 
@@ -349,7 +375,9 @@ def summarize_methdods_and_functions(api_modules, out_dir,
             new_output.append(str_above_header)
         for p in sorted(module_paths):
             with open(p, 'r') as r:
+
                 new_output.extend(r.readlines())
+                new_output.extend(['\n', '\n', '\n'])
 
         msg = ''
         if not os.path.isfile(out_f):

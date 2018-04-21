@@ -36,6 +36,8 @@ def iris_data():
         petal length, and petal width.
         y is a 1-dimensional array of the class labels {0, 1, 2}
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/data/iris_data/
 

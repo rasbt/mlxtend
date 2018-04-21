@@ -12,29 +12,31 @@ import numpy as np
 
 
 class ColumnSelector(BaseEstimator):
+    """Object for selecting specific columns from a data set.
+
+    Parameters
+    ----------
+    cols : array-like (default: None)
+        A list specifying the feature indices to be selected. For example,
+        [1, 4, 5] to select the 2nd, 5th, and 6th feature columns.
+        If None, returns all columns in the array.
+
+    drop_axis : bool (default=False)
+        Drops last axis if True and the only one column is selected. This
+        is useful, e.g., when the ColumnSelector is used for selecting
+        only one column and the resulting array should be fed to e.g.,
+        a scikit-learn column selector. E.g., instead of returning an
+        array with shape (n_samples, 1), drop_axis=True will return an
+        aray with shape (n_samples,).
+
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/feature_selection/ColumnSelector/
+
+    """
 
     def __init__(self, cols=None, drop_axis=False):
-        """Object for selecting specific columns from a data set.
-
-        Parameters
-        ----------
-        cols : array-like (default: None)
-            A list specifying the feature indices to be selected. For example,
-            [1, 4, 5] to select the 2nd, 5th, and 6th feature columns.
-            If None, returns all columns in the array.
-
-        drop_axis : bool (default=False)
-            Drops last axis if True and the only one column is selected. This
-            is useful, e.g., when the ColumnSelector is used for selecting
-            only one column and the resulting array should be fed to e.g.,
-            a scikit-learn column selector. E.g., instead of returning an
-            array with shape (n_samples, 1), drop_axis=True will return an
-            aray with shape (n_samples,).
-
-        For usage examples, please see
-        http://rasbt.github.io/mlxtend/user_guide/feature_selection/ColumnSelector/
-
-        """
         self.cols = cols
         self.drop_axis = drop_axis
 

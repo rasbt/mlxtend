@@ -55,6 +55,8 @@ class LogisticRegression(_BaseModel, _IterativeModel, _Classifier):
         List of floats with cross_entropy cost (sgd or gd) for every
         epoch.
 
+    Examples
+    -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/classifier/LogisticRegression/
 

@@ -22,7 +22,12 @@
     <link rel="stylesheet" href="../../../css/highlight.css">
 
     <!--
-    <link href="../../../extra.css" rel="stylesheet">-->
+    <link href="../../../cinder/css/base.css" rel="stylesheet">
+    <link href="../../../cinder/css/bootstrap-custom.css" rel="stylesheet">
+    <link href="../../../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../../../cinder/css/cinder.css" rel="stylesheet">
+    <link href="../../../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
+    <link href="../../../cinder/css/highlight.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -264,6 +269,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/feature_importance_permutation/">Feature importance permutation</a>
 </li>
 
         
@@ -1199,18 +1210,18 @@ for r, _ in enumerate(grid.cv_results_['mean_test_score']):
              grid.cv_results_[cv_keys[2]][r]))
 </code></pre>
 
-<pre><code>0.953 +/- 0.01 {'pipeline__sfs__k_features': 1, 'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 20}
-0.947 +/- 0.02 {'pipeline__sfs__k_features': 1, 'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 200}
-0.953 +/- 0.01 {'pipeline__sfs__k_features': 2, 'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 20}
-0.947 +/- 0.02 {'pipeline__sfs__k_features': 2, 'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 200}
-0.953 +/- 0.01 {'pipeline__sfs__k_features': 3, 'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 20}
-0.953 +/- 0.02 {'pipeline__sfs__k_features': 3, 'pipeline__logreg__C': 1.0, 'randomforestclassifier__n_estimators': 200}
-0.947 +/- 0.02 {'pipeline__sfs__k_features': 1, 'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 20}
-0.953 +/- 0.02 {'pipeline__sfs__k_features': 1, 'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 200}
-0.947 +/- 0.02 {'pipeline__sfs__k_features': 2, 'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 20}
-0.947 +/- 0.02 {'pipeline__sfs__k_features': 2, 'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 200}
-0.960 +/- 0.01 {'pipeline__sfs__k_features': 3, 'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 20}
-0.953 +/- 0.02 {'pipeline__sfs__k_features': 3, 'pipeline__logreg__C': 100.0, 'randomforestclassifier__n_estimators': 200}
+<pre><code>0.953 +/- 0.01 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 20}
+0.947 +/- 0.02 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 200}
+0.953 +/- 0.01 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 20}
+0.947 +/- 0.02 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 200}
+0.953 +/- 0.01 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 20}
+0.953 +/- 0.02 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 200}
+0.947 +/- 0.02 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 20}
+0.953 +/- 0.02 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 200}
+0.947 +/- 0.02 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 20}
+0.947 +/- 0.02 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 200}
+0.960 +/- 0.01 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 20}
+0.953 +/- 0.02 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 200}
 </code></pre>
 <p>The best parameters determined via GridSearch are:</p>
 <pre><code class="python">grid.best_params_
@@ -1263,7 +1274,9 @@ clf1_pipe = Pipeline([('sel', col_sel),
                       ('logreg', clf1)])
 </code></pre>
 
-<pre><code>Features: 2/2
+<pre><code>[Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
+Features: 1/2[Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s finished
+Features: 2/2
 
 Best features (0, 2)
 </code></pre>
@@ -1333,9 +1346,10 @@ eclf = EnsembleVoteClassifier(clfs=[pipe1, pipe2])
 eclf.fit(X, y)
 </code></pre>
 
-<pre><code>EnsembleVoteClassifier(clfs=[Pipeline(steps=[('columnselector', ColumnSelector(cols=(0, 2))), ('logisticregression', LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
+<pre><code>EnsembleVoteClassifier(clfs=[Pipeline(memory=None,
+     steps=[('columnselector', ColumnSelector(cols=(0, 2), drop_axis=False)), ('logisticregression', LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
           intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-          penalty='l2', random_state=None, solver='libl...='l2', random_state=None, solver='liblinear', tol=0.0001,
+          penalty='l...='l2', random_state=None, solver='liblinear', tol=0.0001,
           verbose=0, warm_start=False))])],
             refit=True, verbose=0, voting='hard', weights=None)
 </code></pre>
@@ -1426,6 +1440,8 @@ would raise a NotFitterError if refit=False.
 [1 1 1 2 2 2]
 &gt;&gt;&gt;
 </code></pre>
+<p>For more usage examples, please see
+<a href="http://rasbt.github.io/mlxtend/user_guide/classifier/EnsembleVoteClassifier/">http://rasbt.github.io/mlxtend/user_guide/classifier/EnsembleVoteClassifier/</a></p>
 <h3 id="methods">Methods</h3>
 <hr>
 

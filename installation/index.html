@@ -22,7 +22,12 @@
     <link rel="stylesheet" href="../css/highlight.css">
 
     <!--
-    <link href="../extra.css" rel="stylesheet">-->
+    <link href="../cinder/css/base.css" rel="stylesheet">
+    <link href="../cinder/css/bootstrap-custom.css" rel="stylesheet">
+    <link href="../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../cinder/css/cinder.css" rel="stylesheet">
+    <link href="../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
+    <link href="../cinder/css/highlight.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -264,6 +269,12 @@
             
 <li >
     <a href="../user_guide/evaluate/confusion_matrix/">Confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/evaluate/feature_importance_permutation/">Feature importance permutation</a>
 </li>
 
         
@@ -860,6 +871,8 @@
             <li><a href="#pypi">PyPI</a></li>
                 <!-- 
                     <li><a href="#upgrading-via-pip">Upgrading via pip</a></li>
+            
+                    <li><a href="#installing-mlxtend-from-the-source-distribution">Installing mlxtend from the source distribution</a></li>
              -->
         
             <li><a href="#conda">Conda</a></li>
@@ -890,6 +903,12 @@
 </code></pre>
 
 <p>Please note that the dependencies (NumPy and SciPy) will also be upgraded if you omit the <code>--no-deps</code> flag; use the <code>--no-deps</code> ("no dependencies") flag if you don't want this.</p>
+<h5 id="installing-mlxtend-from-the-source-distribution">Installing mlxtend from the source distribution</h5>
+<p>In rare cases, users reported problems on certain systems with the default <code>pip</code> installation command, which installs mlxtend from the binary distribution ("wheels") on PyPI. If you should encounter similar problems, you could try to install mlxtend from the source distribution instead via</p>
+<pre><code class="bash">pip install --no-binary :all: mlxtend
+</code></pre>
+
+<p>Also, I would appreciate it if you could report any issues that occur when using <code>pip install mlxtend</code> in hope that we can fix these in future releases.</p>
 <h3 id="conda">Conda</h3>
 <p>The mlxtend package is also <a href="https://github.com/conda-forge/mlxtend-feedstock">available through conda forge</a>. </p>
 <p>To install mlxtend using conda, use the following command:</p>

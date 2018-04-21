@@ -22,7 +22,12 @@
     <link rel="stylesheet" href="../../css/highlight.css">
 
     <!--
-    <link href="../../extra.css" rel="stylesheet">-->
+    <link href="../../cinder/css/base.css" rel="stylesheet">
+    <link href="../../cinder/css/bootstrap-custom.css" rel="stylesheet">
+    <link href="../../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../../cinder/css/cinder.css" rel="stylesheet">
+    <link href="../../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
+    <link href="../../cinder/css/highlight.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -264,6 +269,12 @@
             
 <li >
     <a href="../../user_guide/evaluate/confusion_matrix/">Confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/feature_importance_permutation/">Feature importance permutation</a>
 </li>
 
         
@@ -901,10 +912,12 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.11.0 </p>
+<p>mlxtend version: 0.12.0 </p>
 <h2 id="copytransformer">CopyTransformer</h2>
 <p><em>CopyTransformer()</em></p>
 <p>Transformer that returns a copy of the input array</p>
+<p>For usage examples, please see
+<a href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/CopyTransformer/">http://rasbt.github.io/mlxtend/user_guide/preprocessing/CopyTransformer/</a></p>
 <h3 id="methods">Methods</h3>
 <hr>
 
@@ -993,6 +1006,8 @@ n_features is the number of features.</p>
 <h2 id="densetransformer">DenseTransformer</h2>
 <p><em>DenseTransformer(return_copy=True)</em></p>
 <p>Convert a sparse array into a dense array.</p>
+<p>For usage examples, please see
+<a href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/DenseTransformer/">http://rasbt.github.io/mlxtend/user_guide/preprocessing/DenseTransformer/</a></p>
 <h3 id="methods_1">Methods</h3>
 <hr>
 
@@ -1089,6 +1104,9 @@ n_features is the number of features.</p>
 the MeanCenterer object.</p>
 </li>
 </ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/MeanCenterer/">http://rasbt.github.io/mlxtend/user_guide/preprocessing/MeanCenterer/</a></p>
 <h3 id="methods_2">Methods</h3>
 <hr>
 
@@ -1150,6 +1168,9 @@ n_features is the number of features.</p>
 <p><strong>Attributes</strong></p>
 <p>columns_: list
 List of unique names in the <code>X</code> input list of lists</p>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+<a href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/TransactionEncoder/">http://rasbt.github.io/mlxtend/user_guide/preprocessing/TransactionEncoder/</a></p>
 <h3 id="methods_3">Methods</h3>
 <hr>
 
@@ -1309,6 +1330,9 @@ The corresponding column labels are available as self.columns_, e.g.,
 <p><strong>Attributes</strong></p>
 <p>columns_: list
 List of unique names in the <code>X</code> input list of lists</p>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+<a href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/TransactionEncoder/">http://rasbt.github.io/mlxtend/user_guide/preprocessing/TransactionEncoder/</a></p>
 <h3 id="methods_4">Methods</h3>
 <hr>
 
@@ -1489,6 +1513,9 @@ or column indices [0, 2, 4, ...]</p>
 <p>Copy of the array or DataFrame with rescaled columns.</p>
 </li>
 </ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/minmax_scaling/">http://rasbt.github.io/mlxtend/user_guide/preprocessing/minmax_scaling/</a></p>
 <h2 id="one_hot">one_hot</h2>
 <p><em>one_hot(y, num_labels='auto', dtype='float')</em></p>
 <p>One-hot encoding of class labels</p>
@@ -1516,6 +1543,9 @@ of unique labels from the input array if set to 'auto'.</p>
 a row vector in the returned array.</p>
 </li>
 </ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/one_hot/">http://rasbt.github.io/mlxtend/user_guide/preprocessing/one_hot/</a></p>
 <h2 id="shuffle_arrays_unison">shuffle_arrays_unison</h2>
 <p><em>shuffle_arrays_unison(arrays, random_seed=None)</em></p>
 <p>Shuffle NumPy arrays in unison.</p>
@@ -1544,6 +1574,8 @@ a row vector in the returned array.</p>
 &gt;&gt;&gt; assert(y2.all() == np.array([2, 1, 3]).all())
 &gt;&gt;&gt;
 </code></pre>
+<p>For more usage examples, please see
+<a href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/shuffle_arrays_unison/">http://rasbt.github.io/mlxtend/user_guide/preprocessing/shuffle_arrays_unison/</a></p>
 <h2 id="standardize">standardize</h2>
 <p><em>standardize(array, columns=None, ddof=0, return_params=False, params=None)</em></p>
 <p>Standardize columns in pandas DataFrames.</p>
@@ -1589,7 +1621,10 @@ them from the current array.</p>
 <p><code>df_new</code> : pandas DataFrame object.</p>
 <p>Copy of the array or DataFrame with standardized columns.</p>
 </li>
-</ul></div>
+</ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/standardize/">http://rasbt.github.io/mlxtend/user_guide/preprocessing/standardize/</a></p></div>
         
     </div>
 

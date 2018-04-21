@@ -22,7 +22,12 @@
     <link rel="stylesheet" href="../../css/highlight.css">
 
     <!--
-    <link href="../../extra.css" rel="stylesheet">-->
+    <link href="../../cinder/css/base.css" rel="stylesheet">
+    <link href="../../cinder/css/bootstrap-custom.css" rel="stylesheet">
+    <link href="../../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../../cinder/css/cinder.css" rel="stylesheet">
+    <link href="../../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
+    <link href="../../cinder/css/highlight.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -264,6 +269,12 @@
             
 <li >
     <a href="../../user_guide/evaluate/confusion_matrix/">Confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/feature_importance_permutation/">Feature importance permutation</a>
 </li>
 
         
@@ -883,7 +894,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.11.0 </p>
+<p>mlxtend version: 0.12.0 </p>
 <h2 id="autompg_data">autompg_data</h2>
 <p><em>autompg_data()</em></p>
 <p>Auto MPG dataset.</p>
@@ -918,6 +929,9 @@ and 8 feature columns (6 rows with NaNs removed).
 y is a 1-dimensional array of the target MPG values.</p>
 </li>
 </ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/data/autompg_data/">http://rasbt.github.io/mlxtend/user_guide/data/autompg_data/</a></p>
 <h2 id="boston_housing_data">boston_housing_data</h2>
 <p><em>boston_housing_data()</em></p>
 <p>Boston Housing dataset.</p>
@@ -960,6 +974,9 @@ and 13 feature columns.
 y is a 1-dimensional array of the continuous target variable MEDV</p>
 </li>
 </ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/data/boston_housing_data/">http://rasbt.github.io/mlxtend/user_guide/data/boston_housing_data/</a></p>
 <h2 id="iris_data">iris_data</h2>
 <p><em>iris_data()</em></p>
 <p>Iris flower dataset.</p>
@@ -992,6 +1009,9 @@ petal length, and petal width.
 y is a 1-dimensional array of the class labels {0, 1, 2}</p>
 </li>
 </ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/data/iris_data/">http://rasbt.github.io/mlxtend/user_guide/data/iris_data/</a></p>
 <h2 id="loadlocal_mnist">loadlocal_mnist</h2>
 <p><em>loadlocal_mnist(images_path, labels_path)</em></p>
 <p>Read MNIST from ubyte files.</p>
@@ -1017,6 +1037,9 @@ y is a 1-dimensional array of the class labels {0, 1, 2}</p>
 <p>Target class labels</p>
 </li>
 </ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/data/loadlocal_mnist/">http://rasbt.github.io/mlxtend/user_guide/data/loadlocal_mnist/</a></p>
 <h2 id="make_multiplexer_dataset">make_multiplexer_dataset</h2>
 <p><em>make_multiplexer_dataset(address_bits=2, sample_size=100, positive_class_ratio=0.5, shuffle=False, random_seed=None)</em></p>
 <p>Function to create a binary n-bit multiplexer dataset.</p>
@@ -1072,6 +1095,9 @@ All features are binary (values in {0, 1}).
 y is a 1-dimensional array of class labels in {0, 1}.</p>
 </li>
 </ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/data/make_multiplexer_dataset">http://rasbt.github.io/mlxtend/user_guide/data/make_multiplexer_dataset</a></p>
 <h2 id="mnist_data">mnist_data</h2>
 <p><em>mnist_data()</em></p>
 <p>5000 samples from the MNIST handwritten digits dataset.</p>
@@ -1088,6 +1114,9 @@ each row consists of 28x28 pixels that were unrolled into
 y contains the 10 unique class labels 0-9.</p>
 </li>
 </ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/data/mnist_data/">http://rasbt.github.io/mlxtend/user_guide/data/mnist_data/</a></p>
 <h2 id="three_blobs_data">three_blobs_data</h2>
 <p><em>three_blobs_data()</em></p>
 <p>A random dataset of 3 2D blobs for clustering.</p>
@@ -1108,6 +1137,9 @@ and 2 feature columns.
 y is a 1-dimensional array of the 3 suggested cluster labels 0, 1, 2</p>
 </li>
 </ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/data/three_blobs_data">http://rasbt.github.io/mlxtend/user_guide/data/three_blobs_data</a></p>
 <h2 id="wine_data">wine_data</h2>
 <p><em>wine_data()</em></p>
 <p>Wine dataset.</p>
@@ -1146,7 +1178,10 @@ y is a 1-dimensional array of the 3 suggested cluster labels 0, 1, 2</p>
 and 13 feature columns.
 y is a 1-dimensional array of the 3 class labels 0, 1, 2</p>
 </li>
-</ul></div>
+</ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/data/wine_data">http://rasbt.github.io/mlxtend/user_guide/data/wine_data</a></p></div>
         
     </div>
 

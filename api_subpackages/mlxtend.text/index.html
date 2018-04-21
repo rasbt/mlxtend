@@ -22,7 +22,12 @@
     <link rel="stylesheet" href="../../css/highlight.css">
 
     <!--
-    <link href="../../extra.css" rel="stylesheet">-->
+    <link href="../../cinder/css/base.css" rel="stylesheet">
+    <link href="../../cinder/css/bootstrap-custom.css" rel="stylesheet">
+    <link href="../../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../../cinder/css/cinder.css" rel="stylesheet">
+    <link href="../../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
+    <link href="../../cinder/css/highlight.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -264,6 +269,12 @@
             
 <li >
     <a href="../../user_guide/evaluate/confusion_matrix/">Confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/feature_importance_permutation/">Feature importance permutation</a>
 </li>
 
         
@@ -871,7 +882,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.11.0 </p>
+<p>mlxtend version: 0.12.0 </p>
 <h2 id="generalize_names">generalize_names</h2>
 <p><em>generalize_names(name, output_sep=' ', firstname_output_letters=1)</em></p>
 <p>Generalize a person's first and last name.</p>
@@ -899,6 +910,9 @@
 <p>The generalized name.</p>
 </li>
 </ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/text/generalize_names/">http://rasbt.github.io/mlxtend/user_guide/text/generalize_names/</a></p>
 <h2 id="generalize_names_duplcheck">generalize_names_duplcheck</h2>
 <p><em>generalize_names_duplcheck(df, col_name)</em></p>
 <p>Generalizes names and removes duplicates.</p>
@@ -926,18 +940,27 @@ function should be applied to.</p>
 been applied without duplicates.</p>
 </li>
 </ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/text/generalize_names_duplcheck/">http://rasbt.github.io/mlxtend/user_guide/text/generalize_names_duplcheck/</a></p>
 <h2 id="tokenizer_emoticons">tokenizer_emoticons</h2>
 <p><em>tokenizer_emoticons(text)</em></p>
 <p>Return emoticons from text</p>
-<p>Example:
-    &gt;&gt;&gt; tokenizer_emoticons('</a>This :) is :( a test :-)!')
-[':)', ':(', ':-)']</p>
+<p><strong>Examples</strong></p>
+<pre><code>&gt;&gt;&gt; tokenizer_emoticons('&lt;/a&gt;This :) is :( a test :-)!')
+</code></pre>
+<p>[':)', ':(', ':-)']</p>
+<p>For usage examples, please see
+<a href="http://rasbt.github.io/mlxtend/user_guide/text/tokenizer_emoticons/">http://rasbt.github.io/mlxtend/user_guide/text/tokenizer_emoticons/</a></p>
 <h2 id="tokenizer_words_and_emoticons">tokenizer_words_and_emoticons</h2>
 <p><em>tokenizer_words_and_emoticons(text)</em></p>
 <p>Convert text to lowercase words and emoticons.</p>
-<p>Example:
-    &gt;&gt;&gt; tokenizer_words_and_emoticons('</a>This :) is :( a test :-)!')
-['this', 'is', 'a', 'test', ':)', ':(', ':-)']</p></div>
+<p><strong>Examples</strong></p>
+<pre><code>&gt;&gt;&gt; tokenizer_words_and_emoticons('&lt;/a&gt;This :) is :( a test :-)!')
+</code></pre>
+<p>['this', 'is', 'a', 'test', ':)', ':(', ':-)']</p>
+<p>For more usage examples, please see
+<a href="http://rasbt.github.io/mlxtend/user_guide/text/tokenizer_words_and_emoticons/">http://rasbt.github.io/mlxtend/user_guide/text/tokenizer_words_and_emoticons/</a></p></div>
         
     </div>
 

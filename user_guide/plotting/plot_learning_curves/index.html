@@ -22,7 +22,12 @@
     <link rel="stylesheet" href="../../../css/highlight.css">
 
     <!--
-    <link href="../../../extra.css" rel="stylesheet">-->
+    <link href="../../../cinder/css/base.css" rel="stylesheet">
+    <link href="../../../cinder/css/bootstrap-custom.css" rel="stylesheet">
+    <link href="../../../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../../../cinder/css/cinder.css" rel="stylesheet">
+    <link href="../../../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
+    <link href="../../../cinder/css/highlight.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -264,6 +269,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/feature_importance_permutation/">Feature importance permutation</a>
 </li>
 
         
@@ -957,13 +968,17 @@ for testing purposes.</p>
 </li>
 <li>
 <p><code>legend_loc</code> : str (default: 'best')</p>
-<p _best_="'best'," _lower="'lower" _upper="'upper" left_="left'," right_="right'">Where to place the plot legend:</p>
+<p>Where to place the plot legend:
+{'best', 'upper left', 'upper right', 'lower left', 'lower right'}</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
 <ul>
 <li><code>errors</code> : (training_error, test_error): tuple of lists</li>
-</ul></div>
+</ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/plotting/learning_curves/">http://rasbt.github.io/mlxtend/user_guide/plotting/learning_curves/</a></p></div>
         
     </div>
 

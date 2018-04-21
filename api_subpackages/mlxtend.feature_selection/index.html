@@ -22,7 +22,12 @@
     <link rel="stylesheet" href="../../css/highlight.css">
 
     <!--
-    <link href="../../extra.css" rel="stylesheet">-->
+    <link href="../../cinder/css/base.css" rel="stylesheet">
+    <link href="../../cinder/css/bootstrap-custom.css" rel="stylesheet">
+    <link href="../../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../../cinder/css/cinder.css" rel="stylesheet">
+    <link href="../../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
+    <link href="../../cinder/css/highlight.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -264,6 +269,12 @@
             
 <li >
     <a href="../../user_guide/evaluate/confusion_matrix/">Confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/feature_importance_permutation/">Feature importance permutation</a>
 </li>
 
         
@@ -877,14 +888,31 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.11.0 </p>
+<p>mlxtend version: 0.12.0 </p>
 <h2 id="columnselector">ColumnSelector</h2>
 <p><em>ColumnSelector(cols=None, drop_axis=False)</em></p>
-<p>Base class for all estimators in scikit-learn</p>
-<p><strong>Notes</strong></p>
-<p>All estimators should specify all the parameters that can be set
-at the class level in their <code>__init__</code> as explicit keyword
-arguments (no <code>*args</code> or <code>**kwargs</code>).</p>
+<p>Object for selecting specific columns from a data set.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>cols</code> : array-like (default: None)</p>
+<p>A list specifying the feature indices to be selected. For example,
+[1, 4, 5] to select the 2nd, 5th, and 6th feature columns.
+If None, returns all columns in the array.</p>
+</li>
+<li>
+<p><code>drop_axis</code> : bool (default=False)</p>
+<p>Drops last axis if True and the only one column is selected. This
+is useful, e.g., when the ColumnSelector is used for selecting
+only one column and the resulting array should be fed to e.g.,
+a scikit-learn column selector. E.g., instead of returning an
+array with shape (n_samples, 1), drop_axis=True will return an
+aray with shape (n_samples,).</p>
+</li>
+</ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/feature_selection/ColumnSelector/">http://rasbt.github.io/mlxtend/user_guide/feature_selection/ColumnSelector/</a></p>
 <h3 id="methods">Methods</h3>
 <hr>
 
@@ -1063,10 +1091,13 @@ keys: 'feature_idx' (tuple of indices of the feature subset)
 'avg_score' (average cross-validation score)</p>
 </li>
 </ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/feature_selection/ExhaustiveFeatureSelector/">http://rasbt.github.io/mlxtend/user_guide/feature_selection/ExhaustiveFeatureSelector/</a></p>
 <h3 id="methods_1">Methods</h3>
 <hr>
 
-<p><em>fit(X, y)</em></p>
+<p><em>fit(X, y, </em><em>fit_params)</em></p>
 <p>Perform feature selection and learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1079,6 +1110,10 @@ n_features is the number of features.</p>
 <p><code>y</code> : array-like, shape = [n_samples]</p>
 <p>Target values.</p>
 </li>
+<li>
+<p><code>fit_params</code> : dict of string -&gt; object, optional</p>
+<p>Parameters to pass to to the fit method of classifier.</p>
+</li>
 </ul>
 <p><strong>Returns</strong></p>
 <ul>
@@ -1086,7 +1121,7 @@ n_features is the number of features.</p>
 </ul>
 <hr>
 
-<p><em>fit_transform(X, y)</em></p>
+<p><em>fit_transform(X, y, </em><em>fit_params)</em></p>
 <p>Fit to training data and return the best selected features from X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1094,6 +1129,14 @@ n_features is the number of features.</p>
 <p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
 <p>Training vectors, where n_samples is the number of samples and
 n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>fit_params</code> : dict of string -&gt; object, optional</p>
+<p>Parameters to pass to to the fit method of classifier.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
@@ -1272,10 +1315,13 @@ keys: 'feature_idx' (tuple of indices of the feature subset)
 'avg_score' (average cross-validation score)</p>
 </li>
 </ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/feature_selection/SequentialFeatureSelector/">http://rasbt.github.io/mlxtend/user_guide/feature_selection/SequentialFeatureSelector/</a></p>
 <h3 id="methods_2">Methods</h3>
 <hr>
 
-<p><em>fit(X, y)</em></p>
+<p><em>fit(X, y, </em><em>fit_params)</em></p>
 <p>Perform feature selection and learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1288,6 +1334,10 @@ n_features is the number of features.</p>
 <p><code>y</code> : array-like, shape = [n_samples]</p>
 <p>Target values.</p>
 </li>
+<li>
+<p><code>fit_params</code> : dict of string -&gt; object, optional</p>
+<p>Parameters to pass to to the fit method of classifier.</p>
+</li>
 </ul>
 <p><strong>Returns</strong></p>
 <ul>
@@ -1295,7 +1345,7 @@ n_features is the number of features.</p>
 </ul>
 <hr>
 
-<p><em>fit_transform(X, y)</em></p>
+<p><em>fit_transform(X, y, </em><em>fit_params)</em></p>
 <p>Fit to training data then reduce X to its most important features.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1303,6 +1353,14 @@ n_features is the number of features.</p>
 <p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
 <p>Training vectors, where n_samples is the number of samples and
 n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>fit_params</code> : dict of string -&gt; object, optional</p>
+<p>Parameters to pass to to the fit method of classifier.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>

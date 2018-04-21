@@ -22,7 +22,12 @@
     <link rel="stylesheet" href="../../../css/highlight.css">
 
     <!--
-    <link href="../../../extra.css" rel="stylesheet">-->
+    <link href="../../../cinder/css/base.css" rel="stylesheet">
+    <link href="../../../cinder/css/bootstrap-custom.css" rel="stylesheet">
+    <link href="../../../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../../../cinder/css/cinder.css" rel="stylesheet">
+    <link href="../../../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
+    <link href="../../../cinder/css/highlight.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -264,6 +269,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/feature_importance_permutation/">Feature importance permutation</a>
 </li>
 
         
@@ -908,15 +919,21 @@
 <h2 id="api">API</h2>
 <p><em>tokenizer_emoticons(text)</em></p>
 <p>Return emoticons from text</p>
-<p>Example:
-    &gt;&gt;&gt; tokenizer_emoticons('</a>This :) is :( a test :-)!')
-[':)', ':(', ':-)']</p>
+<p><strong>Examples</strong></p>
+<pre><code>&gt;&gt;&gt; tokenizer_emoticons('&lt;/a&gt;This :) is :( a test :-)!')
+</code></pre>
+<p>[':)', ':(', ':-)']</p>
+<p>For usage examples, please see
+<a href="http://rasbt.github.io/mlxtend/user_guide/text/tokenizer_emoticons/">http://rasbt.github.io/mlxtend/user_guide/text/tokenizer_emoticons/</a></p>
 <p><br><br>
 <em>tokenizer_words_and_emoticons(text)</em></p>
 <p>Convert text to lowercase words and emoticons.</p>
-<p>Example:
-    &gt;&gt;&gt; tokenizer_words_and_emoticons('</a>This :) is :( a test :-)!')
-['this', 'is', 'a', 'test', ':)', ':(', ':-)']</p></div>
+<p><strong>Examples</strong></p>
+<pre><code>&gt;&gt;&gt; tokenizer_words_and_emoticons('&lt;/a&gt;This :) is :( a test :-)!')
+</code></pre>
+<p>['this', 'is', 'a', 'test', ':)', ':(', ':-)']</p>
+<p>For more usage examples, please see
+<a href="http://rasbt.github.io/mlxtend/user_guide/text/tokenizer_words_and_emoticons/">http://rasbt.github.io/mlxtend/user_guide/text/tokenizer_words_and_emoticons/</a></p></div>
         
     </div>
 

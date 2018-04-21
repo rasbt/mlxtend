@@ -22,7 +22,12 @@
     <link rel="stylesheet" href="../../../css/highlight.css">
 
     <!--
-    <link href="../../../extra.css" rel="stylesheet">-->
+    <link href="../../../cinder/css/base.css" rel="stylesheet">
+    <link href="../../../cinder/css/bootstrap-custom.css" rel="stylesheet">
+    <link href="../../../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../../../cinder/css/cinder.css" rel="stylesheet">
+    <link href="../../../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
+    <link href="../../../cinder/css/highlight.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -264,6 +269,12 @@
             
 <li >
     <a href="../confusion_matrix/">Confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../feature_importance_permutation/">Feature importance permutation</a>
 </li>
 
         
@@ -987,11 +998,14 @@ standard error.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
-<pre><code>original, standard_error, (lower_ci, upper_ci)
-Returns the statistic of the original sample (`original`),
+<ul>
+<li>
+<p><code>original, standard_error, (lower_ci, upper_ci)</code> : tuple</p>
+<p>Returns the statistic of the original sample (<code>original</code>),
 the standard error of the estimate, and the
-respective confidence interval bounds.
-</code></pre>
+respective confidence interval bounds.</p>
+</li>
+</ul>
 <p><strong>Examples</strong></p>
 <pre><code>&gt;&gt;&gt; from mlxtend.evaluate import bootstrap
 &gt;&gt;&gt; rng = np.random.RandomState(123)
@@ -1007,7 +1021,9 @@ respective confidence interval bounds.
 ...                                                         ci_bounds[1]))
 Mean: 5.03, SE: +/- 0.11, CI95: [4.80, 5.26]
 &gt;&gt;&gt;
-</code></pre></div>
+</code></pre>
+<p>For more usage examples, please see
+<a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/bootstrap/">http://rasbt.github.io/mlxtend/user_guide/evaluate/bootstrap/</a></p></div>
         
     </div>
 

@@ -22,7 +22,12 @@
     <link rel="stylesheet" href="../../../css/highlight.css">
 
     <!--
-    <link href="../../../extra.css" rel="stylesheet">-->
+    <link href="../../../cinder/css/base.css" rel="stylesheet">
+    <link href="../../../cinder/css/bootstrap-custom.css" rel="stylesheet">
+    <link href="../../../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../../../cinder/css/cinder.css" rel="stylesheet">
+    <link href="../../../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
+    <link href="../../../cinder/css/highlight.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -264,6 +269,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/feature_importance_permutation/">Feature importance permutation</a>
 </li>
 
         
@@ -1181,7 +1192,7 @@ sclf.fit(X, y)
            use_probas=False, verbose=0)
 </code></pre>
 <h1 id="api">API</h1>
-<p><em>StackingCVClassifier(classifiers, meta_classifier, use_probas=False, cv=2, use_features_in_secondary=False, stratify=True, shuffle=True, verbose=0, store_train_meta_features=False, refit=True)</em></p>
+<p><em>StackingCVClassifier(classifiers, meta_classifier, use_probas=False, cv=2, use_features_in_secondary=False, stratify=True, shuffle=True, verbose=0, store_train_meta_features=False, use_clones=True)</em></p>
 <p>A 'Stacking Cross-Validation' classifier for scikit-learn estimators.</p>
 <p>New in mlxtend v0.4.3</p>
 <p><strong>Notes</strong></p>
@@ -1261,10 +1272,13 @@ for fitting the meta-classifier stored in the
 accessed after calling <code>fit</code>.</p>
 </li>
 <li>
-<p><code>refit</code> : bool (default: True)</p>
+<p><code>use_clones</code> : bool (default: True)</p>
 <p>Clones the classifiers for stacking classification if True (default)
 or else uses the original ones, which will be refitted on the dataset
-upon calling the <code>fit</code> method. Setting refit=False is
+upon calling the <code>fit</code> method. Hence, if use_clones=True, the original
+input classifiers will remain unmodified upon using the
+StackingCVClassifier's <code>fit</code> method.
+Setting <code>use_clones=False</code> is
 recommended if you are working with estimators that are supporting
 the scikit-learn fit/predict API interface but are not compatible
 to scikit-learn's <code>clone</code> function.</p>
@@ -1287,6 +1301,9 @@ number of samples
 in training data and n_classifiers is the number of classfiers.</p>
 </li>
 </ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/classifier/StackingCVClassifier/">http://rasbt.github.io/mlxtend/user_guide/classifier/StackingCVClassifier/</a></p>
 <h3 id="methods">Methods</h3>
 <hr>
 

@@ -22,7 +22,12 @@
     <link rel="stylesheet" href="../../../css/highlight.css">
 
     <!--
-    <link href="../../../extra.css" rel="stylesheet">-->
+    <link href="../../../cinder/css/base.css" rel="stylesheet">
+    <link href="../../../cinder/css/bootstrap-custom.css" rel="stylesheet">
+    <link href="../../../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../../../cinder/css/cinder.css" rel="stylesheet">
+    <link href="../../../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
+    <link href="../../../cinder/css/highlight.css" rel="stylesheet">-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -264,6 +269,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/feature_importance_permutation/">Feature importance permutation</a>
 </li>
 
         
@@ -1569,7 +1580,11 @@ possible itemsets lengths (under the apriori condition) are evaluated.</p>
 </ul>
 <p><strong>Returns</strong></p>
 <p>pandas DataFrame with columns ['support', 'itemsets'] of all itemsets
-    that are &gt;= <code>min_support</code> and &lt; than <code>max_len</code> (if <code>max_len</code> is not None).</p></div>
+    that are &gt;= <code>min_support</code> and &lt; than <code>max_len</code>
+    (if <code>max_len</code> is not None).</p>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/">http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/</a></p></div>
         
     </div>
 

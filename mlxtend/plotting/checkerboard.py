@@ -53,6 +53,9 @@ def checkerboard_plot(ary,
     -----------
     fig : matplotlib Figure object.
 
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/plotting/checkerboard_plot/
+
     """
 
     fig, ax = subplots(figsize=figsize)

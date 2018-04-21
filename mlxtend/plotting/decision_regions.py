@@ -17,9 +17,11 @@ from math import ceil
 
 def get_feature_range_mask(X, filler_feature_values=None,
                            filler_feature_ranges=None):
-    '''Function that constucts a boolean array to get rid of samples
+    """
+    Function that constucts a boolean array to get rid of samples
     in X that are outside the feature range specified by filler_feature_values
-    and filler_feature_ranges'''
+    and filler_feature_ranges
+    """
 
     if not isinstance(X, np.ndarray) or not len(X.shape) == 2:
         raise ValueError('X must be a 2D array')
@@ -116,6 +118,9 @@ def plot_decision_regions(X, y, clf,
     Returns
     ---------
     ax : matplotlib.axes.Axes object
+
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/plotting/plot_decision_regions/
 
     """
 

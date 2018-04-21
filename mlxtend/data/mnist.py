@@ -26,6 +26,9 @@ def mnist_data():
         784 pixel feature vectors.
         y contains the 10 unique class labels 0-9.
 
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/data/mnist_data/
+
     """
     tmp = np.genfromtxt(fname=DATA_PATH, delimiter=',')
     X, y = tmp[:, :-1], tmp[:, -1]

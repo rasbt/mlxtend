@@ -92,6 +92,9 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     >>> print(eclf3.predict(X))
     [1 1 1 2 2 2]
     >>>
+
+    For more usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/classifier/EnsembleVoteClassifier/
     """
     def __init__(self, clfs, voting='hard',
                  weights=None, verbose=0, refit=True):

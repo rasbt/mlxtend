@@ -24,6 +24,9 @@ def remove_borders(axes, left=False, bottom=False, right=True, top=True):
     top : bool (default: `True`)
         Hide top axis spine if True.
 
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/plotting/remove_chartjunk/
+
     """
     for ax in axes:
         ax.spines["top"].set_visible(not top)

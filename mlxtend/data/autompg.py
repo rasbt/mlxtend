@@ -39,6 +39,9 @@ def autompg_data():
         and 8 feature columns (6 rows with NaNs removed).
         y is a 1-dimensional array of the target MPG values.
 
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/data/autompg_data/
+
     """
     tmp = np.genfromtxt(fname=DATA_PATH, delimiter=',')
     X, y = tmp[:, :-1], tmp[:, -1]

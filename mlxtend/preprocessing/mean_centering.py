@@ -18,6 +18,10 @@ class MeanCenterer(object):
     col_means : numpy.ndarray [n_columns]
         NumPy array storing the mean values for centering after fitting
         the MeanCenterer object.
+
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/preprocessing/MeanCenterer/
+
     """
     def __init__(self):
         pass

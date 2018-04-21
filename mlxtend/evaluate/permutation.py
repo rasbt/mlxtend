@@ -60,6 +60,9 @@ def permutation_test(x, y, func='x_mean != y_mean', method='exact',
     ----------
     p-value under the null hypothesis
 
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/evaluate/permutation_test/
+
     """
 
     if method not in ('approximate', 'exact'):

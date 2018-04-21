@@ -109,6 +109,9 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         number of samples
         in training data and n_classifiers is the number of classfiers.
 
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/classifier/StackingCVClassifier/
+
     """
     def __init__(self, classifiers, meta_classifier,
                  use_probas=False, cv=2,

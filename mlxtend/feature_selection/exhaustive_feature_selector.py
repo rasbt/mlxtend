@@ -104,6 +104,9 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
               'cv_scores' (list individual cross-validation scores)
               'avg_score' (average cross-validation score)
 
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/feature_selection/ExhaustiveFeatureSelector/
+
     """
     def __init__(self, estimator, min_features=1, max_features=1,
                  print_progress=True, scoring='accuracy',

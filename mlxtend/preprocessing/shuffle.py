@@ -33,6 +33,9 @@ def shuffle_arrays_unison(arrays, random_seed=None):
     >>> assert(X2.all() == np.array([[4, 5, 6], [1, 2, 3], [7, 8, 9]]).all())
     >>> assert(y2.all() == np.array([2, 1, 3]).all())
     >>>
+
+    For more usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/preprocessing/shuffle_arrays_unison/
     """
     if random_seed:
         np.random.seed(random_seed)
@@ -75,6 +78,9 @@ def shuffled_split(X, y, shuffle=True, train_size=0.75, random_seed=None):
     y_test : array-like, shape = [n_samples * (1-train_size)]
          Target values for testing.
 
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/preprocessing/shuffled_split/
+
     """
     check_Xy(X, y, y_int=False)
 
@@ -87,7 +93,6 @@ def shuffled_split(X, y, shuffle=True, train_size=0.75, random_seed=None):
     else:
         X_ary, y_ary = X.copy(), y.copy()
 
-    idx = np.arange(0, y.shape[0])
     train_absize = round(train_size * y.shape[0])
 
     X_train, y_train = X_ary[:train_absize], y_ary[:train_absize]

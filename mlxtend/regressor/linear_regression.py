@@ -50,6 +50,9 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
         Sum of squared errors after each epoch;
         ignored if solver='normal equation'
 
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/regressor/LinearRegression/
+
     """
     def __init__(self, eta=0.01, epochs=50,
                  minibatches=None, random_seed=None,

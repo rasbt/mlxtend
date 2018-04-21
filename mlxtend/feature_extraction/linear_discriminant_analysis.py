@@ -29,6 +29,9 @@ class LinearDiscriminantAnalysis(_BaseModel):
     e_vecs_ : array-like, shape=[n_features]
        Eigenvectors in sorted order.
 
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/feature_extraction/LinearDiscriminantAnalysis/
+
     """
     def __init__(self, n_discriminants=None):
         if n_discriminants is not None and n_discriminants < 1:

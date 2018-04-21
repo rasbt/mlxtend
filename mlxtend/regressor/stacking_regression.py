@@ -70,6 +70,8 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         the scikit-learn fit/predict API interface but are not compatible
         to scikit-learn's `clone` function.
 
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/regressor/StackingRegressor/
 
     """
     def __init__(self, regressors, meta_regressor, verbose=0,

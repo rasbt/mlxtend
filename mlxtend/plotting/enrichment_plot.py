@@ -60,6 +60,9 @@ def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-',
     ----------
     ax : matplotlib axis
 
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/plotting/enrichment_plot/
+
     """
     if isinstance(df, pd.Series):
         df_temp = pd.DataFrame(df)

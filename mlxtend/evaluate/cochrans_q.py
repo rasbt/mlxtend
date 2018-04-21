@@ -30,6 +30,9 @@ def cochrans_q(y_target, *y_model_predictions):
     q, p : float or None, float
         Returns the Q (chi-squared) value and the p-value
 
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/evaluate/cochrans_q/
+
     """
 
     num_models = len(y_model_predictions)

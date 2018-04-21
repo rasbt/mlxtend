@@ -36,6 +36,9 @@ def find_files(substring, path, recursive=False,
     results : `list`
         List of the matched files.
 
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/file_io/find_files/
+
     """
     def check_file(f, path):
         if not (ignore_substring and ignore_substring in f):

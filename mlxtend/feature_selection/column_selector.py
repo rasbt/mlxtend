@@ -31,6 +31,9 @@ class ColumnSelector(BaseEstimator):
             array with shape (n_samples, 1), drop_axis=True will return an
             aray with shape (n_samples,).
 
+        For usage examples, please see
+        http://rasbt.github.io/mlxtend/user_guide/feature_selection/ColumnSelector/
+
         """
         self.cols = cols
         self.drop_axis = drop_axis

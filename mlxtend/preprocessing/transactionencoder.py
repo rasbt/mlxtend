@@ -21,6 +21,9 @@ class TransactionEncoder(BaseEstimator, TransformerMixin):
     columns_: list
       List of unique names in the `X` input list of lists
 
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/preprocessing/TransactionEncoder/
+
     """
     def __init__(self):
         return None

@@ -36,6 +36,9 @@ def iris_data():
         petal length, and petal width.
         y is a 1-dimensional array of the class labels {0, 1, 2}
 
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/data/iris_data/
+
     """
     tmp = np.genfromtxt(fname=DATA_PATH, delimiter=',')
     X, y = tmp[:, :-1], tmp[:, -1]

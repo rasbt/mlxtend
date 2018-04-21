@@ -15,6 +15,10 @@ def tokenizer_words_and_emoticons(text):
     Example:
     >>> tokenizer_words_and_emoticons('</a>This :) is :( a test :-)!')
     ['this', 'is', 'a', 'test', ':)', ':(', ':-)']
+
+    For more usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/text/tokenizer_words_and_emoticons/
+
     """
     text = re.sub('<[^>]*>', '', text)
     emoticons = re.findall('(?::|;|=)(?:-)?(?:\)|\(|D|P)', text)
@@ -28,6 +32,10 @@ def tokenizer_emoticons(text):
     Example:
     >>> tokenizer_emoticons('</a>This :) is :( a test :-)!')
     [':)', ':(', ':-)']
+
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/text/tokenizer_emoticons/
+
     """
     text = re.sub('<[^>]*>', '', text)
     emoticons = re.findall('(?::|;|=)(?:-)?(?:\)|\(|D|P)', text)

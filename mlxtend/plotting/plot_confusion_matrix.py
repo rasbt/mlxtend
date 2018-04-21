@@ -32,6 +32,9 @@ def plot_confusion_matrix(conf_mat,
     fig, ax : matplotlib.pyplot subplot objects
         Figure and axis elements of the subplot.
 
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/plotting/plot_confusion_matrix/
+
     """
     fig, ax = plt.subplots(figsize=figsize)
     if cmap is None:

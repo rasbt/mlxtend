@@ -34,6 +34,12 @@ def generate_new_combinations(old_combinations):
     of item type ids in the ascending order.
     No combination other than generated
     do not have a chance to get enough support
+
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/generate_new_combinations/
+
     """
 
     items_types_in_previous_step = np.unique(old_combinations.flatten())
@@ -82,6 +88,11 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None):
     pandas DataFrame with columns ['support', 'itemsets'] of all itemsets
       that are >= `min_support` and < than `max_len`
       (if `max_len` is not None).
+
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/
 
     """
 

@@ -35,6 +35,11 @@ class RBFKernelPCA(_BaseModel):
     X_projected_ : array-like, shape=[n_samples, n_components]
        Training samples projected along the component axes.
 
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/feature_extraction/RBFKernelPCA/
+
     """
     def __init__(self, gamma=15.0, n_components=None, copy_X=True):
         if n_components is not None and n_components < 1:

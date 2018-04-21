@@ -60,6 +60,11 @@ def make_multiplexer_dataset(address_bits=2, sample_size=100,
         All features are binary (values in {0, 1}).
         y is a 1-dimensional array of class labels in {0, 1}.
 
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/data/make_multiplexer_dataset
+
     """
 
     if not isinstance(address_bits, int):

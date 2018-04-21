@@ -41,6 +41,11 @@ class PrincipalComponentAnalysis(_BaseModel):
        'svd' solver; this does not affect the interpretation
        of the loadings though.
 
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/feature_extraction/PrincipalComponentAnalysis/
+
     """
     def __init__(self, n_components=None, solver='eigen'):
         valid_solver = {'eigen', 'svd'}

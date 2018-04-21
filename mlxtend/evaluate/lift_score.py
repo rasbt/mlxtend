@@ -38,6 +38,11 @@ def lift_score(y_target, y_predicted, binary=True, positive_label=1):
     score : float
         Lift score in the range [0, $\infty$]
 
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/evaluate/lift_score/
+
     """
 
     if not isinstance(y_target, np.ndarray):

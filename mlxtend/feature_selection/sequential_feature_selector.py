@@ -120,6 +120,11 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
               'cv_scores' (list individual cross-validation scores)
               'avg_score' (average cross-validation score)
 
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/feature_selection/SequentialFeatureSelector/
+
     """
     def __init__(self, estimator, k_features=1,
                  forward=True, floating=False,

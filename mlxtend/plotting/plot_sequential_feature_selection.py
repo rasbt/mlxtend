@@ -8,6 +8,7 @@
 
 import matplotlib.pyplot as plt
 
+
 def plot_sequential_feature_selection(metric_dict,
                                       kind='std_dev',
                                       color='blue',
@@ -42,6 +43,11 @@ def plot_sequential_feature_selection(metric_dict,
     Returns
     ----------
     fig : matplotlib.pyplot.figure() object
+
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/plotting/plot_sequential_feature_selection/
 
     """
 

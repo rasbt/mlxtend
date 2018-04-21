@@ -43,6 +43,11 @@ def stacked_barplot(df, bar_width='auto', colors='bgrcky',
     ---------
     fig : matplotlib.pyplot figure object
 
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/plotting/stacked_barplot/
+
     """
     # Setting the positions and width for the bars
     pos = np.array(range(len(df.index)))

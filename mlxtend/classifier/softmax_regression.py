@@ -58,6 +58,11 @@ class SoftmaxRegression(_BaseModel, _IterativeModel, _Classifier,  _MultiClass):
     cost_ : list
         List of floats, the average cross_entropy for each epoch.
 
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/classifier/SoftmaxRegression/
+
     """
     def __init__(self, eta=0.01, epochs=50,
                  l2=0.0,

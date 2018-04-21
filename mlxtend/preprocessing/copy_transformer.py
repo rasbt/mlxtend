@@ -12,7 +12,12 @@ from scipy.sparse import issparse
 
 
 class CopyTransformer(BaseEstimator):
-    """Transformer that returns a copy of the input array"""
+    """Transformer that returns a copy of the input array
+
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/preprocessing/CopyTransformer/
+
+    """
     def __init__(self):
         pass
 

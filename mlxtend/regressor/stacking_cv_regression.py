@@ -89,6 +89,11 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         number of samples
         in training data and len(self.regressors) is the number of regressors.
 
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/regressor/StackingCVRegressor/
+
     """
     def __init__(self, regressors, meta_regressor, cv=5,
                  shuffle=True,

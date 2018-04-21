@@ -41,6 +41,11 @@ def generalize_names(name, output_sep=' ', firstname_output_letters=1):
     gen_name : `str`
         The generalized name.
 
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/text/generalize_names/
+
     """
     # set first and last name positions
     last, first = 'last', 'first'
@@ -111,6 +116,11 @@ def generalize_names_duplcheck(df, col_name):
     df_new : `str`
         New DataFrame object where generalize_names function has
         been applied without duplicates.
+
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/text/generalize_names_duplcheck/
 
     """
     df_new = df.copy()

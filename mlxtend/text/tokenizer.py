@@ -12,9 +12,14 @@ import re
 def tokenizer_words_and_emoticons(text):
     """Convert text to lowercase words and emoticons.
 
-    Example:
+    Examples
+    -----------
     >>> tokenizer_words_and_emoticons('</a>This :) is :( a test :-)!')
     ['this', 'is', 'a', 'test', ':)', ':(', ':-)']
+
+    For more usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/text/tokenizer_words_and_emoticons/
+
     """
     text = re.sub('<[^>]*>', '', text)
     emoticons = re.findall('(?::|;|=)(?:-)?(?:\)|\(|D|P)', text)
@@ -25,9 +30,14 @@ def tokenizer_words_and_emoticons(text):
 def tokenizer_emoticons(text):
     """Return emoticons from text
 
-    Example:
+    Examples
+    -----------
     >>> tokenizer_emoticons('</a>This :) is :( a test :-)!')
     [':)', ':(', ':-)']
+
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/text/tokenizer_emoticons/
+
     """
     text = re.sub('<[^>]*>', '', text)
     emoticons = re.findall('(?::|;|=)(?:-)?(?:\)|\(|D|P)', text)

@@ -48,6 +48,11 @@ def association_rules(df, metric="confidence", min_threshold=0.8):
       of all rules for which
       metric(rule) >= min_threshold.
 
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/
+
     """
 
     # check for mandatory columns

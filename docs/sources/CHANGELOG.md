@@ -35,6 +35,7 @@ The CHANGELOG for the current development version is available at
 
 - Various changes in the documentation and documentation tools to fix formatting issues ([#363](https://github.com/rasbt/mlxtend/pull/363))
 - Fixes a bug where the `StackingCVClassifier`'s meta features were not stored in the original order when `shuffle=True` ([#370](https://github.com/rasbt/mlxtend/pull/370))
+- Many documentation improvements, including links to the User Guides in the API docs ([#371](https://github.com/rasbt/mlxtend/pull/371))
 
 
 

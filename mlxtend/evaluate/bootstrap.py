@@ -48,7 +48,7 @@ def bootstrap(x, func, num_rounds=1000, ci=0.95, ddof=1, seed=None):
     Returns
     -------
 
-    original, standard_error, (lower_ci, upper_ci)
+    original, standard_error, (lower_ci, upper_ci) : tuple
         Returns the statistic of the original sample (`original`),
         the standard error of the estimate, and the
         respective confidence interval bounds.
@@ -70,6 +70,10 @@ def bootstrap(x, func, num_rounds=1000, ci=0.95, ddof=1, seed=None):
     ...                                                         ci_bounds[1]))
     Mean: 5.03, SE: +/- 0.11, CI95: [4.80, 5.26]
     >>>
+
+    For more usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/evaluate/bootstrap/
+
     """
     if ci <= 0 or ci >= 1:
         raise AttributeError('ci must be in range (0, 1)')

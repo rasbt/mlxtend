@@ -45,6 +45,11 @@ def category_scatter(x, y, label_col, data,
     ---------
     fig : matplotlig.pyplot figure object
 
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/plotting/category_scatter/
+
     """
     fig = plt.figure()
     color_gen = cycle(colors)

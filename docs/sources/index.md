@@ -6,11 +6,11 @@
 **Mlxtend (machine learning extensions) is a Python library of useful tools for the day-to-day data science tasks.**
 
 
+[![DOI](http://joss.theoj.org/papers/10.21105/joss.00638/status.svg)](https://doi.org/10.21105/joss.00638)
+[![PyPI version](https://badge.fury.io/py/mlxtend.svg)](http://badge.fury.io/py/mlxtend)
 ![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)
 ![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)
 [![License](https://img.shields.io/badge/license-BSD-blue.svg)](./license)
-[![PyPI version](https://badge.fury.io/py/mlxtend.svg)](http://badge.fury.io/py/mlxtend)
-[![](https://zenodo.org/badge/doi/10.5281/zenodo.594432.svg)](https://zenodo.org/record/594432#.VwWISmNh23c)
 [![Discuss](https://img.shields.io/badge/discuss-google_group-blue.svg)](https://groups.google.com/forum/#!forum/mlxtend)
 
 <hr>

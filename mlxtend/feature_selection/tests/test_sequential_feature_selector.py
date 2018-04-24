@@ -529,7 +529,9 @@ def test_clone_params_fail():
 
                 for idx in self._yield_minibatches_idx(
                         rgen=rgen,
-                        n_batches=y_data.shape[0], data_ary=y_data, shuffle=True):
+                        n_batches=y_data.shape[0],
+                        data_ary=y_data,
+                        shuffle=True):
 
                     update = self.eta * (y_data[idx] -
                                          self._to_classlabels(X[idx]))

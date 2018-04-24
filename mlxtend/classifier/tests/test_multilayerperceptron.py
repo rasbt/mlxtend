@@ -8,6 +8,7 @@ from mlxtend.classifier import MultiLayerPerceptron as MLP
 from mlxtend.data import iris_data
 import numpy as np
 from mlxtend.utils import assert_raises
+from sklearn.base import clone
 
 
 X, y = iris_data()
@@ -170,3 +171,14 @@ def test_retrain():
 
     assert cost_2 == cost_1
     assert cost_3 < (cost_2 / 2.0)
+
+
+def test_clone():
+
+    mlp = MLP(epochs=5,
+              eta=0.05,
+              hidden_layers=[10],
+              minibatches=len(y),
+              random_seed=1)
+
+    clone(mlp)

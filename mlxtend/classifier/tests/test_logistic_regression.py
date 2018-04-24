@@ -9,6 +9,7 @@ import numpy as np
 from mlxtend.classifier import LogisticRegression
 from mlxtend.data import iris_data
 from mlxtend.utils import assert_raises
+from sklearn.base import clone
 
 
 X, y = iris_data()
@@ -192,3 +193,8 @@ def test_ary_persistency_in_shuffling():
                             random_seed=1)
     lr.fit(X, y)
     np.testing.assert_almost_equal(orig, X, 6)
+
+
+def test_clone():
+    log = LogisticRegression()
+    clone(log)

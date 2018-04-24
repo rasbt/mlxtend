@@ -26,7 +26,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Bug Fixes
 
-- -
+- Allow mlxtend estimators to be cloned via scikit-learn's `clone` function. ([#374](https://github.com/rasbt/mlxtend/pull/374))
 
 
 

@@ -17,6 +17,7 @@ from sklearn import datasets
 from mlxtend.utils import assert_raises
 from nose.tools import assert_almost_equal
 from sklearn.model_selection import train_test_split
+from sklearn.base import clone
 
 
 iris = datasets.load_iris()
@@ -320,3 +321,14 @@ def test_predict_meta_features():
     stclf.fit(X_train, y_train)
     test_meta_features = stclf.predict(X_test)
     assert test_meta_features.shape == (X_test.shape[0],)
+
+
+def test_clone():
+
+    knn = KNeighborsClassifier()
+    lr = LogisticRegression()
+    gnb = GaussianNB()
+    stclf = StackingClassifier(classifiers=[knn, gnb],
+                               meta_classifier=lr,
+                               store_train_meta_features=True)
+    clone(stclf)

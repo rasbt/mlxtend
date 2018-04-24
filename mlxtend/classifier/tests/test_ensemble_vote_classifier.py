@@ -13,6 +13,7 @@ import numpy as np
 from sklearn import datasets
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import cross_val_score
+from sklearn.base import clone
 
 
 iris = datasets.load_iris()
@@ -195,3 +196,14 @@ def test_string_labels_refit_false():
 
     eclf.fit(X, y_str)
     assert round(eclf.score(X, y_str), 2) == 0.97
+
+
+def test_clone():
+
+    clf1 = LogisticRegression()
+    clf2 = RandomForestClassifier()
+    clf3 = GaussianNB()
+    eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
+                                  voting='hard',
+                                  refit=False)
+    clone(eclf)

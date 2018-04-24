@@ -9,6 +9,7 @@ import numpy as np
 from mlxtend.classifier import Perceptron
 from mlxtend.data import iris_data
 from mlxtend.utils import assert_raises
+from sklearn.base import clone
 
 # Iris Data
 X, y = iris_data()
@@ -85,3 +86,8 @@ def test_nonstandardized_iris_data():
     ppn = Perceptron(epochs=100, eta=0.01, random_seed=1)
     ppn = ppn.fit(X, y0)
     assert (y0 == ppn.predict(X)).all()
+
+
+def test_clone():
+    ppn = Perceptron()
+    clone(ppn)

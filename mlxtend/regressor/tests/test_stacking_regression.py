@@ -15,7 +15,7 @@ from sklearn.model_selection import train_test_split
 import numpy as np
 from numpy.testing import assert_almost_equal
 from nose.tools import raises
-
+from sklearn.base import clone
 
 
 # Generating a sample dataset
@@ -233,3 +233,13 @@ def test_not_fitted_predict():
                   expect,
                   stregr.predict_meta_features,
                   X_train)
+
+
+def test_clone():
+    lr = LinearRegression()
+    svr_rbf = SVR(kernel='rbf')
+    ridge = Ridge(random_state=1)
+    stregr = StackingRegressor(regressors=[lr, ridge],
+                               meta_regressor=svr_rbf,
+                               store_train_meta_features=True)
+    clone(stregr)

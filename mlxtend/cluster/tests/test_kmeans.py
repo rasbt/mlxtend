@@ -8,6 +8,7 @@ from mlxtend.data import three_blobs_data
 from mlxtend.cluster import Kmeans
 from mlxtend.utils import assert_raises
 import numpy as np
+from sklearn.base import clone
 
 
 X, y = three_blobs_data()
@@ -106,3 +107,8 @@ def test_continue_training():
     km.fit(X, init_params=False)
     np.testing.assert_almost_equal(second_iter, km.centroids_, decimal=2)
     assert km.iterations_ == 2, km.iterations_
+
+
+def test_clone():
+    km = Kmeans(k=2)
+    clone(km)

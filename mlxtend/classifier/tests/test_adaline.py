@@ -9,6 +9,7 @@ import numpy as np
 from mlxtend.classifier import Adaline
 from mlxtend.data import iris_data
 from mlxtend.utils import assert_raises
+from sklearn.base import clone
 
 
 # Iris Data
@@ -147,3 +148,8 @@ def test_ary_persistency_in_shuffling():
                   random_seed=1)
     ada.fit(X_std, y1)
     np.testing.assert_almost_equal(orig, X_std, 6)
+
+
+def test_clone():
+    ada = Adaline()
+    clone(ada)

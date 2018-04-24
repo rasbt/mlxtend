@@ -8,7 +8,11 @@
 
 from time import time
 from collections import defaultdict
-from inspect import signature
+
+try:
+    from inspect import signature
+except ImportError:
+    from .. import signature_py27 as signature
 
 
 class _BaseModel(object):

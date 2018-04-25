@@ -12,7 +12,7 @@ from collections import defaultdict
 try:
     from inspect import signature
 except ImportError:
-    from .. import signature_py27 as signature
+    from ..externals.signature_py27 import signature
 
 
 class _BaseModel(object):

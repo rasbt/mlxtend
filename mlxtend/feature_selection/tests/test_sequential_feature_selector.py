@@ -557,16 +557,18 @@ def test_clone_params_fail():
             return np.where(self._net_input(X) < 0.0, 0, 1)
 
     if sys.version_info >= (3, 0):
+        object_ = ("'<class 'test_sequential_feature_selector."
+                   "test_clone_params_fail.<locals>.Perceptron'>'")
         objtype = 'class'
     else:
         objtype = 'type'
+        object_ = ("'<class 'test_sequential_feature_selector.Perceptron'>'")
 
     expect = ("Cannot clone object"
-              " '<class 'test_sequential_feature_selector."
-              "test_clone_params_fail.<locals>.Perceptron'>'"
+              " %s"
               " (type <%s 'type'>): it does not seem to be a"
               " scikit-learn estimator as it does not"
-              " implement a 'get_params' methods.") % objtype
+              " implement a 'get_params' methods.") % (object_, objtype)
 
     assert_raises(TypeError,
                   expect,

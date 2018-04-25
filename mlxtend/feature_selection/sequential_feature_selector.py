@@ -140,10 +140,6 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.pre_dispatch = pre_dispatch
         self.cv = cv
         self.n_jobs = n_jobs
-        self.named_est = {key: value for key, value in
-                          _name_estimators([self.estimator])}
-        self.cv = cv
-        self.n_jobs = n_jobs
         self.verbose = verbose
         self.named_est = {key: value for key, value in
                           _name_estimators([self.estimator])}
@@ -407,7 +403,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.fitted = True
         return self
 
-    def _inclusion(self, orig_set, subset, X, y, ignore_feature=None, **fit_params):
+    def _inclusion(self, orig_set, subset, X, y, ignore_feature=None,
+                   **fit_params):
         all_avg_scores = []
         all_cv_scores = []
         all_subsets = []
@@ -419,7 +416,9 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
                                 pre_dispatch=self.pre_dispatch)
             work = parallel(delayed(_calc_score)
-                            (self, X, y, tuple(subset | {feature}), **fit_params)
+                            (self, X, y,
+                             tuple(subset | {feature}),
+                             **fit_params)
                             for feature in remaining
                             if feature != ignore_feature)
 

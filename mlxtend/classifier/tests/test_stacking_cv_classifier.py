@@ -20,6 +20,8 @@ from sklearn.model_selection import KFold
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score
+from sklearn.base import clone
+
 
 iris = datasets.load_iris()
 X_iris, y_iris = iris.data[:, 1:3], iris.target
@@ -348,3 +350,13 @@ def test_meta_feat_reordering():
 
     assert round(roc_auc_score(y_train,
                  stclf.train_meta_features_[:, 1]), 2) == 0.88
+
+
+def test_clone():
+    knn = KNeighborsClassifier()
+    lr = LogisticRegression()
+    gnb = GaussianNB()
+    stclf = StackingCVClassifier(classifiers=[knn, gnb],
+                                 meta_classifier=lr,
+                                 store_train_meta_features=True)
+    clone(stclf)

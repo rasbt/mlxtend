@@ -9,6 +9,7 @@ from mlxtend.regressor import LinearRegression
 from mlxtend.data import boston_housing_data
 import numpy as np
 from numpy.testing import assert_almost_equal
+from sklearn.base import clone
 
 X, y = boston_housing_data()
 X_rm = X[:, 5][:, np.newaxis]
@@ -131,3 +132,8 @@ def test_ary_persistency_in_shuffling():
                               random_seed=0)
     sgd_lr.fit(X_rm_lstat_std, y_std)
     np.testing.assert_almost_equal(orig, X_rm_lstat_std, 6)
+
+
+def test_clone():
+    regr = LinearRegression()
+    clone(regr)

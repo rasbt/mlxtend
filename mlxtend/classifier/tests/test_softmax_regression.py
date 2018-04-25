@@ -8,6 +8,7 @@ import numpy as np
 from mlxtend.classifier import SoftmaxRegression
 from mlxtend.data import iris_data
 from mlxtend.utils import assert_raises
+from sklearn.base import clone
 
 
 X, y = iris_data()
@@ -166,3 +167,8 @@ def test_score_function():
     lr.fit(X, y)
     acc = lr.score(X, y)
     assert acc == 1.0, acc
+
+
+def test_clone():
+    lr = SoftmaxRegression()
+    clone(lr)

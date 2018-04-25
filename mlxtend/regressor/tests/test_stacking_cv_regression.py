@@ -15,6 +15,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import Ridge
 from sklearn.svm import SVR
 from sklearn.model_selection import GridSearchCV, train_test_split
+from sklearn.base import clone
 
 
 # Some test data
@@ -192,3 +193,13 @@ def test_not_fitted_predict():
                   expect,
                   stregr.predict_meta_features,
                   X_train)
+
+
+def test_clone():
+    lr = LinearRegression()
+    svr_rbf = SVR(kernel='rbf')
+    ridge = Ridge(random_state=1)
+    stregr = StackingCVRegressor(regressors=[lr, ridge],
+                                 meta_regressor=svr_rbf,
+                                 store_train_meta_features=True)
+    clone(stregr)

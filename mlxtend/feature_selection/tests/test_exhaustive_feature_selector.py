@@ -15,7 +15,6 @@ from sklearn.datasets import load_iris
 from sklearn.linear_model import LinearRegression
 from sklearn.datasets import load_boston
 from mlxtend.utils import assert_raises
-from mlxtend.classifier import SoftmaxRegression
 
 
 def dict_compare_utility(d1, d2):
@@ -215,26 +214,78 @@ def test_regression():
 
 
 def test_clone_params_fail():
-    iris = load_iris()
-    X = iris.data
-    y = iris.target
+    class Perceptron(object):
+
+        def __init__(self, eta=0.1, epochs=50, random_seed=None,
+                     print_progress=0):
+
+            self.eta = eta
+            self.epochs = epochs
+            self.random_seed = random_seed
+            self.print_progress = print_progress
+            self._is_fitted = False
+
+        def _fit(self, X, y, init_params=True):
+            self._check_target_array(y, allowed={(0, 1)})
+            y_data = np.where(y == 0, -1., 1.)
+
+            if init_params:
+                self.b_, self.w_ = self._init_params(
+                    weights_shape=(X.shape[1], 1),
+                    bias_shape=(1,),
+                    random_seed=self.random_seed)
+                self.cost_ = []
+
+            rgen = np.random.RandomState(self.random_seed)
+            for i in range(self.epochs):
+                errors = 0
+
+                for idx in self._yield_minibatches_idx(
+                        rgen=rgen,
+                        n_batches=y_data.shape[0],
+                        data_ary=y_data, shuffle=True):
+
+                    update = self.eta * (y_data[idx] -
+                                         self._to_classlabels(X[idx]))
+                    self.w_ += (update * X[idx]).reshape(self.w_.shape)
+                    self.b_ += update
+                    errors += int(update != 0.0)
+
+                if self.print_progress:
+                    self._print_progress(iteration=i + 1,
+                                         n_iter=self.epochs,
+                                         cost=errors)
+                self.cost_.append(errors)
+            return self
+
+        def _net_input(self, X):
+            """ Net input function """
+            return (np.dot(X, self.w_) + self.b_).flatten()
+
+        def _to_classlabels(self, X):
+            return np.where(self._net_input(X) < 0.0, -1., 1.)
+
+        def _predict(self, X):
+            return np.where(self._net_input(X) < 0.0, 0, 1)
 
     if sys.version_info >= (3, 0):
+        object_ = ("'<class 'test_exhaustive_feature_selector."
+                   "test_clone_params_fail.<locals>.Perceptron'>'")
         objtype = 'class'
     else:
         objtype = 'type'
+        object_ = ("'<class 'test_exhaustive_feature_selector.Perceptron'>'")
 
     expect = ("Cannot clone object"
-              " '<class 'mlxtend.classifier."
-              "softmax_regression.SoftmaxRegression'>'"
+              " %s"
               " (type <%s 'type'>): it does not seem to be a"
               " scikit-learn estimator as it does not"
-              " implement a 'get_params' methods.") % objtype
+              " implement a 'get_params' methods.") % (object_, objtype)
 
     assert_raises(TypeError,
                   expect,
                   EFS,
-                  SoftmaxRegression,
+                  Perceptron,
                   min_features=2,
                   max_features=2,
                   clone_estimator=True)
@@ -260,7 +311,6 @@ def test_clone_params_pass():
 def test_transform_not_fitted():
     iris = load_iris()
     X = iris.data
-    y = iris.target
     knn = KNeighborsClassifier(n_neighbors=4)
 
     efs1 = EFS(knn,
@@ -300,9 +350,6 @@ def test_fit_transform():
 
 
 def test_get_metric_dict_not_fitted():
-    iris = load_iris()
-    X = iris.data
-    y = iris.target
     knn = KNeighborsClassifier(n_neighbors=4)
 
     efs1 = EFS(knn,

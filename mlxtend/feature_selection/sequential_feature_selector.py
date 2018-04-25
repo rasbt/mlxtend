@@ -140,10 +140,6 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.pre_dispatch = pre_dispatch
         self.cv = cv
         self.n_jobs = n_jobs
-        self.named_est = {key: value for key, value in
-                          _name_estimators([self.estimator])}
-        self.cv = cv
-        self.n_jobs = n_jobs
         self.verbose = verbose
         self.named_est = {key: value for key, value in
                           _name_estimators([self.estimator])}

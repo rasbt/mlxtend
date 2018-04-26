@@ -638,6 +638,31 @@ def test_get_metric_dict_not_fitted():
                   sfs1.get_metric_dict)
 
 
+def test_cv_generator_raises():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=4)
+
+    groups = np.arange(len(y)) // 50
+    cv_gen = GroupKFold(n_splits=3).split(X, y, groups)
+
+    expect = ('Input cv is a generator object, which is not supported. '
+              'Instead please input an iterable yielding train, test splits. '
+              'This can usually be done by passing a cross-validation '
+              'generator to the built-in list function. I.e. '
+              'cv=list(<cv-generator>)')
+
+    assert_raises(TypeError,
+                  expect,
+                  SFS,
+                  knn,
+                  k_features=2,
+                  cv=cv_gen,
+                  verbose=0,
+                  n_jobs=1)
+
+
 def test_keyboard_interrupt():
     iris = load_iris()
     X = iris.data

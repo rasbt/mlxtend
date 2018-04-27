@@ -16,7 +16,7 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
--  -
+- A meaningful error message is now raised when a cross-validation generator is used with `SequentialFeatureSelector` ([#377](https://github.com/rasbt/mlxtend/pull/377))
 
 
 ##### Changes

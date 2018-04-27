@@ -7,6 +7,7 @@
 # License: BSD 3 clause
 
 import datetime
+import types
 import numpy as np
 import scipy as sp
 import scipy.stats
@@ -79,11 +80,10 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
         for more information.
     cv : int (default: 5)
-        Scikit-learn cross-validation generator or `int`.
-        If estimator is a classifier (or y consists of integer class labels),
-        stratified k-fold is performed, and regular k-fold cross-validation
-        otherwise.
-        No cross-validation if cv is None, False, or 0.
+        Integer or iterable yielding train, test splits. If cv is an integer
+        and `estimator` is a classifier (or y consists of integer class
+        labels) stratified k-fold. Otherwise regular k-fold cross-validation
+        is performed. No cross-validation if cv is None, False, or 0.
     n_jobs : int (default: 1)
         The number of CPUs to use for evaluating different feature subsets
         in parallel. -1 means 'all CPUs'.
@@ -138,6 +138,15 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.forward = forward
         self.floating = floating
         self.pre_dispatch = pre_dispatch
+        # Want to raise meaningful error message if a
+        # cross-validation generator is inputted
+        if isinstance(cv, types.GeneratorType):
+            err_msg = ('Input cv is a generator object, which is not '
+                       'supported. Instead please input an iterable yielding '
+                       'train, test splits. This can usually be done by '
+                       'passing a cross-validation generator to the '
+                       'built-in list function. I.e. cv=list(<cv-generator>)')
+            raise TypeError(err_msg)
         self.cv = cv
         self.n_jobs = n_jobs
         self.verbose = verbose

@@ -74,7 +74,12 @@ class ColumnSelector(BaseEstimator):
             Subset of the feature space where k_features <= n_features
 
         """
-        t = X[:, self.cols]
+
+        # We use the loc accessor if the input is a pandas dataframe
+        if hasattr(X, 'loc'):
+            t = X.loc[:, self.cols].values
+        else:
+            t = X[:, self.cols]
 
         if t.shape[-1] == 1 and self.drop_axis:
             t = t.reshape(-1)

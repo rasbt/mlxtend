@@ -7,9 +7,10 @@
 # License: BSD 3 clause
 
 import numpy as np
+import pandas as pd
 from mlxtend.feature_selection import ColumnSelector
-from sklearn.linear_model import LogisticRegression
-from sklearn.datasets import load_iris
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn import datasets
 from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import GridSearchCV
 
@@ -36,7 +37,7 @@ def test_ColumnSelector_drop_axis():
 
 
 def test_ColumnSelector_in_gridsearch():
-    iris = load_iris()
+    iris = datasets.load_iris()
     X, y = iris.data, iris.target
     pipe = make_pipeline(ColumnSelector(),
                          LogisticRegression())
@@ -51,3 +52,51 @@ def test_ColumnSelector_in_gridsearch():
 
     gsearch1.fit(X, y)
     assert gsearch1.best_params_['columnselector__cols'] == [1, 2, 3]
+
+
+def test_ColumnSelector_with_dataframe():
+    boston = datasets.load_boston()
+    df_in = pd.DataFrame(boston.data, columns=boston.feature_names)
+    df_out = ColumnSelector(cols=('ZN', 'CRIM')).transform(df_in)
+    assert df_out.shape == (506, 2)
+
+
+def test_ColumnSelector_with_dataframe_drop_axis():
+    boston = datasets.load_boston()
+    df_in = pd.DataFrame(boston.data, columns=boston.feature_names)
+    X1_out = ColumnSelector(cols='ZN', drop_axis=True).transform(df_in)
+    assert X1_out.shape == (506,)
+
+    X1_out = ColumnSelector(cols=('ZN',), drop_axis=True).transform(df_in)
+    assert X1_out.shape == (506,)
+
+    X1_out = ColumnSelector(cols='ZN').transform(df_in)
+    assert X1_out.shape == (506, 1)
+
+    X1_out = ColumnSelector(cols=('ZN',)).transform(df_in)
+    assert X1_out.shape == (506, 1)
+
+
+def test_ColumnSelector_with_dataframe_in_gridsearch():
+    boston = datasets.load_boston()
+    X = pd.DataFrame(boston.data, columns=boston.feature_names)
+    y = boston.target
+    pipe = make_pipeline(ColumnSelector(),
+                         LinearRegression())
+    grid = {'columnselector__cols': [
+            ['ZN', 'RM'],
+            ['ZN', 'RM', 'AGE'],
+            'ZN', ['RM']
+            ],
+            'linearregression__copy_X': [True, False],
+            'linearregression__fit_intercept': [True, False]
+            }
+    gsearch1 = GridSearchCV(estimator=pipe,
+                            param_grid=grid,
+                            cv=5,
+                            n_jobs=1,
+                            scoring='neg_mean_squared_error',
+                            refit=False)
+
+    gsearch1.fit(X, y)
+    assert gsearch1.best_params_['columnselector__cols'] == ['ZN', 'RM', 'AGE']

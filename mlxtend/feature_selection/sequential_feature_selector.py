@@ -38,6 +38,23 @@ def _calc_score(selector, X, y, indices, **fit_params):
     return indices, scores
 
 
+def _get_featurenames(subsets_dict, feature_idx, X):
+    feature_names = None
+    if not hasattr(X, 'loc'):
+        if feature_idx is not None:
+            feature_names = tuple(str(i) for i in feature_idx)
+        return subsets_dict, feature_names
+
+    subsets_dict_ = deepcopy(subsets_dict)
+    for key in subsets_dict_:
+        new_tuple = tuple((X.columns[feature_idx]
+                          for feature_idx in subsets_dict[key]['feature_idx']))
+        subsets_dict_[key]['feature_names'] = new_tuple
+    if feature_idx is not None:
+        feature_names = tuple((X.columns[i] for i in feature_idx))
+    return subsets_dict_, feature_names
+
+
 class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
     """Sequential Feature Selection for Classification and Regression.
@@ -198,14 +215,28 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self : object
 
         """
+
+        # reset from a potential previous fit run
+        self.subsets_ = {}
+        self.fitted = False
+        self.interrupted_ = False
+        self.k_feature_idx_ = None
+        self.k_feature_names_ = None
+        self.k_score_ = None
+
+        if hasattr(X, 'loc'):
+            X_ = X.values
+        else:
+            X_ = X
+
         if not isinstance(self.k_features, int) and\
                 not isinstance(self.k_features, tuple)\
                 and not isinstance(self.k_features, str):
                 raise AttributeError('k_features must be a positive integer'
                                      ', tuple, or string')
 
-        if isinstance(self.k_features, int) and (self.k_features < 1 or
-                                                 self.k_features > X.shape[1]):
+        if (isinstance(self.k_features, int) and (
+                self.k_features < 1 or self.k_features > X_.shape[1])):
             raise AttributeError('k_features must be a positive integer'
                                  ' between 1 and X.shape[1], got %s'
                                  % (self.k_features, ))
@@ -215,11 +246,11 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 raise AttributeError('k_features tuple must consist of 2'
                                      ' elements a min and a max value.')
 
-            if self.k_features[0] not in range(1, X.shape[1] + 1):
+            if self.k_features[0] not in range(1, X_.shape[1] + 1):
                 raise AttributeError('k_features tuple min value must be in'
                                      ' range(1, X.shape[1]+1).')
 
-            if self.k_features[1] not in range(1, X.shape[1] + 1):
+            if self.k_features[1] not in range(1, X_.shape[1] + 1):
                 raise AttributeError('k_features tuple max value must be in'
                                      ' range(1, X.shape[1]+1).')
 
@@ -238,7 +269,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                                          'it must be "best" or "parsimonious"')
                 else:
                     min_k = 1
-                    max_k = X.shape[1]
+                    max_k = X_.shape[1]
             else:
                 min_k = self.k_features[0]
                 max_k = self.k_features[1]
@@ -248,8 +279,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             k_to_select = self.k_features
 
         self.subsets_ = {}
-        orig_set = set(range(X.shape[1]))
-        n_features = X.shape[1]
+        orig_set = set(range(X_.shape[1]))
+        n_features = X_.shape[1]
 
         if self.forward:
             if select_in_range:
@@ -259,9 +290,9 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         else:
             if select_in_range:
                 k_to_select = min_k
-            k_idx = tuple(range(X.shape[1]))
+            k_idx = tuple(range(X_.shape[1]))
             k = len(k_idx)
-            k_idx, k_score = _calc_score(self, X, y, k_idx, **fit_params)
+            k_idx, k_score = _calc_score(self, X_, y, k_idx, **fit_params)
             self.subsets_[k] = {
                 'feature_idx': k_idx,
                 'cv_scores': k_score,
@@ -278,7 +309,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                     k_idx, k_score, cv_scores = self._inclusion(
                         orig_set=orig_set,
                         subset=prev_subset,
-                        X=X,
+                        X=X_,
                         y=y,
                         **fit_params
                     )
@@ -375,6 +406,9 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                     ))
 
                 if self._TESTING_INTERRUPT_MODE:
+                    self.subsets_, self.k_feature_names_ = \
+                        _get_featurenames(self.subsets_,
+                                          self.k_feature_idx_, X)
                     raise KeyboardInterrupt
 
         except KeyboardInterrupt as e:
@@ -408,8 +442,10 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
         self.k_feature_idx_ = k_idx
         self.k_score_ = k_score
-        self.subsets_plus_ = dict()
         self.fitted = True
+        self.subsets_, self.k_feature_names_ = \
+            _get_featurenames(self.subsets_,
+                              self.k_feature_idx_, X)
         return self
 
     def _inclusion(self, orig_set, subset, X, y, ignore_feature=None,
@@ -484,7 +520,11 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
         """
         self._check_fitted()
-        return X[:, self.k_feature_idx_]
+        if hasattr(X, 'loc'):
+            X_ = X.values
+        else:
+            X_ = X
+        return X_[:, self.k_feature_idx_]
 
     def fit_transform(self, X, y, **fit_params):
         """Fit to training data then reduce X to its most important features.

@@ -16,9 +16,11 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
-- A meaningful error message is now raised when a cross-validation generator is used with `SequentialFeatureSelector` ([#377](https://github.com/rasbt/mlxtend/pull/377))
+- A meaningful error message is now raised when a cross-validation generator is used with `SequentialFeatureSelector`. ([#377](https://github.com/rasbt/mlxtend/pull/377))
+- The `SequentialFeatureSelector` now accepts custom feature names via the `fit` method for more interpretable feature subset reports. ([#379](https://github.com/rasbt/mlxtend/pull/379))
+- The `SequentialFeatureSelector` is now also compatible with Pandas DataFrames and uses DataFrame column-names for more interpretable feature subset reports. ([#379](https://github.com/rasbt/mlxtend/pull/379))
+- `ColumnSelector` now works with Pandas DataFrames columns. ([#378](https://github.com/rasbt/mlxtend/pull/378) by [Manuel Garrido](https://github.com/manugarri))
 
-- ColumnSelector now works with Pandas dataframes columns
 
 ##### Changes
 

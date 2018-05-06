@@ -20,9 +20,12 @@ from mlxtend.utils import assert_raises
 def dict_compare_utility(d1, d2):
     assert d1.keys() == d2.keys(), "%s != %s" % (d1, d2)
     for i in d1:
-        err_msg = ("d1[%s]['feature_idx']"
-                   " != d2[%s]['feature_idx']" % (i, i))
-        assert d1[i]['feature_idx'] == d1[i]["feature_idx"], err_msg
+        err_msg1 = ("d1[%s]['feature_idx']"
+                    " != d2[%s]['feature_idx']" % (i, i))
+        err_msg2 = ("d1[%s]['feature_names']"
+                    " != d2[%s]['feature_names']" % (i, i))
+        assert d1[i]['feature_idx'] == d2[i]["feature_idx"], err_msg1
+        assert d1[i]['feature_names'] == d2[i]["feature_names"], err_msg2
         assert_almost_equal(d1[i]['avg_score'],
                             d2[i]['avg_score'],
                             decimal=3,
@@ -99,33 +102,43 @@ def test_knn_wo_cv():
                print_progress=False)
     efs1 = efs1.fit(X, y)
     expect = {0: {'feature_idx': (0, 1),
+                  'feature_names': ('0', '1'),
                   'avg_score': 0.82666666666666666,
                   'cv_scores': np.array([0.82666667])},
               1: {'feature_idx': (0, 2),
+                  'feature_names': ('0', '2'),
                   'avg_score': 0.95999999999999996,
                   'cv_scores': np.array([0.96])},
               2: {'feature_idx': (0, 3),
+                  'feature_names': ('0', '3'),
                   'avg_score': 0.96666666666666667,
                   'cv_scores': np.array([0.96666667])},
               3: {'feature_idx': (1, 2),
+                  'feature_names': ('1', '2'),
                   'avg_score': 0.95999999999999996,
                   'cv_scores': np.array([0.96])},
               4: {'feature_idx': (1, 3),
+                  'feature_names': ('1', '3'),
                   'avg_score': 0.95999999999999996,
                   'cv_scores': np.array([0.96])},
               5: {'feature_idx': (2, 3),
+                  'feature_names': ('2', '3'),
                   'avg_score': 0.97333333333333338,
                   'cv_scores': np.array([0.97333333])},
               6: {'feature_idx': (0, 1, 2),
+                  'feature_names': ('0', '1', '2'),
                   'avg_score': 0.95999999999999996,
                   'cv_scores': np.array([0.96])},
               7: {'feature_idx': (0, 1, 3),
+                  'feature_names': ('0', '1', '3'),
                   'avg_score': 0.96666666666666667,
                   'cv_scores': np.array([0.96666667])},
               8: {'feature_idx': (0, 2, 3),
+                  'feature_names': ('0', '2', '3'),
                   'avg_score': 0.96666666666666667,
                   'cv_scores': np.array([0.96666667])},
               9: {'feature_idx': (1, 2, 3),
+                  'feature_names': ('1', '2', '3'),
                   'avg_score': 0.97333333333333338,
                   'cv_scores': np.array([0.97333333])}}
     dict_compare_utility(d1=expect, d2=efs1.subsets_)
@@ -145,23 +158,27 @@ def test_knn_cv3():
     efs1 = efs1.fit(X, y)
     expect = {0: {'avg_score': 0.9391025641025641,
                   'feature_idx': (0, 1, 2),
+                  'feature_names': ('0', '1', '2'),
                   'cv_scores': np.array([0.97435897, 0.94871795,
                                          0.88888889, 0.94444444])},
               1: {'avg_score': 0.94017094017094016,
                   'feature_idx': (0, 1, 3),
+                  'feature_names': ('0', '1', '3'),
                   'cv_scores': np.array([0.92307692, 0.94871795,
                                          0.91666667, 0.97222222])},
               2: {'avg_score': 0.95299145299145294,
                   'feature_idx': (0, 2, 3),
+                  'feature_names': ('0', '2', '3'),
                   'cv_scores': np.array([0.97435897, 0.94871795,
                                          0.91666667, 0.97222222])},
               3: {'avg_score': 0.97275641025641035,
                   'feature_idx': (1, 2, 3),
+                  'feature_names': ('1', '2', '3'),
                   'cv_scores': np.array([0.97435897, 1.,
                                          0.94444444, 0.97222222])}}
     dict_compare_utility(d1=expect, d2=efs1.subsets_)
-    assert efs1.best_idx_ == (1, 2, 3)
-    assert round(efs1.best_score_, 4) == 0.9728
+    assert efs1.k_feature_idx_ == (1, 2, 3)
+    assert round(efs1.k_score_, 4) == 0.9728
 
 
 def test_fit_params():
@@ -178,24 +195,28 @@ def test_fit_params():
                print_progress=False)
     efs1 = efs1.fit(X, y, sample_weight=sample_weight)
     expect = {0: {'feature_idx': (0, 1, 2),
+                  'feature_names': ('0', '1', '2'),
                   'cv_scores': np.array([0.94871795, 0.92307692,
                                          0.91666667, 0.97222222]),
                   'avg_score': 0.9401709401709402},
               1: {'feature_idx': (0, 1, 3),
+                  'feature_names': ('0', '1', '3'),
                   'cv_scores': np.array([0.92307692, 0.92307692,
                                          0.88888889, 1.]),
                   'avg_score': 0.9337606837606838},
               2: {'feature_idx': (0, 2, 3),
+                  'feature_names': ('0', '2', '3'),
                   'cv_scores': np.array([0.97435897, 0.94871795,
                                          0.94444444, 0.97222222]),
                   'avg_score': 0.9599358974358974},
               3: {'feature_idx': (1, 2, 3),
+                  'feature_names': ('1', '2', '3'),
                   'cv_scores': np.array([0.97435897, 0.94871795,
                                          0.91666667, 1.]),
                   'avg_score': 0.9599358974358974}}
     dict_compare_utility(d1=expect, d2=efs1.subsets_)
-    assert efs1.best_idx_ == (0, 2, 3)
-    assert round(efs1.best_score_, 4) == 0.9599
+    assert efs1.k_feature_idx_ == (0, 2, 3)
+    assert round(efs1.k_score_, 4) == 0.9599
 
 
 def test_regression():
@@ -209,8 +230,8 @@ def test_regression():
                 cv=10,
                 print_progress=False)
     efs_r = efs_r.fit(X, y)
-    assert efs_r.best_idx_ == (0, 2, 4)
-    assert round(efs_r.best_score_, 4) == -40.8777
+    assert efs_r.k_feature_idx_ == (0, 2, 4)
+    assert round(efs_r.k_score_, 4) == -40.8777
 
 
 def test_clone_params_fail():
@@ -305,7 +326,7 @@ def test_clone_params_pass():
                print_progress=False,
                n_jobs=1)
     efs1 = efs1.fit(X, y)
-    assert(efs1.best_idx_ == (1, 3))
+    assert(efs1.k_feature_idx_ == (1, 3))
 
 
 def test_transform_not_fitted():

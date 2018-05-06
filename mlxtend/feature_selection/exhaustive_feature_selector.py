@@ -40,6 +40,32 @@ def _calc_score(selector, X, y, indices, **fit_params):
     return indices, scores
 
 
+def _get_featurenames(subsets_dict, feature_idx, custom_feature_names, X):
+    feature_names = None
+    if feature_idx is not None:
+        if custom_feature_names is not None:
+            feature_names = tuple((custom_feature_names[i]
+                                   for i in feature_idx))
+        elif hasattr(X, 'loc'):
+            feature_names = tuple((X.columns[i] for i in feature_idx))
+        else:
+            feature_names = tuple(str(i) for i in feature_idx)
+
+    subsets_dict_ = deepcopy(subsets_dict)
+    for key in subsets_dict_:
+        if custom_feature_names is not None:
+            new_tuple = tuple((custom_feature_names[i]
+                               for i in subsets_dict[key]['feature_idx']))
+        elif hasattr(X, 'loc'):
+            new_tuple = tuple((X.columns[i]
+                               for i in subsets_dict[key]['feature_idx']))
+        else:
+            new_tuple = tuple(str(i) for i in subsets_dict[key]['feature_idx'])
+        subsets_dict_[key]['feature_names'] = new_tuple
+
+    return subsets_dict_, feature_names
+
+
 class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
     """Exhaustive Feature Selection for Classification and Regression.
@@ -91,9 +117,15 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
     Attributes
     ----------
-    best_idx_ : array-like, shape = [n_predictions]
+    k_feature_idx_ : array-like, shape = [n_predictions]
         Feature Indices of the selected feature subsets.
-    best_score_ : float
+    k_feature_names_ : array-like, shape = [n_predictions]
+        Feature names of the selected feature subsets. If pandas
+        DataFrames are used in the `fit` method, the feature
+        names correspond to the column names. Otherwise, the
+        feature names are string representation of the feature
+        array indices. New in v 0.13.0.
+    k_score_ : float
         Cross validation average score of the selected subset.
     subsets_ : dict
         A dictionary of selected feature subsets during the
@@ -101,8 +133,14 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         the lengths k of these feature subsets. The dictionary
         values are dictionaries themselves with the following
         keys: 'feature_idx' (tuple of indices of the feature subset)
+              'feature_names' (tuple of feature names of the feat. subset)
               'cv_scores' (list individual cross-validation scores)
               'avg_score' (average cross-validation score)
+        Note that if pandas
+        DataFrames are used in the `fit` method, the 'feature_names'
+        correspond to the column names. Otherwise, the
+        feature names are string representation of the feature
+        array indices. The 'feature_names' is new in v 0.13.0.
 
     Examples
     -----------
@@ -132,8 +170,12 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         else:
             self.est_ = self.estimator
         self.fitted = False
+        self.interrupted_ = False
 
-    def fit(self, X, y, **fit_params):
+        # don't mess with this unless testing
+        self._TESTING_INTERRUPT_MODE = False
+
+    def fit(self, X, y, custom_feature_names=None, **fit_params):
         """Perform feature selection and learn model from training data.
 
         Parameters
@@ -152,6 +194,25 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
         """
 
+        # reset from a potential previous fit run
+        self.subsets_ = {}
+        self.fitted = False
+        self.interrupted_ = False
+        self.k_feature_idx_ = None
+        self.k_feature_names_ = None
+        self.k_score_ = None
+
+        if hasattr(X, 'loc'):
+            X_ = X.values
+        else:
+            X_ = X
+
+        if (custom_feature_names is not None
+                and len(custom_feature_names) != X.shape[1]):
+            raise ValueError('If custom_feature_names is not None, '
+                             'the number of elements in custom_feature_names '
+                             'must equal the number of columns in X.')
+
         if (not isinstance(self.max_features, int) or
                 (self.max_features > X.shape[1] or self.max_features < 1)):
             raise AttributeError('max_features must be'
@@ -167,11 +228,9 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         if self.max_features < self.min_features:
             raise AttributeError('min_features must be <= max_features')
 
-        candidates = chain(*((combinations(range(X.shape[1]), r=i))
+        candidates = chain(*((combinations(range(X_.shape[1]), r=i))
                            for i in range(self.min_features,
                                           self.max_features + 1)))
-
-        self.subsets_ = {}
 
         def ncr(n, r):
             """Return the number of combinations of length r from n items.
@@ -196,26 +255,39 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             denom = reduce(op.mul, range(1, r+1))
             return numer//denom
 
-        all_comb = np.sum([ncr(n=X.shape[1], r=i)
+        all_comb = np.sum([ncr(n=X_.shape[1], r=i)
                            for i in range(self.min_features,
                                           self.max_features + 1)])
 
         n_jobs = min(self.n_jobs, all_comb)
         parallel = Parallel(n_jobs=n_jobs, pre_dispatch=self.pre_dispatch)
         work = enumerate(parallel(delayed(_calc_score)
-                                  (self, X, y, c, **fit_params)
+                                  (self, X_, y, c, **fit_params)
                                   for c in candidates))
 
-        for iteration, (c, cv_scores) in work:
+        try:
+            for iteration, (c, cv_scores) in work:
 
-            self.subsets_[iteration] = {'feature_idx': c,
-                                        'cv_scores': cv_scores,
-                                        'avg_score': np.mean(cv_scores)}
+                self.subsets_[iteration] = {'feature_idx': c,
+                                            'cv_scores': cv_scores,
+                                            'avg_score': np.mean(cv_scores)}
 
-            if self.print_progress:
-                sys.stderr.write('\rFeatures: %d/%d' % (
-                    iteration + 1, all_comb))
-                sys.stderr.flush()
+                if self.print_progress:
+                    sys.stderr.write('\rFeatures: %d/%d' % (
+                        iteration + 1, all_comb))
+                    sys.stderr.flush()
+
+                if self._TESTING_INTERRUPT_MODE:
+                    self.subsets_, self.k_feature_names_ = \
+                        _get_featurenames(self.subsets_,
+                                          self.k_feature_idx_,
+                                          custom_feature_names,
+                                          X)
+                    raise KeyboardInterrupt
+
+        except KeyboardInterrupt as e:
+            self.interrupted_ = True
+            sys.stderr.write('\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...')
 
         max_score = float('-inf')
         for c in self.subsets_:
@@ -225,10 +297,14 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         score = max_score
         idx = self.subsets_[best_subset]['feature_idx']
 
-        self.best_idx_ = idx
-        self.best_score_ = score
-        self.subsets_plus_ = dict()
+        self.k_feature_idx_ = idx
+        self.k_score_ = score
         self.fitted = True
+        self.subsets_, self.k_feature_names_ = \
+            _get_featurenames(self.subsets_,
+                              self.k_feature_idx_,
+                              custom_feature_names,
+                              X)
         return self
 
     def transform(self, X):
@@ -246,7 +322,11 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
         """
         self._check_fitted()
-        return X[:, self.best_idx_]
+        if hasattr(X, 'loc'):
+            X_ = X.values
+        else:
+            X_ = X
+        return X_[:, self.k_feature_idx_]
 
     def fit_transform(self, X, y, **fit_params):
         """Fit to training data and return the best selected features from X.

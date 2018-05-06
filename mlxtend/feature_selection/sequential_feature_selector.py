@@ -38,20 +38,29 @@ def _calc_score(selector, X, y, indices, **fit_params):
     return indices, scores
 
 
-def _get_featurenames(subsets_dict, feature_idx, X):
+def _get_featurenames(subsets_dict, feature_idx, custom_feature_names, X):
     feature_names = None
-    if not hasattr(X, 'loc'):
-        if feature_idx is not None:
+    if feature_idx is not None:
+        if custom_feature_names is not None:
+            feature_names = tuple((custom_feature_names[i]
+                                   for i in feature_idx))
+        elif hasattr(X, 'loc'):
+            feature_names = tuple((X.columns[i] for i in feature_idx))
+        else:
             feature_names = tuple(str(i) for i in feature_idx)
-        return subsets_dict, feature_names
 
     subsets_dict_ = deepcopy(subsets_dict)
     for key in subsets_dict_:
-        new_tuple = tuple((X.columns[feature_idx]
-                          for feature_idx in subsets_dict[key]['feature_idx']))
+        if custom_feature_names is not None:
+            new_tuple = tuple((custom_feature_names[i]
+                               for i in subsets_dict[key]['feature_idx']))
+        elif hasattr(X, 'loc'):
+            new_tuple = tuple((X.columns[i]
+                               for i in subsets_dict[key]['feature_idx']))
+        else:
+            new_tuple = tuple(str(i) for i in subsets_dict[key]['feature_idx'])
         subsets_dict_[key]['feature_names'] = new_tuple
-    if feature_idx is not None:
-        feature_names = tuple((X.columns[i] for i in feature_idx))
+
     return subsets_dict_, feature_names
 
 
@@ -126,6 +135,12 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     ----------
     k_feature_idx_ : array-like, shape = [n_predictions]
         Feature Indices of the selected feature subsets.
+    k_feature_names_ : array-like, shape = [n_predictions]
+        Feature names of the selected feature subsets. If pandas
+        DataFrames are used in the `fit` method, the feature
+        names correspond to the column names. Otherwise, the
+        feature names are string representation of the feature
+        array indices. New in v 0.13.0.
     k_score_ : float
         Cross validation average score of the selected subset.
     subsets_ : dict
@@ -134,8 +149,14 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         the lengths k of these feature subsets. The dictionary
         values are dictionaries themselves with the following
         keys: 'feature_idx' (tuple of indices of the feature subset)
+              'feature_names' (tuple of feature names of the feat. subset)
               'cv_scores' (list individual cross-validation scores)
               'avg_score' (average cross-validation score)
+        Note that if pandas
+        DataFrames are used in the `fit` method, the 'feature_names'
+        correspond to the column names. Otherwise, the
+        feature names are string representation of the feature
+        array indices. The 'feature_names' is new in v 0.13.0.
 
     Examples
     -----------
@@ -197,7 +218,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         # don't mess with this unless testing
         self._TESTING_INTERRUPT_MODE = False
 
-    def fit(self, X, y, **fit_params):
+    def fit(self, X, y, custom_feature_names=None, **fit_params):
         """Perform feature selection and learn model from training data.
 
         Parameters
@@ -205,8 +226,16 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
+            New in v 0.13.0: pandas DataFrames are now also accepted as
+            argument for X.
         y : array-like, shape = [n_samples]
             Target values.
+            New in v 0.13.0: pandas DataFrames are now also accepted as
+            argument for y.
+        custom_feature_names : None or tuple (default: tuple)
+            Custom feature names for `self.k_feature_names` and
+            `self.subsets_[i]['feature_names']`.
+            (new in v 0.13.0)
         fit_params : dict of string -> object, optional
             Parameters to pass to to the fit method of classifier.
 
@@ -228,6 +257,12 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             X_ = X.values
         else:
             X_ = X
+
+        if (custom_feature_names is not None
+                and len(custom_feature_names) != X.shape[1]):
+            raise ValueError('If custom_feature_names is not None, '
+                             'the number of elements in custom_feature_names '
+                             'must equal the number of columns in X.')
 
         if not isinstance(self.k_features, int) and\
                 not isinstance(self.k_features, tuple)\
@@ -408,7 +443,9 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 if self._TESTING_INTERRUPT_MODE:
                     self.subsets_, self.k_feature_names_ = \
                         _get_featurenames(self.subsets_,
-                                          self.k_feature_idx_, X)
+                                          self.k_feature_idx_,
+                                          custom_feature_names,
+                                          X)
                     raise KeyboardInterrupt
 
         except KeyboardInterrupt as e:
@@ -445,7 +482,9 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.fitted = True
         self.subsets_, self.k_feature_names_ = \
             _get_featurenames(self.subsets_,
-                              self.k_feature_idx_, X)
+                              self.k_feature_idx_,
+                              custom_feature_names,
+                              X)
         return self
 
     def _inclusion(self, orig_set, subset, X, y, ignore_feature=None,
@@ -513,6 +552,8 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
+            New in v 0.13.0: pandas DataFrames are now also accepted as
+            argument for X.
 
         Returns
         -------
@@ -534,8 +575,12 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
+            New in v 0.13.0: pandas DataFrames are now also accepted as
+            argument for X.
         y : array-like, shape = [n_samples]
             Target values.
+            New in v 0.13.0: a pandas Series are now also accepted as
+            argument for y.
         fit_params : dict of string -> object, optional
             Parameters to pass to to the fit method of classifier.
 

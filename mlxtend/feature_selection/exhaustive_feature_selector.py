@@ -1,7 +1,7 @@
 # Sebastian Raschka 2014-2018
 # mlxtend Machine Learning Library Extensions
 #
-# Algorithm for sequential feature selection.
+# Algorithm for exhaustive feature selection.
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
@@ -129,7 +129,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         Cross validation average score of the selected subset.
     subsets_ : dict
         A dictionary of selected feature subsets during the
-        sequential selection, where the dictionary keys are
+        exhaustive selection, where the dictionary keys are
         the lengths k of these feature subsets. The dictionary
         values are dictionaries themselves with the following
         keys: 'feature_idx' (tuple of indices of the feature subset)
@@ -183,8 +183,14 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
+            New in v 0.13.0: pandas DataFrames are now also accepted as
+            argument for X.
         y : array-like, shape = [n_samples]
             Target values.
+        custom_feature_names : None or tuple (default: tuple)
+            Custom feature names for `self.k_feature_names` and
+            `self.subsets_[i]['feature_names']`.
+            (new in v 0.13.0)
         fit_params : dict of string -> object, optional
             Parameters to pass to to the fit method of classifier.
 
@@ -315,6 +321,8 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
+            New in v 0.13.0: pandas DataFrames are now also accepted as
+            argument for X.
 
         Returns
         -------
@@ -336,6 +344,8 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
+            New in v 0.13.0: pandas DataFrames are now also accepted as
+            argument for X.
         y : array-like, shape = [n_samples]
             Target values.
         fit_params : dict of string -> object, optional

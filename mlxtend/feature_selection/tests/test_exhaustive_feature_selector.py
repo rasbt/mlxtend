@@ -6,6 +6,7 @@
 
 import sys
 import numpy as np
+import pandas as pd
 from numpy.testing import assert_almost_equal
 from mlxtend.feature_selection import ExhaustiveFeatureSelector as EFS
 from sklearn.ensemble import RandomForestClassifier
@@ -178,6 +179,7 @@ def test_knn_cv3():
                                          0.94444444, 0.97222222])}}
     dict_compare_utility(d1=expect, d2=efs1.subsets_)
     assert efs1.k_feature_idx_ == (1, 2, 3)
+    assert efs1.k_feature_names_ == ('1', '2', '3')
     assert round(efs1.k_score_, 4) == 0.9728
 
 
@@ -387,3 +389,74 @@ def test_get_metric_dict_not_fitted():
     assert_raises(AttributeError,
                   expect,
                   efs1.get_metric_dict)
+
+
+def test_custom_feature_names():
+    knn = KNeighborsClassifier(n_neighbors=4)
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    efs1 = EFS(knn,
+               min_features=2,
+               max_features=2,
+               scoring='accuracy',
+               cv=0,
+               clone_estimator=False,
+               print_progress=False,
+               n_jobs=1)
+
+    efs1 = efs1.fit(X, y, custom_feature_names=(
+          'sepal length', 'sepal width', 'petal length', 'petal width'))
+    assert efs1.k_feature_idx_ == (2, 3), efs1.k_feature_idx_
+    assert efs1.k_feature_names_ == ('petal length', 'petal width')
+
+
+def test_check_pandas_dataframe_fit():
+
+    knn = KNeighborsClassifier(n_neighbors=4)
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    efs1 = EFS(knn,
+               min_features=2,
+               max_features=2,
+               scoring='accuracy',
+               cv=0,
+               clone_estimator=False,
+               print_progress=False,
+               n_jobs=1)
+
+    df = pd.DataFrame(X, columns=['sepal length', 'sepal width',
+                                  'petal length', 'petal width'])
+
+    sfs1 = efs1.fit(X, y)
+    assert efs1.k_feature_idx_ == (2, 3), efs1.k_feature_idx_
+    assert efs1.k_feature_names_ == ('2', '3')
+    assert efs1.interrupted_ is False
+
+    sfs1._TESTING_INTERRUPT_MODE = True
+    sfs1 = sfs1.fit(df, y)
+    assert efs1.k_feature_idx_ == (0, 1), efs1.k_feature_idx_
+    assert efs1.k_feature_names_ == ('sepal length', 'sepal width')
+    assert efs1.interrupted_ is True
+
+
+def test_check_pandas_dataframe_transform():
+    knn = KNeighborsClassifier(n_neighbors=4)
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    efs1 = EFS(knn,
+               min_features=2,
+               max_features=2,
+               scoring='accuracy',
+               cv=0,
+               clone_estimator=False,
+               print_progress=False,
+               n_jobs=1)
+
+    df = pd.DataFrame(X, columns=['sepal length', 'sepal width',
+                                  'petal length', 'petal width'])
+    efs1 = efs1.fit(df, y)
+    assert efs1.k_feature_idx_ == (2, 3)
+    assert (150, 2) == efs1.transform(df).shape

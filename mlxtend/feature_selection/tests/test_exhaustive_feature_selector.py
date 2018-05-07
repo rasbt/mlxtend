@@ -178,9 +178,9 @@ def test_knn_cv3():
                   'cv_scores': np.array([0.97435897, 1.,
                                          0.94444444, 0.97222222])}}
     dict_compare_utility(d1=expect, d2=efs1.subsets_)
-    assert efs1.k_feature_idx_ == (1, 2, 3)
-    assert efs1.k_feature_names_ == ('1', '2', '3')
-    assert round(efs1.k_score_, 4) == 0.9728
+    assert efs1.best_idx_ == (1, 2, 3)
+    assert efs1.best_feature_names_ == ('1', '2', '3')
+    assert round(efs1.best_score_, 4) == 0.9728
 
 
 def test_fit_params():
@@ -217,8 +217,8 @@ def test_fit_params():
                                          0.91666667, 1.]),
                   'avg_score': 0.9599358974358974}}
     dict_compare_utility(d1=expect, d2=efs1.subsets_)
-    assert efs1.k_feature_idx_ == (0, 2, 3)
-    assert round(efs1.k_score_, 4) == 0.9599
+    assert efs1.best_idx_ == (0, 2, 3)
+    assert round(efs1.best_score_, 4) == 0.9599
 
 
 def test_regression():
@@ -232,8 +232,8 @@ def test_regression():
                 cv=10,
                 print_progress=False)
     efs_r = efs_r.fit(X, y)
-    assert efs_r.k_feature_idx_ == (0, 2, 4)
-    assert round(efs_r.k_score_, 4) == -40.8777
+    assert efs_r.best_idx_ == (0, 2, 4)
+    assert round(efs_r.best_score_, 4) == -40.8777
 
 
 def test_clone_params_fail():
@@ -328,7 +328,7 @@ def test_clone_params_pass():
                print_progress=False,
                n_jobs=1)
     efs1 = efs1.fit(X, y)
-    assert(efs1.k_feature_idx_ == (1, 3))
+    assert(efs1.best_idx_ == (1, 3))
 
 
 def test_transform_not_fitted():
@@ -407,8 +407,8 @@ def test_custom_feature_names():
 
     efs1 = efs1.fit(X, y, custom_feature_names=(
           'sepal length', 'sepal width', 'petal length', 'petal width'))
-    assert efs1.k_feature_idx_ == (2, 3), efs1.k_feature_idx_
-    assert efs1.k_feature_names_ == ('petal length', 'petal width')
+    assert efs1.best_idx_ == (2, 3), efs1.best_idx_
+    assert efs1.best_feature_names_ == ('petal length', 'petal width')
 
 
 def test_check_pandas_dataframe_fit():
@@ -430,14 +430,14 @@ def test_check_pandas_dataframe_fit():
                                   'petal length', 'petal width'])
 
     sfs1 = efs1.fit(X, y)
-    assert efs1.k_feature_idx_ == (2, 3), efs1.k_feature_idx_
-    assert efs1.k_feature_names_ == ('2', '3')
+    assert efs1.best_idx_ == (2, 3), efs1.best_idx_
+    assert efs1.best_feature_names_ == ('2', '3')
     assert efs1.interrupted_ is False
 
     sfs1._TESTING_INTERRUPT_MODE = True
     sfs1 = sfs1.fit(df, y)
-    assert efs1.k_feature_idx_ == (0, 1), efs1.k_feature_idx_
-    assert efs1.k_feature_names_ == ('sepal length', 'sepal width')
+    assert efs1.best_idx_ == (0, 1), efs1.best_idx_
+    assert efs1.best_feature_names_ == ('sepal length', 'sepal width')
     assert efs1.interrupted_ is True
 
 
@@ -458,5 +458,5 @@ def test_check_pandas_dataframe_transform():
     df = pd.DataFrame(X, columns=['sepal length', 'sepal width',
                                   'petal length', 'petal width'])
     efs1 = efs1.fit(df, y)
-    assert efs1.k_feature_idx_ == (2, 3)
+    assert efs1.best_idx_ == (2, 3)
     assert (150, 2) == efs1.transform(df).shape

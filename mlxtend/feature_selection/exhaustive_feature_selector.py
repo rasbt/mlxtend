@@ -117,15 +117,15 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
     Attributes
     ----------
-    k_feature_idx_ : array-like, shape = [n_predictions]
+    best_idx_ : array-like, shape = [n_predictions]
         Feature Indices of the selected feature subsets.
-    k_feature_names_ : array-like, shape = [n_predictions]
+    best_feature_names_ : array-like, shape = [n_predictions]
         Feature names of the selected feature subsets. If pandas
         DataFrames are used in the `fit` method, the feature
         names correspond to the column names. Otherwise, the
         feature names are string representation of the feature
         array indices. New in v 0.13.0.
-    k_score_ : float
+    best_score_ : float
         Cross validation average score of the selected subset.
     subsets_ : dict
         A dictionary of selected feature subsets during the
@@ -204,9 +204,9 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.subsets_ = {}
         self.fitted = False
         self.interrupted_ = False
-        self.k_feature_idx_ = None
-        self.k_feature_names_ = None
-        self.k_score_ = None
+        self.best_idx_ = None
+        self.best_feature_names_ = None
+        self.best_score_ = None
 
         if hasattr(X, 'loc'):
             X_ = X.values
@@ -284,9 +284,9 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                     sys.stderr.flush()
 
                 if self._TESTING_INTERRUPT_MODE:
-                    self.subsets_, self.k_feature_names_ = \
+                    self.subsets_, self.best_feature_names_ = \
                         _get_featurenames(self.subsets_,
-                                          self.k_feature_idx_,
+                                          self.best_idx_,
                                           custom_feature_names,
                                           X)
                     raise KeyboardInterrupt
@@ -303,12 +303,12 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         score = max_score
         idx = self.subsets_[best_subset]['feature_idx']
 
-        self.k_feature_idx_ = idx
-        self.k_score_ = score
+        self.best_idx_ = idx
+        self.best_score_ = score
         self.fitted = True
-        self.subsets_, self.k_feature_names_ = \
+        self.subsets_, self.best_feature_names_ = \
             _get_featurenames(self.subsets_,
-                              self.k_feature_idx_,
+                              self.best_idx_,
                               custom_feature_names,
                               X)
         return self
@@ -334,7 +334,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             X_ = X.values
         else:
             X_ = X
-        return X_[:, self.k_feature_idx_]
+        return X_[:, self.best_idx_]
 
     def fit_transform(self, X, y, **fit_params):
         """Fit to training data and return the best selected features from X.

@@ -25,8 +25,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- For concistency, the `best_idx_` attribute of the `ExhaustiveFeatureSelector` was renamed to `k_feature_idx_`, which is used by the `SequentialFeatureSelector`. Likewise, `best_score_` was renamed to `k_score_`. ([#380](https://github.com/rasbt/mlxtend/pull/380))
-
+- -
 
 
 ##### Bug Fixes

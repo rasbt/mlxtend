@@ -22,11 +22,11 @@ def test_vectorspace_orthonormalization():
        [0.81649658, 0.50816781, -0.06462163, -0.26631346],
        [0.40824829, -0.83484711, 0.07942048, -0.36063281]])
 
-    np.testing.assert_array_equal(
-        vectorspace_orthonormalization(a1), expect1)
+    np.testing.assert_array_almost_equal(
+        vectorspace_orthonormalization(a1), expect1, decimal=7)
 
-    np.testing.assert_array_equal(
-        vectorspace_orthonormalization(a1/2), expect1)
+    np.testing.assert_array_almost_equal(
+        vectorspace_orthonormalization(a1/2), expect1, decimal=7)
 
 
 def test_vectorspace_dimensionality():

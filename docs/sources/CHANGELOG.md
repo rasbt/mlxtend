@@ -21,6 +21,7 @@ The CHANGELOG for the current development version is available at
 - The `SequentialFeatureSelector` is now also compatible with Pandas DataFrames and uses DataFrame column-names for more interpretable feature subset reports. ([#379](https://github.com/rasbt/mlxtend/pull/379))
 - `ColumnSelector` now works with Pandas DataFrames columns. ([#378](https://github.com/rasbt/mlxtend/pull/378) by [Manuel Garrido](https://github.com/manugarri))
 - The `ExhaustiveFeatureSelector` estimator in `mlxtend.feature_selection` now is safely stoppable mid-process by control+c. ([#380](https://github.com/rasbt/mlxtend/pull/380))
+- Two new functions, `vectorspace_orthonormalization` and `vectorspace_dimensionality` were added to `mlxtend.math` to use the Gram-Schmidt process to convert an orthogonal vectorspace into orthonormal basis vectors and to compute the dimensionality of a vectorspace, respectively. ([#382](https://github.com/rasbt/mlxtend/pull/382))
 
 
 ##### Changes

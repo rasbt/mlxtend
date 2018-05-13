@@ -95,6 +95,8 @@ pages:
   - math:
     - user_guide/math/num_combinations.md
     - user_guide/math/num_permutations.md
+    - user_guide/math/vectorspace_dimensionality.md
+    - user_guide/math/vectorspace_orthonormalization.md
   - plotting:
     - user_guide/plotting/category_scatter.md
     - user_guide/plotting/checkerboard_plot.md

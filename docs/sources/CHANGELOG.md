@@ -32,6 +32,7 @@ The CHANGELOG for the current development version is available at
 ##### Bug Fixes
 
 - Allow mlxtend estimators to be cloned via scikit-learn's `clone` function. ([#374](https://github.com/rasbt/mlxtend/pull/374))
+- Fixes bug to allow the correct use of `refit=False` in `StackingRegressor` and `StackingCVRegressor`  ([#384](https://github.com/rasbt/mlxtend/pull/384) and ([#385](https://github.com/rasbt/mlxtend/pull/385)) by [selay01](https://github.com/selay01))
 
 
 

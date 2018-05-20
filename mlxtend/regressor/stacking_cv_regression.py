@@ -140,8 +140,8 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             self.regr_ = [clone(clf) for clf in self.regressors]
             self.meta_regr_ = clone(self.meta_regressor)
         else:
-            self.clfs_ = self.regressors
-            self.meta_clf_ = self.meta_regressor
+            self.regr_ = self.regressors
+            self.meta_regr_ = self.meta_regressor
 
         kfold = check_cv(self.cv, y)
         if isinstance(self.cv, int):

@@ -16,6 +16,8 @@ df = pd.DataFrame(one_ary, columns=cols)
 
 df_freq_items = apriori(df, min_support=0.6)
 
+df_freq_items_with_colnames = apriori(df, min_support=0.6, use_colnames=True)
+
 columns_ordered = ['antecedants', 'consequents',
                    'antecedent support', 'consequent support',
                    'support',
@@ -88,9 +90,43 @@ def test_leverage():
                                metric='leverage')
     assert res_df.values.shape[0] == 6
 
+    res_df = association_rules(df_freq_items_with_colnames,
+                               min_threshold=0.1,
+                               metric='leverage')
+    assert res_df.values.shape[0] == 6
+
 
 def test_conviction():
     res_df = association_rules(df_freq_items,
                                min_threshold=1.5,
                                metric='conviction')
     assert res_df.values.shape[0] == 11
+
+    res_df = association_rules(df_freq_items_with_colnames,
+                               min_threshold=1.5,
+                               metric='conviction')
+    assert res_df.values.shape[0] == 11
+
+
+def test_lift():
+    res_df = association_rules(df_freq_items,
+                               min_threshold=1.1,
+                               metric='lift')
+    assert res_df.values.shape[0] == 6
+
+    res_df = association_rules(df_freq_items_with_colnames,
+                               min_threshold=1.1,
+                               metric='lift')
+    assert res_df.values.shape[0] == 6
+
+
+def test_confidence():
+    res_df = association_rules(df_freq_items,
+                               min_threshold=0.8,
+                               metric='confidence')
+    assert res_df.values.shape[0] == 9
+
+    res_df = association_rules(df_freq_items_with_colnames,
+                               min_threshold=0.8,
+                               metric='confidence')
+    assert res_df.values.shape[0] == 9

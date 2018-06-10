@@ -142,5 +142,6 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None):
         res_df['itemsets'] = res_df['itemsets'].apply(lambda x: [mapping[i]
                                                       for i in x])
     res_df = res_df.reset_index(drop=True)
+    res_df['itemsets'] = res_df['itemsets'].apply(lambda x: set(x))
 
     return res_df

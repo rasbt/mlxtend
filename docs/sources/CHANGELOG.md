@@ -26,7 +26,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- -
+- Itemsets generated with `apriori` are now sets ([#344](https://github.com/rasbt/mlxtend/issues/344) by [William Laney](https://github.com/WLaney))
 
 
 ##### Bug Fixes

@@ -130,7 +130,7 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None):
     all_res = []
     for k in sorted(itemset_dict):
         support = pd.Series(support_dict[k])
-        itemsets = pd.Series([i for i in itemset_dict[k]])
+        itemsets = pd.Series([set(i) for i in itemset_dict[k]])
 
         res = pd.concat((support, itemsets), axis=1)
         all_res.append(res)
@@ -139,9 +139,8 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None):
     res_df.columns = ['support', 'itemsets']
     if use_colnames:
         mapping = {idx: item for idx, item in enumerate(df.columns)}
-        res_df['itemsets'] = res_df['itemsets'].apply(lambda x: [mapping[i]
-                                                      for i in x])
+        res_df['itemsets'] = res_df['itemsets'].apply(lambda x: set([mapping[i]
+                                                      for i in x]))
     res_df = res_df.reset_index(drop=True)
-    res_df['itemsets'] = res_df['itemsets'].apply(lambda x: set(x))
 
     return res_df

@@ -57,8 +57,8 @@ def test_max_len():
 def test_itemsets_type():
     res_colindice = apriori(df, use_colnames=False)  # This is defualt behavior
     for i in res_colindice['itemsets']:
-        assert isinstance(i, set) == True
-        
+        assert isinstance(i, set) is True
+
     res_colnames = apriori(df, use_colnames=True)  # This is defualt behavior
     for i in res_colnames['itemsets']:
-        assert isinstance(i, set) == True
+        assert isinstance(i, set) is True

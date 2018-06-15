@@ -52,3 +52,13 @@ def test_max_len():
 
     res_df2 = apriori(df, max_len=2)
     assert len(res_df2.iloc[-1, -1]) == 2
+
+
+def test_itemsets_type():
+    res_colindice = apriori(df, use_colnames=False)  # This is default behavior
+    for i in res_colindice['itemsets']:
+        assert isinstance(i, set) is True
+
+    res_colnames = apriori(df, use_colnames=True)
+    for i in res_colnames['itemsets']:
+        assert isinstance(i, set) is True

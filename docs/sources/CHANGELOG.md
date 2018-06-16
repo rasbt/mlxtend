@@ -26,7 +26,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- Itemsets generated with `apriori` are now sets ([#344](https://github.com/rasbt/mlxtend/issues/344) by [William Laney](https://github.com/WLaney))
+- Itemsets generated with `apriori` are now `frozenset`s ([#393](https://github.com/rasbt/mlxtend/issues/393) by [William Laney](https://github.com/WLaney) and [#394](https://github.com/rasbt/mlxtend/issues/394))
 
 
 ##### Bug Fixes

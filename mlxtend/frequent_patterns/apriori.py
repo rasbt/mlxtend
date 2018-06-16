@@ -88,6 +88,11 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None):
     pandas DataFrame with columns ['support', 'itemsets'] of all itemsets
       that are >= `min_support` and < than `max_len`
       (if `max_len` is not None).
+      Each itemset in the 'itemsets' column is of type `frozenset`,
+      which is a Python built-in type that behaves similarly to
+      sets except that it is immutable
+      (For more info, see
+      https://docs.python.org/3.6/library/stdtypes.html#frozenset).
 
     Examples
     -----------
@@ -130,7 +135,7 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None):
     all_res = []
     for k in sorted(itemset_dict):
         support = pd.Series(support_dict[k])
-        itemsets = pd.Series([set(i) for i in itemset_dict[k]])
+        itemsets = pd.Series([frozenset(i) for i in itemset_dict[k]])
 
         res = pd.concat((support, itemsets), axis=1)
         all_res.append(res)
@@ -139,8 +144,8 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None):
     res_df.columns = ['support', 'itemsets']
     if use_colnames:
         mapping = {idx: item for idx, item in enumerate(df.columns)}
-        res_df['itemsets'] = res_df['itemsets'].apply(lambda x: set([mapping[i]
-                                                      for i in x]))
+        res_df['itemsets'] = res_df['itemsets'].apply(lambda x: frozenset([
+                                                      mapping[i] for i in x]))
     res_df = res_df.reset_index(drop=True)
 
     return res_df

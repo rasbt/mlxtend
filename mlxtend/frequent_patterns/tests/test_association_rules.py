@@ -56,6 +56,29 @@ def test_default():
     assert res_df.equals(expect), res_df
 
 
+def test_datatypes():
+    res_df = association_rules(df_freq_items)
+    for i in res_df['antecedants']:
+        assert isinstance(i, frozenset) is True
+
+    for i in res_df['consequents']:
+        assert isinstance(i, frozenset) is True
+
+    # cast itemset-containing dataframe to set and
+    # check if association_rule converts it internally
+    # back to frozensets
+    df_freq_items_copy = df_freq_items.copy()
+    df_freq_items_copy['itemsets'] = df_freq_items_copy['itemsets']\
+        .apply(lambda x: set(x))
+
+    res_df = association_rules(df_freq_items)
+    for i in res_df['antecedants']:
+        assert isinstance(i, frozenset) is True
+
+    for i in res_df['consequents']:
+        assert isinstance(i, frozenset) is True
+
+
 def test_no_support_col():
     df_no_support_col = df_freq_items.loc[:, ['itemsets']]
     assert_raises(ValueError, association_rules, df_no_support_col)
@@ -130,3 +153,19 @@ def test_confidence():
                                min_threshold=0.8,
                                metric='confidence')
     assert res_df.values.shape[0] == 9
+
+
+def test_frozenset_selection():
+    res_df = association_rules(df_freq_items)
+
+    sel = res_df[res_df['consequents'] == frozenset((3, 5))]
+    assert sel.values.shape[0] == 1
+
+    sel = res_df[res_df['consequents'] == frozenset((5, 3))]
+    assert sel.values.shape[0] == 1
+
+    sel = res_df[res_df['consequents'] == {3, 5}]
+    assert sel.values.shape[0] == 1
+
+    sel = res_df[res_df['antecedants'] == frozenset((8, 3))]
+    assert sel.values.shape[0] == 1

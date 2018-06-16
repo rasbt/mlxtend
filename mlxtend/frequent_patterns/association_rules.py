@@ -32,8 +32,10 @@ def association_rules(df, metric="confidence", min_threshold=0.8):
       - support(A->C) = support(A+C) [aka 'support'], range: [0, 1]\n
       - confidence(A->C) = support(A+C) / support(A), range: [0, 1]\n
       - lift(A->C) = confidence(A->C) / support(C), range: [0, inf]\n
-      - leverage(A->C) = support(A->C) - support(A)*support(C), range: [-1, 1]\n
-      - conviction = [1 - support(C)] / [1 - confidence(A->C)], range: [0, inf]\n
+      - leverage(A->C) = support(A->C) - support(A)*support(C),
+        range: [-1, 1]\n
+      - conviction = [1 - support(C)] / [1 - confidence(A->C)],
+        range: [0, inf]\n
 
     min_threshold : float (default: 0.8)
       Minimal threshold for the evaluation metric
@@ -41,12 +43,18 @@ def association_rules(df, metric="confidence", min_threshold=0.8):
 
     Returns
     ----------
-    pandas DataFrame with columns "antecedent support",
-      "consequent support",
+    pandas DataFrame with columns "antecedants" and "consequents"
+      that store itemsets, plus the scoring metric columns:
+      "antecedent support", "consequent support",
       "support", "confidence", "lift",
       "leverage", "conviction"
       of all rules for which
       metric(rule) >= min_threshold.
+      Each entry in the "antecedants" and "consequents" columns are
+      of type `frozenset`, which is a Python built-in type that
+      behaves similarly to sets except that it is immutable
+      (For more info, see
+      https://docs.python.org/3.6/library/stdtypes.html#frozenset).
 
     Examples
     -----------

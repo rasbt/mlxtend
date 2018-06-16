@@ -57,8 +57,23 @@ def test_max_len():
 def test_itemsets_type():
     res_colindice = apriori(df, use_colnames=False)  # This is default behavior
     for i in res_colindice['itemsets']:
-        assert isinstance(i, set) is True
+        assert isinstance(i, frozenset) is True
 
     res_colnames = apriori(df, use_colnames=True)
     for i in res_colnames['itemsets']:
-        assert isinstance(i, set) is True
+        assert isinstance(i, frozenset) is True
+
+
+def test_frozenset_selection():
+    res_df = apriori(df, use_colnames=True)
+    assert res_df.values.shape == (11, 2)
+    assert res_df[res_df['itemsets']
+                  == 'nothing'].values.shape == (0, 2)
+    assert res_df[res_df['itemsets']
+                  == {'Eggs', 'Kidney Beans'}].values.shape == (1, 2)
+    assert res_df[res_df['itemsets']
+                  == frozenset(('Eggs', 'Kidney Beans'))].values.shape\
+        == (1, 2)
+    assert res_df[res_df['itemsets']
+                  == frozenset(('Kidney Beans', 'Eggs'))].values.shape\
+        == (1, 2)

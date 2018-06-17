@@ -37,6 +37,34 @@ def test_EnsembleVoteClassifier():
     assert(scores_mean == 0.94)
 
 
+def test_1model_labels():
+    clf = LogisticRegression(multi_class='multinomial',
+                             solver='newton-cg', random_state=123)
+    ens_clf_1 = EnsembleVoteClassifier(clfs=[clf], voting='soft', weights=None)
+    ens_clf_2 = EnsembleVoteClassifier(clfs=[clf], voting='soft', weights=[1.])
+
+    pred_e1 = ens_clf_1.fit(X, y).predict(X)
+    pred_e2 = ens_clf_2.fit(X, y).predict(X)
+    pred_e3 = clf.fit(X, y).predict(X)
+
+    np.testing.assert_equal(pred_e1, pred_e2)
+    np.testing.assert_equal(pred_e1, pred_e3)
+
+
+def test_1model_probas():
+    clf = LogisticRegression(multi_class='multinomial',
+                             solver='newton-cg', random_state=123)
+    ens_clf_1 = EnsembleVoteClassifier(clfs=[clf], voting='soft', weights=None)
+    ens_clf_2 = EnsembleVoteClassifier(clfs=[clf], voting='soft', weights=[1.])
+
+    pred_e1 = ens_clf_1.fit(X, y).predict_proba(X)
+    pred_e2 = ens_clf_2.fit(X, y).predict_proba(X)
+    pred_e3 = clf.fit(X, y).predict_proba(X)
+
+    np.testing.assert_almost_equal(pred_e1, pred_e2, decimal=8)
+    np.testing.assert_almost_equal(pred_e1, pred_e3, decimal=8)
+
+
 def test_EnsembleVoteClassifier_weights():
 
     np.random.seed(123)

@@ -100,10 +100,15 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None):
     http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/
 
     """
+    is_sparse = hasattr(df, "to_coo")
+    if is_sparse:
+        X = df.to_coo().tocsc()
+        support = np.array(np.sum(X, axis=0) / float(X.shape[0])).reshape(-1)
+    else:
+        X = df.values
+        support = (np.sum(X, axis=0) / float(X.shape[0]))
 
-    X = df.values
     ary_col_idx = np.arange(X.shape[1])
-    support = (np.sum(X, axis=0) / float(X.shape[0]))
     support_dict = {1: support[support >= min_support]}
     itemset_dict = {1: ary_col_idx[support >= min_support].reshape(-1, 1)}
     max_itemset = 1
@@ -118,8 +123,13 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None):
         frequent_items = []
         frequent_items_support = []
 
+        if is_sparse:
+            all_ones = np.ones((X.shape[0], next_max_itemset))
         for c in combin:
-            together = X[:, c].all(axis=1)
+            if is_sparse:
+                together = np.all(X[:, c] == all_ones, axis=1)
+            else:
+                together = X[:, c].all(axis=1)
             support = together.sum() / rows_count
             if support >= min_support:
                 frequent_items.append(c)

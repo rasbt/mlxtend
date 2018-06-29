@@ -1,0 +1,8 @@
+[
+  "mlxtend/frequent_patterns/tests/test_apriori.py::test_default",
+  "mlxtend/frequent_patterns/tests/test_apriori.py::test_max_len",
+  "mlxtend/frequent_patterns/tests/test_apriori.py::test_itemsets_type",
+  "mlxtend/frequent_patterns/tests/test_apriori.py::test_frozenset_selection",
+  "mlxtend/frequent_patterns/tests/test_apriori.py::test_sparse_apriori[False]",
+  "mlxtend/frequent_patterns/tests/test_apriori.py::test_sparse_apriori[0]"
+]

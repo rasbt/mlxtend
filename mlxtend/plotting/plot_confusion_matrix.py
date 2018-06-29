@@ -1,7 +1,3 @@
-from sklearn.metrics import confusion_matrix
-from sklearn.datasets import load_iris
-from sklearn.model_selection import train_test_split
-
 # Sebastian Raschka 2014-2018
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>

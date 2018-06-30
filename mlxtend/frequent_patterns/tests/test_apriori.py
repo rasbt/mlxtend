@@ -5,7 +5,6 @@
 # License: BSD 3 clause
 
 import numpy as np
-import pytest
 
 from mlxtend.frequent_patterns import apriori
 from numpy.testing import assert_array_equal

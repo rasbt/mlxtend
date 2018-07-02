@@ -51,7 +51,7 @@ def generate_new_combinations(old_combinations):
                 yield res
 
 
-def apriori(df, min_support=0.5, use_colnames=False, max_len=None):
+def apriori(df, min_support=0.5, use_colnames=False, max_len=None, n_jobs=1):
     """Get frequent itemsets from a one-hot DataFrame
     Parameters
     -----------
@@ -100,6 +100,7 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None):
     http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/
 
     """
+
     is_sparse = hasattr(df, "to_coo")
     if is_sparse:
         X = df.to_coo().tocsc()

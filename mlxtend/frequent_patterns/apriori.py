@@ -55,7 +55,7 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, n_jobs=1):
     """Get frequent itemsets from a one-hot DataFrame
     Parameters
     -----------
-    df : pandas DataFrame
+    df : pandas DataFrame or pandas SparseDataFrame
       pandas DataFrame the encoded format. For example,
 
     ```

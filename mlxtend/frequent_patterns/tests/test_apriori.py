@@ -5,6 +5,7 @@
 # License: BSD 3 clause
 
 import numpy as np
+
 from mlxtend.frequent_patterns import apriori
 from numpy.testing import assert_array_equal
 import pandas as pd
@@ -72,8 +73,27 @@ def test_frozenset_selection():
     assert res_df[res_df['itemsets']
                   == {'Eggs', 'Kidney Beans'}].values.shape == (1, 2)
     assert res_df[res_df['itemsets']
-                  == frozenset(('Eggs', 'Kidney Beans'))].values.shape\
-        == (1, 2)
+                  == frozenset(('Eggs', 'Kidney Beans'))].values.shape \
+           == (1, 2)
     assert res_df[res_df['itemsets']
-                  == frozenset(('Kidney Beans', 'Eggs'))].values.shape\
-        == (1, 2)
+                  == frozenset(('Kidney Beans', 'Eggs'))].values.shape \
+           == (1, 2)
+
+
+def test_sparse_apriori():
+    def test_with_fill_values(fill_value):
+        sdf = df.to_sparse(fill_value=fill_value)
+        res_df = apriori(sdf, use_colnames=True)
+        assert res_df.values.shape == (11, 2)
+        assert res_df[res_df['itemsets']
+                      == 'nothing'].values.shape == (0, 2)
+        assert res_df[res_df['itemsets']
+                      == {'Eggs', 'Kidney Beans'}].values.shape == (1, 2)
+        assert res_df[res_df['itemsets']
+                      == frozenset(('Eggs', 'Kidney Beans'))].values.shape \
+               == (1, 2)
+        assert res_df[res_df['itemsets']
+                      == frozenset(('Kidney Beans', 'Eggs'))].values.shape \
+               == (1, 2)
+    test_with_fill_values(0)
+    test_with_fill_values(False)

@@ -22,6 +22,7 @@ The CHANGELOG for the current development version is available at
 - `ColumnSelector` now works with Pandas DataFrames columns. ([#378](https://github.com/rasbt/mlxtend/pull/378) by [Manuel Garrido](https://github.com/manugarri))
 - The `ExhaustiveFeatureSelector` estimator in `mlxtend.feature_selection` now is safely stoppable mid-process by control+c. ([#380](https://github.com/rasbt/mlxtend/pull/380))
 - Two new functions, `vectorspace_orthonormalization` and `vectorspace_dimensionality` were added to `mlxtend.math` to use the Gram-Schmidt process to convert a set of linearly independent vectors into a set of orthonormal basis vectors, and to compute the dimensionality of a vectorspace, respectively. ([#382](https://github.com/rasbt/mlxtend/pull/382))
+- `mlxtend.frequent_patterns.apriori` now supports pandas `SparseDataFrame`s to generate frequent itemsets. ([#404](https://github.com/rasbt/mlxtend/pull/404) via [Daniel Morales](https://github.com/rasbt/mlxtend/pull/404))
 
 
 ##### Changes

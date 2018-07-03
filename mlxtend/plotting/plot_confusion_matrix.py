@@ -37,6 +37,9 @@ def plot_confusion_matrix(conf_mat,
         must be True.
     show_normed : bool (default: False)
         Shows normed confusion matrix coefficients if True.
+        The normed confusion matrix coefficients give the 
+        proportion of training examples per class that are 
+        assigned the correct label.
         At least one of  `show_absolute` or `show_normed`
         must be True.
     Returns

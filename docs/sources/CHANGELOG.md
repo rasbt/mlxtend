@@ -23,7 +23,7 @@ The CHANGELOG for the current development version is available at
 - The `ExhaustiveFeatureSelector` estimator in `mlxtend.feature_selection` now is safely stoppable mid-process by control+c. ([#380](https://github.com/rasbt/mlxtend/pull/380))
 - Two new functions, `vectorspace_orthonormalization` and `vectorspace_dimensionality` were added to `mlxtend.math` to use the Gram-Schmidt process to convert a set of linearly independent vectors into a set of orthonormal basis vectors, and to compute the dimensionality of a vectorspace, respectively. ([#382](https://github.com/rasbt/mlxtend/pull/382))
 - `mlxtend.frequent_patterns.apriori` now supports pandas `SparseDataFrame`s to generate frequent itemsets. ([#404](https://github.com/rasbt/mlxtend/pull/404) via [Daniel Morales](https://github.com/rasbt/mlxtend/pull/404))
-
+- The `plot_confusion_matrix` function now has the ability to show normalized confusion matrix coefficients in addition to or instead of absolute confusion matrix coefficients with or without a colorbar. The text display method has been changed so that the full range of the colormap is used. The default size is also now set based on the number of classes.
 
 ##### Changes
 

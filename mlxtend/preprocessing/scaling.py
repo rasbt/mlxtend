@@ -21,7 +21,7 @@ def minmax_scaling(array, columns, min_val=0, max_val=1):
         or column indices [0, 2, 4, ...]
     min_val : `int` or `float`, optional (default=`0`)
         minimum value after rescaling.
-    min_val : `int` or `float`, optional (default=`1`)
+    max_val : `int` or `float`, optional (default=`1`)
         maximum value after rescaling.
 
     Returns

@@ -11,6 +11,7 @@
 from ..externals.estimator_checks import check_is_fitted
 from ..externals.name_estimators import _name_estimators
 from ..externals import six
+from scipy import sparse
 from sklearn.base import BaseEstimator
 from sklearn.base import ClassifierMixin
 from sklearn.base import TransformerMixin
@@ -154,6 +155,8 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         if not self.use_features_in_secondary:
             self.meta_clf_.fit(meta_features, y)
+        elif sparse.issparse(X):
+            self.meta_clf_.fit(sparse.hstack((X, meta_features)), y)
         else:
             self.meta_clf_.fit(np.hstack((X, meta_features)), y)
 
@@ -228,6 +231,8 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         if not self.use_features_in_secondary:
             return self.meta_clf_.predict(meta_features)
+        elif sparse.issparse(X):
+            return self.meta_clf_.predict(sparse.hstack((X, meta_features)))
         else:
             return self.meta_clf_.predict(np.hstack((X, meta_features)))
 
@@ -252,5 +257,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         if not self.use_features_in_secondary:
             return self.meta_clf_.predict_proba(meta_features)
+        elif sparse.issparse(X):
+            return self.meta_clf_.predict_proba(sparse.hstack((X, meta_features)))
         else:
             return self.meta_clf_.predict_proba(np.hstack((X, meta_features)))

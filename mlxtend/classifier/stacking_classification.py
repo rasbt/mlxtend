@@ -258,6 +258,8 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         if not self.use_features_in_secondary:
             return self.meta_clf_.predict_proba(meta_features)
         elif sparse.issparse(X):
-            return self.meta_clf_.predict_proba(sparse.hstack((X, meta_features)))
+            return self.meta_clf_.predict_proba(
+                sparse.hstack((X, meta_features))
+            )
         else:
             return self.meta_clf_.predict_proba(np.hstack((X, meta_features)))

@@ -6,6 +6,7 @@
 
 from mlxtend.classifier import StackingClassifier
 from mlxtend.externals.estimator_checks import NotFittedError
+from scipy import sparse
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
@@ -249,6 +250,40 @@ def test_use_features_in_secondary_predict_proba():
     idx = [0, 1, 2]
     y_pred = sclf.predict_proba(X[idx])[:, 0]
     expect = np.array([0.911, 0.829, 0.885])
+    np.testing.assert_almost_equal(y_pred, expect, 3)
+
+
+def test_use_features_in_secondary_sparse_input_predict():
+    np.random.seed(123)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    sclf = StackingClassifier(classifiers=[clf1],
+                              use_features_in_secondary=True,
+                              meta_classifier=meta)
+
+    scores = cross_val_score(sclf,
+                             sparse.csr_matrix(X),
+                             y,
+                             cv=5,
+                             scoring='accuracy')
+    scores_mean = (round(scores.mean(), 2))
+    assert scores_mean == 0.95, scores_mean
+
+
+def test_use_features_in_secondary_sparse_input_predict_proba():
+    np.random.seed(123)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    sclf = StackingClassifier(classifiers=[clf1],
+                              use_features_in_secondary=True,
+                              meta_classifier=meta)
+
+    sclf.fit(sparse.csr_matrix(X), y)
+    idx = [0, 1, 2]
+    y_pred = sclf.predict_proba(
+        sparse.csr_matrix(X[idx])
+    )[:, 0]
+    expect = np.array([0.910, 0.829, 0.882])
     np.testing.assert_almost_equal(y_pred, expect, 3)
 
 

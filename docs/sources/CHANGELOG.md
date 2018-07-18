@@ -34,7 +34,7 @@ The CHANGELOG for the current development version is available at
 
 - Allow mlxtend estimators to be cloned via scikit-learn's `clone` function. ([#374](https://github.com/rasbt/mlxtend/pull/374))
 - Fixes bug to allow the correct use of `refit=False` in `StackingRegressor` and `StackingCVRegressor`  ([#384](https://github.com/rasbt/mlxtend/pull/384) and ([#385](https://github.com/rasbt/mlxtend/pull/385)) by [selay01](https://github.com/selay01))
-
+- Allow `StackingClassifier` to work with sparse matrices when `use_features_in_secondary=True`  ([#408](https://github.com/rasbt/mlxtend/issues/408))
 
 
 

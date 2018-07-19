@@ -4,6 +4,7 @@
 #
 # License: BSD 3 clause
 
+import numpy as np
 from mlxtend.externals.estimator_checks import NotFittedError
 from mlxtend.utils import assert_raises
 from mlxtend.regressor import StackingRegressor
@@ -12,7 +13,7 @@ from sklearn.linear_model import Ridge
 from sklearn.svm import SVR
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
-import numpy as np
+from scipy import sparse
 from numpy.testing import assert_almost_equal
 from nose.tools import raises
 from sklearn.base import clone
@@ -243,3 +244,21 @@ def test_clone():
                                meta_regressor=svr_rbf,
                                store_train_meta_features=True)
     clone(stregr)
+
+
+def test_predictions_from_sparse_matrix():
+    lr = LinearRegression()
+    svr_lin = SVR(kernel='linear')
+    ridge = Ridge(random_state=1)
+    stregr = StackingRegressor(regressors=[svr_lin, lr],
+                               meta_regressor=ridge)
+
+    # dense
+    stregr.fit(X1, y)
+    print(stregr.score(X1, y))
+    assert round(stregr.score(X1, y), 2) == 0.61
+
+    # sparse
+    stregr.fit(sparse.csr_matrix(X1), y)
+    print(stregr.score(X1, y))
+    assert round(stregr.score(X1, y), 2) == 0.61

@@ -11,6 +11,7 @@ from mlxtend.regressor import StackingRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import Ridge
 from sklearn.svm import SVR
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
 from scipy import sparse
@@ -166,6 +167,7 @@ def test_get_params():
               'regressors',
               'ridge',
               'store_train_meta_features',
+              'use_features_in_secondary',
               'verbose']
     assert got == expect, got
 
@@ -246,6 +248,34 @@ def test_clone():
     clone(stregr)
 
 
+def test_features_in_secondary():
+    lr = LinearRegression()
+    svr_lin = SVR(kernel='linear')
+    rf = RandomForestRegressor(random_state=2)
+    ridge = Ridge(random_state=0)
+    svr_rbf = SVR(kernel='rbf')
+    stack = StackingRegressor(regressors=[svr_lin, lr, ridge, rf],
+                              meta_regressor=svr_rbf,
+                              use_features_in_secondary=True)
+
+    stack.fit(X1, y).predict(X1)
+    mse = 0.14
+    got = np.mean((stack.predict(X1) - y) ** 2)
+    print(got)
+    assert round(got, 2) == mse
+
+    stack = StackingRegressor(regressors=[svr_lin, lr, ridge, rf],
+                              meta_regressor=svr_rbf,
+                              use_features_in_secondary=False)
+
+    # dense
+    stack.fit(X1, y).predict(X1)
+    mse = 0.12
+    got = np.mean((stack.predict(X1) - y) ** 2)
+    print(got)
+    assert round(got, 2) == mse
+
+
 def test_predictions_from_sparse_matrix():
     lr = LinearRegression()
     svr_lin = SVR(kernel='linear')
@@ -262,3 +292,26 @@ def test_predictions_from_sparse_matrix():
     stregr.fit(sparse.csr_matrix(X1), y)
     print(stregr.score(X1, y))
     assert round(stregr.score(X1, y), 2) == 0.61
+
+
+def test_sparse_matrix_inputs_and_features_in_secondary():
+    lr = LinearRegression()
+    svr_lin = SVR(kernel='linear')
+    rf = RandomForestRegressor(random_state=2)
+    ridge = Ridge(random_state=0)
+    svr_rbf = SVR(kernel='rbf')
+    stack = StackingRegressor(regressors=[svr_lin, lr, ridge, rf],
+                              meta_regressor=svr_rbf,
+                              use_features_in_secondary=True)
+
+    # dense
+    stack.fit(X1, y).predict(X1)
+    mse = 0.14
+    got = np.mean((stack.predict(X1) - y) ** 2)
+    assert round(got, 2) == mse
+
+    # sparse
+    stack.fit(sparse.csr_matrix(X1), y)
+    mse = 0.14
+    got = np.mean((stack.predict(sparse.csr_matrix(X1)) - y) ** 2)
+    assert round(got, 2) == mse

@@ -11,13 +11,14 @@
 
 from ..externals.name_estimators import _name_estimators
 from ..externals.estimator_checks import check_is_fitted
+import numpy as np
+from scipy import sparse
 from sklearn.base import BaseEstimator
 from sklearn.base import ClassifierMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
 from sklearn.externals import six
 from sklearn.model_selection._split import check_cv
-import numpy as np
 
 
 class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
@@ -207,12 +208,26 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                 try:
                     model.fit(X[train_index], y[train_index])
                 except TypeError as e:
-                    raise TypeError(str(e) + '\nPlease check that X and y'
+
+                    if str(e).startswith('A sparse matrix was passed,'
+                                         ' but dense'
+                                         ' data is required'):
+                        sparse_estimator_message = (
+                            "\nYou are likely getting this error"
+                            " because one of the"
+                            " estimators"
+                            " does not support sparse matrix input.")
+                    else:
+                        sparse_estimator_message = ''
+
+                    raise TypeError(str(e) + sparse_estimator_message +
+                                    '\nPlease check that X and y'
                                     'are NumPy arrays. If X and y are lists'
                                     ' of lists,\ntry passing them as'
                                     ' numpy.array(X)'
                                     ' and numpy.array(y).')
                 except KeyError as e:
+
                     raise KeyError(str(e) + '\nPlease check that X and y'
                                    ' are NumPy arrays. If X and y are pandas'
                                    ' DataFrames,\ntry passing them as'
@@ -254,8 +269,13 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         for train_index, test_index in skf:
             reordered_labels = np.concatenate((reordered_labels,
                                                y[test_index]))
-            reordered_features = np.concatenate((reordered_features,
-                                                 X[test_index]))
+
+            if sparse.issparse(X):
+                reordered_features = sparse.vstack((reordered_features,
+                                                    X[test_index]))
+            else:
+                reordered_features = np.concatenate((reordered_features,
+                                                     X[test_index]))
 
         # Fit the base models correctly this time using ALL the training set
         for model in self.clfs_:
@@ -264,6 +284,10 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         # Fit the secondary model
         if not self.use_features_in_secondary:
             self.meta_clf_.fit(all_model_predictions, reordered_labels)
+        elif sparse.issparse(X):
+            self.meta_clf_.fit(sparse.hstack((reordered_features,
+                                             all_model_predictions)),
+                               reordered_labels)
         else:
             self.meta_clf_.fit(np.hstack((reordered_features,
                                           all_model_predictions)),
@@ -341,9 +365,12 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         all_model_predictions = self.predict_meta_features(X)
         if not self.use_features_in_secondary:
             return self.meta_clf_.predict(all_model_predictions)
+        elif sparse.issparse(X):
+            return self.meta_clf_.predict(
+                sparse.hstack((X, all_model_predictions)))
         else:
-            return self.meta_clf_.predict(np.hstack((X,
-                                                     all_model_predictions)))
+            return self.meta_clf_.predict(
+                np.hstack((X, all_model_predictions)))
 
     def predict_proba(self, X):
         """ Predict class probabilities for X.
@@ -375,6 +402,9 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                                                single_model_prediction))
         if not self.use_features_in_secondary:
             return self.meta_clf_.predict_proba(all_model_predictions)
+        elif sparse.issparse(X):
+            self.meta_clf_\
+                .predict_proba(sparse.hstack((X, all_model_predictions)))
         else:
             return self.meta_clf_\
                 .predict_proba(np.hstack((X, all_model_predictions)))

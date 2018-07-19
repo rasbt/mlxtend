@@ -7,6 +7,7 @@
 
 import pandas as pd
 import numpy as np
+from scipy import sparse
 from mlxtend.classifier import StackingCVClassifier
 from mlxtend.externals.estimator_checks import NotFittedError
 from mlxtend.utils import assert_raises
@@ -360,3 +361,38 @@ def test_clone():
                                  meta_classifier=lr,
                                  store_train_meta_features=True)
     clone(stclf)
+
+
+def test_sparse_inputs():
+    rf = RandomForestClassifier(random_state=1)
+    lr = LogisticRegression()
+    stclf = StackingCVClassifier(classifiers=[rf, rf],
+                                 meta_classifier=lr)
+    X_train, X_test, y_train,  y_test = train_test_split(X_breast, y_breast,
+                                                         test_size=0.3)
+
+    # dense
+    stclf.fit(X_train, y_train)
+    assert round(stclf.score(X_train, y_train), 2) == 0.99
+
+    # sparse
+    stclf.fit(sparse.csr_matrix(X_train), y_train)
+    assert round(stclf.score(X_train, y_train), 2) == 0.99
+
+
+def test_sparse_inputs_with_features_in_secondary():
+    rf = RandomForestClassifier(random_state=1)
+    lr = LogisticRegression()
+    stclf = StackingCVClassifier(classifiers=[rf, rf],
+                                 meta_classifier=lr,
+                                 use_features_in_secondary=True)
+    X_train, X_test, y_train,  y_test = train_test_split(X_breast, y_breast,
+                                                         test_size=0.3)
+
+    # dense
+    stclf.fit(X_train, y_train)
+    assert round(stclf.score(X_train, y_train), 2) == 0.98
+
+    # sparse
+    stclf.fit(sparse.csr_matrix(X_train), y_train)
+    assert round(stclf.score(X_train, y_train), 2) == 0.98

@@ -16,6 +16,7 @@
 from ..externals.estimator_checks import check_is_fitted
 from ..externals import six
 from ..externals.name_estimators import _name_estimators
+from scipy import sparse
 from sklearn.base import BaseEstimator
 from sklearn.base import RegressorMixin
 from sklearn.base import TransformerMixin
@@ -178,11 +179,12 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             self.train_meta_features_ = meta_features
 
         # Train meta-model on the out-of-fold predictions
-        if self.use_features_in_secondary:
-            self.meta_regr_.fit(np.hstack((X, meta_features)), y)
-        else:
+        if not self.use_features_in_secondary:
             self.meta_regr_.fit(meta_features, y)
-
+        elif sparse.issparse(X):
+            self.meta_regr_.fit(sparse.hstack((X, meta_features)), y)
+        else:
+            self.meta_regr_.fit(np.hstack((X, meta_features)), y)
         # Retrain base models on all data
         for regr in self.regr_:
             regr.fit(X, y)
@@ -215,10 +217,12 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             regr.predict(X) for regr in self.regr_
         ])
 
-        if self.use_features_in_secondary:
-            return self.meta_regr_.predict(np.hstack((X, meta_features)))
-        else:
+        if not self.use_features_in_secondary:
             return self.meta_regr_.predict(meta_features)
+        elif sparse.issparse(X):
+            return self.meta_regr_.predict(sparse.hstack((X, meta_features)))
+        else:
+            return self.meta_regr_.predict(np.hstack((X, meta_features)))
 
     def predict_meta_features(self, X):
         """ Get meta-features of test-data.

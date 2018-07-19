@@ -8,6 +8,7 @@
 # License: BSD 3 clause
 
 import numpy as np
+from scipy import sparse
 from mlxtend.externals.estimator_checks import NotFittedError
 from mlxtend.regressor import StackingCVRegressor
 from mlxtend.utils import assert_raises
@@ -203,3 +204,46 @@ def test_clone():
                                  meta_regressor=svr_rbf,
                                  store_train_meta_features=True)
     clone(stregr)
+
+
+def test_sparse_matrix_inputs():
+    lr = LinearRegression()
+    svr_lin = SVR(kernel='linear')
+    ridge = Ridge(random_state=1)
+    svr_rbf = SVR(kernel='rbf')
+    stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
+                                meta_regressor=svr_rbf)
+
+    # dense
+    stack.fit(X1, y).predict(X1)
+    mse = 0.20
+    got = np.mean((stack.predict(X1) - y) ** 2)
+    assert round(got, 2) == mse
+
+    # sparse
+    stack.fit(sparse.csr_matrix(X1), y)
+    mse = 0.20
+    got = np.mean((stack.predict(sparse.csr_matrix(X1)) - y) ** 2)
+    assert round(got, 2) == mse
+
+
+def test_sparse_matrix_inputs_with_features_in_secondary():
+    lr = LinearRegression()
+    svr_lin = SVR(kernel='linear')
+    ridge = Ridge(random_state=1)
+    svr_rbf = SVR(kernel='rbf')
+    stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
+                                meta_regressor=svr_rbf,
+                                use_features_in_secondary=True)
+
+    # dense
+    stack.fit(X1, y).predict(X1)
+    mse = 0.20
+    got = np.mean((stack.predict(X1) - y) ** 2)
+    assert round(got, 2) == mse
+
+    # sparse
+    stack.fit(sparse.csr_matrix(X1), y)
+    mse = 0.20
+    got = np.mean((stack.predict(sparse.csr_matrix(X1)) - y) ** 2)
+    assert round(got, 2) == mse

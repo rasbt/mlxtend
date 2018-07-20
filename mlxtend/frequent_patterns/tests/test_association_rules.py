@@ -224,4 +224,3 @@ def test_on_df_with_missing_entries_support_only():
 
     assert df_result['support'].shape == (18,)
     assert int(np.isnan(df_result['support'].values).any()) != 1
-   

@@ -29,7 +29,7 @@ The CHANGELOG for the current development version is available at
 ##### Changes
 
 - Itemsets generated with `apriori` are now `frozenset`s ([#393](https://github.com/rasbt/mlxtend/issues/393) by [William Laney](https://github.com/WLaney) and [#394](https://github.com/rasbt/mlxtend/issues/394))
-
+- Now raises an error if a input DataFrame to `apriori` contains non 0, 1, True, False values. [#419](https://github.com/rasbt/mlxtend/issues/419))
 
 ##### Bug Fixes
 
@@ -38,7 +38,6 @@ The CHANGELOG for the current development version is available at
 - Allow `StackingClassifier` to work with sparse matrices when `use_features_in_secondary=True`  ([#408](https://github.com/rasbt/mlxtend/issues/408) by [Floris Hoogenbook](https://github.com/FlorisHoogenboom))
 - Allow `StackingCVRegressor` to work with sparse matrices when `use_features_in_secondary=True`  ([#416](https://github.com/rasbt/mlxtend/issues/416))
 - Allow `StackingCVClassifier` to work with sparse matrices when `use_features_in_secondary=True`  ([#417](https://github.com/rasbt/mlxtend/issues/417))
-
 
 
 

@@ -8,6 +8,7 @@ import numpy as np
 
 from mlxtend.frequent_patterns import apriori
 from numpy.testing import assert_array_equal
+from mlxtend.utils import assert_raises
 import pandas as pd
 
 dataset = [['Milk', 'Onion', 'Nutmeg', 'Kidney Beans', 'Eggs', 'Yogurt'],
@@ -74,10 +75,10 @@ def test_frozenset_selection():
                   == {'Eggs', 'Kidney Beans'}].values.shape == (1, 2)
     assert res_df[res_df['itemsets']
                   == frozenset(('Eggs', 'Kidney Beans'))].values.shape \
-           == (1, 2)
+        == (1, 2)
     assert res_df[res_df['itemsets']
                   == frozenset(('Kidney Beans', 'Eggs'))].values.shape \
-           == (1, 2)
+        == (1, 2)
 
 
 def test_sparse_apriori():
@@ -91,9 +92,19 @@ def test_sparse_apriori():
                       == {'Eggs', 'Kidney Beans'}].values.shape == (1, 2)
         assert res_df[res_df['itemsets']
                       == frozenset(('Eggs', 'Kidney Beans'))].values.shape \
-               == (1, 2)
+            == (1, 2)
         assert res_df[res_df['itemsets']
                       == frozenset(('Kidney Beans', 'Eggs'))].values.shape \
-               == (1, 2)
+            == (1, 2)
     test_with_fill_values(0)
     test_with_fill_values(False)
+
+
+def test_raise_error_if_input_is_not_binary():
+    df2 = pd.DataFrame(one_ary, columns=cols).copy()
+    df2.iloc[3, 3] = 2
+
+    assert_raises(ValueError,
+                  'The allowed values for a DataFrame are True, '
+                  'False, 0, 1. Found value 2',
+                  apriori, df2)

@@ -13,7 +13,8 @@ import numpy as np
 import pandas as pd
 
 
-def association_rules(df, metric="confidence", min_threshold=0.8):
+def association_rules(df, metric="confidence",
+                      min_threshold=0.8, support_only=False):
     """Generates a DataFrame of association rules including the
     metrics 'score', 'confidence', and 'lift'
 
@@ -25,7 +26,8 @@ def association_rules(df, metric="confidence", min_threshold=0.8):
 
     metric : string (default: 'confidence')
       Metric to evaluate if a rule is of interest.
-      Supported metrics are 'support', 'confidence', 'lift',
+      **Automatically set to 'support' if `support_only=True`.**
+      Otherwise, supported metrics are 'support', 'confidence', 'lift',
       'leverage', and 'conviction'
       These metrics are computed as follows:
 
@@ -38,19 +40,31 @@ def association_rules(df, metric="confidence", min_threshold=0.8):
         range: [0, inf]\n
 
     min_threshold : float (default: 0.8)
-      Minimal threshold for the evaluation metric
+      Minimal threshold for the evaluation metric,
+      via the `metric` parameter,
       to decide whether a candidate rule is of interest.
+
+    support_only : bool (default: False)
+      Only computes the rule support and fills the other
+      metric columns with NaNs. This is useful if:
+
+      a) the input DataFrame is incomplete, e.g., does
+      not contain support values for all rule antecedents
+      and consequents
+
+      b) you simply want to speed up the computation because
+      you don't need the other metrics.
 
     Returns
     ----------
-    pandas DataFrame with columns "antecedants" and "consequents"
+    pandas DataFrame with columns "antecedents" and "consequents"
       that store itemsets, plus the scoring metric columns:
       "antecedent support", "consequent support",
       "support", "confidence", "lift",
       "leverage", "conviction"
       of all rules for which
       metric(rule) >= min_threshold.
-      Each entry in the "antecedants" and "consequents" columns are
+      Each entry in the "antecedents" and "consequents" columns are
       of type `frozenset`, which is a Python built-in type that
       behaves similarly to sets except that it is immutable
       (For more info, see
@@ -101,9 +115,12 @@ def association_rules(df, metric="confidence", min_threshold=0.8):
                        "leverage", "conviction"]
 
     # check for metric compliance
-    if metric not in metric_dict.keys():
-        raise ValueError("Metric must be 'confidence' or 'lift', got '{}'"
-                         .format(metric))
+    if support_only:
+        metric = 'support'
+    else:
+        if metric not in metric_dict.keys():
+            raise ValueError("Metric must be 'confidence' or 'lift', got '{}'"
+                             .format(metric))
 
     # get dict of {frequent itemset} -> support
     keys = df['itemsets'].values
@@ -112,7 +129,7 @@ def association_rules(df, metric="confidence", min_threshold=0.8):
     frequent_items_dict = dict(zip(frozenset_vect(keys), values))
 
     # prepare buckets to collect frequent rules
-    rule_antecedants = []
+    rule_antecedents = []
     rule_consequents = []
     rule_supports = []
 
@@ -125,28 +142,56 @@ def association_rules(df, metric="confidence", min_threshold=0.8):
             for c in combinations(k, r=idx):
                 antecedent = frozenset(c)
                 consequent = k.difference(antecedent)
-                sA = frequent_items_dict[antecedent]
-                sC = frequent_items_dict[consequent]
-                # check for the threshold
-                if metric_dict[metric](sAC, sA, sC) >= min_threshold:
-                    rule_antecedants.append(antecedent)
+
+                if support_only:
+                    # support doesn't need these,
+                    # hence, placeholders should suffice
+                    sA = None
+                    sC = None
+
+                else:
+                    try:
+                        sA = frequent_items_dict[antecedent]
+                        sC = frequent_items_dict[consequent]
+                    except KeyError as e:
+                        s = (str(e) + 'You are likely getting this error'
+                                      ' because the DataFrame is missing '
+                                      ' antecedent and/or consequent '
+                                      ' information.'
+                                      ' You can try using the '
+                                      ' `support_only=True` option')
+                        raise KeyError(s)
+                    # check for the threshold
+
+                score = metric_dict[metric](sAC, sA, sC)
+                if score >= min_threshold:
+                    rule_antecedents.append(antecedent)
                     rule_consequents.append(consequent)
                     rule_supports.append([sAC, sA, sC])
 
     # check if frequent rule was generated
     if not rule_supports:
         return pd.DataFrame(
-            columns=["antecedants", "consequents"] + columns_ordered)
+            columns=["antecedents", "consequents"] + columns_ordered)
+
     else:
         # generate metrics
         rule_supports = np.array(rule_supports).T.astype(float)
-        sAC = rule_supports[0]
-        sA = rule_supports[1]
-        sC = rule_supports[2]
         df_res = pd.DataFrame(
-            data=list(zip(rule_antecedants, rule_consequents)),
-            columns=["antecedants", "consequents"])
-        for m in columns_ordered:
-            df_res[m] = metric_dict[m](sAC, sA, sC)
+            data=list(zip(rule_antecedents, rule_consequents)),
+            columns=["antecedents", "consequents"])
+
+        if support_only:
+            sAC = rule_supports[0]
+            for m in columns_ordered:
+                df_res[m] = np.nan
+            df_res['support'] = sAC
+
+        else:
+            sAC = rule_supports[0]
+            sA = rule_supports[1]
+            sC = rule_supports[2]
+            for m in columns_ordered:
+                df_res[m] = metric_dict[m](sAC, sA, sC)
 
         return df_res

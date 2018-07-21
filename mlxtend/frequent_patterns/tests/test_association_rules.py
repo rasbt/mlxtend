@@ -18,7 +18,7 @@ df_freq_items = apriori(df, min_support=0.6)
 
 df_freq_items_with_colnames = apriori(df, min_support=0.6, use_colnames=True)
 
-columns_ordered = ['antecedants', 'consequents',
+columns_ordered = ['antecedents', 'consequents',
                    'antecedent support', 'consequent support',
                    'support',
                    'confidence', 'lift', 'leverage', 'conviction']
@@ -26,7 +26,7 @@ columns_ordered = ['antecedants', 'consequents',
 
 def test_default():
     res_df = association_rules(df_freq_items)
-    res_df['antecedants'] = res_df['antecedants'].apply(
+    res_df['antecedents'] = res_df['antecedents'].apply(
         lambda x: str(frozenset(x)))
     res_df['consequents'] = res_df['consequents'].apply(
         lambda x: str(frozenset(x)))
@@ -46,7 +46,7 @@ def test_default():
         columns=columns_ordered
     )
 
-    expect['antecedants'] = expect['antecedants'].apply(
+    expect['antecedents'] = expect['antecedents'].apply(
         lambda x: str(frozenset(x)))
     expect['consequents'] = expect['consequents'].apply(
         lambda x: str(frozenset(x)))
@@ -58,7 +58,7 @@ def test_default():
 
 def test_datatypes():
     res_df = association_rules(df_freq_items)
-    for i in res_df['antecedants']:
+    for i in res_df['antecedents']:
         assert isinstance(i, frozenset) is True
 
     for i in res_df['consequents']:
@@ -72,7 +72,7 @@ def test_datatypes():
         .apply(lambda x: set(x))
 
     res_df = association_rules(df_freq_items)
-    for i in res_df['antecedants']:
+    for i in res_df['antecedents']:
         assert isinstance(i, frozenset) is True
 
     for i in res_df['consequents']:
@@ -96,7 +96,7 @@ def test_wrong_metric():
 
 def test_empty_result():
     expect = pd.DataFrame(
-        columns=['antecedants', 'consequents',
+        columns=['antecedents', 'consequents',
                  'antecedent support',
                  'consequent support',
                  'support',
@@ -168,7 +168,7 @@ def test_frozenset_selection():
     sel = res_df[res_df['consequents'] == {3, 5}]
     assert sel.values.shape[0] == 1
 
-    sel = res_df[res_df['antecedants'] == frozenset((8, 3))]
+    sel = res_df[res_df['antecedents'] == frozenset((8, 3))]
     assert sel.values.shape[0] == 1
 
 

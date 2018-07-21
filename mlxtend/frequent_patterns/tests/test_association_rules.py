@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from mlxtend.frequent_patterns import apriori, association_rules
-from numpy.testing import assert_raises
+from numpy.testing import assert_raises as numpy_assert_raises
 
 one_ary = np.array([[0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1],
                     [0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1],
@@ -18,7 +18,7 @@ df_freq_items = apriori(df, min_support=0.6)
 
 df_freq_items_with_colnames = apriori(df, min_support=0.6, use_colnames=True)
 
-columns_ordered = ['antecedants', 'consequents',
+columns_ordered = ['antecedents', 'consequents',
                    'antecedent support', 'consequent support',
                    'support',
                    'confidence', 'lift', 'leverage', 'conviction']
@@ -26,7 +26,7 @@ columns_ordered = ['antecedants', 'consequents',
 
 def test_default():
     res_df = association_rules(df_freq_items)
-    res_df['antecedants'] = res_df['antecedants'].apply(
+    res_df['antecedents'] = res_df['antecedents'].apply(
         lambda x: str(frozenset(x)))
     res_df['consequents'] = res_df['consequents'].apply(
         lambda x: str(frozenset(x)))
@@ -46,7 +46,7 @@ def test_default():
         columns=columns_ordered
     )
 
-    expect['antecedants'] = expect['antecedants'].apply(
+    expect['antecedents'] = expect['antecedents'].apply(
         lambda x: str(frozenset(x)))
     expect['consequents'] = expect['consequents'].apply(
         lambda x: str(frozenset(x)))
@@ -58,7 +58,7 @@ def test_default():
 
 def test_datatypes():
     res_df = association_rules(df_freq_items)
-    for i in res_df['antecedants']:
+    for i in res_df['antecedents']:
         assert isinstance(i, frozenset) is True
 
     for i in res_df['consequents']:
@@ -72,7 +72,7 @@ def test_datatypes():
         .apply(lambda x: set(x))
 
     res_df = association_rules(df_freq_items)
-    for i in res_df['antecedants']:
+    for i in res_df['antecedents']:
         assert isinstance(i, frozenset) is True
 
     for i in res_df['consequents']:
@@ -81,21 +81,22 @@ def test_datatypes():
 
 def test_no_support_col():
     df_no_support_col = df_freq_items.loc[:, ['itemsets']]
-    assert_raises(ValueError, association_rules, df_no_support_col)
+    numpy_assert_raises(ValueError, association_rules, df_no_support_col)
 
 
 def test_no_itemsets_col():
     df_no_itemsets_col = df_freq_items.loc[:, ['support']]
-    assert_raises(ValueError, association_rules, df_no_itemsets_col)
+    numpy_assert_raises(ValueError, association_rules, df_no_itemsets_col)
 
 
 def test_wrong_metric():
-    assert_raises(ValueError, association_rules, df_freq_items, 'unicorn')
+    numpy_assert_raises(ValueError, association_rules,
+                        df_freq_items, 'unicorn')
 
 
 def test_empty_result():
     expect = pd.DataFrame(
-        columns=['antecedants', 'consequents',
+        columns=['antecedents', 'consequents',
                  'antecedent support',
                  'consequent support',
                  'support',
@@ -167,5 +168,59 @@ def test_frozenset_selection():
     sel = res_df[res_df['consequents'] == {3, 5}]
     assert sel.values.shape[0] == 1
 
-    sel = res_df[res_df['antecedants'] == frozenset((8, 3))]
+    sel = res_df[res_df['antecedents'] == frozenset((8, 3))]
     assert sel.values.shape[0] == 1
+
+
+def test_override_metric_with_support():
+
+    res_df = association_rules(df_freq_items_with_colnames,
+                               min_threshold=0.8)
+    # default metric is confidence
+    assert res_df.values.shape[0] == 9
+
+    res_df = association_rules(df_freq_items_with_colnames,
+                               min_threshold=0.8,
+                               metric='support')
+    assert res_df.values.shape[0] == 2
+
+    res_df = association_rules(df_freq_items_with_colnames,
+                               min_threshold=0.8,
+                               support_only=True)
+    assert res_df.values.shape[0] == 2
+
+
+def test_on_df_with_missing_entries():
+    # this is a data frame where information about
+    # antecedents and consequents have been cropped
+    # see https://github.com/rasbt/mlxtend/issues/390
+    # for more details
+    dict = {'itemsets': [['177', '176'], ['177', '179'],
+                         ['176', '178'], ['176', '179'],
+                         ['93', '100'], ['177', '178'],
+                         ['177', '176', '178']],
+            'support': [0.253623, 0.253623, 0.217391,
+                        0.217391, 0.181159, 0.108696, 0.108696]}
+
+    df = pd.DataFrame(dict)
+
+    numpy_assert_raises(KeyError, association_rules, df)
+
+
+def test_on_df_with_missing_entries_support_only():
+    # this is a data frame where information about
+    # antecedents and consequents have been cropped
+    # see https://github.com/rasbt/mlxtend/issues/390
+    # for more details
+    dict = {'itemsets': [['177', '176'], ['177', '179'],
+                         ['176', '178'], ['176', '179'],
+                         ['93', '100'], ['177', '178'],
+                         ['177', '176', '178']],
+            'support': [0.253623, 0.253623, 0.217391,
+                        0.217391, 0.181159, 0.108696, 0.108696]}
+
+    df = pd.DataFrame(dict)
+    df_result = association_rules(df, support_only=True, min_threshold=0.1)
+
+    assert df_result['support'].shape == (18,)
+    assert int(np.isnan(df_result['support'].values).any()) != 1

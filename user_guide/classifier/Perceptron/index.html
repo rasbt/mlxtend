@@ -104,7 +104,7 @@
                         
                             
 <li >
-    <a href="../../../USER_GUIDE_INDEX/">USER GUIDE INDEX</a>
+    <a href="../../../USER_GUIDE_INDEX/">User Guide Index</a>
 </li>
 
                         
@@ -115,7 +115,7 @@
         
             
 <li >
-    <a href="../Adaline/">Adaline</a>
+    <a href="../Adaline/">Adaptive Linear Neuron -- Adaline</a>
 </li>
 
         
@@ -127,13 +127,13 @@
         
             
 <li >
-    <a href="../LogisticRegression/">LogisticRegression</a>
+    <a href="../LogisticRegression/">Logistic Regression</a>
 </li>
 
         
             
 <li >
-    <a href="../MultiLayerPerceptron/">MultiLayerPerceptron</a>
+    <a href="../MultiLayerPerceptron/">Neural Network - Multilayer Perceptron</a>
 </li>
 
         
@@ -479,6 +479,18 @@
             
 <li >
     <a href="../../math/num_permutations/">Num permutations</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/vectorspace_dimensionality/">Vectorspace dimensionality</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/vectorspace_orthonormalization/">Vectorspace orthonormalization</a>
 </li>
 
         
@@ -847,7 +859,7 @@
 
 
                     <li>
-                        <a href="https://github.com/rasbt/mlxtend">
+                        <a href="https://github.com/rasbt/mlxtend/">
                                 <i class="fa fa-github"></i>
                             GitHub
                         </a>
@@ -901,14 +913,12 @@ A perceptron receives multiple input signals, and if the sum of the input signal
 <p><img alt="" src="../Perceptron_files/perceptron_schematic.png" /></p>
 <h4 id="basic-notation">Basic Notation</h4>
 <p>Before we dive deeper into the algorithm(s) for learning the weights of the perceptron classifier, let us take a brief look at the basic notation. In the following sections, we will label the <em>positive</em> and <em>negative</em> class in our binary classification setting as "1" and "-1", respectively. Next, we define an activation function <script type="math/tex">g(\mathbf{z})</script> that takes a linear combination of the input values <script type="math/tex">\mathbf{x}</script> and weights <script type="math/tex">\mathbf{w}</script> as input (<script type="math/tex">\mathbf{z} = w_1x_{1} + \dots + w_mx_{m}</script>), and if <script type="math/tex">g(\mathbf{z})</script> is greater than a defined threshold <script type="math/tex">\theta</script> we predict 1 and -1 otherwise; in this case, this activation function <script type="math/tex">g</script> is a simple "unit step function," which is sometimes also called "Heaviside step function." </p>
-<p>
-<script type="math/tex; mode=display">
- g(z) =\begin{cases}
-    1 & \text{if <script type="math/tex">z \ge \theta</script>}\\
-    -1 &amp; \text{otherwise}.
-  \end{cases}
-</script>
-</p>
+<p>$$
+ g(z) =<script type="math/tex; mode=display">\begin{cases}
+    1 & \text{if $z \ge \theta$}\\
+    -1 & \text{otherwise}.
+  \end{cases}</script>
+$$</p>
 <p>where</p>
 <p>
 <script type="math/tex; mode=display">z =  w_1x_{1} + \dots + w_mx_{m} = \sum_{j=1}^{m} x_{j}w_{j} \\ = \mathbf{w}^T\mathbf{x}</script>
@@ -931,14 +941,12 @@ A perceptron receives multiple input signals, and if the sum of the input signal
 <p>In order to simplify the notation, we bring <script type="math/tex">\theta</script> to the left side of the equation and define <script type="math/tex">w_0 = -\theta  \text{ and } x_0=1</script>
 </p>
 <p>so that </p>
-<p>
-<script type="math/tex; mode=display">
- g({z}) =\begin{cases}
-    1 & \text{if <script type="math/tex">z \ge 0</script>}\\
-    -1 &amp; \text{otherwise}.
-  \end{cases}
-</script>
-</p>
+<p>$$
+ g({z}) =<script type="math/tex; mode=display">\begin{cases}
+    1 & \text{if $z \ge 0$}\\
+    -1 & \text{otherwise}.
+  \end{cases}</script>
+$$</p>
 <p>and</p>
 <p>
 <script type="math/tex; mode=display">z = w_0x_{0} + w_1x_{1} + \dots + w_mx_{m} = \sum_{j=0}^{m} x_{j}w_{j} \\ = \mathbf{w}^T\mathbf{x}.</script>
@@ -1174,6 +1182,8 @@ between 0.0 and 1.0 (perfect score).</p>
     <script src="../../../js/base.js"></script>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
     <script src="../../../mathjaxhelper.js"></script>
+    <script src="../../../search/require.js"></script>
+    <script src="../../../search/search.js"></script>
 
     <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
         <div class="modal-dialog">

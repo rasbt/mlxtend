@@ -104,7 +104,7 @@
                         
                             
 <li >
-    <a href="../../../USER_GUIDE_INDEX/">USER GUIDE INDEX</a>
+    <a href="../../../USER_GUIDE_INDEX/">User Guide Index</a>
 </li>
 
                         
@@ -115,7 +115,7 @@
         
             
 <li >
-    <a href="../Adaline/">Adaline</a>
+    <a href="../Adaline/">Adaptive Linear Neuron -- Adaline</a>
 </li>
 
         
@@ -479,6 +479,18 @@
             
 <li >
     <a href="../../math/num_permutations/">Num permutations</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/vectorspace_dimensionality/">Vectorspace dimensionality</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/vectorspace_orthonormalization/">Vectorspace orthonormalization</a>
 </li>
 
         
@@ -847,7 +859,7 @@
 
 
                     <li>
-                        <a href="https://github.com/rasbt/mlxtend">
+                        <a href="https://github.com/rasbt/mlxtend/">
                                 <i class="fa fa-github"></i>
                             GitHub
                         </a>
@@ -900,6 +912,9 @@
                 <!--  -->
         
             <li><a href="#example-6-ensembles-of-classifiers-that-operate-on-different-feature-subsets">Example 6 - Ensembles of Classifiers that Operate on Different Feature Subsets</a></li>
+                <!--  -->
+        
+            <li><a href="#example-7-a-note-about-scikit-learn-svms-and-soft-voting">Example 7 - A Note about Scikit-Learn SVMs and Soft Voting</a></li>
                 <!--  -->
         
     
@@ -1353,6 +1368,50 @@ eclf.fit(X, y)
           verbose=0, warm_start=False))])],
             refit=True, verbose=0, voting='hard', weights=None)
 </code></pre>
+<h2 id="example-7-a-note-about-scikit-learn-svms-and-soft-voting">Example 7 - A Note about Scikit-Learn SVMs and Soft Voting</h2>
+<p>This section provides some additional technical insights in how probabilities are used when <code>voting='soft'</code>. </p>
+<p>Note that scikit-learn estimates the probabilities for SVMs (more info here: http://scikit-learn.org/stable/modules/svm.html#scores-probabilities) in a way that these may not be consistent with the class labels that the SVM predicts. This is an extreme example, but let's say we have a dataset with 3 class labels, 0, 1, and 2. For a given training example, the SVM classifier may predict class 2. However, the class-membership probabilities may look as follows:</p>
+<ul>
+<li>class 0: 99%</li>
+<li>class 1: 0.5%</li>
+<li>class 2: 0.5%</li>
+</ul>
+<p>A practical example of this scenario is shown below:</p>
+<pre><code class="python">import numpy as np
+from mlxtend.classifier import EnsembleVoteClassifier
+from sklearn.svm import SVC
+from sklearn.datasets import load_iris
+
+iris = load_iris()
+X, y = iris.data, iris.target
+
+clf2 = SVC(probability=True, random_state=4)
+clf2.fit(X, y)
+eclf = EnsembleVoteClassifier(clfs=[clf2], voting='soft', refit=False)
+eclf.fit(X, y)
+
+for svm_class, e_class, svm_prob, e_prob, in zip(clf2.predict(X),
+                                                 eclf.predict(X),
+                                                 clf2.predict_proba(X),
+                                                 eclf.predict_proba(X)):
+    if svm_class != e_class:
+        print('============')
+        print('Probas from SVM            :', svm_prob)
+        print('Class from SVM             :', svm_class)
+        print('Probas from SVM in Ensemble:', e_prob)
+        print('Class from SVM in Ensemble :', e_class)
+        print('============')
+</code></pre>
+
+<pre><code>============
+Probas from SVM            : [ 0.01192489  0.47662663  0.51144848]
+Class from SVM             : 1
+Probas from SVM in Ensemble: [ 0.01192489  0.47662663  0.51144848]
+Class from SVM in Ensemble : 2
+============
+</code></pre>
+<p>Based on the probabilities, we would expect the SVM to predict class 2, because it has the highest probability. Since the <code>EnsembleVoteClassifier</code> uses the <code>argmax</code> function internally if <code>voting='soft'</code>, it would indeed predict class 2 in this case even if the ensemble consists of only one SVM model.</p>
+<p>Note that in practice, this minor technical detail does not need to concern you, but it is useful to keep it in mind in case you are wondering about results from a 1-model SVM ensemble compared to that SVM alone -- this is not a bug.</p>
 <h1 id="api">API</h1>
 <p><em>EnsembleVoteClassifier(clfs, voting='hard', weights=None, verbose=0, refit=True)</em></p>
 <p>Soft Voting/Majority Rule classifier for scikit-learn estimators.</p>
@@ -1613,6 +1672,8 @@ n_features is the number of features.</p>
     <script src="../../../js/base.js"></script>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
     <script src="../../../mathjaxhelper.js"></script>
+    <script src="../../../search/require.js"></script>
+    <script src="../../../search/search.js"></script>
 
     <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
         <div class="modal-dialog">

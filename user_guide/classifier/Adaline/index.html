@@ -10,7 +10,7 @@
     <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/classifier/Adaline/"> 
     <link rel="shortcut icon" href="../../../img/favicon.ico">
 
-    <title>Adaline - mlxtend</title>
+    <title>Adaptive Linear Neuron -- Adaline - mlxtend</title>
 
     <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
@@ -104,7 +104,7 @@
                         
                             
 <li >
-    <a href="../../../USER_GUIDE_INDEX/">USER GUIDE INDEX</a>
+    <a href="../../../USER_GUIDE_INDEX/">User Guide Index</a>
 </li>
 
                         
@@ -115,7 +115,7 @@
         
             
 <li class="active">
-    <a href="./">Adaline</a>
+    <a href="./">Adaptive Linear Neuron -- Adaline</a>
 </li>
 
         
@@ -479,6 +479,18 @@
             
 <li >
     <a href="../../math/num_permutations/">Num permutations</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/vectorspace_dimensionality/">Vectorspace dimensionality</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/vectorspace_orthonormalization/">Vectorspace orthonormalization</a>
 </li>
 
         
@@ -847,7 +859,7 @@
 
 
                     <li>
-                        <a href="https://github.com/rasbt/mlxtend">
+                        <a href="https://github.com/rasbt/mlxtend/">
                                 <i class="fa fa-github"></i>
                             GitHub
                         </a>
@@ -916,14 +928,12 @@
 <script type="math/tex; mode=display">MSE = \frac{1}{n} \times SSE</script>
 </p>
 <p><a href="../../regressor/LinearRegression/"><code>LinearRegression</code></a> implements a linear regression model for performing ordinary least squares regression, and in Adaline, we add a threshold function <script type="math/tex">g(\cdot)</script> to convert the continuous outcome to a categorical class label:</p>
-<p>
-<script type="math/tex; mode=display">y = g({z}) =
-\begin{cases}
-1 & \text{if z <script type="math/tex">\ge</script> 0}\\
--1 &amp; \text{otherwise}.
-\end{cases}
-</script>
-</p>
+<p>$$y = g({z}) =
+<script type="math/tex; mode=display">\begin{cases}
+1 & \text{if z $\ge$ 0}\\
+-1 & \text{otherwise}.
+\end{cases}</script>
+$$</p>
 <p>An Adaline model can be trained by one of the following three approaches:</p>
 <ul>
 <li>Normal Equations</li>
@@ -1257,6 +1267,8 @@ between 0.0 and 1.0 (perfect score).</p>
     <script src="../../../js/base.js"></script>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
     <script src="../../../mathjaxhelper.js"></script>
+    <script src="../../../search/require.js"></script>
+    <script src="../../../search/search.js"></script>
 
     <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
         <div class="modal-dialog">

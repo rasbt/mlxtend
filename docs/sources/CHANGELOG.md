@@ -21,7 +21,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- -
+- Addressed deprecations warnings in NumPy 0.15 ([#425](https://github.com/rasbt/mlxtend/pull/425))
 
 
 ##### Bug Fixes

@@ -22,6 +22,7 @@ The CHANGELOG for the current development version is available at
 ##### Changes
 
 - Addressed deprecations warnings in NumPy 0.15 ([#425](https://github.com/rasbt/mlxtend/pull/425))
+- Fixed an issue with a missing import in `mlxtend.plotting.plot_confusion_matrix` ([#428](https://github.com/rasbt/mlxtend/pull/428))
 
 
 ##### Bug Fixes

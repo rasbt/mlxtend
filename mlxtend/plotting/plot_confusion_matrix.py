@@ -6,6 +6,7 @@
 # License: BSD 3 clause
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def plot_confusion_matrix(conf_mat,

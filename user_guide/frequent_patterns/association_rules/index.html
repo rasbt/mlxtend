@@ -924,7 +924,7 @@
 <h2 id="overview">Overview</h2>
 <p>Rule generation is a common task in the mining of frequent patterns. <em>An association rule is an implication expression of the form <script type="math/tex">X \rightarrow Y</script>, where <script type="math/tex">X</script> and <script type="math/tex">Y</script> are disjoint itemsets</em> [1]. A more concrete example based on consumer behaviour would be  <script type="math/tex">\{Diapers\} \rightarrow \{Beer\}</script> suggesting that people who buy diapers are also likely to buy beer. To evaluate the "interest" of such an association rule, different metrics have been developed. The current implementation make use of the <code>confidence</code> and <code>lift</code> metrics. </p>
 <h3 id="metrics">Metrics</h3>
-<p>The currently supported metrics for evaluating association rules and setting selection thresholds are listed below. Given a rule "A -&gt; C", <em>A</em> stands for antecedant and <em>C</em> stands for consequent.</p>
+<p>The currently supported metrics for evaluating association rules and setting selection thresholds are listed below. Given a rule "A -&gt; C", <em>A</em> stands for antecedent and <em>C</em> stands for consequent.</p>
 <h4 id="support">'support':</h4>
 <p>
 <script type="math/tex; mode=display">\text{support}(A\rightarrow C) = \text{support}(A \cup C), \;\;\; \text{range: } [0, 1]</script>
@@ -932,7 +932,7 @@
 <ul>
 <li>introduced in [3]</li>
 </ul>
-<p>The support metric is defined for itemsets, not assocication rules. The table produced by the association rule mining algorithm contains three different support metrics: 'antecedant support', 'consequent support', and 'support'. Here, 'antecedant support' computes the proportion of transactions that contain the antecedant A, and 'consequent support' computes the support for the itemset of the consequent C. The 'support' metric then computes the support of the combined itemset A <script type="math/tex">\cup</script> C -- note that 'support' depends on 'antecedant support' and 'consequent support' via min('antecedant support', 'consequent support').</p>
+<p>The support metric is defined for itemsets, not assocication rules. The table produced by the association rule mining algorithm contains three different support metrics: 'antecedent support', 'consequent support', and 'support'. Here, 'antecedent support' computes the proportion of transactions that contain the antecedent A, and 'consequent support' computes the support for the itemset of the consequent C. The 'support' metric then computes the support of the combined itemset A <script type="math/tex">\cup</script> C -- note that 'support' depends on 'antecedent support' and 'consequent support' via min('antecedent support', 'consequent support').</p>
 <p>Typically, support is used to measure the abundance or frequency (often interpreted as significance or importance) of an itemset in a database. We refer to an itemset as a "frequent itemset" if you support is larger than a specified minimum-support threshold. Note that in general, due to the <em>downward closure</em> property, all subsets of a frequent itemset are also frequent.</p>
 <h4 id="confidence">'confidence':</h4>
 <p>
@@ -1374,12 +1374,12 @@ rules
 
 <p>Pandas <code>DataFrames</code> make it easy to filter the results further. Let's say we are ony interested in rules that satisfy the following criteria:</p>
 <ol>
-<li>at least 2 antecedants</li>
+<li>at least 2 antecedents</li>
 <li>a confidence &gt; 0.75</li>
 <li>a lift score &gt; 1.2</li>
 </ol>
 <p>We could compute the antecedent length as follows:</p>
-<pre><code class="python">rules[&quot;antecedant_len&quot;] = rules[&quot;antecedents&quot;].apply(lambda x: len(x))
+<pre><code class="python">rules[&quot;antecedent_len&quot;] = rules[&quot;antecedents&quot;].apply(lambda x: len(x))
 rules
 </code></pre>
 
@@ -1410,7 +1410,7 @@ rules
       <th>lift</th>
       <th>leverage</th>
       <th>conviction</th>
-      <th>antecedant_len</th>
+      <th>antecedent_len</th>
     </tr>
   </thead>
   <tbody>
@@ -1497,7 +1497,7 @@ rules
 </div>
 
 <p>Then, we can use pandas' selection syntax as shown below:</p>
-<pre><code class="python">rules[ (rules['antecedant_len'] &gt;= 2) &amp;
+<pre><code class="python">rules[ (rules['antecedent_len'] &gt;= 2) &amp;
        (rules['confidence'] &gt; 0.75) &amp;
        (rules['lift'] &gt; 1.2) ]
 </code></pre>
@@ -1529,7 +1529,7 @@ rules
       <th>lift</th>
       <th>leverage</th>
       <th>conviction</th>
-      <th>antecedant_len</th>
+      <th>antecedent_len</th>
     </tr>
   </thead>
   <tbody>
@@ -1550,7 +1550,7 @@ rules
 </table>
 </div>
 
-<p>Similarly, using the Pandas API, we can select entries based on the "antecedants" or "consequents" columns:</p>
+<p>Similarly, using the Pandas API, we can select entries based on the "antecedents" or "consequents" columns:</p>
 <pre><code class="python">rules[rules['antecedents'] == {'Eggs', 'Kidney Beans'}]
 </code></pre>
 
@@ -1581,7 +1581,7 @@ rules
       <th>lift</th>
       <th>leverage</th>
       <th>conviction</th>
-      <th>antecedant_len</th>
+      <th>antecedent_len</th>
     </tr>
   </thead>
   <tbody>
@@ -1604,12 +1604,12 @@ rules
 
 <p><strong>Frozensets</strong></p>
 <p>Note that the entries in the "itemsets" column are of type <code>frozenset</code>, which is built-in Python type that is similar to a Python <code>set</code> but immutable, which makes it more efficient for certain query or comparison operations (https://docs.python.org/3.6/library/stdtypes.html#frozenset). Since <code>frozenset</code>s are sets, the item order does not matter. I.e., the query</p>
-<p><code>rules[rules['antecedants'] == {'Eggs', 'Kidney Beans'}]</code></p>
+<p><code>rules[rules['antecedents'] == {'Eggs', 'Kidney Beans'}]</code></p>
 <p>is equivalent to any of the following three</p>
 <ul>
-<li><code>rules[rules['antecedants'] == {'Kidney Beans', 'Eggs'}]</code></li>
-<li><code>rules[rules['antecedants'] == frozenset(('Eggs', 'Kidney Beans'))]</code></li>
-<li><code>rules[rules['antecedants'] == frozenset(('Kidney Beans', 'Eggs'))]</code></li>
+<li><code>rules[rules['antecedents'] == {'Kidney Beans', 'Eggs'}]</code></li>
+<li><code>rules[rules['antecedents'] == frozenset(('Eggs', 'Kidney Beans'))]</code></li>
+<li><code>rules[rules['antecedents'] == frozenset(('Kidney Beans', 'Eggs'))]</code></li>
 </ul>
 <h2 id="example-3-frequent-itemsets-with-incomplete-antecedent-and-consequent-information">Example 3 -- Frequent Itemsets with Incomplete Antecedent and Consequent Information</h2>
 <p>Most metrics computed by <code>association_rules</code> depends on the consequent and antecedent support score of a given rule provided in the frequent itemset input DataFrame. Consider the following example:</p>
@@ -2147,14 +2147,14 @@ you don't need the other metrics.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
-<p>pandas DataFrame with columns "antecedants" and "consequents"
+<p>pandas DataFrame with columns "antecedents" and "consequents"
     that store itemsets, plus the scoring metric columns:
     "antecedent support", "consequent support",
     "support", "confidence", "lift",
     "leverage", "conviction"
     of all rules for which
     metric(rule) &gt;= min_threshold.
-    Each entry in the "antecedants" and "consequents" columns are
+    Each entry in the "antecedents" and "consequents" columns are
     of type <code>frozenset</code>, which is a Python built-in type that
     behaves similarly to sets except that it is immutable
     (For more info, see

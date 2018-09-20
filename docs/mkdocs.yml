@@ -107,6 +107,7 @@ pages:
     - user_guide/plotting/plot_learning_curves.md
     - user_guide/plotting/plot_linear_regression.md
     - user_guide/plotting/plot_sequential_feature_selection.md
+    - user_guide/plotting/scatterplotmatrix.md
     - user_guide/plotting/stacked_barplot.md
   - preprocessing:
     - user_guide/preprocessing/CopyTransformer.md

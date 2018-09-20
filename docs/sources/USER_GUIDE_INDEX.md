@@ -78,6 +78,7 @@
 - [plot_learning_curves](user_guide/plotting/plot_learning_curves.md)
 - [plot_linear_regression](user_guide/plotting/plot_linear_regression.md)
 - [plot_sequential_feature_selection](user_guide/plotting/plot_sequential_feature_selection.md)
+- [scatterplotmatrix](user_guide/plotting/scatterplotmatrix.md)
 - [stacked_barplot](user_guide/plotting/stacked_barplot.md)
 
 ## `preprocessing`

@@ -16,6 +16,8 @@ from .stacked_barplot import stacked_barplot
 from .enrichment_plot import enrichment_plot
 from .checkerboard import checkerboard_plot
 from .ecdf import ecdf
+from .scatterplotmatrix import scatterplotmatrix
+
 
 __all__ = ["plot_learning_curves",
            "plot_decision_regions",
@@ -27,4 +29,5 @@ __all__ = ["plot_learning_curves",
            "stacked_barplot",
            "enrichment_plot",
            "checkerboard_plot",
-           "ecdf"]
+           "ecdf",
+           "scatterplotmatrix"]

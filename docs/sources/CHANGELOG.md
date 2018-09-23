@@ -17,7 +17,7 @@ The CHANGELOG for the current development version is available at
 ##### New Features
 
 - Added a `scatterplotmatrix` function to the `plotting` module. ([#437](https://github.com/rasbt/mlxtend/pull/437))
-
+- Added `sample_weight` option to `StackingRegressor`. ([#438](https://github.com/rasbt/mlxtend/issues/438))
 
 ##### Changes
 

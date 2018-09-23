@@ -10,6 +10,8 @@ from mlxtend.utils import assert_raises
 from mlxtend.regressor import StackingRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import Ridge
+from sklearn.linear_model import Lasso
+from sklearn.neural_network import MLPRegressor
 from sklearn.svm import SVR
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import GridSearchCV
@@ -27,6 +29,7 @@ X2 = np.sort(5 * np.random.rand(40, 2), axis=0)
 y = np.sin(X1).ravel()
 y[::5] += 3 * (0.5 - np.random.rand(8))
 y2 = np.sin(X2)
+w = np.random.random(40)
 
 
 def test_different_models():
@@ -67,6 +70,60 @@ def test_multivariate_class():
     # there seems to be an issue with the following test on Windows
     # sometimes via Appveyor
     assert round(got, 2) == mse, got
+
+
+def test_sample_weight():
+    lr = LinearRegression()
+    svr_lin = SVR(kernel='linear')
+    ridge = Ridge(random_state=1)
+    svr_rbf = SVR(kernel='rbf')
+    stregr = StackingRegressor(regressors=[svr_lin, lr, ridge],
+                               meta_regressor=svr_rbf)
+    stregr.fit(X1, y, sample_weight=w).predict(X1)
+    mse = 0.22
+    got = np.mean((stregr.predict(X1) - y) ** 2)
+    assert round(got, 2) == mse
+
+
+def test_weight_ones():
+    # sample weight of ones should produce equivalent outcome as no weight
+    lr = LinearRegression()
+    svr_lin = SVR(kernel='linear')
+    ridge = Ridge(random_state=1)
+    svr_rbf = SVR(kernel='rbf')
+    stregr = StackingRegressor(regressors=[svr_lin, lr, ridge],
+                               meta_regressor=svr_rbf)
+
+    stregr.fit(X1, y, sample_weight=np.ones(40)).predict(X1)
+    mse = 0.21
+    got = np.mean((stregr.predict(X1) - y) ** 2)
+    assert round(got, 2) == mse
+
+
+@raises(TypeError)
+def test_unsupported_regressor():
+    # including regressor that does not support
+    # sample_weight should raise error
+    lr = LinearRegression()
+    svr_lin = SVR(kernel='linear')
+    ridge = Ridge(random_state=1)
+    svr_rbf = SVR(kernel='rbf')
+    lasso = Lasso(random_state=1)
+    stregr = StackingRegressor(regressors=[svr_lin, lr, ridge, lasso],
+                               meta_regressor=svr_rbf)
+    stregr.fit(X1, y, w).predict(X1)
+
+
+@raises(TypeError)
+def test_unsupported_meta_regressor():
+    # meta regressor that does not support sample_weight should raise error
+    lr = LinearRegression()
+    svr_lin = SVR(kernel='linear')
+    ridge = Ridge(random_state=1)
+    mlp = MLPRegressor()
+    stregr = StackingRegressor(regressors=[svr_lin, lr, ridge],
+                               meta_regressor=mlp)
+    stregr.fit(X1, y, w).predict(X1)
 
 
 def test_gridsearch():

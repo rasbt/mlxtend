@@ -17,7 +17,7 @@ The CHANGELOG for the current development version is available at
 ##### New Features
 
 - Added a `scatterplotmatrix` function to the `plotting` module. ([#437](https://github.com/rasbt/mlxtend/pull/437))
-
+- Added a `RandomHoldoutSplit` class to perform a train/valid split without rotation in `SequentialFeatureSelector`, scikit-learn `GridSearchCV` etc. ([#442](https://github.com/rasbt/mlxtend/pull/442))
 
 ##### Changes
 

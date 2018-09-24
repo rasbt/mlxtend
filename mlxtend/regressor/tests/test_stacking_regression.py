@@ -240,13 +240,13 @@ def test_get_params():
     expect = ['linearregression',
               'meta-svr',
               'meta_regressor',
-              'refit',
+              'use_clones',
               'regressors',
               'ridge',
               'store_train_meta_features',
               'use_features_in_secondary',
               'verbose']
-    assert got == expect, got
+    assert set(got) == set(expect), got 
 
 
 def test_regressor_gridsearch():

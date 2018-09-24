@@ -26,18 +26,14 @@ class StackingEstimator(BaseEstimator, TransformerMixin):
                  store_train_meta_features=True, use_clones=True):
         self.estimators = estimators
         self.meta_estimator = meta_estimator
-        self.named_estimators = {key: value for
-                                 key, value in
-                                 _name_estimators(estimators)}
-        self.named_meta_estimator = {'meta-%s' % key: value for
-                                     key, value in
-                                     _name_estimators([meta_estimator])}
         self.verbose = verbose
         self.use_features_in_secondary = use_features_in_secondary
         self.store_train_meta_features = store_train_meta_features
         self.use_clones = use_clones
-    
-    
+        
+        # Placeholders for ests_, meta_est_
+        #self.ests_, self.meta_est_ = estimators, meta_estimator
+
     def fit(self, X, y, sample_weight=None):
         """Learn weight coefficients from training data for each regressor.
 
@@ -64,7 +60,7 @@ class StackingEstimator(BaseEstimator, TransformerMixin):
         self._initialize_estimators()
         
         # fit base estimators
-        self._fit_base_estimators(X, y)
+        self._fit_base_estimators(X, y, sample_weight=sample_weight)
 
         
         meta_features = self.predict_meta_features(X)
@@ -75,7 +71,7 @@ class StackingEstimator(BaseEstimator, TransformerMixin):
         # add variables for meta regression, if needed
         meta_features = self._augment_meta_features(X, meta_features)
 
-        self._fit_one(self.meta_estimator_, meta_features, y, 
+        self._fit_one(self.meta_est_, meta_features, y, 
                       sample_weight=sample_weight)
  
         return self
@@ -94,11 +90,12 @@ class StackingEstimator(BaseEstimator, TransformerMixin):
         y_target : array-like, shape = [n_samples] or [n_samples, n_targets]
             Predicted target values.
         """
-        check_is_fitted(self, 'estimators_')
-        
+        check_is_fitted(self, 'ests_')
+        check_is_fitted(self, 'meta_est_')
+
         meta_features = self.predict_meta_features(X)
         meta_features = self._augment_meta_features(X, meta_features)
-        return self.meta_estimator_.predict(meta_features)
+        return self.meta_est_.predict(meta_features)
                     
     def predict_meta_features(self, X):
         """ Get meta-features of test-data.
@@ -117,8 +114,8 @@ class StackingEstimator(BaseEstimator, TransformerMixin):
             of regressors.
 
         """
-        check_is_fitted(self, 'estimators_')
-        return np.column_stack([r.predict(X) for r in self.estimators_])
+        check_is_fitted(self, 'ests_')
+        return np.column_stack([r.predict(X) for r in self.ests_])
 
     def get_params(self, deep=True):
         """Return estimator parameter names for GridSearch support."""
@@ -145,11 +142,11 @@ class StackingEstimator(BaseEstimator, TransformerMixin):
         # if use_clones, create copies of base estimators
         # otherwise we assign the references
         if self.use_clones:
-            self.estimators_ = [clone(e) for e in self.estimators]
-            self.meta_estimator_ = clone(self.meta_estimator)
+            self.ests_ = [clone(e) for e in self.estimators_]
+            self.meta_est_ = clone(self.meta_estimator_)
         else:
-            self.estimator_ = self.estimator_
-            self.meta_estimator_ = self.meta_estimator_
+            self.ests_ = self.estimators_
+            self.meta_est_ = self.meta_estimator_
     
     def _fit_one(self, estimator, X, y, sample_weight=None):
         if sample_weight is None:
@@ -159,14 +156,15 @@ class StackingEstimator(BaseEstimator, TransformerMixin):
     
     def _fit_base_estimators(self, X, y, sample_weight=None):
         if self.verbose > 0:
-            print("Fitting %d regressors..." % (len(self.estimators)))
+            print("Fitting %d regressors..." % len(self.ests_))
 
-        for estimator in self.estimators_:
+        for estimator in self.ests_:
 
             if self.verbose > 0:
-                i = self.estimators_.index(estimator) + 1
+                i = self.ests_.index(estimator) + 1
                 print("Fitting regressor%d: %s (%d/%d)" %
-                      (i, _name_estimators((estimator,))[0][0], i, len(self.estimators_)))
+                      (i, _name_estimators((estimator,))[0][0],
+                       i, len(self.ests_)))
 
             if self.verbose > 2:
                 if hasattr(estimator, 'verbose'):
@@ -186,7 +184,24 @@ class StackingEstimator(BaseEstimator, TransformerMixin):
         else:
             return np.hstack((X, prediction_features))
 
+    @property
+    def estimators_(self):
+        return self.estimators
 
+    @property
+    def meta_estimator_(self):
+        return self.meta_estimator
+
+    @property    
+    def named_estimators(self):
+        return {key: value \
+                for key, value in _name_estimators(self.estimators_)}
+    
+    @property
+    def named_meta_estimator(self):
+        return {'meta-%s' % key: value \
+                for key, value in _name_estimators([self.meta_estimator_])}
+        
 class StackingRegressor(StackingEstimator, RegressorMixin):
 
     """A Stacking regressor for scikit-learn estimators for regression.
@@ -262,22 +277,32 @@ class StackingRegressor(StackingEstimator, RegressorMixin):
             use_clones=use_clones)
         self.regressors = regressors
         self.meta_regressor = meta_regressor
+        del self.estimators
+        del self.meta_estimator
         
     @property
+    def estimators_(self):
+        return self.regressors
+
+    @property
+    def meta_estimator_(self):
+        return self.meta_regressor
+
+    @property
     def regr_(self):
-        return self.estimators_
+        return self.ests_
         
     @property
     def meta_regr_(self):
-        return self.meta_estimator_
+        return self.meta_ests_
 
     @property
     def intercept_(self):
-        return self.meta_estimator_.intercept_
+        return self.meta_est_.intercept_
     
     @property
     def coef_(self):
-        return self.meta_estimator_.coef_
+        return self.meta_est_.coef_
 
 
 class StackingClassifier(StackingEstimator, ClassifierMixin):
@@ -357,6 +382,8 @@ class StackingClassifier(StackingEstimator, ClassifierMixin):
         self.average_probas = average_probas    
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier
+        del self.estimators
+        del self.meta_estimator
 
     def predict_meta_features(self, X):
         """ Get meta-features of test-data.
@@ -396,13 +423,23 @@ class StackingClassifier(StackingEstimator, ClassifierMixin):
             Probability for each class per sample.
         """
         check_is_fitted(self, 'clfs_')
+        check_is_fitted(self, 'meta_clf_')
         meta_features = self.predict_meta_features(X)
         meta_features = self._augment_meta_features(X, meta_features)
+        return self.meta_clf_.predict_proba(meta_features)
+
+    @property
+    def estimators_(self):
+        return self.classifiers
+
+    @property
+    def meta_estimator_(self):
+        return self.meta_classifier
         
     @property
     def clfs_(self):
-        return self.estimators_
+        return self.ests_
 
     @property
     def meta_clf_(self):
-        return self.meta_estimator_
+        return self.meta_est_

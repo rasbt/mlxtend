@@ -7,16 +7,18 @@
 #
 # License: BSD 3 clause
 
+import random
 import numpy as np
 from scipy import sparse
 from mlxtend.externals.estimator_checks import NotFittedError
 from mlxtend.regressor import StackingCVRegressor
 from mlxtend.utils import assert_raises
 from sklearn.linear_model import LinearRegression
-from sklearn.linear_model import Ridge
+from sklearn.linear_model import Ridge, Lasso
 from sklearn.svm import SVR
-from sklearn.model_selection import GridSearchCV, train_test_split
+from sklearn.model_selection import GridSearchCV, train_test_split, KFold
 from sklearn.base import clone
+from nose.tools import raises
 
 
 # Some test data
@@ -247,3 +249,82 @@ def test_sparse_matrix_inputs_with_features_in_secondary():
     mse = 0.20
     got = np.mean((stack.predict(sparse.csr_matrix(X1)) - y) ** 2)
     assert round(got, 2) == mse
+
+
+# Calling for np.random will break the existing tests by changing the
+# seed for CV.
+# As a temporary workaround, we use random package to generate random w.
+random.seed(8)
+w = np.array([random.random() for _ in range(40)])
+# w  = np.random.random(40)
+
+
+def test_sample_weight():
+    lr = LinearRegression()
+    svr_lin = SVR(kernel='linear')
+    ridge = Ridge(random_state=1)
+    svr_rbf = SVR(kernel='rbf')
+    stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
+                                meta_regressor=svr_rbf,
+                                cv=KFold(4, shuffle=True, random_state=7))
+    pred1 = stack.fit(X1, y, sample_weight=w).predict(X1)
+    mse = 0.21  # 0.20770
+    got = np.mean((stack.predict(X1) - y) ** 2)
+    assert round(got, 2) == mse, "Expected %.2f, but got %.5f" % (mse, got)
+    pred2 = stack.fit(X1, y).predict(X1)
+    maxdiff = np.max(np.abs(pred1 - pred2))
+    assert maxdiff > 1e-3, "max diff is %.4f" % maxdiff
+
+
+def test_weight_ones():
+    # sample_weight = None and sample_weight = ones
+    # should give the same result, provided that the
+    # randomness of the models is controled
+    lr = LinearRegression()
+    svr_lin = SVR(kernel='linear')
+    ridge = Ridge(random_state=1)
+    svr_rbf = SVR(kernel='rbf')
+    stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
+                                meta_regressor=svr_rbf,
+                                cv=KFold(5, shuffle=True, random_state=5))
+    pred1 = stack.fit(X1, y).predict(X1)
+    pred2 = stack.fit(X1, y, sample_weight=np.ones(40)).predict(X1)
+    assert np.max(np.abs(pred1 - pred2)) < 1e-3
+
+
+@raises(TypeError)
+def test_unsupported_regressor():
+    lr = LinearRegression()
+    svr_lin = SVR(kernel='linear')
+    ridge = Ridge(random_state=1)
+    lasso = Lasso(random_state=1)
+    svr_rbf = SVR(kernel='rbf')
+    stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge, lasso],
+                                meta_regressor=svr_rbf)
+    stack.fit(X1, y, sample_weight=w).predict(X1)
+
+
+@raises(TypeError)
+def test_unsupported_meta_regressor():
+    lr = LinearRegression()
+    svr_lin = SVR(kernel='linear')
+    ridge = Ridge(random_state=1)
+    lasso = Lasso()
+    stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
+                                meta_regressor=lasso)
+    stack.fit(X1, y, sample_weight=w).predict(X1)
+
+
+def test_weight_unsupported_with_no_weight():
+    # should be okay since we do not pass weight
+    lr = LinearRegression()
+    svr_lin = SVR(kernel='linear')
+    ridge = Ridge(random_state=1)
+    lasso = Lasso()
+    stack = StackingCVRegressor(regressors=[svr_lin, lr, lasso],
+                                meta_regressor=ridge)
+    stack.fit(X1, y).predict(X1)
+
+    stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
+                                meta_regressor=lasso)
+    stack.fit(X1, y).predict(X1)

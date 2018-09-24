@@ -15,7 +15,7 @@ conda config --set always_yes yes --set changeps1 no
 conda update -q conda
 conda info -a
 
-conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
+conda create -q -n test-environment python=$MINICONDA_PYTHON_VERSION
 source activate test-environment
 
 if [ "${LATEST}" = "true" ]; then

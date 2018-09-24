@@ -106,7 +106,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.verbose = verbose
         self.refit = refit
 
-    def fit(self, X, y):
+    def fit(self, X, y, sample_weight=None):
         """Learn weight coefficients from training data for each classifier.
 
         Parameters
@@ -117,6 +117,12 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         y : array-like, shape = [n_samples]
             Target values.
+
+        sample_weight : array-like, shape = [n_samples], optional
+            Sample weights passed as sample_weights to each regressor
+            in the regressors list as well as the meta_regressor.
+            Raises error if some regressor does not support
+            sample_weight in the fit() method.
 
         Returns
         -------
@@ -164,7 +170,11 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                 if self.verbose > 1:
                     print(_name_estimators((clf,))[0][1])
 
-                clf.fit(X, self.le_.transform(y))
+                if sample_weight is None:
+                    clf.fit(X, self.le_.transform(y))
+                else:
+                    clf.fit(X, self.le_.transform(y), 
+                            sample_weight=sample_weight)
         return self
 
     def predict(self, X):

@@ -20,6 +20,7 @@ from .scoring import scoring
 from .ttest import paired_ttest_resampled
 from .ttest import paired_ttest_kfold_cv
 from .ttest import paired_ttest_5x2cv
+from .holdout import RandomHoldoutSplit
 
 
 __all__ = ["scoring", "confusion_matrix",
@@ -29,4 +30,5 @@ __all__ = ["scoring", "confusion_matrix",
            "BootstrapOutOfBag", "bootstrap_point632_score",
            "cochrans_q", "paired_ttest_resampled",
            "paired_ttest_kfold_cv", "paired_ttest_5x2cv",
-           "feature_importance_permutation"]
+           "feature_importance_permutation",
+           "RandomHoldoutSplit"]

@@ -116,7 +116,7 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         self.store_train_meta_features = store_train_meta_features
         self.refit = refit
 
-    def fit(self, X, y, groups=None):
+    def fit(self, X, y, groups=None, sample_weight=None):
         """ Fit ensemble regressors and the meta-regressor.
 
         Parameters
@@ -131,6 +131,10 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         groups : numpy array/None, shape = [n_samples]
             The group that each sample belongs to. This is used by specific
             folding strategies such as GroupKFold()
+
+        sample_weight : array-like, shape = [n_samples], optional
+            Sample weights. Required that all regressors and 
+            meta_regressors has fit() method with sample_weight option.
 
         Returns
         -------
@@ -170,7 +174,11 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             #
             for train_idx, holdout_idx in kfold.split(X, y, groups):
                 instance = clone(regr)
-                instance.fit(X[train_idx], y[train_idx])
+                if sample_weight is None:
+                    instance.fit(X[train_idx], y[train_idx])
+                else:
+                    instance.fit(X[train_idx], y[train_idx],
+                                 sample_weight=sample_weight[train_idx])
                 y_pred = instance.predict(X[holdout_idx])
                 meta_features[holdout_idx, i] = y_pred
 
@@ -180,14 +188,16 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
 
         # Train meta-model on the out-of-fold predictions
         if not self.use_features_in_secondary:
-            self.meta_regr_.fit(meta_features, y)
+            pass
         elif sparse.issparse(X):
-            self.meta_regr_.fit(sparse.hstack((X, meta_features)), y)
+            meta_features = sparse.hstack((X, meta_features))
         else:
-            self.meta_regr_.fit(np.hstack((X, meta_features)), y)
+            meta_features = np.hstack((X, meta_features))
+        self.meta_regr_.fit(meta_features, y, sample_weight=sample_weight)
+
         # Retrain base models on all data
         for regr in self.regr_:
-            regr.fit(X, y)
+            regr.fit(X, y, sample_weight=sample_weight)
 
         return self
 

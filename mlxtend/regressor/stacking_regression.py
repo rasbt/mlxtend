@@ -8,6 +8,9 @@
 #
 # License: BSD 3 clause
 
+from ..stacking import StackingRegressor
+
+'''
 from ..externals.estimator_checks import check_is_fitted
 from ..externals.name_estimators import _name_estimators
 from ..externals import six
@@ -243,3 +246,4 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             return self.meta_regr_.predict(sparse.hstack((X, meta_features)))
         else:
             return self.meta_regr_.predict(np.hstack((X, meta_features)))
+'''

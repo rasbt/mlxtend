@@ -195,11 +195,18 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             meta_features = sparse.hstack((X, meta_features))
         else:
             meta_features = np.hstack((X, meta_features))
-        self.meta_regr_.fit(meta_features, y, sample_weight=sample_weight)
+
+        if sample_weight is None:
+            self.meta_regr_.fit(meta_features, y)
+        else:
+            self.meta_regr_.fit(meta_features, y, sample_weight=sample_weight)
 
         # Retrain base models on all data
         for regr in self.regr_:
-            regr.fit(X, y, sample_weight=sample_weight)
+            if sample_weight is None:
+                regr.fit(X, y)
+            else:
+                regr.fit(X, y, sample_weight=sample_weight)
 
         return self
 

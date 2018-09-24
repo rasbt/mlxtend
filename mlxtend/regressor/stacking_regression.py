@@ -146,7 +146,10 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             if self.verbose > 1:
                 print(_name_estimators((regr,))[0][1])
 
-            regr.fit(X, y, sample_weight=sample_weight)
+            if sample_weight is None:
+                regr.fit(X, y)
+            else:
+                regr.fit(X, y, sample_weight=sample_weight)
 
         meta_features = self.predict_meta_features(X)
 
@@ -157,7 +160,11 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             meta_features = sparse.hstack((X, meta_features))
         else:
             meta_features = np.hstack((X, meta_features))
-        self.meta_regr_.fit(meta_features, y, sample_weight=sample_weight)
+
+        if sample_weight is None:
+            self.meta_regr_.fit(meta_features, y)
+        else:
+            self.meta_regr_.fit(meta_features, y, sample_weight=sample_weight)
 
         # save meta-features for training data
         if self.store_train_meta_features:

@@ -11,7 +11,6 @@ from mlxtend.regressor import StackingRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import Ridge
 from sklearn.linear_model import Lasso
-from sklearn.neural_network import MLPRegressor
 from sklearn.svm import SVR
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import GridSearchCV
@@ -79,10 +78,14 @@ def test_sample_weight():
     svr_rbf = SVR(kernel='rbf')
     stregr = StackingRegressor(regressors=[svr_lin, lr, ridge],
                                meta_regressor=svr_rbf)
-    stregr.fit(X1, y, sample_weight=w).predict(X1)
+    pred1 = stregr.fit(X1, y, sample_weight=w).predict(X1)
     mse = 0.22
     got = np.mean((stregr.predict(X1) - y) ** 2)
     assert round(got, 2) == mse
+    # make sure that this is not equivalent to the model with no weight
+    pred2 = stregr.fit(X1, y).predict(X1)
+    maxdiff = np.max(np.abs(pred1 - pred2))
+    assert maxdiff > 1e-3, "max diff is %.4f" % maxdiff
 
 
 def test_weight_ones():
@@ -93,15 +96,14 @@ def test_weight_ones():
     svr_rbf = SVR(kernel='rbf')
     stregr = StackingRegressor(regressors=[svr_lin, lr, ridge],
                                meta_regressor=svr_rbf)
-
-    stregr.fit(X1, y, sample_weight=np.ones(40)).predict(X1)
-    mse = 0.21
-    got = np.mean((stregr.predict(X1) - y) ** 2)
-    assert round(got, 2) == mse
+    pred1 = stregr.fit(X1, y).predict(X1)
+    pred2 = stregr.fit(X1, y, sample_weight=np.ones(40)).predict(X1)
+    maxdiff = np.max(np.abs(pred1 - pred2))
+    assert maxdiff < 1e-3, "max diff is %.4f" % maxdiff
 
 
 @raises(TypeError)
-def test_unsupported_regressor():
+def test_weight_unsupported_regressor():
     # including regressor that does not support
     # sample_weight should raise error
     lr = LinearRegression()
@@ -111,19 +113,37 @@ def test_unsupported_regressor():
     lasso = Lasso(random_state=1)
     stregr = StackingRegressor(regressors=[svr_lin, lr, ridge, lasso],
                                meta_regressor=svr_rbf)
-    stregr.fit(X1, y, w).predict(X1)
+    stregr.fit(X1, y, sample_weight=w).predict(X1)
 
 
 @raises(TypeError)
-def test_unsupported_meta_regressor():
-    # meta regressor that does not support sample_weight should raise error
+def test_weight_unsupported_meta():
+    # meta regressor with no support for
+    # sample_weight should raise error
     lr = LinearRegression()
     svr_lin = SVR(kernel='linear')
     ridge = Ridge(random_state=1)
-    mlp = MLPRegressor()
+    lasso = Lasso(random_state=1)
     stregr = StackingRegressor(regressors=[svr_lin, lr, ridge],
-                               meta_regressor=mlp)
-    stregr.fit(X1, y, w).predict(X1)
+                               meta_regressor=lasso)
+    stregr.fit(X1, y, sample_weight=w).predict(X1)
+
+
+def test_weight_unsupported_with_no_weight():
+    # pass no weight to regressors with no weight support
+    # should not be a problem
+    lr = LinearRegression()
+    svr_lin = SVR(kernel='linear')
+    ridge = Ridge(random_state=1)
+    svr_rbf = SVR(kernel='rbf')
+    lasso = Lasso(random_state=1)
+    stregr = StackingRegressor(regressors=[svr_lin, lr, ridge, lasso],
+                               meta_regressor=svr_rbf)
+    stregr.fit(X1, y).predict(X1)
+
+    stregr = StackingRegressor(regressors=[svr_lin, lr, ridge],
+                               meta_regressor=lasso)
+    stregr.fit(X1, y).predict(X1)
 
 
 def test_gridsearch():

@@ -151,8 +151,8 @@ class PredefinedHoldoutSplit(object):
         ind = np.arange(X.shape[0])
         train_mask = np.ones(X.shape[0], dtype=np.bool)
         train_mask[self.valid_indices] = False
-        valid_mask = np.where(train_mask==True, False, True)
-        
+        valid_mask = np.where(train_mask is True, False, True)
+
         for i in range(1):
             yield ind[train_mask], ind[valid_mask]
 
@@ -177,4 +177,3 @@ class PredefinedHoldoutSplit(object):
             Always returns 1.
         """
         return 1
-

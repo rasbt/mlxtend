@@ -21,6 +21,7 @@ from .ttest import paired_ttest_resampled
 from .ttest import paired_ttest_kfold_cv
 from .ttest import paired_ttest_5x2cv
 from .holdout import RandomHoldoutSplit
+from .holdout import PredefinedHoldoutSplit
 
 
 __all__ = ["scoring", "confusion_matrix",

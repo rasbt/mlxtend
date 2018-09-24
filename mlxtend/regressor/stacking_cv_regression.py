@@ -133,9 +133,9 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             folding strategies such as GroupKFold()
 
         sample_weight : array-like, shape = [n_samples], optional
-            Sample weights passed as sample_weights to 
-            each regressor in the regressors list as well as the meta_regressor.
-            Raises error if some regressor does not support 
+            Sample weights passed as sample_weights to each regressor
+            in the regressors list as well as the meta_regressor.
+            Raises error if some regressor does not support
             sample_weight in the fit() method.
 
         Returns

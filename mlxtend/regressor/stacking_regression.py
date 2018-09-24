@@ -112,7 +112,10 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         y : array-like, shape = [n_samples] or [n_samples, n_targets]
             Target values.
         sample_weight : array-like, shape = [n_samples], optional
-            Sample weights.
+            Sample weights passed as sample_weights to each regressor
+            in the regressors list as well as the meta_regressor.
+            Raises error if some regressor does not support
+            sample_weight in the fit() method.
 
         Returns
         -------

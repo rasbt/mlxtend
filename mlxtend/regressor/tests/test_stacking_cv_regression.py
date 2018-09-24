@@ -253,11 +253,12 @@ def test_sparse_matrix_inputs_with_features_in_secondary():
 
 
 # Calling for np.random will break the existing tests by changing the
-# seed for CV. 
+# seed for CV.
 # As a temporary workaround, we use random package to generate random w.
 random.seed(8)
 w = np.array([random.random() for _ in range(40)])
 # w  = np.random.random(40)
+
 
 def test_sample_weight():
     lr = LinearRegression()
@@ -274,8 +275,8 @@ def test_sample_weight():
 
 
 def test_weight_ones():
-    # sample_weight = None and sample_weight = ones 
-    # should give the same result, provided that the 
+    # sample_weight = None and sample_weight = ones
+    # should give the same result, provided that the
     # randomness of the models is controled
     lr = LinearRegression()
     svr_lin = SVR(kernel='linear')

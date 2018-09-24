@@ -5,6 +5,7 @@
 #
 # License: BSD 3 clause
 
+import random
 import pandas as pd
 import numpy as np
 from scipy import sparse
@@ -22,6 +23,7 @@ from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score
 from sklearn.base import clone
+from nose.tools import raises
 
 
 iris = datasets.load_iris()
@@ -47,6 +49,89 @@ def test_StackingClassifier():
                              scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
     assert scores_mean == 0.93
+
+
+def test_sample_weight():
+    # with no weight given
+    np.random.seed(123)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingCVClassifier(classifiers=[clf1, clf2],
+                                meta_classifier=meta,
+                                shuffle=False)
+    prob1 = sclf.fit(X_iris, y_iris).predict_proba(X_iris)
+
+    # with weight = 1
+    np.random.seed(123)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingCVClassifier(classifiers=[clf1, clf2],
+                                meta_classifier=meta,
+                                shuffle=False)
+    w = np.ones(len(y_iris))
+    prob2 = sclf.fit(X_iris, y_iris,
+                     sample_weight=w).predict_proba(X_iris)
+
+    # with random weight
+    random.seed(87)
+    w = np.array([random.random() for _ in range(len(y_iris))])
+    np.random.seed(123)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingCVClassifier(classifiers=[clf1, clf2],
+                                meta_classifier=meta,
+                                shuffle=False)
+    prob3 = sclf.fit(X_iris, y_iris,
+                     sample_weight=w).predict_proba(X_iris)
+
+    diff12 = np.max(np.abs(prob1 - prob2))
+    diff23 = np.max(np.abs(prob2 - prob3))
+    assert diff12 < 1e-3, "max diff is %.4f" % diff12
+    assert diff23 > 1e-3, "max diff is %.4f" % diff23
+
+
+@raises(TypeError)
+def test_no_weight_support():
+    w = np.array([random.random() for _ in range(len(y_iris))])
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    clf3 = KNeighborsClassifier()
+    sclf = StackingCVClassifier(classifiers=[clf1, clf2, clf3],
+                                meta_classifier=meta,
+                                shuffle=False)
+    sclf.fit(X_iris, y_iris, sample_weight=w)
+
+
+@raises(TypeError)
+def test_no_weight_support_meta():
+    w = np.array([random.random() for _ in range(len(y_iris))])
+    meta = KNeighborsClassifier()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingCVClassifier(classifiers=[clf1, clf2],
+                                meta_classifier=meta,
+                                shuffle=False)
+    sclf.fit(X_iris, y_iris, sample_weight=w)
+
+
+def test_no_weight_support_with_no_weight():
+    logit = LogisticRegression()
+    rf = RandomForestClassifier()
+    gnb = GaussianNB()
+    knn = KNeighborsClassifier()
+    sclf = StackingCVClassifier(classifiers=[logit, rf, gnb],
+                                meta_classifier=knn,
+                                shuffle=False)
+    sclf.fit(X_iris, y_iris)
+
+    sclf = StackingCVClassifier(classifiers=[logit, knn, gnb],
+                                meta_classifier=rf,
+                                shuffle=False)
+    sclf.fit(X_iris, y_iris)
 
 
 def test_StackingClassifier_proba():

@@ -141,7 +141,7 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.store_train_meta_features = store_train_meta_features
         self.use_clones = use_clones
 
-    def fit(self, X, y, groups=None):
+    def fit(self, X, y, groups=None, sample_weight=None):
         """ Fit ensemble classifers and the meta-classifier.
 
         Parameters
@@ -156,6 +156,12 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         groups : numpy array/None, shape = [n_samples]
             The group that each sample belongs to. This is used by specific
             folding strategies such as GroupKFold()
+
+        sample_weight : array-like, shape = [n_samples], optional
+            Sample weights passed as sample_weights to each regressor
+            in the regressors list as well as the meta_regressor.
+            Raises error if some regressor does not support
+            sample_weight in the fit() method.
 
         Returns
         -------
@@ -206,7 +212,11 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                           ((num + 1), final_cv.get_n_splits()))
 
                 try:
-                    model.fit(X[train_index], y[train_index])
+                    if sample_weight is None:
+                        model.fit(X[train_index], y[train_index])
+                    else:
+                        model.fit(X[train_index], y[train_index],
+                                  sample_weight=sample_weight[train_index])
                 except TypeError as e:
 
                     if str(e).startswith('A sparse matrix was passed,'
@@ -279,19 +289,25 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         # Fit the base models correctly this time using ALL the training set
         for model in self.clfs_:
-            model.fit(X, y)
+            if sample_weight is None:
+                model.fit(X, y)
+            else:
+                model.fit(X, y, sample_weight=sample_weight)
 
         # Fit the secondary model
         if not self.use_features_in_secondary:
-            self.meta_clf_.fit(all_model_predictions, reordered_labels)
+            meta_features = all_model_predictions
         elif sparse.issparse(X):
-            self.meta_clf_.fit(sparse.hstack((reordered_features,
-                                             all_model_predictions)),
-                               reordered_labels)
+            meta_features = sparse.hstack((reordered_features,
+                                           all_model_predictions))
         else:
-            self.meta_clf_.fit(np.hstack((reordered_features,
-                                          all_model_predictions)),
-                               reordered_labels)
+            meta_features = np.hstack((reordered_features,
+                                       all_model_predictions))
+        if sample_weight is None:
+            self.meta_clf_.fit(meta_features, reordered_labels)
+        else:
+            self.meta_clf_.fit(meta_features, reordered_labels,
+                               sample_weight=sample_weight)
 
         return self
 

@@ -72,6 +72,7 @@ pages:
     - user_guide/evaluate/paired_ttest_kfold_cv.md
     - user_guide/evaluate/paired_ttest_resampled.md
     - user_guide/evaluate/permutation_test.md
+    - user_guide/evaluate/PredefinedHoldoutSplit.md
     - user_guide/evaluate/RandomHoldoutSplit.md
     - user_guide/evaluate/scoring.md
   - feature_extraction:

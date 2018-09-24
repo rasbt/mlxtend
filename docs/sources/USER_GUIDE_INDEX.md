@@ -38,6 +38,7 @@
 - [paired_ttest_kfold_cv](user_guide/evaluate/paired_ttest_kfold_cv.md)
 - [paired_ttest_resampled](user_guide/evaluate/paired_ttest_resampled.md)
 - [permutation_test](user_guide/evaluate/permutation_test.md)
+- [PredefinedHoldoutSplit](user_guide/evaluate/PredefinedHoldoutSplit.md)
 - [RandomHoldoutSplit](user_guide/evaluate/RandomHoldoutSplit.md)
 - [scoring](user_guide/evaluate/scoring.md)
 

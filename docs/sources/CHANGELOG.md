@@ -18,7 +18,8 @@ The CHANGELOG for the current development version is available at
 
 - Added a `scatterplotmatrix` function to the `plotting` module. ([#437](https://github.com/rasbt/mlxtend/pull/437))
 - Added `sample_weight` option to `StackingRegressor`, `StackingClassifier`, `StackingCVRegressor`, `StackingCVClassifier`, `EnsembleVoteClassifier`. ([#438](https://github.com/rasbt/mlxtend/issues/438))
-- Added a `RandomHoldoutSplit` class to perform a train/valid split without rotation in `SequentialFeatureSelector`, scikit-learn `GridSearchCV` etc. ([#442](https://github.com/rasbt/mlxtend/pull/442))
+- Added a `RandomHoldoutSplit` class to perform a random train/valid split without rotation in `SequentialFeatureSelector`, scikit-learn `GridSearchCV` etc. ([#442](https://github.com/rasbt/mlxtend/pull/442))
+- Added a `PredefinedHoldoutSplit` class to perform a train/valid split, based on user-specified indices, without rotation in `SequentialFeatureSelector`, scikit-learn `GridSearchCV` etc. ([#443](https://github.com/rasbt/mlxtend/pull/443))
 
 ##### Changes
 

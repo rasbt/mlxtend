@@ -4,6 +4,7 @@
 #
 # License: BSD 3 clause
 
+import random
 from mlxtend.classifier import EnsembleVoteClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB
@@ -14,6 +15,7 @@ from sklearn import datasets
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import cross_val_score
 from sklearn.base import clone
+from nose.tools import raises
 
 
 iris = datasets.load_iris()
@@ -35,6 +37,61 @@ def test_EnsembleVoteClassifier():
                              scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
     assert(scores_mean == 0.94)
+
+
+def test_sample_weight():
+    # with no weight
+    np.random.seed(123)
+    clf1 = LogisticRegression()
+    clf2 = RandomForestClassifier()
+    clf3 = GaussianNB()
+    eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting='hard')
+    prob1 = eclf.fit(X, y).predict_proba(X)
+
+    # with weight = 1
+    w = np.ones(len(y))
+    np.random.seed(123)
+    clf1 = LogisticRegression()
+    clf2 = RandomForestClassifier()
+    clf3 = GaussianNB()
+    eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting='hard')
+    prob2 = eclf.fit(X, y, sample_weight=w).predict_proba(X)
+
+    # with random weight
+    random.seed(87)
+    w = np.array([random.random() for _ in range(len(y))])
+    np.random.seed(123)
+    clf1 = LogisticRegression()
+    clf2 = RandomForestClassifier()
+    clf3 = GaussianNB()
+    eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting='hard')
+    prob3 = eclf.fit(X, y, sample_weight=w).predict_proba(X)
+
+    diff12 = np.max(np.abs(prob1 - prob2))
+    diff23 = np.max(np.abs(prob2 - prob3))
+    assert diff12 < 1e-3, "max diff is %.4f" % diff12
+    assert diff23 > 1e-3, "max diff is %.4f" % diff23
+
+
+@raises(TypeError)
+def test_no_weight_support():
+    random.seed(87)
+    w = np.array([random.random() for _ in range(len(y))])
+    logi = LogisticRegression()
+    rf = RandomForestClassifier()
+    gnb = GaussianNB()
+    knn = KNeighborsClassifier()
+    eclf = EnsembleVoteClassifier(clfs=[logi, rf, gnb, knn], voting='hard')
+    eclf.fit(X, y, sample_weight=w)
+
+
+def test_no_weight_support_with_no_weight():
+    logi = LogisticRegression()
+    rf = RandomForestClassifier()
+    gnb = GaussianNB()
+    knn = KNeighborsClassifier()
+    eclf = EnsembleVoteClassifier(clfs=[logi, rf, gnb, knn], voting='hard')
+    eclf.fit(X, y)
 
 
 def test_1model_labels():

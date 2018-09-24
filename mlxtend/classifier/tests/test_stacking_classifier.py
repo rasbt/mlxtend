@@ -4,6 +4,7 @@
 #
 # License: BSD 3 clause
 
+import random
 from mlxtend.classifier import StackingClassifier
 from mlxtend.externals.estimator_checks import NotFittedError
 from scipy import sparse
@@ -19,6 +20,7 @@ from mlxtend.utils import assert_raises
 from nose.tools import assert_almost_equal
 from sklearn.model_selection import train_test_split
 from sklearn.base import clone
+from nose.tools import raises
 
 
 iris = datasets.load_iris()
@@ -41,6 +43,70 @@ def test_StackingClassifier():
                              scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
     assert scores_mean == 0.95
+
+
+def test_sample_weight():
+    # Make sure that:
+    #    prediction with weight
+    # != prediction with no weight
+    # == prediction with weight ones
+    random.seed(87)
+    w = np.array([random.random() for _ in range(len(y))])
+
+    np.random.seed(123)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingClassifier(classifiers=[clf1, clf2],
+                              meta_classifier=meta)
+    prob1 = sclf.fit(X, y, sample_weight=w).predict_proba(X)
+
+    np.random.seed(123)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingClassifier(classifiers=[clf1, clf2],
+                              meta_classifier=meta)
+    prob2 = sclf.fit(X, y, sample_weight=None).predict_proba(X)
+
+    maxdiff = np.max(np.abs(prob1 - prob2))
+    assert maxdiff > 1e-3, "max diff is %.4f" % maxdiff
+
+    np.random.seed(123)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    sclf = StackingClassifier(classifiers=[clf1, clf2],
+                              meta_classifier=meta)
+    prob3 = sclf.fit(X, y, sample_weight=np.ones(len(y))).predict_proba(X)
+
+    maxdiff = np.max(np.abs(prob2 - prob3))
+    assert maxdiff < 1e-3, "max diff is %.4f" % maxdiff
+
+
+@raises(TypeError)
+def test_weight_unsupported():
+    # Error since KNN does not support sample_weight
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    clf3 = KNeighborsClassifier()
+    sclf = StackingClassifier(classifiers=[clf1, clf2, clf3],
+                              meta_classifier=meta)
+    random.seed(87)
+    w = np.array([random.random() for _ in range(len(y))])
+    sclf.fit(X, y, sample_seight=w)
+
+
+def test_weight_unsupported_no_weight():
+    # This is okay since we do not pass sample weight
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier()
+    clf2 = GaussianNB()
+    clf3 = KNeighborsClassifier()
+    sclf = StackingClassifier(classifiers=[clf1, clf2, clf3],
+                              meta_classifier=meta)
+    sclf.fit(X, y)
 
 
 def test_StackingClassifier_proba_avg_1():

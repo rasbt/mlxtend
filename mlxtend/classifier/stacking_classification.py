@@ -106,7 +106,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.store_train_meta_features = store_train_meta_features
         self.use_clones = use_clones
 
-    def fit(self, X, y):
+    def fit(self, X, y, sample_weight=None):
         """ Fit ensemble classifers and the meta-classifier.
 
         Parameters
@@ -116,6 +116,11 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             n_features is the number of features.
         y : array-like, shape = [n_samples] or [n_samples, n_outputs]
             Target values.
+        sample_weight : array-like, shape = [n_samples], optional
+            Sample weights passed as sample_weights to each regressor
+            in the regressors list as well as the meta_regressor.
+            Raises error if some regressor does not support
+            sample_weight in the fit() method.
 
         Returns
         -------
@@ -145,8 +150,10 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
             if self.verbose > 1:
                 print(_name_estimators((clf,))[0][1])
-
-            clf.fit(X, y)
+            if sample_weight is None:
+                clf.fit(X, y)
+            else:
+                clf.fit(X, y, sample_weight=sample_weight)
 
         meta_features = self.predict_meta_features(X)
 
@@ -154,11 +161,16 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             self.train_meta_features_ = meta_features
 
         if not self.use_features_in_secondary:
-            self.meta_clf_.fit(meta_features, y)
+            pass
         elif sparse.issparse(X):
-            self.meta_clf_.fit(sparse.hstack((X, meta_features)), y)
+            meta_features = sparse.hstack((X, meta_features))
         else:
-            self.meta_clf_.fit(np.hstack((X, meta_features)), y)
+            meta_features = np.hstack((X, meta_features))
+
+        if sample_weight is None:
+            self.meta_clf_.fit(meta_features, y)
+        else:
+            self.meta_clf_.fit(meta_features, y, sample_weight=sample_weight)
 
         return self
 

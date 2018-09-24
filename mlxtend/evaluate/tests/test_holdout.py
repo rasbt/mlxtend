@@ -72,7 +72,6 @@ def test_randomholdoutsplit_in_grid():
     assert grid.n_splits_ == 1
 
 
-
 def test_predefinedholdoutsplit_default_iter():
     h_iter = PredefinedHoldoutSplit(valid_indices=[0, 1, 99])
 
@@ -99,7 +98,8 @@ def test_predefinedholdoutsplit_default_iter():
                                  136, 137, 138, 139, 140, 141, 142, 143,
                                  144, 145, 146, 147, 148, 149])
     expect_valid_ind = np.array([0, 1, 99])
-    assert (train_ind == expect_train_ind).all()
+
+    np.testing.assert_equal(train_ind, expect_train_ind)
     assert (valid_ind == expect_valid_ind).all()
 
 

@@ -18,6 +18,7 @@ from sklearn.base import RegressorMixin
 from sklearn.base import ClassifierMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
+from sklearn.model_selection import check_cv
 
 
 class StackingEstimator(BaseEstimator, TransformerMixin):
@@ -294,7 +295,7 @@ class StackingRegressor(StackingEstimator, RegressorMixin):
         
     @property
     def meta_regr_(self):
-        return self.meta_ests_
+        return self.meta_est_
 
     @property
     def intercept_(self):

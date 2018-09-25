@@ -4,8 +4,8 @@
 #
 # License: BSD 3 clause
 
-from .stacking import StackingRegressor
-from .stacking import StackingClassifier
-#from .stacking_cv_regression import StackingCVRegressor
+from .stacking import StackingRegressor, StackingClassifier
+from .stacking_cv import StackingCVRegressor, StackingCVClassifier
 
-__all__ = ["StackingRegressor", "StackingClassifier"]
+__all__ = ["StackingRegressor", "StackingClassifier",
+           "StackingCVRegressor", "StackingCVClassifier"]

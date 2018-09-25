@@ -120,17 +120,18 @@ def test_get_params():
 
     got = sorted(list({s.split('__')[0] for s in stregr.get_params().keys()}))
     expect = ['cv',
+              'verbose',
               'linearregression',
               'meta-svr',
               'meta_regressor',
-              'refit',
+              'use_clones',
               'regressors',
               'ridge',
               'shuffle',
               'store_train_meta_features',
               'use_features_in_secondary']
-    assert got == expect, got
-
+    assert set(got) == set(expect), "Missing: %s, Redundant %s" % (
+        set(expect) - set(got), set(got) - set(expect))
 
 def test_regressor_gridsearch():
     lr = LinearRegression()

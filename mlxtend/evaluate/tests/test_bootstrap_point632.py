@@ -14,7 +14,7 @@ X, y = iris_data()
 
 
 def test_defaults():
-    lr = LogisticRegression()
+    lr = LogisticRegression(solver='liblinear', multi_class='ovr')
     scores = bootstrap_point632_score(lr, X, y, random_seed=123)
     acc = np.mean(scores)
     assert len(scores == 200)
@@ -23,7 +23,7 @@ def test_defaults():
 
 def test_invalid_splits():
     msg = 'Number of splits must be greater than 1. Got -1.'
-    lr = LogisticRegression()
+    lr = LogisticRegression(solver='liblinear', multi_class='ovr')
     assert_raises(ValueError,
                   msg,
                   bootstrap_point632_score,
@@ -35,7 +35,7 @@ def test_invalid_splits():
 
 def test_allowed_methods():
     msg = "The `method` must be in ('.632', '.632+'). Got 1."
-    lr = LogisticRegression()
+    lr = LogisticRegression(solver='liblinear', multi_class='ovr')
     assert_raises(ValueError,
                   msg,
                   bootstrap_point632_score,
@@ -46,7 +46,7 @@ def test_allowed_methods():
                   1)
 
     msg = "The `method` must be in ('.632', '.632+'). Got test."
-    lr = LogisticRegression()
+    lr = LogisticRegression(solver='liblinear', multi_class='ovr')
     assert_raises(ValueError,
                   msg,
                   bootstrap_point632_score,
@@ -56,9 +56,8 @@ def test_allowed_methods():
                   200,
                   'test')
 
-
     msg = "The .632+ method is not implemented, yet."
-    lr = LogisticRegression()
+    lr = LogisticRegression(solver='liblinear', multi_class='ovr')
     assert_raises(NotImplementedError,
                   msg,
                   bootstrap_point632_score,
@@ -70,7 +69,7 @@ def test_allowed_methods():
 
 
 def test_scoring():
-    lr = LogisticRegression()
+    lr = LogisticRegression(solver='liblinear', multi_class='ovr')
     scores = bootstrap_point632_score(lr, X[:100], y[:100],
                                       scoring='f1',
                                       random_seed=123)

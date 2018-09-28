@@ -14,11 +14,13 @@ from sklearn.linear_model import Lasso
 from sklearn.linear_model import Ridge
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
+from distutils.version import LooseVersion as Version
+from sklearn import __version__ as sklearn_version
 
 
 def test_train_size():
     X, y = iris_data()
-    clf1 = LogisticRegression()
+    clf1 = LogisticRegression(solver='liblinear', multi_class='ovr')
     clf2 = DecisionTreeClassifier()
 
     expected_err_msg = ("train_size must be of type int or float. "
@@ -39,7 +41,9 @@ def test_train_size():
 
 def test_classifier_defaults():
     X, y = iris_data()
-    clf1 = LogisticRegression(random_state=1)
+    clf1 = LogisticRegression(multi_class='ovr',
+                              solver='liblinear',
+                              random_state=1)
     clf2 = DecisionTreeClassifier(random_state=1)
 
     X_train, X_test, y_train, y_test = \
@@ -57,8 +61,12 @@ def test_classifier_defaults():
                                   X=X, y=y,
                                   random_seed=1)
 
-    assert round(t, 3) == -1.809, t
-    assert round(p, 3) == 0.081, p
+    if Version(sklearn_version) < Version("0.20"):
+        assert round(t, 3) == -1.809, t
+        assert round(p, 3) == 0.081, p
+    else:
+        assert round(t, 3) == -1.702, t
+        assert round(p, 3) == 0.10, p
 
     # change maxdepth of decision tree classifier
 
@@ -79,7 +87,9 @@ def test_classifier_defaults():
 
 def test_scoring():
     X, y = iris_data()
-    clf1 = LogisticRegression(random_state=1)
+    clf1 = LogisticRegression(multi_class='ovr',
+                              solver='liblinear',
+                              random_state=1)
     clf2 = DecisionTreeClassifier(random_state=1)
 
     X_train, X_test, y_train, y_test = \
@@ -98,8 +108,12 @@ def test_scoring():
                                   scoring='accuracy',
                                   random_seed=1)
 
-    assert round(t, 3) == -1.809, t
-    assert round(p, 3) == 0.081, p
+    if Version(sklearn_version) < Version('0.20'):
+        assert round(t, 3) == -1.809, t
+        assert round(p, 3) == 0.081, p
+    else:
+        assert round(t, 3) == -1.702, t
+        assert round(p, 3) == 0.1, p
 
     t, p = paired_ttest_resampled(estimator1=clf1,
                                   estimator2=clf2,
@@ -107,8 +121,12 @@ def test_scoring():
                                   scoring='f1_macro',
                                   random_seed=1)
 
-    assert round(t, 3) == -1.690, t
-    assert round(p, 3) == 0.102, p
+    if Version(sklearn_version) < Version("0.20"):
+        assert round(t, 3) == -1.690, t
+        assert round(p, 3) == 0.102, p
+    else:
+        assert round(t, 3) == -1.561, t
+        assert round(p, 3) == 0.129, p
 
 
 def test_regressor():

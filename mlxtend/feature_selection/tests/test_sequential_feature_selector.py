@@ -26,6 +26,9 @@ from mlxtend.classifier import SoftmaxRegression
 from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 from mlxtend.utils import assert_raises
 
+from distutils.version import LooseVersion as Version
+from sklearn import __version__ as sklearn_version
+
 
 def nan_roc_auc_score(y_true, y_score, average='macro', sample_weight=None):
     if len(np.unique(y_true)) != 2:
@@ -453,7 +456,13 @@ def test_regression():
                 verbose=0)
     sfs_r = sfs_r.fit(X, y)
     assert len(sfs_r.k_feature_idx_) == 13
-    assert round(sfs_r.k_score_, 4) == -34.7631
+
+    if Version(sklearn_version) < '0.20':
+        assert round(sfs_r.k_score_, 4) == -34.7631, \
+            round(sfs_r.k_score_, 4)
+    else:
+        assert round(sfs_r.k_score_, 4) == -34.7053, \
+            round(sfs_r.k_score_, 4)
 
 
 def test_regression_sffs():
@@ -499,7 +508,11 @@ def test_regression_in_range():
                 verbose=0)
     sfs_r = sfs_r.fit(X, y)
     assert len(sfs_r.k_feature_idx_) == 9
-    assert round(sfs_r.k_score_, 4) == -31.1537
+
+    if Version(sklearn_version) < '0.20':
+        assert round(sfs_r.k_score_, 4) == -31.1537, round(sfs_r.k_score_, 4)
+    else:
+        assert round(sfs_r.k_score_, 4) == -31.1299, round(sfs_r.k_score_, 4)
 
 
 def test_clone_params_fail():
@@ -713,6 +726,7 @@ def test_gridsearch():
     gs = GridSearchCV(estimator=pipe,
                       param_grid=param_grid,
                       n_jobs=1,
+                      iid=False,
                       cv=5,
                       refit=False)
 

@@ -12,11 +12,15 @@ from sklearn.linear_model import Lasso
 from sklearn.linear_model import Ridge
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
+from distutils.version import LooseVersion as Version
+from sklearn import __version__ as sklearn_version
 
 
 def test_classifier_defaults():
     X, y = iris_data()
-    clf1 = LogisticRegression(random_state=1)
+    clf1 = LogisticRegression(random_state=1,
+                              multi_class='ovr',
+                              solver='liblinear')
     clf2 = DecisionTreeClassifier(random_state=1)
 
     X_train, X_test, y_train, y_test = \
@@ -56,7 +60,8 @@ def test_classifier_defaults():
 
 def test_scoring():
     X, y = iris_data()
-    clf1 = LogisticRegression(random_state=1)
+    clf1 = LogisticRegression(random_state=1, solver='liblinear',
+                              multi_class='ovr')
     clf2 = DecisionTreeClassifier(random_state=1)
 
     X_train, X_test, y_train, y_test = \
@@ -84,8 +89,12 @@ def test_scoring():
                               scoring='f1_macro',
                               random_seed=1)
 
-    assert round(t, 3) == -1.510, t
-    assert round(p, 3) == 0.191, p
+    if Version(sklearn_version) < Version('0.20'):
+        assert round(t, 3) == -1.510, t
+        assert round(p, 3) == 0.191, p
+    else:
+        assert round(t, 3) == -1.506, t
+        assert round(p, 3) == 0.192, p
 
 
 def test_regressor():

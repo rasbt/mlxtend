@@ -34,8 +34,8 @@ def test_sparse_to_dense():
 
 
 def test_pipeline():
-    rf = RandomForestClassifier()
+    rf = RandomForestClassifier(n_estimators=10)
     param_grid = [{'randomforestclassifier__n_estimators': [1, 5, 10]}]
     pipe = make_pipeline(StandardScaler(), DenseTransformer(), rf)
-    grid = GridSearchCV(pipe, param_grid, cv=3, n_jobs=1)
+    grid = GridSearchCV(pipe, param_grid, cv=3, n_jobs=1, iid=False)
     grid.fit(X, y)

@@ -33,9 +33,9 @@ y2 = np.zeros((40,))
 
 def test_different_models():
     lr = LinearRegression()
-    svr_lin = SVR(kernel='linear')
+    svr_lin = SVR(kernel='linear', gamma='auto')
     ridge = Ridge(random_state=1)
-    svr_rbf = SVR(kernel='rbf')
+    svr_rbf = SVR(kernel='rbf', gamma='auto')
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
                                 meta_regressor=svr_rbf)
     stack.fit(X1, y).predict(X1)
@@ -46,9 +46,9 @@ def test_different_models():
 
 def test_use_features_in_secondary():
     lr = LinearRegression()
-    svr_lin = SVR(kernel='linear')
+    svr_lin = SVR(kernel='linear', gamma='auto')
     ridge = Ridge(random_state=1)
-    svr_rbf = SVR(kernel='rbf')
+    svr_rbf = SVR(kernel='rbf', gamma='auto')
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
                                 meta_regressor=svr_rbf,
                                 cv=3,
@@ -61,9 +61,9 @@ def test_use_features_in_secondary():
 
 def test_multivariate():
     lr = LinearRegression()
-    svr_lin = SVR(kernel='linear')
+    svr_lin = SVR(kernel='linear', gamma='auto')
     ridge = Ridge(random_state=1)
-    svr_rbf = SVR(kernel='rbf')
+    svr_rbf = SVR(kernel='rbf', gamma='auto')
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
                                 meta_regressor=svr_rbf)
     stack.fit(X2, y).predict(X2)
@@ -89,9 +89,9 @@ def test_internals():
 
 
 def test_gridsearch_numerate_regr():
-    svr_lin = SVR(kernel='linear')
+    svr_lin = SVR(kernel='linear', gamma='auto')
     ridge = Ridge(random_state=1)
-    svr_rbf = SVR(kernel='rbf')
+    svr_rbf = SVR(kernel='rbf', gamma='auto')
     stack = StackingCVRegressor(regressors=[svr_lin, ridge, ridge],
                                 meta_regressor=svr_rbf)
 
@@ -104,6 +104,7 @@ def test_gridsearch_numerate_regr():
     grid = GridSearchCV(estimator=stack,
                         param_grid=params,
                         cv=5,
+                        iid=False,
                         refit=True,
                         verbose=0)
     grid = grid.fit(X1, y)
@@ -134,7 +135,7 @@ def test_get_params():
 
 def test_regressor_gridsearch():
     lr = LinearRegression()
-    svr_rbf = SVR(kernel='rbf')
+    svr_rbf = SVR(kernel='rbf', gamma='auto')
     ridge = Ridge(random_state=1)
     stregr = StackingCVRegressor(regressors=[lr],
                                  meta_regressor=svr_rbf)
@@ -143,6 +144,7 @@ def test_regressor_gridsearch():
 
     grid = GridSearchCV(estimator=stregr,
                         param_grid=params,
+                        iid=False,
                         cv=5,
                         refit=True)
     grid.fit(X1, y)
@@ -152,7 +154,7 @@ def test_regressor_gridsearch():
 
 def test_predict_meta_features():
     lr = LinearRegression()
-    svr_rbf = SVR(kernel='rbf')
+    svr_rbf = SVR(kernel='rbf', gamma='auto')
     ridge = Ridge(random_state=1)
     stregr = StackingCVRegressor(regressors=[lr, ridge],
                                  meta_regressor=svr_rbf)
@@ -164,7 +166,7 @@ def test_predict_meta_features():
 
 def test_train_meta_features_():
     lr = LinearRegression()
-    svr_rbf = SVR(kernel='rbf')
+    svr_rbf = SVR(kernel='rbf', gamma='auto')
     ridge = Ridge(random_state=1)
     stregr = StackingCVRegressor(regressors=[lr, ridge],
                                  meta_regressor=svr_rbf,
@@ -177,7 +179,7 @@ def test_train_meta_features_():
 
 def test_not_fitted_predict():
     lr = LinearRegression()
-    svr_rbf = SVR(kernel='rbf')
+    svr_rbf = SVR(kernel='rbf', gamma='auto')
     ridge = Ridge(random_state=1)
     stregr = StackingCVRegressor(regressors=[lr, ridge],
                                  meta_regressor=svr_rbf,
@@ -200,7 +202,7 @@ def test_not_fitted_predict():
 
 def test_clone():
     lr = LinearRegression()
-    svr_rbf = SVR(kernel='rbf')
+    svr_rbf = SVR(kernel='rbf', gamma='auto')
     ridge = Ridge(random_state=1)
     stregr = StackingCVRegressor(regressors=[lr, ridge],
                                  meta_regressor=svr_rbf,
@@ -210,9 +212,9 @@ def test_clone():
 
 def test_sparse_matrix_inputs():
     lr = LinearRegression()
-    svr_lin = SVR(kernel='linear')
+    svr_lin = SVR(kernel='linear', gamma='auto')
     ridge = Ridge(random_state=1)
-    svr_rbf = SVR(kernel='rbf')
+    svr_rbf = SVR(kernel='rbf', gamma='auto')
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
                                 meta_regressor=svr_rbf)
 
@@ -231,9 +233,9 @@ def test_sparse_matrix_inputs():
 
 def test_sparse_matrix_inputs_with_features_in_secondary():
     lr = LinearRegression()
-    svr_lin = SVR(kernel='linear')
+    svr_lin = SVR(kernel='linear', gamma='auto')
     ridge = Ridge(random_state=1)
-    svr_rbf = SVR(kernel='rbf')
+    svr_rbf = SVR(kernel='rbf', gamma='auto')
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
                                 meta_regressor=svr_rbf,
                                 use_features_in_secondary=True)
@@ -261,9 +263,9 @@ w = np.array([random.random() for _ in range(40)])
 
 def test_sample_weight():
     lr = LinearRegression()
-    svr_lin = SVR(kernel='linear')
+    svr_lin = SVR(kernel='linear', gamma='auto')
     ridge = Ridge(random_state=1)
-    svr_rbf = SVR(kernel='rbf')
+    svr_rbf = SVR(kernel='rbf', gamma='auto')
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
                                 meta_regressor=svr_rbf,
                                 cv=KFold(4, shuffle=True, random_state=7))
@@ -281,9 +283,9 @@ def test_weight_ones():
     # should give the same result, provided that the
     # randomness of the models is controled
     lr = LinearRegression()
-    svr_lin = SVR(kernel='linear')
+    svr_lin = SVR(kernel='linear', gamma='auto')
     ridge = Ridge(random_state=1)
-    svr_rbf = SVR(kernel='rbf')
+    svr_rbf = SVR(kernel='rbf', gamma='auto')
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
                                 meta_regressor=svr_rbf,
                                 cv=KFold(5, shuffle=True, random_state=5))
@@ -295,10 +297,10 @@ def test_weight_ones():
 @raises(TypeError)
 def test_unsupported_regressor():
     lr = LinearRegression()
-    svr_lin = SVR(kernel='linear')
+    svr_lin = SVR(kernel='linear', gamma='auto')
     ridge = Ridge(random_state=1)
     lasso = Lasso(random_state=1)
-    svr_rbf = SVR(kernel='rbf')
+    svr_rbf = SVR(kernel='rbf', gamma='auto')
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge, lasso],
                                 meta_regressor=svr_rbf)
     stack.fit(X1, y, sample_weight=w).predict(X1)
@@ -307,7 +309,7 @@ def test_unsupported_regressor():
 @raises(TypeError)
 def test_unsupported_meta_regressor():
     lr = LinearRegression()
-    svr_lin = SVR(kernel='linear')
+    svr_lin = SVR(kernel='linear', gamma='auto')
     ridge = Ridge(random_state=1)
     lasso = Lasso()
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
@@ -318,7 +320,7 @@ def test_unsupported_meta_regressor():
 def test_weight_unsupported_with_no_weight():
     # should be okay since we do not pass weight
     lr = LinearRegression()
-    svr_lin = SVR(kernel='linear')
+    svr_lin = SVR(kernel='linear', gamma='auto')
     ridge = Ridge(random_state=1)
     lasso = Lasso()
     stack = StackingCVRegressor(regressors=[svr_lin, lr, lasso],

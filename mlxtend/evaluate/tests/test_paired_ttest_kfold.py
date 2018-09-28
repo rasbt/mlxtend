@@ -16,7 +16,9 @@ from sklearn.model_selection import train_test_split
 
 def test_classifier_defaults():
     X, y = iris_data()
-    clf1 = LogisticRegression(random_state=1)
+    clf1 = LogisticRegression(random_state=1,
+                              multi_class='ovr',
+                              solver='liblinear')
     clf2 = DecisionTreeClassifier(random_state=1)
 
     X_train, X_test, y_train, y_test = \
@@ -56,18 +58,20 @@ def test_classifier_defaults():
 
 def test_scoring():
     X, y = iris_data()
-    clf1 = LogisticRegression(random_state=1)
+    clf1 = LogisticRegression(random_state=1,
+                              solver='liblinear',
+                              multi_class='ovr')
     clf2 = DecisionTreeClassifier(random_state=1)
 
     X_train, X_test, y_train, y_test = \
-        train_test_split(X, y, test_size=0.25,
+        train_test_split(X, y, test_size=0.5,
                          random_state=123)
 
     score1 = clf1.fit(X_train, y_train).score(X_test, y_test)
     score2 = clf2.fit(X_train, y_train).score(X_test, y_test)
 
-    assert round(score1, 2) == 0.97
-    assert round(score2, 2) == 0.95
+    assert round(score1, 2) == 0.96, round(score1, 2)
+    assert round(score2, 2) == 0.91, round(score2, 2)
 
     t, p = paired_ttest_kfold_cv(estimator1=clf1,
                                  estimator2=clf2,
@@ -81,11 +85,11 @@ def test_scoring():
     t, p = paired_ttest_kfold_cv(estimator1=clf1,
                                  estimator2=clf2,
                                  X=X, y=y,
-                                 scoring='f1_macro',
+                                 scoring='recall_micro',
                                  random_seed=1)
 
-    assert round(t, 3) == -1.872, t
-    assert round(p, 3) == 0.094, p
+    assert round(t, 3) == -1.861, t
+    assert round(p, 3) == 0.096, p
 
 
 def test_regressor():

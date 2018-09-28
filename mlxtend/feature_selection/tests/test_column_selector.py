@@ -40,12 +40,13 @@ def test_ColumnSelector_in_gridsearch():
     iris = datasets.load_iris()
     X, y = iris.data, iris.target
     pipe = make_pipeline(ColumnSelector(),
-                         LogisticRegression())
+                         LogisticRegression(multi_class='ovr', solver='liblinear'))
     grid = {'columnselector__cols': [[1, 2], [1, 2, 3], 0, [1]],
             'logisticregression__C': [0.1, 1.0, 10.0]}
 
     gsearch1 = GridSearchCV(estimator=pipe,
                             param_grid=grid,
+                            iid=False,
                             cv=5,
                             n_jobs=1,
                             refit=False)
@@ -95,6 +96,7 @@ def test_ColumnSelector_with_dataframe_in_gridsearch():
                             param_grid=grid,
                             cv=5,
                             n_jobs=1,
+                            iid=False,
                             scoring='neg_mean_squared_error',
                             refit=False)
 

@@ -42,8 +42,9 @@ def test_pipeline():
     param_grid = [{'logisticregression__C': [1, 0.1, 10]}]
     pipe = make_pipeline(StandardScaler(),
                          CopyTransformer(),
-                         LogisticRegression())
-    grid = GridSearchCV(pipe, param_grid, cv=3, n_jobs=1)
+                         LogisticRegression(solver='liblinear',
+                                            multi_class='ovr'))
+    grid = GridSearchCV(pipe, param_grid, cv=3, n_jobs=1, iid=False)
     grid.fit(X, y)
 
 

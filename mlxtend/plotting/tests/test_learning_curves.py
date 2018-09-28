@@ -17,7 +17,7 @@ def test_training_size():
     X = iris.data
     y = iris.target
     X_train, X_test, y_train, y_test = (train_test_split(X, y,
-                                        train_size=0.6, random_state=2))
+                                        test_size=0.4, random_state=2))
 
     clf = DecisionTreeClassifier(max_depth=1, random_state=1)
     training_errors, test_errors = (plot_learning_curves(X_train, y_train,
@@ -35,7 +35,7 @@ def test_scikit_metrics():
     X = iris.data
     y = iris.target
     X_train, X_test, y_train, y_test = (train_test_split(X, y,
-                                        train_size=0.6, random_state=2))
+                                        test_size=0.4, random_state=2))
 
     clf = DecisionTreeClassifier(max_depth=1, random_state=1)
     training_acc, test_acc = (plot_learning_curves(X_train, y_train,

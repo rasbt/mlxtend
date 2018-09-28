@@ -64,7 +64,7 @@ def test_classification():
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.3, random_state=0, stratify=y)
 
-    svm = SVC(C=1.0, kernel='rbf', random_state=0)
+    svm = SVC(C=1.0, kernel='rbf', random_state=0, gamma='auto')
     svm.fit(X_train, y_train)
 
     imp_vals, imp_all = feature_importance_permutation(
@@ -95,7 +95,7 @@ def test_regression():
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.3, random_state=123)
 
-    svm = SVR(kernel='rbf')
+    svm = SVR(kernel='rbf', gamma='auto')
     svm.fit(X_train, y_train)
 
     imp_vals, imp_all = feature_importance_permutation(
@@ -127,7 +127,7 @@ def test_n_rounds():
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.3, random_state=0, stratify=y)
 
-    svm = SVC(C=1.0, kernel='rbf', random_state=0)
+    svm = SVC(C=1.0, kernel='rbf', random_state=0, gamma='auto')
     svm.fit(X_train, y_train)
 
     imp_vals, imp_all = feature_importance_permutation(

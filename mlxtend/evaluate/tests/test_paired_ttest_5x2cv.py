@@ -96,6 +96,7 @@ def test_scoring():
         assert round(t, 3) == -1.506, t
         assert round(p, 3) == 0.192, p
 
+
 def test_regressor():
     X, y = boston_housing_data()
     reg1 = Lasso(random_state=1)

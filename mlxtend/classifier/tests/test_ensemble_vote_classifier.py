@@ -142,7 +142,9 @@ def test_EnsembleVoteClassifier_weights():
 
 def test_EnsembleVoteClassifier_gridsearch():
 
-    clf1 = LogisticRegression(solver='liblinear', multi_class='ovr', random_state=1)
+    clf1 = LogisticRegression(solver='liblinear',
+                              multi_class='ovr',
+                              random_state=1)
     clf2 = RandomForestClassifier(random_state=1)
     clf3 = GaussianNB()
     eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting='soft')
@@ -163,7 +165,9 @@ def test_EnsembleVoteClassifier_gridsearch():
 
 def test_EnsembleVoteClassifier_gridsearch_enumerate_names():
 
-    clf1 = LogisticRegression(solver='liblinear', multi_class='ovr', random_state=1)
+    clf1 = LogisticRegression(solver='liblinear',
+                              multi_class='ovr',
+                              random_state=1)
     clf2 = RandomForestClassifier(random_state=1)
     eclf = EnsembleVoteClassifier(clfs=[clf1, clf1, clf2])
 

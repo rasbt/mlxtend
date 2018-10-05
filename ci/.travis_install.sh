@@ -29,7 +29,7 @@ fi
 conda install jupyter
 
 if [ "${COVERAGE}" = "true" ]; then
-    pip install coverage coveralls codecov
+    conda install coveralls
 fi
 
 python --version

@@ -94,6 +94,8 @@ pages:
     - user_guide/general_concepts/gradient-optimization.md
     - user_guide/general_concepts/linear-gradient-derivative.md
     - user_guide/general_concepts/regularization-linear.md
+  - image:
+    - user_guide/image/extract_face_landmarks.md
   - math:
     - user_guide/math/num_combinations.md
     - user_guide/math/num_permutations.md

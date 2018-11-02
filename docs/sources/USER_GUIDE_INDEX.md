@@ -66,6 +66,9 @@
 - [linear-gradient-derivative](user_guide/general_concepts/linear-gradient-derivative.md)
 - [regularization-linear](user_guide/general_concepts/regularization-linear.md)
 
+## `image`
+- [extract_face_landmarks](user_guide/image/extract_face_landmarks.md)
+
 ## `math`
 - [num_combinations](user_guide/math/num_combinations.md)
 - [num_permutations](user_guide/math/num_permutations.md)

@@ -13,7 +13,8 @@ import os
 from utils import check_exists, download_url, extract_file
 
 predictor_path = '~/mlxtend_data/shape_predictor_68_face_landmarks.dat'
-predictor_url = "http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2"
+predictor_url = ("http://dlib.net/files/"
+                 "shape_predictor_68_face_landmarks.dat.bz2")
 
 if not check_exists(predictor_path):
     download_url(predictor_url, save_path='~/mlxtend_data/',

@@ -27,7 +27,7 @@ else
 fi
 
 conda install jupyter
-
+pip install dlib
 if [ "${COVERAGE}" = "true" ]; then
     conda install coveralls
 fi

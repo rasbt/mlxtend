@@ -10,7 +10,7 @@
 import dlib
 import numpy as np
 import os
-from utils import check_exists, download_url, extract_file
+from .utils import check_exists, download_url, extract_file
 
 predictor_path = '~/mlxtend_data/shape_predictor_68_face_landmarks.dat'
 predictor_url = ("http://dlib.net/files/"

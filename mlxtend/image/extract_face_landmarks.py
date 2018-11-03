@@ -17,8 +17,7 @@ predictor_url = ("http://dlib.net/files/"
                  "shape_predictor_68_face_landmarks.dat.bz2")
 
 if not check_exists(predictor_path):
-    download_url(predictor_url, save_path='~/mlxtend_data/',
-                 filename='shape_predictor_68_face_landmarks.dat.bz2')
+    download_url(predictor_url, save_path='~/mlxtend_data/')
     extract_file('~/mlxtend_data/shape_predictor_68_face_landmarks.dat.bz2')
 
 detector = dlib.get_frontal_face_detector()

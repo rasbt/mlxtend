@@ -25,7 +25,27 @@ detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(os.path.expanduser(predictor_path))
 
 
-def extract_face_landmarks(img):
+def extract_face_landmarks(img, return_dtype=np.int32):
+    """One-hot encoding of class labels
+
+    Parameters
+    ----------
+    img : array-like image, shape = [h, w, 3]
+        numpy array for the face image.
+    return_dtype: the return data-type of the array,
+        default: np.int32.
+
+    Returns
+    ----------
+    landmarks : numpy.ndarray, shape = [68, 2]
+       A numpy array, where each row contains a landmark/point x-y coordinates.
+
+    Examples
+    ----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/sources/image/extract_face_landmarks.ipynb
+
+    """
     faces = detector(img, 1)  # detecting faces
     shape = predictor(img, faces[0])
     landmarks = np.zeros(shape=(68, 2))
@@ -33,4 +53,4 @@ def extract_face_landmarks(img):
         p = shape.part(i)
         landmarks[i, :] = np.array([p.x, p.y])
 
-    return landmarks
+    return landmarks.astype(return_dtype)

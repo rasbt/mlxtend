@@ -19,6 +19,7 @@ install:
   - conda create -q -n test-environment python=%PYTHON_VERSION% numpy scipy scikit-learn pandas nose
   - activate test-environment
   - pip install nose-exclude
+  - pip install dlib
 
 test_script:
   - nosetests -s -v --exclude-dir=mlxtend/plotting

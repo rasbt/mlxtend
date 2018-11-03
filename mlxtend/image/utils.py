@@ -45,9 +45,9 @@ def extract_file(path, to_directory=None):
     path = os.path.expanduser(path)
     if path.endswith('.zip'):
         opener, mode = zipfile.ZipFile, 'r'
-    elif path.endswith('.tar.gz') or path.endswith('.tgz'):
+    elif path.endswith(('.tar.gz', '.tgz')):
         opener, mode = tarfile.open, 'r:gz'
-    elif path.endswith('tar.bz2') or path.endswith('.tbz'):
+    elif path.endswith(('tar.bz2', '.tbz')):
         opener, mode = tarfile.open, 'r:bz2'
     elif path.endswith('.bz2'):
         opener, mode = bz2.BZ2File, 'rb'

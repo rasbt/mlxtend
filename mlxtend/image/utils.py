@@ -8,11 +8,15 @@
 # License: BSD 3 clause
 
 import os
-import pyprind
+import tarfile
+import zipfile
+import bz2
+
 
 def check_exists(path):
     path = os.path.expanduser(path)
     return os.path.exists(path)
+
 
 def makedir(path):
     path = os.path.expanduser(path)
@@ -32,13 +36,10 @@ def download_url(url, save_path):
     try:
         print('Downloading '+url+' to '+filepath)
         urllib.request.urlretrieve(url, filepath)
-    except:
-        raise Exception('Failed to download! Check URL: '+url+
-                        ' and local path: '+save_path)
+    except ValueError:
+        raise Exception('Failed to download! Check URL: ' + url +
+                        ' and local path: ' + save_path)
 
-import tarfile
-import zipfile
-import bz2
 
 def extract_file(path, to_directory=None):
     path = os.path.expanduser(path)
@@ -51,20 +52,23 @@ def extract_file(path, to_directory=None):
     elif path.endswith('.bz2'):
         opener, mode = bz2.BZ2File, 'rb'
         with open(path[:-4], 'wb') as fp_out, opener(path, 'rb') as fp_in:
-            for data in iter(lambda : fp_in.read(100 * 1024), b''):
+            for data in iter(lambda: fp_in.read(100 * 1024), b''):
                 fp_out.write(data)
         return
-    else: 
-        raise (ValueError, "Could not extract `{}` as no extractor is found!".format(path))
-    
+    else:
+        raise (ValueError,
+               "Could not extract `{}` as no extractor is found!".format(path))
+
     if to_directory is None:
         to_directory = os.path.abspath(os.path.join(path, os.path.pardir))
     cwd = os.getcwd()
     os.chdir(to_directory)
-    
+
     try:
         file = opener(path, mode)
-        try: file.extractall()
-        finally: file.close()
+        try:
+            file.extractall()
+        finally:
+            file.close()
     finally:
         os.chdir(cwd)

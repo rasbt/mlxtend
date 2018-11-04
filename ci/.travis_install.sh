@@ -28,6 +28,7 @@ fi
 
 conda install jupyter
 pip install dlib
+pip install imageio
 if [ "${COVERAGE}" = "true" ]; then
     conda install coveralls
 fi

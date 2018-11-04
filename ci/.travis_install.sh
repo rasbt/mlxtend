@@ -37,6 +37,8 @@ if [ "${COVERAGE}" = "true" ]; then
     conda install coveralls
 fi
 
+pip install nose-exclude
+
 python --version
 python -c "import pandas; print('pandas %s' % pandas.__version__)"
 python -c "import numpy; print('numpy %s' % numpy.__version__)"

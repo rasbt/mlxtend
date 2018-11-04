@@ -7,6 +7,7 @@
 from mlxtend.image import extract_face_landmarks
 import imageio
 import numpy as np
+import os
 
 
 def rgb2gray(rgb):
@@ -42,16 +43,30 @@ def test_jpg():
 
     assert landmarks2.shape == (68, 2)
 
-    true_vals = np.array([[85, 110],
-                          [85, 120],
-                          [85, 130],
-                          [87, 140],
-                          [91, 148],
-                          [97, 155],
-                          [104, 160],
-                          [112, 164],
-                          [120, 165],
-                          [125, 162]], dtype=np.int32)
+    if os.name == 'nt':
+        true_vals = np.array([[85, 111],
+                              [84, 120],
+                              [85, 130],
+                              [87, 140],
+                              [91, 148],
+                              [98, 155],
+                              [105, 160],
+                              [113, 164],
+                              [120, 165],
+                              [126, 162]], dtype=np.int32)
+
+    else:
+        true_vals = np.array([[85, 110],
+                              [85, 120],
+                              [85, 130],
+                              [87, 140],
+                              [91, 148],
+                              [97, 155],
+                              [104, 160],
+                              [112, 164],
+                              [120, 165],
+                              [125, 162]], dtype=np.int32)
+
     np.testing.assert_array_equal(landmarks2[:10], true_vals)
 
 

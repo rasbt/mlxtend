@@ -27,8 +27,12 @@ else
 fi
 
 conda install jupyter
-pip install dlib
-pip install imageio
+
+if [ "${IMAGE}" = "true" ]; then
+    pip install dlib
+    pip install imageio
+fi
+
 if [ "${COVERAGE}" = "true" ]; then
     conda install coveralls
 fi

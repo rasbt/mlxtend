@@ -20,6 +20,7 @@ install:
   - activate test-environment
   - pip install nose-exclude
   - pip install dlib
+  - pip install imageio
 
 test_script:
   - nosetests -s -v --exclude-dir=mlxtend/plotting

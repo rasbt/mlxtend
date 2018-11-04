@@ -10,7 +10,7 @@ import numpy as np
 
 
 def test_defaults():
-    img = imageio.imread('data/lena.jpg')
+    img = imageio.imread('mlxtend/image/tests/data/lena.png')
     landmarks = extract_face_landmarks(img)
     assert landmarks.shape == (68, 2)
 

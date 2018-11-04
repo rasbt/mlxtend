@@ -10,6 +10,7 @@
 import dlib
 import numpy as np
 import os
+import warnings
 from .utils import check_exists, download_url, extract_file
 
 predictor_path = '~/mlxtend_data/shape_predictor_68_face_landmarks.dat'
@@ -25,12 +26,21 @@ predictor = dlib.shape_predictor(os.path.expanduser(predictor_path))
 
 
 def extract_face_landmarks(img, return_dtype=np.int32):
-    """One-hot encoding of class labels
+    """Function to extract face landmarks.
+
+    Note that this function requires an installation of
+    the Python version of the library "dlib": http://dlib.net
 
     Parameters
     ----------
-    img : array-like image, shape = [h, w, 3]
-        numpy array for the face image.
+    img : array, shape = [h, w, ?]
+        numpy array of a face image.
+        Supported shapes are
+        - 3D tensors with 1
+        or more color channels, for example,
+        RGB: [h, w, 3]
+        - 2D tensors without color channel, for example,
+        Grayscale: [h, w]
     return_dtype: the return data-type of the array,
         default: np.int32.
 
@@ -46,8 +56,12 @@ def extract_face_landmarks(img, return_dtype=np.int32):
 
     """
     faces = detector(img, 1)  # detecting faces
-    shape = predictor(img, faces[0])
     landmarks = np.zeros(shape=(68, 2))
+    if not faces:
+        warnings.warn('No face detected.')
+        return landmarks
+    shape = predictor(img, faces[0])
+
     for i in range(68):
         p = shape.part(i)
         landmarks[i, :] = np.array([p.x, p.y])

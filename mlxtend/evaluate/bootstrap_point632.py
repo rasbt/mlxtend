@@ -8,7 +8,6 @@
 
 import numpy as np
 from .bootstrap_outofbag import BootstrapOutOfBag
-from sklearn.metrics.scorer import check_scoring
 from sklearn.base import clone
 
 
@@ -25,13 +24,41 @@ def _check_arrays(X, y=None):
             raise ValueError('y must be a 1D array.')
 
     if not len(y) == X.shape[0]:
-        raise ValueError('X and y must contain the same number of samples')
+        raise ValueError('X and y must contain the'
+                         'same number of samples')
+
+
+def no_information_rate(targets, predictions, loss_fn):
+    combinations = np.array(np.meshgrid(targets, predictions)).reshape(-1, 2)
+    return loss_fn(combinations[:, 0], combinations[:, 1])
+
+
+def accuracy(targets, predictions):
+    return np.mean(np.array(targets) == np.array(predictions))
+
+
+def mse(targets, predictions):
+    return np.mean((np.array(targets) - np.array(predictions))**2)
 
 
 def bootstrap_point632_score(estimator, X, y, n_splits=200,
-                             method='.632', scoring=None, random_seed=None):
+                             method='.632', scoring_func=None,
+                             random_seed=None,
+                             clone_estimator=True):
     """
-    Implementation of the 0.632 bootstrap for supervised learning
+    Implementation of the .632 [1] and .632+ [2] bootstrap
+    for supervised learning
+
+    References:
+
+    - [1] Efron, Bradley. 1983. "Estimating the Error Rate
+      of a Prediction Rule: Improvement on Cross-Validation."
+      Journal of the American Statistical Association
+      78 (382): 316. doi:10.2307/2288636.
+    - [2] Efron, Bradley, and Robert Tibshirani. 1997.
+      "Improvements on Cross-Validation: The .632+ Bootstrap Method."
+      Journal of the American Statistical Association
+      92 (438): 548. doi:10.2307/2965703.
 
     Parameters
     ----------
@@ -52,26 +79,26 @@ def bootstrap_point632_score(estimator, X, y, n_splits=200,
         Must be larger than 1.
 
     method : str (default='.632')
-        The bootstrap method, which can be either the
-        regular '.632' bootstrap (default) or the '.632+'
-        bootstrap (not implemented, yet).
+        The bootstrap method, which can be either
+        - 1) '.632' bootstrap (default)
+        - 2) '.632+' bootstrap
+        - 3) 'oob' (regular out-of-bag, no weighting)
+        for comparison studies.
 
-    scoring : str, callable, or None (default: None)
-        If None (default), uses 'accuracy' for sklearn classifiers
-        and 'r2' for sklearn regressors.
-        If str, uses a sklearn scoring metric string identifier, for example
-        {'accuracy', 'f1', 'precision', 'recall', 'roc_auc', etc.}
-        for classifiers,
-        {'mean_absolute_error', 'mean_squared_error'/'neg_mean_squared_error',
-        'median_absolute_error', 'r2', etc.} for regressors.
-        If a callable object or function is provided, it has to be conform with
-        sklearn's signature ``scorer(estimator, X, y)``; see
-        http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
-        for more information.
+    scoring_func : callable,
+        Score function (or loss function) with signature
+        ``scoring_func(y, y_pred, **kwargs)``.
+        If none, uses classification accuracy if the
+        estimator is a classifier and mean squared error
+        if the estimator is a regressor.
 
     random_seed : int (default=None)
         If int, random_seed is the seed used by
         the random number generator.
+
+    clone_estimator : bool (default=True)
+        Clones the estimator if true, otherwise fits
+        the original.
 
     Returns
     -------
@@ -104,27 +131,52 @@ def bootstrap_point632_score(estimator, X, y, n_splits=200,
         raise ValueError('Number of splits must be'
                          ' greater than 1. Got %s.' % n_splits)
 
-    allowed_methods = ('.632', '.632+')
+    allowed_methods = ('.632', '.632+', 'oob')
     if not isinstance(method, str) or method not in allowed_methods:
         raise ValueError('The `method` must '
                          'be in %s. Got %s.' % (allowed_methods, method))
 
-    if method == '.632+':
-        raise NotImplementedError('The .632+ method is not implemented, yet.')
-
     _check_arrays(X, y)
 
-    estimator = clone(estimator)
-    scorer = check_scoring(estimator, scoring=scoring)
+    if clone_estimator:
+        cloned_est = clone(estimator)
+    else:
+        cloned_est = estimator
+
+    if scoring_func is None:
+        if cloned_est._estimator_type == 'classifier':
+            scoring_func = accuracy
+        elif cloned_est._estimator_type == 'regressor':
+            scoring_func = mse
+        else:
+            raise AttributeError('Estimator type undefined.'
+                                 'Please provide a scoring_func argument.')
 
     oob = BootstrapOutOfBag(n_splits=n_splits, random_seed=random_seed)
     scores = np.empty(dtype=np.float, shape=(n_splits,))
     cnt = 0
     for train, test in oob.split(X):
-        estimator.fit(X[train], y[train])
-        train_acc = scorer(estimator, X[train], y[train])
-        test_acc = scorer(estimator, X[test], y[test])
-        acc = 0.368*train_acc + 0.632*test_acc
+        cloned_est.fit(X[train], y[train])
+
+        test_acc = scoring_func(y[test], cloned_est.predict(X[test]))
+
+        if method == 'oob':
+            acc = test_acc
+
+        else:
+            train_acc = scoring_func(y[train], cloned_est.predict(X[train]))
+            if method == '.632+':
+                gamma = no_information_rate(y,
+                                            cloned_est.predict(X),
+                                            scoring_func)
+                R = (-(test_acc - train_acc)) / (gamma - (1 - test_acc))
+                weight = 0.632 / (1-0.368 * R)
+
+            else:
+                weight = 0.632
+
+            acc = weight*test_acc + (1. - weight)*train_acc
+
         scores[cnt] = acc
         cnt += 1
     return scores

@@ -24,7 +24,8 @@ def _check_arrays(X, y=None):
             raise ValueError('y must be a 1D array.')
 
     if not len(y) == X.shape[0]:
-        raise ValueError('X and y must contain the same number of samples')
+        raise ValueError('X and y must contain the'
+                         'same number of samples')
 
 
 def no_information_rate(targets, predictions, loss_fn):

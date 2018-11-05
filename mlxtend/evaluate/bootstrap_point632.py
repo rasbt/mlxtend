@@ -51,12 +51,12 @@ def bootstrap_point632_score(estimator, X, y, n_splits=200,
 
     References:
 
-    - [1] Efron, Bradley. 1983. “Estimating the Error Rate
-      of a Prediction Rule: Improvement on Cross-Validation.”
+    - [1] Efron, Bradley. 1983. "Estimating the Error Rate
+      of a Prediction Rule: Improvement on Cross-Validation."
       Journal of the American Statistical Association
       78 (382): 316. doi:10.2307/2288636.
     - [2] Efron, Bradley, and Robert Tibshirani. 1997.
-      “Improvements on Cross-Validation: The .632+ Bootstrap Method.”
+      "Improvements on Cross-Validation: The .632+ Bootstrap Method."
       Journal of the American Statistical Association
       92 (438): 548. doi:10.2307/2965703.
 

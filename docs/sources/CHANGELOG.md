@@ -28,7 +28,7 @@ The CHANGELOG for the current development version is available at
 ##### Changes
 
 - Addressed deprecations warnings in NumPy 0.15. ([#425](https://github.com/rasbt/mlxtend/pull/425))
-
+- Because of complications in PR ([#459](https://github.com/rasbt/mlxtend/pull/459)), Python 2.7 was now dropped; since official support for Python 2.7 by the Python Software Foundation is ending in approx. 12 months anyways, this re-focussing will hopefully free up some developer time with regard to not having to worry about backward compatibility
 
 ##### Bug Fixes
 

@@ -22,6 +22,8 @@ The CHANGELOG for the current development version is available at
 - Added a `PredefinedHoldoutSplit` class to perform a train/valid split, based on user-specified indices, without rotation in `SequentialFeatureSelector`, scikit-learn `GridSearchCV` etc. ([#443](https://github.com/rasbt/mlxtend/pull/443))
 - Created a new `mlxtend.image` submodule for working on image processing-related tasks. ([#457](https://github.com/rasbt/mlxtend/pull/457))
 - Added a new convenience function `extract_face_landmarks` based on `dlib` to `mlxtend.image`. ([#458](https://github.com/rasbt/mlxtend/pull/458))
+- Added a `method='oob'` option to the `mlxtend.evaluate.bootstrap_point632_score` method to compute the classic out-of-bag bootstrap estimate ([#459](https://github.com/rasbt/mlxtend/pull/459))
+- Added a `method='.632+'` option to the `mlxtend.evaluate.bootstrap_point632_score` method to compute the .632+ bootstrap estimate that addresses the optimism bias of the .632 bootstrap ([#459](https://github.com/rasbt/mlxtend/pull/459))
 
 ##### Changes
 

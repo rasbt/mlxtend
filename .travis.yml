@@ -8,8 +8,7 @@ matrix:
           env: LATEST="true" IMAGE="true" COVERAGE="true" NOTEBOOKS="true" MINICONDA_PYTHON_VERSION=3.7
         - python: 3.6 # python 3.7
           env: LATEST="true" IMAGE="false" COVERAGE="false" NOTEBOOKS="false" MINICONDA_PYTHON_VERSION=3.7
-        - python: 2.7
-          env: LATEST="true" IMAGE="true" COVERAGE="false" NOTEBOOKS="false"  MINICONDA_PYTHON_VERSION=2.7
+CONDA_PYTHON_VERSION=2.7
 install:
     - sudo apt-get update
     - source ci/.travis_install.sh

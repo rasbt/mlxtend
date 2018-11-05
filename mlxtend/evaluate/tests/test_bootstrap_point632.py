@@ -19,7 +19,7 @@ def test_defaults():
     scores = bootstrap_point632_score(lr, X, y, random_seed=123)
     acc = np.mean(scores)
     assert len(scores == 200)
-    assert np.round(acc, 2) == 0.95, np.round(acc, 2)
+    assert np.round(acc, 5) == 0.95306, np.round(acc, 5)
 
 
 def test_oob():
@@ -27,7 +27,7 @@ def test_oob():
     scores = bootstrap_point632_score(tree, X, y, random_seed=123, method='oob')
     acc = np.mean(scores)
     assert len(scores == 200)
-    assert np.round(acc, 2) == 0.95, np.round(acc, 2)
+    assert np.round(acc, 5) == 0.94667, np.round(acc, 5)
 
 
 def test_632():
@@ -36,14 +36,14 @@ def test_632():
                                       method='.632')
     acc = np.mean(scores)
     assert len(scores == 200)
-    assert np.round(acc, 2) == 0.97, np.round(acc, 2)
+    assert np.round(acc, 5) == 0.96629, np.round(acc, 5)
 
     tree2 = DecisionTreeClassifier(random_state=123, max_depth=1)
     scores = bootstrap_point632_score(tree2, X, y, random_seed=123,
                                       method='.632')
     acc = np.mean(scores)
     assert len(scores == 200)
-    assert np.round(acc, 2) == 0.66, np.round(acc, 2)
+    assert np.round(acc, 5) == 0.65512, np.round(acc, 5)
 
 
 def test_632plus():
@@ -52,14 +52,14 @@ def test_632plus():
                                       method='.632+')
     acc = np.mean(scores)
     assert len(scores == 200)
-    assert np.round(acc, 2) == 0.97, np.round(acc, 2)
+    assert np.round(acc, 5) == 0.96528, np.round(acc, 5)
 
     tree2 = DecisionTreeClassifier(random_state=123, max_depth=1)
     scores = bootstrap_point632_score(tree2, X, y, random_seed=123,
                                       method='.632+')
     acc = np.mean(scores)
     assert len(scores == 200)
-    assert np.round(acc, 2) == 0.65, np.round(acc, 2)
+    assert np.round(acc, 5) == 0.65034, np.round(acc, 5)
 
 
 def test_custom_accuracy():
@@ -73,7 +73,7 @@ def test_custom_accuracy():
                                       scoring_func=accuracy2)
     acc = np.mean(scores)
     assert len(scores == 200)
-    assert np.round(acc, 2) == 0.95, np.round(acc, 2)
+    assert np.round(acc, 5) == 0.95306, np.round(acc, 5)
 
 
 def test_invalid_splits():

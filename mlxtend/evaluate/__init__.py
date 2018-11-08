@@ -22,6 +22,8 @@ from .ttest import paired_ttest_kfold_cv
 from .ttest import paired_ttest_5x2cv
 from .holdout import RandomHoldoutSplit
 from .holdout import PredefinedHoldoutSplit
+from .f_test import ftest
+from .f_test import combined_ftest_5x2cv
 
 
 __all__ = ["scoring", "confusion_matrix",
@@ -32,4 +34,5 @@ __all__ = ["scoring", "confusion_matrix",
            "cochrans_q", "paired_ttest_resampled",
            "paired_ttest_kfold_cv", "paired_ttest_5x2cv",
            "feature_importance_permutation",
-           "RandomHoldoutSplit"]
+           "RandomHoldoutSplit", "PredefinedHoldoutSplit",
+           "ftest", "combined_ftest_5x2cv"]

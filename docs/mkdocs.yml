@@ -62,8 +62,10 @@ pages:
     - user_guide/evaluate/bootstrap_point632_score.md
     - user_guide/evaluate/BootstrapOutOfBag.md
     - user_guide/evaluate/cochrans_q.md    
+    - user_guide/evaluate/combined_ftest_5x2cv.md
     - user_guide/evaluate/confusion_matrix.md
     - user_guide/evaluate/feature_importance_permutation.md
+    - user_guide/evaluate/ftest.md
     - user_guide/evaluate/lift_score.md
     - user_guide/evaluate/mcnemar_table.md
     - user_guide/evaluate/mcnemar_tables.md

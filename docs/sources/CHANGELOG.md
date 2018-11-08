@@ -25,6 +25,7 @@ The CHANGELOG for the current development version is available at
 - Added a `method='oob'` option to the `mlxtend.evaluate.bootstrap_point632_score` method to compute the classic out-of-bag bootstrap estimate ([#459](https://github.com/rasbt/mlxtend/pull/459))
 - Added a `method='.632+'` option to the `mlxtend.evaluate.bootstrap_point632_score` method to compute the .632+ bootstrap estimate that addresses the optimism bias of the .632 bootstrap ([#459](https://github.com/rasbt/mlxtend/pull/459))
 - Added a new `mlxtend.evaluate.ftest` function to perform an F-test for comparing the accuracies of two or more classification models. ([#460](https://github.com/rasbt/mlxtend/pull/460))
+- Added a new `mlxtend.evaluate.combined_ftest_5x2cv` function to perform an combined 5x2cv F-Test for comparing the performance of two models. ([#461](https://github.com/rasbt/mlxtend/pull/461))
 
 ##### Changes
 

@@ -41,6 +41,7 @@
 - [paired_ttest_resampled](user_guide/evaluate/paired_ttest_resampled.md)
 - [permutation_test](user_guide/evaluate/permutation_test.md)
 - [PredefinedHoldoutSplit](user_guide/evaluate/PredefinedHoldoutSplit.md)
+- [proportion_difference](user_guide/evaluate/proportion_difference.md)
 - [RandomHoldoutSplit](user_guide/evaluate/RandomHoldoutSplit.md)
 - [scoring](user_guide/evaluate/scoring.md)
 

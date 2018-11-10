@@ -1,947 +1,660 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
-    <page.page.meta charset="utf-8">
-    <page.page.meta http-equiv="X-UA-Compatible" page.content="IE=edge">
-    <page.page.meta name="viewport" page.content="width=device-width, initial-scale=1.0">
-    <page.page.meta name="description" page.content="A library consisting of useful tools and extensions for the day-to-day data science tasks."> 
-    <page.page.meta name="author" page.content="Sebastian Raschka"> 
-    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/plotting/enrichment_plot/"> 
-    <link rel="shortcut icon" href="../../../img/favicon.ico">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Sebastian Raschka">
+  <link rel="shortcut icon" href="../../../img/favicon.ico">
+  <title>Enrichment Plot - mlxtend</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
-    <title>Enrichment Plot - mlxtend</title>
+  <link rel="stylesheet" href="../../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../../cinder/css/base.css" rel="stylesheet">
+  <link href="../../../cinder/css/bootstrap-custom.css" rel="stylesheet">
+  <link href="../../../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
+  <link href="../../../cinder/css/cinder.css" rel="stylesheet">
+  <link href="../../../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
+  <link href="../../../cinder/css/highlight.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Enrichment Plot";
+    var mkdocs_page_input_path = "user_guide/plotting/enrichment_plot.md";
+    var mkdocs_page_url = "/mlxtend/user_guide/plotting/enrichment_plot/";
+  </script>
+  
+  <script src="../../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-    <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
-    <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
-    <link href="../../../css/base.css" rel="stylesheet">
-    <link href="../../../css/cinder.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../../css/highlight.css">
-
-    <!--
-    <link href="../../../cinder/css/base.css" rel="stylesheet">
-    <link href="../../../cinder/css/bootstrap-custom.css" rel="stylesheet">
-    <link href="../../../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
-    <link href="../../../cinder/css/cinder.css" rel="stylesheet">
-    <link href="../../../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
-    <link href="../../../cinder/css/highlight.css" rel="stylesheet">-->
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->
-
-    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
-    <script>
-    WebFont.load({
-        google: {
-            families: ['Open Sans', 'PT Sans']
-        }
-    });
-    </script>
-
-    
-    <script>
-    (function(i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r;
-        i[r] = i[r] || function() {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date();
-        a = s.createElement(o),
-        m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-    ga('create', 'UA-38457794-2', 'rasbt.github.io/mlxtend/');
-    ga('send', 'pageview');
-    </script>
-    
+      ga('create', 'UA-38457794-2', 'rasbt.github.io/mlxtend/');
+      ga('send', 'pageview');
+  </script>
+  
 </head>
 
-<body>
-
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
-
-        <!-- Collapsed navigation -->
-        <div class="navbar-header">
-            
-            <!-- Expander button -->
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            
-
-            <!-- Main title -->
-            <a class="navbar-brand" href="">mlxtend</a>
-        </div>
-
-        <!-- Expanded navigation -->
-        <div class="navbar-collapse collapse">
-            
-                <!-- Main navigation -->
-                <ul class="nav navbar-nav">
-                
-                
-                    <li >
-                        <a href="">Home</a>
-                    </li>
-                
-                
-                
-                    <li class="dropdown active">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                        
-                            
-<li >
-    <a href="USER_GUIDE_INDEX/">User Guide Index</a>
-</li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">classifier</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="user_guide/classifier/Adaline/">Adaptive Linear Neuron -- Adaline</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/classifier/EnsembleVoteClassifier/">EnsembleVoteClassifier</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/classifier/LogisticRegression/">Logistic Regression</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/classifier/MultiLayerPerceptron/">Neural Network - Multilayer Perceptron</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/classifier/Perceptron/">Perceptron</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/classifier/SoftmaxRegression/">Softmax Regression</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/classifier/StackingClassifier/">StackingClassifier</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/classifier/StackingCVClassifier/">StackingCVClassifier</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">cluster</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="user_guide/cluster/Kmeans/">Kmeans</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">data</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="user_guide/data/autompg_data/">Auto MPG</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/data/boston_housing_data/">Boston Housing Data</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/data/iris_data/">Iris Dataset</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/data/loadlocal_mnist/">Load the MNIST Dataset from Local Files</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/data/make_multiplexer_dataset/">Make Multiplexer Dataset</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/data/mnist_data/">MNIST Dataset</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/data/three_blobs_data/">Three Blobs Dataset</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/data/wine_data/">Wine Dataset</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">evaluate</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="user_guide/evaluate/bootstrap/">Bootstrap</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/evaluate/bootstrap_point632_score/">bootstrap_point632_score</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/evaluate/BootstrapOutOfBag/">BootstrapOutOfBag</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/evaluate/cochrans_q/">Cochran's Q Test</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/evaluate/combined_ftest_5x2cv/">5x2cv combined *F* test</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/evaluate/confusion_matrix/">Confusion Matrix</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/evaluate/feature_importance_permutation/">Feature Importance Permutation</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/evaluate/ftest/">F-Test</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/evaluate/lift_score/">Lift Score</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/evaluate/mcnemar_table/">Contigency Table for McNemar's Test</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/evaluate/mcnemar_tables/">Contigency Tables for McNemar's Test and Cochran's Q Test</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/evaluate/mcnemar/">McNemar's Test</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/evaluate/paired_ttest_5x2cv/">5x2cv paired *t* test</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/evaluate/paired_ttest_kfold_cv/">K-fold cross-validated paired *t* test</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/evaluate/paired_ttest_resampled/">Resampled paired *t* test</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/evaluate/permutation_test/">Permutation Test</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/evaluate/PredefinedHoldoutSplit/">PredefinedHoldoutSplit</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/evaluate/RandomHoldoutSplit/">RandomHoldoutSplit</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/evaluate/scoring/">Scoring</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">feature_extraction</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="user_guide/feature_extraction/LinearDiscriminantAnalysis/">Linear Discriminant Analysis</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/feature_extraction/PrincipalComponentAnalysis/">Principal Component Analysis</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/feature_extraction/RBFKernelPCA/">RBFKernelPCA</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">feature_selection</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="user_guide/feature_selection/ColumnSelector/">ColumnSelector</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/feature_selection/ExhaustiveFeatureSelector/">Exhaustive Feature Selector</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/feature_selection/SequentialFeatureSelector/">Sequential Feature Selector</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">file_io</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="user_guide/file_io/find_filegroups/">Find Filegroups</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/file_io/find_files/">Find Files</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">frequent_patterns</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="user_guide/frequent_patterns/apriori/">Apriori</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/frequent_patterns/association_rules/">Association rules</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">general concepts</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="user_guide/general_concepts/activation-functions/">Activation Functions for Artificial Neural Networks</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/general_concepts/gradient-optimization/">Gradient Descent and Stochastic Gradient Descent</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/general_concepts/linear-gradient-derivative/">Deriving the Gradient Descent Rule for Linear Regression and Adaline</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/general_concepts/regularization-linear/">Regularization of Generalized Linear Models</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">image</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="user_guide/image/extract_face_landmarks/">Extract Face Landmarks</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">math</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="user_guide/math/num_combinations/">Compute the Number of Combinations</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/math/num_permutations/">Compute the Number of Permutations</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/math/vectorspace_dimensionality/">Vectorspace Dimensionality</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/math/vectorspace_orthonormalization/">Vectorspace Orthonormalization</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">plotting</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="user_guide/plotting/category_scatter/">Scatterplot with Categories</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/plotting/checkerboard_plot/">Checkerboard Plot</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/plotting/ecdf/">Empirical Cumulative Distribution Function Plot</a>
-</li>
-
-        
-            
-<li class="active">
-    <a href="user_guide/plotting/enrichment_plot/">Enrichment Plot</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/plotting/plot_confusion_matrix/">Confusion Matrix</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/plotting/plot_decision_regions/">Plotting Decision Regions</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/plotting/plot_learning_curves/">Plotting Learning Curves</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/plotting/plot_linear_regression/">Linear Regression Plot</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/plotting/plot_sequential_feature_selection/">Plot Sequential Feature Selection</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/plotting/scatterplotmatrix/">Scatter Plot Matrix</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/plotting/stacked_barplot/">Stacked Barplot</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">preprocessing</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="user_guide/preprocessing/CopyTransformer/">CopyTransformer</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/preprocessing/DenseTransformer/">DenseTransformer</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/preprocessing/MeanCenterer/">Mean Centerer</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/preprocessing/minmax_scaling/">MinMax Scaling</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/preprocessing/one-hot_encoding/">One hot encoding</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/preprocessing/shuffle_arrays_unison/">Shuffle Arrays in Unison</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/preprocessing/standardize/">Standardize</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/preprocessing/TransactionEncoder/">TransactionEncoder</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">regressor</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="user_guide/regressor/LinearRegression/">LinearRegression</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/regressor/StackingCVRegressor/">StackingCVRegressor</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/regressor/StackingRegressor/">StackingRegressor</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">text</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="user_guide/text/generalize_names/">Generalize Names</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/text/generalize_names_duplcheck/">Generalize Names & Duplicate Checking</a>
-</li>
-
-        
-            
-<li >
-    <a href="user_guide/text/tokenizer/">Tokenizer</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                            
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="">utils</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="user_guide/utils/Counter/">Counter</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-                        
-                        </ul>
-                    </li>
-                
-                
-                
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                        
-                            
-<li >
-    <a href="api_subpackages/mlxtend.classifier/">Mlxtend.classifier</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="api_subpackages/mlxtend.cluster/">Mlxtend.cluster</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="api_subpackages/mlxtend.data/">Mlxtend.data</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="api_subpackages/mlxtend.evaluate/">Mlxtend.evaluate</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="api_subpackages/mlxtend.feature_extraction/">Mlxtend.feature extraction</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="api_subpackages/mlxtend.feature_selection/">Mlxtend.feature selection</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="api_subpackages/mlxtend.frequent_patterns/">Mlxtend.frequent patterns</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="api_subpackages/mlxtend.preprocessing/">Mlxtend.preprocessing</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="api_subpackages/mlxtend.text/">Mlxtend.text</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="api_subpackages/mlxtend.utils/">Mlxtend.utils</a>
-</li>
-
-                        
-                        </ul>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="installation/">Installation</a>
-                    </li>
-                
-                
-                
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                        
-                            
-<li >
-    <a href="CHANGELOG/">Release Notes</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="CONTRIBUTING/">How To Contribute</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="contributors/">Contributors</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="license/">License</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="cite/">Citing Mlxtend</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="discuss/">Discuss</a>
-</li>
-
-                        
-                        </ul>
-                    </li>
-                
-                
-                </ul>
-            
-
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
-                        <i class="fa fa-search"></i> Search
-                    </a>
-                </li>
-                
-                    <li >
-                        <a rel="next" href="user_guide/plotting/ecdf/">
-                            <i class="fa fa-arrow-left"></i> Previous
-                        </a>
-                    </li>
-                    <li >
-                        <a rel="prev" href="user_guide/plotting/plot_confusion_matrix/">
-                            Next <i class="fa fa-arrow-right"></i>
-                        </a>
-                    </li>
-                
-
-
-                    <li>
-                        <a href="https://github.com/rasbt/mlxtend/">
-                                <i class="fa fa-github"></i>
-                            GitHub
-                        </a>
-                    </li>
-
-
-
-                
-            </ul>
-        </div>
-    </div>
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../.." class="icon icon-home"> mlxtend</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
 </div>
+      </div>
 
-    <div class="container">
-        
-        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
-    <ul class="nav bs-sidenav">
-    
-        <li class="main active"><a href="#enrichment-plot">Enrichment Plot</a></li>
-        
-            <li><a href="#overview">Overview</a></li>
-                <!-- 
-                    <li><a href="#references">References</a></li>
-             -->
-        
-            <li><a href="#example-1-enrichment-plots-from-pandas-dataframes">Example 1 - Enrichment Plots from Pandas DataFrames</a></li>
-                <!--  -->
-        
-            <li><a href="#api">API</a></li>
-                <!--  -->
-        
-    
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">User Guide</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../../USER_GUIDE_INDEX/">User Guide Index</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">classifier</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../classifier/Adaline/">Adaptive Linear Neuron -- Adaline</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../classifier/EnsembleVoteClassifier/">EnsembleVoteClassifier</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../classifier/LogisticRegression/">Logistic Regression</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../classifier/MultiLayerPerceptron/">Neural Network - Multilayer Perceptron</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../classifier/Perceptron/">Perceptron</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../classifier/SoftmaxRegression/">Softmax Regression</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../classifier/StackingClassifier/">StackingClassifier</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../classifier/StackingCVClassifier/">StackingCVClassifier</a>
+                </li>
     </ul>
-</div></div>
-        <div class="col-md-9" role="main">
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">cluster</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../cluster/Kmeans/">Kmeans</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">data</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../data/autompg_data/">Auto MPG</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../data/boston_housing_data/">Boston Housing Data</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../data/iris_data/">Iris Dataset</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../data/loadlocal_mnist/">Load the MNIST Dataset from Local Files</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../data/make_multiplexer_dataset/">Make Multiplexer Dataset</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../data/mnist_data/">MNIST Dataset</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../data/three_blobs_data/">Three Blobs Dataset</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../data/wine_data/">Wine Dataset</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">evaluate</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../evaluate/bootstrap/">Bootstrap</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../evaluate/bootstrap_point632_score/">bootstrap_point632_score</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../evaluate/BootstrapOutOfBag/">BootstrapOutOfBag</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../evaluate/cochrans_q/">Cochran's Q Test</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../evaluate/combined_ftest_5x2cv/">5x2cv combined *F* test</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../evaluate/feature_importance_permutation/">Feature Importance Permutation</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../evaluate/ftest/">F-Test</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../evaluate/lift_score/">Lift Score</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../evaluate/mcnemar_table/">Contigency Table for McNemar's Test</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../evaluate/mcnemar_tables/">Contigency Tables for McNemar's Test and Cochran's Q Test</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../evaluate/mcnemar/">McNemar's Test</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../evaluate/paired_ttest_5x2cv/">5x2cv paired *t* test</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../evaluate/paired_ttest_kfold_cv/">K-fold cross-validated paired *t* test</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../evaluate/paired_ttest_resampled/">Resampled paired *t* test</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../evaluate/permutation_test/">Permutation Test</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../evaluate/PredefinedHoldoutSplit/">PredefinedHoldoutSplit</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../evaluate/RandomHoldoutSplit/">RandomHoldoutSplit</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../evaluate/scoring/">Scoring</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">feature_extraction</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../feature_extraction/LinearDiscriminantAnalysis/">Linear Discriminant Analysis</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../feature_extraction/PrincipalComponentAnalysis/">Principal Component Analysis</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../feature_extraction/RBFKernelPCA/">RBFKernelPCA</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">feature_selection</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../feature_selection/ColumnSelector/">ColumnSelector</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../feature_selection/ExhaustiveFeatureSelector/">Exhaustive Feature Selector</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../feature_selection/SequentialFeatureSelector/">Sequential Feature Selector</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">file_io</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../file_io/find_filegroups/">Find Filegroups</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../file_io/find_files/">Find Files</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">frequent_patterns</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../frequent_patterns/apriori/">Apriori</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../frequent_patterns/association_rules/">Association rules</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">general concepts</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../general_concepts/activation-functions/">Activation Functions for Artificial Neural Networks</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../general_concepts/gradient-optimization/">Gradient Descent and Stochastic Gradient Descent</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../general_concepts/linear-gradient-derivative/">Deriving the Gradient Descent Rule for Linear Regression and Adaline</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../general_concepts/regularization-linear/">Regularization of Generalized Linear Models</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">image</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../image/extract_face_landmarks/">Extract Face Landmarks</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">math</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../math/num_combinations/">Compute the Number of Combinations</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../math/num_permutations/">Compute the Number of Permutations</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../math/vectorspace_dimensionality/">Vectorspace Dimensionality</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../math/vectorspace_orthonormalization/">Vectorspace Orthonormalization</a>
+                </li>
+    </ul>
+                </li>
+                <li class=" current">
+                    
+    <span class="caption-text">plotting</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../category_scatter/">Scatterplot with Categories</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../checkerboard_plot/">Checkerboard Plot</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../ecdf/">Empirical Cumulative Distribution Function Plot</a>
+                </li>
+                <li class="toctree-l3 current">
+                    
+    <a class="current" href="./">Enrichment Plot</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l4"><a href="#enrichment-plot">Enrichment Plot</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l5" href="#overview">Overview</a></li>
+        
+            <li><a class="toctree-l5" href="#example-1-enrichment-plots-from-pandas-dataframes">Example 1 - Enrichment Plots from Pandas DataFrames</a></li>
+        
+            <li><a class="toctree-l5" href="#api">API</a></li>
+        
+        </ul>
+    
 
-<h1 id="enrichment-plot">Enrichment Plot</h1>
+    </ul>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../plot_confusion_matrix/">Confusion Matrix</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../plot_decision_regions/">Plotting Decision Regions</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../plot_learning_curves/">Plotting Learning Curves</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../plot_linear_regression/">Linear Regression Plot</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../plot_sequential_feature_selection/">Plot Sequential Feature Selection</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../scatterplotmatrix/">Scatter Plot Matrix</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../stacked_barplot/">Stacked Barplot</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">preprocessing</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../preprocessing/CopyTransformer/">CopyTransformer</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../preprocessing/DenseTransformer/">DenseTransformer</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../preprocessing/MeanCenterer/">Mean Centerer</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../preprocessing/minmax_scaling/">MinMax Scaling</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../preprocessing/shuffle_arrays_unison/">Shuffle Arrays in Unison</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../preprocessing/standardize/">Standardize</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../preprocessing/TransactionEncoder/">TransactionEncoder</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">regressor</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../regressor/LinearRegression/">LinearRegression</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../regressor/StackingCVRegressor/">StackingCVRegressor</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../regressor/StackingRegressor/">StackingRegressor</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">text</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../text/generalize_names/">Generalize Names</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../text/generalize_names_duplcheck/">Generalize Names & Duplicate Checking</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../text/tokenizer/">Tokenizer</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">utils</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../utils/Counter/">Counter</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">API</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../../api_subpackages/mlxtend.classifier/">Mlxtend.classifier</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api_subpackages/mlxtend.cluster/">Mlxtend.cluster</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api_subpackages/mlxtend.evaluate/">Mlxtend.evaluate</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api_subpackages/mlxtend.feature_extraction/">Mlxtend.feature extraction</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api_subpackages/mlxtend.feature_selection/">Mlxtend.feature selection</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api_subpackages/mlxtend.frequent_patterns/">Mlxtend.frequent patterns</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api_subpackages/mlxtend.preprocessing/">Mlxtend.preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api_subpackages/mlxtend.text/">Mlxtend.text</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../api_subpackages/mlxtend.utils/">Mlxtend.utils</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../installation/">Installation</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">About</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../../CHANGELOG/">Release Notes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../CONTRIBUTING/">How To Contribute</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../contributors/">Contributors</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../license/">License</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../cite/">Citing Mlxtend</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../../discuss/">Discuss</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../..">mlxtend</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>plotting &raquo;</li>
+        
+      
+        
+          <li>User Guide &raquo;</li>
+        
+      
+    
+    <li>Enrichment Plot</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/rasbt/mlxtend/edit/master/docs/user_guide/plotting/enrichment_plot.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="enrichment-plot">Enrichment Plot</h1>
 <p>A function to plot step plots of cumulative counts.</p>
 <blockquote>
 <p>from mlxtend.general_plotting import category_scatter</p>
@@ -1076,58 +789,59 @@ No legend if legend_loc=False</p>
 </ul>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/plotting/enrichment_plot/">http://rasbt.github.io/mlxtend/user_guide/plotting/enrichment_plot/</a></p></div>
-        
-    </div>
-
-    <footer class="col-md-12 text-center">
-        <hr>
-        <p>
-        <small>Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
-        
-        <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
-    </footer>
-
-    <script src="../../../js/jquery-1.10.2.min.js"></script>
-    <script src="../../../js/bootstrap-3.0.3.min.js"></script>
-    <script src="../../../js/highlight.pack.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-    <script>
-    var base_url = '../../..';
-    </script>
-    <script data-main="../../../mkdocs/js/search.js" src="../../../mkdocs/js/require.js"></script>
-    <script src="../../../js/base.js"></script>
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
-    <script src="../../../mathjaxhelper.js"></script>
-    <script src="../../../search/main.js"></script>
-
-    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                        <span class="sr-only">Close</span>
-                    </button>
-                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        From here you can search these documents. Enter your search terms below.
-                    </p>
-                    <form role="form">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
-                        </div>
-                    </form>
-                    <div id="mkdocs-search-results"></div>
-                </div>
-                <div class="modal-footer">
-                </div>
+    <a href="http://rasbt.github.io/mlxtend/user_guide/plotting/enrichment_plot/">http://rasbt.github.io/mlxtend/user_guide/plotting/enrichment_plot/</a></p>
+              
             </div>
-        </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../plot_confusion_matrix/" class="btn btn-neutral float-right" title="Confusion Matrix">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../ecdf/" class="btn btn-neutral" title="Empirical Cumulative Distribution Function Plot"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
     </div>
+  
 
-    </body>
+  <hr/>
 
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a></p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/rasbt/mlxtend/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../ecdf/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../plot_confusion_matrix/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../../..';</script>
+    <script src="../../../js/theme.js" defer></script>
+      <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" defer></script>
+      <script src="../../../mathjaxhelper.js" defer></script>
+      <script src="../../../search/main.js" defer></script>
+
+</body>
 </html>

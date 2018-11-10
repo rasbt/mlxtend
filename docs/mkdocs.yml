@@ -8,11 +8,10 @@ repo_name: GitHub
 
 #include_search: true # not necessary for this theme
 docs_dir: sources
-theme: mkdocs
-theme_dir: cinder
-#theme_dir: 'custom_theme'
 
-site_favicon: favicon.ico
+theme:
+    name: null
+    custom_dir: 'custom_theme/'
 
 markdown_extensions:
   - tables
@@ -33,7 +32,7 @@ extra_css:
 copyright: Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a>
 google_analytics: ['UA-38457794-2', 'rasbt.github.io/mlxtend/']
 
-pages:
+nav:
 - Home: index.md
 - User Guide:
   - USER_GUIDE_INDEX.md
@@ -150,8 +149,8 @@ pages:
   - api_subpackages/mlxtend.utils.md
 - Installation: installation.md
 - About:
-  - Release Notes: changelog.md
-  - How To Contribute: contributing.md
+  - Release Notes: CHANGELOG.md
+  - How To Contribute: CONTRIBUTING.md
   - Contributors: contributors.md
   - License: license.md
   - Citing Mlxtend: cite.md

@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A library consisting of useful tools and extensions for the day-to-day data science tasks."> 
+    <meta name="author" content="Sebastian Raschka"> 
+    <link rel="canonical" href="http://rasbt.github.io/mlxtend/CHANGELOG/">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    <title>Release Notes - mlxtend</title>
+
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
+    <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/base.css" rel="stylesheet">
+    <link href="../css/cinder.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+
+
+    <link href="../cinder/css/base.css" rel="stylesheet">
+
+
+    <link href="../cinder/css/bootstrap-custom.css" rel="stylesheet">
+
+
+    <link href="../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
+
+
+    <link href="../cinder/css/cinder.css" rel="stylesheet">
+
+
+    <link href="../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
+
+
+    <link href="../cinder/css/highlight.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-38457794-2', 'rasbt.github.io/mlxtend/');
+    ga('send', 'pageview');
+    </script>
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            <a class="navbar-brand" href="..">mlxtend</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../USER_GUIDE_INDEX/">User Guide Index</a>
+</li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">classifier</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../user_guide/classifier/Adaline/">Adaptive Linear Neuron -- Adaline</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/classifier/EnsembleVoteClassifier/">EnsembleVoteClassifier</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/classifier/LogisticRegression/">Logistic Regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/classifier/MultiLayerPerceptron/">Neural Network - Multilayer Perceptron</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/classifier/Perceptron/">Perceptron</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/classifier/SoftmaxRegression/">Softmax Regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/classifier/StackingClassifier/">StackingClassifier</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/classifier/StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">cluster</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../user_guide/cluster/Kmeans/">Kmeans</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">data</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../user_guide/data/autompg_data/">Auto MPG</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/data/boston_housing_data/">Boston Housing Data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/data/iris_data/">Iris Dataset</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/data/loadlocal_mnist/">Load the MNIST Dataset from Local Files</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/data/make_multiplexer_dataset/">Make Multiplexer Dataset</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/data/mnist_data/">MNIST Dataset</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/data/three_blobs_data/">Three Blobs Dataset</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/data/wine_data/">Wine Dataset</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">evaluate</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../user_guide/evaluate/bootstrap/">Bootstrap</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/evaluate/bootstrap_point632_score/">bootstrap_point632_score</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/evaluate/BootstrapOutOfBag/">BootstrapOutOfBag</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/evaluate/cochrans_q/">Cochran's Q Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/evaluate/combined_ftest_5x2cv/">5x2cv combined *F* test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/evaluate/feature_importance_permutation/">Feature Importance Permutation</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/evaluate/ftest/">F-Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/evaluate/lift_score/">Lift Score</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/evaluate/mcnemar_table/">Contigency Table for McNemar's Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/evaluate/mcnemar_tables/">Contigency Tables for McNemar's Test and Cochran's Q Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/evaluate/mcnemar/">McNemar's Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/evaluate/paired_ttest_5x2cv/">5x2cv paired *t* test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/evaluate/paired_ttest_kfold_cv/">K-fold cross-validated paired *t* test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/evaluate/paired_ttest_resampled/">Resampled paired *t* test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/evaluate/permutation_test/">Permutation Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/evaluate/PredefinedHoldoutSplit/">PredefinedHoldoutSplit</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/evaluate/RandomHoldoutSplit/">RandomHoldoutSplit</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/evaluate/scoring/">Scoring</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">feature_extraction</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../user_guide/feature_extraction/LinearDiscriminantAnalysis/">Linear Discriminant Analysis</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/feature_extraction/PrincipalComponentAnalysis/">Principal Component Analysis</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/feature_extraction/RBFKernelPCA/">RBFKernelPCA</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">feature_selection</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../user_guide/feature_selection/ColumnSelector/">ColumnSelector</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/feature_selection/ExhaustiveFeatureSelector/">Exhaustive Feature Selector</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/feature_selection/SequentialFeatureSelector/">Sequential Feature Selector</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">file_io</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../user_guide/file_io/find_filegroups/">Find Filegroups</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/file_io/find_files/">Find Files</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">frequent_patterns</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../user_guide/frequent_patterns/apriori/">Apriori</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/frequent_patterns/association_rules/">Association rules</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">general concepts</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../user_guide/general_concepts/activation-functions/">Activation Functions for Artificial Neural Networks</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/general_concepts/gradient-optimization/">Gradient Descent and Stochastic Gradient Descent</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/general_concepts/linear-gradient-derivative/">Deriving the Gradient Descent Rule for Linear Regression and Adaline</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/general_concepts/regularization-linear/">Regularization of Generalized Linear Models</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">image</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../user_guide/image/extract_face_landmarks/">Extract Face Landmarks</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">math</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../user_guide/math/num_combinations/">Compute the Number of Combinations</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/math/num_permutations/">Compute the Number of Permutations</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/math/vectorspace_dimensionality/">Vectorspace Dimensionality</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/math/vectorspace_orthonormalization/">Vectorspace Orthonormalization</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">plotting</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../user_guide/plotting/category_scatter/">Scatterplot with Categories</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/checkerboard_plot/">Checkerboard Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/ecdf/">Empirical Cumulative Distribution Function Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/enrichment_plot/">Enrichment Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/plot_confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/plot_decision_regions/">Plotting Decision Regions</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/plot_learning_curves/">Plotting Learning Curves</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/plot_linear_regression/">Linear Regression Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/plot_sequential_feature_selection/">Plot Sequential Feature Selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/scatterplotmatrix/">Scatter Plot Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/stacked_barplot/">Stacked Barplot</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">preprocessing</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../user_guide/preprocessing/CopyTransformer/">CopyTransformer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/preprocessing/DenseTransformer/">DenseTransformer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/preprocessing/MeanCenterer/">Mean Centerer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/preprocessing/minmax_scaling/">MinMax Scaling</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/preprocessing/shuffle_arrays_unison/">Shuffle Arrays in Unison</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/preprocessing/standardize/">Standardize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/preprocessing/TransactionEncoder/">TransactionEncoder</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">regressor</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../user_guide/regressor/LinearRegression/">LinearRegression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/regressor/StackingCVRegressor/">StackingCVRegressor</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/regressor/StackingRegressor/">StackingRegressor</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">text</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../user_guide/text/generalize_names/">Generalize Names</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/text/generalize_names_duplcheck/">Generalize Names & Duplicate Checking</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/text/tokenizer/">Tokenizer</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">utils</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../user_guide/utils/Counter/">Counter</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../api_subpackages/mlxtend.classifier/">Mlxtend.classifier</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../api_subpackages/mlxtend.cluster/">Mlxtend.cluster</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../api_subpackages/mlxtend.data/">Mlxtend.data</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../api_subpackages/mlxtend.evaluate/">Mlxtend.evaluate</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../api_subpackages/mlxtend.feature_extraction/">Mlxtend.feature extraction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../api_subpackages/mlxtend.feature_selection/">Mlxtend.feature selection</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../api_subpackages/mlxtend.frequent_patterns/">Mlxtend.frequent patterns</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../api_subpackages/mlxtend.preprocessing/">Mlxtend.preprocessing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../api_subpackages/mlxtend.text/">Mlxtend.text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../api_subpackages/mlxtend.utils/">Mlxtend.utils</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../installation/">Installation</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li class="active">
+    <a href="./">Release Notes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../CONTRIBUTING/">How To Contribute</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../contributors/">Contributors</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../license/">License</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../cite/">Citing Mlxtend</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../discuss/">Discuss</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <i class="fa fa-search"></i> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../installation/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../CONTRIBUTING/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/rasbt/mlxtend/edit/master/docs/CHANGELOG.md"><i class="fa fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="first-level active"><a href="#release-notes">Release Notes</a></li>
+            <li class="second-level"><a href="#version-0140-11-09-2018">Version 0.14.0 (11-09-2018)</a></li>
+                
+                <li class="third-level"><a href="#downloads">Downloads</a></li>
+                <li class="third-level"><a href="#new-features">New Features</a></li>
+                <li class="third-level"><a href="#changes">Changes</a></li>
+                <li class="third-level"><a href="#bug-fixes">Bug Fixes</a></li>
+            <li class="second-level"><a href="#version-0130-2018-07-20">Version 0.13.0 (2018-07-20)</a></li>
+                
+                <li class="third-level"><a href="#downloads_1">Downloads</a></li>
+                <li class="third-level"><a href="#new-features_1">New Features</a></li>
+                <li class="third-level"><a href="#changes_1">Changes</a></li>
+                <li class="third-level"><a href="#bug-fixes_1">Bug Fixes</a></li>
+            <li class="second-level"><a href="#version-0120-2018-21-04">Version 0.12.0 (2018-21-04)</a></li>
+                
+                <li class="third-level"><a href="#downloads_2">Downloads</a></li>
+                <li class="third-level"><a href="#new-features_2">New Features</a></li>
+                <li class="third-level"><a href="#changes_2">Changes</a></li>
+                <li class="third-level"><a href="#bug-fixes_2">Bug Fixes</a></li>
+            <li class="second-level"><a href="#version-0110-2018-03-14">Version 0.11.0 (2018-03-14)</a></li>
+                
+                <li class="third-level"><a href="#downloads_3">Downloads</a></li>
+                <li class="third-level"><a href="#new-features_3">New Features</a></li>
+                <li class="third-level"><a href="#changes_3">Changes</a></li>
+                <li class="third-level"><a href="#bug-fixes_3">Bug Fixes</a></li>
+            <li class="second-level"><a href="#version-0100-2017-12-22">Version 0.10.0 (2017-12-22)</a></li>
+                
+                <li class="third-level"><a href="#downloads_4">Downloads</a></li>
+                <li class="third-level"><a href="#new-features_4">New Features</a></li>
+                <li class="third-level"><a href="#changes_4">Changes</a></li>
+                <li class="third-level"><a href="#bug-fixes_4">Bug Fixes</a></li>
+            <li class="second-level"><a href="#version-091-2017-11-19">Version 0.9.1 (2017-11-19)</a></li>
+                
+                <li class="third-level"><a href="#downloads_5">Downloads</a></li>
+                <li class="third-level"><a href="#new-features_5">New Features</a></li>
+                <li class="third-level"><a href="#changes_5">Changes</a></li>
+                <li class="third-level"><a href="#bug-fixes_5">Bug Fixes</a></li>
+            <li class="second-level"><a href="#version-090-2017-10-21">Version 0.9.0 (2017-10-21)</a></li>
+                
+                <li class="third-level"><a href="#downloads_6">Downloads</a></li>
+                <li class="third-level"><a href="#new-features_6">New Features</a></li>
+                <li class="third-level"><a href="#changes_6">Changes</a></li>
+                <li class="third-level"><a href="#bug-fixes_6">Bug Fixes</a></li>
+            <li class="second-level"><a href="#version-080-2017-09-09">Version 0.8.0 (2017-09-09)</a></li>
+                
+                <li class="third-level"><a href="#downloads_7">Downloads</a></li>
+                <li class="third-level"><a href="#new-features_7">New Features</a></li>
+                <li class="third-level"><a href="#changes_7">Changes</a></li>
+                <li class="third-level"><a href="#bug-fixes_7">Bug Fixes</a></li>
+            <li class="second-level"><a href="#version-070-2017-06-22">Version 0.7.0 (2017-06-22)</a></li>
+                
+                <li class="third-level"><a href="#downloads_8">Downloads</a></li>
+                <li class="third-level"><a href="#new-features_8">New Features</a></li>
+                <li class="third-level"><a href="#changes_8">Changes</a></li>
+                <li class="third-level"><a href="#bug-fixes_8">Bug Fixes</a></li>
+            <li class="second-level"><a href="#version-060-2017-03-18">Version 0.6.0 (2017-03-18)</a></li>
+                
+                <li class="third-level"><a href="#downloads_9">Downloads</a></li>
+                <li class="third-level"><a href="#new-features_9">New Features</a></li>
+                <li class="third-level"><a href="#changes_9">Changes</a></li>
+                <li class="third-level"><a href="#bug-fixes_9">Bug Fixes</a></li>
+            <li class="second-level"><a href="#version-051-2017-02-14">Version 0.5.1 (2017-02-14)</a></li>
+                
+                <li class="third-level"><a href="#downloads_10">Downloads</a></li>
+                <li class="third-level"><a href="#new-features_10">New Features</a></li>
+                <li class="third-level"><a href="#changes_10">Changes</a></li>
+                <li class="third-level"><a href="#bug-fixes_10">Bug Fixes</a></li>
+            <li class="second-level"><a href="#version-050-2016-11-09">Version 0.5.0 (2016-11-09)</a></li>
+                
+                <li class="third-level"><a href="#downloads_11">Downloads</a></li>
+                <li class="third-level"><a href="#new-features_11">New Features</a></li>
+                <li class="third-level"><a href="#changes_11">Changes</a></li>
+                <li class="third-level"><a href="#bug-fixes_11">Bug Fixes</a></li>
+            <li class="second-level"><a href="#version-042-2016-08-24">Version 0.4.2 (2016-08-24)</a></li>
+                
+                <li class="third-level"><a href="#downloads_12">Downloads</a></li>
+                <li class="third-level"><a href="#new-features_12">New Features</a></li>
+                <li class="third-level"><a href="#changes_12">Changes</a></li>
+                <li class="third-level"><a href="#bug-fixes_12">Bug Fixes</a></li>
+            <li class="second-level"><a href="#version-041-2016-05-01">Version 0.4.1 (2016-05-01)</a></li>
+                
+                <li class="third-level"><a href="#downloads_13">Downloads</a></li>
+                <li class="third-level"><a href="#new-features_13">New Features</a></li>
+                <li class="third-level"><a href="#changes_13">Changes</a></li>
+            <li class="second-level"><a href="#version-040-2016-04-09">Version 0.4.0 (2016-04-09)</a></li>
+                
+                <li class="third-level"><a href="#new-features_14">New Features</a></li>
+                <li class="third-level"><a href="#changes_14">Changes</a></li>
+            <li class="second-level"><a href="#version-030-2016-01-31">Version 0.3.0 (2016-01-31)</a></li>
+                
+                <li class="third-level"><a href="#downloads_14">Downloads</a></li>
+                <li class="third-level"><a href="#new-features_15">New Features</a></li>
+                <li class="third-level"><a href="#changes_15">Changes</a></li>
+            <li class="second-level"><a href="#version-029-2015-07-14">Version 0.2.9 (2015-07-14)</a></li>
+                
+                <li class="third-level"><a href="#downloads_15">Downloads</a></li>
+                <li class="third-level"><a href="#new-features_16">New Features</a></li>
+                <li class="third-level"><a href="#changes_16">Changes</a></li>
+            <li class="second-level"><a href="#version-028-2015-06-27">Version 0.2.8 (2015-06-27)</a></li>
+                
+            <li class="second-level"><a href="#version-027-2015-06-20">Version 0.2.7 (2015-06-20)</a></li>
+                
+            <li class="second-level"><a href="#version-026-2015-05-08">Version 0.2.6 (2015-05-08)</a></li>
+                
+            <li class="second-level"><a href="#version-025-2015-04-17">Version 0.2.5 (2015-04-17)</a></li>
+                
+            <li class="second-level"><a href="#version-024-2015-03-15">Version 0.2.4 (2015-03-15)</a></li>
+                
+            <li class="second-level"><a href="#version-023-2015-03-11">Version 0.2.3 (2015-03-11)</a></li>
+                
+            <li class="second-level"><a href="#version-022-2015-03-01">Version 0.2.2 (2015-03-01)</a></li>
+                
+            <li class="second-level"><a href="#version-021-2015-01-20">Version 0.2.1 (2015-01-20)</a></li>
+                
+            <li class="second-level"><a href="#version-020-2015-01-13">Version 0.2.0 (2015-01-13)</a></li>
+                
+            <li class="second-level"><a href="#version-019-2015-01-10">Version 0.1.9 (2015-01-10)</a></li>
+                
+            <li class="second-level"><a href="#version-018-2015-01-07">Version 0.1.8 (2015-01-07)</a></li>
+                
+            <li class="second-level"><a href="#version-017-2015-01-07">Version 0.1.7 (2015-01-07)</a></li>
+                
+            <li class="second-level"><a href="#version-016-2015-01-04">Version 0.1.6 (2015-01-04)</a></li>
+                
+            <li class="second-level"><a href="#version-015-2014-12-11">Version 0.1.5 (2014-12-11)</a></li>
+                
+            <li class="second-level"><a href="#version-014-2014-08-20">Version 0.1.4 (2014-08-20)</a></li>
+                
+            <li class="second-level"><a href="#version-013-2014-08-19">Version 0.1.3 (2014-08-19)</a></li>
+                
+            <li class="second-level"><a href="#version-012-2014-08-19">Version 0.1.2 (2014-08-19)</a></li>
+                
+            <li class="second-level"><a href="#version-011-2014-08-13">Version 0.1.1 (2014-08-13)</a></li>
+                
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<h1 id="release-notes">Release Notes</h1>
+<hr />
+<p>The CHANGELOG for the current development version is available at
+<a href="https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md">https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md</a>.</p>
+<hr />
+<h3 id="version-0140-11-09-2018">Version 0.14.0 (11-09-2018)</h3>
+<h5 id="downloads">Downloads</h5>
+<ul>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.14.0.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.14.0.tar.gz">Source code (tar.gz)</a></li>
+</ul>
+<h5 id="new-features">New Features</h5>
+<ul>
+<li>Added a <code>scatterplotmatrix</code> function to the <code>plotting</code> module. (<a href="https://github.com/rasbt/mlxtend/pull/437">#437</a>)</li>
+<li>Added <code>sample_weight</code> option to <code>StackingRegressor</code>, <code>StackingClassifier</code>, <code>StackingCVRegressor</code>, <code>StackingCVClassifier</code>, <code>EnsembleVoteClassifier</code>. (<a href="https://github.com/rasbt/mlxtend/issues/438">#438</a>)</li>
+<li>Added a <code>RandomHoldoutSplit</code> class to perform a random train/valid split without rotation in <code>SequentialFeatureSelector</code>, scikit-learn <code>GridSearchCV</code> etc. (<a href="https://github.com/rasbt/mlxtend/pull/442">#442</a>)</li>
+<li>Added a <code>PredefinedHoldoutSplit</code> class to perform a train/valid split, based on user-specified indices, without rotation in <code>SequentialFeatureSelector</code>, scikit-learn <code>GridSearchCV</code> etc. (<a href="https://github.com/rasbt/mlxtend/pull/443">#443</a>)</li>
+<li>Created a new <code>mlxtend.image</code> submodule for working on image processing-related tasks. (<a href="https://github.com/rasbt/mlxtend/pull/457">#457</a>)</li>
+<li>Added a new convenience function <code>extract_face_landmarks</code> based on <code>dlib</code> to <code>mlxtend.image</code>. (<a href="https://github.com/rasbt/mlxtend/pull/458">#458</a>)</li>
+<li>Added a <code>method='oob'</code> option to the <code>mlxtend.evaluate.bootstrap_point632_score</code> method to compute the classic out-of-bag bootstrap estimate (<a href="https://github.com/rasbt/mlxtend/pull/459">#459</a>)</li>
+<li>Added a <code>method='.632+'</code> option to the <code>mlxtend.evaluate.bootstrap_point632_score</code> method to compute the .632+ bootstrap estimate that addresses the optimism bias of the .632 bootstrap (<a href="https://github.com/rasbt/mlxtend/pull/459">#459</a>)</li>
+<li>Added a new <code>mlxtend.evaluate.ftest</code> function to perform an F-test for comparing the accuracies of two or more classification models. (<a href="https://github.com/rasbt/mlxtend/pull/460">#460</a>)</li>
+<li>Added a new <code>mlxtend.evaluate.combined_ftest_5x2cv</code> function to perform an combined 5x2cv F-Test for comparing the performance of two models. (<a href="https://github.com/rasbt/mlxtend/pull/461">#461</a>)</li>
+<li>Added a new <code>mlxtend.evaluate.difference_proportions</code> test for comparing two proportions (e.g., classifier accuracies) (<a href="https://github.com/rasbt/mlxtend/pull/462">#462</a>)</li>
+</ul>
+<h5 id="changes">Changes</h5>
+<ul>
+<li>Addressed deprecations warnings in NumPy 0.15. (<a href="https://github.com/rasbt/mlxtend/pull/425">#425</a>)</li>
+<li>Because of complications in PR (<a href="https://github.com/rasbt/mlxtend/pull/459">#459</a>), Python 2.7 was now dropped; since official support for Python 2.7 by the Python Software Foundation is ending in approx. 12 months anyways, this re-focussing will hopefully free up some developer time with regard to not having to worry about backward compatibility</li>
+</ul>
+<h5 id="bug-fixes">Bug Fixes</h5>
+<ul>
+<li>Fixed an issue with a missing import in <code>mlxtend.plotting.plot_confusion_matrix</code>. (<a href="https://github.com/rasbt/mlxtend/pull/428">#428</a>)</li>
+</ul>
+<h3 id="version-0130-2018-07-20">Version 0.13.0 (2018-07-20)</h3>
+<h5 id="downloads_1">Downloads</h5>
+<ul>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.13.0.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.13.0.tar.gz">Source code (tar.gz)</a></li>
+</ul>
+<h5 id="new-features_1">New Features</h5>
+<ul>
+<li>A meaningful error message is now raised when a cross-validation generator is used with <code>SequentialFeatureSelector</code>. (<a href="https://github.com/rasbt/mlxtend/pull/377">#377</a>)</li>
+<li>The <code>SequentialFeatureSelector</code> now accepts custom feature names via the <code>fit</code> method for more interpretable feature subset reports. (<a href="https://github.com/rasbt/mlxtend/pull/379">#379</a>)</li>
+<li>The <code>SequentialFeatureSelector</code> is now also compatible with Pandas DataFrames and uses DataFrame column-names for more interpretable feature subset reports. (<a href="https://github.com/rasbt/mlxtend/pull/379">#379</a>)</li>
+<li><code>ColumnSelector</code> now works with Pandas DataFrames columns. (<a href="https://github.com/rasbt/mlxtend/pull/378">#378</a> by <a href="https://github.com/manugarri">Manuel Garrido</a>)</li>
+<li>The <code>ExhaustiveFeatureSelector</code> estimator in <code>mlxtend.feature_selection</code> now is safely stoppable mid-process by control+c. (<a href="https://github.com/rasbt/mlxtend/pull/380">#380</a>)</li>
+<li>Two new functions, <code>vectorspace_orthonormalization</code> and <code>vectorspace_dimensionality</code> were added to <code>mlxtend.math</code> to use the Gram-Schmidt process to convert a set of linearly independent vectors into a set of orthonormal basis vectors, and to compute the dimensionality of a vectorspace, respectively. (<a href="https://github.com/rasbt/mlxtend/pull/382">#382</a>)</li>
+<li><code>mlxtend.frequent_patterns.apriori</code> now supports pandas <code>SparseDataFrame</code>s to generate frequent itemsets. (<a href="https://github.com/rasbt/mlxtend/pull/404">#404</a> via <a href="https://github.com/rasbt/mlxtend/pull/404">Daniel Morales</a>)</li>
+<li>The <code>plot_confusion_matrix</code> function now has the ability to show normalized confusion matrix coefficients in addition to or instead of absolute confusion matrix coefficients with or without a colorbar. The text display method has been changed so that the full range of the colormap is used. The default size is also now set based on the number of classes.</li>
+<li>Added support for merging the meta features with the original input features in <code>StackingRegressor</code> (via <code>use_features_in_secondary</code>) like it is already supported in the other Stacking classes. (<a href="https://github.com/rasbt/mlxtend/pull/418">#418</a>)</li>
+<li>Added a <code>support_only</code> to the <code>association_rules</code> function, which allow constructing association rules (based on the support metric only) for cropped input DataFrames that don't contain a complete set of antecedent and consequent support values. (<a href="https://github.com/rasbt/mlxtend/pull/421">#421</a>)</li>
+</ul>
+<h5 id="changes_1">Changes</h5>
+<ul>
+<li>Itemsets generated with <code>apriori</code> are now <code>frozenset</code>s (<a href="https://github.com/rasbt/mlxtend/issues/393">#393</a> by <a href="https://github.com/WLaney">William Laney</a> and <a href="https://github.com/rasbt/mlxtend/issues/394">#394</a>)</li>
+<li>Now raises an error if a input DataFrame to <code>apriori</code> contains non 0, 1, True, False values. <a href="https://github.com/rasbt/mlxtend/issues/419">#419</a>)</li>
+</ul>
+<h5 id="bug-fixes_1">Bug Fixes</h5>
+<ul>
+<li>Allow mlxtend estimators to be cloned via scikit-learn's <code>clone</code> function. (<a href="https://github.com/rasbt/mlxtend/pull/374">#374</a>)</li>
+<li>Fixes bug to allow the correct use of <code>refit=False</code> in <code>StackingRegressor</code> and <code>StackingCVRegressor</code>  (<a href="https://github.com/rasbt/mlxtend/pull/384">#384</a> and (<a href="https://github.com/rasbt/mlxtend/pull/385">#385</a>) by <a href="https://github.com/selay01">selay01</a>)</li>
+<li>Allow <code>StackingClassifier</code> to work with sparse matrices when <code>use_features_in_secondary=True</code>  (<a href="https://github.com/rasbt/mlxtend/issues/408">#408</a> by <a href="https://github.com/FlorisHoogenboom">Floris Hoogenbook</a>)</li>
+<li>Allow <code>StackingCVRegressor</code> to work with sparse matrices when <code>use_features_in_secondary=True</code>  (<a href="https://github.com/rasbt/mlxtend/issues/416">#416</a>)</li>
+<li>Allow <code>StackingCVClassifier</code> to work with sparse matrices when <code>use_features_in_secondary=True</code>  (<a href="https://github.com/rasbt/mlxtend/issues/417">#417</a>)</li>
+</ul>
+<h3 id="version-0120-2018-21-04">Version 0.12.0 (2018-21-04)</h3>
+<h5 id="downloads_2">Downloads</h5>
+<ul>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.12.0.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.12.0.tar.gz">Source code (tar.gz)</a></li>
+</ul>
+<h5 id="new-features_2">New Features</h5>
+<ul>
+<li>A new <code>feature_importance_permuation</code> function to compute the feature importance in classifiers and regressors via the <em>permutation importance</em> method (<a href="https://github.com/rasbt/mlxtend/pull/358">#358</a>)</li>
+<li>The fit method of the <code>ExhaustiveFeatureSelector</code> now optionally accepts <code>**fit_params</code> for the estimator that is used for the feature selection. (<a href="https://github.com/rasbt/mlxtend/pull/354">#354</a> by Zach Griffith)</li>
+<li>The fit method of the <code>SequentialFeatureSelector</code> now optionally accepts
+<code>**fit_params</code> for the estimator that is used for the feature selection. (<a href="https://github.com/rasbt/mlxtend/pull/350">#350</a> by Zach Griffith)</li>
+</ul>
+<h5 id="changes_2">Changes</h5>
+<ul>
+<li>Replaced <code>plot_decision_regions</code> colors by a colorblind-friendly palette and adds contour lines for decision regions. (<a href="https://github.com/rasbt/mlxtend/issues/348">#348</a>)</li>
+<li>All stacking estimators now raise <code>NonFittedErrors</code> if any method for inference is called prior to fitting the estimator. (<a href="https://github.com/rasbt/mlxtend/issues/353">#353</a>)</li>
+<li>Renamed the <code>refit</code> parameter of both the <code>StackingClassifier</code> and <code>StackingCVClassifier</code> to <code>use_clones</code> to be more explicit and less misleading. (<a href="https://github.com/rasbt/mlxtend/pull/368">#368</a>)</li>
+</ul>
+<h5 id="bug-fixes_2">Bug Fixes</h5>
+<ul>
+<li>Various changes in the documentation and documentation tools to fix formatting issues (<a href="https://github.com/rasbt/mlxtend/pull/363">#363</a>)</li>
+<li>Fixes a bug where the <code>StackingCVClassifier</code>'s meta features were not stored in the original order when <code>shuffle=True</code> (<a href="https://github.com/rasbt/mlxtend/pull/370">#370</a>)</li>
+<li>Many documentation improvements, including links to the User Guides in the API docs (<a href="https://github.com/rasbt/mlxtend/pull/371">#371</a>)</li>
+</ul>
+<h3 id="version-0110-2018-03-14">Version 0.11.0 (2018-03-14)</h3>
+<h5 id="downloads_3">Downloads</h5>
+<ul>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.11.0.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.11.0.tar.gz">Source code (tar.gz)</a></li>
+</ul>
+<h5 id="new-features_3">New Features</h5>
+<ul>
+<li>New function implementing the resampled paired t-test procedure (<code>paired_ttest_resampled</code>)
+    to compare the performance of two models. (<a href="https://github.com/rasbt/mlxtend/issues/323">#323</a>)</li>
+<li>New function implementing the k-fold paired t-test procedure (<code>paired_ttest_kfold_cv</code>)
+    to compare the performance of two models
+    (also called k-hold-out paired t-test). (<a href="https://github.com/rasbt/mlxtend/issues/324">#324</a>)</li>
+<li>New function implementing the 5x2cv paired t-test procedure (<code>paired_ttest_5x2cv</code>) proposed by Dieterrich (1998)
+    to compare the performance of two models. (<a href="https://github.com/rasbt/mlxtend/issues/325">#325</a>)</li>
+<li>A <code>refit</code> parameter was added to stacking classes (similar to the <code>refit</code> parameter in the <code>EnsembleVoteClassifier</code>), to support classifiers and regressors that follow the scikit-learn API but are not compatible with scikit-learn's <code>clone</code> function. (<a href="https://github.com/rasbt/mlxtend/issues/322">#322</a>)</li>
+<li>The <code>ColumnSelector</code> now has a <code>drop_axis</code> argument to use it in pipelines with <code>CountVectorizers</code>. (<a href="https://github.com/rasbt/mlxtend/pull/333">#333</a>)</li>
+</ul>
+<h5 id="changes_3">Changes</h5>
+<ul>
+<li>Raises an informative error message if <code>predict</code> or <code>predict_meta_features</code> is called prior to calling the <code>fit</code> method in <code>StackingRegressor</code> and <code>StackingCVRegressor</code>. (<a href="https://github.com/rasbt/mlxtend/issues/315">#315</a>)</li>
+<li>The <code>plot_decision_regions</code> function now automatically determines the optimal setting based on the feature dimensions and supports anti-aliasing. The old <code>res</code>  parameter has been deprecated. (<a href="https://github.com/rasbt/mlxtend/pull/309">#309</a> by <a href="https://github.com/arteymix">Guillaume Poirier-Morency</a>)</li>
+<li>Apriori code is faster due to optimization in <code>onehot transformation</code> and the amount of candidates generated by the <code>apriori</code> algorithm. (<a href="https://github.com/rasbt/mlxtend/pull/327">#327</a> by <a href="https://github.com/jaksmid">Jakub Smid</a>)</li>
+<li>The <code>OnehotTransactions</code> class (which is typically often used in combination with the <code>apriori</code> function for association rule mining) is now more memory efficient as it uses boolean arrays instead of integer arrays. In addition, the <code>OnehotTransactions</code> class can be now be provided with <code>sparse</code> argument to generate sparse representations of the <code>onehot</code> matrix to further improve memory efficiency. (<a href="https://github.com/rasbt/mlxtend/pull/328">#328</a> by <a href="https://github.com/jaksmid">Jakub Smid</a>)</li>
+<li>The <code>OneHotTransactions</code> has been deprecated and replaced by the <code>TransactionEncoder</code>. (<a href="https://github.com/rasbt/mlxtend/pull/332">#332</a></li>
+<li>The <code>plot_decision_regions</code> function now has three new parameters, <code>scatter_kwargs</code>, <code>contourf_kwargs</code>, and <code>scatter_highlight_kwargs</code>, that can be used to modify the plotting style. (<a href="https://github.com/rasbt/mlxtend/pull/342">#342</a> by <a href="https://github.com/jrbourbeau">James Bourbeau</a>)</li>
+</ul>
+<h5 id="bug-fixes_3">Bug Fixes</h5>
+<ul>
+<li>Fixed issue when class labels were provided to the <code>EnsembleVoteClassifier</code> when <code>refit</code> was set to <code>false</code>. (<a href="https://github.com/rasbt/mlxtend/issues/322">#322</a>)</li>
+<li>Allow arrays with 16-bit and 32-bit precision in <code>plot_decision_regions</code> function. (<a href="https://github.com/rasbt/mlxtend/issues/337">#337</a>)</li>
+<li>Fixed bug that raised an indexing error if the number of items was &lt;= 1 when computing association rules using the conviction metric. (<a href="https://github.com/rasbt/mlxtend/issues/340">#340</a>)</li>
+</ul>
+<h3 id="version-0100-2017-12-22">Version 0.10.0 (2017-12-22)</h3>
+<h5 id="downloads_4">Downloads</h5>
+<ul>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.10.0.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.10.0.tar.gz">Source code (tar.gz)</a></li>
+</ul>
+<h5 id="new-features_4">New Features</h5>
+<ul>
+<li>New <code>store_train_meta_features</code> parameter for <code>fit</code> in StackingCVRegressor. if True, train meta-features are stored in <code>self.train_meta_features_</code>.
+    New <code>pred_meta_features</code> method for <code>StackingCVRegressor</code>. People can get test meta-features using this method. (<a href="https://github.com/rasbt/mlxtend/pull/294">#294</a> via <a href="https://github.com/takashioya">takashioya</a>)</li>
+<li>The new <code>store_train_meta_features</code> attribute and <code>pred_meta_features</code> method for the <code>StackingCVRegressor</code> were also added to the <code>StackingRegressor</code>, <code>StackingClassifier</code>, and <code>StackingCVClassifier</code> (<a href="https://github.com/rasbt/mlxtend/pull/299">#299</a> &amp; <a href="https://github.com/rasbt/mlxtend/pull/300">#300</a>)</li>
+<li>New function (<code>evaluate.mcnemar_tables</code>) for creating multiple 2x2 contigency from model predictions arrays that can be used in multiple McNemar (post-hoc) tests or Cochran's Q or F tests, etc. (<a href="https://github.com/rasbt/mlxtend/issues/307">#307</a>)</li>
+<li>New function (<code>evaluate.cochrans_q</code>) for performing Cochran's Q test to compare the accuracy of multiple classifiers. (<a href="https://github.com/rasbt/mlxtend/issues/310">#310</a>)</li>
+</ul>
+<h5 id="changes_4">Changes</h5>
+<ul>
+<li>Added <code>requirements.txt</code> to <code>setup.py</code>. (<a href="https://github.com/rasbt/mlxtend/issues/304">#304</a> via <a href="https://github.com/ColCarroll">Colin Carrol</a>)</li>
+</ul>
+<h5 id="bug-fixes_4">Bug Fixes</h5>
+<ul>
+<li>Improved numerical stability for p-values computed via the the exact McNemar test (<a href="https://github.com/rasbt/mlxtend/issues/306">#306</a>)</li>
+<li><code>nose</code> is not required to use the library (<a href="https://github.com/rasbt/mlxtend/issues/302">#302</a>)</li>
+</ul>
+<h3 id="version-091-2017-11-19">Version 0.9.1 (2017-11-19)</h3>
+<h5 id="downloads_5">Downloads</h5>
+<ul>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.9.1.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.9.1.tar.gz">Source code (tar.gz)</a></li>
+</ul>
+<h5 id="new-features_5">New Features</h5>
+<ul>
+<li>Added <code>mlxtend.evaluate.bootstrap_point632_score</code> to evaluate the performance of estimators using the .632 bootstrap. (<a href="https://github.com/rasbt/mlxtend/pull/283">#283</a>)</li>
+<li>New <code>max_len</code> parameter for the frequent itemset generation via the <code>apriori</code> function to allow for early stopping. (<a href="https://github.com/rasbt/mlxtend/pull/270">#270</a>)</li>
+</ul>
+<h5 id="changes_5">Changes</h5>
+<ul>
+<li>All feature index tuples in <code>SequentialFeatureSelector</code> or now in sorted order. (<a href="https://github.com/rasbt/mlxtend/pull/262">#262</a>)</li>
+<li>The <code>SequentialFeatureSelector</code> now runs the continuation of the floating inclusion/exclusion as described in Novovicova &amp; Kittler (1994).
+Note that this didn't cause any difference in performance on any of the test scenarios but could lead to better performance in certain edge cases.
+(<a href="https://github.com/rasbt/mlxtend/pull/262">#262</a>)</li>
+<li><code>utils.Counter</code> now accepts a name variable to help distinguish between multiple counters, time precision can be set with the 'precision' kwarg and the new attribute end_time holds the time the last iteration completed. (<a href="https://github.com/rasbt/mlxtend/pull/278">#278</a> via <a href="https://github.com/matsavage">Mathew Savage</a>)</li>
+</ul>
+<h5 id="bug-fixes_5">Bug Fixes</h5>
+<ul>
+<li>Fixed an deprecation error that occured with McNemar test when using SciPy 1.0. (<a href="https://github.com/rasbt/mlxtend/pull/283">#283</a>)</li>
+</ul>
+<h3 id="version-090-2017-10-21">Version 0.9.0 (2017-10-21)</h3>
+<h5 id="downloads_6">Downloads</h5>
+<ul>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.9.0.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.9.0.tar.gz">Source code (tar.gz)</a></li>
+</ul>
+<h5 id="new-features_6">New Features</h5>
+<ul>
+<li>Added <code>evaluate.permutation_test</code>, a permutation test for hypothesis testing (or A/B testing) to test if two samples come from the same distribution. Or in other words, a procedure to test the null hypothesis that that two groups are not significantly different (e.g., a treatment and a control group). (<a href="https://github.com/rasbt/mlxtend/pull/250">#250</a>)</li>
+<li>Added <code>'leverage'</code> and <code>'conviction</code> as evaluation metrics to the <code>frequent_patterns.association_rules</code> function. (<a href="https://github.com/rasbt/mlxtend/pull/246">#246</a> &amp; <a href="https://github.com/rasbt/mlxtend/pull/247">#247</a>)</li>
+<li>Added a <code>loadings_</code> attribute to <code>PrincipalComponentAnalysis</code> to compute the factor loadings of the features on the principal components. (<a href="https://github.com/rasbt/mlxtend/pull/251">#251</a>)</li>
+<li>Allow grid search over classifiers/regressors in ensemble and stacking estimators. (<a href="https://github.com/rasbt/mlxtend/pull/259">#259</a>)</li>
+<li>New <code>make_multiplexer_dataset</code> function that creates a dataset generated by a n-bit Boolean multiplexer for evaluating supervised learning algorithms. (<a href="https://github.com/rasbt/mlxtend/pull/263">#263</a>)</li>
+<li>Added a new <code>BootstrapOutOfBag</code> class, an implementation of the out-of-bag bootstrap to evaluate supervised learning algorithms. (<a href="https://github.com/rasbt/mlxtend/pull/265">#265</a>)</li>
+<li>The parameters for <code>StackingClassifier</code>, <code>StackingCVClassifier</code>, <code>StackingRegressor</code>, <code>StackingCVRegressor</code>, and <code>EnsembleVoteClassifier</code> can now be tuned using scikit-learn's <code>GridSearchCV</code> (<a href="https://github.com/rasbt/mlxtend/pull/254">#254</a> via <a href="https://github.com/jrbourbeau">James Bourbeau</a>)</li>
+</ul>
+<h5 id="changes_6">Changes</h5>
+<ul>
+<li>The <code>'support'</code> column returned by <code>frequent_patterns.association_rules</code> was changed to compute the support of "antecedant union consequent", and new <code>antecedant support'</code> and <code>'consequent support'</code> column were added to avoid ambiguity. (<a href="https://github.com/rasbt/mlxtend/pull/245">#245</a>)</li>
+<li>Allow the <code>OnehotTransactions</code> to be cloned via scikit-learn's <code>clone</code> function, which is required by e.g., scikit-learn's <code>FeatureUnion</code> or <code>GridSearchCV</code> (via <a href="https://github.com/iaroslav-ai">Iaroslav Shcherbatyi</a>). (<a href="https://github.com/rasbt/mlxtend/pull/249">#249</a>)</li>
+</ul>
+<h5 id="bug-fixes_6">Bug Fixes</h5>
+<ul>
+<li>Fix issues with <code>self._init_time</code> parameter in <code>_IterativeModel</code> subclasses. (<a href="https://github.com/rasbt/mlxtend/pull/256">#256</a>)</li>
+<li>Fix imprecision bug that occurred in <code>plot_ecdf</code> when run on Python 2.7. (<a href="https://github.com/rasbt/mlxtend/pull/264">264</a>)</li>
+<li>The vectors from SVD in <code>PrincipalComponentAnalysis</code> are now being scaled so that the eigenvalues via <code>solver='eigen'</code> and <code>solver='svd'</code> now store eigenvalues that have the same magnitudes. (<a href="https://github.com/rasbt/mlxtend/pull/251">#251</a>)</li>
+</ul>
+<h3 id="version-080-2017-09-09">Version 0.8.0 (2017-09-09)</h3>
+<h5 id="downloads_7">Downloads</h5>
+<ul>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.8.0.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.8.0.tar.gz">Source code (tar.gz)</a></li>
+</ul>
+<h5 id="new-features_7">New Features</h5>
+<ul>
+<li>Added a <code>mlxtend.evaluate.bootstrap</code> that implements the ordinary nonparametric bootstrap to bootstrap a single statistic (for example, the mean. median, R^2 of a regression fit, and so forth) <a href="https://github.com/rasbt/mlxtend/pull/232">#232</a></li>
+<li><code>SequentialFeatureSelecor</code>'s <code>k_features</code> now accepts a string argument "best" or "parsimonious" for more "automated" feature selection. For instance, if "best" is provided, the feature selector will return the feature subset with the best cross-validation performance. If "parsimonious" is provided as an argument, the smallest feature subset that is within one standard error of the cross-validation performance will be selected. <a href="https://github.com/rasbt/mlxtend/pull/238">#238</a></li>
+</ul>
+<h5 id="changes_7">Changes</h5>
+<ul>
+<li><code>SequentialFeatureSelector</code> now uses <code>np.nanmean</code> over normal mean to support scorers that may return <code>np.nan</code>  <a href="https://github.com/rasbt/mlxtend/pull/211">#211</a> (via <a href="https://github.com/mrkaiser">mrkaiser</a>)</li>
+<li>The <code>skip_if_stuck</code> parameter was removed from <code>SequentialFeatureSelector</code> in favor of a more efficient implementation comparing the conditional inclusion/exclusion results (in the floating versions) to the performances of previously sampled feature sets that were cached <a href="https://github.com/rasbt/mlxtend/pull/237">#237</a></li>
+<li><code>ExhaustiveFeatureSelector</code> was modified to consume substantially less memory <a href="https://github.com/rasbt/mlxtend/pull/195">#195</a> (via <a href="https://github.com/adam-erickson">Adam Erickson</a>)</li>
+</ul>
+<h5 id="bug-fixes_7">Bug Fixes</h5>
+<ul>
+<li>Fixed a bug where the <code>SequentialFeatureSelector</code> selected a feature subset larger than then specified via the <code>k_features</code> tuple max-value <a href="https://github.com/rasbt/mlxtend/pull/213">#213</a></li>
+</ul>
+<h3 id="version-070-2017-06-22">Version 0.7.0 (2017-06-22)</h3>
+<h5 id="downloads_8">Downloads</h5>
+<ul>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.7.0.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.7.0.tar.gz">Source code (tar.gz)</a></li>
+</ul>
+<h5 id="new-features_8">New Features</h5>
+<ul>
+<li>New <a href="http://rasbt.github.io/mlxtend/user_guide/plotting/ecdf/">mlxtend.plotting.ecdf</a> function for plotting empirical cumulative distribution functions (<a href="https://github.com/rasbt/mlxtend/pull/196">#196</a>).</li>
+<li>New <a href="http://rasbt.github.io/mlxtend/user_guide/regressor/StackingCVRegressor/"><code>StackingCVRegressor</code></a> for stacking regressors with out-of-fold predictions to prevent overfitting (<a href="https://github.com/rasbt/mlxtend/pull/201">#201</a>via <a href="https://github.com/EikeDehling">Eike Dehling</a>).</li>
+</ul>
+<h5 id="changes_8">Changes</h5>
+<ul>
+<li>The TensorFlow estimator have been removed from mlxtend, since TensorFlow has now very convenient ways to build on estimators, which render those implementations obsolete.</li>
+<li><code>plot_decision_regions</code> now supports plotting decision regions for more than 2 training features <a href="https://github.com/rasbt/mlxtend/pull/189">#189</a>, via <a href="https://github.com/jrbourbeau">James Bourbeau</a>).</li>
+<li>Parallel execution in <code>mlxtend.feature_selection.SequentialFeatureSelector</code> and <code>mlxtend.feature_selection.ExhaustiveFeatureSelector</code> is now performed over different feature subsets instead of the different cross-validation folds to better utilize machines with multiple processors if the number of features is large (<a href="https://github.com/rasbt/mlxtend/pull/193">#193</a>, via <a href="https://github.com/whalebot-helmsman">@whalebot-helmsman</a>).</li>
+<li>Raise meaningful error messages if pandas <code>DataFrame</code>s or Python lists of lists are fed into the <code>StackingCVClassifer</code> as a <code>fit</code> arguments (<a href="https://github.com/rasbt/mlxtend/pull/198">198</a>).</li>
+<li>The <code>n_folds</code> parameter of the <code>StackingCVClassifier</code> was changed to <code>cv</code> and can now accept any kind of cross validation technique that is available from scikit-learn. For example, <code>StackingCVClassifier(..., cv=StratifiedKFold(n_splits=3))</code> or <code>StackingCVClassifier(..., cv=GroupKFold(n_splits=3))</code> (<a href="https://github.com/rasbt/mlxtend/pull/203">#203</a>, via <a href="https://github.com/sque">Konstantinos Paliouras</a>).</li>
+</ul>
+<h5 id="bug-fixes_8">Bug Fixes</h5>
+<ul>
+<li><code>SequentialFeatureSelector</code> now correctly accepts a <code>None</code> argument for the <code>scoring</code> parameter to infer the default scoring metric from scikit-learn classifiers and regressors (<a href="https://github.com/rasbt/mlxtend/pull/171">#171</a>).</li>
+<li>The <code>plot_decision_regions</code> function now supports pre-existing axes objects generated via matplotlib's <code>plt.subplots</code>. (<a href="https://github.com/rasbt/mlxtend/pull/184">#184</a>, <a href="http://rasbt.github.io/mlxtend/user_guide/plotting/plot_decision_regions/#example-6-working-with-existing-axes-objects-using-subplots">see example</a>)</li>
+<li>Made <code>math.num_combinations</code> and <code>math.num_permutations</code> numerically stable for large numbers of combinations and permutations (<a href="https://github.com/rasbt/mlxtend/pull/200">#200</a>).</li>
+</ul>
+<h3 id="version-060-2017-03-18">Version 0.6.0 (2017-03-18)</h3>
+<h5 id="downloads_9">Downloads</h5>
+<ul>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.6.0.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.6.0.tar.gz">Source code (tar.gz)</a></li>
+</ul>
+<h5 id="new-features_9">New Features</h5>
+<ul>
+<li>An <code>association_rules</code> function is implemented that allows to generate rules based on a list of frequent itemsets (via <a href="https://github.com/JoshuaGoerner">Joshua Goerner</a>).</li>
+</ul>
+<h5 id="changes_9">Changes</h5>
+<ul>
+<li>Adds a black <code>edgecolor</code> to plots via <code>plotting.plot_decision_regions</code> to make markers more distinguishable from the background in <code>matplotlib&gt;=2.0</code>.</li>
+<li>The <code>association</code> submodule was renamed to <code>frequent_patterns</code>.</li>
+</ul>
+<h5 id="bug-fixes_9">Bug Fixes</h5>
+<ul>
+<li>The <code>DataFrame</code> index of <code>apriori</code> results are now unique and ordered.</li>
+<li>Fixed typos in autompg and wine datasets (via <a href="https://github.com/jrbourbeau">James Bourbeau</a>).</li>
+</ul>
+<h3 id="version-051-2017-02-14">Version 0.5.1 (2017-02-14)</h3>
+<h5 id="downloads_10">Downloads</h5>
+<ul>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.5.1.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.5.1.tar.gz">Source code (tar.gz)</a></li>
+</ul>
+<h5 id="new-features_10">New Features</h5>
+<ul>
+<li>The <code>EnsembleVoteClassifier</code> has a new <code>refit</code> attribute that prevents refitting classifiers if <code>refit=False</code> to save computational time.</li>
+<li>Added a new <code>lift_score</code> function in <code>evaluate</code> to compute lift score (via <a href="https://github.com/bbardakk">Batuhan Bardak</a>).</li>
+<li><code>StackingClassifier</code> and <code>StackingRegressor</code> support multivariate targets if the underlying models do (via <a href="https://github.com/kernc">kernc</a>).</li>
+<li><code>StackingClassifier</code> has a new <code>use_features_in_secondary</code> attribute like <code>StackingCVClassifier</code>.</li>
+</ul>
+<h5 id="changes_10">Changes</h5>
+<ul>
+<li>Changed default verbosity level in <code>SequentialFeatureSelector</code> to 0</li>
+<li>The <code>EnsembleVoteClassifier</code> now raises a <code>NotFittedError</code> if the estimator wasn't <code>fit</code> before calling <code>predict</code>. (via <a href="https://github.com/avloss">Anton Loss</a>)</li>
+<li>Added new TensorFlow variable initialization syntax to guarantee compatibility with TensorFlow 1.0</li>
+</ul>
+<h5 id="bug-fixes_10">Bug Fixes</h5>
+<ul>
+<li>Fixed wrong default value for <code>k_features</code> in <code>SequentialFeatureSelector</code></li>
+<li>Cast selected feature subsets in the <code>SequentialFeautureSelector</code> as sets to prevent the iterator from getting stuck if the <code>k_idx</code> are different permutations of the same combination (via <a href="https://github.com/zacwellmer">Zac Wellmer</a>).</li>
+<li>Fixed an issue with learning curves that caused the performance metrics to be reversed (via <a href="https://github.com/ipashchenko">ipashchenko</a>)</li>
+<li>Fixed a bug that could occur in the <code>SequentialFeatureSelector</code> if there are similarly-well performing subsets in the floating variants (via <a href="https://github.com/zacwellmer">Zac Wellmer</a>).</li>
+</ul>
+<h3 id="version-050-2016-11-09">Version 0.5.0 (2016-11-09)</h3>
+<h5 id="downloads_11">Downloads</h5>
+<ul>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.5.0.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.5.0.tar.gz">Source code (tar.gz)</a></li>
+</ul>
+<h5 id="new-features_11">New Features</h5>
+<ul>
+<li>New <code>ExhaustiveFeatureSelector</code> estimator in <code>mlxtend.feature_selection</code> for evaluating all feature combinations in a specified range</li>
+<li>The <code>StackingClassifier</code> has a new parameter <code>average_probas</code> that is set to <code>True</code> by default to maintain the current behavior. A deprecation warning was added though, and it will default to <code>False</code> in future releases (0.6.0); <code>average_probas=False</code> will result in stacking of the level-1 predicted probabilities rather than averaging these.</li>
+<li>New <code>StackingCVClassifier</code> estimator in 'mlxtend.classifier' for implementing a stacking ensemble that uses cross-validation techniques for training the meta-estimator to avoid overfitting (<a href="https://github.com/reiinakano">Reiichiro Nakano</a>)</li>
+<li>New <code>OnehotTransactions</code> encoder class added to the <code>preprocessing</code> submodule for transforming transaction data into a one-hot encoded array</li>
+<li>The <code>SequentialFeatureSelector</code> estimator in <code>mlxtend.feature_selection</code> now is safely stoppable mid-process by control+c, and deprecated <code>print_progress</code> in favor of a more tunable <code>verbose</code> parameter (<a href="https://github.com/wdm0006">Will McGinnis</a>)</li>
+<li>New <code>apriori</code> function in <code>association</code> to extract frequent itemsets from transaction data for association rule mining</li>
+<li>New <code>checkerboard_plot</code> function in <code>plotting</code> to plot checkerboard tables / heat maps</li>
+<li>New <code>mcnemar_table</code> and <code>mcnemar</code> functions in <code>evaluate</code> to compute 2x2 contingency tables and McNemar's test</li>
+</ul>
+<h5 id="changes_11">Changes</h5>
+<ul>
+<li>All plotting functions have been moved to <code>mlxtend.plotting</code> for compatibility reasons with continuous integration services and to make the installation of <code>matplotlib</code> optional for users of <code>mlxtend</code>'s core functionality</li>
+<li>Added a compatibility layer for <code>scikit-learn 0.18</code> using the new <code>model_selection</code> module  while maintaining backwards compatibility to scikit-learn 0.17.</li>
+</ul>
+<h5 id="bug-fixes_11">Bug Fixes</h5>
+<ul>
+<li><code>mlxtend.plotting.plot_decision_regions</code> now draws decision regions correctly if more than 4 class labels are present</li>
+<li>Raise <code>AttributeError</code> in <code>plot_decision_regions</code> when the <code>X_higlight</code> argument is a 1D array (<a href="https://github.com/chkoar">chkoar</a>)</li>
+</ul>
+<h3 id="version-042-2016-08-24">Version 0.4.2 (2016-08-24)</h3>
+<h5 id="downloads_12">Downloads</h5>
+<ul>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.4.2.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.4.2.tar.gz">Source code (tar.gz)</a></li>
+<li><a href="http://sebastianraschka.com/pdf/mlxtend-latest.pdf">PDF documentation</a></li>
+</ul>
+<h5 id="new-features_12">New Features</h5>
+<ul>
+<li>Added <code>preprocessing.CopyTransformer</code>, a mock class that returns copies of
+imput arrays via <code>transform</code> and <code>fit_transform</code></li>
+</ul>
+<h5 id="changes_12">Changes</h5>
+<ul>
+<li>Added AppVeyor to CI to ensure MS Windows compatibility</li>
+<li>Dataset are now saved as compressed .txt or .csv files rather than being imported as Python objects</li>
+<li><code>feature_selection.SequentialFeatureSelector</code> now supports the selection of <code>k_features</code> using a tuple to specify a "min-max" <code>k_features</code> range</li>
+<li>Added "SVD solver" option to the <code>PrincipalComponentAnalysis</code></li>
+<li>Raise a <code>AttributeError</code> with "not fitted" message in <code>SequentialFeatureSelector</code> if <code>transform</code> or <code>get_metric_dict</code> are called prior to <code>fit</code></li>
+<li>Use small, positive bias units in <code>TfMultiLayerPerceptron</code>'s hidden layer(s) if the activations are ReLUs in order to avoid dead neurons</li>
+<li>Added an optional <code>clone_estimator</code> parameter to the <code>SequentialFeatureSelector</code> that defaults to <code>True</code>, avoiding the modification of the original estimator objects</li>
+<li>More rigorous type and shape checks in the <code>evaluate.plot_decision_regions</code> function</li>
+<li><code>DenseTransformer</code> now doesn't raise and error if the input array is <em>not</em> sparse</li>
+<li>API clean-up using scikit-learn's <code>BaseEstimator</code> as parent class for <code>feature_selection.ColumnSelector</code></li>
+</ul>
+<h5 id="bug-fixes_12">Bug Fixes</h5>
+<ul>
+<li>Fixed a problem when a tuple-range was provided as argument to the <code>SequentialFeatureSelector</code>'s <code>k_features</code> parameter and the scoring metric was more negative than -1 (e.g., as in scikit-learn's MSE scoring function) (wahutch](https://github.com/wahutch))</li>
+<li>Fixed an <code>AttributeError</code> issue when <code>verbose</code> &gt; 1 in <code>StackingClassifier</code></li>
+<li>Fixed a bug in <code>classifier.SoftmaxRegression</code> where the mean values of the offsets were used to update the bias units rather than their sum</li>
+<li>Fixed rare bug in MLP <code>_layer_mapping</code> functions that caused a swap between the random number generation seed when initializing weights and biases</li>
+</ul>
+<h3 id="version-041-2016-05-01">Version 0.4.1 (2016-05-01)</h3>
+<h5 id="downloads_13">Downloads</h5>
+<ul>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.4.1.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.4.1.tar.gz">Source code (tar.gz)</a></li>
+<li><a href="http://sebastianraschka.com/pdf/mlxtend-0.4.1.pdf">PDF documentation</a></li>
+</ul>
+<h5 id="new-features_13">New Features</h5>
+<ul>
+<li>New TensorFlow estimator for Linear Regression (<code>tf_regressor.TfLinearRegression</code>)</li>
+<li>New k-means clustering estimator (<a href="../user_guide/cluster/Kmeans/"><code>cluster.Kmeans</code></a>)</li>
+<li>New TensorFlow k-means clustering estimator (<code>tf_cluster.Kmeans</code>)</li>
+</ul>
+<h5 id="changes_13">Changes</h5>
+<ul>
+<li>Due to refactoring of the estimator classes, the <code>init_weights</code> parameter of the <code>fit</code> methods was globally renamed to <code>init_params</code></li>
+<li>Overall performance improvements of estimators due to code clean-up and refactoring</li>
+<li>Added several additional checks for correct array types and more meaningful exception messages</li>
+<li>Added optional <code>dropout</code> to the <code>tf_classifier.TfMultiLayerPerceptron</code> classifier for regularization</li>
+<li>Added an optional <code>decay</code> parameter to the <code>tf_classifier.TfMultiLayerPerceptron</code> classifier for adaptive learning via an exponential decay of the learning rate eta</li>
+<li>Replaced old <code>NeuralNetMLP</code> by more streamlined <code>MultiLayerPerceptron</code> (<code>classifier.MultiLayerPerceptron</code>); now also with softmax in the output layer and categorical cross-entropy loss.</li>
+<li>Unified <code>init_params</code> parameter for fit functions to continue training where the algorithm left off (if supported)</li>
+</ul>
+<h3 id="version-040-2016-04-09">Version 0.4.0 (2016-04-09)</h3>
+<h5 id="new-features_14">New Features</h5>
+<ul>
+<li>New <code>TfSoftmaxRegression</code> classifier using Tensorflow (<code>tf_classifier.TfSoftmaxRegression</code>)</li>
+<li>New <code>SoftmaxRegression</code> classifier (<code>classifier.SoftmaxRegression</code>)</li>
+<li>New <code>TfMultiLayerPerceptron</code> classifier using Tensorflow (<code>tf_classifier.TfMultiLayerPerceptron</code>)</li>
+<li>New <code>StackingRegressor</code> (<a href="../user_guide/regressor/StackingRegressor/"><code>regressor.StackingRegressor</code></a>)</li>
+<li>New <code>StackingClassifier</code> (<a href="../user_guide/classifier/StackingClassifier/"><code>classifier.StackingClassifier</code></a>)</li>
+<li>New function for one-hot encoding of class labels (<a href="../user_guide/preprocessing/one-hot_encoding/"><code>preprocessing.one_hot</code></a>)</li>
+<li>Added <code>GridSearch</code> support to the <code>SequentialFeatureSelector</code> (<a href="../user_guide/feature_selection/SequentialFeatureSelector/"><code>feature_selection/.SequentialFeatureSelector</code></a>)</li>
+<li><code>evaluate.plot_decision_regions</code> improvements:<ul>
+<li>Function now handles class y-class labels correctly if array is of type <code>float</code></li>
+<li>Correct handling of input arguments <code>markers</code> and <code>colors</code></li>
+<li>Accept an existing <code>Axes</code> via the <code>ax</code> argument</li>
+</ul>
+</li>
+<li>New <code>print_progress</code> parameter for all generalized models and multi-layer neural networks for printing time elapsed, ETA, and the current cost of the current epoch</li>
+<li>Minibatch learning for <code>classifier.LogisticRegression</code>, <code>classifier.Adaline</code>, and <code>regressor.LinearRegression</code> plus streamlined API</li>
+<li>New Principal Component Analysis class via <a href="../user_guide/feature_extraction/PrincipalComponentAnalysis/"><code>mlxtend.feature_extraction.PrincipalComponentAnalysis</code></a></li>
+<li>New RBF Kernel Principal Component Analysis class via <a href="../user_guide/feature_extraction/RBFKernelPCA/"><code>mlxtend.feature_extraction.RBFKernelPCA</code></a></li>
+<li>New Linear Discriminant Analysis class via <a href="../user_guide/feature_extraction/LinearDiscriminantAnalysis/"><code>mlxtend.feature_extraction.LinearDiscriminantAnalysis</code></a></li>
+</ul>
+<h5 id="changes_14">Changes</h5>
+<ul>
+<li>The <code>column</code> parameter in <code>mlxtend.preprocessing.standardize</code> now defaults to <code>None</code> to standardize all columns more conveniently</li>
+</ul>
+<h3 id="version-030-2016-01-31">Version 0.3.0 (2016-01-31)</h3>
+<h5 id="downloads_14">Downloads</h5>
+<ul>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.3.0.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.3.0.tar.gz">Source code (tar.gz)</a></li>
+</ul>
+<h5 id="new-features_15">New Features</h5>
+<ul>
+<li>Added a progress bar tracker to <code>classifier.NeuralNetMLP</code></li>
+<li>Added a function to score predicted vs. target class labels <code>evaluate.scoring</code></li>
+<li>Added confusion matrix functions to create (<code>evaluate.confusion_matrix</code>) and plot (<code>evaluate.plot_confusion_matrix</code>) confusion matrices</li>
+<li>New style parameter and improved axis scaling in <code>mlxtend.evaluate.plot_learning_curves</code></li>
+<li>Added <code>loadlocal_mnist</code> to <code>mlxtend.data</code> for streaming MNIST from a local byte files into numpy arrays</li>
+<li>New <code>NeuralNetMLP</code> parameters: <code>random_weights</code>, <code>shuffle_init</code>, <code>shuffle_epoch</code></li>
+<li>New <code>SFS</code> features such as the generation of pandas <code>DataFrame</code> results tables and plotting functions (with confidence intervals, standard deviation, and standard error bars)</li>
+<li>Added support for regression estimators in <code>SFS</code></li>
+<li>Added Boston <code>housing dataset</code></li>
+<li>New <code>shuffle</code> parameter for <code>classifier.NeuralNetMLP</code></li>
+</ul>
+<h5 id="changes_15">Changes</h5>
+<ul>
+<li>The <code>mlxtend.preprocessing.standardize</code> function now optionally returns the parameters, which are estimated from the array, for re-use. A further improvement makes the <code>standardize</code> function smarter in order to avoid zero-division errors</li>
+<li>Cosmetic improvements to the <code>evaluate.plot_decision_regions</code> function such as hiding plot axes</li>
+<li>Renaming of <code>classifier.EnsembleClassfier</code> to <code>classifier.EnsembleVoteClassifier</code></li>
+<li>Improved random weight initialization in <code>Perceptron</code>, <code>Adaline</code>, <code>LinearRegression</code>, and <code>LogisticRegression</code></li>
+<li>Changed <code>learning</code> parameter of <code>mlxtend.classifier.Adaline</code> to <code>solver</code> and added "normal equation" as closed-form solution solver</li>
+<li>Hide y-axis labels in <code>mlxtend.evaluate.plot_decision_regions</code> in 1 dimensional evaluations</li>
+<li>Sequential Feature Selection algorithms were unified into a single <code>SequentialFeatureSelector</code> class with parameters to enable floating selection and toggle between forward and backward selection.</li>
+<li>Stratified sampling of MNIST (now 500x random samples from each of the 10 digit categories)</li>
+<li>Renaming <code>mlxtend.plotting</code> to <code>mlxtend.general_plotting</code> in order to distinguish general plotting function from specialized utility function such as <code>evaluate.plot_decision_regions</code></li>
+</ul>
+<h3 id="version-029-2015-07-14">Version 0.2.9 (2015-07-14)</h3>
+<h5 id="downloads_15">Downloads</h5>
+<ul>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.2.9.zip">Source code (zip)</a></li>
+<li><a href="https://github.com/rasbt/mlxtend/archive/v0.2.9.tar.gz">Source code (tar.gz)</a></li>
+</ul>
+<h5 id="new-features_16">New Features</h5>
+<ul>
+<li>Sequential Feature Selection algorithms: SFS, SFFS, SBS, and SFBS</li>
+</ul>
+<h5 id="changes_16">Changes</h5>
+<ul>
+<li>Changed <code>regularization</code> &amp; <code>lambda</code> parameters in <code>LogisticRegression</code> to single parameter <code>l2_lambda</code></li>
+</ul>
+<h3 id="version-028-2015-06-27">Version 0.2.8 (2015-06-27)</h3>
+<ul>
+<li>API changes:<ul>
+<li><code>mlxtend.sklearn.EnsembleClassifier</code> -&gt; <code>mlxtend.classifier.EnsembleClassifier</code></li>
+<li><code>mlxtend.sklearn.ColumnSelector</code> -&gt; <code>mlxtend.feature_selection.ColumnSelector</code></li>
+<li><code>mlxtend.sklearn.DenseTransformer</code> -&gt; <code>mlxtend.preprocessing.DenseTransformer</code></li>
+<li><code>mlxtend.pandas.standardizing</code> -&gt;  <code>mlxtend.preprocessing.standardizing</code></li>
+<li><code>mlxtend.pandas.minmax_scaling</code> -&gt;  <code>mlxtend.preprocessing.minmax_scaling</code></li>
+<li><code>mlxtend.matplotlib</code> -&gt; <code>mlxtend.plotting</code></li>
+</ul>
+</li>
+<li>Added momentum learning parameter (alpha coefficient) to <code>mlxtend.classifier.NeuralNetMLP</code>.</li>
+<li>Added adaptive learning rate (decrease constant) to <code>mlxtend.classifier.NeuralNetMLP</code>.</li>
+<li><code>mlxtend.pandas.minmax_scaling</code> became <code>mlxtend.preprocessing.minmax_scaling</code>  and also supports NumPy arrays now</li>
+<li><code>mlxtend.pandas.standardizing</code> became <code>mlxtend.preprocessing.standardizing</code> and now supports both NumPy arrays and pandas DataFrames; also, now <code>ddof</code> parameters to set the degrees of freedom when calculating the standard deviation</li>
+</ul>
+<h3 id="version-027-2015-06-20">Version 0.2.7 (2015-06-20)</h3>
+<ul>
+<li>Added multilayer perceptron (feedforward artificial neural network) classifier as <code>mlxtend.classifier.NeuralNetMLP</code>.</li>
+<li>Added 5000 labeled trainingsamples from the MNIST handwritten digits dataset to <code>mlxtend.data</code></li>
+</ul>
+<h3 id="version-026-2015-05-08">Version 0.2.6 (2015-05-08)</h3>
+<ul>
+<li>Added ordinary least square regression using different solvers (gradient and stochastic gradient descent, and the closed form solution (normal equation)</li>
+<li>Added option for random weight initialization to logistic regression classifier and updated l2 regularization</li>
+<li>Added <code>wine</code> dataset to <code>mlxtend.data</code></li>
+<li>Added <code>invert_axes</code> parameter <code>mlxtend.matplotlib.enrichtment_plot</code> to optionally plot the "Count" on the x-axis</li>
+<li>New <code>verbose</code> parameter for <code>mlxtend.sklearn.EnsembleClassifier</code> by <a href="https://github.com/albahnsen">Alejandro C. Bahnsen</a></li>
+<li>Added <code>mlxtend.pandas.standardizing</code> to standardize columns in a Pandas DataFrame</li>
+<li>Added parameters <code>linestyles</code> and <code>markers</code> to <code>mlxtend.matplotlib.enrichment_plot</code></li>
+<li><code>mlxtend.regression.lin_regplot</code> automatically adds np.newaxis and works w. python lists</li>
+<li>Added tokenizers: <code>mlxtend.text.extract_emoticons</code> and <code>mlxtend.text.extract_words_and_emoticons</code></li>
+</ul>
+<h3 id="version-025-2015-04-17">Version 0.2.5 (2015-04-17)</h3>
+<ul>
+<li>Added Sequential Backward Selection (mlxtend.sklearn.SBS)</li>
+<li>Added <code>X_highlight</code> parameter to <code>mlxtend.evaluate.plot_decision_regions</code> for highlighting test data points.</li>
+<li>Added mlxtend.regression.lin_regplot to plot the fitted line from linear regression.</li>
+<li>Added mlxtend.matplotlib.stacked_barplot to conveniently produce stacked barplots using pandas <code>DataFrame</code>s.</li>
+<li>Added mlxtend.matplotlib.enrichment_plot</li>
+</ul>
+<h3 id="version-024-2015-03-15">Version 0.2.4 (2015-03-15)</h3>
+<ul>
+<li>Added <code>scoring</code> to <code>mlxtend.evaluate.learning_curves</code> (by user pfsq)</li>
+<li>Fixed setup.py bug caused by the missing README.html file</li>
+<li>matplotlib.category_scatter for pandas DataFrames and Numpy arrays</li>
+</ul>
+<h3 id="version-023-2015-03-11">Version 0.2.3 (2015-03-11)</h3>
+<ul>
+<li>Added Logistic regression</li>
+<li>Gradient descent and stochastic gradient descent perceptron was changed
+  to Adaline (Adaptive Linear Neuron)</li>
+<li>Perceptron and Adaline for {0, 1} classes</li>
+<li>Added <code>mlxtend.preprocessing.shuffle_arrays_unison</code> function to
+  shuffle one or more NumPy arrays.</li>
+<li>Added shuffle and random seed parameter to stochastic gradient descent classifier.</li>
+<li>Added <code>rstrip</code> parameter to <code>mlxtend.file_io.find_filegroups</code> to allow trimming of base names.</li>
+<li>Added <code>ignore_substring</code> parameter to <code>mlxtend.file_io.find_filegroups</code> and <code>find_files</code>.</li>
+<li>Replaced .rstrip in <code>mlxtend.file_io.find_filegroups</code> with more robust regex.</li>
+<li>Gridsearch support for <code>mlxtend.sklearn.EnsembleClassifier</code></li>
+</ul>
+<h3 id="version-022-2015-03-01">Version 0.2.2 (2015-03-01)</h3>
+<ul>
+<li>Improved robustness of EnsembleClassifier.</li>
+<li>Extended plot_decision_regions() functionality for plotting 1D decision boundaries.</li>
+<li>Function matplotlib.plot_decision_regions was reorganized  to evaluate.plot_decision_regions .</li>
+<li>evaluate.plot_learning_curves() function added.</li>
+<li>Added Rosenblatt, gradient descent, and stochastic gradient descent perceptrons.</li>
+</ul>
+<h3 id="version-021-2015-01-20">Version 0.2.1 (2015-01-20)</h3>
+<ul>
+<li>Added mlxtend.pandas.minmax_scaling - a function to rescale pandas DataFrame columns.</li>
+<li>Slight update to the EnsembleClassifier interface (additional <code>voting</code> parameter)</li>
+<li>Fixed EnsembleClassifier to return correct class labels if class labels are not
+  integers from 0 to n.</li>
+<li>Added new matplotlib function to plot decision regions of classifiers.</li>
+</ul>
+<h3 id="version-020-2015-01-13">Version 0.2.0 (2015-01-13)</h3>
+<ul>
+<li>Improved mlxtend.text.generalize_duplcheck to remove duplicates and prevent endless looping issue.</li>
+<li>Added <code>recursive</code> search parameter to mlxtend.file_io.find_files.</li>
+<li>Added <code>check_ext</code> parameter mlxtend.file_io.find_files to search based on file extensions.</li>
+<li>Default parameter to ignore invisible files for mlxtend.file_io.find.</li>
+<li>Added <code>transform</code> and <code>fit_transform</code> to the <code>EnsembleClassifier</code>.</li>
+<li>Added mlxtend.file_io.find_filegroups function.</li>
+</ul>
+<h3 id="version-019-2015-01-10">Version 0.1.9 (2015-01-10)</h3>
+<ul>
+<li>Implemented scikit-learn EnsembleClassifier (majority voting rule) class.</li>
+</ul>
+<h3 id="version-018-2015-01-07">Version 0.1.8 (2015-01-07)</h3>
+<ul>
+<li>Improvements to mlxtend.text.generalize_names to handle certain Dutch last name prefixes (van, van der, de, etc.).</li>
+<li>Added mlxtend.text.generalize_name_duplcheck function to apply mlxtend.text.generalize_names function to a pandas DataFrame without creating duplicates.</li>
+</ul>
+<h3 id="version-017-2015-01-07">Version 0.1.7 (2015-01-07)</h3>
+<ul>
+<li>Added text utilities with name generalization function.</li>
+<li>Added  and file_io utilities.</li>
+</ul>
+<h3 id="version-016-2015-01-04">Version 0.1.6 (2015-01-04)</h3>
+<ul>
+<li>Added combinations and permutations estimators.</li>
+</ul>
+<h3 id="version-015-2014-12-11">Version 0.1.5 (2014-12-11)</h3>
+<ul>
+<li>Added <code>DenseTransformer</code> for pipelines and grid search.</li>
+</ul>
+<h3 id="version-014-2014-08-20">Version 0.1.4 (2014-08-20)</h3>
+<ul>
+<li><code>mean_centering</code> function is now a Class that creates <code>MeanCenterer</code> objects
+  that can be used to fit data via the <code>fit</code> method, and center data at the column
+  means via the <code>transform</code> and <code>fit_transform</code> method.</li>
+</ul>
+<h3 id="version-013-2014-08-19">Version 0.1.3 (2014-08-19)</h3>
+<ul>
+<li>Added <code>preprocessing</code> module and <code>mean_centering</code> function.</li>
+</ul>
+<h3 id="version-012-2014-08-19">Version 0.1.2 (2014-08-19)</h3>
+<ul>
+<li>Added <code>matplotlib</code> utilities and <code>remove_borders</code> function.</li>
+</ul>
+<h3 id="version-011-2014-08-13">Version 0.1.1 (2014-08-13)</h3>
+<ul>
+<li>Simplified code for ColumnSelector.</li>
+</ul></div>
+        
+        
+    </div>
+
+    <footer class="col-md-12 text-center">
+        <hr>
+        <p>
+        <small>Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        
+        <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
+    </footer>
+
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+    var base_url = '..';
+    </script>
+    <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="../mathjaxhelper.js"></script>
+    <script src="../search/main.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+
+</html>

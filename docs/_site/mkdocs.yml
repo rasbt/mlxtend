@@ -1,0 +1,156 @@
+site_name: mlxtend
+site_url: http://rasbt.github.io/mlxtend
+site_author: Sebastian Raschka
+site_description: A library consisting of useful tools and extensions for the day-to-day data science tasks.
+
+repo_url: https://github.com/rasbt/mlxtend
+repo_name: GitHub
+
+#include_search: true # not necessary for this theme
+docs_dir: sources
+
+theme:
+    name: cosmo
+
+markdown_extensions:
+  - tables
+  - fenced_code
+  - mdx_math:
+      enable_dollar_delimiter: True #for use of inline $..$
+extra_javascript:
+  - https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML
+  - mathjaxhelper.js
+extra_css:
+  - cinder/css/base.css
+  - cinder/css/bootstrap-custom.css
+  - cinder/css/bootstrap-custom.min.css
+  - cinder/css/cinder.css
+  - cinder/css/font-awesome-4.0.3.css
+  - cinder/css/highlight.css
+
+copyright: Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a>
+google_analytics: ['UA-38457794-2', 'rasbt.github.io/mlxtend/']
+
+nav:
+- Home: index.md
+- User Guide:
+  - USER_GUIDE_INDEX.md
+  - classifier:
+    - user_guide/classifier/Adaline.md
+    - user_guide/classifier/EnsembleVoteClassifier.md
+    - user_guide/classifier/LogisticRegression.md
+    - user_guide/classifier/MultiLayerPerceptron.md
+    - user_guide/classifier/Perceptron.md
+    - user_guide/classifier/SoftmaxRegression.md
+    - user_guide/classifier/StackingClassifier.md
+    - user_guide/classifier/StackingCVClassifier.md
+  - cluster:
+    - user_guide/cluster/Kmeans.md
+  - data:
+    - user_guide/data/autompg_data.md
+    - user_guide/data/boston_housing_data.md
+    - user_guide/data/iris_data.md
+    - user_guide/data/loadlocal_mnist.md
+    - user_guide/data/make_multiplexer_dataset.md
+    - user_guide/data/mnist_data.md
+    - user_guide/data/three_blobs_data.md
+    - user_guide/data/wine_data.md
+  - evaluate:
+    - user_guide/evaluate/bootstrap.md
+    - user_guide/evaluate/bootstrap_point632_score.md
+    - user_guide/evaluate/BootstrapOutOfBag.md
+    - user_guide/evaluate/cochrans_q.md    
+    - user_guide/evaluate/combined_ftest_5x2cv.md
+    - user_guide/evaluate/confusion_matrix.md
+    - user_guide/evaluate/feature_importance_permutation.md
+    - user_guide/evaluate/ftest.md
+    - user_guide/evaluate/lift_score.md
+    - user_guide/evaluate/mcnemar_table.md
+    - user_guide/evaluate/mcnemar_tables.md
+    - user_guide/evaluate/mcnemar.md
+    - user_guide/evaluate/paired_ttest_5x2cv.md
+    - user_guide/evaluate/paired_ttest_kfold_cv.md
+    - user_guide/evaluate/paired_ttest_resampled.md
+    - user_guide/evaluate/permutation_test.md
+    - user_guide/evaluate/PredefinedHoldoutSplit.md
+    - user_guide/evaluate/RandomHoldoutSplit.md
+    - user_guide/evaluate/scoring.md
+  - feature_extraction:
+    - user_guide/feature_extraction/LinearDiscriminantAnalysis.md
+    - user_guide/feature_extraction/PrincipalComponentAnalysis.md
+    - user_guide/feature_extraction/RBFKernelPCA.md
+  - feature_selection:
+    - user_guide/feature_selection/ColumnSelector.md
+    - user_guide/feature_selection/ExhaustiveFeatureSelector.md
+    - user_guide/feature_selection/SequentialFeatureSelector.md
+  - file_io:
+    - user_guide/file_io/find_filegroups.md
+    - user_guide/file_io/find_files.md
+  - frequent_patterns:
+    - user_guide/frequent_patterns/apriori.md
+    - user_guide/frequent_patterns/association_rules.md
+  - general concepts:
+    - user_guide/general_concepts/activation-functions.md
+    - user_guide/general_concepts/gradient-optimization.md
+    - user_guide/general_concepts/linear-gradient-derivative.md
+    - user_guide/general_concepts/regularization-linear.md
+  - image:
+    - user_guide/image/extract_face_landmarks.md
+  - math:
+    - user_guide/math/num_combinations.md
+    - user_guide/math/num_permutations.md
+    - user_guide/math/vectorspace_dimensionality.md
+    - user_guide/math/vectorspace_orthonormalization.md
+  - plotting:
+    - user_guide/plotting/category_scatter.md
+    - user_guide/plotting/checkerboard_plot.md
+    - user_guide/plotting/ecdf.md
+    - user_guide/plotting/enrichment_plot.md
+    - user_guide/plotting/plot_confusion_matrix.md
+    - user_guide/plotting/plot_decision_regions.md
+    - user_guide/plotting/plot_learning_curves.md
+    - user_guide/plotting/plot_linear_regression.md
+    - user_guide/plotting/plot_sequential_feature_selection.md
+    - user_guide/plotting/scatterplotmatrix.md
+    - user_guide/plotting/stacked_barplot.md
+  - preprocessing:
+    - user_guide/preprocessing/CopyTransformer.md
+    - user_guide/preprocessing/DenseTransformer.md
+    - user_guide/preprocessing/MeanCenterer.md
+    - user_guide/preprocessing/minmax_scaling.md
+    - user_guide/preprocessing/one-hot_encoding.md
+    - user_guide/preprocessing/shuffle_arrays_unison.md
+    - user_guide/preprocessing/standardize.md
+    - user_guide/preprocessing/TransactionEncoder.md
+  - regressor:
+    - user_guide/regressor/LinearRegression.md
+    - user_guide/regressor/StackingCVRegressor.md
+    - user_guide/regressor/StackingRegressor.md
+  - text:
+    - user_guide/text/generalize_names.md
+    - user_guide/text/generalize_names_duplcheck.md
+    - user_guide/text/tokenizer.md
+  - utils:
+    - user_guide/utils/Counter.md
+- API:
+  - api_subpackages/mlxtend.classifier.md
+  - api_subpackages/mlxtend.cluster.md
+  - api_subpackages/mlxtend.data.md
+  - api_subpackages/mlxtend.evaluate.md
+  - api_subpackages/mlxtend.feature_extraction.md
+  - api_subpackages/mlxtend.feature_selection.md
+  - api_subpackages/mlxtend.file_io.md
+  - api_subpackages/mlxtend.frequent_patterns.md
+  - api_subpackages/mlxtend.plotting.md
+  - api_subpackages/mlxtend.preprocessing.md
+  - api_subpackages/mlxtend.regressor.md
+  - api_subpackages/mlxtend.text.md
+  - api_subpackages/mlxtend.utils.md
+- Installation: installation.md
+- About:
+  - Release Notes: CHANGELOG.md
+  - How To Contribute: CONTRIBUTING.md
+  - Contributors: contributors.md
+  - License: license.md
+  - Citing Mlxtend: cite.md
+  - Discuss: discuss.md

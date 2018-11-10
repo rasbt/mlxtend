@@ -1,0 +1,32 @@
+body {
+    background-image: none;
+    background-color: #ffffff;
+}
+
+div.col-md-9 img {
+    border: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 120%;
+}
+
+h1, h2 {
+  margin-top:80px;
+  margin-bottom:30px;
+}
+
+ h3, h4 {
+   margin-top:40px;
+   margin-bottom:20px;
+ }
+
+h5, h6 {
+   margin-top:30px;
+   margin-bottom:10px;
+ }
+
+img {
+  max-width: 90%;
+  height: auto;
+}

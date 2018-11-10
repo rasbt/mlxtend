@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A library consisting of useful tools and extensions for the day-to-day data science tasks."> 
+    <meta name="author" content="Sebastian Raschka"> 
+    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/evaluate/ftest/">
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+
+    <title>F-Test - mlxtend</title>
+
+    <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
+    <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link href="../../../css/cinder.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+
+
+    <link href="../../../cinder/css/base.css" rel="stylesheet">
+
+
+    <link href="../../../cinder/css/bootstrap-custom.css" rel="stylesheet">
+
+
+    <link href="../../../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
+
+
+    <link href="../../../cinder/css/cinder.css" rel="stylesheet">
+
+
+    <link href="../../../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
+
+
+    <link href="../../../cinder/css/highlight.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-38457794-2', 'rasbt.github.io/mlxtend/');
+    ga('send', 'pageview');
+    </script>
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            <a class="navbar-brand" href="../../..">mlxtend</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../USER_GUIDE_INDEX/">User Guide Index</a>
+</li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">classifier</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../classifier/Adaline/">Adaptive Linear Neuron -- Adaline</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/EnsembleVoteClassifier/">EnsembleVoteClassifier</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/LogisticRegression/">Logistic Regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/MultiLayerPerceptron/">Neural Network - Multilayer Perceptron</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/Perceptron/">Perceptron</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/SoftmaxRegression/">Softmax Regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/StackingClassifier/">StackingClassifier</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">cluster</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../cluster/Kmeans/">Kmeans</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">data</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../data/autompg_data/">Auto MPG</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/boston_housing_data/">Boston Housing Data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/iris_data/">Iris Dataset</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/loadlocal_mnist/">Load the MNIST Dataset from Local Files</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/make_multiplexer_dataset/">Make Multiplexer Dataset</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/mnist_data/">MNIST Dataset</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/three_blobs_data/">Three Blobs Dataset</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/wine_data/">Wine Dataset</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">evaluate</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../bootstrap/">Bootstrap</a>
+</li>
+
+        
+            
+<li >
+    <a href="../bootstrap_point632_score/">bootstrap_point632_score</a>
+</li>
+
+        
+            
+<li >
+    <a href="../BootstrapOutOfBag/">BootstrapOutOfBag</a>
+</li>
+
+        
+            
+<li >
+    <a href="../cochrans_q/">Cochran's Q Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../combined_ftest_5x2cv/">5x2cv combined *F* test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../feature_importance_permutation/">Feature Importance Permutation</a>
+</li>
+
+        
+            
+<li class="active">
+    <a href="./">F-Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../lift_score/">Lift Score</a>
+</li>
+
+        
+            
+<li >
+    <a href="../mcnemar_table/">Contigency Table for McNemar's Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../mcnemar_tables/">Contigency Tables for McNemar's Test and Cochran's Q Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../mcnemar/">McNemar's Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../paired_ttest_5x2cv/">5x2cv paired *t* test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../paired_ttest_kfold_cv/">K-fold cross-validated paired *t* test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../paired_ttest_resampled/">Resampled paired *t* test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../permutation_test/">Permutation Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../PredefinedHoldoutSplit/">PredefinedHoldoutSplit</a>
+</li>
+
+        
+            
+<li >
+    <a href="../RandomHoldoutSplit/">RandomHoldoutSplit</a>
+</li>
+
+        
+            
+<li >
+    <a href="../scoring/">Scoring</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">feature_extraction</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../feature_extraction/LinearDiscriminantAnalysis/">Linear Discriminant Analysis</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../feature_extraction/PrincipalComponentAnalysis/">Principal Component Analysis</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../feature_extraction/RBFKernelPCA/">RBFKernelPCA</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">feature_selection</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../feature_selection/ColumnSelector/">ColumnSelector</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../feature_selection/ExhaustiveFeatureSelector/">Exhaustive Feature Selector</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../feature_selection/SequentialFeatureSelector/">Sequential Feature Selector</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">file_io</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../file_io/find_filegroups/">Find Filegroups</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../file_io/find_files/">Find Files</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">frequent_patterns</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../frequent_patterns/apriori/">Apriori</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../frequent_patterns/association_rules/">Association rules</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">general concepts</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../general_concepts/activation-functions/">Activation Functions for Artificial Neural Networks</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/gradient-optimization/">Gradient Descent and Stochastic Gradient Descent</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/linear-gradient-derivative/">Deriving the Gradient Descent Rule for Linear Regression and Adaline</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/regularization-linear/">Regularization of Generalized Linear Models</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">image</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../image/extract_face_landmarks/">Extract Face Landmarks</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">math</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../math/num_combinations/">Compute the Number of Combinations</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/num_permutations/">Compute the Number of Permutations</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/vectorspace_dimensionality/">Vectorspace Dimensionality</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/vectorspace_orthonormalization/">Vectorspace Orthonormalization</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">plotting</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../plotting/category_scatter/">Scatterplot with Categories</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/checkerboard_plot/">Checkerboard Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/ecdf/">Empirical Cumulative Distribution Function Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/enrichment_plot/">Enrichment Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_decision_regions/">Plotting Decision Regions</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_learning_curves/">Plotting Learning Curves</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_linear_regression/">Linear Regression Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_sequential_feature_selection/">Plot Sequential Feature Selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/scatterplotmatrix/">Scatter Plot Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked Barplot</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">preprocessing</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../preprocessing/CopyTransformer/">CopyTransformer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/DenseTransformer/">DenseTransformer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/MeanCenterer/">Mean Centerer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/minmax_scaling/">MinMax Scaling</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/shuffle_arrays_unison/">Shuffle Arrays in Unison</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/standardize/">Standardize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/TransactionEncoder/">TransactionEncoder</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">regressor</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../regressor/LinearRegression/">LinearRegression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../regressor/StackingCVRegressor/">StackingCVRegressor</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../regressor/StackingRegressor/">StackingRegressor</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">text</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../text/generalize_names/">Generalize Names</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../text/generalize_names_duplcheck/">Generalize Names & Duplicate Checking</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../text/tokenizer/">Tokenizer</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">utils</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../utils/Counter/">Counter</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.classifier/">Mlxtend.classifier</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.cluster/">Mlxtend.cluster</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.evaluate/">Mlxtend.evaluate</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.feature_extraction/">Mlxtend.feature extraction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.feature_selection/">Mlxtend.feature selection</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.frequent_patterns/">Mlxtend.frequent patterns</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.preprocessing/">Mlxtend.preprocessing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.text/">Mlxtend.text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.utils/">Mlxtend.utils</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../installation/">Installation</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../CHANGELOG/">Release Notes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../CONTRIBUTING/">How To Contribute</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../contributors/">Contributors</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../license/">License</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../cite/">Citing Mlxtend</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../discuss/">Discuss</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <i class="fa fa-search"></i> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../feature_importance_permutation/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../lift_score/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/rasbt/mlxtend/edit/master/docs/user_guide/evaluate/ftest.md"><i class="fa fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="first-level active"><a href="#f-test">F-Test</a></li>
+            <li class="second-level"><a href="#overview">Overview</a></li>
+                
+                <li class="third-level"><a href="#references">References</a></li>
+            <li class="second-level"><a href="#example-1-f-test">Example 1 - F-test</a></li>
+                
+            <li class="second-level"><a href="#api">API</a></li>
+                
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<h1 id="f-test">F-Test</h1>
+<p>F-test for comparing the performance of multiple classifiers.</p>
+<blockquote>
+<p><code>from mlxtend.evaluate import ftest</code>    </p>
+</blockquote>
+<h2 id="overview">Overview</h2>
+<p>In the context of evaluating machine learning models, the F-test by George W. Snedecor [1] can be regarded as analogous to Cochran's Q test that can be applied to evaluate multiple classifiers (i.e., whether their accuracies estimated on a test set differ) as described by Looney [2][3]. </p>
+<p>More formally, assume the task to test the null hypothesis that there is no difference between the classification accuracies [1]: </p>
+<p>
+<script type="math/tex; mode=display">p_i: H_0 = p_1 = p_2 = \cdots = p_L.</script>
+</p>
+<p>Let <script type="math/tex">\{D_1, \dots , D_L\}</script> be a set of classifiers who have all been tested on the same dataset. If the L classifiers don't perform differently, then the F statistic is distributed according to an F distribution with <script type="math/tex">(L-1</script>) and <script type="math/tex">(L-1)\times N</script> degrees of freedom, where <script type="math/tex">N</script> is the number of examples in the test set.</p>
+<p>The calculation of the F statistic consists of several components, which are listed below (adopted from [3]).</p>
+<p>Sum of squares of the classifiers:</p>
+<p>
+<script type="math/tex; mode=display">
+SSA = N \sum_{i=1}^{N} (L_j)^2,
+</script>
+</p>
+<p>where <script type="math/tex">L_j</script> is the number of classifiers out of <script type="math/tex">L</script> that correctly classified object <script type="math/tex">\mathbf{z}_j \in \mathbf{Z}_{N}</script>, where <script type="math/tex">\mathbf{Z}_{N} = \{\mathbf{z}_1, ... \mathbf{z}_{N}\}</script> is the test dataset on which the classifers are tested on.</p>
+<p>The sum of squares for the objects:</p>
+<p>
+<script type="math/tex; mode=display">
+SSB= \frac{1}{L} \sum_{j=1}^N (L_j)^2 - L\cdot N \cdot ACC_{avg}^2,
+</script>
+</p>
+<p>where <script type="math/tex">ACC_{avg}</script> is the average of the accuracies of the different models <script type="math/tex">ACC_{avg} = \sum_{i=1}^L ACC_i</script>.</p>
+<p>The total sum of squares:</p>
+<p>
+<script type="math/tex; mode=display">
+SST = L\cdot N \cdot ACC_{avg}^2 (1 - ACC_{avg}^2).
+</script>
+</p>
+<p>The sum of squares for the classification--object interaction:</p>
+<p>
+<script type="math/tex; mode=display">
+SSAB = SST - SSA - SSB.
+</script>
+</p>
+<p>The mean SSA and mean SSAB values:</p>
+<p>
+<script type="math/tex; mode=display">
+MSA = \frac{SSA}{L-1},
+</script>
+</p>
+<p>and</p>
+<p>
+<script type="math/tex; mode=display">
+MSAB = \frac{SSAB}{(L-1) (N-1)}.
+</script>
+</p>
+<p>From the MSA and MSAB, we can then calculate the F-value as</p>
+<p>
+<script type="math/tex; mode=display">
+F = \frac{MSA}{MSAB}.
+</script>
+</p>
+<p>After computing the F-value, we can then look up the p-value from a F-distribution table for the corresponding degrees of freedom or obtain it computationally from a cumulative F-distribution function. In practice, if we successfully rejected the null hypothesis at a previously chosen significance threshold, we could perform multiple post hoc pair-wise tests -- for example, McNemar tests with a Bonferroni correction -- to determine which pairs have different population proportions.</p>
+<h3 id="references">References</h3>
+<ul>
+<li>[1]  Snedecor, George W. and Cochran, William G. (1989), Statistical Methods, Eighth Edition, Iowa State University Press.</li>
+<li>[2] Looney, Stephen W. "A statistical technique for comparing the accuracies of several classifiers." Pattern Recognition Letters 8, no. 1 (1988): 5-9.</li>
+<li>[3] Kuncheva, Ludmila I. Combining pattern classifiers: methods and algorithms. John Wiley &amp; Sons, 2004.</li>
+</ul>
+<h2 id="example-1-f-test">Example 1 - F-test</h2>
+<pre><code class="python">import numpy as np
+from mlxtend.evaluate import ftest
+
+## Dataset:
+
+# ground truth labels of the test dataset:
+
+y_true = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   0, 0, 0, 0, 0])
+
+
+# predictions by 3 classifiers (`y_model_1`, `y_model_2`, and `y_model_3`):
+
+y_model_1 = np.array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      0, 0])
+
+y_model_2 = np.array([1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      0, 0])
+
+y_model_3 = np.array([1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      1, 1])
+</code></pre>
+
+<p>Assuming a significance level <script type="math/tex">\alpha=0.05</script>, we can conduct Cochran's Q test as follows, to test the null hypothesis there is no difference between the classification accuracies, <script type="math/tex">p_i: H_0 = p_1 = p_2 = \cdots = p_L</script>:</p>
+<pre><code class="python">f, p_value = ftest(y_true, 
+                   y_model_1, 
+                   y_model_2, 
+                   y_model_3)
+
+print('F: %.3f' % f)
+print('p-value: %.3f' % p_value)
+</code></pre>
+
+<pre><code>F: 3.873
+p-value: 0.022
+</code></pre>
+<p>Since the p-value is smaller than <script type="math/tex">\alpha</script>, we can reject the null hypothesis and conclude that there is a difference between the classification accuracies. As mentioned in the introduction earlier, we could now perform multiple post hoc pair-wise tests -- for example, McNemar tests with a Bonferroni correction -- to determine which pairs have different population proportions.</p>
+<h2 id="api">API</h2>
+<p><em>ftest(y_target, </em>y_model_predictions)*</p>
+<p>F-Test test to compare 2 or more models.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>y_target</code> : array-like, shape=[n_samples]</p>
+<p>True class labels as 1D NumPy array.</p>
+</li>
+<li>
+<p><code>*y_model_predictions</code> : array-likes, shape=[n_samples]</p>
+<p>Variable number of 2 or more arrays that
+contain the predicted class labels
+from models as 1D NumPy array.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>f, p</code> : float or None, float</p>
+<p>Returns the F-value and the p-value</p>
+</li>
+</ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/ftest/">http://rasbt.github.io/mlxtend/user_guide/evaluate/ftest/</a></p></div>
+        
+        
+    </div>
+
+    <footer class="col-md-12 text-center">
+        <hr>
+        <p>
+        <small>Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        
+        <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
+    </footer>
+
+    <script src="../../../js/jquery-1.10.2.min.js"></script>
+    <script src="../../../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+    var base_url = '../../..';
+    </script>
+    <script data-main="../../../mkdocs/js/search.js" src="../../../mkdocs/js/require.js"></script>
+    <script src="../../../js/base.js"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="../../../mathjaxhelper.js"></script>
+    <script src="../../../search/main.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+
+</html>

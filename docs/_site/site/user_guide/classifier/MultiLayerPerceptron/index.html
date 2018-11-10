@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A library consisting of useful tools and extensions for the day-to-day data science tasks."> 
+    <meta name="author" content="Sebastian Raschka"> 
+    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/classifier/MultiLayerPerceptron/">
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+
+    <title>Neural Network - Multilayer Perceptron - mlxtend</title>
+
+    <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
+    <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link href="../../../css/cinder.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+
+
+    <link href="../../../cinder/css/base.css" rel="stylesheet">
+
+
+    <link href="../../../cinder/css/bootstrap-custom.css" rel="stylesheet">
+
+
+    <link href="../../../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
+
+
+    <link href="../../../cinder/css/cinder.css" rel="stylesheet">
+
+
+    <link href="../../../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
+
+
+    <link href="../../../cinder/css/highlight.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-38457794-2', 'rasbt.github.io/mlxtend/');
+    ga('send', 'pageview');
+    </script>
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            <a class="navbar-brand" href="../../..">mlxtend</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../USER_GUIDE_INDEX/">User Guide Index</a>
+</li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">classifier</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../Adaline/">Adaptive Linear Neuron -- Adaline</a>
+</li>
+
+        
+            
+<li >
+    <a href="../EnsembleVoteClassifier/">EnsembleVoteClassifier</a>
+</li>
+
+        
+            
+<li >
+    <a href="../LogisticRegression/">Logistic Regression</a>
+</li>
+
+        
+            
+<li class="active">
+    <a href="./">Neural Network - Multilayer Perceptron</a>
+</li>
+
+        
+            
+<li >
+    <a href="../Perceptron/">Perceptron</a>
+</li>
+
+        
+            
+<li >
+    <a href="../SoftmaxRegression/">Softmax Regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../StackingClassifier/">StackingClassifier</a>
+</li>
+
+        
+            
+<li >
+    <a href="../StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">cluster</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../cluster/Kmeans/">Kmeans</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">data</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../data/autompg_data/">Auto MPG</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/boston_housing_data/">Boston Housing Data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/iris_data/">Iris Dataset</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/loadlocal_mnist/">Load the MNIST Dataset from Local Files</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/make_multiplexer_dataset/">Make Multiplexer Dataset</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/mnist_data/">MNIST Dataset</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/three_blobs_data/">Three Blobs Dataset</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/wine_data/">Wine Dataset</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">evaluate</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../evaluate/bootstrap/">Bootstrap</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/bootstrap_point632_score/">bootstrap_point632_score</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/BootstrapOutOfBag/">BootstrapOutOfBag</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/cochrans_q/">Cochran's Q Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/combined_ftest_5x2cv/">5x2cv combined *F* test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/feature_importance_permutation/">Feature Importance Permutation</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/ftest/">F-Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/lift_score/">Lift Score</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/mcnemar_table/">Contigency Table for McNemar's Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/mcnemar_tables/">Contigency Tables for McNemar's Test and Cochran's Q Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/mcnemar/">McNemar's Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/paired_ttest_5x2cv/">5x2cv paired *t* test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/paired_ttest_kfold_cv/">K-fold cross-validated paired *t* test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/paired_ttest_resampled/">Resampled paired *t* test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/permutation_test/">Permutation Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/PredefinedHoldoutSplit/">PredefinedHoldoutSplit</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/RandomHoldoutSplit/">RandomHoldoutSplit</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/scoring/">Scoring</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">feature_extraction</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../feature_extraction/LinearDiscriminantAnalysis/">Linear Discriminant Analysis</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../feature_extraction/PrincipalComponentAnalysis/">Principal Component Analysis</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../feature_extraction/RBFKernelPCA/">RBFKernelPCA</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">feature_selection</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../feature_selection/ColumnSelector/">ColumnSelector</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../feature_selection/ExhaustiveFeatureSelector/">Exhaustive Feature Selector</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../feature_selection/SequentialFeatureSelector/">Sequential Feature Selector</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">file_io</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../file_io/find_filegroups/">Find Filegroups</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../file_io/find_files/">Find Files</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">frequent_patterns</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../frequent_patterns/apriori/">Apriori</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../frequent_patterns/association_rules/">Association rules</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">general concepts</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../general_concepts/activation-functions/">Activation Functions for Artificial Neural Networks</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/gradient-optimization/">Gradient Descent and Stochastic Gradient Descent</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/linear-gradient-derivative/">Deriving the Gradient Descent Rule for Linear Regression and Adaline</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/regularization-linear/">Regularization of Generalized Linear Models</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">image</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../image/extract_face_landmarks/">Extract Face Landmarks</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">math</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../math/num_combinations/">Compute the Number of Combinations</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/num_permutations/">Compute the Number of Permutations</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/vectorspace_dimensionality/">Vectorspace Dimensionality</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/vectorspace_orthonormalization/">Vectorspace Orthonormalization</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">plotting</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../plotting/category_scatter/">Scatterplot with Categories</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/checkerboard_plot/">Checkerboard Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/ecdf/">Empirical Cumulative Distribution Function Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/enrichment_plot/">Enrichment Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_decision_regions/">Plotting Decision Regions</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_learning_curves/">Plotting Learning Curves</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_linear_regression/">Linear Regression Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_sequential_feature_selection/">Plot Sequential Feature Selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/scatterplotmatrix/">Scatter Plot Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked Barplot</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">preprocessing</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../preprocessing/CopyTransformer/">CopyTransformer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/DenseTransformer/">DenseTransformer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/MeanCenterer/">Mean Centerer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/minmax_scaling/">MinMax Scaling</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/shuffle_arrays_unison/">Shuffle Arrays in Unison</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/standardize/">Standardize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/TransactionEncoder/">TransactionEncoder</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">regressor</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../regressor/LinearRegression/">LinearRegression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../regressor/StackingCVRegressor/">StackingCVRegressor</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../regressor/StackingRegressor/">StackingRegressor</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">text</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../text/generalize_names/">Generalize Names</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../text/generalize_names_duplcheck/">Generalize Names & Duplicate Checking</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../text/tokenizer/">Tokenizer</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">utils</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../utils/Counter/">Counter</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.classifier/">Mlxtend.classifier</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.cluster/">Mlxtend.cluster</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.evaluate/">Mlxtend.evaluate</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.feature_extraction/">Mlxtend.feature extraction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.feature_selection/">Mlxtend.feature selection</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.frequent_patterns/">Mlxtend.frequent patterns</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.preprocessing/">Mlxtend.preprocessing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.text/">Mlxtend.text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.utils/">Mlxtend.utils</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../installation/">Installation</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../CHANGELOG/">Release Notes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../CONTRIBUTING/">How To Contribute</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../contributors/">Contributors</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../license/">License</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../cite/">Citing Mlxtend</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../discuss/">Discuss</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <i class="fa fa-search"></i> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../LogisticRegression/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../Perceptron/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/rasbt/mlxtend/edit/master/docs/user_guide/classifier/MultiLayerPerceptron.md"><i class="fa fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="first-level active"><a href="#neural-network-multilayer-perceptron">Neural Network - Multilayer Perceptron</a></li>
+            <li class="second-level"><a href="#overview">Overview</a></li>
+                
+                <li class="third-level"><a href="#basic-architecture">Basic Architecture</a></li>
+                <li class="third-level"><a href="#activation">Activation</a></li>
+                <li class="third-level"><a href="#references">References</a></li>
+            <li class="second-level"><a href="#example-1-classifying-iris-flowers">Example 1 - Classifying Iris Flowers</a></li>
+                
+                <li class="third-level"><a href="#gradient-descent">Gradient Descent</a></li>
+                <li class="third-level"><a href="#stochastic-gradient-descent">Stochastic Gradient Descent</a></li>
+            <li class="second-level"><a href="#example-2-classifying-handwritten-digits-from-a-10-mnist-subset">Example 2 - Classifying Handwritten Digits from a 10% MNIST Subset</a></li>
+                
+        <li class="first-level "><a href="#api">API</a></li>
+            <li class="second-level"><a href="#methods">Methods</a></li>
+                
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<h1 id="neural-network-multilayer-perceptron">Neural Network - Multilayer Perceptron</h1>
+<p>Implementation of a multilayer perceptron, a feedforward artificial neural network.</p>
+<blockquote>
+<p>from mlxtend.classifier import MultiLayerPerceptron</p>
+</blockquote>
+<h2 id="overview">Overview</h2>
+<p><em>Although the code is fully working and can be used for common classification tasks, this implementation is not geared towards efficiency but clarity – the original code was written for demonstration purposes.</em></p>
+<h3 id="basic-architecture">Basic Architecture</h3>
+<p><img alt="" src="../NeuralNetMLP_files/neuralnet_mlp_1.png" />  </p>
+<p>The neurons <script type="math/tex">x_0</script> and <script type="math/tex">a_0</script> represent the bias units (<script type="math/tex">x_0=1</script>, <script type="math/tex">a_0=1</script>). </p>
+<p>The <script type="math/tex">i</script>th superscript denotes the <script type="math/tex">i</script>th layer, and the <em>j</em>th subscripts stands for the index of the respective unit. For example, <script type="math/tex">a_{1}^{(2)}</script> refers to the first activation unit <strong>after</strong> the bias unit (i.e., 2nd activation unit) in the 2nd layer (here: the hidden layer)</p>
+<p>
+<script type="math/tex; mode=display">\begin{align}
+    \mathbf{a^{(2)}} &= \begin{bmatrix}
+           a_{0}^{(2)} \\
+           a_{1}^{(2)} \\
+           \vdots \\
+           a_{m}^{(2)}
+         \end{bmatrix}.
+  \end{align}</script>
+</p>
+<p>Each layer <script type="math/tex">(l)</script> in a multi-layer perceptron, a directed graph, is fully connected to the next layer <script type="math/tex">(l+1)</script>. We write the weight coefficient that connects the <script type="math/tex">k</script>th unit in the <script type="math/tex">l</script>th layer to the <script type="math/tex">j</script>th unit in layer <script type="math/tex">l+1</script> as <script type="math/tex">w^{(l)}_{j, k}</script>.</p>
+<p>For example, the weight coefficient that connects the units</p>
+<p>
+<script type="math/tex">a_0^{(2)} \rightarrow a_1^{(3)}</script>
+</p>
+<p>would be written as <script type="math/tex">w_{1,0}^{(2)}</script>.</p>
+<h3 id="activation">Activation</h3>
+<p>In the current implementation, the activations of the hidden layer(s) are computed via the logistic (sigmoid) function <script type="math/tex">\phi(z) = \frac{1}{1 + e^{-z}}.</script>
+</p>
+<p><img alt="" src="../NeuralNetMLP_files/logistic_function.png" /></p>
+<p>(For more details on the logistic function, please see <a href="../LogisticRegression/"><code>classifier.LogisticRegression</code></a>; a general overview of different activation function can be found <a href="../../general_concepts/activation-functions/">here</a>.)</p>
+<p>Furthermore, the MLP uses the softmax function in the output layer, For more details on the logistic function, please see <a href="../SoftmaxRegression/"><code>classifier.SoftmaxRegression</code></a>.</p>
+<h3 id="references">References</h3>
+<ul>
+<li>D. R. G. H. R. Williams and G. Hinton. <a href="http://lia.disi.unibo.it/Courses/SistInt/articoli/nnet1.pdf">Learning representations by back-propagating errors</a>. Nature, pages 323–533, 1986.</li>
+<li>C. M. Bishop. <a href="https://books.google.de/books?hl=en&amp;lr=&amp;id=T0S0BgAAQBAJ&amp;oi=fnd&amp;pg=PP1&amp;dq=Neural+networks+for+pattern+recognition&amp;ots=jL6TqGbBld&amp;sig=fiLrMg-RJx22cgQ7zd2CiwUqNqI&amp;redir_esc=y#v=onepage&amp;q=Neural%20networks%20for%20pattern%20recognition&amp;f=false">Neural networks for pattern recognition</a>. Oxford University Press, 1995.</li>
+<li>T. Hastie, J. Friedman, and R. Tibshirani. <a href="http://statweb.stanford.edu/%7Etibs/ElemStatLearn/">The Elements of Statistical Learning</a>, Volume 2. Springer, 2009.</li>
+</ul>
+<h2 id="example-1-classifying-iris-flowers">Example 1 - Classifying Iris Flowers</h2>
+<p>Load 2 features from Iris (petal length and petal width) for visualization purposes:</p>
+<pre><code class="python">from mlxtend.data import iris_data
+X, y = iris_data()
+X = X[:, [0, 3]]    
+
+# standardize training data
+X_std = (X - X.mean(axis=0)) / X.std(axis=0)
+</code></pre>
+
+<p>Train neural network for 3 output flower classes ('Setosa', 'Versicolor', 'Virginica'), regular gradient decent (<code>minibatches=1</code>), 30 hidden units, and no regularization.</p>
+<h3 id="gradient-descent">Gradient Descent</h3>
+<p>Setting the <code>minibatches</code> to <code>1</code> will result in gradient descent training; please see <a href="../../general_concepts/gradient-optimization/">Gradient Descent vs. Stochastic Gradient Descent</a> for details.</p>
+<pre><code class="python">from mlxtend.classifier import MultiLayerPerceptron as MLP
+
+nn1 = MLP(hidden_layers=[50], 
+          l2=0.00, 
+          l1=0.0, 
+          epochs=150, 
+          eta=0.05, 
+          momentum=0.1,
+          decrease_const=0.0,
+          minibatches=1, 
+          random_seed=1,
+          print_progress=3)
+
+nn1 = nn1.fit(X_std, y)
+</code></pre>
+
+<pre><code>Iteration: 150/150 | Cost 0.06 | Elapsed: 0:00:00 | ETA: 0:00:00
+</code></pre>
+<pre><code class="python">from mlxtend.plotting import plot_decision_regions
+import matplotlib.pyplot as plt
+
+fig = plot_decision_regions(X=X_std, y=y, clf=nn1, legend=2)
+plt.title('Multi-layer Perceptron w. 1 hidden layer (logistic sigmoid)')
+plt.show()
+</code></pre>
+
+<p><img alt="png" src="../MultiLayerPerceptron_files/MultiLayerPerceptron_23_0.png" /></p>
+<pre><code class="python">import matplotlib.pyplot as plt
+plt.plot(range(len(nn1.cost_)), nn1.cost_)
+plt.ylabel('Cost')
+plt.xlabel('Epochs')
+plt.show()
+</code></pre>
+
+<p><img alt="png" src="../MultiLayerPerceptron_files/MultiLayerPerceptron_24_0.png" /></p>
+<pre><code class="python">print('Accuracy: %.2f%%' % (100 * nn1.score(X_std, y)))
+</code></pre>
+
+<pre><code>Accuracy: 96.67%
+</code></pre>
+<h3 id="stochastic-gradient-descent">Stochastic Gradient Descent</h3>
+<p>Setting <code>minibatches</code> to <code>n_samples</code> will result in stochastic gradient descent training; please see <a href="../../general_concepts/gradient-optimization/">Gradient Descent vs. Stochastic Gradient Descent</a> for details.</p>
+<pre><code class="python">nn2 = MLP(hidden_layers=[50], 
+          l2=0.00, 
+          l1=0.0, 
+          epochs=5, 
+          eta=0.005, 
+          momentum=0.1,
+          decrease_const=0.0,
+          minibatches=len(y), 
+          random_seed=1,
+          print_progress=3)
+
+nn2.fit(X_std, y)
+
+plt.plot(range(len(nn2.cost_)), nn2.cost_)
+plt.ylabel('Cost')
+plt.xlabel('Epochs')
+plt.show()
+</code></pre>
+
+<pre><code>Iteration: 5/5 | Cost 0.11 | Elapsed: 00:00:00 | ETA: 00:00:00
+</code></pre>
+<p><img alt="png" src="../MultiLayerPerceptron_files/MultiLayerPerceptron_28_1.png" /></p>
+<p>Continue the training for 25 epochs...</p>
+<pre><code class="python">nn2.epochs = 25
+nn2 = nn2.fit(X_std, y)
+</code></pre>
+
+<pre><code>Iteration: 25/25 | Cost 0.07 | Elapsed: 0:00:00 | ETA: 0:00:00
+</code></pre>
+<pre><code class="python">plt.plot(range(len(nn2.cost_)), nn2.cost_)
+plt.ylabel('Cost')
+plt.xlabel('Epochs')
+plt.show()
+</code></pre>
+
+<p><img alt="png" src="../MultiLayerPerceptron_files/MultiLayerPerceptron_31_0.png" /></p>
+<h2 id="example-2-classifying-handwritten-digits-from-a-10-mnist-subset">Example 2 - Classifying Handwritten Digits from a 10% MNIST Subset</h2>
+<p>Load a <strong>5000-sample subset</strong> of the <a href="http://rasbt.github.io/mlxtend/docs/data/mnist/">MNIST dataset</a> (please see <a href="../../data/loadlocal_mnist/"><code>data.loadlocal_mnist</code></a> if you want to download and read in the complete MNIST dataset).</p>
+<pre><code class="python">from mlxtend.data import mnist_data
+from mlxtend.preprocessing import shuffle_arrays_unison
+
+X, y = mnist_data()
+X, y = shuffle_arrays_unison((X, y), random_seed=1)
+X_train, y_train = X[:500], y[:500]
+X_test, y_test = X[500:], y[500:]
+</code></pre>
+
+<p>Visualize a sample from the MNIST dataset to check if it was loaded correctly:</p>
+<pre><code class="python">import matplotlib.pyplot as plt
+
+def plot_digit(X, y, idx):
+    img = X[idx].reshape(28,28)
+    plt.imshow(img, cmap='Greys',  interpolation='nearest')
+    plt.title('true label: %d' % y[idx])
+    plt.show()
+
+plot_digit(X, y, 3500)    
+</code></pre>
+
+<p><img alt="png" src="../MultiLayerPerceptron_files/MultiLayerPerceptron_36_0.png" /></p>
+<p>Standardize pixel values:</p>
+<pre><code class="python">import numpy as np
+from mlxtend.preprocessing import standardize
+
+X_train_std, params = standardize(X_train, 
+                                  columns=range(X_train.shape[1]), 
+                                  return_params=True)
+
+X_test_std = standardize(X_test,
+                         columns=range(X_test.shape[1]),
+                         params=params)
+</code></pre>
+
+<p>Initialize the neural network to recognize the 10 different digits (0-10) using 300 epochs and mini-batch learning.</p>
+<pre><code class="python">nn1 = MLP(hidden_layers=[150], 
+          l2=0.00, 
+          l1=0.0, 
+          epochs=100, 
+          eta=0.005, 
+          momentum=0.0,
+          decrease_const=0.0,
+          minibatches=100, 
+          random_seed=1,
+          print_progress=3)
+</code></pre>
+
+<p>Learn the features while printing the progress to get an idea about how long it may take.</p>
+<pre><code class="python">import matplotlib.pyplot as plt
+
+nn1.fit(X_train_std, y_train)
+
+plt.plot(range(len(nn1.cost_)), nn1.cost_)
+plt.ylabel('Cost')
+plt.xlabel('Epochs')
+plt.show()
+</code></pre>
+
+<pre><code>Iteration: 100/100 | Cost 0.01 | Elapsed: 0:00:17 | ETA: 0:00:00
+</code></pre>
+<p><img alt="png" src="../MultiLayerPerceptron_files/MultiLayerPerceptron_42_1.png" /></p>
+<pre><code class="python">print('Train Accuracy: %.2f%%' % (100 * nn1.score(X_train_std, y_train)))
+print('Test Accuracy: %.2f%%' % (100 * nn1.score(X_test_std, y_test)))
+</code></pre>
+
+<pre><code>Train Accuracy: 100.00%
+Test Accuracy: 84.62%
+</code></pre>
+<p><strong>Please note</strong> that this neural network has been trained on only 10% of the MNIST data for technical demonstration purposes, hence, the lousy predictive performance.</p>
+<h1 id="api">API</h1>
+<p><em>MultiLayerPerceptron(eta=0.5, epochs=50, hidden_layers=[50], n_classes=None, momentum=0.0, l1=0.0, l2=0.0, dropout=1.0, decrease_const=0.0, minibatches=1, random_seed=None, print_progress=0)</em></p>
+<p>Multi-layer perceptron classifier with logistic sigmoid activations</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>eta</code> : float (default: 0.5)</p>
+<p>Learning rate (between 0.0 and 1.0)</p>
+</li>
+<li>
+<p><code>epochs</code> : int (default: 50)</p>
+<p>Passes over the training dataset.
+Prior to each epoch, the dataset is shuffled
+if <code>minibatches &gt; 1</code> to prevent cycles in stochastic gradient descent.</p>
+</li>
+<li>
+<p><code>hidden_layers</code> : list (default: [50])</p>
+<p>Number of units per hidden layer. By default 50 units in the
+first hidden layer. At the moment only 1 hidden layer is supported</p>
+</li>
+<li>
+<p><code>n_classes</code> : int (default: None)</p>
+<p>A positive integer to declare the number of class labels
+if not all class labels are present in a partial training set.
+Gets the number of class labels automatically if None.</p>
+</li>
+<li>
+<p><code>l1</code> : float (default: 0.0)</p>
+<p>L1 regularization strength</p>
+</li>
+<li>
+<p><code>l2</code> : float (default: 0.0)</p>
+<p>L2 regularization strength</p>
+</li>
+<li>
+<p><code>momentum</code> : float (default: 0.0)</p>
+<p>Momentum constant. Factor multiplied with the
+gradient of the previous epoch t-1 to improve
+learning speed
+w(t) := w(t) - (grad(t) + momentum * grad(t-1))</p>
+</li>
+<li>
+<p><code>decrease_const</code> : float (default: 0.0)</p>
+<p>Decrease constant. Shrinks the learning rate
+after each epoch via eta / (1 + epoch*decrease_const)</p>
+</li>
+<li>
+<p><code>minibatches</code> : int (default: 1)</p>
+<p>Divide the training data into <em>k</em> minibatches
+for accelerated stochastic gradient descent learning.
+Gradient Descent Learning if <code>minibatches</code> = 1
+Stochastic Gradient Descent learning if <code>minibatches</code> = len(y)
+Minibatch learning if <code>minibatches</code> &gt; 1</p>
+</li>
+<li>
+<p><code>random_seed</code> : int (default: None)</p>
+<p>Set random state for shuffling and initializing the weights.</p>
+</li>
+<li>
+<p><code>print_progress</code> : int (default: 0)</p>
+<p>Prints progress in fitting to stderr.
+0: No output
+1: Epochs elapsed and cost
+2: 1 plus time elapsed
+3: 2 plus estimated time until completion</p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>w_</code> : 2d-array, shape=[n_features, n_classes]</p>
+<p>Weights after fitting.</p>
+</li>
+<li>
+<p><code>b_</code> : 1D-array, shape=[n_classes]</p>
+<p>Bias units after fitting.</p>
+</li>
+<li>
+<p><code>cost_</code> : list</p>
+<p>List of floats; the mean categorical cross entropy
+cost after each epoch.</p>
+</li>
+</ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/classifier/MultiLayerPerceptron/">http://rasbt.github.io/mlxtend/user_guide/classifier/MultiLayerPerceptron/</a></p>
+<h3 id="methods">Methods</h3>
+<hr>
+
+<p><em>fit(X, y, init_params=True)</em></p>
+<p>Learn model from training data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>init_params</code> : bool (default: True)</p>
+<p>Re-initializes model parameters prior to fitting.
+Set False to continue training with weights from
+a previous model fitting.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
+<hr>
+
+<p><em>predict(X)</em></p>
+<p>Predict targets from X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>target_values</code> : array-like, shape = [n_samples]</p>
+<p>Predicted target values.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>predict_proba(X)</em></p>
+<p>Predict class probabilities of X from the net input.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>Class probabilties</code> : array-like, shape= [n_samples, n_classes]</li>
+</ul>
+<hr>
+
+<p><em>score(X, y)</em></p>
+<p>Compute the prediction accuracy</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values (true class labels).</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>acc</code> : float</p>
+<p>The prediction accuracy as a float
+between 0.0 and 1.0 (perfect score).</p>
+</li>
+</ul></div>
+        
+        
+    </div>
+
+    <footer class="col-md-12 text-center">
+        <hr>
+        <p>
+        <small>Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        
+        <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
+    </footer>
+
+    <script src="../../../js/jquery-1.10.2.min.js"></script>
+    <script src="../../../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+    var base_url = '../../..';
+    </script>
+    <script data-main="../../../mkdocs/js/search.js" src="../../../mkdocs/js/require.js"></script>
+    <script src="../../../js/base.js"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="../../../mathjaxhelper.js"></script>
+    <script src="../../../search/main.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+
+</html>

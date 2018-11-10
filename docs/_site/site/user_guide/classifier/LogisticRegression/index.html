@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A library consisting of useful tools and extensions for the day-to-day data science tasks."> 
+    <meta name="author" content="Sebastian Raschka"> 
+    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/classifier/LogisticRegression/">
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+
+    <title>Logistic Regression - mlxtend</title>
+
+    <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
+    <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link href="../../../css/cinder.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+
+
+    <link href="../../../cinder/css/base.css" rel="stylesheet">
+
+
+    <link href="../../../cinder/css/bootstrap-custom.css" rel="stylesheet">
+
+
+    <link href="../../../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
+
+
+    <link href="../../../cinder/css/cinder.css" rel="stylesheet">
+
+
+    <link href="../../../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
+
+
+    <link href="../../../cinder/css/highlight.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-38457794-2', 'rasbt.github.io/mlxtend/');
+    ga('send', 'pageview');
+    </script>
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            <a class="navbar-brand" href="../../..">mlxtend</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../USER_GUIDE_INDEX/">User Guide Index</a>
+</li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">classifier</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../Adaline/">Adaptive Linear Neuron -- Adaline</a>
+</li>
+
+        
+            
+<li >
+    <a href="../EnsembleVoteClassifier/">EnsembleVoteClassifier</a>
+</li>
+
+        
+            
+<li class="active">
+    <a href="./">Logistic Regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../MultiLayerPerceptron/">Neural Network - Multilayer Perceptron</a>
+</li>
+
+        
+            
+<li >
+    <a href="../Perceptron/">Perceptron</a>
+</li>
+
+        
+            
+<li >
+    <a href="../SoftmaxRegression/">Softmax Regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../StackingClassifier/">StackingClassifier</a>
+</li>
+
+        
+            
+<li >
+    <a href="../StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">cluster</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../cluster/Kmeans/">Kmeans</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">data</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../data/autompg_data/">Auto MPG</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/boston_housing_data/">Boston Housing Data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/iris_data/">Iris Dataset</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/loadlocal_mnist/">Load the MNIST Dataset from Local Files</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/make_multiplexer_dataset/">Make Multiplexer Dataset</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/mnist_data/">MNIST Dataset</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/three_blobs_data/">Three Blobs Dataset</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/wine_data/">Wine Dataset</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">evaluate</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../evaluate/bootstrap/">Bootstrap</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/bootstrap_point632_score/">bootstrap_point632_score</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/BootstrapOutOfBag/">BootstrapOutOfBag</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/cochrans_q/">Cochran's Q Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/combined_ftest_5x2cv/">5x2cv combined *F* test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/feature_importance_permutation/">Feature Importance Permutation</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/ftest/">F-Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/lift_score/">Lift Score</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/mcnemar_table/">Contigency Table for McNemar's Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/mcnemar_tables/">Contigency Tables for McNemar's Test and Cochran's Q Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/mcnemar/">McNemar's Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/paired_ttest_5x2cv/">5x2cv paired *t* test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/paired_ttest_kfold_cv/">K-fold cross-validated paired *t* test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/paired_ttest_resampled/">Resampled paired *t* test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/permutation_test/">Permutation Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/PredefinedHoldoutSplit/">PredefinedHoldoutSplit</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/RandomHoldoutSplit/">RandomHoldoutSplit</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/scoring/">Scoring</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">feature_extraction</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../feature_extraction/LinearDiscriminantAnalysis/">Linear Discriminant Analysis</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../feature_extraction/PrincipalComponentAnalysis/">Principal Component Analysis</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../feature_extraction/RBFKernelPCA/">RBFKernelPCA</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">feature_selection</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../feature_selection/ColumnSelector/">ColumnSelector</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../feature_selection/ExhaustiveFeatureSelector/">Exhaustive Feature Selector</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../feature_selection/SequentialFeatureSelector/">Sequential Feature Selector</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">file_io</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../file_io/find_filegroups/">Find Filegroups</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../file_io/find_files/">Find Files</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">frequent_patterns</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../frequent_patterns/apriori/">Apriori</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../frequent_patterns/association_rules/">Association rules</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">general concepts</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../general_concepts/activation-functions/">Activation Functions for Artificial Neural Networks</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/gradient-optimization/">Gradient Descent and Stochastic Gradient Descent</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/linear-gradient-derivative/">Deriving the Gradient Descent Rule for Linear Regression and Adaline</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/regularization-linear/">Regularization of Generalized Linear Models</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">image</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../image/extract_face_landmarks/">Extract Face Landmarks</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">math</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../math/num_combinations/">Compute the Number of Combinations</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/num_permutations/">Compute the Number of Permutations</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/vectorspace_dimensionality/">Vectorspace Dimensionality</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/vectorspace_orthonormalization/">Vectorspace Orthonormalization</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">plotting</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../plotting/category_scatter/">Scatterplot with Categories</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/checkerboard_plot/">Checkerboard Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/ecdf/">Empirical Cumulative Distribution Function Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/enrichment_plot/">Enrichment Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_decision_regions/">Plotting Decision Regions</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_learning_curves/">Plotting Learning Curves</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_linear_regression/">Linear Regression Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_sequential_feature_selection/">Plot Sequential Feature Selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/scatterplotmatrix/">Scatter Plot Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked Barplot</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">preprocessing</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../preprocessing/CopyTransformer/">CopyTransformer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/DenseTransformer/">DenseTransformer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/MeanCenterer/">Mean Centerer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/minmax_scaling/">MinMax Scaling</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/shuffle_arrays_unison/">Shuffle Arrays in Unison</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/standardize/">Standardize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/TransactionEncoder/">TransactionEncoder</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">regressor</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../regressor/LinearRegression/">LinearRegression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../regressor/StackingCVRegressor/">StackingCVRegressor</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../regressor/StackingRegressor/">StackingRegressor</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">text</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../text/generalize_names/">Generalize Names</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../text/generalize_names_duplcheck/">Generalize Names & Duplicate Checking</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../text/tokenizer/">Tokenizer</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">utils</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../utils/Counter/">Counter</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.classifier/">Mlxtend.classifier</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.cluster/">Mlxtend.cluster</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.evaluate/">Mlxtend.evaluate</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.feature_extraction/">Mlxtend.feature extraction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.feature_selection/">Mlxtend.feature selection</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.frequent_patterns/">Mlxtend.frequent patterns</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.preprocessing/">Mlxtend.preprocessing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.text/">Mlxtend.text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.utils/">Mlxtend.utils</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../installation/">Installation</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../CHANGELOG/">Release Notes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../CONTRIBUTING/">How To Contribute</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../contributors/">Contributors</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../license/">License</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../cite/">Citing Mlxtend</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../discuss/">Discuss</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <i class="fa fa-search"></i> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../EnsembleVoteClassifier/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../MultiLayerPerceptron/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/rasbt/mlxtend/edit/master/docs/user_guide/classifier/LogisticRegression.md"><i class="fa fa-github"></i> Edit on GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="first-level active"><a href="#logistic-regression">Logistic Regression</a></li>
+            <li class="second-level"><a href="#overview">Overview</a></li>
+                
+                <li class="third-level"><a href="#objective-function-log-likelihood">Objective Function -- Log-Likelihood</a></li>
+                <li class="third-level"><a href="#objective-function-logistic-cost-function">Objective Function -- Logistic Cost Function</a></li>
+                <li class="third-level"><a href="#gradient-descent-gd-and-stochastic-gradient-descent-sgd-optimization">Gradient Descent (GD)  and Stochastic Gradient Descent (SGD) Optimization</a></li>
+                <li class="third-level"><a href="#regularization">Regularization</a></li>
+                <li class="third-level"><a href="#references">References</a></li>
+            <li class="second-level"><a href="#example-1-gradient-descent">Example 1 - Gradient Descent</a></li>
+                
+                <li class="third-level"><a href="#predicting-class-labels">Predicting Class Labels</a></li>
+                <li class="third-level"><a href="#predicting-class-probabilities">Predicting Class Probabilities</a></li>
+            <li class="second-level"><a href="#example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</a></li>
+                
+            <li class="second-level"><a href="#example-3-stochastic-gradient-descent-w-minibatches">Example 3 - Stochastic Gradient Descent w. Minibatches</a></li>
+                
+        <li class="first-level "><a href="#api">API</a></li>
+            <li class="second-level"><a href="#methods">Methods</a></li>
+                
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<h1 id="logistic-regression">Logistic Regression</h1>
+<p>A logistic regression class for binary classification tasks.</p>
+<blockquote>
+<p>from mlxtend.classifier import LogisticRegression</p>
+</blockquote>
+<h2 id="overview">Overview</h2>
+<p><img alt="" src="../LogisticRegression_files/logistic_regression_schematic.png" /></p>
+<p>Related to the <a href="../Perceptron/"><code>Perceptron</code></a> and <a href="../Adaline/">'Adaline'</a>, a Logistic Regression model is a linear model for binary classification. However, instead of minimizing a linear cost function such as the sum of squared errors (SSE) in Adaline, we minimize a sigmoid function, i.e., the logistic function:</p>
+<p>
+<script type="math/tex; mode=display">\phi(z) = \frac{1}{1 + e^{-z}},</script>
+</p>
+<p>where <script type="math/tex">z</script> is defined as the net input</p>
+<p>
+<script type="math/tex; mode=display">z = w_0x_0 + w_1x_1 + ... + w_mx_m = \sum_{j=0}^{m} w_j x_j= \mathbf{w}^T\mathbf{x}.</script>
+</p>
+<p>The net input is in turn based on the logit function</p>
+<p>
+<script type="math/tex; mode=display">logit(p(y=1 \mid \mathbf{x})) = z.</script>
+</p>
+<p>Here, <script type="math/tex">p(y=1 \mid \mathbf{x})</script> is the conditional probability that a particular sample belongs to class 1 given its features <script type="math/tex">\mathbf{x}</script>. The logit function takes inputs in the range [0, 1] and transform them to values over the entire real number range. In contrast, the logistic function takes input values over the entire real number range and transforms them to values in the range [0, 1]. In other words, the logistic function is the inverse of the logit function, and it lets us predict the conditional probability that a certain sample belongs to class 1 (or class 0).</p>
+<p><img alt="" src="../LogisticRegression_files/logistic_function.png" /></p>
+<p>After model fitting, the conditional probability <script type="math/tex">p(y=1 \mid \mathbf{x})</script> is converted to a binary class label via a threshold function <script type="math/tex">g(\cdot)</script>:</p>
+<p>$$y = g({z}) = 
+ <script type="math/tex; mode=display">\begin{cases}
+  1 & \text{if $\phi(z) \ge 0.5$}\\
+  0 & \text{otherwise.}
+   \end{cases}</script>
+$$</p>
+<p>or equivalently:</p>
+<p>$$y = g({z}) = 
+<script type="math/tex; mode=display">\begin{cases}
+1 & \text{if z $\ge$ 0}\\
+0 & \text{otherwise}.
+\end{cases}</script>
+$$</p>
+<h3 id="objective-function-log-likelihood">Objective Function -- Log-Likelihood</h3>
+<p>In order to parameterize a logistic regression model, we maximize the likelihood <script type="math/tex">L(\cdot)</script> (or minimize the logistic cost function).</p>
+<p>We write the likelihood as </p>
+<p>
+<script type="math/tex; mode=display">L(\mathbf{w}) = P(\mathbf{y} \mid \mathbf{x};\mathbf{w}) = \prod_{i=1}^{n} P\big(y^{(i)} \mid x^{(i)}; \mathbf{w}\big) = \prod^{n}_{i=1}\bigg(\phi\big(z^{(i)}\big)\bigg)^{y^{(i)}} \bigg(1-\phi\big(z^{(i)}\big)\bigg)^{1-y^{(i)}},</script>
+</p>
+<p>under the assumption that the training samples are independent of each other.</p>
+<p>In practice, it is easier to maximize the (natural) log of this equation, which is called
+the log-likelihood function:</p>
+<p>
+<script type="math/tex; mode=display">l(\mathbf{w}) = \log L(\mathbf{w}) = \sum^{n}_{i=1} y^{(i)} \log \bigg(\phi\big(z^{(i)}\big)\bigg) + \big( 1 - y^{(i)}\big) \log \big(1-\phi\big(z^{(i)}\big)\big)</script>
+</p>
+<p>One advantage of taking the log is to avoid numeric underflow (and challenges with floating point math) for very small likelihoods. Another advantage is that we can obtain the derivative more easily, using the addition trick to rewrite the product of factors as a summation term, which we can then maximize using optimization algorithms such as gradient ascent.</p>
+<h3 id="objective-function-logistic-cost-function">Objective Function -- Logistic Cost Function</h3>
+<p>An alternative to maximizing the log-likelihood, we can define a cost function <script type="math/tex">J(\cdot)</script> to be minimized; we rewrite the log-likelihood as:</p>
+<p>
+<script type="math/tex; mode=display">J(\mathbf{w}) = \sum_{i=1}^{m} - y^{(i)} log \bigg( \phi\big(z^{(i)}\big) \bigg) - \big(1 - y^{(i)}\big) log\bigg(1-\phi\big(z^{(i)}\big)\bigg)</script>
+</p>
+<p>$$
+ J\big(\phi(z), y; \mathbf{w}\big) =<script type="math/tex; mode=display">\begin{cases}
+    -log\big(\phi(z) \big) & \text{if $y = 1$}\\
+    -log\big(1- \phi(z) \big) & \text{if $y = 0$}
+  \end{cases}</script>
+$$</p>
+<p><img alt="" src="../LogisticRegression_files/logistic_cost.png" /></p>
+<p>As we can see in the figure above, we penalize wrong predictions with an increasingly larger cost.</p>
+<h3 id="gradient-descent-gd-and-stochastic-gradient-descent-sgd-optimization">Gradient Descent (GD)  and Stochastic Gradient Descent (SGD) Optimization</h3>
+<h4 id="gradient-ascent-and-the-log-likelihood">Gradient Ascent and the log-likelihood</h4>
+<p>To learn the weight coefficient of a logistic regression model via gradient-based optimization, we compute the partial derivative of the log-likelihood function -- w.r.t. the <em>j</em>th weight -- as follows:</p>
+<p>
+<script type="math/tex; mode=display">\frac{\partial}{\partial w_j} l(\mathbf{w}) = \bigg(y \frac{1}{\phi(z)} - (1-y) \frac{1}{1-\phi{(z)}} \bigg) \frac{\partial}{\partial w_j}\phi(z)</script>
+</p>
+<p>As an intermediate step, we compute the partial derivative of the sigmoid function, which will come in handy later:</p>
+<p>
+<script type="math/tex; mode=display">\begin{align}
+&\frac{\partial}{\partial z} \phi(z) = \frac{\partial}{{\partial z}} \frac{1}{1+e^{-z}} \\\\
+&= \frac{1}{(1 + e^{-z})^{2}} e^{-z}\\\\
+&= \frac{1}{1+e^{-z}} \bigg(1 - \frac{1}{1+e^{-z}} \bigg)\\\\
+&= \phi(z)\big(1-\phi(z)\big)
+\end{align}</script>
+</p>
+<p>Now, we re-substitute <script type="math/tex; mode=display">\frac{\partial}{\partial z} \phi(z) = \phi(z) \big(1 - \phi(z)\big)</script> back into in the log-likelihood partial derivative equation and obtain the equation shown below:</p>
+<p>
+<script type="math/tex; mode=display">\begin{align}
+& \bigg(y \frac{1}{\phi{(z)}} - (1 - y) \frac{1}{1 - \phi(z)} \bigg) \frac{\partial}{\partial w_j} \phi(z) \\\\
+&= \bigg(y \frac{1}{\phi{(z)}} - (1 - y) \frac{1}{1 - \phi(z)} \bigg) \phi(z) \big(1 - \phi(z)\big) \frac{\partial}{\partial w_j}z\\\\
+&= \big(y(1-\phi(z)\big) - (1 - y) \phi(z)\big)x_j\\\\
+&=\big(y - \phi(z)\big)x_j
+\end{align}</script>
+</p>
+<p>Now, in order to find the weights of the model, we take a step proportional to the positive direction of the gradient to maximize the log-likelihood. Futhermore, we add a coefficient, the learning rate <script type="math/tex">\eta</script> to the weight update:</p>
+<p>
+<script type="math/tex; mode=display">\begin{align}
+& w_j := w_j + \eta \frac{\partial}{\partial w_j} l(\mathbf{w})\\\\
+& w_j := w_j + \eta \sum^{n}_{i=1} \big( y^{(i)} - \phi\big(z^{(i)}\big)\big)x_j^{(i)}
+\end{align}</script>
+</p>
+<p>Note that the gradient (and weight update) is computed from all samples in the training set in gradient ascent/descent in contrast to stochastic gradient ascent/descent. For more information about the differences between gradient descent and stochastic gradient descent, please see the related article <a href="../../general_concepts/gradient-optimization/">Gradient Descent and Stochastic Gradient Descent</a>.</p>
+<p>The previous equation shows the weight update for a single weight <script type="math/tex">j</script>. In gradient-based optimization, all weight coefficients are updated simultaneously; the weight update can be written more compactly as </p>
+<p>
+<script type="math/tex; mode=display">\mathbf{w} := \mathbf{w} + \Delta\mathbf{w},</script>
+where</p>
+<p>
+<script type="math/tex; mode=display">\Delta{\mathbf{w}} = \eta \nabla l(\mathbf{w})</script>
+</p>
+<h4 id="gradient-descent-and-the-logistic-cost-function">Gradient Descent and the logistic cost function</h4>
+<p>In the previous section, we derived the gradient of the log-likelihood function, which can be optimized via gradient ascent. Similarly, we can obtain the cost gradient of the logistic cost function <script type="math/tex">J(\cdot)</script> and minimize it via gradient descent in order to learn the logistic regression model.</p>
+<p>The update rule for a single weight:</p>
+<p>
+<script type="math/tex; mode=display">\begin{align}
+& \Delta{w_j} = -\eta \frac{\partial J}{\partial w_j} \\
+& = - \eta \sum_{i=1}^{n}\big(y^{(i)} - \phi\big(z^{(i)}\big) x^{(i)} \big)
+\end{align}</script>
+</p>
+<p>The simultaneous weight update:</p>
+<p>
+<script type="math/tex; mode=display">\mathbf{w} := \mathbf{w} + \Delta\mathbf{w}</script>
+</p>
+<p>where</p>
+<p>
+<script type="math/tex; mode=display">\Delta{\mathbf{w}} = - \eta \nabla J(\mathbf{w}).</script>
+</p>
+<h4 id="shuffling">Shuffling</h4>
+<p>Random shuffling is implemented as:</p>
+<ul>
+<li>for one or more epochs<ul>
+<li>randomly shuffle samples in the training set<ul>
+<li>for training sample <em>i</em><ul>
+<li>compute gradients and perform weight updates</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="regularization">Regularization</h3>
+<p>As a way to tackle overfitting, we can add additional bias to the logistic regression model via a regularization terms. Via the L2 regularization term, we reduce the complexity of the model by penalizing large weight coefficients:</p>
+<p>
+<script type="math/tex; mode=display">L2: \frac{\lambda}{2}\lVert \mathbf{w} \lVert_2 = \frac{\lambda}{2} \sum_{j=1}^{m} w_j^2</script>
+</p>
+<p>In order to apply regularization, we just need to add the regularization term to the cost function that we defined for logistic regression to shrink the weights:</p>
+<p>
+<script type="math/tex; mode=display">J(\mathbf{w}) =  \sum_{i=1}^{m} \Bigg[ - y^{(i)} log \bigg( \phi\big(z^{(i)}\big) \bigg) - \big(1 - y^{(i)}\big) log\bigg(1-\phi\big(z^{(i)}\big)\bigg) \Bigg] + \frac{\lambda}{2} \sum_{j=1}^{m} w_j^2</script>
+</p>
+<p>The update rule for a single weight:</p>
+<p>
+<script type="math/tex; mode=display">\begin{align}
+& \Delta{w_j} = -\eta \bigg( \frac{\partial J}{\partial w_j} + \lambda w_j\bigg)\\
+& = - \eta \sum_{i=1}^{n}\big(y^{(i)} - \phi\big(z^{(i)}\big) x^{(i)} \big) - \eta \lambda w_j
+\end{align}</script>
+</p>
+<p>The simultaneous weight update:</p>
+<p>
+<script type="math/tex; mode=display">\mathbf{w} := \mathbf{w} + \Delta\mathbf{w}</script>
+</p>
+<p>where</p>
+<p>
+<script type="math/tex; mode=display">\Delta{\mathbf{w}} = - \eta \big( \nabla J(\mathbf{w}) + \lambda \mathbf{w}\big).</script>
+</p>
+<p>For more information on regularization, please see <a href="../../general_concepts/regularization-linear/">Regularization of Generalized Linear Models</a>.</p>
+<h3 id="references">References</h3>
+<ul>
+<li>Bishop, Christopher M. <a href="http://www.springer.com/br/book/9780387310732"><em>Pattern recognition and machine learning</em></a>. Springer, 2006. pp. 203-213</li>
+</ul>
+<h2 id="example-1-gradient-descent">Example 1 - Gradient Descent</h2>
+<pre><code class="python">from mlxtend.data import iris_data
+from mlxtend.plotting import plot_decision_regions
+from mlxtend.classifier import LogisticRegression
+import matplotlib.pyplot as plt
+
+# Loading Data
+
+X, y = iris_data()
+X = X[:, [0, 3]] # sepal length and petal width
+X = X[0:100] # class 0 and class 1
+y = y[0:100] # class 0 and class 1
+
+# standardize
+X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
+X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
+
+lr = LogisticRegression(eta=0.1, 
+                        l2_lambda=0.0, 
+                        epochs=100,
+                        minibatches=1, # for Gradient Descent
+                        random_seed=1,
+                        print_progress=3)
+lr.fit(X, y)
+
+plot_decision_regions(X, y, clf=lr)
+plt.title('Logistic Regression - Gradient Descent')
+plt.show()
+
+plt.plot(range(len(lr.cost_)), lr.cost_)
+plt.xlabel('Iterations')
+plt.ylabel('Cost')
+plt.show()
+</code></pre>
+
+<pre><code>Iteration: 100/100 | Cost 0.32 | Elapsed: 0:00:00 | ETA: 0:00:00
+</code></pre>
+<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_43_1.png" /></p>
+<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_43_2.png" /></p>
+<h3 id="predicting-class-labels">Predicting Class Labels</h3>
+<pre><code class="python">y_pred = lr.predict(X)
+print('Last 3 Class Labels: %s' % y_pred[-3:])
+</code></pre>
+
+<pre><code>Last 3 Class Labels: [1 1 1]
+</code></pre>
+<h3 id="predicting-class-probabilities">Predicting Class Probabilities</h3>
+<pre><code class="python">y_pred = lr.predict_proba(X)
+print('Last 3 Class Labels: %s' % y_pred[-3:])
+</code></pre>
+
+<pre><code>Last 3 Class Labels: [ 0.99997968  0.99339873  0.99992707]
+</code></pre>
+<h2 id="example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</h2>
+<pre><code class="python">from mlxtend.data import iris_data
+from mlxtend.plotting import plot_decision_regions
+from mlxtend.classifier import LogisticRegression
+import matplotlib.pyplot as plt
+
+# Loading Data
+
+X, y = iris_data()
+X = X[:, [0, 3]] # sepal length and petal width
+X = X[0:100] # class 0 and class 1
+y = y[0:100] # class 0 and class 1
+
+# standardize
+X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
+X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
+
+lr = LogisticRegression(eta=0.5, 
+                        epochs=30, 
+                        l2_lambda=0.0, 
+                        minibatches=len(y), # for SGD learning 
+                        random_seed=1,
+                        print_progress=3)
+lr.fit(X, y)
+
+plot_decision_regions(X, y, clf=lr)
+plt.title('Logistic Regression - Stochastic Gradient Descent')
+plt.show()
+
+plt.plot(range(len(lr.cost_)), lr.cost_)
+plt.xlabel('Iterations')
+plt.ylabel('Cost')
+plt.show()
+</code></pre>
+
+<pre><code>Iteration: 30/30 | Cost 0.27 | Elapsed: 0:00:00 | ETA: 0:00:00
+</code></pre>
+<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_49_1.png" /></p>
+<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_49_2.png" /></p>
+<h2 id="example-3-stochastic-gradient-descent-w-minibatches">Example 3 - Stochastic Gradient Descent w. Minibatches</h2>
+<p>Here, we set <code>minibatches</code> to 5, which will result in Minibatch Learning with a batch size of 20 samples (since 100 Iris samples divided by 5 minibatches equals 20).</p>
+<pre><code class="python">from mlxtend.data import iris_data
+from mlxtend.plotting import plot_decision_regions
+from mlxtend.classifier import LogisticRegression
+import matplotlib.pyplot as plt
+
+# Loading Data
+
+X, y = iris_data()
+X = X[:, [0, 3]] # sepal length and petal width
+X = X[0:100] # class 0 and class 1
+y = y[0:100] # class 0 and class 1
+
+# standardize
+X[:,0] = (X[:,0] - X[:,0].mean()) / X[:,0].std()
+X[:,1] = (X[:,1] - X[:,1].mean()) / X[:,1].std()
+
+lr = LogisticRegression(eta=0.5, 
+                        epochs=30, 
+                        l2_lambda=0.0, 
+                        minibatches=5, # 100/5 = 20 -&gt; minibatch-s 
+                        random_seed=1,
+                        print_progress=3)
+lr.fit(X, y)
+
+plot_decision_regions(X, y, clf=lr)
+plt.title('Logistic Regression - Stochastic Gradient Descent')
+plt.show()
+
+plt.plot(range(len(lr.cost_)), lr.cost_)
+plt.xlabel('Iterations')
+plt.ylabel('Cost')
+plt.show()
+</code></pre>
+
+<pre><code>Iteration: 30/30 | Cost 0.25 | Elapsed: 0:00:00 | ETA: 0:00:00
+</code></pre>
+<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_52_1.png" /></p>
+<p><img alt="png" src="../LogisticRegression_files/LogisticRegression_52_2.png" /></p>
+<h1 id="api">API</h1>
+<p><em>LogisticRegression(eta=0.01, epochs=50, l2_lambda=0.0, minibatches=1, random_seed=None, print_progress=0)</em></p>
+<p>Logistic regression classifier.</p>
+<p>Note that this implementation of Logistic Regression
+expects binary class labels in {0, 1}.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>eta</code> : float (default: 0.01)</p>
+<p>Learning rate (between 0.0 and 1.0)</p>
+</li>
+<li>
+<p><code>epochs</code> : int (default: 50)</p>
+<p>Passes over the training dataset.
+Prior to each epoch, the dataset is shuffled
+if <code>minibatches &gt; 1</code> to prevent cycles in stochastic gradient descent.</p>
+</li>
+<li>
+<p><code>l2_lambda</code> : float</p>
+<p>Regularization parameter for L2 regularization.
+No regularization if l2_lambda=0.0.</p>
+</li>
+<li>
+<p><code>minibatches</code> : int (default: 1)</p>
+<p>The number of minibatches for gradient-based optimization.
+If 1: Gradient Descent learning
+If len(y): Stochastic Gradient Descent (SGD) online learning
+If 1 &lt; minibatches &lt; len(y): SGD Minibatch learning</p>
+</li>
+<li>
+<p><code>random_seed</code> : int (default: None)</p>
+<p>Set random state for shuffling and initializing the weights.</p>
+</li>
+<li>
+<p><code>print_progress</code> : int (default: 0)</p>
+<p>Prints progress in fitting to stderr.
+0: No output
+1: Epochs elapsed and cost
+2: 1 plus time elapsed
+3: 2 plus estimated time until completion</p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>w_</code> : 2d-array, shape={n_features, 1}</p>
+<p>Model weights after fitting.</p>
+</li>
+<li>
+<p><code>b_</code> : 1d-array, shape={1,}</p>
+<p>Bias unit after fitting.</p>
+</li>
+<li>
+<p><code>cost_</code> : list</p>
+<p>List of floats with cross_entropy cost (sgd or gd) for every
+epoch.</p>
+</li>
+</ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/classifier/LogisticRegression/">http://rasbt.github.io/mlxtend/user_guide/classifier/LogisticRegression/</a></p>
+<h3 id="methods">Methods</h3>
+<hr>
+
+<p><em>fit(X, y, init_params=True)</em></p>
+<p>Learn model from training data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>init_params</code> : bool (default: True)</p>
+<p>Re-initializes model parameters prior to fitting.
+Set False to continue training with weights from
+a previous model fitting.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
+<hr>
+
+<p><em>predict(X)</em></p>
+<p>Predict targets from X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>target_values</code> : array-like, shape = [n_samples]</p>
+<p>Predicted target values.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>predict_proba(X)</em></p>
+<p>Predict class probabilities of X from the net input.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>Class 1 probability</code> : float</li>
+</ul>
+<hr>
+
+<p><em>score(X, y)</em></p>
+<p>Compute the prediction accuracy</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values (true class labels).</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>acc</code> : float</p>
+<p>The prediction accuracy as a float
+between 0.0 and 1.0 (perfect score).</p>
+</li>
+</ul></div>
+        
+        
+    </div>
+
+    <footer class="col-md-12 text-center">
+        <hr>
+        <p>
+        <small>Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        
+        <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
+    </footer>
+
+    <script src="../../../js/jquery-1.10.2.min.js"></script>
+    <script src="../../../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+    var base_url = '../../..';
+    </script>
+    <script data-main="../../../mkdocs/js/search.js" src="../../../mkdocs/js/require.js"></script>
+    <script src="../../../js/base.js"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="../../../mathjaxhelper.js"></script>
+    <script src="../../../search/main.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+
+</html>

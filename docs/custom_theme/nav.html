@@ -55,7 +55,7 @@
                     {%- endif %}
                 {%- endblock %}
 
-                {%- block next_prev %}
+                <!--{%- block next_prev %}
                     {%- if page and (page.next_page or page.previous_page) %}
                     <li {% if not page.previous_page %}class="disabled"{% endif %}>
                         <a rel="next" {% if page.previous_page %}href="{{ page.previous_page.url|url }}"{% endif %}>
@@ -68,14 +68,14 @@
                         </a>
                     </li>
                     {%- endif %}
-                {%- endblock %}
+                {%- endblock %}-->
 
                 {%- block repo %}
                     {%- if page and page.edit_url %}
                     <li>
-                        <a href="{{ page.edit_url }}">
+                        <a href="https://github.com/rasbt/mlxtend">
                             {%- if config.repo_name == 'GitHub' -%}
-                            <i class="fa fa-github"></i> Edit on {{ config.repo_name }}
+                            <i class="fa fa-github"></i> GitHub
                             {%- elif config.repo_name == 'Bitbucket' -%}
                             <i class="fa fa-bitbucket"></i> Edit on {{ config.repo_name }}
                             {%- elif config.repo_name == 'GitLab' -%}

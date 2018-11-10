@@ -8,7 +8,6 @@
 # License: BSD 3 clause
 
 
-import string
 import inspect
 import os
 import sys

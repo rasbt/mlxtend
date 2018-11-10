@@ -938,7 +938,7 @@
 <p>from mlxtend.text import generalize_names_duplcheck</p>
 </blockquote>
 <h2 id="overview">Overview</h2>
-<p><strong>Note</strong> that using <a href="./generalize_named.html"><code>mlxtend.text.generalize_names</code></a> with few <code>firstname_output_letters</code> can result in duplicate entries. E.g., if your dataset contains the names "Adam Johnson" and "Andrew Johnson", the default setting (i.e., 1 first name letter) will produce the generalized name "johnson a" in both cases.</p>
+<p><strong>Note</strong> that using <a href="../generalize_names/"><code>mlxtend.text.generalize_names</code></a> with few <code>firstname_output_letters</code> can result in duplicate entries. E.g., if your dataset contains the names "Adam Johnson" and "Andrew Johnson", the default setting (i.e., 1 first name letter) will produce the generalized name "johnson a" in both cases.</p>
 <p>One solution is to increase the number of first name letters in the output by setting the parameter <code>firstname_output_letters</code> to a value larger than 1. </p>
 <p>An alternative solution is to use the <code>generalize_names_duplcheck</code> function if you are working with pandas DataFrames. </p>
 <p>By default,  <code>generalize_names_duplcheck</code> will apply  <code>generalize_names</code> to a pandas DataFrame column with the minimum number of first name letters and append as many first name letters as necessary until no duplicates are present in the given DataFrame column. An example dataset column that contains the names  </p>

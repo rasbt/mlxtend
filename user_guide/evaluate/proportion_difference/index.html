@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Sebastian Raschka">
+        <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/evaluate/proportion_difference/">
+        <link rel="shortcut icon" href="../../../favicon.ico">
+        
+        <title>Proportion Difference Test - mlxtend</title>
+        <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../../../cinder/css/base.css" rel="stylesheet">
+        <link href="../../../cinder/css/bootstrap-custom.css" rel="stylesheet">
+        <link href="../../../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../../cinder/css/cinder.css" rel="stylesheet">
+        <link href="../../../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../../../cinder/css/highlight.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-38457794-2', 'rasbt.github.io/mlxtend/');
+            ga('send', 'pageview');
+        </script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../../..">mlxtend</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../../..">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../../USER_GUIDE_INDEX/">User Guide Index</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">classifier</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../classifier/Adaline/">Adaptive Linear Neuron -- Adaline</a>
+</li>
+            
+<li >
+    <a href="../../classifier/EnsembleVoteClassifier/">EnsembleVoteClassifier</a>
+</li>
+            
+<li >
+    <a href="../../classifier/LogisticRegression/">Logistic Regression</a>
+</li>
+            
+<li >
+    <a href="../../classifier/MultiLayerPerceptron/">Neural Network - Multilayer Perceptron</a>
+</li>
+            
+<li >
+    <a href="../../classifier/Perceptron/">Perceptron</a>
+</li>
+            
+<li >
+    <a href="../../classifier/SoftmaxRegression/">Softmax Regression</a>
+</li>
+            
+<li >
+    <a href="../../classifier/StackingClassifier/">StackingClassifier</a>
+</li>
+            
+<li >
+    <a href="../../classifier/StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">cluster</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../cluster/Kmeans/">Kmeans</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">data</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../data/autompg_data/">Auto MPG</a>
+</li>
+            
+<li >
+    <a href="../../data/boston_housing_data/">Boston Housing Data</a>
+</li>
+            
+<li >
+    <a href="../../data/iris_data/">Iris Dataset</a>
+</li>
+            
+<li >
+    <a href="../../data/loadlocal_mnist/">Load the MNIST Dataset from Local Files</a>
+</li>
+            
+<li >
+    <a href="../../data/make_multiplexer_dataset/">Make Multiplexer Dataset</a>
+</li>
+            
+<li >
+    <a href="../../data/mnist_data/">MNIST Dataset</a>
+</li>
+            
+<li >
+    <a href="../../data/three_blobs_data/">Three Blobs Dataset</a>
+</li>
+            
+<li >
+    <a href="../../data/wine_data/">Wine Dataset</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">evaluate</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../bootstrap/">Bootstrap</a>
+</li>
+            
+<li >
+    <a href="../bootstrap_point632_score/">bootstrap_point632_score</a>
+</li>
+            
+<li >
+    <a href="../BootstrapOutOfBag/">BootstrapOutOfBag</a>
+</li>
+            
+<li >
+    <a href="../cochrans_q/">Cochran's Q Test</a>
+</li>
+            
+<li >
+    <a href="../combined_ftest_5x2cv/">5x2cv combined *F* test</a>
+</li>
+            
+<li >
+    <a href="../confusion_matrix/">Confusion Matrix</a>
+</li>
+            
+<li >
+    <a href="../feature_importance_permutation/">Feature Importance Permutation</a>
+</li>
+            
+<li >
+    <a href="../ftest/">F-Test</a>
+</li>
+            
+<li >
+    <a href="../lift_score/">Lift Score</a>
+</li>
+            
+<li >
+    <a href="../mcnemar_table/">Contigency Table for McNemar's Test</a>
+</li>
+            
+<li >
+    <a href="../mcnemar_tables/">Contigency Tables for McNemar's Test and Cochran's Q Test</a>
+</li>
+            
+<li >
+    <a href="../mcnemar/">McNemar's Test</a>
+</li>
+            
+<li >
+    <a href="../paired_ttest_5x2cv/">5x2cv paired *t* test</a>
+</li>
+            
+<li >
+    <a href="../paired_ttest_kfold_cv/">K-fold cross-validated paired *t* test</a>
+</li>
+            
+<li >
+    <a href="../paired_ttest_resampled/">Resampled paired *t* test</a>
+</li>
+            
+<li >
+    <a href="../permutation_test/">Permutation Test</a>
+</li>
+            
+<li >
+    <a href="../PredefinedHoldoutSplit/">PredefinedHoldoutSplit</a>
+</li>
+            
+<li >
+    <a href="../RandomHoldoutSplit/">RandomHoldoutSplit</a>
+</li>
+            
+<li >
+    <a href="../scoring/">Scoring</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">feature_extraction</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../feature_extraction/LinearDiscriminantAnalysis/">Linear Discriminant Analysis</a>
+</li>
+            
+<li >
+    <a href="../../feature_extraction/PrincipalComponentAnalysis/">Principal Component Analysis</a>
+</li>
+            
+<li >
+    <a href="../../feature_extraction/RBFKernelPCA/">RBFKernelPCA</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">feature_selection</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../feature_selection/ColumnSelector/">ColumnSelector</a>
+</li>
+            
+<li >
+    <a href="../../feature_selection/ExhaustiveFeatureSelector/">Exhaustive Feature Selector</a>
+</li>
+            
+<li >
+    <a href="../../feature_selection/SequentialFeatureSelector/">Sequential Feature Selector</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">file_io</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../file_io/find_filegroups/">Find Filegroups</a>
+</li>
+            
+<li >
+    <a href="../../file_io/find_files/">Find Files</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">frequent_patterns</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../frequent_patterns/apriori/">Apriori</a>
+</li>
+            
+<li >
+    <a href="../../frequent_patterns/association_rules/">Association rules</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">general concepts</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../general_concepts/activation-functions/">Activation Functions for Artificial Neural Networks</a>
+</li>
+            
+<li >
+    <a href="../../general_concepts/gradient-optimization/">Gradient Descent and Stochastic Gradient Descent</a>
+</li>
+            
+<li >
+    <a href="../../general_concepts/linear-gradient-derivative/">Deriving the Gradient Descent Rule for Linear Regression and Adaline</a>
+</li>
+            
+<li >
+    <a href="../../general_concepts/regularization-linear/">Regularization of Generalized Linear Models</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">image</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../image/extract_face_landmarks/">Extract Face Landmarks</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">math</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../math/num_combinations/">Compute the Number of Combinations</a>
+</li>
+            
+<li >
+    <a href="../../math/num_permutations/">Compute the Number of Permutations</a>
+</li>
+            
+<li >
+    <a href="../../math/vectorspace_dimensionality/">Vectorspace Dimensionality</a>
+</li>
+            
+<li >
+    <a href="../../math/vectorspace_orthonormalization/">Vectorspace Orthonormalization</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">plotting</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../plotting/category_scatter/">Scatterplot with Categories</a>
+</li>
+            
+<li >
+    <a href="../../plotting/checkerboard_plot/">Checkerboard Plot</a>
+</li>
+            
+<li >
+    <a href="../../plotting/ecdf/">Empirical Cumulative Distribution Function Plot</a>
+</li>
+            
+<li >
+    <a href="../../plotting/enrichment_plot/">Enrichment Plot</a>
+</li>
+            
+<li >
+    <a href="../../plotting/plot_confusion_matrix/">Confusion Matrix</a>
+</li>
+            
+<li >
+    <a href="../../plotting/plot_decision_regions/">Plotting Decision Regions</a>
+</li>
+            
+<li >
+    <a href="../../plotting/plot_learning_curves/">Plotting Learning Curves</a>
+</li>
+            
+<li >
+    <a href="../../plotting/plot_linear_regression/">Linear Regression Plot</a>
+</li>
+            
+<li >
+    <a href="../../plotting/plot_sequential_feature_selection/">Plot Sequential Feature Selection</a>
+</li>
+            
+<li >
+    <a href="../../plotting/scatterplotmatrix/">Scatter Plot Matrix</a>
+</li>
+            
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked Barplot</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">preprocessing</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../preprocessing/CopyTransformer/">CopyTransformer</a>
+</li>
+            
+<li >
+    <a href="../../preprocessing/DenseTransformer/">DenseTransformer</a>
+</li>
+            
+<li >
+    <a href="../../preprocessing/MeanCenterer/">Mean Centerer</a>
+</li>
+            
+<li >
+    <a href="../../preprocessing/minmax_scaling/">MinMax Scaling</a>
+</li>
+            
+<li >
+    <a href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+            
+<li >
+    <a href="../../preprocessing/shuffle_arrays_unison/">Shuffle Arrays in Unison</a>
+</li>
+            
+<li >
+    <a href="../../preprocessing/standardize/">Standardize</a>
+</li>
+            
+<li >
+    <a href="../../preprocessing/TransactionEncoder/">TransactionEncoder</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">regressor</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../regressor/LinearRegression/">LinearRegression</a>
+</li>
+            
+<li >
+    <a href="../../regressor/StackingCVRegressor/">StackingCVRegressor</a>
+</li>
+            
+<li >
+    <a href="../../regressor/StackingRegressor/">StackingRegressor</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">text</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../text/generalize_names/">Generalize Names</a>
+</li>
+            
+<li >
+    <a href="../../text/generalize_names_duplcheck/">Generalize Names & Duplicate Checking</a>
+</li>
+            
+<li >
+    <a href="../../text/tokenizer/">Tokenizer</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">utils</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../utils/Counter/">Counter</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../../api_subpackages/mlxtend.classifier/">Mlxtend.classifier</a>
+</li>
+                                    
+<li >
+    <a href="../../../api_subpackages/mlxtend.cluster/">Mlxtend.cluster</a>
+</li>
+                                    
+<li >
+    <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
+</li>
+                                    
+<li >
+    <a href="../../../api_subpackages/mlxtend.evaluate/">Mlxtend.evaluate</a>
+</li>
+                                    
+<li >
+    <a href="../../../api_subpackages/mlxtend.feature_extraction/">Mlxtend.feature extraction</a>
+</li>
+                                    
+<li >
+    <a href="../../../api_subpackages/mlxtend.feature_selection/">Mlxtend.feature selection</a>
+</li>
+                                    
+<li >
+    <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
+</li>
+                                    
+<li >
+    <a href="../../../api_subpackages/mlxtend.frequent_patterns/">Mlxtend.frequent patterns</a>
+</li>
+                                    
+<li >
+    <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
+</li>
+                                    
+<li >
+    <a href="../../../api_subpackages/mlxtend.preprocessing/">Mlxtend.preprocessing</a>
+</li>
+                                    
+<li >
+    <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
+</li>
+                                    
+<li >
+    <a href="../../../api_subpackages/mlxtend.text/">Mlxtend.text</a>
+</li>
+                                    
+<li >
+    <a href="../../../api_subpackages/mlxtend.utils/">Mlxtend.utils</a>
+</li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../../../installation/">Installation</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../../changelog.md">Release Notes</a>
+</li>
+                                    
+<li >
+    <a href="../../../contributing.md">How To Contribute</a>
+</li>
+                                    
+<li >
+    <a href="../../../contributors/">Contributors</a>
+</li>
+                                    
+<li >
+    <a href="../../../license/">License</a>
+</li>
+                                    
+<li >
+    <a href="../../../cite/">Citing Mlxtend</a>
+</li>
+                                    
+<li >
+    <a href="../../../discuss/">Discuss</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li>
+                                <a href="https://github.com/rasbt/mlxtend/edit/master/docs/user_guide/evaluate/proportion_difference.md"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#proportion-difference-test">Proportion Difference Test</a></li>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#example-1-difference-of-proportions">Example 1 - Difference of Proportions</a></li>
+            <li><a href="#api">API</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="proportion-difference-test">Proportion Difference Test</h1>
+<p>Test of the difference of proportions for classifier performance comparison.</p>
+<blockquote>
+<p><code>from mlxtend.evaluate import proportion_difference</code>    </p>
+</blockquote>
+<h2 id="overview">Overview</h2>
+<p>There are several different statistical hypothesis testing frameworks that are being used in practice to compare the performance of classification models, including common methods such as difference of two proportions (here, the proportions are the estimated generalization accuracies from a test set), for which we can construct 95% confidence intervals based on the concept of the Normal Approximation to the Binomial that was covered in Part I. </p>
+<p>Performing a z-score test for two population proportions is inarguably the most straight-forward way to compare to models (but certainly not the best!): In a nutshell, if the 95% confidence intervals of the accuracies of two models do not overlap, we can reject the null hypothesis that the performance of both classifiers is equal at a confidence level of <script type="math/tex">\alpha=0.05</script> (or 5% probability). Violations of assumptions aside (for instance that the test set samples are not independent), as Thomas Dietterich noted based on empircal results in a simulated study [1], this test tends to have a high false positive rate (here: incorrectly detecting  difference when there is none), which is among the reasons why it is not recommended in practice.</p>
+<p>Nonetheless, for the sake of completeness, and since it a commonly used method in practice, the general procedure is outlined below as follows (which also generally applies to the different hypothesis tests presented later): </p>
+<ol>
+<li>formulate the hypothesis to be tested (for instance, the null hypothesis stating that the proportions are the same; consequently, the alternative hypothesis that the proportions are different, if we use a two-tailed test);</li>
+<li>decide upon a significance threshold (for instance, if the probability of observing a difference more extreme than the one observed is more than 5%, then we plan to reject the null hypothesis); </li>
+<li>analyze the data, compute the test statistic (here: z-score), and compare its associated p-value (probability) to the previously determined significance threshold;</li>
+<li>based on the p-value and significance threshold, either accept or reject the null hypothesis at the given confidence level and interpret the results.</li>
+</ol>
+<p>The z-score is computed as the observed difference divided by the square root for their combined variances</p>
+<p>
+<script type="math/tex; mode=display">
+z = \frac{ACC_1 - ACC_2}{\sqrt{\sigma_{1}^2 + \sigma_{2}^2}},
+</script>
+where <script type="math/tex">ACC_1</script> is the accuracy of one model and <script type="math/tex">ACC_2</script> is the accuracy of a second model estimated from the test set. Recall that we computed the variance of the estimated of the estimated accuracy as </p>
+<p>
+<script type="math/tex; mode=display">
+\sigma^2 = \frac{ACC(1-ACC)}{n}
+</script>
+</p>
+<p>in Part I  and then computed the confidence interval (Normal Approximation Interval) as 
+<script type="math/tex; mode=display">
+ACC \pm z \times \sigma,
+</script>
+where <script type="math/tex">z=1.96</script> for a 95% confidence interval.  Comparing the confidence intervals of two accuracy estimates and checking whether they overlap is then analogous to computing the <script type="math/tex">z</script> value for the difference in proportions and comparing the probability (p-value) to the chosen significance threshold. So, to compute the z-score directly for the difference of two proportions, <script type="math/tex">ACC_1</script> and <script type="math/tex">ACC_2</script>, we pool these proportions (assuming that <script type="math/tex">ACC_1</script> and <script type="math/tex">ACC_2</script> are the performances of two models estimated on two indendent test sets of size <script type="math/tex">n_1</script> and <script type="math/tex">n_2</script>, respectively),</p>
+<p>
+<script type="math/tex; mode=display">
+ACC_{1, 2} = \frac{ACC_1 \times n_1 + ACC_2 \times n_2}{n_1 + n_2},
+</script>
+</p>
+<p>and compute the standard deviation as</p>
+<p>
+<script type="math/tex; mode=display">
+\sigma_{1,2} = \sqrt{\frac{ACC_{1, 2} (1 - ACC_{1, 2})}{n_1 + n_2}},
+</script>
+</p>
+<p>such that we can compute the z-score, </p>
+<p>
+<script type="math/tex; mode=display">
+z = \frac{ACC_1 - ACC_2}{\sigma_{1,2}}.
+</script>
+Since, due to using the same test set (and violating the independence assumption) we have <script type="math/tex">n_1 = n_2 = n</script>, so that we can simplify the z-score computation to </p>
+<p>
+<script type="math/tex; mode=display">
+z =  \frac{ACC_1 - ACC_2}{\sqrt{2\sigma^2}} = \frac{ACC_1 - ACC_2}{\sqrt{2\cdot ACC_{1,2}(1-ACC_{1,2}))/n}}.
+</script>
+</p>
+<p>where <script type="math/tex">ACC_{1, 2}</script> is simply <script type="math/tex">(ACC_1 + ACC_2)/2</script>.</p>
+<p>In the second step, based on the computed <script type="math/tex">z</script> value (this assumes the the test errors are independent, which is usually violated in practice as we use the same test set) we can reject the null hypothesis that the a pair of models has equal performance (here, measured in "classification aaccuracy") at an <script type="math/tex">\alpha=0.05</script> level if <script type="math/tex">z</script> is greater than 1.96. Or if we want to put in the extra work, we can compute the area under the a standard normal cumulative distribution at the z-score threshold. If we find this p-value is smaller than a significance level we set prior to conducting the test, then we can reject the null hypothesis at that given significance level.</p>
+<p>The problem with this test though is that we use the same test set to compute the accuracy of the two classifiers; thus, it might be better to use a paired test such as a paired sample t-test, but a more robust alternative is the McNemar test.</p>
+<h3 id="references">References</h3>
+<ul>
+<li>[1] Dietterich, Thomas G. "Approximate statistical tests for comparing supervised classification learning algorithms." <em>Neural computation</em> 10, no. 7 (1998): 1895-1923.</li>
+</ul>
+<h2 id="example-1-difference-of-proportions">Example 1 - Difference of Proportions</h2>
+<p>As an example for applying this test, consider the following 2 model predictions:</p>
+<pre><code class="python">import numpy as np
+
+## Dataset:
+
+# ground truth labels of the test dataset:
+
+y_true = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   0, 0, 0, 0, 0])
+
+
+# predictions by 3 classifiers (`y_model_1`, `y_model_2`, and `y_model_3`):
+
+y_model_1 = np.array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      0, 0])
+
+y_model_2 = np.array([1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                      0, 0])
+</code></pre>
+
+<p>Assume, the test accuracies are as follows:</p>
+<pre><code class="python">acc_1 = np.sum(y_true == y_model_1) / y_true.shape[0]
+acc_2 = np.sum(y_true == y_model_2) / y_true.shape[0]
+
+print('Accuracy Model 1:', acc_1)
+print('Accuracy Model 2:', acc_2)
+
+</code></pre>
+
+<pre><code>Accuracy Model 1: 0.84
+Accuracy Model 2: 0.92
+</code></pre>
+<p>Now, setting a significance threshold of <script type="math/tex">\alpha=0.05</script> and conducting the test</p>
+<pre><code class="python">from mlxtend.evaluate import proportion_difference
+
+z, p_value = proportion_difference(acc_1, acc_2, n_1=y_true.shape[0])
+
+print('z: %.3f' % z)
+print('p-value: %.3f' % p_value)
+</code></pre>
+
+<pre><code>z: -1.754
+p-value: 0.040
+</code></pre>
+<p>we find that there is a statistically significant difference between the model performances. It should be highlighted though that using this test, due to the typical independence violation of using the same test set as well as its high false positive rate, it is not recommended to use this test in practice.</p>
+<h2 id="api">API</h2>
+<p><em>proportion_difference(proportion_1, proportion_2, n_1, n_2=None)</em></p>
+<p>Computes the test statistic and p-value for a difference of
+proportions test.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>proportion_1</code> : float</p>
+<p>The first proportion</p>
+</li>
+<li>
+<p><code>proportion_2</code> : float</p>
+<p>The second proportion</p>
+</li>
+<li>
+<p><code>n_1</code> : int</p>
+<p>The sample size of the first test sample</p>
+</li>
+<li>
+<p><code>n_2</code> : int or None (default=None)</p>
+<p>The sample size of the second test sample.
+If <code>None</code>, <code>n_1</code>=<code>n_2</code>.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>z, p</code> : float or None, float</p>
+<p>Returns the z-score and the p-value</p>
+</li>
+</ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/proportion_difference/">http://rasbt.github.io/mlxtend/user_guide/evaluate/proportion_difference/</a></p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a></p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../../js/base.js" defer></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" defer></script>
+        <script src="../../../mathjaxhelper.js" defer></script>
+        <script src="../../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

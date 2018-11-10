@@ -486,13 +486,13 @@
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc></loc>
-     
+     <loc>http://rasbt.github.io/mlxtend/CHANGELOG/</loc>
+     <lastmod>2018-11-09</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc></loc>
-     
+     <loc>http://rasbt.github.io/mlxtend/CONTRIBUTING/</loc>
+     <lastmod>2018-11-09</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>

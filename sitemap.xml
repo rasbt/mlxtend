@@ -456,6 +456,11 @@
      <changefreq>daily</changefreq>
     </url>
     <url>
+     <loc>http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.image/</loc>
+     <lastmod>2018-11-10</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
      <loc>http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.plotting/</loc>
      <lastmod>2018-11-10</lastmod>
      <changefreq>daily</changefreq>

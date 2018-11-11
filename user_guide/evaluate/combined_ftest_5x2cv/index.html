@@ -947,7 +947,7 @@
 </blockquote>
 <h2 id="overview">Overview</h2>
 <p>The 5x2cv combined <em>F</em> test is a procedure for comparing the performance of two models (classifiers or regressors)
-that was proposed by Alpaydin [1] as a more robust alternative to Dietterich's 5x2cv paired t-test procedure [2]. <a href="../paired_ttest_5x2cv/"><code>paired_ttest_5x2cv.md</code></a>.  Dietterich's 5x2cv method was in turn was designed to address shortcomings in other methods such as the resampled paired <em>t</em> test (see <a href="../paired_ttest_resampled/"><code>paired_ttest_resampled</code></a>) and the k-fold cross-validated paired <em>t</em> test (see <a href="../paired_ttest_kfold_cv/"><code>paired_ttest_kfold_cv</code></a>).</p>
+that was proposed by Alpaydin [1] as a more robust alternative to Dietterich's 5x2cv paired t-test procedure [2]. <a href="../paired_ttest_5x2cv/"><code>paired_ttest_5x2cv.md</code></a>.  Dietterich's 5x2cv method was in turn designed to address shortcomings in other methods such as the resampled paired <em>t</em> test (see <a href="../paired_ttest_resampled/"><code>paired_ttest_resampled</code></a>) and the k-fold cross-validated paired <em>t</em> test (see <a href="../paired_ttest_kfold_cv/"><code>paired_ttest_kfold_cv</code></a>).</p>
 <p>To explain how this method works, let's consider to estimator (e.g., classifiers) A and B. Further, we have a labeled dataset <em>D</em>. In the common hold-out method, we typically split the dataset into 2 parts: a training and a test set. In the 5x2cv paired <em>t</em> test, we repeat the splitting (50% training and 50% test data) 5 times. </p>
 <p>In each of the 5 iterations, we fit A and B to the training split and evaluate their performance (<script type="math/tex">p_A</script> and <script type="math/tex">p_B</script>) on the test split. Then, we rotate the training and test sets (the training set becomes the test set and vice versa) compute the performance again, which results in 2 performance difference measures:</p>
 <p>
@@ -957,7 +957,7 @@ that was proposed by Alpaydin [1] as a more robust alternative to Dietterich's 5
 <p>
 <script type="math/tex; mode=display">p^{(2)} = p^{(2)}_A - p^{(2)}_B.</script>
 </p>
-<p>Then, we estimate the estimate mean and variance of the differences:</p>
+<p>Then, we estimate mean and variance of the differences:</p>
 <p>
 <script type="math/tex">\overline{p} = \frac{p^{(1)} + p^{(2)}}{2}</script>
 </p>

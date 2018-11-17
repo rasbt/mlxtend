@@ -11,6 +11,7 @@ import os
 import tarfile
 import zipfile
 import bz2
+import imageio
 
 
 def check_exists(path):
@@ -22,6 +23,22 @@ def makedir(path):
     path = os.path.expanduser(path)
     if not check_exists(path):
         os.makedirs(path)
+
+
+def listdir(path, extensions=''):
+    path = os.path.expanduser(path)
+    if check_exists(path):
+        return [f for f in os.listdir(path) if f.endswith(extensions)]
+    else:
+        return []
+
+
+def read_image(filename, path=None):
+    if path is not None:
+        path = os.path.expanduser(path)
+        filename = os.path.join(path, filename)
+    if check_exists(filename):
+        return imageio.imread(filename)
 
 
 def download_url(url, save_path):

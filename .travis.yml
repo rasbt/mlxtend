@@ -1,6 +1,22 @@
-sudo: required
+sudo: false
+
 language: python
-cache: pip
+
+cache:
+  apt: true
+  directories:
+  - $HOME/.cache/pip
+  - $HOME/.ccache
+
+dist: trusty
+
+env:
+  global:
+    # Directory where tests are run from
+    - TEST_DIR=/tmp/sklearn
+    - OMP_NUM_THREADS=4
+    - OPENBLAS_NUM_THREADS=4
+
 matrix:
     include:
         - python: 3.6
@@ -9,13 +25,17 @@ matrix:
           env: LATEST="true" IMAGE="true" COVERAGE="true" NOTEBOOKS="true" MINICONDA_PYTHON_VERSION=3.7
         - python: 3.6 # python 3.7
           env: LATEST="true" IMAGE="false" COVERAGE="false" NOTEBOOKS="false" MINICONDA_PYTHON_VERSION=3.7
+
 install:
     - sudo apt-get update
     - source ci/.travis_install.sh
+
 script:
     - bash ci/.travis_test.sh
+
 after_success:
     - if [[ "$COVERAGE" == "true" ]]; then coveralls || echo "failed"; fi
+
 notifications:
     email:
       recipients:

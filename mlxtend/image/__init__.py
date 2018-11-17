@@ -5,5 +5,6 @@
 # License: BSD 3 clause
 
 from .extract_face_landmarks import extract_face_landmarks
+from .eyepad_align import EyepadAlign
 
-__all__ = ["extract_face_landmarks"]
+__all__ = ["extract_face_landmarks", "EyepadAlign"]

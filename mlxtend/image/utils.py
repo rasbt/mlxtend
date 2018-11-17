@@ -30,7 +30,7 @@ def listdir(path, extensions=''):
     if check_exists(path):
         return [f for f in os.listdir(path) if f.endswith(extensions)]
     else:
-        return []
+        raise FileNotFoundError
 
 
 def read_image(filename, path=None):
@@ -39,6 +39,8 @@ def read_image(filename, path=None):
         filename = os.path.join(path, filename)
     if check_exists(filename):
         return imageio.imread(filename)
+    else:
+        raise FileNotFoundError
 
 
 def download_url(url, save_path):

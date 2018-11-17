@@ -31,6 +31,7 @@ conda install jupyter
 if [ "${IMAGE}" = "true" ]; then
     pip install dlib
     pip install imageio
+    pip install scikit-image
 fi
 
 if [ "${COVERAGE}" = "true" ]; then

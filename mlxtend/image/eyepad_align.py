@@ -17,6 +17,17 @@ right_indx = np.array([42, 43, 44, 45, 46, 47])
 
 
 class EyepadAlign():
+    """Class to align/transform face images to target landmarks,
+       based on the location of the eyes.
+
+       1. Scaling factor is computed based on distance between the
+        left and right eyes, so that the transformed image will
+        have the same eye distance as target.
+
+       2. Transformation is performed based on the eyes' middle point.
+
+       3. Finally, the transformed image is padded with zeros to match
+        the desired final image size."""
     def __init__(self, target_landmarks=None,
                  image_width=None, image_height=None):
         self.target_landmarks = target_landmarks
@@ -28,12 +39,19 @@ class EyepadAlign():
 
     def fit(self, target_image=None,
             target_img_dir=None, file_extensions='.jpg'):
+        """Fits the target landmarks points:
+             a. if target_image is given, sets the target landmarks
+                to the landmarks of target image.
+             b. otherwise, if a target directory is given,
+                calculates the average landmarks for all face images
+                in the directory which will be set as the target landmark.
+        """
         if target_image is not None:
             landmarks = extract_face_landmarks(target_image)
             if landmarks is not None:
                 self.target_landmarks = landmarks
-            self.target_width = target_image.shape[0]
-            self.target_height = target_image.shape[1]
+            self.target_width = target_image.shape[1]
+            self.target_height = target_image.shape[0]
         elif target_img_dir is not None:
             file_list = listdir(target_img_dir, file_extensions)
             print("Fitting the average facial landmarks "
@@ -45,8 +63,8 @@ class EyepadAlign():
                 if landmarks is not None:
                     landmarks_list.append(landmarks)
             self.target_landmarks = np.mean(landmarks_list, axis=0)
-            self.target_width = img.shape[0]
-            self.target_height = img.shape[1]
+            self.target_width = img.shape[1]
+            self.target_height = img.shape[0]
 
     def cal_eye_properties(self, landmarks):
         left_eye = np.mean(landmarks[left_indx], axis=0)

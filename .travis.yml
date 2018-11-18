@@ -33,6 +33,13 @@ matrix:
           python: 3.6 # python 3.7
           env: LATEST="true" IMAGE="false" COVERAGE="false" NOTEBOOKS="false" MINICONDA_PYTHON_VERSION=3.7
 
+
+before_install:
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install python3; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then virtualenv venv -p python3; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then source venv/bin/activate; fi
+
 install:
     - sudo apt-get update
     - source ci/.travis_install.sh

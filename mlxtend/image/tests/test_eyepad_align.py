@@ -23,30 +23,24 @@ def test_defaults():
 
     landmarks_tr = extract_face_landmarks(img_tr)
 
-    if os.name == 'nt':
-        true_vals = np.array([[33, 115],
-                              [32, 128],
-                              [32, 142],
-                              [35, 156],
-                              [41, 168],
-                              [50, 177],
-                              [60, 184],
-                              [72, 190],
-                              [82, 190],
-                              [90, 186]], dtype=np.int32)
-    else:
-        true_vals = np.array([[35, 113],
-                              [33, 126],
-                              [34, 140],
-                              [36, 154],
-                              [41, 166],
-                              [51, 176],
-                              [61, 184],
-                              [72, 189],
-                              [82, 190],
-                              [90, 186]], dtype=np.int32)
+    true_vals = np.array([[35, 113],
+                          [33, 126],
+                          [34, 140],
+                          [36, 154],
+                          [41, 166],
+                          [51, 176],
+                          [61, 184],
+                          [72, 189],
+                          [82, 190],
+                          [90, 186]], dtype=np.int32)
 
-    np.testing.assert_array_equal(landmarks_tr[:10], true_vals)
+    if os.name == 'nt':
+        # on windows, imageio parses jpgs sometimes differently so pixel values
+        # maybe slightly different
+        assert np.sum(np.abs(landmarks_tr[:10] - true_vals) > 2) == 0
+    else:
+        assert np.sum(np.abs(landmarks_tr[:10] - true_vals) > 0) == 0
+        np.testing.assert_array_equal(landmarks_tr[:10], true_vals)
 
 
 def test_fit2dir():
@@ -61,27 +55,21 @@ def test_fit2dir():
 
     landmarks_tr = extract_face_landmarks(img_tr)
 
-    if os.name == 'nt':
-        true_vals = np.array([[19, 68],
-                              [17, 76],
-                              [18, 85],
-                              [19, 94],
-                              [23, 102],
-                              [29, 109],
-                              [35, 114],
-                              [43, 118],
-                              [49, 118],
-                              [54, 115]], dtype=np.int32)
-    else:
-        true_vals = np.array([[18, 68],
-                              [18, 77],
-                              [18, 86],
-                              [19, 95],
-                              [23, 103],
-                              [29, 109],
-                              [35, 114],
-                              [43, 117],
-                              [50, 118],
-                              [55, 115]], dtype=np.int32)
+    true_vals = np.array([[18, 68],
+                          [18, 77],
+                          [18, 86],
+                          [19, 95],
+                          [23, 103],
+                          [29, 109],
+                          [35, 114],
+                          [43, 117],
+                          [50, 118],
+                          [55, 115]], dtype=np.int32)
 
-    np.testing.assert_array_equal(landmarks_tr[:10], true_vals)
+    if os.name == 'nt':
+        # on windows, imageio parses jpgs sometimes differently so pixel values
+        # maybe slightly different
+        assert np.sum(np.abs(landmarks_tr[:10] - true_vals) > 2) == 0
+    else:
+        assert np.sum(np.abs(landmarks_tr[:10] - true_vals) > 0) == 0
+        np.testing.assert_array_equal(landmarks_tr[:10], true_vals)

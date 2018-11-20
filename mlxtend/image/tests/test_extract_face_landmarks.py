@@ -78,7 +78,7 @@ def test_jpg():
                              229, 133, 109, 228, 132, 110, 227, 131, 109,
                              224, 129, 109])
 
-    np.assert_array_equal((img[:10, :10]).flatten(), expected_img)
+    np.testing.assert_array_equal((img[:10, :10]).flatten(), expected_img)
 
     if os.name == 'nt':
         true_vals = np.array([[85, 111],

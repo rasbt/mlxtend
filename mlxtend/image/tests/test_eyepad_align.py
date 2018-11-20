@@ -23,16 +23,28 @@ def test_defaults():
 
     landmarks_tr = extract_face_landmarks(img_tr)
 
-    true_vals = np.array([[35, 113],
-                          [33, 126],
-                          [34, 140],
-                          [36, 154],
-                          [41, 166],
-                          [51, 176],
-                          [61, 184],
-                          [72, 189],
-                          [82, 190],
-                          [90, 186]], dtype=np.int32)
+    if os.name == 'nt':
+        true_vals = np.array([[33, 115],
+                              [32, 128],
+                              [32, 142],
+                              [35, 156],
+                              [41, 168],
+                              [50, 177],
+                              [60, 184],
+                              [72, 190],
+                              [82, 190],
+                              [90, 186]], dtype=np.int32)
+    else:
+        true_vals = np.array([[35, 113],
+                              [33, 126],
+                              [34, 140],
+                              [36, 154],
+                              [41, 166],
+                              [51, 176],
+                              [61, 184],
+                              [72, 189],
+                              [82, 190],
+                              [90, 186]], dtype=np.int32)
 
     np.testing.assert_array_equal(landmarks_tr[:10], true_vals)
 
@@ -50,16 +62,16 @@ def test_fit2dir():
     landmarks_tr = extract_face_landmarks(img_tr)
 
     if os.name == 'nt':
-        true_vals = np.array([[17, 66],
-                              [17, 75],
-                              [17, 85],
+        true_vals = np.array([[19, 68],
+                              [17, 76],
+                              [18, 85],
                               [19, 94],
-                              [22, 102],
-                              [28, 109],
-                              [34, 114],
-                              [42, 118],
+                              [23, 102],
+                              [29, 109],
+                              [35, 114],
+                              [43, 118],
                               [49, 118],
-                              [54, 116]], dtype=np.int32)
+                              [54, 115]], dtype=np.int32)
     else:
         true_vals = np.array([[18, 68],
                               [18, 77],

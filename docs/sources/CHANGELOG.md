@@ -16,7 +16,7 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
-- -
+- Added a new transformer class to `mlxtend.image`, `EyepadAlign`, that aligns face images based on the location of the eyes. ([#466](https://github.com/rasbt/mlxtend/pull/466) by [Vahid Mirjalili](https://github.com/vmirly))
 
 ##### Changes
 

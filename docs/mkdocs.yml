@@ -98,6 +98,7 @@ nav:
     - user_guide/general_concepts/regularization-linear.md
   - image:
     - user_guide/image/extract_face_landmarks.md
+    - user_guide/image/eyepad_align.md
   - math:
     - user_guide/math/num_combinations.md
     - user_guide/math/num_permutations.md

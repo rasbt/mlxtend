@@ -20,10 +20,9 @@ conda create -q -n test-environment python=$MINICONDA_PYTHON_VERSION
 source activate test-environment
 
 if [ "${LATEST}" = "true" ]; then
-    pip install ".[testing]"
+    conda install numpy scipy pandas scikit-learn
 else
     conda install numpy=$NUMPY_VERSION scipy=$SCIPY_VERSION pandas=$PANDAS_VERSION scikit-learn=$SKLEARN_VERSION
-    pip install ".[testing]"
 fi
 
 conda install jupyter

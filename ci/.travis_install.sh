@@ -25,6 +25,8 @@ else
     conda install numpy=$NUMPY_VERSION scipy=$SCIPY_VERSION pandas=$PANDAS_VERSION scikit-learn=$SKLEARN_VERSION
 fi
 
+
+conda install matplotlib
 conda install jupyter
 
 if [ "${IMAGE}" = "true" ]; then

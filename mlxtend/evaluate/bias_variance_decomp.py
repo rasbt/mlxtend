@@ -51,6 +51,12 @@ def bias_variance_decomp(estimator, X_train, y_train, X_test, y_test,
         Rabdin seed for the bootstrap sampling used for the
         bias-variance decomposition.
 
+    Returns
+    ----------
+    avg_expected_loss, avg_bias, avg_var : returns the average expected
+        average bias, and average bias (all floats), where the average
+        is computed over the data points in the test set.
+
     """
     supported = ['0-1_loss', 'mse']
     if loss not in supported:

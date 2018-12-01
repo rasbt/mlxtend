@@ -16,11 +16,11 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
-- Adds a new function, `mlxtend.evaluate.bias_variance_decomp` that decomposes the loss of a regressor or classifier into bias and variance terms ([#470](https://github.com/rasbt/mlxtend/pull/470))
+- Adds a new function, `mlxtend.evaluate.bias_variance_decomp` that decomposes the loss of a regressor or classifier into bias and variance terms. ([#470](https://github.com/rasbt/mlxtend/pull/470))
 
 ##### Changes
 
-- -
+- Changed the default solver in `PrincipalComponentAnalysis` to `'svd'` instead of `'eigen'` to improve numerical stability. ([#474](https://github.com/rasbt/mlxtend/pull/474))
 
 ##### Bug Fixes
 

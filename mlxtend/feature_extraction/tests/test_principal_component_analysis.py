@@ -22,6 +22,18 @@ def test_default_components():
     assert res.shape[1] == 4
 
 
+def test_whitening():
+    pca = PCA(n_components=2)
+    res = pca.fit(X).transform(X)
+    diagonals_sum = np.sum(np.diagonal(np.cov(res.T)))
+    assert round(diagonals_sum, 1) == 3.9, diagonals_sum
+
+    pca = PCA(n_components=2, whitening=True)
+    res = pca.fit(X).transform(X)
+    diagonals_sum = np.sum(np.diagonal(np.cov(res.T)))
+    assert round(diagonals_sum, 1) == 2.0, diagonals_sum
+
+
 def test_default_2components():
     pca = PCA(n_components=2)
     res = pca.fit(X).transform(X)

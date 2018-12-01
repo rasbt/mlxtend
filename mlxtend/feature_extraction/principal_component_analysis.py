@@ -102,7 +102,7 @@ class PrincipalComponentAnalysis(_BaseModel):
                                           eig_vecs=self.e_vecs_,
                                           whitening=self.whitening,
                                           n_components=n_components)
-        
+
         self.loadings_ = self._loadings()
         return self
 
@@ -124,16 +124,16 @@ class PrincipalComponentAnalysis(_BaseModel):
         self._check_arrays(X=X)
         if not hasattr(self, 'w_'):
             raise AttributeError('Object as not been fitted, yet.')
-            
+
         transformed = X.dot(self.w_)
         if self.whitening:
-            ### Debug 1
-            #norm = np.sqrt(np.diag(self.e_vals_[:self.w_.shape[1]]))
-            #for i, column in enumerate(transformed.T):
+            # ## Debug 1
+            # norm = np.sqrt(np.diag(self.e_vals_[:self.w_.shape[1]]))
+            # for i, column in enumerate(transformed.T):
             #    transformed[:, i] /= np.max(norm[:, i])
             norm = np.diag((1./np.sqrt(self.e_vals_[:self.w_.shape[1]])))
-            transformed = norm.dot(transformed.T).T            
-        return transformed 
+            transformed = norm.dot(transformed.T).T
+        return transformed
 
     def _covariance_matrix(self, X):
         mean_vec = np.mean(X, axis=0)

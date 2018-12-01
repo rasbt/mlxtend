@@ -19,7 +19,7 @@ class PrincipalComponentAnalysis(_BaseModel):
     n_components : int (default: None)
         The number of principal components for transformation.
         Keeps the original dimensions of the dataset if `None`.
-    solver : str (default: 'eigen')
+    solver : str (default: 'svd')
         Method for performing the matrix decomposition.
         {'eigen', 'svd'}
 
@@ -47,7 +47,7 @@ class PrincipalComponentAnalysis(_BaseModel):
     http://rasbt.github.io/mlxtend/user_guide/feature_extraction/PrincipalComponentAnalysis/
 
     """
-    def __init__(self, n_components=None, solver='eigen'):
+    def __init__(self, n_components=None, solver='svd'):
         valid_solver = {'eigen', 'svd'}
         if solver not in valid_solver:
             raise AttributeError('Must be in %s. Found %s'
@@ -59,7 +59,7 @@ class PrincipalComponentAnalysis(_BaseModel):
         self.n_components = n_components
         self._is_fitted = False
 
-    def fit(self, X):
+    def fit(self, X, y=None):
         """Learn model from training data.
 
         Parameters

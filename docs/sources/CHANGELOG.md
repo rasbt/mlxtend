@@ -17,6 +17,7 @@ The CHANGELOG for the current development version is available at
 ##### New Features
 
 - Adds a new function, `mlxtend.evaluate.bias_variance_decomp` that decomposes the loss of a regressor or classifier into bias and variance terms. ([#470](https://github.com/rasbt/mlxtend/pull/470))
+- Adds a `whitening` parameter to `PrincipalComponentAnalysis`, to optionally whiten the transformed data such that the features have unit variance. ([#475](https://github.com/rasbt/mlxtend/pull/475))
 
 ##### Changes
 
@@ -25,8 +26,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Bug Fixes
 
-- The eigenvectors maybe have not been sorted in certain edge cases in `LinearDiscriminantAnalysis`. ([#478](https://github.com/rasbt/mlxtend/pull/478))
-
+- The eigenvectors maybe have not been sorted in certain edge cases if solver was `'eigen'` in `PrincipalComponentAnalysis` and `LinearDiscriminantAnalysis`. ([#477](https://github.com/rasbt/mlxtend/pull/477), [#478](https://github.com/rasbt/mlxtend/pull/478))
 
 
 ### Version 0.14.0 (11-09-2018)

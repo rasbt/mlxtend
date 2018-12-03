@@ -22,9 +22,10 @@ The CHANGELOG for the current development version is available at
 
 - Changed the default solver in `PrincipalComponentAnalysis` to `'svd'` instead of `'eigen'` to improve numerical stability. ([#474](https://github.com/rasbt/mlxtend/pull/474))
 
+
 ##### Bug Fixes
 
-- -
+- The eigenvectors maybe have not been sorted in certain edge cases in `LinearDiscriminantAnalysis`. ([#478](https://github.com/rasbt/mlxtend/pull/478))
 
 
 

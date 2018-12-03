@@ -134,7 +134,7 @@ class PrincipalComponentAnalysis(_BaseModel):
             e_vals = e_vals ** 2 / n_samples
 
         sort_idx = np.argsort(e_vals)[::-1]
-        e_vals, e_vecs = e_vals[sort_idx], e_vecs[sort_idx]
+        e_vals, e_vecs = e_vals[sort_idx], e_vecs[:, sort_idx]
         return e_vals, e_vecs
 
     def _loadings(self):

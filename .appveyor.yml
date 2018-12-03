@@ -21,3 +21,13 @@ install:
 
 test_script:
   - nosetests -s -v --exclude-dir=mlxtend/plotting
+
+notifications:
+
+  # Email
+  - provider: Email
+    to:
+      - mail@sebastianraschka.com
+    subject: 'Build {{status}}'
+    message: "{{message}}, {{commitId}}, ..."
+    on_build_status_changed: true

@@ -24,7 +24,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Bug Fixes
 
-- -
+- The eigenvectors maybe have not been sorted in certain edge cases if solver was `'eigen'` in `PrincipalComponentAnalysis`. ([#477](https://github.com/rasbt/mlxtend/pull/477))
 
 
 

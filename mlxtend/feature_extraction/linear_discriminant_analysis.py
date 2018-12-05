@@ -145,7 +145,7 @@ class LinearDiscriminantAnalysis(_BaseModel):
         e_vals, e_vecs = np.linalg.eig(np.linalg.inv(within_scatter).dot(
             between_scatter))
         sort_idx = np.argsort(e_vals)[::-1]
-        e_vals, e_vecs = e_vals[sort_idx], e_vecs[sort_idx]
+        e_vals, e_vecs = e_vals[sort_idx], e_vecs[:, sort_idx]
         return e_vals, e_vecs
 
     def _projection_matrix(self, eig_vals, eig_vecs, n_discriminants):

@@ -19,9 +19,12 @@ class PrincipalComponentAnalysis(_BaseModel):
     n_components : int (default: None)
         The number of principal components for transformation.
         Keeps the original dimensions of the dataset if `None`.
-    solver : str (default: 'eigen')
+    solver : str (default: 'svd')
         Method for performing the matrix decomposition.
         {'eigen', 'svd'}
+    whitening : bool (default: False)
+        Performs whitening such that the covariance matrix of
+        the transformed data will be the identity matrix.
 
     Attributes
     ----------
@@ -47,7 +50,7 @@ class PrincipalComponentAnalysis(_BaseModel):
     http://rasbt.github.io/mlxtend/user_guide/feature_extraction/PrincipalComponentAnalysis/
 
     """
-    def __init__(self, n_components=None, solver='eigen'):
+    def __init__(self, n_components=None, solver='svd', whitening=False):
         valid_solver = {'eigen', 'svd'}
         if solver not in valid_solver:
             raise AttributeError('Must be in %s. Found %s'
@@ -58,8 +61,9 @@ class PrincipalComponentAnalysis(_BaseModel):
             raise AttributeError('n_components must be > 1 or None')
         self.n_components = n_components
         self._is_fitted = False
+        self.whitening = whitening
 
-    def fit(self, X):
+    def fit(self, X, y=None):
         """Learn model from training data.
 
         Parameters
@@ -96,7 +100,9 @@ class PrincipalComponentAnalysis(_BaseModel):
 
         self.w_ = self._projection_matrix(eig_vals=self.e_vals_,
                                           eig_vecs=self.e_vecs_,
+                                          whitening=self.whitening,
                                           n_components=n_components)
+
         self.loadings_ = self._loadings()
         return self
 
@@ -118,7 +124,16 @@ class PrincipalComponentAnalysis(_BaseModel):
         self._check_arrays(X=X)
         if not hasattr(self, 'w_'):
             raise AttributeError('Object as not been fitted, yet.')
-        return X.dot(self.w_)
+
+        transformed = X.dot(self.w_)
+        if self.whitening:
+            # ## Debug 1
+            # norm = np.sqrt(np.diag(self.e_vals_[:self.w_.shape[1]]))
+            # for i, column in enumerate(transformed.T):
+            #    transformed[:, i] /= np.max(norm[:, i])
+            norm = np.diag((1./np.sqrt(self.e_vals_[:self.w_.shape[1]])))
+            transformed = norm.dot(transformed.T).T
+        return transformed
 
     def _covariance_matrix(self, X):
         mean_vec = np.mean(X, axis=0)
@@ -134,13 +149,13 @@ class PrincipalComponentAnalysis(_BaseModel):
             e_vals = e_vals ** 2 / n_samples
 
         sort_idx = np.argsort(e_vals)[::-1]
-        e_vals, e_vecs = e_vals[sort_idx], e_vecs[sort_idx]
+        e_vals, e_vecs = e_vals[sort_idx], e_vecs[:, sort_idx]
         return e_vals, e_vecs
 
     def _loadings(self):
         """Compute factor loadings"""
         return self.e_vecs_ * np.sqrt(self.e_vals_)
 
-    def _projection_matrix(self, eig_vals, eig_vecs, n_components):
+    def _projection_matrix(self, eig_vals, eig_vecs, whitening, n_components):
         matrix_w = np.vstack([eig_vecs[:, i] for i in range(n_components)]).T
         return matrix_w

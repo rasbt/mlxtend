@@ -56,16 +56,16 @@ def test_fit2dir():
 
     landmarks_tr = extract_face_landmarks(img_tr)
 
-    true_vals = np.array([[18, 68],
-                          [18, 77],
-                          [18, 86],
-                          [19, 95],
-                          [23, 103],
-                          [29, 109],
-                          [35, 114],
-                          [43, 117],
-                          [50, 118],
-                          [55, 115]], dtype=np.int32)
+    true_vals = np.array([[30, 115],
+                          [28, 130],
+                          [29, 145],
+                          [31, 160],
+                          [38, 173],
+                          [48, 182],
+                          [59, 191],
+                          [71, 196],
+                          [82, 197],
+                          [90, 193]], dtype=np.int32)
 
     if os.name == 'nt':
         # on windows, imageio parses jpgs sometimes differently so pixel values

@@ -16,7 +16,7 @@ def test_defaults():
     eyepad = EyepadAlign()
     target_image = imageio.imread(os.path.join(path,
                                                'celeba-subset/000001.jpg'))
-    eyepad.fit(target_image)
+    eyepad.fit_image(target_image)
 
     img = imageio.imread(os.path.join(path, 'lena-small.png'))
     img_tr = eyepad.transform(img)
@@ -39,15 +39,16 @@ def test_defaults():
         # maybe slightly different
         assert np.sum(np.abs(landmarks_tr[:10] - true_vals) > 2) == 0
     else:
-        assert np.sum(np.abs(landmarks_tr[:10] - true_vals) > 0) == 0
+        assert np.sum(np.abs(landmarks_tr[:10] - true_vals) > 0) == 0, \
+                np.sum(np.abs(landmarks_tr[:10] - true_vals))
         np.testing.assert_array_equal(landmarks_tr[:10], true_vals)
 
 
 def test_fit2dir():
     path = 'mlxtend/image/tests/data/'
     eyepad = EyepadAlign()
-    eyepad.fit(target_img_dir=os.path.join(path, 'celeba-subset/'),
-               file_extensions='.jpg')
+    eyepad.fit_directory(target_img_dir=os.path.join(path, 'celeba-subset/'),
+                         file_extensions='.jpg')
 
     img = imageio.imread(os.path.join(path, 'lena-small.png'))
 
@@ -71,5 +72,6 @@ def test_fit2dir():
         # maybe slightly different
         assert np.sum(np.abs(landmarks_tr[:10] - true_vals) > 2) == 0
     else:
-        assert np.sum(np.abs(landmarks_tr[:10] - true_vals) > 0) == 0
+        assert np.sum(np.abs(landmarks_tr[:10] - true_vals) > 0) == 0, \
+                np.sum(np.abs(landmarks_tr[:10] - true_vals) > 0)
         np.testing.assert_array_equal(landmarks_tr[:10], true_vals)

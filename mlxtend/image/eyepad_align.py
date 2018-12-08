@@ -7,115 +7,147 @@
 #
 # License: BSD 3 clause
 
+import numpy as np
 from . import extract_face_landmarks
 from .utils import listdir, read_image
+from ..externals.pyprind.progbar import ProgBar
 from skimage.transform import warp, AffineTransform
-import numpy as np
-import pyprind
 
 
-left_indx = np.array([36, 37, 38, 39, 40, 41])
-right_indx = np.array([42, 43, 44, 45, 46, 47])
+LEFT_INDEX = np.array([36, 37, 38, 39, 40, 41])
+RIGHT_INDEX = np.array([42, 43, 44, 45, 46, 47])
 
 
 class EyepadAlign(object):
-    """Class to align/transform face images to target landmarks,
-       based on the location of the eyes.
+    """Class to align/transform face images to facial landmarks,
+       based on eye alignment.
 
-       1. Scaling factor is computed based on distance between the
-        left and right eyes, so that the transformed image will
-        have the same eye distance as target.
+       1. A scaling factor is computed based on distance between the
+        left and right eye, such that the transformed face image will
+        have the same eye distance as a reference face image.
 
-       2. Transformation is performed based on the eyes' middle point.
+       2. A transformation is performed based on the eyes' center point.
+        to align the face based on the reference eye location.
 
        3. Finally, the transformed image is padded with zeros to match
         the desired final image size.
 
     Parameters
     ----------
-
-    target_landmarks : target landmarks to transform new face images to
-
-    target_width : the width of the output image
-
-    target_height : the height of the output image
-
-    verbose : verbose level to display the progress bar and log messages
+    verbose : int (default=0)
+        Verbose level to display the progress bar and log messages.
+        Setting `verbose=1` will print a progress bar upon calling
+        `fit_directory`. 
 
     Attributes
     ----------
+    eye_distance_ : 
 
-    target_landmarks_ : target landmarks to transform new face images to,
-        which can be either (1) assigned to pre-fit shapes,
-                            (2) can be computed from a single face image
-                            (3) can be cmputed as the mean of face landmarks
-                                from all face images in a directory.
+    target_landmarks_ : target landmarks to transform new face images to.
+        Depending on the chosen `fit` parameters, it can  be either
+          (1) assigned to pre-fit shapes,
+          (2) computed from a single face image
+          (3) computed as the mean of face landmarks
+              from all face images in a file directory of face images.
 
     target_width_ : the width of the transformed output image.
 
     target_height_ : the height of the transformed output image.
 
-
-    Examples
-    --------
-        eyepad = EyepadAlign()
-        eyepad.fit(target_image=img_a)
-        img_tr = eyepad.transform(img_b)
-
     For more usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/image/EyepadAlign/
 
+    Return
+    ---------------
+    self : object
+
     """
-    def __init__(self, target_landmarks=None, taregt_width=None,
-                 target_height=None, verbose=0):
-        self.eye_distance = None
-        self.target_landmarks_ = target_landmarks
-        self.taregt_width_ = taregt_width
-        self.target_height_ = target_height
+    def __init__(self, verbose=0):
         self.verbose = verbose
 
-    def fit(self, target_image=None,
-            target_img_dir=None, file_extensions='.jpg'):
-        """Fits the target landmarks points:
-             a. if target_image is given, sets the target landmarks
+    def fit_image(self, target_image):
+        """if target_image is given, sets the target landmarks
                 to the landmarks of target image.
-             b. otherwise, if a target directory is given,
-                calculates the average landmarks for all face images
-                in the directory which will be set as the target landmark.
-
+        
         """
-        if target_image is not None:
-            landmarks = extract_face_landmarks(target_image)
-            self.target_landmarks_ = landmarks
-            self.target_width_ = target_image.shape[1]
-            self.target_height_ = target_image.shape[0]
+        landmarks = extract_face_landmarks(target_image)
+        self.target_landmarks_ = landmarks
+        self.target_width_ = target_image.shape[1]
+        self.target_height_ = target_image.shape[0]
 
-        elif target_img_dir is not None:
-            file_list = listdir(target_img_dir, file_extensions)
+        props = self._calc_eye_properties(self.target_landmarks_)
+        self.eyes_mid_point_ = props[0]
+        self.eye_distance_ = props[1]
+        return self
+
+    def fit_directory(self, target_img_dir, file_extensions='.jpg'):
+        """
+        calculates the average landmarks for all face images
+        in the directory which will be set as the target landmark.
+        
+        """
+        file_list = listdir(target_img_dir, file_extensions)
+        if self.verbose >= 1:
+            print("Fitting the average facial landmarks "
+                  "for %d face images " % (len(file_list)))
+        landmarks_list = []
+
+        self.target_width_ = None
+        self.target_height_ = None
+        
+        if self.verbose >= 1:
+            pbar = ProgBar(len(file_list))
+        for f in file_list:
             if self.verbose >= 1:
-                print("Fitting the average facial landmarks "
-                      "for {} face images ".format(len(file_list)))
-            landmarks_list = []
-            pbar = pyprind.ProgBar(len(file_list))
-            for f in file_list:
                 pbar.update()
-                img = read_image(filename=f, path=target_img_dir)
-                landmarks = extract_face_landmarks(img)
-                if landmarks is not None:
-                    landmarks_list.append(landmarks)
-            self.target_landmarks_ = np.mean(landmarks_list, axis=0)
-            self.target_width_ = img.shape[1]
-            self.target_height_ = img.shape[0]
+            img = read_image(filename=f, path=target_img_dir)
 
-    def _cal_eye_properties(self, landmarks):
+            if self.target_width_ is not None:
+                if self.target_width_ != img.shape[1]:
+                    raise AttributeError(
+                        'Width (%d pixels) of image %s does not match'
+                        ' the width of the previous image (%d pixels).'
+                        % (f, img.shape[0], self.target_width_))
+            else:
+                self.target_width_ = img.shape[1]
+            
+            if self.target_height_ is not None:
+                if self.target_height_ != img.shape[0]:
+                    raise AttributeError(
+                        'Height (%d pixels) of image %s does not match'
+                        ' the height of the previous image (%d pixels).'
+                        % (f, img.shape[0], self.target_height_))
+            else:
+                self.target_height_ = img.shape[0]
+            landmarks = extract_face_landmarks(img)
+            #if np.sum(landmarks) != 0.:  # i.e., 0 == no face detected
+            landmarks_list.append(landmarks)
+        self.target_landmarks_ = np.mean(landmarks_list, axis=0)
+        
+        props = self._calc_eye_properties(self.target_landmarks_)
+        self.eyes_mid_point_ = props[0]
+        self.eye_distance_ = props[1]
+        return self
+
+    def fit_values(self, target_landmarks, target_width, target_height):
+        self.target_landmarks_ = target_landmarks
+        self.target_width_ = target_width
+        self.target_height_ = target_height
+        
+        props = self._calc_eye_properties(self.target_landmarks_)
+        self.eyes_mid_point_ = props[0]
+        self.eye_distance_ = props[1]
+        return self
+
+    def _calc_eye_properties(self, landmarks):
         """ Calculates the face properties:
                (1) coordinates of the left-eye
                (2) coordinates of the right-eye
                (3) the distance between left and right eyes
                (4) the middle point between the two eyes
         """
-        left_eye = np.mean(landmarks[left_indx], axis=0)
-        right_eye = np.mean(landmarks[right_indx], axis=0)
+        left_eye = np.mean(landmarks[LEFT_INDEX], axis=0)
+        right_eye = np.mean(landmarks[RIGHT_INDEX], axis=0)
         eyes_mid_point = (left_eye + right_eye)/2.0
         eye_distance = np.sqrt(np.sum(np.square(left_eye - right_eye)))
 
@@ -133,17 +165,17 @@ class EyepadAlign(object):
             (2) Translation is performed based on the middle point
                 between the two eyes.
         """
-        if self.eye_distance is None:
-            props = self._cal_eye_properties(self.target_landmarks_)
-            self.eyes_mid_point = props[0]
-            self.eye_distance = props[1]
+
+        ## ADD CHECK TO MAKE SURE FIT* was called
+
         landmarks = extract_face_landmarks(img)
         if landmarks is None:
             return
-        eyes_mid_point, eye_distance = self._cal_eye_properties(landmarks)
+        
+        eyes_mid_point, eye_distance = self._calc_eye_properties(landmarks)
 
-        scale = self.eye_distance / eye_distance
-        tr = (self.eyes_mid_point/scale - eyes_mid_point)
+        scale = self.eye_distance_ / eye_distance
+        tr = (self.eyes_mid_point_/scale - eyes_mid_point)
         tr = (int(tr[0]*scale), int(tr[1]*scale))
 
         tform = AffineTransform(scale=(scale, scale), rotation=0, shear=0,

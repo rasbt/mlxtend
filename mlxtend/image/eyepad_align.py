@@ -120,8 +120,8 @@ class EyepadAlign(object):
             else:
                 self.target_height_ = img.shape[0]
             landmarks = extract_face_landmarks(img)
-            #if np.sum(landmarks) != 0.:  # i.e., 0 == no face detected
-            landmarks_list.append(landmarks)
+            if np.sum(landmarks) != 0.:  # i.e., 0 == no face detected
+                landmarks_list.append(landmarks)
         self.target_landmarks_ = np.mean(landmarks_list, axis=0)
         
         props = self._calc_eye_properties(self.target_landmarks_)

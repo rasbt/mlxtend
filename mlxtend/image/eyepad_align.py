@@ -108,7 +108,7 @@ class EyepadAlign(object):
                     raise AttributeError(
                         'Width (%d pixels) of image %s does not match'
                         ' the width of the previous image (%d pixels).'
-                        % (f, img.shape[0], self.target_width_))
+                        % (img.shape[0], f, self.target_width_))
             else:
                 self.target_width_ = img.shape[1]
 
@@ -117,7 +117,7 @@ class EyepadAlign(object):
                     raise AttributeError(
                         'Height (%d pixels) of image %s does not match'
                         ' the height of the previous image (%d pixels).'
-                        % (f, img.shape[0], self.target_height_))
+                        % (img.shape[0], f, self.target_height_))
             else:
                 self.target_height_ = img.shape[0]
             landmarks = extract_face_landmarks(img)

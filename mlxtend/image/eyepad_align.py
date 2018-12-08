@@ -37,18 +37,19 @@ class EyepadAlign(object):
     verbose : int (default=0)
         Verbose level to display the progress bar and log messages.
         Setting `verbose=1` will print a progress bar upon calling
-        `fit_directory`. 
+        `fit_directory`.
 
     Attributes
     ----------
-    eye_distance_ : 
-
     target_landmarks_ : target landmarks to transform new face images to.
         Depending on the chosen `fit` parameters, it can  be either
           (1) assigned to pre-fit shapes,
           (2) computed from a single face image
           (3) computed as the mean of face landmarks
               from all face images in a file directory of face images.
+
+    eye_distance_ : the distance between left and right eyes
+        in the target landmarks.
 
     target_width_ : the width of the transformed output image.
 
@@ -68,7 +69,7 @@ class EyepadAlign(object):
     def fit_image(self, target_image):
         """if target_image is given, sets the target landmarks
                 to the landmarks of target image.
-        
+
         """
         landmarks = extract_face_landmarks(target_image)
         self.target_landmarks_ = landmarks
@@ -84,7 +85,7 @@ class EyepadAlign(object):
         """
         calculates the average landmarks for all face images
         in the directory which will be set as the target landmark.
-        
+
         """
         file_list = listdir(target_img_dir, file_extensions)
         if self.verbose >= 1:
@@ -94,7 +95,7 @@ class EyepadAlign(object):
 
         self.target_width_ = None
         self.target_height_ = None
-        
+
         if self.verbose >= 1:
             pbar = ProgBar(len(file_list))
         for f in file_list:
@@ -110,7 +111,7 @@ class EyepadAlign(object):
                         % (f, img.shape[0], self.target_width_))
             else:
                 self.target_width_ = img.shape[1]
-            
+
             if self.target_height_ is not None:
                 if self.target_height_ != img.shape[0]:
                     raise AttributeError(
@@ -123,17 +124,23 @@ class EyepadAlign(object):
             if np.sum(landmarks) != 0.:  # i.e., 0 == no face detected
                 landmarks_list.append(landmarks)
         self.target_landmarks_ = np.mean(landmarks_list, axis=0)
-        
+
         props = self._calc_eye_properties(self.target_landmarks_)
         self.eyes_mid_point_ = props[0]
         self.eye_distance_ = props[1]
         return self
 
     def fit_values(self, target_landmarks, target_width, target_height):
+        """ sets the values for target_landmarks, target_width,
+               and target_heigh.
+            It can be used for assigning these arrays/values to
+               pre-fit models, elliminating the need for re-computing
+               the average landmarks on a target image-dir.
+        """
         self.target_landmarks_ = target_landmarks
         self.target_width_ = target_width
         self.target_height_ = target_height
-        
+
         props = self._calc_eye_properties(self.target_landmarks_)
         self.eyes_mid_point_ = props[0]
         self.eye_distance_ = props[1]
@@ -171,7 +178,7 @@ class EyepadAlign(object):
         landmarks = extract_face_landmarks(img)
         if landmarks is None:
             return
-        
+
         eyes_mid_point, eye_distance = self._calc_eye_properties(landmarks)
 
         scale = self.eye_distance_ / eye_distance

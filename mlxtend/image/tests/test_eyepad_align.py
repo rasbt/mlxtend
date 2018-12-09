@@ -71,7 +71,7 @@ def test_fit2dir():
     if os.name == 'nt':
         # on windows, imageio parses jpgs sometimes differently so pixel values
         # maybe slightly different
-        assert np.sum(np.abs(landmarks_tr[:10] - true_vals) > 2) == 0
+        assert np.sum(np.abs(landmarks_tr[:10] - true_vals) > 3) == 0
     else:
         assert np.sum(np.abs(landmarks_tr[:10] - true_vals) > 0) == 0, \
                 np.sum(np.abs(landmarks_tr[:10] - true_vals) > 0)

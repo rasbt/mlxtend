@@ -24,10 +24,6 @@ matrix:
         - os: linux
           python: 3.6
           env: LATEST="true" IMAGE="true" COVERAGE="true" NOTEBOOKS="true" MINICONDA_PYTHON_VERSION=3.7
-        - os: osx
-          sudo: required
-          python: 3.6
-          env: LATEST="true" IMAGE="true" COVERAGE="false" NOTEBOOKS="false" MINICONDA_PYTHON_VERSION=3.7
         - os: linux
           sudo: required
           python: 3.6

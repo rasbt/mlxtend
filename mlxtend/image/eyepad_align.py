@@ -8,6 +8,7 @@
 # License: BSD 3 clause
 
 import os
+import warnings
 import numpy as np
 from . import extract_face_landmarks
 from .utils import read_image
@@ -106,7 +107,7 @@ class EyepadAlign(object):
 
         target_width : int
             Expected image width of the images in the directory
-    
+
         Returns
         -------
         self : object
@@ -148,6 +149,8 @@ class EyepadAlign(object):
             landmarks = extract_face_landmarks(img)
             if np.sum(landmarks) is not None:  # i.e., None == no face detected
                 landmarks_list.append(landmarks)
+            else:
+                warnings.warn('No face detected in image %s. Image ignored.' % f)
         self.target_landmarks_ = np.mean(landmarks_list, axis=0)
 
         props = self._calc_eye_properties(self.target_landmarks_)

@@ -7,9 +7,10 @@
 #
 # License: BSD 3 clause
 
+import os
 import numpy as np
 from . import extract_face_landmarks
-from .utils import listdir, read_image
+from .utils import read_image
 from ..externals.pyprind.progbar import ProgBar
 from skimage.transform import warp, AffineTransform, resize
 
@@ -58,8 +59,8 @@ class EyepadAlign(object):
     For more usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/image/EyepadAlign/
 
-    Return
-    ---------------
+    Returns
+    -------
     self : object
 
     """
@@ -67,8 +68,16 @@ class EyepadAlign(object):
         self.verbose = verbose
 
     def fit_image(self, target_image):
-        """if target_image is given, sets the target landmarks
-                to the landmarks of target image.
+        """Derives facial landmarks from a target image.
+
+        Arguments
+        ----------
+        target_image : `uint8` numpy.array, shape=[width, height, channels]
+            NumPy array representation of the image data.
+
+        Returns
+        -------
+        self : object
 
         """
         landmarks = extract_face_landmarks(target_image)
@@ -81,18 +90,37 @@ class EyepadAlign(object):
         self.eye_distance_ = props[1]
         return self
 
-    def fit_directory(self, target_img_dir,
-                      target_width, target_height,
-                      file_extensions='.jpg'):
+    def fit_directory(self, target_img_dir, target_height,
+                      target_width,  file_extensions='.jpg'):
         """
-        calculates the average landmarks for all face images
-        in the directory which will be set as the target landmark.
+        Calculates the average landmarks for all face images
+        in a directory which will then be set as the target landmark set.
+
+        Arguments
+        ----------
+        target_img_dir : str
+            Directory containing the images
+
+         target_height : int
+            Expected image height of the images in the directory
+
+        target_width : int
+            Expected image width of the images in the directory
+    
+        Returns
+        -------
+        self : object
 
         """
-        self.target_width_ = target_width
         self.target_height_ = target_height
+        self.target_width_ = target_width
 
-        file_list = listdir(target_img_dir, file_extensions)
+        file_list = [os.path.relpath(os.path.join(dirpath, file),
+                                     target_img_dir)
+                     for (dirpath, dirnames, filenames)
+                     in os.walk(target_img_dir)
+                     for file in filenames if file.endswith(file_extensions)]
+
         if self.verbose >= 1:
             print("Fitting the average facial landmarks "
                   "for %d face images " % (len(file_list)))
@@ -128,11 +156,26 @@ class EyepadAlign(object):
         return self
 
     def fit_values(self, target_landmarks, target_width, target_height):
-        """ sets the values for target_landmarks, target_width,
-               and target_heigh.
-            It can be used for assigning these arrays/values to
-               pre-fit models, elliminating the need for re-computing
-               the average landmarks on a target image-dir.
+        """ Used for determining the eye location from pre-defined
+            landmark arrays, eliminating the need for re-computing
+               the average landmarks on a target image or image directory.
+
+        Arguments
+        ---------
+        target_landmarks : np.array, shape=(height, width)
+            NumPy array containing the locations of the facial landmarks
+            as determined by `mlxtend.image.extract_face_landmarks`
+
+        target_height : int
+            image height
+
+        target_width : int
+            image width
+
+        Returns
+        -------
+        self : object
+
         """
         self.target_landmarks_ = target_landmarks
         self.target_width_ = target_width
@@ -149,6 +192,7 @@ class EyepadAlign(object):
                (2) coordinates of the right-eye
                (3) the distance between left and right eyes
                (4) the middle point between the two eyes
+
         """
         left_eye = np.mean(landmarks[LEFT_INDEX], axis=0)
         right_eye = np.mean(landmarks[RIGHT_INDEX], axis=0)
@@ -168,9 +212,22 @@ class EyepadAlign(object):
 
             (2) Translation is performed based on the middle point
                 between the two eyes.
+
+        Arguments
+        ---------
+
+        img : np.array, shape=(height, width, channels)
+            Input image to be transformed.
+
+        Returns
+        -------
+        self : object
+
         """
 
-        ## ADD CHECK TO MAKE SURE FIT* was called
+        if not hasattr(self, 'self.eyes_mid_point_'):
+            raise AttributeError('Not fitted, yet. Call one of the `fit*`'
+                                 ' methods prior to using `transform`.')
 
         landmarks = extract_face_landmarks(img)
         if landmarks is None:

@@ -23,6 +23,7 @@ The CHANGELOG for the current development version is available at
 ##### Changes
 
 - Changed the default solver in `PrincipalComponentAnalysis` to `'svd'` instead of `'eigen'` to improve numerical stability. ([#474](https://github.com/rasbt/mlxtend/pull/474))
+- The `mlxtend.image.extract_face_landmarks` now returns `None` if no facial landmarks were detected instead of an array of all zeros. ([#466](https://github.com/rasbt/mlxtend/pull/466))
 
 
 ##### Bug Fixes

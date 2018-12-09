@@ -225,7 +225,7 @@ class EyepadAlign(object):
 
         """
 
-        if not hasattr(self, 'self.eyes_mid_point_'):
+        if not hasattr(self, 'eyes_mid_point_'):
             raise AttributeError('Not fitted, yet. Call one of the `fit*`'
                                  ' methods prior to using `transform`.')
 

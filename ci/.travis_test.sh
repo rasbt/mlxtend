@@ -3,22 +3,29 @@
 set -e
 
 
-if [[ "$COVERAGE" == "true" ]]; then
+if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then 
 
-    if [[ "$IMAGE" == "true" ]]; then
-        nosetests -s -v --with-coverage
-    else
-        nosetests -s -v --with-coverage --exclude-dir=mlxtend/image
-    fi
+
+        if [[ "$COVERAGE" == "true" ]]; then
+
+            if [[ "$IMAGE" == "true" ]]; then
+                nosetests -s -v --with-coverage
+            else
+                nosetests -s -v --with-coverage --exclude-dir=mlxtend/image
+            fi
+
+        else
+            if [[ "$IMAGE" == "true" ]]; then
+                nosetests -s -v
+            else
+                nosetests -s -v --exclude-dir=mlxtend/image
+            fi
+        fi
 
 else
-    if [[ "$IMAGE" == "true" ]]; then
-        nosetests -s -v
-    else
-        nosetests -s -v --exclude-dir=mlxtend/image
-    fi
+    nosetests -s -v --exclude-dir=mlxtend/plotting
 fi
-
+  
 
 if [[ "$NOTEBOOKS" == "true" ]]; then
     cd docs

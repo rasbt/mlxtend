@@ -48,6 +48,7 @@ def extract_face_landmarks(img, return_dtype=np.int32):
     ----------
     landmarks : numpy.ndarray, shape = [68, 2]
        A numpy array, where each row contains a landmark/point x-y coordinates.
+       Return None if no face is detected by Dlib.
 
     Examples
     ----------
@@ -56,12 +57,12 @@ def extract_face_landmarks(img, return_dtype=np.int32):
 
     """
     faces = detector(img, 1)  # detecting faces
-    landmarks = np.zeros(shape=(68, 2))
     if not faces:
         warnings.warn('No face detected.')
-        return landmarks
+        return None
     shape = predictor(img, faces[0])
 
+    landmarks = np.zeros(shape=(68, 2))
     for i in range(68):
         p = shape.part(i)
         landmarks[i, :] = np.array([p.x, p.y])

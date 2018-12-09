@@ -11,7 +11,7 @@ import numpy as np
 from . import extract_face_landmarks
 from .utils import listdir, read_image
 from ..externals.pyprind.progbar import ProgBar
-from skimage.transform import warp, AffineTransform
+from skimage.transform import warp, AffineTransform, resize
 
 
 LEFT_INDEX = np.array([36, 37, 38, 39, 40, 41])
@@ -81,20 +81,22 @@ class EyepadAlign(object):
         self.eye_distance_ = props[1]
         return self
 
-    def fit_directory(self, target_img_dir, file_extensions='.jpg'):
+    def fit_directory(self, target_img_dir,
+                      target_width, target_height,
+                      file_extensions='.jpg'):
         """
         calculates the average landmarks for all face images
         in the directory which will be set as the target landmark.
 
         """
+        self.target_width_ = target_width
+        self.target_height_ = target_height
+
         file_list = listdir(target_img_dir, file_extensions)
         if self.verbose >= 1:
             print("Fitting the average facial landmarks "
                   "for %d face images " % (len(file_list)))
         landmarks_list = []
-
-        self.target_width_ = None
-        self.target_height_ = None
 
         if self.verbose >= 1:
             pbar = ProgBar(len(file_list))
@@ -103,25 +105,20 @@ class EyepadAlign(object):
                 pbar.update()
             img = read_image(filename=f, path=target_img_dir)
 
-            if self.target_width_ is not None:
-                if self.target_width_ != img.shape[1]:
-                    raise AttributeError(
-                        'Width (%d pixels) of image %s does not match'
-                        ' the width of the previous image (%d pixels).'
-                        % (img.shape[0], f, self.target_width_))
-            else:
-                self.target_width_ = img.shape[1]
+            if self.target_width_ != img.shape[1]:
+                width_ratio = self.target_width_ / img.shape[1]
+                height_ratio = self.target_height_ / img.shape[0]
 
-            if self.target_height_ is not None:
-                if self.target_height_ != img.shape[0]:
-                    raise AttributeError(
-                        'Height (%d pixels) of image %s does not match'
-                        ' the height of the previous image (%d pixels).'
-                        % (img.shape[0], f, self.target_height_))
-            else:
-                self.target_height_ = img.shape[0]
+                if np.abs(width_ratio - height_ratio) > 0.001:  # ignore
+                    continue
+
+                img = resize(img, output_shape=(self.target_height_,
+                                                self.target_width_),
+                             anti_aliasing=True, mode='reflect')
+                img = (img*255).astype('uint8')
+
             landmarks = extract_face_landmarks(img)
-            if np.sum(landmarks) != 0.:  # i.e., 0 == no face detected
+            if np.sum(landmarks) is not None:  # i.e., None == no face detected
                 landmarks_list.append(landmarks)
         self.target_landmarks_ = np.mean(landmarks_list, axis=0)
 

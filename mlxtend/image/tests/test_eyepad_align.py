@@ -48,6 +48,7 @@ def test_fit2dir():
     path = 'mlxtend/image/tests/data/'
     eyepad = EyepadAlign()
     eyepad.fit_directory(target_img_dir=os.path.join(path, 'celeba-subset/'),
+                         target_width=178, target_height=218,
                          file_extensions='.jpg')
 
     img = imageio.imread(os.path.join(path, 'lena-small.png'))

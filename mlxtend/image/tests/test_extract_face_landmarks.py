@@ -88,5 +88,4 @@ def test_noface():
     img = imageio.core.util.Array((
       np.random.random((193, 341, 3))*255).astype(np.uint8))
     landmarks = extract_face_landmarks(img)
-    assert landmarks.shape == (68, 2)
-    np.testing.assert_array_equal(landmarks, np.zeros((68, 2)))
+    assert landmarks is None

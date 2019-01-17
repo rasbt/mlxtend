@@ -57,7 +57,7 @@ class EyepadAlign(object):
 
     target_width_ : the width of the transformed output image.
 
-    file_extensions : str (default='.jpg'): File extension of the image files. 
+    file_extensions : str (default='.jpg'): File extension of the image files.
 
     For more usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/image/EyepadAlign/
@@ -156,7 +156,8 @@ class EyepadAlign(object):
             if np.sum(landmarks) is not None:  # i.e., None == no face detected
                 landmarks_list.append(landmarks)
             else:
-                warnings.warn('No face detected in image %s. Image ignored.' % f)
+                warnings.warn('No face detected in image %s. Image ignored.'
+                              % f)
         self.target_landmarks_ = np.mean(landmarks_list, axis=0)
 
         props = self._calc_eye_properties(self.target_landmarks_)

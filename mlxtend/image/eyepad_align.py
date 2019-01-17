@@ -53,9 +53,11 @@ class EyepadAlign(object):
     eye_distance_ : the distance between left and right eyes
         in the target landmarks.
 
+    target_height_ : the height of the transformed output image.
+
     target_width_ : the width of the transformed output image.
 
-    target_height_ : the height of the transformed output image.
+    file_extensions : str (default='.jpg'): File extension of the image files.
 
     For more usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/image/EyepadAlign/
@@ -116,11 +118,15 @@ class EyepadAlign(object):
         self.target_height_ = target_height
         self.target_width_ = target_width
 
-        file_list = [os.path.relpath(os.path.join(dirpath, file),
+        file_list = [os.path.relpath(os.path.join(dirpath, f),
                                      target_img_dir)
                      for (dirpath, dirnames, filenames)
                      in os.walk(target_img_dir)
-                     for file in filenames if file.endswith(file_extensions)]
+                     for f in filenames if f.endswith(file_extensions)]
+
+        if not len(file_list):
+            raise ValueError('No images found in %s with extension %s.'
+                             % (target_img_dir, file_extensions))
 
         if self.verbose >= 1:
             print("Fitting the average facial landmarks "
@@ -150,7 +156,8 @@ class EyepadAlign(object):
             if np.sum(landmarks) is not None:  # i.e., None == no face detected
                 landmarks_list.append(landmarks)
             else:
-                warnings.warn('No face detected in image %s. Image ignored.' % f)
+                warnings.warn('No face detected in image %s. Image ignored.'
+                              % f)
         self.target_landmarks_ = np.mean(landmarks_list, axis=0)
 
         props = self._calc_eye_properties(self.target_landmarks_)

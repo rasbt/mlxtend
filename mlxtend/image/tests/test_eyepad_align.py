@@ -9,6 +9,7 @@ from mlxtend.image import extract_face_landmarks
 import imageio
 import numpy as np
 import os
+from nose.tools import assert_raises
 
 
 def test_defaults():
@@ -48,7 +49,8 @@ def test_fit2dir():
     path = 'mlxtend/image/tests/data/'
     eyepad = EyepadAlign()
     eyepad.fit_directory(target_img_dir=os.path.join(path, 'celeba-subset/'),
-                         target_width=178, target_height=218,
+                         target_width=178,
+                         target_height=218,
                          file_extensions='.jpg')
 
     img = imageio.imread(os.path.join(path, 'lena-small.png'))
@@ -76,3 +78,17 @@ def test_fit2dir():
         assert np.sum(np.abs(landmarks_tr[:10] - true_vals) > 0) == 0, \
                 np.sum(np.abs(landmarks_tr[:10] - true_vals) > 0)
         np.testing.assert_array_equal(landmarks_tr[:10], true_vals)
+
+
+def test_empty_dir():
+    path = 'mlxtend/image/tests/data/'
+    eyepad = EyepadAlign()
+
+    def tmp_func():
+        eyepad.fit_directory(target_img_dir=os.path.join(path,
+                                                         'celeba-subset/'),
+                             target_width=178,
+                             target_height=218,
+                             file_extensions='.PNG')
+
+    assert_raises(ValueError, tmp_func)

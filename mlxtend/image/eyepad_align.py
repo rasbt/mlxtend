@@ -57,7 +57,7 @@ class EyepadAlign(object):
 
     target_width_ : the width of the transformed output image.
 
-    file_extensions : str (default='.jpg'): File extension of the image files.
+    file_extension str (default='.jpg'): File extension of the image files.
 
     For more usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/image/EyepadAlign/
@@ -94,7 +94,7 @@ class EyepadAlign(object):
         return self
 
     def fit_directory(self, target_img_dir, target_height,
-                      target_width,  file_extensions='.jpg'):
+                      target_width,  file_extension='.jpg'):
         """
         Calculates the average landmarks for all face images
         in a directory which will then be set as the target landmark set.
@@ -122,11 +122,11 @@ class EyepadAlign(object):
                                      target_img_dir)
                      for (dirpath, dirnames, filenames)
                      in os.walk(target_img_dir)
-                     for f in filenames if f.endswith(file_extensions)]
+                     for f in filenames if f.endswith(file_extension)]
 
         if not len(file_list):
             raise ValueError('No images found in %s with extension %s.'
-                             % (target_img_dir, file_extensions))
+                             % (target_img_dir, file_extension))
 
         if self.verbose >= 1:
             print("Fitting the average facial landmarks "

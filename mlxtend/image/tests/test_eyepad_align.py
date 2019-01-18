@@ -51,7 +51,7 @@ def test_fit2dir():
     eyepad.fit_directory(target_img_dir=os.path.join(path, 'celeba-subset/'),
                          target_width=178,
                          target_height=218,
-                         file_extensions='.jpg')
+                         file_extension='.jpg')
 
     img = imageio.imread(os.path.join(path, 'lena-small.png'))
 
@@ -89,6 +89,6 @@ def test_empty_dir():
                                                          'celeba-subset/'),
                              target_width=178,
                              target_height=218,
-                             file_extensions='.PNG')
+                             file_extension='.PNG')
 
     assert_raises(ValueError, tmp_func)

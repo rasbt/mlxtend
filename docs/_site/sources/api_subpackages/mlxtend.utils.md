@@ -1,4 +1,4 @@
-mlxtend version: 0.14.0dev 
+mlxtend version: 0.15.0dev 
 ## Counter
 
 *Counter(stderr=False, start_newline=True, precision=0, name=None)*

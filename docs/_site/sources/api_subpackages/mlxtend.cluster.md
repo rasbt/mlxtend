@@ -1,4 +1,4 @@
-mlxtend version: 0.14.0dev 
+mlxtend version: 0.15.0dev 
 ## Kmeans
 
 *Kmeans(k, max_iter=10, convergence_tolerance=1e-05, random_seed=None, print_progress=0)*

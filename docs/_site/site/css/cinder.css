@@ -80,3 +80,18 @@ pre {
 footer > hr {
     width: 35%;
 }
+
+
+/*
+  modified dropbox menu, Sebastian Raschka 2016
+*/
+
+.dropdown-menu > li > a {
+  display: block;
+  padding: 5px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.3;
+  color: #333333;
+  white-space: nowrap;
+}

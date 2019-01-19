@@ -86,10 +86,12 @@ from sklearn import datasets
 import numpy as np
 
 # Initializing Classifiers
-clf1 = LogisticRegression(random_state=1)
-clf2 = RandomForestClassifier(random_state=1)
+clf1 = LogisticRegression(random_state=1,
+                          solver='newton-cg',
+                          multi_class='multinomial')
+clf2 = RandomForestClassifier(random_state=1, n_estimators=100)
 clf3 = GaussianNB()
-clf4 = SVC()
+clf4 = SVC(gamma='auto')
 
 # Loading some example data
 iris = datasets.load_iris()
@@ -120,18 +122,8 @@ for clf, lab, grd in zip([clf1, clf2, clf3, clf4],
 plt.show()
 ```
 
-    /Users/sebastian/miniconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:432: FutureWarning: Default solver will be changed to 'lbfgs' in 0.22. Specify a solver to silence this warning.
-      FutureWarning)
-    /Users/sebastian/miniconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:459: FutureWarning: Default multi_class will be changed to 'auto' in 0.22. Specify the multi_class option to silence this warning.
-      "this warning.", FutureWarning)
-    /Users/sebastian/miniconda3/lib/python3.6/site-packages/sklearn/ensemble/forest.py:248: FutureWarning: The default value of n_estimators will change from 10 in version 0.20 to 100 in 0.22.
-      "10 in version 0.20 to 100 in 0.22.", FutureWarning)
-    /Users/sebastian/miniconda3/lib/python3.6/site-packages/sklearn/svm/base.py:196: FutureWarning: The default value of gamma will change from 'auto' to 'scale' in version 0.22 to account better for unscaled features. Set gamma explicitly to 'auto' or 'scale' to avoid this warning.
-      "avoid this warning.", FutureWarning)
 
-
-
-![png](plot_decision_regions_files/plot_decision_regions_11_1.png)
+![png](plot_decision_regions_files/plot_decision_regions_11_0.png)
 
 
 ## Example 4 - Highlighting Test Data Points
@@ -182,11 +174,11 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 
 # Initializing Classifiers
-clf1 = LogisticRegression(random_state=1)
+clf1 = LogisticRegression(random_state=1, solver='lbfgs')
 clf2 = RandomForestClassifier(n_estimators=100, 
                               random_state=1)
 clf3 = GaussianNB()
-clf4 = SVC()
+clf4 = SVC(gamma='auto')
 ```
 
 
@@ -230,14 +222,8 @@ for clf, lab, grd in zip([clf1, clf2, clf3, clf4],
 plt.show()
 ```
 
-    /Users/sebastian/miniconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:432: FutureWarning: Default solver will be changed to 'lbfgs' in 0.22. Specify a solver to silence this warning.
-      FutureWarning)
-    /Users/sebastian/miniconda3/lib/python3.6/site-packages/sklearn/svm/base.py:196: FutureWarning: The default value of gamma will change from 'auto' to 'scale' in version 0.22 to account better for unscaled features. Set gamma explicitly to 'auto' or 'scale' to avoid this warning.
-      "avoid this warning.", FutureWarning)
 
-
-
-![png](plot_decision_regions_files/plot_decision_regions_19_1.png)
+![png](plot_decision_regions_files/plot_decision_regions_19_0.png)
 
 
 ### Half-Moons
@@ -264,14 +250,8 @@ for clf, lab, grd in zip([clf1, clf2, clf3, clf4],
 plt.show()
 ```
 
-    /Users/sebastian/miniconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:432: FutureWarning: Default solver will be changed to 'lbfgs' in 0.22. Specify a solver to silence this warning.
-      FutureWarning)
-    /Users/sebastian/miniconda3/lib/python3.6/site-packages/sklearn/svm/base.py:196: FutureWarning: The default value of gamma will change from 'auto' to 'scale' in version 0.22 to account better for unscaled features. Set gamma explicitly to 'auto' or 'scale' to avoid this warning.
-      "avoid this warning.", FutureWarning)
 
-
-
-![png](plot_decision_regions_files/plot_decision_regions_21_1.png)
+![png](plot_decision_regions_files/plot_decision_regions_21_0.png)
 
 
 ### Concentric Circles
@@ -298,14 +278,8 @@ for clf, lab, grd in zip([clf1, clf2, clf3, clf4],
 plt.show()
 ```
 
-    /Users/sebastian/miniconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:432: FutureWarning: Default solver will be changed to 'lbfgs' in 0.22. Specify a solver to silence this warning.
-      FutureWarning)
-    /Users/sebastian/miniconda3/lib/python3.6/site-packages/sklearn/svm/base.py:196: FutureWarning: The default value of gamma will change from 'auto' to 'scale' in version 0.22 to account better for unscaled features. Set gamma explicitly to 'auto' or 'scale' to avoid this warning.
-      "avoid this warning.", FutureWarning)
 
-
-
-![png](plot_decision_regions_files/plot_decision_regions_23_1.png)
+![png](plot_decision_regions_files/plot_decision_regions_23_0.png)
 
 
 ## Example 6 - Working with existing axes objects using subplots
@@ -327,7 +301,9 @@ X = X[:, None]
 y = iris.target
 
 # Initializing and fitting classifiers
-clf1 = LogisticRegression(random_state=1)
+clf1 = LogisticRegression(random_state=1,
+                          solver='lbfgs',
+                          multi_class='multinomial')
 clf2 = GaussianNB()
 clf1.fit(X, y)
 clf2.fit(X, y)
@@ -340,14 +316,8 @@ fig = plot_decision_regions(X=X, y=y, clf=clf2, ax=axes[1], legend=1)
 plt.show()
 ```
 
-    /Users/sebastian/miniconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:432: FutureWarning: Default solver will be changed to 'lbfgs' in 0.22. Specify a solver to silence this warning.
-      FutureWarning)
-    /Users/sebastian/miniconda3/lib/python3.6/site-packages/sklearn/linear_model/logistic.py:459: FutureWarning: Default multi_class will be changed to 'auto' in 0.22. Specify the multi_class option to silence this warning.
-      "this warning.", FutureWarning)
 
-
-
-![png](plot_decision_regions_files/plot_decision_regions_25_1.png)
+![png](plot_decision_regions_files/plot_decision_regions_25_0.png)
 
 
 ## Example 7 - Decision regions with more than two training features
@@ -365,7 +335,7 @@ X, y = datasets.make_blobs(n_samples=600, n_features=3,
                            cluster_std=[2, 2], random_state=2)
 
 # Training a classifier
-svm = SVC()
+svm = SVC(gamma='auto')
 svm.fit(X, y)
 
 # Plotting decision regions
@@ -387,12 +357,8 @@ fig.suptitle('SVM on make_blobs')
 plt.show()
 ```
 
-    /Users/sebastian/miniconda3/lib/python3.6/site-packages/sklearn/svm/base.py:196: FutureWarning: The default value of gamma will change from 'auto' to 'scale' in version 0.22 to account better for unscaled features. Set gamma explicitly to 'auto' or 'scale' to avoid this warning.
-      "avoid this warning.", FutureWarning)
 
-
-
-![png](plot_decision_regions_files/plot_decision_regions_27_1.png)
+![png](plot_decision_regions_files/plot_decision_regions_27_0.png)
 
 
 ## Example 8 - Grid of decision region slices
@@ -409,7 +375,7 @@ X, y = datasets.make_blobs(n_samples=500, n_features=3, centers=[[2, 2, -2],[-2,
                            cluster_std=[2, 2], random_state=2)
 
 # Training a classifier
-svm = SVC()
+svm = SVC(gamma='auto')
 svm.fit(X, y)
 
 # Plotting decision regions
@@ -430,12 +396,8 @@ fig.suptitle('SVM on make_blobs')
 plt.show()
 ```
 
-    /Users/sebastian/miniconda3/lib/python3.6/site-packages/sklearn/svm/base.py:196: FutureWarning: The default value of gamma will change from 'auto' to 'scale' in version 0.22 to account better for unscaled features. Set gamma explicitly to 'auto' or 'scale' to avoid this warning.
-      "avoid this warning.", FutureWarning)
 
-
-
-![png](plot_decision_regions_files/plot_decision_regions_29_1.png)
+![png](plot_decision_regions_files/plot_decision_regions_29_0.png)
 
 
 ## Example 9 - Customizing the plotting style

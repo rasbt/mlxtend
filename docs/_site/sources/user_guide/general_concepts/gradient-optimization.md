@@ -6,11 +6,11 @@ Using the Gradient Decent optimization algorithm, the weights are updated increm
 
 Compatible cost functions $J(\cdot)$
 
-- Sum of squared errors (SSE) [ [mlxtend.regressor.LinearRegression](./regressor/linear_regression.html), [mlxtend.classfier.Adaline](./classifier/adaline.html) ]:
+- Sum of squared errors (SSE) [ [mlxtend.regressor.LinearRegression](../regressor/LinearRegression.md), [mlxtend.classfier.Adaline](../classifier/Adaline.md) ]:
 $$J(\mathbf{w}) = \frac{1}{2} \sum_i (\text{target}^{(i)} - \text{output}^{(i)})^2$$
 
 
-- Logistic Cost (cross-entropy) [ [mlxtend.classfier.LogisticRegression](./classifier/logisitic_regression.html) ]:
+- Logistic Cost (cross-entropy) [ [mlxtend.classfier.LogisticRegression](../classifier/LogisticRegression.md) ]:
 ...
 
 

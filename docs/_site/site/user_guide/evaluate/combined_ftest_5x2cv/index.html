@@ -806,6 +806,12 @@
                         
                             
 <li >
+    <a href="../../../api_subpackages/mlxtend.image/">Mlxtend.image</a>
+</li>
+
+                        
+                            
+<li >
     <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
@@ -897,6 +903,8 @@
                             <i class="fa fa-search"></i> Search
                         </a>
                     </li>
+
+                <!--
                     <li >
                         <a rel="next" href="../cochrans_q/">
                             <i class="fa fa-arrow-left"></i> Previous
@@ -906,9 +914,9 @@
                         <a rel="prev" href="../confusion_matrix/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
-                    </li>
+                    </li>-->
                     <li>
-                        <a href="https://github.com/rasbt/mlxtend/edit/master/docs/user_guide/evaluate/combined_ftest_5x2cv.md"><i class="fa fa-github"></i> Edit on GitHub</a>
+                        <a href="https://github.com/rasbt/mlxtend"><i class="fa fa-github"></i> GitHub</a>
                     </li>
             </ul>
         </div>
@@ -922,12 +930,12 @@
     <ul class="nav bs-sidenav">
         <li class="first-level active"><a href="#5x2cv-combined-f-test">5x2cv combined F test</a></li>
             <li class="second-level"><a href="#overview">Overview</a></li>
-                
-                <li class="third-level"><a href="#references">References</a></li>
+                 <!-- 
+                <li class="third-level"><a href="#references">References</a></li>  -->
             <li class="second-level"><a href="#example-1-5x2cv-combined-f-test">Example 1 - 5x2cv combined F test</a></li>
-                
+                 <!--   -->
             <li class="second-level"><a href="#api">API</a></li>
-                
+                 <!--   -->
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
@@ -939,7 +947,7 @@
 </blockquote>
 <h2 id="overview">Overview</h2>
 <p>The 5x2cv combined <em>F</em> test is a procedure for comparing the performance of two models (classifiers or regressors)
-that was proposed by Alpaydin [1] as a more robust alternative to Dietterich's 5x2cv paired t-test procedure [2]. <a href="../paired_ttest_5x2cv/"><code>paired_ttest_5x2cv.md</code></a>.  Dietterich's 5x2cv method was in turn was designed to address shortcomings in other methods such as the resampled paired <em>t</em> test (see <a href="../paired_ttest_resampled/"><code>paired_ttest_resampled</code></a>) and the k-fold cross-validated paired <em>t</em> test (see <a href="../paired_ttest_kfold_cv/"><code>paired_ttest_kfold_cv</code></a>).</p>
+that was proposed by Alpaydin [1] as a more robust alternative to Dietterich's 5x2cv paired t-test procedure [2]. <a href="../paired_ttest_5x2cv/"><code>paired_ttest_5x2cv.md</code></a>.  Dietterich's 5x2cv method was in turn designed to address shortcomings in other methods such as the resampled paired <em>t</em> test (see <a href="../paired_ttest_resampled/"><code>paired_ttest_resampled</code></a>) and the k-fold cross-validated paired <em>t</em> test (see <a href="../paired_ttest_kfold_cv/"><code>paired_ttest_kfold_cv</code></a>).</p>
 <p>To explain how this method works, let's consider to estimator (e.g., classifiers) A and B. Further, we have a labeled dataset <em>D</em>. In the common hold-out method, we typically split the dataset into 2 parts: a training and a test set. In the 5x2cv paired <em>t</em> test, we repeat the splitting (50% training and 50% test data) 5 times. </p>
 <p>In each of the 5 iterations, we fit A and B to the training split and evaluate their performance (<script type="math/tex">p_A</script> and <script type="math/tex">p_B</script>) on the test split. Then, we rotate the training and test sets (the training set becomes the test set and vice versa) compute the performance again, which results in 2 performance difference measures:</p>
 <p>
@@ -949,7 +957,7 @@ that was proposed by Alpaydin [1] as a more robust alternative to Dietterich's 5
 <p>
 <script type="math/tex; mode=display">p^{(2)} = p^{(2)}_A - p^{(2)}_B.</script>
 </p>
-<p>Then, we estimate the estimate mean and variance of the differences:</p>
+<p>Then, we estimate mean and variance of the differences:</p>
 <p>
 <script type="math/tex">\overline{p} = \frac{p^{(1)} + p^{(2)}}{2}</script>
 </p>
@@ -1100,7 +1108,7 @@ in the two compared models.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

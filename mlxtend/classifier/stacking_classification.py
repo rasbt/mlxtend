@@ -1,6 +1,6 @@
 # Stacking classifier
 
-# Sebastian Raschka 2014-2018
+# Sebastian Raschka 2014-2019
 # mlxtend Machine Learning Library Extensions
 #
 # An ensemble-learning meta-classifier for stacking

@@ -26,6 +26,7 @@ the Python version of the library "dlib": http://dlib.net
 - `landmarks` : numpy.ndarray, shape = [68, 2]
 
     A numpy array, where each row contains a landmark/point x-y coordinates.
+    Return None if no face is detected by Dlib.
 
 **Examples**
 

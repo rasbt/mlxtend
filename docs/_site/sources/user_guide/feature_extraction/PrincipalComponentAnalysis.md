@@ -166,7 +166,7 @@ $$\Sigma(-v) = -\Sigma v = -\lambda v = \lambda(-v).$$
 
 ## Example 4 - Factor Loadings
 
-After evoking the `fit` method, the factor loadings are available via the `loadings_` attribute. In simple terms, the the loadings are the unstandardized values of the eigenvectors. Or in other words, we can interpret the loadings as the covariances (or correlation in case we standardized the input features) between the input features and the and the principal components (or eigenvectors), which have been scaled to unit length.
+After evoking the `fit` method, the factor loadings are available via the `loadings_` attribute. In simple terms, the loadings are the unstandardized values of the eigenvectors. Or in other words, we can interpret the loadings as the covariances (or correlation in case we standardized the input features) between the input features and the principal components (or eigenvectors), which have been scaled to unit length.
 
 By having the loadings scaled, they become comparable by magnitude and we can assess how much variance in a component is attributed to the input features (as the components are  just a weighted linear combination of the input features).
 
@@ -211,10 +211,167 @@ plt.tight_layout()
 
 For instance, we may say that most of the variance in the first component is attributed to the petal features (although the loading of sepal length on PC1 is also not much less in magnitude). In contrast, the remaining variance captured by PC2 is mostly due to the sepal width. Note that we know from Example 2 that PC1 explains most of the variance, and based on the information from the loading plots, we may say that petal features combined with sepal length may explain most of the spread in the data.
 
+## Example 5 - Feature Extraction Pipeline
+
+
+```python
+from sklearn.pipeline import make_pipeline
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from mlxtend.data import wine_data
+
+X, y = wine_data()
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=123, test_size=0.3, stratify=y)
+```
+
+
+```python
+pipe_pca = make_pipeline(StandardScaler(),
+                         PrincipalComponentAnalysis(n_components=3),
+                         KNeighborsClassifier(n_neighbors=5))
+
+pipe_pca.fit(X_train, y_train)
+
+
+print('Transf. training accyracy: %.2f%%' % (pipe_pca.score(X_train, y_train)*100))
+print('Transf. test accyracy: %.2f%%' % (pipe_pca.score(X_test, y_test)*100))
+```
+
+    Transf. training accyracy: 96.77%
+    Transf. test accyracy: 96.30%
+
+
+## Example 6 - Whitening
+
+Certain algorithms require the data to be whitened. This means that the features have unit variance and the off-diagonals are all zero (i.e., the features are uncorrelated). PCA already ensures that the features are uncorrelated, hence, we only need to apply a simple scaling to whiten the transformed data.
+
+For instance, for a given transformed feature $X'_i$, we divide it by the square-root of the corresponding eigenvalue $\lambda_i$:
+
+$$X'_{\text{whitened}} = \frac{X'_i}{\sqrt{\lambda_i}}.$$
+
+The whitening via the `PrincipalComponentAnalysis` can be achieved by setting `whitening=True` during initialization. Let's demonstrate that with an example.
+
+
+```python
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from mlxtend.data import wine_data
+
+X, y = wine_data()
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=123, test_size=0.3, stratify=y)
+```
+
+### Regular PCA
+
+
+```python
+sc = StandardScaler()
+
+pca1 = PrincipalComponentAnalysis(n_components=2)
+
+X_train_scaled = sc.fit_transform(X_train)
+X_train_transf = pca1.fit(X_train_scaled).transform(X_train_scaled)
+
+
+with plt.style.context('seaborn-whitegrid'):
+    plt.figure(figsize=(6, 4))
+    for lab, col in zip((0, 1, 2),
+                        ('blue', 'red', 'green')):
+        plt.scatter(X_train_transf[y_train==lab, 0],
+                    X_train_transf[y_train==lab, 1],
+                    label=lab,
+                    c=col)
+    plt.xlabel('Principal Component 1')
+    plt.ylabel('Principal Component 2')
+    plt.legend(loc='lower center')
+    plt.tight_layout()
+    plt.show()
+```
+
+
+![png](PrincipalComponentAnalysis_files/PrincipalComponentAnalysis_33_0.png)
+
+
+
+```python
+np.set_printoptions(precision=1, suppress=True)
+
+print('Covariance matrix:\n')
+np.cov(X_train_transf.T)
+```
+
+    Covariance matrix:
+    
+
+
+
+
+
+    array([[4.9, 0. ],
+           [0. , 2.5]])
+
+
+
+As we can see, the features are uncorrelated after transformation but don't have unit variance.
+
+### PCA with Whitening
+
+
+```python
+sc = StandardScaler()
+
+pca1 = PrincipalComponentAnalysis(n_components=2, whitening=True)
+
+X_train_scaled = sc.fit_transform(X_train)
+X_train_transf = pca1.fit(X_train_scaled).transform(X_train_scaled)
+
+
+with plt.style.context('seaborn-whitegrid'):
+    plt.figure(figsize=(6, 4))
+    for lab, col in zip((0, 1, 2),
+                        ('blue', 'red', 'green')):
+        plt.scatter(X_train_transf[y_train==lab, 0],
+                    X_train_transf[y_train==lab, 1],
+                    label=lab,
+                    c=col)
+    plt.xlabel('Principal Component 1')
+    plt.ylabel('Principal Component 2')
+    plt.legend(loc='lower center')
+    plt.tight_layout()
+    plt.show()
+```
+
+
+![png](PrincipalComponentAnalysis_files/PrincipalComponentAnalysis_37_0.png)
+
+
+
+```python
+np.set_printoptions(precision=1, suppress=True)
+
+print('Covariance matrix:\n')
+np.cov(X_train_transf.T)
+```
+
+    Covariance matrix:
+    
+
+
+
+
+
+    array([[1., 0.],
+           [0., 1.]])
+
+
+
+As we can see above, the whitening achieves that all features now have unit variance. I.e., the covariance matrix of the transformed features becomes the identity matrix.
+
 ## API
 
 
-*PrincipalComponentAnalysis(n_components=None, solver='eigen')*
+*PrincipalComponentAnalysis(n_components=None, solver='svd', whitening=False)*
 
 Principal Component Analysis Class
 
@@ -225,10 +382,15 @@ Principal Component Analysis Class
     The number of principal components for transformation.
     Keeps the original dimensions of the dataset if `None`.
 
-- `solver` : str (default: 'eigen')
+- `solver` : str (default: 'svd')
 
     Method for performing the matrix decomposition.
     {'eigen', 'svd'}
+
+- `whitening` : bool (default: False)
+
+    Performs whitening such that the covariance matrix of
+    the transformed data will be the identity matrix.
 
 **Attributes**
 
@@ -264,7 +426,7 @@ For usage examples, please see
 
 <hr>
 
-*fit(X)*
+*fit(X, y=None)*
 
 Learn model from training data.
 
@@ -279,6 +441,49 @@ Learn model from training data.
 
 - `self` : object
 
+
+<hr>
+
+*get_params(deep=True)*
+
+Get parameters for this estimator.
+
+**Parameters**
+
+- `deep` : boolean, optional
+
+    If True, will return the parameters for this estimator and
+    contained subobjects that are estimators.
+
+**Returns**
+
+- `params` : mapping of string to any
+
+    Parameter names mapped to their values.'
+
+    adapted from
+    https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
+    # Author: Gael Varoquaux <gael.varoquaux@normalesup.org>
+    # License: BSD 3 clause
+
+<hr>
+
+*set_params(**params)*
+
+Set the parameters of this estimator.
+The method works on simple estimators as well as on nested objects
+(such as pipelines). The latter have parameters of the form
+``<component>__<parameter>`` so that it's possible to update each
+component of a nested object.
+
+**Returns**
+
+self
+
+adapted from
+https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
+# Author: Gael Varoquaux <gael.varoquaux@normalesup.org>
+# License: BSD 3 clause
 
 <hr>
 

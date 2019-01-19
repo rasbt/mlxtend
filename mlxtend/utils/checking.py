@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2018
+# Sebastian Raschka 2014-2019
 # mlxtend Machine Learning Library Extensions
 #
 # A counter class for printing the progress of an iterator.

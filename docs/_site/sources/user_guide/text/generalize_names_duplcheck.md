@@ -6,7 +6,7 @@ A function that converts a name into a general format ` <last_name><separator><f
 
 ## Overview
 
-**Note** that using [`mlxtend.text.generalize_names`](./generalize_named.html) with few `firstname_output_letters` can result in duplicate entries. E.g., if your dataset contains the names "Adam Johnson" and "Andrew Johnson", the default setting (i.e., 1 first name letter) will produce the generalized name "johnson a" in both cases.
+**Note** that using [`mlxtend.text.generalize_names`](./generalize_names.md) with few `firstname_output_letters` can result in duplicate entries. E.g., if your dataset contains the names "Adam Johnson" and "Andrew Johnson", the default setting (i.e., 1 first name letter) will produce the generalized name "johnson a" in both cases.
 
 One solution is to increase the number of first name letters in the output by setting the parameter `firstname_output_letters` to a value larger than 1. 
 

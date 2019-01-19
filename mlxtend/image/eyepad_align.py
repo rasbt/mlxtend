@@ -57,8 +57,6 @@ class EyepadAlign(object):
 
     target_width_ : the width of the transformed output image.
 
-    file_extension str (default='.jpg'): File extension of the image files.
-
     For more usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/image/EyepadAlign/
 
@@ -94,7 +92,8 @@ class EyepadAlign(object):
         return self
 
     def fit_directory(self, target_img_dir, target_height,
-                      target_width,  file_extension='.jpg'):
+                      target_width,  file_extension='.jpg',
+                      pre_check=True):
         """
         Calculates the average landmarks for all face images
         in a directory which will then be set as the target landmark set.
@@ -109,6 +108,14 @@ class EyepadAlign(object):
 
         target_width : int
             Expected image width of the images in the directory
+
+        file_extension str (default='.jpg'): File extension of the image files.
+
+        pre_check Bool (default=True): Checks that each image has the dimensions
+            specificed via `target_height` and `target_width` on the whole
+            directory first to identify potential issues that are recommended
+            to be fixed before proceeding. Raises a warning for each image if
+            dimensions differ from the ones specified and expected.
 
         Returns
         -------
@@ -128,17 +135,35 @@ class EyepadAlign(object):
             raise ValueError('No images found in %s with extension %s.'
                              % (target_img_dir, file_extension))
 
+        landmarks_list = []
+
+        if pre_check:
+            if self.verbose >= 1:
+                print('Pre-Checking directory for'
+                      ' consistent image dimensions...')
+                pbar = ProgBar(len(file_list))
+            for f in file_list:
+                img = read_image(filename=f, path=target_img_dir)
+                if self.verbose >= 1:
+                    pbar.update()
+                if (img.shape[0] != self.target_height_
+                        or img.shape[1] != self.target_width_):
+                    warnings.warn('Image %s has '
+                                  'dimensions %d x %d '
+                                  'instead of %d x %d.'
+                                   % (f, img.shape[0],
+                                      img.shape[1],
+                                      self.target_height_,
+                                      self.target_width_))
+
         if self.verbose >= 1:
             print("Fitting the average facial landmarks "
                   "for %d face images " % (len(file_list)))
-        landmarks_list = []
-
-        if self.verbose >= 1:
             pbar = ProgBar(len(file_list))
         for f in file_list:
+            img = read_image(filename=f, path=target_img_dir)
             if self.verbose >= 1:
                 pbar.update()
-            img = read_image(filename=f, path=target_img_dir)
 
             if self.target_width_ != img.shape[1]:
                 width_ratio = self.target_width_ / img.shape[1]

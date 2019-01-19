@@ -509,6 +509,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../user_guide/image/eyepad_align/">EyepadAlign</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -937,6 +943,7 @@
         <li class="first-level "><a href="#randomholdoutsplit">RandomHoldoutSplit</a></li>
             <li class="second-level"><a href="#methods_2">Methods</a></li>
                  <!--   -->
+        <li class="first-level "><a href="#bias_variance_decomp">bias_variance_decomp</a></li>
         <li class="first-level "><a href="#bootstrap">bootstrap</a></li>
         <li class="first-level "><a href="#bootstrap_point632_score">bootstrap_point632_score</a></li>
         <li class="first-level "><a href="#cochrans_q">cochrans_q</a></li>
@@ -958,7 +965,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.14.0dev </p>
+<p>mlxtend version: 0.15.0dev </p>
 <h2 id="bootstrapoutofbag">BootstrapOutOfBag</h2>
 <p><em>BootstrapOutOfBag(n_splits=200, random_seed=None)</em></p>
 <p><strong>Parameters</strong></p>
@@ -1186,6 +1193,56 @@ Stratification is done based on the y labels.</p>
 <li>
 <p><code>valid_index</code> : ndarray</p>
 <p>The validation set indices for that split.</p>
+</li>
+</ul>
+<h2 id="bias_variance_decomp">bias_variance_decomp</h2>
+<p><em>bias_variance_decomp(estimator, X_train, y_train, X_test, y_test, loss='0-1_loss', num_rounds=200, random_seed=None)</em></p>
+<p>estimator : object
+A classifier or regressor object or class implementing a <code>fit</code>
+<code>predict</code> method similar to the scikit-learn API.</p>
+<ul>
+<li>
+<p><code>X_train</code> : array-like, shape=(num_examples, num_features)</p>
+<p>A training dataset for drawing the bootstrap samples to carry
+out the bias-variance decomposition.</p>
+</li>
+<li>
+<p><code>y_train</code> : array-like, shape=(num_examples)</p>
+<p>Targets (class labels, continuous values in case of regression)
+associated with the <code>X_train</code> examples.</p>
+</li>
+<li>
+<p><code>X_test</code> : array-like, shape=(num_examples, num_features)</p>
+<p>The test dataset for computing the average loss, bias,
+and variance.</p>
+</li>
+<li>
+<p><code>y_test</code> : array-like, shape=(num_examples)</p>
+<p>Targets (class labels, continuous values in case of regression)
+associated with the <code>X_test</code> examples.</p>
+</li>
+<li>
+<p><code>loss</code> : str (default='0-1_loss')</p>
+<p>Loss function for performing the bias-variance decomposition.
+Currently allowed values are '0-1_loss' and 'mse'.</p>
+</li>
+<li>
+<p><code>num_rounds</code> : int (default=200)</p>
+<p>Number of bootstrap rounds for performing the bias-variance
+decomposition.</p>
+</li>
+<li>
+<p><code>random_seed</code> : int (default=None)</p>
+<p>Random seed for the bootstrap sampling used for the
+bias-variance decomposition.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>avg_expected_loss, avg_bias, avg_var</code> : returns the average expected</p>
+<p>average bias, and average bias (all floats), where the average
+is computed over the data points in the test set.</p>
 </li>
 </ul>
 <h2 id="bootstrap">bootstrap</h2>

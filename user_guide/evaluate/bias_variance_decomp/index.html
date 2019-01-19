@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A library consisting of useful tools and extensions for the day-to-day data science tasks."> 
+    <meta name="author" content="Sebastian Raschka"> 
+    <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/evaluate/bias_variance_decomp/">
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+
+    <title>Bias-Variance Decomposition - mlxtend</title>
+
+    <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
+    <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link href="../../../css/cinder.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+
+
+    <link href="../../../cinder/css/base.css" rel="stylesheet">
+
+
+    <link href="../../../cinder/css/bootstrap-custom.css" rel="stylesheet">
+
+
+    <link href="../../../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
+
+
+    <link href="../../../cinder/css/cinder.css" rel="stylesheet">
+
+
+    <link href="../../../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
+
+
+    <link href="../../../cinder/css/highlight.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-38457794-2', 'rasbt.github.io/mlxtend/');
+    ga('send', 'pageview');
+    </script>
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            <a class="navbar-brand" href="../../..">mlxtend</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../USER_GUIDE_INDEX/">User Guide Index</a>
+</li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">classifier</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../classifier/Adaline/">Adaptive Linear Neuron -- Adaline</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/EnsembleVoteClassifier/">EnsembleVoteClassifier</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/LogisticRegression/">Logistic Regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/MultiLayerPerceptron/">Neural Network - Multilayer Perceptron</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/Perceptron/">Perceptron</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/SoftmaxRegression/">Softmax Regression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/StackingClassifier/">StackingClassifier</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../classifier/StackingCVClassifier/">StackingCVClassifier</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">cluster</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../cluster/Kmeans/">Kmeans</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">data</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../data/autompg_data/">Auto MPG</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/boston_housing_data/">Boston Housing Data</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/iris_data/">Iris Dataset</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/loadlocal_mnist/">Load the MNIST Dataset from Local Files</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/make_multiplexer_dataset/">Make Multiplexer Dataset</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/mnist_data/">MNIST Dataset</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/three_blobs_data/">Three Blobs Dataset</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../data/wine_data/">Wine Dataset</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">evaluate</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../bootstrap/">Bootstrap</a>
+</li>
+
+        
+            
+<li >
+    <a href="../bootstrap_point632_score/">bootstrap_point632_score</a>
+</li>
+
+        
+            
+<li >
+    <a href="../BootstrapOutOfBag/">BootstrapOutOfBag</a>
+</li>
+
+        
+            
+<li >
+    <a href="../cochrans_q/">Cochran's Q Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../combined_ftest_5x2cv/">5x2cv combined *F* test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../feature_importance_permutation/">Feature Importance Permutation</a>
+</li>
+
+        
+            
+<li >
+    <a href="../ftest/">F-Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../lift_score/">Lift Score</a>
+</li>
+
+        
+            
+<li >
+    <a href="../mcnemar_table/">Contigency Table for McNemar's Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../mcnemar_tables/">Contigency Tables for McNemar's Test and Cochran's Q Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../mcnemar/">McNemar's Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../paired_ttest_5x2cv/">5x2cv paired *t* test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../paired_ttest_kfold_cv/">K-fold cross-validated paired *t* test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../paired_ttest_resampled/">Resampled paired *t* test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../permutation_test/">Permutation Test</a>
+</li>
+
+        
+            
+<li >
+    <a href="../PredefinedHoldoutSplit/">PredefinedHoldoutSplit</a>
+</li>
+
+        
+            
+<li >
+    <a href="../RandomHoldoutSplit/">RandomHoldoutSplit</a>
+</li>
+
+        
+            
+<li >
+    <a href="../scoring/">Scoring</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">feature_extraction</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../feature_extraction/LinearDiscriminantAnalysis/">Linear Discriminant Analysis</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../feature_extraction/PrincipalComponentAnalysis/">Principal Component Analysis</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../feature_extraction/RBFKernelPCA/">RBFKernelPCA</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">feature_selection</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../feature_selection/ColumnSelector/">ColumnSelector</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../feature_selection/ExhaustiveFeatureSelector/">Exhaustive Feature Selector</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../feature_selection/SequentialFeatureSelector/">Sequential Feature Selector</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">file_io</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../file_io/find_filegroups/">Find Filegroups</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../file_io/find_files/">Find Files</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">frequent_patterns</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../frequent_patterns/apriori/">Apriori</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../frequent_patterns/association_rules/">Association rules</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">general concepts</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../general_concepts/activation-functions/">Activation Functions for Artificial Neural Networks</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/gradient-optimization/">Gradient Descent and Stochastic Gradient Descent</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/linear-gradient-derivative/">Deriving the Gradient Descent Rule for Linear Regression and Adaline</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../general_concepts/regularization-linear/">Regularization of Generalized Linear Models</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">image</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../image/extract_face_landmarks/">Extract Face Landmarks</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../image/eyepad_align/">EyepadAlign</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">math</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../math/num_combinations/">Compute the Number of Combinations</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/num_permutations/">Compute the Number of Permutations</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/vectorspace_dimensionality/">Vectorspace Dimensionality</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../math/vectorspace_orthonormalization/">Vectorspace Orthonormalization</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">plotting</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../plotting/category_scatter/">Scatterplot with Categories</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/checkerboard_plot/">Checkerboard Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/ecdf/">Empirical Cumulative Distribution Function Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/enrichment_plot/">Enrichment Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_decision_regions/">Plotting Decision Regions</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_learning_curves/">Plotting Learning Curves</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_linear_regression/">Linear Regression Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/plot_sequential_feature_selection/">Plot Sequential Feature Selection</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/scatterplotmatrix/">Scatter Plot Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/stacked_barplot/">Stacked Barplot</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">preprocessing</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../preprocessing/CopyTransformer/">CopyTransformer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/DenseTransformer/">DenseTransformer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/MeanCenterer/">Mean Centerer</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/minmax_scaling/">MinMax Scaling</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/one-hot_encoding/">One hot encoding</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/shuffle_arrays_unison/">Shuffle Arrays in Unison</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/standardize/">Standardize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../preprocessing/TransactionEncoder/">TransactionEncoder</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">regressor</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../regressor/LinearRegression/">LinearRegression</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../regressor/StackingCVRegressor/">StackingCVRegressor</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../regressor/StackingRegressor/">StackingRegressor</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">text</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../text/generalize_names/">Generalize Names</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../text/generalize_names_duplcheck/">Generalize Names & Duplicate Checking</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../text/tokenizer/">Tokenizer</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">utils</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../utils/Counter/">Counter</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.classifier/">Mlxtend.classifier</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.cluster/">Mlxtend.cluster</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.data/">Mlxtend.data</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.evaluate/">Mlxtend.evaluate</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.feature_extraction/">Mlxtend.feature extraction</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.feature_selection/">Mlxtend.feature selection</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.file_io/">Mlxtend.file io</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.frequent_patterns/">Mlxtend.frequent patterns</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.image/">Mlxtend.image</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.preprocessing/">Mlxtend.preprocessing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.regressor/">Mlxtend.regressor</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.text/">Mlxtend.text</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../api_subpackages/mlxtend.utils/">Mlxtend.utils</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../../installation/">Installation</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../CHANGELOG/">Release Notes</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../CONTRIBUTING/">How To Contribute</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../contributors/">Contributors</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../license/">License</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../cite/">Citing Mlxtend</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../discuss/">Discuss</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <i class="fa fa-search"></i> Search
+                        </a>
+                    </li>
+
+                <!---->
+                    <li>
+                        <a href="https://github.com/rasbt/mlxtend"><i class="fa fa-github"></i> GitHub</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="first-level active"><a href="#bias-variance-decomposition">Bias-Variance Decomposition</a></li>
+            <li class="second-level"><a href="#overview">Overview</a></li>
+                 <!-- 
+                <li class="third-level"><a href="#bias-variance-decomposition-of-the-squared-loss">Bias-Variance Decomposition of the Squared Loss</a></li>
+                <li class="third-level"><a href="#bias-variance-decomposition-of-the-0-1-loss">Bias-Variance Decomposition of the 0-1 Loss</a></li>
+                <li class="third-level"><a href="#references">References</a></li>  -->
+            <li class="second-level"><a href="#example-1-bias-variance-decomposition-of-a-decision-tree-classifier">Example 1 -- Bias Variance Decomposition of a Decision Tree Classifier</a></li>
+                 <!--   -->
+            <li class="second-level"><a href="#example-2-bias-variance-decomposition-of-a-decision-tree-regressor">Example 2 -- Bias Variance Decomposition of a Decision Tree Regressor</a></li>
+                 <!--   -->
+            <li class="second-level"><a href="#api">API</a></li>
+                 <!--   -->
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<h1 id="bias-variance-decomposition">Bias-Variance Decomposition</h1>
+<p>Bias variance decomposition of machine learning algorithms for various loss functions.</p>
+<blockquote>
+<p><code>from mlxtend.evaluate import bias_variance_decomp</code>    </p>
+</blockquote>
+<h2 id="overview">Overview</h2>
+<p>Often, researchers use the terms <em>bias</em> and <em>variance</em> or "bias-variance tradeoff" to describe the performance of a model -- i.e., you may stumble upon talks, books, or articles where people say that a model has a high variance or high bias. So, what does that mean? In general, we might say that "high variance" is proportional to overfitting, and "high bias" is proportional to underfitting.</p>
+<p>Anyways, why are we attempting to do this bias-variance decomposition in the first place? The decomposition of the loss into bias and variance helps us understand learning algorithms, as these concepts are correlated to underfitting and overfitting.</p>
+<p>To use the more formal terms for bias and variance, assume we have a point estimator <script type="math/tex">\hat{\theta}</script> of some parameter or function <script type="math/tex">\theta</script>. Then, the bias is commonly defined as the difference between the expected value of the estimator and the parameter that we want to estimate:</p>
+<p>
+<script type="math/tex; mode=display">
+\text{Bias} = E[\hat{\theta}] - \theta.
+</script>
+</p>
+<p>If the bias is larger than zero, we also say that the estimator is positively biased, if the bias is smaller than zero, the estimator is negatively biased, and if the bias is exactly zero, the estimator is unbiased. Similarly, we define the variance as the difference between the expected value of the squared estimator minus the squared expectation of the estimator:</p>
+<p>
+<script type="math/tex; mode=display">
+\text{Var}(\hat{\theta}) = E\big[\hat{\theta}^2\big] - \bigg(E\big[\hat{\theta}\big]\bigg)^2.
+</script>
+</p>
+<p>Note that in the context of this lecture, it will be more convenient to write the variance in its alternative form:</p>
+<p>
+<script type="math/tex; mode=display">
+\text{Var}(\hat{\theta}) = E[(E[{\hat{\theta}}] - \hat{\theta})^2].
+</script>
+</p>
+<p>To illustrate the concept further in context of machine learning ...</p>
+<p>Suppose there is an unknown target function or "true function" to which we do want to approximate. Now, suppose we have different training sets drawn from an unknown distribution defined as "true function + noise." The following plot shows different linear regression models, each fit to a different training set. None of these hypotheses approximate the true function well, except at two points (around x=-10 and x=6). Here, we can say that the bias is large because the difference between the true value and the predicted value, on average (here, average means "expectation of the training sets" not "expectation over examples in the training set"), is large:</p>
+<p><img alt="" src="../bias_variance_decomp_files/high-bias-plot.png" /></p>
+<p>The next plot shows different unpruned decision tree models, each fit to a different training set. Note that these hypotheses fit the training data very closely. However, if we would consider the expectation over training sets, the average hypothesis would fit the true function perfectly (given that the noise is unbiased and has an expected value of 0). As we can see, the variance is very large, since on average, a prediction differs a lot from the expectation value of the prediction:</p>
+<p><img alt="" src="../bias_variance_decomp_files/varianceplot.png" /></p>
+<h3 id="bias-variance-decomposition-of-the-squared-loss">Bias-Variance Decomposition of the Squared Loss</h3>
+<p>We can decompose a loss function such as the squared loss into three terms, a variance, bias, and a noise term (and the same is true for the decomposition of the 0-1 loss later). However, for simplicity, we will ignore the noise term.</p>
+<p>Before we introduce the bias-variance decomposition of the 0-1 loss for classification, let us start with the decomposition of the squared loss as an easy warm-up exercise to get familiar with the overall concept.</p>
+<p>The previous section already listed the common formal definitions of bias and variance, however, let us define them again for convenience:</p>
+<p>
+<script type="math/tex; mode=display">
+\text{Bias}(\hat{\theta}) = E[\hat{\theta}] - \theta, \quad \text{Var}(\hat{\theta}) = E[(E[{\hat{\theta}}] - \hat{\theta})^2].
+</script>
+</p>
+<p>Recall that in the context of these machine learning lecture (notes), we defined </p>
+<ul>
+<li>the true or target function as <script type="math/tex">y = f(x)</script>,</li>
+<li>the predicted target value as <script type="math/tex">\hat{y} = \hat{f}(x) = h(x)</script>,</li>
+<li>and the squared loss as <script type="math/tex">S = (y - \hat{y})^2</script>. (I use <script type="math/tex">S</script> here because it will be easier to tell it apart from the <script type="math/tex">E</script>, which we use for the <em>expectation</em> in this lecture.)</li>
+</ul>
+<p><strong>Note that unless noted otherwise, the expectation is over training sets!</strong></p>
+<p>To get started with the squared error loss decomposition into bias and variance, let use do some algebraic manipulation, i.e., adding and subtracting the expected value of <script type="math/tex">\hat{y}</script> and then expanding the expression using the quadratic formula <script type="math/tex">(a+b)^2 = a^2 + b^2 + 2ab)</script>:</p>
+<p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{split}
+S = (y - \hat{y})^2 \\
+(y - \hat{y})^2 &= (y - E[{\hat{y}}] + E[{\hat{y}}] - \hat{y})^2 \\
+&= (y-E[{\hat{y}}])^2 + (E[{\hat{y}}] - y)^2 + 2(y - E[\hat{y}])(E[\hat{y}] - \hat{y}). 
+\end{split}
+\end{equation}
+</script>
+</p>
+<p>Next, we just use the expectation on both sides, and we are already done:</p>
+<p>
+<script type="math/tex; mode=display">
+\begin{align}
+E[S] &= E[(y - \hat{y})^2] \\
+E[(y - \hat{y})^2]
+&= (y-E[{\hat{y}}])^2 + E[(E[{\hat{y}}] - \hat{y})^2]\\
+&= \text{[Bias]}^2 + \text{Variance}.
+\end{align}
+</script>
+</p>
+<p>You may wonder what happened to the "<script type="math/tex">2ab</script>" term (<script type="math/tex">2(y - E[\hat{y}])(E[\hat{y}] - \hat{y})</script>) when we used the expectation. It turns that it evaluates to zero and hence vanishes from the equation, which can be shown as follows:</p>
+<p>
+<script type="math/tex; mode=display">
+\begin{align}
+E[2(y - E[{\hat{y}}])(E[{\hat{y}}] - \hat{y})]  &= 2 E[(y - E[{\hat{y}}])(E[{\hat{y}}] - \hat{y})] \\
+&=  2(y - E[{\hat{y}}])E[(E[{\hat{y}}] - \hat{y})] \\
+&= 2(y - E[{\hat{y}}])(E[E[{\hat{y}}]] - E[\hat{y}])\\
+&= 2(y - E[{\hat{y}}])(E[{\hat{y}}] - E[{\hat{y}}]) \\
+&= 0.
+\end{align}
+</script>
+</p>
+<p>So, this is the canonical decomposition of the squared error loss into bias and variance. The next section will discuss some approaches that have been made to decompose the 0-1 loss that we commonly use for classification accuracy or error.</p>
+<p>The following figure is a sketch of variance and bias in relation to the training error and generalization error -- how high variance related to overfitting, and how large bias relates to underfitting:</p>
+<p><img alt="" src="../bias_variance_decomp_files/image-20181029010428686.png" /></p>
+<h3 id="bias-variance-decomposition-of-the-0-1-loss">Bias-Variance Decomposition of the 0-1 Loss</h3>
+<p>Note that decomposing the 0-1 loss into bias and variance components is not as straight-forward as for the squared error loss. To quote Pedro Domingos, a well-known machine learning researcher and professor at University of Washington: </p>
+<blockquote>
+<p>"several authors have proposed bias-variance decompositions related to zero-one loss (Kong &amp; Dietterich, 1995; Breiman, 1996b; Kohavi &amp; Wolpert, 1996; Tibshirani, 1996; Friedman, 1997). However, each of these decompositions has significant shortcomings.". [1] </p>
+</blockquote>
+<p>In fact, the paper this quote was taken from may offer the most intuitive and general formulation at this point. However, we will first, for simplicity, go over Kong &amp; Dietterich formulation [2] of the 0-1 loss decomposition, which is the same as Domingos's but excluding the noise term (for simplicity). </p>
+<p>The table below summarizes the relevant terms we used for the squared loss in relation to the 0-1 loss. Recall that the 0-1 loss, <script type="math/tex">L</script>, is 0 if a class label is predicted correctly, and one otherwise. The main prediction for the squared error loss is simply the average over the predictions <script type="math/tex">E[\hat{y}]</script> (the expectation is over training sets), for the 0-1 loss Kong &amp; Dietterich and Domingos defined it as the mode. I.e., if a model predicts the label one more than 50% of the time (considering all possible training sets), then the main prediction is 1, and 0 otherwise.</p>
+<table>
+<thead>
+<tr>
+<th>-</th>
+<th>Squared Loss</th>
+<th>0-1 Loss</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Single loss</td>
+<td>
+<script type="math/tex">(y - \hat{y})^2</script>
+</td>
+<td>
+<script type="math/tex">L(y, \hat{y})</script>
+</td>
+</tr>
+<tr>
+<td>Expected loss</td>
+<td>
+<script type="math/tex">E[(y - \hat{y})^2]</script>
+</td>
+<td>
+<script type="math/tex">E[L(y, \hat{y})]</script>
+</td>
+</tr>
+<tr>
+<td>Main prediction <script type="math/tex">E[\hat{y}]</script>
+</td>
+<td>mean (average)</td>
+<td>mode</td>
+</tr>
+<tr>
+<td>Bias<script type="math/tex">^2</script>
+</td>
+<td>
+<script type="math/tex">(y-E[{\hat{y}}])^2</script>
+</td>
+<td>
+<script type="math/tex">L(y, E[\hat{y}])</script>
+</td>
+</tr>
+<tr>
+<td>Variance</td>
+<td>
+<script type="math/tex">E[(E[{\hat{y}}] - \hat{y})^2]</script>
+</td>
+<td>
+<script type="math/tex">E[L(\hat{y}, E[\hat{y}])]</script>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Hence, as result from using the mode to define the main prediction of the 0-1 loss, the bias is 1 if the main prediction does not agree with the true label <script type="math/tex">y</script>, and 0 otherwise:</p>
+<p>
+<script type="math/tex; mode=display">
+Bias = \begin{cases}
+1 \text{ if }  y \neq E[{\hat{y}}], \\
+0 \text{ otherwise}.
+\end{cases}
+</script>
+</p>
+<p>The variance of the 0-1 loss is defined as the probability that the predicted label does not match the main prediction: </p>
+<p>
+<script type="math/tex; mode=display">
+Variance = P(\hat{y} \neq E[\hat{{y}}]).
+</script>
+</p>
+<p>Next, let us take a look at what happens to the loss if the bias is 0. Given the general definition of the loss, loss = bias + variance, if the bias is 0, then we define the loss as the variance: </p>
+<p>
+<script type="math/tex; mode=display">
+Loss = 0 + Variance = Loss = P(\hat{y} \neq y) = Variance = P(\hat{y} \neq E[\hat{{y}}]).
+</script>
+</p>
+<p>In other words, if a model has zero bias, it's loss is entirely defined by the variance, which is intuitive if we think of variance in the context of being proportional overfitting.</p>
+<p>The more surprising scenario is if the bias is equal to 1. If the bias is equal to 1, as explained by Pedro Domingos, the increasing the variance can decrease the loss, which is an interesting observation. This can be seen by first rewriting the 0-1 loss function as </p>
+<p>
+<script type="math/tex; mode=display">
+Loss = P(\hat{y} \neq y) = 1 - P(\hat{y} = y).
+</script>
+</p>
+<p>(Note that we have not done anything new, yet.) Now, if we look at the previous equation of the bias, if the bias is 1, we have  <script type="math/tex"> y \neq E[{\hat{y}}]</script>. If <script type="math/tex">y</script> is not equal to the main prediction, but <script type="math/tex">y</script> is also is equal to <script type="math/tex">\hat{y}</script>, then <script type="math/tex">\hat{y}</script> must be equal to the main prediction. Using the "inverse" ("1 minus"), we can then write the loss as</p>
+<p>
+<script type="math/tex; mode=display">
+Loss = P(\hat{y} \neq y) = 1 - P(\hat{y} = y) = 1 - P(\hat{y} \neq E[{\hat{y}}]).
+</script>
+</p>
+<p>Since the bias is 1, the loss is hence defined as "loss = bias - variance" if the bias is 1 (or "loss = 1 - variance"). This might be quite unintuitive at first, but the explanations Kong, Dietterich, and Domingos offer was that if a model has a very high bias such that it main prediction is always wrong, increasing the variance can be beneficial, since increasing the variance would push the decision boundary, which might lead to some correct predictions just by chance then. In other words, for scenarios with high bias, increasing the variance can improve (decrease) the loss!</p>
+<h3 id="references">References</h3>
+<ul>
+<li>[1] Domingos, Pedro. "A unified bias-variance decomposition." Proceedings of 17th International Conference on Machine Learning. 2000.</li>
+<li>[2] Dietterich, Thomas G., and Eun Bae Kong. Machine learning bias, statistical bias, and statistical variance of decision tree algorithms. Technical report, Department of Computer Science, Oregon State University, 1995.</li>
+</ul>
+<h2 id="example-1-bias-variance-decomposition-of-a-decision-tree-classifier">Example 1 -- Bias Variance Decomposition of a Decision Tree Classifier</h2>
+<pre><code class="python">from mlxtend.evaluate import bias_variance_decomp
+from sklearn.tree import DecisionTreeClassifier
+from mlxtend.data import iris_data
+from sklearn.model_selection import train_test_split
+
+
+X, y = iris_data()
+X_train, X_test, y_train, y_test = train_test_split(X, y,
+                                                    test_size=0.3,
+                                                    random_state=123,
+                                                    shuffle=True,
+                                                    stratify=y)
+
+
+
+tree = DecisionTreeClassifier(random_state=123)
+
+avg_expected_loss, avg_bias, avg_var = bias_variance_decomp(
+        tree, X_train, y_train, X_test, y_test, 
+        loss='0-1_loss',
+        random_seed=123)
+
+print('Average expected loss: %.3f' % avg_expected_loss)
+print('Average bias: %.3f' % avg_bias)
+print('Average variance: %.3f' % avg_var)
+</code></pre>
+
+<pre><code>Average expected loss: 0.062
+Average bias: 0.022
+Average variance: 0.040
+</code></pre>
+<p>For comparison, the bias-variance decomposition of a bagging classifier, which should intuitively have a lower variance compared than a single decision tree:</p>
+<pre><code class="python">from sklearn.ensemble import BaggingClassifier
+
+tree = DecisionTreeClassifier(random_state=123)
+bag = BaggingClassifier(base_estimator=tree,
+                        n_estimators=100,
+                        random_state=123)
+
+avg_expected_loss, avg_bias, avg_var = bias_variance_decomp(
+        bag, X_train, y_train, X_test, y_test, 
+        loss='0-1_loss',
+        random_seed=123)
+
+print('Average expected loss: %.3f' % avg_expected_loss)
+print('Average bias: %.3f' % avg_bias)
+print('Average variance: %.3f' % avg_var)
+</code></pre>
+
+<pre><code>Average expected loss: 0.048
+Average bias: 0.022
+Average variance: 0.026
+</code></pre>
+<h2 id="example-2-bias-variance-decomposition-of-a-decision-tree-regressor">Example 2 -- Bias Variance Decomposition of a Decision Tree Regressor</h2>
+<pre><code class="python">from mlxtend.evaluate import bias_variance_decomp
+from sklearn.tree import DecisionTreeRegressor
+from mlxtend.data import boston_housing_data
+from sklearn.model_selection import train_test_split
+
+
+X, y = boston_housing_data()
+X_train, X_test, y_train, y_test = train_test_split(X, y,
+                                                    test_size=0.3,
+                                                    random_state=123,
+                                                    shuffle=True)
+
+
+
+tree = DecisionTreeRegressor(random_state=123)
+
+avg_expected_loss, avg_bias, avg_var = bias_variance_decomp(
+        tree, X_train, y_train, X_test, y_test, 
+        loss='mse',
+        random_seed=123)
+
+print('Average expected loss: %.3f' % avg_expected_loss)
+print('Average bias: %.3f' % avg_bias)
+print('Average variance: %.3f' % avg_var)
+</code></pre>
+
+<pre><code>Average expected loss: 31.917
+Average bias: 13.814
+Average variance: 18.102
+</code></pre>
+<p>For comparison, the bias-variance decomposition of a bagging regressor is shown below, which should intuitively have a lower variance than a single decision tree:</p>
+<pre><code class="python">from sklearn.ensemble import BaggingRegressor
+
+tree = DecisionTreeRegressor(random_state=123)
+bag = BaggingRegressor(base_estimator=tree,
+                       n_estimators=100,
+                       random_state=123)
+
+avg_expected_loss, avg_bias, avg_var = bias_variance_decomp(
+        bag, X_train, y_train, X_test, y_test, 
+        loss='mse',
+        random_seed=123)
+
+print('Average expected loss: %.3f' % avg_expected_loss)
+print('Average bias: %.3f' % avg_bias)
+print('Average variance: %.3f' % avg_var)
+</code></pre>
+
+<pre><code>Average expected loss: 18.593
+Average bias: 15.354
+Average variance: 3.239
+</code></pre>
+<h2 id="api">API</h2>
+<p><em>bias_variance_decomp(estimator, X_train, y_train, X_test, y_test, loss='0-1_loss', num_rounds=200, random_seed=None)</em></p>
+<p>estimator : object
+A classifier or regressor object or class implementing a <code>fit</code>
+<code>predict</code> method similar to the scikit-learn API.</p>
+<ul>
+<li>
+<p><code>X_train</code> : array-like, shape=(num_examples, num_features)</p>
+<p>A training dataset for drawing the bootstrap samples to carry
+out the bias-variance decomposition.</p>
+</li>
+<li>
+<p><code>y_train</code> : array-like, shape=(num_examples)</p>
+<p>Targets (class labels, continuous values in case of regression)
+associated with the <code>X_train</code> examples.</p>
+</li>
+<li>
+<p><code>X_test</code> : array-like, shape=(num_examples, num_features)</p>
+<p>The test dataset for computing the average loss, bias,
+and variance.</p>
+</li>
+<li>
+<p><code>y_test</code> : array-like, shape=(num_examples)</p>
+<p>Targets (class labels, continuous values in case of regression)
+associated with the <code>X_test</code> examples.</p>
+</li>
+<li>
+<p><code>loss</code> : str (default='0-1_loss')</p>
+<p>Loss function for performing the bias-variance decomposition.
+Currently allowed values are '0-1_loss' and 'mse'.</p>
+</li>
+<li>
+<p><code>num_rounds</code> : int (default=200)</p>
+<p>Number of bootstrap rounds for performing the bias-variance
+decomposition.</p>
+</li>
+<li>
+<p><code>random_seed</code> : int (default=None)</p>
+<p>Random seed for the bootstrap sampling used for the
+bias-variance decomposition.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>avg_expected_loss, avg_bias, avg_var</code> : returns the average expected</p>
+<p>average bias, and average bias (all floats), where the average
+is computed over the data points in the test set.</p>
+</li>
+</ul></div>
+        
+        
+    </div>
+
+    <footer class="col-md-12 text-center">
+        <hr>
+        <p>
+        <small>Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        
+        <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
+    </footer>
+
+    <script src="../../../js/jquery-1.10.2.min.js"></script>
+    <script src="../../../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+    var base_url = '../../..';
+    </script>
+    <script data-main="../../../mkdocs/js/search.js" src="../../../mkdocs/js/require.js"></script>
+    <script src="../../../js/base.js"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="../../../mathjaxhelper.js"></script>
+    <script src="../../../search/main.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+
+</html>

@@ -509,6 +509,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../image/eyepad_align/">EyepadAlign</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -942,9 +948,19 @@
                  <!--   -->
             <li class="second-level"><a href="#example-4-factor-loadings">Example 4 - Factor Loadings</a></li>
                  <!--   -->
+            <li class="second-level"><a href="#example-5-feature-extraction-pipeline">Example 5 - Feature Extraction Pipeline</a></li>
+                 <!--   -->
+            <li class="second-level"><a href="#example-6-whitening">Example 6 - Whitening</a></li>
+                 <!-- 
+                <li class="third-level"><a href="#regular-pca">Regular PCA</a></li>
+                <li class="third-level"><a href="#pca-with-whitening">PCA with Whitening</a></li>  -->
             <li class="second-level"><a href="#api">API</a></li>
                  <!-- 
                 <li class="third-level"><a href="#methods">Methods</a></li>  -->
+        <li class="first-level "><a href="#author-gael-varoquaux-amp103amp97amp101amp108amp46amp118amp97amp114amp111amp113amp117amp97amp117amp120amp64amp110amp111amp114amp109amp97amp108amp101amp115amp117amp112amp46amp111amp114amp103">Author: Gael Varoquaux &#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a></li>
+        <li class="first-level "><a href="#license-bsd-3-clause">License: BSD 3 clause</a></li>
+        <li class="first-level "><a href="#author-gael-varoquaux-amp103amp97amp101amp108amp46amp118amp97amp114amp111amp113amp117amp97amp117amp120amp64amp110amp111amp114amp109amp97amp108amp101amp115amp117amp112amp46amp111amp114amp103_1">Author: Gael Varoquaux &#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a></li>
+        <li class="first-level "><a href="#license-bsd-3-clause_1">License: BSD 3 clause</a></li>
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
@@ -1080,7 +1096,7 @@ with plt.style.context('seaborn-whitegrid'):
 <script type="math/tex; mode=display">\Sigma(-v) = -\Sigma v = -\lambda v = \lambda(-v).</script>
 </p>
 <h2 id="example-4-factor-loadings">Example 4 - Factor Loadings</h2>
-<p>After evoking the <code>fit</code> method, the factor loadings are available via the <code>loadings_</code> attribute. In simple terms, the the loadings are the unstandardized values of the eigenvectors. Or in other words, we can interpret the loadings as the covariances (or correlation in case we standardized the input features) between the input features and the and the principal components (or eigenvectors), which have been scaled to unit length.</p>
+<p>After evoking the <code>fit</code> method, the factor loadings are available via the <code>loadings_</code> attribute. In simple terms, the loadings are the unstandardized values of the eigenvectors. Or in other words, we can interpret the loadings as the covariances (or correlation in case we standardized the input features) between the input features and the principal components (or eigenvectors), which have been scaled to unit length.</p>
 <p>By having the loadings scaled, they become comparable by magnitude and we can assess how much variance in a component is attributed to the input features (as the components are  just a weighted linear combination of the input features).</p>
 <pre><code class="python">from mlxtend.data import iris_data
 from mlxtend.preprocessing import standardize
@@ -1115,8 +1131,132 @@ plt.tight_layout()
 
 <p><img alt="png" src="../PrincipalComponentAnalysis_files/PrincipalComponentAnalysis_24_0.png" /></p>
 <p>For instance, we may say that most of the variance in the first component is attributed to the petal features (although the loading of sepal length on PC1 is also not much less in magnitude). In contrast, the remaining variance captured by PC2 is mostly due to the sepal width. Note that we know from Example 2 that PC1 explains most of the variance, and based on the information from the loading plots, we may say that petal features combined with sepal length may explain most of the spread in the data.</p>
+<h2 id="example-5-feature-extraction-pipeline">Example 5 - Feature Extraction Pipeline</h2>
+<pre><code class="python">from sklearn.pipeline import make_pipeline
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from mlxtend.data import wine_data
+
+X, y = wine_data()
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=123, test_size=0.3, stratify=y)
+</code></pre>
+
+<pre><code class="python">pipe_pca = make_pipeline(StandardScaler(),
+                         PrincipalComponentAnalysis(n_components=3),
+                         KNeighborsClassifier(n_neighbors=5))
+
+pipe_pca.fit(X_train, y_train)
+
+
+print('Transf. training accyracy: %.2f%%' % (pipe_pca.score(X_train, y_train)*100))
+print('Transf. test accyracy: %.2f%%' % (pipe_pca.score(X_test, y_test)*100))
+</code></pre>
+
+<pre><code>Transf. training accyracy: 96.77%
+Transf. test accyracy: 96.30%
+</code></pre>
+<h2 id="example-6-whitening">Example 6 - Whitening</h2>
+<p>Certain algorithms require the data to be whitened. This means that the features have unit variance and the off-diagonals are all zero (i.e., the features are uncorrelated). PCA already ensures that the features are uncorrelated, hence, we only need to apply a simple scaling to whiten the transformed data.</p>
+<p>For instance, for a given transformed feature <script type="math/tex">X'_i</script>, we divide it by the square-root of the corresponding eigenvalue <script type="math/tex">\lambda_i</script>:</p>
+<p>
+<script type="math/tex; mode=display">X'_{\text{whitened}} = \frac{X'_i}{\sqrt{\lambda_i}}.</script>
+</p>
+<p>The whitening via the <code>PrincipalComponentAnalysis</code> can be achieved by setting <code>whitening=True</code> during initialization. Let's demonstrate that with an example.</p>
+<pre><code class="python">from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from mlxtend.data import wine_data
+
+X, y = wine_data()
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=123, test_size=0.3, stratify=y)
+</code></pre>
+
+<h3 id="regular-pca">Regular PCA</h3>
+<pre><code class="python">sc = StandardScaler()
+
+pca1 = PrincipalComponentAnalysis(n_components=2)
+
+X_train_scaled = sc.fit_transform(X_train)
+X_train_transf = pca1.fit(X_train_scaled).transform(X_train_scaled)
+
+
+with plt.style.context('seaborn-whitegrid'):
+    plt.figure(figsize=(6, 4))
+    for lab, col in zip((0, 1, 2),
+                        ('blue', 'red', 'green')):
+        plt.scatter(X_train_transf[y_train==lab, 0],
+                    X_train_transf[y_train==lab, 1],
+                    label=lab,
+                    c=col)
+    plt.xlabel('Principal Component 1')
+    plt.ylabel('Principal Component 2')
+    plt.legend(loc='lower center')
+    plt.tight_layout()
+    plt.show()
+</code></pre>
+
+<p><img alt="png" src="PrincipalComponentAnalysis_files/PrincipalComponentAnalysis_33_0.png" /></p>
+<pre><code class="python">np.set_printoptions(precision=1, suppress=True)
+
+print('Covariance matrix:\n')
+np.cov(X_train_transf.T)
+</code></pre>
+
+<pre><code>Covariance matrix:
+
+
+
+
+
+
+array([[4.9, 0. ],
+       [0. , 2.5]])
+</code></pre>
+<p>As we can see, the features are uncorrelated after transformation but don't have unit variance.</p>
+<h3 id="pca-with-whitening">PCA with Whitening</h3>
+<pre><code class="python">sc = StandardScaler()
+
+pca1 = PrincipalComponentAnalysis(n_components=2, whitening=True)
+
+X_train_scaled = sc.fit_transform(X_train)
+X_train_transf = pca1.fit(X_train_scaled).transform(X_train_scaled)
+
+
+with plt.style.context('seaborn-whitegrid'):
+    plt.figure(figsize=(6, 4))
+    for lab, col in zip((0, 1, 2),
+                        ('blue', 'red', 'green')):
+        plt.scatter(X_train_transf[y_train==lab, 0],
+                    X_train_transf[y_train==lab, 1],
+                    label=lab,
+                    c=col)
+    plt.xlabel('Principal Component 1')
+    plt.ylabel('Principal Component 2')
+    plt.legend(loc='lower center')
+    plt.tight_layout()
+    plt.show()
+</code></pre>
+
+<p><img alt="png" src="PrincipalComponentAnalysis_files/PrincipalComponentAnalysis_37_0.png" /></p>
+<pre><code class="python">np.set_printoptions(precision=1, suppress=True)
+
+print('Covariance matrix:\n')
+np.cov(X_train_transf.T)
+</code></pre>
+
+<pre><code>Covariance matrix:
+
+
+
+
+
+
+array([[1., 0.],
+       [0., 1.]])
+</code></pre>
+<p>As we can see above, the whitening achieves that all features now have unit variance. I.e., the covariance matrix of the transformed features becomes the identity matrix.</p>
 <h2 id="api">API</h2>
-<p><em>PrincipalComponentAnalysis(n_components=None, solver='eigen')</em></p>
+<p><em>PrincipalComponentAnalysis(n_components=None, solver='svd', whitening=False)</em></p>
 <p>Principal Component Analysis Class</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1126,9 +1266,14 @@ plt.tight_layout()
 Keeps the original dimensions of the dataset if <code>None</code>.</p>
 </li>
 <li>
-<p><code>solver</code> : str (default: 'eigen')</p>
+<p><code>solver</code> : str (default: 'svd')</p>
 <p>Method for performing the matrix decomposition.
 {'eigen', 'svd'}</p>
+</li>
+<li>
+<p><code>whitening</code> : bool (default: False)</p>
+<p>Performs whitening such that the covariance matrix of
+the transformed data will be the identity matrix.</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>
@@ -1163,7 +1308,7 @@ of the loadings though.</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X)</em></p>
+<p><em>fit(X, y=None)</em></p>
 <p>Learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1177,6 +1322,43 @@ n_features is the number of features.</p>
 <ul>
 <li><code>self</code> : object</li>
 </ul>
+<hr>
+
+<p><em>get_params(deep=True)</em></p>
+<p>Get parameters for this estimator.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>deep</code> : boolean, optional</p>
+<p>If True, will return the parameters for this estimator and
+contained subobjects that are estimators.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>params</code> : mapping of string to any</p>
+<p>Parameter names mapped to their values.'</p>
+<p>adapted from
+https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py</p>
+<h1 id="author-gael-varoquaux-amp103amp97amp101amp108amp46amp118amp97amp114amp111amp113amp117amp97amp117amp120amp64amp110amp111amp114amp109amp97amp108amp101amp115amp117amp112amp46amp111amp114amp103">Author: Gael Varoquaux <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;">&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a></h1>
+<h1 id="license-bsd-3-clause">License: BSD 3 clause</h1>
+</li>
+</ul>
+<hr>
+
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.
+The method works on simple estimators as well as on nested objects
+(such as pipelines). The latter have parameters of the form
+<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
+component of a nested object.</p>
+<p><strong>Returns</strong></p>
+<p>self</p>
+<p>adapted from
+https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py</p>
+<h1 id="author-gael-varoquaux-amp103amp97amp101amp108amp46amp118amp97amp114amp111amp113amp117amp97amp117amp120amp64amp110amp111amp114amp109amp97amp108amp101amp115amp117amp112amp46amp111amp114amp103_1">Author: Gael Varoquaux <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;">&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a></h1>
+<h1 id="license-bsd-3-clause_1">License: BSD 3 clause</h1>
 <hr>
 
 <p><em>transform(X)</em></p>

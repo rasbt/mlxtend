@@ -509,6 +509,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../eyepad_align/">EyepadAlign</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -911,7 +917,7 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../../math/num_combinations/">
+                        <a rel="prev" href="../eyepad_align/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>-->
@@ -933,6 +939,8 @@
                  <!-- 
                 <li class="third-level"><a href="#references">References</a></li>  -->
             <li class="second-level"><a href="#example-1">Example 1</a></li>
+                 <!--   -->
+            <li class="second-level"><a href="#display-the-index-of-landmark-popints">Display the index of landmark popints</a></li>
                  <!--   -->
             <li class="second-level"><a href="#api">API</a></li>
                  <!--   -->
@@ -976,7 +984,7 @@ import matplotlib.pyplot as plt
 
 from mlxtend.image import extract_face_landmarks
 
-img = imageio.imread('lena.png')
+img = imageio.imread('test-face.png')
 landmarks = extract_face_landmarks(img)
 print(landmarks.shape)
 print('\n\nFirst 10 landmarks:\n', landmarks[:10])
@@ -986,16 +994,16 @@ print('\n\nFirst 10 landmarks:\n', landmarks[:10])
 
 
 First 10 landmarks:
- [[206 266]
- [204 290]
- [205 314]
- [209 337]
- [220 357]
- [236 374]
- [253 387]
- [273 397]
- [290 398]
- [304 391]]
+ [[132 159]
+ [134 173]
+ [137 187]
+ [142 200]
+ [150 212]
+ [159 222]
+ [170 231]
+ [184 235]
+ [198 236]
+ [211 231]]
 </code></pre>
 <p>Visualization of the landmarks:</p>
 <pre><code class="python">fig = plt.figure(figsize=(15, 5))
@@ -1012,6 +1020,44 @@ plt.show()
 </code></pre>
 
 <p><img alt="png" src="../extract_face_landmarks_files/extract_face_landmarks_9_0.png" /></p>
+<h2 id="display-the-index-of-landmark-popints">Display the index of landmark popints</h2>
+<pre><code class="python"># left and right eyes indexes
+import numpy as np
+
+left = np.array([36, 37, 38, 39, 40, 41])
+right = np.array([42, 43, 44, 45, 46, 47])
+</code></pre>
+
+<pre><code class="python">import matplotlib.pyplot as plt
+%matplotlib inline
+
+
+fig = plt.figure(figsize=(10,10))
+plt.plot(landmarks[:,0], -landmarks[:,1], 'ro', markersize=8, alpha = 0.5)
+for i in range(landmarks.shape[0]):
+    plt.text(landmarks[i,0]+1, -landmarks[i,1], str(i), size=14)
+
+
+left_eye = np.mean(landmarks[left], axis=0)
+right_eye = np.mean(landmarks[right], axis=0)
+print('Coordinates of the Left Eye: ', left_eye)
+print('Coordinates of the Right Eye: ', right_eye)
+plt.plot([left_eye[0]], [-left_eye[1]], 
+            marker='+', color='blue', markersize=10, mew=4)
+
+plt.plot([right_eye[0]], [-right_eye[1]], 
+            marker='+', color='blue', markersize=10, mew=4)
+
+plt.xticks([])
+plt.yticks([])
+
+plt.show()
+</code></pre>
+
+<pre><code>Coordinates of the Left Eye:  [169.33333333 156.        ]
+Coordinates of the Right Eye:  [210.83333333 152.16666667]
+</code></pre>
+<p><img alt="png" src="extract_face_landmarks_files/extract_face_landmarks_12_1.png" /></p>
 <h2 id="api">API</h2>
 <p><em>extract_face_landmarks(img, return_dtype=<class 'numpy.int32'>)</em></p>
 <p>Function to extract face landmarks.</p>
@@ -1036,7 +1082,8 @@ default: np.int32.</p>
 <ul>
 <li>
 <p><code>landmarks</code> : numpy.ndarray, shape = [68, 2]</p>
-<p>A numpy array, where each row contains a landmark/point x-y coordinates.</p>
+<p>A numpy array, where each row contains a landmark/point x-y coordinates.
+Return None if no face is detected by Dlib.</p>
 </li>
 </ul>
 <p><strong>Examples</strong></p>

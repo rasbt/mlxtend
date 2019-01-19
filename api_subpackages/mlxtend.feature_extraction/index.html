@@ -509,6 +509,12 @@
 </li>
 
         
+            
+<li >
+    <a href="../../user_guide/image/eyepad_align/">EyepadAlign</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -953,7 +959,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.14.0dev </p>
+<p>mlxtend version: 0.15.0dev </p>
 <h2 id="lineardiscriminantanalysis">LinearDiscriminantAnalysis</h2>
 <p><em>LinearDiscriminantAnalysis(n_discriminants=None)</em></p>
 <p>Linear Discriminant Analysis Class</p>
@@ -1067,7 +1073,7 @@ n_features is the number of features.</p>
 </li>
 </ul>
 <h2 id="principalcomponentanalysis">PrincipalComponentAnalysis</h2>
-<p><em>PrincipalComponentAnalysis(n_components=None, solver='eigen')</em></p>
+<p><em>PrincipalComponentAnalysis(n_components=None, solver='svd', whitening=False)</em></p>
 <p>Principal Component Analysis Class</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1077,9 +1083,14 @@ n_features is the number of features.</p>
 Keeps the original dimensions of the dataset if <code>None</code>.</p>
 </li>
 <li>
-<p><code>solver</code> : str (default: 'eigen')</p>
+<p><code>solver</code> : str (default: 'svd')</p>
 <p>Method for performing the matrix decomposition.
 {'eigen', 'svd'}</p>
+</li>
+<li>
+<p><code>whitening</code> : bool (default: False)</p>
+<p>Performs whitening such that the covariance matrix of
+the transformed data will be the identity matrix.</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>
@@ -1114,7 +1125,7 @@ of the loadings though.</p>
 <h3 id="methods_1">Methods</h3>
 <hr>
 
-<p><em>fit(X)</em></p>
+<p><em>fit(X, y=None)</em></p>
 <p>Learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>

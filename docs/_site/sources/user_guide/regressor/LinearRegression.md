@@ -87,7 +87,7 @@ plt.show()
 
 
 
-![png](LinearRegression_files/LinearRegression_14_1.png)
+![png](LinearRegression_files/LinearRegression_13_1.png)
 
 
 ## Example 2 - Gradient Descent
@@ -108,8 +108,8 @@ gd_lr = LinearRegression(eta=0.005,
                          print_progress=3)
 gd_lr.fit(X, y)
 
-print('Intercept: %.2f' % gd_lr.w_)
-print('Slope: %.2f' % gd_lr.b_)
+print('Intercept: %.2f' % gd_lr.b_)
+print('Slope: %.2f' % gd_lr.w_)
 
 def lin_regplot(X, y, model):
     plt.scatter(X, y, c='blue')
@@ -120,14 +120,14 @@ lin_regplot(X, y, gd_lr)
 plt.show()
 ```
 
-    Iteration: 100/100 | Cost 0.08 | Elapsed: 0:00:00 | ETA: 0:00:00
+    Iteration: 100/100 | Cost 0.08 | Elapsed: 0:00:00 | ETA: 0:00:000
 
-    Intercept: 0.82
-    Slope: 0.22
+    Intercept: 0.22
+    Slope: 0.82
 
 
 
-![png](LinearRegression_files/LinearRegression_16_2.png)
+![png](LinearRegression_files/LinearRegression_15_2.png)
 
 
 
@@ -143,7 +143,7 @@ plt.show()
 ```
 
 
-![png](LinearRegression_files/LinearRegression_17_0.png)
+![png](LinearRegression_files/LinearRegression_16_0.png)
 
 
 ## Example 3 - Stochastic Gradient Descent
@@ -163,8 +163,8 @@ sgd_lr = LinearRegression(eta=0.01,
                           minibatches=len(y))
 sgd_lr.fit(X, y)
 
-print('Intercept: %.2f' % sgd_lr.b_)
-print('Slope: %.2f' % sgd_lr.w_)
+print('Intercept: %.2f' % sgd_lr.w_)
+print('Slope: %.2f' % sgd_lr.b_)
 
 def lin_regplot(X, y, model):
     plt.scatter(X, y, c='blue')
@@ -175,12 +175,12 @@ lin_regplot(X, y, sgd_lr)
 plt.show()
 ```
 
-    Intercept: 0.24
-    Slope: 0.82
+    Intercept: 0.82
+    Slope: 0.24
 
 
 
-![png](LinearRegression_files/LinearRegression_19_1.png)
+![png](LinearRegression_files/LinearRegression_18_1.png)
 
 
 
@@ -194,7 +194,7 @@ plt.show()
 ```
 
 
-![png](LinearRegression_files/LinearRegression_20_0.png)
+![png](LinearRegression_files/LinearRegression_19_0.png)
 
 
 ## Example 3 - Stochastic Gradient Descent with Minibatches
@@ -231,7 +231,7 @@ plt.show()
 
 
 
-![png](LinearRegression_files/LinearRegression_22_1.png)
+![png](LinearRegression_files/LinearRegression_21_1.png)
 
 
 
@@ -245,7 +245,7 @@ plt.show()
 ```
 
 
-![png](LinearRegression_files/LinearRegression_23_0.png)
+![png](LinearRegression_files/LinearRegression_22_0.png)
 
 
 ## API
@@ -339,6 +339,30 @@ Learn model from training data.
 
 <hr>
 
+*get_params(deep=True)*
+
+Get parameters for this estimator.
+
+**Parameters**
+
+- `deep` : boolean, optional
+
+    If True, will return the parameters for this estimator and
+    contained subobjects that are estimators.
+
+**Returns**
+
+- `params` : mapping of string to any
+
+    Parameter names mapped to their values.'
+
+    adapted from
+    https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
+    # Author: Gael Varoquaux <gael.varoquaux@normalesup.org>
+    # License: BSD 3 clause
+
+<hr>
+
 *predict(X)*
 
 Predict targets from X.
@@ -355,5 +379,24 @@ Predict targets from X.
 - `target_values` : array-like, shape = [n_samples]
 
     Predicted target values.
+
+<hr>
+
+*set_params(**params)*
+
+Set the parameters of this estimator.
+The method works on simple estimators as well as on nested objects
+(such as pipelines). The latter have parameters of the form
+``<component>__<parameter>`` so that it's possible to update each
+component of a nested object.
+
+**Returns**
+
+self
+
+adapted from
+https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
+# Author: Gael Varoquaux <gael.varoquaux@normalesup.org>
+# License: BSD 3 clause
 
 

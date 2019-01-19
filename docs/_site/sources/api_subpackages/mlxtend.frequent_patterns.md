@@ -1,4 +1,4 @@
-mlxtend version: 0.14.0dev 
+mlxtend version: 0.15.0dev 
 ## apriori
 
 *apriori(df, min_support=0.5, use_colnames=False, max_len=None, n_jobs=1)*

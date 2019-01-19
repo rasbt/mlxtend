@@ -15,6 +15,8 @@ The algorithm can be summarized as follows (source: [1]):
     
 ![](./StackingClassifier_files/stacking_algorithm.png)
 
+**Please note that this type of Stacking is prone to overfitting due to information leakage. The related [StackingCVClassifier.md](StackingCVClassifier.md) does not derive the predictions for the 2nd-level classifier from the same datast that was used for training the level-1 classifiers and is recommended instead.**
+
 ### References
 
 
@@ -95,7 +97,7 @@ for clf, lab, grd in zip([clf1, clf2, clf3, sclf],
 ```
 
 
-![png](StackingClassifier_files/StackingClassifier_13_0.png)
+![png](StackingClassifier_files/StackingClassifier_14_0.png)
 
 
 ## Example 2 - Using Probabilities as Meta-Features

@@ -1,4 +1,4 @@
-mlxtend version: 0.14.0dev 
+mlxtend version: 0.15.0dev 
 ## Adaline
 
 *Adaline(eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0)*

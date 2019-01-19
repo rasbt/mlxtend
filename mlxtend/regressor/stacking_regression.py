@@ -1,6 +1,6 @@
 # Stacking regressor
 
-# Sebastian Raschka 2014-2018
+# Sebastian Raschka 2014-2019
 # mlxtend Machine Learning Library Extensions
 #
 # An ensemble-learning meta-regressor for stacking regression

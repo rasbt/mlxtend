@@ -806,6 +806,12 @@
                         
                             
 <li >
+    <a href="../../../api_subpackages/mlxtend.image/">Mlxtend.image</a>
+</li>
+
+                        
+                            
+<li >
     <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
@@ -897,6 +903,8 @@
                             <i class="fa fa-search"></i> Search
                         </a>
                     </li>
+
+                <!--
                     <li >
                         <a rel="next" href="../../preprocessing/TransactionEncoder/">
                             <i class="fa fa-arrow-left"></i> Previous
@@ -906,9 +914,9 @@
                         <a rel="prev" href="../StackingCVRegressor/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
-                    </li>
+                    </li>-->
                     <li>
-                        <a href="https://github.com/rasbt/mlxtend/edit/master/docs/user_guide/regressor/LinearRegression.md"><i class="fa fa-github"></i> Edit on GitHub</a>
+                        <a href="https://github.com/rasbt/mlxtend"><i class="fa fa-github"></i> GitHub</a>
                     </li>
             </ul>
         </div>
@@ -922,21 +930,25 @@
     <ul class="nav bs-sidenav">
         <li class="first-level active"><a href="#linearregression">LinearRegression</a></li>
             <li class="second-level"><a href="#overview">Overview</a></li>
-                
+                 <!-- 
                 <li class="third-level"><a href="#normal-equations-closed-form-solution">Normal Equations (closed-form solution)</a></li>
                 <li class="third-level"><a href="#gradient-descent-gd-and-stochastic-gradient-descent-sgd">Gradient Descent (GD)  and Stochastic Gradient Descent (SGD)</a></li>
-                <li class="third-level"><a href="#references">References</a></li>
+                <li class="third-level"><a href="#references">References</a></li>  -->
             <li class="second-level"><a href="#example-1-closed-form-solution">Example 1 - Closed Form Solution</a></li>
-                
+                 <!--   -->
             <li class="second-level"><a href="#example-2-gradient-descent">Example 2 - Gradient Descent</a></li>
-                
+                 <!--   -->
             <li class="second-level"><a href="#example-3-stochastic-gradient-descent">Example 3 - Stochastic Gradient Descent</a></li>
-                
+                 <!--   -->
             <li class="second-level"><a href="#example-3-stochastic-gradient-descent-with-minibatches">Example 3 - Stochastic Gradient Descent with Minibatches</a></li>
-                
+                 <!--   -->
             <li class="second-level"><a href="#api">API</a></li>
-                
-                <li class="third-level"><a href="#methods">Methods</a></li>
+                 <!-- 
+                <li class="third-level"><a href="#methods">Methods</a></li>  -->
+        <li class="first-level "><a href="#author-gael-varoquaux-amp103amp97amp101amp108amp46amp118amp97amp114amp111amp113amp117amp97amp117amp120amp64amp110amp111amp114amp109amp97amp108amp101amp115amp117amp112amp46amp111amp114amp103">Author: Gael Varoquaux &#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a></li>
+        <li class="first-level "><a href="#license-bsd-3-clause">License: BSD 3 clause</a></li>
+        <li class="first-level "><a href="#author-gael-varoquaux-amp103amp97amp101amp108amp46amp118amp97amp114amp111amp113amp117amp97amp117amp120amp64amp110amp111amp114amp109amp97amp108amp101amp115amp117amp112amp46amp111amp114amp103_1">Author: Gael Varoquaux &#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a></li>
+        <li class="first-level "><a href="#license-bsd-3-clause_1">License: BSD 3 clause</a></li>
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
@@ -1020,7 +1032,7 @@ plt.show()
 <pre><code>Intercept: 0.25
 Slope: 0.81
 </code></pre>
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_14_1.png" /></p>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_13_1.png" /></p>
 <h2 id="example-2-gradient-descent">Example 2 - Gradient Descent</h2>
 <pre><code class="python">import numpy as np
 import matplotlib.pyplot as plt
@@ -1036,8 +1048,8 @@ gd_lr = LinearRegression(eta=0.005,
                          print_progress=3)
 gd_lr.fit(X, y)
 
-print('Intercept: %.2f' % gd_lr.w_)
-print('Slope: %.2f' % gd_lr.b_)
+print('Intercept: %.2f' % gd_lr.b_)
+print('Slope: %.2f' % gd_lr.w_)
 
 def lin_regplot(X, y, model):
     plt.scatter(X, y, c='blue')
@@ -1048,12 +1060,12 @@ lin_regplot(X, y, gd_lr)
 plt.show()
 </code></pre>
 
-<pre><code>Iteration: 100/100 | Cost 0.08 | Elapsed: 0:00:00 | ETA: 0:00:00
+<pre><code>Iteration: 100/100 | Cost 0.08 | Elapsed: 0:00:00 | ETA: 0:00:000
 
-Intercept: 0.82
-Slope: 0.22
+Intercept: 0.22
+Slope: 0.82
 </code></pre>
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_16_2.png" /></p>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_15_2.png" /></p>
 <pre><code class="python"># Visualizing the cost to check for convergence and plotting the linear model:
 
 plt.plot(range(1, gd_lr.epochs+1), gd_lr.cost_)
@@ -1064,7 +1076,7 @@ plt.tight_layout()
 plt.show()    
 </code></pre>
 
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_17_0.png" /></p>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_16_0.png" /></p>
 <h2 id="example-3-stochastic-gradient-descent">Example 3 - Stochastic Gradient Descent</h2>
 <pre><code class="python">import numpy as np
 import matplotlib.pyplot as plt
@@ -1079,8 +1091,8 @@ sgd_lr = LinearRegression(eta=0.01,
                           minibatches=len(y))
 sgd_lr.fit(X, y)
 
-print('Intercept: %.2f' % sgd_lr.b_)
-print('Slope: %.2f' % sgd_lr.w_)
+print('Intercept: %.2f' % sgd_lr.w_)
+print('Slope: %.2f' % sgd_lr.b_)
 
 def lin_regplot(X, y, model):
     plt.scatter(X, y, c='blue')
@@ -1091,10 +1103,10 @@ lin_regplot(X, y, sgd_lr)
 plt.show()
 </code></pre>
 
-<pre><code>Intercept: 0.24
-Slope: 0.82
+<pre><code>Intercept: 0.82
+Slope: 0.24
 </code></pre>
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_19_1.png" /></p>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_18_1.png" /></p>
 <pre><code class="python">plt.plot(range(1, sgd_lr.epochs+1), sgd_lr.cost_)
 plt.xlabel('Epochs')
 plt.ylabel('Cost')
@@ -1103,7 +1115,7 @@ plt.tight_layout()
 plt.show()  
 </code></pre>
 
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_20_0.png" /></p>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_19_0.png" /></p>
 <h2 id="example-3-stochastic-gradient-descent-with-minibatches">Example 3 - Stochastic Gradient Descent with Minibatches</h2>
 <pre><code class="python">import numpy as np
 import matplotlib.pyplot as plt
@@ -1133,7 +1145,7 @@ plt.show()
 <pre><code>Intercept: 0.24
 Slope: 0.82
 </code></pre>
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_22_1.png" /></p>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_21_1.png" /></p>
 <pre><code class="python">plt.plot(range(1, sgd_lr.epochs+1), sgd_lr.cost_)
 plt.xlabel('Epochs')
 plt.ylabel('Cost')
@@ -1142,7 +1154,7 @@ plt.tight_layout()
 plt.show()  
 </code></pre>
 
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_23_0.png" /></p>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_22_0.png" /></p>
 <h2 id="api">API</h2>
 <p><em>LinearRegression(eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0)</em></p>
 <p>Ordinary least squares linear regression.</p>
@@ -1227,6 +1239,29 @@ a previous model fitting.</p>
 </ul>
 <hr>
 
+<p><em>get_params(deep=True)</em></p>
+<p>Get parameters for this estimator.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>deep</code> : boolean, optional</p>
+<p>If True, will return the parameters for this estimator and
+contained subobjects that are estimators.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>params</code> : mapping of string to any</p>
+<p>Parameter names mapped to their values.'</p>
+<p>adapted from
+https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py</p>
+<h1 id="author-gael-varoquaux-amp103amp97amp101amp108amp46amp118amp97amp114amp111amp113amp117amp97amp117amp120amp64amp110amp111amp114amp109amp97amp108amp101amp115amp117amp112amp46amp111amp114amp103">Author: Gael Varoquaux <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;">&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a></h1>
+<h1 id="license-bsd-3-clause">License: BSD 3 clause</h1>
+</li>
+</ul>
+<hr>
+
 <p><em>predict(X)</em></p>
 <p>Predict targets from X.</p>
 <p><strong>Parameters</strong></p>
@@ -1243,7 +1278,21 @@ n_features is the number of features.</p>
 <p><code>target_values</code> : array-like, shape = [n_samples]</p>
 <p>Predicted target values.</p>
 </li>
-</ul></div>
+</ul>
+<hr>
+
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.
+The method works on simple estimators as well as on nested objects
+(such as pipelines). The latter have parameters of the form
+<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
+component of a nested object.</p>
+<p><strong>Returns</strong></p>
+<p>self</p>
+<p>adapted from
+https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py</p>
+<h1 id="author-gael-varoquaux-amp103amp97amp101amp108amp46amp118amp97amp114amp111amp113amp117amp97amp117amp120amp64amp110amp111amp114amp109amp97amp108amp101amp115amp117amp112amp46amp111amp114amp103_1">Author: Gael Varoquaux <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;">&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a></h1>
+<h1 id="license-bsd-3-clause_1">License: BSD 3 clause</h1></div>
         
         
     </div>
@@ -1251,7 +1300,7 @@ n_features is the number of features.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

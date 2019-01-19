@@ -39,7 +39,7 @@ import matplotlib.pyplot as plt
 
 from mlxtend.image import extract_face_landmarks
 
-img = imageio.imread('lena.png')
+img = imageio.imread('test-face.png')
 landmarks = extract_face_landmarks(img)
 print(landmarks.shape)
 print('\n\nFirst 10 landmarks:\n', landmarks[:10])
@@ -49,16 +49,16 @@ print('\n\nFirst 10 landmarks:\n', landmarks[:10])
     
     
     First 10 landmarks:
-     [[206 266]
-     [204 290]
-     [205 314]
-     [209 337]
-     [220 357]
-     [236 374]
-     [253 387]
-     [273 397]
-     [290 398]
-     [304 391]]
+     [[132 159]
+     [134 173]
+     [137 187]
+     [142 200]
+     [150 212]
+     [159 222]
+     [170 231]
+     [184 235]
+     [198 236]
+     [211 231]]
 
 
 Visualization of the landmarks:
@@ -80,6 +80,53 @@ plt.show()
 
 
 ![png](extract_face_landmarks_files/extract_face_landmarks_9_0.png)
+
+
+## Display the index of landmark popints
+
+
+```python
+# left and right eyes indexes
+import numpy as np
+
+left = np.array([36, 37, 38, 39, 40, 41])
+right = np.array([42, 43, 44, 45, 46, 47])
+```
+
+
+```python
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+
+fig = plt.figure(figsize=(10,10))
+plt.plot(landmarks[:,0], -landmarks[:,1], 'ro', markersize=8, alpha = 0.5)
+for i in range(landmarks.shape[0]):
+    plt.text(landmarks[i,0]+1, -landmarks[i,1], str(i), size=14)
+
+
+left_eye = np.mean(landmarks[left], axis=0)
+right_eye = np.mean(landmarks[right], axis=0)
+print('Coordinates of the Left Eye: ', left_eye)
+print('Coordinates of the Right Eye: ', right_eye)
+plt.plot([left_eye[0]], [-left_eye[1]], 
+            marker='+', color='blue', markersize=10, mew=4)
+
+plt.plot([right_eye[0]], [-right_eye[1]], 
+            marker='+', color='blue', markersize=10, mew=4)
+
+plt.xticks([])
+plt.yticks([])
+
+plt.show()
+```
+
+    Coordinates of the Left Eye:  [169.33333333 156.        ]
+    Coordinates of the Right Eye:  [210.83333333 152.16666667]
+
+
+
+![png](extract_face_landmarks_files/extract_face_landmarks_12_1.png)
 
 
 ## API
@@ -111,6 +158,7 @@ the Python version of the library "dlib": http://dlib.net
 - `landmarks` : numpy.ndarray, shape = [68, 2]
 
     A numpy array, where each row contains a landmark/point x-y coordinates.
+    Return None if no face is detected by Dlib.
 
 **Examples**
 

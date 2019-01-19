@@ -111,9 +111,10 @@ class EyepadAlign(object):
 
         file_extension str (default='.jpg'): File extension of the image files.
 
-        pre_check Bool (default=True): Checks that each image has the dimensions
-            specificed via `target_height` and `target_width` on the whole
-            directory first to identify potential issues that are recommended
+        pre_check Bool (default=True): Checks that each image has the
+            dimensions specificed via `target_height`
+            and `target_width` on the whole directory first to identify
+            potential issues that are recommended
             to be fixed before proceeding. Raises a warning for each image if
             dimensions differ from the ones specified and expected.
 
@@ -151,10 +152,10 @@ class EyepadAlign(object):
                     warnings.warn('Image %s has '
                                   'dimensions %d x %d '
                                   'instead of %d x %d.'
-                                   % (f, img.shape[0],
-                                      img.shape[1],
-                                      self.target_height_,
-                                      self.target_width_))
+                                  % (f, img.shape[0],
+                                     img.shape[1],
+                                     self.target_height_,
+                                     self.target_width_))
 
         if self.verbose >= 1:
             print("Fitting the average facial landmarks "

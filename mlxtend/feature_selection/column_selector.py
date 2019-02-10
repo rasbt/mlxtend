@@ -20,7 +20,7 @@ class ColumnSelector(BaseEstimator):
         A list specifying the feature indices to be selected. For example,
         [1, 4, 5] to select the 2nd, 5th, and 6th feature columns, and
         ['A','C','D'] to select the name of feature columns A, C and D.
-        If None, returns all columns in the array. And you can use the columns 
+        If None, returns all columns in the array.
 
     drop_axis : bool (default=False)
         Drops last axis if True and the only one column is selected. This

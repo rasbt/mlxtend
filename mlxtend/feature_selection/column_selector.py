@@ -77,10 +77,10 @@ class ColumnSelector(BaseEstimator):
 
         # We use the loc accessor if the input is a pandas dataframe
         if hasattr(X, 'loc'):
-            t = X.loc[:, self.cols].values
-        else:
-            t = X[:, self.cols]
-
+            try:
+                t = X.iloc[:, self.cols].values
+            except:
+                t = X.loc[:, self.cols].values
         if t.shape[-1] == 1 and self.drop_axis:
             t = t.reshape(-1)
         if len(t.shape) == 1 and not self.drop_axis:

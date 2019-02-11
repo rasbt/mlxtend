@@ -119,7 +119,8 @@ def test_sparsedataframe_notzero_column():
     dfs.columns = [i+1 for i in range(len(dfs.columns))]
     assert_raises(ValueError,
                   'Due to current limitations in Pandas, '
-                  'if the SparseDataFrame has integer column names, '
-                  'please make sure they either start with `0` or cast them '
-                  'as string column names: `df.columns = [str(i) for i in df.columns`.',
+                  'if the SparseDataFrame has integer column names,'
+                  'names, please make sure they either start '
+                  'with `0` or cast them as string column names: '
+                  '`df.columns = [str(i) for i in df.columns`].',
                   apriori, dfs)

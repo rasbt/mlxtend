@@ -83,7 +83,7 @@ class ColumnSelector(BaseEstimator):
             types = {type(i) for i in self.cols}
             if len(types) > 1:
                 raise ValueError('Elements in `cols` should be all of the same data type.')
-            if isinstance(self.cols[0], int):
+            elif isinstance(self.cols[0], int):
                 t = X.iloc[:, self.cols].values
             elif isinstance(self.cols[0], str):
                 t = X.loc[:, self.cols].values

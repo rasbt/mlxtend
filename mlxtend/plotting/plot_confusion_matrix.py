@@ -66,10 +66,10 @@ def plot_confusion_matrix(conf_mat,
     if figsize is None:
         figsize = (len(conf_mat)*1.25, len(conf_mat)*1.25)
 
-    if show_absolute:
-        matshow = ax.matshow(conf_mat, cmap=cmap)
-    else:
+    if show_normed:
         matshow = ax.matshow(normed_conf_mat, cmap=cmap)
+    else:
+        matshow = ax.matshow(conf_mat, cmap=cmap)
 
     if colorbar:
         fig.colorbar(matshow)

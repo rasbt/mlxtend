@@ -77,11 +77,18 @@ class ColumnSelector(BaseEstimator):
         """
 
         # We use the loc accessor if the input is a pandas dataframe
-        if hasattr(X, 'loc'):
-            try:
+        if hasattr(X, 'loc') or hasattr(X, 'iloc'):
+            if type(self.cols) == tuple:
+               self.cols = list(self.cols)
+            types = {type(i) for i in self.cols}
+            if len(types) > 1:
+                raise ValueError('Elements in `cols` should be all of the same data type.')
+            if isinstance(self.cols[0], int):
                 t = X.iloc[:, self.cols].values
-            except TypeError:
+            elif isinstance(self.cols[0], str):
                 t = X.loc[:, self.cols].values
+            else:
+               raise ValueError('Elements in `cols` should be either `int` or `str`.')
         if t.shape[-1] == 1 and self.drop_axis:
             t = t.reshape(-1)
         if len(t.shape) == 1 and not self.drop_axis:

@@ -25,6 +25,8 @@ The CHANGELOG for the current development version is available at
 
 ##### Bug Fixes
 
+- Fix unreable labels in `plot_confusion_matrix` for imbalanced datasets if `show_absolute=True` and `show_normed=True`.
+
 - Raises a more informative error if a `SparseDataFrame` is passed to `apriori` and the dataframe has integer column names that don't start with `0` due to current limitations of the `SparseDataFrame` implementation in pandas. ([#503](https://github.com/rasbt/mlxtend/pull/503))
 
 ### Version 0.15.0 (01-19-2019)

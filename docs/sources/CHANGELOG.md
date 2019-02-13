@@ -25,7 +25,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Bug Fixes
 
--
+- The `feature_selection.ColumnSelector` now also supports column names of type `int` (in addition to `str` names) if the input is a pandas DataFrame.  ([#500](https://github.com/rasbt/mlxtend/pull/500) via [tetrar124](https://github.com/tetrar124)
 
 ### Version 0.15.0 (01-19-2019)
 

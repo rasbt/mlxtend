@@ -352,7 +352,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
                     k_idx, k_score, cv_scores = self._exclusion(
                         feature_set=prev_subset,
-                        X=X,
+                        X=X_,
                         y=y,
                         **fit_params
                     )
@@ -378,7 +378,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                             k_idx_c, k_score_c, cv_scores_c = self._exclusion(
                                 feature_set=k_idx,
                                 fixed_feature=new_feature,
-                                X=X,
+                                X=X_,
                                 y=y,
                                 **fit_params
                             )
@@ -387,7 +387,7 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                             k_idx_c, k_score_c, cv_scores_c = self._inclusion(
                                 orig_set=orig_set - {new_feature},
                                 subset=set(k_idx),
-                                X=X,
+                                X=X_,
                                 y=y,
                                 **fit_params
                             )

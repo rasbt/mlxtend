@@ -8,6 +8,9 @@
 #
 # License: BSD 3 clause
 
+from ..stacking import StackingClassifier
+
+'''
 from ..externals.estimator_checks import check_is_fitted
 from ..externals.name_estimators import _name_estimators
 from ..externals import six
@@ -275,3 +278,4 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             )
         else:
             return self.meta_clf_.predict_proba(np.hstack((X, meta_features)))
+'''

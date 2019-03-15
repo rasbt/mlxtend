@@ -124,6 +124,8 @@ def test_get_params():
               'linearregression',
               'meta-svr',
               'meta_regressor',
+              'n_jobs',
+              'pre_dispatch',
               'refit',
               'regressors',
               'ridge',

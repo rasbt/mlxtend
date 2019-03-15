@@ -17,7 +17,7 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
--
+- Adds multiprocessing support to `StackingCVClassifier`. ([#512](https://github.com/rasbt/mlxtend/pull/512) via [Qiang Gu](https://github.com/qiaguhttps://github.com/qiagu))
 
 ##### Changes
 

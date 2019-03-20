@@ -19,6 +19,7 @@ from sklearn.base import TransformerMixin
 from sklearn.base import clone
 from sklearn.externals import six
 from sklearn.model_selection._split import check_cv
+from sklearn.utils import safe_indexing
 
 
 class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
@@ -141,6 +142,59 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.store_train_meta_features = store_train_meta_features
         self.use_clones = use_clones
 
+    def _fit_fold(self, model, X, y, sample_weight, index, n_splits):
+        if self.verbose > 0:
+            print("Training and fitting fold %d of %d..." %
+                  ((index + 1), n_splits))
+
+        try:
+            if sample_weight is None:
+                model.fit(X, y)
+            else:
+                model.fit(X, y,
+                          sample_weight=sample_weight)
+        except TypeError as e:
+
+            if str(e).startswith('A sparse matrix was passed,'
+                                 ' but dense'
+                                 ' data is required'):
+                sparse_estimator_message = (
+                    "\nYou are likely getting this error"
+                    " because one of the"
+                    " estimators"
+                    " does not support sparse matrix input.")
+            else:
+                sparse_estimator_message = ''
+
+            raise TypeError(str(e) + sparse_estimator_message +
+                            '\nPlease check that X and y'
+                            'are NumPy arrays. If X and y are lists'
+                            ' of lists,\ntry passing them as'
+                            ' numpy.array(X)'
+                            ' and numpy.array(y).')
+        except KeyError as e:
+
+            raise KeyError(str(e) + '\nPlease check that X and y'
+                           ' are NumPy arrays. If X and y are pandas'
+                           ' DataFrames,\ntry passing them as'
+                           ' X.values'
+                           ' and y.values.')
+
+        return model
+
+    def _reorder_with_cv(self, arr, cv):
+        """Reorders and selects indices from arr using test indices of cv"""
+
+        rows = [safe_indexing(arr, test_indices)
+                for _, test_indices in cv]
+
+        if sparse.issparse(arr):
+            stack_fn = sparse.vstack
+        else:
+            stack_fn = np.concatenate
+
+        return stack_fn(rows)
+
     def fit(self, X, y, groups=None, sample_weight=None):
         """ Fit ensemble classifers and the meta-classifier.
 
@@ -184,7 +238,8 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             final_cv.shuffle = self.shuffle
         skf = list(final_cv.split(X, y, groups))
 
-        all_model_predictions = np.array([]).reshape(len(y), 0)
+        per_model_predictions = []
+
         for model in self.clfs_:
 
             if self.verbose > 0:
@@ -200,92 +255,40 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             if self.verbose > 1:
                 print(_name_estimators((model,))[0][1])
 
-            if not self.use_probas:
-                single_model_prediction = np.array([]).reshape(0, 1)
-            else:
-                single_model_prediction = np.array([]).reshape(0, len(set(y)))
+            per_fold_predictions = []
 
-            for num, (train_index, test_index) in enumerate(skf):
+            for num, (train_indices, test_indices) in enumerate(skf):
 
-                if self.verbose > 0:
-                    print("Training and fitting fold %d of %d..." %
-                          ((num + 1), final_cv.get_n_splits()))
+                X_train = safe_indexing(X, train_indices)
+                y_train = safe_indexing(y, train_indices)
+                model = self._fit_fold(
+                    model,
+                    X_train,
+                    y_train,
+                    (safe_indexing(sample_weight, train_indices)
+                     if sample_weight is not None else None),
+                    num,
+                    final_cv.get_n_splits()
+                )
 
-                try:
-                    if sample_weight is None:
-                        model.fit(X[train_index], y[train_index])
-                    else:
-                        model.fit(X[train_index], y[train_index],
-                                  sample_weight=sample_weight[train_index])
-                except TypeError as e:
-
-                    if str(e).startswith('A sparse matrix was passed,'
-                                         ' but dense'
-                                         ' data is required'):
-                        sparse_estimator_message = (
-                            "\nYou are likely getting this error"
-                            " because one of the"
-                            " estimators"
-                            " does not support sparse matrix input.")
-                    else:
-                        sparse_estimator_message = ''
-
-                    raise TypeError(str(e) + sparse_estimator_message +
-                                    '\nPlease check that X and y'
-                                    'are NumPy arrays. If X and y are lists'
-                                    ' of lists,\ntry passing them as'
-                                    ' numpy.array(X)'
-                                    ' and numpy.array(y).')
-                except KeyError as e:
-
-                    raise KeyError(str(e) + '\nPlease check that X and y'
-                                   ' are NumPy arrays. If X and y are pandas'
-                                   ' DataFrames,\ntry passing them as'
-                                   ' X.values'
-                                   ' and y.values.')
-
+                X_test = safe_indexing(X, test_indices)
                 if not self.use_probas:
-                    prediction = model.predict(X[test_index])
+                    prediction = model.predict(X_test)
                     prediction = prediction.reshape(prediction.shape[0], 1)
                 else:
-                    prediction = model.predict_proba(X[test_index])
-                single_model_prediction = np.vstack([single_model_prediction.
-                                                    astype(prediction.dtype),
-                                                     prediction])
+                    prediction = model.predict_proba(X_test)
+                per_fold_predictions.append(prediction)
 
-            all_model_predictions = np.hstack([all_model_predictions.
-                                               astype(single_model_prediction.
-                                                      dtype),
-                                               single_model_prediction])
+            per_model_predictions.append(np.vstack(per_fold_predictions))
+
+        all_model_predictions = np.hstack(per_model_predictions)
 
         if self.store_train_meta_features:
             # Store the meta features in the order of the
-            # original X,y arrays
-            reodered_indices = np.array([]).astype(y.dtype)
-            for train_index, test_index in skf:
-                reodered_indices = np.concatenate((reodered_indices,
-                                                   test_index))
-            self.train_meta_features_ = all_model_predictions[np.argsort(
-                reodered_indices)]
-
-        # We have to shuffle the labels in the same order as we generated
-        # predictions during CV (we kinda shuffled them when we did
-        # Stratified CV).
-        # We also do the same with the features (we will need this only IF
-        # use_features_in_secondary is True)
-        reordered_labels = np.array([]).astype(y.dtype)
-        reordered_features = np.array([]).reshape((0, X.shape[1]))\
-            .astype(X.dtype)
-        for train_index, test_index in skf:
-            reordered_labels = np.concatenate((reordered_labels,
-                                               y[test_index]))
-
-            if sparse.issparse(X):
-                reordered_features = sparse.vstack((reordered_features,
-                                                    X[test_index]))
-            else:
-                reordered_features = np.concatenate((reordered_features,
-                                                     X[test_index]))
+            # original X, y arrays
+            all_test_indices = np.concatenate([i for _, i in skf])
+            self.train_meta_features_ = \
+                all_model_predictions[np.argsort(all_test_indices)]
 
         # Fit the base models correctly this time using ALL the training set
         for model in self.clfs_:
@@ -297,12 +300,17 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         # Fit the secondary model
         if not self.use_features_in_secondary:
             meta_features = all_model_predictions
-        elif sparse.issparse(X):
-            meta_features = sparse.hstack((reordered_features,
-                                           all_model_predictions))
         else:
-            meta_features = np.hstack((reordered_features,
-                                       all_model_predictions))
+            if sparse.issparse(X):
+                stack_fn = sparse.hstack
+            else:
+                stack_fn = np.hstack
+
+            reordered_features = self._reorder_with_cv(X, skf)
+            meta_features = stack_fn((reordered_features,
+                                      all_model_predictions))
+
+        reordered_labels = self._reorder_with_cv(y, skf)
         if sample_weight is None:
             self.meta_clf_.fit(meta_features, reordered_labels)
         else:

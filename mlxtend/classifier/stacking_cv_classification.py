@@ -195,6 +195,52 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         return stack_fn(rows)
 
+    def _all_elements_equal(self, lst):
+        # http://stackoverflow.com/q/3844948/
+        return not lst or lst.count(lst[0]) == len(lst)
+
+    def _combine_probas(self, probas, ys):
+        """Takes probabilities for each fold, and combines them
+
+        This is not a simple np.vstack of probabilities because in cases of
+        poor data, such as when only one instance of a certain class exists in
+        a training set, StratifiedKFold will result in two iterations (one
+        fold) having this class among the labels, and the last iteration will
+        not have this class in the training set.
+
+        fit() on the first level models may result in a differing number of
+        columns among probas, hence causing vstack to fail.
+
+        The workaround here is to insert a column (probability of 0) for the
+        missing class in that fold before combining the probabilities.
+        """
+
+        n_cols = [p.shape[1] for p in probas]
+        if not self._all_elements_equal(n_cols):
+            # Assumes that the classes in the output of predict_proba are
+            #   sorted the way numpy sorts
+            y_all = np.sort(np.unique(np.concatenate(ys)))
+            unique_values = [np.sort(np.unique(y)) for y in ys]
+            missing_values = [np.setdiff1d(y_all, uv)
+                              for uv in unique_values]
+
+            missing_values_idxs = []
+            for arr in missing_values:
+                missing_values_idxs.append(
+                    [np.where(y_all == v)[0][0]
+                     for v in arr]
+                )
+
+            new_probas = []
+            for p, idxs in zip(probas, missing_values_idxs):
+                for i in idxs:
+                    p = np.insert(p, i, 0, axis=1)
+                new_probas.append(p)
+
+            probas = new_probas
+
+        return np.vstack(probas)
+
     def fit(self, X, y, groups=None, sample_weight=None):
         """ Fit ensemble classifers and the meta-classifier.
 
@@ -236,9 +282,10 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             # Override shuffle parameter in case of self generated
             # cross-validation strategy
             final_cv.shuffle = self.shuffle
-        skf = list(final_cv.split(X, y, groups))
 
-        per_model_predictions = []
+        folds = list(final_cv.split(X, y, groups))
+
+        per_model_preds = []
 
         for model in self.clfs_:
 
@@ -255,12 +302,14 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             if self.verbose > 1:
                 print(_name_estimators((model,))[0][1])
 
-            per_fold_predictions = []
+            per_fold_preds = []
+            ys = []
 
-            for num, (train_indices, test_indices) in enumerate(skf):
+            for num, (train_indices, test_indices) in enumerate(folds):
 
                 X_train = safe_indexing(X, train_indices)
                 y_train = safe_indexing(y, train_indices)
+
                 model = self._fit_fold(
                     model,
                     X_train,
@@ -277,16 +326,19 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                     prediction = prediction.reshape(prediction.shape[0], 1)
                 else:
                     prediction = model.predict_proba(X_test)
-                per_fold_predictions.append(prediction)
 
-            per_model_predictions.append(np.vstack(per_fold_predictions))
+                per_fold_preds.append(prediction)
+                ys.append(y_train)
 
-        all_model_predictions = np.hstack(per_model_predictions)
+            all_folds_preds = self._combine_probas(per_fold_preds, ys)
+            per_model_preds.append(all_folds_preds)
+
+        all_model_predictions = np.hstack(per_model_preds)
 
         if self.store_train_meta_features:
             # Store the meta features in the order of the
             # original X, y arrays
-            all_test_indices = np.concatenate([i for _, i in skf])
+            all_test_indices = np.concatenate([i for _, i in folds])
             self.train_meta_features_ = \
                 all_model_predictions[np.argsort(all_test_indices)]
 
@@ -306,11 +358,11 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             else:
                 stack_fn = np.hstack
 
-            reordered_features = self._reorder_with_cv(X, skf)
+            reordered_features = self._reorder_with_cv(X, folds)
             meta_features = stack_fn((reordered_features,
                                       all_model_predictions))
 
-        reordered_labels = self._reorder_with_cv(y, skf)
+        reordered_labels = self._reorder_with_cv(y, folds)
         if sample_weight is None:
             self.meta_clf_.fit(meta_features, reordered_labels)
         else:

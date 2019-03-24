@@ -195,52 +195,6 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         return stack_fn(rows)
 
-    def _all_elements_equal(self, lst):
-        # http://stackoverflow.com/q/3844948/
-        return not lst or lst.count(lst[0]) == len(lst)
-
-    def _combine_probas(self, probas, ys):
-        """Takes probabilities for each fold, and combines them
-
-        This is not a simple np.vstack of probabilities because in cases of
-        poor data, such as when only one instance of a certain class exists in
-        a training set, StratifiedKFold will result in two iterations (one
-        fold) having this class among the labels, and the last iteration will
-        not have this class in the training set.
-
-        fit() on the first level models may result in a differing number of
-        columns among probas, hence causing vstack to fail.
-
-        The workaround here is to insert a column (probability of 0) for the
-        missing class in that fold before combining the probabilities.
-        """
-
-        n_cols = [p.shape[1] for p in probas]
-        if not self._all_elements_equal(n_cols):
-            # Assumes that the classes in the output of predict_proba are
-            #   sorted the way numpy sorts
-            y_all = np.sort(np.unique(np.concatenate(ys)))
-            unique_values = [np.sort(np.unique(y)) for y in ys]
-            missing_values = [np.setdiff1d(y_all, uv)
-                              for uv in unique_values]
-
-            missing_values_idxs = []
-            for arr in missing_values:
-                missing_values_idxs.append(
-                    [np.where(y_all == v)[0][0]
-                     for v in arr]
-                )
-
-            new_probas = []
-            for p, idxs in zip(probas, missing_values_idxs):
-                for i in idxs:
-                    p = np.insert(p, i, 0, axis=1)
-                new_probas.append(p)
-
-            probas = new_probas
-
-        return np.vstack(probas)
-
     def fit(self, X, y, groups=None, sample_weight=None):
         """ Fit ensemble classifers and the meta-classifier.
 
@@ -303,7 +257,6 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                 print(_name_estimators((model,))[0][1])
 
             per_fold_preds = []
-            ys = []
 
             for num, (train_indices, test_indices) in enumerate(folds):
 
@@ -328,19 +281,18 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                     prediction = model.predict_proba(X_test)
 
                 per_fold_preds.append(prediction)
-                ys.append(y_train)
 
-            all_folds_preds = self._combine_probas(per_fold_preds, ys)
+            all_folds_preds = np.vstack(per_fold_preds)
             per_model_preds.append(all_folds_preds)
 
-        all_model_predictions = np.hstack(per_model_preds)
+        meta_features = np.hstack(per_model_preds)
 
         if self.store_train_meta_features:
             # Store the meta features in the order of the
             # original X, y arrays
             all_test_indices = np.concatenate([i for _, i in folds])
             self.train_meta_features_ = \
-                all_model_predictions[np.argsort(all_test_indices)]
+                meta_features[np.argsort(all_test_indices)]
 
         # Fit the base models correctly this time using ALL the training set
         for model in self.clfs_:
@@ -350,17 +302,12 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                 model.fit(X, y, sample_weight=sample_weight)
 
         # Fit the secondary model
-        if not self.use_features_in_secondary:
-            meta_features = all_model_predictions
-        else:
-            if sparse.issparse(X):
-                stack_fn = sparse.hstack
-            else:
-                stack_fn = np.hstack
-
+        if self.use_features_in_secondary:
             reordered_features = self._reorder_with_cv(X, folds)
-            meta_features = stack_fn((reordered_features,
-                                      all_model_predictions))
+            meta_features = self._stack_first_level_features(
+                reordered_features,
+                meta_features
+            )
 
         reordered_labels = self._reorder_with_cv(y, folds)
         if sample_weight is None:
@@ -408,19 +355,35 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         """
         check_is_fitted(self, 'clfs_')
-        all_model_predictions = np.array([]).reshape(len(X), 0)
+
+        per_model_preds = []
+
         for model in self.clfs_:
             if not self.use_probas:
-                single_model_prediction = model.predict(X)
-                single_model_prediction = single_model_prediction\
-                    .reshape(single_model_prediction.shape[0], 1)
+                prediction = model.predict(X)
+                prediction = prediction.reshape(prediction.shape[0], 1)
             else:
-                single_model_prediction = model.predict_proba(X)
-            all_model_predictions = np.hstack((all_model_predictions.
-                                               astype(single_model_prediction
-                                                      .dtype),
-                                               single_model_prediction))
-        return all_model_predictions
+                prediction = model.predict_proba(X)
+
+            per_model_preds.append(prediction)
+
+        return np.hstack(per_model_preds)
+
+    def _stack_first_level_features(self, X, meta_features):
+        if sparse.issparse(X):
+            stack_fn = sparse.hstack
+        else:
+            stack_fn = np.hstack
+
+        return stack_fn((X, meta_features))
+
+    def _do_predict(self, X, predict_fn):
+        meta_features = self.predict_meta_features(X)
+
+        if self.use_features_in_secondary:
+            self._stack_first_level_features(X, meta_features)
+
+        return predict_fn(meta_features)
 
     def predict(self, X):
         """ Predict target values for X.
@@ -437,16 +400,7 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             Predicted class labels.
 
         """
-        check_is_fitted(self, 'clfs_')
-        all_model_predictions = self.predict_meta_features(X)
-        if not self.use_features_in_secondary:
-            return self.meta_clf_.predict(all_model_predictions)
-        elif sparse.issparse(X):
-            return self.meta_clf_.predict(
-                sparse.hstack((X, all_model_predictions)))
-        else:
-            return self.meta_clf_.predict(
-                np.hstack((X, all_model_predictions)))
+        return self._do_predict(X, self.meta_clf_.predict)
 
     def predict_proba(self, X):
         """ Predict class probabilities for X.
@@ -463,24 +417,4 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             Probability for each class per sample.
 
         """
-        check_is_fitted(self, 'clfs_')
-        all_model_predictions = np.array([]).reshape(len(X), 0)
-        for model in self.clfs_:
-            if not self.use_probas:
-                single_model_prediction = model.predict(X)
-                single_model_prediction = single_model_prediction\
-                    .reshape(single_model_prediction.shape[0], 1)
-            else:
-                single_model_prediction = model.predict_proba(X)
-            all_model_predictions = np.hstack((all_model_predictions.
-                                               astype(single_model_prediction.
-                                                      dtype),
-                                               single_model_prediction))
-        if not self.use_features_in_secondary:
-            return self.meta_clf_.predict_proba(all_model_predictions)
-        elif sparse.issparse(X):
-            self.meta_clf_\
-                .predict_proba(sparse.hstack((X, all_model_predictions)))
-        else:
-            return self.meta_clf_\
-                .predict_proba(np.hstack((X, all_model_predictions)))
+        return self._do_predict(X, self.meta_clf_.predict_proba)

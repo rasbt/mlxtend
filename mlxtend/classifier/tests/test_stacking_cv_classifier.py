@@ -493,8 +493,8 @@ def test_sparse_inputs_with_features_in_secondary():
     stclf = StackingCVClassifier(classifiers=[rf, rf],
                                  meta_classifier=lr,
                                  use_features_in_secondary=True)
-    X_train, X_test, y_train,  y_test = train_test_split(X_breast, y_breast,
-                                                         test_size=0.3)
+    X_train, X_test, y_train, y_test = train_test_split(X_breast, y_breast,
+                                                        test_size=0.3)
 
     # dense
     stclf.fit(X_train, y_train)

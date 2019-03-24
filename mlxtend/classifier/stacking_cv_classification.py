@@ -354,7 +354,7 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             Returns the meta-features for test data.
 
         """
-        check_is_fitted(self, 'clfs_')
+        check_is_fitted(self, ['clfs_', 'meta_clf_'])
 
         per_model_preds = []
 
@@ -381,7 +381,7 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         meta_features = self.predict_meta_features(X)
 
         if self.use_features_in_secondary:
-            self._stack_first_level_features(X, meta_features)
+            meta_features = self._stack_first_level_features(X, meta_features)
 
         return predict_fn(meta_features)
 
@@ -400,6 +400,8 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             Predicted class labels.
 
         """
+        check_is_fitted(self, ['clfs_', 'meta_clf_'])
+
         return self._do_predict(X, self.meta_clf_.predict)
 
     def predict_proba(self, X):
@@ -417,4 +419,6 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             Probability for each class per sample.
 
         """
+        check_is_fitted(self, ['clfs_', 'meta_clf_'])
+
         return self._do_predict(X, self.meta_clf_.predict_proba)

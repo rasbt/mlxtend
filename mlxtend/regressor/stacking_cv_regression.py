@@ -280,18 +280,17 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         if not deep:
             return super(StackingCVRegressor, self).get_params(deep=False)
         else:
-            out = self.named_regressors.copy()
+            out = {}
+            for key, value in six.iteritems(super(StackingCVRegressor,
+                                            self).get_params(deep=False)):
+                out['%s' % key] = value
+
             for name, step in six.iteritems(self.named_regressors):
                 for key, value in six.iteritems(step.get_params(deep=True)):
                     out['%s__%s' % (name, key)] = value
 
-            out.update(self.named_meta_regressor.copy())
             for name, step in six.iteritems(self.named_meta_regressor):
                 for key, value in six.iteritems(step.get_params(deep=True)):
                     out['%s__%s' % (name, key)] = value
-
-            for key, value in six.iteritems(super(StackingCVRegressor,
-                                            self).get_params(deep=False)):
-                out['%s' % key] = value
 
             return out

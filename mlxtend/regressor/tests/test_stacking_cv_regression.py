@@ -98,7 +98,7 @@ def test_gridsearch_numerate_regr():
     params = {'ridge-1__alpha': [0.01, 1.0],
               'ridge-2__alpha': [0.01, 1.0],
               'svr__C': [0.01, 1.0],
-              'meta-svr__C': [0.01, 1.0],
+              'meta_regressor__C': [0.01, 1.0],
               'use_features_in_secondary': [True, False]}
 
     grid = GridSearchCV(estimator=stack,
@@ -122,7 +122,6 @@ def test_get_params():
     got = sorted(list({s.split('__')[0] for s in stregr.get_params().keys()}))
     expect = ['cv',
               'linearregression',
-              'meta-svr',
               'meta_regressor',
               'n_jobs',
               'pre_dispatch',

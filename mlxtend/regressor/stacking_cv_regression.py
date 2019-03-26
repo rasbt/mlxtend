@@ -285,13 +285,16 @@ class StackingCVRegressor(_BaseComposition, RegressorMixin, TransformerMixin):
         # setattr to the `regressors` instead to make sure
         # the name and fitting regressor both are updated
         #
-        if attr == 'named_regressors!':
+        if attr == 'named_regressors':
             names, regressors = zip(*self.named_regressors)
             regressors = list(regressors)
 
             for i, regressor_name in enumerate(names):
                 if regressor_name == name:
-                    regressors[i] = new_val
+                    if new_val is None:
+                        del regressors[i]
+                    else:
+                        regressors[i] = new_val
                     break
             setattr(self, 'regressors', regressors)
 

@@ -18,6 +18,7 @@ The CHANGELOG for the current development version is available at
 ##### New Features
 
 - Adds multiprocessing support to `StackingCVClassifier`. ([#512](https://github.com/rasbt/mlxtend/pull/512) via [Qiang Gu](https://github.com/qiaguhttps://github.com/qiagu))
+- Adds a `verbose` parameter to `apriori` to show the current iteration number as well as the itemset size currently being sampled. ([#519](https://github.com/rasbt/mlxtend/pull/519)
 
 ##### Changes
 

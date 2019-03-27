@@ -15,18 +15,18 @@
 
 from ..externals.estimator_checks import check_is_fitted
 from ..externals.name_estimators import _name_estimators
+from ..utils.base_compostion import _BaseXComposition
 from scipy import sparse
 from sklearn.base import RegressorMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
 from sklearn.model_selection import cross_val_predict
 from sklearn.model_selection._split import check_cv
-from sklearn.utils.metaestimators import _BaseComposition
 
 import numpy as np
 
 
-class StackingCVRegressor(_BaseComposition, RegressorMixin, TransformerMixin):
+class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
     """A 'Stacking Cross-Validation' regressor for scikit-learn estimators.
 
     New in mlxtend v0.7.0
@@ -269,38 +269,11 @@ class StackingCVRegressor(_BaseComposition, RegressorMixin, TransformerMixin):
     @property
     def named_regressors(self):
         """
-        Hide this attribute from `get_params()`, but not its offsprings.
-
         Returns
         -------
-        List of named estimator tuple, like [('svc', SVC(...))]
+        List of named estimator tuples, like [('svc', SVC(...))]
         """
         return _name_estimators(self.regressors)
-
-    def _replace_estimator(self, attr, name, new_val):
-        """
-        assumes `name` is a valid estimator name
-        """
-        #
-        # setattr to the `regressors` instead to make sure
-        # the name and fitting regressor both are updated
-        #
-        if attr == 'named_regressors':
-            names, regressors = zip(*self.named_regressors)
-            regressors = list(regressors)
-
-            for i, regressor_name in enumerate(names):
-                if regressor_name == name:
-                    if new_val is None:
-                        del regressors[i]
-                    else:
-                        regressors[i] = new_val
-                    break
-            setattr(self, 'regressors', regressors)
-
-        else:
-            super(StackingCVRegressor, self)\
-                ._replace_estimator(attr, name, new_val)
 
     def get_params(self, deep=True):
         #
@@ -317,5 +290,5 @@ class StackingCVRegressor(_BaseComposition, RegressorMixin, TransformerMixin):
         -------
         self
         """
-        self._set_params('named_regressors', **params)
+        self._set_params('regressors', 'named_regressors', **params)
         return self

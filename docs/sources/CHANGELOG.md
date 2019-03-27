@@ -18,6 +18,7 @@ The CHANGELOG for the current development version is available at
 ##### New Features
 
 - Adds multiprocessing support to `StackingCVClassifier`. ([#512](https://github.com/rasbt/mlxtend/pull/512) via [Qiang Gu](https://github.com/qiaguhttps://github.com/qiagu))
+- Adds an optional `class_name` parameter to the confusion matrix function to display class names on the axis as tick marks. ([#487](https://github.com/rasbt/mlxtend/pull/487) via [sandpiturtle](https://github.com/qiaguhttps://github.com/sandpiturtle))
 
 ##### Changes
 

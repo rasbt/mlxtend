@@ -16,7 +16,8 @@ def plot_confusion_matrix(conf_mat,
                           cmap=None,
                           colorbar=False,
                           show_absolute=True,
-                          show_normed=False):
+                          show_normed=False,
+                          class_names=None):
     """Plot a confusion matrix via matplotlib.
     Parameters
     -----------
@@ -43,6 +44,9 @@ def plot_confusion_matrix(conf_mat,
         assigned the correct label.
         At least one of  `show_absolute` or `show_normed`
         must be True.
+    class_names : array-like, shape = [n_classes] (default: None)
+        List of class names.
+        If not `None`, ticks will be set to these values.
     Returns
     -----------
     fig, ax : matplotlib.pyplot subplot objects
@@ -54,6 +58,9 @@ def plot_confusion_matrix(conf_mat,
     """
     if not (show_absolute or show_normed):
         raise AssertionError('Both show_absolute and show_normed are False')
+    if class_names is not None and len(class_names) != len(conf_mat):
+        raise AssertionError('len(class_names) should be equal to number of'
+                             'classes in the dataset')
 
     total_samples = conf_mat.sum(axis=1)[:, np.newaxis]
     normed_conf_mat = conf_mat.astype('float') / total_samples
@@ -90,7 +97,12 @@ def plot_confusion_matrix(conf_mat,
                     va='center',
                     ha='center',
                     color="white" if normed_conf_mat[i, j] > 0.5 else "black")
-
+    
+    if class_names is not None:
+        tick_marks = np.arange(len(class_names))
+        plt.xticks(tick_marks, class_names, rotation=45)
+        plt.yticks(tick_marks, class_names)
+        
     if hide_spines:
         ax.spines['right'].set_visible(False)
         ax.spines['top'].set_visible(False)

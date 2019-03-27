@@ -806,6 +806,12 @@
                         
                             
 <li >
+    <a href="../../../api_subpackages/mlxtend.image/">Mlxtend.image</a>
+</li>
+
+                        
+                            
+<li >
     <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
@@ -897,6 +903,8 @@
                             <i class="fa fa-search"></i> Search
                         </a>
                     </li>
+
+                <!--
                     <li >
                         <a rel="next" href="../SoftmaxRegression/">
                             <i class="fa fa-arrow-left"></i> Previous
@@ -906,9 +914,9 @@
                         <a rel="prev" href="../StackingCVClassifier/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
-                    </li>
+                    </li>-->
                     <li>
-                        <a href="https://github.com/rasbt/mlxtend/edit/master/docs/user_guide/classifier/StackingClassifier.md"><i class="fa fa-github"></i> Edit on GitHub</a>
+                        <a href="https://github.com/rasbt/mlxtend"><i class="fa fa-github"></i> GitHub</a>
                     </li>
             </ul>
         </div>
@@ -923,18 +931,18 @@
         <li class="first-level active"><a href="#stackingclassifier">StackingClassifier</a></li>
         <li class="first-level "><a href="#overview">Overview</a></li>
             <li class="second-level"><a href="#references">References</a></li>
-                
+                 <!--   -->
             <li class="second-level"><a href="#example-1-simple-stacked-classification">Example 1 - Simple Stacked Classification</a></li>
-                
+                 <!--   -->
             <li class="second-level"><a href="#example-2-using-probabilities-as-meta-features">Example 2 - Using Probabilities as Meta-Features</a></li>
-                
+                 <!--   -->
             <li class="second-level"><a href="#example-3-stacked-classification-and-gridsearch">Example 3 - Stacked Classification and GridSearch</a></li>
-                
+                 <!--   -->
             <li class="second-level"><a href="#example-4-stacking-of-classifiers-that-operate-on-different-feature-subsets">Example 4 - Stacking of Classifiers that Operate on Different Feature Subsets</a></li>
-                
+                 <!--   -->
         <li class="first-level "><a href="#api">API</a></li>
             <li class="second-level"><a href="#methods">Methods</a></li>
-                
+                 <!--   -->
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
@@ -950,6 +958,7 @@ The meta-classifier can either be trained on the predicted class labels or proba
 <p><img alt="" src="../StackingClassifier_files/stackingclassification_overview.png" /></p>
 <p>The algorithm can be summarized as follows (source: [1]):</p>
 <p><img alt="" src="../StackingClassifier_files/stacking_algorithm.png" /></p>
+<p><strong>Please note that this type of Stacking is prone to overfitting due to information leakage. The related <a href="../StackingCVClassifier/">StackingCVClassifier.md</a> does not derive the predictions for the 2nd-level classifier from the same datast that was used for training the level-1 classifiers and is recommended instead.</strong></p>
 <h3 id="references">References</h3>
 <ul>
 <li>[1] Tang, J., S. Alelyani, and H. Liu. "<a href="https://books.google.com/books?id=nwQZCwAAQBAJ&amp;lpg=PA500&amp;dq=stacking%20classifier%20subsets&amp;pg=PA499#v=onepage&amp;q&amp;f=false">Data Classification: Algorithms and Applications.</a>" Data Mining and Knowledge Discovery Series, CRC Press (2015): pp. 498-500.</li>
@@ -1020,7 +1029,7 @@ for clf, lab, grd in zip([clf1, clf2, clf3, sclf],
     plt.title(lab)
 </code></pre>
 
-<p><img alt="png" src="../StackingClassifier_files/StackingClassifier_13_0.png" /></p>
+<p><img alt="png" src="../StackingClassifier_files/StackingClassifier_14_0.png" /></p>
 <h2 id="example-2-using-probabilities-as-meta-features">Example 2 - Using Probabilities as Meta-Features</h2>
 <p>Alternatively, the class-probabilities of the first-level classifiers can be used to train the meta-classifier (2nd-level classifier) by setting <code>use_probas=True</code>. If <code>average_probas=True</code>, the probabilities of the level-1 classifiers are averaged, if <code>average_probas=False</code>, the probabilities are stacked (recommended). For example, in a 3-class setting with 2 level-1 classifiers, these classifiers may make the following "probability" predictions for 1 training sample:</p>
 <ul>
@@ -1453,7 +1462,7 @@ component of a nested object.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

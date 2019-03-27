@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2018
+# Sebastian Raschka 2014-2019
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
@@ -108,3 +108,19 @@ def test_raise_error_if_input_is_not_binary():
                   'The allowed values for a DataFrame are True, '
                   'False, 0, 1. Found value 2',
                   apriori, df2)
+
+
+def test_sparsedataframe_notzero_column():
+    dfs = pd.SparseDataFrame(df)
+    dfs.columns = [i for i in range(len(dfs.columns))]
+    apriori(dfs)
+
+    dfs = pd.SparseDataFrame(df)
+    dfs.columns = [i+1 for i in range(len(dfs.columns))]
+    assert_raises(ValueError,
+                  'Due to current limitations in Pandas, '
+                  'if the SparseDataFrame has integer column names,'
+                  'names, please make sure they either start '
+                  'with `0` or cast them as string column names: '
+                  '`df.columns = [str(i) for i in df.columns`].',
+                  apriori, dfs)

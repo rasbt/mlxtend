@@ -3,7 +3,7 @@
 # For explanation of approach, see:
 # dnc1994.com/2016/05/rank-10-percent-in-first-kaggle-competition-en/#Stacking
 #
-# Sebastian Raschka 2014-2018
+# Sebastian Raschka 2014-2019
 # mlxtend Machine Learning Library Extensions
 #
 # An ensemble-learning meta-regressor for out-of-fold stacking regression
@@ -21,6 +21,7 @@ from sklearn.base import BaseEstimator
 from sklearn.base import RegressorMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
+from sklearn.model_selection import cross_val_predict
 from sklearn.model_selection._split import check_cv
 
 import numpy as np
@@ -82,6 +83,24 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         recommended if you are working with estimators that are supporting
         the scikit-learn fit/predict API interface but are not compatible
         to scikit-learn's `clone` function.
+    n_jobs : int or None, optional (default=None)
+        The number of CPUs to use to do the computation.
+        ``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.
+        ``-1`` means using all processors. See :term:`Glossary <n_jobs>`
+        for more details.
+    pre_dispatch : int, or string, optional
+        Controls the number of jobs that get dispatched during parallel
+        execution. Reducing this number can be useful to avoid an
+        explosion of memory consumption when more jobs get dispatched
+        than CPUs can process. This parameter can be:
+            - None, in which case all the jobs are immediately
+              created and spawned. Use this for lightweight and
+              fast-running jobs, to avoid delays due to on-demand
+              spawning of the jobs
+            - An int, giving the exact number of total jobs that are
+              spawned
+            - A string, giving an expression as a function of n_jobs,
+              as in '2*n_jobs'
 
     Attributes
     ----------
@@ -97,10 +116,10 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
 
     """
     def __init__(self, regressors, meta_regressor, cv=5,
-                 shuffle=True,
+                 shuffle=True, n_jobs=1,
                  use_features_in_secondary=False,
                  store_train_meta_features=False,
-                 refit=True):
+                 refit=True, pre_dispatch=None):
 
         self.regressors = regressors
         self.meta_regressor = meta_regressor
@@ -112,9 +131,11 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
                                      _name_estimators([meta_regressor])}
         self.cv = cv
         self.shuffle = shuffle
+        self.n_jobs = n_jobs
         self.use_features_in_secondary = use_features_in_secondary
         self.store_train_meta_features = store_train_meta_features
         self.refit = refit
+        self.pre_dispatch = pre_dispatch
 
     def fit(self, X, y, groups=None, sample_weight=None):
         """ Fit ensemble regressors and the meta-regressor.
@@ -155,34 +176,23 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
             # Override shuffle parameter in case of self generated
             # cross-validation strategy
             kfold.shuffle = self.shuffle
-
-        meta_features = np.zeros((X.shape[0], len(self.regressors)))
-
         #
-        # The outer loop iterates over the base-regressors. Each regressor
-        # is trained cv times and makes predictions, after which we train
-        # the meta-regressor on their combined results.
-        #
-        for i, regr in enumerate(self.regressors):
-            #
-            # In the inner loop, each model is trained cv times on the
-            # training-part of this fold of data; and the holdout-part of data
-            # is used for predictions. This is repeated cv times, so in
-            # the end we have predictions for each data point.
-            #
-            # Advantage of this complex approach is that data points we're
-            # predicting have not been trained on by the algorithm, so it's
-            # less susceptible to overfitting.
-            #
-            for train_idx, holdout_idx in kfold.split(X, y, groups):
-                instance = clone(regr)
-                if sample_weight is None:
-                    instance.fit(X[train_idx], y[train_idx])
-                else:
-                    instance.fit(X[train_idx], y[train_idx],
-                                 sample_weight=sample_weight[train_idx])
-                y_pred = instance.predict(X[holdout_idx])
-                meta_features[holdout_idx, i] = y_pred
+        # The meta_features are collection of the prediction data,
+        # in shape of [n_samples, len(self.regressors)]. Each column
+        # corresponds to the result of `corss_val_predict` using every
+        # base regressors.
+        # Advantage of this complex approach is that data points we're
+        # predicting have not been trained on by the algorithm, so it's
+        # less susceptible to overfitting.
+        if sample_weight is None:
+            fit_params = None
+        else:
+            fit_params = dict(sample_weight=sample_weight)
+        meta_features = np.column_stack([cross_val_predict(
+                regr, X, y, groups=groups, cv=kfold,
+                n_jobs=self.n_jobs, fit_params=fit_params,
+                pre_dispatch=self.pre_dispatch)
+                    for regr in self.regr_])
 
         # save meta-features for training data
         if self.store_train_meta_features:

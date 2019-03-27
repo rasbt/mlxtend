@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2018
+# Sebastian Raschka 2014-2019
 # mlxtend Machine Learning Library Extensions
 #
 # Object for selecting a dataset column in scikit-learn pipelines.
@@ -61,6 +61,18 @@ def test_ColumnSelector_with_dataframe():
     df_in = pd.DataFrame(boston.data, columns=boston.feature_names)
     df_out = ColumnSelector(cols=('ZN', 'CRIM')).transform(df_in)
     assert df_out.shape == (506, 2)
+
+
+def test_ColumnSelector_with_dataframe_and_int_columns():
+    boston = datasets.load_boston()
+    df_in = pd.DataFrame(boston.data, columns=boston.feature_names)
+    df_out_str = ColumnSelector(cols=('INDUS', 'CHAS')).transform(df_in)
+    df_out_int = ColumnSelector(cols=(2, 3)).transform(df_in)
+
+    np.testing.assert_array_equal(df_out_str[:, 0],
+                                  df_out_int[:, 0])
+    np.testing.assert_array_equal(df_out_str[:, 1],
+                                  df_out_int[:, 1])
 
 
 def test_ColumnSelector_with_dataframe_drop_axis():

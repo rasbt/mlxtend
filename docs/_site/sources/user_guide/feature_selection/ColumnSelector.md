@@ -155,7 +155,7 @@ pipe.score(X, y)
 
 
 
-    0.83999999999999997
+    0.84
 
 
 
@@ -221,6 +221,50 @@ print('Best performance:', grid.best_score_)
 
     Best parameters: {'columnselector__cols': (2, 3), 'kneighborsclassifier__n_neighbors': 1}
     Best performance: 0.98
+
+
+## Example 3 -- Scaling of a Subset of Features in a scikit-learn Pipeline
+
+The following example illustrates how we could use the `ColumnSelector` in tandem with scikit-learn's `FeatureUnion` to only scale certain features (in this toy example: the first and second feature only) in a datasets in a `Pipeline`.
+
+
+```python
+from mlxtend.feature_selection import ColumnSelector
+from sklearn.pipeline import make_pipeline
+from sklearn.pipeline import Pipeline
+from sklearn.pipeline import FeatureUnion
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.neighbors import KNeighborsClassifier
+from mlxtend.data import iris_data
+
+
+X, y = iris_data()
+
+scale_pipe = make_pipeline(ColumnSelector(cols=(0, 1)),
+                           MinMaxScaler())
+
+pipeline = Pipeline([
+    ('feats', FeatureUnion([
+        ('col_1-2', scale_pipe),
+        ('col_3-4', ColumnSelector(cols=(2, 3)))
+    ])),
+    ('clf', KNeighborsClassifier())
+])
+
+
+pipeline.fit(X, y)
+```
+
+
+
+
+    Pipeline(memory=None,
+         steps=[('feats', FeatureUnion(n_jobs=None,
+           transformer_list=[('col_1-2', Pipeline(memory=None,
+         steps=[('columnselector', ColumnSelector(cols=(0, 1), drop_axis=False)), ('minmaxscaler', MinMaxScaler(copy=True, feature_range=(0, 1)))])), ('col_3-4', ColumnSelector(cols=(2, 3), drop_axis=Fa...ki',
+               metric_params=None, n_jobs=None, n_neighbors=5, p=2,
+               weights='uniform'))])
+
 
 
 ## API

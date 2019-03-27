@@ -1,5 +1,5 @@
-# Sebastian Raschka 2014-2018
-# mlxtend Machine Learning Library Extensions
+# Sebastian Raschka 2014-2019
+# myxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
@@ -112,6 +112,13 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, n_jobs=1):
 
     is_sparse = hasattr(df, "to_coo")
     if is_sparse:
+        if not isinstance(df.columns[0], str) and df.columns[0] != 0:
+            raise ValueError('Due to current limitations in Pandas, '
+                             'if the SparseDataFrame has integer column names,'
+                             'names, please make sure they either start '
+                             'with `0` or cast them as string column names: '
+                             '`df.columns = [str(i) for i in df.columns`].')
+
         X = df.to_coo().tocsc()
         support = np.array(np.sum(X, axis=0) / float(X.shape[0])).reshape(-1)
     else:

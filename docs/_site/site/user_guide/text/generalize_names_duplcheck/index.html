@@ -806,6 +806,12 @@
                         
                             
 <li >
+    <a href="../../../api_subpackages/mlxtend.image/">Mlxtend.image</a>
+</li>
+
+                        
+                            
+<li >
     <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
@@ -897,6 +903,8 @@
                             <i class="fa fa-search"></i> Search
                         </a>
                     </li>
+
+                <!--
                     <li >
                         <a rel="next" href="../generalize_names/">
                             <i class="fa fa-arrow-left"></i> Previous
@@ -906,9 +914,9 @@
                         <a rel="prev" href="../tokenizer/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
-                    </li>
+                    </li>-->
                     <li>
-                        <a href="https://github.com/rasbt/mlxtend/edit/master/docs/user_guide/text/generalize_names_duplcheck.md"><i class="fa fa-github"></i> Edit on GitHub</a>
+                        <a href="https://github.com/rasbt/mlxtend"><i class="fa fa-github"></i> GitHub</a>
                     </li>
             </ul>
         </div>
@@ -922,12 +930,12 @@
     <ul class="nav bs-sidenav">
         <li class="first-level active"><a href="#generalize-names-duplicate-checking">Generalize Names &amp; Duplicate Checking</a></li>
             <li class="second-level"><a href="#overview">Overview</a></li>
-                
-                <li class="third-level"><a href="#references">References</a></li>
+                 <!-- 
+                <li class="third-level"><a href="#references">References</a></li>  -->
             <li class="second-level"><a href="#example-1-defaults">Example 1 - Defaults</a></li>
-                
+                 <!--   -->
             <li class="second-level"><a href="#api">API</a></li>
-                
+                 <!--   -->
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
@@ -938,7 +946,7 @@
 <p>from mlxtend.text import generalize_names_duplcheck</p>
 </blockquote>
 <h2 id="overview">Overview</h2>
-<p><strong>Note</strong> that using <a href="./generalize_named.html"><code>mlxtend.text.generalize_names</code></a> with few <code>firstname_output_letters</code> can result in duplicate entries. E.g., if your dataset contains the names "Adam Johnson" and "Andrew Johnson", the default setting (i.e., 1 first name letter) will produce the generalized name "johnson a" in both cases.</p>
+<p><strong>Note</strong> that using <a href="../generalize_names/"><code>mlxtend.text.generalize_names</code></a> with few <code>firstname_output_letters</code> can result in duplicate entries. E.g., if your dataset contains the names "Adam Johnson" and "Andrew Johnson", the default setting (i.e., 1 first name letter) will produce the generalized name "johnson a" in both cases.</p>
 <p>One solution is to increase the number of first name letters in the output by setting the parameter <code>firstname_output_letters</code> to a value larger than 1. </p>
 <p>An alternative solution is to use the <code>generalize_names_duplcheck</code> function if you are working with pandas DataFrames. </p>
 <p>By default,  <code>generalize_names_duplcheck</code> will apply  <code>generalize_names</code> to a pandas DataFrame column with the minimum number of first name letters and append as many first name letters as necessary until no duplicates are present in the given DataFrame column. An example dataset column that contains the names  </p>
@@ -1066,7 +1074,7 @@ been applied without duplicates.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

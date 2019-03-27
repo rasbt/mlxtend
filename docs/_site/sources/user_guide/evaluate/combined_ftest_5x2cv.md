@@ -7,7 +7,7 @@
 ## Overview
 
 The 5x2cv combined *F* test is a procedure for comparing the performance of two models (classifiers or regressors)
-that was proposed by Alpaydin [1] as a more robust alternative to Dietterich's 5x2cv paired t-test procedure [2]. [`paired_ttest_5x2cv.md`](paired_ttest_5x2cv.md).  Dietterich's 5x2cv method was in turn was designed to address shortcomings in other methods such as the resampled paired *t* test (see [`paired_ttest_resampled`](paired_ttest_resampled.md)) and the k-fold cross-validated paired *t* test (see [`paired_ttest_kfold_cv`](paired_ttest_kfold_cv.md)).
+that was proposed by Alpaydin [1] as a more robust alternative to Dietterich's 5x2cv paired t-test procedure [2]. [`paired_ttest_5x2cv.md`](paired_ttest_5x2cv.md).  Dietterich's 5x2cv method was in turn designed to address shortcomings in other methods such as the resampled paired *t* test (see [`paired_ttest_resampled`](paired_ttest_resampled.md)) and the k-fold cross-validated paired *t* test (see [`paired_ttest_kfold_cv`](paired_ttest_kfold_cv.md)).
 
 To explain how this method works, let's consider to estimator (e.g., classifiers) A and B. Further, we have a labeled dataset *D*. In the common hold-out method, we typically split the dataset into 2 parts: a training and a test set. In the 5x2cv paired *t* test, we repeat the splitting (50% training and 50% test data) 5 times. 
 
@@ -19,7 +19,7 @@ and
 
 $$p^{(2)} = p^{(2)}_A - p^{(2)}_B.$$
 
-Then, we estimate the estimate mean and variance of the differences:
+Then, we estimate mean and variance of the differences:
 
 $\overline{p} = \frac{p^{(1)} + p^{(2)}}{2}$
 

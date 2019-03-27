@@ -806,6 +806,12 @@
                         
                             
 <li >
+    <a href="../../../api_subpackages/mlxtend.image/">Mlxtend.image</a>
+</li>
+
+                        
+                            
+<li >
     <a href="../../../api_subpackages/mlxtend.plotting/">Mlxtend.plotting</a>
 </li>
 
@@ -897,6 +903,8 @@
                             <i class="fa fa-search"></i> Search
                         </a>
                     </li>
+
+                <!--
                     <li >
                         <a rel="next" href="../../feature_extraction/RBFKernelPCA/">
                             <i class="fa fa-arrow-left"></i> Previous
@@ -906,9 +914,9 @@
                         <a rel="prev" href="../ExhaustiveFeatureSelector/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
-                    </li>
+                    </li>-->
                     <li>
-                        <a href="https://github.com/rasbt/mlxtend/edit/master/docs/user_guide/feature_selection/ColumnSelector.md"><i class="fa fa-github"></i> Edit on GitHub</a>
+                        <a href="https://github.com/rasbt/mlxtend"><i class="fa fa-github"></i> GitHub</a>
                     </li>
             </ul>
         </div>
@@ -922,15 +930,17 @@
     <ul class="nav bs-sidenav">
         <li class="first-level active"><a href="#columnselector">ColumnSelector</a></li>
             <li class="second-level"><a href="#overview">Overview</a></li>
-                
-                <li class="third-level"><a href="#references">References</a></li>
+                 <!-- 
+                <li class="third-level"><a href="#references">References</a></li>  -->
             <li class="second-level"><a href="#example-1-fitting-an-estimator-on-a-feature-subset">Example 1 - Fitting an Estimator on a Feature Subset</a></li>
-                
+                 <!--   -->
             <li class="second-level"><a href="#example-2-feature-selection-via-gridsearch">Example 2 - Feature Selection via GridSearch</a></li>
-                
+                 <!--   -->
+            <li class="second-level"><a href="#example-3-scaling-of-a-subset-of-features-in-a-scikit-learn-pipeline">Example 3 -- Scaling of a Subset of Features in a scikit-learn Pipeline</a></li>
+                 <!--   -->
             <li class="second-level"><a href="#api">API</a></li>
-                
-                <li class="third-level"><a href="#methods">Methods</a></li>
+                 <!-- 
+                <li class="third-level"><a href="#methods">Methods</a></li>  -->
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
@@ -1054,7 +1064,7 @@ pipe.fit(X, y)
 pipe.score(X, y)
 </code></pre>
 
-<pre><code>0.83999999999999997
+<pre><code>0.84
 </code></pre>
 <h2 id="example-2-feature-selection-via-gridsearch">Example 2 - Feature Selection via GridSearch</h2>
 <p>Example 1 showed a simple useage example of the <code>ColumnSelector</code>; however, selecting columns from a dataset is trivial and does not require a specific transformer class since we could have achieved the same results via</p>
@@ -1104,6 +1114,41 @@ print('Best performance:', grid.best_score_)
 
 <pre><code>Best parameters: {'columnselector__cols': (2, 3), 'kneighborsclassifier__n_neighbors': 1}
 Best performance: 0.98
+</code></pre>
+<h2 id="example-3-scaling-of-a-subset-of-features-in-a-scikit-learn-pipeline">Example 3 -- Scaling of a Subset of Features in a scikit-learn Pipeline</h2>
+<p>The following example illustrates how we could use the <code>ColumnSelector</code> in tandem with scikit-learn's <code>FeatureUnion</code> to only scale certain features (in this toy example: the first and second feature only) in a datasets in a <code>Pipeline</code>.</p>
+<pre><code class="python">from mlxtend.feature_selection import ColumnSelector
+from sklearn.pipeline import make_pipeline
+from sklearn.pipeline import Pipeline
+from sklearn.pipeline import FeatureUnion
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.neighbors import KNeighborsClassifier
+from mlxtend.data import iris_data
+
+
+X, y = iris_data()
+
+scale_pipe = make_pipeline(ColumnSelector(cols=(0, 1)),
+                           MinMaxScaler())
+
+pipeline = Pipeline([
+    ('feats', FeatureUnion([
+        ('col_1-2', scale_pipe),
+        ('col_3-4', ColumnSelector(cols=(2, 3)))
+    ])),
+    ('clf', KNeighborsClassifier())
+])
+
+
+pipeline.fit(X, y)
+</code></pre>
+
+<pre><code>Pipeline(memory=None,
+     steps=[('feats', FeatureUnion(n_jobs=None,
+       transformer_list=[('col_1-2', Pipeline(memory=None,
+     steps=[('columnselector', ColumnSelector(cols=(0, 1), drop_axis=False)), ('minmaxscaler', MinMaxScaler(copy=True, feature_range=(0, 1)))])), ('col_3-4', ColumnSelector(cols=(2, 3), drop_axis=Fa...ki',
+           metric_params=None, n_jobs=None, n_neighbors=5, p=2,
+           weights='uniform'))])
 </code></pre>
 <h2 id="api">API</h2>
 <p><em>ColumnSelector(cols=None, drop_axis=False)</em></p>
@@ -1228,7 +1273,7 @@ n_features is the number of features.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

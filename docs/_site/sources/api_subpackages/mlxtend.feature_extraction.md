@@ -1,4 +1,4 @@
-mlxtend version: 0.14.0dev 
+mlxtend version: 0.15.0dev 
 ## LinearDiscriminantAnalysis
 
 *LinearDiscriminantAnalysis(n_discriminants=None)*
@@ -128,7 +128,7 @@ Apply the linear transformation on X.
 
 ## PrincipalComponentAnalysis
 
-*PrincipalComponentAnalysis(n_components=None, solver='eigen')*
+*PrincipalComponentAnalysis(n_components=None, solver='svd', whitening=False)*
 
 Principal Component Analysis Class
 
@@ -139,10 +139,15 @@ Principal Component Analysis Class
     The number of principal components for transformation.
     Keeps the original dimensions of the dataset if `None`.
 
-- `solver` : str (default: 'eigen')
+- `solver` : str (default: 'svd')
 
     Method for performing the matrix decomposition.
     {'eigen', 'svd'}
+
+- `whitening` : bool (default: False)
+
+    Performs whitening such that the covariance matrix of
+    the transformed data will be the identity matrix.
 
 **Attributes**
 
@@ -178,7 +183,7 @@ For usage examples, please see
 
 <hr>
 
-*fit(X)*
+*fit(X, y=None)*
 
 Learn model from training data.
 

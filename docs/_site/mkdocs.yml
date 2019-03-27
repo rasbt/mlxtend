@@ -5,12 +5,14 @@ site_description: A library consisting of useful tools and extensions for the da
 
 repo_url: https://github.com/rasbt/mlxtend
 repo_name: GitHub
+edit_uri: docs/sources/user_guide/
 
 #include_search: true # not necessary for this theme
 docs_dir: sources
 
 theme:
-    name: cosmo
+    name: null
+    custom_dir: 'custom_theme/'
 
 markdown_extensions:
   - tables
@@ -28,7 +30,7 @@ extra_css:
   - cinder/css/font-awesome-4.0.3.css
   - cinder/css/highlight.css
 
-copyright: Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a>
+copyright: Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a>
 google_analytics: ['UA-38457794-2', 'rasbt.github.io/mlxtend/']
 
 nav:
@@ -96,6 +98,7 @@ nav:
     - user_guide/general_concepts/regularization-linear.md
   - image:
     - user_guide/image/extract_face_landmarks.md
+    - user_guide/image/eyepad_align.md
   - math:
     - user_guide/math/num_combinations.md
     - user_guide/math/num_permutations.md
@@ -141,6 +144,7 @@ nav:
   - api_subpackages/mlxtend.feature_selection.md
   - api_subpackages/mlxtend.file_io.md
   - api_subpackages/mlxtend.frequent_patterns.md
+  - api_subpackages/mlxtend.image.md
   - api_subpackages/mlxtend.plotting.md
   - api_subpackages/mlxtend.preprocessing.md
   - api_subpackages/mlxtend.regressor.md

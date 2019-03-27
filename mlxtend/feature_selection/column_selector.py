@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2018
+# Sebastian Raschka 2014-2019
 # mlxtend Machine Learning Library Extensions
 #
 # Object for selecting a dataset column in scikit-learn pipelines.
@@ -18,7 +18,8 @@ class ColumnSelector(BaseEstimator):
     ----------
     cols : array-like (default: None)
         A list specifying the feature indices to be selected. For example,
-        [1, 4, 5] to select the 2nd, 5th, and 6th feature columns.
+        [1, 4, 5] to select the 2nd, 5th, and 6th feature columns, and
+        ['A','C','D'] to select the name of feature columns A, C and D.
         If None, returns all columns in the array.
 
     drop_axis : bool (default=False)
@@ -75,9 +76,23 @@ class ColumnSelector(BaseEstimator):
 
         """
 
-        # We use the loc accessor if the input is a pandas dataframe
-        if hasattr(X, 'loc'):
-            t = X.loc[:, self.cols].values
+        # We use the loc or iloc accessor if the input is a pandas dataframe
+        if hasattr(X, 'loc') or hasattr(X, 'iloc'):
+            if type(self.cols) == tuple:
+                self.cols = list(self.cols)
+            types = {type(i) for i in self.cols}
+            if len(types) > 1:
+                raise ValueError(
+                    'Elements in `cols` should be all of the same data type.'
+                )
+            if isinstance(self.cols[0], int):
+                t = X.iloc[:, self.cols].values
+            elif isinstance(self.cols[0], str):
+                t = X.loc[:, self.cols].values
+            else:
+                raise ValueError(
+                    'Elements in `cols` should be either `int` or `str`.'
+                )
         else:
             t = X[:, self.cols]
 

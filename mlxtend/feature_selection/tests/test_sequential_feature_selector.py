@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2018
+# Sebastian Raschka 2014-2019
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
@@ -809,43 +809,90 @@ def test_max_feature_subset_parsimonious():
 
 
 def test_check_pandas_dataframe_fit():
+    for floating in [True, False]:
+        iris = load_iris()
+        X = iris.data
+        y = iris.target
+        lr = SoftmaxRegression(random_seed=1)
+        sfs1 = SFS(lr,
+                   k_features=2,
+                   forward=True,
+                   floating=floating,
+                   scoring='accuracy',
+                   cv=0,
+                   verbose=0,
+                   n_jobs=1)
 
-    iris = load_iris()
-    X = iris.data
-    y = iris.target
-    lr = SoftmaxRegression(random_seed=1)
-    sfs1 = SFS(lr,
-               k_features=2,
-               forward=True,
-               floating=False,
-               scoring='accuracy',
-               cv=0,
-               verbose=0,
-               n_jobs=1)
+        df = pd.DataFrame(X, columns=['sepal len', 'sepal width',
+                                      'petal len', 'petal width'])
 
-    df = pd.DataFrame(X, columns=['sepal len', 'sepal width',
-                                  'petal len', 'petal width'])
+        sfs1 = sfs1.fit(X, y)
+        assert sfs1.k_feature_idx_ == (1, 3)
+        assert sfs1.k_feature_names_ == ('1', '3')
+        assert sfs1.subsets_[2]['feature_names'] == ('1', '3')
 
-    sfs1 = sfs1.fit(X, y)
-    assert sfs1.k_feature_idx_ == (1, 3)
-    assert sfs1.k_feature_names_ == ('1', '3')
-    assert sfs1.subsets_[2]['feature_names'] == ('1', '3')
+        sfs1 = sfs1.fit(df, y)
+        assert sfs1.subsets_[1]['feature_names'] == ('petal width',)
+        assert sfs1.subsets_[2]['feature_names'] == ('sepal width',
+                                                     'petal width')
+        assert sfs1.subsets_[1]['feature_idx'] == (3,)
+        assert sfs1.subsets_[2]['feature_idx'] == (1, 3)
+        assert sfs1.k_feature_idx_ == (1, 3)
+        assert sfs1.k_feature_names_ == ('sepal width', 'petal width')
 
-    sfs1 = sfs1.fit(df, y)
-    assert sfs1.subsets_[1]['feature_names'] == ('petal width',)
-    assert sfs1.subsets_[2]['feature_names'] == ('sepal width', 'petal width')
-    assert sfs1.subsets_[1]['feature_idx'] == (3,)
-    assert sfs1.subsets_[2]['feature_idx'] == (1, 3)
-    assert sfs1.k_feature_idx_ == (1, 3)
-    assert sfs1.k_feature_names_ == ('sepal width', 'petal width')
+        sfs1._TESTING_INTERRUPT_MODE = True
+        out = sfs1.fit(df, y)
+        assert len(out.subsets_.keys()) > 0
+        assert sfs1.interrupted_
+        assert sfs1.subsets_[1]['feature_names'] == ('petal width',)
+        assert sfs1.k_feature_idx_ == (3,)
+        assert sfs1.k_feature_names_ == ('petal width',)
 
-    sfs1._TESTING_INTERRUPT_MODE = True
-    out = sfs1.fit(df, y)
-    assert len(out.subsets_.keys()) > 0
-    assert sfs1.interrupted_
-    assert sfs1.subsets_[1]['feature_names'] == ('petal width',)
-    assert sfs1.k_feature_idx_ == (3,)
-    assert sfs1.k_feature_names_ == ('petal width',)
+
+def test_check_pandas_dataframe_fit_backward():
+    for floating in [True, False]:
+        iris = load_iris()
+        X = iris.data
+        y = iris.target
+        lr = SoftmaxRegression(random_seed=1)
+        sfs1 = SFS(lr,
+                   k_features=2,
+                   forward=False,
+                   floating=floating,
+                   scoring='accuracy',
+                   cv=0,
+                   verbose=0,
+                   n_jobs=1)
+
+        df = pd.DataFrame(X, columns=['sepal len', 'sepal width',
+                                      'petal len', 'petal width'])
+
+        sfs1 = sfs1.fit(X, y)
+        assert sfs1.k_feature_idx_ == (1, 2)
+        assert sfs1.k_feature_names_ == ('1', '2')
+        assert sfs1.subsets_[2]['feature_names'] == ('1', '2')
+
+        sfs1 = sfs1.fit(df, y)
+        assert sfs1.subsets_[3]['feature_names'] == ('sepal len',
+                                                     'sepal width',
+                                                     'petal len')
+        assert sfs1.subsets_[2]['feature_names'] == ('sepal width',
+                                                     'petal len')
+        assert sfs1.subsets_[3]['feature_idx'] == (0, 1, 2)
+        assert sfs1.subsets_[2]['feature_idx'] == (1, 2)
+        assert sfs1.k_feature_idx_ == (1, 2)
+        assert sfs1.k_feature_names_ == ('sepal width', 'petal len')
+
+        sfs1._TESTING_INTERRUPT_MODE = True
+        out = sfs1.fit(df, y)
+        assert len(out.subsets_.keys()) > 0
+        assert sfs1.interrupted_
+        assert sfs1.subsets_[3]['feature_names'] == ('sepal len',
+                                                     'sepal width',
+                                                     'petal len')
+        assert sfs1.k_feature_idx_ == (0, 1, 2)
+        assert sfs1.k_feature_names_ == ('sepal len', 'sepal width',
+                                         'petal len')
 
 
 def test_check_pandas_dataframe_transform():

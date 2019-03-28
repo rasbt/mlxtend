@@ -51,7 +51,7 @@ def generate_new_combinations(old_combinations):
                 yield res
 
 
-def apriori(df, min_support=0.5, use_colnames=False, max_len=None, n_jobs=1):
+def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
     """Get frequent itemsets from a one-hot DataFrame
     Parameters
     -----------
@@ -84,6 +84,9 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, n_jobs=1):
     max_len : int (default: None)
       Maximum length of the itemsets generated. If `None` (default) all
       possible itemsets lengths (under the apriori condition) are evaluated.
+
+    verbose : int (default: 0)
+      Shows the number of iterations if 1.
 
     Returns
     -----------
@@ -134,6 +137,8 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, n_jobs=1):
     if max_len is None:
         max_len = float('inf')
 
+    iter_count = 0
+
     while max_itemset and max_itemset < max_len:
         next_max_itemset = max_itemset + 1
         combin = generate_new_combinations(itemset_dict[max_itemset])
@@ -143,6 +148,10 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, n_jobs=1):
         if is_sparse:
             all_ones = np.ones((X.shape[0], next_max_itemset))
         for c in combin:
+            if verbose:
+                iter_count += 1
+                print('\rIteration: %d | Sampling itemset size %d' %
+                      (iter_count, next_max_itemset), end="")
             if is_sparse:
                 together = np.all(X[:, c] == all_ones, axis=1)
             else:
@@ -174,5 +183,8 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, n_jobs=1):
         res_df['itemsets'] = res_df['itemsets'].apply(lambda x: frozenset([
                                                       mapping[i] for i in x]))
     res_df = res_df.reset_index(drop=True)
+
+    if verbose:
+        print()  # adds newline if verbose counter was used
 
     return res_df

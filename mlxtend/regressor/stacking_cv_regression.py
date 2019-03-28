@@ -14,10 +14,9 @@
 # License: BSD 3 clause
 
 from ..externals.estimator_checks import check_is_fitted
-from ..externals import six
 from ..externals.name_estimators import _name_estimators
+from ..utils.base_compostion import _BaseXComposition
 from scipy import sparse
-from sklearn.base import BaseEstimator
 from sklearn.base import RegressorMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
@@ -27,7 +26,7 @@ from sklearn.model_selection._split import check_cv
 import numpy as np
 
 
-class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
+class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
     """A 'Stacking Cross-Validation' regressor for scikit-learn estimators.
 
     New in mlxtend v0.7.0
@@ -123,12 +122,6 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
 
         self.regressors = regressors
         self.meta_regressor = meta_regressor
-        self.named_regressors = {key: value for
-                                 key, value in
-                                 _name_estimators(regressors)}
-        self.named_meta_regressor = {'meta-%s' % key: value for
-                                     key, value in
-                                     _name_estimators([meta_regressor])}
         self.cv = cv
         self.shuffle = shuffle
         self.n_jobs = n_jobs
@@ -273,25 +266,29 @@ class StackingCVRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
         check_is_fitted(self, 'regr_')
         return np.column_stack([regr.predict(X) for regr in self.regr_])
 
+    @property
+    def named_regressors(self):
+        """
+        Returns
+        -------
+        List of named estimator tuples, like [('svc', SVC(...))]
+        """
+        return _name_estimators(self.regressors)
+
     def get_params(self, deep=True):
         #
         # Return estimator parameter names for GridSearch support.
         #
-        if not deep:
-            return super(StackingCVRegressor, self).get_params(deep=False)
-        else:
-            out = self.named_regressors.copy()
-            for name, step in six.iteritems(self.named_regressors):
-                for key, value in six.iteritems(step.get_params(deep=True)):
-                    out['%s__%s' % (name, key)] = value
+        return self._get_params('named_regressors', deep=deep)
 
-            out.update(self.named_meta_regressor.copy())
-            for name, step in six.iteritems(self.named_meta_regressor):
-                for key, value in six.iteritems(step.get_params(deep=True)):
-                    out['%s__%s' % (name, key)] = value
+    def set_params(self, **params):
+        """Set the parameters of this estimator.
 
-            for key, value in six.iteritems(super(StackingCVRegressor,
-                                            self).get_params(deep=False)):
-                out['%s' % key] = value
+        Valid parameter keys can be listed with ``get_params()``.
 
-            return out
+        Returns
+        -------
+        self
+        """
+        self._set_params('regressors', 'named_regressors', **params)
+        return self

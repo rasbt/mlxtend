@@ -98,7 +98,7 @@ def test_gridsearch_numerate_regr():
     params = {'ridge-1__alpha': [0.01, 1.0],
               'ridge-2__alpha': [0.01, 1.0],
               'svr__C': [0.01, 1.0],
-              'meta-svr__C': [0.01, 1.0],
+              'meta_regressor__C': [0.01, 1.0],
               'use_features_in_secondary': [True, False]}
 
     grid = GridSearchCV(estimator=stack,
@@ -122,7 +122,6 @@ def test_get_params():
     got = sorted(list({s.split('__')[0] for s in stregr.get_params().keys()}))
     expect = ['cv',
               'linearregression',
-              'meta-svr',
               'meta_regressor',
               'n_jobs',
               'pre_dispatch',
@@ -332,3 +331,34 @@ def test_weight_unsupported_with_no_weight():
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
                                 meta_regressor=lasso)
     stack.fit(X1, y).predict(X1)
+
+
+def test_gridsearch_replace_mix():
+    svr_lin = SVR(kernel='linear', gamma='auto')
+    ridge = Ridge(random_state=1)
+    svr_rbf = SVR(kernel='rbf', gamma='auto')
+    lr = LinearRegression()
+    lasso = Lasso(random_state=1)
+    stack = StackingCVRegressor(regressors=[svr_lin, lasso, ridge],
+                                meta_regressor=svr_rbf,
+                                shuffle=False)
+
+    params = {'regressors': [[svr_lin, lr]],
+              'linearregression': [None, lasso, ridge],
+              'svr__kernel': ['poly']}
+
+    grid = GridSearchCV(estimator=stack,
+                        param_grid=params,
+                        cv=KFold(5, shuffle=True, random_state=42),
+                        iid=False,
+                        refit=True,
+                        verbose=0)
+    grid = grid.fit(X1, y)
+
+    got1 = round(grid.best_score_, 2)
+    got2 = len(grid.best_params_['regressors'])
+    got3 = grid.best_params_['regressors'][0].kernel
+
+    assert got1 == 0.73, got1
+    assert got2 == 2, got2
+    assert got3 == 'poly', got3

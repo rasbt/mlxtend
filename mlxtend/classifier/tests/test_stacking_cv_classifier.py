@@ -329,39 +329,6 @@ def test_verbose():
     sclf.fit(X_iris, y_iris)
 
 
-def test_list_of_lists():
-    X_list = [i for i in X_iris]
-    meta = LogisticRegression(multi_class='ovr', solver='liblinear')
-    clf1 = RandomForestClassifier(n_estimators=10)
-    clf2 = GaussianNB()
-    sclf = StackingCVClassifier(classifiers=[clf1, clf2],
-                                use_probas=True,
-                                meta_classifier=meta,
-                                shuffle=False,
-                                verbose=0)
-
-    try:
-        sclf.fit(X_list, y_iris)
-    except TypeError as e:
-        assert 'are NumPy arrays. If X and y are lists' in str(e)
-
-
-def test_pandas():
-    X_df = pd.DataFrame(X_iris)
-    meta = LogisticRegression(multi_class='ovr', solver='liblinear')
-    clf1 = RandomForestClassifier(n_estimators=10)
-    clf2 = GaussianNB()
-    sclf = StackingCVClassifier(classifiers=[clf1, clf2],
-                                use_probas=True,
-                                meta_classifier=meta,
-                                shuffle=False,
-                                verbose=0)
-    try:
-        sclf.fit(X_df, y_iris)
-    except KeyError as e:
-        assert 'are NumPy arrays. If X and y are pandas DataFrames' in str(e)
-
-
 def test_get_params():
     clf1 = KNeighborsClassifier(n_neighbors=1)
     clf2 = RandomForestClassifier(random_state=1)
@@ -493,8 +460,8 @@ def test_sparse_inputs_with_features_in_secondary():
     stclf = StackingCVClassifier(classifiers=[rf, rf],
                                  meta_classifier=lr,
                                  use_features_in_secondary=True)
-    X_train, X_test, y_train,  y_test = train_test_split(X_breast, y_breast,
-                                                         test_size=0.3)
+    X_train, X_test, y_train, y_test = train_test_split(X_breast, y_breast,
+                                                        test_size=0.3)
 
     # dense
     stclf.fit(X_train, y_train)
@@ -503,5 +470,43 @@ def test_sparse_inputs_with_features_in_secondary():
 
     # sparse
     stclf.fit(sparse.csr_matrix(X_train), y_train)
+    assert round(stclf.score(X_train, y_train), 2) == 0.99, \
+        round(stclf.score(X_train, y_train), 2)
+
+
+def test_works_with_df_if_fold_indexes_missing():
+    """This is a regression test to make sure fitting will still work even if
+    training data has ids that cannot be indexed using the indexes from the cv
+    (e.g. skf)
+
+    Some possibilities:
+    + Output of the folds are not neatly consecutive (i.e. [341, 345, 543, ...]
+      instead of [0, 1, ... n])
+    + Indexes just start from some number greater than the size of the input
+      (see test case)
+
+    Training data sometimes has ids that carry other information, and selection
+    of rows based on cv should not break.
+
+    This is fixed in the code using `safe_indexing`
+    """
+
+    np.random.seed(123)
+    rf = RandomForestClassifier(n_estimators=10)
+    lr = LogisticRegression(multi_class='ovr', solver='liblinear')
+    stclf = StackingCVClassifier(classifiers=[rf, rf],
+                                 meta_classifier=lr,
+                                 use_features_in_secondary=True)
+
+    X_modded = pd.DataFrame(X_breast,
+                            index=np.arange(X_breast.shape[0]) + 1000)
+    y_modded = pd.Series(y_breast,
+                         index=np.arange(y_breast.shape[0]) + 1000)
+
+    X_train, X_test, y_train, y_test = train_test_split(X_modded, y_modded,
+                                                        test_size=0.3)
+
+    # dense
+    stclf.fit(X_train, y_train)
     assert round(stclf.score(X_train, y_train), 2) == 0.99, \
         round(stclf.score(X_train, y_train), 2)

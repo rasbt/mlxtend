@@ -142,59 +142,6 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.store_train_meta_features = store_train_meta_features
         self.use_clones = use_clones
 
-    def _fit_fold(self, model, X, y, sample_weight, index, n_splits):
-        if self.verbose > 0:
-            print("Training and fitting fold %d of %d..." %
-                  ((index + 1), n_splits))
-
-        try:
-            if sample_weight is None:
-                model.fit(X, y)
-            else:
-                model.fit(X, y,
-                          sample_weight=sample_weight)
-        except TypeError as e:
-
-            if str(e).startswith('A sparse matrix was passed,'
-                                 ' but dense'
-                                 ' data is required'):
-                sparse_estimator_message = (
-                    "\nYou are likely getting this error"
-                    " because one of the"
-                    " estimators"
-                    " does not support sparse matrix input.")
-            else:
-                sparse_estimator_message = ''
-
-            raise TypeError(str(e) + sparse_estimator_message +
-                            '\nPlease check that X and y'
-                            'are NumPy arrays. If X and y are lists'
-                            ' of lists,\ntry passing them as'
-                            ' numpy.array(X)'
-                            ' and numpy.array(y).')
-        except KeyError as e:
-
-            raise KeyError(str(e) + '\nPlease check that X and y'
-                           ' are NumPy arrays. If X and y are pandas'
-                           ' DataFrames,\ntry passing them as'
-                           ' X.values'
-                           ' and y.values.')
-
-        return model
-
-    def _reorder_with_cv(self, arr, cv):
-        """Reorders and selects indices from arr using test indices of cv"""
-
-        rows = [safe_indexing(arr, test_indices)
-                for _, test_indices in cv]
-
-        if sparse.issparse(arr):
-            stack_fn = sparse.vstack
-        else:
-            stack_fn = np.concatenate
-
-        return stack_fn(rows)
-
     def fit(self, X, y, groups=None, sample_weight=None):
         """ Fit ensemble classifers and the meta-classifier.
 
@@ -239,9 +186,16 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         folds = list(final_cv.split(X, y, groups))
 
-        per_model_preds = []
+        # Handle the case of X being a list of lists
+        #   by converting X into a numpy array
+        if isinstance(X, list):
+            X = np.array(X)
 
-        for model in self.clfs_:
+        meta_features = None
+        n_folds = final_cv.get_n_splits()
+        n_models = len(self.clfs_)
+
+        for n, model in enumerate(self.clfs_):
 
             if self.verbose > 0:
                 i = self.clfs_.index(model) + 1
@@ -256,43 +210,41 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             if self.verbose > 1:
                 print(_name_estimators((model,))[0][1])
 
-            per_fold_preds = []
-
             for num, (train_indices, test_indices) in enumerate(folds):
 
                 X_train = safe_indexing(X, train_indices)
                 y_train = safe_indexing(y, train_indices)
 
-                model = self._fit_fold(
-                    model,
-                    X_train,
-                    y_train,
-                    (safe_indexing(sample_weight, train_indices)
-                     if sample_weight is not None else None),
-                    num,
-                    final_cv.get_n_splits()
-                )
+                if self.verbose > 0:
+                    print("Training and fitting fold %d of %d..." %
+                          ((num + 1), n_folds))
+
+                if sample_weight is None:
+                    model.fit(X_train, y_train)
+                else:
+                    w = safe_indexing(sample_weight, train_indices)
+                    model.fit(X_train, y_train, sample_weight=w)
 
                 X_test = safe_indexing(X, test_indices)
                 if not self.use_probas:
-                    prediction = model.predict(X_test)
-                    prediction = prediction.reshape(prediction.shape[0], 1)
+                    prediction = model.predict(X_test)[:, np.newaxis]
                 else:
                     prediction = model.predict_proba(X_test)
 
-                per_fold_preds.append(prediction)
-
-            all_folds_preds = np.vstack(per_fold_preds)
-            per_model_preds.append(all_folds_preds)
-
-        meta_features = np.hstack(per_model_preds)
+                if meta_features is None:
+                    # First run, use prediction to get the number of classes
+                    n_classes = prediction.shape[1]
+                    meta_features_shape = (X.shape[0], n_classes * n_models)
+                    meta_features = np.empty(shape=meta_features_shape)
+                    meta_features[np.array(test_indices)[:, np.newaxis],
+                                  np.arange(n_classes)] = prediction
+                else:
+                    row_idx = np.array(test_indices)[:, np.newaxis]
+                    col_idx = np.arange(n_classes) + n * n_classes
+                    meta_features[row_idx, col_idx] = prediction
 
         if self.store_train_meta_features:
-            # Store the meta features in the order of the
-            # original X, y arrays
-            all_test_indices = np.concatenate([i for _, i in folds])
-            self.train_meta_features_ = \
-                meta_features[np.argsort(all_test_indices)]
+            self.train_meta_features_ = meta_features
 
         # Fit the base models correctly this time using ALL the training set
         for model in self.clfs_:
@@ -303,17 +255,15 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         # Fit the secondary model
         if self.use_features_in_secondary:
-            reordered_features = self._reorder_with_cv(X, folds)
             meta_features = self._stack_first_level_features(
-                reordered_features,
+                X,
                 meta_features
             )
 
-        reordered_labels = self._reorder_with_cv(y, folds)
         if sample_weight is None:
-            self.meta_clf_.fit(meta_features, reordered_labels)
+            self.meta_clf_.fit(meta_features, y)
         else:
-            self.meta_clf_.fit(meta_features, reordered_labels,
+            self.meta_clf_.fit(meta_features, y,
                                sample_weight=sample_weight)
 
         return self
@@ -360,8 +310,7 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         for model in self.clfs_:
             if not self.use_probas:
-                prediction = model.predict(X)
-                prediction = prediction.reshape(prediction.shape[0], 1)
+                prediction = model.predict(X)[:, np.newaxis]
             else:
                 prediction = model.predict_proba(X)
 

@@ -329,39 +329,6 @@ def test_verbose():
     sclf.fit(X_iris, y_iris)
 
 
-def test_list_of_lists():
-    X_list = [i for i in X_iris]
-    meta = LogisticRegression(multi_class='ovr', solver='liblinear')
-    clf1 = RandomForestClassifier(n_estimators=10)
-    clf2 = GaussianNB()
-    sclf = StackingCVClassifier(classifiers=[clf1, clf2],
-                                use_probas=True,
-                                meta_classifier=meta,
-                                shuffle=False,
-                                verbose=0)
-
-    try:
-        sclf.fit(X_list, y_iris)
-    except TypeError as e:
-        assert 'are NumPy arrays. If X and y are lists' in str(e)
-
-
-def test_pandas():
-    X_df = pd.DataFrame(X_iris)
-    meta = LogisticRegression(multi_class='ovr', solver='liblinear')
-    clf1 = RandomForestClassifier(n_estimators=10)
-    clf2 = GaussianNB()
-    sclf = StackingCVClassifier(classifiers=[clf1, clf2],
-                                use_probas=True,
-                                meta_classifier=meta,
-                                shuffle=False,
-                                verbose=0)
-    try:
-        sclf.fit(X_df, y_iris)
-    except KeyError as e:
-        assert 'are NumPy arrays. If X and y are pandas DataFrames' in str(e)
-
-
 def test_get_params():
     clf1 = KNeighborsClassifier(n_neighbors=1)
     clf2 = RandomForestClassifier(random_state=1)

@@ -10,11 +10,9 @@
 
 from ..externals.estimator_checks import check_is_fitted
 from ..externals.name_estimators import _name_estimators
-from ..externals import six
 from ..utils.base_compostion import _BaseXComposition
 import numpy as np
 import scipy.sparse as sparse
-from sklearn.base import BaseEstimator
 from sklearn.base import RegressorMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
@@ -67,7 +65,8 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         Model coefficients of the fitted meta-estimator
     intercept_ : float
         Intercept of the fitted meta-estimator
-    train_meta_features : numpy array, shape = [n_samples, len(self.regressors)]
+    train_meta_features : numpy array,
+        shape = [n_samples, len(self.regressors)]
         meta-features for training data, where n_samples is the
         number of samples
         in training data and len(self.regressors) is the number of regressors.
@@ -193,7 +192,6 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         """
         self._set_params('regressors', 'named_regressors', **params)
         return self
-
 
     def predict_meta_features(self, X):
         """ Get meta-features of test-data.

@@ -14,11 +14,9 @@ from ..externals.estimator_checks import check_is_fitted
 from ..utils.base_compostion import _BaseXComposition
 import numpy as np
 from scipy import sparse
-from sklearn.base import BaseEstimator
 from sklearn.base import ClassifierMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
-from sklearn.externals import six
 from sklearn.model_selection import cross_val_predict
 from sklearn.model_selection._split import check_cv
 from sklearn.utils import check_X_y

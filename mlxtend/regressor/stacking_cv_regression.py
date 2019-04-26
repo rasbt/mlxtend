@@ -127,7 +127,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         self.meta_regressor = meta_regressor
         self.cv = cv
         self.shuffle = shuffle
-        self.verbose=verbose
+        self.verbose = verbose
         self.n_jobs = n_jobs
         self.use_features_in_secondary = use_features_in_secondary
         self.store_train_meta_features = store_train_meta_features

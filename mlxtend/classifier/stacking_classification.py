@@ -10,10 +10,8 @@
 
 from ..externals.estimator_checks import check_is_fitted
 from ..externals.name_estimators import _name_estimators
-from ..externals import six
 from ..utils.base_compostion import _BaseXComposition
 from scipy import sparse
-from sklearn.base import BaseEstimator
 from sklearn.base import ClassifierMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
@@ -105,7 +103,6 @@ class StackingClassifier(_BaseXComposition, ClassifierMixin,
     @property
     def named_classifiers(self):
         return _name_estimators(self.classifiers)
-
 
     def fit(self, X, y, sample_weight=None):
         """ Fit ensemble classifers and the meta-classifier.

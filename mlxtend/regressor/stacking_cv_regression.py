@@ -70,6 +70,8 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         be shuffled at fitting stage prior to cross-validation. If the `cv`
         argument is a specific cross validation technique, this argument is
         omitted.
+    verbose : int, optional (default=0)
+        Controls the verbosity of the building process.
     store_train_meta_features : bool (default: False)
         If True, the meta-features computed from the training data
         used for fitting the
@@ -116,7 +118,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
 
     """
     def __init__(self, regressors, meta_regressor, cv=5,
-                 shuffle=True, n_jobs=1,
+                 shuffle=True, verbose=0, n_jobs=1,
                  use_features_in_secondary=False,
                  store_train_meta_features=False,
                  refit=True, pre_dispatch='2*n_jobs'):
@@ -125,6 +127,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         self.meta_regressor = meta_regressor
         self.cv = cv
         self.shuffle = shuffle
+        self.verbose=verbose
         self.n_jobs = n_jobs
         self.use_features_in_secondary = use_features_in_secondary
         self.store_train_meta_features = store_train_meta_features

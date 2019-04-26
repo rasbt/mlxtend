@@ -174,7 +174,7 @@ def test_gridsearch():
                                 use_probas=True,
                                 shuffle=False)
 
-    params = {'meta-logisticregression__C': [1.0, 100.0],
+    params = {'meta_classifier__C': [1.0, 100.0],
               'randomforestclassifier__n_estimators': [20, 200]}
 
     grid = GridSearchCV(estimator=sclf, param_grid=params, cv=5, iid=False)
@@ -196,7 +196,7 @@ def test_gridsearch_enumerate_names():
                                 meta_classifier=meta,
                                 shuffle=False)
 
-    params = {'meta-logisticregression__C': [1.0, 100.0],
+    params = {'meta_classifier__C': [1.0, 100.0],
               'randomforestclassifier-1__n_estimators': [5, 10],
               'randomforestclassifier-2__n_estimators': [5, 20],
               'use_probas': [True, False]}
@@ -259,7 +259,7 @@ def test_do_not_stratify():
                              cv=5,
                              scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
-    assert scores_mean == 0.94
+    assert scores_mean == 0.93, scores.mean()
 
 
 def test_cross_validation_technique():
@@ -281,7 +281,7 @@ def test_cross_validation_technique():
                              cv=5,
                              scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
-    assert scores_mean == 0.94
+    assert scores_mean == 0.93, scores.mean()
 
 
 def test_not_fitted():
@@ -338,12 +338,14 @@ def test_get_params():
                                 meta_classifier=lr)
 
     got = sorted(list({s.split('__')[0] for s in sclf.get_params().keys()}))
+
     expect = ['classifiers',
               'cv',
               'gaussiannb',
               'kneighborsclassifier',
-              'meta-logisticregression',
               'meta_classifier',
+              'n_jobs',
+              'pre_dispatch',
               'randomforestclassifier',
               'shuffle',
               'store_train_meta_features',

@@ -22,6 +22,7 @@ from sklearn.base import TransformerMixin
 from sklearn.base import clone
 from sklearn.model_selection import cross_val_predict
 from sklearn.model_selection._split import check_cv
+from sklearn.utils import check_X_y
 
 import numpy as np
 
@@ -118,7 +119,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
                  shuffle=True, n_jobs=1,
                  use_features_in_secondary=False,
                  store_train_meta_features=False,
-                 refit=True, pre_dispatch=None):
+                 refit=True, pre_dispatch='2*n_jobs'):
 
         self.regressors = regressors
         self.meta_regressor = meta_regressor
@@ -164,6 +165,8 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
             self.regr_ = self.regressors
             self.meta_regr_ = self.meta_regressor
 
+        X, y = check_X_y(X, y, accept_sparse=['csc', 'csr'])
+
         kfold = check_cv(self.cv, y)
         if isinstance(self.cv, int):
             # Override shuffle parameter in case of self generated
@@ -183,8 +186,8 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
             fit_params = dict(sample_weight=sample_weight)
         meta_features = np.column_stack([cross_val_predict(
                 regr, X, y, groups=groups, cv=kfold,
-                n_jobs=self.n_jobs, fit_params=fit_params,
-                pre_dispatch=self.pre_dispatch)
+                verbose=self.verbose, n_jobs=self.n_jobs,
+                fit_params=fit_params, pre_dispatch=self.pre_dispatch)
                     for regr in self.regr_])
 
         # save meta-features for training data

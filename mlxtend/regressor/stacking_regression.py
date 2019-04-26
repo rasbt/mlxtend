@@ -11,6 +11,7 @@
 from ..externals.estimator_checks import check_is_fitted
 from ..externals.name_estimators import _name_estimators
 from ..externals import six
+from ..utils.base_compostion import _BaseXComposition
 import numpy as np
 import scipy.sparse as sparse
 from sklearn.base import BaseEstimator
@@ -19,7 +20,7 @@ from sklearn.base import TransformerMixin
 from sklearn.base import clone
 
 
-class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
+class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
 
     """A Stacking regressor for scikit-learn estimators for regression.
 
@@ -90,16 +91,14 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
 
         self.regressors = regressors
         self.meta_regressor = meta_regressor
-        self.named_regressors = {key: value for
-                                 key, value in
-                                 _name_estimators(regressors)}
-        self.named_meta_regressor = {'meta-%s' % key: value for
-                                     key, value in
-                                     _name_estimators([meta_regressor])}
         self.verbose = verbose
         self.use_features_in_secondary = use_features_in_secondary
         self.store_train_meta_features = store_train_meta_features
         self.refit = refit
+
+    @property
+    def named_regressors(self):
+        return _name_estimators(self.regressors)
 
     def fit(self, X, y, sample_weight=None):
         """Learn weight coefficients from training data for each regressor.
@@ -123,7 +122,7 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
 
         """
         if self.refit:
-            self.regr_ = [clone(clf) for clf in self.regressors]
+            self.regr_ = clone(self.regressors)
             self.meta_regr_ = clone(self.meta_regressor)
         else:
             self.regr_ = self.regressors
@@ -181,24 +180,20 @@ class StackingRegressor(BaseEstimator, RegressorMixin, TransformerMixin):
 
     def get_params(self, deep=True):
         """Return estimator parameter names for GridSearch support."""
-        if not deep:
-            return super(StackingRegressor, self).get_params(deep=False)
-        else:
-            out = self.named_regressors.copy()
-            for name, step in six.iteritems(self.named_regressors):
-                for key, value in six.iteritems(step.get_params(deep=True)):
-                    out['%s__%s' % (name, key)] = value
+        return self._get_params('named_regressors', deep=deep)
 
-            out.update(self.named_meta_regressor.copy())
-            for name, step in six.iteritems(self.named_meta_regressor):
-                for key, value in six.iteritems(step.get_params(deep=True)):
-                    out['%s__%s' % (name, key)] = value
+    def set_params(self, **params):
+        """Set the parameters of this estimator.
 
-            for key, value in six.iteritems(super(StackingRegressor,
-                                            self).get_params(deep=False)):
-                out['%s' % key] = value
+        Valid parameter keys can be listed with ``get_params()``.
 
-            return out
+        Returns
+        -------
+        self
+        """
+        self._set_params('regressors', 'named_regressors', **params)
+        return self
+
 
     def predict_meta_features(self, X):
         """ Get meta-features of test-data.

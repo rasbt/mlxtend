@@ -24,7 +24,8 @@ from sklearn.model_selection._split import check_cv
 from sklearn.utils import check_X_y
 
 
-class StackingCVClassifier(_BaseXComposition, ClassifierMixin, TransformerMixin):
+class StackingCVClassifier(_BaseXComposition, ClassifierMixin,
+                           TransformerMixin):
 
     """A 'Stacking Cross-Validation' classifier for scikit-learn estimators.
 

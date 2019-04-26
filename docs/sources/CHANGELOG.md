@@ -17,6 +17,8 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
+- Other stacking estimators, including `StackingClassifier`, `StackingCVClassifier` and `StackingRegressor`, support grid search over the `regressors` and even a single base regressor. ([#522](https://github.com/rasbt/mlxtend/pull/522) via [Qiang Gu](https://github.com/qiaguhttps://github.com/qiagu))
+- Adds multiprocessing support to `StackingCVClassifier`. ([#522](https://github.com/rasbt/mlxtend/pull/522) via [Qiang Gu](https://github.com/qiaguhttps://github.com/qiagu))
 - Adds multiprocessing support to `StackingCVRegressor`. ([#512](https://github.com/rasbt/mlxtend/pull/512) via [Qiang Gu](https://github.com/qiaguhttps://github.com/qiagu))
 -  Now, the `StackingCVRegressor` also enables grid search over the `regressors` and even a single base regressor. When there are level-mixed parameters, `GridSearchCV` will try to replace hyperparameters in a top-down order (see the [documentation](http://rasbt.github.io/mlxtend/user_guide/regressor/StackingCVRegressor/) for examples details). ([#515](https://github.com/rasbt/mlxtend/pull/512) via [Qiang Gu](https://github.com/qiaguhttps://github.com/qiagu))
 - Adds a `verbose` parameter to `apriori` to show the current iteration number as well as the itemset size currently being sampled. ([#519](https://github.com/rasbt/mlxtend/pull/519)
@@ -24,6 +26,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
+- The same change mentioned below is now applied to other stacking estimators, including `StackingClassifier`, `StackingCVClassifier` and `StackingRegressor`. ([#522](https://github.com/rasbt/mlxtend/pull/522) via [Qiang Gu](https://github.com/qiaguhttps://github.com/qiagu))
 - Due to new features, restructuring, and better scikit-learn support (for `GridSearchCV`, etc.) the `StackingCVRegressor`'s meta regressor is now being accessed via `'meta_regressor__*` in the parameter grid. E.g., if a `RandomForestRegressor` as meta- egressor was previously tuned via `'randomforestregressor__n_estimators'`, this has now changed to `'meta_regressor__n_estimators'`. ([#515](https://github.com/rasbt/mlxtend/pull/512) via [Qiang Gu](https://github.com/qiaguhttps://github.com/qiagu))
 
 

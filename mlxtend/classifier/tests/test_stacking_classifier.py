@@ -216,7 +216,7 @@ def test_gridsearch():
     sclf = StackingClassifier(classifiers=[clf1, clf2],
                               meta_classifier=meta)
 
-    params = {'meta-logisticregression__C': [1.0, 100.0],
+    params = {'meta_classifier__C': [1.0, 100.0],
               'randomforestclassifier__n_estimators': [20, 200]}
 
     grid = GridSearchCV(estimator=sclf, param_grid=params, cv=5, iid=False)
@@ -238,7 +238,7 @@ def test_gridsearch_enumerate_names():
     sclf = StackingClassifier(classifiers=[clf1, clf1, clf2],
                               meta_classifier=meta)
 
-    params = {'meta-logisticregression__C': [1.0, 100.0],
+    params = {'meta_classifier__C': [1.0, 100.0],
               'randomforestclassifier-1__n_estimators': [5, 10],
               'randomforestclassifier-2__n_estimators': [5, 20],
               'use_probas': [True, False]}
@@ -407,7 +407,6 @@ def test_get_params():
               'classifiers',
               'gaussiannb',
               'kneighborsclassifier',
-              'meta-logisticregression',
               'meta_classifier',
               'randomforestclassifier',
               'store_train_meta_features',

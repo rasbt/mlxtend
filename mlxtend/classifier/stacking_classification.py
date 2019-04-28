@@ -10,16 +10,16 @@
 
 from ..externals.estimator_checks import check_is_fitted
 from ..externals.name_estimators import _name_estimators
-from ..externals import six
+from ..utils.base_compostion import _BaseXComposition
 from scipy import sparse
-from sklearn.base import BaseEstimator
 from sklearn.base import ClassifierMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
 import numpy as np
 
 
-class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
+class StackingClassifier(_BaseXComposition, ClassifierMixin,
+                         TransformerMixin):
 
     """A Stacking classifier for scikit-learn estimators for classification.
 
@@ -93,18 +93,16 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier
-        self.named_classifiers = {key: value for
-                                  key, value in
-                                  _name_estimators(classifiers)}
-        self.named_meta_classifier = {'meta-%s' % key: value for
-                                      key, value in
-                                      _name_estimators([meta_classifier])}
         self.use_probas = use_probas
         self.average_probas = average_probas
         self.verbose = verbose
         self.use_features_in_secondary = use_features_in_secondary
         self.store_train_meta_features = store_train_meta_features
         self.use_clones = use_clones
+
+    @property
+    def named_classifiers(self):
+        return _name_estimators(self.classifiers)
 
     def fit(self, X, y, sample_weight=None):
         """ Fit ensemble classifers and the meta-classifier.
@@ -128,7 +126,7 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         """
         if self.use_clones:
-            self.clfs_ = [clone(clf) for clf in self.classifiers]
+            self.clfs_ = clone(self.classifiers)
             self.meta_clf_ = clone(self.meta_classifier)
         else:
             self.clfs_ = self.classifiers
@@ -176,25 +174,19 @@ class StackingClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
     def get_params(self, deep=True):
         """Return estimator parameter names for GridSearch support."""
+        return self._get_params('named_classifiers', deep=deep)
 
-        if not deep:
-            return super(StackingClassifier, self).get_params(deep=False)
-        else:
-            out = self.named_classifiers.copy()
-            for name, step in six.iteritems(self.named_classifiers):
-                for key, value in six.iteritems(step.get_params(deep=True)):
-                    out['%s__%s' % (name, key)] = value
+    def set_params(self, **params):
+        """Set the parameters of this estimator.
 
-            out.update(self.named_meta_classifier.copy())
-            for name, step in six.iteritems(self.named_meta_classifier):
-                for key, value in six.iteritems(step.get_params(deep=True)):
-                    out['%s__%s' % (name, key)] = value
+        Valid parameter keys can be listed with ``get_params()``.
 
-            for key, value in six.iteritems(super(StackingClassifier,
-                                            self).get_params(deep=False)):
-                out['%s' % key] = value
-
-            return out
+        Returns
+        -------
+        self
+        """
+        self._set_params('classifiers', 'named_classifiers', **params)
+        return self
 
     def predict_meta_features(self, X):
         """ Get meta-features of test-data.

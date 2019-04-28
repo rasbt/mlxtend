@@ -156,7 +156,7 @@ def test_gridsearch():
 
     params = {'ridge__alpha': [0.01, 1.0],
               'svr__C': [0.01, 1.0],
-              'meta-svr__C': [0.01, 1.0]}
+              'meta_regressor__C': [0.01, 1.0]}
 
     grid = GridSearchCV(estimator=stregr,
                         param_grid=params,
@@ -180,7 +180,7 @@ def test_gridsearch_numerate_regr():
     params = {'ridge-1__alpha': [0.01, 1.0],
               'ridge-2__alpha': [0.01, 1.0],
               'svr__C': [0.01, 1.0],
-              'meta-svr__C': [0.01, 1.0]}
+              'meta_regressor__C': [0.01, 1.0]}
 
     grid = GridSearchCV(estimator=stregr,
                         param_grid=params,
@@ -240,7 +240,6 @@ def test_get_params():
 
     got = sorted(list({s.split('__')[0] for s in stregr.get_params().keys()}))
     expect = ['linearregression',
-              'meta-svr',
               'meta_regressor',
               'refit',
               'regressors',

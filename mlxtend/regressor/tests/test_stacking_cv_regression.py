@@ -130,7 +130,8 @@ def test_get_params():
               'ridge',
               'shuffle',
               'store_train_meta_features',
-              'use_features_in_secondary']
+              'use_features_in_secondary',
+              'verbose']
     assert got == expect, got
 
 

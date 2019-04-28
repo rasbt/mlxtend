@@ -11,18 +11,19 @@
 
 from ..externals.name_estimators import _name_estimators
 from ..externals.estimator_checks import check_is_fitted
+from ..utils.base_compostion import _BaseXComposition
 import numpy as np
 from scipy import sparse
-from sklearn.base import BaseEstimator
 from sklearn.base import ClassifierMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
-from sklearn.externals import six
+from sklearn.model_selection import cross_val_predict
 from sklearn.model_selection._split import check_cv
-from sklearn.utils import safe_indexing
+from sklearn.utils import check_X_y
 
 
-class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
+class StackingCVClassifier(_BaseXComposition, ClassifierMixin,
+                           TransformerMixin):
 
     """A 'Stacking Cross-Validation' classifier for scikit-learn estimators.
 
@@ -98,6 +99,24 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         recommended if you are working with estimators that are supporting
         the scikit-learn fit/predict API interface but are not compatible
         to scikit-learn's `clone` function.
+    n_jobs : int or None, optional (default=None)
+        The number of CPUs to use to do the computation.
+        ``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.
+        ``-1`` means using all processors. See :term:`Glossary <n_jobs>`
+        for more details.
+    pre_dispatch : int, or string, optional
+        Controls the number of jobs that get dispatched during parallel
+        execution. Reducing this number can be useful to avoid an
+        explosion of memory consumption when more jobs get dispatched
+        than CPUs can process. This parameter can be:
+            - None, in which case all the jobs are immediately
+              created and spawned. Use this for lightweight and
+              fast-running jobs, to avoid delays due to on-demand
+              spawning of the jobs
+            - An int, giving the exact number of total jobs that are
+              spawned
+            - A string, giving an expression as a function of n_jobs,
+              as in '2*n_jobs'
 
 
     Attributes
@@ -123,16 +142,11 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                  stratify=True,
                  shuffle=True, verbose=0,
                  store_train_meta_features=False,
-                 use_clones=True):
+                 use_clones=True, n_jobs=None,
+                 pre_dispatch='2*n_jobs'):
 
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier
-        self.named_classifiers = {key: value for
-                                  key, value in
-                                  _name_estimators(classifiers)}
-        self.named_meta_classifier = {'meta-%s' % key: value for
-                                      key, value in
-                                      _name_estimators([meta_classifier])}
         self.use_probas = use_probas
         self.verbose = verbose
         self.cv = cv
@@ -141,6 +155,12 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.shuffle = shuffle
         self.store_train_meta_features = store_train_meta_features
         self.use_clones = use_clones
+        self.n_jobs = n_jobs
+        self.pre_dispatch = pre_dispatch
+
+    @property
+    def named_classifiers(self):
+        return _name_estimators(self.classifiers)
 
     def fit(self, X, y, groups=None, sample_weight=None):
         """ Fit ensemble classifers and the meta-classifier.
@@ -170,7 +190,7 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         """
         if self.use_clones:
-            self.clfs_ = [clone(clf) for clf in self.classifiers]
+            self.clfs_ = clone(self.classifiers)
             self.meta_clf_ = clone(self.meta_classifier)
         else:
             self.clfs_ = self.classifiers
@@ -184,16 +204,15 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             # cross-validation strategy
             final_cv.shuffle = self.shuffle
 
-        folds = list(final_cv.split(X, y, groups))
+        # Input validation.
+        X, y = check_X_y(X, y, accept_sparse=['csc', 'csr'])
 
-        # Handle the case of X being a list of lists
-        #   by converting X into a numpy array
-        if isinstance(X, list):
-            X = np.array(X)
+        if sample_weight is None:
+            fit_params = None
+        else:
+            fit_params = dict(sample_weight=sample_weight)
 
         meta_features = None
-        n_folds = final_cv.get_n_splits()
-        n_models = len(self.clfs_)
 
         for n, model in enumerate(self.clfs_):
 
@@ -210,38 +229,19 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             if self.verbose > 1:
                 print(_name_estimators((model,))[0][1])
 
-            for num, (train_indices, test_indices) in enumerate(folds):
+            prediction = cross_val_predict(
+                    model, X, y, groups=groups, cv=final_cv,
+                    n_jobs=self.n_jobs, fit_params=fit_params,
+                    verbose=self.verbose, pre_dispatch=self.pre_dispatch,
+                    method='predict_proba' if self.use_probas else 'predict')
 
-                X_train = safe_indexing(X, train_indices)
-                y_train = safe_indexing(y, train_indices)
+            if not self.use_probas:
+                prediction = prediction[:, np.newaxis]
 
-                if self.verbose > 0:
-                    print("Training and fitting fold %d of %d..." %
-                          ((num + 1), n_folds))
-
-                if sample_weight is None:
-                    model.fit(X_train, y_train)
-                else:
-                    w = safe_indexing(sample_weight, train_indices)
-                    model.fit(X_train, y_train, sample_weight=w)
-
-                X_test = safe_indexing(X, test_indices)
-                if not self.use_probas:
-                    prediction = model.predict(X_test)[:, np.newaxis]
-                else:
-                    prediction = model.predict_proba(X_test)
-
-                if meta_features is None:
-                    # First run, use prediction to get the number of classes
-                    n_classes = prediction.shape[1]
-                    meta_features_shape = (X.shape[0], n_classes * n_models)
-                    meta_features = np.empty(shape=meta_features_shape)
-                    meta_features[np.array(test_indices)[:, np.newaxis],
-                                  np.arange(n_classes)] = prediction
-                else:
-                    row_idx = np.array(test_indices)[:, np.newaxis]
-                    col_idx = np.arange(n_classes) + n * n_classes
-                    meta_features[row_idx, col_idx] = prediction
+            if meta_features is None:
+                meta_features = prediction
+            else:
+                meta_features = np.column_stack((meta_features, prediction))
 
         if self.store_train_meta_features:
             self.train_meta_features_ = meta_features
@@ -270,24 +270,19 @@ class StackingCVClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
     def get_params(self, deep=True):
         """Return estimator parameter names for GridSearch support."""
-        if not deep:
-            return super(StackingCVClassifier, self).get_params(deep=False)
-        else:
-            out = self.named_classifiers.copy()
-            for name, step in six.iteritems(self.named_classifiers):
-                for key, value in six.iteritems(step.get_params(deep=True)):
-                    out['%s__%s' % (name, key)] = value
+        return self._get_params('named_classifiers', deep=deep)
 
-            out.update(self.named_meta_classifier.copy())
-            for name, step in six.iteritems(self.named_meta_classifier):
-                for key, value in six.iteritems(step.get_params(deep=True)):
-                    out['%s__%s' % (name, key)] = value
+    def set_params(self, **params):
+        """Set the parameters of this estimator.
 
-            for key, value in six.iteritems(super(StackingCVClassifier,
-                                            self).get_params(deep=False)):
-                out['%s' % key] = value
+        Valid parameter keys can be listed with ``get_params()``.
 
-            return out
+        Returns
+        -------
+        self
+        """
+        self._set_params('classifiers', 'named_classifiers', **params)
+        return self
 
     def predict_meta_features(self, X):
         """ Get meta-features of test-data.

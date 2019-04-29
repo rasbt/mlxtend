@@ -32,15 +32,6 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
 
     New in mlxtend v0.7.0
 
-    Notes
-    -------
-    The StackingCVRegressor uses scikit-learn's check_cv
-    internally, which doesn't support a random seed. Thus
-    NumPy's random seed need to be specified explicitely for
-    deterministic behavior, for instance, by setting
-    np.random.seed(RANDOM_SEED)
-    prior to fitting the StackingCVRegressor
-
     Parameters
     ----------
     regressors : array-like, shape = [n_regressors]
@@ -59,25 +50,16 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         - An object to be used as a cross-validation generator.
         - An iterable yielding train, test splits.
         For integer/None inputs, it will use `KFold` cross-validation
-    use_features_in_secondary : bool (default: False)
-        If True, the meta-regressor will be trained both on
-        the predictions of the original regressors and the
-        original dataset.
-        If False, the meta-regressor will be trained only on
-        the predictions of the original regressors.
     shuffle : bool (default: True)
         If True,  and the `cv` argument is integer, the training data will
         be shuffled at fitting stage prior to cross-validation. If the `cv`
         argument is a specific cross validation technique, this argument is
         omitted.
+    random_state : int, RandomState instance or None, optional (default: None)
+        Constrols the randomness of the cv splitter. Used when `cv` is
+        integer and `shuffle=True`. New in v0.16.0.
     verbose : int, optional (default=0)
-        Controls the verbosity of the building process.
-    store_train_meta_features : bool (default: False)
-        If True, the meta-features computed from the training data
-        used for fitting the
-        meta-regressor stored in the `self.train_meta_features_` array,
-        which can be
-        accessed after calling `fit`.
+        Controls the verbosity of the building process. New in v0.16.0
     refit : bool (default: True)
         Clones the regressors for stacking regression if True (default)
         or else uses the original ones, which will be refitted on the dataset
@@ -85,11 +67,23 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         recommended if you are working with estimators that are supporting
         the scikit-learn fit/predict API interface but are not compatible
         to scikit-learn's `clone` function.
+    use_features_in_secondary : bool (default: False)
+        If True, the meta-regressor will be trained both on
+        the predictions of the original regressors and the
+        original dataset.
+        If False, the meta-regressor will be trained only on
+        the predictions of the original regressors.
+    store_train_meta_features : bool (default: False)
+        If True, the meta-features computed from the training data
+        used for fitting the
+        meta-regressor stored in the `self.train_meta_features_` array,
+        which can be
+        accessed after calling `fit`.
     n_jobs : int or None, optional (default=None)
         The number of CPUs to use to do the computation.
         ``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.
         ``-1`` means using all processors. See :term:`Glossary <n_jobs>`
-        for more details.
+        for more details. New in v0.16.0.
     pre_dispatch : int, or string, optional
         Controls the number of jobs that get dispatched during parallel
         execution. Reducing this number can be useful to avoid an
@@ -103,6 +97,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
               spawned
             - A string, giving an expression as a function of n_jobs,
               as in '2*n_jobs'
+        New in v0.16.0.
 
     Attributes
     ----------
@@ -118,20 +113,21 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
 
     """
     def __init__(self, regressors, meta_regressor, cv=5,
-                 shuffle=True, verbose=0, n_jobs=1,
-                 use_features_in_secondary=False,
-                 store_train_meta_features=False,
-                 refit=True, pre_dispatch='2*n_jobs'):
+                 shuffle=True, random_state=None, verbose=0,
+                 refit=True, use_features_in_secondary=False,
+                 store_train_meta_features=False, n_jobs=None,
+                 pre_dispatch='2*n_jobs'):
 
         self.regressors = regressors
         self.meta_regressor = meta_regressor
         self.cv = cv
         self.shuffle = shuffle
+        self.random_state = random_state
         self.verbose = verbose
-        self.n_jobs = n_jobs
+        self.refit = refit
         self.use_features_in_secondary = use_features_in_secondary
         self.store_train_meta_features = store_train_meta_features
-        self.refit = refit
+        self.n_jobs = n_jobs
         self.pre_dispatch = pre_dispatch
 
     def fit(self, X, y, groups=None, sample_weight=None):
@@ -175,6 +171,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
             # Override shuffle parameter in case of self generated
             # cross-validation strategy
             kfold.shuffle = self.shuffle
+            kfold.random_state = self.random_state
         #
         # The meta_features are collection of the prediction data,
         # in shape of [n_samples, len(self.regressors)]. Each column

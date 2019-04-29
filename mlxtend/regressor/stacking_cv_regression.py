@@ -115,7 +115,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
     def __init__(self, regressors, meta_regressor, cv=5,
                  shuffle=True, random_state=0, verbose=0,
                  refit=True, use_features_in_secondary=False,
-                 store_train_meta_features=False, n_jobs=1,
+                 store_train_meta_features=False, n_jobs=None,
                  pre_dispatch='2*n_jobs'):
 
         self.regressors = regressors

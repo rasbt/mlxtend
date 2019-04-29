@@ -29,15 +29,6 @@ class StackingCVClassifier(_BaseXComposition, ClassifierMixin,
 
     New in mlxtend v0.4.3
 
-    Notes
-    -------
-    The StackingCVClassifier uses scikit-learn's check_cv
-    internally, which doesn't support a random seed. Thus
-    NumPy's random seed need to be specified explicitely for
-    deterministic behavior, for instance, by setting
-    np.random.seed(RANDOM_SEED)
-    prior to fitting the StackingCVClassifier
-
     Parameters
     ----------
     classifiers : array-like, shape = [n_classifiers]
@@ -61,20 +52,18 @@ class StackingCVClassifier(_BaseXComposition, ClassifierMixin,
         For integer/None inputs, it will use either a `KFold` or
         `StratifiedKFold` cross validation depending the value of `stratify`
         argument.
-    use_features_in_secondary : bool (default: False)
-        If True, the meta-classifier will be trained both on the predictions
-        of the original classifiers and the original dataset.
-        If False, the meta-classifier will be trained only on the predictions
-        of the original classifiers.
-    stratify : bool (default: True)
-        If True, and the `cv` argument is integer it will follow a stratified
-        K-Fold cross validation technique. If the `cv` argument is a specific
-        cross validation technique, this argument is omitted.
     shuffle : bool (default: True)
         If True,  and the `cv` argument is integer, the training data will be
         shuffled at fitting stage prior to cross-validation. If the `cv`
         argument is a specific cross validation technique, this argument is
         omitted.
+    random_state : int, RandomState instance or None, optional (default: 0)
+        Constrols the randomness of the cv splitter. Used when `cv` is
+        integer and `shuffle=True`. New in v0.16.0.
+    stratify : bool (default: True)
+        If True, and the `cv` argument is integer it will follow a stratified
+        K-Fold cross validation technique. If the `cv` argument is a specific
+        cross validation technique, this argument is omitted.
     verbose : int, optional (default=0)
         Controls the verbosity of the building process.
         - `verbose=0` (default): Prints nothing
@@ -84,6 +73,11 @@ class StackingCVClassifier(_BaseXComposition, ClassifierMixin,
                        regressor being fitted
         - `verbose>2`: Changes `verbose` param of the underlying regressor to
            self.verbose - 2
+    use_features_in_secondary : bool (default: False)
+        If True, the meta-classifier will be trained both on the predictions
+        of the original classifiers and the original dataset.
+        If False, the meta-classifier will be trained only on the predictions
+        of the original classifiers.
     store_train_meta_features : bool (default: False)
         If True, the meta-features computed from the training data used
         for fitting the meta-classifier stored in the
@@ -103,7 +97,7 @@ class StackingCVClassifier(_BaseXComposition, ClassifierMixin,
         The number of CPUs to use to do the computation.
         ``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.
         ``-1`` means using all processors. See :term:`Glossary <n_jobs>`
-        for more details.
+        for more details. New in v0.16.0.
     pre_dispatch : int, or string, optional
         Controls the number of jobs that get dispatched during parallel
         execution. Reducing this number can be useful to avoid an
@@ -117,7 +111,7 @@ class StackingCVClassifier(_BaseXComposition, ClassifierMixin,
               spawned
             - A string, giving an expression as a function of n_jobs,
               as in '2*n_jobs'
-
+        New in v0.16.0.
 
     Attributes
     ----------
@@ -137,10 +131,9 @@ class StackingCVClassifier(_BaseXComposition, ClassifierMixin,
 
     """
     def __init__(self, classifiers, meta_classifier,
-                 use_probas=False, cv=2,
+                 use_probas=False, cv=2, shuffle=True,
+                 random_state=0, stratify=True, verbose=0,
                  use_features_in_secondary=False,
-                 stratify=True,
-                 shuffle=True, verbose=0,
                  store_train_meta_features=False,
                  use_clones=True, n_jobs=None,
                  pre_dispatch='2*n_jobs'):
@@ -148,11 +141,12 @@ class StackingCVClassifier(_BaseXComposition, ClassifierMixin,
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier
         self.use_probas = use_probas
-        self.verbose = verbose
         self.cv = cv
-        self.use_features_in_secondary = use_features_in_secondary
-        self.stratify = stratify
         self.shuffle = shuffle
+        self.random_state = random_state
+        self.stratify = stratify
+        self.verbose = verbose
+        self.use_features_in_secondary = use_features_in_secondary
         self.store_train_meta_features = store_train_meta_features
         self.use_clones = use_clones
         self.n_jobs = n_jobs
@@ -203,6 +197,7 @@ class StackingCVClassifier(_BaseXComposition, ClassifierMixin,
             # Override shuffle parameter in case of self generated
             # cross-validation strategy
             final_cv.shuffle = self.shuffle
+            final_cv.random_state = self.random_state
 
         # Input validation.
         X, y = check_X_y(X, y, accept_sparse=['csc', 'csr'])

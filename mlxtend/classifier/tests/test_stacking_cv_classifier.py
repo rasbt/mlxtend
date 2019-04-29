@@ -346,6 +346,7 @@ def test_get_params():
               'meta_classifier',
               'n_jobs',
               'pre_dispatch',
+              'random_state',
               'randomforestclassifier',
               'shuffle',
               'store_train_meta_features',
@@ -409,7 +410,6 @@ def test_predict_meta_features():
 
 
 def test_meta_feat_reordering():
-    np.random.seed(123)
     knn = KNeighborsClassifier()
     lr = LogisticRegression(multi_class='ovr', solver='liblinear')
     gnb = GaussianNB()
@@ -418,6 +418,7 @@ def test_meta_feat_reordering():
                                  shuffle=True,
                                  store_train_meta_features=True)
     X_train, X_test, y_train,  y_test = train_test_split(X_breast, y_breast,
+                                                         random_state=0,
                                                          test_size=0.3)
     stclf.fit(X_train, y_train)
 

@@ -39,9 +39,9 @@ def test_different_models():
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
                                 meta_regressor=svr_rbf)
     stack.fit(X1, y).predict(X1)
-    mse = 0.21
+    mse = 0.20
     got = np.mean((stack.predict(X1) - y) ** 2)
-    assert round(got, 2) == mse
+    assert round(got, 2) == mse, got
 
 
 def test_use_features_in_secondary():
@@ -67,7 +67,7 @@ def test_multivariate():
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
                                 meta_regressor=svr_rbf)
     stack.fit(X2, y).predict(X2)
-    mse = 0.19
+    mse = 0.20
     got = np.mean((stack.predict(X2) - y) ** 2)
     assert round(got, 2) == mse, '%f != %f' % (round(got, 2), mse)
 
@@ -93,7 +93,8 @@ def test_gridsearch_numerate_regr():
     ridge = Ridge(random_state=1)
     svr_rbf = SVR(kernel='rbf', gamma='auto')
     stack = StackingCVRegressor(regressors=[svr_lin, ridge, ridge],
-                                meta_regressor=svr_rbf)
+                                meta_regressor=svr_rbf,
+                                random_state=42)
 
     params = {'ridge-1__alpha': [0.01, 1.0],
               'ridge-2__alpha': [0.01, 1.0],
@@ -125,6 +126,7 @@ def test_get_params():
               'meta_regressor',
               'n_jobs',
               'pre_dispatch',
+              'random_state',
               'refit',
               'regressors',
               'ridge',
@@ -140,7 +142,8 @@ def test_regressor_gridsearch():
     svr_rbf = SVR(kernel='rbf', gamma='auto')
     ridge = Ridge(random_state=1)
     stregr = StackingCVRegressor(regressors=[lr],
-                                 meta_regressor=svr_rbf)
+                                 meta_regressor=svr_rbf,
+                                 random_state=1)
 
     params = {'regressors': [[ridge, lr], [lr, ridge, lr]]}
 
@@ -246,13 +249,13 @@ def test_sparse_matrix_inputs_with_features_in_secondary():
     stack.fit(X1, y).predict(X1)
     mse = 0.20
     got = np.mean((stack.predict(X1) - y) ** 2)
-    assert round(got, 2) == mse
+    assert round(got, 2) == mse, got
 
     # sparse
     stack.fit(sparse.csr_matrix(X1), y)
-    mse = 0.20
+    mse = 0.21
     got = np.mean((stack.predict(sparse.csr_matrix(X1)) - y) ** 2)
-    assert round(got, 2) == mse
+    assert round(got, 2) == mse, got
 
 
 # Calling for np.random will break the existing tests by changing the

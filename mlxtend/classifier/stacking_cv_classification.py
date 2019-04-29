@@ -57,7 +57,7 @@ class StackingCVClassifier(_BaseXComposition, ClassifierMixin,
         shuffled at fitting stage prior to cross-validation. If the `cv`
         argument is a specific cross validation technique, this argument is
         omitted.
-    random_state : int, RandomState instance or None, optional (default: 0)
+    random_state : int, RandomState instance or None, optional (default: None)
         Constrols the randomness of the cv splitter. Used when `cv` is
         integer and `shuffle=True`. New in v0.16.0.
     stratify : bool (default: True)
@@ -132,7 +132,7 @@ class StackingCVClassifier(_BaseXComposition, ClassifierMixin,
     """
     def __init__(self, classifiers, meta_classifier,
                  use_probas=False, cv=2, shuffle=True,
-                 random_state=0, stratify=True, verbose=0,
+                 random_state=None, stratify=True, verbose=0,
                  use_features_in_secondary=False,
                  store_train_meta_features=False,
                  use_clones=True, n_jobs=None,

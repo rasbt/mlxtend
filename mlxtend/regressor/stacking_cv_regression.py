@@ -55,7 +55,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         be shuffled at fitting stage prior to cross-validation. If the `cv`
         argument is a specific cross validation technique, this argument is
         omitted.
-    random_state : int, RandomState instance or None, optional (default: 0)
+    random_state : int, RandomState instance or None, optional (default: None)
         Constrols the randomness of the cv splitter. Used when `cv` is
         integer and `shuffle=True`. New in v0.16.0.
     verbose : int, optional (default=0)
@@ -113,7 +113,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
 
     """
     def __init__(self, regressors, meta_regressor, cv=5,
-                 shuffle=True, random_state=0, verbose=0,
+                 shuffle=True, random_state=None, verbose=0,
                  refit=True, use_features_in_secondary=False,
                  store_train_meta_features=False, n_jobs=None,
                  pre_dispatch='2*n_jobs'):

@@ -245,12 +245,12 @@ def test_use_features_in_secondary():
 
 
 def test_do_not_stratify():
-    np.random.seed(123)
     meta = LogisticRegression(multi_class='ovr', solver='liblinear')
     clf1 = RandomForestClassifier(n_estimators=10)
     clf2 = GaussianNB()
     sclf = StackingCVClassifier(classifiers=[clf1, clf2],
                                 meta_classifier=meta,
+                                random_state=42,
                                 stratify=False)
 
     scores = cross_val_score(sclf,
@@ -266,14 +266,14 @@ def test_cross_validation_technique():
     # This is like the `test_do_not_stratify` but instead
     # autogenerating the cross validation strategy it provides
     # a pre-created object
-    np.random.seed(123)
     cv = KFold(n_splits=2, shuffle=True)
     meta = LogisticRegression(multi_class='ovr', solver='liblinear')
-    clf1 = RandomForestClassifier(n_estimators=10)
+    clf1 = RandomForestClassifier(n_estimators=10, random_state=42)
     clf2 = GaussianNB()
     sclf = StackingCVClassifier(classifiers=[clf1, clf2],
                                 meta_classifier=meta,
-                                cv=cv)
+                                cv=cv,
+                                random_state=42)
 
     scores = cross_val_score(sclf,
                              X_iris,
@@ -281,7 +281,7 @@ def test_cross_validation_technique():
                              cv=5,
                              scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
-    assert scores_mean == 0.93, scores.mean()
+    assert scores_mean == 0.92, scores.mean()
 
 
 def test_not_fitted():
@@ -359,13 +359,13 @@ def test_get_params():
 
 
 def test_classifier_gridsearch():
-    np.random.seed(123)
     clf1 = KNeighborsClassifier(n_neighbors=1)
-    clf2 = RandomForestClassifier(n_estimators=10)
+    clf2 = RandomForestClassifier(n_estimators=10, random_state=42)
     clf3 = GaussianNB()
     lr = LogisticRegression(multi_class='ovr', solver='liblinear')
     sclf = StackingCVClassifier(classifiers=[clf1],
-                                meta_classifier=lr)
+                                meta_classifier=lr,
+                                random_state=42)
 
     params = {'classifiers': [[clf1], [clf1, clf2, clf3]]}
 
@@ -416,6 +416,7 @@ def test_meta_feat_reordering():
     stclf = StackingCVClassifier(classifiers=[knn, gnb],
                                  meta_classifier=lr,
                                  shuffle=True,
+                                 random_state=42,
                                  store_train_meta_features=True)
     X_train, X_test, y_train,  y_test = train_test_split(X_breast, y_breast,
                                                          random_state=0,
@@ -423,7 +424,7 @@ def test_meta_feat_reordering():
     stclf.fit(X_train, y_train)
 
     assert round(roc_auc_score(y_train,
-                 stclf.train_meta_features_[:, 1]), 2) == 0.87, \
+                 stclf.train_meta_features_[:, 1]), 2) == 0.86, \
         round(roc_auc_score(y_train,
               stclf.train_meta_features_[:, 1]), 2)
 
@@ -443,7 +444,8 @@ def test_sparse_inputs():
     rf = RandomForestClassifier(n_estimators=10)
     lr = LogisticRegression(multi_class='ovr', solver='liblinear')
     stclf = StackingCVClassifier(classifiers=[rf, rf],
-                                 meta_classifier=lr)
+                                 meta_classifier=lr,
+                                 random_state=42)
     X_train, X_test, y_train,  y_test = train_test_split(X_breast, y_breast,
                                                          test_size=0.3)
 
@@ -457,23 +459,23 @@ def test_sparse_inputs():
 
 
 def test_sparse_inputs_with_features_in_secondary():
-    np.random.seed(123)
-    rf = RandomForestClassifier(n_estimators=10)
+    rf = RandomForestClassifier(n_estimators=10, random_state=42)
     lr = LogisticRegression(multi_class='ovr', solver='liblinear')
     stclf = StackingCVClassifier(classifiers=[rf, rf],
                                  meta_classifier=lr,
+                                 random_state=42,
                                  use_features_in_secondary=True)
     X_train, X_test, y_train, y_test = train_test_split(X_breast, y_breast,
                                                         test_size=0.3)
 
     # dense
     stclf.fit(X_train, y_train)
-    assert round(stclf.score(X_train, y_train), 2) == 0.99, \
+    assert round(stclf.score(X_train, y_train), 2) == 1.0, \
         round(stclf.score(X_train, y_train), 2)
 
     # sparse
     stclf.fit(sparse.csr_matrix(X_train), y_train)
-    assert round(stclf.score(X_train, y_train), 2) == 0.99, \
+    assert round(stclf.score(X_train, y_train), 2) == 1.0, \
         round(stclf.score(X_train, y_train), 2)
 
 
@@ -495,10 +497,11 @@ def test_works_with_df_if_fold_indexes_missing():
     """
 
     np.random.seed(123)
-    rf = RandomForestClassifier(n_estimators=10)
+    rf = RandomForestClassifier(n_estimators=10, random_state=42)
     lr = LogisticRegression(multi_class='ovr', solver='liblinear')
     stclf = StackingCVClassifier(classifiers=[rf, rf],
                                  meta_classifier=lr,
+                                 random_state=42,
                                  use_features_in_secondary=True)
 
     X_modded = pd.DataFrame(X_breast,

@@ -37,7 +37,8 @@ def test_different_models():
     ridge = Ridge(random_state=1)
     svr_rbf = SVR(kernel='rbf', gamma='auto')
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
-                                meta_regressor=svr_rbf)
+                                meta_regressor=svr_rbf,
+                                random_state=0)
     stack.fit(X1, y).predict(X1)
     mse = 0.20
     got = np.mean((stack.predict(X1) - y) ** 2)
@@ -52,6 +53,7 @@ def test_use_features_in_secondary():
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
                                 meta_regressor=svr_rbf,
                                 cv=3,
+                                random_state=0,
                                 use_features_in_secondary=True)
     stack.fit(X1, y).predict(X1)
     mse = 0.2
@@ -65,7 +67,8 @@ def test_multivariate():
     ridge = Ridge(random_state=1)
     svr_rbf = SVR(kernel='rbf', gamma='auto')
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
-                                meta_regressor=svr_rbf)
+                                meta_regressor=svr_rbf,
+                                random_state=0)
     stack.fit(X2, y).predict(X2)
     mse = 0.20
     got = np.mean((stack.predict(X2) - y) ** 2)
@@ -78,7 +81,8 @@ def test_internals():
     cv = 10
     stack = StackingCVRegressor(regressors=[lr, lr, lr, lr, lr],
                                 meta_regressor=lr,
-                                cv=cv)
+                                cv=cv,
+                                random_state=0)
     stack.fit(X3, y2)
     assert stack.predict(X3).mean() == y2.mean()
     assert stack.meta_regr_.intercept_ == 0.0
@@ -118,7 +122,8 @@ def test_get_params():
     svr_rbf = SVR(kernel='rbf')
     ridge = Ridge(random_state=1)
     stregr = StackingCVRegressor(regressors=[ridge, lr],
-                                 meta_regressor=svr_rbf)
+                                 meta_regressor=svr_rbf,
+                                 random_state=42)
 
     got = sorted(list({s.split('__')[0] for s in stregr.get_params().keys()}))
     expect = ['cv',
@@ -221,19 +226,20 @@ def test_sparse_matrix_inputs():
     ridge = Ridge(random_state=1)
     svr_rbf = SVR(kernel='rbf', gamma='auto')
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
-                                meta_regressor=svr_rbf)
+                                meta_regressor=svr_rbf,
+                                random_state=42)
 
     # dense
     stack.fit(X1, y).predict(X1)
-    mse = 0.20
+    mse = 0.21
     got = np.mean((stack.predict(X1) - y) ** 2)
-    assert round(got, 2) == mse
+    assert round(got, 2) == mse, got
 
     # sparse
     stack.fit(sparse.csr_matrix(X1), y)
     mse = 0.20
     got = np.mean((stack.predict(sparse.csr_matrix(X1)) - y) ** 2)
-    assert round(got, 2) == mse
+    assert round(got, 2) == mse, got
 
 
 def test_sparse_matrix_inputs_with_features_in_secondary():
@@ -243,6 +249,7 @@ def test_sparse_matrix_inputs_with_features_in_secondary():
     svr_rbf = SVR(kernel='rbf', gamma='auto')
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
                                 meta_regressor=svr_rbf,
+                                random_state=42,
                                 use_features_in_secondary=True)
 
     # dense
@@ -253,7 +260,7 @@ def test_sparse_matrix_inputs_with_features_in_secondary():
 
     # sparse
     stack.fit(sparse.csr_matrix(X1), y)
-    mse = 0.21
+    mse = 0.20
     got = np.mean((stack.predict(sparse.csr_matrix(X1)) - y) ** 2)
     assert round(got, 2) == mse, got
 

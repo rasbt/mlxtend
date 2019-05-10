@@ -80,6 +80,9 @@ def feature_importance_permutation(X, y, predict_method,
         def score_func(y_true, y_pred):
             return np.mean(y_true == y_pred)
 
+    else:
+        score_func = metric
+
     rng = np.random.RandomState(seed)
 
     mean_importance_vals = np.zeros(X.shape[1])

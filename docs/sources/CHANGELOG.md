@@ -37,6 +37,7 @@ The CHANGELOG for the current development version is available at
 - Fix unreadable labels in `plot_confusion_matrix` for imbalanced datasets if `show_absolute=True` and `show_normed=True`. ([#504](https://github.com/rasbt/mlxtend/pull/504))
 - Raises a more informative error if a `SparseDataFrame` is passed to `apriori` and the dataframe has integer column names that don't start with `0` due to current limitations of the `SparseDataFrame` implementation in pandas. ([#503](https://github.com/rasbt/mlxtend/pull/503))
 - SequentialFeatureSelector now supports DataFrame as input for all operating modes (forward/backward/floating). [#506](https://github.com/rasbt/mlxtend/pull/506)
+- `mlxtend.evaluate.feature_importance_permutation` now correctly accepts scoring functions with proper function signature as `metric` argument. [#528](https://github.com/rasbt/mlxtend/pull/528)
 
 ### Version 0.15.0 (01-19-2019)
 

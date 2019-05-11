@@ -234,7 +234,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
     def set_params(self, **params):
         """Set the parameters of this estimator.
         Valid parameter keys can be listed with ``get_params()``.
-        
+
         Returns
         -------
         self

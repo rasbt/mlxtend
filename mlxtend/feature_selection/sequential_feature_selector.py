@@ -16,9 +16,9 @@ from copy import deepcopy
 from itertools import combinations
 from sklearn.metrics import get_scorer
 from sklearn.base import clone
-from sklearn.base import BaseEstimator
 from sklearn.base import MetaEstimatorMixin
 from ..externals.name_estimators import _name_estimators
+from ..utils.base_compostion import _BaseXComposition
 from sklearn.model_selection import cross_val_score
 from sklearn.externals.joblib import Parallel, delayed
 
@@ -64,7 +64,7 @@ def _get_featurenames(subsets_dict, feature_idx, custom_feature_names, X):
     return subsets_dict_, feature_names
 
 
-class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
+class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
     """Sequential Feature Selection for Classification and Regression.
 
@@ -188,8 +188,6 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.cv = cv
         self.n_jobs = n_jobs
         self.verbose = verbose
-        self.named_est = {key: value for key, value in
-                          _name_estimators([self.estimator])}
         self.clone_estimator = clone_estimator
 
         if self.clone_estimator:
@@ -217,6 +215,32 @@ class SequentialFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
         # don't mess with this unless testing
         self._TESTING_INTERRUPT_MODE = False
+
+    @property
+    def named_estimators(self):
+        """
+        Returns
+        -------
+        List of named estimator tuples, like [('svc', SVC(...))]
+        """
+        return _name_estimators([self.estimator])
+
+    def get_params(self, deep=True):
+        #
+        # Return estimator parameter names for GridSearch support.
+        #
+        return self._get_params('named_estimators', deep=deep)
+
+    def set_params(self, **params):
+        """Set the parameters of this estimator.
+        Valid parameter keys can be listed with ``get_params()``.
+
+        Returns
+        -------
+        self
+        """
+        self._set_params('estimator', 'named_estimators', **params)
+        return self
 
     def fit(self, X, y, custom_feature_names=None, **fit_params):
         """Perform feature selection and learn model from training data.

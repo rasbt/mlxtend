@@ -341,6 +341,7 @@ def test_get_params():
 
     expect = ['classifiers',
               'cv',
+              'drop_last_proba',
               'gaussiannb',
               'kneighborsclassifier',
               'meta_classifier',
@@ -477,6 +478,38 @@ def test_sparse_inputs_with_features_in_secondary():
     stclf.fit(sparse.csr_matrix(X_train), y_train)
     assert round(stclf.score(X_train, y_train), 2) == 1.0, \
         round(stclf.score(X_train, y_train), 2)
+
+
+def test_StackingClassifier_drop_last_proba():
+    np.random.seed(123)
+    lr1 = LogisticRegression(solver='liblinear',
+                             multi_class='ovr')
+    sclf1 = StackingCVClassifier(classifiers=[lr1, lr1],
+                                 use_probas=True,
+                                 drop_last_proba=False,
+                                 meta_classifier=lr1)
+
+    sclf1.fit(X_iris, y_iris)
+    r1 = sclf1.predict_meta_features(X_iris[:2])
+    assert r1.shape == (2, 6)
+
+    sclf2 = StackingCVClassifier(classifiers=[lr1, lr1],
+                                 use_probas=True,
+                                 drop_last_proba=True,
+                                 meta_classifier=lr1)
+
+    sclf2.fit(X_iris, y_iris)
+    r2 = sclf2.predict_meta_features(X_iris[:2])
+    assert r2.shape == (2, 4), r2.shape
+
+    sclf3 = StackingCVClassifier(classifiers=[lr1, lr1],
+                                 use_probas=True,
+                                 drop_last_proba=True,
+                                 meta_classifier=lr1)
+ 
+    sclf3.fit(X_iris[0:100], y_iris[0:100])  # only 2 classes
+    r3 = sclf3.predict_meta_features(X_iris[:2])
+    assert r3.shape == (2, 2), r3.shape
 
 
 def test_works_with_df_if_fold_indexes_missing():

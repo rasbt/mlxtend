@@ -42,6 +42,12 @@ class StackingCVClassifier(_BaseXComposition, ClassifierMixin,
     use_probas : bool (default: False)
         If True, trains meta-classifier based on predicted probabilities
         instead of class labels.
+    drop_last_proba : bool (default: False)
+        Drops the last "probability" column in the feature set since if `True`,
+        because it is redundant:
+        p(y_c) = 1 - p(y_1) + p(y_2) + ... + p(y_{c-1}).
+        This can be useful for meta-classifiers that are sensitive to
+        perfectly collinear features. Only relevant if `use_probas=True.
     cv : int, cross-validation generator or an iterable, optional (default: 2)
         Determines the cross-validation splitting strategy.
         Possible inputs for cv are:
@@ -131,7 +137,8 @@ class StackingCVClassifier(_BaseXComposition, ClassifierMixin,
 
     """
     def __init__(self, classifiers, meta_classifier,
-                 use_probas=False, cv=2, shuffle=True,
+                 use_probas=False, drop_last_proba=False,
+                 cv=2, shuffle=True,
                  random_state=None, stratify=True, verbose=0,
                  use_features_in_secondary=False,
                  store_train_meta_features=False,
@@ -141,6 +148,7 @@ class StackingCVClassifier(_BaseXComposition, ClassifierMixin,
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier
         self.use_probas = use_probas
+        self.drop_last_proba = drop_last_proba
         self.cv = cv
         self.shuffle = shuffle
         self.random_state = random_state
@@ -232,6 +240,8 @@ class StackingCVClassifier(_BaseXComposition, ClassifierMixin,
 
             if not self.use_probas:
                 prediction = prediction[:, np.newaxis]
+            elif self.drop_last_proba:
+                prediction = prediction[:, :-1]
 
             if meta_features is None:
                 meta_features = prediction
@@ -302,7 +312,10 @@ class StackingCVClassifier(_BaseXComposition, ClassifierMixin,
             if not self.use_probas:
                 prediction = model.predict(X)[:, np.newaxis]
             else:
-                prediction = model.predict_proba(X)
+                if self.drop_last_proba:
+                    prediction = model.predict_proba(X)[:, :-1]
+                else:
+                    prediction = model.predict_proba(X)
 
             per_model_preds.append(prediction)
 

@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../user_guide/evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/evaluate/bootstrap/">Bootstrap</a>
 </li>
 
@@ -943,11 +949,13 @@
         <li class="first-level "><a href="#sequentialfeatureselector">SequentialFeatureSelector</a></li>
             <li class="second-level"><a href="#methods_2">Methods</a></li>
                  <!--   -->
+            <li class="second-level"><a href="#properties">Properties</a></li>
+                 <!--   -->
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.15.0dev </p>
+<p>mlxtend version: 0.16.0 </p>
 <h2 id="columnselector">ColumnSelector</h2>
 <p><em>ColumnSelector(cols=None, drop_axis=False)</em></p>
 <p>Object for selecting specific columns from a data set.</p>
@@ -956,7 +964,8 @@
 <li>
 <p><code>cols</code> : array-like (default: None)</p>
 <p>A list specifying the feature indices to be selected. For example,
-[1, 4, 5] to select the 2nd, 5th, and 6th feature columns.
+[1, 4, 5] to select the 2nd, 5th, and 6th feature columns, and
+['A','C','D'] to select the name of feature columns A, C and D.
 If None, returns all columns in the array.</p>
 </li>
 <li>
@@ -1522,11 +1531,8 @@ contained subobjects that are estimators.</p>
 <hr>
 
 <p><em>set_params(</em><em>params)</em></p>
-<p>Set the parameters of this estimator.</p>
-<p>The method works on simple estimators as well as on nested objects
-(such as pipelines). The latter have parameters of the form
-<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
-component of a nested object.</p>
+<p>Set the parameters of this estimator.
+Valid parameter keys can be listed with <code>get_params()</code>.</p>
 <p><strong>Returns</strong></p>
 <p>self</p>
 <hr>
@@ -1544,7 +1550,13 @@ argument for X.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
-<p>Reduced feature subset of X, shape={n_samples, k_features}</p></div>
+<p>Reduced feature subset of X, shape={n_samples, k_features}</p>
+<h3 id="properties">Properties</h3>
+<hr>
+
+<p><em>named_estimators</em></p>
+<p><strong>Returns</strong></p>
+<p>List of named estimator tuples, like [('svc', SVC(...))]</p></div>
         
         
     </div>
@@ -1552,7 +1564,7 @@ argument for X.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

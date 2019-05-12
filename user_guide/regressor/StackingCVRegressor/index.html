@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
+</li>
+
+        
+            
+<li >
     <a href="../../evaluate/bootstrap/">Bootstrap</a>
 </li>
 
@@ -944,7 +950,8 @@
                  <!--   -->
             <li class="second-level"><a href="#api">API</a></li>
                  <!-- 
-                <li class="third-level"><a href="#methods">Methods</a></li>  -->
+                <li class="third-level"><a href="#methods">Methods</a></li>
+                <li class="third-level"><a href="#properties">Properties</a></li>  -->
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
@@ -982,13 +989,11 @@ lasso = Lasso()
 rf = RandomForestRegressor(n_estimators=5, 
                            random_state=RANDOM_SEED)
 
-# The StackingCVRegressor uses scikit-learn's check_cv
-# internally, which doesn't support a random seed. Thus
-# NumPy's random seed need to be specified explicitely for
-# deterministic behavior
-np.random.seed(RANDOM_SEED)
+# Starting from v0.16.0, StackingCVRegressor supports
+# `random_state` to get deterministic result.
 stack = StackingCVRegressor(regressors=(svr, lasso, rf),
-                            meta_regressor=lasso)
+                            meta_regressor=lasso,
+                            random_state=RANDOM_SEED)
 
 print('5-fold cross validation scores:\n')
 
@@ -1002,17 +1007,12 @@ for clf, label in zip([svr, lasso, rf, stack], ['SVM', 'Lasso',
 
 <pre><code>5-fold cross validation scores:
 
-R^2 Score: 0.45 (+/- 0.29) [SVM]
+R^2 Score: 0.46 (+/- 0.29) [SVM]
 R^2 Score: 0.43 (+/- 0.14) [Lasso]
-R^2 Score: 0.52 (+/- 0.28) [Random Forest]
-R^2 Score: 0.58 (+/- 0.24) [StackingCVRegressor]
+R^2 Score: 0.53 (+/- 0.28) [Random Forest]
+R^2 Score: 0.57 (+/- 0.24) [StackingCVRegressor]
 </code></pre>
-<pre><code class="python"># The StackingCVRegressor uses scikit-learn's check_cv
-# internally, which doesn't support a random seed. Thus
-# NumPy's random seed need to be specified explicitely for
-# deterministic behavior
-np.random.seed(RANDOM_SEED)
-stack = StackingCVRegressor(regressors=(svr, lasso, rf),
+<pre><code class="python">stack = StackingCVRegressor(regressors=(svr, lasso, rf),
                             meta_regressor=lasso)
 
 print('5-fold cross validation scores:\n')
@@ -1027,14 +1027,14 @@ for clf, label in zip([svr, lasso, rf, stack], ['SVM', 'Lasso',
 
 <pre><code>5-fold cross validation scores:
 
-Neg. MSE Score: -33.69 (+/- 22.36) [SVM]
+Neg. MSE Score: -33.34 (+/- 22.36) [SVM]
 Neg. MSE Score: -35.53 (+/- 16.99) [Lasso]
-Neg. MSE Score: -27.32 (+/- 16.62) [Random Forest]
-Neg. MSE Score: -25.64 (+/- 18.11) [StackingCVRegressor]
+Neg. MSE Score: -27.25 (+/- 16.76) [Random Forest]
+Neg. MSE Score: -25.82 (+/- 18.10) [StackingCVRegressor]
 </code></pre>
 <h2 id="example-2-gridsearchcv-with-stacking">Example 2: GridSearchCV with Stacking</h2>
 <p>In this second example we demonstrate how <code>StackingCVRegressor</code> works in combination with <code>GridSearchCV</code>. The stack still allows tuning hyper parameters of the base and meta models!</p>
-<p>To set up a parameter grid for scikit-learn's <code>GridSearch</code>, we simply provide the estimator's names in the parameter grid -- in the special case of the meta-regressor, we append the <code>'meta-'</code> prefix.</p>
+<p>For instance, we can use <code>estimator.get_params().keys()</code> to get a full list of tunable parameters.</p>
 <pre><code class="python">from mlxtend.regressor import StackingCVRegressor
 from sklearn.datasets import load_boston
 from sklearn.linear_model import Lasso
@@ -1044,17 +1044,13 @@ from sklearn.model_selection import GridSearchCV
 
 X, y = load_boston(return_X_y=True)
 
-ridge = Ridge()
-lasso = Lasso()
+ridge = Ridge(random_state=RANDOM_SEED)
+lasso = Lasso(random_state=RANDOM_SEED)
 rf = RandomForestRegressor(random_state=RANDOM_SEED)
 
-# The StackingCVRegressor uses scikit-learn's check_cv
-# internally, which doesn't support a random seed. Thus
-# NumPy's random seed need to be specified explicitely for
-# deterministic behavior
-np.random.seed(RANDOM_SEED)
 stack = StackingCVRegressor(regressors=(lasso, ridge),
                             meta_regressor=rf, 
+                            random_state=RANDOM_SEED,
                             use_features_in_secondary=True)
 
 params = {'lasso__alpha': [0.1, 1.0, 10.0],
@@ -1065,7 +1061,7 @@ grid = GridSearchCV(
     param_grid={
         'lasso__alpha': [x/5.0 for x in range(1, 10)],
         'ridge__alpha': [x/20.0 for x in range(1, 10)],
-        'meta-randomforestregressor__n_estimators': [10, 100]
+        'meta_regressor__n_estimators': [10, 100]
     }, 
     cv=5,
     refit=True
@@ -1076,7 +1072,11 @@ grid.fit(X, y)
 print(&quot;Best: %f using %s&quot; % (grid.best_score_, grid.best_params_))
 </code></pre>
 
-<pre><code>Best: 0.673590 using {'lasso__alpha': 0.4, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.3}
+<pre><code>Best: 0.679576 using {'lasso__alpha': 1.2, 'meta_regressor__n_estimators': 10, 'ridge__alpha': 0.4}
+
+
+/Users/guq/miniconda3/envs/python3/lib/python3.7/site-packages/sklearn/model_selection/_search.py:841: DeprecationWarning: The default of the `iid` parameter will change from True to False in version 0.22 and will be removed in 0.24. This will change numeric results when test-set sizes are unequal.
+  DeprecationWarning)
 </code></pre>
 <pre><code class="python">cv_keys = ('mean_test_score', 'std_test_score', 'params')
 
@@ -1093,39 +1093,32 @@ print('Best parameters: %s' % grid.best_params_)
 print('Accuracy: %.2f' % grid.best_score_)
 </code></pre>
 
-<pre><code>0.622 +/- 0.10 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.05}
-0.649 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.1}
-0.650 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.15}
-0.667 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.2}
-0.629 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.25}
-0.663 +/- 0.08 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.3}
-0.633 +/- 0.08 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.35}
-0.637 +/- 0.08 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.4}
-0.649 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.45}
-0.653 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 100, 'ridge__alpha': 0.05}
-0.648 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 100, 'ridge__alpha': 0.1}
-0.645 +/- 0.09 {'lasso__alpha': 0.2, 'meta-randomforestregressor__n_estimators': 100, 'ridge__alpha': 0.15}
+<pre><code>0.637 +/- 0.09 {'lasso__alpha': 0.2, 'meta_regressor__n_estimators': 10, 'ridge__alpha': 0.05}
+0.656 +/- 0.08 {'lasso__alpha': 0.2, 'meta_regressor__n_estimators': 10, 'ridge__alpha': 0.1}
+0.635 +/- 0.09 {'lasso__alpha': 0.2, 'meta_regressor__n_estimators': 10, 'ridge__alpha': 0.15}
+0.647 +/- 0.08 {'lasso__alpha': 0.2, 'meta_regressor__n_estimators': 10, 'ridge__alpha': 0.2}
+0.630 +/- 0.09 {'lasso__alpha': 0.2, 'meta_regressor__n_estimators': 10, 'ridge__alpha': 0.25}
+0.628 +/- 0.09 {'lasso__alpha': 0.2, 'meta_regressor__n_estimators': 10, 'ridge__alpha': 0.3}
+0.639 +/- 0.09 {'lasso__alpha': 0.2, 'meta_regressor__n_estimators': 10, 'ridge__alpha': 0.35}
+0.641 +/- 0.09 {'lasso__alpha': 0.2, 'meta_regressor__n_estimators': 10, 'ridge__alpha': 0.4}
+0.653 +/- 0.08 {'lasso__alpha': 0.2, 'meta_regressor__n_estimators': 10, 'ridge__alpha': 0.45}
+0.644 +/- 0.09 {'lasso__alpha': 0.2, 'meta_regressor__n_estimators': 100, 'ridge__alpha': 0.05}
+0.642 +/- 0.09 {'lasso__alpha': 0.2, 'meta_regressor__n_estimators': 100, 'ridge__alpha': 0.1}
+0.646 +/- 0.09 {'lasso__alpha': 0.2, 'meta_regressor__n_estimators': 100, 'ridge__alpha': 0.15}
 ...
-Best parameters: {'lasso__alpha': 0.4, 'meta-randomforestregressor__n_estimators': 10, 'ridge__alpha': 0.3}
-Accuracy: 0.67
+Best parameters: {'lasso__alpha': 1.2, 'meta_regressor__n_estimators': 10, 'ridge__alpha': 0.4}
+Accuracy: 0.68
 </code></pre>
 <p><strong>Note</strong></p>
-<p>The <code>StackingCVRegressor</code> also enables grid search over the <code>regressors</code> argument. However, due to the current implementation of <code>GridSearchCV</code> in scikit-learn, it is not possible to search over both, different regressors and regressor parameters at the same time. For instance, while the following parameter dictionary works</p>
+<p>The <code>StackingCVRegressor</code> also enables grid search over the <code>regressors</code> and even a single base regressor. When there are level-mixed hyperparameters, <code>GridSearchCV</code> will try to replace hyperparameters in a top-down order, i.e., <code>regressors</code> -&gt; single base regressor -&gt; regressor hyperparameter. For instance, given a hyperparameter grid such as</p>
 <pre><code>params = {'randomforestregressor__n_estimators': [1, 100],
 'regressors': [(regr1, regr1, regr1), (regr2, regr3)]}
 </code></pre>
-<p>it will use the instance settings of <code>regr1</code>, <code>regr2</code>, and <code>regr3</code> and not overwrite it with the <code>'n_estimators'</code> settings from <code>'randomforestregressor__n_estimators': [1, 100]</code>.</p>
+<p>it will first use the instance settings of either <code>(regr1, regr2, regr3)</code> or <code>(regr2, regr3)</code> . Then it will replace the <code>'n_estimators'</code> settings for a matching regressor based on <code>'randomforestregressor__n_estimators': [1, 100]</code>.</p>
 <h2 id="api">API</h2>
-<p><em>StackingCVRegressor(regressors, meta_regressor, cv=5, shuffle=True, use_features_in_secondary=False, store_train_meta_features=False, refit=True)</em></p>
+<p><em>StackingCVRegressor(regressors, meta_regressor, cv=5, shuffle=True, random_state=None, verbose=0, refit=True, use_features_in_secondary=False, store_train_meta_features=False, n_jobs=None, pre_dispatch='2</em>n_jobs')*</p>
 <p>A 'Stacking Cross-Validation' regressor for scikit-learn estimators.</p>
 <p>New in mlxtend v0.7.0</p>
-<p><strong>Notes</strong></p>
-<p>The StackingCVRegressor uses scikit-learn's check_cv
-internally, which doesn't support a random seed. Thus
-NumPy's random seed need to be specified explicitely for
-deterministic behavior, for instance, by setting
-np.random.seed(RANDOM_SEED)
-prior to fitting the StackingCVRegressor</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1151,19 +1144,37 @@ Possible inputs for cv are:
 For integer/None inputs, it will use <code>KFold</code> cross-validation</p>
 </li>
 <li>
+<p><code>shuffle</code> : bool (default: True)</p>
+<p>If True,  and the <code>cv</code> argument is integer, the training data will
+be shuffled at fitting stage prior to cross-validation. If the <code>cv</code>
+argument is a specific cross validation technique, this argument is
+omitted.</p>
+</li>
+<li>
+<p><code>random_state</code> : int, RandomState instance or None, optional (default: None)</p>
+<p>Constrols the randomness of the cv splitter. Used when <code>cv</code> is
+integer and <code>shuffle=True</code>. New in v0.16.0.</p>
+</li>
+<li>
+<p><code>verbose</code> : int, optional (default=0)</p>
+<p>Controls the verbosity of the building process. New in v0.16.0</p>
+</li>
+<li>
+<p><code>refit</code> : bool (default: True)</p>
+<p>Clones the regressors for stacking regression if True (default)
+or else uses the original ones, which will be refitted on the dataset
+upon calling the <code>fit</code> method. Setting refit=False is
+recommended if you are working with estimators that are supporting
+the scikit-learn fit/predict API interface but are not compatible
+to scikit-learn's <code>clone</code> function.</p>
+</li>
+<li>
 <p><code>use_features_in_secondary</code> : bool (default: False)</p>
 <p>If True, the meta-regressor will be trained both on
 the predictions of the original regressors and the
 original dataset.
 If False, the meta-regressor will be trained only on
 the predictions of the original regressors.</p>
-</li>
-<li>
-<p><code>shuffle</code> : bool (default: True)</p>
-<p>If True,  and the <code>cv</code> argument is integer, the training data will
-be shuffled at fitting stage prior to cross-validation. If the <code>cv</code>
-argument is a specific cross validation technique, this argument is
-omitted.</p>
 </li>
 <li>
 <p><code>store_train_meta_features</code> : bool (default: False)</p>
@@ -1174,13 +1185,27 @@ which can be
 accessed after calling <code>fit</code>.</p>
 </li>
 <li>
-<p><code>refit</code> : bool (default: True)</p>
-<p>Clones the regressors for stacking regression if True (default)
-or else uses the original ones, which will be refitted on the dataset
-upon calling the <code>fit</code> method. Setting refit=False is
-recommended if you are working with estimators that are supporting
-the scikit-learn fit/predict API interface but are not compatible
-to scikit-learn's <code>clone</code> function.</p>
+<p><code>n_jobs</code> : int or None, optional (default=None)</p>
+<p>The number of CPUs to use to do the computation.
+<code>None</code> means 1 unless in a :obj:<code>joblib.parallel_backend</code> context.
+<code>-1</code> means using all processors. See :term:<code>Glossary &lt;n_jobs&gt;</code>
+for more details. New in v0.16.0.</p>
+</li>
+<li>
+<p><code>pre_dispatch</code> : int, or string, optional</p>
+<p>Controls the number of jobs that get dispatched during parallel
+execution. Reducing this number can be useful to avoid an
+explosion of memory consumption when more jobs get dispatched
+than CPUs can process. This parameter can be:
+- None, in which case all the jobs are immediately
+created and spawned. Use this for lightweight and
+fast-running jobs, to avoid delays due to on-demand
+spawning of the jobs
+- An int, giving the exact number of total jobs that are
+spawned
+- A string, giving an expression as a function of n_jobs,
+as in '2*n_jobs'
+New in v0.16.0.</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>
@@ -1326,7 +1351,10 @@ would get a R^2 score of 0.0.</p>
 <ul>
 <li>
 <p><code>X</code> : array-like, shape = (n_samples, n_features)</p>
-<p>Test samples.</p>
+<p>Test samples. For some estimators this may be a
+precomputed kernel matrix instead, shape = (n_samples,
+n_samples_fitted], where n_samples_fitted is the number of
+samples used in the fitting for the estimator.</p>
 </li>
 <li>
 <p><code>y</code> : array-like, shape = (n_samples) or (n_samples, n_outputs)</p>
@@ -1348,12 +1376,16 @@ would get a R^2 score of 0.0.</p>
 
 <p><em>set_params(</em><em>params)</em></p>
 <p>Set the parameters of this estimator.</p>
-<p>The method works on simple estimators as well as on nested objects
-(such as pipelines). The latter have parameters of the form
-<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
-component of a nested object.</p>
+<p>Valid parameter keys can be listed with <code>get_params()</code>.</p>
 <p><strong>Returns</strong></p>
-<p>self</p></div>
+<p>self</p>
+<h3 id="properties">Properties</h3>
+<hr>
+
+<p><em>named_regressors</em></p>
+<p><strong>Returns</strong></p>
+<p>List of named estimator tuples, like [('svc', SVC(...))]</p>
+<p>ython</p></div>
         
         
     </div>
@@ -1361,7 +1393,7 @@ component of a nested object.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

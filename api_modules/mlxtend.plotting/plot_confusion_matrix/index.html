@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../../user_guide/evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/evaluate/bootstrap/">Bootstrap</a>
 </li>
 
@@ -930,7 +936,7 @@
         <div class="col-md-9" role="main">
 
 <h2 id="plot_confusion_matrix">plot_confusion_matrix</h2>
-<p><em>plot_confusion_matrix(conf_mat, hide_spines=False, hide_ticks=False, figsize=None, cmap=None, colorbar=False, show_absolute=True, show_normed=False)</em></p>
+<p><em>plot_confusion_matrix(conf_mat, hide_spines=False, hide_ticks=False, figsize=None, cmap=None, colorbar=False, show_absolute=True, show_normed=False, class_names=None)</em></p>
 <p>Plot a confusion matrix via matplotlib.
 <strong>Parameters</strong></p>
 <ul>
@@ -971,7 +977,12 @@ The normed confusion matrix coefficients give the
 proportion of training examples per class that are
 assigned the correct label.
 At least one of  <code>show_absolute</code> or <code>show_normed</code>
-must be True.
+must be True.</p>
+</li>
+<li>
+<p><code>class_names</code> : array-like, shape = [n_classes] (default: None)</p>
+<p>List of class names.
+If not <code>None</code>, ticks will be set to these values.
 <strong>Returns</strong></p>
 </li>
 <li>
@@ -989,7 +1000,7 @@ must be True.
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

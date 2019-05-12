@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
+</li>
+
+        
+            
+<li >
     <a href="../../evaluate/bootstrap/">Bootstrap</a>
 </li>
 
@@ -1228,27 +1234,27 @@ apriori(df, min_support=0.6)
     <tr>
       <th>6</th>
       <td>0.6</td>
-      <td>(Onion, Eggs)</td>
+      <td>(Eggs, Onion)</td>
     </tr>
     <tr>
       <th>7</th>
       <td>0.6</td>
-      <td>(Milk, Kidney Beans)</td>
+      <td>(Kidney Beans, Milk)</td>
     </tr>
     <tr>
       <th>8</th>
       <td>0.6</td>
-      <td>(Onion, Kidney Beans)</td>
+      <td>(Kidney Beans, Onion)</td>
     </tr>
     <tr>
       <th>9</th>
       <td>0.6</td>
-      <td>(Kidney Beans, Yogurt)</td>
+      <td>(Yogurt, Kidney Beans)</td>
     </tr>
     <tr>
       <th>10</th>
       <td>0.6</td>
-      <td>(Onion, Eggs, Kidney Beans)</td>
+      <td>(Eggs, Kidney Beans, Onion)</td>
     </tr>
   </tbody>
 </table>
@@ -1324,31 +1330,31 @@ frequent_itemsets
     <tr>
       <th>6</th>
       <td>0.6</td>
-      <td>(Onion, Eggs)</td>
+      <td>(Eggs, Onion)</td>
       <td>2</td>
     </tr>
     <tr>
       <th>7</th>
       <td>0.6</td>
-      <td>(Milk, Kidney Beans)</td>
+      <td>(Kidney Beans, Milk)</td>
       <td>2</td>
     </tr>
     <tr>
       <th>8</th>
       <td>0.6</td>
-      <td>(Onion, Kidney Beans)</td>
+      <td>(Kidney Beans, Onion)</td>
       <td>2</td>
     </tr>
     <tr>
       <th>9</th>
       <td>0.6</td>
-      <td>(Kidney Beans, Yogurt)</td>
+      <td>(Yogurt, Kidney Beans)</td>
       <td>2</td>
     </tr>
     <tr>
       <th>10</th>
       <td>0.6</td>
-      <td>(Onion, Eggs, Kidney Beans)</td>
+      <td>(Eggs, Kidney Beans, Onion)</td>
       <td>3</td>
     </tr>
   </tbody>
@@ -1425,7 +1431,7 @@ frequent_itemsets
     <tr>
       <th>6</th>
       <td>0.6</td>
-      <td>(Onion, Eggs)</td>
+      <td>(Eggs, Onion)</td>
       <td>2</td>
     </tr>
   </tbody>
@@ -1555,9 +1561,11 @@ sparse_df
 </table>
 </div>
 
-<pre><code class="python">apriori(sparse_df, min_support=0.6, use_colnames=True)
+<pre><code class="python">apriori(sparse_df, min_support=0.6, use_colnames=True, verbose=1)
 </code></pre>
 
+<pre><code>Iteration: 17 | Sampling itemset size 3
+</code></pre>
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1614,34 +1622,34 @@ sparse_df
     <tr>
       <th>6</th>
       <td>0.6</td>
-      <td>(Onion, Eggs)</td>
+      <td>(Eggs, Onion)</td>
     </tr>
     <tr>
       <th>7</th>
       <td>0.6</td>
-      <td>(Milk, Kidney Beans)</td>
+      <td>(Kidney Beans, Milk)</td>
     </tr>
     <tr>
       <th>8</th>
       <td>0.6</td>
-      <td>(Onion, Kidney Beans)</td>
+      <td>(Kidney Beans, Onion)</td>
     </tr>
     <tr>
       <th>9</th>
       <td>0.6</td>
-      <td>(Kidney Beans, Yogurt)</td>
+      <td>(Yogurt, Kidney Beans)</td>
     </tr>
     <tr>
       <th>10</th>
       <td>0.6</td>
-      <td>(Onion, Eggs, Kidney Beans)</td>
+      <td>(Eggs, Kidney Beans, Onion)</td>
     </tr>
   </tbody>
 </table>
 </div>
 
 <h2 id="api">API</h2>
-<p><em>apriori(df, min_support=0.5, use_colnames=False, max_len=None, n_jobs=1)</em></p>
+<p><em>apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0)</em></p>
 <p>Get frequent itemsets from a one-hot DataFrame
 <strong>Parameters</strong></p>
 <ul>
@@ -1680,6 +1688,10 @@ instead of column indices.</p>
 <p>Maximum length of the itemsets generated. If <code>None</code> (default) all
 possible itemsets lengths (under the apriori condition) are evaluated.</p>
 </li>
+<li>
+<p><code>verbose</code> : int (default: 0)</p>
+<p>Shows the number of iterations if 1.</p>
+</li>
 </ul>
 <p><strong>Returns</strong></p>
 <p>pandas DataFrame with columns ['support', 'itemsets'] of all itemsets
@@ -1700,7 +1712,7 @@ possible itemsets lengths (under the apriori condition) are evaluated.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

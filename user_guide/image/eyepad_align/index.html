@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
+</li>
+
+        
+            
+<li >
     <a href="../../evaluate/bootstrap/">Bootstrap</a>
 </li>
 
@@ -1011,7 +1017,7 @@ ax.set_title('Aligned to Target', size=20)
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="eyepad_align_files/eyepad_align_11_0.png" /></p>
+<p><img alt="png" src="../eyepad_align_files/eyepad_align_11_0.png" /></p>
 <h2 id="example-2-fit_directory">Example 2 (fit_directory)</h2>
 <p>In typical computer vision and deep learning tasks, we are interested in aligning all images in a dataset and across dataset to allow cross-dataset comparisons of face image classifiers.</p>
 <p>Using the <code>fit_directory</code> method, we can fit <code>EyepadAlign</code> such that the average landmarks are computed from all images in a directory. Then, we can use these average landmarks to transform new images based on the average eye location.</p>
@@ -1061,7 +1067,7 @@ plt.imshow(img_no_landmarks)
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="eyepad_align_files/eyepad_align_16_0.png" /></p>
+<p><img alt="png" src="../eyepad_align_files/eyepad_align_16_0.png" /></p>
 <p>Finally, the an example of aligning the original Lena image to the average landmarks in the dataset is shown below:</p>
 <pre><code class="python">fig = plt.figure(figsize=(10, 4))
 
@@ -1084,7 +1090,7 @@ plt.tight_layout()
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="eyepad_align_files/eyepad_align_18_0.png" /></p>
+<p><img alt="png" src="../eyepad_align_files/eyepad_align_18_0.png" /></p>
 <h2 id="example-3-fit_values">Example 3 (fit_values)</h2>
 <p>For more customization, landmarks can also be passed manually.</p>
 <pre><code class="python">import imageio
@@ -1153,7 +1159,7 @@ plt.show()
 
 <pre><code>Transformed Image shape:  (218, 178, 3)
 </code></pre>
-<p><img alt="png" src="eyepad_align_files/eyepad_align_22_1.png" /></p>
+<p><img alt="png" src="../eyepad_align_files/eyepad_align_22_1.png" /></p>
 <h2 id="example-4-centering-the-nose">Example 4 (centering the nose)</h2>
 <p>In many applications that involve center-cropping, it is helpful to translate the image such that the tip of the nose is located in the center of the image.</p>
 <pre><code class="python">### Fit EyepadAlign to dataset to compute average landmarks
@@ -1230,7 +1236,7 @@ plt.tight_layout()
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="eyepad_align_files/eyepad_align_27_0.png" /></p>
+<p><img alt="png" src="../eyepad_align_files/eyepad_align_27_0.png" /></p>
 <h2 id="api">API</h2>
 <p><em>EyepadAlign(verbose=0)</em></p>
 <p>Class to align/transform face images to facial landmarks,
@@ -1387,7 +1393,7 @@ between the two eyes.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

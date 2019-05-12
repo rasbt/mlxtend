@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../../user_guide/evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/evaluate/bootstrap/">Bootstrap</a>
 </li>
 
@@ -927,21 +933,16 @@
         <li class="first-level active"><a href="#stackingcvregressor">StackingCVRegressor</a></li>
             <li class="second-level"><a href="#methods">Methods</a></li>
                  <!--   -->
+            <li class="second-level"><a href="#properties">Properties</a></li>
+                 <!--   -->
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
 <h2 id="stackingcvregressor">StackingCVRegressor</h2>
-<p><em>StackingCVRegressor(regressors, meta_regressor, cv=5, shuffle=True, use_features_in_secondary=False, store_train_meta_features=False, refit=True)</em></p>
+<p><em>StackingCVRegressor(regressors, meta_regressor, cv=5, shuffle=True, random_state=None, verbose=0, refit=True, use_features_in_secondary=False, store_train_meta_features=False, n_jobs=None, pre_dispatch='2</em>n_jobs')*</p>
 <p>A 'Stacking Cross-Validation' regressor for scikit-learn estimators.</p>
 <p>New in mlxtend v0.7.0</p>
-<p><strong>Notes</strong></p>
-<p>The StackingCVRegressor uses scikit-learn's check_cv
-internally, which doesn't support a random seed. Thus
-NumPy's random seed need to be specified explicitely for
-deterministic behavior, for instance, by setting
-np.random.seed(RANDOM_SEED)
-prior to fitting the StackingCVRegressor</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -967,19 +968,37 @@ Possible inputs for cv are:
 For integer/None inputs, it will use <code>KFold</code> cross-validation</p>
 </li>
 <li>
+<p><code>shuffle</code> : bool (default: True)</p>
+<p>If True,  and the <code>cv</code> argument is integer, the training data will
+be shuffled at fitting stage prior to cross-validation. If the <code>cv</code>
+argument is a specific cross validation technique, this argument is
+omitted.</p>
+</li>
+<li>
+<p><code>random_state</code> : int, RandomState instance or None, optional (default: None)</p>
+<p>Constrols the randomness of the cv splitter. Used when <code>cv</code> is
+integer and <code>shuffle=True</code>. New in v0.16.0.</p>
+</li>
+<li>
+<p><code>verbose</code> : int, optional (default=0)</p>
+<p>Controls the verbosity of the building process. New in v0.16.0</p>
+</li>
+<li>
+<p><code>refit</code> : bool (default: True)</p>
+<p>Clones the regressors for stacking regression if True (default)
+or else uses the original ones, which will be refitted on the dataset
+upon calling the <code>fit</code> method. Setting refit=False is
+recommended if you are working with estimators that are supporting
+the scikit-learn fit/predict API interface but are not compatible
+to scikit-learn's <code>clone</code> function.</p>
+</li>
+<li>
 <p><code>use_features_in_secondary</code> : bool (default: False)</p>
 <p>If True, the meta-regressor will be trained both on
 the predictions of the original regressors and the
 original dataset.
 If False, the meta-regressor will be trained only on
 the predictions of the original regressors.</p>
-</li>
-<li>
-<p><code>shuffle</code> : bool (default: True)</p>
-<p>If True,  and the <code>cv</code> argument is integer, the training data will
-be shuffled at fitting stage prior to cross-validation. If the <code>cv</code>
-argument is a specific cross validation technique, this argument is
-omitted.</p>
 </li>
 <li>
 <p><code>store_train_meta_features</code> : bool (default: False)</p>
@@ -990,13 +1009,27 @@ which can be
 accessed after calling <code>fit</code>.</p>
 </li>
 <li>
-<p><code>refit</code> : bool (default: True)</p>
-<p>Clones the regressors for stacking regression if True (default)
-or else uses the original ones, which will be refitted on the dataset
-upon calling the <code>fit</code> method. Setting refit=False is
-recommended if you are working with estimators that are supporting
-the scikit-learn fit/predict API interface but are not compatible
-to scikit-learn's <code>clone</code> function.</p>
+<p><code>n_jobs</code> : int or None, optional (default=None)</p>
+<p>The number of CPUs to use to do the computation.
+<code>None</code> means 1 unless in a :obj:<code>joblib.parallel_backend</code> context.
+<code>-1</code> means using all processors. See :term:<code>Glossary &lt;n_jobs&gt;</code>
+for more details. New in v0.16.0.</p>
+</li>
+<li>
+<p><code>pre_dispatch</code> : int, or string, optional</p>
+<p>Controls the number of jobs that get dispatched during parallel
+execution. Reducing this number can be useful to avoid an
+explosion of memory consumption when more jobs get dispatched
+than CPUs can process. This parameter can be:
+- None, in which case all the jobs are immediately
+created and spawned. Use this for lightweight and
+fast-running jobs, to avoid delays due to on-demand
+spawning of the jobs
+- An int, giving the exact number of total jobs that are
+spawned
+- A string, giving an expression as a function of n_jobs,
+as in '2*n_jobs'
+New in v0.16.0.</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>
@@ -1167,12 +1200,15 @@ samples used in the fitting for the estimator.</p>
 
 <p><em>set_params(</em><em>params)</em></p>
 <p>Set the parameters of this estimator.</p>
-<p>The method works on simple estimators as well as on nested objects
-(such as pipelines). The latter have parameters of the form
-<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
-component of a nested object.</p>
+<p>Valid parameter keys can be listed with <code>get_params()</code>.</p>
 <p><strong>Returns</strong></p>
-<p>self</p></div>
+<p>self</p>
+<h3 id="properties">Properties</h3>
+<hr>
+
+<p><em>named_regressors</em></p>
+<p><strong>Returns</strong></p>
+<p>List of named estimator tuples, like [('svc', SVC(...))]</p></div>
         
         
     </div>
@@ -1180,7 +1216,7 @@ component of a nested object.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

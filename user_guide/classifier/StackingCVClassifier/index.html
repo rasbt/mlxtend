@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
+</li>
+
+        
+            
+<li >
     <a href="../../evaluate/bootstrap/">Bootstrap</a>
 </li>
 
@@ -949,6 +955,8 @@
         <li class="first-level "><a href="#api">API</a></li>
             <li class="second-level"><a href="#methods">Methods</a></li>
                  <!--   -->
+            <li class="second-level"><a href="#properties">Properties</a></li>
+                 <!--   -->
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
@@ -983,6 +991,9 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
 from mlxtend.classifier import StackingCVClassifier
 import numpy as np
+import warnings
+
+warnings.simplefilter('ignore')
 
 RANDOM_SEED = 42
 
@@ -991,13 +1002,11 @@ clf2 = RandomForestClassifier(random_state=RANDOM_SEED)
 clf3 = GaussianNB()
 lr = LogisticRegression()
 
-# The StackingCVClassifier uses scikit-learn's check_cv
-# internally, which doesn't support a random seed. Thus
-# NumPy's random seed need to be specified explicitely for
-# deterministic behavior
-np.random.seed(RANDOM_SEED)
-sclf = StackingCVClassifier(classifiers=[clf1, clf2, clf3], 
-                            meta_classifier=lr)
+# Starting from v0.16.0, StackingCVRegressor supports
+# `random_state` to get deterministic result.
+sclf = StackingCVClassifier(classifiers=[clf1, clf2, clf3],
+                            meta_classifier=lr,
+                            random_state=RANDOM_SEED)
 
 print('3-fold cross validation:\n')
 
@@ -1018,7 +1027,7 @@ for clf, label in zip([clf1, clf2, clf3, sclf],
 Accuracy: 0.91 (+/- 0.01) [KNN]
 Accuracy: 0.90 (+/- 0.03) [Random Forest]
 Accuracy: 0.92 (+/- 0.03) [Naive Bayes]
-Accuracy: 0.93 (+/- 0.02) [StackingClassifier]
+Accuracy: 0.91 (+/- 0.01) [StackingClassifier]
 </code></pre>
 <pre><code class="python">import matplotlib.pyplot as plt
 from mlxtend.plotting import plot_decision_regions
@@ -1059,14 +1068,10 @@ clf2 = RandomForestClassifier(random_state=1)
 clf3 = GaussianNB()
 lr = LogisticRegression()
 
-# The StackingCVClassifier uses scikit-learn's check_cv
-# internally, which doesn't support a random seed. Thus
-# NumPy's random seed need to be specified explicitely for
-# deterministic behavior
-np.random.seed(RANDOM_SEED)
 sclf = StackingCVClassifier(classifiers=[clf1, clf2, clf3],
                             use_probas=True,
-                            meta_classifier=lr)
+                            meta_classifier=lr,
+                            random_state=42)
 
 print('3-fold cross validation:\n')
 
@@ -1085,12 +1090,12 @@ for clf, label in zip([clf1, clf2, clf3, sclf],
 <pre><code>3-fold cross validation:
 
 Accuracy: 0.91 (+/- 0.01) [KNN]
-Accuracy: 0.91 (+/- 0.06) [Random Forest]
+Accuracy: 0.93 (+/- 0.05) [Random Forest]
 Accuracy: 0.92 (+/- 0.03) [Naive Bayes]
 Accuracy: 0.95 (+/- 0.04) [StackingClassifier]
 </code></pre>
 <h2 id="example-3-stacked-cv-classification-and-gridsearch">Example 3 - Stacked CV Classification and GridSearch</h2>
-<p>To set up a parameter grid for scikit-learn's <code>GridSearch</code>, we simply provide the estimator's names in the parameter grid -- in the special case of the meta-regressor, we append the <code>'meta-'</code> prefix.</p>
+<p>The stack allows tuning hyper parameters of the base and meta models! A full list of tunable parameters can be obtained via <code>estimator.get_params().keys()</code>.</p>
 <pre><code class="python">from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB 
@@ -1105,17 +1110,13 @@ clf2 = RandomForestClassifier(random_state=RANDOM_SEED)
 clf3 = GaussianNB()
 lr = LogisticRegression()
 
-# The StackingCVClassifier uses scikit-learn's check_cv
-# internally, which doesn't support a random seed. Thus
-# NumPy's random seed need to be specified explicitely for
-# deterministic behavior
-np.random.seed(RANDOM_SEED)
 sclf = StackingCVClassifier(classifiers=[clf1, clf2, clf3], 
-                            meta_classifier=lr)
+                            meta_classifier=lr,
+                            random_state=42)
 
 params = {'kneighborsclassifier__n_neighbors': [1, 5],
           'randomforestclassifier__n_estimators': [10, 50],
-          'meta-logisticregression__C': [0.1, 10.0]}
+          'meta_classifier__C': [0.1, 10.0]}
 
 grid = GridSearchCV(estimator=sclf, 
                     param_grid=params, 
@@ -1135,16 +1136,16 @@ print('Best parameters: %s' % grid.best_params_)
 print('Accuracy: %.2f' % grid.best_score_)
 </code></pre>
 
-<pre><code>0.673 +/- 0.01 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
-0.667 +/- 0.00 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
-0.920 +/- 0.02 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
-0.893 +/- 0.02 {'kneighborsclassifier__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
-0.667 +/- 0.00 {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
-0.667 +/- 0.00 {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
-0.947 +/- 0.02 {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
-0.947 +/- 0.02 {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
-Best parameters: {'kneighborsclassifier__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
-Accuracy: 0.95
+<pre><code>0.673 +/- 0.01 {'kneighborsclassifier__n_neighbors': 1, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.667 +/- 0.00 {'kneighborsclassifier__n_neighbors': 1, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.933 +/- 0.02 {'kneighborsclassifier__n_neighbors': 1, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.920 +/- 0.02 {'kneighborsclassifier__n_neighbors': 1, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+0.673 +/- 0.01 {'kneighborsclassifier__n_neighbors': 5, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.667 +/- 0.00 {'kneighborsclassifier__n_neighbors': 5, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.940 +/- 0.02 {'kneighborsclassifier__n_neighbors': 5, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.927 +/- 0.02 {'kneighborsclassifier__n_neighbors': 5, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+Best parameters: {'kneighborsclassifier__n_neighbors': 5, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+Accuracy: 0.94
 </code></pre>
 <p>In case we are planning to use a regression algorithm multiple times, all we need to do is to add an additional number suffix in the parameter grid as shown below:</p>
 <pre><code class="python">from sklearn.model_selection import GridSearchCV
@@ -1156,18 +1157,14 @@ clf2 = RandomForestClassifier(random_state=RANDOM_SEED)
 clf3 = GaussianNB()
 lr = LogisticRegression()
 
-# The StackingCVClassifier uses scikit-learn's check_cv
-# internally, which doesn't support a random seed. Thus
-# NumPy's random seed need to be specified explicitely for
-# deterministic behavior
-np.random.seed(RANDOM_SEED)
 sclf = StackingCVClassifier(classifiers=[clf1, clf1, clf2, clf3], 
-                            meta_classifier=lr)
+                            meta_classifier=lr,
+                            random_state=RANDOM_SEED)
 
 params = {'kneighborsclassifier-1__n_neighbors': [1, 5],
           'kneighborsclassifier-2__n_neighbors': [1, 5],
           'randomforestclassifier__n_estimators': [10, 50],
-          'meta-logisticregression__C': [0.1, 10.0]}
+          'meta_classifier__C': [0.1, 10.0]}
 
 grid = GridSearchCV(estimator=sclf, 
                     param_grid=params, 
@@ -1187,31 +1184,31 @@ print('Best parameters: %s' % grid.best_params_)
 print('Accuracy: %.2f' % grid.best_score_)
 </code></pre>
 
-<pre><code>0.673 +/- 0.01 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
-0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
-0.920 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
-0.893 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
-0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
-0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
-0.947 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
-0.940 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
-0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
-0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
-0.953 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
-0.927 +/- 0.03 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
-0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 10}
-0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 0.1, 'randomforestclassifier__n_estimators': 50}
-0.940 +/- 0.03 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
-0.940 +/- 0.03 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 50}
-Best parameters: {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta-logisticregression__C': 10.0, 'randomforestclassifier__n_estimators': 10}
-Accuracy: 0.95
+<pre><code>0.673 +/- 0.01 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.947 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.920 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+0.673 +/- 0.01 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.960 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.933 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+0.673 +/- 0.01 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.960 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.933 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+0.673 +/- 0.01 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.667 +/- 0.00 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.953 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.927 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+Best parameters: {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+Accuracy: 0.96
 </code></pre>
 <p><strong>Note</strong></p>
-<p>The <code>StackingCVClassifier</code> also enables grid search over the <code>classifiers</code> argument. However, due to the current implementation of <code>GridSearchCV</code> in scikit-learn, it is not possible to search over both, differenct classifiers and classifier parameters at the same time. For instance, while the following parameter dictionary works</p>
+<p>The <code>StackingClassifier</code> also enables grid search over the <code>classifiers</code> argument. When there are level-mixed hyperparameters, GridSearchCV will try to replace hyperparameters in a top-down order, i.e., classifers -&gt; single base classifier -&gt; classifier hyperparameter. For instance,  given a hyperparameter grid such as</p>
 <pre><code>params = {'randomforestclassifier__n_estimators': [1, 100],
 'classifiers': [(clf1, clf1, clf1), (clf2, clf3)]}
 </code></pre>
-<p>it will use the instance settings of <code>clf1</code>, <code>clf2</code>, and <code>clf3</code> and not overwrite it with the <code>'n_estimators'</code> settings from <code>'randomforestclassifier__n_estimators': [1, 100]</code>.</p>
+<p>it will first use the instance settings of either (clf1, clf1, clf1) or (clf2, clf3). Then it will replace the <code>'n_estimators'</code> settings for a matching classifier based on <code>'randomforestclassifier__n_estimators': [1, 100]</code>.</p>
 <h2 id="example-4-stacking-of-classifiers-that-operate-on-different-feature-subsets">Example 4 - Stacking of Classifiers that Operate on Different Feature Subsets</h2>
 <p>The different level-1 classifiers can be fit to different subsets of features in the training dataset. The following example illustrates how this can be done on a technical level using scikit-learn pipelines and the <code>ColumnSelector</code>:</p>
 <pre><code class="python">from sklearn.datasets import load_iris
@@ -1230,34 +1227,31 @@ pipe2 = make_pipeline(ColumnSelector(cols=(1, 2, 3)),
                       LogisticRegression())
 
 sclf = StackingCVClassifier(classifiers=[pipe1, pipe2], 
-                            meta_classifier=LogisticRegression())
+                            meta_classifier=LogisticRegression(),
+                            random_state=42)
 
 sclf.fit(X, y)
 </code></pre>
 
-<pre><code>StackingCVClassifier(classifiers=[Pipeline(steps=[('columnselector', ColumnSelector(cols=(0, 2))), ('logisticregression', LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
-          intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-          penalty='l2', random_state=None, solve...='l2', random_state=None, solver='liblinear', tol=0.0001,
-          verbose=0, warm_start=False))])],
-           cv=2,
+<pre><code>StackingCVClassifier(classifiers=[Pipeline(memory=None,
+     steps=[('columnselector', ColumnSelector(cols=(0, 2), drop_axis=False)), ('logisticregression', LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
+          intercept_scaling=1, max_iter=100, multi_class='warn',
+          n_jobs=None,...nalty='l2', random_state=None, solver='warn',
+          tol=0.0001, verbose=0, warm_start=False))])],
+           cv=2, drop_last_proba=False,
            meta_classifier=LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
-          intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,
-          penalty='l2', random_state=None, solver='liblinear', tol=0.0001,
-          verbose=0, warm_start=False),
-           shuffle=True, stratify=True, use_features_in_secondary=False,
+          intercept_scaling=1, max_iter=100, multi_class='warn',
+          n_jobs=None, penalty='l2', random_state=None, solver='warn',
+          tol=0.0001, verbose=0, warm_start=False),
+           n_jobs=None, pre_dispatch='2*n_jobs', random_state=42,
+           shuffle=True, store_train_meta_features=False, stratify=True,
+           use_clones=True, use_features_in_secondary=False,
            use_probas=False, verbose=0)
 </code></pre>
 <h1 id="api">API</h1>
-<p><em>StackingCVClassifier(classifiers, meta_classifier, use_probas=False, cv=2, use_features_in_secondary=False, stratify=True, shuffle=True, verbose=0, store_train_meta_features=False, use_clones=True)</em></p>
+<p><em>StackingCVClassifier(classifiers, meta_classifier, use_probas=False, drop_last_proba=False, cv=2, shuffle=True, random_state=None, stratify=True, verbose=0, use_features_in_secondary=False, store_train_meta_features=False, use_clones=True, n_jobs=None, pre_dispatch='2</em>n_jobs')*</p>
 <p>A 'Stacking Cross-Validation' classifier for scikit-learn estimators.</p>
 <p>New in mlxtend v0.4.3</p>
-<p><strong>Notes</strong></p>
-<p>The StackingCVClassifier uses scikit-learn's check_cv
-internally, which doesn't support a random seed. Thus
-NumPy's random seed need to be specified explicitely for
-deterministic behavior, for instance, by setting
-np.random.seed(RANDOM_SEED)
-prior to fitting the StackingCVClassifier</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1278,6 +1272,14 @@ classifiers</p>
 instead of class labels.</p>
 </li>
 <li>
+<p><code>drop_last_proba</code> : bool (default: False)</p>
+<p>Drops the last "probability" column in the feature set since if <code>True</code>,
+because it is redundant:
+p(y_c) = 1 - p(y_1) + p(y_2) + ... + p(y_{c-1}).
+This can be useful for meta-classifiers that are sensitive to
+perfectly collinear features. Only relevant if `use_probas=True.</p>
+</li>
+<li>
 <p><code>cv</code> : int, cross-validation generator or an iterable, optional (default: 2)</p>
 <p>Determines the cross-validation splitting strategy.
 Possible inputs for cv are:
@@ -1290,24 +1292,22 @@ For integer/None inputs, it will use either a <code>KFold</code> or
 argument.</p>
 </li>
 <li>
-<p><code>use_features_in_secondary</code> : bool (default: False)</p>
-<p>If True, the meta-classifier will be trained both on the predictions
-of the original classifiers and the original dataset.
-If False, the meta-classifier will be trained only on the predictions
-of the original classifiers.</p>
+<p><code>shuffle</code> : bool (default: True)</p>
+<p>If True,  and the <code>cv</code> argument is integer, the training data will be
+shuffled at fitting stage prior to cross-validation. If the <code>cv</code>
+argument is a specific cross validation technique, this argument is
+omitted.</p>
+</li>
+<li>
+<p><code>random_state</code> : int, RandomState instance or None, optional (default: None)</p>
+<p>Constrols the randomness of the cv splitter. Used when <code>cv</code> is
+integer and <code>shuffle=True</code>. New in v0.16.0.</p>
 </li>
 <li>
 <p><code>stratify</code> : bool (default: True)</p>
 <p>If True, and the <code>cv</code> argument is integer it will follow a stratified
 K-Fold cross validation technique. If the <code>cv</code> argument is a specific
 cross validation technique, this argument is omitted.</p>
-</li>
-<li>
-<p><code>shuffle</code> : bool (default: True)</p>
-<p>If True,  and the <code>cv</code> argument is integer, the training data will be
-shuffled at fitting stage prior to cross-validation. If the <code>cv</code>
-argument is a specific cross validation technique, this argument is
-omitted.</p>
 </li>
 <li>
 <p><code>verbose</code> : int, optional (default=0)</p>
@@ -1319,6 +1319,13 @@ and which fold is currently being used for fitting
 regressor being fitted
 - <code>verbose&gt;2</code>: Changes <code>verbose</code> param of the underlying regressor to
 self.verbose - 2</p>
+</li>
+<li>
+<p><code>use_features_in_secondary</code> : bool (default: False)</p>
+<p>If True, the meta-classifier will be trained both on the predictions
+of the original classifiers and the original dataset.
+If False, the meta-classifier will be trained only on the predictions
+of the original classifiers.</p>
 </li>
 <li>
 <p><code>store_train_meta_features</code> : bool (default: False)</p>
@@ -1338,6 +1345,29 @@ Setting <code>use_clones=False</code> is
 recommended if you are working with estimators that are supporting
 the scikit-learn fit/predict API interface but are not compatible
 to scikit-learn's <code>clone</code> function.</p>
+</li>
+<li>
+<p><code>n_jobs</code> : int or None, optional (default=None)</p>
+<p>The number of CPUs to use to do the computation.
+<code>None</code> means 1 unless in a :obj:<code>joblib.parallel_backend</code> context.
+<code>-1</code> means using all processors. See :term:<code>Glossary &lt;n_jobs&gt;</code>
+for more details. New in v0.16.0.</p>
+</li>
+<li>
+<p><code>pre_dispatch</code> : int, or string, optional</p>
+<p>Controls the number of jobs that get dispatched during parallel
+execution. Reducing this number can be useful to avoid an
+explosion of memory consumption when more jobs get dispatched
+than CPUs can process. This parameter can be:
+- None, in which case all the jobs are immediately
+created and spawned. Use this for lightweight and
+fast-running jobs, to avoid delays due to on-demand
+spawning of the jobs
+- An int, giving the exact number of total jobs that are
+spawned
+- A string, giving an expression as a function of n_jobs,
+as in '2*n_jobs'
+New in v0.16.0.</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>
@@ -1511,12 +1541,14 @@ each label set be correctly predicted.</p>
 
 <p><em>set_params(</em><em>params)</em></p>
 <p>Set the parameters of this estimator.</p>
-<p>The method works on simple estimators as well as on nested objects
-(such as pipelines). The latter have parameters of the form
-<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
-component of a nested object.</p>
+<p>Valid parameter keys can be listed with <code>get_params()</code>.</p>
 <p><strong>Returns</strong></p>
-<p>self</p></div>
+<p>self</p>
+<h3 id="properties">Properties</h3>
+<hr>
+
+<p><em>named_classifiers</em></p>
+<p>None</p></div>
         
         
     </div>
@@ -1524,7 +1556,7 @@ component of a nested object.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

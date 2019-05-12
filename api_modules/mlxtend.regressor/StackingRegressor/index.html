@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../../user_guide/evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/evaluate/bootstrap/">Bootstrap</a>
 </li>
 
@@ -997,8 +1003,9 @@ accessed after calling <code>fit</code>.</p>
 <p>Intercept of the fitted meta-estimator</p>
 </li>
 <li>
-<p><code>train_meta_features</code> : numpy array, shape = [n_samples, len(self.regressors)]</p>
-<p>meta-features for training data, where n_samples is the
+<p><code>train_meta_features</code> : numpy array,</p>
+<p>shape = [n_samples, len(self.regressors)]
+meta-features for training data, where n_samples is the
 number of samples
 in training data and len(self.regressors) is the number of regressors.</p>
 </li>
@@ -1151,10 +1158,7 @@ samples used in the fitting for the estimator.</p>
 
 <p><em>set_params(</em><em>params)</em></p>
 <p>Set the parameters of this estimator.</p>
-<p>The method works on simple estimators as well as on nested objects
-(such as pipelines). The latter have parameters of the form
-<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
-component of a nested object.</p>
+<p>Valid parameter keys can be listed with <code>get_params()</code>.</p>
 <p><strong>Returns</strong></p>
 <p>self</p>
 <h3 id="properties">Properties</h3>
@@ -1165,6 +1169,10 @@ component of a nested object.</p>
 <hr>
 
 <p><em>intercept_</em></p>
+<p>None</p>
+<hr>
+
+<p><em>named_regressors</em></p>
 <p>None</p></div>
         
         
@@ -1173,7 +1181,7 @@ component of a nested object.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2018 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

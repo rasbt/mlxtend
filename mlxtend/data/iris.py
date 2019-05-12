@@ -36,6 +36,15 @@ def iris_data():
         petal length, and petal width.
         y is a 1-dimensional array of the class labels {0, 1, 2}
 
+
+    Note
+    --------
+    Iris dataset present in UCI's machine learning repository is different
+    from Iris data availble in R (and the one in the original Fischer paper).
+    Precisely, there are two data points(row number 34 and 37) in UCI's Machine
+    Learning repo are different from the Iris dataset in R (and the one in the
+    original Fischer paper).
+
     Examples
     -----------
     For usage examples, please see

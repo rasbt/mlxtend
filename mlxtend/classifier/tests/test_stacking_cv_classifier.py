@@ -506,7 +506,7 @@ def test_StackingClassifier_drop_last_proba():
                                  use_probas=True,
                                  drop_last_proba=True,
                                  meta_classifier=lr1)
- 
+
     sclf3.fit(X_iris[0:100], y_iris[0:100])  # only 2 classes
     r3 = sclf3.predict_meta_features(X_iris[:2])
     assert r3.shape == (2, 2), r3.shape

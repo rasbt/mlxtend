@@ -41,10 +41,10 @@ def iris_data():
     --------
     The Iris dataset (originally collected by Edgar Anderson) and
     available in UCI's machine learning repository is different from
-    the Iris dataset available in R. Precisely, there are two data
-    points(row number 34 and 37) in UCI's Machine Learning repository
-    are different from the Iris dataset in R (and the one in the original
-    Fisher paper).
+    the Iris dataset available in R(and the one in the original paper
+    by R.A. Fisher [1]). Precisely, there are two data points(row number
+    34 and 37) in UCI's Machine Learning repository are different from the
+    Iris dataset in R (and the one in the original Fisher paper).
 
     [1] . A. Fisher (1936). "The use of multiple measurements in taxonomic
     problems". Annals of Eugenics. 7 (2): 179–188

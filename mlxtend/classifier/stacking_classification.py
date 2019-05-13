@@ -37,8 +37,15 @@ class StackingClassifier(_BaseXComposition, ClassifierMixin,
     use_probas : bool (default: False)
         If True, trains meta-classifier based on predicted probabilities
         instead of class labels.
+    drop_last_proba : bool (default: False)
+        Drops the last "probability" column in the feature set since if `True`,
+        because it is redundant:
+        p(y_c) = 1 - p(y_1) + p(y_2) + ... + p(y_{c-1}).
+        This can be useful for meta-classifiers that are sensitive to
+        perfectly collinear features. Only relevant if `use_probas=True`.
     average_probas : bool (default: False)
-        Averages the probabilities as meta features if True.
+        Averages the probabilities as meta features if `True`.
+        Only relevant if `use_probas=True`.
     verbose : int, optional (default=0)
         Controls the verbosity of the building process.
         - `verbose=0` (default): Prints nothing
@@ -86,7 +93,8 @@ class StackingClassifier(_BaseXComposition, ClassifierMixin,
 
     """
     def __init__(self, classifiers, meta_classifier,
-                 use_probas=False, average_probas=False, verbose=0,
+                 use_probas=False, drop_last_proba=False,
+                 average_probas=False, verbose=0,
                  use_features_in_secondary=False,
                  store_train_meta_features=False,
                  use_clones=True):
@@ -94,6 +102,7 @@ class StackingClassifier(_BaseXComposition, ClassifierMixin,
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier
         self.use_probas = use_probas
+        self.drop_last_proba = drop_last_proba
         self.average_probas = average_probas
         self.verbose = verbose
         self.use_features_in_secondary = use_features_in_secondary
@@ -205,8 +214,12 @@ class StackingClassifier(_BaseXComposition, ClassifierMixin,
         """
         check_is_fitted(self, 'clfs_')
         if self.use_probas:
-            probas = np.asarray([clf.predict_proba(X)
-                                 for clf in self.clfs_])
+            if self.drop_last_proba:
+                probas = np.asarray([clf.predict_proba(X)[:, :-1]
+                                     for clf in self.clfs_])
+            else:
+                probas = np.asarray([clf.predict_proba(X)
+                                     for clf in self.clfs_])
             if self.average_probas:
                 vals = np.average(probas, axis=0)
             else:

@@ -195,6 +195,38 @@ def test_StackingClassifier_avg_vs_concat():
     np.array_equal(r2[0][:3], r2[0][3:])
 
 
+def test_StackingClassifier_drop_last_proba():
+    np.random.seed(123)
+    lr1 = LogisticRegression(solver='liblinear',
+                             multi_class='ovr')
+    sclf1 = StackingClassifier(classifiers=[lr1, lr1],
+                               use_probas=True,
+                               drop_last_proba=False,
+                               meta_classifier=lr1)
+
+    sclf1.fit(X, y)
+    r1 = sclf1.predict_meta_features(X[:2])
+    assert r1.shape == (2, 6)
+
+    sclf2 = StackingClassifier(classifiers=[lr1, lr1],
+                               use_probas=True,
+                               drop_last_proba=True,
+                               meta_classifier=lr1)
+
+    sclf2.fit(X, y)
+    r2 = sclf2.predict_meta_features(X[:2])
+    assert r2.shape == (2, 4), r2.shape
+
+    sclf3 = StackingClassifier(classifiers=[lr1, lr1],
+                               use_probas=True,
+                               drop_last_proba=True,
+                               meta_classifier=lr1)
+
+    sclf3.fit(X[0:100], y[0:100])  # only 2 classes
+    r3 = sclf3.predict_meta_features(X[:2])
+    assert r3.shape == (2, 2), r3.shape
+
+
 def test_multivariate_class():
     np.random.seed(123)
     meta = KNeighborsClassifier()
@@ -405,6 +437,7 @@ def test_get_params():
     got = sorted(list({s.split('__')[0] for s in sclf.get_params().keys()}))
     expect = ['average_probas',
               'classifiers',
+              'drop_last_proba',
               'gaussiannb',
               'kneighborsclassifier',
               'meta_classifier',

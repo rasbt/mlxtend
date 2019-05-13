@@ -25,10 +25,11 @@ from sklearn.model_selection import cross_val_score
 from sklearn.externals.joblib import Parallel, delayed
 
 
-def _calc_score(selector, X, y, indices, **fit_params):
+def _calc_score(selector, X, y, indices, groups=None, **fit_params):
     if selector.cv:
         scores = cross_val_score(selector.est_,
                                  X[:, indices], y,
+                                 groups=groups,
                                  cv=selector.cv,
                                  scoring=selector.scorer,
                                  n_jobs=1,
@@ -175,7 +176,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         # don't mess with this unless testing
         self._TESTING_INTERRUPT_MODE = False
 
-    def fit(self, X, y, custom_feature_names=None, **fit_params):
+    def fit(self, X, y, custom_feature_names=None, groups=None, **fit_params):
         """Perform feature selection and learn model from training data.
 
         Parameters
@@ -191,6 +192,9 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             Custom feature names for `self.k_feature_names` and
             `self.subsets_[i]['feature_names']`.
             (new in v 0.13.0)
+        groups : array-like, with shape (n_samples,), optional
+            Group labels for the samples used while splitting the dataset into
+            train/test set. Passed to the fit method of the cross-validator.
         fit_params : dict of string -> object, optional
             Parameters to pass to to the fit method of classifier.
 
@@ -268,7 +272,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         n_jobs = min(self.n_jobs, all_comb)
         parallel = Parallel(n_jobs=n_jobs, pre_dispatch=self.pre_dispatch)
         work = enumerate(parallel(delayed(_calc_score)
-                                  (self, X_, y, c, **fit_params)
+                                  (self, X_, y, c, groups=groups, **fit_params)
                                   for c in candidates))
 
         try:
@@ -336,7 +340,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             X_ = X
         return X_[:, self.best_idx_]
 
-    def fit_transform(self, X, y, **fit_params):
+    def fit_transform(self, X, y, groups=None, **fit_params):
         """Fit to training data and return the best selected features from X.
 
         Parameters
@@ -348,6 +352,9 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             argument for X.
         y : array-like, shape = [n_samples]
             Target values.
+        groups : array-like, with shape (n_samples,), optional
+            Group labels for the samples used while splitting the dataset into
+            train/test set. Passed to the fit method of the cross-validator.
         fit_params : dict of string -> object, optional
             Parameters to pass to to the fit method of classifier.
 
@@ -356,7 +363,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         Feature subset of X, shape={n_samples, k_features}
 
         """
-        self.fit(X, y, **fit_params)
+        self.fit(X, y, groups=groups, **fit_params)
         return self.transform(X)
 
     def get_metric_dict(self, confidence_interval=0.95):

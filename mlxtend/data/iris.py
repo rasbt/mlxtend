@@ -32,7 +32,7 @@ def iris_data(version='uci'):
     Parameters
     --------
     version : string, optional, default 'uci'.
-    version to use {'uci','r'}. 'uci' gives data 
+    version to use {'uci', 'r'}. 'uci' gives data
     from the UCI machine learning repo and 'r' gives
     the Iris dataset in R. See Note for details.
 
@@ -64,22 +64,16 @@ def iris_data(version='uci'):
     http://rasbt.github.io/mlxtend/user_guide/data/iris_data/
 
     """
-    if version =="uci":
-
+    if version == "uci":
         tmp = np.genfromtxt(fname=DATA_PATH, delimiter=',')
         X, y = tmp[:, :-1], tmp[:, -1]
         y = y.astype(int)
-
-    elif version =="r":
+    elif version == "r":
         tmp = np.genfromtxt(fname=DATA_PATH, delimiter=',')
         X, y = tmp[:, :-1], tmp[:, -1]
-        X[34] = [4.9,3.1,1.5,0.2]
-        X[37] = [4.9,3.6,1.4,0.1]        
+        X[34] = [4.9, 3.1, 1.5, 0.2]
+        X[37] = [4.9, 3.6, 1.4, 0.1]
         y = y.astype(int)
     else:
         raise ValueError("version must be 'uci' or 'r'.")
-
-
-    
-
     return X, y

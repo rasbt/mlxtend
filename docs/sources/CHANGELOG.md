@@ -16,7 +16,7 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
-- -
+- Added Enhancement to the existing `iris_data()` by adding R version of the dataset.
 
 ##### Changes
 

@@ -31,10 +31,11 @@ def iris_data(version='uci'):
 
     Parameters
     --------
-    version : string, optional, default 'uci'.
-    version to use {'uci', 'r'}. 'uci' gives data
-    from the UCI machine learning repo and 'r' gives
-    the Iris dataset in R. See Note for details.
+    version : string, optional (default: 'uci').
+      Version to use {'uci', 'corrected'}. 'uci' loads the dataset
+      as deposited on the UCI machine learning repository, and 
+      'corrected' provides the version that is consistent with
+      Fisher's original paper. See Note for details.
 
 
     Returns
@@ -50,10 +51,12 @@ def iris_data(version='uci'):
     --------
     The Iris dataset (originally collected by Edgar Anderson) and
     available in UCI's machine learning repository is different from
-    the Iris dataset available in R(and the one in the original paper
-    by R.A. Fisher [1]). Precisely, there are two data points(row number
+    the Iris dataset described in the original paper by  R.A. Fisher [1]). 
+    Precisely, there are two data points (row number
     34 and 37) in UCI's Machine Learning repository are different from the
-    Iris dataset in R (and the one in the original Fisher paper).
+    origianlly published Iris dataset. Also, the original version of the Iris
+    Dataset, which can be loaded via `version='corrected'` is the same
+    as the one in R.
 
     [1] . A. Fisher (1936). "The use of multiple measurements in taxonomic
     problems". Annals of Eugenics. 7 (2): 179–188
@@ -68,12 +71,12 @@ def iris_data(version='uci'):
         tmp = np.genfromtxt(fname=DATA_PATH, delimiter=',')
         X, y = tmp[:, :-1], tmp[:, -1]
         y = y.astype(int)
-    elif version == "r":
+    elif version == "corrected":
         tmp = np.genfromtxt(fname=DATA_PATH, delimiter=',')
         X, y = tmp[:, :-1], tmp[:, -1]
         X[34] = [4.9, 3.1, 1.5, 0.2]
         X[37] = [4.9, 3.6, 1.4, 0.1]
         y = y.astype(int)
     else:
-        raise ValueError("version must be 'uci' or 'r'.")
+        raise ValueError("version must be 'uci' or 'corrected'.")
     return X, y

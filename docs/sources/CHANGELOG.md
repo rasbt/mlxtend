@@ -16,7 +16,8 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
-- Added Enhancement to the existing `iris_data()` by adding R version of the dataset.
+- Added an enhancement to the existing `iris_data()` such that both the UCI Repository version of the Iris dataset as well as the corrected, original
+  version of the dataset can be loaded, which has a slight difference in two data points (consistent with Fisher's paper; this is also the same as in R). (via [#539](https://github.com/rasbt/mlxtend/pull/532) via [janismdhanbad](https://github.com/janismdhanbad))
 
 ##### Changes
 

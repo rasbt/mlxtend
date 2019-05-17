@@ -2,6 +2,8 @@ from mlxtend.data import iris_data
 import numpy as np
 import os
 import re
+from numpy.testing import assert_array_equal
+from nose.tools import assert_raises
 
 
 this_dir, this_filename = os.path.split(__file__)
@@ -13,7 +15,9 @@ def test_iris_data_uci():
     tmp = np.genfromtxt(fname=DATA_PATH, delimiter=',')
     original_uci_data_x, original_uci_data_y = tmp[:, :-1], tmp[:, -1]
     original_uci_data_y = original_uci_data_y.astype(int)
-    assert(original_uci_data_x, original_uci_data_y == iris_data())
+    iris_x, iris_y = iris_data()
+    assert_array_equal(original_uci_data_x, iris_x)
+    assert_array_equal(original_uci_data_y, iris_y)
 
 
 def test_iris_data_r():
@@ -22,4 +26,9 @@ def test_iris_data_r():
     original_r_data_y = original_r_data_y.astype(int)
     original_r_data_x[34] = [4.9, 3.1, 1.5, 0.2]
     original_r_data_x[37] = [4.9, 3.6, 1.4, 0.1]
-    assert(original_r_data_x, original_r_data_x == iris_data(version='r'))
+    iris_x, iris_y = iris_data(version='corrected')
+    assert_array_equal(original_r_data_x, iris_x)
+
+
+def test_iris_invalid_choice():
+    assert_raises(ValueError, iris_data, 'wrong-choice')

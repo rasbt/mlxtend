@@ -16,7 +16,7 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
-- -
+- Add optional `groups` parameter to `SequentialFeatureSelector` and `ExhaustiveFeatureSelector` `fit()` methods for forwarding to sklearn CV ([#537](https://github.com/rasbt/mlxtend/pull/537) via [arc12](https://github.com/qiaguhttps://github.com/arc12))
 
 ##### Changes
 

@@ -219,6 +219,33 @@ def test_knn_cv3():
     dict_compare_utility(d1=expect, d2=sfs1.subsets_)
 
 
+def test_knn_cv3_groups():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=4)
+    sfs1 = SFS(knn,
+               k_features=3,
+               forward=True,
+               floating=False,
+               cv=GroupKFold(n_splits=3),
+               verbose=0)
+    np.random.seed(1630672634)
+    groups = np.random.randint(0, 6, size=len(y))
+    sfs1 = sfs1.fit(X, y, groups=groups)
+    # print(sfs1.subsets_)
+    expect = {
+        1: {'cv_scores': np.array([0.97916667, 0.93877551, 0.96226415]),
+            'feature_idx': (3,),
+            'avg_score': 0.9600687759380482},
+        2: {'cv_scores': np.array([0.95833333, 0.93877551, 0.98113208]),
+            'feature_idx': (1, 3),
+            'avg_score': 0.9594136396697044},
+        3: {'cv_scores': np.array([0.97916667, 0.95918367, 0.94339623]),
+            'feature_idx': (1, 2, 3),
+            'avg_score': 0.9605821888503829}}
+    dict_compare_utility(d1=expect, d2=sfs1.subsets_, decimal=3)
+
 def test_knn_rbf_groupkfold():
     nan_roc_auc_scorer = make_scorer(nan_roc_auc_score)
     rng = np.random.RandomState(123)

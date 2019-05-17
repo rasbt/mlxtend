@@ -23,10 +23,11 @@ from sklearn.model_selection import cross_val_score
 from sklearn.externals.joblib import Parallel, delayed
 
 
-def _calc_score(selector, X, y, indices, **fit_params):
+def _calc_score(selector, X, y, indices, groups=None, **fit_params):
     if selector.cv:
         scores = cross_val_score(selector.est_,
                                  X[:, indices], y,
+                                 groups=groups,
                                  cv=selector.cv,
                                  scoring=selector.scorer,
                                  n_jobs=1,
@@ -242,7 +243,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self._set_params('estimator', 'named_estimators', **params)
         return self
 
-    def fit(self, X, y, custom_feature_names=None, **fit_params):
+    def fit(self, X, y, custom_feature_names=None, groups=None, **fit_params):
         """Perform feature selection and learn model from training data.
 
         Parameters
@@ -260,6 +261,9 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             Custom feature names for `self.k_feature_names` and
             `self.subsets_[i]['feature_names']`.
             (new in v 0.13.0)
+        groups : array-like, with shape (n_samples,), optional
+            Group labels for the samples used while splitting the dataset into
+            train/test set. Passed to the fit method of the cross-validator.
         fit_params : dict of string -> object, optional
             Parameters to pass to to the fit method of classifier.
 
@@ -291,8 +295,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         if not isinstance(self.k_features, int) and\
                 not isinstance(self.k_features, tuple)\
                 and not isinstance(self.k_features, str):
-                raise AttributeError('k_features must be a positive integer'
-                                     ', tuple, or string')
+            raise AttributeError('k_features must be a positive integer'
+                                 ', tuple, or string')
 
         if (isinstance(self.k_features, int) and (
                 self.k_features < 1 or self.k_features > X_.shape[1])):
@@ -351,7 +355,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 k_to_select = min_k
             k_idx = tuple(range(X_.shape[1]))
             k = len(k_idx)
-            k_idx, k_score = _calc_score(self, X_, y, k_idx, **fit_params)
+            k_idx, k_score = _calc_score(self, X_, y, k_idx,
+                                         groups=groups, **fit_params)
             self.subsets_[k] = {
                 'feature_idx': k_idx,
                 'cv_scores': k_score,
@@ -370,6 +375,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                         subset=prev_subset,
                         X=X_,
                         y=y,
+                        groups=groups,
                         **fit_params
                     )
                 else:
@@ -378,6 +384,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                         feature_set=prev_subset,
                         X=X_,
                         y=y,
+                        groups=groups,
                         **fit_params
                     )
 
@@ -404,6 +411,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                                 fixed_feature=new_feature,
                                 X=X_,
                                 y=y,
+                                groups=groups,
                                 **fit_params
                             )
 
@@ -413,6 +421,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                                 subset=set(k_idx),
                                 X=X_,
                                 y=y,
+                                groups=groups,
                                 **fit_params
                             )
 
@@ -472,7 +481,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                                           X)
                     raise KeyboardInterrupt
 
-        except KeyboardInterrupt as e:
+        except KeyboardInterrupt:
             self.interrupted_ = True
             sys.stderr.write('\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...')
 
@@ -512,7 +521,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         return self
 
     def _inclusion(self, orig_set, subset, X, y, ignore_feature=None,
-                   **fit_params):
+                   groups=None, **fit_params):
         all_avg_scores = []
         all_cv_scores = []
         all_subsets = []
@@ -526,7 +535,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             work = parallel(delayed(_calc_score)
                             (self, X, y,
                              tuple(subset | {feature}),
-                             **fit_params)
+                             groups=groups, **fit_params)
                             for feature in remaining
                             if feature != ignore_feature)
 
@@ -541,7 +550,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                    all_cv_scores[best])
         return res
 
-    def _exclusion(self, feature_set, X, y, fixed_feature=None, **fit_params):
+    def _exclusion(self, feature_set, X, y, fixed_feature=None,
+                   groups=None, **fit_params):
         n = len(feature_set)
         res = (None, None, None)
         if n > 1:
@@ -552,7 +562,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             n_jobs = min(self.n_jobs, features)
             parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
                                 pre_dispatch=self.pre_dispatch)
-            work = parallel(delayed(_calc_score)(self, X, y, p, **fit_params)
+            work = parallel(delayed(_calc_score)(self, X, y, p,
+                                                 groups=groups, **fit_params)
                             for p in combinations(feature_set, r=n - 1)
                             if not fixed_feature or fixed_feature in set(p))
 
@@ -591,7 +602,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             X_ = X
         return X_[:, self.k_feature_idx_]
 
-    def fit_transform(self, X, y, **fit_params):
+    def fit_transform(self, X, y, groups=None, **fit_params):
         """Fit to training data then reduce X to its most important features.
 
         Parameters
@@ -605,6 +616,9 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             Target values.
             New in v 0.13.0: a pandas Series are now also accepted as
             argument for y.
+        groups : array-like, with shape (n_samples,), optional
+            Group labels for the samples used while splitting the dataset into
+            train/test set. Passed to the fit method of the cross-validator.
         fit_params : dict of string -> object, optional
             Parameters to pass to to the fit method of classifier.
 
@@ -613,7 +627,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         Reduced feature subset of X, shape={n_samples, k_features}
 
         """
-        self.fit(X, y, **fit_params)
+        self.fit(X, y, groups=groups, **fit_params)
         return self.transform(X)
 
     def get_metric_dict(self, confidence_interval=0.95):

@@ -16,6 +16,7 @@ from sklearn.datasets import load_iris
 from sklearn.linear_model import LinearRegression
 from sklearn.datasets import load_boston
 from mlxtend.utils import assert_raises
+from sklearn.model_selection import GroupKFold
 
 
 def dict_compare_utility(d1, d2):
@@ -181,6 +182,40 @@ def test_knn_cv3():
     assert efs1.best_idx_ == (1, 2, 3)
     assert efs1.best_feature_names_ == ('1', '2', '3')
     assert round(efs1.best_score_, 4) == 0.9728
+
+
+def test_knn_cv3_groups():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=4)
+    efs1 = EFS(knn,
+               min_features=3,
+               max_features=3,
+               scoring='accuracy',
+               cv=GroupKFold(n_splits=3),
+               print_progress=False)
+    np.random.seed(1630672634)
+    groups = np.random.randint(0, 6, size=len(y))
+    efs1 = efs1.fit(X, y, groups=groups)
+    # print(efs1.subsets_)
+    expect = {0: {'cv_scores': np.array([0.97916667, 0.93877551, 0.9245283]),
+                  'feature_idx': (0, 1, 2),
+                  'avg_score': 0.9474901595858469,
+                  'feature_names': ('0', '1', '2')},
+              1: {'cv_scores': np.array([1., 0.93877551, 0.9245283]),
+                  'feature_idx': (0, 1, 3),
+                  'avg_score': 0.9544346040302915,
+                  'feature_names': ('0', '1', '3')},
+              2: {'cv_scores': np.array([0.97916667, 0.95918367, 0.9245283]),
+                  'feature_idx': (0, 2, 3),
+                  'avg_score': 0.9542928806742822,
+                  'feature_names': ('0', '2', '3')},
+              3: {'cv_scores': np.array([0.97916667, 0.95918367, 0.94339623]),
+                  'feature_idx': (1, 2, 3),
+                  'avg_score': 0.9605821888503829,
+                  'feature_names': ('1', '2', '3')}}
+    dict_compare_utility(d1=expect, d2=efs1.subsets_)
 
 
 def test_fit_params():

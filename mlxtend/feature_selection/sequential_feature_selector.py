@@ -295,8 +295,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         if not isinstance(self.k_features, int) and\
                 not isinstance(self.k_features, tuple)\
                 and not isinstance(self.k_features, str):
-                raise AttributeError('k_features must be a positive integer'
-                                     ', tuple, or string')
+            raise AttributeError('k_features must be a positive integer'
+                                 ', tuple, or string')
 
         if (isinstance(self.k_features, int) and (
                 self.k_features < 1 or self.k_features > X_.shape[1])):
@@ -355,7 +355,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 k_to_select = min_k
             k_idx = tuple(range(X_.shape[1]))
             k = len(k_idx)
-            k_idx, k_score = _calc_score(self, X_, y, k_idx, groups=groups, **fit_params)
+            k_idx, k_score = _calc_score(self, X_, y, k_idx,
+                                         groups=groups, **fit_params)
             self.subsets_[k] = {
                 'feature_idx': k_idx,
                 'cv_scores': k_score,
@@ -480,7 +481,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                                           X)
                     raise KeyboardInterrupt
 
-        except KeyboardInterrupt as e:
+        except KeyboardInterrupt:
             self.interrupted_ = True
             sys.stderr.write('\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...')
 
@@ -549,7 +550,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                    all_cv_scores[best])
         return res
 
-    def _exclusion(self, feature_set, X, y, fixed_feature=None, groups=None, **fit_params):
+    def _exclusion(self, feature_set, X, y, fixed_feature=None,
+                   groups=None, **fit_params):
         n = len(feature_set)
         res = (None, None, None)
         if n > 1:
@@ -560,7 +562,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             n_jobs = min(self.n_jobs, features)
             parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
                                 pre_dispatch=self.pre_dispatch)
-            work = parallel(delayed(_calc_score)(self, X, y, p, groups=groups, **fit_params)
+            work = parallel(delayed(_calc_score)(self, X, y, p,
+                                                 groups=groups, **fit_params)
                             for p in combinations(feature_set, r=n - 1)
                             if not fixed_feature or fixed_feature in set(p))
 

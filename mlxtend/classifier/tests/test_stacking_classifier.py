@@ -5,6 +5,7 @@
 # License: BSD 3 clause
 
 import random
+import pytest
 from mlxtend.classifier import StackingClassifier
 from mlxtend.externals.estimator_checks import NotFittedError
 from scipy import sparse
@@ -17,10 +18,9 @@ from sklearn.model_selection import cross_val_score
 import numpy as np
 from mlxtend.data import iris_data
 from mlxtend.utils import assert_raises
-from nose.tools import assert_almost_equal
+from numpy.testing import assert_almost_equal
 from sklearn.model_selection import train_test_split
 from sklearn.base import clone
-from nose.tools import raises
 from distutils.version import LooseVersion as Version
 from sklearn import __version__ as sklearn_version
 
@@ -96,7 +96,6 @@ def test_sample_weight():
     assert maxdiff < 1e-3, "max diff is %.4f" % maxdiff
 
 
-@raises(TypeError)
 def test_weight_unsupported():
     # Error since KNN does not support sample_weight
     np.random.seed(123)
@@ -109,7 +108,9 @@ def test_weight_unsupported():
                               meta_classifier=meta)
     random.seed(87)
     w = np.array([random.random() for _ in range(len(y))])
-    sclf.fit(X, y, sample_seight=w)
+
+    with pytest.raises(TypeError):
+        sclf.fit(X, y, sample_seight=w)
 
 
 def test_weight_unsupported_no_weight():
@@ -179,8 +180,8 @@ def test_StackingClassifier_avg_vs_concat():
     sclf1.fit(X, y)
     r1 = sclf1.predict_meta_features(X[:2])
     assert r1.shape == (2, 3)
-    assert_almost_equal(np.sum(r1[0]), 1.0, places=6)
-    assert_almost_equal(np.sum(r1[1]), 1.0, places=6)
+    assert_almost_equal(np.sum(r1[0]), 1.0, decimal=6)
+    assert_almost_equal(np.sum(r1[1]), 1.0, decimal=6)
 
     sclf2 = StackingClassifier(classifiers=[lr1, lr1],
                                use_probas=True,
@@ -190,8 +191,8 @@ def test_StackingClassifier_avg_vs_concat():
     sclf2.fit(X, y)
     r2 = sclf2.predict_meta_features(X[:2])
     assert r2.shape == (2, 6)
-    assert_almost_equal(np.sum(r2[0]), 2.0, places=6)
-    assert_almost_equal(np.sum(r2[1]), 2.0, places=6)
+    assert_almost_equal(np.sum(r2[0]), 2.0, decimal=6)
+    assert_almost_equal(np.sum(r2[1]), 2.0, decimal=6)
     np.array_equal(r2[0][:3], r2[0][3:])
 
 

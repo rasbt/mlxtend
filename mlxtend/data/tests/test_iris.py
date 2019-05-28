@@ -1,9 +1,9 @@
 from mlxtend.data import iris_data
+import pytest
 import numpy as np
 import os
 import re
 from numpy.testing import assert_array_equal
-from nose.tools import assert_raises
 
 
 this_dir, this_filename = os.path.split(__file__)
@@ -31,4 +31,6 @@ def test_iris_data_r():
 
 
 def test_iris_invalid_choice():
-    assert_raises(ValueError, iris_data, 'wrong-choice')
+    with pytest.raises(TypeError) as excinfo:
+        iris_data()
+        assert excinfo.value.message == ('wrong-choice')

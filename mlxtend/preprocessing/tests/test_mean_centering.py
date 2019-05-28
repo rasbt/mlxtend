@@ -6,15 +6,15 @@
 
 
 import numpy as np
+import pytest
 from mlxtend.preprocessing import MeanCenterer
-from nose.tools import raises
 
 
-@raises(AttributeError)
 def test_fitting_error():
     X1 = np.array([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
     mc = MeanCenterer()
-    mc.transform(X1)
+    with pytest.raises(AttributeError):
+        mc.transform(X1)
 
 
 def test_array_mean_centering():

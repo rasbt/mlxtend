@@ -8,6 +8,7 @@
 import random
 import pandas as pd
 import numpy as np
+import pytest
 from scipy import sparse
 from mlxtend.classifier import StackingCVClassifier
 from mlxtend.externals.estimator_checks import NotFittedError
@@ -24,7 +25,6 @@ from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score
 from sklearn.base import clone
-from nose.tools import raises
 from distutils.version import LooseVersion as Version
 from sklearn import __version__ as sklearn_version
 
@@ -100,7 +100,6 @@ def test_sample_weight():
     assert diff23 > 1e-3, "max diff is %.4f" % diff23
 
 
-@raises(TypeError)
 def test_no_weight_support():
     w = np.array([random.random() for _ in range(len(y_iris))])
     meta = LogisticRegression(multi_class='ovr', solver='liblinear')
@@ -110,10 +109,10 @@ def test_no_weight_support():
     sclf = StackingCVClassifier(classifiers=[clf1, clf2, clf3],
                                 meta_classifier=meta,
                                 shuffle=False)
-    sclf.fit(X_iris, y_iris, sample_weight=w)
+    with pytest.raises(TypeError):
+        sclf.fit(X_iris, y_iris, sample_weight=w)
 
 
-@raises(TypeError)
 def test_no_weight_support_meta():
     w = np.array([random.random() for _ in range(len(y_iris))])
     meta = KNeighborsClassifier()
@@ -122,7 +121,9 @@ def test_no_weight_support_meta():
     sclf = StackingCVClassifier(classifiers=[clf1, clf2],
                                 meta_classifier=meta,
                                 shuffle=False)
-    sclf.fit(X_iris, y_iris, sample_weight=w)
+
+    with pytest.raises(TypeError):
+        sclf.fit(X_iris, y_iris, sample_weight=w)
 
 
 def test_no_weight_support_with_no_weight():

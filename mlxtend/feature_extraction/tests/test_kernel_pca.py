@@ -5,8 +5,8 @@
 # License: BSD 3 clause
 
 import numpy as np
+import pytest
 from numpy.testing import assert_almost_equal
-from nose.tools import raises
 from mlxtend.feature_extraction import RBFKernelPCA as KPCA
 from sklearn.datasets import make_moons
 
@@ -25,10 +25,10 @@ def test_default_2components():
     assert pca.X_projected_.shape == (X1.shape[0], 2)
 
 
-@raises(AttributeError)
-def test_default_components():
-    pca = KPCA(n_components=0)
-    pca.fit(X1)
+def test_default_0components():
+    with pytest.raises(AttributeError):
+        pca = KPCA(n_components=0)
+        pca.fit(X1)
 
 
 def test_proj():
@@ -53,14 +53,14 @@ def test_reproj_2():
     assert_almost_equal(pca.X_projected_[1, None], exp, decimal=2)
 
 
-@raises(ValueError)
 def test_fail_array_fit():
     pca = KPCA(n_components=2)
-    pca.fit(X1[1])
+    with pytest.raises(ValueError):
+        pca.fit(X1[1])
 
 
-@raises(ValueError)
 def test_fail_array_transform():
     pca = KPCA(n_components=2)
     pca.fit(X1)
-    pca.transform(X1[1])
+    with pytest.raises(ValueError):
+        pca.transform(X1[1])

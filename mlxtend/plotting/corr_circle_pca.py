@@ -37,8 +37,6 @@ def plot_pca_correlation_graph(X, variables_names, dimensions=(1, 2),
     X : 2d array like.
         The columns represent the different variables and the rows are the
          samples of thos variables
-    names_cols_X : array like
-        name to be added to the final pandas table.
     variables_names : array like
         Name of the columns (the variables) of X
     dimensions: tuple with two elements.
@@ -47,6 +45,9 @@ def plot_pca_correlation_graph(X, variables_names, dimensions=(1, 2),
     figure_axis_size :
          size of the final frame. The figure created is a square with length
          and width equal to figure_axis_size.
+
+    returns:
+        matplotlib_figure , correlation_matrix
     """
     n_comp = max(dimensions)
 

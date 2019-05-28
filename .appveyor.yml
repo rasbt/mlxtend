@@ -20,7 +20,8 @@ install:
   - pip install scikit-image
 
 test_script:
-  -  PYTHONPATH='.' pytest -sv --ignore=mlxtend/plotting
+  - set PYTHONPATH=%PYTHONPATH%;%CD%
+  - pytest -sv --ignore=mlxtend/plotting
 
 notifications:
 

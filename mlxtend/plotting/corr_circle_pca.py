@@ -1,6 +1,6 @@
 # mlxtend Machine Learning Library Extensions
 #
-# A function for removing chart junk from matplotlib plots
+# A function for plotting a PCA correlation circle
 # File Author: Gabriel Azevedo Ferreira <az.fe.gabriel@gmail.com>
 
 from sklearn.decomposition import PCA

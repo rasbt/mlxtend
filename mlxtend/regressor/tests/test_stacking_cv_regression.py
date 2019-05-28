@@ -237,7 +237,7 @@ def test_sparse_matrix_inputs():
 
     # sparse
     stack.fit(sparse.csr_matrix(X1), y)
-    mse = 0.20
+    mse = 0.19
     got = np.mean((stack.predict(sparse.csr_matrix(X1)) - y) ** 2)
     assert round(got, 2) == mse, got
 

@@ -481,7 +481,7 @@ def test_train_meta_features_():
     stclf = StackingClassifier(classifiers=[knn, gnb],
                                meta_classifier=lr,
                                store_train_meta_features=True)
-    X_train, X_test, y_train,  y_test = train_test_split(X, y, test_size=0.3)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
     stclf.fit(X_train, y_train)
     train_meta_features = stclf.train_meta_features_
     assert train_meta_features.shape == (X_train.shape[0], 2)
@@ -493,7 +493,7 @@ def test_predict_meta_features():
                             multi_class='ovr',
                             random_state=1)
     gnb = GaussianNB()
-    X_train, X_test, y_train,  y_test = train_test_split(X, y, test_size=0.3)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
 
     #  test default (class labels)
     stclf = StackingClassifier(classifiers=[knn, gnb],

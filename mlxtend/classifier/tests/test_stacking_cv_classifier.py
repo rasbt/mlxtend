@@ -388,8 +388,8 @@ def test_train_meta_features_():
     stclf = StackingCVClassifier(classifiers=[knn, gnb],
                                  meta_classifier=lr,
                                  store_train_meta_features=True)
-    X_train, X_test, y_train,  y_test = train_test_split(X_iris, y_iris,
-                                                         test_size=0.3)
+    X_train, X_test, y_train, y_test = train_test_split(X_iris, y_iris,
+                                                        test_size=0.3)
     stclf.fit(X_train, y_train)
     train_meta_features = stclf.train_meta_features_
     assert train_meta_features.shape == (X_train.shape[0], 2)
@@ -399,8 +399,8 @@ def test_predict_meta_features():
     knn = KNeighborsClassifier()
     lr = LogisticRegression(multi_class='ovr', solver='liblinear')
     gnb = GaussianNB()
-    X_train, X_test, y_train,  y_test = train_test_split(X_iris, y_iris,
-                                                         test_size=0.3)
+    X_train, X_test, y_train, y_test = train_test_split(X_iris, y_iris,
+                                                        test_size=0.3)
     #  test default (class labels)
     stclf = StackingCVClassifier(classifiers=[knn, gnb],
                                  meta_classifier=lr,
@@ -425,7 +425,7 @@ def test_meta_feat_reordering():
     stclf.fit(X_train, y_train)
 
     assert round(roc_auc_score(y_train,
-                 stclf.train_meta_features_[:, 1]), 2) == 0.86, \
+                 stclf.train_meta_features_[:, 1]), 2) == 0.87, \
         round(roc_auc_score(y_train,
               stclf.train_meta_features_[:, 1]), 2)
 
@@ -471,12 +471,12 @@ def test_sparse_inputs_with_features_in_secondary():
 
     # dense
     stclf.fit(X_train, y_train)
-    assert round(stclf.score(X_train, y_train), 2) == 1.0, \
+    assert round(stclf.score(X_train, y_train), 2) == 0.99, \
         round(stclf.score(X_train, y_train), 2)
 
     # sparse
     stclf.fit(sparse.csr_matrix(X_train), y_train)
-    assert round(stclf.score(X_train, y_train), 2) == 1.0, \
+    assert round(stclf.score(X_train, y_train), 2) == 0.99, \
         round(stclf.score(X_train, y_train), 2)
 
 
@@ -542,7 +542,8 @@ def test_works_with_df_if_fold_indexes_missing():
     y_modded = pd.Series(y_breast,
                          index=np.arange(y_breast.shape[0]) + 1000)
 
-    X_train, X_test, y_train, y_test = train_test_split(X_modded, y_modded,
+    X_train, X_test, y_train, y_test = train_test_split(X_modded,
+                                                        y_modded,
                                                         test_size=0.3)
 
     # dense

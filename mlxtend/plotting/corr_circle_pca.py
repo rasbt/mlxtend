@@ -7,7 +7,7 @@ from sklearn.decomposition import PCA
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-from adjustText import adjust_text
+from mlxtend.externals.adjust_text import adjust_text
 
 
 def create_correlation_table(A, B, names_cols_A, names_cols_B):

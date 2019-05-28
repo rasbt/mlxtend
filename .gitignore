@@ -1,4 +1,5 @@
 # Test Suites
+.coverage*
 .pytest_cache/
 
 # Documentation builds

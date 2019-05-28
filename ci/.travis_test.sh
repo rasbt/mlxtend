@@ -9,9 +9,9 @@ if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then
         if [[ "$COVERAGE" == "true" ]]; then
 
             if [[ "$IMAGE" == "true" ]]; then
-                 PYTHONPATH='.' pytest -sv --with-coverage
+                 PYTHONPATH='.' pytest -sv --cov=mlxtend
             else
-                 PYTHONPATH='.' pytest -sv --with-coverage --ignore=mlxtend/image
+                 PYTHONPATH='.' pytest -sv --cov=mlxtend --ignore=mlxtend/image
             fi
 
         else

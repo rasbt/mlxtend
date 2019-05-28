@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2019
+g# Sebastian Raschka 2014-2019
 # mlxtend Machine Learning Library Extensions
 #
 # Base Clusteer (Clutering Parent Class)
@@ -41,8 +41,8 @@ class _BaseModel(object):
 
         adapted from
         https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
-        # Author: Gael Varoquaux <gael.varoquaux@normalesup.org>
-        # License: BSD 3 clause
+         Author: Gael Varoquaux <gael.varoquaux@normalesup.org>
+         License: BSD 3 clause
         """
         # fetch the constructor or the original constructor before
         # deprecation wrapping if any

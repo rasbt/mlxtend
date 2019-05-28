@@ -19,6 +19,7 @@ The CHANGELOG for the current development version is available at
 - Added an enhancement to the existing `iris_data()` such that both the UCI Repository version of the Iris dataset as well as the corrected, original
   version of the dataset can be loaded, which has a slight difference in two data points (consistent with Fisher's paper; this is also the same as in R). (via [#539](https://github.com/rasbt/mlxtend/pull/532) via [janismdhanbad](https://github.com/janismdhanbad))
 - Add optional `groups` parameter to `SequentialFeatureSelector` and `ExhaustiveFeatureSelector` `fit()` methods for forwarding to sklearn CV ([#537](https://github.com/rasbt/mlxtend/pull/537) via [arc12](https://github.com/qiaguhttps://github.com/arc12))
+- 
 
 
 ##### Changes
@@ -52,6 +53,7 @@ The CHANGELOG for the current development version is available at
 
 - Due to new features, restructuring, and better scikit-learn support (for `GridSearchCV`, etc.) the `StackingCVRegressor`'s meta regressor is now being accessed via `'meta_regressor__*` in the parameter grid. E.g., if a `RandomForestRegressor` as meta- egressor was previously tuned via `'randomforestregressor__n_estimators'`, this has now changed to `'meta_regressor__n_estimators'`. ([#515](https://github.com/rasbt/mlxtend/pull/512) via [Qiang Gu](https://github.com/qiaguhttps://github.com/qiagu))
 - The same change mentioned above is now applied to other stacking estimators, including `StackingClassifier`, `StackingCVClassifier` and `StackingRegressor`. ([#522](https://github.com/rasbt/mlxtend/pull/522) via [Qiang Gu](https://github.com/qiaguhttps://github.com/qiagu))
+- Automatically performs mean centering for PCA solver 'SVD' such that using SVD is always equal to using the covariance matrix approach [#545](https://github.com/rasbt/mlxtend/pull/545)
 
 ##### Bug Fixes
 

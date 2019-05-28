@@ -425,8 +425,13 @@ def test_meta_feat_reordering():
                                                          test_size=0.3)
     stclf.fit(X_train, y_train)
 
+    if Version(sklearn_version) < Version("0.21"):
+        expected_value = 0.86
+    else:
+        expected_value = 0.87
+
     assert round(roc_auc_score(y_train,
-                 stclf.train_meta_features_[:, 1]), 2) == 0.87, \
+                 stclf.train_meta_features_[:, 1]), 2) == expected_value, \
         round(roc_auc_score(y_train,
               stclf.train_meta_features_[:, 1]), 2)
 
@@ -472,7 +477,13 @@ def test_sparse_inputs_with_features_in_secondary():
 
     # dense
     stclf.fit(X_train, y_train)
-    assert round(stclf.score(X_train, y_train), 2) == 0.99, \
+
+    if Version(sklearn_version) < Version("0.21"):
+        expected_value = 1.0
+    else:
+        expected_value = 0.99
+
+    assert round(stclf.score(X_train, y_train), 2) == expected_value, \
         round(stclf.score(X_train, y_train), 2)
 
     # sparse

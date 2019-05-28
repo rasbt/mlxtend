@@ -9,7 +9,8 @@
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
 
-# The above copyright notice and this permission notice shall be included in all
+# The above copyright notice and this permission notice shall be
+# included in all
 # copies or substantial portions of the Software.
 
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -105,8 +106,8 @@ def get_midpoint(bbox):
 def get_points_inside_bbox(x, y, bbox):
     """Return the indices of points inside the given bbox."""
     x1, y1, x2, y2 = bbox.xmin, bbox.ymin, bbox.xmax, bbox.ymax
-    x_in = np.logical_and(x>x1, x<x2)
-    y_in = np.logical_and(y>y1, y<y2)
+    x_in = np.logical_and(x > x1, x < x2)
+    y_in = np.logical_and(y > y1, y < y2)
     return np.asarray(np.nonzero(x_in & y_in)[0])
 
 
@@ -225,7 +226,7 @@ def optimally_align_text(x, y, texts, expand=(1., 1.), add_bboxes=[],
         # Most important: prefer alignments that keep the text inside the axes.
         # If tied, take the alignments that minimize the number of x, y points
         # contained inside the text.
-        # Break any remaining ties by minimizing the total 
+        # Break any remaining ties by minimizing the total
         # area of intersections
         # with all text bboxes and other objects to avoid.
         a, value = min(enumerate(counts), key=itemgetter(1))
@@ -356,7 +357,8 @@ def repel_text_from_points(x, y, texts, renderer=None, ax=None,
         r = renderer
     bboxes = get_bboxes(texts, r, expand, ax=ax)
 
-    # move_x[i,j] is the x displacement of the i'th text caused by the j'th point
+    # move_x[i,j] is the x displacement of the i'th
+    # text caused by the j'th point
     move_x = np.zeros((len(bboxes), len(x)))
     move_y = np.zeros((len(bboxes), len(x)))
     for i, bbox in enumerate(bboxes):
@@ -428,7 +430,7 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
                 force_text=(0.1, 0.25), force_points=(0.2, 0.5),
                 force_objects=(0.1, 0.25),
                 lim=500, precision=0.01,
-                only_move={'points':'xy', 'text':'xy', 'objects':'xy'},
+                only_move={'points': 'xy', 'text': 'xy', 'objects': 'xy'},
                 avoid_text=True, avoid_points=True, avoid_self=True,
                 save_steps=False, save_prefix='', save_format='png',
                 add_step_numbers=True, on_basemap=False,
@@ -594,7 +596,7 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
         if add_step_numbers:
             plt.title('Before')
         plt.savefig('%s%s.%s' % (save_prefix,
-                                 '000a', save_format), 
+                                 '000a', save_format),
                     format=save_format, dpi=150)
     elif on_basemap:
         ax.draw(r)
@@ -612,7 +614,7 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
         if add_step_numbers:
             plt.title('Autoaligned')
         plt.savefig('%s%s.%s' % (save_prefix,
-                                 '000b', save_format), 
+                                 '000b', save_format),
                     format=save_format, dpi=150)
     elif on_basemap:
         ax.draw(r)
@@ -691,7 +693,8 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
         # are both greater than the max over the last
         # 10 iterations (suggesting a
         # failure to converge)
-        if (qx < precision_x and qy < precision_y) or np.all([qx, qy] >= histm):
+        if (qx < precision_x and qy < precision_y)\
+                or np.all([qx, qy] >= histm):
             break
         # Now adding arrows from texts to their original locations if required
     if 'arrowprops' in kwargs:

@@ -3,11 +3,11 @@
 # A function for plotting a PCA correlation circle
 # File Author: Gabriel Azevedo Ferreira <az.fe.gabriel@gmail.com>
 
-from sklearn.decomposition import PCA
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from mlxtend.externals.adjust_text import adjust_text
+from mlxtend.feature_extraction import PrincipalComponentAnalysis
 
 
 def create_correlation_table(A, B, names_cols_A, names_cols_B):
@@ -51,16 +51,20 @@ def plot_pca_correlation_graph(X, variables_names, dimensions=(1, 2),
     ----------
         matplotlib_figure , correlation_matrix
     """
+    X = np.array(X)
+    X = X - X.mean(axis=0)
     n_comp = max(dimensions)
 
     if X_pca is None:
-        pca = PCA(n_components=n_comp)
-        X_pca = pca.fit_transform(X)
+        pca = PrincipalComponentAnalysis(n_components=n_comp)
+        pca.fit(X)
+        X_pca = pca.transform(X)
 
     corrs = create_correlation_table(X_pca, X, ['Dim ' + str(i + 1) for i in
                                                 range(n_comp)],
                                      variables_names)
-    explained_var_ratio = pca.explained_variance_ratio_
+    tot = sum(pca.e_vals_)
+    explained_var_ratio = [(i / tot) * 100 for i in pca.e_vals_]
 
     # Plotting circle
     fig_res = plt.figure(figsize=(figure_axis_size, figure_axis_size))

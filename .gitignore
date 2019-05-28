@@ -1,3 +1,6 @@
+# Test Suites
+.pytest_cache/
+
 # Documentation builds
 docs/site/
 docs/mlxtend.pdf

@@ -39,6 +39,7 @@ fi
 
 conda install matplotlib
 conda install jupyter
+conda install pytest
 
 if [ "${IMAGE}" = "true" ]; then
     pip install dlib
@@ -49,8 +50,6 @@ fi
 if [ "${COVERAGE}" = "true" ]; then
     conda install coveralls
 fi
-
-pip install nose-exclude
 
 python --version
 python -c "import pandas; print('pandas %s' % pandas.__version__)"

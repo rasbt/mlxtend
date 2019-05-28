@@ -51,7 +51,6 @@ if [ "${COVERAGE}" = "true" ]; then
 fi
 
 pip install nose-exclude
-pip install adjustText
 
 python --version
 python -c "import pandas; print('pandas %s' % pandas.__version__)"

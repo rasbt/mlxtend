@@ -108,7 +108,7 @@ class PrincipalComponentAnalysis(_BaseModel):
                                           n_components=n_components)
 
         tot = np.sum(self.e_vals_)
-        self.e_vals_normalized_ = np.array([(i / tot)*100
+        self.e_vals_normalized_ = np.array([(i / tot)
                                             for i in sorted(self.e_vals_,
                                             reverse=True)])
         self.loadings_ = self._loadings()

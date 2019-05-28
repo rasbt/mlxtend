@@ -34,6 +34,8 @@ def plot_pca_correlation_graph(X, variables_names, dimensions=(1, 2),
     """
     Compute the PCA for X and plots the Correlation graph
 
+    Parameters
+    ----------
     X : 2d array like.
         The columns represent the different variables and the rows are the
          samples of thos variables
@@ -45,14 +47,14 @@ def plot_pca_correlation_graph(X, variables_names, dimensions=(1, 2),
     figure_axis_size :
          size of the final frame. The figure created is a square with length
          and width equal to figure_axis_size.
-
-    returns:
+    Returns
+    ----------
         matplotlib_figure , correlation_matrix
     """
     n_comp = max(dimensions)
 
-    pca = PCA(n_components=n_comp)
     if X_pca is None:
+        pca = PCA(n_components=n_comp)
         X_pca = pca.fit_transform(X)
 
     corrs = create_correlation_table(X_pca, X, ['Dim ' + str(i + 1) for i in

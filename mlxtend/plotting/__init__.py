@@ -17,7 +17,7 @@ from .enrichment_plot import enrichment_plot
 from .checkerboard import checkerboard_plot
 from .ecdf import ecdf
 from .scatterplotmatrix import scatterplotmatrix
-from .corr_circle_pca import plot_pca_correlation_graph
+from .pca_correlation_graph import plot_pca_correlation_graph
 
 
 __all__ = ["plot_learning_curves",

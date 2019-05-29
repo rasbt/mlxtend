@@ -47,11 +47,13 @@ The CHANGELOG for the current development version is available at
 -  Now, the `StackingCVRegressor` also enables grid search over the `regressors` and even a single base regressor. When there are level-mixed parameters, `GridSearchCV` will try to replace hyperparameters in a top-down order (see the [documentation](http://rasbt.github.io/mlxtend/user_guide/regressor/StackingCVRegressor/) for examples details). ([#515](https://github.com/rasbt/mlxtend/pull/512) via [Qiang Gu](https://github.com/qiaguhttps://github.com/qiagu))
 - Adds a `verbose` parameter to `apriori` to show the current iteration number as well as the itemset size currently being sampled. ([#519](https://github.com/rasbt/mlxtend/pull/519)
 - Adds an optional `class_name` parameter to the confusion matrix function to display class names on the axis as tick marks. ([#487](https://github.com/rasbt/mlxtend/pull/487) via [sandpiturtle](https://github.com/qiaguhttps://github.com/sandpiturtle))
+- Adds a `pca.e_vals_normalized_` attribute to PCA for storing the eigenvalues also in normalized form; this is commonly referred to as variance explained ratios. [#545](https://github.com/rasbt/mlxtend/pull/545)
 
 ##### Changes
 
 - Due to new features, restructuring, and better scikit-learn support (for `GridSearchCV`, etc.) the `StackingCVRegressor`'s meta regressor is now being accessed via `'meta_regressor__*` in the parameter grid. E.g., if a `RandomForestRegressor` as meta- egressor was previously tuned via `'randomforestregressor__n_estimators'`, this has now changed to `'meta_regressor__n_estimators'`. ([#515](https://github.com/rasbt/mlxtend/pull/512) via [Qiang Gu](https://github.com/qiaguhttps://github.com/qiagu))
 - The same change mentioned above is now applied to other stacking estimators, including `StackingClassifier`, `StackingCVClassifier` and `StackingRegressor`. ([#522](https://github.com/rasbt/mlxtend/pull/522) via [Qiang Gu](https://github.com/qiaguhttps://github.com/qiagu))
+- Automatically performs mean centering for PCA solver 'SVD' such that using SVD is always equal to using the covariance matrix approach [#545](https://github.com/rasbt/mlxtend/pull/545)
 
 ##### Bug Fixes
 

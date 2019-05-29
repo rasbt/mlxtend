@@ -34,6 +34,10 @@ class PrincipalComponentAnalysis(_BaseModel):
         Eigenvalues in sorted order.
     e_vecs_ : array-like, shape=[n_features]
        Eigenvectors in sorted order.
+    e_vals_normalized_ :  array-like, shape=[n_features]
+        Normalized eigen values such that they sum up to 1.
+        This is equal to what's often referred to as
+        "explained variance ratios."
     loadings_ : array_like, shape=[n_features, n_features]
        The factor loadings of the original variables onto
        the principal components. The columns are the principal
@@ -103,6 +107,10 @@ class PrincipalComponentAnalysis(_BaseModel):
                                           whitening=self.whitening,
                                           n_components=n_components)
 
+        tot = np.sum(self.e_vals_)
+        self.e_vals_normalized_ = np.array([(i / tot)
+                                            for i in sorted(self.e_vals_,
+                                            reverse=True)])
         self.loadings_ = self._loadings()
         return self
 
@@ -144,7 +152,12 @@ class PrincipalComponentAnalysis(_BaseModel):
         if self.solver == 'eigen':
             e_vals, e_vecs = np.linalg.eig(mat)
         elif self.solver == 'svd':
-            u, s, v = np.linalg.svd(mat.T)
+            # Only SVD on mean centered data is equivalent to
+            # PCA via covariance matrix (note that computing
+            # the covariance matrix will implicitely center
+            # the data)
+            mat_centered = mat - mat.mean(axis=0)
+            u, s, v = np.linalg.svd(mat_centered.T)
             e_vecs, e_vals = u, s
             e_vals = e_vals ** 2 / n_samples
 

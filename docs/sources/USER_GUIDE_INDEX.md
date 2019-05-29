@@ -83,6 +83,7 @@
 - [ecdf](user_guide/plotting/ecdf.md)
 - [enrichment_plot](user_guide/plotting/enrichment_plot.md)
 - [plot_confusion_matrix](user_guide/plotting/plot_confusion_matrix.md)
+- [plot_pca_correlation_graph](user_guide/plotting/plot_pca_correlation_graph.md)
 - [plot_decision_regions](user_guide/plotting/plot_decision_regions.md)
 - [plot_learning_curves](user_guide/plotting/plot_learning_curves.md)
 - [plot_linear_regression](user_guide/plotting/plot_linear_regression.md)

@@ -5,8 +5,8 @@
 # License: BSD 3 clause
 
 import numpy as np
+import pytest
 from mlxtend.preprocessing import one_hot
-from nose.tools import raises
 
 
 def test_default():
@@ -43,16 +43,16 @@ def test_list():
     np.testing.assert_array_equal(expect, out)
 
 
-@raises(AttributeError)
 def test_multidim_list():
     y = [[0, 1, 2, 3, 4, 2]]
-    one_hot(y)
+    with pytest.raises(AttributeError):
+        one_hot(y)
 
 
-@raises(AttributeError)
 def test_multidim_array():
     y = np.array([[0], [1], [2], [3], [4], [2]])
-    one_hot(y)
+    with pytest.raises(AttributeError):
+        one_hot(y)
 
 
 def test_oneclass():

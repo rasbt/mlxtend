@@ -9,21 +9,21 @@ if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then
         if [[ "$COVERAGE" == "true" ]]; then
 
             if [[ "$IMAGE" == "true" ]]; then
-                nosetests -s -v --with-coverage
+                 PYTHONPATH='.' pytest -sv --cov=mlxtend
             else
-                nosetests -s -v --with-coverage --exclude-dir=mlxtend/image
+                 PYTHONPATH='.' pytest -sv --cov=mlxtend --ignore=mlxtend/image
             fi
 
         else
             if [[ "$IMAGE" == "true" ]]; then
-                nosetests -s -v
+                 PYTHONPATH='.' pytest -sv
             else
-                nosetests -s -v --exclude-dir=mlxtend/image
+                 PYTHONPATH='.' pytest -sv --ignore=mlxtend/image
             fi
         fi
 
 else
-    nosetests -s -v --exclude-dir=mlxtend/plotting
+     PYTHONPATH='.' pytest -sv --ignore=mlxtend/plotting
 fi
   
 

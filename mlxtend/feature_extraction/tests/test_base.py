@@ -5,7 +5,7 @@
 # License: BSD 3 clause
 
 import numpy as np
-from nose.tools import raises
+import pytest
 from mlxtend.feature_extraction.base  import _BaseFeatureExtractor
 
 
@@ -21,18 +21,18 @@ def test_X_y_array_pass():
     base._check_arrays(X=X, y=y)
 
 
-@raises(ValueError)
 def test_1D_X():
-    base._check_arrays(X=X[1])
+    with pytest.raises(ValueError):
+        base._check_arrays(X=X[1])
 
 
-@raises(ValueError)
 def test_X_int_y():
-    base._check_arrays(X=X, y=y[1])
+    with pytest.raises(ValueError):
+        base._check_arrays(X=X, y=y[1])
 
 
-@raises(ValueError)
 def test_X_short_y():
     print(y[1:].shape)
     print(X.shape)
-    base._check_arrays(X=X, y=y[1:])
+    with pytest.raises(ValueError):
+        base._check_arrays(X=X, y=y[1:])

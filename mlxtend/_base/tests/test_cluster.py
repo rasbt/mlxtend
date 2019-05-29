@@ -7,7 +7,7 @@
 from mlxtend._base import _BaseModel
 from mlxtend._base import _Classifier
 import numpy as np
-from mlxtend.utils import assert_raises
+import pytest
 
 
 class BlankClassifier(_BaseModel, _Classifier):
@@ -44,39 +44,40 @@ def test_check_labels_ok_2():
 def test_check_labels_not_ok_1():
     y = np.array([1, 3, 2])
     cl = BlankClassifier(print_progress=0, random_seed=1)
-    assert_raises(AttributeError,
-                  'Labels not in {(1, 2), (0, 1)}.\nFound (1, 2, 3)',
-                  cl._check_target_array,
-                  y,
-                  {(0, 1), (1, 2)})
+    with pytest.raises(AttributeError) as excinfo:
+        cl._check_target_array(y, {(0, 1), (1, 2)})
+        assert excinfo.value.message == ('Labels not in'
+                                         ' {(1, 2), (0, 1)}.'
+                                         '\nFound (1, 2, 3)')
 
 
-def test_check_labels_interger_notok():
+def test_check_labels_integer_notok():
     y = np.array([1., 2.], dtype=np.float64)
     cl = BlankClassifier(print_progress=0, random_seed=1)
-    assert_raises(AttributeError,
-                  'y must be an integer array.\nFound float64',
-                  cl._check_target_array,
-                  y)
+    with pytest.raises(AttributeError) as excinfo:
+        cl._check_target_array(y)
+        assert excinfo.value.message == ('y must be an integer'
+                                         ' array.\nFound float64')
 
 
 def test_check_labels_positive_notok():
     y = np.array([1, 1, -1])
     cl = BlankClassifier(print_progress=0, random_seed=1)
-    assert_raises(AttributeError,
-                  'y array must not contain negative labels.\nFound [-1  1]',
-                  cl._check_target_array,
-                  y)
+    with pytest.raises(AttributeError) as excinfo:
+        cl._check_target_array(y)
+        assert excinfo.value.message == ('y array must not '
+                                         'contain negative '
+                                         'labels.\nFound [-1  1]')
 
 
 def test_predict_fail():
     X = np.array([[1], [2], [3]])
     est = BlankClassifier(print_progress=0, random_seed=1)
     est._is_fitted = False
-    assert_raises(AttributeError,
-                  'Model is not fitted, yet.',
-                  est.predict,
-                  X)
+    with pytest.raises(AttributeError) as excinfo:
+        est.predict(X)
+        assert excinfo.value.message == ('Model is not '
+                                         'fitted, yet.')
 
 
 def test_predict_pass():
@@ -90,10 +91,10 @@ def test_predict_pass():
 def test_fit_1():
     X = np.array([[1], [2], [3]])
     est = BlankClassifier(print_progress=0, random_seed=1)
-    assert_raises(TypeError,
-                  "fit() missing 1 required positional argument: 'y'",
-                  est.fit,
-                  X)
+    with pytest.raises(TypeError) as excinfo:
+        est.fit(X)
+        assert excinfo.value.message == ("fit() missing 1"
+                                         "required positional argument: 'y'")
 
 
 def test_fit_2():

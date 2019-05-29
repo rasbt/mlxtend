@@ -8,6 +8,7 @@
 # License: BSD 3 clause
 
 import random
+import pytest
 import numpy as np
 from scipy import sparse
 from mlxtend.externals.estimator_checks import NotFittedError
@@ -18,7 +19,8 @@ from sklearn.linear_model import Ridge, Lasso
 from sklearn.svm import SVR
 from sklearn.model_selection import GridSearchCV, train_test_split, KFold
 from sklearn.base import clone
-from nose.tools import raises
+from distutils.version import LooseVersion as Version
+from sklearn import __version__ as sklearn_version
 
 
 # Some test data
@@ -237,9 +239,14 @@ def test_sparse_matrix_inputs():
 
     # sparse
     stack.fit(sparse.csr_matrix(X1), y)
-    mse = 0.20
+
+    if Version(sklearn_version) < Version("0.21"):
+        expected_value = 0.20
+    else:
+        expected_value = 0.19
+
     got = np.mean((stack.predict(sparse.csr_matrix(X1)) - y) ** 2)
-    assert round(got, 2) == mse, got
+    assert round(got, 2) == expected_value, got
 
 
 def test_sparse_matrix_inputs_with_features_in_secondary():
@@ -306,7 +313,6 @@ def test_weight_ones():
     assert np.max(np.abs(pred1 - pred2)) < 1e-3
 
 
-@raises(TypeError)
 def test_unsupported_regressor():
     lr = LinearRegression()
     svr_lin = SVR(kernel='linear', gamma='auto')
@@ -315,10 +321,10 @@ def test_unsupported_regressor():
     svr_rbf = SVR(kernel='rbf', gamma='auto')
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge, lasso],
                                 meta_regressor=svr_rbf)
-    stack.fit(X1, y, sample_weight=w).predict(X1)
+    with pytest.raises(TypeError):
+        stack.fit(X1, y, sample_weight=w).predict(X1)
 
 
-@raises(TypeError)
 def test_unsupported_meta_regressor():
     lr = LinearRegression()
     svr_lin = SVR(kernel='linear', gamma='auto')
@@ -326,7 +332,9 @@ def test_unsupported_meta_regressor():
     lasso = Lasso()
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
                                 meta_regressor=lasso)
-    stack.fit(X1, y, sample_weight=w).predict(X1)
+
+    with pytest.raises(TypeError):
+        stack.fit(X1, y, sample_weight=w).predict(X1)
 
 
 def test_weight_unsupported_with_no_weight():

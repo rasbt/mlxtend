@@ -5,6 +5,7 @@
 # License: BSD 3 clause
 
 import random
+import pytest
 from mlxtend.classifier import EnsembleVoteClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB
@@ -15,7 +16,6 @@ from mlxtend.data import iris_data
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import cross_val_score
 from sklearn.base import clone
-from nose.tools import raises
 
 X, y = iris_data()
 X = X[:, 1:3]
@@ -72,7 +72,6 @@ def test_sample_weight():
     assert diff23 > 1e-3, "max diff is %.4f" % diff23
 
 
-@raises(TypeError)
 def test_no_weight_support():
     random.seed(87)
     w = np.array([random.random() for _ in range(len(y))])
@@ -81,7 +80,8 @@ def test_no_weight_support():
     gnb = GaussianNB()
     knn = KNeighborsClassifier()
     eclf = EnsembleVoteClassifier(clfs=[logi, rf, gnb, knn], voting='hard')
-    eclf.fit(X, y, sample_weight=w)
+    with pytest.raises(TypeError):
+        eclf.fit(X, y, sample_weight=w)
 
 
 def test_no_weight_support_with_no_weight():

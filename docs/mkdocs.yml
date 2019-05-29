@@ -108,6 +108,7 @@ nav:
   - plotting:
     - user_guide/plotting/category_scatter.md
     - user_guide/plotting/checkerboard_plot.md
+    - user_guide/plotting/plot_pca_correlation_graph.md
     - user_guide/plotting/ecdf.md
     - user_guide/plotting/enrichment_plot.md
     - user_guide/plotting/plot_confusion_matrix.md

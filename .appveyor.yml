@@ -13,15 +13,15 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   - conda info -a
-  - conda create -q -n test-environment python=%PYTHON_VERSION% numpy scipy scikit-learn pandas nose
+  - conda create -q -n test-environment python=%PYTHON_VERSION% numpy scipy scikit-learn pandas pytest
   - activate test-environment
-  - pip install nose-exclude
   - pip install dlib
   - pip install imageio
   - pip install scikit-image
 
 test_script:
-  - nosetests -s -v --exclude-dir=mlxtend/plotting
+  - set PYTHONPATH=%PYTHONPATH%;%CD%
+  - pytest -sv --ignore=mlxtend/plotting
 
 notifications:
 

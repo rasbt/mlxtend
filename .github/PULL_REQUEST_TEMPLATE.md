@@ -20,7 +20,7 @@ Fixes #366
 - [ ] Added a note about the modification or contribution to the `./docs/sources/CHANGELOG.md` file (if applicable)
 - [ ] Added appropriate unit test functions in the `./mlxtend/*/tests` directories (if applicable)
 - [ ] Modify documentation in the corresponding Jupyter Notebook under `mlxtend/docs/sources/` (if applicable)
-- [ ] Ran `nosetests ./mlxtend -sv` and make sure that all unit tests pass (for small modifications, it might be sufficient to only run the specific test file, e.g., `nosetests ./mlxtend/classifier/tests/test_stacking_cv_classifier.py -sv`)
+- [ ] Ran `PYTHONPATH='.' pytest ./mlxtend -sv` and make sure that all unit tests pass (for small modifications, it might be sufficient to only run the specific test file, e.g., `PYTHONPATH='.' pytest ./mlxtend/classifier/tests/test_stacking_cv_classifier.py -sv`)
 - [ ] Checked for style issues by running `flake8 ./mlxtend`
 
 

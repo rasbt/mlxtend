@@ -9,7 +9,7 @@ from mlxtend.image import extract_face_landmarks
 import imageio
 import numpy as np
 import os
-from nose.tools import assert_raises
+import pytest
 
 
 def test_defaults():
@@ -91,4 +91,5 @@ def test_empty_dir():
                              target_height=218,
                              file_extension='.PNG')
 
-    assert_raises(ValueError, tmp_func)
+    with pytest.raises(ValueError):
+        tmp_func()

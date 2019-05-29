@@ -1,3 +1,7 @@
+# Test Suites
+.coverage*
+.pytest_cache/
+
 # Documentation builds
 docs/site/
 docs/mlxtend.pdf

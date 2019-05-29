@@ -4,6 +4,7 @@
 #
 # License: BSD 3 clause
 
+import pytest
 import numpy as np
 from mlxtend.externals.estimator_checks import NotFittedError
 from mlxtend.utils import assert_raises
@@ -17,7 +18,6 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
 from scipy import sparse
 from numpy.testing import assert_almost_equal
-from nose.tools import raises
 from sklearn.base import clone
 
 
@@ -102,7 +102,6 @@ def test_weight_ones():
     assert maxdiff < 1e-3, "max diff is %.4f" % maxdiff
 
 
-@raises(TypeError)
 def test_weight_unsupported_regressor():
     # including regressor that does not support
     # sample_weight should raise error
@@ -113,10 +112,11 @@ def test_weight_unsupported_regressor():
     lasso = Lasso(random_state=1)
     stregr = StackingRegressor(regressors=[svr_lin, lr, ridge, lasso],
                                meta_regressor=svr_rbf)
-    stregr.fit(X1, y, sample_weight=w).predict(X1)
+
+    with pytest.raises(TypeError):
+        stregr.fit(X1, y, sample_weight=w).predict(X1)
 
 
-@raises(TypeError)
 def test_weight_unsupported_meta():
     # meta regressor with no support for
     # sample_weight should raise error
@@ -126,7 +126,9 @@ def test_weight_unsupported_meta():
     lasso = Lasso(random_state=1)
     stregr = StackingRegressor(regressors=[svr_lin, lr, ridge],
                                meta_regressor=lasso)
-    stregr.fit(X1, y, sample_weight=w).predict(X1)
+
+    with pytest.raises(TypeError):
+        stregr.fit(X1, y, sample_weight=w).predict(X1)
 
 
 def test_weight_unsupported_with_no_weight():
@@ -219,16 +221,17 @@ def test_get_intercept():
 
 
 # ValueError was changed to AttributeError in sklearn >= 0.19
-@raises(AttributeError, ValueError)
 def test_get_coeff_fail():
     lr = LinearRegression()
     svr_rbf = SVR(kernel='rbf', gamma='auto')
     ridge = Ridge(random_state=1)
     stregr = StackingRegressor(regressors=[ridge, lr],
                                meta_regressor=svr_rbf)
-    stregr = stregr.fit(X1, y)
-    r = stregr.coef_
-    assert r
+
+    with pytest.raises(AttributeError):
+        stregr = stregr.fit(X1, y)
+        r = stregr.coef_
+        assert r
 
 
 def test_get_params():

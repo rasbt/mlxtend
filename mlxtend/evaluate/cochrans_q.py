@@ -71,8 +71,8 @@ def cochrans_q(y_target, *y_model_predictions):
 
     # denominator
     binary_combin = list(itertools.product([0, 1], repeat=num_models))
-    ary = np.hstack(((y_target == mod).reshape(-1, 1) for
-                    mod in y_model_predictions)).astype(int)
+    ary = np.hstack([(y_target == mod).reshape(-1, 1) for
+                    mod in y_model_predictions]).astype(int)
     correctly_classified_objects = 0
     binary_combin_totals = np.zeros(len(binary_combin))
     for i, c in enumerate(binary_combin):

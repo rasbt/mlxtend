@@ -50,6 +50,7 @@ def plot_decision_regions(X, y, clf,
                           ax=None,
                           X_highlight=None,
                           res=None,
+                          zoom_factor=1.,
                           legend=1,
                           hide_spines=True,
                           markers='s^oxv<>',
@@ -99,6 +100,8 @@ def plot_decision_regions(X, y, clf,
         automatically for optimal results and computational efficiency.
         To increase the resolution, it's is recommended to use to provide
         a `dpi argument via matplotlib, e.g., `plt.figure(dpi=600)`.
+    zoom_factor : float (default: 1.0)
+        Controls the scale of the x- and y-axis of the decision plot.
     hide_spines : bool (default: True)
         Hide axis spines if True.
     legend : int (default: 1)
@@ -201,11 +204,13 @@ def plot_decision_regions(X, y, clf,
     colors = [next(colors_gen) for c in range(n_classes)]
 
     # Get minimum and maximum
-    x_min, x_max = X[:, x_index].min() - 1, X[:, x_index].max() + 1
+    x_min, x_max = (X[:, x_index].min() - 1./zoom_factor,
+                    X[:, x_index].max() + 1./zoom_factor)
     if dim == 1:
         y_min, y_max = -1, 1
     else:
-        y_min, y_max = X[:, y_index].min() - 1, X[:, y_index].max() + 1
+        y_min, y_max = (X[:, y_index].min() - 1./zoom_factor,
+                        X[:, y_index].max() + 1./zoom_factor)
 
     xnum, ynum = plt.gcf().dpi * plt.gcf().get_size_inches()
     xnum, ynum = floor(xnum), ceil(ynum)

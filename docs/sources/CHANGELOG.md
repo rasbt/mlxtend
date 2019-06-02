@@ -24,7 +24,8 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- -
+- Now uses the latest joblib library under the hood for multiprocessing instead of `sklearn.externals.joblib` ([#547](https://github.com/rasbt/mlxtend/pull/547))
+
 
 ##### Bug Fixes
 

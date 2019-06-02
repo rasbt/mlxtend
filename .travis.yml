@@ -20,7 +20,7 @@ matrix:
         - os: linux
           sudo: required
           python: 3.6
-          env: LATEST="false" IMAGE="true" COVERAGE="false" NUMPY_VERSION="1.16.2" SCIPY_VERSION="1.2.1" SKLEARN_VERSION="0.20.3" JOBLIB_VERSION=1.1.1 PANDAS_VERSION="0.24.2"  MINICONDA_PYTHON_VERSION=3.7
+          env: LATEST="false" IMAGE="true" COVERAGE="false" NUMPY_VERSION="1.16.2" SCIPY_VERSION="1.2.1" SKLEARN_VERSION="0.20.3" JOBLIB_VERSION=0.13.1 PANDAS_VERSION="0.24.2"  MINICONDA_PYTHON_VERSION=3.7
         - os: linux
           python: 3.6
           env: LATEST="true" IMAGE="true" COVERAGE="true" NOTEBOOKS="true" MINICONDA_PYTHON_VERSION=3.7

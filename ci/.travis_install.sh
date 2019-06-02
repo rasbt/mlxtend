@@ -31,9 +31,9 @@ conda create -q -n test-environment python=$MINICONDA_PYTHON_VERSION
 source activate test-environment
 
 if [ "${LATEST}" = "true" ]; then
-    conda install numpy scipy pandas scikit-learn
+    conda install numpy scipy pandas scikit-learn joblib
 else
-    conda install numpy=$NUMPY_VERSION scipy=$SCIPY_VERSION pandas=$PANDAS_VERSION scikit-learn=$SKLEARN_VERSION
+    conda install numpy=$NUMPY_VERSION scipy=$SCIPY_VERSION pandas=$PANDAS_VERSION scikit-learn=$SKLEARN_VERSION joblib=$JOBLIB_VERSION
 fi
 
 

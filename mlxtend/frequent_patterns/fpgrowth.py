@@ -121,39 +121,6 @@ def fpgrowth(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
     return res_df
 
 
-def build_tree(itemsets, minsup):
-    """
-    Creates an FPTree for the given itemsets and minimum support.
-
-    Parameters
-    ----------
-    itemsets : list of lists
-    minsup : int
-        The minimum support threshold.
-
-    Returns
-    -------
-    tree : FPTree
-    rank : dictionary
-        Maps each item (string) to an int to define an ordering.
-    """
-    count = collections.defaultdict(int)
-    for item in itertools.chain.from_iterable([iset for iset in itemsets]):
-        count[item] += 1
-    items = sorted([item for item in count if count[item]
-                    >= minsup], key=count.get)
-    rank = {item: i for i, item in enumerate(items)}
-    itemsets = [[item for item in itemset if item in rank]
-                for itemset in itemsets]
-
-    tree = FPTree(rank)
-    for itemset in itemsets:
-        itemset.sort(key=rank.get, reverse=True)
-        tree.insert_itemset(itemset)
-
-    return tree, rank
-
-
 def fpg_step(tree, minsup, colnames, max_len, verbose):
     """
     Performs a recursive step of the fpgrowth algorithm.

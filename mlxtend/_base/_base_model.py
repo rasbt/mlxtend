@@ -84,8 +84,8 @@ class _BaseModel(object):
 
         adapted from
         https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
-        # Author: Gael Varoquaux <gael.varoquaux@normalesup.org>
-        # License: BSD 3 clause
+         Author: Gael Varoquaux <gael.varoquaux@normalesup.org>
+         License: BSD 3 clause
         """
         out = dict()
         for key in self._get_param_names():
@@ -109,8 +109,8 @@ class _BaseModel(object):
 
         adapted from
         https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
-        # Author: Gael Varoquaux <gael.varoquaux@normalesup.org>
-        # License: BSD 3 clause
+         Author: Gael Varoquaux <gael.varoquaux@normalesup.org>
+         License: BSD 3 clause
         """
         if not params:
             # Simple optimization to gain speed (inspect is slow)

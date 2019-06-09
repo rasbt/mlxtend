@@ -20,11 +20,13 @@ The CHANGELOG for the current development version is available at
   version of the dataset can be loaded, which has a slight difference in two data points (consistent with Fisher's paper; this is also the same as in R). (via [#539](https://github.com/rasbt/mlxtend/pull/532) via [janismdhanbad](https://github.com/janismdhanbad))
 - Add optional `groups` parameter to `SequentialFeatureSelector` and `ExhaustiveFeatureSelector` `fit()` methods for forwarding to sklearn CV ([#537](https://github.com/rasbt/mlxtend/pull/537) via [arc12](https://github.com/qiaguhttps://github.com/arc12))
 - Adds a new `plot_pca_correlation_graph` function to the `mlxtend.plotting` submodule for plotting a PCA correlation graph. ([#544](https://github.com/rasbt/mlxtend/pull/544) via [Gabriel-Azevedo-Ferreira](https://github.com/qiaguhttps://github.com/Gabriel-Azevedo-Ferreira))
+- Added a `zoom_factor` parameter to the `mlxten.plotting.plot_decision_region` function that allows users to zoom in and out of the decision region plots. ([#545](https://github.com/rasbt/mlxtend/pull/545))
 - Add FP-Growth algorithm for mining frequent itemsets
 
 ##### Changes
 
-- -
+- Now uses the latest joblib library under the hood for multiprocessing instead of `sklearn.externals.joblib` ([#547](https://github.com/rasbt/mlxtend/pull/547))
+
 
 ##### Bug Fixes
 

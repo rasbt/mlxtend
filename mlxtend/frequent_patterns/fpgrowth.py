@@ -12,7 +12,7 @@ import pandas as pd
 
 def fpgrowth(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
     """Get frequent itemsets from a one-hot DataFrame
-    
+
     Parameters
     -----------
     df : pandas DataFrame or pandas SparseDataFrame

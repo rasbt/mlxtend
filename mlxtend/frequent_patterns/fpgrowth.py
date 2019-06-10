@@ -12,6 +12,7 @@ import pandas as pd
 
 def fpgrowth(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
     """Get frequent itemsets from a one-hot DataFrame
+    
     Parameters
     -----------
     df : pandas DataFrame or pandas SparseDataFrame
@@ -32,7 +33,7 @@ def fpgrowth(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
     ```
 
     min_support : float (default: 0.5)
-      A float between 0 and 1 for minumum support of the itemsets returned.
+      A float between 0 and 1 for minimum support of the itemsets returned.
       The support is computed as the fraction
       transactions_where_item(s)_occur / total_transactions.
 

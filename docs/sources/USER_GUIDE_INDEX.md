@@ -63,6 +63,7 @@
 ## `frequent_patterns`
 - [apriori](user_guide/frequent_patterns/apriori.md)
 - [association_rules](user_guide/frequent_patterns/association_rules.md)
+- [fpgrowth](user_guide/frequent_patterns/fpgrowth.md)
 
 ## `general concepts`
 - [activation-functions](user_guide/general_concepts/activation-functions.md)

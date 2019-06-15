@@ -8,6 +8,7 @@ import math
 import itertools
 import numpy as np
 import pandas as pd
+from .fpcommon import FPNode, FPTree
 
 
 def fpgrowth(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
@@ -156,12 +157,7 @@ def fpg_step(tree, minsup, colnames, max_len, verbose):
             yield support, tree.cond_items + [item]
 
     if verbose:
-        cond_items = tree.cond_items
-        if colnames:
-            cond_items = [colnames[i] for i in tree.cond_items]
-        cond_items = ", ".join(cond_items)
-        print('\r%d itemsets from tree conditioned on items (%s)' %
-              (count, cond_items), end="\n")
+        tree.print_status(count, colnames)
 
     # Generate conditional trees to generate frequent itemsets one item larger
     if not tree.is_path() and (not max_len or max_len > len(tree.cond_items)):
@@ -170,116 +166,3 @@ def fpg_step(tree, minsup, colnames, max_len, verbose):
             for sup, iset in fpg_step(cond_tree, minsup,
                                       colnames, max_len, verbose):
                 yield sup, iset
-
-
-class FPTree(object):
-    def __init__(self, rank=None):
-        self.root = FPNode(None)
-        self.nodes = collections.defaultdict(list)
-        self.cond_items = []
-        self.rank = rank
-
-    def conditional_tree(self, cond_item, minsup):
-        """
-        Creates and returns the subtree of self conditioned on cond_item.
-
-        Parameters
-        ----------
-        cond_item : int | str
-            Item that the tree (self) will be conditioned on.
-        minsup : int
-            Minimum support threshold.
-
-        Returns
-        -------
-        cond_tree : FPtree
-        """
-        # Find all path from root node to nodes for item
-        branches = []
-        count = collections.defaultdict(int)
-        for node in self.nodes[cond_item]:
-            branch = node.itempath_from_root()
-            branches.append(branch)
-            for item in branch:
-                count[item] += node.count
-
-        # Define new ordering or deep trees may have combinatorially explosion
-        items = [item for item in count if count[item] >= minsup]
-        items.sort(key=count.get)
-        rank = {item: i for i, item in enumerate(items)}
-
-        # Create conditional tree
-        cond_tree = FPTree(rank)
-        for idx, branch in enumerate(branches):
-            branch = sorted([i for i in branch if i in rank],
-                            key=rank.get, reverse=True)
-            cond_tree.insert_itemset(branch, self.nodes[cond_item][idx].count)
-        cond_tree.cond_items = self.cond_items + [cond_item]
-
-        return cond_tree
-
-    def insert_itemset(self, itemset, count=1):
-        """
-        Inserts a list of items into the tree.
-
-        Parameters
-        ----------
-        itemset : list
-            Items that will be inserted into the tree.
-        count : int
-            The number of occurrences of the itemset.
-        """
-        if len(itemset) == 0:
-            return
-
-        # Follow existing path in tree as long as possible
-        index = 0
-        node = self.root
-        for item in itemset:
-            if item in node.children:
-                child = node.children[item]
-                child.count += count
-                node = child
-                index += 1
-            else:
-                break
-
-        # Insert any remaining items
-        for item in itemset[index:]:
-            child_node = FPNode(item, count, node)
-            self.nodes[item].append(child_node)
-            node = child_node
-
-    def is_path(self):
-        if len(self.root.children) > 1:
-            return False
-        for i in self.nodes:
-            if len(self.nodes[i]) > 1 or len(self.nodes[i][0].children) > 1:
-                return False
-        return True
-
-
-class FPNode(object):
-    def __init__(self, item, count=1, parent=None):
-        self.item = item
-        self.count = count
-        self.parent = parent
-        self.children = collections.defaultdict(FPNode)
-
-        if parent is not None:
-            parent.children[item] = self
-
-    def itempath_from_root(self):
-        """ Returns the top-down sequence of items from self to
-            (but not including) the root node. """
-        path = []
-        if self.item is None:
-            return path
-
-        node = self.parent
-        while node.item is not None:
-            path.append(node.item)
-            node = node.parent
-
-        path.reverse()
-        return path

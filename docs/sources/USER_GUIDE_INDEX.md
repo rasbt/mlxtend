@@ -83,6 +83,7 @@
 - [checkerboard_plot](user_guide/plotting/checkerboard_plot.md)
 - [ecdf](user_guide/plotting/ecdf.md)
 - [enrichment_plot](user_guide/plotting/enrichment_plot.md)
+- [heatmap](user_guide/plotting/heatmap.md)
 - [plot_confusion_matrix](user_guide/plotting/plot_confusion_matrix.md)
 - [plot_pca_correlation_graph](user_guide/plotting/plot_pca_correlation_graph.md)
 - [plot_decision_regions](user_guide/plotting/plot_decision_regions.md)

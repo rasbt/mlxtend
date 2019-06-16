@@ -12,6 +12,7 @@ from .plot_sequential_feature_selection\
 from .plot_linear_regression import plot_linear_regression
 from .remove_chartjunk import remove_borders
 from .scatter import category_scatter
+from .heatmap import heatmap
 from .stacked_barplot import stacked_barplot
 from .enrichment_plot import enrichment_plot
 from .checkerboard import checkerboard_plot
@@ -27,6 +28,7 @@ __all__ = ["plot_learning_curves",
            "plot_linear_regression",
            "remove_borders",
            "category_scatter",
+           "heatmap",
            "stacked_barplot",
            "enrichment_plot",
            "checkerboard_plot",

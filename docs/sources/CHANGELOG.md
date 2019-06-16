@@ -18,10 +18,11 @@ The CHANGELOG for the current development version is available at
 
 - Added an enhancement to the existing `iris_data()` such that both the UCI Repository version of the Iris dataset as well as the corrected, original
   version of the dataset can be loaded, which has a slight difference in two data points (consistent with Fisher's paper; this is also the same as in R). (via [#539](https://github.com/rasbt/mlxtend/pull/532) via [janismdhanbad](https://github.com/janismdhanbad))
-- Add optional `groups` parameter to `SequentialFeatureSelector` and `ExhaustiveFeatureSelector` `fit()` methods for forwarding to sklearn CV ([#537](https://github.com/rasbt/mlxtend/pull/537) via [arc12](https://github.com/qiaguhttps://github.com/arc12))
+- Added optional `groups` parameter to `SequentialFeatureSelector` and `ExhaustiveFeatureSelector` `fit()` methods for forwarding to sklearn CV ([#537](https://github.com/rasbt/mlxtend/pull/537) via [arc12](https://github.com/qiaguhttps://github.com/arc12))
 - Added a new `plot_pca_correlation_graph` function to the `mlxtend.plotting` submodule for plotting a PCA correlation graph. ([#544](https://github.com/rasbt/mlxtend/pull/544) via [Gabriel-Azevedo-Ferreira](https://github.com/qiaguhttps://github.com/Gabriel-Azevedo-Ferreira))
 - Added a `zoom_factor` parameter to the `mlxten.plotting.plot_decision_region` function that allows users to zoom in and out of the decision region plots. ([#545](https://github.com/rasbt/mlxtend/pull/545))
 - Added a function `fpgrowth` that implements the FP-Growth algorithm for mining frequent itemsets as a drop-in replacement of the existing `apriori` algorithm. ([#550](https://github.com/rasbt/mlxtend/pull/550) via [Steve Harenberg](https://github.com/harenbergsd))
+- New `heatmap` function in `mlxtend.plotting`.  ([#552](https://github.com/rasbt/mlxtend/pull/552))
 
 ##### Changes
 

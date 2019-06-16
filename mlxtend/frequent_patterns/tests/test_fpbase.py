@@ -5,15 +5,18 @@
 # License: BSD 3 clause
 
 import numpy as np
-from mlxtend.frequent_patterns import apriori
 from numpy.testing import assert_array_equal
 from mlxtend.utils import assert_raises
 import pandas as pd
 
 
-# need to wrap with this class so FPTestBase is not run as its own unit test
 class FPTestBase(object):
-    def setUp(self):
+    """
+    Base testing class for frequent pattern mining. This class should include
+    setup and tests common to all methods (e.g., error for improper input)
+    """
+
+    def setUp(self, fpalgo):
         self.one_ary = np.array(
             [[0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1],
                 [0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1],
@@ -27,7 +30,46 @@ class FPTestBase(object):
 
         self.df = pd.DataFrame(self.one_ary, columns=self.cols)
 
-        self.fpalgo = apriori
+        self.fpalgo = fpalgo
+
+    def test_itemsets_type(self):
+        # This is default behavior
+        res_colindice = self.fpalgo(self.df, use_colnames=False)
+        for i in res_colindice['itemsets']:
+            assert isinstance(i, frozenset) is True
+
+        res_colnames = self.fpalgo(self.df, use_colnames=True)
+        for i in res_colnames['itemsets']:
+            assert isinstance(i, frozenset) is True
+
+    def test_raise_error_if_input_is_not_binary(self):
+        df2 = pd.DataFrame(self.one_ary, columns=self.cols).copy()
+        df2.iloc[3, 3] = 2
+
+        assert_raises(ValueError,
+                      'The allowed values for a DataFrame are True, '
+                      'False, 0, 1. Found value 2',
+                      self.fpalgo, df2)
+
+    def test_sparsedataframe_notzero_column(self):
+        dfs = pd.SparseDataFrame(self.df)
+        dfs.columns = [i for i in range(len(dfs.columns))]
+        self.fpalgo(dfs)
+
+        dfs = pd.SparseDataFrame(self.df)
+        dfs.columns = [i+1 for i in range(len(dfs.columns))]
+        assert_raises(ValueError,
+                      'Due to current limitations in Pandas, '
+                      'if the SparseDataFrame has integer column names,'
+                      'names, please make sure they either start '
+                      'with `0` or cast them as string column names: '
+                      '`df.columns = [str(i) for i in df.columns`].',
+                      self.fpalgo, dfs)
+
+
+class FPTestAll(FPTestBase):
+    def setUp(self, fpalgo):
+        FPTestBase.setUp(self, fpalgo)
 
     def test_default(self):
         res_df = self.fpalgo(self.df)
@@ -55,16 +97,6 @@ class FPTestBase(object):
         res_df2 = self.fpalgo(self.df, max_len=2)
         max_len = np.max(res_df2['itemsets'].apply(len))
         assert max_len == 2
-
-    def test_itemsets_type(self):
-        # This is default behavior
-        res_colindice = self.fpalgo(self.df, use_colnames=False)
-        for i in res_colindice['itemsets']:
-            assert isinstance(i, frozenset) is True
-
-        res_colnames = self.fpalgo(self.df, use_colnames=True)
-        for i in res_colnames['itemsets']:
-            assert isinstance(i, frozenset) is True
 
     def test_frozenset_selection(self):
         res_df = self.fpalgo(self.df, use_colnames=True)
@@ -97,27 +129,3 @@ class FPTestBase(object):
                 == (1, 2)
         test_with_fill_values(0)
         test_with_fill_values(False)
-
-    def test_raise_error_if_input_is_not_binary(self):
-        df2 = pd.DataFrame(self.one_ary, columns=self.cols).copy()
-        df2.iloc[3, 3] = 2
-
-        assert_raises(ValueError,
-                      'The allowed values for a DataFrame are True, '
-                      'False, 0, 1. Found value 2',
-                      self.fpalgo, df2)
-
-    def test_sparsedataframe_notzero_column(self):
-        dfs = pd.SparseDataFrame(self.df)
-        dfs.columns = [i for i in range(len(dfs.columns))]
-        self.fpalgo(dfs)
-
-        dfs = pd.SparseDataFrame(self.df)
-        dfs.columns = [i+1 for i in range(len(dfs.columns))]
-        assert_raises(ValueError,
-                      'Due to current limitations in Pandas, '
-                      'if the SparseDataFrame has integer column names,'
-                      'names, please make sure they either start '
-                      'with `0` or cast them as string column names: '
-                      '`df.columns = [str(i) for i in df.columns`].',
-                      self.fpalgo, dfs)

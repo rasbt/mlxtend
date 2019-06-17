@@ -155,7 +155,7 @@ class FPTree(object):
     def print_status(self, count, colnames):
         cond_items = [str(i) for i in self.cond_items]
         if colnames:
-            cond_items = [colnames[i] for i in self.cond_items]
+            cond_items = [str(colnames[i]) for i in self.cond_items]
         cond_items = ", ".join(cond_items)
         print('\r%d itemset(s) from tree conditioned on items (%s)' %
               (count, cond_items), end="\n")

@@ -68,6 +68,7 @@ class FPTestBase(object):
 
     def test_frozenset_selection(self):
         res_df = self.fpalgo(self.df, use_colnames=True)
+        assert res_df.values.shape == self.fpalgo(self.df).values.shape
         assert res_df[res_df['itemsets']
                       == 'nothing'].values.shape == (0, 2)
         assert res_df[res_df['itemsets']
@@ -83,16 +84,16 @@ class FPTestBase(object):
         def test_with_fill_values(fill_value):
             sdf = self.df.to_sparse(fill_value=fill_value)
             res_df = self.fpalgo(sdf, use_colnames=True)
-            assert res_df.values.shape == (11, 2)
+            assert res_df.values.shape == self.fpalgo(self.df).values.shape
             assert res_df[res_df['itemsets']
                           == 'nothing'].values.shape == (0, 2)
             assert res_df[res_df['itemsets']
-                          == {'Eggs', 'Kidney Beans'}].values.shape == (1, 2)
+                          == {'Milk', 'Kidney Beans'}].values.shape == (1, 2)
             assert res_df[res_df['itemsets'] ==
-                          frozenset(('Eggs', 'Kidney Beans'))].values.shape \
+                          frozenset(('Milk', 'Kidney Beans'))].values.shape \
                 == (1, 2)
             assert res_df[res_df['itemsets'] ==
-                          frozenset(('Kidney Beans', 'Eggs'))].values.shape \
+                          frozenset(('Kidney Beans', 'Milk'))].values.shape \
                 == (1, 2)
         test_with_fill_values(0)
         test_with_fill_values(False)
@@ -104,21 +105,20 @@ class FPTestAll(FPTestBase):
 
     def test_default(self):
         res_df = self.fpalgo(self.df)
-        expect = pd.DataFrame([[0.8, np.array([3]), 1],
-                               [1.0, np.array([5]), 1],
-                               [0.6, np.array([6]), 1],
-                               [0.6, np.array([8]), 1],
-                               [0.6, np.array([10]), 1],
-                               [0.8, np.array([3, 5]), 2],
-                               [0.6, np.array([3, 8]), 2],
-                               [0.6, np.array([5, 6]), 2],
-                               [0.6, np.array([5, 8]), 2],
-                               [0.6, np.array([5, 10]), 2],
-                               [0.6, np.array([3, 5, 8]), 3]],
-                              columns=['support', 'itemsets', 'length'])
+        expect = pd.DataFrame([[0.8, np.array([3])],
+                               [1.0, np.array([5])],
+                               [0.6, np.array([6])],
+                               [0.6, np.array([8])],
+                               [0.6, np.array([10])],
+                               [0.8, np.array([3, 5])],
+                               [0.6, np.array([3, 8])],
+                               [0.6, np.array([5, 6])],
+                               [0.6, np.array([5, 8])],
+                               [0.6, np.array([5, 10])],
+                               [0.6, np.array([3, 5, 8])]],
+                              columns=['support', 'itemsets'])
 
-        for a, b in zip(res_df, expect):
-            assert_array_equal(a, b)
+        compare_dataframes(res_df, expect)
 
     def test_max_len(self):
         res_df1 = self.fpalgo(self.df)
@@ -128,19 +128,6 @@ class FPTestAll(FPTestBase):
         res_df2 = self.fpalgo(self.df, max_len=2)
         max_len = np.max(res_df2['itemsets'].apply(len))
         assert max_len == 2
-
-    def test_frozenset_selection(self):
-        res_df = self.fpalgo(self.df, use_colnames=True)
-        assert res_df.values.shape == (11, 2)
-
-    def test_sparse(self):
-        def test_with_fill_values(fill_value):
-            sdf = self.df.to_sparse(fill_value=fill_value)
-            res_df = self.fpalgo(sdf, use_colnames=True)
-            assert res_df.values.shape == (11, 2)
-
-        test_with_fill_values(0)
-        test_with_fill_values(False)
 
 
 class FPTestMaximal(FPTestBase):
@@ -165,28 +152,13 @@ class FPTestMaximal(FPTestBase):
         max_len = np.max(res_df2['itemsets'].apply(len))
         assert max_len == 2
 
-    def test_frozenset_selection(self):
-        res_df = self.fpalgo(self.df, use_colnames=True)
-        assert res_df.values.shape == (3, 2)
-
-    def test_sparse(self):
-        def test_with_fill_values(fill_value):
-            sdf = self.df.to_sparse(fill_value=fill_value)
-            res_df = self.fpalgo(sdf, use_colnames=True)
-            assert res_df.values.shape == (3, 2)
-
-        test_with_fill_values(0)
-        test_with_fill_values(False)
-
 
 def compare_dataframes(df1, df2):
     itemsets1 = [sorted(list(i)) for i in df1['itemsets']]
     itemsets2 = [sorted(list(i)) for i in df2['itemsets']]
-    itemsets1.sort()
-    itemsets2.sort()
 
-    rows1 = zip(df1['support'], itemsets1)
-    rows2 = zip(df2['support'], itemsets2)
+    rows1 = sorted(zip(itemsets1, df1['support']))
+    rows2 = sorted(zip(itemsets2, df2['support']))
 
     for r1, r2 in zip(rows1, rows2):
         assert_array_equal(r1, r2)

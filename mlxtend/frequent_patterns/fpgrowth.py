@@ -3,7 +3,6 @@
 #
 # License: BSD 3 clause
 
-import collections
 import math
 import itertools
 import numpy as np

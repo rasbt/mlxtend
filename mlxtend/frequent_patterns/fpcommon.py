@@ -48,13 +48,13 @@ def generate_itemsets(generator, num_itemsets, colname_map):
 
 
 def valid_input_check(df):
-    allowed_val = {0, 1, True, False}
-    unique_val = np.unique(df.values.ravel())
-    for val in unique_val:
-        if val not in allowed_val:
-            s = ('The allowed values for a DataFrame'
-                 ' are True, False, 0, 1. Found value %s' % (val))
-            raise ValueError(s)
+    # Pandas is much slower than numpy, so use df.values instead of df here
+    idxs = np.where((df.values != 1) & (df.values != 0))
+    if len(idxs[0]) > 0:
+        val = df.values[idxs[0][0], idxs[1][0]]
+        s = ('The allowed values for a DataFrame'
+             ' are True, False, 0, 1. Found value %s' % (val))
+        raise ValueError(s)
 
     is_sparse = hasattr(df, "to_coo")
     if is_sparse:

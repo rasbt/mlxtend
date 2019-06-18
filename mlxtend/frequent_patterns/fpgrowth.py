@@ -8,7 +8,7 @@ import math
 import itertools
 import numpy as np
 import pandas as pd
-from .fpcommon import FPNode, FPTree
+import mlxtend.frequent_patterns.fpcommon as fpc
 
 
 def fpgrowth(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
@@ -61,22 +61,8 @@ def fpgrowth(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
       https://docs.python.org/3.6/library/stdtypes.html#frozenset).
 
     """
-    allowed_val = {0, 1, True, False}
-    unique_val = np.unique(df.values.ravel())
-    for val in unique_val:
-        if val not in allowed_val:
-            s = ('The allowed values for a DataFrame'
-                 ' are True, False, 0, 1. Found value %s' % (val))
-            raise ValueError(s)
+    fpc.valid_input_check(df)
 
-    is_sparse = hasattr(df, "to_coo")
-    if is_sparse:
-        if not isinstance(df.columns[0], str) and df.columns[0] != 0:
-            raise ValueError('Due to current limitations in Pandas, '
-                             'if the SparseDataFrame has integer column names,'
-                             'names, please make sure they either start '
-                             'with `0` or cast them as string column names: '
-                             '`df.columns = [str(i) for i in df.columns`].')
     itemsets = df.values
     num_items = itemsets.shape[1]       # number of unique items
     num_itemsets = itemsets.shape[0]    # number of itemsets in the database
@@ -97,7 +83,7 @@ def fpgrowth(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
     # Building tree by inserting itemsets in sorted order
     # Hueristic for reducing tree size is inserting in order
     #   of most frequent to least frequent
-    tree = FPTree(rank)
+    tree = fpc.FPTree(rank)
     for i in range(num_itemsets):
         itemset = [item for item in np.where(
             itemsets[i, :])[0] if item in rank]

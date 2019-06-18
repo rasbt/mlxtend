@@ -105,13 +105,12 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
     http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/
 
     """
-    allowed_val = {0, 1, True, False}
-    unique_val = np.unique(df.values.ravel())
-    for val in unique_val:
-        if val not in allowed_val:
-            s = ('The allowed values for a DataFrame'
-                 ' are True, False, 0, 1. Found value %s' % (val))
-            raise ValueError(s)
+    idxs = np.where((df.values != 1) & (df.values != 0))
+    if len(idxs[0]) > 0:
+        val = df.values[idxs[0][0], idxs[1][0]]
+        s = ('The allowed values for a DataFrame'
+             ' are True, False, 0, 1. Found value %s' % (val))
+        raise ValueError(s)
 
     is_sparse = hasattr(df, "to_coo")
     if is_sparse:

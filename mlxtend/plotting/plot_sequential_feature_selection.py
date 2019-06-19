@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 
 
 def plot_sequential_feature_selection(metric_dict,
+                                      figsize=None
                                       kind='std_dev',
                                       color='blue',
                                       bcolor='steelblue',
@@ -22,6 +23,8 @@ def plot_sequential_feature_selection(metric_dict,
     Parameters
     ----------
     metric_dict : mlxtend.SequentialFeatureSelector.get_metric_dict() object
+    figsize : tuple (default: (10,10))
+        Height and width of the figure
     kind : str (default: "std_dev")
         The kind of error bar or confidence interval in
         {'std_dev', 'std_err', 'ci', None}.
@@ -50,12 +53,17 @@ def plot_sequential_feature_selection(metric_dict,
     http://rasbt.github.io/mlxtend/user_guide/plotting/plot_sequential_feature_selection/
 
     """
-
+    
+    if figsize is None:
+        figsize = (10,10)
+    
     allowed = {'std_dev', 'std_err', 'ci', None}
     if kind not in allowed:
         raise AttributeError('kind not in %s' % allowed)
 
-    fig = plt.figure()
+    # fig = plt.figure()
+    fig = plt.subplots(figsize=figsize)
+    
     k_feat = sorted(metric_dict.keys())
     avg = [metric_dict[k]['avg_score'] for k in k_feat]
 

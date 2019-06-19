@@ -4,10 +4,11 @@
 #
 # License: BSD 3 clause
 
+import unittest
 from mlxtend.frequent_patterns.tests.test_fpbase import FPTestAll
 from mlxtend.frequent_patterns import apriori
 
 
-class TestApriori(FPTestAll):
+class TestApriori(unittest.TestCase, FPTestAll):
     def setUp(self):
         FPTestAll.setUp(self, apriori)

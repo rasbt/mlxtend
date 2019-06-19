@@ -7,7 +7,7 @@ import math
 import itertools
 import numpy as np
 import pandas as pd
-import mlxtend.frequent_patterns.fpcommon as fpc
+from ..frequent_patterns import fpcommon as fpc
 
 
 def fpgrowth(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):

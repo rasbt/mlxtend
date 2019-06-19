@@ -16,13 +16,17 @@ class FPTestBase(object):
     setup and tests common to all methods (e.g., error for improper input)
     """
 
-    def setUp(self, fpalgo):
-        self.one_ary = np.array(
-            [[0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1],
+    def setUp(self, fpalgo, one_ary=None):
+        if one_ary is None:
+            self.one_ary = np.array(
+               [[0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1],
                 [0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1],
                 [1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0],
                 [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1],
                 [0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0]])
+
+        else:
+            self.one_ary = one_ary
 
         self.cols = ['Apple', 'Corn', 'Dill', 'Eggs', 'Ice cream',
                      'Kidney Beans', 'Milk',
@@ -100,8 +104,8 @@ class FPTestBase(object):
 
 
 class FPTestAll(FPTestBase):
-    def setUp(self, fpalgo):
-        FPTestBase.setUp(self, fpalgo)
+    def setUp(self, fpalgo, one_ary=None):
+        FPTestBase.setUp(self, fpalgo, one_ary=one_ary)
 
     def test_default(self):
         res_df = self.fpalgo(self.df)
@@ -131,8 +135,8 @@ class FPTestAll(FPTestBase):
 
 
 class FPTestMaximal(FPTestBase):
-    def setUp(self, fpalgo):
-        FPTestBase.setUp(self, fpalgo)
+    def setUp(self, fpalgo, one_ary=None):
+        FPTestBase.setUp(self, fpalgo, one_ary=one_ary)
 
     def test_default(self):
         res_df = self.fpalgo(self.df)

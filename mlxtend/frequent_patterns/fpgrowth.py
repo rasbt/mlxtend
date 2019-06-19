@@ -62,50 +62,16 @@ def fpgrowth(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
     """
     fpc.valid_input_check(df)
 
-    itemsets = df.values
-    num_items = itemsets.shape[1]       # number of unique items
-    num_itemsets = itemsets.shape[0]    # number of itemsets in the database
-    # support of each individual item
-    item_support = np.sum(itemsets, axis=0) / float(num_itemsets)
-
     colname_map = None
     if use_colnames:
         colname_map = {idx: item for idx, item in enumerate(df.columns)}
 
-    items = [item for item in range(
-        num_items) if item_support[item] >= min_support]
+    tree, _ = fpc.setup_fptree(df, min_support)
 
-    # Define ordering on items for inserting into FPTree
-    items.sort(key=lambda x: item_support[x])
-    rank = {item: i for i, item in enumerate(items)}
+    minsup = math.ceil(min_support * len(df.values))  # min support as count
+    generator = fpg_step(tree, minsup, colname_map, max_len, verbose)
 
-    # Building tree by inserting itemsets in sorted order
-    # Hueristic for reducing tree size is inserting in order
-    #   of most frequent to least frequent
-    tree = fpc.FPTree(rank)
-    for i in range(num_itemsets):
-        itemset = [item for item in np.where(
-            itemsets[i, :])[0] if item in rank]
-        itemset.sort(key=rank.get, reverse=True)
-        tree.insert_itemset(itemset)
-
-    # Collect frequent itemsets
-    minsup = math.ceil(min_support * num_itemsets)  # min support as count
-    frequent_itemsets = []
-    itemset_supports = []
-
-    for sup, iset in fpg_step(tree, minsup, colname_map, max_len, verbose):
-        frequent_itemsets.append(frozenset(iset))
-        itemset_supports.append(sup/num_itemsets)
-
-    res_df = pd.DataFrame({'support': itemset_supports,
-                           'itemsets': frequent_itemsets})
-
-    if use_colnames:
-        res_df['itemsets'] = res_df['itemsets'] \
-            .apply(lambda x: frozenset([colname_map[i] for i in x]))
-
-    return res_df
+    return fpc.generate_itemsets(generator, len(df.values), colname_map)
 
 
 def fpg_step(tree, minsup, colnames, max_len, verbose):

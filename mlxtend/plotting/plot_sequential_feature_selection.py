@@ -53,9 +53,7 @@ def plot_sequential_feature_selection(metric_dict,
     http://rasbt.github.io/mlxtend/user_guide/plotting/plot_sequential_feature_selection/
 
     """
-    
 
-    
     allowed = {'std_dev', 'std_err', 'ci', None}
     if kind not in allowed:
         raise AttributeError('kind not in %s' % allowed)
@@ -65,7 +63,7 @@ def plot_sequential_feature_selection(metric_dict,
         fig = plt.subplots(figsize=figsize)
     else:
         fig = plt.subplots()
-    
+
     k_feat = sorted(metric_dict.keys())
     avg = [metric_dict[k]['avg_score'] for k in k_feat]
 

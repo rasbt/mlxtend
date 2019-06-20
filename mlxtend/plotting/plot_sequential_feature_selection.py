@@ -23,7 +23,7 @@ def plot_sequential_feature_selection(metric_dict,
     Parameters
     ----------
     metric_dict : mlxtend.SequentialFeatureSelector.get_metric_dict() object
-    figsize : tuple (default: (8,6))
+    figsize : tuple (default: None)
         Height and width of the figure
     kind : str (default: "std_dev")
         The kind of error bar or confidence interval in

@@ -40,7 +40,8 @@ def fpmax(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
       instead of column indices.
 
     max_len : int (default: None)
-      Maximum length of the itemsets generated. If `None` (default) all
+      Given the set of all maximal itemsets,
+      return those that are less than `max_len`. If `None` (default) all
       possible itemsets lengths are evaluated.
 
     verbose : int (default: 0)

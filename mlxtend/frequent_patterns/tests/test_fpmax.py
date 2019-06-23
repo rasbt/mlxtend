@@ -1,15 +1,15 @@
 import unittest
 import numpy as np
-from mlxtend.frequent_patterns.tests.test_fpbase import FPTestAll
-from mlxtend.frequent_patterns import fpgrowth
+from mlxtend.frequent_patterns.tests.test_fpbase import FPTestMaximal
+from mlxtend.frequent_patterns import fpmax
 
 
-class TestFPGrowth(unittest.TestCase, FPTestAll):
+class TestFPMax(unittest.TestCase, FPTestMaximal):
     def setUp(self):
-        FPTestAll.setUp(self, fpgrowth)
+        FPTestMaximal.setUp(self, fpmax)
 
 
-class TestFPGrowth2(unittest.TestCase, FPTestAll):
+class TestFPMax2(unittest.TestCase, FPTestMaximal):
     def setUp(self):
         one_ary = np.array(
             [[False, False, False, True, False, True, True, True, True,
@@ -22,4 +22,4 @@ class TestFPGrowth2(unittest.TestCase, FPTestAll):
               True, True],
              [False, True, False, True, True, True, False, False, True,
               False, False]])
-        FPTestAll.setUp(self, fpgrowth, one_ary=one_ary)
+        FPTestMaximal.setUp(self, fpmax, one_ary=one_ary)

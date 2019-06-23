@@ -6,6 +6,7 @@
 
 from .apriori import apriori
 from .fpgrowth import fpgrowth
+from .fpmax import fpmax
 from .association_rules import association_rules
 
-__all__ = ["apriori", "association_rules", "fpgrowth"]
+__all__ = ["apriori", "association_rules", "fpgrowth", "fpmax"]

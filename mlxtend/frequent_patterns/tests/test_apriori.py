@@ -5,11 +5,27 @@
 # License: BSD 3 clause
 
 import unittest
-from mlxtend.frequent_patterns.tests.test_fpbase import FPTestBase
+import numpy as np
+from mlxtend.frequent_patterns.tests.test_fpbase import FPTestAll
 from mlxtend.frequent_patterns import apriori
 
 
-class FPTestGrowth(unittest.TestCase, FPTestBase):
+class TestApriori(unittest.TestCase, FPTestAll):
     def setUp(self):
-        FPTestBase.setUp(self)
-        self.fpalgo = apriori
+        FPTestAll.setUp(self, apriori)
+
+
+class TestApriori2(unittest.TestCase, FPTestAll):
+    def setUp(self):
+        one_ary = np.array(
+            [[False, False, False, True, False, True, True, True, True,
+              False, True],
+             [False, False, True, True, False, True, False, True, True,
+              False, True],
+             [True, False, False, True, False, True, True, False, False,
+              False, False],
+             [False, True, False, False, False, True, True, False, False,
+              True, True],
+             [False, True, False, True, True, True, False, False, True,
+              False, False]])
+        FPTestAll.setUp(self, apriori, one_ary=one_ary)

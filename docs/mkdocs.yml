@@ -93,6 +93,7 @@ nav:
     - user_guide/frequent_patterns/apriori.md
     - user_guide/frequent_patterns/association_rules.md
     - user_guide/frequent_patterns/fpgrowth.md
+    - user_guide/frequent_patterns/fpmax.md
   - general concepts:
     - user_guide/general_concepts/activation-functions.md
     - user_guide/general_concepts/gradient-optimization.md

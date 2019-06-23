@@ -24,6 +24,7 @@ The CHANGELOG for the current development version is available at
 - Added a function `fpgrowth` that implements the FP-Growth algorithm for mining frequent itemsets as a drop-in replacement for the existing `apriori` algorithm. ([#550](https://github.com/rasbt/mlxtend/pull/550) via [Steve Harenberg](https://github.com/harenbergsd))
 - New `heatmap` function in `mlxtend.plotting`.  ([#552](https://github.com/rasbt/mlxtend/pull/552))
 - Added a function `fpmax` that implements the FP-Max algorithm for mining maximal itemsets as a drop-in replacement for the `fpgrowth` algorithm. ([#553](https://github.com/rasbt/mlxtend/pull/553) via [Steve Harenberg](https://github.com/harenbergsd))
+- New `figsize` parameter for the `plot_decision_regions` function in `mlxtend.plotting`. ([#555](https://github.com/rasbt/mlxtend/pull/555) via [Mirza Hasanbasic](https://github.com/kazyka))
 
 ##### Changes
 

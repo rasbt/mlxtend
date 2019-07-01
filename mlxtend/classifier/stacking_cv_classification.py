@@ -208,7 +208,7 @@ class StackingCVClassifier(_BaseXComposition, ClassifierMixin,
             final_cv.random_state = self.random_state
 
         # Input validation.
-        X, y = check_X_y(X, y, accept_sparse=['csc', 'csr'])
+        X, y = check_X_y(X, y, accept_sparse=['csc', 'csr'], dtype=None)
 
         if sample_weight is None:
             fit_params = None

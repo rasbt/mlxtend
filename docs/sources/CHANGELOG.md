@@ -28,7 +28,8 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- Now uses the latest joblib library under the hood for multiprocessing instead of `sklearn.externals.joblib` ([#547](https://github.com/rasbt/mlxtend/pull/547))
+- Now uses the latest joblib library under the hood for multiprocessing instead of `sklearn.externals.joblib`. ([#547](https://github.com/rasbt/mlxtend/pull/547))
+- Changes to `StackingCVClassifier` and `StackingCVRegressor` such that first-level models are allowed to generate output of non-numeric type. ([#562](https://github.com/rasbt/mlxtend/pull/562))
 
 
 ##### Bug Fixes

@@ -16,9 +16,8 @@ and checking off items as you go.
 3. [ ]  Create and check out a new topic branch (please don't make modifications in the master branch)
 4. [ ]  Implement the new feature or apply the bug-fix  
 5. [ ]  Add appropriate unit test functions in `mlxtend/*/tests`
-6. [ ]  Run `nosetests ./mlxtend -sv` and make sure that all unit tests pass  
-7. [ ]  Check/improve the test coverage by running `nosetests ./mlxtend --with-coverage`
-8. [ ]  Check for style issues by running `flake8 ./mlxtend` (you may want to run `nosetests` again after you made modifications to the code)
+6. [ ]  Run `PYTHONPATH='.' pytest ./mlxtend -sv` and make sure that all unit tests pass  
+7. [ ]  Check for style issues by running `flake8 ./mlxtend` (you may want to run `pytest` again after you made modifications to the code)
 8. [ ]  Add a note about the modification/contribution to the `./docs/sources/changelog.md` file  
 9. [ ]  Modify documentation in the appropriate location under `mlxtend/docs/sources/`  
 10. [ ]  Push the topic branch to the server and create a pull request
@@ -164,14 +163,9 @@ Now it's time to modify existing code or to contribute new code to the project.
 Add the respective unit tests and check if they pass:
 
 ```bash
-$ nosetests -sv
+$ PYTHONPATH='.' pytest ./mlxtend ---with-coverage
 ```
 
-Use the `--with-coverage` flag to ensure that all code is being covered in the unit tests:
-
-```bash
-$ nosetests --with-coverage
-```
 
 #### 5. Documenting changes
 

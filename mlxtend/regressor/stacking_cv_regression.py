@@ -164,7 +164,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
             self.regr_ = self.regressors
             self.meta_regr_ = self.meta_regressor
 
-        X, y = check_X_y(X, y, accept_sparse=['csc', 'csr'])
+        X, y = check_X_y(X, y, accept_sparse=['csc', 'csr'], dtype=None)
 
         kfold = check_cv(self.cv, y)
         if isinstance(self.cv, int):

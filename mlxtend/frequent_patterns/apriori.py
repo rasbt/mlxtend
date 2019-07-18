@@ -108,7 +108,8 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
 
     def _support(_x, _n_rows, _is_sparse):
         """
-        DRY local method to calculate support as the row-wise sum of values / number of rows
+        DRY local method to calculate support as the
+        row-wise sum of values / number of rows
         :param _x: matrix of bools or binary
         :param _n_rows: numeric, number of rows
         :param _is_sparse: bool True if _x is sparse
@@ -147,7 +148,11 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
 
     while max_itemset and max_itemset < (max_len or float('inf')):
         next_max_itemset = max_itemset + 1
-        combin = np.array(list(generate_new_combinations(itemset_dict[max_itemset])))
+        combin = np.array(
+            list(
+                generate_new_combinations(itemset_dict[max_itemset])
+            )
+        )
 
         if combin.size == 0:
             break

@@ -105,6 +105,18 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
     http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/
 
     """
+
+    def _support(_x, _n_rows, _is_sparse):
+        """
+        DRY local method to calculate support as the row-wise sum of values / number of rows
+        :param _x: matrix of bools or binary
+        :param _n_rows: numeric, number of rows
+        :param _is_sparse: bool True if _x is sparse
+        :return: np.array, shape = (n_rows, )
+        """
+        out = (np.sum(_x, axis=0) / _n_rows)
+        return np.array(out).reshape(-1)
+
     idxs = np.where((df.values != 1) & (df.values != 0))
     if len(idxs[0]) > 0:
         val = df.values[idxs[0][0], idxs[1][0]]
@@ -122,10 +134,10 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
                              '`df.columns = [str(i) for i in df.columns`].')
 
         X = df.to_coo().tocsc()
-        support = np.array(np.sum(X, axis=0) / float(X.shape[0])).reshape(-1)
+        support = _support(X, X.shape[0], is_sparse)
     else:
         X = df.values
-        support = (np.sum(X, axis=0) / float(X.shape[0]))
+        support = _support(X, X.shape[0], is_sparse)
 
     ary_col_idx = np.arange(X.shape[1])
     support_dict = {1: support[support >= min_support]}
@@ -133,39 +145,34 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
     max_itemset = 1
     rows_count = float(X.shape[0])
 
-    if max_len is None:
-        max_len = float('inf')
-
-    iter_count = 0
-
-    while max_itemset and max_itemset < max_len:
+    while max_itemset and max_itemset < (max_len or float('inf')):
         next_max_itemset = max_itemset + 1
-        combin = generate_new_combinations(itemset_dict[max_itemset])
-        frequent_items = []
-        frequent_items_support = []
+        combin = np.array(list(generate_new_combinations(itemset_dict[max_itemset])))
+
+        if combin.size == 0:
+            break
+
+        if verbose:
+            print('\rProcessing %d combinations | Sampling itemset size %d' %
+                  (combin.size[0], next_max_itemset), end="")
 
         if is_sparse:
-            all_ones = np.ones((X.shape[0], next_max_itemset))
-        for c in combin:
-            if verbose:
-                iter_count += 1
-                print('\rIteration: %d | Sampling itemset size %d' %
-                      (iter_count, next_max_itemset), end="")
-            if is_sparse:
-                together = np.all(X[:, c] == all_ones, axis=1)
-            else:
-                together = X[:, c].all(axis=1)
-            support = together.sum() / rows_count
-            if support >= min_support:
-                frequent_items.append(c)
-                frequent_items_support.append(support)
+            all_ones = np.ones((int(rows_count), 1))
+            _bools = X[:, combin[:, 0]] == all_ones
+            for n in range(1, combin.shape[1]):
+                _bools = _bools & (X[:, combin[:, n]] == all_ones)
+        else:
+            _bools = np.all(X[:, combin], axis=2)
 
-        if frequent_items:
-            itemset_dict[next_max_itemset] = np.array(frequent_items)
-            support_dict[next_max_itemset] = np.array(frequent_items_support)
+        support = _support(np.array(_bools), rows_count, is_sparse)
+        _mask = (support >= min_support).reshape(-1)
+
+        if any(_mask):
+            itemset_dict[next_max_itemset] = np.array(combin[_mask])
+            support_dict[next_max_itemset] = np.array(support[_mask])
             max_itemset = next_max_itemset
         else:
-            max_itemset = 0
+            break
 
     all_res = []
     for k in sorted(itemset_dict):

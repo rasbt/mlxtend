@@ -159,7 +159,7 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
 
         if verbose:
             print('\rProcessing %d combinations | Sampling itemset size %d' %
-                  (combin.size[0], next_max_itemset), end="")
+                  (combin.size, next_max_itemset), end="")
 
         if is_sparse:
             all_ones = np.ones((int(rows_count), 1))

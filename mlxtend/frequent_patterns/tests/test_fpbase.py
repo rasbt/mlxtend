@@ -148,18 +148,18 @@ class FPTestAll(FPTestBase):
         assert max_len == 2
 
     def test_low_memory_flag(self):
-        try:
+        import inspect
+        if 'low_memory' in inspect.signature(self.fpalgo).parameters:
             with captured_output() as (out, err):
                 _ = self.fpalgo(self.df, low_memory=True, verbose=1)
-                print(out.getvalue())
-        except TypeError:
-            # If there is no low_memory argument, don't run the test.
-            assert True
-        else:
+
             # Only get the last value of the stream to reduce test noise
-            expect = 'Iteration: 17 | Sampling itemset size 3\n\n'
+            expect = 'Iteration: 17 | Sampling itemset size 3\n'
             out = out.getvalue().split('\r')[-1]
             assert out == expect
+        else:
+            # If there is no low_memory argument, don't run the test.
+            assert True
 
 
 class FPTestMaximal(FPTestBase):

@@ -51,7 +51,8 @@ def generate_new_combinations(old_combinations):
                 yield res
 
 
-def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
+def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
+            low_memory=False):
     """Get frequent itemsets from a one-hot DataFrame
     Parameters
     -----------
@@ -86,7 +87,12 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
       possible itemsets lengths (under the apriori condition) are evaluated.
 
     verbose : int (default: 0)
-      Shows the number of iterations if 1.
+      Shows the number of iterations if 1 and low_memory is True. If
+      low_memory is false, shows the number of combinations.
+
+    low_memory : bool (default: False)
+      If True, uses an iterator to search for combinations above min_support.
+
 
     Returns
     -----------
@@ -146,38 +152,69 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
     max_itemset = 1
     rows_count = float(X.shape[0])
 
+    iter_count = 0
+    all_ones = np.ones((int(rows_count), 1))
+
     while max_itemset and max_itemset < (max_len or float('inf')):
         next_max_itemset = max_itemset + 1
-        combin = np.array(
-            list(
-                generate_new_combinations(itemset_dict[max_itemset])
-            )
-        )
+        combin = generate_new_combinations(itemset_dict[max_itemset])
+        if not low_memory:
+            combin = np.array(list(combin))
 
-        if combin.size == 0:
-            break
+            if combin.size == 0:
+                break
 
-        if verbose:
+        if verbose and not low_memory:
             print('\rProcessing %d combinations | Sampling itemset size %d' %
                   (combin.size, next_max_itemset), end="")
 
-        if is_sparse:
-            all_ones = np.ones((int(rows_count), 1))
-            _bools = X[:, combin[:, 0]] == all_ones
-            for n in range(1, combin.shape[1]):
-                _bools = _bools & (X[:, combin[:, n]] == all_ones)
-        else:
-            _bools = np.all(X[:, combin], axis=2)
+        # With exceptionally large datasets, the matrix operations can use a
+        # substantial amount of memory. For low memory applications or large
+        # datasets, set low_memory = True to use a slower but more memory-
+        # efficient implementation.
+        if low_memory:
+            frequent_items = []
+            frequent_items_support = []
+            if is_sparse:
+                all_ones = np.ones((X.shape[0], next_max_itemset))
+            for c in combin:
+                if verbose:
+                    iter_count += 1
+                    print('\rIteration: %d | Sampling itemset size %d' %
+                          (iter_count, next_max_itemset), end="")
+                if is_sparse:
+                    together = np.all(X[:, c] == all_ones, axis=1)
+                else:
+                    together = X[:, c].all(axis=1)
+                support = together.sum() / rows_count
+                if support >= min_support:
+                    frequent_items.append(c)
+                    frequent_items_support.append(support)
 
-        support = _support(np.array(_bools), rows_count, is_sparse)
-        _mask = (support >= min_support).reshape(-1)
-
-        if any(_mask):
-            itemset_dict[next_max_itemset] = np.array(combin[_mask])
-            support_dict[next_max_itemset] = np.array(support[_mask])
-            max_itemset = next_max_itemset
+            if frequent_items:
+                itemset_dict[next_max_itemset] = np.array(frequent_items)
+                support_dict[next_max_itemset] = \
+                    np.array(frequent_items_support)
+                max_itemset = next_max_itemset
+            else:
+                break
         else:
-            break
+            if is_sparse:
+                _bools = X[:, combin[:, 0]] == all_ones
+                for n in range(1, combin.shape[1]):
+                    _bools = _bools & (X[:, combin[:, n]] == all_ones)
+            else:
+                _bools = np.all(X[:, combin], axis=2)
+
+            support = _support(np.array(_bools), rows_count, is_sparse)
+            _mask = (support >= min_support).reshape(-1)
+            if any(_mask):
+                itemset_dict[next_max_itemset] = np.array(combin[_mask])
+                support_dict[next_max_itemset] = np.array(support[_mask])
+                max_itemset = next_max_itemset
+            else:
+                # Exit condition
+                break
 
     all_res = []
     for k in sorted(itemset_dict):

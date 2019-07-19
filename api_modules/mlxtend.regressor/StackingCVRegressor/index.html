@@ -467,6 +467,18 @@
 </li>
 
         
+            
+<li >
+    <a href="../../../user_guide/frequent_patterns/fpgrowth/">Fpgrowth</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../../user_guide/frequent_patterns/fpmax/">Fpmax</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -577,6 +589,12 @@
         
             
 <li >
+    <a href="../../../user_guide/plotting/plot_pca_correlation_graph/">PCA Correlation Circle</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/plotting/ecdf/">Empirical Cumulative Distribution Function Plot</a>
 </li>
 
@@ -584,6 +602,12 @@
             
 <li >
     <a href="../../../user_guide/plotting/enrichment_plot/">Enrichment Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../../user_guide/plotting/heatmap/">Heatmap</a>
 </li>
 
         
@@ -1196,6 +1220,15 @@ samples used in the fitting for the estimator.</p>
 <p>R^2 of self.predict(X) wrt. y.</p>
 </li>
 </ul>
+<p><strong>Notes</strong></p>
+<p>The R2 score used when calling <code>score</code> on a regressor will use
+    <code>multioutput='uniform_average'</code> from version 0.23 to keep consistent
+    with <code>metrics.r2_score</code>. This will influence the <code>score</code> method of
+    all the multioutput regressors (except for
+    <code>multioutput.MultiOutputRegressor</code>). To specify the default value
+    manually and avoid the warning, please either call <code>metrics.r2_score</code>
+    directly or make a custom scorer with <code>metrics.make_scorer</code> (the
+    built-in scorer <code>'r2'</code> uses <code>multioutput='uniform_average'</code>).</p>
 <hr>
 
 <p><em>set_params(</em><em>params)</em></p>

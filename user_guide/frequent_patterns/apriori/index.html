@@ -467,6 +467,18 @@
 </li>
 
         
+            
+<li >
+    <a href="../fpgrowth/">Fpgrowth</a>
+</li>
+
+        
+            
+<li >
+    <a href="../fpmax/">Fpmax</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -577,6 +589,12 @@
         
             
 <li >
+    <a href="../../plotting/plot_pca_correlation_graph/">PCA Correlation Circle</a>
+</li>
+
+        
+            
+<li >
     <a href="../../plotting/ecdf/">Empirical Cumulative Distribution Function Plot</a>
 </li>
 
@@ -584,6 +602,12 @@
             
 <li >
     <a href="../../plotting/enrichment_plot/">Enrichment Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/heatmap/">Heatmap</a>
 </li>
 
         
@@ -943,6 +967,7 @@
         <li class="first-level active"><a href="#frequent-itemsets-via-apriori-algorithm">Frequent Itemsets via Apriori Algorithm</a></li>
         <li class="first-level "><a href="#overview">Overview</a></li>
         <li class="first-level "><a href="#references">References</a></li>
+        <li class="first-level "><a href="#related">Related</a></li>
         <li class="first-level "><a href="#example-1-generating-frequent-itemsets">Example 1 -- Generating Frequent Itemsets</a></li>
         <li class="first-level "><a href="#example-2-selecting-and-filtering-results">Example 2 -- Selecting and Filtering Results</a></li>
         <li class="first-level "><a href="#example-3-working-with-sparse-representations">Example 3 -- Working with Sparse Representations</a></li>
@@ -960,6 +985,11 @@
 <p>Apriori is a popular algorithm [1] for extracting frequent itemsets with applications in association rule learning. The apriori algorithm has been designed to operate on databases containing transactions, such as purchases by customers of a store. An itemset is considered as "frequent" if it meets a user-specified support threshold. For instance, if the support threshold is set to 0.5 (50%), a frequent itemset is defined as a set of items that occur together in at least 50% of all transactions in the database.</p>
 <h2 id="references">References</h2>
 <p>[1] Agrawal, Rakesh, and Ramakrishnan Srikant. "<a href="https://www.it.uu.se/edu/course/homepage/infoutv/ht08/vldb94_rj.pdf">Fast algorithms for mining association rules</a>." Proc. 20th int. conf. very large data bases, VLDB. Vol. 1215. 1994.</p>
+<h2 id="related">Related</h2>
+<ul>
+<li><a href="../fpgrowth/">FP-Growth</a></li>
+<li><a href="../fpmax/">FP-Max</a></li>
+</ul>
 <h2 id="example-1-generating-frequent-itemsets">Example 1 -- Generating Frequent Itemsets</h2>
 <p>The <code>apriori</code> function expects data in a one-hot encoded pandas DataFrame.
 Suppose we have the following transaction data:</p>
@@ -1234,7 +1264,7 @@ apriori(df, min_support=0.6)
     <tr>
       <th>6</th>
       <td>0.6</td>
-      <td>(Eggs, Onion)</td>
+      <td>(Onion, Eggs)</td>
     </tr>
     <tr>
       <th>7</th>
@@ -1244,17 +1274,17 @@ apriori(df, min_support=0.6)
     <tr>
       <th>8</th>
       <td>0.6</td>
-      <td>(Kidney Beans, Onion)</td>
+      <td>(Onion, Kidney Beans)</td>
     </tr>
     <tr>
       <th>9</th>
       <td>0.6</td>
-      <td>(Yogurt, Kidney Beans)</td>
+      <td>(Kidney Beans, Yogurt)</td>
     </tr>
     <tr>
       <th>10</th>
       <td>0.6</td>
-      <td>(Eggs, Kidney Beans, Onion)</td>
+      <td>(Onion, Kidney Beans, Eggs)</td>
     </tr>
   </tbody>
 </table>
@@ -1330,7 +1360,7 @@ frequent_itemsets
     <tr>
       <th>6</th>
       <td>0.6</td>
-      <td>(Eggs, Onion)</td>
+      <td>(Onion, Eggs)</td>
       <td>2</td>
     </tr>
     <tr>
@@ -1342,19 +1372,19 @@ frequent_itemsets
     <tr>
       <th>8</th>
       <td>0.6</td>
-      <td>(Kidney Beans, Onion)</td>
+      <td>(Onion, Kidney Beans)</td>
       <td>2</td>
     </tr>
     <tr>
       <th>9</th>
       <td>0.6</td>
-      <td>(Yogurt, Kidney Beans)</td>
+      <td>(Kidney Beans, Yogurt)</td>
       <td>2</td>
     </tr>
     <tr>
       <th>10</th>
       <td>0.6</td>
-      <td>(Eggs, Kidney Beans, Onion)</td>
+      <td>(Onion, Kidney Beans, Eggs)</td>
       <td>3</td>
     </tr>
   </tbody>
@@ -1431,7 +1461,7 @@ frequent_itemsets
     <tr>
       <th>6</th>
       <td>0.6</td>
-      <td>(Eggs, Onion)</td>
+      <td>(Onion, Eggs)</td>
       <td>2</td>
     </tr>
   </tbody>
@@ -1451,7 +1481,7 @@ frequent_itemsets
 <p>To save memory, you may want to represent your transaction data in the sparse format.
 This is especially useful if you have lots of products and small transactions.</p>
 <pre><code class="python">oht_ary = te.fit(dataset).transform(dataset, sparse=True)
-sparse_df = pd.SparseDataFrame(te_ary, columns=te.columns_, default_fill_value=False)
+sparse_df = pd.SparseDataFrame(oht_ary, columns=te.columns_, default_fill_value=False)
 sparse_df
 </code></pre>
 
@@ -1564,7 +1594,7 @@ sparse_df
 <pre><code class="python">apriori(sparse_df, min_support=0.6, use_colnames=True, verbose=1)
 </code></pre>
 
-<pre><code>Iteration: 17 | Sampling itemset size 3
+<pre><code>Processing 21 combinations | Sampling itemset size 3
 </code></pre>
 <div>
 <style scoped>
@@ -1622,7 +1652,7 @@ sparse_df
     <tr>
       <th>6</th>
       <td>0.6</td>
-      <td>(Eggs, Onion)</td>
+      <td>(Onion, Eggs)</td>
     </tr>
     <tr>
       <th>7</th>
@@ -1632,26 +1662,26 @@ sparse_df
     <tr>
       <th>8</th>
       <td>0.6</td>
-      <td>(Kidney Beans, Onion)</td>
+      <td>(Onion, Kidney Beans)</td>
     </tr>
     <tr>
       <th>9</th>
       <td>0.6</td>
-      <td>(Yogurt, Kidney Beans)</td>
+      <td>(Kidney Beans, Yogurt)</td>
     </tr>
     <tr>
       <th>10</th>
       <td>0.6</td>
-      <td>(Eggs, Kidney Beans, Onion)</td>
+      <td>(Onion, Kidney Beans, Eggs)</td>
     </tr>
   </tbody>
 </table>
 </div>
 
 <h2 id="api">API</h2>
-<p><em>apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0)</em></p>
-<p>Get frequent itemsets from a one-hot DataFrame
-<strong>Parameters</strong></p>
+<p><em>apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0, low_memory=False)</em></p>
+<p>Get frequent itemsets from a one-hot DataFrame</p>
+<p><strong>Parameters</strong></p>
 <ul>
 <li>
 <p><code>df</code> : pandas DataFrame or pandas SparseDataFrame</p>
@@ -1676,11 +1706,11 @@ For example,</p>
 <p><code>min_support</code> : float (default: 0.5)</p>
 <p>A float between 0 and 1 for minumum support of the itemsets returned.
 The support is computed as the fraction
-transactions_where_item(s)_occur / total_transactions.</p>
+<code>transactions_where_item(s)_occur / total_transactions</code>.</p>
 </li>
 <li>
 <p><code>use_colnames</code> : bool (default: False)</p>
-<p>If true, uses the DataFrames' column names in the returned DataFrame
+<p>If <code>True</code>, uses the DataFrames' column names in the returned DataFrame
 instead of column indices.</p>
 </li>
 <li>
@@ -1690,7 +1720,17 @@ possible itemsets lengths (under the apriori condition) are evaluated.</p>
 </li>
 <li>
 <p><code>verbose</code> : int (default: 0)</p>
-<p>Shows the number of iterations if 1.</p>
+<p>Shows the number of iterations if &gt;= 1 and <code>low_memory</code> is <code>True</code>. If</p>
+<blockquote>
+<p>=1 and <code>low_memory</code> is <code>False</code>, shows the number of combinations.</p>
+</blockquote>
+</li>
+<li>
+<p><code>low_memory</code> : bool (default: False)</p>
+<p>If <code>True</code>, uses an iterator to search for combinations above <code>min_support</code>.
+Note that while <code>low_memory=True</code> should only be used for large dataset
+if memory resources are limited, because this implementation is approx.
+3-6x slower than the default.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>

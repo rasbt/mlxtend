@@ -467,6 +467,18 @@
 </li>
 
         
+            
+<li >
+    <a href="../../../user_guide/frequent_patterns/fpgrowth/">Fpgrowth</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../../user_guide/frequent_patterns/fpmax/">Fpmax</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -577,6 +589,12 @@
         
             
 <li >
+    <a href="../../../user_guide/plotting/plot_pca_correlation_graph/">PCA Correlation Circle</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/plotting/ecdf/">Empirical Cumulative Distribution Function Plot</a>
 </li>
 
@@ -584,6 +602,12 @@
             
 <li >
     <a href="../../../user_guide/plotting/enrichment_plot/">Enrichment Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../../user_guide/plotting/heatmap/">Heatmap</a>
 </li>
 
         
@@ -1044,7 +1068,7 @@ array indices. The 'feature_names' is new in v 0.13.0.</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, custom_feature_names=None, </em><em>fit_params)</em></p>
+<p><em>fit(X, y, custom_feature_names=None, groups=None, </em><em>fit_params)</em></p>
 <p>Perform feature selection and learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1066,6 +1090,11 @@ argument for X.</p>
 (new in v 0.13.0)</p>
 </li>
 <li>
+<p><code>groups</code> : array-like, with shape (n_samples,), optional</p>
+<p>Group labels for the samples used while splitting the dataset into
+train/test set. Passed to the fit method of the cross-validator.</p>
+</li>
+<li>
 <p><code>fit_params</code> : dict of string -&gt; object, optional</p>
 <p>Parameters to pass to to the fit method of classifier.</p>
 </li>
@@ -1076,7 +1105,7 @@ argument for X.</p>
 </ul>
 <hr>
 
-<p><em>fit_transform(X, y, </em><em>fit_params)</em></p>
+<p><em>fit_transform(X, y, groups=None, </em><em>fit_params)</em></p>
 <p>Fit to training data and return the best selected features from X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1090,6 +1119,11 @@ argument for X.</p>
 <li>
 <p><code>y</code> : array-like, shape = [n_samples]</p>
 <p>Target values.</p>
+</li>
+<li>
+<p><code>groups</code> : array-like, with shape (n_samples,), optional</p>
+<p>Group labels for the samples used while splitting the dataset into
+train/test set. Passed to the fit method of the cross-validator.</p>
 </li>
 <li>
 <p><code>fit_params</code> : dict of string -&gt; object, optional</p>

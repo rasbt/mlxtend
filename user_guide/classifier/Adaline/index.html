@@ -467,6 +467,18 @@
 </li>
 
         
+            
+<li >
+    <a href="../../frequent_patterns/fpgrowth/">Fpgrowth</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../frequent_patterns/fpmax/">Fpmax</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -577,6 +589,12 @@
         
             
 <li >
+    <a href="../../plotting/plot_pca_correlation_graph/">PCA Correlation Circle</a>
+</li>
+
+        
+            
+<li >
     <a href="../../plotting/ecdf/">Empirical Cumulative Distribution Function Plot</a>
 </li>
 
@@ -584,6 +602,12 @@
             
 <li >
     <a href="../../plotting/enrichment_plot/">Enrichment Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/heatmap/">Heatmap</a>
 </li>
 
         
@@ -1044,7 +1068,7 @@ ada = Adaline(epochs=30,
               random_seed=1)
 ada.fit(X, y)
 plot_decision_regions(X, y, clf=ada)
-plt.title('Adaline - Stochastic Gradient Descent')
+plt.title('Adaline - Closed Form')
 
 plt.show()
 </code></pre>
@@ -1076,7 +1100,7 @@ ada = Adaline(epochs=30,
 
 ada.fit(X, y)
 plot_decision_regions(X, y, clf=ada)
-plt.title('Adaline - Stochastic Gradient Descent')
+plt.title('Adaline - Gradient Descent')
 plt.show()
 
 plt.plot(range(len(ada.cost_)), ada.cost_)
@@ -1087,7 +1111,7 @@ plt.ylabel('Cost')
 <pre><code>Iteration: 30/30 | Cost 3.79 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
 <p><img alt="png" src="../Adaline_files/Adaline_17_1.png" /></p>
-<pre><code>&lt;matplotlib.text.Text at 0x10eb32908&gt;
+<pre><code>Text(0, 0.5, 'Cost')
 </code></pre>
 <p><img alt="png" src="../Adaline_files/Adaline_17_3.png" /></p>
 <h2 id="example-3-stochastic-gradient-descent">Example 3 - Stochastic Gradient Descent</h2>
@@ -1155,7 +1179,7 @@ ada = Adaline(epochs=15,
 
 ada.fit(X, y)
 plot_decision_regions(X, y, clf=ada)
-plt.title('Adaline - Stochastic Gradient Descent')
+plt.title('Adaline - Stochastic Gradient Descent w. Minibatches')
 plt.show()
 
 plt.plot(range(len(ada.cost_)), ada.cost_)
@@ -1253,6 +1277,29 @@ a previous model fitting.</p>
 </ul>
 <hr>
 
+<p><em>get_params(deep=True)</em></p>
+<p>Get parameters for this estimator.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>deep</code> : boolean, optional</p>
+<p>If True, will return the parameters for this estimator and
+contained subobjects that are estimators.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>params</code> : mapping of string to any</p>
+<p>Parameter names mapped to their values.'</p>
+<p>adapted from
+https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
+Author: Gael Varoquaux <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;">&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a>
+License: BSD 3 clause</p>
+</li>
+</ul>
+<hr>
+
 <p><em>predict(X)</em></p>
 <p>Predict targets from X.</p>
 <p><strong>Parameters</strong></p>
@@ -1293,7 +1340,21 @@ n_features is the number of features.</p>
 <p>The prediction accuracy as a float
 between 0.0 and 1.0 (perfect score).</p>
 </li>
-</ul></div>
+</ul>
+<hr>
+
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.
+The method works on simple estimators as well as on nested objects
+(such as pipelines). The latter have parameters of the form
+<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
+component of a nested object.</p>
+<p><strong>Returns</strong></p>
+<p>self</p>
+<p>adapted from
+https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
+Author: Gael Varoquaux <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;">&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a>
+License: BSD 3 clause</p></div>
         
         
     </div>

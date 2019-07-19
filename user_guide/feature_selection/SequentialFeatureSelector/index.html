@@ -467,6 +467,18 @@
 </li>
 
         
+            
+<li >
+    <a href="../../frequent_patterns/fpgrowth/">Fpgrowth</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../frequent_patterns/fpmax/">Fpmax</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -577,6 +589,12 @@
         
             
 <li >
+    <a href="../../plotting/plot_pca_correlation_graph/">PCA Correlation Circle</a>
+</li>
+
+        
+            
+<li >
     <a href="../../plotting/ecdf/">Empirical Cumulative Distribution Function Plot</a>
 </li>
 
@@ -584,6 +602,12 @@
             
 <li >
     <a href="../../plotting/enrichment_plot/">Enrichment Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../plotting/heatmap/">Heatmap</a>
 </li>
 
         
@@ -1210,15 +1234,15 @@ sfs1 = sfs1.fit(X, y)
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
 
-[2019-05-10 19:29:31] Features: 1/3 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2019-06-20 08:43:12] Features: 1/3 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s finished
 
-[2019-05-10 19:29:31] Features: 2/3 -- score: 0.9733333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2019-06-20 08:43:12] Features: 2/3 -- score: 0.9733333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
 
-[2019-05-10 19:29:31] Features: 3/3 -- score: 0.9733333333333334
+[2019-06-20 08:43:12] Features: 3/3 -- score: 0.9733333333333334
 </code></pre>
 <p>Via the <code>subsets_</code> attribute, we can take a look at the selected feature indices at each step:</p>
 <pre><code class="python">sfs1.subsets_
@@ -1247,15 +1271,15 @@ sfs1.subsets_
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
 
-[2019-05-10 19:29:31] Features: 1/3 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2019-06-20 08:43:12] Features: 1/3 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s finished
 
-[2019-05-10 19:29:31] Features: 2/3 -- score: 0.9733333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2019-06-20 08:43:12] Features: 2/3 -- score: 0.9733333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
 
-[2019-05-10 19:29:31] Features: 3/3 -- score: 0.9733333333333334
+[2019-06-20 08:43:12] Features: 3/3 -- score: 0.9733333333333334
 
 
 
@@ -1590,19 +1614,19 @@ plt.show()
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
 
-[2019-05-10 19:29:33] Features: 1/4 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2019-06-20 08:43:14] Features: 1/4 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s finished
 
-[2019-05-10 19:29:33] Features: 2/4 -- score: 0.9666666666666668[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2019-06-20 08:43:14] Features: 2/4 -- score: 0.9666666666666668[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
 
-[2019-05-10 19:29:33] Features: 3/4 -- score: 0.9533333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2019-06-20 08:43:14] Features: 3/4 -- score: 0.9533333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s finished
 
-[2019-05-10 19:29:33] Features: 4/4 -- score: 0.9733333333333334
+[2019-06-20 08:43:14] Features: 4/4 -- score: 0.9733333333333334
 </code></pre>
 <p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_43_1.png" /></p>
 <h2 id="example-5-sequential-feature-selection-for-regression">Example 5 - Sequential Feature Selection for Regression</h2>
@@ -1674,15 +1698,15 @@ sfs1 = sfs1.fit(X, y)
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
 
-[2019-05-10 19:29:34] Features: 1/3 -- score: 0.9666666666666667[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2019-06-20 08:43:15] Features: 1/3 -- score: 0.9666666666666667[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s finished
 
-[2019-05-10 19:29:34] Features: 2/3 -- score: 0.9666666666666667[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2019-06-20 08:43:15] Features: 2/3 -- score: 0.9666666666666667[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
 
-[2019-05-10 19:29:34] Features: 3/3 -- score: 0.9666666666666667
+[2019-06-20 08:43:15] Features: 3/3 -- score: 0.9666666666666667
 </code></pre>
 <h2 id="example-7-using-the-selected-feature-subset-for-making-new-predictions">Example 7 -- Using the Selected Feature Subset For Making New Predictions</h2>
 <pre><code class="python"># Initialize the dataset
@@ -1819,15 +1843,20 @@ gs = gs.fit(X_train, y_train)
 </code></pre>
 
 <pre><code>[('sfs', SequentialFeatureSelector(clone_estimator=True, cv=5,
-               estimator=KNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',
-             metric_params=None, n_jobs=None, n_neighbors=1, p=2,
-             weights='uniform'),
-               floating=False, forward=True, k_features=4, n_jobs=1,
-               pre_dispatch='2*n_jobs', scoring='accuracy', verbose=0)),
+                            estimator=KNeighborsClassifier(algorithm='auto',
+                                                           leaf_size=30,
+                                                           metric='minkowski',
+                                                           metric_params=None,
+                                                           n_jobs=None,
+                                                           n_neighbors=1, p=2,
+                                                           weights='uniform'),
+                            floating=False, forward=True, k_features=4, n_jobs=1,
+                            pre_dispatch='2*n_jobs', scoring='accuracy',
+                            verbose=0)),
  ('knn',
   KNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',
-             metric_params=None, n_jobs=None, n_neighbors=2, p=2,
-             weights='uniform'))]
+                       metric_params=None, n_jobs=None, n_neighbors=2, p=2,
+                       weights='uniform'))]
 </code></pre>
 <p>Via sub-indexing, we can then obtain the best-selected feature subset:</p>
 <pre><code class="python">print('Best features:', gs.best_estimator_.steps[0][1].k_feature_idx_)
@@ -1930,7 +1959,7 @@ print('groups: {}'.format(groups))
 cv_gen
 </code></pre>
 
-<pre><code>&lt;generator object _BaseKFold.split at 0x10c0e3480&gt;
+<pre><code>&lt;generator object _BaseKFold.split at 0x7fa9787fdc78&gt;
 </code></pre>
 <p>The <code>cv</code> parameter of <code>SequentialFeatureSelector</code> must be either an <code>int</code> or an iterable yielding train, test splits. This iterable can be constructed by passing the train, test split generator to the built-in <code>list()</code> function. </p>
 <pre><code class="python">cv = list(cv_gen)
@@ -2200,7 +2229,7 @@ array indices. The 'feature_names' is new in v 0.13.0.</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, custom_feature_names=None, </em><em>fit_params)</em></p>
+<p><em>fit(X, y, custom_feature_names=None, groups=None, </em><em>fit_params)</em></p>
 <p>Perform feature selection and learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -2224,6 +2253,11 @@ argument for y.</p>
 (new in v 0.13.0)</p>
 </li>
 <li>
+<p><code>groups</code> : array-like, with shape (n_samples,), optional</p>
+<p>Group labels for the samples used while splitting the dataset into
+train/test set. Passed to the fit method of the cross-validator.</p>
+</li>
+<li>
 <p><code>fit_params</code> : dict of string -&gt; object, optional</p>
 <p>Parameters to pass to to the fit method of classifier.</p>
 </li>
@@ -2234,7 +2268,7 @@ argument for y.</p>
 </ul>
 <hr>
 
-<p><em>fit_transform(X, y, </em><em>fit_params)</em></p>
+<p><em>fit_transform(X, y, groups=None, </em><em>fit_params)</em></p>
 <p>Fit to training data then reduce X to its most important features.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -2250,6 +2284,11 @@ argument for X.</p>
 <p>Target values.
 New in v 0.13.0: a pandas Series are now also accepted as
 argument for y.</p>
+</li>
+<li>
+<p><code>groups</code> : array-like, with shape (n_samples,), optional</p>
+<p>Group labels for the samples used while splitting the dataset into
+train/test set. Passed to the fit method of the cross-validator.</p>
 </li>
 <li>
 <p><code>fit_params</code> : dict of string -&gt; object, optional</p>

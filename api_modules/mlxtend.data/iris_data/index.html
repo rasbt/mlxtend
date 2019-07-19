@@ -467,6 +467,18 @@
 </li>
 
         
+            
+<li >
+    <a href="../../../user_guide/frequent_patterns/fpgrowth/">Fpgrowth</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../../user_guide/frequent_patterns/fpmax/">Fpmax</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -577,6 +589,12 @@
         
             
 <li >
+    <a href="../../../user_guide/plotting/plot_pca_correlation_graph/">PCA Correlation Circle</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/plotting/ecdf/">Empirical Cumulative Distribution Function Plot</a>
 </li>
 
@@ -584,6 +602,12 @@
             
 <li >
     <a href="../../../user_guide/plotting/enrichment_plot/">Enrichment Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../../user_guide/plotting/heatmap/">Heatmap</a>
 </li>
 
         
@@ -936,7 +960,7 @@
         <div class="col-md-9" role="main">
 
 <h2 id="iris_data">iris_data</h2>
-<p><em>iris_data()</em></p>
+<p><em>iris_data(version='uci')</em></p>
 <p>Iris flower dataset.</p>
 <ul>
 <li>
@@ -957,6 +981,16 @@
 </ul>
 </li>
 </ul>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>version</code> : string, optional (default: 'uci').</p>
+<p>Version to use {'uci', 'corrected'}. 'uci' loads the dataset
+as deposited on the UCI machine learning repository, and
+'corrected' provides the version that is consistent with
+Fisher's original paper. See Note for details.</p>
+</li>
+</ul>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
@@ -967,6 +1001,18 @@ petal length, and petal width.
 y is a 1-dimensional array of the class labels {0, 1, 2}</p>
 </li>
 </ul>
+<p><strong>Note</strong></p>
+<p>The Iris dataset (originally collected by Edgar Anderson) and
+    available in UCI's machine learning repository is different from
+    the Iris dataset described in the original paper by  R.A. Fisher [1]).
+    Precisely, there are two data points (row number
+    34 and 37) in UCI's Machine Learning repository are different from the
+    origianlly published Iris dataset. Also, the original version of the Iris
+    Dataset, which can be loaded via <code>version='corrected'</code> is the same
+    as the one in R.</p>
+<pre><code>[1] . A. Fisher (1936). "The use of multiple measurements in taxonomic
+problems". Annals of Eugenics. 7 (2): 179–188
+</code></pre>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
     <a href="http://rasbt.github.io/mlxtend/user_guide/data/iris_data/">http://rasbt.github.io/mlxtend/user_guide/data/iris_data/</a></p></div>

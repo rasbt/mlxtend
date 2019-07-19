@@ -467,6 +467,18 @@
 </li>
 
         
+            
+<li >
+    <a href="../../frequent_patterns/fpgrowth/">Fpgrowth</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../frequent_patterns/fpmax/">Fpmax</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -577,6 +589,12 @@
         
             
 <li >
+    <a href="../plot_pca_correlation_graph/">PCA Correlation Circle</a>
+</li>
+
+        
+            
+<li >
     <a href="../ecdf/">Empirical Cumulative Distribution Function Plot</a>
 </li>
 
@@ -584,6 +602,12 @@
             
 <li >
     <a href="../enrichment_plot/">Enrichment Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../heatmap/">Heatmap</a>
 </li>
 
         
@@ -971,13 +995,15 @@ knn = KNeighborsClassifier(n_neighbors=4)
 sfs = SFS(knn, 
           k_features=4, 
           forward=True, 
-          floating=False, 
+          floating=False,
           scoring='accuracy',
           cv=5)
 
 sfs = sfs.fit(X, y)
 
-fig1 = plot_sfs(sfs.get_metric_dict(), kind='std_dev')
+fig1 = plot_sfs(sfs.get_metric_dict(),
+                kind='std_dev',
+                figsize=(6, 4))
 
 plt.ylim([0.8, 1])
 plt.title('Sequential Forward Selection (w. StdDev)')
@@ -985,16 +1011,18 @@ plt.grid()
 plt.show()
 </code></pre>
 
-<pre><code>Features: 4/4
-</code></pre>
-<p><img alt="png" src="../plot_sequential_feature_selection_files/plot_sequential_feature_selection_7_1.png" /></p>
+<p><img alt="png" src="../plot_sequential_feature_selection_files/plot_sequential_feature_selection_7_0.png" /></p>
 <h1 id="api">API</h1>
-<p><em>plot_sequential_feature_selection(metric_dict, kind='std_dev', color='blue', bcolor='steelblue', marker='o', alpha=0.2, ylabel='Performance', confidence_interval=0.95)</em></p>
+<p><em>plot_sequential_feature_selection(metric_dict, figsize=None, kind='std_dev', color='blue', bcolor='steelblue', marker='o', alpha=0.2, ylabel='Performance', confidence_interval=0.95)</em></p>
 <p>Plot feature selection results.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
 <p><code>metric_dict</code> : mlxtend.SequentialFeatureSelector.get_metric_dict() object</p>
+</li>
+<li>
+<p><code>figsize</code> : tuple (default: None)</p>
+<p>Height and width of the figure</p>
 </li>
 <li>
 <p><code>kind</code> : str (default: "std_dev")</p>
@@ -1034,7 +1062,8 @@ plt.show()
 </ul>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/plotting/plot_sequential_feature_selection/">http://rasbt.github.io/mlxtend/user_guide/plotting/plot_sequential_feature_selection/</a></p></div>
+    <a href="http://rasbt.github.io/mlxtend/user_guide/plotting/plot_sequential_feature_selection/">http://rasbt.github.io/mlxtend/user_guide/plotting/plot_sequential_feature_selection/</a></p>
+<p>ython</p></div>
         
         
     </div>

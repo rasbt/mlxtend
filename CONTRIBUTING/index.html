@@ -467,6 +467,18 @@
 </li>
 
         
+            
+<li >
+    <a href="../user_guide/frequent_patterns/fpgrowth/">Fpgrowth</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/frequent_patterns/fpmax/">Fpmax</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -577,6 +589,12 @@
         
             
 <li >
+    <a href="../user_guide/plotting/plot_pca_correlation_graph/">PCA Correlation Circle</a>
+</li>
+
+        
+            
+<li >
     <a href="../user_guide/plotting/ecdf/">Empirical Cumulative Distribution Function Plot</a>
 </li>
 
@@ -584,6 +602,12 @@
             
 <li >
     <a href="../user_guide/plotting/enrichment_plot/">Enrichment Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/plotting/heatmap/">Heatmap</a>
 </li>
 
         
@@ -992,9 +1016,8 @@ and checking off items as you go.</p>
 <li>[ ]  Create and check out a new topic branch (please don't make modifications in the master branch)</li>
 <li>[ ]  Implement the new feature or apply the bug-fix  </li>
 <li>[ ]  Add appropriate unit test functions in <code>mlxtend/*/tests</code></li>
-<li>[ ]  Run <code>nosetests ./mlxtend -sv</code> and make sure that all unit tests pass  </li>
-<li>[ ]  Check/improve the test coverage by running <code>nosetests ./mlxtend --with-coverage</code></li>
-<li>[ ]  Check for style issues by running <code>flake8 ./mlxtend</code> (you may want to run <code>nosetests</code> again after you made modifications to the code)</li>
+<li>[ ]  Run <code>PYTHONPATH='.' pytest ./mlxtend -sv</code> and make sure that all unit tests pass  </li>
+<li>[ ]  Check for style issues by running <code>flake8 ./mlxtend</code> (you may want to run <code>pytest</code> again after you made modifications to the code)</li>
 <li>[ ]  Add a note about the modification/contribution to the <code>./docs/sources/changelog.md</code> file  </li>
 <li>[ ]  Modify documentation in the appropriate location under <code>mlxtend/docs/sources/</code>  </li>
 <li>[ ]  Push the topic branch to the server and create a pull request</li>
@@ -1099,11 +1122,7 @@ do a quick search to see if a similar issue has been submitted already.</p>
 <p>Now it's time to modify existing code or to contribute new code to the project.</p>
 <h4 id="4-testing-your-code">4. Testing your code</h4>
 <p>Add the respective unit tests and check if they pass:</p>
-<pre><code class="bash">$ nosetests -sv
-</code></pre>
-
-<p>Use the <code>--with-coverage</code> flag to ensure that all code is being covered in the unit tests:</p>
-<pre><code class="bash">$ nosetests --with-coverage
+<pre><code class="bash">$ PYTHONPATH='.' pytest ./mlxtend ---with-coverage
 </code></pre>
 
 <h4 id="5-documenting-changes">5. Documenting changes</h4>

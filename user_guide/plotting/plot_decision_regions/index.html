@@ -467,6 +467,18 @@
 </li>
 
         
+            
+<li >
+    <a href="../../frequent_patterns/fpgrowth/">Fpgrowth</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../frequent_patterns/fpmax/">Fpmax</a>
+</li>
+
+        
     </ul>
   </li>
 
@@ -577,6 +589,12 @@
         
             
 <li >
+    <a href="../plot_pca_correlation_graph/">PCA Correlation Circle</a>
+</li>
+
+        
+            
+<li >
     <a href="../ecdf/">Empirical Cumulative Distribution Function Plot</a>
 </li>
 
@@ -584,6 +602,12 @@
             
 <li >
     <a href="../enrichment_plot/">Enrichment Plot</a>
+</li>
+
+        
+            
+<li >
+    <a href="../heatmap/">Heatmap</a>
 </li>
 
         
@@ -965,6 +989,8 @@
             <li class="second-level"><a href="#example-9-customizing-the-plotting-style">Example 9 - Customizing the plotting style</a></li>
                  <!--   -->
             <li class="second-level"><a href="#example-10-providing-your-own-legend-labels">Example 10 - Providing your own legend labels</a></li>
+                 <!--   -->
+            <li class="second-level"><a href="#example-11-plots-with-different-zoom-factors">Example 11 - Plots with different zoom factors</a></li>
                  <!--   -->
         <li class="first-level "><a href="#api">API</a></li>
     </ul>
@@ -1385,8 +1411,57 @@ plt.show()
 </code></pre>
 
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_34_0.png" /></p>
+<h2 id="example-11-plots-with-different-zoom-factors">Example 11 - Plots with different zoom factors</h2>
+<pre><code class="python">from mlxtend.plotting import plot_decision_regions
+import matplotlib.pyplot as plt
+from sklearn import datasets
+from sklearn.svm import SVC
+
+# Loading some example data
+iris = datasets.load_iris()
+X = iris.data[:, [0, 2]]
+y = iris.target
+
+# Training a classifier
+svm = SVC(C=0.5, kernel='linear')
+svm.fit(X, y)
+</code></pre>
+
+<pre><code>SVC(C=0.5, cache_size=200, class_weight=None, coef0=0.0,
+    decision_function_shape='ovr', degree=3, gamma='auto_deprecated',
+    kernel='linear', max_iter=-1, probability=False, random_state=None,
+    shrinking=True, tol=0.001, verbose=False)
+</code></pre>
+<p><strong>Default Zoom Factor</strong></p>
+<pre><code class="python">plot_decision_regions(X, y, clf=svm, zoom_factor=1.)
+plt.show()
+</code></pre>
+
+<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_38_0.png" /></p>
+<p><strong>Zooming out</strong></p>
+<pre><code class="python">plot_decision_regions(X, y, clf=svm, zoom_factor=0.1)
+plt.show()
+</code></pre>
+
+<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_40_0.png" /></p>
+<p><strong>Zooming in</strong></p>
+<p>Note that while zooming in (by choosing a <code>zoom_factor</code> &gt; 1.0) the plots are still created such that all data points are shown in the plot.</p>
+<pre><code class="python">plot_decision_regions(X, y, clf=svm, zoom_factor=2.0)
+plt.show()
+</code></pre>
+
+<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_43_0.png" /></p>
+<p><strong>Cropping the axes</strong></p>
+<p>In order to zoom in further, which means that some training examples won't be shown, you can simply crop the axes as shown below:</p>
+<pre><code class="python">plot_decision_regions(X, y, clf=svm, zoom_factor=2.0)
+plt.xlim(5, 6)
+plt.ylim(2, 5)
+plt.show()
+</code></pre>
+
+<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_46_0.png" /></p>
 <h1 id="api">API</h1>
-<p><em>plot_decision_regions(X, y, clf, feature_index=None, filler_feature_values=None, filler_feature_ranges=None, ax=None, X_highlight=None, res=None, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors='#1f77b4,#ff7f0e,#3ca02c,#d62728,#9467bd,#8c564b,#e377c2,#7f7f7f,#bcbd22,#17becf', scatter_kwargs=None, contourf_kwargs=None, scatter_highlight_kwargs=None)</em></p>
+<p><em>plot_decision_regions(X, y, clf, feature_index=None, filler_feature_values=None, filler_feature_ranges=None, ax=None, X_highlight=None, res=None, zoom_factor=1.0, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors='#1f77b4,#ff7f0e,#3ca02c,#d62728,#9467bd,#8c564b,#e377c2,#7f7f7f,#bcbd22,#17becf', scatter_kwargs=None, contourf_kwargs=None, scatter_highlight_kwargs=None)</em></p>
 <p>Plot decision regions of a classifier.</p>
 <p>Please note that this functions assumes that class labels are
 labeled consecutively, e.g,. 0, 1, 2, 3, 4, and 5. If you have class
@@ -1442,6 +1517,10 @@ determining the number of points given the figure DPI and size
 automatically for optimal results and computational efficiency.
 To increase the resolution, it's is recommended to use to provide
 a <code>dpi argument via matplotlib, e.g.,</code>plt.figure(dpi=600)`.</p>
+</li>
+<li>
+<p><code>zoom_factor</code> : float (default: 1.0)</p>
+<p>Controls the scale of the x- and y-axis of the decision plot.</p>
 </li>
 <li>
 <p><code>hide_spines</code> : bool (default: True)</p>

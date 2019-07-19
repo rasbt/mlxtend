@@ -92,7 +92,8 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
       >=1 and `low_memory` is `False`, shows the number of combinations.
 
     low_memory : bool (default: False)
-      If `True`, uses an iterator to search for combinations above `min_support`.
+      If `True`, uses an iterator to search for combinations above
+      `min_support`.
       Note that while `low_memory=True` should only be used for large dataset
       if memory resources are limited, because this implementation is approx.
       3-6x slower than the default.

@@ -139,13 +139,10 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
                              'names, please make sure they either start '
                              'with `0` or cast them as string column names: '
                              '`df.columns = [str(i) for i in df.columns`].')
-
         X = df.to_coo().tocsc()
-        support = _support(X, X.shape[0], is_sparse)
     else:
         X = df.values
-        support = _support(X, X.shape[0], is_sparse)
-
+    support = _support(X, X.shape[0], is_sparse)
     ary_col_idx = np.arange(X.shape[1])
     support_dict = {1: support[support >= min_support]}
     itemset_dict = {1: ary_col_idx[support >= min_support].reshape(-1, 1)}
@@ -158,15 +155,6 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
     while max_itemset and max_itemset < (max_len or float('inf')):
         next_max_itemset = max_itemset + 1
         combin = generate_new_combinations(itemset_dict[max_itemset])
-        if not low_memory:
-            combin = np.array(list(combin))
-
-            if combin.size == 0:
-                break
-
-        if verbose and not low_memory:
-            print('\rProcessing %d combinations | Sampling itemset size %d' %
-                  (combin.size, next_max_itemset), end="")
 
         # With exceptionally large datasets, the matrix operations can use a
         # substantial amount of memory. For low memory applications or large
@@ -199,6 +187,15 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
             else:
                 break
         else:
+            combin = np.array(list(combin))
+
+            if combin.size == 0:
+                break
+            if verbose:
+                print(
+                    '\rProcessing %d combinations | Sampling itemset size %d' %
+                    (combin.size, next_max_itemset), end="")
+
             if is_sparse:
                 _bools = X[:, combin[:, 0]] == all_ones
                 for n in range(1, combin.shape[1]):

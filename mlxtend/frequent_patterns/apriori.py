@@ -113,13 +113,26 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
     """
 
     def _support(_x, _n_rows, _is_sparse):
-        """
-        DRY local method to calculate support as the
+        """DRY private method to calculate support as the
         row-wise sum of values / number of rows
-        :param _x: matrix of bools or binary
-        :param _n_rows: numeric, number of rows
-        :param _is_sparse: bool True if _x is sparse
-        :return: np.array, shape = (n_rows, )
+        Parameters
+        -----------
+
+        _x : matrix of bools or binary
+
+        _n_rows : numeric, number of rows in _x
+
+        _is_sparse : bool True if _x is sparse
+
+        Returns
+        -----------
+        np.array, shape = (n_rows, )
+
+        Examples
+        -----------
+        For usage examples, please see
+        http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/
+
         """
         out = (np.sum(_x, axis=0) / _n_rows)
         return np.array(out).reshape(-1)

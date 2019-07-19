@@ -10,12 +10,21 @@ from mlxtend.frequent_patterns.tests.test_fpbase import FPTestAll
 from mlxtend.frequent_patterns import apriori
 
 
+def apriori_wrapper_low_memory(*args, **kwargs):
+    return apriori(*args, **kwargs, low_memory=True)
+
+
 class TestApriori(unittest.TestCase, FPTestAll):
     def setUp(self):
         FPTestAll.setUp(self, apriori)
 
 
-class TestApriori2(unittest.TestCase, FPTestAll):
+class TestAprioriLowMemory(unittest.TestCase, FPTestAll):
+    def setUp(self):
+        FPTestAll.setUp(self, apriori_wrapper_low_memory)
+
+
+class TestAprioriBinaryInput(unittest.TestCase, FPTestAll):
     def setUp(self):
         one_ary = np.array(
             [[False, False, False, True, False, True, True, True, True,

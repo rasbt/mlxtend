@@ -54,6 +54,7 @@ def generate_new_combinations(old_combinations):
 def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
             low_memory=False):
     """Get frequent itemsets from a one-hot DataFrame
+
     Parameters
     -----------
     df : pandas DataFrame or pandas SparseDataFrame
@@ -76,10 +77,10 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
     min_support : float (default: 0.5)
       A float between 0 and 1 for minumum support of the itemsets returned.
       The support is computed as the fraction
-      transactions_where_item(s)_occur / total_transactions.
+      `transactions_where_item(s)_occur / total_transactions`.
 
     use_colnames : bool (default: False)
-      If true, uses the DataFrames' column names in the returned DataFrame
+      If `True`, uses the DataFrames' column names in the returned DataFrame
       instead of column indices.
 
     max_len : int (default: None)
@@ -87,11 +88,14 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
       possible itemsets lengths (under the apriori condition) are evaluated.
 
     verbose : int (default: 0)
-      Shows the number of iterations if 1 and low_memory is True. If
-      low_memory is false, shows the number of combinations.
+      Shows the number of iterations if >= 1 and `low_memory` is `True`. If
+      >=1 and `low_memory` is `False`, shows the number of combinations.
 
     low_memory : bool (default: False)
-      If True, uses an iterator to search for combinations above min_support.
+      If `True`, uses an iterator to search for combinations above `min_support`.
+      Note that while `low_memory=True` should only be used for large dataset
+      if memory resources are limited, because this implementation is approx.
+      3-6x slower than the default.
 
 
     Returns
@@ -115,6 +119,7 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
     def _support(_x, _n_rows, _is_sparse):
         """DRY private method to calculate support as the
         row-wise sum of values / number of rows
+
         Parameters
         -----------
 
@@ -171,7 +176,7 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
 
         # With exceptionally large datasets, the matrix operations can use a
         # substantial amount of memory. For low memory applications or large
-        # datasets, set low_memory = True to use a slower but more memory-
+        # datasets, set `low_memory=True` to use a slower but more memory-
         # efficient implementation.
         if low_memory:
             frequent_items = []

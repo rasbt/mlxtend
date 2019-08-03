@@ -78,6 +78,8 @@ def fpmax_step(tree, minsup, mfit, colnames, max_len, verbose):
     count = 0
     items = list(tree.nodes.keys())
     largest_set = sorted(tree.cond_items+items, key=mfit.rank.get)
+    if len(largest_set) == 0:
+        return
     if tree.is_path():
         if not mfit.contains(largest_set):
             count += 1
@@ -85,7 +87,7 @@ def fpmax_step(tree, minsup, mfit, colnames, max_len, verbose):
             mfit.cache = largest_set
             mfit.insert_itemset(largest_set)
             if max_len is None or len(largest_set) <= max_len:
-                support = min([tree.nodes[i][0].count for i in items])
+                support = tree.root.count
                 yield support, largest_set
 
     if verbose:

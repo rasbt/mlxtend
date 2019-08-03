@@ -123,6 +123,8 @@ class FPTree(object):
         count : int
             The number of occurrences of the itemset.
         """
+        self.root.count += count
+
         if len(itemset) == 0:
             return
 
@@ -162,7 +164,7 @@ class FPTree(object):
 
 
 class FPNode(object):
-    def __init__(self, item, count=1, parent=None):
+    def __init__(self, item, count=0, parent=None):
         self.item = item
         self.count = count
         self.parent = parent

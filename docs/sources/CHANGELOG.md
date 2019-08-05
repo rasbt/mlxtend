@@ -7,12 +7,37 @@ The CHANGELOG for the current development version is available at
 
 ---
 
-### Version 0.17.0dev0 (TBD)
+### Version 0.18.0 (TBD)
 
 ##### Downloads
 
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.18.0.zip)
+
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.18.0.tar.gz)
+
+##### New Features
+
 - -
+
+##### Changes
+
 - -
+
+##### Bug Fixes
+
+- Behavior of `fpgrowth` and `apriori` consistent for edgecases such as `min_support=0`. ([#573](https://github.com/rasbt/mlxtend/pull/550) via [Steve Harenberg](https://github.com/harenbergsd))
+- `fpmax` returns an empty data frame now instead of raising an error if the frequent itemset set is empty. ([#573](https://github.com/rasbt/mlxtend/pull/550) via [Steve Harenberg](https://github.com/harenbergsd))
+
+
+
+
+
+### Version 0.17.0 (07/19/2019)
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.17.0.zip)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.17.0.tar.gz)
 
 ##### New Features
 
@@ -25,6 +50,7 @@ The CHANGELOG for the current development version is available at
 - New `heatmap` function in `mlxtend.plotting`.  ([#552](https://github.com/rasbt/mlxtend/pull/552))
 - Added a function `fpmax` that implements the FP-Max algorithm for mining maximal itemsets as a drop-in replacement for the `fpgrowth` algorithm. ([#553](https://github.com/rasbt/mlxtend/pull/553) via [Steve Harenberg](https://github.com/harenbergsd))
 - New `figsize` parameter for the `plot_decision_regions` function in `mlxtend.plotting`. ([#555](https://github.com/rasbt/mlxtend/pull/555) via [Mirza Hasanbasic](https://github.com/kazyka))
+- New `low_memory` option for the `apriori` frequent itemset generating function. Setting `low_memory=False` (default) uses a substantially optimized version of the algorithm that is 3-6x faster than the original implementation (`low_memory=True`). ([#567](https://github.com/rasbt/mlxtend/pull/567) via [jmayse](https://github.com/jmayse))
 
 ##### Changes
 
@@ -35,6 +61,7 @@ The CHANGELOG for the current development version is available at
 ##### Bug Fixes
 
 - Fixed documentation of `iris_data()` under `iris.py` by adding a note about differences in the iris data in R and UCI machine learning repo.
+- Make sure that if the `'svd'` mode is used in PCA, the number of eigenvalues is the same as when using `'eigen'` (append 0's zeros in that case) ([#565](https://github.com/rasbt/mlxtend/pull/565))
 
 ### Version 0.16.0 (05/12/2019)
 

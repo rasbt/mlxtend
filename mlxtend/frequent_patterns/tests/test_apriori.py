@@ -6,7 +6,8 @@
 
 import unittest
 import numpy as np
-from mlxtend.frequent_patterns.tests.test_fpbase import FPTestAll
+from test_fpbase import FPTestEdgeCases, FPTestErrors, \
+                        FPTestEx1All, FPTestEx2All
 from mlxtend.frequent_patterns import apriori
 
 
@@ -14,17 +15,27 @@ def apriori_wrapper_low_memory(*args, **kwargs):
     return apriori(*args, **kwargs, low_memory=True)
 
 
-class TestApriori(unittest.TestCase, FPTestAll):
+class TestEdgeCases(unittest.TestCase, FPTestEdgeCases):
     def setUp(self):
-        FPTestAll.setUp(self, apriori)
+        FPTestEdgeCases.setUp(self, apriori)
 
 
-class TestAprioriLowMemory(unittest.TestCase, FPTestAll):
+class TestErrors(unittest.TestCase, FPTestErrors):
     def setUp(self):
-        FPTestAll.setUp(self, apriori_wrapper_low_memory)
+        FPTestErrors.setUp(self, apriori)
 
 
-class TestAprioriBinaryInput(unittest.TestCase, FPTestAll):
+class TestApriori(unittest.TestCase, FPTestEx1All):
+    def setUp(self):
+        FPTestEx1All.setUp(self, apriori)
+
+
+class TestAprioriLowMemory(unittest.TestCase, FPTestEx1All):
+    def setUp(self):
+        FPTestEx1All.setUp(self, apriori_wrapper_low_memory)
+
+
+class TestAprioriBoolInput(unittest.TestCase, FPTestEx1All):
     def setUp(self):
         one_ary = np.array(
             [[False, False, False, True, False, True, True, True, True,
@@ -37,4 +48,9 @@ class TestAprioriBinaryInput(unittest.TestCase, FPTestAll):
               True, True],
              [False, True, False, True, True, True, False, False, True,
               False, False]])
-        FPTestAll.setUp(self, apriori, one_ary=one_ary)
+        FPTestEx1All.setUp(self, apriori, one_ary=one_ary)
+
+
+class TestEx2(unittest.TestCase, FPTestEx2All):
+    def setUp(self):
+        FPTestEx2All.setUp(self, apriori)

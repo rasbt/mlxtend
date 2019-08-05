@@ -160,6 +160,10 @@ class PrincipalComponentAnalysis(_BaseModel):
             u, s, v = np.linalg.svd(mat_centered.T)
             e_vecs, e_vals = u, s
             e_vals = e_vals ** 2 / n_samples
+            if e_vals.shape[0] < e_vecs.shape[1]:
+                new_e_vals = np.zeros(e_vecs.shape[1])
+                new_e_vals[:e_vals.shape[0]] = e_vals
+                e_vals = new_e_vals
 
         sort_idx = np.argsort(e_vals)[::-1]
         e_vals, e_vecs = e_vals[sort_idx], e_vecs[:, sort_idx]

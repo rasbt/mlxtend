@@ -7,33 +7,55 @@
 import numpy as np
 from numpy.testing import assert_array_equal
 from mlxtend.utils import assert_raises
+from mlxtend.preprocessing import TransactionEncoder
 import pandas as pd
+import sys
+from contextlib import contextmanager
+from io import StringIO
 
 
-class FPTestBase(object):
+@contextmanager
+def captured_output():
+    new_out, new_err = StringIO(), StringIO()
+    old_out, old_err = sys.stdout, sys.stderr
+    try:
+        sys.stdout, sys.stderr = new_out, new_err
+        yield sys.stdout, sys.stderr
+    finally:
+        sys.stdout, sys.stderr = old_out, old_err
+
+
+class FPTestEdgeCases(object):
     """
-    Base testing class for frequent pattern mining. This class should include
-    setup and tests common to all methods (e.g., error for improper input)
+    Base class for testing edge cases for pattern mining.
     """
 
-    def setUp(self, fpalgo, one_ary=None):
-        if one_ary is None:
-            self.one_ary = np.array(
-               [[0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1],
-                [0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1],
-                [1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0],
-                [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1],
-                [0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0]])
+    def setUp(self, fpalgo):
+        self.fpalgo = fpalgo
 
-        else:
-            self.one_ary = one_ary
+    def test_empty(self):
+        df = pd.DataFrame([[]])
+        res_df = self.fpalgo(df)
+        expect = pd.DataFrame([], columns=['support', 'itemsets'])
+        compare_dataframes(res_df, expect)
 
+
+class FPTestErrors(object):
+    """
+    Base class for testing expected errors for pattern mining.
+    """
+
+    def setUp(self, fpalgo):
+        self.one_ary = np.array(
+            [[0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1],
+             [0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1],
+             [1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0],
+             [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1],
+             [0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0]])
         self.cols = ['Apple', 'Corn', 'Dill', 'Eggs', 'Ice cream',
                      'Kidney Beans', 'Milk',
                      'Nutmeg', 'Onion', 'Unicorn', 'Yogurt']
-
         self.df = pd.DataFrame(self.one_ary, columns=self.cols)
-
         self.fpalgo = fpalgo
 
     def test_itemsets_type(self):
@@ -70,6 +92,31 @@ class FPTestBase(object):
                       '`df.columns = [str(i) for i in df.columns`].',
                       self.fpalgo, dfs)
 
+
+class FPTestEx1(object):
+    """
+    Base class for testing frequent pattern mining on a small example.
+    """
+
+    def setUp(self, fpalgo, one_ary=None):
+        if one_ary is None:
+            self.one_ary = np.array(
+                [[0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1],
+                 [0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1],
+                 [1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0],
+                 [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1],
+                 [0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0]])
+        else:
+            self.one_ary = one_ary
+
+        self.cols = ['Apple', 'Corn', 'Dill', 'Eggs', 'Ice cream',
+                     'Kidney Beans', 'Milk',
+                     'Nutmeg', 'Onion', 'Unicorn', 'Yogurt']
+
+        self.df = pd.DataFrame(self.one_ary, columns=self.cols)
+
+        self.fpalgo = fpalgo
+
     def test_frozenset_selection(self):
         res_df = self.fpalgo(self.df, use_colnames=True)
         assert res_df.values.shape == self.fpalgo(self.df).values.shape
@@ -103,9 +150,9 @@ class FPTestBase(object):
         test_with_fill_values(False)
 
 
-class FPTestAll(FPTestBase):
+class FPTestEx1All(FPTestEx1):
     def setUp(self, fpalgo, one_ary=None):
-        FPTestBase.setUp(self, fpalgo, one_ary=one_ary)
+        FPTestEx1.setUp(self, fpalgo, one_ary=one_ary)
 
     def test_default(self):
         res_df = self.fpalgo(self.df)
@@ -133,28 +180,50 @@ class FPTestAll(FPTestBase):
         max_len = np.max(res_df2['itemsets'].apply(len))
         assert max_len == 2
 
+    def test_low_memory_flag(self):
+        import inspect
+        if 'low_memory' in inspect.signature(self.fpalgo).parameters:
+            with captured_output() as (out, err):
+                _ = self.fpalgo(self.df, low_memory=True, verbose=1)
 
-class FPTestMaximal(FPTestBase):
-    def setUp(self, fpalgo, one_ary=None):
-        FPTestBase.setUp(self, fpalgo, one_ary=one_ary)
+            # Only get the last value of the stream to reduce test noise
+            expect = 'Iteration: 17 | Sampling itemset size 3\n'
+            out = out.getvalue().split('\r')[-1]
+            assert out == expect
+        else:
+            # If there is no low_memory argument, don't run the test.
+            assert True
 
-    def test_default(self):
-        res_df = self.fpalgo(self.df)
-        expect = pd.DataFrame([[0.6, frozenset([5, 6])],
-                               [0.6, frozenset([5, 10])],
-                               [0.6, frozenset([3, 5, 8])]],
+
+class FPTestEx2(object):
+    """
+    Base class for testing frequent pattern mining on a small example.
+    """
+
+    def setUp(self):
+        database = [['a'], ['b'], ['c', 'd'], ['e']]
+        te = TransactionEncoder()
+        te_ary = te.fit(database).transform(database)
+
+        self.df = pd.DataFrame(te_ary, columns=te.columns_)
+
+
+class FPTestEx2All(FPTestEx2):
+    def setUp(self, fpalgo):
+        self.fpalgo = fpalgo
+        FPTestEx2.setUp(self)
+
+    def test_output(self):
+        res_df = self.fpalgo(self.df, min_support=0.001, use_colnames=True)
+        expect = pd.DataFrame([[0.25, frozenset(['a'])],
+                               [0.25, frozenset(['b'])],
+                               [0.25, frozenset(['c'])],
+                               [0.25, frozenset(['d'])],
+                               [0.25, frozenset(['e'])],
+                               [0.25, frozenset(['c', 'd'])]],
                               columns=['support', 'itemsets'])
 
         compare_dataframes(res_df, expect)
-
-    def test_max_len(self):
-        res_df1 = self.fpalgo(self.df)
-        max_len = np.max(res_df1['itemsets'].apply(len))
-        assert max_len == 3
-
-        res_df2 = self.fpalgo(self.df, max_len=2)
-        max_len = np.max(res_df2['itemsets'].apply(len))
-        assert max_len == 2
 
 
 def compare_dataframes(df1, df2):

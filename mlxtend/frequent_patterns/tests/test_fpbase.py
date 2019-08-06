@@ -226,6 +226,33 @@ class FPTestEx2All(FPTestEx2):
         compare_dataframes(res_df, expect)
 
 
+class FPTestEx3(object):
+    """
+    Base class for testing frequent pattern mining on a small example.
+    """
+
+    def setUp(self):
+        database = [['a'], ['b'], ['c', 'd'], ['e']]
+        te = TransactionEncoder()
+        te_ary = te.fit(database).transform(database)
+
+        self.df = pd.DataFrame(te_ary, columns=te.columns_)
+
+
+class FPTestEx3All(FPTestEx3):
+    def setUp(self, fpalgo):
+        self.fpalgo = fpalgo
+        FPTestEx3.setUp(self)
+
+    def test_output3(self):
+        assert_raises(ValueError,
+                      '`min_support` must be a positive '
+                      'number within the interval `(0, 1]`. Got 0.0.',
+                      self.fpalgo,
+                      self.df,
+                      min_support=0.)
+
+
 def compare_dataframes(df1, df2):
     itemsets1 = [sorted(list(i)) for i in df1['itemsets']]
     itemsets2 = [sorted(list(i)) for i in df2['itemsets']]

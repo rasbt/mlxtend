@@ -2,7 +2,8 @@ import unittest
 import pandas as pd
 import numpy as np
 from mlxtend.frequent_patterns import fpmax
-from test_fpbase import FPTestEdgeCases, FPTestErrors, FPTestEx1, FPTestEx2
+from test_fpbase import FPTestEdgeCases, FPTestErrors, FPTestEx1, FPTestEx2, \
+    FPTestEx3All
 from test_fpbase import compare_dataframes
 
 
@@ -60,7 +61,7 @@ class TestEx2(unittest.TestCase, FPTestEx2):
         FPTestEx2.setUp(self)
 
     def test_output(self):
-        res_df = fpmax(self.df, min_support=0, use_colnames=True)
+        res_df = fpmax(self.df, min_support=0.001, use_colnames=True)
         expect = pd.DataFrame([[0.25, frozenset(['a'])],
                                [0.25, frozenset(['b'])],
                                [0.25, frozenset(['c', 'd'])],
@@ -68,3 +69,8 @@ class TestEx2(unittest.TestCase, FPTestEx2):
                               columns=['support', 'itemsets'])
 
         compare_dataframes(res_df, expect)
+
+
+class TestEx3(unittest.TestCase, FPTestEx3All):
+    def setUp(self):
+        FPTestEx3All.setUp(self, fpmax)

@@ -60,6 +60,11 @@ def fpgrowth(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
     """
     fpc.valid_input_check(df)
 
+    if min_support <= 0.:
+        raise ValueError('`min_support` must be a positive '
+                         'number within the interval `(0, 1]`. '
+                         'Got %s.' % min_support)
+
     colname_map = None
     if use_colnames:
         colname_map = {idx: item for idx, item in enumerate(df.columns)}

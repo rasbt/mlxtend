@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 from test_fpbase import FPTestEdgeCases, FPTestErrors, \
-                        FPTestEx1All, FPTestEx2All
+                        FPTestEx1All, FPTestEx2All, FPTestEx3All
 from mlxtend.frequent_patterns import fpgrowth
 
 
@@ -39,3 +39,8 @@ class TestEx1BoolInput(unittest.TestCase, FPTestEx1All):
 class TestEx2(unittest.TestCase, FPTestEx2All):
     def setUp(self):
         FPTestEx2All.setUp(self, fpgrowth)
+
+
+class TestEx3(unittest.TestCase, FPTestEx3All):
+    def setUp(self):
+        FPTestEx3All.setUp(self, fpgrowth)

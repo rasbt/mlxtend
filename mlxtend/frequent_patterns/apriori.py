@@ -143,6 +143,11 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
         out = (np.sum(_x, axis=0) / _n_rows)
         return np.array(out).reshape(-1)
 
+    if min_support <= 0.:
+        raise ValueError('`min_support` must be a positive '
+                         'number within the interval `(0, 1]`. '
+                         'Got %s.' % min_support)
+
     idxs = np.where((df.values != 1) & (df.values != 0))
     if len(idxs[0]) > 0:
         val = df.values[idxs[0][0], idxs[1][0]]

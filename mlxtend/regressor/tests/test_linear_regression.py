@@ -164,7 +164,7 @@ def test_multivariate_qr():
 def test_multivariate_svd():
     w_exp = np.array([[5.1], [-0.6]])
     b_exp = np.array([-1.5])
-    svd_lr = LinearRegression(method='direct')
+    svd_lr = LinearRegression(method='svd')
     svd_lr.fit(X_rm_lstat, y)
     assert_almost_equal(svd_lr.w_, w_exp, decimal=1)
     assert_almost_equal(svd_lr.b_, b_exp, decimal=1)

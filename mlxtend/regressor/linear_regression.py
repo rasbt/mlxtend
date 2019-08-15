@@ -21,13 +21,17 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
     ------------
     eta : float (default: 0.01)
         solver rate (between 0.0 and 1.0)
+    method : string (default: 'sgd')
+        Which method do you want to use to solve it.
+        For Gradient Descent, use 'sgd', for QR decomposition method, use 
+        'qr', for SVD method, use 'svd'and for direct analytical method, 
+        use 'direct'.
     epochs : int (default: 50)
         Passes over the training dataset.
         Prior to each epoch, the dataset is shuffled
         if `minibatches > 1` to prevent cycles in stochastic gradient descent.
-    minibatches : int (default: None)
+    minibatches : int (default: 1)
         The number of minibatches for gradient-based optimization.
-        If None: Normal Equations (closed-form solution)
         If 1: Gradient Descent learning
         If len(y): Stochastic Gradient Descent learning
         If 1 < minibatches < len(y): Minibatch learning
@@ -56,8 +60,8 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
     http://rasbt.github.io/mlxtend/user_guide/regressor/LinearRegression/
 
     """
-    def __init__(self, eta=0.01, epochs=50,
-                 minibatches=None, random_seed=None,
+    def __init__(self, eta=0.01, method='sgd', epochs=50,
+                 minibatches=1, random_seed=None,
                  print_progress=0):
 
         _BaseModel.__init__(self)
@@ -69,6 +73,7 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
         self.random_seed = random_seed
         self.print_progress = print_progress
         self._is_fitted = False
+        self.method = method
 
     def _fit(self, X, y, init_params=True):
 
@@ -79,11 +84,11 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
                 random_seed=self.random_seed)
             self.cost_ = []
 
-        if self.minibatches is None:
+        # Direct analytical method
+        if self.method == 'direct':
             self.b_, self.w_ = self._normal_equation(X, y)
-
         # Gradient descent or stochastic gradient descent learning
-        else:
+        elif self.method == 'sgd':
             self.init_time_ = time()
             rgen = np.random.RandomState(self.random_seed)
             for i in range(self.epochs):
@@ -106,6 +111,17 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
                     self._print_progress(iteration=(i + 1),
                                          n_iter=self.epochs,
                                          cost=cost)
+        # Solve using QR decomposition
+        elif self.method == 'qr':
+            Xb = np.hstack((np.ones((X.shape[0], 1)), X))
+            Q, R = np.linalg.qr(Xb)
+            beta = np.dot(np.linalg.inv(R), np.dot(Q.T, y))
+            self.b_, self.w_ = np.array([beta[0]]), beta[1:].reshape(X.shape[1], 1)
+        # Solve using SVD
+        elif self.method == 'svd':
+            Xb = np.hstack((np.ones((X.shape[0], 1)), X))
+            beta = np.dot(np.linalg.pinv(Xb), y)
+            self.b_, self.w_ = np.array([beta[0]]), beta[1:].reshape(X.shape[1], 1)
 
         return self
 

@@ -116,12 +116,14 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
             Xb = np.hstack((np.ones((X.shape[0], 1)), X))
             Q, R = np.linalg.qr(Xb)
             beta = np.dot(np.linalg.inv(R), np.dot(Q.T, y))
-            self.b_, self.w_ = np.array([beta[0]]), beta[1:].reshape(X.shape[1], 1)
+            self.b_ = np.array([beta[0]])
+            self.w_ = beta[1:].reshape(X.shape[1], 1)
         # Solve using SVD
         elif self.method == 'svd':
             Xb = np.hstack((np.ones((X.shape[0], 1)), X))
             beta = np.dot(np.linalg.pinv(Xb), y)
-            self.b_, self.w_ = np.array([beta[0]]), beta[1:].reshape(X.shape[1], 1)
+            self.b_ = np.array([beta[0]])
+            self.w_ = beta[1:].reshape(X.shape[1], 1)
 
         return self
 

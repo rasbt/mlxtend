@@ -21,7 +21,7 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
     ------------
     eta : float (default: 0.01)
         solver rate (between 0.0 and 1.0)
-    method : string (default: 'sgd')
+    method : string (default: 'direct')
         Which method do you want to use to solve it.
         For Gradient Descent, use 'sgd', for QR decomposition method, use
         'qr', for SVD method, use 'svd'and for direct analytical method,
@@ -30,8 +30,9 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
         Passes over the training dataset.
         Prior to each epoch, the dataset is shuffled
         if `minibatches > 1` to prevent cycles in stochastic gradient descent.
-    minibatches : int (default: 1)
+    minibatches : int (default: None)
         The number of minibatches for gradient-based optimization.
+        If None: Direct method, QR or SVD method
         If 1: Gradient Descent learning
         If len(y): Stochastic Gradient Descent learning
         If 1 < minibatches < len(y): Minibatch learning
@@ -60,8 +61,8 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
     http://rasbt.github.io/mlxtend/user_guide/regressor/LinearRegression/
 
     """
-    def __init__(self, eta=0.01, method='sgd', epochs=50,
-                 minibatches=1, random_seed=None,
+    def __init__(self, eta=0.01, method='direct', epochs=50,
+                 minibatches=None, random_seed=None,
                  print_progress=0):
 
         _BaseModel.__init__(self)

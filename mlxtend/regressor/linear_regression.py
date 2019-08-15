@@ -23,8 +23,8 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
         solver rate (between 0.0 and 1.0)
     method : string (default: 'sgd')
         Which method do you want to use to solve it.
-        For Gradient Descent, use 'sgd', for QR decomposition method, use 
-        'qr', for SVD method, use 'svd'and for direct analytical method, 
+        For Gradient Descent, use 'sgd', for QR decomposition method, use
+        'qr', for SVD method, use 'svd'and for direct analytical method,
         use 'direct'.
     epochs : int (default: 50)
         Passes over the training dataset.

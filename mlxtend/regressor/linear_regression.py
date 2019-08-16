@@ -19,22 +19,32 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
 
     Parameters
     ------------
+    method : string (default: 'direct')
+        For gradient descent-based optimization, use `sgd` (see `minibatch`
+        parameter for further options). Otherwise, if `direct` (default),
+        the analytical method is used. For alternative, numerically more
+        stable solutions, use either `qr` (QR decomopisition) or `svd`
+        (Singular Value Decomposition).
     eta : float (default: 0.01)
-        solver rate (between 0.0 and 1.0)
+        solver learning rate (between 0.0 and 1.0). Used with `method =`
+        `'sgd'`. (See `methods` parameter for details)
     epochs : int (default: 50)
         Passes over the training dataset.
         Prior to each epoch, the dataset is shuffled
         if `minibatches > 1` to prevent cycles in stochastic gradient descent.
+        Used with `method = 'sgd'`. (See `methods` parameter for details)
     minibatches : int (default: None)
         The number of minibatches for gradient-based optimization.
-        If None: Normal Equations (closed-form solution)
+        If None: Direct method, QR, or SVD method (see `method` parameter
+                 for details)
         If 1: Gradient Descent learning
         If len(y): Stochastic Gradient Descent learning
         If 1 < minibatches < len(y): Minibatch learning
     random_seed : int (default: None)
-        Set random state for shuffling and initializing the weights.
+        Set random state for shuffling and initializing the weights. Used in
+        `method = 'sgd'`. (See `methods` parameter for details)
     print_progress : int (default: 0)
-        Prints progress in fitting to stderr if not solver='normal equation'
+        Prints progress in fitting to stderr if `method = 'sgd'`.
         0: No output
         1: Epochs elapsed and cost
         2: 1 plus time elapsed
@@ -56,7 +66,7 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
     http://rasbt.github.io/mlxtend/user_guide/regressor/LinearRegression/
 
     """
-    def __init__(self, eta=0.01, epochs=50,
+    def __init__(self, method='direct', eta=0.01, epochs=50,
                  minibatches=None, random_seed=None,
                  print_progress=0):
 
@@ -69,6 +79,17 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
         self.random_seed = random_seed
         self.print_progress = print_progress
         self._is_fitted = False
+        self.method = method
+
+        if method != 'sgd' and minibatches is not None:
+            raise ValueError(('Minibatches should be set to `None` '
+                              'if `method` != `sgd`. Got method=`%s`.')
+                             % (method))
+
+        supported_methods = ('sgd', 'direct', 'svd', 'qr')
+        if method not in supported_methods:
+            raise ValueError('`method` must be in %s. Got %s.' % (
+                             supported_methods, method))
 
     def _fit(self, X, y, init_params=True):
 
@@ -79,11 +100,11 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
                 random_seed=self.random_seed)
             self.cost_ = []
 
-        if self.minibatches is None:
+        # Direct analytical method
+        if self.method == 'direct':
             self.b_, self.w_ = self._normal_equation(X, y)
-
         # Gradient descent or stochastic gradient descent learning
-        else:
+        elif self.method == 'sgd':
             self.init_time_ = time()
             rgen = np.random.RandomState(self.random_seed)
             for i in range(self.epochs):
@@ -106,6 +127,19 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
                     self._print_progress(iteration=(i + 1),
                                          n_iter=self.epochs,
                                          cost=cost)
+        # Solve using QR decomposition
+        elif self.method == 'qr':
+            Xb = np.hstack((np.ones((X.shape[0], 1)), X))
+            Q, R = np.linalg.qr(Xb)
+            beta = np.dot(np.linalg.inv(R), np.dot(Q.T, y))
+            self.b_ = np.array([beta[0]])
+            self.w_ = beta[1:].reshape(X.shape[1], 1)
+        # Solve using SVD
+        elif self.method == 'svd':
+            Xb = np.hstack((np.ones((X.shape[0], 1)), X))
+            beta = np.dot(np.linalg.pinv(Xb), y)
+            self.b_ = np.array([beta[0]])
+            self.w_ = beta[1:].reshape(X.shape[1], 1)
 
         return self
 

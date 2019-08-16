@@ -51,6 +51,7 @@ The CHANGELOG for the current development version is available at
 - Added a function `fpmax` that implements the FP-Max algorithm for mining maximal itemsets as a drop-in replacement for the `fpgrowth` algorithm. ([#553](https://github.com/rasbt/mlxtend/pull/553) via [Steve Harenberg](https://github.com/harenbergsd))
 - New `figsize` parameter for the `plot_decision_regions` function in `mlxtend.plotting`. ([#555](https://github.com/rasbt/mlxtend/pull/555) via [Mirza Hasanbasic](https://github.com/kazyka))
 - New `low_memory` option for the `apriori` frequent itemset generating function. Setting `low_memory=False` (default) uses a substantially optimized version of the algorithm that is 3-6x faster than the original implementation (`low_memory=True`). ([#567](https://github.com/rasbt/mlxtend/pull/567) via [jmayse](https://github.com/jmayse))
+- Added numerically stable OLS methods which uses `QR decomposition` and `Singular Value Decomposition` (SVD) methods to `LinearRegression` in `mlxtend.regressor.linear_regression`. ([#575](https://github.com/rasbt/mlxtend/pull/575) via [PuneetGrov3r](https://github.com/PuneetGrov3r))
 
 ##### Changes
 

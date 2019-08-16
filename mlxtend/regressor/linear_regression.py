@@ -19,32 +19,27 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
 
     Parameters
     ------------
-    method : string (default: 'direct')
-        For gradient descent-based optimization, use `sgd` (see `minibatch`
-        parameter for further options). Otherwise, if `direct` (default),
-        the analytical method is used. For alternative, numerically more
-        stable solutions, use either `qr` (QR decomopisition) or `svd`
-        (Singular Value Decomposition).
     eta : float (default: 0.01)
-        solver learning rate (between 0.0 and 1.0). Used with `method =`
-        `'sgd'`. (See `methods` parameter for details)
+        solver rate (between 0.0 and 1.0)
+    method : string (default: 'direct')
+        Which method do you want to use to solve it.
+        For Gradient Descent, use 'sgd', for QR decomposition method, use
+        'qr', for SVD method, use 'svd'and for direct analytical method,
+        use 'direct'.
     epochs : int (default: 50)
         Passes over the training dataset.
         Prior to each epoch, the dataset is shuffled
         if `minibatches > 1` to prevent cycles in stochastic gradient descent.
-        Used with `method = 'sgd'`. (See `methods` parameter for details)
     minibatches : int (default: None)
         The number of minibatches for gradient-based optimization.
-        If None: Direct method, QR, or SVD method (see `method` parameter
-                 for details)
+        If None: Direct method, QR or SVD method
         If 1: Gradient Descent learning
         If len(y): Stochastic Gradient Descent learning
         If 1 < minibatches < len(y): Minibatch learning
     random_seed : int (default: None)
-        Set random state for shuffling and initializing the weights. Used in
-        `method = 'sgd'`. (See `methods` parameter for details)
+        Set random state for shuffling and initializing the weights.
     print_progress : int (default: 0)
-        Prints progress in fitting to stderr if `method = 'sgd'`.
+        Prints progress in fitting to stderr if not solver='normal equation'
         0: No output
         1: Epochs elapsed and cost
         2: 1 plus time elapsed
@@ -80,16 +75,6 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
         self.print_progress = print_progress
         self._is_fitted = False
         self.method = method
-
-        if method != 'sgd' and minibatches is not None:
-            raise ValueError(('Minibatches should be set to `None` '
-                              'if `method` != `sgd`. Got method=`%s`.')
-                             % (method))
-
-        supported_methods = ('sgd', 'direct', 'svd', 'qr')
-        if method not in supported_methods:
-            raise ValueError('`method` must be in %s. Got %s.' % (
-                             supported_methods, method))
 
     def _fit(self, X, y, init_params=True):
 

@@ -53,6 +53,24 @@ def test_univariate_gradient_descent():
     assert_almost_equal(gd_lr.b_, b_exp, decimal=1)
 
 
+def test_univariate_qr():
+    w_exp = np.array([[9.1]])
+    b_exp = np.array([-34.7])
+    qr_lr = LinearRegression(method='qr')
+    qr_lr.fit(X_rm, y)
+    assert_almost_equal(qr_lr.w_, w_exp, decimal=1)
+    assert_almost_equal(qr_lr.b_, b_exp, decimal=1)
+
+
+def test_univariate_svd():
+    w_exp = np.array([[9.1]])
+    b_exp = np.array([-34.7])
+    svd_lr = LinearRegression(method='svd')
+    svd_lr.fit(X_rm, y)
+    assert_almost_equal(svd_lr.w_, w_exp, decimal=1)
+    assert_almost_equal(svd_lr.b_, b_exp, decimal=1)
+
+
 def test_progress_1():
     gd_lr = LinearRegression(method='sgd',
                              minibatches=1,
@@ -140,6 +158,24 @@ def test_ary_persistency_in_shuffling():
                               random_seed=0)
     sgd_lr.fit(X_rm_lstat_std, y_std)
     np.testing.assert_almost_equal(orig, X_rm_lstat_std, 6)
+
+
+def test_multivariate_qr():
+    w_exp = np.array([[5.1], [-0.6]])
+    b_exp = np.array([-1.5])
+    qr_lr = LinearRegression(method='qr')
+    qr_lr.fit(X_rm_lstat, y)
+    assert_almost_equal(qr_lr.w_, w_exp, decimal=1)
+    assert_almost_equal(qr_lr.b_, b_exp, decimal=1)
+
+
+def test_multivariate_svd():
+    w_exp = np.array([[5.1], [-0.6]])
+    b_exp = np.array([-1.5])
+    svd_lr = LinearRegression(method='svd')
+    svd_lr.fit(X_rm_lstat, y)
+    assert_almost_equal(svd_lr.w_, w_exp, decimal=1)
+    assert_almost_equal(svd_lr.b_, b_exp, decimal=1)
 
 
 def test_clone():

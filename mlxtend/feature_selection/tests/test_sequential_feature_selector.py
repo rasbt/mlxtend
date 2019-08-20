@@ -278,7 +278,7 @@ def test_knn_rbf_groupkfold():
                 y_new.append(0)
             else:
                 y_new.append(1)
-    y_new_bool = [True if item is 1 else False for item in y_new]
+    y_new_bool = [True if item == 1 else False for item in y_new]
     cv_obj = GroupKFold(n_splits=3)
     cv_obj_list = list(cv_obj.split(X, np.array(y_new_bool), groups))
     sfs1 = SFS(forest,

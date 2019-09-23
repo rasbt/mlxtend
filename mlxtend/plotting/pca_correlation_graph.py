@@ -1,3 +1,4 @@
+
 # mlxtend Machine Learning Library Extensions
 #
 # A function for plotting a PCA correlation circle
@@ -10,9 +11,26 @@ from mlxtend.externals.adjust_text import adjust_text
 from mlxtend.feature_extraction import PrincipalComponentAnalysis
 
 
+def corr2_coeff(A, B):
+    """
+    Compute correlation coefficients and return as a np array
+    """
+    A, B = np.array(A), np.array(B)
+    # Rowwise mean of input arrays & subtract from input arrays themeselves
+    A_mA = A - A.mean(1)[:, None]
+    B_mB = B - B.mean(1)[:, None]
+
+    # Sum of squares across rows
+    ssA = (A_mA**2).sum(1)
+    ssB = (B_mB**2).sum(1)
+
+    # Finally get corr coeff
+    return np.dot(A_mA, B_mB.T) / np.sqrt(np.dot(ssA[:, None], ssB[None]))
+
+
 def create_correlation_table(A, B, names_cols_A, names_cols_B):
     """
-    Compute the correlation coefficients and return as a DataFrame.
+    Compute correlation coefficients and return as a DataFrame.
 
     A and B: 2d array like.
         The columns represent the different variables and the rows are
@@ -22,15 +40,17 @@ def create_correlation_table(A, B, names_cols_A, names_cols_B):
     return: pandas DataFrame with the corelations.Columns and Indexes
     represent the different variables of A and B (respectvely)
     """
-    corrs = np.corrcoef(np.transpose(A), np.transpose(B)
-                        )[len(names_cols_A):, :len(names_cols_A)]
+    # corrs = np.corrcoef(np.transpose(A), np.transpose(B)
+    #                     )[len(names_cols_A):, :len(names_cols_A)]
+    corrs = corr2_coeff(A.T, B.T).T
+
     df_corrs = pd.DataFrame(corrs,
                             columns=names_cols_A, index=names_cols_B)
     return df_corrs
 
 
 def plot_pca_correlation_graph(X, variables_names, dimensions=(1, 2),
-                               figure_axis_size=6, X_pca=None):
+                               figure_axis_size=6):
     """
     Compute the PCA for X and plots the Correlation graph
 
@@ -55,10 +75,9 @@ def plot_pca_correlation_graph(X, variables_names, dimensions=(1, 2),
     X = X - X.mean(axis=0)
     n_comp = max(dimensions)
 
-    if X_pca is None:
-        pca = PrincipalComponentAnalysis(n_components=n_comp)
-        pca.fit(X)
-        X_pca = pca.transform(X)
+    pca = PrincipalComponentAnalysis(n_components=n_comp)
+    pca.fit(X)
+    X_pca = pca.transform(X)
 
     corrs = create_correlation_table(X_pca, X, ['Dim ' + str(i + 1) for i in
                                                 range(n_comp)],
@@ -95,9 +114,9 @@ def plot_pca_correlation_graph(X, variables_names, dimensions=(1, 2),
     plt.title("Correlation Circle", fontsize=figure_axis_size * 3)
 
     plt.xlabel("Dim " + str(dimensions[0]) + " (%s%%)" %
-               str(explained_var_ratio[dimensions[0] - 1])[:4].lstrip("0."),
+               str(explained_var_ratio[dimensions[0] - 1])[:4],
                fontsize=figure_axis_size * 2)
     plt.ylabel("Dim " + str(dimensions[1]) + " (%s%%)" %
-               str(explained_var_ratio[dimensions[1] - 1])[:4].lstrip("0."),
+               str(explained_var_ratio[dimensions[1] - 1])[:4],
                fontsize=figure_axis_size * 2)
     return fig_res, corrs

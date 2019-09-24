@@ -96,7 +96,6 @@ def plot_pca_correlation_graph(X, variables_names, dimensions=(1, 2),
         pca.fit(X)
         X_pca = pca.transform(X)
         explained_variance = pca.e_vals_
-        print(explained_variance)
 
     if X_pca.shape[1] < n_comp:
         raise ValueError(f"Input array `X_pca` contains fewer principal"

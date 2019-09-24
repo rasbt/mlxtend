@@ -159,7 +159,7 @@ class PrincipalComponentAnalysis(_BaseModel):
             mat_centered = mat - mat.mean(axis=0)
             u, s, v = np.linalg.svd(mat_centered.T)
             e_vecs, e_vals = u, s
-            e_vals = e_vals ** 2 / n_samples
+            e_vals = e_vals ** 2 / (n_samples-1)
             if e_vals.shape[0] < e_vecs.shape[1]:
                 new_e_vals = np.zeros(e_vecs.shape[1])
                 new_e_vals[:e_vals.shape[0]] = e_vals

@@ -50,7 +50,7 @@ def create_correlation_table(A, B, names_cols_A, names_cols_B):
 
 
 def plot_pca_correlation_graph(X, variables_names, dimensions=(1, 2),
-                               figure_axis_size=6):
+                               figure_axis_size=6, X_pca=None, explained_variance=None):
     """
     Compute the PCA for X and plots the Correlation graph
 
@@ -59,31 +59,60 @@ def plot_pca_correlation_graph(X, variables_names, dimensions=(1, 2),
     X : 2d array like.
         The columns represent the different variables and the rows are the
          samples of thos variables
+
     variables_names : array like
         Name of the columns (the variables) of X
+
     dimensions: tuple with two elements.
         dimensions to be plot (x,y)
-    X_pca : optional. if not provided, compute PCA independently
+
     figure_axis_size :
          size of the final frame. The figure created is a square with length
          and width equal to figure_axis_size.
+
+    X_pca : np.ndarray, shape = [n_samples, n_components].
+        Optional.
+        `X_pca` is the matrix of the transformed components from X.
+        If not provided, the function computes PCA independently
+        Expected `n_componentes >= max(dimensions)`
+
+    explained_variance : 1 dimension np.ndarray, length = n_components
+        Optional.
+        `explained_variance` are the eigenvalues from the diagonalized covariance matrix on the PCA transformatiopn.
+        If not provided, the function computes PCA independently
+        Expected `n_componentes == X.shape[1]`
+
     Returns
     ----------
         matplotlib_figure , correlation_matrix
     """
+
     X = np.array(X)
     X = X - X.mean(axis=0)
     n_comp = max(dimensions)
 
-    pca = PrincipalComponentAnalysis(n_components=n_comp)
-    pca.fit(X)
-    X_pca = pca.transform(X)
+    if (X_pca is None) or (explained_variance is None):
+        pca = PrincipalComponentAnalysis(n_components=n_comp)
+        pca.fit(X)
+        X_pca = pca.transform(X)
+        explained_variance = pca.e_vals_
+        print(explained_variance)
+
+    if X_pca.shape[1] < n_comp:
+        raise ValueError(f"Input array `X_pca` contains fewer principal"
+                         f" components than expected based on `dimensions`."
+                         f" Got {X_pca.shape[1]} components in X_pca,"
+                         f" expected at least `max(dimensions)={n_components}`.")
+    if len(explained_variance) < n_comp:
+        raise ValueError(f"Input array `explained_variance` contains fewer elements"
+                         f" than expected. Got {len(explained_variance)} elements,"
+                         f" expected `X.shape[1]={X.shape[1]}`.")
 
     corrs = create_correlation_table(X_pca, X, ['Dim ' + str(i + 1) for i in
                                                 range(n_comp)],
                                      variables_names)
-    tot = sum(pca.e_vals_)
-    explained_var_ratio = [(i / tot) * 100 for i in pca.e_vals_]
+    tot = sum(X.var(0))
+    explained_var_ratio = [(i / tot) * 100 for i in explained_variance]
 
     # Plotting circle
     fig_res = plt.figure(figsize=(figure_axis_size, figure_axis_size))

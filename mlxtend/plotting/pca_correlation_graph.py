@@ -50,7 +50,7 @@ def create_correlation_table(A, B, names_cols_A, names_cols_B):
 
 
 def plot_pca_correlation_graph(X, variables_names, dimensions=(1, 2),
-                               figure_axis_size=6, X_pca=None, 
+                               figure_axis_size=6, X_pca=None,
                                explained_variance=None):
     """
     Compute the PCA for X and plots the Correlation graph
@@ -79,7 +79,7 @@ def plot_pca_correlation_graph(X, variables_names, dimensions=(1, 2),
 
     explained_variance : 1 dimension np.ndarray, length = n_components
         Optional.
-        `explained_variance` are the eigenvalues from the diagonalized 
+        `explained_variance` are the eigenvalues from the diagonalized
         covariance matrix on the PCA transformatiopn.
         If not provided, the function computes PCA independently
         Expected `n_componentes == X.shape[1]`
@@ -113,7 +113,7 @@ def plot_pca_correlation_graph(X, variables_names, dimensions=(1, 2),
     corrs = create_correlation_table(X_pca, X, ['Dim ' + str(i + 1) for i in
                                                 range(n_comp)],
                                      variables_names)
-    tot = sum(X.var(0))
+    tot = sum(X.var(0)) * X.shape[0] / (X.shape[0] - 1)
     explained_var_ratio = [(i / tot) * 100 for i in explained_variance]
 
     # Plotting circle

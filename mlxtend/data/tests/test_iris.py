@@ -31,6 +31,6 @@ def test_iris_data_r():
 
 
 def test_iris_invalid_choice():
-    with pytest.raises(TypeError) as excinfo:
-        iris_data()
-        assert excinfo.value.message == ('wrong-choice')
+    with pytest.raises(ValueError) as excinfo:
+        iris_data(version='bla')
+        assert excinfo.value.message == "version must be 'uci' or 'corrected'."

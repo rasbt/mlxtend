@@ -65,7 +65,7 @@ def plot_pca_correlation_graph(X, variables_names, dimensions=(1, 2),
         Name of the columns (the variables) of X
 
     dimensions: tuple with two elements.
-        dimensions to be plot (x,y)
+        dimensions to be plotted (x,y)
 
     figure_axis_size :
          size of the final frame. The figure created is a square with length
@@ -74,7 +74,8 @@ def plot_pca_correlation_graph(X, variables_names, dimensions=(1, 2),
     X_pca : np.ndarray, shape = [n_samples, n_components].
         Optional.
         `X_pca` is the matrix of the transformed components from X.
-        If not provided, the function computes PCA independently
+        If not provided, the function computes PCA automatically using
+        mlxtend.feature_extraction.PrincipalComponentAnalysis
         Expected `n_componentes >= max(dimensions)`
 
     explained_variance : 1 dimension np.ndarray, length = n_components
@@ -93,21 +94,38 @@ def plot_pca_correlation_graph(X, variables_names, dimensions=(1, 2),
     X = X - X.mean(axis=0)
     n_comp = max(dimensions)
 
-    if (X_pca is None) or (explained_variance is None):
+    if (X_pca is None) and (explained_variance is None):
         pca = PrincipalComponentAnalysis(n_components=n_comp)
         pca.fit(X)
         X_pca = pca.transform(X)
         explained_variance = pca.e_vals_
 
+    elif (X_pca is not None) and (explained_variance is None):
+        raise ValueError("If `X_pca` is not None, the `explained variance`"
+                         " values should not be `None`.")
+
+    elif (X_pca is None) and (explained_variance is not None):
+        raise ValueError("If `explained variance` is not None, the `X_pca`"
+                         " values should not be `None`.")
+
+    elif (X_pca is not None) and (explained_variance is not None):
+        if X_pca.shape[1] != len(explained_variance):
+            raise ValueError(f"Number of principal components must "
+                             f"match the number "
+                             f"of eigenvalues. Got "
+                             f"{X_pca.shape[1]} "
+                             f"!= "
+                             f"{len(explained_variance)}")
+
     if X_pca.shape[1] < n_comp:
         raise ValueError(f"Input array `X_pca` contains fewer principal"
-                         f" components than expected based on `dimensions`. "
-                         f"Got {X_pca.shape[1]} components in X_pca, expected"
-                         f" at least `max(dimensions)={n_components}`.")
+                         f" components than expected based on `dimensions`."
+                         f" Got {X_pca.shape[1]} components in X_pca, expected"
+                         f" at least `max(dimensions)={n_comp}`.")
     if len(explained_variance) < n_comp:
-        raise ValueError(f"Input array `explained_variance` contains fewer "
-                         f"elements than expected. Got "
-                         f"{len(explained_variance)} elements, expected"
+        raise ValueError(f"Input array `explained_variance` contains fewer"
+                         f" elements than expected. Got"
+                         f" {len(explained_variance)} elements, expected"
                          f"`X.shape[1]={X.shape[1]}`.")
 
     corrs = create_correlation_table(X_pca, X, ['Dim ' + str(i + 1) for i in

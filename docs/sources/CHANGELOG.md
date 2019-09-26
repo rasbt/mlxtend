@@ -24,7 +24,7 @@ The CHANGELOG for the current development version is available at
 - -
 
 ##### Bug Fixes
-
+- Fixes a bug in `mlxtend.plotting.plot_pca_correlation_graph` that caused the explaind variances not summing up to 1. Also, improves the runtime performance of the correlation computation and adds a missing function argument for the explained variances (eigenvalues) if users provide their own principal components. ([#593](https://github.com/rasbt/mlxtend/issues/593) via [Gabriel Azevedo Ferreira](https://github.com/Gabriel-Azevedo-Ferreira))
 - Behavior of `fpgrowth` and `apriori` consistent for edgecases such as `min_support=0`. ([#573](https://github.com/rasbt/mlxtend/pull/573) via [Steve Harenberg](https://github.com/harenbergsd))
 - `fpmax` returns an empty data frame now instead of raising an error if the frequent itemset set is empty. ([#573](https://github.com/rasbt/mlxtend/pull/573) via [Steve Harenberg](https://github.com/harenbergsd))
 - Fixes and issue in `mlxtend.plotting.plot_confusion_matrix`, where the font-color choice for medium-dark cells was not ideal and hard to read. [#588](https://github.com/rasbt/mlxtend/pull/588) via [sohrabtowfighi](https://github.com/sohrabtowfighi))

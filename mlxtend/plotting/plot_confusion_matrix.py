@@ -91,18 +91,27 @@ def plot_confusion_matrix(conf_mat,
                     cell_text += format(normed_conf_mat[i, j], '.2f') + ')'
             else:
                 cell_text += format(normed_conf_mat[i, j], '.2f')
-            ax.text(x=j,
-                    y=i,
-                    s=cell_text,
-                    va='center',
-                    ha='center',
-                    color="white" if normed_conf_mat[i, j] > 0.5 else "black")
-    
+            if show_normed:
+                ax.text(x=j,
+                        y=i,
+                        s=cell_text,
+                        va='center',
+                        ha='center',
+                        color="white" if normed_conf_mat[i, j] > 0.5
+                        else "black")
+            else:
+                ax.text(x=j,
+                        y=i,
+                        s=cell_text,
+                        va='center',
+                        ha='center',
+                        color="white" if conf_mat[i, j] > np.max(conf_mat)/2
+                        else "black")
     if class_names is not None:
         tick_marks = np.arange(len(class_names))
         plt.xticks(tick_marks, class_names, rotation=45)
         plt.yticks(tick_marks, class_names)
-        
+
     if hide_spines:
         ax.spines['right'].set_visible(False)
         ax.spines['top'].set_visible(False)

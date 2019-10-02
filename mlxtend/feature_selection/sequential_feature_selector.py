@@ -131,6 +131,15 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         if False. Set to False if the estimator doesn't
         implement scikit-learn's set_params and get_params methods.
         In addition, it is required to set cv=0, and n_jobs=1.
+    fixed_features : tuple (default: None)
+        If not `None`, the feature indices provided as a tuple will be
+        regarded as fixed by the feature selector. For example, if
+        `fixed_features=(1, 3, 7)`, the 2nd, 4th, and 8th feature are
+        guaranteed to be present in the solution. Note that if
+        `fixed_features` is not `None`, make sure that the number of
+        features to be selected is greater than `len(fixed_features)`.
+        In other words, ensure that `k_features > len(fixed_features)`.
+        New in mlxtend v. 0.18.0.
 
     Attributes
     ----------
@@ -170,7 +179,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                  verbose=0, scoring=None,
                  cv=5, n_jobs=1,
                  pre_dispatch='2*n_jobs',
-                 clone_estimator=True):
+                 clone_estimator=True,
+                 fixed_features=None):
 
         self.estimator = estimator
         self.k_features = k_features
@@ -190,6 +200,28 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self.n_jobs = n_jobs
         self.verbose = verbose
         self.clone_estimator = clone_estimator
+
+        if fixed_features is not None:
+            if isinstance(self.k_features, int) and \
+                    self.k_features <= len(fixed_features):
+                raise ValueError('Number of features to be selected must'
+                                 ' be larger than the number of'
+                                 ' features specified via `fixed_features`.'
+                                 ' Got `k_features=%d` and'
+                                 ' `fixed_features=%d`' %
+                                 (k_features, len(fixed_features)))
+
+            elif isinstance(self.k_features, tuple) and \
+                    self.k_features[0] <= len(fixed_features):
+                raise ValueError('The minimum number of features to'
+                                 ' be selected must'
+                                 ' be larger than the number of'
+                                 ' features specified via `fixed_features`.'
+                                 ' Got `k_features=%s` and '
+                                 '`len(fixed_features)=%d`' %
+                                 (k_features, len(fixed_features)))
+
+        self.fixed_features = fixed_features
 
         if self.clone_estimator:
             self.est_ = clone(self.estimator)
@@ -281,10 +313,21 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self.k_feature_names_ = None
         self.k_score_ = None
 
+        self.fixed_features_ = self.fixed_features
+        self.fixed_features_set_ = set()
+
         if hasattr(X, 'loc'):
             X_ = X.values
+            if self.fixed_features is not None:
+                self.fixed_features_ = tuple(X.columns.get_loc(c)
+                                             if isinstance(c, str) else c
+                                             for c in self.fixed_features
+                                             )
         else:
             X_ = X
+
+        if self.fixed_features is not None:
+            self.fixed_features_set_ = set(self.fixed_features_)
 
         if (custom_feature_names is not None
                 and len(custom_feature_names) != X.shape[1]):
@@ -341,19 +384,35 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             select_in_range = False
             k_to_select = self.k_features
 
-        self.subsets_ = {}
         orig_set = set(range(X_.shape[1]))
         n_features = X_.shape[1]
+
+        if self.forward and self.fixed_features is not None:
+            orig_set = set(range(X_.shape[1])) - self.fixed_features_set_
+            n_features = len(orig_set)
 
         if self.forward:
             if select_in_range:
                 k_to_select = max_k
-            k_idx = ()
-            k = 0
+
+            if self.fixed_features is not None:
+                k_idx = self.fixed_features_
+                k = len(k_idx)
+                k_idx, k_score = _calc_score(self, X_, y, k_idx,
+                                             groups=groups, **fit_params)
+                self.subsets_[k] = {
+                    'feature_idx': k_idx,
+                    'cv_scores': k_score,
+                    'avg_score': np.nanmean(k_score)
+                }
+
+            else:
+                k_idx = ()
+                k = 0
         else:
             if select_in_range:
                 k_to_select = min_k
-            k_idx = tuple(range(X_.shape[1]))
+            k_idx = tuple(orig_set)
             k = len(k_idx)
             k_idx, k_score = _calc_score(self, X_, y, k_idx,
                                          groups=groups, **fit_params)
@@ -379,12 +438,12 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                         **fit_params
                     )
                 else:
-
                     k_idx, k_score, cv_scores = self._exclusion(
                         feature_set=prev_subset,
                         X=X_,
                         y=y,
                         groups=groups,
+                        fixed_feature=self.fixed_features_set_,
                         **fit_params
                     )
 
@@ -406,14 +465,23 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                             (new_feature,) = set(k_idx) ^ prev_subset
 
                         if self.forward:
-                            k_idx_c, k_score_c, cv_scores_c = self._exclusion(
-                                feature_set=k_idx,
-                                fixed_feature=new_feature,
-                                X=X_,
-                                y=y,
-                                groups=groups,
-                                **fit_params
-                            )
+
+                            fixed_features_ok = True
+                            if self.fixed_features is not None and \
+                                    len(self.fixed_features) - len(k_idx) <= 1:
+                                fixed_features_ok = False
+                            if fixed_features_ok:
+                                k_idx_c, k_score_c, cv_scores_c = \
+                                    self._exclusion(
+                                        feature_set=k_idx,
+                                        fixed_feature=(
+                                            {new_feature} |
+                                            self.fixed_features_set_),
+                                        X=X_,
+                                        y=y,
+                                        groups=groups,
+                                        **fit_params
+                                    )
 
                         else:
                             k_idx_c, k_score_c, cv_scores_c = self._inclusion(
@@ -565,7 +633,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             work = parallel(delayed(_calc_score)(self, X, y, p,
                                                  groups=groups, **fit_params)
                             for p in combinations(feature_set, r=n - 1)
-                            if not fixed_feature or fixed_feature in set(p))
+                            if not fixed_feature or
+                            fixed_feature.issubset(set(p)))
 
             for p, cv_scores in work:
 

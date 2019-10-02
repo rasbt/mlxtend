@@ -59,11 +59,13 @@ def test_evals():
 
     pca = PCA(n_components=2, solver='eigen')
     pca.fit(X_std)
-    assert_almost_equal(pca.e_vals_, [2.9, 0.9, 0.2, 0.02], decimal=1)
+
+    expected = [2.93035378, 0.92740362, 0.14834223, 0.02074601]
+    assert_almost_equal(pca.e_vals_, expected, decimal=5)
 
     pca = PCA(n_components=2, solver='svd')
     pca.fit(X_std)
-    assert_almost_equal(pca.e_vals_, [2.9, 0.9, 0.2, 0.02], decimal=1)
+    assert_almost_equal(pca.e_vals_, expected, decimal=5)
 
 
 def test_loadings():

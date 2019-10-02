@@ -19,7 +19,7 @@ else
 fi
     
 
-bash miniconda.sh -b -p $HOME/miniconda
+bash miniconda.sh -b -p "$HOME/miniconda"
 export PATH="$HOME/miniconda/bin:$PATH"
 hash -r
 conda config --set always_yes yes --set changeps1 no
@@ -27,13 +27,13 @@ conda update -q conda
 conda update -q pip
 conda info -a
 
-conda create -q -n test-environment python=$MINICONDA_PYTHON_VERSION
+conda create -q -n test-environment python="$MINICONDA_PYTHON_VERSION"
 source activate test-environment
 
 if [ "${LATEST}" = "true" ]; then
     conda install numpy scipy pandas scikit-learn joblib
 else
-    conda install numpy=$NUMPY_VERSION scipy=$SCIPY_VERSION pandas=$PANDAS_VERSION scikit-learn=$SKLEARN_VERSION joblib=$JOBLIB_VERSION
+    conda install numpy="$NUMPY_VERSION" scipy="$SCIPY_VERSION" pandas="$PANDAS_VERSION" scikit-learn="$SKLEARN_VERSION" joblib="$JOBLIB_VERSION"
 fi
 
 

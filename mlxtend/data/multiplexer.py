@@ -12,8 +12,7 @@ import numpy as np
 def make_multiplexer_dataset(address_bits=2, sample_size=100,
                              positive_class_ratio=0.5, shuffle=False,
                              random_seed=None):
-    """
-    Function to create a binary n-bit multiplexer dataset.
+    """Function to create a binary n-bit multiplexer dataset.
 
     New in mlxtend v0.9
 
@@ -66,7 +65,6 @@ def make_multiplexer_dataset(address_bits=2, sample_size=100,
     http://rasbt.github.io/mlxtend/user_guide/data/make_multiplexer_dataset
 
     """
-
     if not isinstance(address_bits, int):
         raise AttributeError('address_bits'
                              ' must be an integer. Got %s.' %

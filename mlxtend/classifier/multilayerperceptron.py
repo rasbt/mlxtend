@@ -18,6 +18,7 @@ from .._base import _Classifier
 
 class MultiLayerPerceptron(_BaseModel, _IterativeModel,
                            _MultiClass, _MultiLayer, _Classifier):
+
     """Multi-layer perceptron classifier with logistic sigmoid activations
 
     Parameters
@@ -78,6 +79,7 @@ class MultiLayerPerceptron(_BaseModel, _IterativeModel,
     http://rasbt.github.io/mlxtend/user_guide/classifier/MultiLayerPerceptron/
 
     """
+
     def __init__(self, eta=0.5, epochs=50,
                  hidden_layers=[50],
                  n_classes=None,

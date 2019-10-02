@@ -4,16 +4,12 @@
 Please insert a brief description of the Pull request here
 -->
 
-
-
 ### Related issues or pull requests
 
 <!--  
 If applicable, please link related issues/pull request here. E.g.,   
 Fixes #366
 -->
-
-
 
 ### Pull Request Checklist
 
@@ -22,8 +18,6 @@ Fixes #366
 - [ ] Modify documentation in the corresponding Jupyter Notebook under `mlxtend/docs/sources/` (if applicable)
 - [ ] Ran `PYTHONPATH='.' pytest ./mlxtend -sv` and make sure that all unit tests pass (for small modifications, it might be sufficient to only run the specific test file, e.g., `PYTHONPATH='.' pytest ./mlxtend/classifier/tests/test_stacking_cv_classifier.py -sv`)
 - [ ] Checked for style issues by running `flake8 ./mlxtend`
-
-
 
 
 <!--NOTE  

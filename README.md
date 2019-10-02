@@ -1,8 +1,7 @@
-
 [![DOI](http://joss.theoj.org/papers/10.21105/joss.00638/status.svg)](https://doi.org/10.21105/joss.00638)
 [![Build Status](https://travis-ci.org/rasbt/mlxtend.svg?branch=master)](https://travis-ci.org/rasbt/mlxtend)
 [![Build status](https://ci.appveyor.com/api/projects/status/7vx20e0h5dxcyla2/branch/master?svg=true)](https://ci.appveyor.com/project/rasbt/mlxtend/branch/master)
-[![Code Health](https://landscape.io/github/rasbt/mlxtend/master/landscape.svg?style=flat)](https://landscape.io/github/rasbt/mlxtend/master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2a199e28871c477d9ecf6e200b4977b9)](https://www.codacy.com/manual/rasbt/mlxtend?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rasbt/mlxtend&amp;utm_campaign=Badge_Grade)
 [![Coverage Status](https://coveralls.io/repos/rasbt/mlxtend/badge.svg?branch=master&service=github)](https://coveralls.io/github/rasbt/mlxtend?branch=master)
 ![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)
 ![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg)
@@ -11,17 +10,13 @@
 
 ![](./docs/sources/img/logo.png)
 
-
 **Mlxtend (machine learning extensions) is a Python library of useful tools for the day-to-day data science tasks.**
-
-
 
 <br>
 
 Sebastian Raschka 2014-2019
 
 <br>
-
 
 ## Links
 
@@ -33,7 +28,6 @@ Sebastian Raschka 2014-2019
 
 <br>
 <br>
-
 
 ## Installing mlxtend
 
@@ -74,7 +68,6 @@ python setup.py install
 
 <br>
 <br>
-
 
 ## Examples
 

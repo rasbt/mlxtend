@@ -90,8 +90,8 @@ class StackingClassifier(_BaseXComposition, ClassifierMixin,
     -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/classifier/StackingClassifier/
-
     """
+
     def __init__(self, classifiers, meta_classifier,
                  use_probas=False, drop_last_proba=False,
                  average_probas=False, verbose=0,

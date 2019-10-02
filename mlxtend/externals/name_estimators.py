@@ -1,10 +1,8 @@
 from ..externals import six
 from collections import defaultdict
 
-"""
-The :mod:`sklearn.pipeline` module implements utilities to build a composite
-estimator, as a chain of transforms and estimators.
-"""
+# The :mod:`sklearn.pipeline` module implements utilities to build a composite
+# estimator, as a chain of transforms and estimators.
 # Author: Edouard Duchesnay
 #         Gael Varoquaux
 #         Virgile Fritsch
@@ -18,7 +16,7 @@ def _name_estimators(estimators):
 
     names = [type(estimator).__name__.lower() for estimator in estimators]
     namecount = defaultdict(int)
-    for est, name in zip(estimators, names):
+    for _, name in zip(estimators, names):
         namecount[name] += 1
 
     for k, v in list(six.iteritems(namecount)):

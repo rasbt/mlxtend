@@ -1,4 +1,3 @@
-
 [![DOI](http://joss.theoj.org/papers/10.21105/joss.00638/status.svg)](https://doi.org/10.21105/joss.00638)
 [![Build Status](https://travis-ci.org/rasbt/mlxtend.svg?branch=master)](https://travis-ci.org/rasbt/mlxtend)
 [![Build status](https://ci.appveyor.com/api/projects/status/7vx20e0h5dxcyla2/branch/master?svg=true)](https://ci.appveyor.com/project/rasbt/mlxtend/branch/master)
@@ -11,17 +10,13 @@
 
 ![](./docs/sources/img/logo.png)
 
-
 **Mlxtend (machine learning extensions) is a Python library of useful tools for the day-to-day data science tasks.**
-
-
 
 <br>
 
 Sebastian Raschka 2014-2019
 
 <br>
-
 
 ## Links
 
@@ -33,7 +28,6 @@ Sebastian Raschka 2014-2019
 
 <br>
 <br>
-
 
 ## Installing mlxtend
 
@@ -74,7 +68,6 @@ python setup.py install
 
 <br>
 <br>
-
 
 ## Examples
 

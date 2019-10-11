@@ -19,7 +19,7 @@ from sklearn.base import TransformerMixin
 from sklearn.base import clone
 from sklearn.model_selection import cross_val_predict
 from sklearn.model_selection._split import check_cv
-from sklearn.utils import check_X_y
+# from sklearn.utils import check_X_y
 
 
 class StackingCVClassifier(_BaseXComposition, ClassifierMixin,
@@ -207,8 +207,11 @@ class StackingCVClassifier(_BaseXComposition, ClassifierMixin,
             final_cv.shuffle = self.shuffle
             final_cv.random_state = self.random_state
 
-        # Input validation.
-        X, y = check_X_y(X, y, accept_sparse=['csc', 'csr'], dtype=None)
+        # Disable global input validation, because it causes issue when
+        # pipelines are used that perform preprocessing on X. I.e., X may
+        # not be directly passed to the classifiers, which is why this code
+        # would raise unecessary errors at this point.
+        # X, y = check_X_y(X, y, accept_sparse=['csc', 'csr'], dtype=None)
 
         if sample_weight is None:
             fit_params = None

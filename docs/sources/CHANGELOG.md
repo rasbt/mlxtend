@@ -29,7 +29,7 @@ The CHANGELOG for the current development version is available at
 - `fpmax` returns an empty data frame now instead of raising an error if the frequent itemset set is empty. ([#573](https://github.com/rasbt/mlxtend/pull/573) via [Steve Harenberg](https://github.com/harenbergsd))
 - Fixes and issue in `mlxtend.plotting.plot_confusion_matrix`, where the font-color choice for medium-dark cells was not ideal and hard to read. [#588](https://github.com/rasbt/mlxtend/pull/588) via [sohrabtowfighi](https://github.com/sohrabtowfighi))
 - The `svd` mode of `mlxtend.feature_extraction.PrincipalComponentAnalysis` now also *n-1* degrees of freedom instead of *n* d.o.f. when computing the eigenvalues to match the behavior of `eigen`. [#595](https://github.com/rasbt/mlxtend/pull/595)
-
+- Disable input validation for `StackingCVClassifier` because it causes issues if pipelines are used as input. [#606](https://github.com/rasbt/mlxtend/pull/606)
 
 
 

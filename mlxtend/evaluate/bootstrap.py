@@ -27,7 +27,7 @@ def bootstrap(x, func, num_rounds=1000, ci=0.95, ddof=1, seed=None):
         or vector.
 
     num_rounds : int (default=1000)
-        The number of bootstrap samnples to draw where each
+        The number of bootstrap samples to draw where each
         bootstrap sample has the same number of records as the
         original dataset.
 

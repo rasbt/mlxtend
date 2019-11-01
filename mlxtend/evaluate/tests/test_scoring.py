@@ -120,7 +120,7 @@ def test_avg_perclass_accuracy():
     y_pred = np.array([0, 1, 1, 0, 1, 1, 2, 2, 2, 2])
     res = scoring(y_target=y_targ,
                   y_predicted=y_pred,
-                  metric='per-class accuracy')
+                  metric='average per-class accuracy')
     assert round(res, 3) == 0.667, res
 
 
@@ -129,5 +129,5 @@ def test_avg_perclass_error():
     y_pred = np.array([0, 1, 1, 0, 1, 1, 2, 2, 2, 2])
     res = scoring(y_target=y_targ,
                   y_predicted=y_pred,
-                  metric='per-class error')
+                  metric='average per-class error')
     assert round(res, 3) == 0.333, res

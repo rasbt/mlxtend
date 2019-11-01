@@ -39,8 +39,8 @@ def scoring(y_target, y_predicted, metric='error',
     metric : str (default: 'error')
         Performance metric:
         'accuracy': (TP + TN)/(FP + FN + TP + TN) = 1-ERR\n
-        'per-class accuracy': Average per-class accuracy\n
-        'per-class error':  Average per-class error\n
+        'average per-class accuracy': Average per-class accuracy\n
+        'average per-class error':  Average per-class error\n
         'error': (TP + TN)/(FP+ FN + TP + TN) = 1-ACC\n
         'false_positive_rate': FP/N = FP/(FP + TN)\n
         'true_positive_rate': TP/P = TP/(FN + TP)\n
@@ -74,8 +74,8 @@ def scoring(y_target, y_predicted, metric='error',
     """
     implemented = {'error',
                    'accuracy',
-                   'per-class accuracy',
-                   'per-class error',
+                   'average per-class accuracy',
+                   'average per-class error',
                    'false_positive_rate',
                    'true_positive_rate',
                    'true_negative_rate',
@@ -110,12 +110,12 @@ def scoring(y_target, y_predicted, metric='error',
         res = _accuracy(targ_tmp, pred_tmp)
     elif metric == 'error':
         res = _error(targ_tmp, pred_tmp)
-    elif metric == 'per-class accuracy':
+    elif metric == 'average per-class accuracy':
         res = _macro(targ_tmp,
                      pred_tmp,
                      func=_accuracy,
                      unique_labels=unique_labels)
-    elif metric == 'per-class error':
+    elif metric == 'average per-class error':
         res = _macro(targ_tmp,
                      pred_tmp,
                      func=_error,

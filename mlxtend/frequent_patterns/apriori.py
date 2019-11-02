@@ -44,11 +44,11 @@ def generate_new_combinations(old_combinations):
 
     items_types_in_previous_step = np.unique(old_combinations.flatten())
     for old_combination in old_combinations:
-        max_combination = max(old_combination)
-        for item in items_types_in_previous_step:
-            if item > max_combination:
-                res = tuple(old_combination) + (item,)
-                yield res
+        max_combination = old_combination[-1]
+        valid_items = items_types_in_previous_step[items_types_in_previous_step > max_combination]
+        old_tuple = tuple(old_combination)
+        for item in valid_items:
+            yield old_tuple + (item,)
 
 
 def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,

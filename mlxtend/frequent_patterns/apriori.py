@@ -30,10 +30,7 @@ def generate_new_combinations(old_combinations):
     Returns
     -----------
     Generator of all combinations from the last step x items
-    from the previous step. Every combination is a tuple
-    of item type ids in the ascending order.
-    No combination other than generated
-    do not have a chance to get enough support
+    from the previous step.
 
     Examples
     -----------
@@ -48,7 +45,8 @@ def generate_new_combinations(old_combinations):
         valid_items = items_types_in_previous_step[items_types_in_previous_step > max_combination]
         old_tuple = tuple(old_combination)
         for item in valid_items:
-            yield old_tuple + (item,)
+            yield from old_tuple
+            yield item
 
 
 def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
@@ -189,7 +187,7 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
             frequent_items_support = []
             if is_sparse:
                 all_ones = np.ones((X.shape[0], next_max_itemset))
-            for c in combin:
+            for c in zip(*[iter(combin)] * next_max_itemset):
                 if verbose:
                     iter_count += 1
                     print('\rIteration: %d | Sampling itemset size %d' %
@@ -211,7 +209,8 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
             else:
                 break
         else:
-            combin = np.array(list(combin))
+            combin = generate_new_combinations(itemset_dict[max_itemset])
+            combin = np.fromiter(combin, dtype=int).reshape(-1, next_max_itemset)
 
             if combin.size == 0:
                 break

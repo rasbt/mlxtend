@@ -49,6 +49,84 @@ def generate_new_combinations(old_combinations):
             yield item
 
 
+def generate_new_combinations_low_memory(old_combinations, X, min_support, is_sparse):
+    """
+    Generator of all combinations based on the last state of Apriori algorithm
+    Parameters
+    -----------
+    old_combinations: np.array
+        All combinations with enough support in the last step
+        Combinations are represented by a matrix.
+        Number of columns is equal to the combination size
+        of the previous step.
+        Each row represents one combination
+        and contains item type ids in the ascending order
+        ```
+               0        1
+        0      15       20
+        1      15       22
+        2      17       19
+        ```
+
+    X: np.array or scipy sparse matrix
+      The allowed values are either 0/1 or True/False.
+      For example,
+
+    ```
+        0      1     0     1     1     0     1
+        1      1     0     1     0     0     1
+        2      1     0     1     0     0     0
+        3      1     1     0     0     0     0
+        4      0     0     1     1     1     1
+        5      0     0     1     0     1     1
+        6      0     0     1     0     1     0
+        7      1     1     0     0     0     0
+    ```
+
+    min_support : float (default: 0.5)
+      A float between 0 and 1 for minumum support of the itemsets returned.
+      The support is computed as the fraction
+      `transactions_where_item(s)_occur / total_transactions`.
+
+    is_sparse : bool True if X is sparse
+
+    Returns
+    -----------
+    Generator of all combinations from the last step x items
+    from the previous step. Every combination contains the
+    number of transactions where this item occurs, followed
+    by item type ids in the ascending order.
+    No combination other than generated
+    do not have a chance to get enough support
+
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/generate_new_combinations/
+
+    """
+
+    items_types_in_previous_step = np.unique(old_combinations.flatten())
+    rows_count = X.shape[0]
+    threshold = min_support * rows_count
+    for old_combination in old_combinations:
+        max_combination = old_combination[-1]
+        valid_items = items_types_in_previous_step[items_types_in_previous_step > max_combination]
+        old_tuple = tuple(old_combination)
+        if is_sparse:
+            mask_rows = X[:, old_tuple].toarray().all(axis=1)
+            X_cols = X[:, valid_items].toarray()
+            supports = X_cols[mask_rows].sum(axis=0)
+        else:
+            mask_rows = X[:, old_tuple].all(axis=1)
+            supports = X[mask_rows][:, valid_items].sum(axis=0)
+        valid_indices = (supports >= threshold).nonzero()[0]
+        for index in valid_indices:
+            yield supports[index]
+            yield from old_tuple
+            yield valid_items[index]
+
+
 def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
             low_memory=False):
     """Get frequent itemsets from a one-hot DataFrame
@@ -171,43 +249,30 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
     max_itemset = 1
     rows_count = float(X.shape[0])
 
-    iter_count = 0
     all_ones = np.ones((int(rows_count), 1))
 
     while max_itemset and max_itemset < (max_len or float('inf')):
         next_max_itemset = max_itemset + 1
-        combin = generate_new_combinations(itemset_dict[max_itemset])
 
         # With exceptionally large datasets, the matrix operations can use a
         # substantial amount of memory. For low memory applications or large
         # datasets, set `low_memory=True` to use a slower but more memory-
         # efficient implementation.
         if low_memory:
-            frequent_items = []
-            frequent_items_support = []
-            if is_sparse:
-                all_ones = np.ones((X.shape[0], next_max_itemset))
-            for c in zip(*[iter(combin)] * next_max_itemset):
-                if verbose:
-                    iter_count += 1
-                    print('\rIteration: %d | Sampling itemset size %d' %
-                          (iter_count, next_max_itemset), end="")
-                if is_sparse:
-                    together = np.all(X[:, c] == all_ones, axis=1)
-                else:
-                    together = X[:, c].all(axis=1)
-                support = together.sum() / rows_count
-                if support >= min_support:
-                    frequent_items.append(c)
-                    frequent_items_support.append(support)
+            combin = generate_new_combinations_low_memory(itemset_dict[max_itemset], X, min_support, is_sparse)
+            # slightly faster than creating an array from a list of tuples
+            combin = np.fromiter(combin, dtype=int).reshape(-1, next_max_itemset + 1)
 
-            if frequent_items:
-                itemset_dict[next_max_itemset] = np.array(frequent_items)
-                support_dict[next_max_itemset] = \
-                    np.array(frequent_items_support)
-                max_itemset = next_max_itemset
-            else:
+            if combin.size == 0:
                 break
+            if verbose:
+                print(
+                    '\rProcessing %d valid combinations | Sampling itemset size %d' %
+                    (combin.size, next_max_itemset), end="")
+
+            itemset_dict[next_max_itemset] = combin[:, 1:]
+            support_dict[next_max_itemset] = combin[:, 0].astype(float) / rows_count
+            max_itemset = next_max_itemset
         else:
             combin = generate_new_combinations(itemset_dict[max_itemset])
             combin = np.fromiter(combin, dtype=int).reshape(-1, next_max_itemset)

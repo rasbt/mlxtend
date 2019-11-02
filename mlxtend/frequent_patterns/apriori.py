@@ -42,14 +42,16 @@ def generate_new_combinations(old_combinations):
     items_types_in_previous_step = np.unique(old_combinations.flatten())
     for old_combination in old_combinations:
         max_combination = old_combination[-1]
-        valid_items = items_types_in_previous_step[items_types_in_previous_step > max_combination]
+        mask = items_types_in_previous_step > max_combination
+        valid_items = items_types_in_previous_step[mask]
         old_tuple = tuple(old_combination)
         for item in valid_items:
             yield from old_tuple
             yield item
 
 
-def generate_new_combinations_low_memory(old_combinations, X, min_support, is_sparse):
+def generate_new_combinations_low_memory(old_combinations, X, min_support,
+                                         is_sparse):
     """
     Generator of all combinations based on the last state of Apriori algorithm
     Parameters
@@ -111,7 +113,8 @@ def generate_new_combinations_low_memory(old_combinations, X, min_support, is_sp
     threshold = min_support * rows_count
     for old_combination in old_combinations:
         max_combination = old_combination[-1]
-        valid_items = items_types_in_previous_step[items_types_in_previous_step > max_combination]
+        mask = items_types_in_previous_step > max_combination
+        valid_items = items_types_in_previous_step[mask]
         old_tuple = tuple(old_combination)
         if is_sparse:
             mask_rows = X[:, old_tuple].toarray().all(axis=1)
@@ -259,23 +262,27 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
         # datasets, set `low_memory=True` to use a slower but more memory-
         # efficient implementation.
         if low_memory:
-            combin = generate_new_combinations_low_memory(itemset_dict[max_itemset], X, min_support, is_sparse)
+            combin = generate_new_combinations_low_memory(
+                itemset_dict[max_itemset], X, min_support, is_sparse)
             # slightly faster than creating an array from a list of tuples
-            combin = np.fromiter(combin, dtype=int).reshape(-1, next_max_itemset + 1)
+            combin = np.fromiter(combin, dtype=int)
+            combin = combin.reshape(-1, next_max_itemset + 1)
 
             if combin.size == 0:
                 break
             if verbose:
                 print(
-                    '\rProcessing %d valid combinations | Sampling itemset size %d' %
+                    '\rProcessing %d combinations | Sampling itemset size %d' %
                     (combin.size, next_max_itemset), end="")
 
             itemset_dict[next_max_itemset] = combin[:, 1:]
-            support_dict[next_max_itemset] = combin[:, 0].astype(float) / rows_count
+            support_dict[next_max_itemset] = combin[:, 0].astype(float) \
+                / rows_count
             max_itemset = next_max_itemset
         else:
             combin = generate_new_combinations(itemset_dict[max_itemset])
-            combin = np.fromiter(combin, dtype=int).reshape(-1, next_max_itemset)
+            combin = np.fromiter(combin, dtype=int)
+            combin = combin.reshape(-1, next_max_itemset)
 
             if combin.size == 0:
                 break

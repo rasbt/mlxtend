@@ -187,7 +187,7 @@ class FPTestEx1All(FPTestEx1):
                 _ = self.fpalgo(self.df, low_memory=True, verbose=1)
 
             # Only get the last value of the stream to reduce test noise
-            expect = 'Processing 4 valid combinations | Sampling itemset size 3\n'
+            expect = 'Processing 4 combinations | Sampling itemset size 3\n'
             out = out.getvalue().split('\r')[-1]
             assert out == expect
         else:

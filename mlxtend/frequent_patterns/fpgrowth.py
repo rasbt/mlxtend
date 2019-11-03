@@ -19,15 +19,15 @@ def fpgrowth(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
       For example,
 
     ```
-             Apple  Bananas  Beer  Chicken  Milk  Rice
-        0      1        0     1        1     0     1
-        1      1        0     1        0     0     1
-        2      1        0     1        0     0     0
-        3      1        1     0        0     0     0
-        4      0        0     1        1     1     1
-        5      0        0     1        0     1     1
-        6      0        0     1        0     1     0
-        7      1        1     0        0     0     0
+           Apple  Bananas   Beer  Chicken   Milk   Rice
+        0   True    False   True     True  False   True
+        1   True    False   True    False  False   True
+        2   True    False   True    False  False  False
+        3   True     True  False    False  False  False
+        4  False    False   True     True   True   True
+        5  False    False   True    False   True   True
+        6  False    False   True    False   True  False
+        7   True     True  False    False  False  False
     ```
 
     min_support : float (default: 0.5)

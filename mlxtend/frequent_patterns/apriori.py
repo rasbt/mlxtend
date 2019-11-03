@@ -6,6 +6,7 @@
 
 import numpy as np
 import pandas as pd
+from ..frequent_patterns import fpcommon as fpc
 
 
 def generate_new_combinations(old_combinations):
@@ -227,21 +228,10 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
                          'number within the interval `(0, 1]`. '
                          'Got %s.' % min_support)
 
-    idxs = np.where((df.values != 1) & (df.values != 0))
-    if len(idxs[0]) > 0:
-        val = df.values[idxs[0][0], idxs[1][0]]
-        s = ('The allowed values for a DataFrame'
-             ' are True, False, 0, 1. Found value %s' % (val))
-        raise ValueError(s)
+    fpc.valid_input_check(df)
 
     is_sparse = hasattr(df, "to_coo")
     if is_sparse:
-        if not isinstance(df.columns[0], str) and df.columns[0] != 0:
-            raise ValueError('Due to current limitations in Pandas, '
-                             'if the SparseDataFrame has integer column names,'
-                             'names, please make sure they either start '
-                             'with `0` or cast them as string column names: '
-                             '`df.columns = [str(i) for i in df.columns`].')
         X = df.to_coo().tocsc()
     else:
         X = df.values

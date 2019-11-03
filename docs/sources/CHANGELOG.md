@@ -21,7 +21,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- -
+- Improve the runtime performance for the `apriori` frequent itemset generating function when `low_memory=True`. Setting `low_memory=False` (default) is still faster for small itemsets, but `low_memory=True` can be much faster for large itemsets and requires less memory.  Also, input validation for  `apriori`, ̀ fpgrowth` and `fpmax` takes a significant amount of time when input pandas DataFrame is large; this is now dramatically reduced when input contains boolean values (and not zeros/ones), which is the case when using `TransactionEncoder`. ([#619](https://github.com/rasbt/mlxtend/pull/619) via [Denis Barbier](https://github.com/dbarbier))
 
 ##### Bug Fixes
 - Fixes a bug in `mlxtend.plotting.plot_pca_correlation_graph` that caused the explaind variances not summing up to 1. Also, improves the runtime performance of the correlation computation and adds a missing function argument for the explained variances (eigenvalues) if users provide their own principal components. ([#593](https://github.com/rasbt/mlxtend/issues/593) via [Gabriel Azevedo Ferreira](https://github.com/Gabriel-Azevedo-Ferreira))

@@ -50,7 +50,7 @@ def generate_itemsets(generator, num_itemsets, colname_map):
 
 
 def valid_input_check(df):
-    if hasattr(df, "to_coo"):
+    if hasattr(df, "to_coo") or hasattr(df, "sparse"):
         if not isinstance(df.columns[0], str) and df.columns[0] != 0:
             raise ValueError('Due to current limitations in Pandas, '
                              'if the SparseDataFrame has integer column names,'

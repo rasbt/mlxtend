@@ -9,6 +9,8 @@ from numpy.testing import assert_array_equal
 from mlxtend.utils import assert_raises
 from mlxtend.preprocessing import TransactionEncoder
 import pandas as pd
+from pandas import __version__ as pandas_version
+from distutils.version import LooseVersion as Version
 import sys
 from contextlib import contextmanager
 from io import StringIO
@@ -79,11 +81,9 @@ class FPTestErrors(object):
         test_with_dataframe(df2)
         sdf = df2.to_sparse()
         test_with_dataframe(sdf)
-        try:
-            sdf = df2.astype(pd.SparseDtype(int, fill_value=0))
-        except AttributeError:
-            # pandas < 0.25
-            pass
+        if Version(pandas_version) >= Version("0.24"):
+            sdf2 = df2.astype(pd.SparseDtype(int, fill_value=0))
+            test_with_dataframe(sdf2)
 
     def test_sparsedataframe_notzero_column(self):
         dfs = pd.SparseDataFrame(self.df)
@@ -158,13 +158,12 @@ class FPTestEx1(object):
         test_with_fill_values(False)
 
     def test_sparse(self):
+        if Version(pandas_version) < Version("0.24"):
+            return
+
         def test_with_fill_values(fill_value):
-            try:
-                sdt = pd.SparseDtype(type(fill_value), fill_value=fill_value)
-                sdf = self.df.astype(sdt)
-            except AttributeError:
-                # pandas < 0.25
-                return
+            sdt = pd.SparseDtype(type(fill_value), fill_value=fill_value)
+            sdf = self.df.astype(sdt)
             res_df = self.fpalgo(sdf, use_colnames=True)
             assert res_df.values.shape == self.fpalgo(self.df).values.shape
             assert res_df[res_df['itemsets']

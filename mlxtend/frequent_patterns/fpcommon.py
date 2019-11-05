@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 import collections
+from distutils.version import LooseVersion as Version
+from pandas import __version__ as pandas_version
 
 
 def setup_fptree(df, min_support):
@@ -57,15 +59,10 @@ def valid_input_check(df):
                              '`df.columns = [str(i) for i in df.columns`].')
 
     # Fast path: if all columns are boolean, there is nothing to check
-    all_bools = False
-    if hasattr(df, "sparse"):
-        try:
-            # SparseDtype introduced in pandas 0.24; works for DataFrame
-            # with SparseArray, or with deprecated SparseDataFrame
-            all_bools = (df.dtypes == pd.SparseDtype(bool)).all()
-        except AttributeError:
-            pass
-    if not all_bools:
+    if Version(pandas_version) >= Version("0.24"):
+        all_bools = ((df.dtypes == pd.SparseDtype(bool)) |
+                     (df.dtypes == bool)).all()
+    else:
         all_bools = (df.dtypes == bool).all()
     if not all_bools:
         # Pandas is much slower than numpy, so use np.where on Numpy arrays

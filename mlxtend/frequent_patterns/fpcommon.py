@@ -6,27 +6,55 @@ from pandas import __version__ as pandas_version
 
 
 def setup_fptree(df, min_support):
-    itemsets = df.values
-    num_items = itemsets.shape[1]       # number of unique items
-    num_itemsets = itemsets.shape[0]    # number of itemsets in the database
+    num_itemsets = len(df.index)        # number of itemsets in the database
+
+    is_sparse = False
+    if hasattr(df, "to_coo"):
+        # SparseDataFrame with pandas < 0.24
+        if df.size == 0:
+            itemsets = df.values
+        else:
+            itemsets = df.to_coo().tocsr()
+            is_sparse = True
+    elif hasattr(df, "sparse"):
+        # DataFrame with SparseArray (pandas >= 0.24)
+        if df.size == 0:
+            itemsets = df.values
+        else:
+            itemsets = df.sparse.to_coo().tocsr()
+            is_sparse = True
+    else:
+        # dense DataFrame
+        itemsets = df.values
 
     # support of each individual item
-    item_support = np.sum(itemsets, axis=0) / float(num_itemsets)
+    # if itemsets is sparse, np.sum returns an np.matrix of shape (1, N)
+    item_support = np.array(np.sum(itemsets, axis=0) / float(num_itemsets))
+    item_support = item_support.reshape(-1)
 
-    items = [item for item in range(
-        num_items) if item_support[item] >= min_support]
+    items = np.nonzero(item_support >= min_support)[0]
 
     # Define ordering on items for inserting into FPTree
-    items.sort(key=lambda x: item_support[x])
-    rank = {item: i for i, item in enumerate(items)}
+    indices = item_support[items].argsort()
+    rank = {item: i for i, item in enumerate(items[indices])}
 
     # Building tree by inserting itemsets in sorted order
-    # Hueristic for reducing tree size is inserting in order
+    # Heuristic for reducing tree size is inserting in order
     #   of most frequent to least frequent
     tree = FPTree(rank)
     for i in range(num_itemsets):
-        itemset = [item for item in np.where(
-            itemsets[i, :])[0] if item in rank]
+        if is_sparse:
+            # itemsets has been converted to CSR format to speed-up the line
+            # below.  It has 3 attributes:
+            #  - itemsets.data contains non null values, shape(#nnz,)
+            #  - itemsets.indices contains the column number of non null
+            #    elements, shape(#nnz,)
+            #  - itemsets.indptr[i] contains the offset in itemset.indices of
+            #    the first non null element in row i, shape(1+#nrows,)
+            nonnull = itemsets.indices[itemsets.indptr[i]:itemsets.indptr[i+1]]
+        else:
+            nonnull = np.where(itemsets[i, :])[0]
+        itemset = [item for item in nonnull if item in rank]
         itemset.sort(key=rank.get, reverse=True)
         tree.insert_itemset(itemset)
 

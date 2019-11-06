@@ -6,6 +6,7 @@
 
 import numpy as np
 from numpy.testing import assert_array_equal
+from scipy.sparse import csr_matrix
 from mlxtend.utils import assert_raises
 from mlxtend.preprocessing import TransactionEncoder
 import pandas as pd
@@ -178,6 +179,17 @@ class FPTestEx1(object):
                 == (1, 2)
         test_with_fill_values(0)
         test_with_fill_values(False)
+
+    def test_sparse_with_zero(self):
+        res_df = self.fpalgo(self.df)
+        ary2 = self.one_ary.copy()
+        ary2[3, :] = 1
+        sparse_ary = csr_matrix(ary2)
+        sparse_ary[3, :] = self.one_ary[3, :]
+        sdf = pd.SparseDataFrame(sparse_ary, columns=self.df.columns,
+                                 default_fill_value=0)
+        res_df2 = self.fpalgo(sdf)
+        compare_dataframes(res_df2, res_df)
 
 
 class FPTestEx1All(FPTestEx1):

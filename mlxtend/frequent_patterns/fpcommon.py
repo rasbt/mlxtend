@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 import collections
+from distutils.version import LooseVersion as Version
+from pandas import __version__ as pandas_version
 
 
 def setup_fptree(df, min_support):
@@ -48,24 +50,44 @@ def generate_itemsets(generator, num_itemsets, colname_map):
 
 
 def valid_input_check(df):
-    # Fast path: if all columns are boolean, there is nothing to check
-    if not (df.dtypes == bool).all():
-        # Pandas is much slower than numpy, so use df.values instead of df here
-        idxs = np.where((df.values != 1) & (df.values != 0))
-        if len(idxs[0]) > 0:
-            val = df.values[idxs[0][0], idxs[1][0]]
-            s = ('The allowed values for a DataFrame'
-                 ' are True, False, 0, 1. Found value %s' % (val))
-            raise ValueError(s)
-
-    is_sparse = hasattr(df, "to_coo")
-    if is_sparse:
+    if df.size == 0:
+        return
+    if hasattr(df, "to_coo") or hasattr(df, "sparse"):
         if not isinstance(df.columns[0], str) and df.columns[0] != 0:
             raise ValueError('Due to current limitations in Pandas, '
                              'if the SparseDataFrame has integer column names,'
                              'names, please make sure they either start '
                              'with `0` or cast them as string column names: '
                              '`df.columns = [str(i) for i in df.columns`].')
+
+    # Fast path: if all columns are boolean, there is nothing to check
+    if Version(pandas_version) >= Version("0.24"):
+        all_bools = ((df.dtypes == pd.SparseDtype(bool)) |
+                     (df.dtypes == bool)).all()
+    else:
+        all_bools = (df.dtypes == bool).all()
+    if not all_bools:
+        # Pandas is much slower than numpy, so use np.where on Numpy arrays
+        if hasattr(df, "to_coo"):
+            # see comment in apriori.py, to_coo attribute must be checked first
+            if df.size == 0:
+                values = df.values
+            else:
+                values = df.to_coo().tocoo().data
+        elif hasattr(df, "sparse"):
+            if df.size == 0:
+                values = df.values
+            else:
+                values = df.sparse.to_coo().tocoo().data
+        else:
+            values = df.values
+        idxs = np.where((values != 1) & (values != 0))
+        if len(idxs[0]) > 0:
+            # idxs has 1 dimension with sparse data and 2 with dense data
+            val = values[tuple(loc[0] for loc in idxs)]
+            s = ('The allowed values for a DataFrame'
+                 ' are True, False, 0, 1. Found value %s' % (val))
+            raise ValueError(s)
 
 
 class FPTree(object):

@@ -230,11 +230,28 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
 
     fpc.valid_input_check(df)
 
-    is_sparse = hasattr(df, "to_coo")
-    if is_sparse:
-        X = df.to_coo().tocsc()
+    # sparse attribute exists for both deprecated SparseDataFrame and
+    # DataFrame with SparseArray (pandas >= 0.24); to_coo attribute
+    # exists only for the former, thus it is checked first to distinguish
+    # between SparseDataFrame and DataFrame with SparseArray.
+    if hasattr(df, "to_coo"):
+        # SparseDataFrame with pandas < 0.24
+        if df.size == 0:
+            X = df.values
+        else:
+            X = df.to_coo().tocsc()
+        is_sparse = True
+    elif hasattr(df, "sparse"):
+        # DataFrame with SparseArray (pandas >= 0.24)
+        if df.size == 0:
+            X = df.values
+        else:
+            X = df.sparse.to_coo().tocsc()
+        is_sparse = True
     else:
+        # dense DataFrame
         X = df.values
+        is_sparse = False
     support = _support(X, X.shape[0], is_sparse)
     ary_col_idx = np.arange(X.shape[1])
     support_dict = {1: support[support >= min_support]}

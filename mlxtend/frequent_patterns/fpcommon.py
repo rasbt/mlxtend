@@ -38,6 +38,10 @@ def setup_fptree(df, min_support):
     indices = item_support[items].argsort()
     rank = {item: i for i, item in enumerate(items[indices])}
 
+    if is_sparse:
+        # Ensure that there are no zeros in sparse DataFrame
+        itemsets.eliminate_zeros()
+
     # Building tree by inserting itemsets in sorted order
     # Heuristic for reducing tree size is inserting in order
     #   of most frequent to least frequent

@@ -186,7 +186,8 @@ class FPTestEx1(object):
         ary2[3, :] = 1
         sparse_ary = csr_matrix(ary2)
         sparse_ary[3, :] = self.one_ary[3, :]
-        sdf = pd.SparseDataFrame(sparse_ary, columns=self.df.columns, default_fill_value=0)
+        sdf = pd.SparseDataFrame(sparse_ary, columns=self.df.columns,
+                                 default_fill_value=0)
         res_df2 = self.fpalgo(sdf)
         compare_dataframes(res_df2, res_df)
 

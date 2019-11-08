@@ -12,11 +12,20 @@ from mlxtend.evaluate.confusion_matrix import confusion_matrix
 
 def _accuracy(true, pred):
     return (true == pred).sum() / float(true.shape[0])
+    # return 0
 
 
 def _error(true, pred):
     return 1.0 - _accuracy(true, pred)
 
+def _per_class_accuracy(true, pred, unique_labels, pos_label=None):
+  scores = {}
+  for l in unique_labels:
+    scores[l] = _accuracy(np.where(true != l, 1, 0),
+                          np.where(pred != l, 1, 0))
+  if pos_label is None or pos_label not in scores.keys():
+    return float(sum([v for v in scores.values()]))/len(scores.values())
+  return scores[pos_label]
 
 def _macro(true, pred, func, unique_labels):
     scores = []
@@ -27,7 +36,7 @@ def _macro(true, pred, func, unique_labels):
 
 
 def scoring(y_target, y_predicted, metric='error',
-            positive_label=1, unique_labels='auto'):
+            positive_label=1, unique_labels='auto', pos_label=None):
     """Compute a scoring metric for supervised learning.
 
     Parameters
@@ -111,10 +120,10 @@ def scoring(y_target, y_predicted, metric='error',
     elif metric == 'error':
         res = _error(targ_tmp, pred_tmp)
     elif metric == 'average per-class accuracy':
-        res = _macro(targ_tmp,
-                     pred_tmp,
-                     func=_accuracy,
-                     unique_labels=unique_labels)
+        res = _per_class_accuracy(targ_tmp,
+                                  pred_tmp,
+                                  unique_labels=unique_labels,
+                                  pos_label=pos_label)
     elif metric == 'average per-class error':
         res = _macro(targ_tmp,
                      pred_tmp,

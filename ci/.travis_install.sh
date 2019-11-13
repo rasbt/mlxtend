@@ -51,7 +51,7 @@ if [ "${IMAGE}" = "true" ]; then
     else
         pip install dlib=="$DLIB_VERSION"
         pip install imageio=="$IMAGEIO_VERSION"
-        pip install scikit-image=="$DLIB_VERSION"
+        pip install scikit-image=="$SKIMAGE_VERSION"
     fi
 fi
 

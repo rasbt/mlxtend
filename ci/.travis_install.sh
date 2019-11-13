@@ -43,9 +43,15 @@ conda install pytest
 
 
 if [ "${IMAGE}" = "true" ]; then
-    pip install dlib
-    pip install imageio
-    pip install scikit-image
+
+    if [ "${LATEST}" = "true" ]; then
+        pip install dlib
+        pip install imageio
+        pip install scikit-image
+    else
+        pip install dlib=="$DLIB_VERSION"
+        pip install imageio=="$IMAGEIO_VERSION"
+        pip install scikit-image=="$DLIB_VERSION"
 fi
 
 if [ "${COVERAGE}" = "true" ]; then

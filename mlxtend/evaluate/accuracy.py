@@ -7,11 +7,15 @@
 import numpy as np
 
 
-def _compute_metric(target_temp, predicted_temp):
-    return (target_temp == predicted_temp).sum() / float(target_temp.shape[0])
+def _compute_metric(target_temp, predicted_temp, normalize=True):
+    if normalize:
+        return (target_temp == predicted_temp).mean()
+    else:
+        return (target_temp == predicted_temp).sum()
 
 
-def accuracy_score(y_target, y_predicted, method="binary", pos_label=1):
+def accuracy_score(y_target, y_predicted, method="binary",
+                   pos_label=1, normalize=True):
     """General accuracy function for supervised learning.
     Parameters
     ------------
@@ -26,7 +30,10 @@ def accuracy_score(y_target, y_predicted, method="binary", pos_label=1):
         If set to 'average', computes average per class accuracy.
     pos_label : str or int, 1 by default.
         The class whose accuracy score is to be reported.
-        Used only when method is set to 'binary'
+        Used only when `method` is set to 'binary'
+    normalize : bool, True by default.
+        If True, returns fraction of correctly classified samples.
+        If False, returns number of correctly classified samples.
 
     Returns
     ------------
@@ -41,7 +48,7 @@ def accuracy_score(y_target, y_predicted, method="binary", pos_label=1):
         raise AttributeError('`y_target` and `y_predicted`'
                              ' don\'t have the same number of elements.')
     if method == "standard":
-        return _compute_metric(target_temp, predicted_temp)
+        return _compute_metric(target_temp, predicted_temp, normalize)
 
     elif method == "binary":
         if pos_label not in unique_labels:
@@ -49,7 +56,7 @@ def accuracy_score(y_target, y_predicted, method="binary", pos_label=1):
 
         target_temp = np.where(target_temp == pos_label, 1, 0)
         predicted_temp = np.where(predicted_temp == pos_label, 1, 0)
-        return _compute_metric(target_temp, predicted_temp)
+        return _compute_metric(target_temp, predicted_temp, normalize)
 
     else:
         return sum([_compute_metric(np.where(target_temp != l, 1, 0),

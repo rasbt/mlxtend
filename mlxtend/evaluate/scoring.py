@@ -8,14 +8,11 @@
 
 import numpy as np
 from mlxtend.evaluate.confusion_matrix import confusion_matrix
-
-
-def _accuracy(true, pred):
-    return (true == pred).sum() / float(true.shape[0])
+from mlxtend.evaluate.accuracy import accuracy_score
 
 
 def _error(true, pred):
-    return 1.0 - _accuracy(true, pred)
+    return 1.0 - accuracy_score(true, pred, method='standard')
 
 
 def _macro(true, pred, func, unique_labels):
@@ -107,14 +104,11 @@ def scoring(y_target, y_predicted, metric='error',
 
     # multi-class metrics
     if metric == 'accuracy':
-        res = _accuracy(targ_tmp, pred_tmp)
+        res = accuracy_score(targ_tmp, pred_tmp, method='standard')
     elif metric == 'error':
         res = _error(targ_tmp, pred_tmp)
     elif metric == 'average per-class accuracy':
-        res = _macro(targ_tmp,
-                     pred_tmp,
-                     func=_accuracy,
-                     unique_labels=unique_labels)
+        res = accuracy_score(targ_tmp, pred_tmp, method='average')
     elif metric == 'average per-class error':
         res = _macro(targ_tmp,
                      pred_tmp,

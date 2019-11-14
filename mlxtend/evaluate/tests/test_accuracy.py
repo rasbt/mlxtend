@@ -32,4 +32,4 @@ def test_average():
     y_pred = np.array([0, 1, 1, 0, 1, 1, 2, 2, 2, 2])
 
     y = accuracy_score(y_targ, y_pred, method='average')
-    assert_almost_equal(y, 0.6667)
+    assert_almost_equal(y, float(2) / 3, decimal=4)

@@ -18,7 +18,7 @@ def test_multiclass_binary():
 
     assert_almost_equal(y_2, float(7) / 9, decimal=4)
     assert_almost_equal(y_1, float(6) / 9, decimal=4)
-    assert_almost_equal(y_3, 7)
+    assert y_3 == 6
 
 
 def test_standard():
@@ -29,7 +29,7 @@ def test_standard():
     y_1 = accuracy_score(y_targ, y_pred, method='binary',
                          normalize=False)
     assert_almost_equal(y, float(3) / 6, decimal=4)
-    assert_almost_equal(y_1, 3)
+    assert y_1 == 3
 
 
 def test_average():

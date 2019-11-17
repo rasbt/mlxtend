@@ -14,7 +14,7 @@ def _compute_metric(target_temp, predicted_temp, normalize=True):
         return (target_temp == predicted_temp).sum()
 
 
-def accuracy_score(y_target, y_predicted, method="binary",
+def accuracy_score(y_target, y_predicted, method="standard",
                    pos_label=1, normalize=True):
     """General accuracy function for supervised learning.
     Parameters
@@ -58,7 +58,11 @@ def accuracy_score(y_target, y_predicted, method="binary",
         predicted_temp = np.where(predicted_temp == pos_label, 1, 0)
         return _compute_metric(target_temp, predicted_temp, normalize)
 
-    else:
+    elif method == "average":
         return sum([_compute_metric(np.where(target_temp != l, 1, 0),
                     np.where(predicted_temp != l, 1, 0))
                     for l in unique_labels]) / float(unique_labels.shape[0])
+
+    else:
+        raise ValueError('`method` must be "standard", "average"'
+                         'or "binary". Got "%s".' % method)

@@ -24,6 +24,7 @@
 - [wine_data](user_guide/data/wine_data.md)
 
 ## `evaluate`
+- [accuracy_score](user_guide/evaluate/accuracy_score.md)
 - [bias_variance_decomp](user_guide/evaluate/bias_variance_decomp.md)
 - [bootstrap](user_guide/evaluate/bootstrap.md)
 - [bootstrap_point632_score](user_guide/evaluate/bootstrap_point632_score.md)

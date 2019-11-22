@@ -33,14 +33,19 @@ def extract_face_landmarks(img, return_dtype=np.int32):
 
     Parameters
     ----------
+
     img : array, shape = [h, w, ?]
-        numpy array of a face image.
+        Numpy array of a face image or
+        imageio.core.util.Array. E.g.,
+        img = imageio.core.util.Array(ary)
+
         Supported shapes are
         - 3D tensors with 1
         or more color channels, for example,
         RGB: [h, w, 3]
         - 2D tensors without color channel, for example,
         Grayscale: [h, w]
+
     return_dtype: the return data-type of the array,
         default: np.int32.
 

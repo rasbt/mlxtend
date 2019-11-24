@@ -15,6 +15,7 @@ from mlxtend.externals.estimator_checks import NotFittedError
 from mlxtend.utils import assert_raises
 from mlxtend.data import iris_data
 from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import PassiveAggressiveClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
@@ -567,3 +568,23 @@ def test_works_with_df_if_fold_indexes_missing():
     stclf.fit(X_train, y_train)
     assert round(stclf.score(X_train, y_train), 2) == 0.99, \
         round(stclf.score(X_train, y_train), 2)
+
+
+def test_decision_function():
+    np.random.seed(123)
+
+    # PassiveAggressiveClassifier has no predict_proba 
+    meta = PassiveAggressiveClassifier(random_state=42)
+    clf1 = RandomForestClassifier(n_estimators=10)
+    clf2 = GaussianNB()
+    sclf = StackingCVClassifier(classifiers=[clf1, clf2],
+                              use_probas=True,
+                              meta_classifier=meta)
+
+    scores = cross_val_score(sclf,
+                             X_breast,
+                             y_breast,
+                             cv=5,
+                             scoring='roc_auc')
+    scores_mean = (round(scores.mean(), 2))
+    assert scores_mean == 0.96, scores_mean

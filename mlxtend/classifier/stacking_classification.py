@@ -11,14 +11,14 @@
 from ..externals.estimator_checks import check_is_fitted
 from ..externals.name_estimators import _name_estimators
 from ..utils.base_compostion import _BaseXComposition
+from ._base_classification import _BaseStackingClassifier
 from scipy import sparse
-from sklearn.base import ClassifierMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
 import numpy as np
 
 
-class StackingClassifier(_BaseXComposition, ClassifierMixin,
+class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
                          TransformerMixin):
 
     """A Stacking classifier for scikit-learn estimators for classification.
@@ -227,56 +227,3 @@ class StackingClassifier(_BaseXComposition, ClassifierMixin,
         else:
             vals = np.column_stack([clf.predict(X) for clf in self.clfs_])
         return vals
-
-    def predict(self, X):
-        """ Predict target values for X.
-
-        Parameters
-        ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
-            Training vectors, where n_samples is the number of samples and
-            n_features is the number of features.
-
-        Returns
-        ----------
-        labels : array-like, shape = [n_samples] or [n_samples, n_outputs]
-            Predicted class labels.
-
-        """
-        check_is_fitted(self, 'clfs_')
-        meta_features = self.predict_meta_features(X)
-
-        if not self.use_features_in_secondary:
-            return self.meta_clf_.predict(meta_features)
-        elif sparse.issparse(X):
-            return self.meta_clf_.predict(sparse.hstack((X, meta_features)))
-        else:
-            return self.meta_clf_.predict(np.hstack((X, meta_features)))
-
-    def predict_proba(self, X):
-        """ Predict class probabilities for X.
-
-        Parameters
-        ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
-            Training vectors, where n_samples is the number of samples and
-            n_features is the number of features.
-
-        Returns
-        ----------
-        proba : array-like, shape = [n_samples, n_classes] or a list of \
-                n_outputs of such arrays if n_outputs > 1.
-            Probability for each class per sample.
-
-        """
-        check_is_fitted(self, 'clfs_')
-        meta_features = self.predict_meta_features(X)
-
-        if not self.use_features_in_secondary:
-            return self.meta_clf_.predict_proba(meta_features)
-        elif sparse.issparse(X):
-            return self.meta_clf_.predict_proba(
-                sparse.hstack((X, meta_features))
-            )
-        else:
-            return self.meta_clf_.predict_proba(np.hstack((X, meta_features)))

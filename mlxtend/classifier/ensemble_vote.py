@@ -173,7 +173,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                 if sample_weight is None:
                     clf.fit(X, self.le_.transform(y))
                 else:
-                    clf.fit(X, self.le_.transform(y), 
+                    clf.fit(X, self.le_.transform(y),
                             sample_weight=sample_weight)
         return self
 

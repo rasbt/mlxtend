@@ -521,7 +521,7 @@ def test_clone():
 def test_decision_function():
     np.random.seed(123)
 
-    # PassiveAggressiveClassifier has no predict_proba 
+    # PassiveAggressiveClassifier has no predict_proba
     meta = PassiveAggressiveClassifier(random_state=42)
     clf1 = RandomForestClassifier(n_estimators=10)
     clf2 = GaussianNB()

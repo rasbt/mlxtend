@@ -573,13 +573,13 @@ def test_works_with_df_if_fold_indexes_missing():
 def test_decision_function():
     np.random.seed(123)
 
-    # PassiveAggressiveClassifier has no predict_proba 
+    # PassiveAggressiveClassifier has no predict_proba
     meta = PassiveAggressiveClassifier(random_state=42)
     clf1 = RandomForestClassifier(n_estimators=10)
     clf2 = GaussianNB()
     sclf = StackingCVClassifier(classifiers=[clf1, clf2],
-                              use_probas=True,
-                              meta_classifier=meta)
+                                use_probas=True,
+                                meta_classifier=meta)
 
     scores = cross_val_score(sclf,
                              X_breast,

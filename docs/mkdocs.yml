@@ -58,6 +58,7 @@ nav:
     - user_guide/data/three_blobs_data.md
     - user_guide/data/wine_data.md
   - evaluate:
+    - user_guide/evaluate/accuracy_score.md
     - user_guide/evaluate/bias_variance_decomp.md
     - user_guide/evaluate/bootstrap.md
     - user_guide/evaluate/bootstrap_point632_score.md

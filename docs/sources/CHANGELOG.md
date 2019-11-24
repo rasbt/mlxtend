@@ -18,6 +18,7 @@ The CHANGELOG for the current development version is available at
 ##### New Features
 
 - The `SequentialFeatureSelector` now supports using pre-specified feature sets via the `fixed_features` parameter. ([#578](https://github.com/rasbt/mlxtend/pull/578))
+- Adds a new `accuracy_score` function to `mlxtend.evaluate` for computing basic classifcation accuracy, per-class accuracy, and average per-class accuracy. ([#624](https://github.com/rasbt/mlxtend/pull/624) via [Deepan Das](https://github.com/deepandas11))
 - `StackingClassifier` and `StackingCVClassifier`now supports `decision_function` method, which serves as a preferred choice over `predict_proba` in calculating roc_auc and average_precision scores when the meta estimator is a linear model or support vector classifier.
 
 ##### Changes

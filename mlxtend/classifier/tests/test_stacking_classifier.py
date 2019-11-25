@@ -522,7 +522,9 @@ def test_decision_function():
     np.random.seed(123)
 
     # PassiveAggressiveClassifier has no predict_proba
-    meta = PassiveAggressiveClassifier(random_state=42)
+    meta = PassiveAggressiveClassifier(max_iter=1000,
+                                       tol=0.001,
+                                       random_state=42)
     clf1 = RandomForestClassifier(n_estimators=10)
     clf2 = GaussianNB()
     sclf = StackingClassifier(classifiers=[clf1, clf2],

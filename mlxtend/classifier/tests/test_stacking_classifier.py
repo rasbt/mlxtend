@@ -10,6 +10,8 @@ from mlxtend.classifier import StackingClassifier
 from mlxtend.externals.estimator_checks import NotFittedError
 from scipy import sparse
 from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import PassiveAggressiveClassifier
+from sklearn.svm import SVC
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
@@ -515,3 +517,50 @@ def test_clone():
                                meta_classifier=lr,
                                store_train_meta_features=True)
     clone(stclf)
+
+
+def test_decision_function():
+    np.random.seed(123)
+
+    # PassiveAggressiveClassifier has no predict_proba
+    meta = PassiveAggressiveClassifier(max_iter=1000,
+                                       tol=0.001,
+                                       random_state=42)
+    clf1 = RandomForestClassifier(n_estimators=10)
+    clf2 = GaussianNB()
+    sclf = StackingClassifier(classifiers=[clf1, clf2],
+                              use_probas=True,
+                              meta_classifier=meta)
+
+    # binarize target
+    y2 = y > 1
+    scores = cross_val_score(sclf,
+                             X,
+                             y2,
+                             cv=5,
+                             scoring='roc_auc')
+    scores_mean = (round(scores.mean(), 2))
+
+    if Version(sklearn_version) < Version("0.21"):
+        assert scores_mean == 0.96, scores_mean
+    else:
+        assert scores_mean == 0.93, scores_mean
+
+    # another test
+    meta = SVC(decision_function_shape='ovo')
+
+    sclf = StackingClassifier(classifiers=[clf1, clf2],
+                              use_probas=True,
+                              meta_classifier=meta)
+    
+    scores = cross_val_score(sclf,
+                             X,
+                             y2,
+                             cv=5,
+                             scoring='roc_auc')
+    scores_mean = (round(scores.mean(), 2))
+
+    if Version(sklearn_version) < Version("0.21"):
+        assert scores_mean == 0.95, scores_mean
+    else:
+        assert scores_mean == 0.95, scores_mean

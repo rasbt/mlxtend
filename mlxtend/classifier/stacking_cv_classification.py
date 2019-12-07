@@ -12,9 +12,9 @@
 from ..externals.name_estimators import _name_estimators
 from ..externals.estimator_checks import check_is_fitted
 from ..utils.base_compostion import _BaseXComposition
+from ._base_classification import _BaseStackingClassifier
 import numpy as np
 from scipy import sparse
-from sklearn.base import ClassifierMixin
 from sklearn.base import TransformerMixin
 from sklearn.base import clone
 from sklearn.model_selection import cross_val_predict
@@ -22,7 +22,7 @@ from sklearn.model_selection._split import check_cv
 # from sklearn.utils import check_X_y
 
 
-class StackingCVClassifier(_BaseXComposition, ClassifierMixin,
+class StackingCVClassifier(_BaseXComposition, _BaseStackingClassifier,
                            TransformerMixin):
 
     """A 'Stacking Cross-Validation' classifier for scikit-learn estimators.
@@ -331,49 +331,3 @@ class StackingCVClassifier(_BaseXComposition, ClassifierMixin,
             stack_fn = np.hstack
 
         return stack_fn((X, meta_features))
-
-    def _do_predict(self, X, predict_fn):
-        meta_features = self.predict_meta_features(X)
-
-        if self.use_features_in_secondary:
-            meta_features = self._stack_first_level_features(X, meta_features)
-
-        return predict_fn(meta_features)
-
-    def predict(self, X):
-        """ Predict target values for X.
-
-        Parameters
-        ----------
-        X : numpy array, shape = [n_samples, n_features]
-            Training vectors, where n_samples is the number of samples and
-            n_features is the number of features.
-
-        Returns
-        ----------
-        labels : array-like, shape = [n_samples]
-            Predicted class labels.
-
-        """
-        check_is_fitted(self, ['clfs_', 'meta_clf_'])
-
-        return self._do_predict(X, self.meta_clf_.predict)
-
-    def predict_proba(self, X):
-        """ Predict class probabilities for X.
-
-        Parameters
-        ----------
-        X : numpy array, shape = [n_samples, n_features]
-            Training vectors, where n_samples is the number of samples and
-            n_features is the number of features.
-
-        Returns
-        ----------
-        proba : array-like, shape = [n_samples, n_classes]
-            Probability for each class per sample.
-
-        """
-        check_is_fitted(self, ['clfs_', 'meta_clf_'])
-
-        return self._do_predict(X, self.meta_clf_.predict_proba)

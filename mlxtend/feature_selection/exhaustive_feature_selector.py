@@ -34,7 +34,8 @@ def _calc_score(selector, X, y, indices, groups=None, **fit_params):
                                  scoring=selector.scorer,
                                  n_jobs=1,
                                  pre_dispatch=selector.pre_dispatch,
-                                 fit_params=fit_params)
+                                 fit_params=fit_params,
+                                 error_score=-np.inf)
     else:
         selector.est_.fit(X[:, indices], y, **fit_params)
         scores = np.array([selector.scorer(selector.est_, X[:, indices], y)])

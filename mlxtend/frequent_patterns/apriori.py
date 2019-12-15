@@ -30,8 +30,10 @@ def generate_new_combinations(old_combinations):
 
     Returns
     -----------
-    Generator of all combinations from the last step x items
-    from the previous step.
+    Generator of combinations based on the last state of Apriori algorithm.
+    In order to reduce number of candidates, this function implements the
+    join step of apriori-gen described in section 2.1.1 of Apriori paper.
+    Prune step is not yet implemented.
 
     Examples
     -----------
@@ -40,15 +42,17 @@ def generate_new_combinations(old_combinations):
 
     """
 
-    items_types_in_previous_step = np.unique(old_combinations.flatten())
-    for old_combination in old_combinations:
-        max_combination = old_combination[-1]
-        mask = items_types_in_previous_step > max_combination
-        valid_items = items_types_in_previous_step[mask]
-        old_tuple = tuple(old_combination)
-        for item in valid_items:
-            yield from old_tuple
-            yield item
+    length = len(old_combinations)
+    for i, old_combination in enumerate(old_combinations):
+        head_i = list(old_combination[:-1])
+        j = i + 1
+        while j < length:
+            *head_j, tail_j = old_combinations[j]
+            if head_i != head_j:
+                break
+            yield from old_combination
+            yield tail_j
+            j = j + 1
 
 
 def generate_new_combinations_low_memory(old_combinations, X, min_support,

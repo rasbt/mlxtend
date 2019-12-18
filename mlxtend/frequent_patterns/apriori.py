@@ -9,6 +9,44 @@ import pandas as pd
 from ..frequent_patterns import fpcommon as fpc
 
 
+class _FixedLengthTrie:
+
+    """Fixed-length trie (prefix tree).
+
+    Parameters
+    ----------
+    combinations: list of itemsets
+        All combinations with enough support in the last step
+
+    Attributes
+    ----------
+    root : dict
+        Root node
+    """
+    __slots__ = ("root")
+
+    def __init__(self, combinations):
+        self.root = dict()
+        for combination in combinations:
+            current = self.root
+            for item in combination:
+                try:
+                    current = current[item]
+                except KeyError:
+                    next_node = dict()
+                    current[item] = next_node
+                    current = next_node
+
+    def __contains__(self, combination):
+        current = self.root
+        try:
+            for item in combination:
+                current = current[item]
+            return True
+        except KeyError:
+            return False
+
+
 def generate_new_combinations(old_combinations):
     """
     Generator of all combinations based on the last state of Apriori algorithm
@@ -32,8 +70,7 @@ def generate_new_combinations(old_combinations):
     -----------
     Generator of combinations based on the last state of Apriori algorithm.
     In order to reduce number of candidates, this function implements the
-    join step of apriori-gen described in section 2.1.1 of Apriori paper.
-    Prune step is not yet implemented.
+    apriori-gen function described in section 2.1.1 of Apriori paper.
 
     Examples
     -----------
@@ -43,6 +80,7 @@ def generate_new_combinations(old_combinations):
     """
 
     length = len(old_combinations)
+    trie = _FixedLengthTrie(old_combinations)
     for i, old_combination in enumerate(old_combinations):
         head_i = list(old_combination[:-1])
         j = i + 1
@@ -50,8 +88,18 @@ def generate_new_combinations(old_combinations):
             *head_j, tail_j = old_combinations[j]
             if head_i != head_j:
                 break
-            yield from old_combination
-            yield tail_j
+            # Prune old_combination+(item,) if any subset is not frequent
+            candidate = tuple(old_combination) + (tail_j,)
+            # No need to check the last two values, because test_candidate
+            # is then old_combinations[i] and old_combinations[j]
+            for idx in range(len(candidate) - 2):
+                test_candidate = list(candidate)
+                del test_candidate[idx]
+                if test_candidate not in trie:
+                    # early exit from for-loop skips else clause just below
+                    break
+            else:
+                yield from candidate
             j = j + 1
 
 

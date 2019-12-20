@@ -7,5 +7,6 @@
 from .linear_regression import LinearRegression
 from .stacking_regression import StackingRegressor
 from .stacking_cv_regression import StackingCVRegressor
+from .ensemble_vote import EnsembleVotingRegressor
 
-__all__ = ["LinearRegression", "StackingRegressor", "StackingCVRegressor"]
+__all__ = ["LinearRegression", "StackingRegressor", "StackingCVRegressor", "EnsembleVotingRegressor"]

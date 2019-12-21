@@ -382,8 +382,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
         else:
             select_in_range = False
-            k_to_select = int(len(X[1])**.5) # random subsample of sqrt(k_features) dimensions
-            np.take(X, np.random.permutation(X.shape[1]), axis = 1, out = X) # shuffle matrix horizontally
+            k_to_select = int(len(X[1])**.5)
+            np.take(X, np.random.permutation(X.shape[1]), axis=1, out=X)
 
         orig_set = set(range(X_.shape[1]))
         n_features = X_.shape[1]

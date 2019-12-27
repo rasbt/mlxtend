@@ -482,12 +482,7 @@ def test_sparse_inputs_with_features_in_secondary():
     # dense
     stclf.fit(X_train, y_train)
 
-    if Version(sklearn_version) < Version("0.21"):
-        expected_value = 1.0
-    if Version(sklearn_version) < Version("0.22"):
-        expected_value = 0.99
-    else:
-        expected_value = 1.00
+    expected_value = 1.0
 
     assert round(stclf.score(X_train, y_train), 2) == expected_value, \
         round(stclf.score(X_train, y_train), 2)

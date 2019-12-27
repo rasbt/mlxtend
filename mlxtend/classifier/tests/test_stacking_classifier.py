@@ -112,7 +112,7 @@ def test_weight_unsupported():
     w = np.array([random.random() for _ in range(len(y))])
 
     with pytest.raises(TypeError):
-        sclf.fit(X, y, sample_seight=w)
+        sclf.fit(X, y, sample_weight=w)
 
 
 def test_weight_unsupported_no_weight():
@@ -312,7 +312,7 @@ def test_not_fitted():
                               use_probas=True,
                               meta_classifier=meta)
 
-    X, y = iris_data()
+    X, _ = iris_data()
 
     assert_raises(NotFittedError,
                   "This StackingClassifier instance is not fitted yet."
@@ -496,7 +496,7 @@ def test_predict_meta_features():
                             multi_class='ovr',
                             random_state=1)
     gnb = GaussianNB()
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+    X_train, X_test, y_train, _ = train_test_split(X, y, test_size=0.3)
 
     #  test default (class labels)
     stclf = StackingClassifier(classifiers=[knn, gnb],
@@ -552,7 +552,7 @@ def test_decision_function():
     sclf = StackingClassifier(classifiers=[clf1, clf2],
                               use_probas=True,
                               meta_classifier=meta)
-    
+
     scores = cross_val_score(sclf,
                              X,
                              y2,
@@ -560,7 +560,7 @@ def test_decision_function():
                              scoring='roc_auc')
     scores_mean = (round(scores.mean(), 2))
 
-    if Version(sklearn_version) < Version("0.21"):
+    if Version(sklearn_version) < Version("0.22"):
         assert scores_mean == 0.95, scores_mean
     else:
-        assert scores_mean == 0.95, scores_mean
+        assert scores_mean == 0.94, scores_mean

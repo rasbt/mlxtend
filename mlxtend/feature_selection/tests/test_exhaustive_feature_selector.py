@@ -7,6 +7,7 @@
 import sys
 import numpy as np
 import pandas as pd
+from distutils.version import LooseVersion as Version
 from numpy.testing import assert_almost_equal
 from mlxtend.feature_selection import ExhaustiveFeatureSelector as EFS
 from sklearn.ensemble import RandomForestClassifier
@@ -17,6 +18,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.datasets import load_boston
 from mlxtend.utils import assert_raises
 from sklearn.model_selection import GroupKFold
+from sklearn import __version__ as sklearn_version
 
 
 def dict_compare_utility(d1, d2):
@@ -161,27 +163,37 @@ def test_knn_cv3():
     expect = {0: {'avg_score': 0.9391025641025641,
                   'feature_idx': (0, 1, 2),
                   'feature_names': ('0', '1', '2'),
-                  'cv_scores': np.array([0.97435897, 0.94871795,
-                                         0.88888889, 0.94444444])},
-              1: {'avg_score': 0.94017094017094016,
+                  'cv_scores': np.array([0.974, 0.947, 0.892, 0.946])},
+              1: {'avg_score': 0.9400782361308677,
                   'feature_idx': (0, 1, 3),
                   'feature_names': ('0', '1', '3'),
-                  'cv_scores': np.array([0.92307692, 0.94871795,
-                                         0.91666667, 0.97222222])},
+                  'cv_scores': np.array([0.921, 0.947, 0.919, 0.973])},
               2: {'avg_score': 0.95299145299145294,
                   'feature_idx': (0, 2, 3),
                   'feature_names': ('0', '2', '3'),
-                  'cv_scores': np.array([0.97435897, 0.94871795,
-                                         0.91666667, 0.97222222])},
+                  'cv_scores': np.array([0.974, 0.947, 0.919, 0.973])},
               3: {'avg_score': 0.97275641025641035,
                   'feature_idx': (1, 2, 3),
                   'feature_names': ('1', '2', '3'),
-                  'cv_scores': np.array([0.97435897, 1.,
-                                         0.94444444, 0.97222222])}}
+                  'cv_scores': np.array([0.974, 1.   , 0.946, 0.973])}}
+
+    if Version(sklearn_version) < Version("0.22"):
+        expect[0]['cv_scores'] = np.array([0.97435897, 0.94871795,
+                                           0.88888889, 0.94444444])
+        expect[1]['cv_scores'] = np.array([0.92307692, 0.94871795,
+                                           0.91666667, 0.97222222])
+        expect[2]['cv_scores'] = np.array([0.97435897, 0.94871795,
+                                           0.91666667, 0.97222222])
+        expect[3]['cv_scores'] = np.array([0.97435897, 0.94871795,
+                                           0.91666667, 0.97222222])
+        expect[1]['avg_score'] = 0.94017094017094016
+        assert round(efs1.best_score_, 4) == 0.9728
+    else:
+        assert round(efs1.best_score_, 4) == 0.9732
+
     dict_compare_utility(d1=expect, d2=efs1.subsets_)
     assert efs1.best_idx_ == (1, 2, 3)
     assert efs1.best_feature_names_ == ('1', '2', '3')
-    assert round(efs1.best_score_, 4) == 0.9728
 
 
 def test_knn_cv3_groups():
@@ -198,7 +210,7 @@ def test_knn_cv3_groups():
     np.random.seed(1630672634)
     groups = np.random.randint(0, 6, size=len(y))
     efs1 = efs1.fit(X, y, groups=groups)
-    # print(efs1.subsets_)
+
     expect = {0: {'cv_scores': np.array([0.97916667, 0.93877551, 0.9245283]),
                   'feature_idx': (0, 1, 2),
                   'avg_score': 0.9474901595858469,
@@ -233,27 +245,40 @@ def test_fit_params():
     efs1 = efs1.fit(X, y, sample_weight=sample_weight)
     expect = {0: {'feature_idx': (0, 1, 2),
                   'feature_names': ('0', '1', '2'),
-                  'cv_scores': np.array([0.94871795, 0.92307692,
-                                         0.91666667, 0.97222222]),
-                  'avg_score': 0.9401709401709402},
+                  'cv_scores': np.array([0.947, 0.868, 0.919, 0.973]),
+                  'avg_score': 0.9269203413940257},
               1: {'feature_idx': (0, 1, 3),
                   'feature_names': ('0', '1', '3'),
-                  'cv_scores': np.array([0.92307692, 0.92307692,
-                                         0.88888889, 1.]),
+                  'cv_scores': np.array([0.921, 0.921, 0.892, 1.]),
                   'avg_score': 0.9337606837606838},
               2: {'feature_idx': (0, 2, 3),
                   'feature_names': ('0', '2', '3'),
-                  'cv_scores': np.array([0.97435897, 0.94871795,
-                                         0.94444444, 0.97222222]),
-                  'avg_score': 0.9599358974358974},
+                  'cv_scores': np.array([0.974, 0.947, 0.919, 0.973]),
+                  'avg_score': 0.9532361308677098},
               3: {'feature_idx': (1, 2, 3),
                   'feature_names': ('1', '2', '3'),
-                  'cv_scores': np.array([0.97435897, 0.94871795,
-                                         0.91666667, 1.]),
-                  'avg_score': 0.9599358974358974}}
+                  'cv_scores': np.array([0.974, 0.947, 0.892, 1.]),
+                  'avg_score': 0.9532361308677098}}
+
+    if Version(sklearn_version) < Version("0.22"):
+        expect[0]['avg_score'] = 0.9401709401709402
+        expect[0]['cv_scores'] = np.array([0.94871795, 0.92307692,
+                                           0.91666667, 0.97222222])
+        expect[1]['cv_scores'] = np.array([0.94871795, 0.92307692,
+                                           0.91666667, 0.97222222])
+        expect[2]['cv_scores'] = np.array([0.94871795, 0.92307692,
+                                           0.91666667, 0.97222222])
+        expect[2]['avg_score'] = 0.9599358974358974
+        expect[3]['avg_score'] = 0.9599358974358974
+        expect[3]['cv_scores'] = np.array([0.97435897, 0.94871795,
+                                           0.91666667, 1.])
+        assert round(efs1.best_score_, 4) == 0.9599
+
+    else:
+        assert round(efs1.best_score_, 4) == 0.9532
+
     dict_compare_utility(d1=expect, d2=efs1.subsets_)
     assert efs1.best_idx_ == (0, 2, 3)
-    assert round(efs1.best_score_, 4) == 0.9599
 
 
 def test_regression():

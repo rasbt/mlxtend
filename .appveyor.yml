@@ -16,8 +16,8 @@ install:
   - conda create -q -n test-environment python=%PYTHON_VERSION% numpy scipy scikit-learn pandas joblib pytest
   - activate test-environment
   - conda install -c conda-forge dlib=19.17
-  - pip install imageio
-  - pip install scikit-image
+  - conda install imageio
+  - conda install scikit-image
 
 test_script:
   - set PYTHONPATH=%PYTHONPATH%;%CD%

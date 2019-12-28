@@ -429,8 +429,10 @@ def test_meta_feat_reordering():
 
     if Version(sklearn_version) < Version("0.21"):
         expected_value = 0.86
-    else:
+    elif Version(sklearn_version) < Version("0.22"):
         expected_value = 0.87
+    else:
+        expected_value = 0.85
 
     assert round(roc_auc_score(y_train,
                  stclf.train_meta_features_[:, 1]), 2) == expected_value, \
@@ -480,10 +482,7 @@ def test_sparse_inputs_with_features_in_secondary():
     # dense
     stclf.fit(X_train, y_train)
 
-    if Version(sklearn_version) < Version("0.21"):
-        expected_value = 1.0
-    else:
-        expected_value = 0.99
+    expected_value = 1.0
 
     assert round(stclf.score(X_train, y_train), 2) == expected_value, \
         round(stclf.score(X_train, y_train), 2)
@@ -493,8 +492,12 @@ def test_sparse_inputs_with_features_in_secondary():
 
     if Version(sklearn_version) < Version("0.21"):
         expected_value = 1.0
-    else:
+    if Version(sklearn_version) < Version("0.22"):
         expected_value = 0.99
+    else:
+        expected_value = 1.00
+
+
     assert round(stclf.score(X_train, y_train), 2) == expected_value, \
         round(stclf.score(X_train, y_train), 2)
 
@@ -567,8 +570,13 @@ def test_works_with_df_if_fold_indexes_missing():
 
     # dense
     stclf.fit(X_train, y_train)
-    assert round(stclf.score(X_train, y_train), 2) == 0.99, \
-        round(stclf.score(X_train, y_train), 2)
+
+    if Version(sklearn_version) < Version("0.22"):
+        assert round(stclf.score(X_train, y_train), 2) == 0.99, \
+            round(stclf.score(X_train, y_train), 2)
+    else:
+        assert round(stclf.score(X_train, y_train), 2) == 0.98, \
+            round(stclf.score(X_train, y_train), 2)
 
 
 def test_decision_function():
@@ -596,7 +604,7 @@ def test_decision_function():
     sclf = StackingCVClassifier(classifiers=[clf1, clf2],
                                 use_probas=True,
                                 meta_classifier=meta)
-    
+
     scores = cross_val_score(sclf,
                              X_breast,
                              y_breast,
@@ -606,5 +614,7 @@ def test_decision_function():
 
     if Version(sklearn_version) < Version("0.21"):
         assert scores_mean == 0.94, scores_mean
-    else:
+    elif Version(sklearn_version) < Version("0.22"):
         assert scores_mean == 0.96, scores_mean
+    else:
+        assert scores_mean == 0.90, scores_mean

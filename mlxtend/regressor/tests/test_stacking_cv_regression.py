@@ -242,8 +242,10 @@ def test_sparse_matrix_inputs():
 
     if Version(sklearn_version) < Version("0.21"):
         expected_value = 0.20
+    elif Version(sklearn_version) < Version("0.22"):
+        expected_value = 0.20
     else:
-        expected_value = 0.19
+        expected_value = 0.21
 
     got = np.mean((stack.predict(sparse.csr_matrix(X1)) - y) ** 2)
     assert round(got, 2) == expected_value, got

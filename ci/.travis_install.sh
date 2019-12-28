@@ -33,7 +33,9 @@ source activate test-environment
 if [ "${LATEST}" = "true" ]; then
     conda install numpy scipy pandas scikit-learn joblib
 else
-    conda install numpy="$NUMPY_VERSION" scipy="$SCIPY_VERSION" pandas="$PANDAS_VERSION" scikit-learn="$SKLEARN_VERSION" joblib="$JOBLIB_VERSION"
+    conda install numpy="$NUMPY_VERSION" scipy="$SCIPY_VERSION" pandas="$PANDAS_VERSION" joblib="$JOBLIB_VERSION"
+    # temporary fix because 0.22 cannot be installed from the main conda branch
+    conda install scikit-learn="$SKLEARN_VERSION" -c conda-forge
 fi
 
 

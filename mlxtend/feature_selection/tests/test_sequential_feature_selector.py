@@ -203,23 +203,30 @@ def test_knn_cv3():
     sfs1 = sfs1.fit(X, y)
     sfs1.subsets_
     expect = {1: {'avg_score': 0.95299145299145294,
-                  'cv_scores': np.array([0.97435897,
-                                         0.94871795,
-                                         0.88888889,
-                                         1.0]),
+                  'cv_scores': np.array([0.974, 0.947, 0.892, 1.]),
                   'feature_idx': (3,)},
               2: {'avg_score': 0.95993589743589736,
-                  'cv_scores': np.array([0.97435897,
-                                         0.94871795,
-                                         0.91666667,
-                                         1.0]),
+                  'cv_scores': np.array([0.974, 0.947, 0.919, 1.]),
                   'feature_idx': (2, 3)},
-              3: {'avg_score': 0.97275641025641035,
-                  'cv_scores': np.array([0.97435897,
-                                         1.0,
-                                         0.94444444,
-                                         0.97222222]),
+              3: {'avg_score': 0.9732,
+                  'cv_scores': np.array([0.974, 1., 0.946, 0.973]),
                   'feature_idx': (1, 2, 3)}}
+
+    if Version(sklearn_version) < Version("0.22"):
+        expect[1]['cv_scores'] = np.array([0.97435897,
+                                           0.94871795,
+                                           0.88888889,
+                                           1.0])
+        expect[2]['cv_scores'] = np.array([0.97435897,
+                                           0.94871795,
+                                           0.91666667,
+                                           1.0])
+        expect[2]['avg_score'] = 0.97275641025641035
+        expect[3]['cv_scores'] = np.array([0.97435897,
+                                           1.0,
+                                           0.94444444,
+                                           0.97222222])
+
     dict_compare_utility(d_actual=sfs1.subsets_, d_desired=expect)
 
 
@@ -454,7 +461,11 @@ def test_knn_scoring_metric():
                cv=4,
                verbose=0)
     sfs5 = sfs5.fit(X, y)
-    assert round(sfs5.k_score_, 4) == 0.9728
+
+    if Version(sklearn_version) < '0.22':
+        assert round(sfs5.k_score_, 4) == 0.9728
+    else:
+        assert round(sfs5.k_score_, 4) == 0.9732
 
     sfs6 = SFS(knn,
                k_features=3,
@@ -463,7 +474,10 @@ def test_knn_scoring_metric():
                cv=4,
                verbose=0)
     sfs6 = sfs6.fit(X, y)
-    assert round(sfs6.k_score_, 4) == 0.9728
+    if Version(sklearn_version) < '0.22':
+        assert round(sfs5.k_score_, 4) == 0.9728
+    else:
+        assert round(sfs5.k_score_, 4) == 0.9732
 
     sfs7 = SFS(knn,
                k_features=3,
@@ -472,7 +486,10 @@ def test_knn_scoring_metric():
                scoring='f1_macro',
                cv=4)
     sfs7 = sfs7.fit(X, y)
-    assert round(sfs7.k_score_, 4) == 0.9727, sfs7.k_score_
+    if Version(sklearn_version) < '0.22':
+        assert round(sfs5.k_score_, 4) == 0.9727
+    else:
+        assert round(sfs5.k_score_, 4) == 0.9732
 
 
 def test_regression():
@@ -588,9 +605,9 @@ def test_clone_params_fail():
                     errors += int(update != 0.0)
 
                 if self.print_progress:
-                    self._print_progress(iteration=i + 1,
-                                         n_iter=self.epochs,
-                                         cost=errors)
+                    self.print_progress(iteration=i + 1,
+                                        n_iter=self.epochs,
+                                        cost=errors)
                 self.cost_.append(errors)
             return self
 

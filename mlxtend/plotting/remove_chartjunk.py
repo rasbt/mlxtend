@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2019
+# Sebastian Raschka 2014-2020
 # mlxtend Machine Learning Library Extensions
 #
 # A function for removing chart junk from matplotlib plots

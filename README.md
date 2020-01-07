@@ -14,7 +14,7 @@
 
 <br>
 
-Sebastian Raschka 2014-2019
+Sebastian Raschka 2014-2020
 
 <br>
 

@@ -11,9 +11,9 @@ The CHANGELOG for the current development version is available at
 
 ##### Downloads
 
-- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.18.0.zip)
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.17.1.zip)
 
-- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.18.0.tar.gz)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.17.1.tar.gz)
 
 ##### New Features
 

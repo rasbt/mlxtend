@@ -7,7 +7,7 @@ The CHANGELOG for the current development version is available at
 
 ---
 
-### Version 0.18.0 (TBD)
+### Version 0.17.1 (2020-01-28)
 
 ##### Downloads
 

@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../../user_guide/evaluate/accuracy_score/">Accuracy Score</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
 </li>
 
@@ -960,7 +966,7 @@
         <div class="col-md-9" role="main">
 
 <h2 id="plot_pca_correlation_graph">plot_pca_correlation_graph</h2>
-<p><em>plot_pca_correlation_graph(X, variables_names, dimensions=(1, 2), figure_axis_size=6, X_pca=None)</em></p>
+<p><em>plot_pca_correlation_graph(X, variables_names, dimensions=(1, 2), figure_axis_size=6, X_pca=None, explained_variance=None)</em></p>
 <p>Compute the PCA for X and plots the Correlation graph</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -971,18 +977,31 @@ samples of thos variables</p>
 </li>
 <li>
 <p><code>variables_names</code> : array like</p>
-<p>Name of the columns (the variables) of X
-dimensions: tuple with two elements.
-dimensions to be plot (x,y)</p>
-</li>
-<li>
-<p><code>X_pca</code> : optional. if not provided, compute PCA independently</p>
+<p>Name of the columns (the variables) of X</p>
+<p>dimensions: tuple with two elements.
+dimensions to be plotted (x,y)</p>
 <p>figure_axis_size :
 size of the final frame. The figure created is a square with length
-and width equal to figure_axis_size.
-<strong>Returns</strong></p>
+and width equal to figure_axis_size.</p>
+</li>
+<li>
+<p><code>X_pca</code> : np.ndarray, shape = [n_samples, n_components].</p>
+<p>Optional.
+<code>X_pca</code> is the matrix of the transformed components from X.
+If not provided, the function computes PCA automatically using
+mlxtend.feature_extraction.PrincipalComponentAnalysis
+Expected <code>n_componentes &gt;= max(dimensions)</code></p>
+</li>
+<li>
+<p><code>explained_variance</code> : 1 dimension np.ndarray, length = n_components</p>
+<p>Optional.
+<code>explained_variance</code> are the eigenvalues from the diagonalized
+covariance matrix on the PCA transformatiopn.
+If not provided, the function computes PCA independently
+Expected <code>n_componentes == X.shape[1]</code></p>
 </li>
 </ul>
+<p><strong>Returns</strong></p>
 <p>matplotlib_figure , correlation_matrix</p></div>
         
         

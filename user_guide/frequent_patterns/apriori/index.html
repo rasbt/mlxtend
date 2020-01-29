@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../evaluate/accuracy_score/">Accuracy Score</a>
+</li>
+
+        
+            
+<li >
     <a href="../../evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
 </li>
 
@@ -1481,7 +1487,7 @@ frequent_itemsets
 <p>To save memory, you may want to represent your transaction data in the sparse format.
 This is especially useful if you have lots of products and small transactions.</p>
 <pre><code class="python">oht_ary = te.fit(dataset).transform(dataset, sparse=True)
-sparse_df = pd.SparseDataFrame(oht_ary, columns=te.columns_, default_fill_value=False)
+sparse_df = pd.DataFrame.sparse.from_spmatrix(oht_ary, columns=te.columns_)
 sparse_df
 </code></pre>
 

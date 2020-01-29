@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../evaluate/accuracy_score/">Accuracy Score</a>
+</li>
+
+        
+            
+<li >
     <a href="../../evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
 </li>
 
@@ -968,15 +974,21 @@
             <li class="second-level"><a href="#overview">Overview</a></li>
                  <!-- 
                 <li class="third-level"><a href="#normal-equations-closed-form-solution">Normal Equations (closed-form solution)</a></li>
+                <li class="third-level"><a href="#stable-ols-via-qr-factorization">Stable OLS via QR Factorization</a></li>
+                <li class="third-level"><a href="#stable-ols-via-singular-value-decomposition">Stable OLS via Singular Value Decomposition</a></li>
                 <li class="third-level"><a href="#gradient-descent-gd-and-stochastic-gradient-descent-sgd">Gradient Descent (GD)  and Stochastic Gradient Descent (SGD)</a></li>
                 <li class="third-level"><a href="#references">References</a></li>  -->
             <li class="second-level"><a href="#example-1-closed-form-solution">Example 1 - Closed Form Solution</a></li>
                  <!--   -->
-            <li class="second-level"><a href="#example-2-gradient-descent">Example 2 - Gradient Descent</a></li>
+            <li class="second-level"><a href="#example-2-qr-decomposition-method">Example 2 - QR decomposition method</a></li>
                  <!--   -->
-            <li class="second-level"><a href="#example-3-stochastic-gradient-descent">Example 3 - Stochastic Gradient Descent</a></li>
+            <li class="second-level"><a href="#example-3-svd-method">Example 3 - SVD method</a></li>
                  <!--   -->
-            <li class="second-level"><a href="#example-3-stochastic-gradient-descent-with-minibatches">Example 3 - Stochastic Gradient Descent with Minibatches</a></li>
+            <li class="second-level"><a href="#example-4-gradient-descent">Example 4 - Gradient Descent</a></li>
+                 <!--   -->
+            <li class="second-level"><a href="#example-5-stochastic-gradient-descent">Example 5 - Stochastic Gradient Descent</a></li>
+                 <!--   -->
+            <li class="second-level"><a href="#example-6-stochastic-gradient-descent-with-minibatches">Example 6 - Stochastic Gradient Descent with Minibatches</a></li>
                  <!--   -->
             <li class="second-level"><a href="#api">API</a></li>
                  <!-- 
@@ -1000,23 +1012,55 @@
 <p>
 <script type="math/tex; mode=display">MSE = \frac{1}{n} \times SSE</script>
 </p>
-<p>Now, <code>LinearRegression</code> implements a linear regression model for performing ordinary least squares regression using one of the following three approaches:</p>
+<p>Now, <code>LinearRegression</code> implements a linear regression model for performing ordinary least squares regression using one of the following five approaches:</p>
 <ul>
 <li>Normal Equations</li>
+<li>QR Decomposition Method</li>
+<li>SVD (Singular Value Decomposition) method</li>
 <li>Gradient Descent</li>
 <li>Stochastic Gradient Descent</li>
 </ul>
 <h3 id="normal-equations-closed-form-solution">Normal Equations (closed-form solution)</h3>
-<p>The closed-form solution should be preferred for "smaller" datasets where calculating (a "costly") matrix inverse is not a concern. For very large datasets, or datasets where the inverse of <script type="math/tex">[X^T X]</script> may not exist (the matrix is non-invertible or singular, e.g., in case of perfect multicollinearity), the gradient descent or stochastic gradient descent approaches are to be preferred.</p>
+<p>The closed-form solution should be preferred for "smaller" datasets where calculating (a "costly") matrix inverse is not a concern. For very large datasets, or datasets where the inverse of <script type="math/tex">[X^T X]</script> may not exist (the matrix is non-invertible or singular, e.g., in case of perfect multicollinearity), the QR, SVD or gradient descent approaches are to be preferred.</p>
 <p>The linear function (linear regression model) is defined as:</p>
 <p>
-<script type="math/tex; mode=display">y = w_0x_0 + w_1x_1 + ... + w_mx_m = \sum_{i=0}^{n} = \mathbf{w}^T\mathbf{x}</script>
+<script type="math/tex; mode=display">y = w_0x_0 + w_1x_1 + ... + w_mx_m = \sum_{i=0}^{m} = \mathbf{w}^T\mathbf{x}</script>
 </p>
 <p>where <script type="math/tex">y</script> is the response variable, <script type="math/tex">\mathbf{x}</script> is an <script type="math/tex">m</script>-dimensional sample vector, and <script type="math/tex">\mathbf{w}</script> is the weight vector (vector of coefficients). Note that <script type="math/tex">w_0</script> represents the y-axis intercept of the model and therefore <script type="math/tex">x_0=1</script>.  </p>
 <p>Using the closed-form solution (normal equation), we compute the weights of the model as follows:</p>
 <p>
 <script type="math/tex; mode=display"> \mathbf{w} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^Ty</script>
 </p>
+<h3 id="stable-ols-via-qr-factorization">Stable OLS via QR Factorization</h3>
+<p>The QR decomposition method offers a more numerically stable alternative to the closed-form, analytical solution based on the "normal equations," and it can be used to compute the inverse of large matrices more efficiently.</p>
+<p>QR decomposition method decomposes given matrix into two matrices for which an inverse can be easily obtained. For instance, a given matrix <script type="math/tex">X \in \mathbb{R}^{n \times m}</script>, the QR decomposition into two matrices is:</p>
+<p>
+<script type="math/tex; mode=display">\mathbf{X = QR},</script>
+</p>
+<p>where</p>
+<p>
+<script type="math/tex">Q \in \mathbb{R}^{n \times m}</script> is an orthonormal matrix, such that <script type="math/tex">Q^\top Q = QQ^\top = I</script>. 
+The second matrix <script type="math/tex">R \in \mathbf{R}^{m \times m}</script> is an upper triangular matrix.</p>
+<p>The weight parameters of the ordinary least squares regression model can then be computed as follows [1]:</p>
+<p>
+<script type="math/tex; mode=display">\mathbf{w} = \mathbf{R}^{-1}\mathbf{Q}^\top y.</script>
+</p>
+<h3 id="stable-ols-via-singular-value-decomposition">Stable OLS via Singular Value Decomposition</h3>
+<p>Another alternative way for obtaining the OLS model weights in a numerically stable fashion is by Singular Value Decomposition (SVD), which is defined as:</p>
+<p>
+<script type="math/tex; mode=display">\mathbf{X}=\mathbf{U}\Sigma \mathbf{V}^\top,</script>
+</p>
+<p>for a given matrix <script type="math/tex">\mathbf{X}</script>.</p>
+<p>Then, it can be shown that the pseudo-inverse of <script type="math/tex">X</script>, <script type="math/tex">X^+</script>, can be obtained as follows [1]:</p>
+<p>
+<script type="math/tex; mode=display"> X^+ = \mathbf{U} \mathbf{\Sigma}^+  V^{\top}.</script>
+</p>
+<p>Note that while <script type="math/tex">\Sigma</script> is the diagonal matrix consisting of singular values of <script type="math/tex">\mathbf{X}</script>, <script type="math/tex">\Sigma^{+}</script> is the diagonal matrix consisting of the reciprocals of the singular values.</p>
+<p>The model weights can then be computed as follows:</p>
+<p>
+<script type="math/tex; mode=display">\mathbf{w} = \mathbf{X}^+  \mathbf{y}.</script>
+</p>
+<p>Please note that this OLS method is computationally most inefficient. However, it is a useful approach when the direct method (normal equations) or QR factorization cannot be applied or the normal equations (via <script type="math/tex">\mathbf{X}^T \mathbf{X}</script>) are ill-conditioned [3].</p>
 <h3 id="gradient-descent-gd-and-stochastic-gradient-descent-sgd">Gradient Descent (GD)  and Stochastic Gradient Descent (SGD)</h3>
 <p>See <a href="../../general_concepts/gradient-optimization/">Gradient Descent and Stochastic Gradient Descent</a> and <a href="../../general_concepts/linear-gradient-derivative/">Deriving the Gradient Descent Rule for Linear Regression and Adaline</a> for details.</p>
 <p>Random shuffling is implemented as:</p>
@@ -1034,9 +1078,9 @@
 </ul>
 <h3 id="references">References</h3>
 <ul>
-<li>F. Galton. <a href="http://www.jstor.org/stable/2841583">Regression towards mediocrity in hereditary stature</a>. Journal of the Anthropological Institute of Great Britain and Ireland, pages 246–263, 1886.</li>
-<li>A. I. Khuri. <a href="http://onlinelibrary.wiley.com/doi/10.1111/insr.12020_10/abstract">Introduction to linear regression analysis</a>, by Douglas C. Montgomery, Elizabeth A. Peck, G. Geoffrey Vining. International Statistical Review, 81(2):318–319, 2013.</li>
-<li>D. S. G. Pollock. <a href="http://www.le.ac.uk/users/dsgp1/COURSES/MESOMET/ECMETXT/06mesmet.pdf">The Classical Linear Regression Model</a>.</li>
+<li>[1] Chapter 3, page 55, Linear Methods for Regression. Trevor Hastie; Robert Tibshirani; Jerome Friedman (2009). <a href="http://statweb.stanford.edu/~tibs/ElemStatLearn/download.html">The Elements of Statistical Learning: Data Mining, Inference, and Prediction (2nd ed.)</a>. New York: Springer. (ISBN 978–0–387–84858–7)</li>
+<li>[2] G. Strang, Linear Algebra and Its Applications, 2nd Ed., Orlando, FL, Academic Press, Inc., 1980, pp. 139-142.</li>
+<li>[3] Douglas Wilhelm Harder. Numerical Analysis for Engineering. Section 4.8, <a href="https://ece.uwaterloo.ca/~dwharder/NumericalAnalysis/04LinearAlgebra/illconditioned/">ill-conditioned Matrices</a></li>
 </ul>
 <h2 id="example-1-closed-form-solution">Example 1 - Closed Form Solution</h2>
 <pre><code class="python">import numpy as np
@@ -1046,7 +1090,7 @@ from mlxtend.regressor import LinearRegression
 X = np.array([ 1.0, 2.1, 3.6, 4.2, 6])[:, np.newaxis]
 y = np.array([ 1.0, 2.0, 3.0, 4.0, 5.0])
 
-ne_lr = LinearRegression(minibatches=None)
+ne_lr = LinearRegression()
 ne_lr.fit(X, y)
 
 print('Intercept: %.2f' % ne_lr.b_)
@@ -1063,12 +1107,9 @@ plt.show()
 
 <pre><code>Intercept: 0.25
 Slope: 0.81
-
-
-
-&lt;Figure size 640x480 with 1 Axes&gt;
 </code></pre>
-<h2 id="example-2-gradient-descent">Example 2 - Gradient Descent</h2>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_16_1.png" /></p>
+<h2 id="example-2-qr-decomposition-method">Example 2 - QR decomposition method</h2>
 <pre><code class="python">import numpy as np
 import matplotlib.pyplot as plt
 from mlxtend.regressor import LinearRegression
@@ -1076,7 +1117,62 @@ from mlxtend.regressor import LinearRegression
 X = np.array([ 1.0, 2.1, 3.6, 4.2, 6])[:, np.newaxis]
 y = np.array([ 1.0, 2.0, 3.0, 4.0, 5.0])
 
-gd_lr = LinearRegression(eta=0.005, 
+qr_lr = LinearRegression(method='qr')
+qr_lr.fit(X, y)
+
+print('Intercept: %.2f' % qr_lr.b_)
+print('Slope: %.2f' % qr_lr.w_[0])
+
+def lin_regplot(X, y, model):
+    plt.scatter(X, y, c='blue')
+    plt.plot(X, model.predict(X), color='red')    
+    return
+
+lin_regplot(X, y, qr_lr)
+plt.show()
+</code></pre>
+
+<pre><code>Intercept: 0.25
+Slope: 0.81
+</code></pre>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_18_1.png" /></p>
+<h2 id="example-3-svd-method">Example 3 - SVD method</h2>
+<pre><code class="python">import numpy as np
+import matplotlib.pyplot as plt
+from mlxtend.regressor import LinearRegression
+
+X = np.array([ 1.0, 2.1, 3.6, 4.2, 6])[:, np.newaxis]
+y = np.array([ 1.0, 2.0, 3.0, 4.0, 5.0])
+
+svd_lr = LinearRegression(method='svd')
+svd_lr.fit(X, y)
+
+print('Intercept: %.2f' %svd_lr.b_)
+print('Slope: %.2f' % svd_lr.w_[0])
+
+def lin_regplot(X, y, model):
+    plt.scatter(X, y, c='blue')
+    plt.plot(X, model.predict(X), color='red')    
+    return
+
+lin_regplot(X, y, svd_lr)
+plt.show()
+</code></pre>
+
+<pre><code>Intercept: 0.25
+Slope: 0.81
+</code></pre>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_20_1.png" /></p>
+<h2 id="example-4-gradient-descent">Example 4 - Gradient Descent</h2>
+<pre><code class="python">import numpy as np
+import matplotlib.pyplot as plt
+from mlxtend.regressor import LinearRegression
+
+X = np.array([ 1.0, 2.1, 3.6, 4.2, 6])[:, np.newaxis]
+y = np.array([ 1.0, 2.0, 3.0, 4.0, 5.0])
+
+gd_lr = LinearRegression(method='sgd',
+                         eta=0.005, 
                          epochs=100,
                          minibatches=1,
                          random_seed=123,
@@ -1100,7 +1196,7 @@ plt.show()
 Intercept: 0.22
 Slope: 0.82
 </code></pre>
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_15_2.png" /></p>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_22_2.png" /></p>
 <pre><code class="python"># Visualizing the cost to check for convergence and plotting the linear model:
 
 plt.plot(range(1, gd_lr.epochs+1), gd_lr.cost_)
@@ -1111,8 +1207,8 @@ plt.tight_layout()
 plt.show()    
 </code></pre>
 
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_16_0.png" /></p>
-<h2 id="example-3-stochastic-gradient-descent">Example 3 - Stochastic Gradient Descent</h2>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_23_0.png" /></p>
+<h2 id="example-5-stochastic-gradient-descent">Example 5 - Stochastic Gradient Descent</h2>
 <pre><code class="python">import numpy as np
 import matplotlib.pyplot as plt
 from mlxtend.regressor import LinearRegression
@@ -1120,7 +1216,8 @@ from mlxtend.regressor import LinearRegression
 X = np.array([ 1.0, 2.1, 3.6, 4.2, 6])[:, np.newaxis]
 y = np.array([ 1.0, 2.0, 3.0, 4.0, 5.0])
 
-sgd_lr = LinearRegression(eta=0.01, 
+sgd_lr = LinearRegression(method='sgd',
+                          eta=0.01, 
                           epochs=100, 
                           random_seed=0, 
                           minibatches=len(y))
@@ -1141,7 +1238,7 @@ plt.show()
 <pre><code>Intercept: 0.82
 Slope: 0.24
 </code></pre>
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_18_1.png" /></p>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_25_1.png" /></p>
 <pre><code class="python">plt.plot(range(1, sgd_lr.epochs+1), sgd_lr.cost_)
 plt.xlabel('Epochs')
 plt.ylabel('Cost')
@@ -1150,8 +1247,8 @@ plt.tight_layout()
 plt.show()  
 </code></pre>
 
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_19_0.png" /></p>
-<h2 id="example-3-stochastic-gradient-descent-with-minibatches">Example 3 - Stochastic Gradient Descent with Minibatches</h2>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_26_0.png" /></p>
+<h2 id="example-6-stochastic-gradient-descent-with-minibatches">Example 6 - Stochastic Gradient Descent with Minibatches</h2>
 <pre><code class="python">import numpy as np
 import matplotlib.pyplot as plt
 from mlxtend.regressor import LinearRegression
@@ -1159,7 +1256,8 @@ from mlxtend.regressor import LinearRegression
 X = np.array([ 1.0, 2.1, 3.6, 4.2, 6])[:, np.newaxis]
 y = np.array([ 1.0, 2.0, 3.0, 4.0, 5.0])
 
-sgd_lr = LinearRegression(eta=0.01, 
+sgd_lr = LinearRegression(method='sgd',
+                          eta=0.01, 
                           epochs=100, 
                           random_seed=0, 
                           minibatches=3)
@@ -1180,7 +1278,7 @@ plt.show()
 <pre><code>Intercept: 0.24
 Slope: 0.82
 </code></pre>
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_21_1.png" /></p>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_28_1.png" /></p>
 <pre><code class="python">plt.plot(range(1, sgd_lr.epochs+1), sgd_lr.cost_)
 plt.xlabel('Epochs')
 plt.ylabel('Cost')
@@ -1189,37 +1287,49 @@ plt.tight_layout()
 plt.show()  
 </code></pre>
 
-<p><img alt="png" src="../LinearRegression_files/LinearRegression_22_0.png" /></p>
+<p><img alt="png" src="../LinearRegression_files/LinearRegression_29_0.png" /></p>
 <h2 id="api">API</h2>
-<p><em>LinearRegression(eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0)</em></p>
+<p><em>LinearRegression(method='direct', eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0)</em></p>
 <p>Ordinary least squares linear regression.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
+<p><code>method</code> : string (default: 'direct')</p>
+<p>For gradient descent-based optimization, use <code>sgd</code> (see <code>minibatch</code>
+parameter for further options). Otherwise, if <code>direct</code> (default),
+the analytical method is used. For alternative, numerically more
+stable solutions, use either <code>qr</code> (QR decomopisition) or <code>svd</code>
+(Singular Value Decomposition).</p>
+</li>
+<li>
 <p><code>eta</code> : float (default: 0.01)</p>
-<p>solver rate (between 0.0 and 1.0)</p>
+<p>solver learning rate (between 0.0 and 1.0). Used with <code>method =</code>
+<code>'sgd'</code>. (See <code>methods</code> parameter for details)</p>
 </li>
 <li>
 <p><code>epochs</code> : int (default: 50)</p>
 <p>Passes over the training dataset.
 Prior to each epoch, the dataset is shuffled
-if <code>minibatches &gt; 1</code> to prevent cycles in stochastic gradient descent.</p>
+if <code>minibatches &gt; 1</code> to prevent cycles in stochastic gradient descent.
+Used with <code>method = 'sgd'</code>. (See <code>methods</code> parameter for details)</p>
 </li>
 <li>
 <p><code>minibatches</code> : int (default: None)</p>
 <p>The number of minibatches for gradient-based optimization.
-If None: Normal Equations (closed-form solution)
+If None: Direct method, QR, or SVD method (see <code>method</code> parameter
+for details)
 If 1: Gradient Descent learning
 If len(y): Stochastic Gradient Descent learning
 If 1 &lt; minibatches &lt; len(y): Minibatch learning</p>
 </li>
 <li>
 <p><code>random_seed</code> : int (default: None)</p>
-<p>Set random state for shuffling and initializing the weights.</p>
+<p>Set random state for shuffling and initializing the weights. Used in
+<code>method = 'sgd'</code>. (See <code>methods</code> parameter for details)</p>
 </li>
 <li>
 <p><code>print_progress</code> : int (default: 0)</p>
-<p>Prints progress in fitting to stderr if not solver='normal equation'
+<p>Prints progress in fitting to stderr if <code>method = 'sgd'</code>.
 0: No output
 1: Epochs elapsed and cost
 2: 1 plus time elapsed
@@ -1327,7 +1437,8 @@ component of a nested object.</p>
 <p>adapted from
 https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
 Author: Gael Varoquaux <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;">&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a>
-License: BSD 3 clause</p></div>
+License: BSD 3 clause</p>
+<p>ython</p></div>
         
         
     </div>

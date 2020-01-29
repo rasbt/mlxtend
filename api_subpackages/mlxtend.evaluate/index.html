@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../user_guide/evaluate/accuracy_score/">Accuracy Score</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
 </li>
 
@@ -973,6 +979,7 @@
         <li class="first-level "><a href="#randomholdoutsplit">RandomHoldoutSplit</a></li>
             <li class="second-level"><a href="#methods_2">Methods</a></li>
                  <!--   -->
+        <li class="first-level "><a href="#accuracy_score">accuracy_score</a></li>
         <li class="first-level "><a href="#bias_variance_decomp">bias_variance_decomp</a></li>
         <li class="first-level "><a href="#bootstrap">bootstrap</a></li>
         <li class="first-level "><a href="#bootstrap_point632_score">bootstrap_point632_score</a></li>
@@ -995,7 +1002,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.17.0 </p>
+<p>mlxtend version: 0.17.1 </p>
 <h2 id="bootstrapoutofbag">BootstrapOutOfBag</h2>
 <p><em>BootstrapOutOfBag(n_splits=200, random_seed=None)</em></p>
 <p><strong>Parameters</strong></p>
@@ -1225,6 +1232,39 @@ Stratification is done based on the y labels.</p>
 <p>The validation set indices for that split.</p>
 </li>
 </ul>
+<h2 id="accuracy_score">accuracy_score</h2>
+<p><em>accuracy_score(y_target, y_predicted, method='standard', pos_label=1, normalize=True)</em></p>
+<p>General accuracy function for supervised learning.
+<strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>y_target</code> : array-like, shape=[n_values]</p>
+<p>True class labels or target values.</p>
+</li>
+<li>
+<p><code>y_predicted</code> : array-like, shape=[n_values]</p>
+<p>Predicted class labels or target values.</p>
+</li>
+<li>
+<p><code>method</code> : str, 'standard' by default.</p>
+<p>The chosen method for accuracy computation.
+If set to 'standard', computes overall accuracy.
+If set to 'binary', computes accuracy for class pos_label.
+If set to 'average', computes average per class accuracy.</p>
+</li>
+<li>
+<p><code>pos_label</code> : str or int, 1 by default.</p>
+<p>The class whose accuracy score is to be reported.
+Used only when <code>method</code> is set to 'binary'</p>
+</li>
+<li>
+<p><code>normalize</code> : bool, True by default.</p>
+<p>If True, returns fraction of correctly classified samples.
+If False, returns number of correctly classified samples.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>score: float</p>
 <h2 id="bias_variance_decomp">bias_variance_decomp</h2>
 <p><em>bias_variance_decomp(estimator, X_train, y_train, X_test, y_test, loss='0-1_loss', num_rounds=200, random_seed=None)</em></p>
 <p>estimator : object
@@ -1295,7 +1335,7 @@ or vector.</p>
 </li>
 <li>
 <p><code>num_rounds</code> : int (default=1000)</p>
-<p>The number of bootstrap samnples to draw where each
+<p>The number of bootstrap samples to draw where each
 bootstrap sample has the same number of records as the
 original dataset.</p>
 </li>
@@ -2093,8 +2133,8 @@ If <code>None</code>, <code>n_1</code>=<code>n_2</code>.</p>
 <p><code>metric</code> : str (default: 'error')</p>
 <p>Performance metric:
 'accuracy': (TP + TN)/(FP + FN + TP + TN) = 1-ERR</p>
-<p>'per-class accuracy': Average per-class accuracy</p>
-<p>'per-class error':  Average per-class error</p>
+<p>'average per-class accuracy': Average per-class accuracy</p>
+<p>'average per-class error':  Average per-class error</p>
 <p>'error': (TP + TN)/(FP+ FN + TP + TN) = 1-ACC</p>
 <p>'false_positive_rate': FP/N = FP/(FP + TN)</p>
 <p>'true_positive_rate': TP/P = TP/(FN + TP)</p>

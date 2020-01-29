@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../user_guide/evaluate/accuracy_score/">Accuracy Score</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
 </li>
 
@@ -972,7 +978,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.17.0 </p>
+<p>mlxtend version: 0.17.1 </p>
 <h2 id="eyepadalign">EyepadAlign</h2>
 <p><em>EyepadAlign(verbose=0)</em></p>
 <p>Class to align/transform face images to facial landmarks,
@@ -1132,14 +1138,16 @@ the Python version of the library "dlib": http://dlib.net</p>
 <ul>
 <li>
 <p><code>img</code> : array, shape = [h, w, ?]</p>
-<p>numpy array of a face image.
-Supported shapes are
+<p>Numpy array of a face image or
+imageio.core.util.Array. E.g.,
+img = imageio.core.util.Array(ary)</p>
+<p>Supported shapes are
 - 3D tensors with 1
 or more color channels, for example,
 RGB: [h, w, 3]
 - 2D tensors without color channel, for example,
-Grayscale: [h, w]
-return_dtype: the return data-type of the array,
+Grayscale: [h, w]</p>
+<p>return_dtype: the return data-type of the array,
 default: np.int32.</p>
 </li>
 </ul>

@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../../user_guide/evaluate/accuracy_score/">Accuracy Score</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
 </li>
 
@@ -1108,6 +1114,27 @@ in training data and n_classifiers is the number of classfiers.</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
+<p><em>decision_function(X)</em></p>
+<p>Predict class confidence scores for X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>scores</code> : shape=(n_samples,) if n_classes == 2 else             (n_samples, n_classes).</p>
+<p>Confidence scores per (sample, class) combination. In the binary
+case, confidence score for self.classes_[1] where &gt;0 means this
+class would be predicted.</p>
+</li>
+</ul>
+<hr>
+
 <p><em>fit(X, y, groups=None, sample_weight=None)</em></p>
 <p>Fit ensemble classifers and the meta-classifier.</p>
 <p><strong>Parameters</strong></p>
@@ -1153,6 +1180,10 @@ and returns a transformed version of X.</p>
 <li>
 <p><code>y</code> : numpy array of shape [n_samples]</p>
 <p>Target values.</p>
+</li>
+<li>
+<p><code>**fit_params</code> : dict</p>
+<p>Additional fit parameters.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
@@ -1211,7 +1242,7 @@ n_features is the number of features.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
 <p>Training vectors, where n_samples is the number of samples and
 n_features is the number of features.</p>
 </li>
@@ -1219,29 +1250,29 @@ n_features is the number of features.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>proba</code> : array-like, shape = [n_samples, n_classes]</p>
+<p><code>proba</code> : array-like, shape = [n_samples, n_classes] or a list of                 n_outputs of such arrays if n_outputs &gt; 1.</p>
 <p>Probability for each class per sample.</p>
 </li>
 </ul>
 <hr>
 
 <p><em>score(X, y, sample_weight=None)</em></p>
-<p>Returns the mean accuracy on the given test data and labels.</p>
+<p>Return the mean accuracy on the given test data and labels.</p>
 <p>In multi-label classification, this is the subset accuracy
 which is a harsh metric since you require for each sample that
 each label set be correctly predicted.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>X</code> : array-like, shape = (n_samples, n_features)</p>
+<p><code>X</code> : array-like of shape (n_samples, n_features)</p>
 <p>Test samples.</p>
 </li>
 <li>
-<p><code>y</code> : array-like, shape = (n_samples) or (n_samples, n_outputs)</p>
+<p><code>y</code> : array-like of shape (n_samples,) or (n_samples, n_outputs)</p>
 <p>True labels for X.</p>
 </li>
 <li>
-<p><code>sample_weight</code> : array-like, shape = [n_samples], optional</p>
+<p><code>sample_weight</code> : array-like of shape (n_samples,), default=None</p>
 <p>Sample weights.</p>
 </li>
 </ul>

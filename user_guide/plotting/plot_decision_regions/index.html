@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../evaluate/accuracy_score/">Accuracy Score</a>
+</li>
+
+        
+            
+<li >
     <a href="../../evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
 </li>
 
@@ -992,6 +998,8 @@
                  <!--   -->
             <li class="second-level"><a href="#example-11-plots-with-different-zoom-factors">Example 11 - Plots with different zoom factors</a></li>
                  <!--   -->
+            <li class="second-level"><a href="#example-12-using-classifiers-that-expect-onehot-encoded-outputs-keras">Example 12 - Using classifiers that expect onehot-encoded outputs (Keras)</a></li>
+                 <!--   -->
         <li class="first-level "><a href="#api">API</a></li>
     </ul>
 </div></div>
@@ -1460,6 +1468,98 @@ plt.show()
 </code></pre>
 
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_46_0.png" /></p>
+<h2 id="example-12-using-classifiers-that-expect-onehot-encoded-outputs-keras">Example 12 - Using classifiers that expect onehot-encoded outputs (Keras)</h2>
+<p>Most objects for classification that mimick the scikit-learn estimator API should be compatible with the <code>plot_decision_regions</code> function. However, if the classification model (e.g., a typical Keras model) output onehot-encoded predictions, we have to use an additional trick. I.e., for onehot encoded outputs, we need to wrap the Keras model into a class that converts these onehot encoded variables into integers. Such a wrapper class can be as simple as the following:</p>
+<pre><code class="python">class Onehot2Int(object):
+
+    def __init__(self, model):
+        self.model = model
+
+    def predict(self, X):
+        y_pred = self.model.predict(X)
+        return np.argmax(y_pred, axis=1)
+</code></pre>
+
+<p>The example below illustrates how the Onehot2Int class can be used with a Keras model that outputs onehot encoded labels:</p>
+<pre><code class="python">import keras
+from keras.models import Sequential
+from keras.layers import Dense
+import matplotlib.pyplot as plt
+import numpy as np
+from mlxtend.data import iris_data
+from mlxtend.preprocessing import standardize
+from mlxtend.plotting import plot_decision_regions
+from keras.utils import to_categorical
+
+X, y = iris_data()
+X = X[:, [2, 3]]
+
+X = standardize(X)
+
+# OneHot encoding
+y_onehot = to_categorical(y)
+
+# Create the model
+np.random.seed(123)
+model = Sequential()
+model.add(Dense(8, input_shape=(2,), activation='relu', kernel_initializer='he_uniform'))
+model.add(Dense(4, activation='relu', kernel_initializer='he_uniform'))
+model.add(Dense(3, activation='softmax'))
+
+# Configure the model and start training
+model.compile(loss=&quot;categorical_crossentropy&quot;, optimizer=keras.optimizers.adam(lr=0.005), metrics=['accuracy'])
+history = model.fit(X, y_onehot, epochs=10, batch_size=5, verbose=1, validation_split=0.1)
+</code></pre>
+
+<pre><code>Using TensorFlow backend.
+
+
+WARNING:tensorflow:From /Users/sebastian/miniconda3/lib/python3.7/site-packages/keras/backend/tensorflow_backend.py:74: The name tf.get_default_graph is deprecated. Please use tf.compat.v1.get_default_graph instead.
+
+WARNING:tensorflow:From /Users/sebastian/miniconda3/lib/python3.7/site-packages/keras/backend/tensorflow_backend.py:517: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+WARNING:tensorflow:From /Users/sebastian/miniconda3/lib/python3.7/site-packages/keras/backend/tensorflow_backend.py:4138: The name tf.random_uniform is deprecated. Please use tf.random.uniform instead.
+
+WARNING:tensorflow:From /Users/sebastian/miniconda3/lib/python3.7/site-packages/keras/optimizers.py:790: The name tf.train.Optimizer is deprecated. Please use tf.compat.v1.train.Optimizer instead.
+
+WARNING:tensorflow:From /Users/sebastian/miniconda3/lib/python3.7/site-packages/keras/backend/tensorflow_backend.py:3295: The name tf.log is deprecated. Please use tf.math.log instead.
+
+WARNING:tensorflow:From /Users/sebastian/miniconda3/lib/python3.7/site-packages/tensorflow/python/ops/math_grad.py:1250: add_dispatch_support.&lt;locals&gt;.wrapper (from tensorflow.python.ops.array_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.where in 2.0, which has the same broadcast rule as np.where
+WARNING:tensorflow:From /Users/sebastian/miniconda3/lib/python3.7/site-packages/keras/backend/tensorflow_backend.py:986: The name tf.assign_add is deprecated. Please use tf.compat.v1.assign_add instead.
+
+Train on 135 samples, validate on 15 samples
+Epoch 1/10
+135/135 [==============================] - 1s 9ms/step - loss: 1.0487 - acc: 0.4074 - val_loss: 1.1136 - val_acc: 0.0000e+00
+Epoch 2/10
+135/135 [==============================] - 0s 571us/step - loss: 0.8553 - acc: 0.6519 - val_loss: 1.1569 - val_acc: 0.0000e+00
+Epoch 3/10
+135/135 [==============================] - 0s 585us/step - loss: 0.6601 - acc: 0.6889 - val_loss: 1.1103 - val_acc: 0.0000e+00
+Epoch 4/10
+135/135 [==============================] - 0s 582us/step - loss: 0.5327 - acc: 0.7185 - val_loss: 1.0639 - val_acc: 0.0000e+00
+Epoch 5/10
+135/135 [==============================] - 0s 703us/step - loss: 0.4370 - acc: 0.8444 - val_loss: 1.0055 - val_acc: 0.6667
+Epoch 6/10
+135/135 [==============================] - 0s 661us/step - loss: 0.3779 - acc: 0.8963 - val_loss: 0.9092 - val_acc: 0.8000
+Epoch 7/10
+135/135 [==============================] - 0s 672us/step - loss: 0.3364 - acc: 0.9407 - val_loss: 0.8492 - val_acc: 0.8667
+Epoch 8/10
+135/135 [==============================] - 0s 616us/step - loss: 0.3091 - acc: 0.9259 - val_loss: 0.7795 - val_acc: 0.8667
+Epoch 9/10
+135/135 [==============================] - 0s 735us/step - loss: 0.2796 - acc: 0.9407 - val_loss: 0.7048 - val_acc: 0.9333
+Epoch 10/10
+135/135 [==============================] - 0s 935us/step - loss: 0.2621 - acc: 0.9556 - val_loss: 0.6324 - val_acc: 1.0000
+</code></pre>
+<pre><code class="python"># Wrap keras model
+model_no_ohe = Onehot2Int(model)
+
+# Plot decision boundary
+plot_decision_regions(X, y, clf=model_no_ohe)
+plt.show()
+</code></pre>
+
+<p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_52_0.png" /></p>
 <h1 id="api">API</h1>
 <p><em>plot_decision_regions(X, y, clf, feature_index=None, filler_feature_values=None, filler_feature_ranges=None, ax=None, X_highlight=None, res=None, zoom_factor=1.0, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors='#1f77b4,#ff7f0e,#3ca02c,#d62728,#9467bd,#8c564b,#e377c2,#7f7f7f,#bcbd22,#17becf', scatter_kwargs=None, contourf_kwargs=None, scatter_highlight_kwargs=None)</em></p>
 <p>Plot decision regions of a classifier.</p>

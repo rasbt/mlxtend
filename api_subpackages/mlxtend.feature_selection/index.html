@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../user_guide/evaluate/accuracy_score/">Accuracy Score</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
 </li>
 
@@ -979,7 +985,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.17.0 </p>
+<p>mlxtend version: 0.17.1 </p>
 <h2 id="columnselector">ColumnSelector</h2>
 <p><em>ColumnSelector(cols=None, drop_axis=False)</em></p>
 <p>Object for selecting specific columns from a data set.</p>
@@ -1052,7 +1058,7 @@ n_features is the number of features.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>deep</code> : boolean, optional</p>
+<p><code>deep</code> : bool, default=True</p>
 <p>If True, will return the parameters for this estimator and
 contained subobjects that are estimators.</p>
 </li>
@@ -1072,8 +1078,20 @@ contained subobjects that are estimators.</p>
 (such as pipelines). The latter have parameters of the form
 <code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
 component of a nested object.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>**params</code> : dict</p>
+<p>Estimator parameters.</p>
+</li>
+</ul>
 <p><strong>Returns</strong></p>
-<p>self</p>
+<ul>
+<li>
+<p><code>self</code> : object</p>
+<p>Estimator instance.</p>
+</li>
+</ul>
 <hr>
 
 <p><em>transform(X, y=None)</em></p>
@@ -1297,7 +1315,7 @@ interval bounds of the CV score averages.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>deep</code> : boolean, optional</p>
+<p><code>deep</code> : bool, default=True</p>
 <p>If True, will return the parameters for this estimator and
 contained subobjects that are estimators.</p>
 </li>
@@ -1317,8 +1335,20 @@ contained subobjects that are estimators.</p>
 (such as pipelines). The latter have parameters of the form
 <code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
 component of a nested object.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>**params</code> : dict</p>
+<p>Estimator parameters.</p>
+</li>
+</ul>
 <p><strong>Returns</strong></p>
-<p>self</p>
+<ul>
+<li>
+<p><code>self</code> : object</p>
+<p>Estimator instance.</p>
+</li>
+</ul>
 <hr>
 
 <p><em>transform(X)</em></p>
@@ -1336,7 +1366,7 @@ argument for X.</p>
 <p><strong>Returns</strong></p>
 <p>Feature subset of X, shape={n_samples, k_features}</p>
 <h2 id="sequentialfeatureselector">SequentialFeatureSelector</h2>
-<p><em>SequentialFeatureSelector(estimator, k_features=1, forward=True, floating=False, verbose=0, scoring=None, cv=5, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
+<p><em>SequentialFeatureSelector(estimator, k_features=1, forward=True, floating=False, verbose=0, scoring=None, cv=5, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True, fixed_features=None)*</p>
 <p>Sequential Feature Selection for Classification and Regression.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1419,6 +1449,17 @@ of n_jobs, as in <code>2*n_jobs</code></p>
 if False. Set to False if the estimator doesn't
 implement scikit-learn's set_params and get_params methods.
 In addition, it is required to set cv=0, and n_jobs=1.</p>
+</li>
+<li>
+<p><code>fixed_features</code> : tuple (default: None)</p>
+<p>If not <code>None</code>, the feature indices provided as a tuple will be
+regarded as fixed by the feature selector. For example, if
+<code>fixed_features=(1, 3, 7)</code>, the 2nd, 4th, and 8th feature are
+guaranteed to be present in the solution. Note that if
+<code>fixed_features</code> is not <code>None</code>, make sure that the number of
+features to be selected is greater than <code>len(fixed_features)</code>.
+In other words, ensure that <code>k_features &gt; len(fixed_features)</code>.
+New in mlxtend v. 0.18.0.</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>
@@ -1560,7 +1601,7 @@ interval bounds of the CV score averages.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>deep</code> : boolean, optional</p>
+<p><code>deep</code> : bool, default=True</p>
 <p>If True, will return the parameters for this estimator and
 contained subobjects that are estimators.</p>
 </li>

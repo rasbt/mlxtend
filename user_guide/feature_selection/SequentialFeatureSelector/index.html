@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../evaluate/accuracy_score/">Accuracy Score</a>
+</li>
+
+        
+            
+<li >
     <a href="../../evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
 </li>
 
@@ -998,6 +1004,8 @@
                  <!--   -->
             <li class="second-level"><a href="#example-12-using-pandas-dataframes">Example 12 - Using Pandas DataFrames</a></li>
                  <!--   -->
+            <li class="second-level"><a href="#example-13-specifying-fixed-feature-sets">Example 13 - Specifying Fixed Feature Sets</a></li>
+                 <!--   -->
         <li class="first-level "><a href="#api">API</a></li>
             <li class="second-level"><a href="#methods">Methods</a></li>
                  <!--   -->
@@ -1159,7 +1167,7 @@
 <li>The returned output of the algorithm is a subset of the feature space of a specified size. E.g., a subset of 5 features from a 10-dimensional feature space (<strong><em>k = 5, d = 10</em></strong>).
 <br><br></li>
 </ul>
-<p><strong>Initialization:</strong> <script type="math/tex">X_0 = Y</script>, <script type="math/tex">k = d</script>
+<p><strong>Initialization:</strong> <script type="math/tex">X_0 = \emptyset</script>, <script type="math/tex">k = 0</script>
 </p>
 <ul>
 <li>We initialize the algorithm with an empty set ("null set") so that the <strong><em>k = 0</em></strong> (where <strong><em>k</em></strong> is the size of the subset)
@@ -1234,15 +1242,15 @@ sfs1 = sfs1.fit(X, y)
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
 
-[2019-06-20 08:43:12] Features: 1/3 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2019-08-20 15:49:09] Features: 1/3 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s finished
 
-[2019-06-20 08:43:12] Features: 2/3 -- score: 0.9733333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2019-08-20 15:49:09] Features: 2/3 -- score: 0.9733333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
 
-[2019-06-20 08:43:12] Features: 3/3 -- score: 0.9733333333333334
+[2019-08-20 15:49:09] Features: 3/3 -- score: 0.9733333333333334
 </code></pre>
 <p>Via the <code>subsets_</code> attribute, we can take a look at the selected feature indices at each step:</p>
 <pre><code class="python">sfs1.subsets_
@@ -1271,15 +1279,15 @@ sfs1.subsets_
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
 
-[2019-06-20 08:43:12] Features: 1/3 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2019-08-20 15:49:09] Features: 1/3 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s finished
 
-[2019-06-20 08:43:12] Features: 2/3 -- score: 0.9733333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2019-08-20 15:49:09] Features: 2/3 -- score: 0.9733333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
 
-[2019-06-20 08:43:12] Features: 3/3 -- score: 0.9733333333333334
+[2019-08-20 15:49:09] Features: 3/3 -- score: 0.9733333333333334
 
 
 
@@ -1614,19 +1622,19 @@ plt.show()
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
 
-[2019-06-20 08:43:14] Features: 1/4 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2019-08-20 15:49:11] Features: 1/4 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s finished
 
-[2019-06-20 08:43:14] Features: 2/4 -- score: 0.9666666666666668[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2019-08-20 15:49:11] Features: 2/4 -- score: 0.9666666666666668[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
 
-[2019-06-20 08:43:14] Features: 3/4 -- score: 0.9533333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2019-08-20 15:49:11] Features: 3/4 -- score: 0.9533333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s finished
 
-[2019-06-20 08:43:14] Features: 4/4 -- score: 0.9733333333333334
+[2019-08-20 15:49:11] Features: 4/4 -- score: 0.9733333333333334
 </code></pre>
 <p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_43_1.png" /></p>
 <h2 id="example-5-sequential-feature-selection-for-regression">Example 5 - Sequential Feature Selection for Regression</h2>
@@ -1698,15 +1706,15 @@ sfs1 = sfs1.fit(X, y)
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
 
-[2019-06-20 08:43:15] Features: 1/3 -- score: 0.9666666666666667[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2019-08-20 15:49:12] Features: 1/3 -- score: 0.9666666666666667[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s finished
 
-[2019-06-20 08:43:15] Features: 2/3 -- score: 0.9666666666666667[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2019-08-20 15:49:12] Features: 2/3 -- score: 0.9666666666666667[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
 
-[2019-06-20 08:43:15] Features: 3/3 -- score: 0.9666666666666667
+[2019-08-20 15:49:12] Features: 3/3 -- score: 0.9666666666666667
 </code></pre>
 <h2 id="example-7-using-the-selected-feature-subset-for-making-new-predictions">Example 7 -- Using the Selected Feature Subset For Making New Predictions</h2>
 <pre><code class="python"># Initialize the dataset
@@ -1850,9 +1858,9 @@ gs = gs.fit(X_train, y_train)
                                                            n_jobs=None,
                                                            n_neighbors=1, p=2,
                                                            weights='uniform'),
-                            floating=False, forward=True, k_features=4, n_jobs=1,
-                            pre_dispatch='2*n_jobs', scoring='accuracy',
-                            verbose=0)),
+                            fixed_features=None, floating=False, forward=True,
+                            k_features=4, n_jobs=1, pre_dispatch='2*n_jobs',
+                            scoring='accuracy', verbose=0)),
  ('knn',
   KNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',
                        metric_params=None, n_jobs=None, n_neighbors=2, p=2,
@@ -1959,7 +1967,7 @@ print('groups: {}'.format(groups))
 cv_gen
 </code></pre>
 
-<pre><code>&lt;generator object _BaseKFold.split at 0x7fa9787fdc78&gt;
+<pre><code>&lt;generator object _BaseKFold.split at 0x7fbef94cee58&gt;
 </code></pre>
 <p>The <code>cv</code> parameter of <code>SequentialFeatureSelector</code> must be either an <code>int</code> or an iterable yielding train, test splits. This iterable can be constructed by passing the train, test split generator to the built-in <code>list()</code> function. </p>
 <pre><code class="python">cv = list(cv_gen)
@@ -2102,8 +2110,171 @@ dtype: int64
   'feature_names': ('petal len', 'sepal width', 'petal width')}}
 </code></pre>
 <p>In mlxtend version &gt;= 0.13 pandas DataFrames are supported as feature inputs to the <code>SequentianFeatureSelector</code> instead of NumPy arrays or other NumPy-like array types.</p>
+<h2 id="example-13-specifying-fixed-feature-sets">Example 13 - Specifying Fixed Feature Sets</h2>
+<p>Often, it may be useful to specify a fixed set of features we want to use for a given model (e.g., determined by prior knowledge or domain knowledge). Since MLxtend v 0.18.0, it is now possible to specify such features via the <code>fixed_featurs</code> attribute. This will mean that these features are guaranteed to be included in the selected subsets.</p>
+<p>Note that this feature works for all options regarding forward and backward selection, and using floating selection or not.</p>
+<p>The example below illustrates how we can set the features 0 and 2 in the dataset as fixed:</p>
+<pre><code class="python">from sklearn.neighbors import KNeighborsClassifier
+from sklearn.datasets import load_iris
+
+iris = load_iris()
+X = iris.data
+y = iris.target
+knn = KNeighborsClassifier(n_neighbors=3)
+
+from mlxtend.feature_selection import SequentialFeatureSelector as SFS
+
+sfs1 = SFS(knn, 
+           k_features=4, 
+           forward=True, 
+           floating=False, 
+           verbose=2,
+           scoring='accuracy',
+           fixed_features=(0, 2),
+           cv=3)
+
+sfs1 = sfs1.fit(X, y)
+</code></pre>
+
+<pre><code>[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
+
+[2019-08-20 15:49:16] Features: 3/4 -- score: 0.9738562091503268[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s finished
+
+[2019-08-20 15:49:16] Features: 4/4 -- score: 0.9803921568627452
+</code></pre>
+<pre><code class="python">sfs1.subsets_
+</code></pre>
+
+<pre><code>{2: {'feature_idx': (0, 2),
+  'cv_scores': array([0.96078431, 0.92156863, 0.95833333]),
+  'avg_score': 0.9468954248366014,
+  'feature_names': ('0', '2')},
+ 3: {'feature_idx': (0, 2, 3),
+  'cv_scores': array([0.98039216, 0.94117647, 1.        ]),
+  'avg_score': 0.9738562091503268,
+  'feature_names': ('0', '2', '3')},
+ 4: {'feature_idx': (0, 1, 2, 3),
+  'cv_scores': array([0.98039216, 0.96078431, 1.        ]),
+  'avg_score': 0.9803921568627452,
+  'feature_names': ('0', '1', '2', '3')}}
+</code></pre>
+<p>If the input dataset is a pandas DataFrame, we can also use the column names directly:</p>
+<pre><code class="python">import pandas as pd
+</code></pre>
+
+<pre><code class="python">X_df = pd.DataFrame(X, columns=['sepal len', 'petal len',
+                                'sepal width', 'petal width'])
+X_df.head()
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal len</th>
+      <th>petal len</th>
+      <th>sepal width</th>
+      <th>petal width</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="python">sfs2 = SFS(knn, 
+           k_features=4, 
+           forward=True, 
+           floating=False, 
+           verbose=2,
+           scoring='accuracy',
+           fixed_features=('sepal len', 'petal len'),
+           cv=3)
+
+sfs2 = sfs2.fit(X_df, y)
+</code></pre>
+
+<pre><code>[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
+
+[2019-08-20 15:49:16] Features: 3/4 -- score: 0.9403594771241831[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s finished
+
+[2019-08-20 15:49:16] Features: 4/4 -- score: 0.9803921568627452
+</code></pre>
+<pre><code class="python">sfs2.subsets_
+</code></pre>
+
+<pre><code>{2: {'feature_idx': (0, 1),
+  'cv_scores': array([0.7254902 , 0.68627451, 0.77083333]),
+  'avg_score': 0.7275326797385621,
+  'feature_names': ('sepal len', 'petal len')},
+ 3: {'feature_idx': (0, 1, 2),
+  'cv_scores': array([0.98039216, 0.88235294, 0.95833333]),
+  'avg_score': 0.9403594771241831,
+  'feature_names': ('sepal len', 'petal len', 'sepal width')},
+ 4: {'feature_idx': (0, 1, 2, 3),
+  'cv_scores': array([0.98039216, 0.96078431, 1.        ]),
+  'avg_score': 0.9803921568627452,
+  'feature_names': ('sepal len', 'petal len', 'sepal width', 'petal width')}}
+</code></pre>
 <h1 id="api">API</h1>
-<p><em>SequentialFeatureSelector(estimator, k_features=1, forward=True, floating=False, verbose=0, scoring=None, cv=5, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
+<p><em>SequentialFeatureSelector(estimator, k_features=1, forward=True, floating=False, verbose=0, scoring=None, cv=5, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True, fixed_features=None)*</p>
 <p>Sequential Feature Selection for Classification and Regression.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -2186,6 +2357,17 @@ of n_jobs, as in <code>2*n_jobs</code></p>
 if False. Set to False if the estimator doesn't
 implement scikit-learn's set_params and get_params methods.
 In addition, it is required to set cv=0, and n_jobs=1.</p>
+</li>
+<li>
+<p><code>fixed_features</code> : tuple (default: None)</p>
+<p>If not <code>None</code>, the feature indices provided as a tuple will be
+regarded as fixed by the feature selector. For example, if
+<code>fixed_features=(1, 3, 7)</code>, the 2nd, 4th, and 8th feature are
+guaranteed to be present in the solution. Note that if
+<code>fixed_features</code> is not <code>None</code>, make sure that the number of
+features to be selected is greater than <code>len(fixed_features)</code>.
+In other words, ensure that <code>k_features &gt; len(fixed_features)</code>.
+New in mlxtend v. 0.18.0.</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>

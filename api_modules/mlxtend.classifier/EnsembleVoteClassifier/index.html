@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../../user_guide/evaluate/accuracy_score/">Accuracy Score</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
 </li>
 
@@ -1094,6 +1100,10 @@ and returns a transformed version of X.</p>
 <p><code>y</code> : numpy array of shape [n_samples]</p>
 <p>Target values.</p>
 </li>
+<li>
+<p><code>**fit_params</code> : dict</p>
+<p>Additional fit parameters.</p>
+</li>
 </ul>
 <p><strong>Returns</strong></p>
 <ul>
@@ -1147,22 +1157,22 @@ n_features is the number of features.</p>
 <hr>
 
 <p><em>score(X, y, sample_weight=None)</em></p>
-<p>Returns the mean accuracy on the given test data and labels.</p>
+<p>Return the mean accuracy on the given test data and labels.</p>
 <p>In multi-label classification, this is the subset accuracy
 which is a harsh metric since you require for each sample that
 each label set be correctly predicted.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>X</code> : array-like, shape = (n_samples, n_features)</p>
+<p><code>X</code> : array-like of shape (n_samples, n_features)</p>
 <p>Test samples.</p>
 </li>
 <li>
-<p><code>y</code> : array-like, shape = (n_samples) or (n_samples, n_outputs)</p>
+<p><code>y</code> : array-like of shape (n_samples,) or (n_samples, n_outputs)</p>
 <p>True labels for X.</p>
 </li>
 <li>
-<p><code>sample_weight</code> : array-like, shape = [n_samples], optional</p>
+<p><code>sample_weight</code> : array-like of shape (n_samples,), default=None</p>
 <p>Sample weights.</p>
 </li>
 </ul>
@@ -1181,8 +1191,20 @@ each label set be correctly predicted.</p>
 (such as pipelines). The latter have parameters of the form
 <code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
 component of a nested object.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>**params</code> : dict</p>
+<p>Estimator parameters.</p>
+</li>
+</ul>
 <p><strong>Returns</strong></p>
-<p>self</p>
+<ul>
+<li>
+<p><code>self</code> : object</p>
+<p>Estimator instance.</p>
+</li>
+</ul>
 <hr>
 
 <p><em>transform(X)</em></p>

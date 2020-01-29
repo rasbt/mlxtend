@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../evaluate/accuracy_score/">Accuracy Score</a>
+</li>
+
+        
+            
+<li >
     <a href="../../evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
 </li>
 
@@ -1142,7 +1148,7 @@ frequent_itemsets
 </table>
 </div>
 
-<p>The <code>generate_rules()</code> function allows you to (1) specify your metric of interest and (2) the according threshold. Currently implemented measures are <strong>confidence</strong> and <strong>lift</strong>. Let's say you are interesting in rules derived from the frequent itemsets only if the level of confidence is above the 90 percent threshold (<code>min_threshold=0.7</code>):</p>
+<p>The <code>generate_rules()</code> function allows you to (1) specify your metric of interest and (2) the according threshold. Currently implemented measures are <strong>confidence</strong> and <strong>lift</strong>. Let's say you are interested in rules derived from the frequent itemsets only if the level of confidence is above the 70 percent threshold (<code>min_threshold=0.7</code>):</p>
 <pre><code class="python">from mlxtend.frequent_patterns import association_rules
 
 association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshold=0.7)

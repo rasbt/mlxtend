@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../evaluate/accuracy_score/">Accuracy Score</a>
+</li>
+
+        
+            
+<li >
     <a href="../../evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
 </li>
 
@@ -979,8 +985,6 @@
                  <!--   -->
             <li class="second-level"><a href="#api">API</a></li>
                  <!--   -->
-            <li class="second-level"><a href="#plot_confusion_matrix">plot_confusion_matrix</a></li>
-                 <!--   -->
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
@@ -1002,15 +1006,22 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-binary = np.array([[4, 1],
+binary1 = np.array([[4, 1],
                    [1, 2]])
 
-fig, ax = plot_confusion_matrix(conf_mat=binary)
+fig, ax = plot_confusion_matrix(conf_mat=binary1)
 plt.show()
 </code></pre>
 
 <p><img alt="png" src="../plot_confusion_matrix_files/plot_confusion_matrix_9_0.png" /></p>
-<p><img alt="png" src="../plot_confusion_matrix_files/plot_confusion_matrix_9_1.png" /></p>
+<pre><code class="python">binary2 = np.array([[21, 1],
+                    [3, 1]])
+
+fig, ax = plot_confusion_matrix(conf_mat=binary2, figsize=(2, 2))
+plt.show()
+</code></pre>
+
+<p><img alt="png" src="../plot_confusion_matrix_files/plot_confusion_matrix_10_0.png" /></p>
 <h2 id="example-2-binary-absolute-and-relative-with-colorbar">Example 2 - Binary absolute and relative with colorbar</h2>
 <pre><code class="python">binary = np.array([[4, 1],
                    [1, 2]])
@@ -1022,8 +1033,7 @@ fig, ax = plot_confusion_matrix(conf_mat=binary,
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../plot_confusion_matrix_files/plot_confusion_matrix_11_0.png" /></p>
-<p><img alt="png" src="../plot_confusion_matrix_files/plot_confusion_matrix_11_1.png" /></p>
+<p><img alt="png" src="../plot_confusion_matrix_files/plot_confusion_matrix_12_0.png" /></p>
 <h2 id="example-3-multiclass-relative">Example 3 - Multiclass relative</h2>
 <pre><code class="python">multiclass = np.array([[2, 1, 0, 0],
                        [1, 2, 0, 0],
@@ -1037,8 +1047,7 @@ fig, ax = plot_confusion_matrix(conf_mat=multiclass,
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../plot_confusion_matrix_files/plot_confusion_matrix_13_0.png" /></p>
-<p><img alt="png" src="../plot_confusion_matrix_files/plot_confusion_matrix_13_1.png" /></p>
+<p><img alt="png" src="../plot_confusion_matrix_files/plot_confusion_matrix_14_0.png" /></p>
 <h2 id="example-4-add-class-names">Example 4 - Add Class Names</h2>
 <pre><code class="python">multiclass = np.array([[2, 1, 0, 0],
                        [1, 2, 0, 0],
@@ -1055,67 +1064,8 @@ fig, ax = plot_confusion_matrix(conf_mat=multiclass,
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../plot_confusion_matrix_files/plot_confusion_matrix_15_0.png" /></p>
-<p><img alt="png" src="../plot_confusion_matrix_files/plot_confusion_matrix_15_1.png" /></p>
+<p><img alt="png" src="../plot_confusion_matrix_files/plot_confusion_matrix_16_0.png" /></p>
 <h2 id="api">API</h2>
-<p><em>plot_confusion_matrix(conf_mat, hide_spines=False, hide_ticks=False, figsize=None, cmap=None, colorbar=False, show_absolute=True, show_normed=False, class_names=None)</em></p>
-<p>Plot a confusion matrix via matplotlib.
-<strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>conf_mat</code> : array-like, shape = [n_classes, n_classes]</p>
-<p>Confusion matrix from evaluate.confusion matrix.</p>
-</li>
-<li>
-<p><code>hide_spines</code> : bool (default: False)</p>
-<p>Hides axis spines if True.</p>
-</li>
-<li>
-<p><code>hide_ticks</code> : bool (default: False)</p>
-<p>Hides axis ticks if True</p>
-</li>
-<li>
-<p><code>figsize</code> : tuple (default: (2.5, 2.5))</p>
-<p>Height and width of the figure</p>
-</li>
-<li>
-<p><code>cmap</code> : matplotlib colormap (default: <code>None</code>)</p>
-<p>Uses matplotlib.pyplot.cm.Blues if <code>None</code></p>
-</li>
-<li>
-<p><code>colorbar</code> : bool (default: False)</p>
-<p>Shows a colorbar if True</p>
-</li>
-<li>
-<p><code>show_absolute</code> : bool (default: True)</p>
-<p>Shows absolute confusion matrix coefficients if True.
-At least one of  <code>show_absolute</code> or <code>show_normed</code>
-must be True.</p>
-</li>
-<li>
-<p><code>show_normed</code> : bool (default: False)</p>
-<p>Shows normed confusion matrix coefficients if True.
-The normed confusion matrix coefficients give the
-proportion of training examples per class that are
-assigned the correct label.
-At least one of  <code>show_absolute</code> or <code>show_normed</code>
-must be True.</p>
-</li>
-<li>
-<p><code>class_names</code> : array-like, shape = [n_classes] (default: None)</p>
-<p>List of class names.
-If not <code>None</code>, ticks will be set to these values.
-<strong>Returns</strong></p>
-</li>
-<li>
-<p><code>fig, ax</code> : matplotlib.pyplot subplot objects</p>
-<p>Figure and axis elements of the subplot.
-<strong>Examples</strong></p>
-</li>
-</ul>
-<p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/plotting/plot_confusion_matrix/">http://rasbt.github.io/mlxtend/user_guide/plotting/plot_confusion_matrix/</a></p>
-<h2 id="plot_confusion_matrix">plot_confusion_matrix</h2>
 <p><em>plot_confusion_matrix(conf_mat, hide_spines=False, hide_ticks=False, figsize=None, cmap=None, colorbar=False, show_absolute=True, show_normed=False, class_names=None)</em></p>
 <p>Plot a confusion matrix via matplotlib.
 <strong>Parameters</strong></p>

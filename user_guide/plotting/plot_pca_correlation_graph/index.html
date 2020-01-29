@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../evaluate/accuracy_score/">Accuracy Score</a>
+</li>
+
+        
+            
+<li >
     <a href="../../evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
 </li>
 
@@ -1003,7 +1009,7 @@ feature_names = [
 
 figure, correlation_matrix = plot_pca_correlation_graph(X_norm, 
                                                         feature_names,
-                                                        pc_dimensions=(1, 2),
+                                                        dimensions=(1, 2),
                                                         figure_axis_size=10)
 
 </code></pre>
@@ -1030,8 +1036,8 @@ figure, correlation_matrix = plot_pca_correlation_graph(X_norm,
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Principal Component 1</th>
-      <th>Principal Component 2</th>
+      <th>Dim 1</th>
+      <th>Dim 2</th>
     </tr>
   </thead>
   <tbody>
@@ -1061,30 +1067,39 @@ figure, correlation_matrix = plot_pca_correlation_graph(X_norm,
 
 <p>Further, note that the percentage values shown on the x and y axis denote how much of the variance in the original dataset is explained by each principal component axis. I.e.., if PC1 lists 72.7% and PC2 lists 23.0% as shown above, then combined, the 2 principal components explain 95.7% of the total variance.</p>
 <h2 id="api">API</h2>
-<p><em>plot_pca_correlation_graph(X, variables_names, pc_dimensions=(1, 2), figure_axis_size=6, X_pca=None)</em></p>
-<p>Computes PCA for X and plots the correlation plot</p>
+<p><em>plot_pca_correlation_graph(X, variables_names, dimensions=(1, 2), figure_axis_size=6, X_pca=None, explained_variance=None)</em></p>
+<p>Compute the PCA for X and plots the Correlation graph</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>X</code> : 2d array-like.</p>
+<p><code>X</code> : 2d array like.</p>
 <p>The columns represent the different variables and the rows are the
-examples of those feature variables</p>
+samples of thos variables</p>
 </li>
 <li>
-<p><code>variables_names</code> : array-like</p>
-<p>Column names (the feature variables) of X
-pc_dimensions: tuple with two elements (default=(1, 2)).
-principal component dimensions to be plotted (x, y)</p>
+<p><code>variables_names</code> : array like</p>
+<p>Name of the columns (the variables) of X</p>
+<p>dimensions: tuple with two elements.
+dimensions to be plotted (x,y)</p>
+<p>figure_axis_size :
+size of the final frame. The figure created is a square with length
+and width equal to figure_axis_size.</p>
 </li>
 <li>
-<p><code>X_pca</code> : 2d array-like (default=None)</p>
-<p>Feature variables after performing PCA.
-If not provided, this function will carry out
-the principal component analysis automatically.
-figure_axis_size (default=6):
-size of the final figure frame.
-The figure created has square-shape with length
-and width equal to <code>figure_axis_size</code>.</p>
+<p><code>X_pca</code> : np.ndarray, shape = [n_samples, n_components].</p>
+<p>Optional.
+<code>X_pca</code> is the matrix of the transformed components from X.
+If not provided, the function computes PCA automatically using
+mlxtend.feature_extraction.PrincipalComponentAnalysis
+Expected <code>n_componentes &gt;= max(dimensions)</code></p>
+</li>
+<li>
+<p><code>explained_variance</code> : 1 dimension np.ndarray, length = n_components</p>
+<p>Optional.
+<code>explained_variance</code> are the eigenvalues from the diagonalized
+covariance matrix on the PCA transformatiopn.
+If not provided, the function computes PCA independently
+Expected <code>n_componentes == X.shape[1]</code></p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>

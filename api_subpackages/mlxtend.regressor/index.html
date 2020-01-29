@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../user_guide/evaluate/accuracy_score/">Accuracy Score</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
 </li>
 
@@ -981,37 +987,49 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.17.0 </p>
+<p>mlxtend version: 0.17.1 </p>
 <h2 id="linearregression">LinearRegression</h2>
-<p><em>LinearRegression(eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0)</em></p>
+<p><em>LinearRegression(method='direct', eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0)</em></p>
 <p>Ordinary least squares linear regression.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
+<p><code>method</code> : string (default: 'direct')</p>
+<p>For gradient descent-based optimization, use <code>sgd</code> (see <code>minibatch</code>
+parameter for further options). Otherwise, if <code>direct</code> (default),
+the analytical method is used. For alternative, numerically more
+stable solutions, use either <code>qr</code> (QR decomopisition) or <code>svd</code>
+(Singular Value Decomposition).</p>
+</li>
+<li>
 <p><code>eta</code> : float (default: 0.01)</p>
-<p>solver rate (between 0.0 and 1.0)</p>
+<p>solver learning rate (between 0.0 and 1.0). Used with <code>method =</code>
+<code>'sgd'</code>. (See <code>methods</code> parameter for details)</p>
 </li>
 <li>
 <p><code>epochs</code> : int (default: 50)</p>
 <p>Passes over the training dataset.
 Prior to each epoch, the dataset is shuffled
-if <code>minibatches &gt; 1</code> to prevent cycles in stochastic gradient descent.</p>
+if <code>minibatches &gt; 1</code> to prevent cycles in stochastic gradient descent.
+Used with <code>method = 'sgd'</code>. (See <code>methods</code> parameter for details)</p>
 </li>
 <li>
 <p><code>minibatches</code> : int (default: None)</p>
 <p>The number of minibatches for gradient-based optimization.
-If None: Normal Equations (closed-form solution)
+If None: Direct method, QR, or SVD method (see <code>method</code> parameter
+for details)
 If 1: Gradient Descent learning
 If len(y): Stochastic Gradient Descent learning
 If 1 &lt; minibatches &lt; len(y): Minibatch learning</p>
 </li>
 <li>
 <p><code>random_seed</code> : int (default: None)</p>
-<p>Set random state for shuffling and initializing the weights.</p>
+<p>Set random state for shuffling and initializing the weights. Used in
+<code>method = 'sgd'</code>. (See <code>methods</code> parameter for details)</p>
 </li>
 <li>
 <p><code>print_progress</code> : int (default: 0)</p>
-<p>Prints progress in fitting to stderr if not solver='normal equation'
+<p>Prints progress in fitting to stderr if <code>method = 'sgd'</code>.
 0: No output
 1: Epochs elapsed and cost
 2: 1 plus time elapsed
@@ -1274,6 +1292,10 @@ and returns a transformed version of X.</p>
 <p><code>y</code> : numpy array of shape [n_samples]</p>
 <p>Target values.</p>
 </li>
+<li>
+<p><code>**fit_params</code> : dict</p>
+<p>Additional fit parameters.</p>
+</li>
 </ul>
 <p><strong>Returns</strong></p>
 <ul>
@@ -1289,7 +1311,7 @@ and returns a transformed version of X.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>deep</code> : boolean, optional</p>
+<p><code>deep</code> : bool, default=True</p>
 <p>If True, will return the parameters for this estimator and
 contained subobjects that are estimators.</p>
 </li>
@@ -1344,7 +1366,7 @@ of regressors.</p>
 <hr>
 
 <p><em>score(X, y, sample_weight=None)</em></p>
-<p>Returns the coefficient of determination R^2 of the prediction.</p>
+<p>Return the coefficient of determination R^2 of the prediction.</p>
 <p>The coefficient R^2 is defined as (1 - u/v), where u is the residual
 sum of squares ((y_true - y_pred) <strong> 2).sum() and v is the total
 sum of squares ((y_true - y_true.mean()) </strong> 2).sum().</p>
@@ -1355,18 +1377,19 @@ would get a R^2 score of 0.0.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>X</code> : array-like, shape = (n_samples, n_features)</p>
+<p><code>X</code> : array-like of shape (n_samples, n_features)</p>
 <p>Test samples. For some estimators this may be a
-precomputed kernel matrix instead, shape = (n_samples,
-n_samples_fitted], where n_samples_fitted is the number of
+precomputed kernel matrix or a list of generic objects instead,
+shape = (n_samples, n_samples_fitted),
+where n_samples_fitted is the number of
 samples used in the fitting for the estimator.</p>
 </li>
 <li>
-<p><code>y</code> : array-like, shape = (n_samples) or (n_samples, n_outputs)</p>
+<p><code>y</code> : array-like of shape (n_samples,) or (n_samples, n_outputs)</p>
 <p>True values for X.</p>
 </li>
 <li>
-<p><code>sample_weight</code> : array-like, shape = [n_samples], optional</p>
+<p><code>sample_weight</code> : array-like of shape (n_samples,), default=None</p>
 <p>Sample weights.</p>
 </li>
 </ul>
@@ -1380,12 +1403,13 @@ samples used in the fitting for the estimator.</p>
 <p><strong>Notes</strong></p>
 <p>The R2 score used when calling <code>score</code> on a regressor will use
     <code>multioutput='uniform_average'</code> from version 0.23 to keep consistent
-    with <code>metrics.r2_score</code>. This will influence the <code>score</code> method of
-    all the multioutput regressors (except for
-    <code>multioutput.MultiOutputRegressor</code>). To specify the default value
-    manually and avoid the warning, please either call <code>metrics.r2_score</code>
-    directly or make a custom scorer with <code>metrics.make_scorer</code> (the
-    built-in scorer <code>'r2'</code> uses <code>multioutput='uniform_average'</code>).</p>
+    with :func:<code>~sklearn.metrics.r2_score</code>. This will influence the
+    <code>score</code> method of all the multioutput regressors (except for
+    :class:<code>~sklearn.multioutput.MultiOutputRegressor</code>). To specify the
+    default value manually and avoid the warning, please either call
+    :func:<code>~sklearn.metrics.r2_score</code> directly or make a custom scorer with
+    :func:<code>~sklearn.metrics.make_scorer</code> (the built-in scorer <code>'r2'</code> uses
+    <code>multioutput='uniform_average'</code>).</p>
 <hr>
 
 <p><em>set_params(</em><em>params)</em></p>
@@ -1526,6 +1550,10 @@ and returns a transformed version of X.</p>
 <p><code>y</code> : numpy array of shape [n_samples]</p>
 <p>Target values.</p>
 </li>
+<li>
+<p><code>**fit_params</code> : dict</p>
+<p>Additional fit parameters.</p>
+</li>
 </ul>
 <p><strong>Returns</strong></p>
 <ul>
@@ -1581,7 +1609,7 @@ of regressors.</p>
 <hr>
 
 <p><em>score(X, y, sample_weight=None)</em></p>
-<p>Returns the coefficient of determination R^2 of the prediction.</p>
+<p>Return the coefficient of determination R^2 of the prediction.</p>
 <p>The coefficient R^2 is defined as (1 - u/v), where u is the residual
 sum of squares ((y_true - y_pred) <strong> 2).sum() and v is the total
 sum of squares ((y_true - y_true.mean()) </strong> 2).sum().</p>
@@ -1592,18 +1620,19 @@ would get a R^2 score of 0.0.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>X</code> : array-like, shape = (n_samples, n_features)</p>
+<p><code>X</code> : array-like of shape (n_samples, n_features)</p>
 <p>Test samples. For some estimators this may be a
-precomputed kernel matrix instead, shape = (n_samples,
-n_samples_fitted], where n_samples_fitted is the number of
+precomputed kernel matrix or a list of generic objects instead,
+shape = (n_samples, n_samples_fitted),
+where n_samples_fitted is the number of
 samples used in the fitting for the estimator.</p>
 </li>
 <li>
-<p><code>y</code> : array-like, shape = (n_samples) or (n_samples, n_outputs)</p>
+<p><code>y</code> : array-like of shape (n_samples,) or (n_samples, n_outputs)</p>
 <p>True values for X.</p>
 </li>
 <li>
-<p><code>sample_weight</code> : array-like, shape = [n_samples], optional</p>
+<p><code>sample_weight</code> : array-like of shape (n_samples,), default=None</p>
 <p>Sample weights.</p>
 </li>
 </ul>
@@ -1617,12 +1646,13 @@ samples used in the fitting for the estimator.</p>
 <p><strong>Notes</strong></p>
 <p>The R2 score used when calling <code>score</code> on a regressor will use
     <code>multioutput='uniform_average'</code> from version 0.23 to keep consistent
-    with <code>metrics.r2_score</code>. This will influence the <code>score</code> method of
-    all the multioutput regressors (except for
-    <code>multioutput.MultiOutputRegressor</code>). To specify the default value
-    manually and avoid the warning, please either call <code>metrics.r2_score</code>
-    directly or make a custom scorer with <code>metrics.make_scorer</code> (the
-    built-in scorer <code>'r2'</code> uses <code>multioutput='uniform_average'</code>).</p>
+    with :func:<code>~sklearn.metrics.r2_score</code>. This will influence the
+    <code>score</code> method of all the multioutput regressors (except for
+    :class:<code>~sklearn.multioutput.MultiOutputRegressor</code>). To specify the
+    default value manually and avoid the warning, please either call
+    :func:<code>~sklearn.metrics.r2_score</code> directly or make a custom scorer with
+    :func:<code>~sklearn.metrics.make_scorer</code> (the built-in scorer <code>'r2'</code> uses
+    <code>multioutput='uniform_average'</code>).</p>
 <hr>
 
 <p><em>set_params(</em><em>params)</em></p>

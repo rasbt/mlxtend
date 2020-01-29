@@ -253,6 +253,12 @@
         
             
 <li >
+    <a href="../../../user_guide/evaluate/accuracy_score/">Accuracy Score</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/evaluate/bias_variance_decomp/">Bias-Variance Decomposition</a>
 </li>
 
@@ -971,15 +977,15 @@ The allowed values are either 0/1 or True/False.
 For example,</p>
 </li>
 </ul>
-<pre><code>    Apple  Bananas  Beer  Chicken  Milk  Rice
-    0      1        0     1        1     0     1
-    1      1        0     1        0     0     1
-    2      1        0     1        0     0     0
-    3      1        1     0        0     0     0
-    4      0        0     1        1     1     1
-    5      0        0     1        0     1     1
-    6      0        0     1        0     1     0
-    7      1        1     0        0     0     0
+<pre><code>    Apple  Bananas   Beer  Chicken   Milk   Rice
+    0     True    False   True     True  False   True
+    1     True    False   True    False  False   True
+    2     True    False   True    False  False  False
+    3     True     True  False    False  False  False
+    4    False    False   True     True   True   True
+    5    False    False   True    False   True   True
+    6    False    False   True    False   True  False
+    7     True     True  False    False  False  False
 </code></pre>
 
 <ul>

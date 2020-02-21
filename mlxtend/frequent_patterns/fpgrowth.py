@@ -13,7 +13,7 @@ def fpgrowth(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
 
     Parameters
     -----------
-    df : pandas DataFrame or pandas SparseDataFrame
+    df : pandas DataFrame
       pandas DataFrame the encoded format.
       The allowed values are either 0/1 or True/False.
       For example,

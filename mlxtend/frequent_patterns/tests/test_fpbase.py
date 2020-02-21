@@ -80,18 +80,34 @@ class FPTestErrors(object):
         df2 = pd.DataFrame(self.one_ary, columns=self.cols).copy()
         df2.iloc[3, 3] = 2
         test_with_dataframe(df2)
-        sdf = df2.to_sparse()
+
+        if Version(pandas_version) >= Version("1.00"):
+
+            sdf = df2.astype(pd.SparseDtype("int", np.nan)).sparse.to_coo()
+        else:
+            sdf = df2.to_sparse()
         test_with_dataframe(sdf)
-        if Version(pandas_version) >= Version("0.24"):
+
+        if Version(pandas_version) >= Version("0.24") \
+                and Version(pandas_version) <= Version("1.00"):
             sdf2 = df2.astype(pd.SparseDtype(int, fill_value=0))
             test_with_dataframe(sdf2)
 
     def test_sparsedataframe_notzero_column(self):
-        dfs = pd.SparseDataFrame(self.df)
+
+        if Version(pandas_version) < Version('1.00'):
+            dfs = pd.SparseDataFrame(self.df)
+        else:
+            dfs = self.df.astype(pd.SparseDtype("int", np.nan)).sparse.to_coo()
+
         dfs.columns = [i for i in range(len(dfs.columns))]
         self.fpalgo(dfs)
 
-        dfs = pd.SparseDataFrame(self.df)
+        if Version(pandas_version) < Version('1.00'):
+            dfs = self.df.astype(pd.SparseDtype("int", np.nan)).sparse.to_coo()
+        else:
+            dfs = self.df.sparse.to_coo()
+
         dfs.columns = [i+1 for i in range(len(dfs.columns))]
         assert_raises(ValueError,
                       'Due to current limitations in Pandas, '
@@ -142,21 +158,24 @@ class FPTestEx1(object):
 
     def test_sparse_deprecated(self):
         def test_with_fill_values(fill_value):
-            sdf = self.df.to_sparse(fill_value=fill_value)
-            res_df = self.fpalgo(sdf, use_colnames=True)
-            assert res_df.values.shape == self.fpalgo(self.df).values.shape
-            assert res_df[res_df['itemsets']
-                          == 'nothing'].values.shape == (0, 2)
-            assert res_df[res_df['itemsets']
-                          == {'Milk', 'Kidney Beans'}].values.shape == (1, 2)
-            assert res_df[res_df['itemsets'] ==
-                          frozenset(('Milk', 'Kidney Beans'))].values.shape \
-                == (1, 2)
-            assert res_df[res_df['itemsets'] ==
-                          frozenset(('Kidney Beans', 'Milk'))].values.shape \
-                == (1, 2)
-        test_with_fill_values(0)
-        test_with_fill_values(False)
+
+            if Version(pandas_version) <= Version("1.00"):
+                sdf = self.df.to_sparse(fill_value=fill_value)
+                res_df = self.fpalgo(sdf, use_colnames=True)
+                assert res_df.values.shape == self.fpalgo(self.df).values.shape
+                assert res_df[res_df['itemsets'] == 'nothing']\
+                    .values.shape == (0, 2)
+                assert res_df[res_df['itemsets'] == {'Milk', 'Kidney Beans'}]\
+                    .values.shape == (1, 2)
+                assert res_df[res_df['itemsets'] == frozenset(
+                    ('Milk', 'Kidney Beans'))]\
+                    .values.shape \
+                    == (1, 2)
+                assert res_df[res_df['itemsets'] == frozenset(
+                    ('Kidney Beans', 'Milk'))].values.shape \
+                    == (1, 2)
+            test_with_fill_values(0)
+            test_with_fill_values(False)
 
     def test_sparse(self):
         if Version(pandas_version) < Version("0.24"):
@@ -186,8 +205,13 @@ class FPTestEx1(object):
         ary2[3, :] = 1
         sparse_ary = csr_matrix(ary2)
         sparse_ary[3, :] = self.one_ary[3, :]
-        sdf = pd.SparseDataFrame(sparse_ary, columns=self.df.columns,
-                                 default_fill_value=0)
+
+        if pandas_version < Version('1.00'):
+            sdf = pd.SparseDataFrame(sparse_ary, columns=self.df.columns,
+                                     default_fill_value=0)
+        else:
+            sdf = pd.DataFrame.sparse.from_spmatrix(sparse_ary,
+                                                    columns=self.df.columns)
         res_df2 = self.fpalgo(sdf)
         compare_dataframes(res_df2, res_df)
 

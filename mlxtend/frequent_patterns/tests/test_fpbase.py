@@ -88,7 +88,6 @@ class FPTestErrors(object):
         dfs = self.df.astype(pd.SparseDtype("int", np.nan)).sparse.to_coo()
 
         dfs.columns = [i for i in range(len(dfs.columns))]
-        dfs = 
         self.fpalgo(dfs)
 
         dfs = self.df.astype(pd.SparseDtype("int", np.nan)).sparse.to_coo()

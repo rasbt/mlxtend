@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 import collections
-import warnings
 from distutils.version import LooseVersion as Version
 from pandas import __version__ as pandas_version
 

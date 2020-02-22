@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import collections
+import warnings
 from distutils.version import LooseVersion as Version
 from pandas import __version__ as pandas_version
 
@@ -82,6 +83,17 @@ def generate_itemsets(generator, num_itemsets, colname_map):
 
 
 def valid_input_check(df):
+
+    if f"{type(df)}" == "<class 'pandas.core.frame.SparseDataFrame'>":
+        msg = ("SparseDataFrame support has been deprecated in pandas 1.0,"
+               " and is no longer supported in mlxtend. "
+               " Please"
+               " see the pandas migration guide at"
+               " https://pandas.pydata.org/pandas-docs/"
+               "stable/user_guide/sparse.html#sparse-data-structures"
+               " for supporting sparse data in DataFrames.")
+        raise TypeError(msg)
+
     if df.size == 0:
         return
     if hasattr(df, "to_coo") or hasattr(df, "sparse"):

@@ -137,15 +137,8 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
 
     Parameters
     -----------
-    df : pandas DataFrame
-      pandas DataFrame the encoded format. Also supports
-      DataFrames with sparse data; for more info, please
-      see (https://pandas.pydata.org/pandas-docs/stable/
-           user_guide/sparse.html#sparse-data-structures)
-
-      Please note that the old pandas SparseDataFrame format
-      is no longer supported in mlxtend >= 0.17.2.
-
+    df : pandas DataFrame or pandas SparseDataFrame
+      pandas DataFrame the encoded format.
       The allowed values are either 0/1 or True/False.
       For example,
 

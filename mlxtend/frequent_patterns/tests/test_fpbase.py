@@ -81,17 +81,32 @@ class FPTestErrors(object):
         df2.iloc[3, 3] = 2
         test_with_dataframe(df2)
 
-        sdf = df2.astype(pd.SparseDtype("int", fill_value=0))
+        if Version(pandas_version) >= Version("1.00"):
+
+            sdf = df2.astype(pd.SparseDtype("int", np.nan)).sparse.to_coo()
+        else:
+            sdf = df2.to_sparse()
         test_with_dataframe(sdf)
 
+        if Version(pandas_version) >= Version("0.24") \
+                and Version(pandas_version) <= Version("1.00"):
+            sdf2 = df2.astype(pd.SparseDtype(int, fill_value=0))
+            test_with_dataframe(sdf2)
+
     def test_sparsedataframe_notzero_column(self):
-        dfs = self.df.astype(pd.SparseDtype("int", np.nan)).sparse.to_coo()
+
+        if Version(pandas_version) < Version('1.00'):
+            dfs = pd.SparseDataFrame(self.df)
+        else:
+            dfs = self.df.astype(pd.SparseDtype("int", np.nan)).sparse.to_coo()
 
         dfs.columns = [i for i in range(len(dfs.columns))]
-        dfs = 
         self.fpalgo(dfs)
 
-        dfs = self.df.astype(pd.SparseDtype("int", np.nan)).sparse.to_coo()
+        if Version(pandas_version) < Version('1.00'):
+            dfs = self.df.astype(pd.SparseDtype("int", np.nan)).sparse.to_coo()
+        else:
+            dfs = self.df.sparse.to_coo()
 
         dfs.columns = [i+1 for i in range(len(dfs.columns))]
         assert_raises(ValueError,
@@ -141,7 +156,31 @@ class FPTestEx1(object):
                       == frozenset(('Kidney Beans', 'Milk'))].values.shape \
             == (1, 2)
 
+    def test_sparse_deprecated(self):
+        def test_with_fill_values(fill_value):
+
+            if Version(pandas_version) <= Version("1.00"):
+                sdf = self.df.to_sparse(fill_value=fill_value)
+                res_df = self.fpalgo(sdf, use_colnames=True)
+                assert res_df.values.shape == self.fpalgo(self.df).values.shape
+                assert res_df[res_df['itemsets'] == 'nothing']\
+                    .values.shape == (0, 2)
+                assert res_df[res_df['itemsets'] == {'Milk', 'Kidney Beans'}]\
+                    .values.shape == (1, 2)
+                assert res_df[res_df['itemsets'] == frozenset(
+                    ('Milk', 'Kidney Beans'))]\
+                    .values.shape \
+                    == (1, 2)
+                assert res_df[res_df['itemsets'] == frozenset(
+                    ('Kidney Beans', 'Milk'))].values.shape \
+                    == (1, 2)
+            test_with_fill_values(0)
+            test_with_fill_values(False)
+
     def test_sparse(self):
+        if Version(pandas_version) < Version("0.24"):
+            return
+
         def test_with_fill_values(fill_value):
             sdt = pd.SparseDtype(type(fill_value), fill_value=fill_value)
             sdf = self.df.astype(sdt)
@@ -161,20 +200,18 @@ class FPTestEx1(object):
         test_with_fill_values(False)
 
     def test_sparse_with_zero(self):
-        if Version(pandas_version) < Version("1.2"):
-
-            # needs to be revisited in future when pandas bug
-            # in https://github.com/pandas-dev/pandas/issues/29814
-            # is fixed
-            return
         res_df = self.fpalgo(self.df)
         ary2 = self.one_ary.copy()
         ary2[3, :] = 1
         sparse_ary = csr_matrix(ary2)
         sparse_ary[3, :] = self.one_ary[3, :]
 
-        sdf = pd.DataFrame.sparse.from_spmatrix(sparse_ary,
-                                                columns=self.df.columns)
+        if pandas_version < Version('1.00'):
+            sdf = pd.SparseDataFrame(sparse_ary, columns=self.df.columns,
+                                     default_fill_value=0)
+        else:
+            sdf = pd.DataFrame.sparse.from_spmatrix(sparse_ary,
+                                                    columns=self.df.columns)
         res_df2 = self.fpalgo(sdf)
         compare_dataframes(res_df2, res_df)
 

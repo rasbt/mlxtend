@@ -56,3 +56,13 @@ def one_hot(y, num_labels='auto', dtype='float'):
             ary[i, val] = 1
 
     return ary.astype(dtype)
+
+
+class OnehotTransactions(TransactionEncoder):
+    def __init__(self, *args, **kwargs):
+        warnings.simplefilter('default')
+        msg = ("OnehotTransactions has been deprecated and will be removed"
+               " in future. Please use TransactionEncoder instead.")
+        warnings.warn(msg, DeprecationWarning)
+
+        super().__init__(*args, **kwargs)

@@ -11,9 +11,9 @@ The CHANGELOG for the current development version is available at
 
 ##### Downloads
 
-- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.18.0.zip)
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.17.2.zip)
 
-- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.18.0.tar.gz)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.17.2.tar.gz)
 
 
 ##### New Features
@@ -23,7 +23,7 @@ The CHANGELOG for the current development version is available at
 ##### Changes
 
 - The previously deprecated `OnehotTransactions` has been removed in favor of the `TransactionEncoder.`
-- Removed `SparseDataFrame` support in frequent pattern mining functions in favor of pandas >=1.0's new way for working sparse data. If you used `SparseDataFrame` formats, please see pandas' migration guide at https://pandas.pydata.org/pandas-docs/stable/user_guide/sparse.html#migrating
+- Removed `SparseDataFrame` support in frequent pattern mining functions in favor of pandas >=1.0's new way for working sparse data. If you used `SparseDataFrame` formats, please see pandas' migration guide at https://pandas.pydata.org/pandas-docs/stable/user_guide/sparse.html#migrating ([#667](https://github.com/rasbt/mlxtend/pull/667))
 
 
 ##### Bug Fixes

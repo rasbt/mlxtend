@@ -9,14 +9,7 @@ def setup_fptree(df, min_support):
     num_itemsets = len(df.index)        # number of itemsets in the database
 
     is_sparse = False
-    if hasattr(df, "to_coo"):
-        # SparseDataFrame with pandas < 0.24
-        if df.size == 0:
-            itemsets = df.values
-        else:
-            itemsets = df.to_coo().tocsr()
-            is_sparse = True
-    elif hasattr(df, "sparse"):
+    if hasattr(df, "sparse"):
         # DataFrame with SparseArray (pandas >= 0.24)
         if df.size == 0:
             itemsets = df.values
@@ -95,29 +88,18 @@ def valid_input_check(df):
 
     if df.size == 0:
         return
-    if hasattr(df, "to_coo") or hasattr(df, "sparse"):
+    if hasattr(df, "sparse"):
         if not isinstance(df.columns[0], str) and df.columns[0] != 0:
             raise ValueError('Due to current limitations in Pandas, '
-                             'if the SparseDataFrame has integer column names,'
+                             'if the sparse format has integer column names,'
                              'names, please make sure they either start '
                              'with `0` or cast them as string column names: '
                              '`df.columns = [str(i) for i in df.columns`].')
 
-    # Fast path: if all columns are boolean, there is nothing to check
-    if Version(pandas_version) >= Version("0.24"):
-        all_bools = ((df.dtypes == pd.SparseDtype(bool)) |
-                     (df.dtypes == bool)).all()
-    else:
-        all_bools = (df.dtypes == bool).all()
+    all_bools = (df.dtypes == bool).all()
     if not all_bools:
         # Pandas is much slower than numpy, so use np.where on Numpy arrays
-        if hasattr(df, "to_coo"):
-            # see comment in apriori.py, to_coo attribute must be checked first
-            if df.size == 0:
-                values = df.values
-            else:
-                values = df.to_coo().tocoo().data
-        elif hasattr(df, "sparse"):
+        if hasattr(df, "sparse"):
             if df.size == 0:
                 values = df.values
             else:

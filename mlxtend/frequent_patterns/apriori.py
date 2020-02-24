@@ -137,8 +137,15 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
 
     Parameters
     -----------
-    df : pandas DataFrame or pandas SparseDataFrame
-      pandas DataFrame the encoded format.
+    df : pandas DataFrame
+      pandas DataFrame the encoded format. Also supports
+      DataFrames with sparse data; for more info, please
+      see (https://pandas.pydata.org/pandas-docs/stable/
+           user_guide/sparse.html#sparse-data-structures)
+
+      Please note that the old pandas SparseDataFrame format
+      is no longer supported in mlxtend >= 0.17.2.
+
       The allowed values are either 0/1 or True/False.
       For example,
 
@@ -230,18 +237,7 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
 
     fpc.valid_input_check(df)
 
-    # sparse attribute exists for both deprecated SparseDataFrame and
-    # DataFrame with SparseArray (pandas >= 0.24); to_coo attribute
-    # exists only for the former, thus it is checked first to distinguish
-    # between SparseDataFrame and DataFrame with SparseArray.
-    if hasattr(df, "to_coo"):
-        # SparseDataFrame with pandas < 0.24
-        if df.size == 0:
-            X = df.values
-        else:
-            X = df.to_coo().tocsc()
-        is_sparse = True
-    elif hasattr(df, "sparse"):
+    if hasattr(df, "sparse"):
         # DataFrame with SparseArray (pandas >= 0.24)
         if df.size == 0:
             X = df.values
@@ -318,7 +314,8 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
     all_res = []
     for k in sorted(itemset_dict):
         support = pd.Series(support_dict[k])
-        itemsets = pd.Series([frozenset(i) for i in itemset_dict[k]])
+        itemsets = pd.Series([frozenset(i) for i in itemset_dict[k]],
+                             dtype='object')
 
         res = pd.concat((support, itemsets), axis=1)
         all_res.append(res)

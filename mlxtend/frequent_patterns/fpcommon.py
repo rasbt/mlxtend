@@ -97,11 +97,7 @@ def valid_input_check(df):
                              '`df.columns = [str(i) for i in df.columns`].')
 
     # Fast path: if all columns are boolean, there is nothing to checks
-    if Version(pandas_version) >= Version("0.24"):
-        all_bools = ((df.dtypes == pd.SparseDtype(bool)) |
-                     (df.dtypes == bool)).all()
-    else:
-        all_bools = (df.dtypes == bool).all()
+    all_bools = df.dtypes.apply(pd.api.types.is_bool_dtype).all()
     if not all_bools:
         # Pandas is much slower than numpy, so use np.where on Numpy arrays
         if hasattr(df, "sparse"):

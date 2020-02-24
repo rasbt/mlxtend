@@ -1265,7 +1265,7 @@ apriori(df, min_support=0.6)
     <tr>
       <th>5</th>
       <td>0.8</td>
-      <td>(Eggs, Kidney Beans)</td>
+      <td>(Kidney Beans, Eggs)</td>
     </tr>
     <tr>
       <th>6</th>
@@ -1280,7 +1280,7 @@ apriori(df, min_support=0.6)
     <tr>
       <th>8</th>
       <td>0.6</td>
-      <td>(Onion, Kidney Beans)</td>
+      <td>(Kidney Beans, Onion)</td>
     </tr>
     <tr>
       <th>9</th>
@@ -1290,7 +1290,7 @@ apriori(df, min_support=0.6)
     <tr>
       <th>10</th>
       <td>0.6</td>
-      <td>(Onion, Kidney Beans, Eggs)</td>
+      <td>(Kidney Beans, Onion, Eggs)</td>
     </tr>
   </tbody>
 </table>
@@ -1360,7 +1360,7 @@ frequent_itemsets
     <tr>
       <th>5</th>
       <td>0.8</td>
-      <td>(Eggs, Kidney Beans)</td>
+      <td>(Kidney Beans, Eggs)</td>
       <td>2</td>
     </tr>
     <tr>
@@ -1378,7 +1378,7 @@ frequent_itemsets
     <tr>
       <th>8</th>
       <td>0.6</td>
-      <td>(Onion, Kidney Beans)</td>
+      <td>(Kidney Beans, Onion)</td>
       <td>2</td>
     </tr>
     <tr>
@@ -1390,7 +1390,7 @@ frequent_itemsets
     <tr>
       <th>10</th>
       <td>0.6</td>
-      <td>(Onion, Kidney Beans, Eggs)</td>
+      <td>(Kidney Beans, Onion, Eggs)</td>
       <td>3</td>
     </tr>
   </tbody>
@@ -1429,7 +1429,7 @@ frequent_itemsets
     <tr>
       <th>5</th>
       <td>0.8</td>
-      <td>(Eggs, Kidney Beans)</td>
+      <td>(Kidney Beans, Eggs)</td>
       <td>2</td>
     </tr>
   </tbody>
@@ -1653,7 +1653,7 @@ sparse_df
     <tr>
       <th>5</th>
       <td>0.8</td>
-      <td>(Eggs, Kidney Beans)</td>
+      <td>(Kidney Beans, Eggs)</td>
     </tr>
     <tr>
       <th>6</th>
@@ -1668,7 +1668,7 @@ sparse_df
     <tr>
       <th>8</th>
       <td>0.6</td>
-      <td>(Onion, Kidney Beans)</td>
+      <td>(Kidney Beans, Onion)</td>
     </tr>
     <tr>
       <th>9</th>
@@ -1678,7 +1678,7 @@ sparse_df
     <tr>
       <th>10</th>
       <td>0.6</td>
-      <td>(Onion, Kidney Beans, Eggs)</td>
+      <td>(Kidney Beans, Onion, Eggs)</td>
     </tr>
   </tbody>
 </table>
@@ -1690,21 +1690,26 @@ sparse_df
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>df</code> : pandas DataFrame or pandas SparseDataFrame</p>
-<p>pandas DataFrame the encoded format.
-The allowed values are either 0/1 or True/False.
+<p><code>df</code> : pandas DataFrame</p>
+<p>pandas DataFrame the encoded format. Also supports
+DataFrames with sparse data; for more info, please
+see (https://pandas.pydata.org/pandas-docs/stable/
+user_guide/sparse.html#sparse-data-structures)</p>
+<p>Please note that the old pandas SparseDataFrame format
+is no longer supported in mlxtend &gt;= 0.17.2.</p>
+<p>The allowed values are either 0/1 or True/False.
 For example,</p>
 </li>
 </ul>
-<pre><code>    Apple  Bananas  Beer  Chicken  Milk  Rice
-    0      1        0     1        1     0     1
-    1      1        0     1        0     0     1
-    2      1        0     1        0     0     0
-    3      1        1     0        0     0     0
-    4      0        0     1        1     1     1
-    5      0        0     1        0     1     1
-    6      0        0     1        0     1     0
-    7      1        1     0        0     0     0
+<pre><code>    Apple  Bananas   Beer  Chicken   Milk   Rice
+    0     True    False   True     True  False   True
+    1     True    False   True    False  False   True
+    2     True    False   True    False  False  False
+    3     True     True  False    False  False  False
+    4    False    False   True     True   True   True
+    5    False    False   True    False   True   True
+    6    False    False   True    False   True  False
+    7     True     True  False    False  False  False
 </code></pre>
 
 <ul>
@@ -1733,7 +1738,8 @@ possible itemsets lengths (under the apriori condition) are evaluated.</p>
 </li>
 <li>
 <p><code>low_memory</code> : bool (default: False)</p>
-<p>If <code>True</code>, uses an iterator to search for combinations above <code>min_support</code>.
+<p>If <code>True</code>, uses an iterator to search for combinations above
+<code>min_support</code>.
 Note that while <code>low_memory=True</code> should only be used for large dataset
 if memory resources are limited, because this implementation is approx.
 3-6x slower than the default.</p>

@@ -1209,12 +1209,12 @@ fpmax(df, min_support=0.6)
     <tr>
       <th>1</th>
       <td>0.6</td>
-      <td>(Eggs, Onion, Kidney Beans)</td>
+      <td>(Onion, Eggs, Kidney Beans)</td>
     </tr>
     <tr>
       <th>2</th>
       <td>0.6</td>
-      <td>(Yogurt, Kidney Beans)</td>
+      <td>(Kidney Beans, Yogurt)</td>
     </tr>
   </tbody>
 </table>
@@ -1228,21 +1228,26 @@ fpmax(df, min_support=0.6)
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
-<p><code>df</code> : pandas DataFrame or pandas SparseDataFrame</p>
-<p>pandas DataFrame the encoded format.
-The allowed values are either 0/1 or True/False.
+<p><code>df</code> : pandas DataFrame</p>
+<p>pandas DataFrame the encoded format. Also supports
+DataFrames with sparse data; for more info, please
+see (https://pandas.pydata.org/pandas-docs/stable/
+user_guide/sparse.html#sparse-data-structures)</p>
+<p>Please note that the old pandas SparseDataFrame format
+is no longer supported in mlxtend &gt;= 0.17.2.</p>
+<p>The allowed values are either 0/1 or True/False.
 For example,</p>
 </li>
 </ul>
-<pre><code>    Apple  Bananas  Beer  Chicken  Milk  Rice
-    0      1        0     1        1     0     1
-    1      1        0     1        0     0     1
-    2      1        0     1        0     0     0
-    3      1        1     0        0     0     0
-    4      0        0     1        1     1     1
-    5      0        0     1        0     1     1
-    6      0        0     1        0     1     0
-    7      1        1     0        0     0     0
+<pre><code>    Apple  Bananas   Beer  Chicken   Milk   Rice
+    0   True    False   True     True  False   True
+    1   True    False   True    False  False   True
+    2   True    False   True    False  False  False
+    3   True     True  False    False  False  False
+    4  False    False   True     True   True   True
+    5  False    False   True    False   True   True
+    6  False    False   True    False   True  False
+    7   True     True  False    False  False  False
 </code></pre>
 
 <ul>

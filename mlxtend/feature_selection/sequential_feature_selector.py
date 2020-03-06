@@ -14,25 +14,59 @@ import scipy.stats
 import sys
 from copy import deepcopy
 from itertools import combinations
-from sklearn.metrics import get_scorer
+from sklearn.metrics import get_scorer, roc_auc_score, accuracy_score
 from sklearn.base import clone
 from sklearn.base import MetaEstimatorMixin
 from ..externals.name_estimators import _name_estimators
 from ..utils.base_compostion import _BaseXComposition
-from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import StratifiedKFold, cross_val_score
 from joblib import Parallel, delayed
 
 
-def _calc_score(selector, X, y, indices, groups=None, **fit_params):
+def fit_and_score(model, X, y, weights,
+                  train, test,
+                  metric=roc_auc_score):
+    # Fit and predict
+    model_clone = clone(model)
+    model_clone.fit(X[train], y[train], sample_weight=weights[train])
+    y_pred = model_clone.predict(X[test])
+
+    # Score
+    score = metric(y[test], y_pred, sample_weight=weights[test])
+    return score
+
+
+def parallel_cross_val_scores_weighted(model, X, y, weights,
+                                       cv=5,
+                                       metric=accuracy_score,
+                                       n_jobs=None,
+                                       verbose=0,
+                                       pre_dispatch='2*n_jobs'):
+    # Initialise CV
+    cv = StratifiedKFold(n_splits=cv, shuffle=True, random_state=42)
+
+    # Set up parallel processing
+    parallel = Parallel(n_jobs=n_jobs,
+                        verbose=verbose,
+                        pre_dispatch=pre_dispatch)
+
+    # Call fit_and_score
+    scores = parallel(
+        delayed(fit_and_score)(model, X, y, weights, train, test, metric)
+        for train, test in cv.split(X, y))
+
+    return scores
+
+
+def _calc_score(selector, X, y, weights, indices, **fit_params):
     if selector.cv:
-        scores = cross_val_score(selector.est_,
+        scores = parallel_cross_val_scores_weighted(selector.est_,
                                  X[:, indices], y,
-                                 groups=groups,
+                                 weights,
                                  cv=selector.cv,
-                                 scoring=selector.scorer,
                                  n_jobs=1,
                                  pre_dispatch=selector.pre_dispatch,
-                                 fit_params=fit_params)
+                                 )
     else:
         selector.est_.fit(X[:, indices], y, **fit_params)
         scores = np.array([selector.scorer(selector.est_, X[:, indices], y)])

@@ -8,14 +8,14 @@
 #
 # License: BSD 3 clause
 
+import numpy as np
+from scipy import sparse
+from sklearn.base import TransformerMixin, clone
+
 from ..externals.estimator_checks import check_is_fitted
 from ..externals.name_estimators import _name_estimators
 from ..utils.base_compostion import _BaseXComposition
 from ._base_classification import _BaseStackingClassifier
-from scipy import sparse
-from sklearn.base import TransformerMixin
-from sklearn.base import clone
-import numpy as np
 
 
 class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,

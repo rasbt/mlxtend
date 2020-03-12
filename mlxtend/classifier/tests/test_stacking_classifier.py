@@ -328,7 +328,6 @@ def test_not_fitted():
     clf2 = GaussianNB()
     sclf = StackingClassifier(classifiers=[clf1, clf2],
                               use_probas=True,
-                              use_clones=True,
                               meta_classifier=meta)
 
     X, _ = iris_data()

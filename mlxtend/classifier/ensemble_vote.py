@@ -8,15 +8,14 @@
 #
 # License: BSD 3 clause
 
-from sklearn.base import BaseEstimator
-from sklearn.base import ClassifierMixin
-from sklearn.base import TransformerMixin
-from sklearn.preprocessing import LabelEncoder
-from sklearn.base import clone
-from sklearn.exceptions import NotFittedError
-from ..externals.name_estimators import _name_estimators
-from ..externals import six
 import numpy as np
+from sklearn.base import (BaseEstimator, ClassifierMixin, TransformerMixin,
+                          clone)
+from sklearn.exceptions import NotFittedError
+from sklearn.preprocessing import LabelEncoder
+
+from ..externals import six
+from ..externals.name_estimators import _name_estimators
 
 
 class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
@@ -61,7 +60,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     fit_base_estimators : bool (default: True)
         Refits classifiers in `clfs` if True; uses references to the `clfs`,
         otherwise (assumes that the classifiers were already fit).
-        Note: fit_base_estimators=False will enforce use_clones to be False, 
+        Note: fit_base_estimators=False will enforce use_clones to be False,
         and is incompatible to most scikit-learn wrappers!
         For instance, if any form of cross-validation is performed
         this would require the re-fitting classifiers to training folds, which
@@ -109,8 +108,10 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     http://rasbt.github.io/mlxtend/user_guide/classifier/EnsembleVoteClassifier/
     """
 
-    def __init__(self, clfs, voting='hard', weights=None,
-                 verbose=0, use_clones=True, fit_base_estimators=True):
+    def __init__(self, clfs, voting='hard',
+                 weights=None, verbose=0,
+                 use_clones=True,
+                 fit_base_estimators=True):
 
         self.clfs = clfs
         self.named_clfs = {key: value for key, value in _name_estimators(clfs)}
@@ -161,6 +162,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.classes_ = self.le_.classes_
 
         if not self.fit_base_estimators:
+            print('Warning: enforce use_clones to be False')
             self.use_clones = False
 
         if self.use_clones:
@@ -221,8 +223,8 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             predictions = self._predict(X)
 
             maj = np.apply_along_axis(lambda x:
-                                      np.argmax(np.bincount(x,
-                                                            weights=self.weights)),
+                                      np.argmax(np.bincount(
+                                          x, weights=self.weights)),
                                       axis=1,
                                       arr=predictions)
 
@@ -283,8 +285,8 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                 for key, value in six.iteritems(step.get_params(deep=True)):
                     out['%s__%s' % (name, key)] = value
 
-            for key, value in six.iteritems(super(EnsembleVoteClassifier,
-                                                  self).get_params(deep=False)):
+            for key, value in six.iteritems(
+                    super(EnsembleVoteClassifier, self).get_params(deep=False)):
                 out['%s' % key] = value
             return out
 

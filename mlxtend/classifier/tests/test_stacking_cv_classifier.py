@@ -6,30 +6,29 @@
 # License: BSD 3 clause
 
 import random
-import pandas as pd
+from distutils.version import LooseVersion as Version
+
 import numpy as np
+import pandas as pd
 import pytest
 from scipy import sparse
+from sklearn import __version__ as sklearn_version
+from sklearn import datasets, exceptions
+from sklearn.base import clone
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import (LogisticRegression,
+                                  PassiveAggressiveClassifier)
+from sklearn.metrics import roc_auc_score
+from sklearn.model_selection import (GridSearchCV, KFold, cross_val_score,
+                                     train_test_split)
+from sklearn.naive_bayes import GaussianNB
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
+
 from mlxtend.classifier import StackingCVClassifier
+from mlxtend.data import iris_data
 from mlxtend.externals.estimator_checks import NotFittedError
 from mlxtend.utils import assert_raises
-from mlxtend.data import iris_data
-from sklearn.linear_model import LogisticRegression
-from sklearn.linear_model import PassiveAggressiveClassifier
-from sklearn.svm import SVC
-from sklearn.naive_bayes import GaussianNB
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn import datasets
-from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import KFold
-from sklearn.model_selection import cross_val_score
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import roc_auc_score
-from sklearn.base import clone
-from distutils.version import LooseVersion as Version
-from sklearn import __version__ as sklearn_version
-
 
 X_iris, y_iris = iris_data()
 X_iris = X_iris[:, 1:3]
@@ -319,6 +318,33 @@ def test_not_fitted():
                   X)
 
 
+def test_use_clones():
+    np.random.seed(123)
+    X, y = iris_data()
+
+    meta = LogisticRegression(solver='liblinear',
+                              multi_class='ovr')
+    clf1 = RandomForestClassifier(n_estimators=10)
+    clf2 = GaussianNB()
+    StackingCVClassifier(classifiers=[clf1, clf2],
+                         use_clones=True,
+                         meta_classifier=meta, shuffle=False).fit(X, y)
+
+    assert_raises(exceptions.NotFittedError,
+                  "This RandomForestClassifier instance is not fitted yet."
+                  " Call 'fit' with appropriate arguments"
+                  " before using this estimator.",
+                  clf1.predict,
+                  X)
+
+    StackingCVClassifier(classifiers=[clf1, clf2],
+                         use_probas=True,
+                         use_clones=False,
+                         meta_classifier=meta, shuffle=False).fit(X, y)
+
+    clf1.predict(X)
+
+
 def test_verbose():
     np.random.seed(123)
     meta = LogisticRegression(multi_class='ovr', solver='liblinear')
@@ -391,8 +417,8 @@ def test_train_meta_features_():
     stclf = StackingCVClassifier(classifiers=[knn, gnb],
                                  meta_classifier=lr,
                                  store_train_meta_features=True)
-    X_train, X_test, y_train, y_test = train_test_split(X_iris, y_iris,
-                                                        test_size=0.3)
+    X_train, _, y_train, _ = train_test_split(X_iris, y_iris,
+                                              test_size=0.3)
     stclf.fit(X_train, y_train)
     train_meta_features = stclf.train_meta_features_
     assert train_meta_features.shape == (X_train.shape[0], 2)
@@ -435,9 +461,9 @@ def test_meta_feat_reordering():
         expected_value = 0.85
 
     assert round(roc_auc_score(y_train,
-                 stclf.train_meta_features_[:, 1]), 2) == expected_value, \
+                               stclf.train_meta_features_[:, 1]), 2) == expected_value, \
         round(roc_auc_score(y_train,
-              stclf.train_meta_features_[:, 1]), 2)
+                            stclf.train_meta_features_[:, 1]), 2)
 
 
 def test_clone():
@@ -476,8 +502,8 @@ def test_sparse_inputs_with_features_in_secondary():
                                  meta_classifier=lr,
                                  random_state=42,
                                  use_features_in_secondary=True)
-    X_train, X_test, y_train, y_test = train_test_split(X_breast, y_breast,
-                                                        test_size=0.3)
+    X_train, _, y_train, _ = train_test_split(X_breast, y_breast,
+                                              test_size=0.3)
 
     # dense
     stclf.fit(X_train, y_train)
@@ -496,7 +522,6 @@ def test_sparse_inputs_with_features_in_secondary():
         expected_value = 0.99
     else:
         expected_value = 1.00
-
 
     assert round(stclf.score(X_train, y_train), 2) == expected_value, \
         round(stclf.score(X_train, y_train), 2)

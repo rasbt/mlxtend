@@ -5,27 +5,28 @@
 # License: BSD 3 clause
 
 import random
-import pytest
-from mlxtend.classifier import StackingClassifier
-from mlxtend.externals.estimator_checks import NotFittedError
-from scipy import sparse
-from sklearn.linear_model import LogisticRegression
-from sklearn.linear_model import PassiveAggressiveClassifier
-from sklearn.svm import SVC
-from sklearn.naive_bayes import GaussianNB
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import cross_val_score
-import numpy as np
-from mlxtend.data import iris_data
-from mlxtend.utils import assert_raises
-from numpy.testing import assert_almost_equal
-from sklearn.model_selection import train_test_split
-from sklearn.base import clone
 from distutils.version import LooseVersion as Version
-from sklearn import __version__ as sklearn_version
 
+import numpy as np
+import pytest
+from numpy.testing import assert_almost_equal
+from scipy import sparse
+from sklearn import __version__ as sklearn_version
+from sklearn import exceptions
+from sklearn.base import clone
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import (LogisticRegression,
+                                  PassiveAggressiveClassifier)
+from sklearn.model_selection import (GridSearchCV, cross_val_score,
+                                     train_test_split)
+from sklearn.naive_bayes import GaussianNB
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
+
+from mlxtend.classifier import StackingClassifier
+from mlxtend.data import iris_data
+from mlxtend.externals.estimator_checks import NotFittedError
+from mlxtend.utils import assert_raises
 
 X, y = iris_data()
 X = X[:, 1:3]
@@ -54,6 +55,23 @@ def test_StackingClassifier():
         assert scores_mean == 0.95, scores_mean
     else:
         assert scores_mean == 0.95, scores_mean
+
+
+def test_fit_base_estimators_false():
+    np.random.seed(123)
+    meta = LogisticRegression(solver='liblinear',
+                              multi_class='ovr')
+    clf1 = RandomForestClassifier(n_estimators=10)
+    clf2 = GaussianNB()
+
+    clf1.fit(X, y)
+    clf2.fit(X, y)
+
+    sclf = StackingClassifier(classifiers=[clf1, clf2], meta_classifier=meta,
+                              fit_base_estimators=False)
+
+    sclf.fit(X, y)
+    assert round(sclf.score(X, y), 2) == 0.98
 
 
 def test_sample_weight():
@@ -310,6 +328,7 @@ def test_not_fitted():
     clf2 = GaussianNB()
     sclf = StackingClassifier(classifiers=[clf1, clf2],
                               use_probas=True,
+                              use_clones=True,
                               meta_classifier=meta)
 
     X, _ = iris_data()
@@ -334,6 +353,33 @@ def test_not_fitted():
                   " before using this method.",
                   sclf.predict_meta_features,
                   X)
+
+
+def test_use_clones():
+    np.random.seed(123)
+    X, y = iris_data()
+
+    meta = LogisticRegression(solver='liblinear',
+                              multi_class='ovr')
+    clf1 = RandomForestClassifier(n_estimators=10)
+    clf2 = GaussianNB()
+    StackingClassifier(classifiers=[clf1, clf2],
+                       use_clones=True,
+                       meta_classifier=meta).fit(X, y)
+
+    assert_raises(exceptions.NotFittedError,
+                  "This RandomForestClassifier instance is not fitted yet."
+                  " Call 'fit' with appropriate arguments"
+                  " before using this estimator.",
+                  clf1.predict,
+                  X)
+
+    StackingClassifier(classifiers=[clf1, clf2],
+                       use_probas=True,
+                       use_clones=False,
+                       meta_classifier=meta).fit(X, y)
+
+    clf1.predict(X)
 
 
 def test_verbose():
@@ -441,6 +487,7 @@ def test_get_params():
     expect = ['average_probas',
               'classifiers',
               'drop_last_proba',
+              'fit_base_estimators',
               'gaussiannb',
               'kneighborsclassifier',
               'meta_classifier',
@@ -484,7 +531,7 @@ def test_train_meta_features_():
     stclf = StackingClassifier(classifiers=[knn, gnb],
                                meta_classifier=lr,
                                store_train_meta_features=True)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+    X_train, _, y_train, _ = train_test_split(X, y, test_size=0.3)
     stclf.fit(X_train, y_train)
     train_meta_features = stclf.train_meta_features_
     assert train_meta_features.shape == (X_train.shape[0], 2)

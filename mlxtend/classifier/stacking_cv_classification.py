@@ -35,7 +35,7 @@ class StackingCVClassifier(_BaseXComposition, _BaseStackingClassifier,
         A list of classifiers.
         Invoking the `fit` method on the `StackingCVClassifer` will fit clones
         of these original classifiers that will
-        be stored in the class attribute `self.clfs_`.
+        be stored in the class attribute `self.clfs_` if `use_clones=True`.
     meta_classifier : object
         The meta-classifier to be fitted on the ensemble of
         classifiers
@@ -136,6 +136,7 @@ class StackingCVClassifier(_BaseXComposition, _BaseStackingClassifier,
     http://rasbt.github.io/mlxtend/user_guide/classifier/StackingCVClassifier/
 
     """
+
     def __init__(self, classifiers, meta_classifier,
                  use_probas=False, drop_last_proba=False,
                  cv=2, shuffle=True,
@@ -236,10 +237,10 @@ class StackingCVClassifier(_BaseXComposition, _BaseStackingClassifier,
                 print(_name_estimators((model,))[0][1])
 
             prediction = cross_val_predict(
-                    model, X, y, groups=groups, cv=final_cv,
-                    n_jobs=self.n_jobs, fit_params=fit_params,
-                    verbose=self.verbose, pre_dispatch=self.pre_dispatch,
-                    method='predict_proba' if self.use_probas else 'predict')
+                model, X, y, groups=groups, cv=final_cv,
+                n_jobs=self.n_jobs, fit_params=fit_params,
+                verbose=self.verbose, pre_dispatch=self.pre_dispatch,
+                method='predict_proba' if self.use_probas else 'predict')
 
             if not self.use_probas:
                 prediction = prediction[:, np.newaxis]

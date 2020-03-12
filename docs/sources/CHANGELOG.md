@@ -23,7 +23,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- -
+- Implemented both `use_clones` and `fit_base_estimators` (previously `refit` in `EnsembleVoteClassifier`) for `EnsembleVoteClassifier` and `StackingClassifier`.
 
 ##### Bug Fixes
 

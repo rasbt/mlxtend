@@ -74,6 +74,33 @@ def test_fit_base_estimators_false():
     assert round(sclf.score(X, y), 2) == 0.98
 
 
+def test_use_clones():
+    np.random.seed(123)
+    X, y = iris_data()
+
+    meta = LogisticRegression(solver='liblinear',
+                              multi_class='ovr')
+    clf1 = RandomForestClassifier(n_estimators=10)
+    clf2 = GaussianNB()
+    StackingClassifier(classifiers=[clf1, clf2],
+                       use_clones=True,
+                       meta_classifier=meta).fit(X, y)
+
+    assert_raises(exceptions.NotFittedError,
+                  "This RandomForestClassifier instance is not fitted yet."
+                  " Call 'fit' with appropriate arguments"
+                  " before using this estimator.",
+                  clf1.predict,
+                  X)
+
+    StackingClassifier(classifiers=[clf1, clf2],
+                       use_probas=True,
+                       use_clones=False,
+                       meta_classifier=meta).fit(X, y)
+
+    clf1.predict(X)
+
+
 def test_sample_weight():
     # Make sure that:
     #    prediction with weight
@@ -352,33 +379,6 @@ def test_not_fitted():
                   " before using this method.",
                   sclf.predict_meta_features,
                   X)
-
-
-def test_use_clones():
-    np.random.seed(123)
-    X, y = iris_data()
-
-    meta = LogisticRegression(solver='liblinear',
-                              multi_class='ovr')
-    clf1 = RandomForestClassifier(n_estimators=10)
-    clf2 = GaussianNB()
-    StackingClassifier(classifiers=[clf1, clf2],
-                       use_clones=True,
-                       meta_classifier=meta).fit(X, y)
-
-    assert_raises(exceptions.NotFittedError,
-                  "This RandomForestClassifier instance is not fitted yet."
-                  " Call 'fit' with appropriate arguments"
-                  " before using this estimator.",
-                  clf1.predict,
-                  X)
-
-    StackingClassifier(classifiers=[clf1, clf2],
-                       use_probas=True,
-                       use_clones=False,
-                       meta_classifier=meta).fit(X, y)
-
-    clf1.predict(X)
 
 
 def test_verbose():

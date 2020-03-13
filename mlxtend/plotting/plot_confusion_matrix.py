@@ -17,7 +17,9 @@ def plot_confusion_matrix(conf_mat,
                           colorbar=False,
                           show_absolute=True,
                           show_normed=False,
-                          class_names=None):
+                          class_names=None,
+                          figure=None,
+                          axis=None):
     """Plot a confusion matrix via matplotlib.
     Parameters
     -----------
@@ -47,6 +49,9 @@ def plot_confusion_matrix(conf_mat,
     class_names : array-like, shape = [n_classes] (default: None)
         List of class names.
         If not `None`, ticks will be set to these values.
+    figure: Matplotlib figure, if None will create a new figure
+    axis: Matplotlib figure axis, if None will create a new axis
+
     Returns
     -----------
     fig, ax : matplotlib.pyplot subplot objects
@@ -65,7 +70,14 @@ def plot_confusion_matrix(conf_mat,
     total_samples = conf_mat.sum(axis=1)[:, np.newaxis]
     normed_conf_mat = conf_mat.astype('float') / total_samples
 
-    fig, ax = plt.subplots(figsize=figsize)
+    if figure is None and axis is None:
+        fig, ax = plt.subplots(figsize=figsize)
+    elif axis is None:
+        fig = figure
+        ax = fig.add_subplot(1, 1, 1)
+    else:
+        fig, ax = figure, axis
+
     ax.grid(False)
     if cmap is None:
         cmap = plt.cm.Blues

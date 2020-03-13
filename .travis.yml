@@ -34,6 +34,7 @@ before_install:
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
 
 install:
+    - travis_wait mvn install
     - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then sudo apt-get update; fi
     - source ci/.travis_install.sh
 

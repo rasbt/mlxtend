@@ -58,7 +58,7 @@ def parallel_cross_val_scores_weighted(model, X, y, weights,
     return scores
 
 
-def _calc_score(selector, X, y, weights, indices, **fit_params):
+def _calc_score(selector, X, y, weights, indices, groups=None, **fit_params):
     if selector.cv:
         scores = parallel_cross_val_scores_weighted(selector.est_,
                                  X[:, indices], y,
@@ -214,13 +214,15 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                  cv=5, n_jobs=1,
                  pre_dispatch='2*n_jobs',
                  clone_estimator=True,
-                 fixed_features=None):
+                 fixed_features=None,
+                 sample_weights=None):
 
         self.estimator = estimator
         self.k_features = k_features
         self.forward = forward
         self.floating = floating
         self.pre_dispatch = pre_dispatch
+        self.sample_weights = sample_weights
         # Want to raise meaningful error message if a
         # cross-validation generator is inputted
         if isinstance(cv, types.GeneratorType):
@@ -432,7 +434,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             if self.fixed_features is not None:
                 k_idx = self.fixed_features_
                 k = len(k_idx)
-                k_idx, k_score = _calc_score(self, X_, y, k_idx,
+                k_idx, k_score = _calc_score(self, X_, y, self.sample_weights, k_idx,
                                              groups=groups, **fit_params)
                 self.subsets_[k] = {
                     'feature_idx': k_idx,
@@ -448,7 +450,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 k_to_select = min_k
             k_idx = tuple(orig_set)
             k = len(k_idx)
-            k_idx, k_score = _calc_score(self, X_, y, k_idx,
+            k_idx, k_score = _calc_score(self, X_, y, self.sample_weights, k_idx,
                                          groups=groups, **fit_params)
             self.subsets_[k] = {
                 'feature_idx': k_idx,
@@ -635,7 +637,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
                                 pre_dispatch=self.pre_dispatch)
             work = parallel(delayed(_calc_score)
-                            (self, X, y,
+                            (self, X, y, self.sample_weights,
                              tuple(subset | {feature}),
                              groups=groups, **fit_params)
                             for feature in remaining
@@ -664,7 +666,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             n_jobs = min(self.n_jobs, features)
             parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
                                 pre_dispatch=self.pre_dispatch)
-            work = parallel(delayed(_calc_score)(self, X, y, p,
+            work = parallel(delayed(_calc_score)(self, X, y, self.sample_weights, p,
                                                  groups=groups, **fit_params)
                             for p in combinations(feature_set, r=n - 1)
                             if not fixed_feature or

@@ -5,12 +5,6 @@ setup(name='mlxtend',
       description='Machine Learning Library Extensions',
       url='https://github.com/pelucid/mlxtend',
       packages=find_packages(),
-      package_data={'': ['LICENSE-BSD3.txt',
-                         'LICENSE-CC-BY.txt',
-                         'README.md',
-                         'requirements.txt']
-                    },
-      include_package_data=True,
       install_requires=[
           "scipy>=1.2.1",
           "numpy>=1.16.2",

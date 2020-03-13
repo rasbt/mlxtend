@@ -16,4 +16,3 @@ deps: venv
 
 test:
 	python setup.py test
-

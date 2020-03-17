@@ -58,15 +58,26 @@ def parallel_cross_val_scores_weighted(model, X, y, weights,
     return scores
 
 
-def _calc_score(selector, X, y, weights, indices, groups=None, **fit_params):
+def _calc_score(selector, X, y, indices, groups=None, weights=None, **fit_params):
     if selector.cv:
-        scores = parallel_cross_val_scores_weighted(selector.est_,
-                                 X[:, indices], y,
-                                 weights,
-                                 cv=selector.cv,
-                                 n_jobs=1,
-                                 pre_dispatch=selector.pre_dispatch,
-                                 )
+        if weights:
+            scores = parallel_cross_val_scores_weighted(selector.est_,
+                                     X[:, indices], y,
+                                     weights,
+                                     cv=selector.cv,
+                                     n_jobs=1,
+                                     pre_dispatch=selector.pre_dispatch,
+                                     )
+        else:
+            scores = cross_val_score(selector.est_,
+                                     X[:, indices], y,
+                                     groups=groups,
+                                     cv=selector.cv,
+                                     scoring=selector.scorer,
+                                     n_jobs=1,
+                                     pre_dispatch=selector.pre_dispatch,
+                                     fit_params=fit_params)
+
     else:
         selector.est_.fit(X[:, indices], y, **fit_params)
         scores = np.array([selector.scorer(selector.est_, X[:, indices], y)])
@@ -434,8 +445,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             if self.fixed_features is not None:
                 k_idx = self.fixed_features_
                 k = len(k_idx)
-                k_idx, k_score = _calc_score(self, X_, y, self.sample_weights, k_idx,
-                                             groups=groups, **fit_params)
+                k_idx, k_score = _calc_score(self, X_, y, k_idx,
+                                             groups=groups, weights=self.sample_weights, **fit_params)
                 self.subsets_[k] = {
                     'feature_idx': k_idx,
                     'cv_scores': k_score,
@@ -450,8 +461,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 k_to_select = min_k
             k_idx = tuple(orig_set)
             k = len(k_idx)
-            k_idx, k_score = _calc_score(self, X_, y, self.sample_weights, k_idx,
-                                         groups=groups, **fit_params)
+            k_idx, k_score = _calc_score(self, X_, y, k_idx,
+                                         groups=groups, weights=self.sample_weights,**fit_params)
             self.subsets_[k] = {
                 'feature_idx': k_idx,
                 'cv_scores': k_score,
@@ -637,9 +648,9 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
                                 pre_dispatch=self.pre_dispatch)
             work = parallel(delayed(_calc_score)
-                            (self, X, y, self.sample_weights,
+                            (self, X, y,
                              tuple(subset | {feature}),
-                             groups=groups, **fit_params)
+                             groups=groups, weights=self.sample_weights, **fit_params)
                             for feature in remaining
                             if feature != ignore_feature)
 
@@ -666,8 +677,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             n_jobs = min(self.n_jobs, features)
             parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
                                 pre_dispatch=self.pre_dispatch)
-            work = parallel(delayed(_calc_score)(self, X, y, self.sample_weights, p,
-                                                 groups=groups, **fit_params)
+            work = parallel(delayed(_calc_score)(self, X, y, p,
+                                                 groups=groups, wieghts=self.sample_weights, **fit_params)
                             for p in combinations(feature_set, r=n - 1)
                             if not fixed_feature or
                             fixed_feature.issubset(set(p)))

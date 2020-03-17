@@ -63,7 +63,7 @@ def parallel_cross_val_scores_weighted(model, X, y, weights,
 
 def _calc_score(selector, X, y, indices, groups=None, weights=None, **fit_params):
     if selector.cv:
-        if weights:
+        if weights is not None:
             scores = parallel_cross_val_scores_weighted(selector.est_,
                                      X[:, indices], y,
                                      weights,

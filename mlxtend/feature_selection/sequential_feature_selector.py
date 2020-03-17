@@ -42,6 +42,9 @@ def parallel_cross_val_scores_weighted(model, X, y, weights,
                                        n_jobs=None,
                                        verbose=0,
                                        pre_dispatch='2*n_jobs'):
+
+    print("here")
+    print(weights)
     # Initialise CV
     cv = StratifiedKFold(n_splits=cv, shuffle=True, random_state=42)
 

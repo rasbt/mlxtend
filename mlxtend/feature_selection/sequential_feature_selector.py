@@ -681,7 +681,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
                                 pre_dispatch=self.pre_dispatch)
             work = parallel(delayed(_calc_score)(self, X, y, p,
-                                                 groups=groups, wieghts=self.sample_weights, **fit_params)
+                                                 groups=groups, weights=self.sample_weights, **fit_params)
                             for p in combinations(feature_set, r=n - 1)
                             if not fixed_feature or
                             fixed_feature.issubset(set(p)))

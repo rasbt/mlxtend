@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='mlxtend',
-      version='0.0.3',
+      version='0.0.1',
       description='Machine Learning Library Extensions',
       url='https://github.com/pelucid/mlxtend',
       packages=find_packages(),

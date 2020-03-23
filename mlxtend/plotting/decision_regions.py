@@ -246,7 +246,7 @@ def plot_decision_regions(X, y, clf,
                linewidths=0.5,
                antialiased=True)
 
-    ax.axis(xmin=xx.min(), xmax=xx.max(), y_min=yy.min(), y_max=yy.max())
+    ax.axis([xx.min(), xx.max(), yy.min(), yy.max()])
 
     # Scatter training data samples
     # Make sure scatter_kwargs has backwards compatible defaults

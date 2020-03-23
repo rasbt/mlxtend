@@ -12,6 +12,13 @@ import os
 import pytest
 
 
+if 'TRAVIS' in os.environ or os.environ.get('TRAVIS') == 'true':
+    TRAVIS = True
+else:
+    TRAVIS = False
+
+
+@pytest.mark.skipif(TRAVIS, reason="DLIB download too slow")
 def test_defaults():
     path = 'mlxtend/image/tests/data/'
     eyepad = EyepadAlign()
@@ -45,6 +52,7 @@ def test_defaults():
         np.testing.assert_array_equal(landmarks_tr[:10], true_vals)
 
 
+@pytest.mark.skipif(TRAVIS, reason="DLIB download too slow")
 def test_fit2dir():
     path = 'mlxtend/image/tests/data/'
     eyepad = EyepadAlign()
@@ -80,6 +88,7 @@ def test_fit2dir():
         np.testing.assert_array_equal(landmarks_tr[:10], true_vals)
 
 
+@pytest.mark.skipif(TRAVIS, reason="DLIB download too slow")
 def test_empty_dir():
     path = 'mlxtend/image/tests/data/'
     eyepad = EyepadAlign()

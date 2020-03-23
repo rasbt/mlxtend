@@ -27,7 +27,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Bug Fixes
 
-- -
+- Fix axis DeprecationWarning in matplotlib v3.1.0 and newer. ([#673](https://github.com/rasbt/mlxtend/pull/673))
 
 ### Version 0.17.2 (02-24-2020)
 

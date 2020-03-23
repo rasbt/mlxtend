@@ -8,12 +8,20 @@ from mlxtend.image import extract_face_landmarks
 import imageio
 import numpy as np
 import os
+import pytest
+
+
+if 'TRAVIS' in os.environ or os.environ.get('TRAVIS') == 'true':
+    TRAVIS = True
+else:
+    TRAVIS = False
 
 
 def rgb2gray(rgb):
     return np.dot(rgb[..., :3], [0.299, 0.587, 0.114]).astype(np.uint8)
 
 
+@pytest.mark.skipif(TRAVIS, reason="DLIB download too slow")
 def test_defaults():
     img = imageio.imread('mlxtend/image/tests/data/lena-small.png')
     landmarks1 = extract_face_landmarks(img)
@@ -35,6 +43,7 @@ def test_defaults():
     np.testing.assert_array_equal(landmarks2[:10], true_vals)
 
 
+@pytest.mark.skipif(TRAVIS, reason="DLIB download too slow")
 def test_jpg():
     img = imageio.imread('mlxtend/image/tests/data/lena-small.jpg')
     landmarks1 = extract_face_landmarks(img)
@@ -63,6 +72,7 @@ def test_jpg():
         np.testing.assert_array_equal(landmarks2[:10], true_vals)
 
 
+@pytest.mark.skipif(TRAVIS, reason="DLIB download too slow")
 def test_grayscale():
     img = imageio.imread('mlxtend/image/tests/data/lena-small.png')
     img = rgb2gray(img)
@@ -84,6 +94,7 @@ def test_grayscale():
     np.testing.assert_array_equal(landmarks1[:10], true_vals)
 
 
+@pytest.mark.skipif(TRAVIS, reason="DLIB download too slow")
 def test_noface():
     img = imageio.core.util.Array((
       np.random.random((193, 341, 3))*255).astype(np.uint8))

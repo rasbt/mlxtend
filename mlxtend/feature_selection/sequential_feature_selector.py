@@ -36,7 +36,7 @@ def fit_and_score(model, X, y, weights,
     return score
 
 
-def parallel_cross_val_scores_weighted(model, X, y, weights,
+def cross_val_scores_weighted(model, X, y, weights,
                                        cv=5,
                                        metric=accuracy_score,
                                        n_jobs=None,
@@ -64,7 +64,7 @@ def parallel_cross_val_scores_weighted(model, X, y, weights,
 def _calc_score(selector, X, y, indices, groups=None, weights=None, **fit_params):
     if selector.cv:
         if weights is not None:
-            scores = parallel_cross_val_scores_weighted(selector.est_,
+            scores = cross_val_scores_weighted(selector.est_,
                                      X[:, indices], y,
                                      weights,
                                      cv=selector.cv,

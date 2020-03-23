@@ -7,5 +7,5 @@ sys.path.insert(0, HERE)
 
 collect_ignore = []
 if 'TRAVIS' in os.environ or os.environ.get('TRAVIS') == 'true':
-    collect_ignore.append("mlxtend/tests/test_extract_face_landmarks.py")
-    collect_ignore.append("mlxtend/tests/test_eyepad_align.py")
+    collect_ignore.append("mlxtend/image/tests/test_extract_face_landmarks.py")
+    collect_ignore.append("mlxtend/image/tests/test_eyepad_align.py")

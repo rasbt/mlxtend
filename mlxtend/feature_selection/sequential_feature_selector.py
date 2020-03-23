@@ -14,7 +14,7 @@ import scipy.stats
 import sys
 from copy import deepcopy
 from itertools import combinations
-from sklearn.metrics import get_scorer, roc_auc_score, accuracy_score
+from sklearn.metrics import get_scorer
 from sklearn.base import clone
 from sklearn.base import MetaEstimatorMixin
 from ..externals.name_estimators import _name_estimators
@@ -23,28 +23,24 @@ from sklearn.model_selection import StratifiedKFold, cross_val_score
 from joblib import Parallel, delayed
 
 
-def fit_and_score(model, X, y, weights,
+def fit_and_score(model, X, y, sample_weights,
                   train, test,
-                  metric=roc_auc_score):
+                  scoring):
     # Fit and predict
     model_clone = clone(model)
-    model_clone.fit(X[train], y[train], sample_weight=weights[train])
+    model_clone.fit(X[train], y[train], sample_weight=sample_weights[train])
     y_pred = model_clone.predict(X[test])
 
     # Score
-    score = metric(y[test], y_pred, sample_weight=weights[test])
+    score = scoring(y[test], y_pred, sample_weight=sample_weights[test])
     return score
 
 
-def cross_val_scores_weighted(model, X, y, weights,
-                                       cv=5,
-                                       metric=accuracy_score,
-                                       n_jobs=None,
-                                       verbose=0,
-                                       pre_dispatch='2*n_jobs'):
-
-    print("here")
-    print(weights)
+def cross_val_scores_weighted(model, X, y, scoring, sample_weights,
+                              cv=5,
+                              n_jobs=None,
+                              verbose=0,
+                              pre_dispatch='2*n_jobs'):
     # Initialise CV
     cv = StratifiedKFold(n_splits=cv, shuffle=True, random_state=42)
 
@@ -55,22 +51,23 @@ def cross_val_scores_weighted(model, X, y, weights,
 
     # Call fit_and_score
     scores = parallel(
-        delayed(fit_and_score)(model, X, y, weights, train, test, metric)
+        delayed(fit_and_score)(model, X, y, sample_weights, train, test, scoring)
         for train, test in cv.split(X, y))
 
     return scores
 
 
-def _calc_score(selector, X, y, indices, groups=None, weights=None, **fit_params):
+def _calc_score(selector, X, y, indices, groups=None, **fit_params):
     if selector.cv:
-        if weights is not None:
+        if selector.sample_weights is not None:
             scores = cross_val_scores_weighted(selector.est_,
-                                     X[:, indices], y,
-                                     weights,
-                                     cv=selector.cv,
-                                     n_jobs=1,
-                                     pre_dispatch=selector.pre_dispatch,
-                                     )
+                                               X[:, indices], y,
+                                               scoring=selector.scorer,
+                                               sample_weights=selector.sample_weights,
+                                               cv=selector.cv,
+                                               n_jobs=1,
+                                               pre_dispatch=selector.pre_dispatch,
+                                               )
         else:
             scores = cross_val_score(selector.est_,
                                      X[:, indices], y,
@@ -114,7 +111,6 @@ def _get_featurenames(subsets_dict, feature_idx, custom_feature_names, X):
 
 
 class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
-
     """Sequential Feature Selection for Classification and Regression.
 
     Parameters
@@ -222,6 +218,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
     http://rasbt.github.io/mlxtend/user_guide/feature_selection/SequentialFeatureSelector/
 
     """
+
     def __init__(self, estimator, k_features=1,
                  forward=True, floating=False,
                  verbose=0, scoring=None,
@@ -385,8 +382,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                              'the number of elements in custom_feature_names '
                              'must equal the number of columns in X.')
 
-        if not isinstance(self.k_features, int) and\
-                not isinstance(self.k_features, tuple)\
+        if not isinstance(self.k_features, int) and \
+                not isinstance(self.k_features, tuple) \
                 and not isinstance(self.k_features, str):
             raise AttributeError('k_features must be a positive integer'
                                  ', tuple, or string')
@@ -395,7 +392,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 self.k_features < 1 or self.k_features > X_.shape[1])):
             raise AttributeError('k_features must be a positive integer'
                                  ' between 1 and X.shape[1], got %s'
-                                 % (self.k_features, ))
+                                 % (self.k_features,))
 
         if isinstance(self.k_features, tuple):
             if len(self.k_features) != 2:
@@ -414,7 +411,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 raise AttributeError('The min k_features value must be smaller'
                                      ' than the max k_features value.')
 
-        if isinstance(self.k_features, tuple) or\
+        if isinstance(self.k_features, tuple) or \
                 isinstance(self.k_features, str):
 
             select_in_range = True
@@ -449,7 +446,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 k_idx = self.fixed_features_
                 k = len(k_idx)
                 k_idx, k_score = _calc_score(self, X_, y, k_idx,
-                                             groups=groups, weights=self.sample_weights, **fit_params)
+                                             groups=groups, **fit_params)
                 self.subsets_[k] = {
                     'feature_idx': k_idx,
                     'cv_scores': k_score,
@@ -465,7 +462,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             k_idx = tuple(orig_set)
             k = len(k_idx)
             k_idx, k_score = _calc_score(self, X_, y, k_idx,
-                                         groups=groups, weights=self.sample_weights,**fit_params)
+                                         groups=groups, **fit_params)
             self.subsets_[k] = {
                 'feature_idx': k_idx,
                 'cv_scores': k_score,
@@ -525,8 +522,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                                     self._exclusion(
                                         feature_set=k_idx,
                                         fixed_feature=(
-                                            {new_feature} |
-                                            self.fixed_features_set_),
+                                                {new_feature} |
+                                                self.fixed_features_set_),
                                         X=X_,
                                         y=y,
                                         groups=groups,
@@ -569,7 +566,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 # floating can lead to multiple same-sized subsets
                 if k not in self.subsets_ or (k_score >
                                               self.subsets_[k]['avg_score']):
-
                     k_idx = tuple(sorted(k_idx))
                     self.subsets_[k] = {
                         'feature_idx': k_idx,
@@ -653,7 +649,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             work = parallel(delayed(_calc_score)
                             (self, X, y,
                              tuple(subset | {feature}),
-                             groups=groups, weights=self.sample_weights, **fit_params)
+                             groups=groups, **fit_params)
                             for feature in remaining
                             if feature != ignore_feature)
 
@@ -681,13 +677,12 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
                                 pre_dispatch=self.pre_dispatch)
             work = parallel(delayed(_calc_score)(self, X, y, p,
-                                                 groups=groups, weights=self.sample_weights, **fit_params)
+                                                 groups=groups, **fit_params)
                             for p in combinations(feature_set, r=n - 1)
                             if not fixed_feature or
                             fixed_feature.issubset(set(p)))
 
             for p, cv_scores in work:
-
                 all_avg_scores.append(np.nanmean(cv_scores))
                 all_cv_scores.append(cv_scores)
                 all_subsets.append(p)

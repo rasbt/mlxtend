@@ -1,51 +1,19 @@
-language: generic
+language: python
+python:
+  - "3.6"
 
-cache:
-  apt: true
-  directories:
-  - $HOME/.cache/pip
-  - $HOME/.ccache
+script:
+  - make deps
 
 dist: trusty
 
-env:
-  global:
-    # Directory where tests are run from
-    - TEST_DIR=/tmp/sklearn
-    - OMP_NUM_THREADS=4
-    - OPENBLAS_NUM_THREADS=4
-
-matrix:
-    include:
-        - os: linux
-          sudo: required
-          python: 3.8
-          env: LATEST="false" IMAGE="true" COVERAGE="false" NUMPY_VERSION="1.18.1" SCIPY_VERSION="1.4.1" SKLEARN_VERSION="0.22.0" JOBLIB_VERSION=0.13.2 PANDAS_VERSION="1.0.1" IMAGEIO_VERSION="2.5.0" SKIMAGE_VERSION="0.15.0" DLIB_VERSION="19.17.0" MINICONDA_PYTHON_VERSION=3.7
-        - os: linux
-          python: 3.8
-          env: LATEST="true" IMAGE="true" COVERAGE="true" NOTEBOOKS="true" MINICONDA_PYTHON_VERSION=3.7
-        - os: linux
-          sudo: required
-          python: 3.8
-          env: LATEST="true" IMAGE="false" COVERAGE="false" NOTEBOOKS="false" MINICONDA_PYTHON_VERSION=3.7
-
-
-before_install:
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
-
-install:
-    - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then sudo apt-get update; fi
-    - source ci/.travis_install.sh
-
-script:
-    - bash ci/.travis_test.sh
-
-after_success:
-    - if [[ "$COVERAGE" == "true" ]]; then coveralls || echo "failed"; fi
-
 notifications:
-    email:
-      recipients:
-          - mail@sebastianraschka.com
-    on_success: always
-    on_failure: always
+  email:
+    recipients:
+      - developers@growthintel.com
+    on_success: never
+    on_failure: change
+
+    slack:
+      rooms:
+        secure: "O/kZr/L3H3R7ndC9aR8ScpL0lN893g8TAsiPdTxVQK7fJ9t88gAonR+yQIq/ZwD4Xwb5NDc09xMBpikhCrquBCqpSxf/EC9tDzePbjlqYCjsZ8wuOmo4byFrH32bvcxr3SIWw8zSY88Z4Ac5msTgUBW2aovOgn9wIM2Prs9kP9y/ftPnlkAs9IJHLJ5DmwEw9KEUTq1eKbWh7+nlguDkBIwpqeuU4gOUAZGFuCy4Cqs53K87PQRX0VjTxnkqODKoF8cuIN9TU0D0u75kqny902rXfzgaSyy8mFFxu+HkPhDbdFICV3H8P82QSpbmUTzcgvfHOBDxZHFJ2cxAScKoLtSzaaHvHA6H3WrHP6r5jei0UgG4v5dNRtyA5uO+DtVu0thr/cpBI97Hm9Ob9sTOCzIRtTuSPyk+cAYsksDDzL67diJhkaaCcIQBL6Z5qSEZzJS+Ggdzo5SwiTDrK/qOW/xk/53qQrB2lL9oQT4vuiTpwSUJnaWDeVlfYk09JnfYWfSHzNWXy+F8aQQylMzuoKGDTtVDya7dpObwCFatJ1yvr1sGu067Y5+04a5fk6hRmPaQDFNEfkN14BF8xw4EQJA2M8Gna6U6bQmkwHRPFIcJpC6vmA6UV5Wvg8Rpgme7GN3R9i07/1+520CeWdYCXFlYWlFy6kpAhECDMO3uJwU="

@@ -32,7 +32,7 @@ def fit_and_score(model, X, y, sample_weights,
     y_pred = model_clone.predict(X[test])
 
     # Score
-    score = scoring(y[test], y_pred, sample_weight=sample_weights[test])
+    score = scoring(X, y[test], y_pred, sample_weight=sample_weights[test])
     return score
 
 

@@ -19,7 +19,14 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
-- -
+- The `drop_last_proba` argument of the stacking classifiers 
+`StackingCVClassifier` and `StackingClassifier` has been removed and its 
+functionality transferred to and extended in the new `drop_proba_col` argument.
+This maintains the previous functionality if set to `last`. If set to `first`, 
+the first probability column will instead be dropped. If set to `None`, no 
+probability columns are dropped. 
+([#590](https://github.com/rasbt/mlxtend/issues/590))
+
 
 ##### Changes
 
@@ -127,7 +134,7 @@ The CHANGELOG for the current development version is available at
 ##### New Features
 
 - `StackingCVClassifier` and `StackingCVRegressor` now support `random_state` parameter, which, together with `shuffle`, controls the randomness in the cv splitting. ([#523](https://github.com/rasbt/mlxtend/pull/523) via [Qiang Gu](https://github.com/qiaguhttps://github.com/qiagu))
-- `StackingCVClassifier` and `StackingCVRegressor` now have a new `drop_last_proba` parameter. It drops the last "probability" column in the feature set since if `True`,
+- `StackingCVClassifier` and `StackingClassifier` now have a new `drop_last_proba` parameter. It drops the last "probability" column in the feature set since if `True`,
         because it is redundant: p(y_c) = 1 - p(y_1) + p(y_2) + ... + p(y_{c-1}). This can be useful for meta-classifiers that are sensitive to perfectly collinear features. ([#532](https://github.com/rasbt/mlxtend/pull/532))
 - Other stacking estimators, including `StackingClassifier`, `StackingCVClassifier` and `StackingRegressor`, support grid search over the `regressors` and even a single base regressor. ([#522](https://github.com/rasbt/mlxtend/pull/522) via [Qiang Gu](https://github.com/qiaguhttps://github.com/qiagu))
 - Adds multiprocessing support to `StackingCVClassifier`. ([#522](https://github.com/rasbt/mlxtend/pull/522) via [Qiang Gu](https://github.com/qiaguhttps://github.com/qiagu))

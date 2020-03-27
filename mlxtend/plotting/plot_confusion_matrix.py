@@ -21,6 +21,7 @@ def plot_confusion_matrix(conf_mat,
                           figure=None,
                           axis=None):
     """Plot a confusion matrix via matplotlib.
+    
     Parameters
     -----------
     conf_mat : array-like, shape = [n_classes, n_classes]
@@ -49,13 +50,16 @@ def plot_confusion_matrix(conf_mat,
     class_names : array-like, shape = [n_classes] (default: None)
         List of class names.
         If not `None`, ticks will be set to these values.
-    figure: Matplotlib figure, if None will create a new figure
-    axis: Matplotlib figure axis, if None will create a new axis
+    figure : None or Matplotlib figure  (default: None)
+        If None will create a new figure.
+    axis : None or Matplotlib figure axis (default: None)
+        If None will create a new axis.
 
     Returns
     -----------
     fig, ax : matplotlib.pyplot subplot objects
         Figure and axis elements of the subplot.
+
     Examples
     -----------
     For usage examples, please see

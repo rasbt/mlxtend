@@ -344,7 +344,7 @@ def test_get_params():
 
     expect = ['classifiers',
               'cv',
-              'drop_proba_col',
+              'drop_last_proba',
               'gaussiannb',
               'kneighborsclassifier',
               'meta_classifier',
@@ -502,13 +502,13 @@ def test_sparse_inputs_with_features_in_secondary():
         round(stclf.score(X_train, y_train), 2)
 
 
-def test_StackingClassifier_drop_proba_col():
+def test_StackingClassifier_drop_last_proba():
     np.random.seed(123)
     lr1 = LogisticRegression(solver='liblinear',
                              multi_class='ovr')
     sclf1 = StackingCVClassifier(classifiers=[lr1, lr1],
                                  use_probas=True,
-                                 drop_proba_col=None,
+                                 drop_last_proba=False,
                                  meta_classifier=lr1)
 
     sclf1.fit(X_iris, y_iris)
@@ -517,25 +517,16 @@ def test_StackingClassifier_drop_proba_col():
 
     sclf2 = StackingCVClassifier(classifiers=[lr1, lr1],
                                  use_probas=True,
-                                 drop_proba_col='last',
+                                 drop_last_proba=True,
                                  meta_classifier=lr1)
 
     sclf2.fit(X_iris, y_iris)
     r2 = sclf2.predict_meta_features(X_iris[:2])
     assert r2.shape == (2, 4), r2.shape
 
-    sclf4 = StackingCVClassifier(classifiers=[lr1, lr1],
-                                 use_probas=True,
-                                 drop_proba_col='first',
-                                 meta_classifier=lr1)
-
-    sclf4.fit(X_iris, y_iris)
-    r4 = sclf4.predict_meta_features(X_iris[:2])
-    assert r4.shape == (2, 4), r4.shape
-
     sclf3 = StackingCVClassifier(classifiers=[lr1, lr1],
                                  use_probas=True,
-                                 drop_proba='last',
+                                 drop_last_proba=True,
                                  meta_classifier=lr1)
 
     sclf3.fit(X_iris[0:100], y_iris[0:100])  # only 2 classes

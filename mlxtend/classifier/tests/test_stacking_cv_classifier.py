@@ -526,7 +526,7 @@ def test_StackingClassifier_drop_last_proba():
 
     sclf3 = StackingCVClassifier(classifiers=[lr1, lr1],
                                  use_probas=True,
-                                 drop_last_proba=True,
+                                 drop_proba_col='last',
                                  meta_classifier=lr1)
 
     sclf3.fit(X_iris[0:100], y_iris[0:100])  # only 2 classes

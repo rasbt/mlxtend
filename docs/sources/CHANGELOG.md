@@ -45,8 +45,8 @@ The CHANGELOG for the current development version is available at
 ##### Changes
 
 - The previously deprecated `OnehotTransactions` has been removed in favor of the `TransactionEncoder.`
-- Removed `SparseDataFrame` support in frequent pattern mining functions in favor of pandas >=1.0's new way for working sparse data. If you used `SparseDataFrame` formats, please see pandas' migration guide at https://pandas.pydata.org/pandas-docs/stable/user_guide/sparse.html#migrating ([#667](https://github.com/rasbt/mlxtend/pull/667))
-
+- Removed `SparseDataFrame` support in frequent pattern mining functions in favor of pandas >=1.0's new way for working sparse data. If you used `SparseDataFrame` formats, please see pandas' migration guide at https://pandas.pydata.org/pandas-docs/stable/user_guide/sparse.html#migrating. ([#667](https://github.com/rasbt/mlxtend/pull/667))
+- The `plot_confusion_matrix.py` now also accepts a matplotlib figure and axis as input to which the confusion matrix plot can be added. ([#671](https://github.com/rasbt/mlxtend/pull/634) via [Vahid Mirjalili](https://github.com/vmirly))
 
 ##### Bug Fixes
 

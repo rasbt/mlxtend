@@ -38,11 +38,12 @@ if [[ "$NOTEBOOKS" == "true" ]]; then
     python make_api.py
     # skip image subdir because DLIB takes too long to download on travis
 
-    if [[ "$IMAGE" == "false" ]]; then
-      python make_api.py --ignore_subpackages "mlxtend.image"
-      find sources -name "*.ipynb" -not -path "sources/user_guide/image/*" -exec jupyter nbconvert --to notebook --execute {} \;
-    else
+    if [[ "$IMAGE" == "true" ]]; then
       python make_api.py 
       find sources -name "*.ipynb" -exec jupyter nbconvert --to notebook --execute {} \;
+    else      
+      python make_api.py --ignore_packages "mlxtend.image"
+      find sources -name "*.ipynb" -not -path "sources/user_guide/image/*" -exec jupyter nbconvert --to notebook --execute {} \;
+    
     fi
 fi

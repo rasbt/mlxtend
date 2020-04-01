@@ -35,8 +35,6 @@ fi
 
 if [[ "$NOTEBOOKS" == "true" ]]; then
     cd docs
-    python make_api.py
-    # skip image subdir because DLIB takes too long to download on travis
 
     if [[ "$IMAGE" == "true" ]]; then
       python make_api.py 

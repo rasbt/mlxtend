@@ -43,12 +43,15 @@ class StackingCVClassifier(_BaseXComposition, _BaseStackingClassifier,
     use_probas : bool (default: False)
         If True, trains meta-classifier based on predicted probabilities
         instead of class labels.
-    drop_last_proba : bool (default: False)
-        Drops the last "probability" column in the feature set since if `True`,
-        because it is redundant:
+    drop_proba_col : string (default: None)
+        Drops extra "probability" column in the feature set, because it is
+        redundant:
         p(y_c) = 1 - p(y_1) + p(y_2) + ... + p(y_{c-1}).
-        This can be useful for meta-classifiers that are sensitive to
-        perfectly collinear features. Only relevant if `use_probas=True.
+        This can be useful for meta-classifiers that are sensitive to perfectly
+        collinear features.
+        If 'last', drops last probability column.
+        If 'first', drops first probability column.
+        Only relevant if `use_probas=True`.
     cv : int, cross-validation generator or an iterable, optional (default: 2)
         Determines the cross-validation splitting strategy.
         Possible inputs for cv are:
@@ -139,7 +142,7 @@ class StackingCVClassifier(_BaseXComposition, _BaseStackingClassifier,
     """
 
     def __init__(self, classifiers, meta_classifier,
-                 use_probas=False, drop_last_proba=False,
+                 use_probas=False, drop_proba_col=None,
                  cv=2, shuffle=True,
                  random_state=None, stratify=True, verbose=0,
                  use_features_in_secondary=False,
@@ -150,7 +153,13 @@ class StackingCVClassifier(_BaseXComposition, _BaseStackingClassifier,
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier
         self.use_probas = use_probas
-        self.drop_last_proba = drop_last_proba
+
+        allowed = {None, 'first', 'last'}
+        if drop_proba_col not in allowed:
+            raise ValueError('`drop_proba_col` must be in %s. Got %s'
+                             % (allowed, drop_proba_col))
+
+        self.drop_proba_col = drop_proba_col
         self.cv = cv
         self.shuffle = shuffle
         self.random_state = random_state
@@ -245,8 +254,10 @@ class StackingCVClassifier(_BaseXComposition, _BaseStackingClassifier,
 
             if not self.use_probas:
                 prediction = prediction[:, np.newaxis]
-            elif self.drop_last_proba:
+            elif self.drop_proba_col == 'last':
                 prediction = prediction[:, :-1]
+            elif self.drop_proba_col == 'first':
+                prediction = prediction[:, 1:]
 
             if meta_features is None:
                 meta_features = prediction
@@ -317,8 +328,10 @@ class StackingCVClassifier(_BaseXComposition, _BaseStackingClassifier,
             if not self.use_probas:
                 prediction = model.predict(X)[:, np.newaxis]
             else:
-                if self.drop_last_proba:
+                if self.drop_proba_col == 'last':
                     prediction = model.predict_proba(X)[:, :-1]
+                elif self.drop_proba_col == 'first':
+                    prediction = model.predict_proba(X)[:, 1:]
                 else:
                     prediction = model.predict_proba(X)
 

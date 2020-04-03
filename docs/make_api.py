@@ -235,7 +235,8 @@ def get_functions_and_classes(package):
     return classes, functions
 
 
-def generate_api_docs(package, api_dir, clean=False, printlog=True):
+def generate_api_docs(package, api_dir, clean=False,
+                      printlog=True, ignore_packages=None):
     """Generate a module level API documentation of a python package.
 
     Description
@@ -253,6 +254,11 @@ def generate_api_docs(package, api_dir, clean=False, printlog=True):
         Removes previously existing API directory if True.
     printlog : bool (default: True)
         Prints a progress log to the standard output screen if True.
+    ignore_packages : iterable or None (default: None)
+        Iterable (list, set, tuple) that contains the names of packages
+        and subpackages to ignore or skip. For instance, if the
+        images subpackage in mlxtend is supposed to be split, provide the
+        argument `{mlxtend.image}`.
 
     """
     if printlog:
@@ -269,6 +275,11 @@ def generate_api_docs(package, api_dir, clean=False, printlog=True):
     api_docs = {}
     for importer, pkg_name, is_pkg in pkgutil.iter_modules(
             package.__path__, prefix):
+
+        if ignore_packages is not None and pkg_name in ignore_packages:
+            if printlog:
+                print('ignored %s' % pkg_name)
+            continue
         if is_pkg:
             subpackage = __import__(pkg_name, fromlist="dummy")
             prefix = subpackage.__name__ + "."
@@ -418,7 +429,7 @@ if __name__ == "__main__":
     parser.add_argument('-o2', '--output_subpackage_api',
                         default='../docs/sources/api_subpackages',
                         help=('Target directory for the'
-                              'subpackage-level API Markdown files'))
+                              ' subpackage-level API Markdown files'))
     parser.add_argument('-c', '--clean',
                         action='store_true',
                         help='Remove previous API files')
@@ -428,13 +439,24 @@ if __name__ == "__main__":
     parser.add_argument('-v', '--version',
                         action='version',
                         version='v. 0.1')
+    parser.add_argument('--ignore_packages',
+                        default='',
+                        help='Ignores subpackages listed via this option.'
+                             ' For example, to ignore mlxtend.image,'
+                             ' type "mlxtend.image".'
+                             ' For multiple subpackages, separate them via,'
+                             ' commas. For example,'
+                             ' "mlxtend.image,mlxtend.plotting".')
 
     args = parser.parse_args()
+
+    ignore_packages_set = set(args.ignore_packages.split(","))
 
     package = import_package(args.package_dir, args.package_name)
     generate_api_docs(package=package,
                       api_dir=args.output_module_api,
                       clean=args.clean,
+                      ignore_packages=ignore_packages_set,
                       printlog=not(args.silent))
     summarize_methdods_and_functions(api_modules=args.output_module_api,
                                      out_dir=args.output_subpackage_api,

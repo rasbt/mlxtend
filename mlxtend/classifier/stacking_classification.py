@@ -38,12 +38,15 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
     use_probas : bool (default: False)
         If True, trains meta-classifier based on predicted probabilities
         instead of class labels.
-    drop_last_proba : bool (default: False)
-        Drops the last "probability" column in the feature set since if `True`,
-        because it is redundant:
+    drop_proba_col : string (default: None)
+        Drops extra "probability" column in the feature set, because it is
+        redundant:
         p(y_c) = 1 - p(y_1) + p(y_2) + ... + p(y_{c-1}).
-        This can be useful for meta-classifiers that are sensitive to
-        perfectly collinear features. Only relevant if `use_probas=True`.
+        This can be useful for meta-classifiers that are sensitive to perfectly
+        collinear features.
+        If 'last', drops last probability column.
+        If 'first', drops first probability column.
+        Only relevant if `use_probas=True`.
     average_probas : bool (default: False)
         Averages the probabilities as meta features if `True`.
         Only relevant if `use_probas=True`.
@@ -103,7 +106,7 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
     """
 
     def __init__(self, classifiers, meta_classifier,
-                 use_probas=False, drop_last_proba=False,
+                 use_probas=False, drop_proba_col=None,
                  average_probas=False, verbose=0,
                  use_features_in_secondary=False,
                  store_train_meta_features=False,
@@ -112,7 +115,13 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier
         self.use_probas = use_probas
-        self.drop_last_proba = drop_last_proba
+
+        allowed = {None, 'first', 'last'}
+        if drop_proba_col not in allowed:
+            raise ValueError('`drop_proba_col` must be in %s. Got %s'
+                             % (allowed, drop_proba_col))
+        self.drop_proba_col = drop_proba_col
+
         self.average_probas = average_probas
         self.verbose = verbose
         self.use_features_in_secondary = use_features_in_secondary
@@ -230,8 +239,11 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
         """
         check_is_fitted(self, 'clfs_')
         if self.use_probas:
-            if self.drop_last_proba:
+            if self.drop_proba_col == 'last':
                 probas = np.asarray([clf.predict_proba(X)[:, :-1]
+                                     for clf in self.clfs_])
+            elif self.drop_proba_col == 'first':
+                probas = np.asarray([clf.predict_proba(X)[:, 1:]
                                      for clf in self.clfs_])
             else:
                 probas = np.asarray([clf.predict_proba(X)

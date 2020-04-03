@@ -627,3 +627,16 @@ def test_decision_function():
         assert scores_mean == 0.96, scores_mean
     else:
         assert scores_mean == 0.90, scores_mean
+
+
+def test_drop_col_unsupported():
+    np.random.seed(123)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier(n_estimators=10)
+    clf2 = GaussianNB()
+    clf3 = KNeighborsClassifier()
+
+    with pytest.raises(ValueError):
+        StackingCVClassifier(classifiers=[clf1, clf2, clf3],
+                             meta_classifier=meta,
+                             drop_proba_col='invalid value')

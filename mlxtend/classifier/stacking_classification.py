@@ -105,7 +105,13 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier
         self.use_probas = use_probas
+
+        allowed = {None, 'first', 'last'}
+        if drop_proba_col not in allowed:
+            raise ValueError('`drop_proba_col` must be in %s. Got %s'
+                             % (allowed, drop_proba_col))
         self.drop_proba_col = drop_proba_col
+
         self.average_probas = average_probas
         self.verbose = verbose
         self.use_features_in_secondary = use_features_in_secondary

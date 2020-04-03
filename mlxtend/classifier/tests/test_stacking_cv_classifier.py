@@ -344,7 +344,7 @@ def test_get_params():
 
     expect = ['classifiers',
               'cv',
-              'drop_last_proba',
+              'drop_proba_col',
               'gaussiannb',
               'kneighborsclassifier',
               'meta_classifier',
@@ -502,13 +502,13 @@ def test_sparse_inputs_with_features_in_secondary():
         round(stclf.score(X_train, y_train), 2)
 
 
-def test_StackingClassifier_drop_last_proba():
+def test_StackingClassifier_drop_proba_col():
     np.random.seed(123)
     lr1 = LogisticRegression(solver='liblinear',
                              multi_class='ovr')
     sclf1 = StackingCVClassifier(classifiers=[lr1, lr1],
                                  use_probas=True,
-                                 drop_last_proba=False,
+                                 drop_proba_col=None,
                                  meta_classifier=lr1)
 
     sclf1.fit(X_iris, y_iris)
@@ -517,16 +517,25 @@ def test_StackingClassifier_drop_last_proba():
 
     sclf2 = StackingCVClassifier(classifiers=[lr1, lr1],
                                  use_probas=True,
-                                 drop_last_proba=True,
+                                 drop_proba_col='last',
                                  meta_classifier=lr1)
 
     sclf2.fit(X_iris, y_iris)
     r2 = sclf2.predict_meta_features(X_iris[:2])
     assert r2.shape == (2, 4), r2.shape
 
+    sclf4 = StackingCVClassifier(classifiers=[lr1, lr1],
+                                 use_probas=True,
+                                 drop_proba_col='first',
+                                 meta_classifier=lr1)
+
+    sclf4.fit(X_iris, y_iris)
+    r4 = sclf4.predict_meta_features(X_iris[:2])
+    assert r4.shape == (2, 4), r4.shape
+
     sclf3 = StackingCVClassifier(classifiers=[lr1, lr1],
                                  use_probas=True,
-                                 drop_last_proba=True,
+                                 drop_proba_col='last',
                                  meta_classifier=lr1)
 
     sclf3.fit(X_iris[0:100], y_iris[0:100])  # only 2 classes
@@ -618,3 +627,16 @@ def test_decision_function():
         assert scores_mean == 0.96, scores_mean
     else:
         assert scores_mean == 0.90, scores_mean
+
+
+def test_drop_col_unsupported():
+    np.random.seed(123)
+    meta = LogisticRegression()
+    clf1 = RandomForestClassifier(n_estimators=10)
+    clf2 = GaussianNB()
+    clf3 = KNeighborsClassifier()
+
+    with pytest.raises(ValueError):
+        StackingCVClassifier(classifiers=[clf1, clf2, clf3],
+                             meta_classifier=meta,
+                             drop_proba_col='invalid value')

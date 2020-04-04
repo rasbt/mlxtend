@@ -5,8 +5,6 @@
 # License: BSD 3 clause
 
 import numpy as np
-from .transactionencoder import TransactionEncoder
-import warnings
 
 
 def one_hot(y, num_labels='auto', dtype='float'):

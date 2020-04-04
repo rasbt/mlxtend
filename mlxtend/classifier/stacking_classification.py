@@ -9,6 +9,7 @@
 # License: BSD 3 clause
 
 import numpy as np
+import warnings
 from scipy import sparse
 from sklearn.base import TransformerMixin, clone
 
@@ -30,7 +31,7 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
         Invoking the `fit` method on the `StackingClassifer` will fit clones
         of these original classifiers that will
         be stored in the class attribute
-        `self.clfs_` if if `use_clones=True` (default) and
+        `self.clfs_` if `use_clones=True` (default) and
         `fit_base_estimators=True` (default).
     meta_classifier : object
         The meta-classifier to be fitted on the ensemble of
@@ -79,8 +80,9 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
         the scikit-learn fit/predict API interface but are not compatible
         to scikit-learn's `clone` function.
     fit_base_estimators: bool (default: True)
-        Refits classifiers in `clfs` if True; uses references to the `clfs`,
-        otherwise (assumes that the classifiers were already fit).
+        Refits classifiers in `classifiers` if True; uses references to the
+        `classifiers`, otherwise (assumes that the classifiers were
+        already fit).
         Note: fit_base_estimators=False will enforce use_clones to be False,
         and is incompatible to most scikit-learn wrappers!
         For instance, if any form of cross-validation is performed
@@ -155,7 +157,8 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
 
         """
         if not self.fit_base_estimators:
-            print('Warning: enforce use_clones to be False')
+            warnings.warn("fit_base_estimators=False "
+                          "enforces use_clones to be `False`")
             self.use_clones = False
 
         if self.use_clones:

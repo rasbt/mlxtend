@@ -9,6 +9,7 @@
 # License: BSD 3 clause
 
 import numpy as np
+import warnings
 from sklearn.base import (BaseEstimator, ClassifierMixin, TransformerMixin,
                           clone)
 from sklearn.exceptions import NotFittedError
@@ -27,9 +28,9 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     clfs : array-like, shape = [n_classifiers]
         A list of classifiers.
         Invoking the `fit` method on the `VotingClassifier` will fit clones
-        of those original classifiers that will
+        of those original classifiers
         be stored in the class attribute
-        `self.clfs_` if `use_clones-True` (default) and
+        if `use_clones=True` (default) and
         `fit_base_estimators=True` (default).
     voting : str, {'hard', 'soft'} (default='hard')
         If 'hard', uses predicted class labels for majority rule voting.
@@ -71,9 +72,9 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     ----------
     classes_ : array-like, shape = [n_predictions]
     clf : array-like, shape = [n_predictions]
-        The unmodified input classifiers
+        The input classifiers; may be overwritten if `use_clones=False`
     clf_ : array-like, shape = [n_predictions]
-        Fitted clones of the input classifiers
+        Fitted input classifiers; clones if `use_clones=True`
 
     Examples
     --------
@@ -162,7 +163,8 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.classes_ = self.le_.classes_
 
         if not self.fit_base_estimators:
-            print('Warning: enforce use_clones to be False')
+            warnings.warn("fit_base_estimators=False "
+                          "enforces use_clones to be `False`")
             self.use_clones = False
 
         if self.use_clones:

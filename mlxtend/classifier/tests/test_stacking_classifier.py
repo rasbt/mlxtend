@@ -494,8 +494,8 @@ def test_get_params():
     got = sorted(list({s.split('__')[0] for s in sclf.get_params().keys()}))
     expect = ['average_probas',
               'classifiers',
-              'fit_base_estimators',
               'drop_proba_col',
+              'fit_base_estimators',
               'gaussiannb',
               'kneighborsclassifier',
               'meta_classifier',

@@ -9,16 +9,17 @@
 #
 # License: BSD 3 clause
 
-from ..externals.name_estimators import _name_estimators
-from ..externals.estimator_checks import check_is_fitted
-from ..utils.base_compostion import _BaseXComposition
-from ._base_classification import _BaseStackingClassifier
 import numpy as np
 from scipy import sparse
-from sklearn.base import TransformerMixin
-from sklearn.base import clone
+from sklearn.base import TransformerMixin, clone
 from sklearn.model_selection import cross_val_predict
 from sklearn.model_selection._split import check_cv
+
+from ..externals.estimator_checks import check_is_fitted
+from ..externals.name_estimators import _name_estimators
+from ..utils.base_compostion import _BaseXComposition
+from ._base_classification import _BaseStackingClassifier
+
 # from sklearn.utils import check_X_y
 
 
@@ -35,7 +36,7 @@ class StackingCVClassifier(_BaseXComposition, _BaseStackingClassifier,
         A list of classifiers.
         Invoking the `fit` method on the `StackingCVClassifer` will fit clones
         of these original classifiers that will
-        be stored in the class attribute `self.clfs_`.
+        be stored in the class attribute `self.clfs_` if `use_clones=True`.
     meta_classifier : object
         The meta-classifier to be fitted on the ensemble of
         classifiers
@@ -139,6 +140,7 @@ class StackingCVClassifier(_BaseXComposition, _BaseStackingClassifier,
     http://rasbt.github.io/mlxtend/user_guide/classifier/StackingCVClassifier/
 
     """
+
     def __init__(self, classifiers, meta_classifier,
                  use_probas=False, drop_proba_col=None,
                  cv=2, shuffle=True,
@@ -245,10 +247,10 @@ class StackingCVClassifier(_BaseXComposition, _BaseStackingClassifier,
                 print(_name_estimators((model,))[0][1])
 
             prediction = cross_val_predict(
-                    model, X, y, groups=groups, cv=final_cv,
-                    n_jobs=self.n_jobs, fit_params=fit_params,
-                    verbose=self.verbose, pre_dispatch=self.pre_dispatch,
-                    method='predict_proba' if self.use_probas else 'predict')
+                model, X, y, groups=groups, cv=final_cv,
+                n_jobs=self.n_jobs, fit_params=fit_params,
+                verbose=self.verbose, pre_dispatch=self.pre_dispatch,
+                method='predict_proba' if self.use_probas else 'predict')
 
             if not self.use_probas:
                 prediction = prediction[:, np.newaxis]

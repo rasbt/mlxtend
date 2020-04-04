@@ -8,14 +8,15 @@
 #
 # License: BSD 3 clause
 
+import numpy as np
+import warnings
+from scipy import sparse
+from sklearn.base import TransformerMixin, clone
+
 from ..externals.estimator_checks import check_is_fitted
 from ..externals.name_estimators import _name_estimators
 from ..utils.base_compostion import _BaseXComposition
 from ._base_classification import _BaseStackingClassifier
-from scipy import sparse
-from sklearn.base import TransformerMixin
-from sklearn.base import clone
-import numpy as np
 
 
 class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
@@ -30,7 +31,8 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
         Invoking the `fit` method on the `StackingClassifer` will fit clones
         of these original classifiers that will
         be stored in the class attribute
-        `self.clfs_`.
+        `self.clfs_` if `use_clones=True` (default) and
+        `fit_base_estimators=True` (default).
     meta_classifier : object
         The meta-classifier to be fitted on the ensemble of
         classifiers
@@ -77,6 +79,16 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
         recommended if you are working with estimators that are supporting
         the scikit-learn fit/predict API interface but are not compatible
         to scikit-learn's `clone` function.
+    fit_base_estimators: bool (default: True)
+        Refits classifiers in `classifiers` if True; uses references to the
+        `classifiers`, otherwise (assumes that the classifiers were
+        already fit).
+        Note: fit_base_estimators=False will enforce use_clones to be False,
+        and is incompatible to most scikit-learn wrappers!
+        For instance, if any form of cross-validation is performed
+        this would require the re-fitting classifiers to training folds, which
+        would raise a NotFitterError if fit_base_estimators=False.
+        (New in mlxtend v0.6.)
 
     Attributes
     ----------
@@ -100,7 +112,7 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
                  average_probas=False, verbose=0,
                  use_features_in_secondary=False,
                  store_train_meta_features=False,
-                 use_clones=True):
+                 use_clones=True, fit_base_estimators=True):
 
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier
@@ -117,6 +129,7 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
         self.use_features_in_secondary = use_features_in_secondary
         self.store_train_meta_features = store_train_meta_features
         self.use_clones = use_clones
+        self.fit_base_estimators = fit_base_estimators
 
     @property
     def named_classifiers(self):
@@ -143,6 +156,11 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
         self : object
 
         """
+        if not self.fit_base_estimators:
+            warnings.warn("fit_base_estimators=False "
+                          "enforces use_clones to be `False`")
+            self.use_clones = False
+
         if self.use_clones:
             self.clfs_ = clone(self.classifiers)
             self.meta_clf_ = clone(self.meta_classifier)
@@ -150,26 +168,27 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
             self.clfs_ = self.classifiers
             self.meta_clf_ = self.meta_classifier
 
-        if self.verbose > 0:
-            print("Fitting %d classifiers..." % (len(self.classifiers)))
-
-        for clf in self.clfs_:
-
+        if self.fit_base_estimators:
             if self.verbose > 0:
-                i = self.clfs_.index(clf) + 1
-                print("Fitting classifier%d: %s (%d/%d)" %
-                      (i, _name_estimators((clf,))[0][0], i, len(self.clfs_)))
+                print("Fitting %d classifiers..." % (len(self.classifiers)))
 
-            if self.verbose > 2:
-                if hasattr(clf, 'verbose'):
-                    clf.set_params(verbose=self.verbose - 2)
+            for clf in self.clfs_:
 
-            if self.verbose > 1:
-                print(_name_estimators((clf,))[0][1])
-            if sample_weight is None:
-                clf.fit(X, y)
-            else:
-                clf.fit(X, y, sample_weight=sample_weight)
+                if self.verbose > 0:
+                    i = self.clfs_.index(clf) + 1
+                    print("Fitting classifier%d: %s (%d/%d)" %
+                          (i, _name_estimators((clf,))[0][0], i, len(self.clfs_)))
+
+                if self.verbose > 2:
+                    if hasattr(clf, 'verbose'):
+                        clf.set_params(verbose=self.verbose - 2)
+
+                if self.verbose > 1:
+                    print(_name_estimators((clf,))[0][1])
+                if sample_weight is None:
+                    clf.fit(X, y)
+                else:
+                    clf.fit(X, y, sample_weight=sample_weight)
 
         meta_features = self.predict_meta_features(X)
 

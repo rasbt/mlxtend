@@ -5,17 +5,20 @@
 # License: BSD 3 clause
 
 import random
-import pytest
-from mlxtend.classifier import EnsembleVoteClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.naive_bayes import GaussianNB
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.neighbors import KNeighborsClassifier
+
 import numpy as np
-from mlxtend.data import iris_data
-from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import cross_val_score
+import pytest
+from sklearn import exceptions
 from sklearn.base import clone
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import GridSearchCV, cross_val_score
+from sklearn.naive_bayes import GaussianNB
+from sklearn.neighbors import KNeighborsClassifier
+
+from mlxtend.classifier import EnsembleVoteClassifier
+from mlxtend.data import iris_data
+from mlxtend.utils import assert_raises
 
 X, y = iris_data()
 X = X[:, 1:3]
@@ -36,6 +39,46 @@ def test_EnsembleVoteClassifier():
                              scoring='accuracy')
     scores_mean = (round(scores.mean(), 2))
     assert(scores_mean == 0.94)
+
+
+def test_fit_base_estimators_false():
+    np.random.seed(123)
+    clf1 = LogisticRegression(solver='liblinear', multi_class='ovr')
+    clf2 = RandomForestClassifier(n_estimators=10)
+    clf3 = GaussianNB()
+
+    clf1.fit(X, y)
+    clf2.fit(X, y)
+    clf3.fit(X, y)
+
+    eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
+                                  voting='hard',
+                                  fit_base_estimators=False)
+
+    eclf.fit(X, y)
+    assert round(eclf.score(X, y), 2) == 0.97
+
+
+def test_use_clones():
+    np.random.seed(123)
+    clf1 = LogisticRegression(solver='liblinear',
+                              multi_class='ovr')
+    clf2 = RandomForestClassifier(n_estimators=10)
+    clf3 = GaussianNB()
+    EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
+                           use_clones=True).fit(X, y)
+
+    assert_raises(exceptions.NotFittedError,
+                  "This RandomForestClassifier instance is not fitted yet."
+                  " Call 'fit' with appropriate arguments"
+                  " before using this estimator.",
+                  clf2.predict,
+                  X)
+
+    EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
+                           use_clones=False).fit(X, y)
+
+    clf2.predict(X)
 
 
 def test_sample_weight():
@@ -190,10 +233,11 @@ def test_get_params():
 
     got = sorted(list({s.split('__')[0] for s in eclf.get_params().keys()}))
     expect = ['clfs',
+              'fit_base_estimators',
               'gaussiannb',
               'kneighborsclassifier',
               'randomforestclassifier',
-              'refit',
+              'use_clones',
               'verbose',
               'voting',
               'weights']
@@ -260,37 +304,6 @@ def test_string_labels_python_list():
     assert(scores_mean == 0.94)
 
 
-def test_string_labels_refit_false():
-    np.random.seed(123)
-    clf1 = LogisticRegression(solver='liblinear', multi_class='ovr')
-    clf2 = RandomForestClassifier(n_estimators=10)
-    clf3 = GaussianNB()
-
-    y_str = y.copy()
-    y_str = y_str.astype(str)
-    y_str[:50] = 'a'
-    y_str[50:100] = 'b'
-    y_str[100:150] = 'c'
-
-    clf1.fit(X, y_str)
-    clf2.fit(X, y_str)
-    clf3.fit(X, y_str)
-
-    eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
-                                  voting='hard',
-                                  refit=False)
-
-    eclf.fit(X, y_str)
-    assert round(eclf.score(X, y_str), 2) == 0.97
-
-    eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
-                                  voting='soft',
-                                  refit=False)
-
-    eclf.fit(X, y_str)
-    assert round(eclf.score(X, y_str), 2) == 0.97
-
-
 def test_clone():
 
     clf1 = LogisticRegression(solver='liblinear', multi_class='ovr')
@@ -298,5 +311,5 @@ def test_clone():
     clf3 = GaussianNB()
     eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
                                   voting='hard',
-                                  refit=False)
+                                  fit_base_estimators=False)
     clone(eclf)

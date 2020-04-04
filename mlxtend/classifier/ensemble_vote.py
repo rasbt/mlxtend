@@ -8,15 +8,15 @@
 #
 # License: BSD 3 clause
 
-from sklearn.base import BaseEstimator
-from sklearn.base import ClassifierMixin
-from sklearn.base import TransformerMixin
-from sklearn.preprocessing import LabelEncoder
-from sklearn.base import clone
-from sklearn.exceptions import NotFittedError
-from ..externals.name_estimators import _name_estimators
-from ..externals import six
 import numpy as np
+import warnings
+from sklearn.base import (BaseEstimator, ClassifierMixin, TransformerMixin,
+                          clone)
+from sklearn.exceptions import NotFittedError
+from sklearn.preprocessing import LabelEncoder
+
+from ..externals import six
+from ..externals.name_estimators import _name_estimators
 
 
 class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
@@ -28,9 +28,10 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     clfs : array-like, shape = [n_classifiers]
         A list of classifiers.
         Invoking the `fit` method on the `VotingClassifier` will fit clones
-        of those original classifiers that will
+        of those original classifiers
         be stored in the class attribute
-        `self.clfs_` if `refit=True` (default).
+        if `use_clones=True` (default) and
+        `fit_base_estimators=True` (default).
     voting : str, {'hard', 'soft'} (default='hard')
         If 'hard', uses predicted class labels for majority rule voting.
         Else if 'soft', predicts the class label based on the argmax of
@@ -47,22 +48,33 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         - `verbose=2`: Prints info about the parameters of the clf being fitted
         - `verbose>2`: Changes `verbose` param of the underlying clf to
            self.verbose - 2
-    refit : bool (default: True)
+    use_clones : bool (default: True)
+        Clones the classifiers for stacking classification if True (default)
+        or else uses the original ones, which will be refitted on the dataset
+        upon calling the `fit` method. Hence, if use_clones=True, the original
+        input classifiers will remain unmodified upon using the
+        StackingClassifier's `fit` method.
+        Setting `use_clones=False` is
+        recommended if you are working with estimators that are supporting
+        the scikit-learn fit/predict API interface but are not compatible
+        to scikit-learn's `clone` function.
+    fit_base_estimators : bool (default: True)
         Refits classifiers in `clfs` if True; uses references to the `clfs`,
         otherwise (assumes that the classifiers were already fit).
-        Note: refit=False is incompatible to mist scikit-learn wrappers!
+        Note: fit_base_estimators=False will enforce use_clones to be False,
+        and is incompatible to most scikit-learn wrappers!
         For instance, if any form of cross-validation is performed
         this would require the re-fitting classifiers to training folds, which
-        would raise a NotFitterError if refit=False.
+        would raise a NotFitterError if fit_base_estimators=False.
         (New in mlxtend v0.6.)
 
     Attributes
     ----------
     classes_ : array-like, shape = [n_predictions]
     clf : array-like, shape = [n_predictions]
-        The unmodified input classifiers
+        The input classifiers; may be overwritten if `use_clones=False`
     clf_ : array-like, shape = [n_predictions]
-        Fitted clones of the input classifiers
+        Fitted input classifiers; clones if `use_clones=True`
 
     Examples
     --------
@@ -96,15 +108,19 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     For more usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/classifier/EnsembleVoteClassifier/
     """
+
     def __init__(self, clfs, voting='hard',
-                 weights=None, verbose=0, refit=True):
+                 weights=None, verbose=0,
+                 use_clones=True,
+                 fit_base_estimators=True):
 
         self.clfs = clfs
         self.named_clfs = {key: value for key, value in _name_estimators(clfs)}
         self.voting = voting
         self.weights = weights
         self.verbose = verbose
-        self.refit = refit
+        self.use_clones = use_clones
+        self.fit_base_estimators = fit_base_estimators
 
     def fit(self, X, y, sample_weight=None):
         """Learn weight coefficients from training data for each classifier.
@@ -146,12 +162,17 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.le_.fit(y)
         self.classes_ = self.le_.classes_
 
-        if not self.refit:
-            self.clfs_ = [clf for clf in self.clfs]
+        if not self.fit_base_estimators:
+            warnings.warn("fit_base_estimators=False "
+                          "enforces use_clones to be `False`")
+            self.use_clones = False
 
+        if self.use_clones:
+            self.clfs_ = clone(self.clfs)
         else:
-            self.clfs_ = [clone(clf) for clf in self.clfs]
+            self.clfs_ = self.clfs
 
+        if self.fit_base_estimators:
             if self.verbose > 0:
                 print("Fitting %d classifiers..." % (len(self.clfs)))
 
@@ -204,8 +225,8 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             predictions = self._predict(X)
 
             maj = np.apply_along_axis(lambda x:
-                                      np.argmax(np.bincount(x,
-                                                weights=self.weights)),
+                                      np.argmax(np.bincount(
+                                          x, weights=self.weights)),
                                       axis=1,
                                       arr=predictions)
 
@@ -266,15 +287,15 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                 for key, value in six.iteritems(step.get_params(deep=True)):
                     out['%s__%s' % (name, key)] = value
 
-            for key, value in six.iteritems(super(EnsembleVoteClassifier,
-                                            self).get_params(deep=False)):
+            for key, value in six.iteritems(
+                    super(EnsembleVoteClassifier, self).get_params(deep=False)):
                 out['%s' % key] = value
             return out
 
     def _predict(self, X):
         """Collect results from clf.predict calls."""
 
-        if self.refit:
+        if self.fit_base_estimators:
             return np.asarray([clf.predict(X) for clf in self.clfs_]).T
         else:
             return np.asarray([self.le_.transform(clf.predict(X))

@@ -26,10 +26,8 @@ columns_ordered = ['antecedents', 'consequents',
 
 def test_default():
     res_df = association_rules(df_freq_items)
-    res_df['antecedents'] = res_df['antecedents'].apply(
-        lambda x: str(frozenset(x)))
-    res_df['consequents'] = res_df['consequents'].apply(
-        lambda x: str(frozenset(x)))
+    res_df['antecedents'] = np.vectorize(str)(res_df['antecedents'])
+    res_df['consequents'] = np.vectorize(str)(res_df['consequents'])
     res_df.sort_values(columns_ordered, inplace=True)
     res_df.reset_index(inplace=True, drop=True)
 
@@ -46,10 +44,10 @@ def test_default():
         columns=columns_ordered
     )
 
-    expect['antecedents'] = expect['antecedents'].apply(
-        lambda x: str(frozenset(x)))
-    expect['consequents'] = expect['consequents'].apply(
-        lambda x: str(frozenset(x)))
+    expect['antecedents'] = np.vectorize(str)(
+        np.vectorize(frozenset)(expect['antecedents']))
+    expect['consequents'] = np.vectorize(str)(
+        np.vectorize(frozenset)(expect['consequents']))
     expect.sort_values(columns_ordered, inplace=True)
     expect.reset_index(inplace=True, drop=True)
 
@@ -68,8 +66,8 @@ def test_datatypes():
     # check if association_rule converts it internally
     # back to frozensets
     df_freq_items_copy = df_freq_items.copy()
-    df_freq_items_copy['itemsets'] = df_freq_items_copy['itemsets']\
-        .apply(lambda x: set(x))
+    df_freq_items_copy['itemsets'] = np.vectorize(set)(
+        df_freq_items_copy['itemsets'])
 
     res_df = association_rules(df_freq_items)
     for i in res_df['antecedents']:

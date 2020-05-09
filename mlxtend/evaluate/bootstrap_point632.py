@@ -9,6 +9,7 @@
 import numpy as np
 from .bootstrap_outofbag import BootstrapOutOfBag
 from sklearn.base import clone
+from itertools import product
 
 
 def _check_arrays(X, y=None):
@@ -29,7 +30,7 @@ def _check_arrays(X, y=None):
 
 
 def no_information_rate(targets, predictions, loss_fn):
-    combinations = np.array(np.meshgrid(targets, predictions)).reshape(-1, 2)
+    combinations = np.array(list(product(targets, predictions)))
     return loss_fn(combinations[:, 0], combinations[:, 1])
 
 

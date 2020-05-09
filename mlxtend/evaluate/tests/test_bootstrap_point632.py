@@ -52,14 +52,14 @@ def test_632plus():
                                       method='.632+')
     acc = np.mean(scores)
     assert len(scores == 200)
-    assert np.round(acc, 5) == 0.96528, np.round(acc, 5)
+    assert np.round(acc, 5) == 0.96168, np.round(acc, 5)
 
     tree2 = DecisionTreeClassifier(random_state=123, max_depth=1)
     scores = bootstrap_point632_score(tree2, X, y, random_seed=123,
                                       method='.632+')
     acc = np.mean(scores)
     assert len(scores == 200)
-    assert np.round(acc, 5) == 0.65034, np.round(acc, 5)
+    assert np.round(acc, 5) == 0.67167, np.round(acc, 5)
 
 
 def test_custom_accuracy():

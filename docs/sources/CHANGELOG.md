@@ -24,6 +24,7 @@ The CHANGELOG for the current development version is available at
 ##### Changes
 
 - Implemented both `use_clones` and `fit_base_estimators` (previously `refit` in `EnsembleVoteClassifier`) for `EnsembleVoteClassifier` and `StackingClassifier`. ([#670](https://github.com/rasbt/mlxtend/pull/670) via [Katrina Ni](https://github.com/nilichen))
+- Switched to using raw strings for regex in `mlxtend.text` to prevent deprecation warning in Python 3.8 ([#688](https://github.com/rasbt/mlxtend/pull/688))
 
 ##### Bug Fixes
 

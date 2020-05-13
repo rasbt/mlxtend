@@ -83,7 +83,7 @@ def generalize_names(name, output_sep=' ', firstname_output_letters=1):
                    if x in string.ascii_letters + ' ')
 
     # get first and last name if applicable
-    m = re.match('(?P<first>\w+)\W+(?P<last>\w+)', name)
+    m = re.match(r'(?P<first>\w+)\W+(?P<last>\w+)', name)
     if m:
         output = '%s%s%s' % (m.group(last),
                              output_sep,

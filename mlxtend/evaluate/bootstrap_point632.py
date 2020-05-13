@@ -9,6 +9,7 @@
 import numpy as np
 from .bootstrap_outofbag import BootstrapOutOfBag
 from sklearn.base import clone
+from itertools import product
 
 
 def _check_arrays(X, y=None):
@@ -29,7 +30,7 @@ def _check_arrays(X, y=None):
 
 
 def no_information_rate(targets, predictions, loss_fn):
-    combinations = np.array(np.meshgrid(targets, predictions)).reshape(-1, 2)
+    combinations = np.array(list(product(targets, predictions)))
     return loss_fn(combinations[:, 0], combinations[:, 1])
 
 
@@ -164,18 +165,21 @@ def bootstrap_point632_score(estimator, X, y, n_splits=200,
             acc = test_acc
 
         else:
-            train_acc = scoring_func(y[train], cloned_est.predict(X[train]))
+            test_err = 1 - test_acc
+            train_err = 1 - scoring_func(y[train],
+                                         cloned_est.predict(X[train]))
             if method == '.632+':
-                gamma = no_information_rate(y,
-                                            cloned_est.predict(X),
-                                            scoring_func)
-                R = (-(test_acc - train_acc)) / (gamma - (1 - test_acc))
-                weight = 0.632 / (1-0.368 * R)
+                gamma = 1 - (no_information_rate(
+                    y,
+                    cloned_est.predict(X),
+                    scoring_func))
+                R = (test_err - train_err) / (gamma - train_err)
+                weight = 0.632 / (1 - 0.368*R)
 
             else:
                 weight = 0.632
 
-            acc = weight*test_acc + (1. - weight)*train_acc
+            acc = 1 - (weight*test_err + (1. - weight)*train_err)
 
         scores[cnt] = acc
         cnt += 1

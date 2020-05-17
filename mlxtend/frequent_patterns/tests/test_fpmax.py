@@ -74,3 +74,18 @@ class TestEx2(unittest.TestCase, FPTestEx2):
 class TestEx3(unittest.TestCase, FPTestEx3All):
     def setUp(self):
         FPTestEx3All.setUp(self, fpmax)
+
+
+class TestEx4(unittest.TestCase):
+    def setUp(self):
+        self.df = pd.DataFrame(
+            [[1, 1, 0], [1, 0, 1], [0, 0, 1]], columns=['a', 'b', 'c'])
+        self.fpalgo = fpmax
+
+    def test_output(self):
+        res_df = self.fpalgo(self.df, min_support=0.01, use_colnames=True)
+        expect = pd.DataFrame([[0.3333333333333333, frozenset(['a', 'b'])],
+                               [0.3333333333333333, frozenset(['a', 'c'])]],
+                              columns=['support', 'itemsets'])
+
+        compare_dataframes(res_df, expect)

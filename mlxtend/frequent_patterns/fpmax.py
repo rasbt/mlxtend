@@ -100,6 +100,8 @@ def fpmax_step(tree, minsup, mfit, colnames, max_len, verbose):
             mfit.insert_itemset(largest_set)
             if max_len is None or len(largest_set) <= max_len:
                 support = tree.root.count
+                if len(items) > 0:
+                    support = min([tree.nodes[i][0].count for i in items])
                 yield support, largest_set
 
     if verbose:

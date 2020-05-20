@@ -30,6 +30,7 @@ The CHANGELOG for the current development version is available at
 
 - Fixes axis DeprecationWarning in matplotlib v3.1.0 and newer. ([#673](https://github.com/rasbt/mlxtend/pull/673))
 - Fixes an issue with using `meshgrid` in `no_information_rate` function used by the `bootstrap_point632_score` function for the .632+ estimate. ([#688](https://github.com/rasbt/mlxtend/pull/688))
+- Fixes an issue in `fpmax` that could lead to incorrect support values. ([#692](https://github.com/rasbt/mlxtend/pull/692) via [Steve Harenberg](https://github.com/harenbergsd))
 
 ### Version 0.17.2 (02-24-2020)
 

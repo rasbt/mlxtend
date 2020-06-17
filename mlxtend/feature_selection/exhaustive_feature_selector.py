@@ -239,7 +239,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             raise AttributeError('min_features must be <= max_features')
 
         candidates = chain.from_iterable(
-            combinations(range(X_.shape[1]), r=i) for i in 
+            combinations(range(X_.shape[1]), r=i) for i in
             range(self.min_features, self.max_features + 1)
         )
 

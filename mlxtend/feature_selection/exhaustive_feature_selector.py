@@ -238,9 +238,10 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         if self.max_features < self.min_features:
             raise AttributeError('min_features must be <= max_features')
 
-        candidates = chain(*((combinations(range(X_.shape[1]), r=i))
-                           for i in range(self.min_features,
-                                          self.max_features + 1)))
+        candidates = chain.from_iterable(
+            combinations(range(X_.shape[1]), r=i) for i in
+            range(self.min_features, self.max_features + 1)
+        )
 
         def ncr(n, r):
             """Return the number of combinations of length r from n items.

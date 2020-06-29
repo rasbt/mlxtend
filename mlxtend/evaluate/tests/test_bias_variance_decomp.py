@@ -96,6 +96,6 @@ def test_mse_bagging():
             loss='mse',
             random_seed=123)
 
-    assert round(avg_expected_loss, 3) == 18.622
-    assert round(avg_bias, 3) == 15.378
-    assert round(avg_var, 3) == 3.244
+    assert round(avg_expected_loss, 2) == 18.62
+    assert round(avg_bias, 2) == 15.38
+    assert round(avg_var, 2) == 3.24

@@ -16,6 +16,7 @@ from mlxtend.regressor import StackingCVRegressor
 from mlxtend.utils import assert_raises
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import Ridge, Lasso
+from sklearn.neighbors import KNeighborsRegressor
 from sklearn.svm import SVR
 from sklearn.model_selection import GridSearchCV, train_test_split, KFold
 from sklearn.base import clone
@@ -316,41 +317,46 @@ def test_weight_ones():
 
 
 def test_unsupported_regressor():
+    # including regressor that does not support
+    # sample_weight should raise error
     lr = LinearRegression()
     svr_lin = SVR(kernel='linear', gamma='auto')
     ridge = Ridge(random_state=1)
-    lasso = Lasso(random_state=1)
+    knn = KNeighborsRegressor()
     svr_rbf = SVR(kernel='rbf', gamma='auto')
-    stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge, lasso],
+    stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge, knn],
                                 meta_regressor=svr_rbf)
     with pytest.raises(TypeError):
         stack.fit(X1, y, sample_weight=w).predict(X1)
 
 
 def test_unsupported_meta_regressor():
+    # meta regressor with no support for
+    # sample_weight should raise error
     lr = LinearRegression()
     svr_lin = SVR(kernel='linear', gamma='auto')
     ridge = Ridge(random_state=1)
-    lasso = Lasso()
+    knn = KNeighborsRegressor()
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
-                                meta_regressor=lasso)
+                                meta_regressor=knn)
 
     with pytest.raises(TypeError):
         stack.fit(X1, y, sample_weight=w).predict(X1)
 
 
 def test_weight_unsupported_with_no_weight():
-    # should be okay since we do not pass weight
+    # pass no weight to regressors with no weight support
+    # should not be a problem
     lr = LinearRegression()
     svr_lin = SVR(kernel='linear', gamma='auto')
     ridge = Ridge(random_state=1)
-    lasso = Lasso()
-    stack = StackingCVRegressor(regressors=[svr_lin, lr, lasso],
+    knn = KNeighborsRegressor()
+    stack = StackingCVRegressor(regressors=[svr_lin, lr, knn],
                                 meta_regressor=ridge)
     stack.fit(X1, y).predict(X1)
 
     stack = StackingCVRegressor(regressors=[svr_lin, lr, ridge],
-                                meta_regressor=lasso)
+                                meta_regressor=knn)
     stack.fit(X1, y).predict(X1)
 
 

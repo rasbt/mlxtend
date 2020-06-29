@@ -621,19 +621,8 @@ def test_clone_params_fail():
         def _predict(self, X):
             return np.where(self._net_input(X) < 0.0, 0, 1)
 
-    if sys.version_info >= (3, 0):
-        object_ = ("'<class 'test_sequential_feature_selector."
-                   "test_clone_params_fail.<locals>.Perceptron'>'")
-        objtype = 'class'
-    else:
-        objtype = 'type'
-        object_ = ("'<class 'test_sequential_feature_selector.Perceptron'>'")
-
-    expect = ("Cannot clone object"
-              " %s"
-              " (type <%s 'type'>): it does not seem to be a"
-              " scikit-learn estimator as it does not"
-              " implement a 'get_params' methods.") % (object_, objtype)
+    expect = ("Cannot clone object. You should provide an "
+              "instance of scikit-learn estimator instead of a class.")
 
     assert_raises(TypeError,
                   expect,

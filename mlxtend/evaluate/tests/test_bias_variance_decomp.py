@@ -73,9 +73,9 @@ def test_mse_tree():
             loss='mse',
             random_seed=123)
 
-    assert round(avg_expected_loss, 3) == 31.917
-    assert round(avg_bias, 3) == 13.814
-    assert round(avg_var, 3) == 18.102
+    assert round(avg_expected_loss, 3) == 31.756
+    assert round(avg_bias, 3) == 13.856
+    assert round(avg_var, 3) == 17.900
 
 
 def test_mse_bagging():
@@ -96,6 +96,6 @@ def test_mse_bagging():
             loss='mse',
             random_seed=123)
 
-    assert round(avg_expected_loss, 3) == 18.593
-    assert round(avg_bias, 3) == 15.354
-    assert round(avg_var, 3) == 3.239
+    assert round(avg_expected_loss, 3) == 18.622
+    assert round(avg_bias, 3) == 15.378
+    assert round(avg_var, 3) == 3.244

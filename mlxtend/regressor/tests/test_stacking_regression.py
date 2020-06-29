@@ -11,7 +11,7 @@ from mlxtend.utils import assert_raises
 from mlxtend.regressor import StackingRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import Ridge
-from sklearn.linear_model import Lasso
+from sklearn.neighbors import KNeighborsRegressor
 from sklearn.svm import SVR
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import GridSearchCV
@@ -109,8 +109,8 @@ def test_weight_unsupported_regressor():
     svr_lin = SVR(kernel='linear', gamma='auto')
     ridge = Ridge(random_state=1)
     svr_rbf = SVR(kernel='rbf', gamma='auto')
-    lasso = Lasso(random_state=1)
-    stregr = StackingRegressor(regressors=[svr_lin, lr, ridge, lasso],
+    knn = KNeighborsRegressor()
+    stregr = StackingRegressor(regressors=[svr_lin, lr, ridge, knn],
                                meta_regressor=svr_rbf)
 
     with pytest.raises(TypeError):
@@ -123,9 +123,9 @@ def test_weight_unsupported_meta():
     lr = LinearRegression()
     svr_lin = SVR(kernel='linear', gamma='auto')
     ridge = Ridge(random_state=1)
-    lasso = Lasso(random_state=1)
+    knn = KNeighborsRegressor()
     stregr = StackingRegressor(regressors=[svr_lin, lr, ridge],
-                               meta_regressor=lasso)
+                               meta_regressor=knn)
 
     with pytest.raises(TypeError):
         stregr.fit(X1, y, sample_weight=w).predict(X1)
@@ -138,13 +138,13 @@ def test_weight_unsupported_with_no_weight():
     svr_lin = SVR(kernel='linear', gamma='auto')
     ridge = Ridge(random_state=1)
     svr_rbf = SVR(kernel='rbf', gamma='auto')
-    lasso = Lasso(random_state=1)
-    stregr = StackingRegressor(regressors=[svr_lin, lr, ridge, lasso],
+    knn = KNeighborsRegressor()
+    stregr = StackingRegressor(regressors=[svr_lin, lr, ridge, knn],
                                meta_regressor=svr_rbf)
     stregr.fit(X1, y).predict(X1)
 
     stregr = StackingRegressor(regressors=[svr_lin, lr, ridge],
-                               meta_regressor=lasso)
+                               meta_regressor=knn)
     stregr.fit(X1, y).predict(X1)
 
 

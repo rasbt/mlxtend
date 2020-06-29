@@ -3,7 +3,7 @@ build: false
 environment:
   matrix:
     - PYTHON_VERSION: 3.8
-      MINICONDA: C:/Miniconda38-x64
+      MINICONDA: C:/Miniconda37-x64
 init:
   - ECHO %PYTHON_VERSION% %MINICONDA%
   - ECHO conda --version
@@ -15,7 +15,7 @@ install:
   - conda info -a
   - conda create -q -n test-environment python=%PYTHON_VERSION% numpy scipy scikit-learn pandas joblib pytest
   - activate test-environment
-  - conda install -c conda-forge dlib=19.20
+  - conda install -c conda-forge dlib=19.17
   - conda install imageio
   - conda install scikit-image
 

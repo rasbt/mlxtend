@@ -124,7 +124,7 @@ def test_scoring():
     assert np.round(f1, 2) == 1.0, f1
 
     # test predict_proba
-    scores = bootstrap_point632_score(lr, X[:100], y[:100],
+    scores = bootstrap_point632_score(lr, X[:100], y[:100].ravel(),
                                       scoring_func=roc_auc_score,
                                       predict_proba=True,
                                       random_seed=123)
@@ -134,7 +134,7 @@ def test_scoring():
 
     with pytest.raises(RuntimeError):
         delattr(lr, 'predict_proba')
-        scores = bootstrap_point632_score(lr, X[:100], y[:100],
+        scores = bootstrap_point632_score(lr, X[:100], y[:100].ravel(),
                                           scoring_func=roc_auc_score,
                                           predict_proba=True,
                                           random_seed=123)

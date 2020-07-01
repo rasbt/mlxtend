@@ -4,6 +4,7 @@
 #
 # License: BSD 3 clause
 
+import pytest
 import numpy as np
 from mlxtend.evaluate import bootstrap_point632_score
 from mlxtend.utils import assert_raises

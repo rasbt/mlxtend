@@ -132,7 +132,7 @@ def test_scoring():
 
 
 def test_scoring_proba():
-    from sklearn.metrics import f1_score, roc_auc_score
+    from sklearn.metrics import roc_auc_score
     lr = LogisticRegression(solver='liblinear', multi_class='ovr')
 
     # test predict_proba

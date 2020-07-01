@@ -130,6 +130,7 @@ def test_scoring():
     assert len(scores == 200)
     assert np.round(f1, 2) == 1.0, f1
 
+
 def test_scoring_proba():
     from sklearn.metrics import f1_score, roc_auc_score
     lr = LogisticRegression(solver='liblinear', multi_class='ovr')

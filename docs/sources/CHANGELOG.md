@@ -19,7 +19,7 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
-- Add `predict_proba` kwarg to bootstrap methods, to allow bootstrapping of scoring functions that take in probability values. ([#670](https://github.com/rasbt/mlxtend/pull/670) via [Adam Li](https://github.com/adam2392))
+- Add `predict_proba` kwarg to bootstrap methods, to allow bootstrapping of scoring functions that take in probability values. ([#700](https://github.com/rasbt/mlxtend/pull/700) via [Adam Li](https://github.com/adam2392))
 
 ##### Changes
 

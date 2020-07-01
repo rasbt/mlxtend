@@ -186,9 +186,12 @@ def bootstrap_point632_score(estimator, X, y, n_splits=200,
         # for binary class uses the last column
         predicted_test_val = predict_func(X[test])
         predicted_train_val = predict_func(X[train])
-        if predict_proba and len(np.unique(y)) == 2:
-            predicted_train_val = predicted_train_val[:, 1]
-            predicted_test_val = predicted_test_val[:, 1]
+        if predict_proba:
+            len_uniq = np.unique(y)
+
+            if len(len_uniq) == 2:
+                predicted_train_val = predicted_train_val[:, 1]
+                predicted_test_val = predicted_test_val[:, 1]
 
         test_acc = scoring_func(y[test], predicted_test_val)
 

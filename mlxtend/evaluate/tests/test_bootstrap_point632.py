@@ -113,7 +113,7 @@ def test_allowed_methods():
 
 
 def test_scoring():
-    from sklearn.metrics import f1_score
+    from sklearn.metrics import f1_score, roc_auc_score
     lr = LogisticRegression(solver='liblinear', multi_class='ovr')
     scores = bootstrap_point632_score(lr, X[:100], y[:100],
                                       scoring_func=f1_score,
@@ -121,3 +121,19 @@ def test_scoring():
     f1 = np.mean(scores)
     assert len(scores == 200)
     assert np.round(f1, 2) == 1.0, f1
+
+    # test predict_proba
+    scores = bootstrap_point632_score(lr, X[:100], y[:100],
+                                      scoring_func=roc_auc_score,
+                                      predict_proba=True,
+                                      random_seed=123)
+    roc_auc = np.mean(scores)
+    assert len(scores == 200)
+    assert np.round(roc_auc, 2) == 1.0, roc_auc
+
+    with pytest.raises(RuntimeError):
+        delattr(lr, 'predict_proba')
+        scores = bootstrap_point632_score(lr, X[:100], y[:100],
+                                          scoring_func=roc_auc_score,
+                                          predict_proba=True,
+                                          random_seed=123)

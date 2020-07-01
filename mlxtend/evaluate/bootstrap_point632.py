@@ -170,7 +170,7 @@ def bootstrap_point632_score(estimator, X, y, n_splits=200,
     if not predict_proba:
         predict_func = cloned_est.predict
     else:
-        if not getattr(cloned_est, 'predict_proba'):
+        if not getattr(cloned_est, 'predict_proba', None):
             raise RuntimeError(f'The estimator {cloned_est} does not '
                                f'support predicting probabilities via '
                                f'`predict_proba` function.')
@@ -182,14 +182,22 @@ def bootstrap_point632_score(estimator, X, y, n_splits=200,
     for train, test in oob.split(X):
         cloned_est.fit(X[train], y[train])
 
-        test_acc = scoring_func(y[test], predict_func(X[test]))
+        # get the prediction probability
+        # for binary class uses the last column
+        predicted_test_val = predict_func(X[test])
+        predicted_train_val = predict_func(X[train])
+        if predict_proba and len(np.unique(y)) == 2:
+            predicted_train_val = predicted_train_val[:, 1]
+            predicted_test_val = predicted_test_val[:, 1]
+
+        test_acc = scoring_func(y[test], predicted_test_val)
 
         if method == 'oob':
             acc = test_acc
 
         else:
             test_err = 1 - test_acc
-            train_err = 1 - scoring_func(y[train], predict_func(X[train]))
+            train_err = 1 - scoring_func(y[train], predicted_train_val)
             if method == '.632+':
                 gamma = 1 - (no_information_rate(
                     y,

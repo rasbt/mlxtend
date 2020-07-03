@@ -5,13 +5,21 @@
 # License: BSD 3 clause
 
 import numpy as np
-from mlxtend.evaluate import bootstrap_point632_score
-from mlxtend.utils import assert_raises
-from mlxtend.data import iris_data
+import pytest
+from sklearn.base import BaseEstimator
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 
+from mlxtend.data import iris_data
+from mlxtend.evaluate import bootstrap_point632_score
+from mlxtend.utils import assert_raises
+
 X, y = iris_data()
+
+
+class FakeClassifier(BaseEstimator):
+    def __init__(self):
+        pass
 
 
 def test_defaults():
@@ -63,10 +71,10 @@ def test_632plus():
 
 
 def test_custom_accuracy():
-
     def accuracy2(targets, predictions):
         return sum([i == j for i, j in
                     zip(targets, predictions)]) / len(targets)
+
     lr = LogisticRegression(solver='liblinear', multi_class='ovr')
     scores = bootstrap_point632_score(lr, X, y,
                                       random_seed=123,
@@ -121,3 +129,24 @@ def test_scoring():
     f1 = np.mean(scores)
     assert len(scores == 200)
     assert np.round(f1, 2) == 1.0, f1
+
+
+def test_scoring_proba():
+    from sklearn.metrics import roc_auc_score
+    lr = LogisticRegression(solver='liblinear', multi_class='ovr')
+
+    # test predict_proba
+    scores = bootstrap_point632_score(lr, X[:100], y[:100],
+                                      scoring_func=roc_auc_score,
+                                      predict_proba=True,
+                                      random_seed=123)
+    roc_auc = np.mean(scores)
+    assert len(scores == 200)
+    assert np.round(roc_auc, 2) == 1.0, roc_auc
+
+    with pytest.raises(RuntimeError):
+        clf = FakeClassifier()
+        scores = bootstrap_point632_score(clf, X[:100], y[:100],
+                                          scoring_func=roc_auc_score,
+                                          predict_proba=True,
+                                          random_seed=123)

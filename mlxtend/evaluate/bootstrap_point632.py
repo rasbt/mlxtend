@@ -44,6 +44,7 @@ def mse(targets, predictions):
 
 def bootstrap_point632_score(estimator, X, y, n_splits=200,
                              method='.632', scoring_func=None,
+                             predict_proba=False,
                              random_seed=None,
                              clone_estimator=True):
     """
@@ -92,6 +93,17 @@ def bootstrap_point632_score(estimator, X, y, n_splits=200,
         If none, uses classification accuracy if the
         estimator is a classifier and mean squared error
         if the estimator is a regressor.
+
+    predict_proba : bool
+        Whether to use the `predict_proba` function for the
+        `estimator` argument. This is to be used in conjunction
+        with `scoring_func` which takes in probability values
+        instead of actual predictions.
+        For example, if the scoring_func is
+        :meth:`sklearn.metrics.roc_auc_score`, then use
+        `predict_proba=True`.
+        Note that this requires `estimator` to have
+        `predict_proba` method implemented.
 
     random_seed : int (default=None)
         If int, random_seed is the seed used by
@@ -153,21 +165,42 @@ def bootstrap_point632_score(estimator, X, y, n_splits=200,
             raise AttributeError('Estimator type undefined.'
                                  'Please provide a scoring_func argument.')
 
+    # determine which prediction function to use
+    # either label, or probability prediction
+    if not predict_proba:
+        predict_func = cloned_est.predict
+    else:
+        if not getattr(cloned_est, 'predict_proba', None):
+            raise RuntimeError(f'The estimator {cloned_est} does not '
+                               f'support predicting probabilities via '
+                               f'`predict_proba` function.')
+        predict_func = cloned_est.predict_proba
+
     oob = BootstrapOutOfBag(n_splits=n_splits, random_seed=random_seed)
     scores = np.empty(dtype=np.float, shape=(n_splits,))
     cnt = 0
     for train, test in oob.split(X):
         cloned_est.fit(X[train], y[train])
 
-        test_acc = scoring_func(y[test], cloned_est.predict(X[test]))
+        # get the prediction probability
+        # for binary class uses the last column
+        predicted_test_val = predict_func(X[test])
+        predicted_train_val = predict_func(X[train])
+        if predict_proba:
+            len_uniq = np.unique(y)
+
+            if len(len_uniq) == 2:
+                predicted_train_val = predicted_train_val[:, 1]
+                predicted_test_val = predicted_test_val[:, 1]
+
+        test_acc = scoring_func(y[test], predicted_test_val)
 
         if method == 'oob':
             acc = test_acc
 
         else:
             test_err = 1 - test_acc
-            train_err = 1 - scoring_func(y[train],
-                                         cloned_est.predict(X[train]))
+            train_err = 1 - scoring_func(y[train], predicted_train_val)
             if method == '.632+':
                 gamma = 1 - (no_information_rate(
                     y,

@@ -114,7 +114,8 @@ def heatmap(matrix,
                         s=cell_text,
                         va='center',
                         ha='center',
-                        color="white" if normed_matrix[i, j] < 0.5 else "black")
+                        color="white" if normed_matrix[i, j] < 0.5
+                              else "black")
 
     if row_names is not None:
         tick_marks = np.arange(len(row_names))

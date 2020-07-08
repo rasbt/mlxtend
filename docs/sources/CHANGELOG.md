@@ -20,6 +20,7 @@ The CHANGELOG for the current development version is available at
 ##### New Features
 
 - Add `predict_proba` kwarg to bootstrap methods, to allow bootstrapping of scoring functions that take in probability values. ([#700](https://github.com/rasbt/mlxtend/pull/700) via [Adam Li](https://github.com/adam2392))
+- Add a `cell_values` parameter to `mlxtend.plotting.heatmap()` to optionally suppress cell annotations by setting `cell_values=False`. ([#703](https://github.com/rasbt/mlxtend/pull/700)
 
 ##### Changes
 

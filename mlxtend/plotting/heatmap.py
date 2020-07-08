@@ -19,6 +19,7 @@ def heatmap(matrix,
             row_names=None,
             column_names=None,
             column_name_rotation=45,
+            cell_values=True,
             cell_fmt='.2f',
             cell_font_size=None):
     """Plot a heatmap via matplotlib.
@@ -52,11 +53,14 @@ def heatmap(matrix,
     column_name_rotation : int (default: 45)
         Number of degrees for rotating column x-tick labels.
 
+    cell_values : bool (default: True)
+        Plots cell values if True.
+
     cell_fmt : string (default: '.2f')
-        Format specification for cell values.
+        Format specification for cell values (if `cell_values=True`)
 
     cell_font_size : int (default: None)
-        Font size for cell values
+        Font size for cell values (if `cell_values=True`)
 
     Returns
     -----------
@@ -99,17 +103,18 @@ def heatmap(matrix,
 
     normed_matrix = matrix.astype('float') / matrix.max()
 
-    for i in range(matrix.shape[0]):
-        for j in range(matrix.shape[1]):
-            cell_text = format(matrix[i, j], cell_fmt)
+    if cell_values:
+        for i in range(matrix.shape[0]):
+            for j in range(matrix.shape[1]):
+                cell_text = format(matrix[i, j], cell_fmt)
 
-            ax.text(x=j,
-                    y=i,
-                    size=cell_font_size,
-                    s=cell_text,
-                    va='center',
-                    ha='center',
-                    color="white" if normed_matrix[i, j] < 0.5 else "black")
+                ax.text(x=j,
+                        y=i,
+                        size=cell_font_size,
+                        s=cell_text,
+                        va='center',
+                        ha='center',
+                        color="white" if normed_matrix[i, j] < 0.5 else "black")
 
     if row_names is not None:
         tick_marks = np.arange(len(row_names))

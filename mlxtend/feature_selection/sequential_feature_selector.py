@@ -26,7 +26,7 @@ from joblib import Parallel, delayed
 def _calc_score(selector, X, y, indices, groups=None, **fit_params):
     if selector.cv:
         scores = cross_val_score(selector.est_,
-                                 X[:, indices], y,
+                                 X, y,
                                  groups=groups,
                                  cv=selector.cv,
                                  scoring=selector.scorer,
@@ -34,8 +34,8 @@ def _calc_score(selector, X, y, indices, groups=None, **fit_params):
                                  pre_dispatch=selector.pre_dispatch,
                                  fit_params=fit_params)
     else:
-        selector.est_.fit(X[:, indices], y, **fit_params)
-        scores = np.array([selector.scorer(selector.est_, X[:, indices], y)])
+        selector.est_.fit(X, y, **fit_params)
+        scores = np.array([selector.scorer(selector.est_, X, y)])
     return indices, scores
 
 
@@ -398,7 +398,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             if self.fixed_features is not None:
                 k_idx = self.fixed_features_
                 k = len(k_idx)
-                k_idx, k_score = _calc_score(self, X_, y, k_idx,
+                k_idx, k_score = _calc_score(self, X[:, k_idx], y, k_idx,
                                              groups=groups, **fit_params)
                 self.subsets_[k] = {
                     'feature_idx': k_idx,
@@ -414,7 +414,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 k_to_select = min_k
             k_idx = tuple(orig_set)
             k = len(k_idx)
-            k_idx, k_score = _calc_score(self, X_, y, k_idx,
+            k_idx, k_score = _calc_score(self, X[:, k_idx], y, k_idx,
                                          groups=groups, **fit_params)
             self.subsets_[k] = {
                 'feature_idx': k_idx,
@@ -601,7 +601,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
                                 pre_dispatch=self.pre_dispatch)
             work = parallel(delayed(_calc_score)
-                            (self, X, y,
+                            (self, X[:, tuple(subset | {feature})], y,
                              tuple(subset | {feature}),
                              groups=groups, **fit_params)
                             for feature in remaining
@@ -630,7 +630,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             n_jobs = min(self.n_jobs, features)
             parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose,
                                 pre_dispatch=self.pre_dispatch)
-            work = parallel(delayed(_calc_score)(self, X, y, p,
+            work = parallel(delayed(_calc_score)(self, X[:, p], y, p,
                                                  groups=groups, **fit_params)
                             for p in combinations(feature_set, r=n - 1)
                             if not fixed_feature or

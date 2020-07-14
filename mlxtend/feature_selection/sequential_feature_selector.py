@@ -398,7 +398,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             if self.fixed_features is not None:
                 k_idx = self.fixed_features_
                 k = len(k_idx)
-                k_idx, k_score = _calc_score(self, X[:, k_idx], y, k_idx,
+                k_idx, k_score = _calc_score(self, X_[:, k_idx], y, k_idx,
                                              groups=groups, **fit_params)
                 self.subsets_[k] = {
                     'feature_idx': k_idx,
@@ -414,7 +414,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 k_to_select = min_k
             k_idx = tuple(orig_set)
             k = len(k_idx)
-            k_idx, k_score = _calc_score(self, X[:, k_idx], y, k_idx,
+            k_idx, k_score = _calc_score(self, X_[:, k_idx], y, k_idx,
                                          groups=groups, **fit_params)
             self.subsets_[k] = {
                 'feature_idx': k_idx,

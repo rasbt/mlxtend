@@ -78,8 +78,6 @@ def bias_variance_decomp(estimator, X_train, y_train, X_test, y_test,
                                                axis=0,
                                                arr=all_pred)
 
-        avg_expected_loss = (main_predictions != y_test).sum()/y_test.size
-
         avg_expected_loss = np.apply_along_axis(lambda x:
                                                 (x != y_test).mean(),
                                                 axis=1,

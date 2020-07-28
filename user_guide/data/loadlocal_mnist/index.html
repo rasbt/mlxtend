@@ -1029,14 +1029,18 @@
 </code></pre>
 <h2 id="example-1-part-2-loading-mnist-into-numpy-arrays">Example 1 Part 2 - Loading MNIST into NumPy Arrays</h2>
 <pre><code class="python">from mlxtend.data import loadlocal_mnist
+import platform
 </code></pre>
 
-<pre><code class="python">
+<pre><code class="python">if not platform.system() == 'Windows':
+    X, y = loadlocal_mnist(
+            images_path='train-images-idx3-ubyte', 
+            labels_path='train-labels-idx1-ubyte')
 
-X, y = loadlocal_mnist(
-        images_path='/Users/Sebastian/Desktop/train-images-idx3-ubyte', 
-        labels_path='/Users/Sebastian/Desktop/train-labels-idx1-ubyte')
-
+else:
+    X, y = loadlocal_mnist(
+            images_path='train-images.idx3-ubyte', 
+            labels_path='train-labels.idx1-ubyte')
 </code></pre>
 
 <pre><code class="python">print('Dimensions: %s x %s' % (X.shape[0], X.shape[1]))
@@ -1102,9 +1106,9 @@ labels: [0 1 2 3 4 5 6 7 8 9]
 Class distribution: [5923 6742 5958 6131 5842 5421 5918 6265 5851 5949]
 </code></pre>
 <h3 id="store-as-csv-files">Store as CSV Files</h3>
-<pre><code class="python">np.savetxt(fname='/Users/Sebastian/Desktop/images.csv', 
+<pre><code class="python">np.savetxt(fname='images.csv', 
            X=X, delimiter=',', fmt='%d')
-np.savetxt(fname='/Users/Sebastian/Desktop/labels.csv', 
+np.savetxt(fname='labels.csv', 
            X=y, delimiter=',', fmt='%d')
 </code></pre>
 
@@ -1143,7 +1147,7 @@ np.savetxt(fname='/Users/Sebastian/Desktop/labels.csv',
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

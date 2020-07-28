@@ -1435,10 +1435,10 @@ svm = SVC(C=0.5, kernel='linear')
 svm.fit(X, y)
 </code></pre>
 
-<pre><code>SVC(C=0.5, cache_size=200, class_weight=None, coef0=0.0,
-    decision_function_shape='ovr', degree=3, gamma='auto_deprecated',
-    kernel='linear', max_iter=-1, probability=False, random_state=None,
-    shrinking=True, tol=0.001, verbose=False)
+<pre><code>SVC(C=0.5, break_ties=False, cache_size=200, class_weight=None, coef0=0.0,
+    decision_function_shape='ovr', degree=3, gamma='scale', kernel='linear',
+    max_iter=-1, probability=False, random_state=None, shrinking=True,
+    tol=0.001, verbose=False)
 </code></pre>
 <p><strong>Default Zoom Factor</strong></p>
 <pre><code class="python">plot_decision_regions(X, y, clf=svm, zoom_factor=1.)
@@ -1514,42 +1514,27 @@ history = model.fit(X, y_onehot, epochs=10, batch_size=5, verbose=1, validation_
 <pre><code>Using TensorFlow backend.
 
 
-WARNING:tensorflow:From /Users/sebastian/miniconda3/lib/python3.7/site-packages/keras/backend/tensorflow_backend.py:74: The name tf.get_default_graph is deprecated. Please use tf.compat.v1.get_default_graph instead.
-
-WARNING:tensorflow:From /Users/sebastian/miniconda3/lib/python3.7/site-packages/keras/backend/tensorflow_backend.py:517: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
-
-WARNING:tensorflow:From /Users/sebastian/miniconda3/lib/python3.7/site-packages/keras/backend/tensorflow_backend.py:4138: The name tf.random_uniform is deprecated. Please use tf.random.uniform instead.
-
-WARNING:tensorflow:From /Users/sebastian/miniconda3/lib/python3.7/site-packages/keras/optimizers.py:790: The name tf.train.Optimizer is deprecated. Please use tf.compat.v1.train.Optimizer instead.
-
-WARNING:tensorflow:From /Users/sebastian/miniconda3/lib/python3.7/site-packages/keras/backend/tensorflow_backend.py:3295: The name tf.log is deprecated. Please use tf.math.log instead.
-
-WARNING:tensorflow:From /Users/sebastian/miniconda3/lib/python3.7/site-packages/tensorflow/python/ops/math_grad.py:1250: add_dispatch_support.&lt;locals&gt;.wrapper (from tensorflow.python.ops.array_ops) is deprecated and will be removed in a future version.
-Instructions for updating:
-Use tf.where in 2.0, which has the same broadcast rule as np.where
-WARNING:tensorflow:From /Users/sebastian/miniconda3/lib/python3.7/site-packages/keras/backend/tensorflow_backend.py:986: The name tf.assign_add is deprecated. Please use tf.compat.v1.assign_add instead.
-
 Train on 135 samples, validate on 15 samples
 Epoch 1/10
-135/135 [==============================] - 1s 9ms/step - loss: 1.0487 - acc: 0.4074 - val_loss: 1.1136 - val_acc: 0.0000e+00
+135/135 [==============================] - 0s 907us/step - loss: 1.0485 - accuracy: 0.4593 - val_loss: 1.1127 - val_accuracy: 0.0000e+00
 Epoch 2/10
-135/135 [==============================] - 0s 571us/step - loss: 0.8553 - acc: 0.6519 - val_loss: 1.1569 - val_acc: 0.0000e+00
+135/135 [==============================] - 0s 198us/step - loss: 0.8551 - accuracy: 0.6519 - val_loss: 1.1561 - val_accuracy: 0.0000e+00
 Epoch 3/10
-135/135 [==============================] - 0s 585us/step - loss: 0.6601 - acc: 0.6889 - val_loss: 1.1103 - val_acc: 0.0000e+00
+135/135 [==============================] - 0s 167us/step - loss: 0.6599 - accuracy: 0.6889 - val_loss: 1.1097 - val_accuracy: 0.0000e+00
 Epoch 4/10
-135/135 [==============================] - 0s 582us/step - loss: 0.5327 - acc: 0.7185 - val_loss: 1.0639 - val_acc: 0.0000e+00
+135/135 [==============================] - 0s 168us/step - loss: 0.5326 - accuracy: 0.7185 - val_loss: 1.0635 - val_accuracy: 0.0000e+00
 Epoch 5/10
-135/135 [==============================] - 0s 703us/step - loss: 0.4370 - acc: 0.8444 - val_loss: 1.0055 - val_acc: 0.6667
+135/135 [==============================] - 0s 155us/step - loss: 0.4369 - accuracy: 0.8444 - val_loss: 1.0050 - val_accuracy: 0.6667
 Epoch 6/10
-135/135 [==============================] - 0s 661us/step - loss: 0.3779 - acc: 0.8963 - val_loss: 0.9092 - val_acc: 0.8000
+135/135 [==============================] - 0s 154us/step - loss: 0.3777 - accuracy: 0.8963 - val_loss: 0.9089 - val_accuracy: 0.8000
 Epoch 7/10
-135/135 [==============================] - 0s 672us/step - loss: 0.3364 - acc: 0.9407 - val_loss: 0.8492 - val_acc: 0.8667
+135/135 [==============================] - 0s 160us/step - loss: 0.3363 - accuracy: 0.9407 - val_loss: 0.8491 - val_accuracy: 0.8667
 Epoch 8/10
-135/135 [==============================] - 0s 616us/step - loss: 0.3091 - acc: 0.9259 - val_loss: 0.7795 - val_acc: 0.8667
+135/135 [==============================] - 0s 156us/step - loss: 0.3090 - accuracy: 0.9259 - val_loss: 0.7793 - val_accuracy: 0.8667
 Epoch 9/10
-135/135 [==============================] - 0s 735us/step - loss: 0.2796 - acc: 0.9407 - val_loss: 0.7048 - val_acc: 0.9333
+135/135 [==============================] - 0s 165us/step - loss: 0.2795 - accuracy: 0.9407 - val_loss: 0.7046 - val_accuracy: 0.9333
 Epoch 10/10
-135/135 [==============================] - 0s 935us/step - loss: 0.2621 - acc: 0.9556 - val_loss: 0.6324 - val_acc: 1.0000
+135/135 [==============================] - 0s 153us/step - loss: 0.2621 - accuracy: 0.9556 - val_loss: 0.6322 - val_accuracy: 1.0000
 </code></pre>
 <pre><code class="python"># Wrap keras model
 model_no_ohe = Onehot2Int(model)
@@ -1658,7 +1643,8 @@ No legend if legend is 0.</p>
 </ul>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/plotting/plot_decision_regions/">http://rasbt.github.io/mlxtend/user_guide/plotting/plot_decision_regions/</a></p></div>
+    <a href="http://rasbt.github.io/mlxtend/user_guide/plotting/plot_decision_regions/">http://rasbt.github.io/mlxtend/user_guide/plotting/plot_decision_regions/</a></p>
+<p>ython</p></div>
         
         
     </div>
@@ -1666,7 +1652,7 @@ No legend if legend is 0.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

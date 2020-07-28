@@ -966,7 +966,7 @@
         <div class="col-md-9" role="main">
 
 <h2 id="heatmap">heatmap</h2>
-<p><em>heatmap(matrix, hide_spines=False, hide_ticks=False, figsize=None, cmap=None, colorbar=True, row_names=None, column_names=None, column_name_rotation=45, cell_fmt='.2f', cell_font_size=None)</em></p>
+<p><em>heatmap(matrix, hide_spines=False, hide_ticks=False, figsize=None, cmap=None, colorbar=True, row_names=None, column_names=None, column_name_rotation=45, cell_values=True, cell_fmt='.2f', cell_font_size=None)</em></p>
 <p>Plot a heatmap via matplotlib.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1007,12 +1007,16 @@
 <p>Number of degrees for rotating column x-tick labels.</p>
 </li>
 <li>
+<p><code>cell_values</code> : bool (default: True)</p>
+<p>Plots cell values if True.</p>
+</li>
+<li>
 <p><code>cell_fmt</code> : string (default: '.2f')</p>
-<p>Format specification for cell values.</p>
+<p>Format specification for cell values (if <code>cell_values=True</code>)</p>
 </li>
 <li>
 <p><code>cell_font_size</code> : int (default: None)</p>
-<p>Font size for cell values</p>
+<p>Font size for cell values (if <code>cell_values=True</code>)</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
@@ -1032,7 +1036,7 @@
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

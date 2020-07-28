@@ -1002,7 +1002,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.17.2 </p>
+<p>mlxtend version: 0.18.0dev0 </p>
 <h2 id="adaline">Adaline</h2>
 <p><em>Adaline(eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0)</em></p>
 <p>ADAptive LInear NEuron classifier.</p>
@@ -1167,7 +1167,7 @@ https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
 Author: Gael Varoquaux <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;">&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a>
 License: BSD 3 clause</p>
 <h2 id="ensemblevoteclassifier">EnsembleVoteClassifier</h2>
-<p><em>EnsembleVoteClassifier(clfs, voting='hard', weights=None, verbose=0, refit=True)</em></p>
+<p><em>EnsembleVoteClassifier(clfs, voting='hard', weights=None, verbose=0, use_clones=True, fit_base_estimators=True)</em></p>
 <p>Soft Voting/Majority Rule classifier for scikit-learn estimators.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1175,9 +1175,10 @@ License: BSD 3 clause</p>
 <p><code>clfs</code> : array-like, shape = [n_classifiers]</p>
 <p>A list of classifiers.
 Invoking the <code>fit</code> method on the <code>VotingClassifier</code> will fit clones
-of those original classifiers that will
+of those original classifiers
 be stored in the class attribute
-<code>self.clfs_</code> if <code>refit=True</code> (default).</p>
+if <code>use_clones=True</code> (default) and
+<code>fit_base_estimators=True</code> (default).</p>
 </li>
 <li>
 <p><code>voting</code> : str, {'hard', 'soft'} (default='hard')</p>
@@ -1202,13 +1203,26 @@ before averaging (<code>soft</code> voting). Uses uniform weights if <code>None<
 self.verbose - 2</p>
 </li>
 <li>
-<p><code>refit</code> : bool (default: True)</p>
+<p><code>use_clones</code> : bool (default: True)</p>
+<p>Clones the classifiers for stacking classification if True (default)
+or else uses the original ones, which will be refitted on the dataset
+upon calling the <code>fit</code> method. Hence, if use_clones=True, the original
+input classifiers will remain unmodified upon using the
+StackingClassifier's <code>fit</code> method.
+Setting <code>use_clones=False</code> is
+recommended if you are working with estimators that are supporting
+the scikit-learn fit/predict API interface but are not compatible
+to scikit-learn's <code>clone</code> function.</p>
+</li>
+<li>
+<p><code>fit_base_estimators</code> : bool (default: True)</p>
 <p>Refits classifiers in <code>clfs</code> if True; uses references to the <code>clfs</code>,
 otherwise (assumes that the classifiers were already fit).
-Note: refit=False is incompatible to mist scikit-learn wrappers!
+Note: fit_base_estimators=False will enforce use_clones to be False,
+and is incompatible to most scikit-learn wrappers!
 For instance, if any form of cross-validation is performed
 this would require the re-fitting classifiers to training folds, which
-would raise a NotFitterError if refit=False.
+would raise a NotFitterError if fit_base_estimators=False.
 (New in mlxtend v0.6.)</p>
 </li>
 </ul>
@@ -1219,11 +1233,11 @@ would raise a NotFitterError if refit=False.
 </li>
 <li>
 <p><code>clf</code> : array-like, shape = [n_predictions]</p>
-<p>The unmodified input classifiers</p>
+<p>The input classifiers; may be overwritten if <code>use_clones=False</code></p>
 </li>
 <li>
 <p><code>clf_</code> : array-like, shape = [n_predictions]</p>
-<p>Fitted clones of the input classifiers</p>
+<p>Fitted input classifiers; clones if <code>use_clones=True</code></p>
 </li>
 </ul>
 <p><strong>Examples</strong></p>
@@ -2162,7 +2176,7 @@ https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
 Author: Gael Varoquaux <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;">&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a>
 License: BSD 3 clause</p>
 <h2 id="stackingcvclassifier">StackingCVClassifier</h2>
-<p><em>StackingCVClassifier(classifiers, meta_classifier, use_probas=False, drop_last_proba=False, cv=2, shuffle=True, random_state=None, stratify=True, verbose=0, use_features_in_secondary=False, store_train_meta_features=False, use_clones=True, n_jobs=None, pre_dispatch='2</em>n_jobs')*</p>
+<p><em>StackingCVClassifier(classifiers, meta_classifier, use_probas=False, drop_proba_col=None, cv=2, shuffle=True, random_state=None, stratify=True, verbose=0, use_features_in_secondary=False, store_train_meta_features=False, use_clones=True, n_jobs=None, pre_dispatch='2</em>n_jobs')*</p>
 <p>A 'Stacking Cross-Validation' classifier for scikit-learn estimators.</p>
 <p>New in mlxtend v0.4.3</p>
 <p><strong>Parameters</strong></p>
@@ -2172,7 +2186,7 @@ License: BSD 3 clause</p>
 <p>A list of classifiers.
 Invoking the <code>fit</code> method on the <code>StackingCVClassifer</code> will fit clones
 of these original classifiers that will
-be stored in the class attribute <code>self.clfs_</code>.</p>
+be stored in the class attribute <code>self.clfs_</code> if <code>use_clones=True</code>.</p>
 </li>
 <li>
 <p><code>meta_classifier</code> : object</p>
@@ -2185,12 +2199,15 @@ classifiers</p>
 instead of class labels.</p>
 </li>
 <li>
-<p><code>drop_last_proba</code> : bool (default: False)</p>
-<p>Drops the last "probability" column in the feature set since if <code>True</code>,
-because it is redundant:
+<p><code>drop_proba_col</code> : string (default: None)</p>
+<p>Drops extra "probability" column in the feature set, because it is
+redundant:
 p(y_c) = 1 - p(y_1) + p(y_2) + ... + p(y_{c-1}).
-This can be useful for meta-classifiers that are sensitive to
-perfectly collinear features. Only relevant if `use_probas=True.</p>
+This can be useful for meta-classifiers that are sensitive to perfectly
+collinear features.
+If 'last', drops last probability column.
+If 'first', drops first probability column.
+Only relevant if <code>use_probas=True</code>.</p>
 </li>
 <li>
 <p><code>cv</code> : int, cross-validation generator or an iterable, optional (default: 2)</p>
@@ -2488,7 +2505,7 @@ each label set be correctly predicted.</p>
 <p><em>named_classifiers</em></p>
 <p>None</p>
 <h2 id="stackingclassifier">StackingClassifier</h2>
-<p><em>StackingClassifier(classifiers, meta_classifier, use_probas=False, drop_last_proba=False, average_probas=False, verbose=0, use_features_in_secondary=False, store_train_meta_features=False, use_clones=True)</em></p>
+<p><em>StackingClassifier(classifiers, meta_classifier, use_probas=False, drop_proba_col=None, average_probas=False, verbose=0, use_features_in_secondary=False, store_train_meta_features=False, use_clones=True, fit_base_estimators=True)</em></p>
 <p>A Stacking classifier for scikit-learn estimators for classification.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -2498,7 +2515,8 @@ each label set be correctly predicted.</p>
 Invoking the <code>fit</code> method on the <code>StackingClassifer</code> will fit clones
 of these original classifiers that will
 be stored in the class attribute
-<code>self.clfs_</code>.</p>
+<code>self.clfs_</code> if <code>use_clones=True</code> (default) and
+<code>fit_base_estimators=True</code> (default).</p>
 </li>
 <li>
 <p><code>meta_classifier</code> : object</p>
@@ -2511,12 +2529,15 @@ classifiers</p>
 instead of class labels.</p>
 </li>
 <li>
-<p><code>drop_last_proba</code> : bool (default: False)</p>
-<p>Drops the last "probability" column in the feature set since if <code>True</code>,
-because it is redundant:
+<p><code>drop_proba_col</code> : string (default: None)</p>
+<p>Drops extra "probability" column in the feature set, because it is
+redundant:
 p(y_c) = 1 - p(y_1) + p(y_2) + ... + p(y_{c-1}).
-This can be useful for meta-classifiers that are sensitive to
-perfectly collinear features. Only relevant if <code>use_probas=True</code>.</p>
+This can be useful for meta-classifiers that are sensitive to perfectly
+collinear features.
+If 'last', drops last probability column.
+If 'first', drops first probability column.
+Only relevant if <code>use_probas=True</code>.</p>
 </li>
 <li>
 <p><code>average_probas</code> : bool (default: False)</p>
@@ -2557,7 +2578,17 @@ StackingClassifier's <code>fit</code> method.
 Setting <code>use_clones=False</code> is
 recommended if you are working with estimators that are supporting
 the scikit-learn fit/predict API interface but are not compatible
-to scikit-learn's <code>clone</code> function.</p>
+to scikit-learn's <code>clone</code> function.
+fit_base_estimators: bool (default: True)
+Refits classifiers in <code>classifiers</code> if True; uses references to the
+<code>classifiers</code>, otherwise (assumes that the classifiers were
+already fit).
+Note: fit_base_estimators=False will enforce use_clones to be False,
+and is incompatible to most scikit-learn wrappers!
+For instance, if any form of cross-validation is performed
+this would require the re-fitting classifiers to training folds, which
+would raise a NotFitterError if fit_base_estimators=False.
+(New in mlxtend v0.6.)</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>
@@ -2766,7 +2797,7 @@ each label set be correctly predicted.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

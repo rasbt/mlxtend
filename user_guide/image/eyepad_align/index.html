@@ -1002,7 +1002,7 @@
 <li>[1] Kazemi, Vahid, and Josephine Sullivan. "One millisecond face alignment with an ensemble of regression trees." Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2014.</li>
 </ul>
 <h2 id="example-1-fit_image">Example 1 (fit_image)</h2>
-<p>This example illustrates the use of EyepadAlign fit to a <strong>single</strong> target input image (first image in the <a href="http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html">CelebA dataset</a>) to the canonical computer vision benchmark image Lena such that the eye position is in the same scale and location as the target image.</p>
+<p>This example illustrates the use of EyepadAlign fit to a <strong>single</strong> target input image (first image in the <a href="http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html">CelebA dataset</a>) to another portrait such that the eye position is in the same scale and location as the target image.</p>
 <pre><code class="python">import imageio
 from mlxtend.image import EyepadAlign
 
@@ -1077,13 +1077,13 @@ Fitting the average facial landmarks for 9 face images
 
 
 Total time elapsed: 00:00:00
-0% [#####    ] 100% | ETA: 00:00:00/Users/sebastian/code/mlxtend/mlxtend/image/extract_face_landmarks.py:61: UserWarning: No face detected.
+0% [#####    ] 100% | ETA: 00:00:00/Users/sebastian/code/mlxtend/mlxtend/image/extract_face_landmarks.py:66: UserWarning: No face detected.
   warnings.warn('No face detected.')
-/Users/sebastian/code/mlxtend/mlxtend/image/eyepad_align.py:185: UserWarning: No face detected in image 000004.jpg. Image ignored.
+/Users/sebastian/code/mlxtend/mlxtend/image/eyepad_align.py:188: UserWarning: No face detected in image 000004.jpg. Image ignored.
   % f)
 0% [#########] 100% | ETA: 00:00:00
 Total time elapsed: 00:00:00
-/Users/sebastian/code/mlxtend/mlxtend/image/eyepad_align.py:185: UserWarning: No face detected in image 000003.jpg. Image ignored.
+/Users/sebastian/code/mlxtend/mlxtend/image/eyepad_align.py:188: UserWarning: No face detected in image 000003.jpg. Image ignored.
   % f)
 
 
@@ -1098,7 +1098,7 @@ plt.show()
 </code></pre>
 
 <p><img alt="png" src="../eyepad_align_files/eyepad_align_16_0.png" /></p>
-<p>Finally, the an example of aligning the original Lena image to the average landmarks in the dataset is shown below:</p>
+<p>Finally, the an example of aligning the original face image to the average landmarks in the dataset is shown below:</p>
 <pre><code class="python">fig = plt.figure(figsize=(10, 4))
 
 ax = fig.add_subplot(1, 3, 1)
@@ -1215,20 +1215,14 @@ Fitting the average facial landmarks for 9 face images
 
 
 Total time elapsed: 00:00:00
-0% [#####    ] 100% | ETA: 00:00:00/Users/sebastian/code/mlxtend/mlxtend/image/extract_face_landmarks.py:61: UserWarning: No face detected.
-  warnings.warn('No face detected.')
-/Users/sebastian/code/mlxtend/mlxtend/image/eyepad_align.py:185: UserWarning: No face detected in image 000004.jpg. Image ignored.
-  % f)
 0% [#########] 100% | ETA: 00:00:00
 Total time elapsed: 00:00:00
-/Users/sebastian/code/mlxtend/mlxtend/image/eyepad_align.py:185: UserWarning: No face detected in image 000003.jpg. Image ignored.
-  % f)
 
 
 
 
 
-&lt;mlxtend.image.eyepad_align.EyepadAlign at 0x1c1839ba90&gt;
+&lt;mlxtend.image.eyepad_align.EyepadAlign at 0x7fa09865d390&gt;
 </code></pre>
 <pre><code class="python">### Use the calculated landmarks to center the nose:
 center = np.array([178//2, 218//2])
@@ -1316,12 +1310,13 @@ from all face images in a file directory of face images.</p>
 <p><code>target_width_</code> : the width of the transformed output image.</p>
 </li>
 </ul>
-<p>For more usage examples, please see
-<a href="http://rasbt.github.io/mlxtend/user_guide/image/EyepadAlign/">http://rasbt.github.io/mlxtend/user_guide/image/EyepadAlign/</a></p>
 <p><strong>Returns</strong></p>
 <ul>
 <li><code>self</code> : object</li>
 </ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/image/eyepad_align/">http://rasbt.github.io/mlxtend/user_guide/image/eyepad_align/</a></p>
 <h3 id="methods">Methods</h3>
 <hr>
 
@@ -1342,9 +1337,10 @@ in a directory which will then be set as the target landmark set.</p>
 <p><code>target_width</code> : int</p>
 <p>Expected image width of the images in the directory</p>
 <p>file_extension str (default='.jpg'): File extension of the image files.</p>
-<p>pre_check Bool (default=True): Checks that each image has the dimensions
-specificed via <code>target_height</code> and <code>target_width</code> on the whole
-directory first to identify potential issues that are recommended
+<p>pre_check Bool (default=True): Checks that each image has the
+dimensions specificed via <code>target_height</code>
+and <code>target_width</code> on the whole directory first to identify
+potential issues that are recommended
 to be fixed before proceeding. Raises a warning for each image if
 dimensions differ from the ones specified and expected.</p>
 </li>
@@ -1423,7 +1419,7 @@ between the two eyes.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

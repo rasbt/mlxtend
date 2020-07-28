@@ -1048,7 +1048,7 @@ print('p value: %.3f' % p)
 <pre><code>t statistic: -1.861
 p value: 0.096
 </code></pre>
-<p>Since <script type="math/tex">p > t</script>, we cannot reject the null hypothesis and may conclude that the performance of the two algorithms is not significantly different. </p>
+<p>Since <script type="math/tex">p > \alpha</script>, we cannot reject the null hypothesis and may conclude that the performance of the two algorithms is not significantly different. </p>
 <p>While it is generally not recommended to apply statistical tests multiple times without correction for multiple hypothesis testing, let us take a look at an example where the decision tree algorithm is limited to producing a very simple decision boundary that would result in a relatively bad performance:</p>
 <pre><code class="python">clf2 = DecisionTreeClassifier(random_state=1, max_depth=1)
 
@@ -1146,7 +1146,7 @@ in the two compared models.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

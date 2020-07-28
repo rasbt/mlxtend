@@ -1002,7 +1002,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.17.2 </p>
+<p>mlxtend version: 0.18.0dev0 </p>
 <h2 id="bootstrapoutofbag">BootstrapOutOfBag</h2>
 <p><em>BootstrapOutOfBag(n_splits=200, random_seed=None)</em></p>
 <p><strong>Parameters</strong></p>
@@ -1088,6 +1088,9 @@ training set are used to for a training subset
 for model fitting.</p>
 </li>
 </ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/PredefinedHoldoutSplit/">http://rasbt.github.io/mlxtend/user_guide/evaluate/PredefinedHoldoutSplit/</a></p>
 <h3 id="methods_1">Methods</h3>
 <hr>
 
@@ -1172,6 +1175,9 @@ into training and validation set partitions.</p>
 split or not</p>
 </li>
 </ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/RandomHoldoutSplit/">http://rasbt.github.io/mlxtend/user_guide/evaluate/RandomHoldoutSplit/</a></p>
 <h3 id="methods_2">Methods</h3>
 <hr>
 
@@ -1265,6 +1271,9 @@ If False, returns number of correctly classified samples.</p>
 </ul>
 <p><strong>Returns</strong></p>
 <p>score: float</p>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/accuracy_score/">http://rasbt.github.io/mlxtend/user_guide/evaluate/accuracy_score/</a></p>
 <h2 id="bias_variance_decomp">bias_variance_decomp</h2>
 <p><em>bias_variance_decomp(estimator, X_train, y_train, X_test, y_test, loss='0-1_loss', num_rounds=200, random_seed=None)</em></p>
 <p>estimator : object
@@ -1315,6 +1324,9 @@ bias-variance decomposition.</p>
 is computed over the data points in the test set.</p>
 </li>
 </ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/bias_variance_decomp/">http://rasbt.github.io/mlxtend/user_guide/evaluate/bias_variance_decomp/</a></p>
 <h2 id="bootstrap">bootstrap</h2>
 <p><em>bootstrap(x, func, num_rounds=1000, ci=0.95, ddof=1, seed=None)</em></p>
 <p>Implements the ordinary nonparametric bootstrap</p>
@@ -1385,7 +1397,7 @@ Mean: 5.03, SE: +/- 0.11, CI95: [4.80, 5.26]
 <p>For more usage examples, please see
 <a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/bootstrap/">http://rasbt.github.io/mlxtend/user_guide/evaluate/bootstrap/</a></p>
 <h2 id="bootstrap_point632_score">bootstrap_point632_score</h2>
-<p><em>bootstrap_point632_score(estimator, X, y, n_splits=200, method='.632', scoring_func=None, random_seed=None, clone_estimator=True)</em></p>
+<p><em>bootstrap_point632_score(estimator, X, y, n_splits=200, method='.632', scoring_func=None, predict_proba=False, random_seed=None, clone_estimator=True)</em></p>
 <p>Implementation of the .632 [1] and .632+ [2] bootstrap
 for supervised learning</p>
 <p>References:</p>
@@ -1439,6 +1451,18 @@ If none, uses classification accuracy if the</p>
 <p>estimator is a classifier and mean squared error
     if the estimator is a regressor.</p>
 <ul>
+<li>
+<p><code>predict_proba</code> : bool</p>
+<p>Whether to use the <code>predict_proba</code> function for the
+<code>estimator</code> argument. This is to be used in conjunction
+with <code>scoring_func</code> which takes in probability values
+instead of actual predictions.
+For example, if the scoring_func is
+:meth:<code>sklearn.metrics.roc_auc_score</code>, then use
+<code>predict_proba=True</code>.
+Note that this requires <code>estimator</code> to have
+<code>predict_proba</code> method implemented.</p>
+</li>
 <li>
 <p><code>random_seed</code> : int (default=None)</p>
 <p>If int, random_seed is the seed used by
@@ -2175,7 +2199,7 @@ y_target</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

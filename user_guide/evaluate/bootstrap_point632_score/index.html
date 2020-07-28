@@ -1065,8 +1065,8 @@ upper = np.percentile(scores, 97.5)
 print('95%% Confidence interval: [%.2f, %.2f]' % (100*lower, 100*upper))
 </code></pre>
 
-<pre><code>Accuracy: 94.52%
-95% Confidence interval: [88.88, 98.28]
+<pre><code>Accuracy: 94.36%
+95% Confidence interval: [88.46, 98.31]
 </code></pre>
 <h2 id="example-2-evaluating-the-predictive-performance-of-a-model-via-the-632-bootstrap">Example 2 -- Evaluating the predictive performance of a model via the .632 Bootstrap</h2>
 <pre><code class="python">from sklearn import datasets
@@ -1091,8 +1091,8 @@ upper = np.percentile(scores, 97.5)
 print('95%% Confidence interval: [%.2f, %.2f]' % (100*lower, 100*upper))
 </code></pre>
 
-<pre><code>Accuracy: 96.58%
-95% Confidence interval: [92.37, 98.97]
+<pre><code>Accuracy: 96.57%
+95% Confidence interval: [92.37, 98.95]
 </code></pre>
 <h2 id="example-3-evaluating-the-predictive-performance-of-a-model-via-the-632-bootstrap">Example 3 -- Evaluating the predictive performance of a model via the .632+ Bootstrap</h2>
 <pre><code class="python">from sklearn import datasets
@@ -1117,8 +1117,8 @@ upper = np.percentile(scores, 97.5)
 print('95%% Confidence interval: [%.2f, %.2f]' % (100*lower, 100*upper))
 </code></pre>
 
-<pre><code>Accuracy: 96.40%
-95% Confidence interval: [92.34, 99.00]
+<pre><code>Accuracy: 96.28%
+95% Confidence interval: [92.10, 98.90]
 </code></pre>
 <h2 id="api">API</h2>
 <p><em>bootstrap_point632_score(estimator, X, y, n_splits=200, method='.632', scoring_func=None, random_seed=None, clone_estimator=True)</em></p>
@@ -1219,7 +1219,7 @@ replicate.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

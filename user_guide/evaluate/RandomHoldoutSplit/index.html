@@ -1029,16 +1029,19 @@ grid = GridSearchCV(KNeighborsClassifier(),
                     cv=RandomHoldoutSplit(valid_size=0.3, random_seed=123))
 
 grid.fit(X, y)
-
-assert grid.n_splits_ == 1
-print(grid.grid_scores_)
 </code></pre>
 
-<pre><code>[mean: 0.95556, std: 0.00000, params: {'n_neighbors': 1}, mean: 0.95556, std: 0.00000, params: {'n_neighbors': 2}, mean: 0.95556, std: 0.00000, params: {'n_neighbors': 3}, mean: 0.95556, std: 0.00000, params: {'n_neighbors': 4}, mean: 0.95556, std: 0.00000, params: {'n_neighbors': 5}]
-
-
-/Users/sebastian/miniconda3/lib/python3.6/site-packages/sklearn/model_selection/_search.py:762: DeprecationWarning: The grid_scores_ attribute was deprecated in version 0.18 in favor of the more elaborate cv_results_ attribute. The grid_scores_ attribute will not be available from 0.20
-  DeprecationWarning)
+<pre><code>GridSearchCV(cv=&lt;mlxtend.evaluate.holdout.RandomHoldoutSplit object at 0x7fcf8061ba90&gt;,
+             error_score=nan,
+             estimator=KNeighborsClassifier(algorithm='auto', leaf_size=30,
+                                            metric='minkowski',
+                                            metric_params=None, n_jobs=None,
+                                            n_neighbors=5, p=2,
+                                            weights='uniform'),
+             iid='deprecated', n_jobs=None,
+             param_grid={'n_neighbors': [1, 2, 3, 4, 5]},
+             pre_dispatch='2*n_jobs', refit=True, return_train_score=False,
+             scoring=None, verbose=0)
 </code></pre>
 <h2 id="api">API</h2>
 <p><em>RandomHoldoutSplit(valid_size=0.5, random_seed=None, stratify=False)</em></p>
@@ -1064,6 +1067,9 @@ into training and validation set partitions.</p>
 split or not</p>
 </li>
 </ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/RandomHoldoutSplit/">http://rasbt.github.io/mlxtend/user_guide/evaluate/RandomHoldoutSplit/</a></p>
 <h3 id="methods">Methods</h3>
 <hr>
 
@@ -1123,8 +1129,7 @@ Stratification is done based on the y labels.</p>
 <p><code>valid_index</code> : ndarray</p>
 <p>The validation set indices for that split.</p>
 </li>
-</ul>
-<p>ython</p></div>
+</ul></div>
         
         
     </div>
@@ -1132,7 +1137,7 @@ Stratification is done based on the y labels.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

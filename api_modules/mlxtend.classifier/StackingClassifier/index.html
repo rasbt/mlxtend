@@ -970,7 +970,7 @@
         <div class="col-md-9" role="main">
 
 <h2 id="stackingclassifier">StackingClassifier</h2>
-<p><em>StackingClassifier(classifiers, meta_classifier, use_probas=False, drop_last_proba=False, average_probas=False, verbose=0, use_features_in_secondary=False, store_train_meta_features=False, use_clones=True)</em></p>
+<p><em>StackingClassifier(classifiers, meta_classifier, use_probas=False, drop_proba_col=None, average_probas=False, verbose=0, use_features_in_secondary=False, store_train_meta_features=False, use_clones=True, fit_base_estimators=True)</em></p>
 <p>A Stacking classifier for scikit-learn estimators for classification.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -980,7 +980,8 @@
 Invoking the <code>fit</code> method on the <code>StackingClassifer</code> will fit clones
 of these original classifiers that will
 be stored in the class attribute
-<code>self.clfs_</code>.</p>
+<code>self.clfs_</code> if <code>use_clones=True</code> (default) and
+<code>fit_base_estimators=True</code> (default).</p>
 </li>
 <li>
 <p><code>meta_classifier</code> : object</p>
@@ -993,12 +994,15 @@ classifiers</p>
 instead of class labels.</p>
 </li>
 <li>
-<p><code>drop_last_proba</code> : bool (default: False)</p>
-<p>Drops the last "probability" column in the feature set since if <code>True</code>,
-because it is redundant:
+<p><code>drop_proba_col</code> : string (default: None)</p>
+<p>Drops extra "probability" column in the feature set, because it is
+redundant:
 p(y_c) = 1 - p(y_1) + p(y_2) + ... + p(y_{c-1}).
-This can be useful for meta-classifiers that are sensitive to
-perfectly collinear features. Only relevant if <code>use_probas=True</code>.</p>
+This can be useful for meta-classifiers that are sensitive to perfectly
+collinear features.
+If 'last', drops last probability column.
+If 'first', drops first probability column.
+Only relevant if <code>use_probas=True</code>.</p>
 </li>
 <li>
 <p><code>average_probas</code> : bool (default: False)</p>
@@ -1039,7 +1043,17 @@ StackingClassifier's <code>fit</code> method.
 Setting <code>use_clones=False</code> is
 recommended if you are working with estimators that are supporting
 the scikit-learn fit/predict API interface but are not compatible
-to scikit-learn's <code>clone</code> function.</p>
+to scikit-learn's <code>clone</code> function.
+fit_base_estimators: bool (default: True)
+Refits classifiers in <code>classifiers</code> if True; uses references to the
+<code>classifiers</code>, otherwise (assumes that the classifiers were
+already fit).
+Note: fit_base_estimators=False will enforce use_clones to be False,
+and is incompatible to most scikit-learn wrappers!
+For instance, if any form of cross-validation is performed
+this would require the re-fitting classifiers to training folds, which
+would raise a NotFitterError if fit_base_estimators=False.
+(New in mlxtend v0.6.)</p>
 </li>
 </ul>
 <p><strong>Attributes</strong></p>
@@ -1248,7 +1262,7 @@ each label set be correctly predicted.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

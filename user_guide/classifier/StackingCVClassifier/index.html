@@ -1407,7 +1407,7 @@ plt.show()
 
 <p><img alt="png" src="../StackingCVClassifier_files/StackingCVClassifier_32_0.png" /></p>
 <h1 id="api">API</h1>
-<p><em>StackingCVClassifier(classifiers, meta_classifier, use_probas=False, drop_last_proba=False, cv=2, shuffle=True, random_state=None, stratify=True, verbose=0, use_features_in_secondary=False, store_train_meta_features=False, use_clones=True, n_jobs=None, pre_dispatch='2</em>n_jobs')*</p>
+<p><em>StackingCVClassifier(classifiers, meta_classifier, use_probas=False, drop_proba_col=None, cv=2, shuffle=True, random_state=None, stratify=True, verbose=0, use_features_in_secondary=False, store_train_meta_features=False, use_clones=True, n_jobs=None, pre_dispatch='2</em>n_jobs')*</p>
 <p>A 'Stacking Cross-Validation' classifier for scikit-learn estimators.</p>
 <p>New in mlxtend v0.4.3</p>
 <p><strong>Parameters</strong></p>
@@ -1430,12 +1430,15 @@ classifiers</p>
 instead of class labels.</p>
 </li>
 <li>
-<p><code>drop_last_proba</code> : bool (default: False)</p>
-<p>Drops the last "probability" column in the feature set since if <code>True</code>,
-because it is redundant:
+<p><code>drop_proba_col</code> : string (default: None)</p>
+<p>Drops extra "probability" column in the feature set, because it is
+redundant:
 p(y_c) = 1 - p(y_1) + p(y_2) + ... + p(y_{c-1}).
-This can be useful for meta-classifiers that are sensitive to
-perfectly collinear features. Only relevant if `use_probas=True.</p>
+This can be useful for meta-classifiers that are sensitive to perfectly
+collinear features.
+If <code>last</code>, drops last probability column.
+If <code>first</code>, drops first probability column.
+Only relevant if <code>use_probas=True</code>.</p>
 </li>
 <li>
 <p><code>cv</code> : int, cross-validation generator or an iterable, optional (default: 2)</p>
@@ -1739,7 +1742,7 @@ each label set be correctly predicted.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

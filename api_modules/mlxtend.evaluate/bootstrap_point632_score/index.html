@@ -966,7 +966,7 @@
         <div class="col-md-9" role="main">
 
 <h2 id="bootstrap_point632_score">bootstrap_point632_score</h2>
-<p><em>bootstrap_point632_score(estimator, X, y, n_splits=200, method='.632', scoring_func=None, random_seed=None, clone_estimator=True)</em></p>
+<p><em>bootstrap_point632_score(estimator, X, y, n_splits=200, method='.632', scoring_func=None, predict_proba=False, random_seed=None, clone_estimator=True)</em></p>
 <p>Implementation of the .632 [1] and .632+ [2] bootstrap
 for supervised learning</p>
 <p>References:</p>
@@ -1021,6 +1021,18 @@ If none, uses classification accuracy if the</p>
     if the estimator is a regressor.</p>
 <ul>
 <li>
+<p><code>predict_proba</code> : bool</p>
+<p>Whether to use the <code>predict_proba</code> function for the
+<code>estimator</code> argument. This is to be used in conjunction
+with <code>scoring_func</code> which takes in probability values
+instead of actual predictions.
+For example, if the scoring_func is
+:meth:<code>sklearn.metrics.roc_auc_score</code>, then use
+<code>predict_proba=True</code>.
+Note that this requires <code>estimator</code> to have
+<code>predict_proba</code> method implemented.</p>
+</li>
+<li>
 <p><code>random_seed</code> : int (default=None)</p>
 <p>If int, random_seed is the seed used by
 the random number generator.</p>
@@ -1064,7 +1076,7 @@ replicate.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

@@ -982,13 +982,11 @@
                  <!--   -->
             <li class="second-level"><a href="#example-4-stacking-of-classifiers-that-operate-on-different-feature-subsets">Example 4 - Stacking of Classifiers that Operate on Different Feature Subsets</a></li>
                  <!--   -->
-            <li class="second-level"><a href="#example-5-roc-curve-with-decision_function">Example 5 -- ROC Curve with decision_function</a></li>
+            <li class="second-level"><a href="#example-5-using-pre-fitted-classifiers">Example 5 - Using Pre-fitted Classifiers</a></li>
+                 <!--   -->
+            <li class="second-level"><a href="#example-6-roc-curve-with-decision_function">Example 6 -- ROC Curve with decision_function</a></li>
                  <!--   -->
         <li class="first-level "><a href="#api">API</a></li>
-            <li class="second-level"><a href="#methods">Methods</a></li>
-                 <!--   -->
-            <li class="second-level"><a href="#properties">Properties</a></li>
-                 <!--   -->
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
@@ -1291,7 +1289,41 @@ sclf.fit(X, y)
                    use_features_in_secondary=False, use_probas=False,
                    verbose=0)
 </code></pre>
-<h2 id="example-5-roc-curve-with-decision_function">Example 5 -- ROC Curve with <code>decision_function</code></h2>
+<h2 id="example-5-using-pre-fitted-classifiers">Example 5 - Using Pre-fitted Classifiers</h2>
+<p>Assume that we previously fitted our classifiers:</p>
+<pre><code class="python">from sklearn import model_selection
+from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import GaussianNB 
+from sklearn.ensemble import RandomForestClassifier
+import numpy as np
+
+clf1 = KNeighborsClassifier(n_neighbors=1)
+clf2 = RandomForestClassifier(random_state=1)
+clf3 = GaussianNB()
+lr = LogisticRegression()
+
+for clf in (clf1, clf2, clf3):
+    clf.fit(X, y)
+</code></pre>
+
+<p>By setting <code>fit_base_estimators=False</code>, it will enforce <code>use_clones</code> to be False and the <code>StackingClassifier</code> will not re-fit these classifers to save computational time:</p>
+<pre><code class="python">from mlxtend.classifier import StackingClassifier
+import copy
+sclf = StackingClassifier(classifiers=[clf1, clf2, clf3], 
+                          meta_classifier=lr, fit_base_estimators=False)
+
+labels = ['KNN', 'Random Forest', 'Naive Bayes', 'StackingClassifier']
+
+sclf.fit(X, y)
+
+print('accuracy:', np.mean(y == sclf.predict(X)))
+</code></pre>
+
+<pre><code>Warning: enforce use_clones to be False
+accuracy: 1.0
+</code></pre>
+<p>However, please note that <code>fit_base_estimators=False</code> is incompatible to any form of cross-validation that is done in e.g., <code>model_selection.cross_val_score</code> or <code>model_selection.GridSearchCV</code>, etc., since it would require the classifiers to be refit to the training folds. Thus, only use <code>fit_base_estimators=False</code> if you want to make a prediction directly without cross-validation.</p>
+<h2 id="example-6-roc-curve-with-decision_function">Example 6 -- ROC Curve with <code>decision_function</code></h2>
 <p>Like other scikit-learn classifiers, the <code>StackingCVClassifier</code> has an <code>decision_function</code> method that can be used for plotting ROC curves. Note that the <code>decision_function</code> expects and requires the meta-classifier to implement a <code>decision_function</code>.</p>
 <pre><code class="python">from sklearn import model_selection
 from sklearn.linear_model import LogisticRegression
@@ -1366,7 +1398,7 @@ plt.legend(loc=&quot;lower right&quot;)
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../StackingClassifier_files/StackingClassifier_31_0.png" /></p>
+<p><img alt="png" src="../StackingClassifier_files/StackingClassifier_37_0.png" /></p>
 <p><strong>Using <code>decision_function()</code></strong></p>
 <pre><code class="python">y_score = classifier.fit(X_train, y_train).decision_function(X_test)
 
@@ -1396,279 +1428,8 @@ plt.legend(loc=&quot;lower right&quot;)
 plt.show()
 </code></pre>
 
-<p><img alt="png" src="../StackingClassifier_files/StackingClassifier_33_0.png" /></p>
-<h1 id="api">API</h1>
-<p><em>StackingClassifier(classifiers, meta_classifier, use_probas=False, drop_last_proba=False, average_probas=False, verbose=0, use_features_in_secondary=False, store_train_meta_features=False, use_clones=True)</em></p>
-<p>A Stacking classifier for scikit-learn estimators for classification.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>classifiers</code> : array-like, shape = [n_classifiers]</p>
-<p>A list of classifiers.
-Invoking the <code>fit</code> method on the <code>StackingClassifer</code> will fit clones
-of these original classifiers that will
-be stored in the class attribute
-<code>self.clfs_</code>.</p>
-</li>
-<li>
-<p><code>meta_classifier</code> : object</p>
-<p>The meta-classifier to be fitted on the ensemble of
-classifiers</p>
-</li>
-<li>
-<p><code>use_probas</code> : bool (default: False)</p>
-<p>If True, trains meta-classifier based on predicted probabilities
-instead of class labels.</p>
-</li>
-<li>
-<p><code>drop_last_proba</code> : bool (default: False)</p>
-<p>Drops the last "probability" column in the feature set since if <code>True</code>,
-because it is redundant:
-p(y_c) = 1 - p(y_1) + p(y_2) + ... + p(y_{c-1}).
-This can be useful for meta-classifiers that are sensitive to
-perfectly collinear features. Only relevant if <code>use_probas=True</code>.</p>
-</li>
-<li>
-<p><code>average_probas</code> : bool (default: False)</p>
-<p>Averages the probabilities as meta features if <code>True</code>.
-Only relevant if <code>use_probas=True</code>.</p>
-</li>
-<li>
-<p><code>verbose</code> : int, optional (default=0)</p>
-<p>Controls the verbosity of the building process.
-- <code>verbose=0</code> (default): Prints nothing
-- <code>verbose=1</code>: Prints the number &amp; name of the regressor being fitted
-- <code>verbose=2</code>: Prints info about the parameters of the
-regressor being fitted
-- <code>verbose&gt;2</code>: Changes <code>verbose</code> param of the underlying regressor to
-self.verbose - 2</p>
-</li>
-<li>
-<p><code>use_features_in_secondary</code> : bool (default: False)</p>
-<p>If True, the meta-classifier will be trained both on the predictions
-of the original classifiers and the original dataset.
-If False, the meta-classifier will be trained only on the predictions
-of the original classifiers.</p>
-</li>
-<li>
-<p><code>store_train_meta_features</code> : bool (default: False)</p>
-<p>If True, the meta-features computed from the training data used
-for fitting the meta-classifier stored in the
-<code>self.train_meta_features_</code> array, which can be
-accessed after calling <code>fit</code>.</p>
-</li>
-<li>
-<p><code>use_clones</code> : bool (default: True)</p>
-<p>Clones the classifiers for stacking classification if True (default)
-or else uses the original ones, which will be refitted on the dataset
-upon calling the <code>fit</code> method. Hence, if use_clones=True, the original
-input classifiers will remain unmodified upon using the
-StackingClassifier's <code>fit</code> method.
-Setting <code>use_clones=False</code> is
-recommended if you are working with estimators that are supporting
-the scikit-learn fit/predict API interface but are not compatible
-to scikit-learn's <code>clone</code> function.</p>
-</li>
-</ul>
-<p><strong>Attributes</strong></p>
-<ul>
-<li>
-<p><code>clfs_</code> : list, shape=[n_classifiers]</p>
-<p>Fitted classifiers (clones of the original classifiers)</p>
-</li>
-<li>
-<p><code>meta_clf_</code> : estimator</p>
-<p>Fitted meta-classifier (clone of the original meta-estimator)</p>
-</li>
-<li>
-<p><code>train_meta_features</code> : numpy array, shape = [n_samples, n_classifiers]</p>
-<p>meta-features for training data, where n_samples is the
-number of samples
-in training data and n_classifiers is the number of classfiers.</p>
-</li>
-</ul>
-<p><strong>Examples</strong></p>
-<p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/classifier/StackingClassifier/">http://rasbt.github.io/mlxtend/user_guide/classifier/StackingClassifier/</a></p>
-<h3 id="methods">Methods</h3>
-<hr>
-
-<p><em>decision_function(X)</em></p>
-<p>Predict class confidence scores for X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>scores</code> : shape=(n_samples,) if n_classes == 2 else             (n_samples, n_classes).</p>
-<p>Confidence scores per (sample, class) combination. In the binary
-case, confidence score for self.classes_[1] where &gt;0 means this
-class would be predicted.</p>
-</li>
-</ul>
-<hr>
-
-<p><em>fit(X, y, sample_weight=None)</em></p>
-<p>Fit ensemble classifers and the meta-classifier.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples] or [n_samples, n_outputs]</p>
-<p>Target values.</p>
-</li>
-<li>
-<p><code>sample_weight</code> : array-like, shape = [n_samples], optional</p>
-<p>Sample weights passed as sample_weights to each regressor
-in the regressors list as well as the meta_regressor.
-Raises error if some regressor does not support
-sample_weight in the fit() method.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
-<hr>
-
-<p><em>fit_transform(X, y=None, </em><em>fit_params)</em></p>
-<p>Fit to data, then transform it.</p>
-<p>Fits transformer to X and y with optional parameters fit_params
-and returns a transformed version of X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : numpy array of shape [n_samples, n_features]</p>
-<p>Training set.</p>
-</li>
-<li>
-<p><code>y</code> : numpy array of shape [n_samples]</p>
-<p>Target values.</p>
-</li>
-<li>
-<p><code>**fit_params</code> : dict</p>
-<p>Additional fit parameters.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>X_new</code> : numpy array of shape [n_samples, n_features_new]</p>
-<p>Transformed array.</p>
-</li>
-</ul>
-<hr>
-
-<p><em>get_params(deep=True)</em></p>
-<p>Return estimator parameter names for GridSearch support.</p>
-<hr>
-
-<p><em>predict(X)</em></p>
-<p>Predict target values for X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>labels</code> : array-like, shape = [n_samples]</p>
-<p>Predicted class labels.</p>
-</li>
-</ul>
-<hr>
-
-<p><em>predict_meta_features(X)</em></p>
-<p>Get meta-features of test-data.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
-<p>Test vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>meta-features</code> : numpy array, shape = [n_samples, n_classifiers]</p>
-<p>Returns the meta-features for test data.</p>
-</li>
-</ul>
-<hr>
-
-<p><em>predict_proba(X)</em></p>
-<p>Predict class probabilities for X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>proba</code> : array-like, shape = [n_samples, n_classes] or a list of                 n_outputs of such arrays if n_outputs &gt; 1.</p>
-<p>Probability for each class per sample.</p>
-</li>
-</ul>
-<hr>
-
-<p><em>score(X, y, sample_weight=None)</em></p>
-<p>Return the mean accuracy on the given test data and labels.</p>
-<p>In multi-label classification, this is the subset accuracy
-which is a harsh metric since you require for each sample that
-each label set be correctly predicted.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : array-like of shape (n_samples, n_features)</p>
-<p>Test samples.</p>
-</li>
-<li>
-<p><code>y</code> : array-like of shape (n_samples,) or (n_samples, n_outputs)</p>
-<p>True labels for X.</p>
-</li>
-<li>
-<p><code>sample_weight</code> : array-like of shape (n_samples,), default=None</p>
-<p>Sample weights.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>score</code> : float</p>
-<p>Mean accuracy of self.predict(X) wrt. y.</p>
-</li>
-</ul>
-<hr>
-
-<p><em>set_params(</em><em>params)</em></p>
-<p>Set the parameters of this estimator.</p>
-<p>Valid parameter keys can be listed with <code>get_params()</code>.</p>
-<p><strong>Returns</strong></p>
-<p>self</p>
-<h3 id="properties">Properties</h3>
-<hr>
-
-<p><em>named_classifiers</em></p>
-<p>None</p></div>
+<p><img alt="png" src="../StackingClassifier_files/StackingClassifier_39_0.png" /></p>
+<h1 id="api">API</h1></div>
         
         
     </div>
@@ -1676,7 +1437,7 @@ each label set be correctly predicted.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

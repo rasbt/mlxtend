@@ -1268,12 +1268,12 @@ fpgrowth(df, min_support=0.6)
     <tr>
       <th>5</th>
       <td>0.8</td>
-      <td>(Kidney Beans, Eggs)</td>
+      <td>(Eggs, Kidney Beans)</td>
     </tr>
     <tr>
       <th>6</th>
       <td>0.6</td>
-      <td>(Kidney Beans, Yogurt)</td>
+      <td>(Yogurt, Kidney Beans)</td>
     </tr>
     <tr>
       <th>7</th>
@@ -1288,12 +1288,12 @@ fpgrowth(df, min_support=0.6)
     <tr>
       <th>9</th>
       <td>0.6</td>
-      <td>(Onion, Kidney Beans, Eggs)</td>
+      <td>(Onion, Eggs, Kidney Beans)</td>
     </tr>
     <tr>
       <th>10</th>
       <td>0.6</td>
-      <td>(Kidney Beans, Milk)</td>
+      <td>(Milk, Kidney Beans)</td>
     </tr>
   </tbody>
 </table>
@@ -1314,19 +1314,19 @@ df = pd.DataFrame(te_ary, columns=te.columns_)
 %timeit -n 100 -r 10 apriori(df, min_support=0.6)
 </code></pre>
 
-<pre><code>3.53 ms ± 124 µs per loop (mean ± std. dev. of 10 runs, 100 loops each)
+<pre><code>3.16 ms ± 66.3 µs per loop (mean ± std. dev. of 10 runs, 100 loops each)
 </code></pre>
 <pre><code class="python">%timeit -n 100 -r 10 apriori(df, min_support=0.6, low_memory=True)
 </code></pre>
 
-<pre><code>3.7 ms ± 70.8 µs per loop (mean ± std. dev. of 10 runs, 100 loops each)
+<pre><code>3.43 ms ± 131 µs per loop (mean ± std. dev. of 10 runs, 100 loops each)
 </code></pre>
 <pre><code class="python">from mlxtend.frequent_patterns import fpgrowth
 
 %timeit -n 100 -r 10 fpgrowth(df, min_support=0.6)
 </code></pre>
 
-<pre><code>1.57 ms ± 36.7 µs per loop (mean ± std. dev. of 10 runs, 100 loops each)
+<pre><code>1.24 ms ± 38.7 µs per loop (mean ± std. dev. of 10 runs, 100 loops each)
 </code></pre>
 <h2 id="more-examples">More Examples</h2>
 <p>Please note that since the <code>fpgrowth</code> function is a drop-in replacement for <code>apriori</code>, it comes with the same set of function arguments and return arguments. Thus, for more examples, please see the <a href="../apriori/"><code>apriori</code></a> documentation.</p>
@@ -1388,7 +1388,10 @@ possible itemsets lengths are evaluated.</p>
     which is a Python built-in type that behaves similarly to
     sets except that it is immutable
     (For more info, see
-    https://docs.python.org/3.6/library/stdtypes.html#frozenset).</p></div>
+    https://docs.python.org/3.6/library/stdtypes.html#frozenset).</p>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/fpgrowth/">http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/fpgrowth/</a></p></div>
         
         
     </div>
@@ -1396,7 +1399,7 @@ possible itemsets lengths are evaluated.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

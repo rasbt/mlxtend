@@ -966,9 +966,9 @@
         <div class="col-md-9" role="main">
 
 <h2 id="plot_confusion_matrix">plot_confusion_matrix</h2>
-<p><em>plot_confusion_matrix(conf_mat, hide_spines=False, hide_ticks=False, figsize=None, cmap=None, colorbar=False, show_absolute=True, show_normed=False, class_names=None)</em></p>
-<p>Plot a confusion matrix via matplotlib.
-<strong>Parameters</strong></p>
+<p><em>plot_confusion_matrix(conf_mat, hide_spines=False, hide_ticks=False, figsize=None, cmap=None, colorbar=False, show_absolute=True, show_normed=False, class_names=None, figure=None, axis=None)</em></p>
+<p>Plot a confusion matrix via matplotlib.</p>
+<p><strong>Parameters</strong></p>
 <ul>
 <li>
 <p><code>conf_mat</code> : array-like, shape = [n_classes, n_classes]</p>
@@ -1012,15 +1012,25 @@ must be True.</p>
 <li>
 <p><code>class_names</code> : array-like, shape = [n_classes] (default: None)</p>
 <p>List of class names.
-If not <code>None</code>, ticks will be set to these values.
-<strong>Returns</strong></p>
+If not <code>None</code>, ticks will be set to these values.</p>
 </li>
 <li>
-<p><code>fig, ax</code> : matplotlib.pyplot subplot objects</p>
-<p>Figure and axis elements of the subplot.
-<strong>Examples</strong></p>
+<p><code>figure</code> : None or Matplotlib figure  (default: None)</p>
+<p>If None will create a new figure.</p>
+</li>
+<li>
+<p><code>axis</code> : None or Matplotlib figure axis (default: None)</p>
+<p>If None will create a new axis.</p>
 </li>
 </ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>fig, ax</code> : matplotlib.pyplot subplot objects</p>
+<p>Figure and axis elements of the subplot.</p>
+</li>
+</ul>
+<p><strong>Examples</strong></p>
 <p>For usage examples, please see
     <a href="http://rasbt.github.io/mlxtend/user_guide/plotting/plot_confusion_matrix/">http://rasbt.github.io/mlxtend/user_guide/plotting/plot_confusion_matrix/</a></p></div>
         
@@ -1030,7 +1040,7 @@ If not <code>None</code>, ticks will be set to these values.
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

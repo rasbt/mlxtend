@@ -968,7 +968,7 @@
         <div class="col-md-9" role="main">
 
 <h2 id="ensemblevoteclassifier">EnsembleVoteClassifier</h2>
-<p><em>EnsembleVoteClassifier(clfs, voting='hard', weights=None, verbose=0, refit=True)</em></p>
+<p><em>EnsembleVoteClassifier(clfs, voting='hard', weights=None, verbose=0, use_clones=True, fit_base_estimators=True)</em></p>
 <p>Soft Voting/Majority Rule classifier for scikit-learn estimators.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -976,9 +976,10 @@
 <p><code>clfs</code> : array-like, shape = [n_classifiers]</p>
 <p>A list of classifiers.
 Invoking the <code>fit</code> method on the <code>VotingClassifier</code> will fit clones
-of those original classifiers that will
+of those original classifiers
 be stored in the class attribute
-<code>self.clfs_</code> if <code>refit=True</code> (default).</p>
+if <code>use_clones=True</code> (default) and
+<code>fit_base_estimators=True</code> (default).</p>
 </li>
 <li>
 <p><code>voting</code> : str, {'hard', 'soft'} (default='hard')</p>
@@ -1003,13 +1004,26 @@ before averaging (<code>soft</code> voting). Uses uniform weights if <code>None<
 self.verbose - 2</p>
 </li>
 <li>
-<p><code>refit</code> : bool (default: True)</p>
+<p><code>use_clones</code> : bool (default: True)</p>
+<p>Clones the classifiers for stacking classification if True (default)
+or else uses the original ones, which will be refitted on the dataset
+upon calling the <code>fit</code> method. Hence, if use_clones=True, the original
+input classifiers will remain unmodified upon using the
+StackingClassifier's <code>fit</code> method.
+Setting <code>use_clones=False</code> is
+recommended if you are working with estimators that are supporting
+the scikit-learn fit/predict API interface but are not compatible
+to scikit-learn's <code>clone</code> function.</p>
+</li>
+<li>
+<p><code>fit_base_estimators</code> : bool (default: True)</p>
 <p>Refits classifiers in <code>clfs</code> if True; uses references to the <code>clfs</code>,
 otherwise (assumes that the classifiers were already fit).
-Note: refit=False is incompatible to mist scikit-learn wrappers!
+Note: fit_base_estimators=False will enforce use_clones to be False,
+and is incompatible to most scikit-learn wrappers!
 For instance, if any form of cross-validation is performed
 this would require the re-fitting classifiers to training folds, which
-would raise a NotFitterError if refit=False.
+would raise a NotFitterError if fit_base_estimators=False.
 (New in mlxtend v0.6.)</p>
 </li>
 </ul>
@@ -1020,11 +1034,11 @@ would raise a NotFitterError if refit=False.
 </li>
 <li>
 <p><code>clf</code> : array-like, shape = [n_predictions]</p>
-<p>The unmodified input classifiers</p>
+<p>The input classifiers; may be overwritten if <code>use_clones=False</code></p>
 </li>
 <li>
 <p><code>clf_</code> : array-like, shape = [n_predictions]</p>
-<p>Fitted clones of the input classifiers</p>
+<p>Fitted input classifiers; clones if <code>use_clones=True</code></p>
 </li>
 </ul>
 <p><strong>Examples</strong></p>
@@ -1235,7 +1249,7 @@ n_features is the number of features.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

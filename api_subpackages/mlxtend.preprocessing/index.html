@@ -979,11 +979,8 @@
         <li class="first-level "><a href="#meancenterer">MeanCenterer</a></li>
             <li class="second-level"><a href="#methods_2">Methods</a></li>
                  <!--   -->
-        <li class="first-level "><a href="#onehottransactions">OnehotTransactions</a></li>
-            <li class="second-level"><a href="#methods_3">Methods</a></li>
-                 <!--   -->
         <li class="first-level "><a href="#transactionencoder">TransactionEncoder</a></li>
-            <li class="second-level"><a href="#methods_4">Methods</a></li>
+            <li class="second-level"><a href="#methods_3">Methods</a></li>
                  <!--   -->
         <li class="first-level "><a href="#minmax_scaling">minmax_scaling</a></li>
         <li class="first-level "><a href="#one_hot">one_hot</a></li>
@@ -993,7 +990,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.17.2 </p>
+<p>mlxtend version: 0.18.0dev0 </p>
 <h2 id="copytransformer">CopyTransformer</h2>
 <p><em>CopyTransformer()</em></p>
 <p>Transformer that returns a copy of the input array</p>
@@ -1265,168 +1262,6 @@ n_features is the number of features.</p>
 <p>A copy of the input array with the columns centered.</p>
 </li>
 </ul>
-<h2 id="onehottransactions">OnehotTransactions</h2>
-<p><em>OnehotTransactions(</em>args, *<em>kwargs)</em></p>
-<p>Encoder class for transaction data in Python lists</p>
-<p><strong>Parameters</strong></p>
-<p>None</p>
-<p><strong>Attributes</strong></p>
-<p>columns_: list
-List of unique names in the <code>X</code> input list of lists</p>
-<p><strong>Examples</strong></p>
-<p>For usage examples, please see
-<a href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/TransactionEncoder/">http://rasbt.github.io/mlxtend/user_guide/preprocessing/TransactionEncoder/</a></p>
-<h3 id="methods_3">Methods</h3>
-<hr>
-
-<p><em>fit(X)</em></p>
-<p>Learn unique column names from transaction DataFrame</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : list of lists</p>
-<p>A python list of lists, where the outer list stores the
-n transactions and the inner list stores the items in each
-transaction.</p>
-<p>For example,
-[['Apple', 'Beer', 'Rice', 'Chicken'],
-['Apple', 'Beer', 'Rice'],
-['Apple', 'Beer'],
-['Apple', 'Bananas'],
-['Milk', 'Beer', 'Rice', 'Chicken'],
-['Milk', 'Beer', 'Rice'],
-['Milk', 'Beer'],
-['Apple', 'Bananas']]</p>
-</li>
-</ul>
-<hr>
-
-<p><em>fit_transform(X, sparse=False)</em></p>
-<p>Fit a TransactionEncoder encoder and transform a dataset.</p>
-<hr>
-
-<p><em>get_params(deep=True)</em></p>
-<p>Get parameters for this estimator.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>deep</code> : boolean, optional</p>
-<p>If True, will return the parameters for this estimator and
-contained subobjects that are estimators.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>params</code> : mapping of string to any</p>
-<p>Parameter names mapped to their values.</p>
-</li>
-</ul>
-<hr>
-
-<p><em>inverse_transform(array)</em></p>
-<p>Transforms an encoded NumPy array back into transactions.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>array</code> : NumPy array [n_transactions, n_unique_items]</p>
-<p>The NumPy one-hot encoded boolean array of the input transactions,
-where the columns represent the unique items found in the input
-array in alphabetic order</p>
-<p>For example,</p>
-</li>
-</ul>
-<pre><code>    array([[True , False, True , True , False, True ],
-    [True , False, True , False, False, True ],
-    [True , False, True , False, False, False],
-    [True , True , False, False, False, False],
-    [False, False, True , True , True , True ],
-    [False, False, True , False, True , True ],
-    [False, False, True , False, True , False],
-    [True , True , False, False, False, False]])
-</code></pre>
-
-<pre><code>The corresponding column labels are available as self.columns_,
-e.g., ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']
-</code></pre>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>X</code> : list of lists</p>
-<p>A python list of lists, where the outer list stores the
-n transactions and the inner list stores the items in each
-transaction.</p>
-<p>For example,</p>
-</li>
-</ul>
-<pre><code>    [['Apple', 'Beer', 'Rice', 'Chicken'],
-    ['Apple', 'Beer', 'Rice'],
-    ['Apple', 'Beer'],
-    ['Apple', 'Bananas'],
-    ['Milk', 'Beer', 'Rice', 'Chicken'],
-    ['Milk', 'Beer', 'Rice'],
-    ['Milk', 'Beer'],
-    ['Apple', 'Bananas']]
-</code></pre>
-
-<hr>
-
-<p><em>set_params(</em><em>params)</em></p>
-<p>Set the parameters of this estimator.</p>
-<p>The method works on simple estimators as well as on nested objects
-(such as pipelines). The latter have parameters of the form
-<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
-component of a nested object.</p>
-<p><strong>Returns</strong></p>
-<p>self</p>
-<hr>
-
-<p><em>transform(X, sparse=False)</em></p>
-<p>Transform transactions into a one-hot encoded NumPy array.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : list of lists</p>
-<p>A python list of lists, where the outer list stores the
-n transactions and the inner list stores the items in each
-transaction.</p>
-<p>For example,
-[['Apple', 'Beer', 'Rice', 'Chicken'],
-['Apple', 'Beer', 'Rice'],
-['Apple', 'Beer'],
-['Apple', 'Bananas'],
-['Milk', 'Beer', 'Rice', 'Chicken'],
-['Milk', 'Beer', 'Rice'],
-['Milk', 'Beer'],
-['Apple', 'Bananas']]</p>
-<p>sparse: bool (default=False)
-If True, transform will return Compressed Sparse Row matrix
-instead of the regular one.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>array</code> : NumPy array [n_transactions, n_unique_items]</p>
-<p>if sparse=False (default).
-Compressed Sparse Row matrix otherwise
-The one-hot encoded boolean array of the input transactions,
-where the columns represent the unique items found in the input
-array in alphabetic order. Exact representation depends
-on the sparse argument</p>
-<p>For example,
-array([[True , False, True , True , False, True ],
-[True , False, True , False, False, True ],
-[True , False, True , False, False, False],
-[True , True , False, False, False, False],
-[False, False, True , True , True , True ],
-[False, False, True , False, True , True ],
-[False, False, True , False, True , False],
-[True , True , False, False, False, False]])
-The corresponding column labels are available as self.columns_, e.g.,
-['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']</p>
-</li>
-</ul>
 <h2 id="transactionencoder">TransactionEncoder</h2>
 <p><em>TransactionEncoder()</em></p>
 <p>Encoder class for transaction data in Python lists</p>
@@ -1438,7 +1273,7 @@ List of unique names in the <code>X</code> input list of lists</p>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
 <a href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/TransactionEncoder/">http://rasbt.github.io/mlxtend/user_guide/preprocessing/TransactionEncoder/</a></p>
-<h3 id="methods_4">Methods</h3>
+<h3 id="methods_3">Methods</h3>
 <hr>
 
 <p><em>fit(X)</em></p>
@@ -1749,7 +1584,7 @@ them from the current array.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

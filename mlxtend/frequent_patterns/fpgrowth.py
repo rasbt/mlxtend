@@ -64,6 +64,11 @@ def fpgrowth(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
       (For more info, see
       https://docs.python.org/3.6/library/stdtypes.html#frozenset).
 
+    Examples
+    ----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/fpgrowth/
+
     """
     fpc.valid_input_check(df)
 

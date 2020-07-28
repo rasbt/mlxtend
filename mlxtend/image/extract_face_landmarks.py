@@ -58,7 +58,7 @@ def extract_face_landmarks(img, return_dtype=np.int32):
     Examples
     ----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/sources/image/extract_face_landmarks.ipynb
+    http://rasbt.github.io/mlxtend/user_guide/image/extract_face_landmarks/
 
     """
     faces = detector(img, 1)  # detecting faces

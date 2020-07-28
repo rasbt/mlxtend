@@ -87,7 +87,13 @@ def plot_pca_correlation_graph(X, variables_names, dimensions=(1, 2),
 
     Returns
     ----------
-        matplotlib_figure , correlation_matrix
+        matplotlib_figure, correlation_matrix
+
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/plotting/plot_pca_correlation_graph/
+
     """
 
     X = np.array(X)

@@ -31,6 +31,11 @@ def vectorspace_orthonormalization(ary,  # method='gram-schmidt',
     arr : array-like, shape=[num_vectors, num_vectors]
         An orthonormal set of vectors (arranged as columns)
 
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/math/vectorspace_orthonormalization/
+
     """
 
     # Gram-Schmidt Process
@@ -82,6 +87,11 @@ def vectorspace_dimensionality(ary):
     dimensions : int
         An integer indicating the "dimensionality" hyper-volume spanned by
         the vector set
+
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/math/vectorspace_dimensionality/
 
     """
     # Note that since the vectors of

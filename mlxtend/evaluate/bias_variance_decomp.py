@@ -57,6 +57,11 @@ def bias_variance_decomp(estimator, X_train, y_train, X_test, y_test,
         average bias, and average bias (all floats), where the average
         is computed over the data points in the test set.
 
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/evaluate/bias_variance_decomp/
+
     """
     supported = ['0-1_loss', 'mse']
     if loss not in supported:

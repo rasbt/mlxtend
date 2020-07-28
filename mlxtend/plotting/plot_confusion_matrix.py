@@ -21,7 +21,7 @@ def plot_confusion_matrix(conf_mat,
                           figure=None,
                           axis=None):
     """Plot a confusion matrix via matplotlib.
-    
+
     Parameters
     -----------
     conf_mat : array-like, shape = [n_classes, n_classes]
@@ -64,6 +64,7 @@ def plot_confusion_matrix(conf_mat,
     -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/plotting/plot_confusion_matrix/
+
     """
     if not (show_absolute or show_normed):
         raise AssertionError('Both show_absolute and show_normed are False')

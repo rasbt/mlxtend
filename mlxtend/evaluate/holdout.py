@@ -29,6 +29,12 @@ class RandomHoldoutSplit(object):
         True or False, whether to perform a stratified
         split or not
 
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/evaluate/RandomHoldoutSplit/
+
+
     """
 
     def __init__(self, valid_size=0.5, random_seed=None, stratify=False):
@@ -117,6 +123,11 @@ class PredefinedHoldoutSplit(object):
         to be used for validation. All other indices in the
         training set are used to for a training subset
         for model fitting.
+
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/evaluate/PredefinedHoldoutSplit/
 
     """
 

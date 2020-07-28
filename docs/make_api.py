@@ -156,7 +156,7 @@ def object_to_markdownpage(obj_name, obj, s=''):
 
 
 def import_package(rel_path_to_package, package_name):
-    """Imports a python package into the current namespace.
+    """Imports a Python package into the current namespace.
 
     Parameters
     ----------
@@ -187,7 +187,7 @@ def get_subpackages(package):
 
     Parameters
     ----------
-    package : python package object
+    package : Python package object
 
     Returns
     --------
@@ -202,7 +202,7 @@ def get_modules(package):
 
     Parameters
     ----------
-    package : python package object
+    package : Python package object
 
     Returns
     --------
@@ -217,7 +217,7 @@ def get_functions_and_classes(package):
 
     Parameters
     ----------
-    package : python package object
+    package : Python package object
 
     Returns
     --------

@@ -57,12 +57,14 @@ class EyepadAlign(object):
 
     target_width_ : the width of the transformed output image.
 
-    For more usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/image/EyepadAlign/
-
     Returns
     -------
     self : object
+
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/image/eyepad_align/
 
     """
     def __init__(self, verbose=0):

@@ -1,4 +1,4 @@
-[![DOI](http://joss.theoj.org/papers/10.21105/joss.00638/status.svg)](https://doi.org/10.21105/joss.00638)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.00638/status.svg)](https://doi.org/10.21105/joss.00638)
 [![Build Status](https://travis-ci.org/rasbt/mlxtend.svg?branch=master)](https://travis-ci.org/rasbt/mlxtend)
 [![Build status](https://ci.appveyor.com/api/projects/status/7vx20e0h5dxcyla2/branch/master?svg=true)](https://ci.appveyor.com/project/rasbt/mlxtend/branch/master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/2a199e28871c477d9ecf6e200b4977b9)](https://www.codacy.com/manual/rasbt/mlxtend?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rasbt/mlxtend&amp;utm_campaign=Badge_Grade)

@@ -38,6 +38,12 @@ def accuracy_score(y_target, y_predicted, method="standard",
     Returns
     ------------
     score: float
+
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/evaluate/accuracy_score/
+
     """
 
     target_temp = np.asarray(y_target)

@@ -51,6 +51,11 @@ def scatterplotmatrix(X, fig_axes=None, names=None,
       for example, by calling the pyplot `subplot` function
       `fig, axes = plt.subplots(...)`
 
+    Examples
+    ----------
+    For more usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/plotting/scatterplotmatrix/
+
     """
 
     num_examples, num_features = X.shape
@@ -66,11 +71,10 @@ def scatterplotmatrix(X, fig_axes=None, names=None,
         names = ['X%d' % (i+1) for i in range(num_features)]
 
     for i, j in zip(*np.triu_indices_from(axes, k=1)):
-
-            axes[j, i].scatter(X[:, j], X[:, i], alpha=alpha, **kwargs)
-            axes[j, i].set_xlabel(names[j])
-            axes[j, i].set_ylabel(names[i])
-            axes[i, j].set_axis_off()
+        axes[j, i].scatter(X[:, j], X[:, i], alpha=alpha, **kwargs)
+        axes[j, i].set_xlabel(names[j])
+        axes[j, i].set_ylabel(names[i])
+        axes[i, j].set_axis_off()
 
     for i in range(num_features):
         axes[i, i].hist(X[:, i], alpha=alpha)

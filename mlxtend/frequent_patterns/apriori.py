@@ -36,7 +36,7 @@ def generate_new_combinations(old_combinations):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/generate_new_combinations/
+    http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori
 
     """
 

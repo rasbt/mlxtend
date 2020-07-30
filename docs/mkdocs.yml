@@ -159,6 +159,7 @@ nav:
 - Installation: installation.md
 - About:
   - Release Notes: CHANGELOG.md
+  - Code of Conduct: Code-of-Conduct.md
   - How To Contribute: CONTRIBUTING.md
   - Contributors: contributors.md
   - License: license.md

@@ -1,17 +1,30 @@
+### Code of Conduct
+
+<!-- 
+If this is your first Pull Request for the MLxtend repository, please review
+the code of conduct, which is available at http://rasbt.github.io/mlxtend/Code-of-Conduct/. 
+-->
+
+
 ### Description
 
 <!--  
-Please insert a brief description of the Pull request here
+Please insert a brief description of the Pull request below.
 -->
 
 ### Related issues or pull requests
 
 <!--  
-If applicable, please link related issues/pull request here. E.g.,   
-Fixes #366
+If applicable, please link related issues/pull request below. For example,   
+"Fixes #366". Note that the "Fixes" keyword in GitHub will automatically
+close the listed issue upon merging this Pull Request.
 -->
 
 ### Pull Request Checklist
+
+<!--
+Please fill out the following checklist if applicable. For more more information and help, please see the Contributor Documentation avaialable at http://rasbt.github.io/mlxtend/contributing/.
+-->
 
 - [ ] Added a note about the modification or contribution to the `./docs/sources/CHANGELOG.md` file (if applicable)
 - [ ] Added appropriate unit test functions in the `./mlxtend/*/tests` directories (if applicable)
@@ -23,5 +36,4 @@ Fixes #366
 <!--NOTE  
 Due to the improved GitHub UI, the squashing of commits is no longer necessary.
 Please DO NOT SQUASH commits since they help with keeping track of the changes during the discussion).
-For more information and instructions, please see http://rasbt.github.io/mlxtend/contributing/  
 -->

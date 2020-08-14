@@ -16,36 +16,36 @@ control = [657, 623, 652, 654, 658, 660, 670, 620]
 def test_one_sided_x_greater_y():
     p = permutation_test(treatment, control,
                          func=lambda x, y: np.mean(x) - np.mean(y))
-    assert round(p, 4) == 0.0274, p
+    assert round(p, 4) == 0.0301, p
 
     p = permutation_test(treatment, control,
                          func="x_mean > y_mean")
-    assert round(p, 4) == 0.0274, p
+    assert round(p, 4) == 0.0301, p
 
 
 def test_one_sided_y_greater_x():
     p = permutation_test(treatment, control,
                          func=lambda x, y: np.mean(y) - np.mean(x))
-    assert round(p, 3) == 1 - 0.03, p
+    assert round(p, 3) == 0.973, p
 
     p = permutation_test(treatment, control,
                          func="x_mean < y_mean")
-    assert round(p, 3) == 1 - 0.03, p
+    assert round(p, 3) == 0.973, p
 
 
 def test_two_sided():
     p = permutation_test(treatment, control,
                          func=lambda x, y: np.abs(np.mean(x) - np.mean(y)))
-    assert round(p, 3) == 0.055, p
+    assert round(p, 3) == 0.060, p
 
     p = permutation_test(treatment, control,
                          func="x_mean != y_mean")
-    assert round(p, 3) == 0.055, p
+    assert round(p, 3) == 0.060, p
 
 
 def test_default():
     p = permutation_test(treatment, control)
-    assert round(p, 3) == 0.055, p
+    assert round(p, 3) == 0.060, p
 
 
 def test_approximateone_sided_x_greater_y():
@@ -55,7 +55,7 @@ def test_approximateone_sided_x_greater_y():
                          method='approximate',
                          num_rounds=5000,
                          seed=123)
-    assert round(p, 3) == 0.028, p
+    assert round(p, 3) == 0.031, p
 
 
 def test_invalid_method():

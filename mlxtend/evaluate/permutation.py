@@ -97,7 +97,7 @@ def permutation_test(x, y, func='x_mean != y_mean', method='exact',
     m, n = len(x), len(y)
     combined = np.hstack((x, y))
 
-    more_extreme = 0.
+    at_least_as_extreme = 0.
     reference_stat = func(x, y)
 
     # Note that whether we compute the combinations or permutations
@@ -120,15 +120,21 @@ def permutation_test(x, y, func='x_mean != y_mean', method='exact',
             indices_y = [i for i in range(m + n) if i not in indices_x]
             diff = func(combined[list(indices_x)], combined[indices_y])
 
-            if diff > reference_stat:
-                more_extreme += 1.
+            if diff > reference_stat or np.isclose(diff, reference_stat):
+                at_least_as_extreme += 1.
 
         num_rounds = factorial(m + n) / (factorial(m)*factorial(n))
 
     else:
         for i in range(num_rounds):
             rng.shuffle(combined)
-            if func(combined[:m], combined[m:]) > reference_stat:
-                more_extreme += 1.
+            diff = func(combined[:m], combined[m:])
 
-    return more_extreme / num_rounds
+            if diff > reference_stat or np.isclose(diff, reference_stat):
+                at_least_as_extreme += 1.
+
+        # To cover the actual experiment results
+        at_least_as_extreme += 1
+        num_rounds += 1
+
+    return at_least_as_extreme / num_rounds

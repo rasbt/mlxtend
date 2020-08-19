@@ -20,8 +20,8 @@ def bias_variance_decomp(estimator, X_train, y_train, X_test, y_test,
                          loss='0-1_loss', num_rounds=200, random_seed=None):
     """
     estimator : object
-        A classifier or regressor object or class implementing a `fit`
-        `predict` method similar to the scikit-learn API.
+        A classifier or regressor object or class implementing both a
+        `fit` and `predict` method similar to the scikit-learn API.
 
     X_train : array-like, shape=(num_examples, num_features)
         A training dataset for drawing the bootstrap samples to carry

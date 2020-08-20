@@ -23,7 +23,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- -
+- `permutation_test` (`mlxtend.evaluate.permutation`) ìs corrected to give the proportion of permutations whose statistic is *at least as extreme* as the one observed. ([#721](https://github.com/rasbt/mlxtend/pull/721) via [Florian Charlier](https://github.com/DarthTrevis))
 
 ##### Bug Fixes
 

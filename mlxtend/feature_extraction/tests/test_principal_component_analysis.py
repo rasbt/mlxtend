@@ -108,7 +108,7 @@ def test_fail_array_dimension_2():
 def test_variance_explained_ratio():
     pca = PCA()
     pca.fit(X_std)
-    assert np.sum(pca.e_vals_normalized_) == 1.
+    assert_almost_equal(np.sum(pca.e_vals_normalized_), 1.)
     assert np.sum(pca.e_vals_normalized_ < 0.) == 0
 
 

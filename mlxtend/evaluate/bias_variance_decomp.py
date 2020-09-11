@@ -74,7 +74,11 @@ def bias_variance_decomp(estimator, X_train, y_train, X_test, y_test,
 
     for i in range(num_rounds):
         X_boot, y_boot = _draw_bootstrap_sample(rng, X_train, y_train)
-        pred = estimator.fit(X_boot, y_boot).predict(X_test)
+        if estimator.__class__.__name__ == 'Sequential':
+            estimator.fit(X_boot, y_boot)
+            pred = estimator.predict(X_test).reshape(1, -1)
+        else:
+            pred = estimator.fit(X_boot, y_boot).predict(X_test)
         all_pred[i] = pred
 
     if loss == '0-1_loss':

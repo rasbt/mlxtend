@@ -19,7 +19,8 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
-- -
+- The `bias_variance_decomp` now supports Keras estimators. ([#725](https://github.com/rasbt/mlxtend/pull/725) via [@hanzigs](https://github.com/hanzigs))
+
 
 ##### Changes
 

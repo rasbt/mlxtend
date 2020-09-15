@@ -5,6 +5,7 @@
 - [EnsembleVoteClassifier](user_guide/classifier/EnsembleVoteClassifier.md)
 - [LogisticRegression](user_guide/classifier/LogisticRegression.md)
 - [MultiLayerPerceptron](user_guide/classifier/MultiLayerPerceptron.md)
+- [OneRClassifier](user_guide/classifier/OneRClassifier.md)
 - [Perceptron](user_guide/classifier/Perceptron.md)
 - [SoftmaxRegression](user_guide/classifier/SoftmaxRegression.md)
 - [StackingClassifier](user_guide/classifier/StackingClassifier.md)

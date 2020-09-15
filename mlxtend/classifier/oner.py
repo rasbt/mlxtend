@@ -170,7 +170,8 @@ class OneRClassifier(BaseEstimator, ClassifierMixin):
                         ary[:, idx] = np.bincount(y[X[:, feature_idx] == r],
                                                   minlength=n_class_labels)
 
-                    stat, p, dof, expected = chi2_contingency(ary)
+                    # returns "stat, p, dof, expected"
+                    _, p, _, _ = chi2_contingency(ary)
                 p_values.append(p)
                 best_p_idx = np.argmax(p_values)
                 best_idx = best_idx[best_p_idx]

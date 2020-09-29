@@ -296,8 +296,9 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         groups : array-like, with shape (n_samples,), optional
             Group labels for the samples used while splitting the dataset into
             train/test set. Passed to the fit method of the cross-validator.
-        fit_params : dict of string -> object, optional
-            Parameters to pass to to the fit method of classifier.
+        fit_params : various, optional
+            Additional parameters that are being passed to the estimator.
+            For example, `sample_weights=weights`.
 
         Returns
         -------
@@ -688,8 +689,9 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         groups : array-like, with shape (n_samples,), optional
             Group labels for the samples used while splitting the dataset into
             train/test set. Passed to the fit method of the cross-validator.
-        fit_params : dict of string -> object, optional
-            Parameters to pass to to the fit method of classifier.
+        fit_params : various, optional
+            Additional parameters that are being passed to the estimator.
+            For example, `sample_weights=weights`.
 
         Returns
         -------

@@ -297,7 +297,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             Group labels for the samples used while splitting the dataset into
             train/test set. Passed to the fit method of the cross-validator.
         fit_params : various, optional
-            Additional parameters that are being passed to the estimator. 
+            Additional parameters that are being passed to the estimator.
             For example, `sample_weights=weights`.
 
         Returns
@@ -690,7 +690,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             Group labels for the samples used while splitting the dataset into
             train/test set. Passed to the fit method of the cross-validator.
         fit_params : various, optional
-            Additional parameters that are being passed to the estimator. 
+            Additional parameters that are being passed to the estimator.
             For example, `sample_weights=weights`.
 
         Returns

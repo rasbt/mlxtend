@@ -27,6 +27,7 @@ from .f_test import combined_ftest_5x2cv
 from .proportion_difference import proportion_difference
 from .bias_variance_decomp import bias_variance_decomp
 from .accuracy import accuracy_score
+from .counterfactual import create_counterfactual
 
 __all__ = ["scoring", "confusion_matrix",
            "mcnemar_table", "mcnemar_tables",
@@ -39,4 +40,4 @@ __all__ = ["scoring", "confusion_matrix",
            "RandomHoldoutSplit", "PredefinedHoldoutSplit",
            "ftest", "combined_ftest_5x2cv",
            "proportion_difference", "bias_variance_decomp",
-           "accuracy_score"]
+           "accuracy_score", "create_counterfactual"]

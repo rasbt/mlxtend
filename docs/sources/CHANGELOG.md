@@ -30,7 +30,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Bug Fixes
 
-- -
+- The loss in `LogisticRegression` for logging purposes didn't include the L2 penalty for the first weight in the weight vector (this is not the bias unit). However, since this loss function was only used for logging purposes, and the gradient remains correct, this does not have an effect on the main code. ([#741](https://github.com/rasbt/mlxtend/pull/741))
 
 
 ### Version 0.17.3 (07-27-2020)

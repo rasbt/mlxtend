@@ -59,9 +59,9 @@ def mcnemar_table(y_target, y_model1, y_model2):
     tb = np.zeros((2, 2), dtype=int)
 
     tb[0, 0] = np.sum(plus_true == 2)
+    tb[0, 1] = np.sum(minus_true == 1)
+    tb[1, 0] = np.sum(minus_true == -1)
     tb[1, 1] = np.sum(plus_true == 0)
-    tb[1, 0] = np.sum(minus_true == 1)
-    tb[0, 1] = np.sum(minus_true == -1)
 
     return tb
 
@@ -148,9 +148,9 @@ def mcnemar_tables(y_target, *y_model_predictions):
         minus_true = model1_vs_true - model2_vs_true
 
         tb[0, 0] = np.sum(plus_true == 2)
+        tb[0, 1] = np.sum(minus_true == 1)
+        tb[1, 0] = np.sum(minus_true == -1)
         tb[1, 1] = np.sum(plus_true == 0)
-        tb[1, 0] = np.sum(minus_true == 1)
-        tb[0, 1] = np.sum(minus_true == -1)
 
         name_str = 'model_%s vs model_%s' % (comb[0], comb[1])
         tables[name_str] = tb

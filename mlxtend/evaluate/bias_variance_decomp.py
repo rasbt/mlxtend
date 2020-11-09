@@ -17,7 +17,8 @@ def _draw_bootstrap_sample(rng, X, y):
 
 
 def bias_variance_decomp(estimator, X_train, y_train, X_test, y_test,
-                         loss='0-1_loss', num_rounds=200, random_seed=None):
+                         loss='0-1_loss', num_rounds=200, random_seed=None,
+                         **fit_params):
     """
     estimator : object
         A classifier or regressor object or class implementing both a
@@ -51,6 +52,10 @@ def bias_variance_decomp(estimator, X_train, y_train, X_test, y_test,
         Random seed for the bootstrap sampling used for the
         bias-variance decomposition.
 
+    fit_params : additional parameters
+        Additional parameters to be passed to the .fit() function of the
+        estimator when it is fit to the bootstrap samples.
+
     Returns
     ----------
     avg_expected_loss, avg_bias, avg_var : returns the average expected
@@ -74,11 +79,30 @@ def bias_variance_decomp(estimator, X_train, y_train, X_test, y_test,
 
     for i in range(num_rounds):
         X_boot, y_boot = _draw_bootstrap_sample(rng, X_train, y_train)
-        if estimator.__class__.__name__ == 'Sequential':
-            estimator.fit(X_boot, y_boot)
+
+        # Keras support
+        if estimator.__class__.__name__ in ['Sequential', 'Functional']:
+
+            # reset model
+            for ix, layer in enumerate(estimator.layers):
+                if hasattr(estimator.layers[ix], 'kernel_initializer') and \
+                        hasattr(estimator.layers[ix], 'bias_initializer'):
+                    weight_initializer = \
+                        estimator.layers[ix].kernel_initializer
+                    bias_initializer = estimator.layers[ix].bias_initializer
+
+                    old_weights, old_biases = \
+                        estimator.layers[ix].get_weights()
+
+                    estimator.layers[ix].set_weights([
+                        weight_initializer(shape=old_weights.shape),
+                        bias_initializer(shape=len(old_biases))])
+
+            estimator.fit(X_boot, y_boot, **fit_params)
             pred = estimator.predict(X_test).reshape(1, -1)
         else:
-            pred = estimator.fit(X_boot, y_boot).predict(X_test)
+            pred = estimator.fit(
+                X_boot, y_boot, **fit_params).predict(X_test)
         all_pred[i] = pred
 
     if loss == '0-1_loss':

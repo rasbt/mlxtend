@@ -19,7 +19,8 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
-- The `bias_variance_decomp` now supports Keras estimators. ([#725](https://github.com/rasbt/mlxtend/pull/725) via [@hanzigs](https://github.com/hanzigs))
+- The `bias_variance_decomp` function now supports optional `fit_params` for the estimators that are fit on bootstrap samples ([#748](https://github.com/rasbt/mlxtend/pull/748))
+- The `bias_variance_decomp` function now supports Keras estimators. ([#725](https://github.com/rasbt/mlxtend/pull/725) via [@hanzigs](https://github.com/hanzigs))
 - Adds new `mlxtend.classifier.OneRClassifier` (One Rule Classfier) class, a simple rule-based classifier that is often used as a performance baseline or simple interpretable model. ([#726](https://github.com/rasbt/mlxtend/pull/726)
 - Adds new `create_counterfactual` method for creating counterfactuals to explain model predictions.  ([#740](https://github.com/rasbt/mlxtend/pull/740))
 

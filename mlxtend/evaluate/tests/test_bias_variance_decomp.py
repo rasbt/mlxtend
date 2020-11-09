@@ -7,6 +7,8 @@
 # License: BSD 3 clause
 
 
+import os
+import pytest
 from mlxtend.evaluate import bias_variance_decomp
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.tree import DecisionTreeRegressor
@@ -88,7 +90,7 @@ def test_mse_bagging():
 
     tree = DecisionTreeRegressor(random_state=123)
     bag = BaggingRegressor(base_estimator=tree,
-                           n_estimators=100,
+                           n_estimators=10,
                            random_state=123)
 
     avg_expected_loss, avg_bias, avg_var = bias_variance_decomp(
@@ -96,6 +98,34 @@ def test_mse_bagging():
             loss='mse',
             random_seed=123)
 
-    assert round(avg_expected_loss, 2) == 18.62
-    assert round(avg_bias, 2) == 15.38
-    assert round(avg_var, 2) == 3.24
+    assert round(avg_expected_loss, 2) == 20.22, avg_expected_loss
+    assert round(avg_bias, 2) == 15.51, avg_bias
+    assert round(avg_var, 2) == 4.71, avg_var
+
+
+if 'TRAVIS' in os.environ or os.environ.get('TRAVIS') == 'true':
+    TRAVIS = True
+else:
+    TRAVIS = False
+
+
+@pytest.mark.skipif(TRAVIS, reason="TensorFlow dependency")
+def test_keras():
+
+    import tensorflow as tf
+    X, y = boston_housing_data()
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y,
+        test_size=0.3,
+        random_state=123,
+        shuffle=True)
+
+    model = tf.keras.Sequential([
+        tf.keras.layers.Dense(32, activation=tf.nn.relu),
+        tf.keras.layers.Dense(1)])
+
+    optimizer = tf.keras.optimizers.Adam()
+    model.compile(loss='mean_squared_error', optimizer=optimizer)
+
+    model.fit(X_train, y_train, epochs=10)
+    model.predict(X_test)

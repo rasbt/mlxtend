@@ -21,7 +21,7 @@ install:
 
 test_script:
   - set PYTHONPATH=%PYTHONPATH%;%CD%
-  - pytest -sv --ignore=mlxtend/plotting
+  - pytest -sv --ignore=mlxtend/plotting --ignore=mlxtend/evaluate/test/test_bias_variance_decomp.py
 
 notifications:
 

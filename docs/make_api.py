@@ -51,53 +51,37 @@ def docstring_to_markdown(docstring):
     """
     new_docstring_lst = []
 
+    encountered_examples = False
     for idx, line in enumerate(docstring.split('\n')):
         line = line.strip()
         if set(line) in ({'-'}, {'='}):
-            new_docstring_lst[idx - 1] = '**%s**' % new_docstring_lst[idx - 1]
-
+            new_docstring_lst[idx-1] = '**%s**' % new_docstring_lst[idx-1]
         elif line.startswith('>>>'):
-            line = '    %s' % line
-
+            if not encountered_examples:
+                new_docstring_lst.append('```')
+                encountered_examples = True
         new_docstring_lst.append(line)
 
-    param_encountered = False
     for idx, line in enumerate(new_docstring_lst[1:]):
         if line:
             if line.startswith('Description : '):
-                new_docstring_lst[idx + 1] = (new_docstring_lst[idx + 1]
-                                              .replace('Description : ', ''))
+                new_docstring_lst[idx+1] = (new_docstring_lst[idx+1]
+                                            .replace('Description : ', ''))
             elif ' : ' in line:
-                param_encountered = True
                 line = line.replace(' : ', '` : ')
-                new_docstring_lst[idx + 1] = '\n- `%s\n' % line
-            elif '**' in new_docstring_lst[idx - 1] and '**' not in line:
-                new_docstring_lst[idx + 1] = '\n%s' % line.lstrip()
-            elif '**' not in line and param_encountered:
-                new_docstring_lst[idx + 1] = '    %s' % line.lstrip()
+                new_docstring_lst[idx+1] = '\n- `%s\n' % line
+            elif '**' in new_docstring_lst[idx-1] and '**' not in line:
+                new_docstring_lst[idx+1] = '\n%s' % line.lstrip()
+            elif '**' not in line:
+                new_docstring_lst[idx+1] = '    %s' % line.lstrip()
 
     clean_lst = []
     for line in new_docstring_lst:
-
-        if 'http://rasbt.github.io/' in line:
-            line = make_markdown_url(line_string=line,
-                                     s='http://rasbt.github.io/')
-
-            if len(clean_lst) > 0 and \
-                    clean_lst[-1].lstrip().startswith(
-                        'For more usage examples'):
-                clean_lst[-1] = clean_lst[-1].lstrip()
-                line = line.lstrip()
-
-        if line.startswith('\n>>>'):
-            clean_lst.append('\n')
-            clean_lst.append('    ' + line[1:])
-        elif line.startswith('        ```'):
-            clean_lst.append(line[8:])
-        elif line.startswith('    ```'):
-            clean_lst.append(line[4:])
-        elif set(line.strip()) not in ({'-'}, {'='}):
+        if set(line.strip()) not in ({'-'}, {'='}):
             clean_lst.append(line)
+
+    if encountered_examples:
+        clean_lst.append('```')
     return clean_lst
 
 

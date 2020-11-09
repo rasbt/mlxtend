@@ -108,8 +108,13 @@ if 'TRAVIS' in os.environ or os.environ.get('TRAVIS') == 'true':
 else:
     TRAVIS = False
 
+if 'APPVEYOR' in os.environ or os.environ.get('APPVEYOR') == 'true':
+    APPVEYOR = True
+else:
+    APPVEYOR = False
 
-@pytest.mark.skipif(TRAVIS, reason="TensorFlow dependency")
+
+@pytest.mark.skipif(TRAVIS or APPVEYOR, reason="TensorFlow dependency")
 def test_keras():
 
     import tensorflow as tf

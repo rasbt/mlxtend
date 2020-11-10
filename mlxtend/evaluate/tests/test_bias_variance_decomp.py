@@ -75,9 +75,9 @@ def test_mse_tree():
             loss='mse',
             random_seed=123)
 
-    assert round(avg_expected_loss, 3) == 31.756
-    assert round(avg_bias, 3) == 13.856
-    assert round(avg_var, 3) == 17.900
+    assert round(avg_expected_loss, 3) == 31.536
+    assert round(avg_bias, 3) == 14.096
+    assert round(avg_var, 3) == 17.440
 
 
 def test_mse_bagging():
@@ -98,9 +98,9 @@ def test_mse_bagging():
             loss='mse',
             random_seed=123)
 
-    assert round(avg_expected_loss, 2) == 20.22, avg_expected_loss
-    assert round(avg_bias, 2) == 15.51, avg_bias
-    assert round(avg_var, 2) == 4.71, avg_var
+    assert round(avg_expected_loss, 2) == 20.24, avg_expected_loss
+    assert round(avg_bias, 2) == 15.63, avg_bias
+    assert round(avg_var, 2) == 4.61, avg_var
 
 
 if 'TRAVIS' in os.environ or os.environ.get('TRAVIS') == 'true':

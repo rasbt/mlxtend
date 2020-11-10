@@ -19,7 +19,7 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
-- The `bias_variance_decomp` function now supports optional `fit_params` for the estimators that are fit on bootstrap samples ([#748](https://github.com/rasbt/mlxtend/pull/748))
+- The `bias_variance_decomp` function now supports optional `fit_params` for the estimators that are fit on bootstrap samples. ([#748](https://github.com/rasbt/mlxtend/pull/748))
 - The `bias_variance_decomp` function now supports Keras estimators. ([#725](https://github.com/rasbt/mlxtend/pull/725) via [@hanzigs](https://github.com/hanzigs))
 - Adds new `mlxtend.classifier.OneRClassifier` (One Rule Classfier) class, a simple rule-based classifier that is often used as a performance baseline or simple interpretable model. ([#726](https://github.com/rasbt/mlxtend/pull/726)
 - Adds new `create_counterfactual` method for creating counterfactuals to explain model predictions.  ([#740](https://github.com/rasbt/mlxtend/pull/740))
@@ -32,6 +32,7 @@ The CHANGELOG for the current development version is available at
 ##### Bug Fixes
 
 - The loss in `LogisticRegression` for logging purposes didn't include the L2 penalty for the first weight in the weight vector (this is not the bias unit). However, since this loss function was only used for logging purposes, and the gradient remains correct, this does not have an effect on the main code. ([#741](https://github.com/rasbt/mlxtend/pull/741))
+- Fixes a bug in `bias_variance_decomp` where when the `mse` loss was used, downcasting to integers caused imprecise results for small numbers. ([#749](https://github.com/rasbt/mlxtend/pull/749))
 
 
 ### Version 0.17.3 (07-27-2020)

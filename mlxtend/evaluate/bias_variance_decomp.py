@@ -75,7 +75,12 @@ def bias_variance_decomp(estimator, X_train, y_train, X_test, y_test,
 
     rng = np.random.RandomState(random_seed)
 
-    all_pred = np.zeros((num_rounds, y_test.shape[0]), dtype=np.int)
+    if loss == '0-1_loss':
+        dtype = np.int
+    elif loss == 'mse':
+        dtype = np.float
+
+    all_pred = np.zeros((num_rounds, y_test.shape[0]), dtype=dtype)
 
     for i in range(num_rounds):
         X_boot, y_boot = _draw_bootstrap_sample(rng, X_train, y_train)

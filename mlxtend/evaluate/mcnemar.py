@@ -212,4 +212,11 @@ def mcnemar(ary, corrected=True, exact=False):
         chi2 = min(b, c)
         p = min(scipy.stats.binom.cdf(chi2, b + c, .5) * 2., 1.)
 
+        # this is equivalent to the following code:
+        #
+        #    p = 0
+        #    for i in range(max(b, c), b+c+1):
+        #        p += scipy.special.binom(b+c, i) * 0.5**i * (1-0.5)**((b+c)-i)
+        #    p = 2*p
+
     return chi2, p

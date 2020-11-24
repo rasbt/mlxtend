@@ -96,11 +96,11 @@ def test_input_binary():
                         y_model2,
                         y_model3)
 
-    expect1 = np.array([[4, 1],
-                       [2, 3]])
+    expect1 = np.array([[4, 2],
+                       [1, 3]])
 
-    expect2 = np.array([[5, 0],
-                        [1, 4]])
+    expect2 = np.array([[5, 1],
+                        [0, 4]])
 
     expect3 = np.array([[4, 1],
                         [1, 4]])
@@ -121,11 +121,11 @@ def test_input_nonbinary():
                         y_model2,
                         y_model3)
 
-    expect1 = np.array([[4, 1],
-                       [2, 3]])
+    expect1 = np.array([[4, 2],
+                       [1, 3]])
 
-    expect2 = np.array([[5, 0],
-                        [1, 4]])
+    expect2 = np.array([[5, 1],
+                        [0, 4]])
 
     expect3 = np.array([[4, 1],
                         [1, 4]])

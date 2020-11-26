@@ -3,8 +3,7 @@
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
-# Author: Sebastian Raschka <sebastianraschka.com>
-# Author: Sebastian Raschka <sebastianraschka.com>
+
 
 
 import seaborn as sns
@@ -13,7 +12,8 @@ import numpy as np
 
 
 def scatter_hist(x, y, data):
-    """ Scatter plot and histograms plot individual feature histograms along with scatter plot.
+    """
+    Scatter plot individual feature histograms along with scatter plot.
 
     Parameters
     ----------

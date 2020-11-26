@@ -13,7 +13,7 @@ import numpy as np
 
 def scatter_hist(x, y, data):
     """
-    Scatter plot individual feature histograms along with scatter plot.
+    Scatter plot, individual feature histograms along axes of scatter plot.
 
     Parameters
     ----------

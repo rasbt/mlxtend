@@ -146,7 +146,7 @@ class LogisticRegression(_BaseModel, _IterativeModel, _Classifier):
     def _logit_cost(self, y, y_val):
         logit = -y.dot(np.log(y_val)) - ((1 - y).dot(np.log(1 - y_val)))
         if self.l2_lambda:
-            l2 = self.l2_lambda / 2.0 * np.sum(self.w_[1:]**2)
+            l2 = self.l2_lambda / 2.0 * np.sum(self.w_**2)
             logit += l2
         return logit
 

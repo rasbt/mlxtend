@@ -59,9 +59,9 @@ def mcnemar_table(y_target, y_model1, y_model2):
     tb = np.zeros((2, 2), dtype=int)
 
     tb[0, 0] = np.sum(plus_true == 2)
+    tb[0, 1] = np.sum(minus_true == 1)
+    tb[1, 0] = np.sum(minus_true == -1)
     tb[1, 1] = np.sum(plus_true == 0)
-    tb[1, 0] = np.sum(minus_true == 1)
-    tb[0, 1] = np.sum(minus_true == -1)
 
     return tb
 
@@ -148,9 +148,9 @@ def mcnemar_tables(y_target, *y_model_predictions):
         minus_true = model1_vs_true - model2_vs_true
 
         tb[0, 0] = np.sum(plus_true == 2)
+        tb[0, 1] = np.sum(minus_true == 1)
+        tb[1, 0] = np.sum(minus_true == -1)
         tb[1, 1] = np.sum(plus_true == 0)
-        tb[1, 0] = np.sum(minus_true == 1)
-        tb[0, 1] = np.sum(minus_true == -1)
 
         name_str = 'model_%s vs model_%s' % (comb[0], comb[1])
         tables[name_str] = tb
@@ -211,5 +211,12 @@ def mcnemar(ary, corrected=True, exact=False):
     else:
         chi2 = min(b, c)
         p = min(scipy.stats.binom.cdf(chi2, b + c, .5) * 2., 1.)
+
+        # this is equivalent to the following code:
+        #
+        #    p = 0
+        #    for i in range(max(b, c), b+c+1):
+        #        p += scipy.special.binom(b+c, i) * 0.5**i * (1-0.5)**((b+c)-i)
+        #    p = 2*p
 
     return chi2, p

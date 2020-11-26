@@ -75,8 +75,8 @@ def test_input_binary():
     tb = mcnemar_table(y_target=y_target,
                        y_model1=y_model1,
                        y_model2=y_model2)
-    expect = np.array([[4, 1],
-                       [2, 3]])
+    expect = np.array([[4, 2],
+                       [1, 3]])
 
     np.testing.assert_array_equal(tb, expect)
 
@@ -89,7 +89,7 @@ def test_input_nonbinary():
     tb = mcnemar_table(y_target=y_target,
                        y_model1=y_model1,
                        y_model2=y_model2)
-    expect = np.array([[4, 1],
-                       [2, 3]])
+    expect = np.array([[4, 2],
+                       [1, 3]])
 
     np.testing.assert_array_equal(tb, expect)

@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1002,41 +1014,33 @@
 <li>-</li>
 </ul>
 <h2 id="example-1-defaults">Example 1 - Defaults</h2>
-<pre><code class="python">from mlxtend.text import generalize_names
+<pre><code class="language-python">from mlxtend.text import generalize_names
 </code></pre>
-
-<pre><code class="python">generalize_names('Pozo, José Ángel')
+<pre><code class="language-python">generalize_names('Pozo, José Ángel')
 </code></pre>
-
 <pre><code>'pozo j'
 </code></pre>
-<pre><code class="python">generalize_names('José Pozo')
+<pre><code class="language-python">generalize_names('José Pozo')
 </code></pre>
-
 <pre><code>'pozo j'
 </code></pre>
-<pre><code class="python">generalize_names('José Ángel Pozo')
+<pre><code class="language-python">generalize_names('José Ángel Pozo')
 </code></pre>
-
 <pre><code>'pozo j'
 </code></pre>
 <h2 id="example-2-optional-parameters">Example 2 - Optional Parameters</h2>
-<pre><code class="python">from mlxtend.text import generalize_names
+<pre><code class="language-python">from mlxtend.text import generalize_names
 </code></pre>
-
-<pre><code class="python">generalize_names(&quot;Eto'o, Samuel&quot;, firstname_output_letters=2)
+<pre><code class="language-python">generalize_names(&quot;Eto'o, Samuel&quot;, firstname_output_letters=2)
 </code></pre>
-
 <pre><code>'etoo sa'
 </code></pre>
-<pre><code class="python">generalize_names(&quot;Eto'o, Samuel&quot;, firstname_output_letters=0)
+<pre><code class="language-python">generalize_names(&quot;Eto'o, Samuel&quot;, firstname_output_letters=0)
 </code></pre>
-
 <pre><code>'etoo'
 </code></pre>
-<pre><code class="python">generalize_names(&quot;Eto'o, Samuel&quot;, output_sep=', ')
+<pre><code class="language-python">generalize_names(&quot;Eto'o, Samuel&quot;, output_sep=', ')
 </code></pre>
-
 <pre><code>'etoo, s'
 </code></pre>
 <h2 id="api">API</h2>

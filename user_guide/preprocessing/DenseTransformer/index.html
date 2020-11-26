@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -992,7 +1004,7 @@
 <p>from mlxtend.preprocessing import DenseTransformer</p>
 </blockquote>
 <h2 id="example-1">Example 1</h2>
-<pre><code class="python">from sklearn.pipeline import Pipeline
+<pre><code class="language-python">from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import CountVectorizer
@@ -1032,7 +1044,6 @@ best_parameters_1 = grid_search_1.best_estimator_.get_params()
 for param_name in sorted(parameters_1.keys()):
     print(&quot;\t%s: %r&quot; % (param_name, best_parameters_1[param_name]))
 </code></pre>
-
 <pre><code>Performing grid search...
 pipeline: ['vect', 'to_dense', 'clf']
 parameters:
@@ -1053,88 +1064,98 @@ Best parameters set:
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X, y=None)</em></p>
-<p>Mock method. Does nothing.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<p>self</p>
+*fit(X, y=None)*
+
+Mock method. Does nothing.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples] (default: None)
+
+
+**Returns**
+
+self
+
 <hr>
 
-<p><em>fit_transform(X, y=None)</em></p>
-<p>Return a dense version of the input array.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>X_dense</code> : dense version of the input X array.</li>
-</ul>
+*fit_transform(X, y=None)*
+
+Return a dense version of the input array.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples] (default: None)
+
+
+**Returns**
+
+- `X_dense` : dense version of the input X array.
+
+
 <hr>
 
-<p><em>get_params(deep=True)</em></p>
-<p>Get parameters for this estimator.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>deep</code> : boolean, optional</p>
-<p>If True, will return the parameters for this estimator and
-contained subobjects that are estimators.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>params</code> : mapping of string to any</p>
-<p>Parameter names mapped to their values.</p>
-</li>
-</ul>
+*get_params(deep=True)*
+
+Get parameters for this estimator.
+
+**Parameters**
+
+- `deep` : boolean, optional
+
+    If True, will return the parameters for this estimator and
+    contained subobjects that are estimators.
+
+**Returns**
+
+- `params` : mapping of string to any
+
+    Parameter names mapped to their values.
+
 <hr>
 
-<p><em>set_params(</em><em>params)</em></p>
-<p>Set the parameters of this estimator.</p>
-<p>The method works on simple estimators as well as on nested objects
+*set_params(**params)*
+
+Set the parameters of this estimator.
+
+The method works on simple estimators as well as on nested objects
 (such as pipelines). The latter have parameters of the form
-<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
-component of a nested object.</p>
-<p><strong>Returns</strong></p>
-<p>self</p>
+``<component>__<parameter>`` so that it's possible to update each
+component of a nested object.
+
+**Returns**
+
+self
+
 <hr>
 
-<p><em>transform(X, y=None)</em></p>
-<p>Return a dense version of the input array.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>X_dense</code> : dense version of the input X array.</li>
-</ul></div>
+*transform(X, y=None)*
+
+Return a dense version of the input array.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples] (default: None)
+
+
+**Returns**
+
+- `X_dense` : dense version of the input X array.</div>
         
         
     </div>

@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1021,7 +1033,7 @@
 <li>Kazemi, Vahid, and Josephine Sullivan. "One millisecond face alignment with an ensemble of regression trees." Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2014.</li>
 </ul>
 <h2 id="example-1-rgb-images">Example 1 -- RGB Images</h2>
-<pre><code class="python">import imageio
+<pre><code class="language-python">import imageio
 import matplotlib.pyplot as plt
 
 
@@ -1032,7 +1044,6 @@ landmarks = extract_face_landmarks(img)
 print(landmarks.shape)
 print('\n\nFirst 10 landmarks:\n', landmarks[:10])
 </code></pre>
-
 <pre><code>(68, 2)
 
 
@@ -1049,7 +1060,7 @@ First 10 landmarks:
  [211 231]]
 </code></pre>
 <p>Visualization of the landmarks:</p>
-<pre><code class="python">fig = plt.figure(figsize=(15, 5))
+<pre><code class="language-python">fig = plt.figure(figsize=(15, 5))
 ax = fig.add_subplot(1, 3, 1)
 ax.imshow(img)
 ax = fig.add_subplot(1, 3, 2)
@@ -1067,17 +1078,15 @@ for p in landmarks:
 ax.imshow(img2)
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../extract_face_landmarks_files/extract_face_landmarks_9_0.png" /></p>
 <h3 id="displaying-the-index-of-landmark-points">Displaying the index of landmark points</h3>
-<pre><code class="python">import numpy as np
+<pre><code class="language-python">import numpy as np
 
 
 left_eye = np.array([36, 37, 38, 39, 40, 41])
 right_eye = np.array([42, 43, 44, 45, 46, 47])
 </code></pre>
-
-<pre><code class="python">import matplotlib.pyplot as plt
+<pre><code class="language-python">import matplotlib.pyplot as plt
 %matplotlib inline
 
 
@@ -1102,13 +1111,12 @@ plt.yticks([])
 
 plt.show()
 </code></pre>
-
 <pre><code>Coordinates of the Left Eye:  [169.33333333 156.        ]
 Coordinates of the Right Eye:  [210.83333333 152.16666667]
 </code></pre>
 <p><img alt="png" src="../extract_face_landmarks_files/extract_face_landmarks_12_1.png" /></p>
 <h2 id="example-2-grayscale-images">Example 2 -- Grayscale Images</h2>
-<pre><code class="python">import imageio
+<pre><code class="language-python">import imageio
 import matplotlib.pyplot as plt
 from mlxtend.image import extract_face_landmarks
 
@@ -1117,7 +1125,6 @@ landmarks = extract_face_landmarks(img)
 print(landmarks.shape)
 print('\n\nFirst 10 landmarks:\n', landmarks[:10])
 </code></pre>
-
 <pre><code>(68, 2)
 
 
@@ -1133,7 +1140,7 @@ First 10 landmarks:
  [60 66]
  [64 64]]
 </code></pre>
-<pre><code class="python">fig = plt.figure(figsize=(15, 5))
+<pre><code class="language-python">fig = plt.figure(figsize=(15, 5))
 ax = fig.add_subplot(1, 3, 1)
 ax.imshow(img, cmap='gray')
 ax = fig.add_subplot(1, 3, 2)
@@ -1152,7 +1159,6 @@ for p in landmarks:
 ax.imshow(img2, cmap='gray')
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../extract_face_landmarks_files/extract_face_landmarks_15_0.png" /></p>
 <h2 id="api">API</h2>
 <p><em>extract_face_landmarks(img, return_dtype=<class 'numpy.int32'>)</em></p>

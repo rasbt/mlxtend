@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../../user_guide/classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../../user_guide/evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../../user_guide/evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -972,10 +984,10 @@
         <div class="col-md-9" role="main">
 
 <h2 id="bias_variance_decomp">bias_variance_decomp</h2>
-<p><em>bias_variance_decomp(estimator, X_train, y_train, X_test, y_test, loss='0-1_loss', num_rounds=200, random_seed=None)</em></p>
+<p><em>bias_variance_decomp(estimator, X_train, y_train, X_test, y_test, loss='0-1_loss', num_rounds=200, random_seed=None, </em><em>fit_params)</em></p>
 <p>estimator : object
-A classifier or regressor object or class implementing a <code>fit</code>
-<code>predict</code> method similar to the scikit-learn API.</p>
+    A classifier or regressor object or class implementing both a
+    <code>fit</code> and <code>predict</code> method similar to the scikit-learn API.</p>
 <ul>
 <li>
 <p><code>X_train</code> : array-like, shape=(num_examples, num_features)</p>
@@ -1012,6 +1024,11 @@ decomposition.</p>
 <p>Random seed for the bootstrap sampling used for the
 bias-variance decomposition.</p>
 </li>
+<li>
+<p><code>fit_params</code> : additional parameters</p>
+<p>Additional parameters to be passed to the .fit() function of the
+estimator when it is fit to the bootstrap samples.</p>
+</li>
 </ul>
 <p><strong>Returns</strong></p>
 <ul>
@@ -1023,7 +1040,7 @@ is computed over the data points in the test set.</p>
 </ul>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/bias_variance_decomp/">http://rasbt.github.io/mlxtend/user_guide/evaluate/bias_variance_decomp/</a></p></div>
+    http://rasbt.github.io/mlxtend/user_guide/evaluate/bias_variance_decomp/</p></div>
         
         
     </div>

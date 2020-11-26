@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1132,7 +1144,7 @@ y_model_3 = np.array([1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 <li>[2] Kuncheva, Ludmila I. Combining pattern classifiers: methods and algorithms. John Wiley &amp; Sons, 2004.</li>
 </ul>
 <h2 id="example-1-cochrans-q-test">Example 1 - Cochran's Q test</h2>
-<pre><code class="python">import numpy as np
+<pre><code class="language-python">import numpy as np
 from mlxtend.evaluate import cochrans_q
 from mlxtend.evaluate import mcnemar_table
 from mlxtend.evaluate import mcnemar
@@ -1172,9 +1184,8 @@ y_model_3 = np.array([1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                       1, 1])
 </code></pre>
-
 <p>Assuming a significance level <script type="math/tex">\alpha=0.05</script>, we can conduct Cochran's Q test as follows, to test the null hypothesis there is no difference between the classification accuracies, <script type="math/tex">p_i: H_0 = p_1 = p_2 = \cdots = p_L</script>:</p>
-<pre><code class="python">q, p_value = cochrans_q(y_true, 
+<pre><code class="language-python">q, p_value = cochrans_q(y_true, 
                         y_model_1, 
                         y_model_2, 
                         y_model_3)
@@ -1182,24 +1193,22 @@ y_model_3 = np.array([1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 print('Q: %.3f' % q)
 print('p-value: %.3f' % p_value)
 </code></pre>
-
 <pre><code>Q: 7.529
 p-value: 0.023
 </code></pre>
 <p>Since the p-value is smaller than <script type="math/tex">\alpha</script>, we can reject the null hypothesis and conclude that there is a difference between the classification accuracies. As mentioned in the introduction earlier, we could now perform multiple post hoc pair-wise tests -- for example, McNemar tests with a Bonferroni correction -- to determine which pairs have different population proportions.</p>
 <p>Lastly, let's illustrate that Cochran's Q test is indeed just a generalized version of McNemar's test:</p>
-<pre><code class="python">chi2, p_value = cochrans_q(y_true, 
+<pre><code class="language-python">chi2, p_value = cochrans_q(y_true, 
                            y_model_1, 
                            y_model_2)
 
 print('Cochran\'s Q Chi^2: %.3f' % chi2)
 print('Cochran\'s Q p-value: %.3f' % p_value)
 </code></pre>
-
 <pre><code>Cochran's Q Chi^2: 5.333
 Cochran's Q p-value: 0.021
 </code></pre>
-<pre><code class="python">chi2, p_value = mcnemar(mcnemar_table(y_true, 
+<pre><code class="language-python">chi2, p_value = mcnemar(mcnemar_table(y_true, 
                                       y_model_1, 
                                       y_model_2),
                         corrected=False)
@@ -1207,7 +1216,6 @@ Cochran's Q p-value: 0.021
 print('McNemar\'s Chi^2: %.3f' % chi2)
 print('McNemar\'s p-value: %.3f' % p_value)
 </code></pre>
-
 <pre><code>McNemar's Chi^2: 5.333
 McNemar's p-value: 0.021
 </code></pre>

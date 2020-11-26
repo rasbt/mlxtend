@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../../user_guide/classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../../user_guide/evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../../user_guide/evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -974,18 +986,18 @@
 <h2 id="bootstrap_point632_score">bootstrap_point632_score</h2>
 <p><em>bootstrap_point632_score(estimator, X, y, n_splits=200, method='.632', scoring_func=None, predict_proba=False, random_seed=None, clone_estimator=True)</em></p>
 <p>Implementation of the .632 [1] and .632+ [2] bootstrap
-for supervised learning</p>
-<p>References:</p>
-<ul>
-<li>[1] Efron, Bradley. 1983. "Estimating the Error Rate
+    for supervised learning</p>
+<pre><code>References:
+
+- [1] Efron, Bradley. 1983. "Estimating the Error Rate
 of a Prediction Rule: Improvement on Cross-Validation."
 Journal of the American Statistical Association
-78 (382): 316. doi:10.2307/2288636.</li>
-<li>[2] Efron, Bradley, and Robert Tibshirani. 1997.
+78 (382): 316. doi:10.2307/2288636.
+- [2] Efron, Bradley, and Robert Tibshirani. 1997.
 "Improvements on Cross-Validation: The .632+ Bootstrap Method."
 Journal of the American Statistical Association
-92 (438): 548. doi:10.2307/2965703.</li>
-</ul>
+92 (438): 548. doi:10.2307/2965703.
+</code></pre>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1058,23 +1070,24 @@ replicate.</p>
 </li>
 </ul>
 <p><strong>Examples</strong></p>
-<pre><code>&gt;&gt;&gt; from sklearn import datasets, linear_model
-&gt;&gt;&gt; from mlxtend.evaluate import bootstrap_point632_score
-&gt;&gt;&gt; iris = datasets.load_iris()
-&gt;&gt;&gt; X = iris.data
-&gt;&gt;&gt; y = iris.target
-&gt;&gt;&gt; lr = linear_model.LogisticRegression()
-&gt;&gt;&gt; scores = bootstrap_point632_score(lr, X, y)
-&gt;&gt;&gt; acc = np.mean(scores)
-&gt;&gt;&gt; print('Accuracy:', acc)
-0.953023146884
-&gt;&gt;&gt; lower = np.percentile(scores, 2.5)
-&gt;&gt;&gt; upper = np.percentile(scores, 97.5)
-&gt;&gt;&gt; print('95%% Confidence interval: [%.2f, %.2f]' % (lower, upper))
-95% Confidence interval: [0.90, 0.98]
-</code></pre>
-<p>For more usage examples, please see
-<a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/bootstrap_point632_score/">http://rasbt.github.io/mlxtend/user_guide/evaluate/bootstrap_point632_score/</a></p></div>
+<pre><code>    &gt;&gt;&gt; from sklearn import datasets, linear_model
+    &gt;&gt;&gt; from mlxtend.evaluate import bootstrap_point632_score
+    &gt;&gt;&gt; iris = datasets.load_iris()
+    &gt;&gt;&gt; X = iris.data
+    &gt;&gt;&gt; y = iris.target
+    &gt;&gt;&gt; lr = linear_model.LogisticRegression()
+    &gt;&gt;&gt; scores = bootstrap_point632_score(lr, X, y)
+    &gt;&gt;&gt; acc = np.mean(scores)
+    &gt;&gt;&gt; print('Accuracy:', acc)
+    0.953023146884
+    &gt;&gt;&gt; lower = np.percentile(scores, 2.5)
+    &gt;&gt;&gt; upper = np.percentile(scores, 97.5)
+    &gt;&gt;&gt; print('95%% Confidence interval: [%.2f, %.2f]' % (lower, upper))
+    95% Confidence interval: [0.90, 0.98]
+
+    For more usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/evaluate/bootstrap_point632_score/
+</code></pre></div>
         
         
     </div>

@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1001,7 +1013,7 @@
 <li>-</li>
 </ul>
 <h2 id="example-1-category-scatter-from-pandas-dataframes">Example 1 - Category Scatter from Pandas DataFrames</h2>
-<pre><code class="python">import pandas as pd
+<pre><code class="language-python">import pandas as pd
 from io import StringIO
 
 csvfile = &quot;&quot;&quot;label,x,y
@@ -1015,7 +1027,6 @@ class3,3.8,5.1&quot;&quot;&quot;
 df = pd.read_csv(StringIO(csvfile))
 df
 </code></pre>
-
 <div>
 <table border="1" class="dataframe">
   <thead>
@@ -1068,16 +1079,15 @@ df
 </div>
 
 <p>Plotting the data where the categories are determined by the unique values in the label column <code>label_col</code>. The <code>x</code> and <code>y</code> values are simply the column names of the DataFrame that we want to plot.</p>
-<pre><code class="python">import matplotlib.pyplot as plt
+<pre><code class="language-python">import matplotlib.pyplot as plt
 from mlxtend.plotting import category_scatter
 
 fig = category_scatter(x='x', y='y', label_col='label', 
                        data=df, legend_loc='upper left')
 </code></pre>
-
 <p><img alt="png" src="../category_scatter_files/category_scatter_9_0.png" /></p>
 <h2 id="example-2-category-scatter-from-numpy-arrays">Example 2 - Category Scatter from NumPy Arrays</h2>
-<pre><code class="python">import numpy as np
+<pre><code class="language-python">import numpy as np
 from io import BytesIO
 
 csvfile = &quot;&quot;&quot;1,10.0,8.04
@@ -1090,7 +1100,6 @@ csvfile = &quot;&quot;&quot;1,10.0,8.04
 ary = np.genfromtxt(BytesIO(csvfile.encode()), delimiter=',')
 ary
 </code></pre>
-
 <pre><code>array([[  1.  ,  10.  ,   8.04],
        [  1.  ,  10.5 ,   7.3 ],
        [  2.  ,   8.3 ,   5.5 ],
@@ -1099,13 +1108,12 @@ ary
        [  3.  ,   3.8 ,   5.1 ]])
 </code></pre>
 <p>Now, pretending that the first column represents the labels, and the second and third column represent the <code>x</code> and <code>y</code> values, respectively.</p>
-<pre><code class="python">import matplotlib.pyplot as plt
+<pre><code class="language-python">import matplotlib.pyplot as plt
 from mlxtend.plotting import category_scatter
 
 fix = category_scatter(x=1, y=2, label_col=0, 
                        data=ary, legend_loc='upper left')
 </code></pre>
-
 <p><img alt="png" src="../category_scatter_files/category_scatter_13_0.png" /></p>
 <h2 id="api">API</h2>
 <p><em>category_scatter(x, y, label_col, data, markers='sxo^v', colors=('blue', 'green', 'red', 'purple', 'gray', 'cyan'), alpha=0.7, markersize=20.0, legend_loc='best')</em></p>

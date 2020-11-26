@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -986,6 +998,8 @@
                  <!--   -->
             <li class="second-level"><a href="#example-2-bias-variance-decomposition-of-a-decision-tree-regressor">Example 2 -- Bias Variance Decomposition of a Decision Tree Regressor</a></li>
                  <!--   -->
+            <li class="second-level"><a href="#example-3-tensorflowkeras-support">Example 3 -- TensorFlow/Keras Support</a></li>
+                 <!--   -->
             <li class="second-level"><a href="#api">API</a></li>
                  <!--   -->
     </ul>
@@ -1179,7 +1193,7 @@ Loss = P(\hat{y} \neq y) = 1 - P(\hat{y} = y) = 1 - P(\hat{y} \neq E[{\hat{y}}])
 <li>[2] Dietterich, Thomas G., and Eun Bae Kong. Machine learning bias, statistical bias, and statistical variance of decision tree algorithms. Technical report, Department of Computer Science, Oregon State University, 1995.</li>
 </ul>
 <h2 id="example-1-bias-variance-decomposition-of-a-decision-tree-classifier">Example 1 -- Bias Variance Decomposition of a Decision Tree Classifier</h2>
-<pre><code class="python">from mlxtend.evaluate import bias_variance_decomp
+<pre><code class="language-python">from mlxtend.evaluate import bias_variance_decomp
 from sklearn.tree import DecisionTreeClassifier
 from mlxtend.data import iris_data
 from sklearn.model_selection import train_test_split
@@ -1205,13 +1219,12 @@ print('Average expected loss: %.3f' % avg_expected_loss)
 print('Average bias: %.3f' % avg_bias)
 print('Average variance: %.3f' % avg_var)
 </code></pre>
-
 <pre><code>Average expected loss: 0.062
 Average bias: 0.022
 Average variance: 0.040
 </code></pre>
 <p>For comparison, the bias-variance decomposition of a bagging classifier, which should intuitively have a lower variance compared than a single decision tree:</p>
-<pre><code class="python">from sklearn.ensemble import BaggingClassifier
+<pre><code class="language-python">from sklearn.ensemble import BaggingClassifier
 
 tree = DecisionTreeClassifier(random_state=123)
 bag = BaggingClassifier(base_estimator=tree,
@@ -1227,13 +1240,12 @@ print('Average expected loss: %.3f' % avg_expected_loss)
 print('Average bias: %.3f' % avg_bias)
 print('Average variance: %.3f' % avg_var)
 </code></pre>
-
 <pre><code>Average expected loss: 0.048
 Average bias: 0.022
 Average variance: 0.026
 </code></pre>
 <h2 id="example-2-bias-variance-decomposition-of-a-decision-tree-regressor">Example 2 -- Bias Variance Decomposition of a Decision Tree Regressor</h2>
-<pre><code class="python">from mlxtend.evaluate import bias_variance_decomp
+<pre><code class="language-python">from mlxtend.evaluate import bias_variance_decomp
 from sklearn.tree import DecisionTreeRegressor
 from mlxtend.data import boston_housing_data
 from sklearn.model_selection import train_test_split
@@ -1258,13 +1270,12 @@ print('Average expected loss: %.3f' % avg_expected_loss)
 print('Average bias: %.3f' % avg_bias)
 print('Average variance: %.3f' % avg_var)
 </code></pre>
-
-<pre><code>Average expected loss: 31.917
-Average bias: 13.814
-Average variance: 18.102
+<pre><code>Average expected loss: 31.756
+Average bias: 13.856
+Average variance: 17.900
 </code></pre>
 <p>For comparison, the bias-variance decomposition of a bagging regressor is shown below, which should intuitively have a lower variance than a single decision tree:</p>
-<pre><code class="python">from sklearn.ensemble import BaggingRegressor
+<pre><code class="language-python">from sklearn.ensemble import BaggingRegressor
 
 tree = DecisionTreeRegressor(random_state=123)
 bag = BaggingRegressor(base_estimator=tree,
@@ -1280,16 +1291,72 @@ print('Average expected loss: %.3f' % avg_expected_loss)
 print('Average bias: %.3f' % avg_bias)
 print('Average variance: %.3f' % avg_var)
 </code></pre>
+<pre><code>Average expected loss: 18.620
+Average bias: 15.461
+Average variance: 3.159
+</code></pre>
+<h2 id="example-3-tensorflowkeras-support">Example 3 -- TensorFlow/Keras Support</h2>
+<p>Since mlxtend v0.18.0, the <code>bias_variance_decomp</code> now supports Keras models. Note that the original model is reset in each round (before refitting it to the bootstrap samples).</p>
+<pre><code class="language-python">from mlxtend.evaluate import bias_variance_decomp
+from mlxtend.data import boston_housing_data
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
+import tensorflow as tf
+import numpy as np
 
-<pre><code>Average expected loss: 18.593
-Average bias: 15.354
-Average variance: 3.239
+
+np.random.seed(1)
+tf.random.set_seed(1)
+
+
+X, y = boston_housing_data()
+X_train, X_test, y_train, y_test = train_test_split(X, y,
+                                                    test_size=0.3,
+                                                    random_state=123,
+                                                    shuffle=True)
+
+
+model = tf.keras.Sequential([
+    tf.keras.layers.Dense(32, activation=tf.nn.relu),
+    tf.keras.layers.Dense(1)
+  ])
+
+optimizer = tf.keras.optimizers.Adam()
+model.compile(loss='mean_squared_error', optimizer=optimizer)
+
+model.fit(X_train, y_train, epochs=100, verbose=0)
+
+mean_squared_error(model.predict(X_test), y_test)
+</code></pre>
+<pre><code>32.69300595184836
+</code></pre>
+<p>Note that it is highly recommended to use the same number of training epochs that you would use on the original training set to ensure convergence:</p>
+<pre><code class="language-python">np.random.seed(1)
+tf.random.set_seed(1)
+
+
+avg_expected_loss, avg_bias, avg_var = bias_variance_decomp(
+        model, X_train, y_train, X_test, y_test, 
+        loss='mse',
+        num_rounds=100,
+        random_seed=123,
+        epochs=200, # fit_param
+        verbose=0) # fit_param
+
+
+print('Average expected loss: %.3f' % avg_expected_loss)
+print('Average bias: %.3f' % avg_bias)
+print('Average variance: %.3f' % avg_var)
+</code></pre>
+<pre><code>Average expected loss: 32.740
+Average bias: 27.474
+Average variance: 5.265
 </code></pre>
 <h2 id="api">API</h2>
-<p><em>bias_variance_decomp(estimator, X_train, y_train, X_test, y_test, loss='0-1_loss', num_rounds=200, random_seed=None)</em></p>
+<p><em>bias_variance_decomp(estimator, X_train, y_train, X_test, y_test, loss='0-1_loss', num_rounds=200, random_seed=None, </em><em>fit_params)</em></p>
 <p>estimator : object
-A classifier or regressor object or class implementing a <code>fit</code>
-<code>predict</code> method similar to the scikit-learn API.</p>
+    A classifier or regressor object or class implementing both a
+    <code>fit</code> and <code>predict</code> method similar to the scikit-learn API.</p>
 <ul>
 <li>
 <p><code>X_train</code> : array-like, shape=(num_examples, num_features)</p>
@@ -1326,6 +1393,11 @@ decomposition.</p>
 <p>Random seed for the bootstrap sampling used for the
 bias-variance decomposition.</p>
 </li>
+<li>
+<p><code>fit_params</code> : additional parameters</p>
+<p>Additional parameters to be passed to the .fit() function of the
+estimator when it is fit to the bootstrap samples.</p>
+</li>
 </ul>
 <p><strong>Returns</strong></p>
 <ul>
@@ -1337,7 +1409,8 @@ is computed over the data points in the test set.</p>
 </ul>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/bias_variance_decomp/">http://rasbt.github.io/mlxtend/user_guide/evaluate/bias_variance_decomp/</a></p></div>
+    http://rasbt.github.io/mlxtend/user_guide/evaluate/bias_variance_decomp/</p>
+<p>ython</p></div>
         
         
     </div>

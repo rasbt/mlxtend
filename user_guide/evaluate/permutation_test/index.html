@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1005,12 +1017,12 @@
 <li>Divide the permuted dataset into two datasets x' and y' of size <em>n</em> and <em>m</em>, respectively</li>
 <li>Compute the difference (here: mean) of sample x' and sample y' and record this difference</li>
 <li>Repeat steps 3-5 until all permutations are evaluated</li>
-<li>Return the p-value as the number of times the recorded differences were more extreme than the original difference from 1. and divide this number by the total number of permutations</li>
+<li>Return the p-value as the number of times the recorded differences were at least as extreme as the original difference from 1. and divide this number by the total number of permutations</li>
 </ol>
 <p>Here, the p-value is defined as the probability, given the null hypothesis (no difference between the samples) is true, that we obtain results that are at least as extreme as the results we observed (i.e., the sample difference from 1.).</p>
-<p>More formally, we can express the computation of the p-value as follows ([2]):</p>
+<p>More formally, we can express the computation of the p-value as follows (adapted from [2]):</p>
 <p>
-<script type="math/tex; mode=display">p(t > t_0) = \frac{1}{(n+m)!} \sum^{(n+m)!}_{j=1} I(t_j > t_0),</script>
+<script type="math/tex; mode=display">p(t \geq t_0) = \frac{1}{(n+m)!} \sum^{(n+m)!}_{j=1} I(t_j \geq t_0),</script>
 </p>
 <p>where <script type="math/tex">t_0</script> is the observed value of the test statistic (1. in the list above), and <script type="math/tex">t</script> is the t-value, the statistic computed from the resamples (5.) <script type="math/tex">t(x'_1, x'_2, ..., x'_n, y'_1, y'_2, ..., x'_m) = |\bar{x'} - \bar{y'}|</script>, and <em>I</em> is the indicator function.</p>
 <p>Given a significance level that we specify prior to carrying out the permutation test (e.g., alpha=0.05), we fail to reject the null hypothesis if the p-value is greater than alpha.</p>
@@ -1023,16 +1035,15 @@
 </ul>
 <h2 id="example-1-two-sided-permutation-test">Example 1 -- Two-sided permutation test</h2>
 <p>Perform a two-sided permutation test to test the null hypothesis that two groups, "treatment" and "control" come from the same distribution. We specify alpha=0.01 as our significance level.</p>
-<pre><code class="python">treatment = [ 28.44,  29.32,  31.22,  29.58,  30.34,  28.76,  29.21,  30.4 ,
+<pre><code class="language-python">treatment = [ 28.44,  29.32,  31.22,  29.58,  30.34,  28.76,  29.21,  30.4 ,
               31.12,  31.78,  27.58,  31.57,  30.73,  30.43,  30.31,  30.32,
               29.18,  29.52,  29.22,  30.56]
 control = [ 33.51,  30.63,  32.38,  32.52,  29.41,  30.93,  49.78,  28.96,
             35.77,  31.42,  30.76,  30.6 ,  23.64,  30.54,  47.78,  31.98,
             34.52,  32.42,  31.32,  40.72]
 </code></pre>
-
 <p>Since evaluating all possible permutations may take a while, we will use the approximation method (see the introduction for details):</p>
-<pre><code class="python">from mlxtend.evaluate import permutation_test
+<pre><code class="language-python">from mlxtend.evaluate import permutation_test
 
 p_value = permutation_test(treatment, control,
                            method='approximate',
@@ -1040,13 +1051,12 @@ p_value = permutation_test(treatment, control,
                            seed=0)
 print(p_value)
 </code></pre>
-
-<pre><code>0.0066
+<pre><code>0.0066993300669933005
 </code></pre>
 <p>Since p-value &lt; alpha, we can reject the null hypothesis that the two samples come from the same distribution.</p>
 <h2 id="example-2-calculating-the-p-value-for-correlation-analysis-pearsons-r">Example 2 -- Calculating the p-value for correlation analysis (Pearson's R)</h2>
 <p>Note: this is a one-sided hypothesis testing as we conduct the permutation test as "how many times obtain a correlation coefficient that is greater than the observed value?"</p>
-<pre><code class="python">import numpy as np
+<pre><code class="language-python">import numpy as np
 from mlxtend.evaluate import permutation_test
 
 x = np.array([1, 2, 3, 4, 5, 6])
@@ -1061,9 +1071,8 @@ p_value = permutation_test(x, y,
                            seed=0)
 print('P value: %.2f' % p_value)
 </code></pre>
-
 <pre><code>Observed pearson R: 0.81
-P value: 0.09
+P value: 0.10
 </code></pre>
 <h2 id="api">API</h2>
 <p><em>permutation_test(x, y, func='x_mean != y_mean', method='exact', num_rounds=1000, seed=None)</em></p>

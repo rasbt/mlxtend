@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../user_guide/classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../user_guide/evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -984,12 +996,12 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.18.0dev0 </p>
+<p>mlxtend version: 0.18.0 </p>
 <h2 id="generalize_names">generalize_names</h2>
 <p><em>generalize_names(name, output_sep=' ', firstname_output_letters=1)</em></p>
 <p>Generalize a person's first and last name.</p>
 <p>Returns a person's name in the format
-<code>&lt;last_name&gt;&lt;separator&gt;&lt;firstname letter(s)&gt; (all lowercase)</code></p>
+    <code>&lt;last_name&gt;&lt;separator&gt;&lt;firstname letter(s)&gt; (all lowercase)</code></p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1014,13 +1026,13 @@
 </ul>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/text/generalize_names/">http://rasbt.github.io/mlxtend/user_guide/text/generalize_names/</a></p>
+    http://rasbt.github.io/mlxtend/user_guide/text/generalize_names/</p>
 <h2 id="generalize_names_duplcheck">generalize_names_duplcheck</h2>
 <p><em>generalize_names_duplcheck(df, col_name)</em></p>
 <p>Generalizes names and removes duplicates.</p>
 <p>Applies mlxtend.text.generalize_names to a DataFrame
-with 1 first name letter by default
-and uses more first name letters if duplicates are detected.</p>
+    with 1 first name letter by default
+    and uses more first name letters if duplicates are detected.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1044,25 +1056,27 @@ been applied without duplicates.</p>
 </ul>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/text/generalize_names_duplcheck/">http://rasbt.github.io/mlxtend/user_guide/text/generalize_names_duplcheck/</a></p>
+    http://rasbt.github.io/mlxtend/user_guide/text/generalize_names_duplcheck/</p>
 <h2 id="tokenizer_emoticons">tokenizer_emoticons</h2>
 <p><em>tokenizer_emoticons(text)</em></p>
 <p>Return emoticons from text</p>
 <p><strong>Examples</strong></p>
-<pre><code>&gt;&gt;&gt; tokenizer_emoticons('&lt;/a&gt;This :) is :( a test :-)!')
+<pre><code>    &gt;&gt;&gt; tokenizer_emoticons('&lt;/a&gt;This :) is :( a test :-)!')
+    [':)', ':(', ':-)']
+
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/text/tokenizer_emoticons/
 </code></pre>
-<p>[':)', ':(', ':-)']</p>
-<p>For usage examples, please see
-<a href="http://rasbt.github.io/mlxtend/user_guide/text/tokenizer_emoticons/">http://rasbt.github.io/mlxtend/user_guide/text/tokenizer_emoticons/</a></p>
 <h2 id="tokenizer_words_and_emoticons">tokenizer_words_and_emoticons</h2>
 <p><em>tokenizer_words_and_emoticons(text)</em></p>
 <p>Convert text to lowercase words and emoticons.</p>
 <p><strong>Examples</strong></p>
-<pre><code>&gt;&gt;&gt; tokenizer_words_and_emoticons('&lt;/a&gt;This :) is :( a test :-)!')
-</code></pre>
-<p>['this', 'is', 'a', 'test', ':)', ':(', ':-)']</p>
-<p>For more usage examples, please see
-<a href="http://rasbt.github.io/mlxtend/user_guide/text/tokenizer_words_and_emoticons/">http://rasbt.github.io/mlxtend/user_guide/text/tokenizer_words_and_emoticons/</a></p></div>
+<pre><code>    &gt;&gt;&gt; tokenizer_words_and_emoticons('&lt;/a&gt;This :) is :( a test :-)!')
+    ['this', 'is', 'a', 'test', ':)', ':(', ':-)']
+
+    For more usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/text/tokenizer_words_and_emoticons/
+</code></pre></div>
         
         
     </div>

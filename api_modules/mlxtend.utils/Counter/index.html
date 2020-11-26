@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../../user_guide/classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../../user_guide/evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../../user_guide/evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1012,26 +1024,28 @@ between multiple counters.</p>
 </li>
 </ul>
 <p><strong>Examples</strong></p>
-<pre><code>&gt;&gt;&gt; cnt = Counter()
-&gt;&gt;&gt; for i in range(20):
-...     # do some computation
-...     time.sleep(0.1)
-...     cnt.update()
-20 iter | 2 sec
-&gt;&gt;&gt; print('The counter was initialized.'
-' %d seconds ago.' % (time.time() - cnt.start_time))
-The counter was initialized 2 seconds ago
-&gt;&gt;&gt; print('The counter was last updated'
-' %d seconds ago.' % (time.time() - cnt.end_time))
-The counter was last updated 0 seconds ago.
+<pre><code>    &gt;&gt;&gt; cnt = Counter()
+    &gt;&gt;&gt; for i in range(20):
+    ...     # do some computation
+    ...     time.sleep(0.1)
+    ...     cnt.update()
+    20 iter | 2 sec
+    &gt;&gt;&gt; print('The counter was initialized.'
+    ' %d seconds ago.' % (time.time() - cnt.start_time))
+    The counter was initialized 2 seconds ago
+    &gt;&gt;&gt; print('The counter was last updated'
+    ' %d seconds ago.' % (time.time() - cnt.end_time))
+    The counter was last updated 0 seconds ago.
+
+    For more usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/utils/Counter/
 </code></pre>
-<p>For more usage examples, please see
-<a href="http://rasbt.github.io/mlxtend/user_guide/utils/Counter/">http://rasbt.github.io/mlxtend/user_guide/utils/Counter/</a></p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>update()</em></p>
-<p>Print current iteration and time elapsed.</p></div>
+*update()*
+
+Print current iteration and time elapsed.</div>
         
         
     </div>

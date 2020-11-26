@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../user_guide/classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../user_guide/evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -979,390 +991,359 @@
         <li class="first-level active"><a href="#copytransformer">CopyTransformer</a></li>
             <li class="second-level"><a href="#methods">Methods</a></li>
                  <!--   -->
-        <li class="first-level "><a href="#densetransformer">DenseTransformer</a></li>
-            <li class="second-level"><a href="#methods_1">Methods</a></li>
-                 <!--   -->
-        <li class="first-level "><a href="#meancenterer">MeanCenterer</a></li>
-            <li class="second-level"><a href="#methods_2">Methods</a></li>
-                 <!--   -->
-        <li class="first-level "><a href="#transactionencoder">TransactionEncoder</a></li>
-            <li class="second-level"><a href="#methods_3">Methods</a></li>
-                 <!--   -->
-        <li class="first-level "><a href="#minmax_scaling">minmax_scaling</a></li>
-        <li class="first-level "><a href="#one_hot">one_hot</a></li>
-        <li class="first-level "><a href="#shuffle_arrays_unison">shuffle_arrays_unison</a></li>
-        <li class="first-level "><a href="#standardize">standardize</a></li>
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.18.0dev0 </p>
+<p>mlxtend version: 0.18.0 </p>
 <h2 id="copytransformer">CopyTransformer</h2>
 <p><em>CopyTransformer()</em></p>
 <p>Transformer that returns a copy of the input array</p>
-<p>For usage examples, please see
-<a href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/CopyTransformer/">http://rasbt.github.io/mlxtend/user_guide/preprocessing/CopyTransformer/</a></p>
+<pre><code>For usage examples, please see
+http://rasbt.github.io/mlxtend/user_guide/preprocessing/CopyTransformer/
+</code></pre>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X, y=None)</em></p>
-<p>Mock method. Does nothing.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<p>self</p>
+*fit(X, y=None)*
+
+Mock method. Does nothing.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples] (default: None)
+
+
+**Returns**
+
+self
+
 <hr>
 
-<p><em>fit_transform(X, y=None)</em></p>
-<p>Return a copy of the input array.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>X_copy</code> : copy of the input X array.</li>
-</ul>
+*fit_transform(X, y=None)*
+
+Return a copy of the input array.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples] (default: None)
+
+
+**Returns**
+
+- `X_copy` : copy of the input X array.
+
+
 <hr>
 
-<p><em>get_params(deep=True)</em></p>
-<p>Get parameters for this estimator.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>deep</code> : bool, default=True</p>
-<p>If True, will return the parameters for this estimator and
-contained subobjects that are estimators.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>params</code> : mapping of string to any</p>
-<p>Parameter names mapped to their values.</p>
-</li>
-</ul>
+*get_params(deep=True)*
+
+Get parameters for this estimator.
+
+**Parameters**
+
+- `deep` : bool, default=True
+
+    If True, will return the parameters for this estimator and
+    contained subobjects that are estimators.
+
+**Returns**
+
+- `params` : mapping of string to any
+
+    Parameter names mapped to their values.
+
 <hr>
 
-<p><em>set_params(</em><em>params)</em></p>
-<p>Set the parameters of this estimator.</p>
-<p>The method works on simple estimators as well as on nested objects
-(such as pipelines). The latter have parameters of the form
-<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
-component of a nested object.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>**params</code> : dict</p>
-<p>Estimator parameters.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>self</code> : object</p>
-<p>Estimator instance.</p>
-</li>
-</ul>
+*set_params(**params)*
+
+Set the parameters of this estimator.
+
+    The method works on simple estimators as well as on nested objects
+    (such as pipelines). The latter have parameters of the form
+    ``<component>__<parameter>`` so that it's possible to update each
+    component of a nested object.
+
+**Parameters**
+
+- `**params` : dict
+
+    Estimator parameters.
+
+**Returns**
+
+- `self` : object
+
+    Estimator instance.
+
 <hr>
 
-<p><em>transform(X, y=None)</em></p>
-<p>Return a copy of the input array.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>X_copy</code> : copy of the input X array.</li>
-</ul>
-<h2 id="densetransformer">DenseTransformer</h2>
-<p><em>DenseTransformer(return_copy=True)</em></p>
-<p>Convert a sparse array into a dense array.</p>
-<p>For usage examples, please see
-<a href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/DenseTransformer/">http://rasbt.github.io/mlxtend/user_guide/preprocessing/DenseTransformer/</a></p>
-<h3 id="methods_1">Methods</h3>
+*transform(X, y=None)*
+
+Return a copy of the input array.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples] (default: None)
+
+
+**Returns**
+
+- `X_copy` : copy of the input X array.
+
+
+
+
+
+## DenseTransformer
+
+*DenseTransformer(return_copy=True)*
+
+Convert a sparse array into a dense array.
+
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/preprocessing/DenseTransformer/
+
+### Methods
+
 <hr>
 
-<p><em>fit(X, y=None)</em></p>
-<p>Mock method. Does nothing.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<p>self</p>
+*fit(X, y=None)*
+
+Mock method. Does nothing.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples] (default: None)
+
+
+**Returns**
+
+self
+
 <hr>
 
-<p><em>fit_transform(X, y=None)</em></p>
-<p>Return a dense version of the input array.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>X_dense</code> : dense version of the input X array.</li>
-</ul>
+*fit_transform(X, y=None)*
+
+Return a dense version of the input array.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples] (default: None)
+
+
+**Returns**
+
+- `X_dense` : dense version of the input X array.
+
+
 <hr>
 
-<p><em>get_params(deep=True)</em></p>
-<p>Get parameters for this estimator.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>deep</code> : bool, default=True</p>
-<p>If True, will return the parameters for this estimator and
-contained subobjects that are estimators.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>params</code> : mapping of string to any</p>
-<p>Parameter names mapped to their values.</p>
-</li>
-</ul>
+*get_params(deep=True)*
+
+Get parameters for this estimator.
+
+**Parameters**
+
+- `deep` : bool, default=True
+
+    If True, will return the parameters for this estimator and
+    contained subobjects that are estimators.
+
+**Returns**
+
+- `params` : mapping of string to any
+
+    Parameter names mapped to their values.
+
 <hr>
 
-<p><em>set_params(</em><em>params)</em></p>
-<p>Set the parameters of this estimator.</p>
-<p>The method works on simple estimators as well as on nested objects
-(such as pipelines). The latter have parameters of the form
-<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
-component of a nested object.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>**params</code> : dict</p>
-<p>Estimator parameters.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>self</code> : object</p>
-<p>Estimator instance.</p>
-</li>
-</ul>
+*set_params(**params)*
+
+Set the parameters of this estimator.
+
+    The method works on simple estimators as well as on nested objects
+    (such as pipelines). The latter have parameters of the form
+    ``<component>__<parameter>`` so that it's possible to update each
+    component of a nested object.
+
+**Parameters**
+
+- `**params` : dict
+
+    Estimator parameters.
+
+**Returns**
+
+- `self` : object
+
+    Estimator instance.
+
 <hr>
 
-<p><em>transform(X, y=None)</em></p>
-<p>Return a dense version of the input array.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples] (default: None)</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>X_dense</code> : dense version of the input X array.</li>
-</ul>
-<h2 id="meancenterer">MeanCenterer</h2>
-<p><em>MeanCenterer()</em></p>
-<p>Column centering of vectors and matrices.</p>
-<p><strong>Attributes</strong></p>
-<ul>
-<li>
-<p><code>col_means</code> : numpy.ndarray [n_columns]</p>
-<p>NumPy array storing the mean values for centering after fitting
-the MeanCenterer object.</p>
-</li>
-</ul>
-<p><strong>Examples</strong></p>
-<p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/MeanCenterer/">http://rasbt.github.io/mlxtend/user_guide/preprocessing/MeanCenterer/</a></p>
-<h3 id="methods_2">Methods</h3>
+*transform(X, y=None)*
+
+Return a dense version of the input array.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples] (default: None)
+
+
+**Returns**
+
+- `X_dense` : dense version of the input X array.
+
+
+
+
+
+## MeanCenterer
+
+*MeanCenterer()*
+
+Column centering of vectors and matrices.
+
+**Attributes**
+
+- `col_means` : numpy.ndarray [n_columns]
+
+    NumPy array storing the mean values for centering after fitting
+    the MeanCenterer object.
+
+**Examples**
+
+For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/preprocessing/MeanCenterer/
+
+### Methods
+
 <hr>
 
-<p><em>fit(X)</em></p>
-<p>Gets the column means for mean centering.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Array of data vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<p>self</p>
+*fit(X)*
+
+Gets the column means for mean centering.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Array of data vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+self
+
 <hr>
 
-<p><em>fit_transform(X)</em></p>
-<p>Fits and transforms an arry.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Array of data vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>X_tr</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>A copy of the input array with the columns centered.</p>
-</li>
-</ul>
+*fit_transform(X)*
+
+Fits and transforms an arry.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Array of data vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `X_tr` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    A copy of the input array with the columns centered.
+
 <hr>
 
-<p><em>transform(X)</em></p>
-<p>Centers a NumPy array.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Array of data vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>X_tr</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>A copy of the input array with the columns centered.</p>
-</li>
-</ul>
-<h2 id="transactionencoder">TransactionEncoder</h2>
-<p><em>TransactionEncoder()</em></p>
-<p>Encoder class for transaction data in Python lists</p>
-<p><strong>Parameters</strong></p>
-<p>None</p>
-<p><strong>Attributes</strong></p>
-<p>columns_: list
-List of unique names in the <code>X</code> input list of lists</p>
-<p><strong>Examples</strong></p>
-<p>For usage examples, please see
-<a href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/TransactionEncoder/">http://rasbt.github.io/mlxtend/user_guide/preprocessing/TransactionEncoder/</a></p>
-<h3 id="methods_3">Methods</h3>
+*transform(X)*
+
+Centers a NumPy array.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Array of data vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `X_tr` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    A copy of the input array with the columns centered.
+
+
+
+
+## TransactionEncoder
+
+*TransactionEncoder()*
+
+Encoder class for transaction data in Python lists
+
+**Parameters**
+
+None
+
+**Attributes**
+
+columns_: list
+    List of unique names in the `X` input list of lists
+
+**Examples**
+
+For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/preprocessing/TransactionEncoder/
+
+### Methods
+
 <hr>
 
-<p><em>fit(X)</em></p>
-<p>Learn unique column names from transaction DataFrame</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : list of lists</p>
-<p>A python list of lists, where the outer list stores the
-n transactions and the inner list stores the items in each
-transaction.</p>
-<p>For example,
-[['Apple', 'Beer', 'Rice', 'Chicken'],
-['Apple', 'Beer', 'Rice'],
-['Apple', 'Beer'],
-['Apple', 'Bananas'],
-['Milk', 'Beer', 'Rice', 'Chicken'],
-['Milk', 'Beer', 'Rice'],
-['Milk', 'Beer'],
-['Apple', 'Bananas']]</p>
-</li>
-</ul>
-<hr>
+*fit(X)*
 
-<p><em>fit_transform(X, sparse=False)</em></p>
-<p>Fit a TransactionEncoder encoder and transform a dataset.</p>
-<hr>
+Learn unique column names from transaction DataFrame
 
-<p><em>get_params(deep=True)</em></p>
-<p>Get parameters for this estimator.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>deep</code> : bool, default=True</p>
-<p>If True, will return the parameters for this estimator and
-contained subobjects that are estimators.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>params</code> : mapping of string to any</p>
-<p>Parameter names mapped to their values.</p>
-</li>
-</ul>
-<hr>
+**Parameters**
 
-<p><em>inverse_transform(array)</em></p>
-<p>Transforms an encoded NumPy array back into transactions.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>array</code> : NumPy array [n_transactions, n_unique_items]</p>
-<p>The NumPy one-hot encoded boolean array of the input transactions,
-where the columns represent the unique items found in the input
-array in alphabetic order</p>
-<p>For example,</p>
-</li>
-</ul>
-<pre><code>    array([[True , False, True , True , False, True ],
-    [True , False, True , False, False, True ],
-    [True , False, True , False, False, False],
-    [True , True , False, False, False, False],
-    [False, False, True , True , True , True ],
-    [False, False, True , False, True , True ],
-    [False, False, True , False, True , False],
-    [True , True , False, False, False, False]])
-</code></pre>
+- `X` : list of lists
 
-<pre><code>The corresponding column labels are available as self.columns_,
-e.g., ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']
-</code></pre>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>X</code> : list of lists</p>
-<p>A python list of lists, where the outer list stores the
-n transactions and the inner list stores the items in each
-transaction.</p>
-<p>For example,</p>
-</li>
-</ul>
-<pre><code>    [['Apple', 'Beer', 'Rice', 'Chicken'],
+    A python list of lists, where the outer list stores the
+    n transactions and the inner list stores the items in each
+    transaction.
+
+    For example,
+    [['Apple', 'Beer', 'Rice', 'Chicken'],
     ['Apple', 'Beer', 'Rice'],
     ['Apple', 'Beer'],
     ['Apple', 'Bananas'],
@@ -1370,219 +1351,324 @@ transaction.</p>
     ['Milk', 'Beer', 'Rice'],
     ['Milk', 'Beer'],
     ['Apple', 'Bananas']]
-</code></pre>
 
 <hr>
 
-<p><em>set_params(</em><em>params)</em></p>
-<p>Set the parameters of this estimator.</p>
-<p>The method works on simple estimators as well as on nested objects
-(such as pipelines). The latter have parameters of the form
-<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
-component of a nested object.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>**params</code> : dict</p>
-<p>Estimator parameters.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>self</code> : object</p>
-<p>Estimator instance.</p>
-</li>
-</ul>
+*fit_transform(X, sparse=False)*
+
+Fit a TransactionEncoder encoder and transform a dataset.
+
 <hr>
 
-<p><em>transform(X, sparse=False)</em></p>
-<p>Transform transactions into a one-hot encoded NumPy array.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : list of lists</p>
-<p>A python list of lists, where the outer list stores the
-n transactions and the inner list stores the items in each
-transaction.</p>
-<p>For example,
-[['Apple', 'Beer', 'Rice', 'Chicken'],
-['Apple', 'Beer', 'Rice'],
-['Apple', 'Beer'],
-['Apple', 'Bananas'],
-['Milk', 'Beer', 'Rice', 'Chicken'],
-['Milk', 'Beer', 'Rice'],
-['Milk', 'Beer'],
-['Apple', 'Bananas']]</p>
-<p>sparse: bool (default=False)
-If True, transform will return Compressed Sparse Row matrix
-instead of the regular one.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>array</code> : NumPy array [n_transactions, n_unique_items]</p>
-<p>if sparse=False (default).
-Compressed Sparse Row matrix otherwise
-The one-hot encoded boolean array of the input transactions,
-where the columns represent the unique items found in the input
-array in alphabetic order. Exact representation depends
-on the sparse argument</p>
-<p>For example,
-array([[True , False, True , True , False, True ],
-[True , False, True , False, False, True ],
-[True , False, True , False, False, False],
-[True , True , False, False, False, False],
-[False, False, True , True , True , True ],
-[False, False, True , False, True , True ],
-[False, False, True , False, True , False],
-[True , True , False, False, False, False]])
-The corresponding column labels are available as self.columns_, e.g.,
-['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']</p>
-</li>
-</ul>
-<h2 id="minmax_scaling">minmax_scaling</h2>
-<p><em>minmax_scaling(array, columns, min_val=0, max_val=1)</em></p>
-<p>Min max scaling of pandas' DataFrames.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>array</code> : pandas DataFrame or NumPy ndarray, shape = [n_rows, n_columns].</p>
-</li>
-<li>
-<p><code>columns</code> : array-like, shape = [n_columns]</p>
-<p>Array-like with column names, e.g., ['col1', 'col2', ...]
-or column indices [0, 2, 4, ...]</p>
-</li>
-<li>
-<p><code>min_val</code> : <code>int</code> or <code>float</code>, optional (default=<code>0</code>)</p>
-<p>minimum value after rescaling.</p>
-</li>
-<li>
-<p><code>max_val</code> : <code>int</code> or <code>float</code>, optional (default=<code>1</code>)</p>
-<p>maximum value after rescaling.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>df_new</code> : pandas DataFrame object.</p>
-<p>Copy of the array or DataFrame with rescaled columns.</p>
-</li>
-</ul>
-<p><strong>Examples</strong></p>
-<p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/minmax_scaling/">http://rasbt.github.io/mlxtend/user_guide/preprocessing/minmax_scaling/</a></p>
-<h2 id="one_hot">one_hot</h2>
-<p><em>one_hot(y, num_labels='auto', dtype='float')</em></p>
-<p>One-hot encoding of class labels</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>y</code> : array-like, shape = [n_classlabels]</p>
-<p>Python list or numpy array consisting of class labels.</p>
-</li>
-<li>
-<p><code>num_labels</code> : int or 'auto'</p>
-<p>Number of unique labels in the class label array. Infers the number
-of unique labels from the input array if set to 'auto'.</p>
-</li>
-<li>
-<p><code>dtype</code> : str</p>
-<p>NumPy array type (float, float32, float64) of the output array.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>ary</code> : numpy.ndarray, shape = [n_classlabels]</p>
-<p>One-hot encoded array, where each sample is represented as
-a row vector in the returned array.</p>
-</li>
-</ul>
-<p><strong>Examples</strong></p>
-<p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/one_hot/">http://rasbt.github.io/mlxtend/user_guide/preprocessing/one_hot/</a></p>
-<h2 id="shuffle_arrays_unison">shuffle_arrays_unison</h2>
-<p><em>shuffle_arrays_unison(arrays, random_seed=None)</em></p>
-<p>Shuffle NumPy arrays in unison.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>arrays</code> : array-like, shape = [n_arrays]</p>
-<p>A list of NumPy arrays.</p>
-</li>
-<li>
-<p><code>random_seed</code> : int (default: None)</p>
-<p>Sets the random state.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>shuffled_arrays</code> : A list of NumPy arrays after shuffling.</li>
-</ul>
-<p><strong>Examples</strong></p>
-<pre><code>&gt;&gt;&gt; import numpy as np
-&gt;&gt;&gt; from mlxtend.preprocessing import shuffle_arrays_unison
-&gt;&gt;&gt; X1 = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
-&gt;&gt;&gt; y1 = np.array([1, 2, 3])
-&gt;&gt;&gt; X2, y2 = shuffle_arrays_unison(arrays=[X1, y1], random_seed=3)
-&gt;&gt;&gt; assert(X2.all() == np.array([[4, 5, 6], [1, 2, 3], [7, 8, 9]]).all())
-&gt;&gt;&gt; assert(y2.all() == np.array([2, 1, 3]).all())
-&gt;&gt;&gt;
-</code></pre>
-<p>For more usage examples, please see
-<a href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/shuffle_arrays_unison/">http://rasbt.github.io/mlxtend/user_guide/preprocessing/shuffle_arrays_unison/</a></p>
-<h2 id="standardize">standardize</h2>
-<p><em>standardize(array, columns=None, ddof=0, return_params=False, params=None)</em></p>
-<p>Standardize columns in pandas DataFrames.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>array</code> : pandas DataFrame or NumPy ndarray, shape = [n_rows, n_columns].</p>
-</li>
-<li>
-<p><code>columns</code> : array-like, shape = [n_columns] (default: None)</p>
-<p>Array-like with column names, e.g., ['col1', 'col2', ...]
-or column indices [0, 2, 4, ...]
-If None, standardizes all columns.</p>
-</li>
-<li>
-<p><code>ddof</code> : int (default: 0)</p>
-<p>Delta Degrees of Freedom. The divisor used in calculations
-is N - ddof, where N represents the number of elements.</p>
-</li>
-<li>
-<p><code>return_params</code> : dict (default: False)</p>
-<p>If set to True, a dictionary is returned in addition to the
-standardized array. The parameter dictionary contains the
-column means ('avgs') and standard deviations ('stds') of
-the individual columns.</p>
-</li>
-<li>
-<p><code>params</code> : dict (default: None)</p>
-<p>A dictionary with column means and standard deviations as
-returned by the <code>standardize</code> function if <code>return_params</code>
-was set to True. If a <code>params</code> dictionary is provided, the
-<code>standardize</code> function will use these instead of computing
-them from the current array.</p>
-</li>
-</ul>
-<p><strong>Notes</strong></p>
-<p>If all values in a given column are the same, these values are all
-    set to <code>0.0</code>. The standard deviation in the <code>parameters</code> dictionary
-    is consequently set to <code>1.0</code> to avoid dividing by zero.</p>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>df_new</code> : pandas DataFrame object.</p>
-<p>Copy of the array or DataFrame with standardized columns.</p>
-</li>
-</ul>
-<p><strong>Examples</strong></p>
-<p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/preprocessing/standardize/">http://rasbt.github.io/mlxtend/user_guide/preprocessing/standardize/</a></p></div>
+*get_params(deep=True)*
+
+Get parameters for this estimator.
+
+**Parameters**
+
+- `deep` : bool, default=True
+
+    If True, will return the parameters for this estimator and
+    contained subobjects that are estimators.
+
+**Returns**
+
+- `params` : mapping of string to any
+
+    Parameter names mapped to their values.
+
+<hr>
+
+*inverse_transform(array)*
+
+Transforms an encoded NumPy array back into transactions.
+
+**Parameters**
+
+- `array` : NumPy array [n_transactions, n_unique_items]
+
+    The NumPy one-hot encoded boolean array of the input transactions,
+    where the columns represent the unique items found in the input
+    array in alphabetic order
+
+    For example,
+    ```
+    array([[True , False, True , True , False, True ],
+    [True , False, True , False, False, True ],
+    [True , False, True , False, False, False],
+    [True , True , False, False, False, False],
+    [False, False, True , True , True , True ],
+    [False, False, True , False, True , True ],
+    [False, False, True , False, True , False],
+    [True , True , False, False, False, False]])
+    ```
+    The corresponding column labels are available as self.columns_,
+    e.g., ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']
+
+**Returns**
+
+- `X` : list of lists
+
+    A python list of lists, where the outer list stores the
+    n transactions and the inner list stores the items in each
+    transaction.
+
+    For example,
+    ```
+    [['Apple', 'Beer', 'Rice', 'Chicken'],
+    ['Apple', 'Beer', 'Rice'],
+    ['Apple', 'Beer'],
+    ['Apple', 'Bananas'],
+    ['Milk', 'Beer', 'Rice', 'Chicken'],
+    ['Milk', 'Beer', 'Rice'],
+    ['Milk', 'Beer'],
+    ['Apple', 'Bananas']]
+    ```
+
+<hr>
+
+*set_params(**params)*
+
+Set the parameters of this estimator.
+
+    The method works on simple estimators as well as on nested objects
+    (such as pipelines). The latter have parameters of the form
+    ``<component>__<parameter>`` so that it's possible to update each
+    component of a nested object.
+
+**Parameters**
+
+- `**params` : dict
+
+    Estimator parameters.
+
+**Returns**
+
+- `self` : object
+
+    Estimator instance.
+
+<hr>
+
+*transform(X, sparse=False)*
+
+Transform transactions into a one-hot encoded NumPy array.
+
+**Parameters**
+
+- `X` : list of lists
+
+    A python list of lists, where the outer list stores the
+    n transactions and the inner list stores the items in each
+    transaction.
+
+    For example,
+    [['Apple', 'Beer', 'Rice', 'Chicken'],
+    ['Apple', 'Beer', 'Rice'],
+    ['Apple', 'Beer'],
+    ['Apple', 'Bananas'],
+    ['Milk', 'Beer', 'Rice', 'Chicken'],
+    ['Milk', 'Beer', 'Rice'],
+    ['Milk', 'Beer'],
+    ['Apple', 'Bananas']]
+
+    sparse: bool (default=False)
+    If True, transform will return Compressed Sparse Row matrix
+    instead of the regular one.
+
+**Returns**
+
+- `array` : NumPy array [n_transactions, n_unique_items]
+
+    if sparse=False (default).
+    Compressed Sparse Row matrix otherwise
+    The one-hot encoded boolean array of the input transactions,
+    where the columns represent the unique items found in the input
+    array in alphabetic order. Exact representation depends
+    on the sparse argument
+
+    For example,
+    array([[True , False, True , True , False, True ],
+    [True , False, True , False, False, True ],
+    [True , False, True , False, False, False],
+    [True , True , False, False, False, False],
+    [False, False, True , True , True , True ],
+    [False, False, True , False, True , True ],
+    [False, False, True , False, True , False],
+    [True , True , False, False, False, False]])
+    The corresponding column labels are available as self.columns_, e.g.,
+    ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']
+
+
+
+
+## minmax_scaling
+
+*minmax_scaling(array, columns, min_val=0, max_val=1)*
+
+Min max scaling of pandas' DataFrames.
+
+**Parameters**
+
+- `array` : pandas DataFrame or NumPy ndarray, shape = [n_rows, n_columns].
+
+
+- `columns` : array-like, shape = [n_columns]
+
+    Array-like with column names, e.g., ['col1', 'col2', ...]
+    or column indices [0, 2, 4, ...]
+
+- `min_val` : `int` or `float`, optional (default=`0`)
+
+    minimum value after rescaling.
+
+- `max_val` : `int` or `float`, optional (default=`1`)
+
+    maximum value after rescaling.
+
+**Returns**
+
+- `df_new` : pandas DataFrame object.
+
+    Copy of the array or DataFrame with rescaled columns.
+
+**Examples**
+
+For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/preprocessing/minmax_scaling/
+
+
+
+
+## one_hot
+
+*one_hot(y, num_labels='auto', dtype='float')*
+
+One-hot encoding of class labels
+
+**Parameters**
+
+- `y` : array-like, shape = [n_classlabels]
+
+    Python list or numpy array consisting of class labels.
+
+- `num_labels` : int or 'auto'
+
+    Number of unique labels in the class label array. Infers the number
+    of unique labels from the input array if set to 'auto'.
+
+- `dtype` : str
+
+    NumPy array type (float, float32, float64) of the output array.
+
+**Returns**
+
+- `ary` : numpy.ndarray, shape = [n_classlabels]
+
+    One-hot encoded array, where each sample is represented as
+    a row vector in the returned array.
+
+**Examples**
+
+For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/preprocessing/one_hot/
+
+
+
+
+## shuffle_arrays_unison
+
+*shuffle_arrays_unison(arrays, random_seed=None)*
+
+Shuffle NumPy arrays in unison.
+
+**Parameters**
+
+- `arrays` : array-like, shape = [n_arrays]
+
+    A list of NumPy arrays.
+
+- `random_seed` : int (default: None)
+
+    Sets the random state.
+
+**Returns**
+
+- `shuffled_arrays` : A list of NumPy arrays after shuffling.
+
+
+**Examples**
+
+    ```
+    >>> import numpy as np
+    >>> from mlxtend.preprocessing import shuffle_arrays_unison
+    >>> X1 = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+    >>> y1 = np.array([1, 2, 3])
+    >>> X2, y2 = shuffle_arrays_unison(arrays=[X1, y1], random_seed=3)
+    >>> assert(X2.all() == np.array([[4, 5, 6], [1, 2, 3], [7, 8, 9]]).all())
+    >>> assert(y2.all() == np.array([2, 1, 3]).all())
+    >>>
+
+    For more usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/preprocessing/shuffle_arrays_unison/
+```
+
+
+
+
+## standardize
+
+*standardize(array, columns=None, ddof=0, return_params=False, params=None)*
+
+Standardize columns in pandas DataFrames.
+
+**Parameters**
+
+- `array` : pandas DataFrame or NumPy ndarray, shape = [n_rows, n_columns].
+
+
+- `columns` : array-like, shape = [n_columns] (default: None)
+
+    Array-like with column names, e.g., ['col1', 'col2', ...]
+    or column indices [0, 2, 4, ...]
+    If None, standardizes all columns.
+
+- `ddof` : int (default: 0)
+
+    Delta Degrees of Freedom. The divisor used in calculations
+    is N - ddof, where N represents the number of elements.
+
+- `return_params` : dict (default: False)
+
+    If set to True, a dictionary is returned in addition to the
+    standardized array. The parameter dictionary contains the
+    column means ('avgs') and standard deviations ('stds') of
+    the individual columns.
+
+- `params` : dict (default: None)
+
+    A dictionary with column means and standard deviations as
+    returned by the `standardize` function if `return_params`
+    was set to True. If a `params` dictionary is provided, the
+    `standardize` function will use these instead of computing
+    them from the current array.
+
+**Notes**
+
+If all values in a given column are the same, these values are all
+    set to `0.0`. The standard deviation in the `parameters` dictionary
+    is consequently set to `1.0` to avoid dividing by zero.
+
+**Returns**
+
+- `df_new` : pandas DataFrame object.
+
+    Copy of the array or DataFrame with standardized columns.
+
+**Examples**
+
+For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/preprocessing/standardize/</div>
         
         
     </div>

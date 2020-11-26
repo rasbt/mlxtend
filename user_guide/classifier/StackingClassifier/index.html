@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1015,13 +1027,12 @@ The meta-classifier can either be trained on the predicted class labels or proba
 <li>[2] Wolpert, David H. "<a href="http://www.sciencedirect.com/science/article/pii/S0893608005800231">Stacked generalization.</a>" Neural networks 5.2 (1992): 241-259.</li>
 </ul>
 <h2 id="example-1-simple-stacked-classification">Example 1 - Simple Stacked Classification</h2>
-<pre><code class="python">from sklearn import datasets
+<pre><code class="language-python">from sklearn import datasets
 
 iris = datasets.load_iris()
 X, y = iris.data[:, 1:3], iris.target
 </code></pre>
-
-<pre><code class="python">from sklearn import model_selection
+<pre><code class="language-python">from sklearn import model_selection
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB 
@@ -1052,7 +1063,6 @@ for clf, label in zip([clf1, clf2, clf3, sclf],
     print(&quot;Accuracy: %0.2f (+/- %0.2f) [%s]&quot; 
           % (scores.mean(), scores.std(), label))
 </code></pre>
-
 <pre><code>3-fold cross validation:
 
 Accuracy: 0.91 (+/- 0.01) [KNN]
@@ -1060,7 +1070,7 @@ Accuracy: 0.95 (+/- 0.01) [Random Forest]
 Accuracy: 0.91 (+/- 0.02) [Naive Bayes]
 Accuracy: 0.95 (+/- 0.02) [StackingClassifier]
 </code></pre>
-<pre><code class="python">import matplotlib.pyplot as plt
+<pre><code class="language-python">import matplotlib.pyplot as plt
 from mlxtend.plotting import plot_decision_regions
 import matplotlib.gridspec as gridspec
 import itertools
@@ -1081,7 +1091,6 @@ for clf, lab, grd in zip([clf1, clf2, clf3, sclf],
     fig = plot_decision_regions(X=X, y=y, clf=clf)
     plt.title(lab)
 </code></pre>
-
 <p><img alt="png" src="../StackingClassifier_files/StackingClassifier_14_0.png" /></p>
 <h2 id="example-2-using-probabilities-as-meta-features">Example 2 - Using Probabilities as Meta-Features</h2>
 <p>Alternatively, the class-probabilities of the first-level classifiers can be used to train the meta-classifier (2nd-level classifier) by setting <code>use_probas=True</code>. If <code>average_probas=True</code>, the probabilities of the level-1 classifiers are averaged, if <code>average_probas=False</code>, the probabilities are stacked (recommended). For example, in a 3-class setting with 2 level-1 classifiers, these classifiers may make the following "probability" predictions for 1 training sample:</p>
@@ -1097,7 +1106,7 @@ for clf, lab, grd in zip([clf1, clf2, clf3, sclf],
 <ul>
 <li>[0.2, 0.5, 0.3, 0.3, 0.4, 0.4]</li>
 </ul>
-<pre><code class="python">clf1 = KNeighborsClassifier(n_neighbors=1)
+<pre><code class="language-python">clf1 = KNeighborsClassifier(n_neighbors=1)
 clf2 = RandomForestClassifier(random_state=1)
 clf3 = GaussianNB()
 lr = LogisticRegression()
@@ -1119,7 +1128,6 @@ for clf, label in zip([clf1, clf2, clf3, sclf],
     print(&quot;Accuracy: %0.2f (+/- %0.2f) [%s]&quot; 
           % (scores.mean(), scores.std(), label))
 </code></pre>
-
 <pre><code>3-fold cross validation:
 
 Accuracy: 0.91 (+/- 0.01) [KNN]
@@ -1129,7 +1137,7 @@ Accuracy: 0.92 (+/- 0.02) [StackingClassifier]
 </code></pre>
 <h2 id="example-3-stacked-classification-and-gridsearch">Example 3 - Stacked Classification and GridSearch</h2>
 <p>The stack allows tuning hyper parameters of the base and meta models! A full list of tunable parameters can be obtained via <code>estimator.get_params().keys()</code>.</p>
-<pre><code class="python">from sklearn.linear_model import LogisticRegression
+<pre><code class="language-python">from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB 
 from sklearn.ensemble import RandomForestClassifier
@@ -1166,7 +1174,6 @@ for r, _ in enumerate(grid.cv_results_['mean_test_score']):
 print('Best parameters: %s' % grid.best_params_)
 print('Accuracy: %.2f' % grid.best_score_)
 </code></pre>
-
 <pre><code>0.933 +/- 0.03 {'kneighborsclassifier__n_neighbors': 1, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 10}
 0.940 +/- 0.02 {'kneighborsclassifier__n_neighbors': 1, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 50}
 0.927 +/- 0.03 {'kneighborsclassifier__n_neighbors': 1, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 10}
@@ -1179,7 +1186,7 @@ Best parameters: {'kneighborsclassifier__n_neighbors': 1, 'meta_classifier__C': 
 Accuracy: 0.95
 </code></pre>
 <p>In case we are planning to use a regression algorithm multiple times, all we need to do is to add an additional number suffix in the parameter grid as shown below:</p>
-<pre><code class="python">from sklearn.model_selection import GridSearchCV
+<pre><code class="language-python">from sklearn.model_selection import GridSearchCV
 
 # Initializing models
 
@@ -1212,7 +1219,6 @@ for r, _ in enumerate(grid.cv_results_['mean_test_score']):
 print('Best parameters: %s' % grid.best_params_)
 print('Accuracy: %.2f' % grid.best_score_)
 </code></pre>
-
 <pre><code>0.933 +/- 0.03 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 10}
 0.940 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 50}
 0.927 +/- 0.03 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 10}
@@ -1240,7 +1246,7 @@ Accuracy: 0.95
 <p>it will first use the instance settings of either (clf1, clf1, clf1) or (clf2, clf3). Then it will replace the <code>'n_estimators'</code> settings for a matching classifier based on <code>'randomforestclassifier__n_estimators': [1, 100]</code>.</p>
 <h2 id="example-4-stacking-of-classifiers-that-operate-on-different-feature-subsets">Example 4 - Stacking of Classifiers that Operate on Different Feature Subsets</h2>
 <p>The different level-1 classifiers can be fit to different subsets of features in the training dataset. The following example illustrates how this can be done on a technical level using scikit-learn pipelines and the <code>ColumnSelector</code>:</p>
-<pre><code class="python">from sklearn.datasets import load_iris
+<pre><code class="language-python">from sklearn.datasets import load_iris
 from mlxtend.classifier import StackingClassifier
 from mlxtend.feature_selection import ColumnSelector
 from sklearn.pipeline import make_pipeline
@@ -1260,7 +1266,6 @@ sclf = StackingClassifier(classifiers=[pipe1, pipe2],
 
 sclf.fit(X, y)
 </code></pre>
-
 <pre><code>StackingClassifier(average_probas=False,
                    classifiers=[Pipeline(memory=None,
                                          steps=[('columnselector',
@@ -1297,7 +1302,7 @@ sclf.fit(X, y)
 </code></pre>
 <h2 id="example-5-using-pre-fitted-classifiers">Example 5 - Using Pre-fitted Classifiers</h2>
 <p>Assume that we previously fitted our classifiers:</p>
-<pre><code class="python">from sklearn import model_selection
+<pre><code class="language-python">from sklearn import model_selection
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB 
 from sklearn.ensemble import RandomForestClassifier
@@ -1311,9 +1316,8 @@ lr = LogisticRegression()
 for clf in (clf1, clf2, clf3):
     clf.fit(X, y)
 </code></pre>
-
 <p>By setting <code>fit_base_estimators=False</code>, it will enforce <code>use_clones</code> to be False and the <code>StackingClassifier</code> will not re-fit these classifers to save computational time:</p>
-<pre><code class="python">from mlxtend.classifier import StackingClassifier
+<pre><code class="language-python">from mlxtend.classifier import StackingClassifier
 import copy
 sclf = StackingClassifier(classifiers=[clf1, clf2, clf3], 
                           meta_classifier=lr, fit_base_estimators=False)
@@ -1324,14 +1328,13 @@ sclf.fit(X, y)
 
 print('accuracy:', np.mean(y == sclf.predict(X)))
 </code></pre>
-
 <pre><code>Warning: enforce use_clones to be False
 accuracy: 1.0
 </code></pre>
 <p>However, please note that <code>fit_base_estimators=False</code> is incompatible to any form of cross-validation that is done in e.g., <code>model_selection.cross_val_score</code> or <code>model_selection.GridSearchCV</code>, etc., since it would require the classifiers to be refit to the training folds. Thus, only use <code>fit_base_estimators=False</code> if you want to make a prediction directly without cross-validation.</p>
 <h2 id="example-6-roc-curve-with-decision_function">Example 6 -- ROC Curve with <code>decision_function</code></h2>
 <p>Like other scikit-learn classifiers, the <code>StackingCVClassifier</code> has an <code>decision_function</code> method that can be used for plotting ROC curves. Note that the <code>decision_function</code> expects and requires the meta-classifier to implement a <code>decision_function</code>.</p>
-<pre><code class="python">from sklearn import model_selection
+<pre><code class="language-python">from sklearn import model_selection
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
@@ -1374,9 +1377,8 @@ sclf = StackingClassifier(classifiers=[clf1, clf2, clf3],
 # Learn to predict each class against the other
 classifier = OneVsRestClassifier(sclf)
 </code></pre>
-
 <p><strong>Using <code>predict_proba()</code></strong></p>
-<pre><code class="python">y_score = classifier.fit(X_train, y_train).predict_proba(X_test)
+<pre><code class="language-python">y_score = classifier.fit(X_train, y_train).predict_proba(X_test)
 
 # Compute ROC curve and ROC area for each class
 fpr = dict()
@@ -1403,10 +1405,9 @@ plt.title('Receiver operating characteristic example')
 plt.legend(loc=&quot;lower right&quot;)
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../StackingClassifier_files/StackingClassifier_37_0.png" /></p>
 <p><strong>Using <code>decision_function()</code></strong></p>
-<pre><code class="python">y_score = classifier.fit(X_train, y_train).decision_function(X_test)
+<pre><code class="language-python">y_score = classifier.fit(X_train, y_train).decision_function(X_test)
 
 # Compute ROC curve and ROC area for each class
 fpr = dict()
@@ -1433,7 +1434,6 @@ plt.title('Receiver operating characteristic example')
 plt.legend(loc=&quot;lower right&quot;)
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../StackingClassifier_files/StackingClassifier_39_0.png" /></p>
 <h1 id="api">API</h1></div>
         

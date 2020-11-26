@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../../user_guide/classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../../user_guide/evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../../user_guide/evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1001,47 +1013,50 @@ the random number generator.</p>
 </ul>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/BootstrapOutOfBag/">http://rasbt.github.io/mlxtend/user_guide/evaluate/BootstrapOutOfBag/</a></p>
+    http://rasbt.github.io/mlxtend/user_guide/evaluate/BootstrapOutOfBag/</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>get_n_splits(X=None, y=None, groups=None)</em></p>
-<p>Returns the number of splitting iterations in the cross-validator</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : object</p>
-<p>Always ignored, exists for compatibility with scikit-learn.</p>
-</li>
-<li>
-<p><code>y</code> : object</p>
-<p>Always ignored, exists for compatibility with scikit-learn.</p>
-</li>
-<li>
-<p><code>groups</code> : object</p>
-<p>Always ignored, exists for compatibility with scikit-learn.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>n_splits</code> : int</p>
-<p>Returns the number of splitting iterations in the cross-validator.</p>
-</li>
-</ul>
+*get_n_splits(X=None, y=None, groups=None)*
+
+Returns the number of splitting iterations in the cross-validator
+
+**Parameters**
+
+- `X` : object
+
+    Always ignored, exists for compatibility with scikit-learn.
+
+
+- `y` : object
+
+    Always ignored, exists for compatibility with scikit-learn.
+
+
+- `groups` : object
+
+    Always ignored, exists for compatibility with scikit-learn.
+
+**Returns**
+
+
+- `n_splits` : int
+
+    Returns the number of splitting iterations in the cross-validator.
+
 <hr>
 
-<p><em>split(X, y=None, groups=None)</em></p>
-<p>y : array-like or None (default: None)
-Argument is not used and only included as parameter
-for compatibility, similar to <code>KFold</code> in scikit-learn.</p>
-<ul>
-<li>
-<p><code>groups</code> : array-like or None (default: None)</p>
-<p>Argument is not used and only included as parameter
-for compatibility, similar to <code>KFold</code> in scikit-learn.</p>
-</li>
-</ul></div>
+*split(X, y=None, groups=None)*
+
+y : array-like or None (default: None)
+    Argument is not used and only included as parameter
+    for compatibility, similar to `KFold` in scikit-learn.
+
+
+- `groups` : array-like or None (default: None)
+
+    Argument is not used and only included as parameter
+    for compatibility, similar to `KFold` in scikit-learn.</div>
         
         
     </div>

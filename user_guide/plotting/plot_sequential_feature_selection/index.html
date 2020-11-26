@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -993,7 +1005,7 @@
 <h1 id="overview">Overview</h1>
 <p>for more information on sequential feature selection, please see <a href="../../feature_selection/SequentialFeatureSelector/"><code>feature_selection.SequentialFeatureSelector</code></a>.</p>
 <h2 id="example-1-plotting-the-results-from-sequentialfeatureselector">Example 1 - Plotting the results from SequentialFeatureSelector</h2>
-<pre><code class="python">from mlxtend.plotting import plot_sequential_feature_selection as plot_sfs
+<pre><code class="language-python">from mlxtend.plotting import plot_sequential_feature_selection as plot_sfs
 from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 import matplotlib.pyplot as plt
 from sklearn.neighbors import KNeighborsClassifier
@@ -1022,7 +1034,6 @@ plt.title('Sequential Forward Selection (w. StdDev)')
 plt.grid()
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../plot_sequential_feature_selection_files/plot_sequential_feature_selection_7_0.png" /></p>
 <h1 id="api">API</h1>
 <p><em>plot_sequential_feature_selection(metric_dict, figsize=None, kind='std_dev', color='blue', bcolor='steelblue', marker='o', alpha=0.2, ylabel='Performance', confidence_interval=0.95)</em></p>

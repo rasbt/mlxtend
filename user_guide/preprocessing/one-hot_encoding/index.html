@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1011,13 +1023,12 @@
      ])
 </code></pre>
 <h2 id="example-1-defaults">Example 1 - Defaults</h2>
-<pre><code class="python">from mlxtend.preprocessing import one_hot
+<pre><code class="language-python">from mlxtend.preprocessing import one_hot
 import numpy as np
 
 y = np.array([0, 1, 2, 1, 2])
 one_hot(y)
 </code></pre>
-
 <pre><code>array([[ 1.,  0.,  0.],
        [ 0.,  1.,  0.],
        [ 0.,  0.,  1.],
@@ -1025,12 +1036,11 @@ one_hot(y)
        [ 0.,  0.,  1.]])
 </code></pre>
 <h2 id="example-2-python-lists">Example 2 - Python Lists</h2>
-<pre><code class="python">from mlxtend.preprocessing import one_hot
+<pre><code class="language-python">from mlxtend.preprocessing import one_hot
 
 y = [0, 1, 2, 1, 2]
 one_hot(y)
 </code></pre>
-
 <pre><code>array([[ 1.,  0.,  0.],
        [ 0.,  1.,  0.],
        [ 0.,  0.,  1.],
@@ -1038,12 +1048,11 @@ one_hot(y)
        [ 0.,  0.,  1.]])
 </code></pre>
 <h2 id="example-3-integer-arrays">Example 3 - Integer Arrays</h2>
-<pre><code class="python">from mlxtend.preprocessing import one_hot
+<pre><code class="language-python">from mlxtend.preprocessing import one_hot
 
 y = [0, 1, 2, 1, 2]
 one_hot(y, dtype='int')
 </code></pre>
-
 <pre><code>array([[1, 0, 0],
        [0, 1, 0],
        [0, 0, 1],
@@ -1051,12 +1060,11 @@ one_hot(y, dtype='int')
        [0, 0, 1]])
 </code></pre>
 <h2 id="example-4-arbitrary-numbers-of-class-labels">Example 4 - Arbitrary Numbers of Class Labels</h2>
-<pre><code class="python">from mlxtend.preprocessing import one_hot
+<pre><code class="language-python">from mlxtend.preprocessing import one_hot
 
 y = [0, 1, 2, 1, 2]
 one_hot(y, num_labels=10)
 </code></pre>
-
 <pre><code>array([[ 1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.],
        [ 0.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.],
        [ 0.,  0.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.],

@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -995,7 +1007,7 @@
 <p>Encodes database transaction data in form of a Python list of lists into a NumPy array.</p>
 <h2 id="example-1">Example 1</h2>
 <p>Suppose we have the following transaction data:</p>
-<pre><code class="python">from mlxtend.preprocessing import TransactionEncoder
+<pre><code class="language-python">from mlxtend.preprocessing import TransactionEncoder
 
 dataset = [['Apple', 'Beer', 'Rice', 'Chicken'],
            ['Apple', 'Beer', 'Rice'],
@@ -1006,13 +1018,11 @@ dataset = [['Apple', 'Beer', 'Rice', 'Chicken'],
            ['Milk', 'Beer'],
            ['Apple', 'Bananas']]
 </code></pre>
-
 <p>Using and <code>TransactionEncoder</code> object, we can transform this dataset into an array format suitable for typical machine learning APIs. Via the <code>fit</code> method, the <code>TransactionEncoder</code> learns the unique labels in the dataset, and via the <code>transform</code> method, it transforms the input dataset (a Python list of lists) into a one-hot encoded NumPy boolean array:</p>
-<pre><code class="python">te = TransactionEncoder()
+<pre><code class="language-python">te = TransactionEncoder()
 te_ary = te.fit(dataset).transform(dataset)
 te_ary
 </code></pre>
-
 <pre><code>array([[ True, False,  True,  True, False,  True],
        [ True, False,  True, False, False,  True],
        [ True, False,  True, False, False, False],
@@ -1023,9 +1033,8 @@ te_ary
        [ True,  True, False, False, False, False]], dtype=bool)
 </code></pre>
 <p>The NumPy array is boolean for the sake of memory efficiency when working with large datasets. If a classic integer representation is desired instead, we can just convert the array to the appropriate type: </p>
-<pre><code class="python">te_ary.astype(&quot;int&quot;)
+<pre><code class="language-python">te_ary.astype(&quot;int&quot;)
 </code></pre>
-
 <pre><code>array([[1, 0, 1, 1, 0, 1],
        [1, 0, 1, 0, 0, 1],
        [1, 0, 1, 0, 0, 0],
@@ -1036,17 +1045,15 @@ te_ary
        [1, 1, 0, 0, 0, 0]])
 </code></pre>
 <p>After fitting, the unique column names that correspond to the data array shown above can be accessed via the <code>columns_</code> attribute:</p>
-<pre><code class="python">te.columns_
+<pre><code class="language-python">te.columns_
 </code></pre>
-
 <pre><code>['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']
 </code></pre>
 <p>For our convenience, we can turn theencoded array into a pandas <code>DataFrame</code>:</p>
-<pre><code class="python">import pandas as pd
+<pre><code class="language-python">import pandas as pd
 
 pd.DataFrame(te_ary, columns=te.columns_)
 </code></pre>
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1151,10 +1158,9 @@ pd.DataFrame(te_ary, columns=te.columns_)
 </div>
 
 <p>If we desire, we can turn the one-hot encoded array back into a transaction list of lists via the <code>inverse_transform</code> function:</p>
-<pre><code class="python">first4 = te_ary[:4]
+<pre><code class="language-python">first4 = te_ary[:4]
 te.inverse_transform(first4)
 </code></pre>
-
 <pre><code>[['Apple', 'Beer', 'Chicken', 'Rice'],
  ['Apple', 'Beer', 'Rice'],
  ['Apple', 'Beer'],
@@ -1174,63 +1180,69 @@ List of unique names in the <code>X</code> input list of lists</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X)</em></p>
-<p>Learn unique column names from transaction DataFrame</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : list of lists</p>
-<p>A python list of lists, where the outer list stores the
-n transactions and the inner list stores the items in each
-transaction.</p>
-<p>For example,
-[['Apple', 'Beer', 'Rice', 'Chicken'],
-['Apple', 'Beer', 'Rice'],
-['Apple', 'Beer'],
-['Apple', 'Bananas'],
-['Milk', 'Beer', 'Rice', 'Chicken'],
-['Milk', 'Beer', 'Rice'],
-['Milk', 'Beer'],
-['Apple', 'Bananas']]</p>
-</li>
-</ul>
+*fit(X)*
+
+Learn unique column names from transaction DataFrame
+
+**Parameters**
+
+- `X` : list of lists
+
+    A python list of lists, where the outer list stores the
+    n transactions and the inner list stores the items in each
+    transaction.
+
+    For example,
+    [['Apple', 'Beer', 'Rice', 'Chicken'],
+    ['Apple', 'Beer', 'Rice'],
+    ['Apple', 'Beer'],
+    ['Apple', 'Bananas'],
+    ['Milk', 'Beer', 'Rice', 'Chicken'],
+    ['Milk', 'Beer', 'Rice'],
+    ['Milk', 'Beer'],
+    ['Apple', 'Bananas']]
+
 <hr>
 
-<p><em>fit_transform(X, sparse=False)</em></p>
-<p>Fit a TransactionEncoder encoder and transform a dataset.</p>
+*fit_transform(X, sparse=False)*
+
+Fit a TransactionEncoder encoder and transform a dataset.
+
 <hr>
 
-<p><em>get_params(deep=True)</em></p>
-<p>Get parameters for this estimator.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>deep</code> : boolean, optional</p>
-<p>If True, will return the parameters for this estimator and
-contained subobjects that are estimators.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>params</code> : mapping of string to any</p>
-<p>Parameter names mapped to their values.</p>
-</li>
-</ul>
+*get_params(deep=True)*
+
+Get parameters for this estimator.
+
+**Parameters**
+
+- `deep` : boolean, optional
+
+    If True, will return the parameters for this estimator and
+    contained subobjects that are estimators.
+
+**Returns**
+
+- `params` : mapping of string to any
+
+    Parameter names mapped to their values.
+
 <hr>
 
-<p><em>inverse_transform(array)</em></p>
-<p>Transforms an encoded NumPy array back into transactions.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>array</code> : NumPy array [n_transactions, n_unique_items]</p>
-<p>The NumPy one-hot encoded boolean array of the input transactions,
-where the columns represent the unique items found in the input
-array in alphabetic order</p>
-<p>For example,</p>
-</li>
-</ul>
+*inverse_transform(array)*
+
+Transforms an encoded NumPy array back into transactions.
+
+**Parameters**
+
+- `array` : NumPy array [n_transactions, n_unique_items]
+
+    The NumPy one-hot encoded boolean array of the input transactions,
+    where the columns represent the unique items found in the input
+    array in alphabetic order
+
+    For example,
+
 <pre><code>    array([[True , False, True , True , False, True ],
     [True , False, True , False, False, True ],
     [True , False, True , False, False, False],
@@ -1241,19 +1253,19 @@ array in alphabetic order</p>
     [True , True , False, False, False, False]])
 </code></pre>
 
-<pre><code>The corresponding column labels are available as self.columns_,
-e.g., ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']
-</code></pre>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>X</code> : list of lists</p>
-<p>A python list of lists, where the outer list stores the
-n transactions and the inner list stores the items in each
-transaction.</p>
-<p>For example,</p>
-</li>
-</ul>
+    The corresponding column labels are available as self.columns_,
+    e.g., ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']
+
+**Returns**
+
+- `X` : list of lists
+
+    A python list of lists, where the outer list stores the
+    n transactions and the inner list stores the items in each
+    transaction.
+
+    For example,
+
 <pre><code>    [['Apple', 'Beer', 'Rice', 'Chicken'],
     ['Apple', 'Beer', 'Rice'],
     ['Apple', 'Beer'],
@@ -1264,65 +1276,75 @@ transaction.</p>
     ['Apple', 'Bananas']]
 </code></pre>
 
+
 <hr>
 
-<p><em>set_params(</em><em>params)</em></p>
-<p>Set the parameters of this estimator.</p>
-<p>The method works on simple estimators as well as on nested objects
+*set_params(**params)*
+
+Set the parameters of this estimator.
+
+The method works on simple estimators as well as on nested objects
 (such as pipelines). The latter have parameters of the form
-<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
-component of a nested object.</p>
-<p><strong>Returns</strong></p>
-<p>self</p>
+``<component>__<parameter>`` so that it's possible to update each
+component of a nested object.
+
+**Returns**
+
+self
+
 <hr>
 
-<p><em>transform(X, sparse=False)</em></p>
-<p>Transform transactions into a one-hot encoded NumPy array.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : list of lists</p>
-<p>A python list of lists, where the outer list stores the
-n transactions and the inner list stores the items in each
-transaction.</p>
-<p>For example,
-[['Apple', 'Beer', 'Rice', 'Chicken'],
-['Apple', 'Beer', 'Rice'],
-['Apple', 'Beer'],
-['Apple', 'Bananas'],
-['Milk', 'Beer', 'Rice', 'Chicken'],
-['Milk', 'Beer', 'Rice'],
-['Milk', 'Beer'],
-['Apple', 'Bananas']]</p>
-<p>sparse: bool (default=False)
-If True, transform will return Compressed Sparse Row matrix
-instead of the regular one.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>array</code> : NumPy array [n_transactions, n_unique_items]</p>
-<p>if sparse=False (default).
-Compressed Sparse Row matrix otherwise
-The one-hot encoded boolean array of the input transactions,
-where the columns represent the unique items found in the input
-array in alphabetic order. Exact representation depends
-on the sparse argument</p>
-<p>For example,
-array([[True , False, True , True , False, True ],
-[True , False, True , False, False, True ],
-[True , False, True , False, False, False],
-[True , True , False, False, False, False],
-[False, False, True , True , True , True ],
-[False, False, True , False, True , True ],
-[False, False, True , False, True , False],
-[True , True , False, False, False, False]])
-The corresponding column labels are available as self.columns_, e.g.,
-['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']</p>
-</li>
-</ul>
-<p>ython</p></div>
+*transform(X, sparse=False)*
+
+Transform transactions into a one-hot encoded NumPy array.
+
+**Parameters**
+
+- `X` : list of lists
+
+    A python list of lists, where the outer list stores the
+    n transactions and the inner list stores the items in each
+    transaction.
+
+    For example,
+    [['Apple', 'Beer', 'Rice', 'Chicken'],
+    ['Apple', 'Beer', 'Rice'],
+    ['Apple', 'Beer'],
+    ['Apple', 'Bananas'],
+    ['Milk', 'Beer', 'Rice', 'Chicken'],
+    ['Milk', 'Beer', 'Rice'],
+    ['Milk', 'Beer'],
+    ['Apple', 'Bananas']]
+
+    sparse: bool (default=False)
+    If True, transform will return Compressed Sparse Row matrix
+    instead of the regular one.
+
+**Returns**
+
+- `array` : NumPy array [n_transactions, n_unique_items]
+
+    if sparse=False (default).
+    Compressed Sparse Row matrix otherwise
+    The one-hot encoded boolean array of the input transactions,
+    where the columns represent the unique items found in the input
+    array in alphabetic order. Exact representation depends
+    on the sparse argument
+
+    For example,
+    array([[True , False, True , True , False, True ],
+    [True , False, True , False, False, True ],
+    [True , False, True , False, False, False],
+    [True , True , False, False, False, False],
+    [False, False, True , True , True , True ],
+    [False, False, True , False, True , True ],
+    [False, False, True , False, True , False],
+    [True , True , False, False, False, False]])
+    The corresponding column labels are available as self.columns_, e.g.,
+    ['Apple', 'Bananas', 'Beer', 'Chicken', 'Milk', 'Rice']
+
+
+ython</div>
         
         
     </div>

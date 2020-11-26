@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -998,12 +1010,11 @@
 <li>Totally uncorrelated features are orthogonal to each other.</li>
 <li>Features with a negative correlation will be plotted on the opposing quadrants of this plot.</li>
 </ul>
-<pre><code class="python">from mlxtend.data import iris_data
+<pre><code class="language-python">from mlxtend.data import iris_data
 from mlxtend.plotting import plot_pca_correlation_graph
 import numpy as np
 </code></pre>
-
-<pre><code class="python">X, y = iris_data()
+<pre><code class="language-python">X, y = iris_data()
 
 X_norm = X / X.std(axis=0) # Normalizing the feature columns is recommended
 
@@ -1019,11 +1030,9 @@ figure, correlation_matrix = plot_pca_correlation_graph(X_norm,
                                                         figure_axis_size=10)
 
 </code></pre>
-
 <p><img alt="png" src="../plot_pca_correlation_graph_files/plot_pca_correlation_graph_6_0.png" /></p>
-<pre><code class="python">correlation_matrix
+<pre><code class="language-python">correlation_matrix
 </code></pre>
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {

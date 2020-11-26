@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1000,7 +1012,7 @@
 <li>-</li>
 </ul>
 <h2 id="example-1-enrichment-plots-from-pandas-dataframes">Example 1 - Enrichment Plots from Pandas DataFrames</h2>
-<pre><code class="python">import pandas as pd
+<pre><code class="language-python">import pandas as pd
 s1 = [1.1, 1.5]
 s2 = [2.1, 1.8]
 s3 = [3.1, 2.1]
@@ -1009,7 +1021,6 @@ data = [s1, s2, s3, s4]
 df = pd.DataFrame(data, columns=['X1', 'X2'])
 df
 </code></pre>
-
 <div>
 <table border="1" class="dataframe">
   <thead>
@@ -1045,12 +1056,11 @@ df
 </div>
 
 <p>Plotting the data where the categories are determined by the unique values in the label column <code>label_col</code>. The <code>x</code> and <code>y</code> values are simply the column names of the DataFrame that we want to plot.</p>
-<pre><code class="python">import matplotlib.pyplot as plt
+<pre><code class="language-python">import matplotlib.pyplot as plt
 from mlxtend.plotting import enrichment_plot
 
 ax = enrichment_plot(df, legend_loc='upper left')
 </code></pre>
-
 <p><img alt="png" src="../enrichment_plot_files/enrichment_plot_10_0.png" /></p>
 <h2 id="api">API</h2>
 <p><em>enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-', alpha=0.5, lw=2, where='post', grid=True, count_label='Count', xlim='auto', ylim='auto', invert_axes=False, legend_loc='best', ax=None)</em></p>

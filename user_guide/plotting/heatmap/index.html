@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1002,7 +1014,7 @@
 <li>-</li>
 </ul>
 <h2 id="example-1-simple-heatmap">Example 1 -- Simple heatmap</h2>
-<pre><code class="python">from mlxtend.plotting import heatmap
+<pre><code class="language-python">from mlxtend.plotting import heatmap
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -1012,16 +1024,14 @@ some_array = np.random.random((20, 30))
 heatmap(some_array, figsize=(20, 10))
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../heatmap_files/heatmap_8_0.png" /></p>
 <p>The cell values can be suppressed by setting <code>cell_values=False</code>:</p>
-<pre><code class="python">heatmap(some_array, figsize=(20, 10), cell_values=False)
+<pre><code class="language-python">heatmap(some_array, figsize=(20, 10), cell_values=False)
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../heatmap_files/heatmap_10_0.png" /></p>
 <h2 id="example-2-covariance-matrix-as-heatmap">Example 2 -- Covariance matrix as heatmap</h2>
-<pre><code class="python">from mlxtend.plotting import heatmap
+<pre><code class="language-python">from mlxtend.plotting import heatmap
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -1037,7 +1047,6 @@ df.columns = ['CRIM', 'ZN', 'INDUS', 'CHAS',
               'TAX', 'PTRATIO', 'B', 'LSTAT', 'MEDV']
 df.head()
 </code></pre>
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1162,14 +1171,13 @@ df.head()
 </table>
 </div>
 
-<pre><code class="python">cols = ['LSTAT', 'INDUS', 'NOX', 'RM', 'MEDV']
+<pre><code class="language-python">cols = ['LSTAT', 'INDUS', 'NOX', 'RM', 'MEDV']
 
 cm = np.corrcoef(df[cols].values.T)
 hm = heatmap(cm, column_names=cols, row_names=cols)
 
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../heatmap_files/heatmap_13_0.png" /></p>
 <h2 id="api">API</h2>
 <p><em>heatmap(matrix, hide_spines=False, hide_ticks=False, figsize=None, cmap=None, colorbar=True, row_names=None, column_names=None, column_name_rotation=45, cell_fmt='.2f', cell_font_size=None)</em></p>

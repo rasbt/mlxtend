@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -993,7 +1005,7 @@
 </blockquote>
 <h2 id="example-1-centering-a-numpy-array">Example 1 - Centering a NumPy Array</h2>
 <p>Use the <code>fit</code> method to fit the column means of a dataset (e.g., the training dataset) to a new <code>MeanCenterer</code> object. Then, call the <code>transform</code> method on the same dataset to center it at the sample mean.</p>
-<pre><code class="python">import numpy as np
+<pre><code class="language-python">import numpy as np
 from mlxtend.preprocessing import MeanCenterer
 X_train = np.array(
                    [[1, 2, 3],
@@ -1002,7 +1014,6 @@ X_train = np.array(
 mc = MeanCenterer().fit(X_train)
 mc.transform(X_train)
 </code></pre>
-
 <pre><code>array([[-3., -3., -3.],
        [ 0.,  0.,  0.],
        [ 3.,  3.,  3.]])
@@ -1024,57 +1035,61 @@ the MeanCenterer object.</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X)</em></p>
-<p>Gets the column means for mean centering.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Array of data vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<p>self</p>
+*fit(X)*
+
+Gets the column means for mean centering.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Array of data vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+self
+
 <hr>
 
-<p><em>fit_transform(X)</em></p>
-<p>Fits and transforms an arry.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Array of data vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>X_tr</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>A copy of the input array with the columns centered.</p>
-</li>
-</ul>
+*fit_transform(X)*
+
+Fits and transforms an arry.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Array of data vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `X_tr` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    A copy of the input array with the columns centered.
+
 <hr>
 
-<p><em>transform(X)</em></p>
-<p>Centers a NumPy array.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Array of data vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>X_tr</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>A copy of the input array with the columns centered.</p>
-</li>
-</ul>
-<p>ython</p></div>
+*transform(X)*
+
+Centers a NumPy array.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Array of data vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `X_tr` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    A copy of the input array with the columns centered.
+
+
+ython</div>
         
         
     </div>

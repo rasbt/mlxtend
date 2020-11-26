@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../../user_guide/classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../../user_guide/evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../../user_guide/evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -976,9 +988,10 @@
 <h2 id="predefinedholdoutsplit">PredefinedHoldoutSplit</h2>
 <p><em>PredefinedHoldoutSplit(valid_indices)</em></p>
 <p>Train/Validation set splitter for sklearn's GridSearchCV etc.</p>
-<p>Uses user-specified train/validation set indices to split a dataset
+<pre><code>Uses user-specified train/validation set indices to split a dataset
 into train/validation sets using user-defined or random
-indices.</p>
+indices.
+</code></pre>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -991,67 +1004,71 @@ for model fitting.</p>
 </ul>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/PredefinedHoldoutSplit/">http://rasbt.github.io/mlxtend/user_guide/evaluate/PredefinedHoldoutSplit/</a></p>
+    http://rasbt.github.io/mlxtend/user_guide/evaluate/PredefinedHoldoutSplit/</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>get_n_splits(X=None, y=None, groups=None)</em></p>
-<p>Returns the number of splitting iterations in the cross-validator</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : object</p>
-<p>Always ignored, exists for compatibility.</p>
-</li>
-<li>
-<p><code>y</code> : object</p>
-<p>Always ignored, exists for compatibility.</p>
-</li>
-<li>
-<p><code>groups</code> : object</p>
-<p>Always ignored, exists for compatibility.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>n_splits</code> : 1</p>
-<p>Returns the number of splitting iterations in the cross-validator.
-Always returns 1.</p>
-</li>
-</ul>
+*get_n_splits(X=None, y=None, groups=None)*
+
+Returns the number of splitting iterations in the cross-validator
+
+**Parameters**
+
+- `X` : object
+
+    Always ignored, exists for compatibility.
+
+
+- `y` : object
+
+    Always ignored, exists for compatibility.
+
+
+- `groups` : object
+
+    Always ignored, exists for compatibility.
+
+**Returns**
+
+- `n_splits` : 1
+
+    Returns the number of splitting iterations in the cross-validator.
+    Always returns 1.
+
 <hr>
 
-<p><em>split(X, y, groups=None)</em></p>
-<p>Generate indices to split data into training and test set.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : array-like, shape (num_examples, num_features)</p>
-<p>Training data, where num_examples is the number of examples
-and num_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape (num_examples,)</p>
-<p>The target variable for supervised learning problems.
-Stratification is done based on the y labels.</p>
-</li>
-<li>
-<p><code>groups</code> : object</p>
-<p>Always ignored, exists for compatibility.</p>
-</li>
-</ul>
-<p><strong>Yields</strong></p>
-<ul>
-<li>
-<p><code>train_index</code> : ndarray</p>
-<p>The training set indices for that split.</p>
-</li>
-<li>
-<p><code>valid_index</code> : ndarray</p>
-<p>The validation set indices for that split.</p>
-</li>
-</ul></div>
+*split(X, y, groups=None)*
+
+Generate indices to split data into training and test set.
+
+**Parameters**
+
+- `X` : array-like, shape (num_examples, num_features)
+
+    Training data, where num_examples is the number of examples
+    and num_features is the number of features.
+
+
+- `y` : array-like, shape (num_examples,)
+
+    The target variable for supervised learning problems.
+    Stratification is done based on the y labels.
+
+
+- `groups` : object
+
+    Always ignored, exists for compatibility.
+
+**Yields**
+
+- `train_index` : ndarray
+
+    The training set indices for that split.
+
+
+- `valid_index` : ndarray
+
+    The validation set indices for that split.</div>
         
         
     </div>

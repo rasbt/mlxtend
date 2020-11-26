@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1024,7 +1036,7 @@ that was proposed by Dietterich [1] to address shortcomings in other methods suc
 </ul>
 <h2 id="example-1-5x2cv-paired-t-test">Example 1 - 5x2cv paired <em>t</em> test</h2>
 <p>Assume we want to compare two classification algorithms, logistic regression and a decision tree algorithm:</p>
-<pre><code class="python">from sklearn.linear_model import LogisticRegression
+<pre><code class="language-python">from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from mlxtend.data import iris_data
 from sklearn.model_selection import train_test_split
@@ -1044,13 +1056,12 @@ score2 = clf2.fit(X_train, y_train).score(X_test, y_test)
 print('Logistic regression accuracy: %.2f%%' % (score1*100))
 print('Decision tree accuracy: %.2f%%' % (score2*100))
 </code></pre>
-
 <pre><code>Logistic regression accuracy: 97.37%
 Decision tree accuracy: 94.74%
 </code></pre>
 <p>Note that these accuracy values are not used in the paired <em>t</em> test procedure as new test/train splits are generated during the resampling procedure, the values above are just serving the purpose of intuition.</p>
 <p>Now, let's assume a significance threshold of <script type="math/tex">\alpha=0.05</script> for rejecting the null hypothesis that both algorithms perform equally well on the dataset and conduct the 5x2cv <em>t</em> test:</p>
-<pre><code class="python">from mlxtend.evaluate import paired_ttest_5x2cv
+<pre><code class="language-python">from mlxtend.evaluate import paired_ttest_5x2cv
 
 
 t, p = paired_ttest_5x2cv(estimator1=clf1,
@@ -1061,13 +1072,12 @@ t, p = paired_ttest_5x2cv(estimator1=clf1,
 print('t statistic: %.3f' % t)
 print('p value: %.3f' % p)
 </code></pre>
-
 <pre><code>t statistic: -1.539
 p value: 0.184
 </code></pre>
 <p>Since <script type="math/tex">p > \alpha</script>, we cannot reject the null hypothesis and may conclude that the performance of the two algorithms is not significantly different. </p>
 <p>While it is generally not recommended to apply statistical tests multiple times without correction for multiple hypothesis testing, let us take a look at an example where the decision tree algorithm is limited to producing a very simple decision boundary that would result in a relatively bad performance:</p>
-<pre><code class="python">clf2 = DecisionTreeClassifier(random_state=1, max_depth=1)
+<pre><code class="language-python">clf2 = DecisionTreeClassifier(random_state=1, max_depth=1)
 
 score2 = clf2.fit(X_train, y_train).score(X_test, y_test)
 print('Decision tree accuracy: %.2f%%' % (score2*100))
@@ -1081,7 +1091,6 @@ t, p = paired_ttest_5x2cv(estimator1=clf1,
 print('t statistic: %.3f' % t)
 print('p value: %.3f' % p)
 </code></pre>
-
 <pre><code>Decision tree accuracy: 63.16%
 t statistic: 5.386
 p value: 0.003

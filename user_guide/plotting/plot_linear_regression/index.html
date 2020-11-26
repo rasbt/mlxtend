@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1000,7 +1012,7 @@
 <li>-</li>
 </ul>
 <h2 id="example-1-ordinary-least-squares-simple-linear-regression">Example 1 - Ordinary Least Squares Simple Linear Regression</h2>
-<pre><code class="python">import matplotlib.pyplot as plt
+<pre><code class="language-python">import matplotlib.pyplot as plt
 from mlxtend.plotting import plot_linear_regression
 import numpy as np
 
@@ -1013,7 +1025,6 @@ y = np.array([14, 24, 22, 59, 66, 25, 18, 60, 39, 32, 53, 18, 55, 41, 28, 61, 35
 intercept, slope, corr_coeff = plot_linear_regression(X, y)
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../plot_linear_regression_files/plot_linear_regression_8_0.png" /></p>
 <h2 id="api">API</h2>
 <p><em>plot_linear_regression(X, y, model=LinearRegression(copy_X=True, fit_intercept=True, n_jobs=1, normalize=False), corr_func='pearsonr', scattercolor='blue', fit_style='k--', legend=True, xlim='auto')</em></p>

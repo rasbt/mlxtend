@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1008,15 +1020,14 @@
 <h2 id="example-1-generating-frequent-itemsets">Example 1 -- Generating Frequent Itemsets</h2>
 <p>The <code>fpgrowth</code> function expects data in a one-hot encoded pandas DataFrame.
 Suppose we have the following transaction data:</p>
-<pre><code class="python">dataset = [['Milk', 'Onion', 'Nutmeg', 'Kidney Beans', 'Eggs', 'Yogurt'],
+<pre><code class="language-python">dataset = [['Milk', 'Onion', 'Nutmeg', 'Kidney Beans', 'Eggs', 'Yogurt'],
            ['Dill', 'Onion', 'Nutmeg', 'Kidney Beans', 'Eggs', 'Yogurt'],
            ['Milk', 'Apple', 'Kidney Beans', 'Eggs'],
            ['Milk', 'Unicorn', 'Corn', 'Kidney Beans', 'Yogurt'],
            ['Corn', 'Onion', 'Onion', 'Kidney Beans', 'Ice cream', 'Eggs']]
 </code></pre>
-
 <p>We can transform it into the right format via the <code>TransactionEncoder</code> as follows:</p>
-<pre><code class="python">import pandas as pd
+<pre><code class="language-python">import pandas as pd
 from mlxtend.preprocessing import TransactionEncoder
 
 te = TransactionEncoder()
@@ -1024,7 +1035,6 @@ te_ary = te.fit(dataset).transform(dataset)
 df = pd.DataFrame(te_ary, columns=te.columns_)
 df
 </code></pre>
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1132,11 +1142,10 @@ df
 </div>
 
 <p>Now, let us return the items and itemsets with at least 60% support:</p>
-<pre><code class="python">from mlxtend.frequent_patterns import fpgrowth
+<pre><code class="language-python">from mlxtend.frequent_patterns import fpgrowth
 
 fpgrowth(df, min_support=0.6)
 </code></pre>
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1220,9 +1229,8 @@ fpgrowth(df, min_support=0.6)
 </div>
 
 <p>By default, <code>fpgrowth</code> returns the column indices of the items, which may be useful in downstream operations such as association rule mining. For better readability, we can set <code>use_colnames=True</code> to convert these integer values into the respective item names: </p>
-<pre><code class="python">fpgrowth(df, min_support=0.6, use_colnames=True)
+<pre><code class="language-python">fpgrowth(df, min_support=0.6, use_colnames=True)
 </code></pre>
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1279,22 +1287,22 @@ fpgrowth(df, min_support=0.6)
     <tr>
       <th>6</th>
       <td>0.6</td>
-      <td>(Yogurt, Kidney Beans)</td>
+      <td>(Kidney Beans, Yogurt)</td>
     </tr>
     <tr>
       <th>7</th>
       <td>0.6</td>
-      <td>(Onion, Eggs)</td>
+      <td>(Eggs, Onion)</td>
     </tr>
     <tr>
       <th>8</th>
       <td>0.6</td>
-      <td>(Onion, Kidney Beans)</td>
+      <td>(Kidney Beans, Onion)</td>
     </tr>
     <tr>
       <th>9</th>
       <td>0.6</td>
-      <td>(Onion, Eggs, Kidney Beans)</td>
+      <td>(Eggs, Kidney Beans, Onion)</td>
     </tr>
     <tr>
       <th>10</th>
@@ -1307,32 +1315,28 @@ fpgrowth(df, min_support=0.6)
 
 <h2 id="example-2-apriori-versus-fpgrowth">Example 2 -- Apriori versus FPGrowth</h2>
 <p>Since FP-Growth doesn't require creating candidate sets explicitly, it can be magnitudes faster than the alternative Apriori algorithm. For instance, the following cells compare the performance of the Apriori algorithm to the performance of FP-Growth -- even in this very simple toy dataset scenario, FP-Growth is about 5 times faster.</p>
-<pre><code class="python">import pandas as pd
+<pre><code class="language-python">import pandas as pd
 from mlxtend.preprocessing import TransactionEncoder
 
 te = TransactionEncoder()
 te_ary = te.fit(dataset).transform(dataset)
 df = pd.DataFrame(te_ary, columns=te.columns_)
 </code></pre>
-
-<pre><code class="python">from mlxtend.frequent_patterns import apriori
+<pre><code class="language-python">from mlxtend.frequent_patterns import apriori
 
 %timeit -n 100 -r 10 apriori(df, min_support=0.6)
 </code></pre>
-
-<pre><code>3.16 ms ± 66.3 µs per loop (mean ± std. dev. of 10 runs, 100 loops each)
+<pre><code>3.02 ms ± 118 µs per loop (mean ± std. dev. of 10 runs, 100 loops each)
 </code></pre>
-<pre><code class="python">%timeit -n 100 -r 10 apriori(df, min_support=0.6, low_memory=True)
+<pre><code class="language-python">%timeit -n 100 -r 10 apriori(df, min_support=0.6, low_memory=True)
 </code></pre>
-
-<pre><code>3.43 ms ± 131 µs per loop (mean ± std. dev. of 10 runs, 100 loops each)
+<pre><code>2.89 ms ± 89.4 µs per loop (mean ± std. dev. of 10 runs, 100 loops each)
 </code></pre>
-<pre><code class="python">from mlxtend.frequent_patterns import fpgrowth
+<pre><code class="language-python">from mlxtend.frequent_patterns import fpgrowth
 
 %timeit -n 100 -r 10 fpgrowth(df, min_support=0.6)
 </code></pre>
-
-<pre><code>1.24 ms ± 38.7 µs per loop (mean ± std. dev. of 10 runs, 100 loops each)
+<pre><code>1.05 ms ± 47.7 µs per loop (mean ± std. dev. of 10 runs, 100 loops each)
 </code></pre>
 <h2 id="more-examples">More Examples</h2>
 <p>Please note that since the <code>fpgrowth</code> function is a drop-in replacement for <code>apriori</code>, it comes with the same set of function arguments and return arguments. Thus, for more examples, please see the <a href="../apriori/"><code>apriori</code></a> documentation.</p>
@@ -1351,20 +1355,16 @@ user_guide/sparse.html#sparse-data-structures)</p>
 is no longer supported in mlxtend &gt;= 0.17.2.</p>
 <p>The allowed values are either 0/1 or True/False.
 For example,</p>
+<p><code>Apple  Bananas   Beer  Chicken   Milk   Rice
+0   True    False   True     True  False   True
+1   True    False   True    False  False   True
+2   True    False   True    False  False  False
+3   True     True  False    False  False  False
+4  False    False   True     True   True   True
+5  False    False   True    False   True   True
+6  False    False   True    False   True  False
+7   True     True  False    False  False  False</code></p>
 </li>
-</ul>
-<pre><code>    Apple  Bananas   Beer  Chicken   Milk   Rice
-    0   True    False   True     True  False   True
-    1   True    False   True    False  False   True
-    2   True    False   True    False  False  False
-    3   True     True  False    False  False  False
-    4  False    False   True     True   True   True
-    5  False    False   True    False   True   True
-    6  False    False   True    False   True  False
-    7   True     True  False    False  False  False
-</code></pre>
-
-<ul>
 <li>
 <p><code>min_support</code> : float (default: 0.5)</p>
 <p>A float between 0 and 1 for minimum support of the itemsets returned.
@@ -1397,7 +1397,7 @@ possible itemsets lengths are evaluated.</p>
     https://docs.python.org/3.6/library/stdtypes.html#frozenset).</p>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/fpgrowth/">http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/fpgrowth/</a></p></div>
+    http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/fpgrowth/</p></div>
         
         
     </div>

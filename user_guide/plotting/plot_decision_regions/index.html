@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1021,7 +1033,7 @@
 <li></li>
 </ul>
 <h2 id="example-1-decision-regions-in-2d">Example 1 - Decision regions in 2D</h2>
-<pre><code class="python">from mlxtend.plotting import plot_decision_regions
+<pre><code class="language-python">from mlxtend.plotting import plot_decision_regions
 import matplotlib.pyplot as plt
 from sklearn import datasets
 from sklearn.svm import SVC
@@ -1045,10 +1057,9 @@ plt.ylabel('petal length [cm]')
 plt.title('SVM on Iris')
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_6_0.png" /></p>
 <h2 id="example-2-decision-regions-in-1d">Example 2 - Decision regions in 1D</h2>
-<pre><code class="python">from mlxtend.plotting import plot_decision_regions
+<pre><code class="language-python">from mlxtend.plotting import plot_decision_regions
 import matplotlib.pyplot as plt
 from sklearn import datasets
 from sklearn.svm import SVC
@@ -1072,10 +1083,9 @@ plt.title('SVM on Iris')
 
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_8_0.png" /></p>
 <h2 id="example-3-decision-region-grids">Example 3 - Decision Region Grids</h2>
-<pre><code class="python">from sklearn.linear_model import LogisticRegression
+<pre><code class="language-python">from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
@@ -1095,8 +1105,7 @@ iris = datasets.load_iris()
 X = iris.data[:, [0,2]]
 y = iris.target
 </code></pre>
-
-<pre><code class="python">import matplotlib.pyplot as plt
+<pre><code class="language-python">import matplotlib.pyplot as plt
 from mlxtend.plotting import plot_decision_regions
 import matplotlib.gridspec as gridspec
 import itertools
@@ -1116,10 +1125,9 @@ for clf, lab, grd in zip([clf1, clf2, clf3, clf4],
 
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_11_0.png" /></p>
 <h2 id="example-4-highlighting-test-data-points">Example 4 - Highlighting Test Data Points</h2>
-<pre><code class="python">from mlxtend.plotting import plot_decision_regions
+<pre><code class="language-python">from mlxtend.plotting import plot_decision_regions
 from mlxtend.preprocessing import shuffle_arrays_unison
 import matplotlib.pyplot as plt
 from sklearn import datasets
@@ -1148,10 +1156,9 @@ plt.ylabel('petal length [cm]')
 plt.title('SVM on Iris')
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_13_0.png" /></p>
 <h2 id="example-5-evaluating-classifier-behavior-on-non-linear-problems">Example 5 - Evaluating Classifier Behavior on Non-Linear Problems</h2>
-<pre><code class="python">from sklearn.linear_model import LogisticRegression
+<pre><code class="language-python">from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
@@ -1163,25 +1170,22 @@ clf2 = RandomForestClassifier(n_estimators=100,
 clf3 = GaussianNB()
 clf4 = SVC(gamma='auto')
 </code></pre>
-
-<pre><code class="python"># Loading Plotting Utilities
+<pre><code class="language-python"># Loading Plotting Utilities
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import itertools
 from mlxtend.plotting import plot_decision_regions
 import numpy as np
 </code></pre>
-
 <h3 id="xor">XOR</h3>
-<pre><code class="python">xx, yy = np.meshgrid(np.linspace(-3, 3, 50),
+<pre><code class="language-python">xx, yy = np.meshgrid(np.linspace(-3, 3, 50),
                      np.linspace(-3, 3, 50))
 rng = np.random.RandomState(0)
 X = rng.randn(300, 2)
 y = np.array(np.logical_xor(X[:, 0] &gt; 0, X[:, 1] &gt; 0), 
              dtype=int)
 </code></pre>
-
-<pre><code class="python">gs = gridspec.GridSpec(2, 2)
+<pre><code class="language-python">gs = gridspec.GridSpec(2, 2)
 
 fig = plt.figure(figsize=(10,8))
 
@@ -1197,10 +1201,9 @@ for clf, lab, grd in zip([clf1, clf2, clf3, clf4],
 
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_19_0.png" /></p>
 <h3 id="half-moons">Half-Moons</h3>
-<pre><code class="python">from sklearn.datasets import make_moons
+<pre><code class="language-python">from sklearn.datasets import make_moons
 X, y = make_moons(n_samples=100, random_state=123)
 
 gs = gridspec.GridSpec(2, 2)
@@ -1219,10 +1222,9 @@ for clf, lab, grd in zip([clf1, clf2, clf3, clf4],
 
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_21_0.png" /></p>
 <h3 id="concentric-circles">Concentric Circles</h3>
-<pre><code class="python">from sklearn.datasets import make_circles
+<pre><code class="language-python">from sklearn.datasets import make_circles
 X, y = make_circles(n_samples=1000, random_state=123, noise=0.1, factor=0.2)
 
 gs = gridspec.GridSpec(2, 2)
@@ -1241,10 +1243,9 @@ for clf, lab, grd in zip([clf1, clf2, clf3, clf4],
 
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_23_0.png" /></p>
 <h2 id="example-6-working-with-existing-axes-objects-using-subplots">Example 6 - Working with existing axes objects using subplots</h2>
-<pre><code class="python">import matplotlib.pyplot as plt
+<pre><code class="language-python">import matplotlib.pyplot as plt
 from mlxtend.plotting import plot_decision_regions
 
 from sklearn.linear_model import LogisticRegression
@@ -1273,10 +1274,9 @@ fig = plot_decision_regions(X=X, y=y, clf=clf2, ax=axes[1], legend=1)
 
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_25_0.png" /></p>
 <h2 id="example-7-decision-regions-with-more-than-two-training-features">Example 7 - Decision regions with more than two training features</h2>
-<pre><code class="python">from mlxtend.plotting import plot_decision_regions
+<pre><code class="language-python">from mlxtend.plotting import plot_decision_regions
 import matplotlib.pyplot as plt
 from sklearn import datasets
 from sklearn.svm import SVC
@@ -1308,10 +1308,9 @@ ax.set_title('Feature 3 = {}'.format(value))
 fig.suptitle('SVM on make_blobs')
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_27_0.png" /></p>
 <h2 id="example-8-grid-of-decision-region-slices">Example 8 - Grid of decision region slices</h2>
-<pre><code class="python">from mlxtend.plotting import plot_decision_regions
+<pre><code class="language-python">from mlxtend.plotting import plot_decision_regions
 import matplotlib.pyplot as plt
 from sklearn import datasets
 from sklearn.svm import SVC
@@ -1341,10 +1340,9 @@ for value, ax in zip(values, axarr.flat):
 fig.suptitle('SVM on make_blobs')
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_29_0.png" /></p>
 <h2 id="example-9-customizing-the-plotting-style">Example 9 - Customizing the plotting style</h2>
-<pre><code class="python">from mlxtend.plotting import plot_decision_regions
+<pre><code class="language-python">from mlxtend.plotting import plot_decision_regions
 from mlxtend.preprocessing import shuffle_arrays_unison
 import matplotlib.pyplot as plt
 from sklearn import datasets
@@ -1379,11 +1377,10 @@ plt.ylabel('petal length [cm]')
 plt.title('SVM on Iris')
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_31_0.png" /></p>
 <h2 id="example-10-providing-your-own-legend-labels">Example 10 - Providing your own legend labels</h2>
 <p>Custom legend labels can be provided by returning the <code>axis</code> object(s) from the <code>plot_decision_region</code> function and then getting the handles and labels of the legend. Custom handles (i.e., labels) can then be provided via <code>ax.legend</code></p>
-<pre><code class="python">ax = plot_decision_regions(X, y, clf=svm, legend=0)
+<pre><code class="language-python">ax = plot_decision_regions(X, y, clf=svm, legend=0)
 
 handles, labels = ax.get_legend_handles_labels()
 ax.legend(handles, 
@@ -1391,9 +1388,8 @@ ax.legend(handles,
            framealpha=0.3, scatterpoints=1)
 
 </code></pre>
-
 <p>An example is shown below.</p>
-<pre><code class="python">from mlxtend.plotting import plot_decision_regions
+<pre><code class="language-python">from mlxtend.plotting import plot_decision_regions
 import matplotlib.pyplot as plt
 from sklearn import datasets
 from sklearn.svm import SVC
@@ -1423,10 +1419,9 @@ ax.legend(handles,
 
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_34_0.png" /></p>
 <h2 id="example-11-plots-with-different-zoom-factors">Example 11 - Plots with different zoom factors</h2>
-<pre><code class="python">from mlxtend.plotting import plot_decision_regions
+<pre><code class="language-python">from mlxtend.plotting import plot_decision_regions
 import matplotlib.pyplot as plt
 from sklearn import datasets
 from sklearn.svm import SVC
@@ -1440,43 +1435,38 @@ y = iris.target
 svm = SVC(C=0.5, kernel='linear')
 svm.fit(X, y)
 </code></pre>
-
 <pre><code>SVC(C=0.5, break_ties=False, cache_size=200, class_weight=None, coef0=0.0,
     decision_function_shape='ovr', degree=3, gamma='scale', kernel='linear',
     max_iter=-1, probability=False, random_state=None, shrinking=True,
     tol=0.001, verbose=False)
 </code></pre>
 <p><strong>Default Zoom Factor</strong></p>
-<pre><code class="python">plot_decision_regions(X, y, clf=svm, zoom_factor=1.)
+<pre><code class="language-python">plot_decision_regions(X, y, clf=svm, zoom_factor=1.)
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_38_0.png" /></p>
 <p><strong>Zooming out</strong></p>
-<pre><code class="python">plot_decision_regions(X, y, clf=svm, zoom_factor=0.1)
+<pre><code class="language-python">plot_decision_regions(X, y, clf=svm, zoom_factor=0.1)
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_40_0.png" /></p>
 <p><strong>Zooming in</strong></p>
 <p>Note that while zooming in (by choosing a <code>zoom_factor</code> &gt; 1.0) the plots are still created such that all data points are shown in the plot.</p>
-<pre><code class="python">plot_decision_regions(X, y, clf=svm, zoom_factor=2.0)
+<pre><code class="language-python">plot_decision_regions(X, y, clf=svm, zoom_factor=2.0)
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_43_0.png" /></p>
 <p><strong>Cropping the axes</strong></p>
 <p>In order to zoom in further, which means that some training examples won't be shown, you can simply crop the axes as shown below:</p>
-<pre><code class="python">plot_decision_regions(X, y, clf=svm, zoom_factor=2.0)
+<pre><code class="language-python">plot_decision_regions(X, y, clf=svm, zoom_factor=2.0)
 plt.xlim(5, 6)
 plt.ylim(2, 5)
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_46_0.png" /></p>
 <h2 id="example-12-using-classifiers-that-expect-onehot-encoded-outputs-keras">Example 12 - Using classifiers that expect onehot-encoded outputs (Keras)</h2>
 <p>Most objects for classification that mimick the scikit-learn estimator API should be compatible with the <code>plot_decision_regions</code> function. However, if the classification model (e.g., a typical Keras model) output onehot-encoded predictions, we have to use an additional trick. I.e., for onehot encoded outputs, we need to wrap the Keras model into a class that converts these onehot encoded variables into integers. Such a wrapper class can be as simple as the following:</p>
-<pre><code class="python">class Onehot2Int(object):
+<pre><code class="language-python">class Onehot2Int(object):
 
     def __init__(self, model):
         self.model = model
@@ -1485,9 +1475,8 @@ plt.show()
         y_pred = self.model.predict(X)
         return np.argmax(y_pred, axis=1)
 </code></pre>
-
 <p>The example below illustrates how the Onehot2Int class can be used with a Keras model that outputs onehot encoded labels:</p>
-<pre><code class="python">import keras
+<pre><code class="language-python">import keras
 from keras.models import Sequential
 from keras.layers import Dense
 import matplotlib.pyplot as plt
@@ -1516,7 +1505,6 @@ model.add(Dense(3, activation='softmax'))
 model.compile(loss=&quot;categorical_crossentropy&quot;, optimizer=keras.optimizers.adam(lr=0.005), metrics=['accuracy'])
 history = model.fit(X, y_onehot, epochs=10, batch_size=5, verbose=1, validation_split=0.1)
 </code></pre>
-
 <pre><code>Using TensorFlow backend.
 
 
@@ -1542,14 +1530,13 @@ Epoch 9/10
 Epoch 10/10
 135/135 [==============================] - 0s 153us/step - loss: 0.2621 - accuracy: 0.9556 - val_loss: 0.6322 - val_accuracy: 1.0000
 </code></pre>
-<pre><code class="python"># Wrap keras model
+<pre><code class="language-python"># Wrap keras model
 model_no_ohe = Onehot2Int(model)
 
 # Plot decision boundary
 plot_decision_regions(X, y, clf=model_no_ohe)
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../plot_decision_regions_files/plot_decision_regions_52_0.png" /></p>
 <h1 id="api">API</h1>
 <p><em>plot_decision_regions(X, y, clf, feature_index=None, filler_feature_values=None, filler_feature_ranges=None, ax=None, X_highlight=None, res=None, zoom_factor=1.0, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors='#1f77b4,#ff7f0e,#3ca02c,#d62728,#9467bd,#8c564b,#e377c2,#7f7f7f,#bcbd22,#17becf', scatter_kwargs=None, contourf_kwargs=None, scatter_highlight_kwargs=None)</em></p>

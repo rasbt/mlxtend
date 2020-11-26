@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -993,7 +1005,7 @@
 <p>from mlxtend.frequent_patterns import fpmax</p>
 </blockquote>
 <h2 id="overview">Overview</h2>
-<p>The <a href="../apriori/">Apriori algorithm</a> is among the first and most popular algorithms for frequent itemset generation (frequent itemsets are then used for association rule mining). However, the runtime of Apriori can be quite small, especially for datasets with a large number of unique items, as the runtime grows exponentially depending on the number of unique items. </p>
+<p>The <a href="../apriori/">Apriori algorithm</a> is among the first and most popular algorithms for frequent itemset generation (frequent itemsets are then used for association rule mining). However, the runtime of Apriori can be quite large, especially for datasets with a large number of unique items, as the runtime grows exponentially depending on the number of unique items. </p>
 <p>In contrast to Apriori, <a href="../fpgrowth/">FP-Growth</a> is a frequent pattern generation algorithm that inserts items into a pattern search tree, which allows it to have a linear increase in runtime with respect to the number of unique items or entries.</p>
 <p>FP-Max is a variant of FP-Growth, which focuses on obtaining maximal itemsets.
 <strong>An itemset X is said to maximal if X is frequent and there exists no frequent super-pattern containing X.</strong> In other words, a frequent pattern X cannot be sub-pattern of larger frequent pattern to qualify for the definition <em>maximal itemset</em>.</p>
@@ -1009,15 +1021,14 @@
 <h2 id="example-1-maximal-itemsets">Example 1 -- Maximal Itemsets</h2>
 <p>The <code>fpmax</code> function expects data in a one-hot encoded pandas DataFrame.
 Suppose we have the following transaction data:</p>
-<pre><code class="python">dataset = [['Milk', 'Onion', 'Nutmeg', 'Kidney Beans', 'Eggs', 'Yogurt'],
+<pre><code class="language-python">dataset = [['Milk', 'Onion', 'Nutmeg', 'Kidney Beans', 'Eggs', 'Yogurt'],
            ['Dill', 'Onion', 'Nutmeg', 'Kidney Beans', 'Eggs', 'Yogurt'],
            ['Milk', 'Apple', 'Kidney Beans', 'Eggs'],
            ['Milk', 'Unicorn', 'Corn', 'Kidney Beans', 'Yogurt'],
            ['Corn', 'Onion', 'Onion', 'Kidney Beans', 'Ice cream', 'Eggs']]
 </code></pre>
-
 <p>We can transform it into the right format via the <code>TransactionEncoder</code> as follows:</p>
-<pre><code class="python">import pandas as pd
+<pre><code class="language-python">import pandas as pd
 from mlxtend.preprocessing import TransactionEncoder
 
 te = TransactionEncoder()
@@ -1025,7 +1036,6 @@ te_ary = te.fit(dataset).transform(dataset)
 df = pd.DataFrame(te_ary, columns=te.columns_)
 df
 </code></pre>
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1133,11 +1143,10 @@ df
 </div>
 
 <p>Now, let us return the items and itemsets with at least 60% support:</p>
-<pre><code class="python">from mlxtend.frequent_patterns import fpmax
+<pre><code class="language-python">from mlxtend.frequent_patterns import fpmax
 
 fpmax(df, min_support=0.6)
 </code></pre>
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1181,9 +1190,8 @@ fpmax(df, min_support=0.6)
 </div>
 
 <p>By default, <code>fpmax</code> returns the column indices of the items, which may be useful in downstream operations such as association rule mining. For better readability, we can set <code>use_colnames=True</code> to convert these integer values into the respective item names: </p>
-<pre><code class="python">fpmax(df, min_support=0.6, use_colnames=True)
+<pre><code class="language-python">fpmax(df, min_support=0.6, use_colnames=True)
 </code></pre>
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1255,7 +1263,6 @@ For example,</p>
     6  False    False   True    False   True  False
     7   True     True  False    False  False  False
 </code></pre>
-
 <ul>
 <li>
 <p><code>min_support</code> : float (default: 0.5)</p>

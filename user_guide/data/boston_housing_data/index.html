@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1026,13 +1038,12 @@
 'Hedonic prices and the demand for clean air', J. Environ. Economics &amp; Management, vol.5, 81-102, 1978.</li>
 </ul>
 <h2 id="example-1-dataset-overview">Example 1 - Dataset overview</h2>
-<pre><code class="python">from mlxtend.data import boston_housing_data
+<pre><code class="language-python">from mlxtend.data import boston_housing_data
 X, y = boston_housing_data()
 
 print('Dimensions: %s x %s' % (X.shape[0], X.shape[1]))
 print('1st row', X[0])
 </code></pre>
-
 <pre><code>(506, 14)
 Dimensions: 506 x 13
 1st row [  6.32000000e-03   1.80000000e+01   2.31000000e+00   0.00000000e+00

@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1001,7 +1013,7 @@
 <p>
 <script type="math/tex; mode=display">ACC = \frac{TP + TN}{n}</script>
 </p>
-<pre><code class="python">import numpy as np
+<pre><code class="language-python">import numpy as np
 from mlxtend.evaluate import accuracy_score
 
 
@@ -1010,12 +1022,11 @@ y_pred = [1, 0, 0, 0, 1, 2, 0, 2, 2]
 
 accuracy_score(y_targ, y_pred)
 </code></pre>
-
 <pre><code>0.5555555555555556
 </code></pre>
 <h2 id="example-2-per-class-accuracy">Example 2 -- Per-Class Accuracy</h2>
 <p>The per-class accuracy is the accuracy of one class (defined as the <code>pos_label</code>) versus all remaining datapoints in the dataset.</p>
-<pre><code class="python">import numpy as np
+<pre><code class="language-python">import numpy as np
 from mlxtend.evaluate import accuracy_score
 
 
@@ -1028,7 +1039,6 @@ bin_acc = accuracy_score(y_targ, y_pred, method='binary', pos_label=1)
 print(f'Standard accuracy: {std_acc*100:.2f}%')
 print(f'Class 1 accuracy: {bin_acc*100:.2f}%')
 </code></pre>
-
 <pre><code>Standard accuracy: 55.56%
 Class 1 accuracy: 66.67%
 </code></pre>
@@ -1056,7 +1066,7 @@ Class 1 accuracy: 66.67%
 <p>
 <script type="math/tex; mode=display">APC\;ACC = \frac{83/90 + 71/90 + 78/90}{3} \approx 0.86</script>
 </p>
-<pre><code class="python">import numpy as np
+<pre><code class="language-python">import numpy as np
 from mlxtend.evaluate import accuracy_score
 
 
@@ -1071,7 +1081,6 @@ print(f'Standard accuracy: {std_acc*100:.2f}%')
 print(f'Class 1 accuracy: {bin_acc*100:.2f}%')
 print(f'Average per-class accuracy: {avg_acc*100:.2f}%')
 </code></pre>
-
 <pre><code>Standard accuracy: 55.56%
 Class 1 accuracy: 66.67%
 Average per-class accuracy: 70.37%

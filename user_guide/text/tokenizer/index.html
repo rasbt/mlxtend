@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1002,21 +1014,17 @@
 <li>-</li>
 </ul>
 <h2 id="example-1-extract-emoticons">Example 1 - Extract Emoticons</h2>
-<pre><code class="python">from mlxtend.text import tokenizer_emoticons
+<pre><code class="language-python">from mlxtend.text import tokenizer_emoticons
 </code></pre>
-
-<pre><code class="python">tokenizer_emoticons('&lt;/a&gt;This :) is :( a test :-)!')
+<pre><code class="language-python">tokenizer_emoticons('&lt;/a&gt;This :) is :( a test :-)!')
 </code></pre>
-
 <pre><code>[':)', ':(', ':-)']
 </code></pre>
 <h2 id="example-2-extract-words-and-emoticons">Example 2 - Extract Words and Emoticons</h2>
-<pre><code class="python">from mlxtend.text import tokenizer_words_and_emoticons
+<pre><code class="language-python">from mlxtend.text import tokenizer_words_and_emoticons
 </code></pre>
-
-<pre><code class="python">tokenizer_words_and_emoticons('&lt;/a&gt;This :) is :( a test :-)!')
+<pre><code class="language-python">tokenizer_words_and_emoticons('&lt;/a&gt;This :) is :( a test :-)!')
 </code></pre>
-
 <pre><code>['this', 'is', 'a', 'test', ':)', ':(', ':-)']
 </code></pre>
 <h2 id="api">API</h2>

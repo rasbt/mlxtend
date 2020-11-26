@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1005,15 +1017,14 @@
 <h2 id="example-1-generating-frequent-itemsets">Example 1 -- Generating Frequent Itemsets</h2>
 <p>The <code>apriori</code> function expects data in a one-hot encoded pandas DataFrame.
 Suppose we have the following transaction data:</p>
-<pre><code class="python">dataset = [['Milk', 'Onion', 'Nutmeg', 'Kidney Beans', 'Eggs', 'Yogurt'],
+<pre><code class="language-python">dataset = [['Milk', 'Onion', 'Nutmeg', 'Kidney Beans', 'Eggs', 'Yogurt'],
            ['Dill', 'Onion', 'Nutmeg', 'Kidney Beans', 'Eggs', 'Yogurt'],
            ['Milk', 'Apple', 'Kidney Beans', 'Eggs'],
            ['Milk', 'Unicorn', 'Corn', 'Kidney Beans', 'Yogurt'],
            ['Corn', 'Onion', 'Onion', 'Kidney Beans', 'Ice cream', 'Eggs']]
 </code></pre>
-
 <p>We can transform it into the right format via the <code>TransactionEncoder</code> as follows:</p>
-<pre><code class="python">import pandas as pd
+<pre><code class="language-python">import pandas as pd
 from mlxtend.preprocessing import TransactionEncoder
 
 te = TransactionEncoder()
@@ -1021,7 +1032,6 @@ te_ary = te.fit(dataset).transform(dataset)
 df = pd.DataFrame(te_ary, columns=te.columns_)
 df
 </code></pre>
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1129,11 +1139,10 @@ df
 </div>
 
 <p>Now, let us return the items and itemsets with at least 60% support:</p>
-<pre><code class="python">from mlxtend.frequent_patterns import apriori
+<pre><code class="language-python">from mlxtend.frequent_patterns import apriori
 
 apriori(df, min_support=0.6)
 </code></pre>
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1217,9 +1226,8 @@ apriori(df, min_support=0.6)
 </div>
 
 <p>By default, <code>apriori</code> returns the column indices of the items, which may be useful in downstream operations such as association rule mining. For better readability, we can set <code>use_colnames=True</code> to convert these integer values into the respective item names: </p>
-<pre><code class="python">apriori(df, min_support=0.6, use_colnames=True)
+<pre><code class="language-python">apriori(df, min_support=0.6, use_colnames=True)
 </code></pre>
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1304,11 +1312,10 @@ apriori(df, min_support=0.6)
 
 <h2 id="example-2-selecting-and-filtering-results">Example 2 -- Selecting and Filtering Results</h2>
 <p>The advantage of working with pandas <code>DataFrames</code> is that we can use its convenient features to filter the results. For instance, let's assume we are only interested in itemsets of length 2 that have a support of at least 80 percent. First, we create the frequent itemsets via <code>apriori</code> and add a new column that stores the length of each itemset:</p>
-<pre><code class="python">frequent_itemsets = apriori(df, min_support=0.6, use_colnames=True)
+<pre><code class="language-python">frequent_itemsets = apriori(df, min_support=0.6, use_colnames=True)
 frequent_itemsets['length'] = frequent_itemsets['itemsets'].apply(lambda x: len(x))
 frequent_itemsets
 </code></pre>
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1404,10 +1411,9 @@ frequent_itemsets
 </div>
 
 <p>Then, we can select the results that satisfy our desired criteria as follows:</p>
-<pre><code class="python">frequent_itemsets[ (frequent_itemsets['length'] == 2) &amp;
+<pre><code class="language-python">frequent_itemsets[ (frequent_itemsets['length'] == 2) &amp;
                    (frequent_itemsets['support'] &gt;= 0.8) ]
 </code></pre>
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1443,9 +1449,8 @@ frequent_itemsets
 </div>
 
 <p>Similarly, using the Pandas API, we can select entries based on the "itemsets" column:</p>
-<pre><code class="python">frequent_itemsets[ frequent_itemsets['itemsets'] == {'Onion', 'Eggs'} ]
+<pre><code class="language-python">frequent_itemsets[ frequent_itemsets['itemsets'] == {'Onion', 'Eggs'} ]
 </code></pre>
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1492,11 +1497,10 @@ frequent_itemsets
 <h2 id="example-3-working-with-sparse-representations">Example 3 -- Working with Sparse Representations</h2>
 <p>To save memory, you may want to represent your transaction data in the sparse format.
 This is especially useful if you have lots of products and small transactions.</p>
-<pre><code class="python">oht_ary = te.fit(dataset).transform(dataset, sparse=True)
+<pre><code class="language-python">oht_ary = te.fit(dataset).transform(dataset, sparse=True)
 sparse_df = pd.DataFrame.sparse.from_spmatrix(oht_ary, columns=te.columns_)
 sparse_df
 </code></pre>
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1603,9 +1607,8 @@ sparse_df
 </table>
 </div>
 
-<pre><code class="python">apriori(sparse_df, min_support=0.6, use_colnames=True, verbose=1)
+<pre><code class="language-python">apriori(sparse_df, min_support=0.6, use_colnames=True, verbose=1)
 </code></pre>
-
 <pre><code>Processing 21 combinations | Sampling itemset size 3
 </code></pre>
 <div>
@@ -1717,7 +1720,6 @@ For example,</p>
     6    False    False   True    False   True  False
     7     True     True  False    False  False  False
 </code></pre>
-
 <ul>
 <li>
 <p><code>min_support</code> : float (default: 0.5)</p>

@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1009,7 +1021,7 @@
 </ul>
 <h2 id="example-1-fit_image">Example 1 (fit_image)</h2>
 <p>This example illustrates the use of EyepadAlign fit to a <strong>single</strong> target input image (first image in the <a href="http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html">CelebA dataset</a>) to another portrait such that the eye position is in the same scale and location as the target image.</p>
-<pre><code class="python">import imageio
+<pre><code class="language-python">import imageio
 from mlxtend.image import EyepadAlign
 
 
@@ -1021,10 +1033,9 @@ print('Target image shape: ', target_image.shape)
 
 eyepad.fit_image(target_image);
 </code></pre>
-
 <pre><code>Target image shape:  (218, 178, 3)
 </code></pre>
-<pre><code class="python">### Transform a test image
+<pre><code class="language-python">### Transform a test image
 
 
 img = imageio.imread('test-face.png')
@@ -1033,11 +1044,10 @@ print('Original Image shape: ', img.shape)
 img_tr = eyepad.transform(img)
 print('Transformed Image shape: ', img_tr.shape)
 </code></pre>
-
 <pre><code>Original Image shape:  (350, 350, 3)
 Transformed Image shape:  (218, 178, 3)
 </code></pre>
-<pre><code class="python">import matplotlib.pyplot as plt
+<pre><code class="language-python">import matplotlib.pyplot as plt
 
 
 fig = plt.figure(figsize=(12, 5))
@@ -1052,12 +1062,11 @@ ax.imshow(img_tr)
 ax.set_title('Aligned to Target', size=20)
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../eyepad_align_files/eyepad_align_11_0.png" /></p>
 <h2 id="example-2-fit_directory">Example 2 (fit_directory)</h2>
 <p>In typical computer vision and deep learning tasks, we are interested in aligning all images in a dataset and across dataset to allow cross-dataset comparisons of face image classifiers.</p>
 <p>Using the <code>fit_directory</code> method, we can fit <code>EyepadAlign</code> such that the average landmarks are computed from all images in a directory. Then, we can use these average landmarks to transform new images based on the average eye location.</p>
-<pre><code class="python">import imageio
+<pre><code class="language-python">import imageio
 from mlxtend.image import EyepadAlign
 
 
@@ -1072,7 +1081,6 @@ img = imageio.imread('test-face.png')
 img_tr = eyepad.transform(img)
 print('Transformed Image shape: ', img_tr.shape)
 </code></pre>
-
 <pre><code>Pre-Checking directory for consistent image dimensions...
 
 
@@ -1096,16 +1104,15 @@ Total time elapsed: 00:00:00
 Transformed Image shape:  (218, 178, 3)
 </code></pre>
 <p>Note that a warning is displayed if no face landmarks could be detected. In these cases, the image is skipped and not included in the average landmark computation. E.g., 000003.jpg would be such an example:</p>
-<pre><code class="python">import matplotlib.pyplot as plt
+<pre><code class="language-python">import matplotlib.pyplot as plt
 
 img_no_landmarks = imageio.imread('celeba-subset/000003.jpg')
 plt.imshow(img_no_landmarks)
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../eyepad_align_files/eyepad_align_16_0.png" /></p>
 <p>Finally, the an example of aligning the original face image to the average landmarks in the dataset is shown below:</p>
-<pre><code class="python">fig = plt.figure(figsize=(10, 4))
+<pre><code class="language-python">fig = plt.figure(figsize=(10, 4))
 
 ax = fig.add_subplot(1, 3, 1)
 ax.scatter(eyepad.target_landmarks_[:, 0], eyepad.target_landmarks_[:, 1], alpha=0.8)
@@ -1125,11 +1132,10 @@ ax.set_title('Aligned to Target', size=20)
 plt.tight_layout()
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../eyepad_align_files/eyepad_align_18_0.png" /></p>
 <h2 id="example-3-fit_values">Example 3 (fit_values)</h2>
 <p>For more customization, landmarks can also be passed manually.</p>
-<pre><code class="python">import imageio
+<pre><code class="language-python">import imageio
 from mlxtend.image import EyepadAlign
 import numpy as np
 
@@ -1164,8 +1170,7 @@ eyepad = EyepadAlign(verbose=1)
 eyepad.fit_values(target_landmarks=celeba_landmarks,
                      target_width=178, target_height=218);
 </code></pre>
-
-<pre><code class="python">import matplotlib.pyplot as plt
+<pre><code class="language-python">import matplotlib.pyplot as plt
 
 
 img = imageio.imread('test-face.png')
@@ -1192,13 +1197,12 @@ ax.set_title('Aligned to Target', size=20)
 plt.tight_layout()
 plt.show()
 </code></pre>
-
 <pre><code>Transformed Image shape:  (218, 178, 3)
 </code></pre>
 <p><img alt="png" src="../eyepad_align_files/eyepad_align_22_1.png" /></p>
 <h2 id="example-4-centering-the-nose">Example 4 (centering the nose)</h2>
 <p>In many applications that involve center-cropping, it is helpful to translate the image such that the tip of the nose is located in the center of the image.</p>
-<pre><code class="python">### Fit EyepadAlign to dataset to compute average landmarks
+<pre><code class="language-python">### Fit EyepadAlign to dataset to compute average landmarks
 
 import imageio
 from mlxtend.image import EyepadAlign
@@ -1210,7 +1214,6 @@ eyepad.fit_directory(target_img_dir='celeba-subset/',
                      target_width=178, target_height=218,
                      file_extension='.jpg')
 </code></pre>
-
 <pre><code>Pre-Checking directory for consistent image dimensions...
 
 
@@ -1230,7 +1233,7 @@ Total time elapsed: 00:00:00
 
 &lt;mlxtend.image.eyepad_align.EyepadAlign at 0x7fa09865d390&gt;
 </code></pre>
-<pre><code class="python">### Use the calculated landmarks to center the nose:
+<pre><code class="language-python">### Use the calculated landmarks to center the nose:
 center = np.array([178//2, 218//2])
 displacement_vector = center - eyepad.target_landmarks_[33] # index 33 is the nose-tip
 
@@ -1241,8 +1244,7 @@ eyepad_cent_nose = EyepadAlign(verbose=1)
 eyepad_cent_nose.fit_values(target_landmarks=nose_centered_landmarks,
                              target_width=178, target_height=218);
 </code></pre>
-
-<pre><code class="python">### Evaluate the results
+<pre><code class="language-python">### Evaluate the results
 
 img = imageio.imread('test-face.png')
 img_tr = eyepad.transform(img)
@@ -1265,7 +1267,6 @@ ax.set_title('Aligned (Nose in image center)', size=15)
 plt.tight_layout()
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../eyepad_align_files/eyepad_align_27_0.png" /></p>
 <h2 id="api">API</h2>
 <p><em>EyepadAlign(verbose=0)</em></p>
@@ -1326,98 +1327,113 @@ from all face images in a file directory of face images.</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit_directory(target_img_dir, target_height, target_width, file_extension='.jpg', pre_check=True)</em></p>
-<p>Calculates the average landmarks for all face images
-in a directory which will then be set as the target landmark set.</p>
-<p><strong>Arguments</strong></p>
-<ul>
-<li>
-<p><code>target_img_dir</code> : str</p>
-<p>Directory containing the images</p>
-</li>
-<li>
-<p><code>target_height</code> : int</p>
-<p>Expected image height of the images in the directory</p>
-</li>
-<li>
-<p><code>target_width</code> : int</p>
-<p>Expected image width of the images in the directory</p>
-<p>file_extension str (default='.jpg'): File extension of the image files.</p>
-<p>pre_check Bool (default=True): Checks that each image has the
-dimensions specificed via <code>target_height</code>
-and <code>target_width</code> on the whole directory first to identify
-potential issues that are recommended
-to be fixed before proceeding. Raises a warning for each image if
-dimensions differ from the ones specified and expected.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
+*fit_directory(target_img_dir, target_height, target_width, file_extension='.jpg', pre_check=True)*
+
+Calculates the average landmarks for all face images
+in a directory which will then be set as the target landmark set.
+
+**Arguments**
+
+- `target_img_dir` : str
+
+    Directory containing the images
+
+
+- `target_height` : int
+
+    Expected image height of the images in the directory
+
+
+- `target_width` : int
+
+    Expected image width of the images in the directory
+
+    file_extension str (default='.jpg'): File extension of the image files.
+
+    pre_check Bool (default=True): Checks that each image has the
+    dimensions specificed via `target_height`
+    and `target_width` on the whole directory first to identify
+    potential issues that are recommended
+    to be fixed before proceeding. Raises a warning for each image if
+    dimensions differ from the ones specified and expected.
+
+**Returns**
+
+- `self` : object
+
+
 <hr>
 
-<p><em>fit_image(target_image)</em></p>
-<p>Derives facial landmarks from a target image.</p>
-<p><strong>Arguments</strong></p>
-<ul>
-<li>
-<p><code>target_image</code> : <code>uint8</code> numpy.array, shape=[width, height, channels]</p>
-<p>NumPy array representation of the image data.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
+*fit_image(target_image)*
+
+Derives facial landmarks from a target image.
+
+**Arguments**
+
+- `target_image` : `uint8` numpy.array, shape=[width, height, channels]
+
+    NumPy array representation of the image data.
+
+**Returns**
+
+- `self` : object
+
+
 <hr>
 
-<p><em>fit_values(target_landmarks, target_width, target_height)</em></p>
-<p>Used for determining the eye location from pre-defined
+*fit_values(target_landmarks, target_width, target_height)*
+
+Used for determining the eye location from pre-defined
 landmark arrays, eliminating the need for re-computing
-the average landmarks on a target image or image directory.</p>
-<p><strong>Arguments</strong></p>
-<ul>
-<li>
-<p><code>target_landmarks</code> : np.array, shape=(height, width)</p>
-<p>NumPy array containing the locations of the facial landmarks
-as determined by <code>mlxtend.image.extract_face_landmarks</code></p>
-</li>
-<li>
-<p><code>target_height</code> : int</p>
-<p>image height</p>
-</li>
-<li>
-<p><code>target_width</code> : int</p>
-<p>image width</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
+the average landmarks on a target image or image directory.
+
+**Arguments**
+
+- `target_landmarks` : np.array, shape=(height, width)
+
+    NumPy array containing the locations of the facial landmarks
+    as determined by `mlxtend.image.extract_face_landmarks`
+
+
+- `target_height` : int
+
+    image height
+
+
+- `target_width` : int
+
+    image width
+
+**Returns**
+
+- `self` : object
+
+
 <hr>
 
-<p><em>transform(img)</em></p>
-<p>transforms a single face image (img) to the target landmarks
+*transform(img)*
+
+transforms a single face image (img) to the target landmarks
 based on the location of the eyes by
-scaling, translation and cropping (if needed):</p>
-<p>(1) Scaling the image so that the distance of the two eyes
+scaling, translation and cropping (if needed):
+
+(1) Scaling the image so that the distance of the two eyes
 in the given image (img) matches the distance of the
-two eyes in the target landmarks.</p>
-<p>(2) Translation is performed based on the middle point
-between the two eyes.</p>
-<p><strong>Arguments</strong></p>
-<ul>
-<li>
-<p><code>img</code> : np.array, shape=(height, width, channels)</p>
-<p>Input image to be transformed.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul></div>
+two eyes in the target landmarks.
+
+(2) Translation is performed based on the middle point
+between the two eyes.
+
+**Arguments**
+
+
+- `img` : np.array, shape=(height, width, channels)
+
+    Input image to be transformed.
+
+**Returns**
+
+- `self` : object</div>
         
         
     </div>

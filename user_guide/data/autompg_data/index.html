@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1020,7 +1032,7 @@
 <li>Quinlan,R. (1993). Combining Instance-Based and Model-Based Learning. In Proceedings on the Tenth International Conference of Machine Learning, 236-243, University of Massachusetts, Amherst. Morgan Kaufmann.</li>
 </ul>
 <h2 id="example-dataset-overview">Example - Dataset overview</h2>
-<pre><code class="python">from mlxtend.data import autompg_data
+<pre><code class="language-python">from mlxtend.data import autompg_data
 X, y = autompg_data()
 
 print('Dimensions: %s x %s' % (X.shape[0], X.shape[1]))
@@ -1029,7 +1041,6 @@ print('\nHeader: %s' % ['cylinders', 'displacement',
                         'model year', 'origin', 'car name'])
 print('1st row', X[0])
 </code></pre>
-
 <pre><code>Dimensions: 392 x 8
 
 Header: ['cylinders', 'displacement', 'horsepower', 'weight', 'acceleration', 'model year', 'origin', 'car name']
@@ -1037,9 +1048,8 @@ Header: ['cylinders', 'displacement', 'horsepower', 'weight', 'acceleration', 'm
    1.20000000e+01   7.00000000e+01   1.00000000e+00              nan]
 </code></pre>
 <p>Note that the feature array contains a <code>str</code> column ("car name"), thus it is recommended to pick the features as needed and convert it into a <code>float</code> array for further analysis. The example below shows how to get rid of the <code>car name</code> column and cast the NumPy array as a <code>float</code> array.</p>
-<pre><code class="python">X[:, :-1].astype(float)
+<pre><code class="language-python">X[:, :-1].astype(float)
 </code></pre>
-
 <pre><code>array([[   8. ,  307. ,  130. , ...,   12. ,   70. ,    1. ],
        [   8. ,  350. ,  165. , ...,   11.5,   70. ,    1. ],
        [   8. ,  318. ,  150. , ...,   11. ,   70. ,    1. ],

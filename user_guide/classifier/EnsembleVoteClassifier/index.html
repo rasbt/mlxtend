@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1087,13 +1099,12 @@ p(i_1 \mid \mathbf{x}) = {0.1 \times 0.1 + 0.2 \times 0.1 + 0.8 \times 0.6} = 0.
 <li>[1] S. Raschka. <a href="https://github.com/rasbt/python-machine-learning-book">Python Machine Learning</a>. Packt Publishing Ltd., 2015.</li>
 </ul>
 <h2 id="example-1-classifying-iris-flowers-using-different-classification-models">Example 1 -  Classifying Iris Flowers Using Different Classification Models</h2>
-<pre><code class="python">from sklearn import datasets
+<pre><code class="language-python">from sklearn import datasets
 
 iris = datasets.load_iris()
 X, y = iris.data[:, 1:3], iris.target
 </code></pre>
-
-<pre><code class="python">from sklearn import model_selection
+<pre><code class="language-python">from sklearn import model_selection
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB 
 from sklearn.ensemble import RandomForestClassifier
@@ -1115,14 +1126,13 @@ for clf, label in zip([clf1, clf2, clf3], labels):
     print(&quot;Accuracy: %0.2f (+/- %0.2f) [%s]&quot;
           % (scores.mean(), scores.std(), label))
 </code></pre>
-
 <pre><code>5-fold cross validation:
 
 Accuracy: 0.95 (+/- 0.04) [Logistic Regression]
 Accuracy: 0.94 (+/- 0.04) [Random Forest]
 Accuracy: 0.91 (+/- 0.04) [Naive Bayes]
 </code></pre>
-<pre><code class="python">from mlxtend.classifier import EnsembleVoteClassifier
+<pre><code class="language-python">from mlxtend.classifier import EnsembleVoteClassifier
 
 eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], weights=[1,1,1])
 
@@ -1135,14 +1145,13 @@ for clf, label in zip([clf1, clf2, clf3, eclf], labels):
     print(&quot;Accuracy: %0.2f (+/- %0.2f) [%s]&quot; 
           % (scores.mean(), scores.std(), label))
 </code></pre>
-
 <pre><code>Accuracy: 0.95 (+/- 0.04) [Logistic Regression]
 Accuracy: 0.94 (+/- 0.04) [Random Forest]
 Accuracy: 0.91 (+/- 0.04) [Naive Bayes]
 Accuracy: 0.95 (+/- 0.04) [Ensemble]
 </code></pre>
 <h4 id="plotting-decision-regions">Plotting Decision Regions</h4>
-<pre><code class="python">import matplotlib.pyplot as plt
+<pre><code class="language-python">import matplotlib.pyplot as plt
 from mlxtend.plotting import plot_decision_regions
 import matplotlib.gridspec as gridspec
 import itertools
@@ -1161,7 +1170,6 @@ for clf, lab, grd in zip([clf1, clf2, clf3, eclf],
     fig = plot_decision_regions(X=X, y=y, clf=clf)
     plt.title(lab)
 </code></pre>
-
 <pre><code>/Users/kani/Documents/KatrinaLand/mlxtend/mlxtend/plotting/decision_regions.py:249: MatplotlibDeprecationWarning: Passing unsupported keyword arguments to axis() will raise a TypeError in 3.3.
   ax.axis(xmin=xx.min(), xmax=xx.max(), y_min=yy.min(), y_max=yy.max())
 /Users/kani/Documents/KatrinaLand/mlxtend/mlxtend/plotting/decision_regions.py:249: MatplotlibDeprecationWarning: Passing unsupported keyword arguments to axis() will raise a TypeError in 3.3.
@@ -1173,13 +1181,12 @@ for clf, lab, grd in zip([clf1, clf2, clf3, eclf],
 </code></pre>
 <p><img alt="png" src="../EnsembleVoteClassifier_files/EnsembleVoteClassifier_24_1.png" /></p>
 <h2 id="example-2-grid-search">Example 2 - Grid Search</h2>
-<pre><code class="python">from sklearn import datasets
+<pre><code class="language-python">from sklearn import datasets
 
 iris = datasets.load_iris()
 X, y = iris.data[:, 1:3], iris.target
 </code></pre>
-
-<pre><code class="python">from sklearn.model_selection import GridSearchCV
+<pre><code class="language-python">from sklearn.model_selection import GridSearchCV
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB 
 from sklearn.ensemble import RandomForestClassifier
@@ -1204,7 +1211,6 @@ for r, _ in enumerate(grid.cv_results_['mean_test_score']):
              grid.cv_results_[cv_keys[1]][r] / 2.0,
              grid.cv_results_[cv_keys[2]][r]))
 </code></pre>
-
 <pre><code>/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
 STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
 
@@ -1317,7 +1323,7 @@ Please also refer to the documentation for alternative solver options:
 0.960 +/- 0.01 {'logisticregression__C': 100.0, 'randomforestclassifier__n_estimators': 200}
 </code></pre>
 <p><strong>Note</strong>: If the <code>EnsembleClassifier</code> is initialized with multiple similar estimator objects, the estimator names are modified with consecutive integer indices, for example:</p>
-<pre><code class="python">clf1 = LogisticRegression(random_state=1)
+<pre><code class="language-python">clf1 = LogisticRegression(random_state=1)
 clf2 = RandomForestClassifier(random_state=1)
 eclf = EnsembleVoteClassifier(clfs=[clf1, clf1, clf2], 
                               voting='soft')
@@ -1329,7 +1335,6 @@ params = {'logisticregression-1__C': [1.0, 100.0],
 grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
 grid = grid.fit(iris.data, iris.target)
 </code></pre>
-
 <pre><code>/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
 STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
 
@@ -1745,7 +1750,7 @@ Please also refer to the documentation for alternative solver options:
 </code></pre>
 <p>returns the best feature columns, <code>k_feature_idx_</code>, given a dataset X.</p>
 <p>Thus, we simply need to construct a <code>Pipeline</code> consisting of the feature selector and the classifier in order to select different feature subsets for different algorithms. During <code>fitting</code>, the optimal feature subsets are automatically determined via the <code>GridSearchCV</code> object, and by calling <code>predict</code>, the fitted feature selector in the pipeline only passes these columns along, which resulted in the best performance for the respective classifier.</p>
-<pre><code class="python">from sklearn import datasets
+<pre><code class="language-python">from sklearn import datasets
 
 iris = datasets.load_iris()
 X, y = iris.data[:, :], iris.target
@@ -1796,7 +1801,6 @@ for r, _ in enumerate(grid.cv_results_['mean_test_score']):
              grid.cv_results_[cv_keys[1]][r] / 2.0,
              grid.cv_results_[cv_keys[2]][r]))
 </code></pre>
-
 <pre><code>/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
 STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
 
@@ -1829,23 +1833,21 @@ Please also refer to the documentation for alternative solver options:
 0.960 +/- 0.01 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 200}
 </code></pre>
 <p>The best parameters determined via GridSearch are:</p>
-<pre><code class="python">grid.best_params_
+<pre><code class="language-python">grid.best_params_
 </code></pre>
-
 <pre><code>{'pipeline__logreg__C': 1.0,
  'pipeline__sfs__k_features': 2,
  'randomforestclassifier__n_estimators': 200}
 </code></pre>
 <p>Now, we assign these parameters to the ensemble voting classifier, fit the models on the complete training set, and perform a prediction on 3 samples from the Iris dataset.</p>
-<pre><code class="python">eclf = eclf.set_params(**grid.best_params_)
+<pre><code class="language-python">eclf = eclf.set_params(**grid.best_params_)
 eclf.fit(X, y).predict(X[[1, 51, 149]])
 </code></pre>
-
 <pre><code>array([0, 1, 2])
 </code></pre>
 <h4 id="manual-approach">Manual Approach</h4>
 <p>Alternatively, we can select different columns "manually" using the <code>ColumnSelector</code> object. In this example, we select only the first (sepal length) and third (petal length) column for the logistic regression classifier (<code>clf1</code>).</p>
-<pre><code class="python">from mlxtend.feature_selection import ColumnSelector
+<pre><code class="language-python">from mlxtend.feature_selection import ColumnSelector
 
 
 col_sel = ColumnSelector(cols=[0, 2])
@@ -1857,11 +1859,10 @@ eclf = EnsembleVoteClassifier(clfs=[clf1_pipe, clf2, clf3],
                               voting='soft')
 eclf.fit(X, y).predict(X[[1, 51, 149]])
 </code></pre>
-
 <pre><code>array([0, 1, 2])
 </code></pre>
 <p>Furthermore, we can fit the <code>SequentialFeatureSelector</code> separately, outside the grid search hyperparameter optimization pipeline. Here, we determine the best features first, and then we construct a pipeline using these "fixed," best features as seed for the <code>ColumnSelector</code>:</p>
-<pre><code class="python">sfs1 = SequentialFeatureSelector(clf1, 
+<pre><code class="language-python">sfs1 = SequentialFeatureSelector(clf1, 
                                  k_features=2,
                                  forward=True, 
                                  floating=False, 
@@ -1878,7 +1879,6 @@ col_sel = ColumnSelector(cols=sfs1.k_feature_idx_)
 clf1_pipe = Pipeline([('sel', col_sel),
                       ('logreg', clf1)])
 </code></pre>
-
 <pre><code>[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
 Features: 1/2[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
@@ -1887,22 +1887,20 @@ Features: 2/2
 
 Best features (2, 3)
 </code></pre>
-<pre><code class="python">eclf = EnsembleVoteClassifier(clfs=[clf1_pipe, clf2, clf3], 
+<pre><code class="language-python">eclf = EnsembleVoteClassifier(clfs=[clf1_pipe, clf2, clf3], 
                               voting='soft')
 eclf.fit(X, y).predict(X[[1, 51, 149]])
 </code></pre>
-
 <pre><code>array([0, 1, 2])
 </code></pre>
 <h2 id="example-5-using-pre-fitted-classifiers">Example 5 - Using Pre-fitted Classifiers</h2>
-<pre><code class="python">from sklearn import datasets
+<pre><code class="language-python">from sklearn import datasets
 
 iris = datasets.load_iris()
 X, y = iris.data[:, 1:3], iris.target
 </code></pre>
-
 <p>Assume that we previously fitted our classifiers:</p>
-<pre><code class="python">from sklearn import model_selection
+<pre><code class="language-python">from sklearn import model_selection
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB 
 from sklearn.ensemble import RandomForestClassifier
@@ -1915,9 +1913,8 @@ clf3 = GaussianNB()
 for clf in (clf1, clf2, clf3):
     clf.fit(X, y)
 </code></pre>
-
 <p>By setting <code>fit_base_estimators=False</code>, it will enforce <code>use_clones</code> to be False and the <code>EnsembleVoteClassifier</code> will not re-fit these classifers to save computational time:</p>
-<pre><code class="python">from mlxtend.classifier import EnsembleVoteClassifier
+<pre><code class="language-python">from mlxtend.classifier import EnsembleVoteClassifier
 import copy
 eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], weights=[1,1,1], fit_base_estimators=False)
 
@@ -1927,14 +1924,13 @@ eclf.fit(X, y)
 
 print('accuracy:', np.mean(y == eclf.predict(X)))
 </code></pre>
-
 <pre><code>Warning: enforce use_clones to be False
 accuracy: 0.96
 </code></pre>
 <p>However, please note that <code>fit_base_estimators=False</code> is incompatible to any form of cross-validation that is done in e.g., <code>model_selection.cross_val_score</code> or <code>model_selection.GridSearchCV</code>, etc., since it would require the classifiers to be refit to the training folds. Thus, only use <code>fit_base_estimators=False</code> if you want to make a prediction directly without cross-validation.</p>
 <h2 id="example-6-ensembles-of-classifiers-that-operate-on-different-feature-subsets">Example 6 - Ensembles of Classifiers that Operate on Different Feature Subsets</h2>
 <p>If desired, the different classifiers can be fit to different subsets of features in the training dataset. The following example illustrates how this can be done on a technical level using scikit-learn pipelines and the <code>ColumnSelector</code>:</p>
-<pre><code class="python">from sklearn.datasets import load_iris
+<pre><code class="language-python">from sklearn.datasets import load_iris
 from mlxtend.classifier import EnsembleVoteClassifier
 from mlxtend.feature_selection import ColumnSelector
 from sklearn.pipeline import make_pipeline
@@ -1953,7 +1949,6 @@ eclf = EnsembleVoteClassifier(clfs=[pipe1, pipe2])
 
 eclf.fit(X, y)
 </code></pre>
-
 <pre><code>EnsembleVoteClassifier(clfs=[Pipeline(memory=None,
                                       steps=[('columnselector',
                                               ColumnSelector(cols=(0, 2),
@@ -2002,7 +1997,7 @@ eclf.fit(X, y)
 <li>class 2: 0.5%</li>
 </ul>
 <p>A practical example of this scenario is shown below:</p>
-<pre><code class="python">import numpy as np
+<pre><code class="language-python">import numpy as np
 from mlxtend.classifier import EnsembleVoteClassifier
 from sklearn.svm import SVC
 from sklearn.datasets import load_iris
@@ -2027,7 +2022,6 @@ for svm_class, e_class, svm_prob, e_prob, in zip(clf2.predict(X),
         print('Class from SVM in Ensemble :', e_class)
         print('============')
 </code></pre>
-
 <pre><code>Warning: enforce use_clones to be False
 ============
 Probas from SVM            : [0.00910384 0.47821605 0.51268012]

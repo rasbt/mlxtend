@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1000,7 +1012,7 @@
 <li>-</li>
 </ul>
 <h2 id="example-1-stacked-barplot-from-pandas-dataframes">Example 1 - Stacked Barplot from Pandas DataFrames</h2>
-<pre><code class="python">import pandas as pd
+<pre><code class="language-python">import pandas as pd
 
 s1 = [1.0, 2.0, 3.0, 4.0]
 s2 = [1.4, 2.1, 2.9, 5.1]
@@ -1013,7 +1025,6 @@ df.columns = ['X1', 'X2', 'X3', 'X4']
 df.index = ['Sample1', 'Sample2', 'Sample3', 'Sample4']
 df
 </code></pre>
-
 <div>
 <table border="1" class="dataframe">
   <thead>
@@ -1059,12 +1070,11 @@ df
 </div>
 
 <p>By default, the index of the <code>DataFrame</code> is used as column labels, and the <code>DataFrame</code> columns are used for the plot legend.</p>
-<pre><code class="python">import matplotlib.pyplot as plt
+<pre><code class="language-python">import matplotlib.pyplot as plt
 from mlxtend.plotting import stacked_barplot
 
 fig = stacked_barplot(df, rotation=45, legend_loc='best')
 </code></pre>
-
 <p><img alt="png" src="../stacked_barplot_files/stacked_barplot_10_0.png" /></p>
 <h2 id="api">API</h2>
 <p><em>stacked_barplot(df, bar_width='auto', colors='bgrcky', labels='index', rotation=90, legend_loc='best')</em></p>

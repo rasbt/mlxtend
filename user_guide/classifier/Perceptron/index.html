@@ -147,6 +147,12 @@
 
         
             
+<li >
+    <a href="../OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
 <li class="active">
     <a href="./">Perceptron</a>
 </li>
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -954,7 +966,7 @@
 
                 <!--
                     <li >
-                        <a rel="next" href="../MultiLayerPerceptron/">
+                        <a rel="next" href="../OneRClassifier/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
@@ -1002,12 +1014,14 @@ A perceptron receives multiple input signals, and if the sum of the input signal
 <p><img alt="" src="../Perceptron_files/perceptron_schematic.png" /></p>
 <h4 id="basic-notation">Basic Notation</h4>
 <p>Before we dive deeper into the algorithm(s) for learning the weights of the perceptron classifier, let us take a brief look at the basic notation. In the following sections, we will label the <em>positive</em> and <em>negative</em> class in our binary classification setting as "1" and "-1", respectively. Next, we define an activation function <script type="math/tex">g(\mathbf{z})</script> that takes a linear combination of the input values <script type="math/tex">\mathbf{x}</script> and weights <script type="math/tex">\mathbf{w}</script> as input (<script type="math/tex">\mathbf{z} = w_1x_{1} + \dots + w_mx_{m}</script>), and if <script type="math/tex">g(\mathbf{z})</script> is greater than a defined threshold <script type="math/tex">\theta</script> we predict 1 and -1 otherwise; in this case, this activation function <script type="math/tex">g</script> is a simple "unit step function," which is sometimes also called "Heaviside step function." </p>
-<p>$$
- g(z) =<script type="math/tex; mode=display">\begin{cases}
-    1 & \text{if $z \ge \theta$}\\
-    -1 & \text{otherwise}.
-  \end{cases}</script>
-$$</p>
+<p>
+<script type="math/tex; mode=display">
+ g(z) =\begin{cases}
+    1 & \text{if <script type="math/tex">z \ge \theta</script>}\\
+    -1 &amp; \text{otherwise}.
+  \end{cases}
+</script>
+</p>
 <p>where</p>
 <p>
 <script type="math/tex; mode=display">z =  w_1x_{1} + \dots + w_mx_{m} = \sum_{j=1}^{m} x_{j}w_{j} \\ = \mathbf{w}^T\mathbf{x}</script>
@@ -1030,12 +1044,14 @@ $$</p>
 <p>In order to simplify the notation, we bring <script type="math/tex">\theta</script> to the left side of the equation and define <script type="math/tex">w_0 = -\theta  \text{ and } x_0=1</script>
 </p>
 <p>so that </p>
-<p>$$
- g({z}) =<script type="math/tex; mode=display">\begin{cases}
-    1 & \text{if $z \ge 0$}\\
-    -1 & \text{otherwise}.
-  \end{cases}</script>
-$$</p>
+<p>
+<script type="math/tex; mode=display">
+ g({z}) =\begin{cases}
+    1 & \text{if <script type="math/tex">z \ge 0</script>}\\
+    -1 &amp; \text{otherwise}.
+  \end{cases}
+</script>
+</p>
 <p>and</p>
 <p>
 <script type="math/tex; mode=display">z = w_0x_{0} + w_1x_{1} + \dots + w_mx_{m} = \sum_{j=0}^{m} x_{j}w_{j} \\ = \mathbf{w}^T\mathbf{x}.</script>
@@ -1088,7 +1104,7 @@ $$</p>
 <li>F. Rosenblatt. The perceptron, a perceiving and recognizing automaton Project Para. Cornell Aeronautical Laboratory, 1957.</li>
 </ul>
 <h2 id="example-1-classification-of-iris-flowers">Example 1 - Classification of Iris Flowers</h2>
-<pre><code class="python">from mlxtend.data import iris_data
+<pre><code class="language-python">from mlxtend.data import iris_data
 from mlxtend.plotting import plot_decision_regions
 from mlxtend.classifier import Perceptron
 import matplotlib.pyplot as plt
@@ -1124,7 +1140,6 @@ plt.xlabel('Iterations')
 plt.ylabel('Missclassifications')
 plt.show()
 </code></pre>
-
 <pre><code>Iteration: 5/5 | Elapsed: 00:00:00 | ETA: 00:00:00
 </code></pre>
 <p><img alt="png" src="../Perceptron_files/Perceptron_22_1.png" /></p>
@@ -1182,74 +1197,77 @@ Prior to each epoch, the dataset is shuffled to prevent cycles.</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, init_params=True)</em></p>
-<p>Learn model from training data.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values.</p>
-</li>
-<li>
-<p><code>init_params</code> : bool (default: True)</p>
-<p>Re-initializes model parameters prior to fitting.
-Set False to continue training with weights from
-a previous model fitting.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
+*fit(X, y, init_params=True)*
+
+Learn model from training data.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples]
+
+    Target values.
+
+- `init_params` : bool (default: True)
+
+    Re-initializes model parameters prior to fitting.
+    Set False to continue training with weights from
+    a previous model fitting.
+
+**Returns**
+
+- `self` : object
+
+
 <hr>
 
-<p><em>predict(X)</em></p>
-<p>Predict targets from X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>target_values</code> : array-like, shape = [n_samples]</p>
-<p>Predicted target values.</p>
-</li>
-</ul>
+*predict(X)*
+
+Predict targets from X.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `target_values` : array-like, shape = [n_samples]
+
+    Predicted target values.
+
 <hr>
 
-<p><em>score(X, y)</em></p>
-<p>Compute the prediction accuracy</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values (true class labels).</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>acc</code> : float</p>
-<p>The prediction accuracy as a float
-between 0.0 and 1.0 (perfect score).</p>
-</li>
-</ul>
-<p>ython</p></div>
+*score(X, y)*
+
+Compute the prediction accuracy
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples]
+
+    Target values (true class labels).
+
+**Returns**
+
+- `acc` : float
+
+    The prediction accuracy as a float
+    between 0.0 and 1.0 (perfect score).
+
+
+ython</div>
         
         
     </div>

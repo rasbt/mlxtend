@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1042,7 +1054,7 @@
 <p>The <code>mcnemar</code> funtion expects a 2x2 contingency table as a NumPy array that is formatted as follows:</p>
 <p><img alt="" src="../mcnemar_table_files/mcnemar_contingency_table.png" /></p>
 <p>Such a contigency matrix can be created by using the <code>mcnemar_table</code> function from <code>mlxtend.evaluate</code>. For example:</p>
-<pre><code class="python">import numpy as np
+<pre><code class="language-python">import numpy as np
 from mlxtend.evaluate import mcnemar_table
 
 # The correct target (class) labels
@@ -1060,27 +1072,24 @@ tb = mcnemar_table(y_target=y_target,
 
 print(tb)
 </code></pre>
-
 <pre><code>[[4 1]
  [2 3]]
 </code></pre>
 <h2 id="example-2-mcnemars-test-for-scenario-b">Example 2 - McNemar's Test for Scenario B</h2>
 <p>No, let us continue with the example mentioned in the overview section and assume that we already computed the 2x2 contigency table:</p>
 <p><img alt="" src="../mcnemar_files/mcnemar_scenario_b.png" /></p>
-<pre><code class="python">import numpy as np
+<pre><code class="language-python">import numpy as np
 
 tb_b = np.array([[9945, 25],
                  [15, 15]])
 </code></pre>
-
 <p>To test the null hypothesis that the predictive performance of two models are equal (using a significance level of <script type="math/tex">\alpha=0.05</script>), we can conduct a corrected McNemar Test for computing the chi-squared and p-value as follows:</p>
-<pre><code class="python">from mlxtend.evaluate import mcnemar
+<pre><code class="language-python">from mlxtend.evaluate import mcnemar
 
 chi2, p = mcnemar(ary=tb_b, corrected=True)
 print('chi-squared:', chi2)
 print('p-value:', p)
 </code></pre>
-
 <pre><code>chi-squared: 2.025
 p-value: 0.154728923485
 </code></pre>
@@ -1089,7 +1098,7 @@ p-value: 0.154728923485
 <p>In contrast to scenario B (Example 2), the sample size in scenario A is relatively small (b + c = 11  + 1 = 12) and smaller than the recommended 25 [3] to approximate the computed chi-square value by the chi-square distribution well.</p>
 <p><img alt="" src="../mcnemar_files/mcnemar_scenario_a.png" /></p>
 <p>In this case, we need to compute the exact p-value from the binomial distribution:</p>
-<pre><code class="python">from mlxtend.evaluate import mcnemar
+<pre><code class="language-python">from mlxtend.evaluate import mcnemar
 import numpy as np
 
 tb_a = np.array([[9959, 11],
@@ -1100,7 +1109,6 @@ chi2, p = mcnemar(ary=tb_a, exact=True)
 print('chi-squared:', chi2)
 print('p-value:', p)
 </code></pre>
-
 <pre><code>chi-squared: None
 p-value: 0.005859375
 </code></pre>

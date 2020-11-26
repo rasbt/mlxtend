@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../user_guide/classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../user_guide/classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../user_guide/evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../user_guide/evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -977,7 +989,7 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="first-level active"><a href="#release-notes">Release Notes</a></li>
-            <li class="second-level"><a href="#version-0180-tbd">Version 0.18.0 (TBD)</a></li>
+            <li class="second-level"><a href="#version-0180-11252020">Version 0.18.0 (11/25/2020)</a></li>
                  <!-- 
                 <li class="third-level"><a href="#downloads">Downloads</a></li>
                 <li class="third-level"><a href="#new-features">New Features</a></li>
@@ -1161,7 +1173,7 @@
 <p>The CHANGELOG for the current development version is available at
 <a href="https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md">https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md</a>.</p>
 <hr />
-<h3 id="version-0180-tbd">Version 0.18.0 (TBD)</h3>
+<h3 id="version-0180-11252020">Version 0.18.0 (11/25/2020)</h3>
 <h5 id="downloads">Downloads</h5>
 <ul>
 <li>
@@ -1173,15 +1185,20 @@
 </ul>
 <h5 id="new-features">New Features</h5>
 <ul>
-<li>-</li>
+<li>The <code>bias_variance_decomp</code> function now supports optional <code>fit_params</code> for the estimators that are fit on bootstrap samples. (<a href="https://github.com/rasbt/mlxtend/pull/748">#748</a>)</li>
+<li>The <code>bias_variance_decomp</code> function now supports Keras estimators. (<a href="https://github.com/rasbt/mlxtend/pull/725">#725</a> via <a href="https://github.com/hanzigs">@hanzigs</a>)</li>
+<li>Adds new <code>mlxtend.classifier.OneRClassifier</code> (One Rule Classfier) class, a simple rule-based classifier that is often used as a performance baseline or simple interpretable model. (<a href="https://github.com/rasbt/mlxtend/pull/726">#726</a></li>
+<li>Adds new <code>create_counterfactual</code> method for creating counterfactuals to explain model predictions.  (<a href="https://github.com/rasbt/mlxtend/pull/740">#740</a>)</li>
 </ul>
 <h5 id="changes">Changes</h5>
 <ul>
-<li>-</li>
+<li><code>permutation_test</code> (<code>mlxtend.evaluate.permutation</code>) ìs corrected to give the proportion of permutations whose statistic is <em>at least as extreme</em> as the one observed. (<a href="https://github.com/rasbt/mlxtend/pull/721">#721</a> via <a href="https://github.com/DarthTrevis">Florian Charlier</a>)</li>
+<li>Fixes the McNemar confusion matrix layout to match the convention (and documentation), swapping the upper left and lower right cells. (<a href="https://github.com/rasbt/mlxtend/pull/744">#744</a> via <a href="https://github.com/mmarius">mmarius</a>)</li>
 </ul>
 <h5 id="bug-fixes">Bug Fixes</h5>
 <ul>
-<li>-</li>
+<li>The loss in <code>LogisticRegression</code> for logging purposes didn't include the L2 penalty for the first weight in the weight vector (this is not the bias unit). However, since this loss function was only used for logging purposes, and the gradient remains correct, this does not have an effect on the main code. (<a href="https://github.com/rasbt/mlxtend/pull/741">#741</a>)</li>
+<li>Fixes a bug in <code>bias_variance_decomp</code> where when the <code>mse</code> loss was used, downcasting to integers caused imprecise results for small numbers. (<a href="https://github.com/rasbt/mlxtend/pull/749">#749</a>)</li>
 </ul>
 <h3 id="version-0173-07-27-2020">Version 0.17.3 (07-27-2020)</h3>
 <h5 id="downloads_1">Downloads</h5>

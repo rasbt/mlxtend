@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../../user_guide/classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../../user_guide/evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../../user_guide/evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1023,7 +1035,8 @@ respective confidence interval bounds.</p>
 </li>
 </ul>
 <p><strong>Examples</strong></p>
-<pre><code>&gt;&gt;&gt; from mlxtend.evaluate import bootstrap
+<pre><code>```
+&gt;&gt;&gt; from mlxtend.evaluate import bootstrap
 &gt;&gt;&gt; rng = np.random.RandomState(123)
 &gt;&gt;&gt; x = rng.normal(loc=5., size=100)
 &gt;&gt;&gt; original, std_err, ci_bounds = bootstrap(x,
@@ -1037,9 +1050,11 @@ respective confidence interval bounds.</p>
 ...                                                         ci_bounds[1]))
 Mean: 5.03, SE: +/- 0.11, CI95: [4.80, 5.26]
 &gt;&gt;&gt;
+
+For more usage examples, please see
+http://rasbt.github.io/mlxtend/user_guide/evaluate/bootstrap/
 </code></pre>
-<p>For more usage examples, please see
-<a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/bootstrap/">http://rasbt.github.io/mlxtend/user_guide/evaluate/bootstrap/</a></p></div>
+<p>```</p></div>
         
         
     </div>

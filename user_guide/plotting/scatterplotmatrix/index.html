@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1002,7 +1014,7 @@
 <li>-</li>
 </ul>
 <h2 id="example-1-simple-scatter-plot-matrix">Example 1 - Simple Scatter Plot Matrix</h2>
-<pre><code class="python">import matplotlib.pyplot as plt
+<pre><code class="language-python">import matplotlib.pyplot as plt
 from mlxtend.data import iris_data
 from mlxtend.plotting import scatterplotmatrix
 
@@ -1012,10 +1024,9 @@ scatterplotmatrix(X, figsize=(10, 8))
 plt.tight_layout()
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../scatterplotmatrix_files/scatterplotmatrix_8_0.png" /></p>
 <h2 id="example-2-scatter-plot-matrix-with-multiple-categories">Example 2 - Scatter Plot Matrix with Multiple Categories</h2>
-<pre><code class="python">names = ['sepal length [cm]', 'sepal width [cm]',
+<pre><code class="language-python">names = ['sepal length [cm]', 'sepal width [cm]',
          'petal length [cm]', 'petal width [cm]']
 
 fig, axes = scatterplotmatrix(X[y==0], figsize=(10, 8), alpha=0.5)
@@ -1025,7 +1036,6 @@ fig, axes = scatterplotmatrix(X[y==2], fig_axes=(fig, axes), alpha=0.5, names=na
 plt.tight_layout()
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../scatterplotmatrix_files/scatterplotmatrix_10_0.png" /></p>
 <h2 id="api">API</h2>
 <p><em>scatterplotmatrix(X, fig_axes=None, names=None, figsize=(8, 8), alpha=1.0, </em><em>kwargs)</em></p>

@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../user_guide/classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../user_guide/evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user_guide/evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -979,41 +991,17 @@
         <li class="first-level active"><a href="#adaline">Adaline</a></li>
             <li class="second-level"><a href="#methods">Methods</a></li>
                  <!--   -->
-        <li class="first-level "><a href="#ensemblevoteclassifier">EnsembleVoteClassifier</a></li>
-            <li class="second-level"><a href="#methods_1">Methods</a></li>
-                 <!--   -->
-        <li class="first-level "><a href="#logisticregression">LogisticRegression</a></li>
-            <li class="second-level"><a href="#methods_2">Methods</a></li>
-                 <!--   -->
-        <li class="first-level "><a href="#multilayerperceptron">MultiLayerPerceptron</a></li>
-            <li class="second-level"><a href="#methods_3">Methods</a></li>
-                 <!--   -->
-        <li class="first-level "><a href="#perceptron">Perceptron</a></li>
-            <li class="second-level"><a href="#methods_4">Methods</a></li>
-                 <!--   -->
-        <li class="first-level "><a href="#softmaxregression">SoftmaxRegression</a></li>
-            <li class="second-level"><a href="#methods_5">Methods</a></li>
-                 <!--   -->
-        <li class="first-level "><a href="#stackingcvclassifier">StackingCVClassifier</a></li>
-            <li class="second-level"><a href="#methods_6">Methods</a></li>
-                 <!--   -->
-            <li class="second-level"><a href="#properties">Properties</a></li>
-                 <!--   -->
-        <li class="first-level "><a href="#stackingclassifier">StackingClassifier</a></li>
-            <li class="second-level"><a href="#methods_7">Methods</a></li>
-                 <!--   -->
-            <li class="second-level"><a href="#properties_1">Properties</a></li>
-                 <!--   -->
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.18.0dev0 </p>
+<p>mlxtend version: 0.18.0 </p>
 <h2 id="adaline">Adaline</h2>
 <p><em>Adaline(eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0)</em></p>
 <p>ADAptive LInear NEuron classifier.</p>
-<p>Note that this implementation of Adaline expects binary class labels
-in {0, 1}.</p>
+<pre><code>Note that this implementation of Adaline expects binary class labels
+in {0, 1}.
+</code></pre>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1064,1738 +1052,2058 @@ If 1 &lt; minibatches &lt; len(y): SGD Minibatch learning</p>
 </ul>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/classifier/Adaline/">http://rasbt.github.io/mlxtend/user_guide/classifier/Adaline/</a></p>
+    http://rasbt.github.io/mlxtend/user_guide/classifier/Adaline/</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, init_params=True)</em></p>
-<p>Learn model from training data.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values.</p>
-</li>
-<li>
-<p><code>init_params</code> : bool (default: True)</p>
-<p>Re-initializes model parameters prior to fitting.
-Set False to continue training with weights from
-a previous model fitting.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
+*fit(X, y, init_params=True)*
+
+Learn model from training data.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples]
+
+    Target values.
+
+- `init_params` : bool (default: True)
+
+    Re-initializes model parameters prior to fitting.
+    Set False to continue training with weights from
+    a previous model fitting.
+
+**Returns**
+
+- `self` : object
+
+
 <hr>
 
-<p><em>get_params(deep=True)</em></p>
-<p>Get parameters for this estimator.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>deep</code> : boolean, optional</p>
-<p>If True, will return the parameters for this estimator and
-contained subobjects that are estimators.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>params</code> : mapping of string to any</p>
-<p>Parameter names mapped to their values.'</p>
-<p>adapted from
-https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
-Author: Gael Varoquaux <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;">&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a>
-License: BSD 3 clause</p>
-</li>
-</ul>
+*get_params(deep=True)*
+
+Get parameters for this estimator.
+
+**Parameters**
+
+- `deep` : boolean, optional
+
+    If True, will return the parameters for this estimator and
+    contained subobjects that are estimators.
+
+**Returns**
+
+- `params` : mapping of string to any
+
+    Parameter names mapped to their values.'
+
+    adapted from
+    https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
+    Author: Gael Varoquaux <gael.varoquaux@normalesup.org>
+    License: BSD 3 clause
+
 <hr>
 
-<p><em>predict(X)</em></p>
-<p>Predict targets from X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>target_values</code> : array-like, shape = [n_samples]</p>
-<p>Predicted target values.</p>
-</li>
-</ul>
+*predict(X)*
+
+Predict targets from X.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `target_values` : array-like, shape = [n_samples]
+
+    Predicted target values.
+
 <hr>
 
-<p><em>score(X, y)</em></p>
-<p>Compute the prediction accuracy</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values (true class labels).</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>acc</code> : float</p>
-<p>The prediction accuracy as a float
-between 0.0 and 1.0 (perfect score).</p>
-</li>
-</ul>
+*score(X, y)*
+
+Compute the prediction accuracy
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples]
+
+    Target values (true class labels).
+
+**Returns**
+
+- `acc` : float
+
+    The prediction accuracy as a float
+    between 0.0 and 1.0 (perfect score).
+
 <hr>
 
-<p><em>set_params(</em><em>params)</em></p>
-<p>Set the parameters of this estimator.
-The method works on simple estimators as well as on nested objects
-(such as pipelines). The latter have parameters of the form
-<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
-component of a nested object.</p>
-<p><strong>Returns</strong></p>
-<p>self</p>
-<p>adapted from
-https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
-Author: Gael Varoquaux <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;">&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a>
-License: BSD 3 clause</p>
-<h2 id="ensemblevoteclassifier">EnsembleVoteClassifier</h2>
-<p><em>EnsembleVoteClassifier(clfs, voting='hard', weights=None, verbose=0, use_clones=True, fit_base_estimators=True)</em></p>
-<p>Soft Voting/Majority Rule classifier for scikit-learn estimators.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>clfs</code> : array-like, shape = [n_classifiers]</p>
-<p>A list of classifiers.
-Invoking the <code>fit</code> method on the <code>VotingClassifier</code> will fit clones
-of those original classifiers
-be stored in the class attribute
-if <code>use_clones=True</code> (default) and
-<code>fit_base_estimators=True</code> (default).</p>
-</li>
-<li>
-<p><code>voting</code> : str, {'hard', 'soft'} (default='hard')</p>
-<p>If 'hard', uses predicted class labels for majority rule voting.
-Else if 'soft', predicts the class label based on the argmax of
-the sums of the predicted probalities, which is recommended for
-an ensemble of well-calibrated classifiers.</p>
-</li>
-<li>
-<p><code>weights</code> : array-like, shape = [n_classifiers], optional (default=<code>None</code>)</p>
-<p>Sequence of weights (<code>float</code> or <code>int</code>) to weight the occurances of
-predicted class labels (<code>hard</code> voting) or class probabilities
-before averaging (<code>soft</code> voting). Uses uniform weights if <code>None</code>.</p>
-</li>
-<li>
-<p><code>verbose</code> : int, optional (default=0)</p>
-<p>Controls the verbosity of the building process.
-- <code>verbose=0</code> (default): Prints nothing
-- <code>verbose=1</code>: Prints the number &amp; name of the clf being fitted
-- <code>verbose=2</code>: Prints info about the parameters of the clf being fitted
-- <code>verbose&gt;2</code>: Changes <code>verbose</code> param of the underlying clf to
-self.verbose - 2</p>
-</li>
-<li>
-<p><code>use_clones</code> : bool (default: True)</p>
-<p>Clones the classifiers for stacking classification if True (default)
-or else uses the original ones, which will be refitted on the dataset
-upon calling the <code>fit</code> method. Hence, if use_clones=True, the original
-input classifiers will remain unmodified upon using the
-StackingClassifier's <code>fit</code> method.
-Setting <code>use_clones=False</code> is
-recommended if you are working with estimators that are supporting
-the scikit-learn fit/predict API interface but are not compatible
-to scikit-learn's <code>clone</code> function.</p>
-</li>
-<li>
-<p><code>fit_base_estimators</code> : bool (default: True)</p>
-<p>Refits classifiers in <code>clfs</code> if True; uses references to the <code>clfs</code>,
-otherwise (assumes that the classifiers were already fit).
-Note: fit_base_estimators=False will enforce use_clones to be False,
-and is incompatible to most scikit-learn wrappers!
-For instance, if any form of cross-validation is performed
-this would require the re-fitting classifiers to training folds, which
-would raise a NotFitterError if fit_base_estimators=False.
-(New in mlxtend v0.6.)</p>
-</li>
-</ul>
-<p><strong>Attributes</strong></p>
-<ul>
-<li>
-<p><code>classes_</code> : array-like, shape = [n_predictions]</p>
-</li>
-<li>
-<p><code>clf</code> : array-like, shape = [n_predictions]</p>
-<p>The input classifiers; may be overwritten if <code>use_clones=False</code></p>
-</li>
-<li>
-<p><code>clf_</code> : array-like, shape = [n_predictions]</p>
-<p>Fitted input classifiers; clones if <code>use_clones=True</code></p>
-</li>
-</ul>
-<p><strong>Examples</strong></p>
-<pre><code>&gt;&gt;&gt; import numpy as np
-&gt;&gt;&gt; from sklearn.linear_model import LogisticRegression
-&gt;&gt;&gt; from sklearn.naive_bayes import GaussianNB
-&gt;&gt;&gt; from sklearn.ensemble import RandomForestClassifier
-&gt;&gt;&gt; from mlxtend.sklearn import EnsembleVoteClassifier
-&gt;&gt;&gt; clf1 = LogisticRegression(random_seed=1)
-&gt;&gt;&gt; clf2 = RandomForestClassifier(random_seed=1)
-&gt;&gt;&gt; clf3 = GaussianNB()
-&gt;&gt;&gt; X = np.array([[-1, -1], [-2, -1], [-3, -2], [1, 1], [2, 1], [3, 2]])
-&gt;&gt;&gt; y = np.array([1, 1, 1, 2, 2, 2])
-&gt;&gt;&gt; eclf1 = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
-... voting='hard', verbose=1)
-&gt;&gt;&gt; eclf1 = eclf1.fit(X, y)
-&gt;&gt;&gt; print(eclf1.predict(X))
-[1 1 1 2 2 2]
-&gt;&gt;&gt; eclf2 = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting='soft')
-&gt;&gt;&gt; eclf2 = eclf2.fit(X, y)
-&gt;&gt;&gt; print(eclf2.predict(X))
-[1 1 1 2 2 2]
-&gt;&gt;&gt; eclf3 = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
-...                          voting='soft', weights=[2,1,1])
-&gt;&gt;&gt; eclf3 = eclf3.fit(X, y)
-&gt;&gt;&gt; print(eclf3.predict(X))
-[1 1 1 2 2 2]
-&gt;&gt;&gt;
-</code></pre>
-<p>For more usage examples, please see
-<a href="http://rasbt.github.io/mlxtend/user_guide/classifier/EnsembleVoteClassifier/">http://rasbt.github.io/mlxtend/user_guide/classifier/EnsembleVoteClassifier/</a></p>
-<h3 id="methods_1">Methods</h3>
+*set_params(**params)*
+
+Set the parameters of this estimator.
+    The method works on simple estimators as well as on nested objects
+    (such as pipelines). The latter have parameters of the form
+    ``<component>__<parameter>`` so that it's possible to update each
+    component of a nested object.
+
+**Returns**
+
+self
+
+    adapted from
+    https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
+    Author: Gael Varoquaux <gael.varoquaux@normalesup.org>
+    License: BSD 3 clause
+
+
+
+
+## EnsembleVoteClassifier
+
+*EnsembleVoteClassifier(clfs, voting='hard', weights=None, verbose=0, use_clones=True, fit_base_estimators=True)*
+
+Soft Voting/Majority Rule classifier for scikit-learn estimators.
+
+**Parameters**
+
+- `clfs` : array-like, shape = [n_classifiers]
+
+    A list of classifiers.
+    Invoking the `fit` method on the `VotingClassifier` will fit clones
+    of those original classifiers
+    be stored in the class attribute
+    if `use_clones=True` (default) and
+    `fit_base_estimators=True` (default).
+
+- `voting` : str, {'hard', 'soft'} (default='hard')
+
+    If 'hard', uses predicted class labels for majority rule voting.
+    Else if 'soft', predicts the class label based on the argmax of
+    the sums of the predicted probalities, which is recommended for
+    an ensemble of well-calibrated classifiers.
+
+- `weights` : array-like, shape = [n_classifiers], optional (default=`None`)
+
+    Sequence of weights (`float` or `int`) to weight the occurances of
+    predicted class labels (`hard` voting) or class probabilities
+    before averaging (`soft` voting). Uses uniform weights if `None`.
+
+- `verbose` : int, optional (default=0)
+
+    Controls the verbosity of the building process.
+    - `verbose=0` (default): Prints nothing
+    - `verbose=1`: Prints the number & name of the clf being fitted
+    - `verbose=2`: Prints info about the parameters of the clf being fitted
+    - `verbose>2`: Changes `verbose` param of the underlying clf to
+    self.verbose - 2
+
+- `use_clones` : bool (default: True)
+
+    Clones the classifiers for stacking classification if True (default)
+    or else uses the original ones, which will be refitted on the dataset
+    upon calling the `fit` method. Hence, if use_clones=True, the original
+    input classifiers will remain unmodified upon using the
+    StackingClassifier's `fit` method.
+    Setting `use_clones=False` is
+    recommended if you are working with estimators that are supporting
+    the scikit-learn fit/predict API interface but are not compatible
+    to scikit-learn's `clone` function.
+
+- `fit_base_estimators` : bool (default: True)
+
+    Refits classifiers in `clfs` if True; uses references to the `clfs`,
+    otherwise (assumes that the classifiers were already fit).
+    Note: fit_base_estimators=False will enforce use_clones to be False,
+    and is incompatible to most scikit-learn wrappers!
+    For instance, if any form of cross-validation is performed
+    this would require the re-fitting classifiers to training folds, which
+    would raise a NotFitterError if fit_base_estimators=False.
+    (New in mlxtend v0.6.)
+
+**Attributes**
+
+- `classes_` : array-like, shape = [n_predictions]
+
+
+- `clf` : array-like, shape = [n_predictions]
+
+    The input classifiers; may be overwritten if `use_clones=False`
+
+- `clf_` : array-like, shape = [n_predictions]
+
+    Fitted input classifiers; clones if `use_clones=True`
+
+**Examples**
+
+    ```
+    >>> import numpy as np
+    >>> from sklearn.linear_model import LogisticRegression
+    >>> from sklearn.naive_bayes import GaussianNB
+    >>> from sklearn.ensemble import RandomForestClassifier
+    >>> from mlxtend.sklearn import EnsembleVoteClassifier
+    >>> clf1 = LogisticRegression(random_seed=1)
+    >>> clf2 = RandomForestClassifier(random_seed=1)
+    >>> clf3 = GaussianNB()
+    >>> X = np.array([[-1, -1], [-2, -1], [-3, -2], [1, 1], [2, 1], [3, 2]])
+    >>> y = np.array([1, 1, 1, 2, 2, 2])
+    >>> eclf1 = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
+    ... voting='hard', verbose=1)
+    >>> eclf1 = eclf1.fit(X, y)
+    >>> print(eclf1.predict(X))
+    [1 1 1 2 2 2]
+    >>> eclf2 = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting='soft')
+    >>> eclf2 = eclf2.fit(X, y)
+    >>> print(eclf2.predict(X))
+    [1 1 1 2 2 2]
+    >>> eclf3 = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
+    ...                          voting='soft', weights=[2,1,1])
+    >>> eclf3 = eclf3.fit(X, y)
+    >>> print(eclf3.predict(X))
+    [1 1 1 2 2 2]
+    >>>
+
+    For more usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/classifier/EnsembleVoteClassifier/
+```
+
+### Methods
+
 <hr>
 
-<p><em>fit(X, y, sample_weight=None)</em></p>
-<p>Learn weight coefficients from training data for each classifier.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values.</p>
-</li>
-<li>
-<p><code>sample_weight</code> : array-like, shape = [n_samples], optional</p>
-<p>Sample weights passed as sample_weights to each regressor
-in the regressors list as well as the meta_regressor.
-Raises error if some regressor does not support
-sample_weight in the fit() method.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
+*fit(X, y, sample_weight=None)*
+
+Learn weight coefficients from training data for each classifier.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+
+- `y` : array-like, shape = [n_samples]
+
+    Target values.
+
+
+- `sample_weight` : array-like, shape = [n_samples], optional
+
+    Sample weights passed as sample_weights to each regressor
+    in the regressors list as well as the meta_regressor.
+    Raises error if some regressor does not support
+    sample_weight in the fit() method.
+
+**Returns**
+
+- `self` : object
+
+
 <hr>
 
-<p><em>fit_transform(X, y=None, </em><em>fit_params)</em></p>
-<p>Fit to data, then transform it.</p>
-<p>Fits transformer to X and y with optional parameters fit_params
-and returns a transformed version of X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : numpy array of shape [n_samples, n_features]</p>
-<p>Training set.</p>
-</li>
-<li>
-<p><code>y</code> : numpy array of shape [n_samples]</p>
-<p>Target values.</p>
-</li>
-<li>
-<p><code>**fit_params</code> : dict</p>
-<p>Additional fit parameters.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>X_new</code> : numpy array of shape [n_samples, n_features_new]</p>
-<p>Transformed array.</p>
-</li>
-</ul>
+*fit_transform(X, y=None, **fit_params)*
+
+Fit to data, then transform it.
+
+    Fits transformer to X and y with optional parameters fit_params
+    and returns a transformed version of X.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix, dataframe} of shape                 (n_samples, n_features)
+
+
+
+- `y` : ndarray of shape (n_samples,), default=None
+
+    Target values.
+
+
+- `**fit_params` : dict
+
+    Additional fit parameters.
+
+**Returns**
+
+- `X_new` : ndarray array of shape (n_samples, n_features_new)
+
+    Transformed array.
+
 <hr>
 
-<p><em>get_params(deep=True)</em></p>
-<p>Return estimator parameter names for GridSearch support.</p>
+*get_params(deep=True)*
+
+Return estimator parameter names for GridSearch support.
+
 <hr>
 
-<p><em>predict(X)</em></p>
-<p>Predict class labels for X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>maj</code> : array-like, shape = [n_samples]</p>
-<p>Predicted class labels.</p>
-</li>
-</ul>
+*predict(X)*
+
+Predict class labels for X.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `maj` : array-like, shape = [n_samples]
+
+    Predicted class labels.
+
 <hr>
 
-<p><em>predict_proba(X)</em></p>
-<p>Predict class probabilities for X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>avg</code> : array-like, shape = [n_samples, n_classes]</p>
-<p>Weighted average probability for each class per sample.</p>
-</li>
-</ul>
+*predict_proba(X)*
+
+Predict class probabilities for X.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `avg` : array-like, shape = [n_samples, n_classes]
+
+    Weighted average probability for each class per sample.
+
 <hr>
 
-<p><em>score(X, y, sample_weight=None)</em></p>
-<p>Return the mean accuracy on the given test data and labels.</p>
-<p>In multi-label classification, this is the subset accuracy
-which is a harsh metric since you require for each sample that
-each label set be correctly predicted.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : array-like of shape (n_samples, n_features)</p>
-<p>Test samples.</p>
-</li>
-<li>
-<p><code>y</code> : array-like of shape (n_samples,) or (n_samples, n_outputs)</p>
-<p>True labels for X.</p>
-</li>
-<li>
-<p><code>sample_weight</code> : array-like of shape (n_samples,), default=None</p>
-<p>Sample weights.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>score</code> : float</p>
-<p>Mean accuracy of self.predict(X) wrt. y.</p>
-</li>
-</ul>
+*score(X, y, sample_weight=None)*
+
+Return the mean accuracy on the given test data and labels.
+
+    In multi-label classification, this is the subset accuracy
+    which is a harsh metric since you require for each sample that
+    each label set be correctly predicted.
+
+**Parameters**
+
+- `X` : array-like of shape (n_samples, n_features)
+
+    Test samples.
+
+
+- `y` : array-like of shape (n_samples,) or (n_samples, n_outputs)
+
+    True labels for X.
+
+
+- `sample_weight` : array-like of shape (n_samples,), default=None
+
+    Sample weights.
+
+**Returns**
+
+- `score` : float
+
+    Mean accuracy of self.predict(X) wrt. y.
+
 <hr>
 
-<p><em>set_params(</em><em>params)</em></p>
-<p>Set the parameters of this estimator.</p>
-<p>The method works on simple estimators as well as on nested objects
-(such as pipelines). The latter have parameters of the form
-<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
-component of a nested object.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>**params</code> : dict</p>
-<p>Estimator parameters.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>self</code> : object</p>
-<p>Estimator instance.</p>
-</li>
-</ul>
+*set_params(**params)*
+
+Set the parameters of this estimator.
+
+    The method works on simple estimators as well as on nested objects
+    (such as pipelines). The latter have parameters of the form
+    ``<component>__<parameter>`` so that it's possible to update each
+    component of a nested object.
+
+**Parameters**
+
+- `**params` : dict
+
+    Estimator parameters.
+
+**Returns**
+
+- `self` : object
+
+    Estimator instance.
+
 <hr>
 
-<p><em>transform(X)</em></p>
-<p>Return class labels or probabilities for X for each estimator.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>If</code>voting='soft'`` : array-like = [n_classifiers, n_samples, n_classes]</p>
-<p>Class probabilties calculated by each classifier.</p>
-</li>
-<li>
-<p><code>If</code>voting='hard'`` : array-like = [n_classifiers, n_samples]</p>
-<p>Class labels predicted by each classifier.</p>
-</li>
-</ul>
-<h2 id="logisticregression">LogisticRegression</h2>
-<p><em>LogisticRegression(eta=0.01, epochs=50, l2_lambda=0.0, minibatches=1, random_seed=None, print_progress=0)</em></p>
-<p>Logistic regression classifier.</p>
-<p>Note that this implementation of Logistic Regression
-expects binary class labels in {0, 1}.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>eta</code> : float (default: 0.01)</p>
-<p>Learning rate (between 0.0 and 1.0)</p>
-</li>
-<li>
-<p><code>epochs</code> : int (default: 50)</p>
-<p>Passes over the training dataset.
-Prior to each epoch, the dataset is shuffled
-if <code>minibatches &gt; 1</code> to prevent cycles in stochastic gradient descent.</p>
-</li>
-<li>
-<p><code>l2_lambda</code> : float</p>
-<p>Regularization parameter for L2 regularization.
-No regularization if l2_lambda=0.0.</p>
-</li>
-<li>
-<p><code>minibatches</code> : int (default: 1)</p>
-<p>The number of minibatches for gradient-based optimization.
-If 1: Gradient Descent learning
-If len(y): Stochastic Gradient Descent (SGD) online learning
-If 1 &lt; minibatches &lt; len(y): SGD Minibatch learning</p>
-</li>
-<li>
-<p><code>random_seed</code> : int (default: None)</p>
-<p>Set random state for shuffling and initializing the weights.</p>
-</li>
-<li>
-<p><code>print_progress</code> : int (default: 0)</p>
-<p>Prints progress in fitting to stderr.
-0: No output
-1: Epochs elapsed and cost
-2: 1 plus time elapsed
-3: 2 plus estimated time until completion</p>
-</li>
-</ul>
-<p><strong>Attributes</strong></p>
-<ul>
-<li>
-<p><code>w_</code> : 2d-array, shape={n_features, 1}</p>
-<p>Model weights after fitting.</p>
-</li>
-<li>
-<p><code>b_</code> : 1d-array, shape={1,}</p>
-<p>Bias unit after fitting.</p>
-</li>
-<li>
-<p><code>cost_</code> : list</p>
-<p>List of floats with cross_entropy cost (sgd or gd) for every
-epoch.</p>
-</li>
-</ul>
-<p><strong>Examples</strong></p>
-<p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/classifier/LogisticRegression/">http://rasbt.github.io/mlxtend/user_guide/classifier/LogisticRegression/</a></p>
-<h3 id="methods_2">Methods</h3>
+*transform(X)*
+
+Return class labels or probabilities for X for each estimator.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `If `voting='soft'`` : array-like = [n_classifiers, n_samples, n_classes]
+
+    Class probabilties calculated by each classifier.
+
+- `If `voting='hard'`` : array-like = [n_classifiers, n_samples]
+
+    Class labels predicted by each classifier.
+
+
+
+
+## LogisticRegression
+
+*LogisticRegression(eta=0.01, epochs=50, l2_lambda=0.0, minibatches=1, random_seed=None, print_progress=0)*
+
+Logistic regression classifier.
+
+    Note that this implementation of Logistic Regression
+    expects binary class labels in {0, 1}.
+
+**Parameters**
+
+- `eta` : float (default: 0.01)
+
+    Learning rate (between 0.0 and 1.0)
+
+- `epochs` : int (default: 50)
+
+    Passes over the training dataset.
+    Prior to each epoch, the dataset is shuffled
+    if `minibatches > 1` to prevent cycles in stochastic gradient descent.
+
+- `l2_lambda` : float
+
+    Regularization parameter for L2 regularization.
+    No regularization if l2_lambda=0.0.
+
+- `minibatches` : int (default: 1)
+
+    The number of minibatches for gradient-based optimization.
+    If 1: Gradient Descent learning
+    If len(y): Stochastic Gradient Descent (SGD) online learning
+    If 1 < minibatches < len(y): SGD Minibatch learning
+
+- `random_seed` : int (default: None)
+
+    Set random state for shuffling and initializing the weights.
+
+- `print_progress` : int (default: 0)
+
+    Prints progress in fitting to stderr.
+    0: No output
+    1: Epochs elapsed and cost
+    2: 1 plus time elapsed
+    3: 2 plus estimated time until completion
+
+**Attributes**
+
+- `w_` : 2d-array, shape={n_features, 1}
+
+    Model weights after fitting.
+
+- `b_` : 1d-array, shape={1,}
+
+    Bias unit after fitting.
+
+- `cost_` : list
+
+    List of floats with cross_entropy cost (sgd or gd) for every
+    epoch.
+
+**Examples**
+
+For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/classifier/LogisticRegression/
+
+### Methods
+
 <hr>
 
-<p><em>fit(X, y, init_params=True)</em></p>
-<p>Learn model from training data.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values.</p>
-</li>
-<li>
-<p><code>init_params</code> : bool (default: True)</p>
-<p>Re-initializes model parameters prior to fitting.
-Set False to continue training with weights from
-a previous model fitting.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
+*fit(X, y, init_params=True)*
+
+Learn model from training data.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples]
+
+    Target values.
+
+- `init_params` : bool (default: True)
+
+    Re-initializes model parameters prior to fitting.
+    Set False to continue training with weights from
+    a previous model fitting.
+
+**Returns**
+
+- `self` : object
+
+
 <hr>
 
-<p><em>get_params(deep=True)</em></p>
-<p>Get parameters for this estimator.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>deep</code> : boolean, optional</p>
-<p>If True, will return the parameters for this estimator and
-contained subobjects that are estimators.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>params</code> : mapping of string to any</p>
-<p>Parameter names mapped to their values.'</p>
-<p>adapted from
-https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
-Author: Gael Varoquaux <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;">&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a>
-License: BSD 3 clause</p>
-</li>
-</ul>
+*get_params(deep=True)*
+
+Get parameters for this estimator.
+
+**Parameters**
+
+- `deep` : boolean, optional
+
+    If True, will return the parameters for this estimator and
+    contained subobjects that are estimators.
+
+**Returns**
+
+- `params` : mapping of string to any
+
+    Parameter names mapped to their values.'
+
+    adapted from
+    https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
+    Author: Gael Varoquaux <gael.varoquaux@normalesup.org>
+    License: BSD 3 clause
+
 <hr>
 
-<p><em>predict(X)</em></p>
-<p>Predict targets from X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>target_values</code> : array-like, shape = [n_samples]</p>
-<p>Predicted target values.</p>
-</li>
-</ul>
+*predict(X)*
+
+Predict targets from X.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `target_values` : array-like, shape = [n_samples]
+
+    Predicted target values.
+
 <hr>
 
-<p><em>predict_proba(X)</em></p>
-<p>Predict class probabilities of X from the net input.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>Class 1 probability</code> : float</li>
-</ul>
+*predict_proba(X)*
+
+Predict class probabilities of X from the net input.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `Class 1 probability` : float
+
+
 <hr>
 
-<p><em>score(X, y)</em></p>
-<p>Compute the prediction accuracy</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values (true class labels).</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>acc</code> : float</p>
-<p>The prediction accuracy as a float
-between 0.0 and 1.0 (perfect score).</p>
-</li>
-</ul>
+*score(X, y)*
+
+Compute the prediction accuracy
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples]
+
+    Target values (true class labels).
+
+**Returns**
+
+- `acc` : float
+
+    The prediction accuracy as a float
+    between 0.0 and 1.0 (perfect score).
+
 <hr>
 
-<p><em>set_params(</em><em>params)</em></p>
-<p>Set the parameters of this estimator.
-The method works on simple estimators as well as on nested objects
-(such as pipelines). The latter have parameters of the form
-<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
-component of a nested object.</p>
-<p><strong>Returns</strong></p>
-<p>self</p>
-<p>adapted from
-https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
-Author: Gael Varoquaux <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;">&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a>
-License: BSD 3 clause</p>
-<h2 id="multilayerperceptron">MultiLayerPerceptron</h2>
-<p><em>MultiLayerPerceptron(eta=0.5, epochs=50, hidden_layers=[50], n_classes=None, momentum=0.0, l1=0.0, l2=0.0, dropout=1.0, decrease_const=0.0, minibatches=1, random_seed=None, print_progress=0)</em></p>
-<p>Multi-layer perceptron classifier with logistic sigmoid activations</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>eta</code> : float (default: 0.5)</p>
-<p>Learning rate (between 0.0 and 1.0)</p>
-</li>
-<li>
-<p><code>epochs</code> : int (default: 50)</p>
-<p>Passes over the training dataset.
-Prior to each epoch, the dataset is shuffled
-if <code>minibatches &gt; 1</code> to prevent cycles in stochastic gradient descent.</p>
-</li>
-<li>
-<p><code>hidden_layers</code> : list (default: [50])</p>
-<p>Number of units per hidden layer. By default 50 units in the
-first hidden layer. At the moment only 1 hidden layer is supported</p>
-</li>
-<li>
-<p><code>n_classes</code> : int (default: None)</p>
-<p>A positive integer to declare the number of class labels
-if not all class labels are present in a partial training set.
-Gets the number of class labels automatically if None.</p>
-</li>
-<li>
-<p><code>l1</code> : float (default: 0.0)</p>
-<p>L1 regularization strength</p>
-</li>
-<li>
-<p><code>l2</code> : float (default: 0.0)</p>
-<p>L2 regularization strength</p>
-</li>
-<li>
-<p><code>momentum</code> : float (default: 0.0)</p>
-<p>Momentum constant. Factor multiplied with the
-gradient of the previous epoch t-1 to improve
-learning speed
-w(t) := w(t) - (grad(t) + momentum * grad(t-1))</p>
-</li>
-<li>
-<p><code>decrease_const</code> : float (default: 0.0)</p>
-<p>Decrease constant. Shrinks the learning rate
-after each epoch via eta / (1 + epoch*decrease_const)</p>
-</li>
-<li>
-<p><code>minibatches</code> : int (default: 1)</p>
-<p>Divide the training data into <em>k</em> minibatches
-for accelerated stochastic gradient descent learning.
-Gradient Descent Learning if <code>minibatches</code> = 1
-Stochastic Gradient Descent learning if <code>minibatches</code> = len(y)
-Minibatch learning if <code>minibatches</code> &gt; 1</p>
-</li>
-<li>
-<p><code>random_seed</code> : int (default: None)</p>
-<p>Set random state for shuffling and initializing the weights.</p>
-</li>
-<li>
-<p><code>print_progress</code> : int (default: 0)</p>
-<p>Prints progress in fitting to stderr.
-0: No output
-1: Epochs elapsed and cost
-2: 1 plus time elapsed
-3: 2 plus estimated time until completion</p>
-</li>
-</ul>
-<p><strong>Attributes</strong></p>
-<ul>
-<li>
-<p><code>w_</code> : 2d-array, shape=[n_features, n_classes]</p>
-<p>Weights after fitting.</p>
-</li>
-<li>
-<p><code>b_</code> : 1D-array, shape=[n_classes]</p>
-<p>Bias units after fitting.</p>
-</li>
-<li>
-<p><code>cost_</code> : list</p>
-<p>List of floats; the mean categorical cross entropy
-cost after each epoch.</p>
-</li>
-</ul>
-<p><strong>Examples</strong></p>
-<p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/classifier/MultiLayerPerceptron/">http://rasbt.github.io/mlxtend/user_guide/classifier/MultiLayerPerceptron/</a></p>
-<h3 id="methods_3">Methods</h3>
+*set_params(**params)*
+
+Set the parameters of this estimator.
+    The method works on simple estimators as well as on nested objects
+    (such as pipelines). The latter have parameters of the form
+    ``<component>__<parameter>`` so that it's possible to update each
+    component of a nested object.
+
+**Returns**
+
+self
+
+    adapted from
+    https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
+    Author: Gael Varoquaux <gael.varoquaux@normalesup.org>
+    License: BSD 3 clause
+
+
+
+
+## MultiLayerPerceptron
+
+*MultiLayerPerceptron(eta=0.5, epochs=50, hidden_layers=[50], n_classes=None, momentum=0.0, l1=0.0, l2=0.0, dropout=1.0, decrease_const=0.0, minibatches=1, random_seed=None, print_progress=0)*
+
+Multi-layer perceptron classifier with logistic sigmoid activations
+
+**Parameters**
+
+- `eta` : float (default: 0.5)
+
+    Learning rate (between 0.0 and 1.0)
+
+- `epochs` : int (default: 50)
+
+    Passes over the training dataset.
+    Prior to each epoch, the dataset is shuffled
+    if `minibatches > 1` to prevent cycles in stochastic gradient descent.
+
+- `hidden_layers` : list (default: [50])
+
+    Number of units per hidden layer. By default 50 units in the
+    first hidden layer. At the moment only 1 hidden layer is supported
+
+- `n_classes` : int (default: None)
+
+    A positive integer to declare the number of class labels
+    if not all class labels are present in a partial training set.
+    Gets the number of class labels automatically if None.
+
+- `l1` : float (default: 0.0)
+
+    L1 regularization strength
+
+- `l2` : float (default: 0.0)
+
+    L2 regularization strength
+
+- `momentum` : float (default: 0.0)
+
+    Momentum constant. Factor multiplied with the
+    gradient of the previous epoch t-1 to improve
+    learning speed
+    w(t) := w(t) - (grad(t) + momentum * grad(t-1))
+
+- `decrease_const` : float (default: 0.0)
+
+    Decrease constant. Shrinks the learning rate
+    after each epoch via eta / (1 + epoch*decrease_const)
+
+- `minibatches` : int (default: 1)
+
+    Divide the training data into *k* minibatches
+    for accelerated stochastic gradient descent learning.
+    Gradient Descent Learning if `minibatches` = 1
+    Stochastic Gradient Descent learning if `minibatches` = len(y)
+    Minibatch learning if `minibatches` > 1
+
+- `random_seed` : int (default: None)
+
+    Set random state for shuffling and initializing the weights.
+
+- `print_progress` : int (default: 0)
+
+    Prints progress in fitting to stderr.
+    0: No output
+    1: Epochs elapsed and cost
+    2: 1 plus time elapsed
+    3: 2 plus estimated time until completion
+
+**Attributes**
+
+- `w_` : 2d-array, shape=[n_features, n_classes]
+
+    Weights after fitting.
+
+- `b_` : 1D-array, shape=[n_classes]
+
+    Bias units after fitting.
+
+- `cost_` : list
+
+    List of floats; the mean categorical cross entropy
+    cost after each epoch.
+
+**Examples**
+
+For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/classifier/MultiLayerPerceptron/
+
+### Methods
+
 <hr>
 
-<p><em>fit(X, y, init_params=True)</em></p>
-<p>Learn model from training data.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values.</p>
-</li>
-<li>
-<p><code>init_params</code> : bool (default: True)</p>
-<p>Re-initializes model parameters prior to fitting.
-Set False to continue training with weights from
-a previous model fitting.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
+*fit(X, y, init_params=True)*
+
+Learn model from training data.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples]
+
+    Target values.
+
+- `init_params` : bool (default: True)
+
+    Re-initializes model parameters prior to fitting.
+    Set False to continue training with weights from
+    a previous model fitting.
+
+**Returns**
+
+- `self` : object
+
+
 <hr>
 
-<p><em>get_params(deep=True)</em></p>
-<p>Get parameters for this estimator.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>deep</code> : boolean, optional</p>
-<p>If True, will return the parameters for this estimator and
-contained subobjects that are estimators.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>params</code> : mapping of string to any</p>
-<p>Parameter names mapped to their values.'</p>
-<p>adapted from
-https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
-Author: Gael Varoquaux <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;">&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a>
-License: BSD 3 clause</p>
-</li>
-</ul>
+*get_params(deep=True)*
+
+Get parameters for this estimator.
+
+**Parameters**
+
+- `deep` : boolean, optional
+
+    If True, will return the parameters for this estimator and
+    contained subobjects that are estimators.
+
+**Returns**
+
+- `params` : mapping of string to any
+
+    Parameter names mapped to their values.'
+
+    adapted from
+    https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
+    Author: Gael Varoquaux <gael.varoquaux@normalesup.org>
+    License: BSD 3 clause
+
 <hr>
 
-<p><em>predict(X)</em></p>
-<p>Predict targets from X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>target_values</code> : array-like, shape = [n_samples]</p>
-<p>Predicted target values.</p>
-</li>
-</ul>
+*predict(X)*
+
+Predict targets from X.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `target_values` : array-like, shape = [n_samples]
+
+    Predicted target values.
+
 <hr>
 
-<p><em>predict_proba(X)</em></p>
-<p>Predict class probabilities of X from the net input.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>Class probabilties</code> : array-like, shape= [n_samples, n_classes]</li>
-</ul>
+*predict_proba(X)*
+
+Predict class probabilities of X from the net input.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `Class probabilties` : array-like, shape= [n_samples, n_classes]
+
+
 <hr>
 
-<p><em>score(X, y)</em></p>
-<p>Compute the prediction accuracy</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values (true class labels).</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>acc</code> : float</p>
-<p>The prediction accuracy as a float
-between 0.0 and 1.0 (perfect score).</p>
-</li>
-</ul>
+*score(X, y)*
+
+Compute the prediction accuracy
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples]
+
+    Target values (true class labels).
+
+**Returns**
+
+- `acc` : float
+
+    The prediction accuracy as a float
+    between 0.0 and 1.0 (perfect score).
+
 <hr>
 
-<p><em>set_params(</em><em>params)</em></p>
-<p>Set the parameters of this estimator.
-The method works on simple estimators as well as on nested objects
-(such as pipelines). The latter have parameters of the form
-<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
-component of a nested object.</p>
-<p><strong>Returns</strong></p>
-<p>self</p>
-<p>adapted from
-https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
-Author: Gael Varoquaux <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;">&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a>
-License: BSD 3 clause</p>
-<h2 id="perceptron">Perceptron</h2>
-<p><em>Perceptron(eta=0.1, epochs=50, random_seed=None, print_progress=0)</em></p>
-<p>Perceptron classifier.</p>
-<p>Note that this implementation of the Perceptron expects binary class labels
-in {0, 1}.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>eta</code> : float (default: 0.1)</p>
-<p>Learning rate (between 0.0 and 1.0)</p>
-</li>
-<li>
-<p><code>epochs</code> : int (default: 50)</p>
-<p>Number of passes over the training dataset.
-Prior to each epoch, the dataset is shuffled to prevent cycles.</p>
-</li>
-<li>
-<p><code>random_seed</code> : int</p>
-<p>Random state for initializing random weights and shuffling.</p>
-</li>
-<li>
-<p><code>print_progress</code> : int (default: 0)</p>
-<p>Prints progress in fitting to stderr.
-0: No output
-1: Epochs elapsed and cost
-2: 1 plus time elapsed
-3: 2 plus estimated time until completion</p>
-</li>
-</ul>
-<p><strong>Attributes</strong></p>
-<ul>
-<li>
-<p><code>w_</code> : 2d-array, shape={n_features, 1}</p>
-<p>Model weights after fitting.</p>
-</li>
-<li>
-<p><code>b_</code> : 1d-array, shape={1,}</p>
-<p>Bias unit after fitting.</p>
-</li>
-<li>
-<p><code>cost_</code> : list</p>
-<p>Number of misclassifications in every epoch.</p>
-</li>
-</ul>
-<p><strong>Examples</strong></p>
-<p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/classifier/Perceptron/">http://rasbt.github.io/mlxtend/user_guide/classifier/Perceptron/</a></p>
-<h3 id="methods_4">Methods</h3>
+*set_params(**params)*
+
+Set the parameters of this estimator.
+    The method works on simple estimators as well as on nested objects
+    (such as pipelines). The latter have parameters of the form
+    ``<component>__<parameter>`` so that it's possible to update each
+    component of a nested object.
+
+**Returns**
+
+self
+
+    adapted from
+    https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
+    Author: Gael Varoquaux <gael.varoquaux@normalesup.org>
+    License: BSD 3 clause
+
+
+
+
+## OneRClassifier
+
+*OneRClassifier(resolve_ties='first')*
+
+OneR (One Rule) Classifier.
+
+**Parameters**
+
+- `resolve_ties` : str (default: 'first')
+
+    Option for how to resolve ties if two or more features
+    have the same error. Options are
+    - 'first' (default): chooses first feature in the list, i.e.,
+    feature with the lower column index.
+    - 'chi-squared': performs a chi-squared test for each feature
+    against the target and selects the feature with the lowest p-value.
+
+**Attributes**
+
+- `self.classes_labels_` : array-like, shape = [n_labels]
+
+    Array containing the unique class labels found in the
+    training set.
+
+
+- `self.feature_idx_` : int
+
+    The index of the rules' feature based on the column in
+    the training set.
+
+
+- `self.p_value_` : float
+
+    The p value for a given feature. Only available after calling `fit`
+    when the OneR attribute `resolve_ties = 'chi-squared'` is set.
+
+
+- `self.prediction_dict_` : dict
+
+    Dictionary containing information about the
+    feature's (self.feature_idx_)
+    rules and total error. E.g.,
+    `{'total error': 37, 'rules (value: class)': {0: 0, 1: 2}}`
+    means the total error is 37, and the rules are
+    "if feature value == 0 classify as 0"
+    and "if feature value == 1 classify as 2".
+    (And classify as class 1 otherwise.)
+
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/classifier/OneRClassifier/
+
+### Methods
+
 <hr>
 
-<p><em>fit(X, y, init_params=True)</em></p>
-<p>Learn model from training data.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values.</p>
-</li>
-<li>
-<p><code>init_params</code> : bool (default: True)</p>
-<p>Re-initializes model parameters prior to fitting.
-Set False to continue training with weights from
-a previous model fitting.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
+*fit(X, y)*
+
+Learn rule from training data.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+
+- `y` : array-like, shape = [n_samples]
+
+    Target values.
+
+**Returns**
+
+- `self` : object
+
+
 <hr>
 
-<p><em>get_params(deep=True)</em></p>
-<p>Get parameters for this estimator.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>deep</code> : boolean, optional</p>
-<p>If True, will return the parameters for this estimator and
-contained subobjects that are estimators.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>params</code> : mapping of string to any</p>
-<p>Parameter names mapped to their values.'</p>
-<p>adapted from
-https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
-Author: Gael Varoquaux <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;">&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a>
-License: BSD 3 clause</p>
-</li>
-</ul>
+*get_params(deep=True)*
+
+Get parameters for this estimator.
+
+**Parameters**
+
+- `deep` : bool, default=True
+
+    If True, will return the parameters for this estimator and
+    contained subobjects that are estimators.
+
+**Returns**
+
+- `params` : mapping of string to any
+
+    Parameter names mapped to their values.
+
 <hr>
 
-<p><em>predict(X)</em></p>
-<p>Predict targets from X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>target_values</code> : array-like, shape = [n_samples]</p>
-<p>Predicted target values.</p>
-</li>
-</ul>
+*predict(X)*
+
+Predict class labels for X.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `maj` : array-like, shape = [n_samples]
+
+    Predicted class labels.
+
 <hr>
 
-<p><em>score(X, y)</em></p>
-<p>Compute the prediction accuracy</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values (true class labels).</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>acc</code> : float</p>
-<p>The prediction accuracy as a float
-between 0.0 and 1.0 (perfect score).</p>
-</li>
-</ul>
+*score(X, y, sample_weight=None)*
+
+Return the mean accuracy on the given test data and labels.
+
+    In multi-label classification, this is the subset accuracy
+    which is a harsh metric since you require for each sample that
+    each label set be correctly predicted.
+
+**Parameters**
+
+- `X` : array-like of shape (n_samples, n_features)
+
+    Test samples.
+
+
+- `y` : array-like of shape (n_samples,) or (n_samples, n_outputs)
+
+    True labels for X.
+
+
+- `sample_weight` : array-like of shape (n_samples,), default=None
+
+    Sample weights.
+
+**Returns**
+
+- `score` : float
+
+    Mean accuracy of self.predict(X) wrt. y.
+
 <hr>
 
-<p><em>set_params(</em><em>params)</em></p>
-<p>Set the parameters of this estimator.
-The method works on simple estimators as well as on nested objects
-(such as pipelines). The latter have parameters of the form
-<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
-component of a nested object.</p>
-<p><strong>Returns</strong></p>
-<p>self</p>
-<p>adapted from
-https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
-Author: Gael Varoquaux <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;">&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a>
-License: BSD 3 clause</p>
-<h2 id="softmaxregression">SoftmaxRegression</h2>
-<p><em>SoftmaxRegression(eta=0.01, epochs=50, l2=0.0, minibatches=1, n_classes=None, random_seed=None, print_progress=0)</em></p>
-<p>Softmax regression classifier.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>eta</code> : float (default: 0.01)</p>
-<p>Learning rate (between 0.0 and 1.0)</p>
-</li>
-<li>
-<p><code>epochs</code> : int (default: 50)</p>
-<p>Passes over the training dataset.
-Prior to each epoch, the dataset is shuffled
-if <code>minibatches &gt; 1</code> to prevent cycles in stochastic gradient descent.</p>
-</li>
-<li>
-<p><code>l2</code> : float</p>
-<p>Regularization parameter for L2 regularization.
-No regularization if l2=0.0.</p>
-</li>
-<li>
-<p><code>minibatches</code> : int (default: 1)</p>
-<p>The number of minibatches for gradient-based optimization.
-If 1: Gradient Descent learning
-If len(y): Stochastic Gradient Descent (SGD) online learning
-If 1 &lt; minibatches &lt; len(y): SGD Minibatch learning</p>
-</li>
-<li>
-<p><code>n_classes</code> : int (default: None)</p>
-<p>A positive integer to declare the number of class labels
-if not all class labels are present in a partial training set.
-Gets the number of class labels automatically if None.</p>
-</li>
-<li>
-<p><code>random_seed</code> : int (default: None)</p>
-<p>Set random state for shuffling and initializing the weights.</p>
-</li>
-<li>
-<p><code>print_progress</code> : int (default: 0)</p>
-<p>Prints progress in fitting to stderr.
-0: No output
-1: Epochs elapsed and cost
-2: 1 plus time elapsed
-3: 2 plus estimated time until completion</p>
-</li>
-</ul>
-<p><strong>Attributes</strong></p>
-<ul>
-<li>
-<p><code>w_</code> : 2d-array, shape={n_features, 1}</p>
-<p>Model weights after fitting.</p>
-</li>
-<li>
-<p><code>b_</code> : 1d-array, shape={1,}</p>
-<p>Bias unit after fitting.</p>
-</li>
-<li>
-<p><code>cost_</code> : list</p>
-<p>List of floats, the average cross_entropy for each epoch.</p>
-</li>
-</ul>
-<p><strong>Examples</strong></p>
-<p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/classifier/SoftmaxRegression/">http://rasbt.github.io/mlxtend/user_guide/classifier/SoftmaxRegression/</a></p>
-<h3 id="methods_5">Methods</h3>
+*set_params(**params)*
+
+Set the parameters of this estimator.
+
+    The method works on simple estimators as well as on nested objects
+    (such as pipelines). The latter have parameters of the form
+    ``<component>__<parameter>`` so that it's possible to update each
+    component of a nested object.
+
+**Parameters**
+
+- `**params` : dict
+
+    Estimator parameters.
+
+**Returns**
+
+- `self` : object
+
+    Estimator instance.
+
+
+
+
+## Perceptron
+
+*Perceptron(eta=0.1, epochs=50, random_seed=None, print_progress=0)*
+
+Perceptron classifier.
+
+    Note that this implementation of the Perceptron expects binary class labels
+    in {0, 1}.
+
+**Parameters**
+
+- `eta` : float (default: 0.1)
+
+    Learning rate (between 0.0 and 1.0)
+
+- `epochs` : int (default: 50)
+
+    Number of passes over the training dataset.
+    Prior to each epoch, the dataset is shuffled to prevent cycles.
+
+- `random_seed` : int
+
+    Random state for initializing random weights and shuffling.
+
+- `print_progress` : int (default: 0)
+
+    Prints progress in fitting to stderr.
+    0: No output
+    1: Epochs elapsed and cost
+    2: 1 plus time elapsed
+    3: 2 plus estimated time until completion
+
+**Attributes**
+
+- `w_` : 2d-array, shape={n_features, 1}
+
+    Model weights after fitting.
+
+- `b_` : 1d-array, shape={1,}
+
+    Bias unit after fitting.
+
+- `cost_` : list
+
+    Number of misclassifications in every epoch.
+
+**Examples**
+
+For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/classifier/Perceptron/
+
+### Methods
+
 <hr>
 
-<p><em>fit(X, y, init_params=True)</em></p>
-<p>Learn model from training data.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values.</p>
-</li>
-<li>
-<p><code>init_params</code> : bool (default: True)</p>
-<p>Re-initializes model parameters prior to fitting.
-Set False to continue training with weights from
-a previous model fitting.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
+*fit(X, y, init_params=True)*
+
+Learn model from training data.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples]
+
+    Target values.
+
+- `init_params` : bool (default: True)
+
+    Re-initializes model parameters prior to fitting.
+    Set False to continue training with weights from
+    a previous model fitting.
+
+**Returns**
+
+- `self` : object
+
+
 <hr>
 
-<p><em>get_params(deep=True)</em></p>
-<p>Get parameters for this estimator.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>deep</code> : boolean, optional</p>
-<p>If True, will return the parameters for this estimator and
-contained subobjects that are estimators.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>params</code> : mapping of string to any</p>
-<p>Parameter names mapped to their values.'</p>
-<p>adapted from
-https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
-Author: Gael Varoquaux <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;">&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a>
-License: BSD 3 clause</p>
-</li>
-</ul>
+*get_params(deep=True)*
+
+Get parameters for this estimator.
+
+**Parameters**
+
+- `deep` : boolean, optional
+
+    If True, will return the parameters for this estimator and
+    contained subobjects that are estimators.
+
+**Returns**
+
+- `params` : mapping of string to any
+
+    Parameter names mapped to their values.'
+
+    adapted from
+    https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
+    Author: Gael Varoquaux <gael.varoquaux@normalesup.org>
+    License: BSD 3 clause
+
 <hr>
 
-<p><em>predict(X)</em></p>
-<p>Predict targets from X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>target_values</code> : array-like, shape = [n_samples]</p>
-<p>Predicted target values.</p>
-</li>
-</ul>
+*predict(X)*
+
+Predict targets from X.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `target_values` : array-like, shape = [n_samples]
+
+    Predicted target values.
+
 <hr>
 
-<p><em>predict_proba(X)</em></p>
-<p>Predict class probabilities of X from the net input.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>Class probabilties</code> : array-like, shape= [n_samples, n_classes]</li>
-</ul>
+*score(X, y)*
+
+Compute the prediction accuracy
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples]
+
+    Target values (true class labels).
+
+**Returns**
+
+- `acc` : float
+
+    The prediction accuracy as a float
+    between 0.0 and 1.0 (perfect score).
+
 <hr>
 
-<p><em>score(X, y)</em></p>
-<p>Compute the prediction accuracy</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values (true class labels).</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>acc</code> : float</p>
-<p>The prediction accuracy as a float
-between 0.0 and 1.0 (perfect score).</p>
-</li>
-</ul>
+*set_params(**params)*
+
+Set the parameters of this estimator.
+    The method works on simple estimators as well as on nested objects
+    (such as pipelines). The latter have parameters of the form
+    ``<component>__<parameter>`` so that it's possible to update each
+    component of a nested object.
+
+**Returns**
+
+self
+
+    adapted from
+    https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
+    Author: Gael Varoquaux <gael.varoquaux@normalesup.org>
+    License: BSD 3 clause
+
+
+
+
+## SoftmaxRegression
+
+*SoftmaxRegression(eta=0.01, epochs=50, l2=0.0, minibatches=1, n_classes=None, random_seed=None, print_progress=0)*
+
+Softmax regression classifier.
+
+**Parameters**
+
+- `eta` : float (default: 0.01)
+
+    Learning rate (between 0.0 and 1.0)
+
+- `epochs` : int (default: 50)
+
+    Passes over the training dataset.
+    Prior to each epoch, the dataset is shuffled
+    if `minibatches > 1` to prevent cycles in stochastic gradient descent.
+
+- `l2` : float
+
+    Regularization parameter for L2 regularization.
+    No regularization if l2=0.0.
+
+- `minibatches` : int (default: 1)
+
+    The number of minibatches for gradient-based optimization.
+    If 1: Gradient Descent learning
+    If len(y): Stochastic Gradient Descent (SGD) online learning
+    If 1 < minibatches < len(y): SGD Minibatch learning
+
+- `n_classes` : int (default: None)
+
+    A positive integer to declare the number of class labels
+    if not all class labels are present in a partial training set.
+    Gets the number of class labels automatically if None.
+
+- `random_seed` : int (default: None)
+
+    Set random state for shuffling and initializing the weights.
+
+- `print_progress` : int (default: 0)
+
+    Prints progress in fitting to stderr.
+    0: No output
+    1: Epochs elapsed and cost
+    2: 1 plus time elapsed
+    3: 2 plus estimated time until completion
+
+**Attributes**
+
+- `w_` : 2d-array, shape={n_features, 1}
+
+    Model weights after fitting.
+
+- `b_` : 1d-array, shape={1,}
+
+    Bias unit after fitting.
+
+- `cost_` : list
+
+    List of floats, the average cross_entropy for each epoch.
+
+**Examples**
+
+For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/classifier/SoftmaxRegression/
+
+### Methods
+
 <hr>
 
-<p><em>set_params(</em><em>params)</em></p>
-<p>Set the parameters of this estimator.
-The method works on simple estimators as well as on nested objects
-(such as pipelines). The latter have parameters of the form
-<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
-component of a nested object.</p>
-<p><strong>Returns</strong></p>
-<p>self</p>
-<p>adapted from
-https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
-Author: Gael Varoquaux <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;">&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a>
-License: BSD 3 clause</p>
-<h2 id="stackingcvclassifier">StackingCVClassifier</h2>
-<p><em>StackingCVClassifier(classifiers, meta_classifier, use_probas=False, drop_proba_col=None, cv=2, shuffle=True, random_state=None, stratify=True, verbose=0, use_features_in_secondary=False, store_train_meta_features=False, use_clones=True, n_jobs=None, pre_dispatch='2</em>n_jobs')*</p>
-<p>A 'Stacking Cross-Validation' classifier for scikit-learn estimators.</p>
-<p>New in mlxtend v0.4.3</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>classifiers</code> : array-like, shape = [n_classifiers]</p>
-<p>A list of classifiers.
-Invoking the <code>fit</code> method on the <code>StackingCVClassifer</code> will fit clones
-of these original classifiers that will
-be stored in the class attribute <code>self.clfs_</code> if <code>use_clones=True</code>.</p>
-</li>
-<li>
-<p><code>meta_classifier</code> : object</p>
-<p>The meta-classifier to be fitted on the ensemble of
-classifiers</p>
-</li>
-<li>
-<p><code>use_probas</code> : bool (default: False)</p>
-<p>If True, trains meta-classifier based on predicted probabilities
-instead of class labels.</p>
-</li>
-<li>
-<p><code>drop_proba_col</code> : string (default: None)</p>
-<p>Drops extra "probability" column in the feature set, because it is
-redundant:
-p(y_c) = 1 - p(y_1) + p(y_2) + ... + p(y_{c-1}).
-This can be useful for meta-classifiers that are sensitive to perfectly
-collinear features.
-If 'last', drops last probability column.
-If 'first', drops first probability column.
-Only relevant if <code>use_probas=True</code>.</p>
-</li>
-<li>
-<p><code>cv</code> : int, cross-validation generator or an iterable, optional (default: 2)</p>
-<p>Determines the cross-validation splitting strategy.
-Possible inputs for cv are:
-- None, to use the default 2-fold cross validation,
-- integer, to specify the number of folds in a <code>(Stratified)KFold</code>,
-- An object to be used as a cross-validation generator.
-- An iterable yielding train, test splits.
-For integer/None inputs, it will use either a <code>KFold</code> or
-<code>StratifiedKFold</code> cross validation depending the value of <code>stratify</code>
-argument.</p>
-</li>
-<li>
-<p><code>shuffle</code> : bool (default: True)</p>
-<p>If True,  and the <code>cv</code> argument is integer, the training data will be
-shuffled at fitting stage prior to cross-validation. If the <code>cv</code>
-argument is a specific cross validation technique, this argument is
-omitted.</p>
-</li>
-<li>
-<p><code>random_state</code> : int, RandomState instance or None, optional (default: None)</p>
-<p>Constrols the randomness of the cv splitter. Used when <code>cv</code> is
-integer and <code>shuffle=True</code>. New in v0.16.0.</p>
-</li>
-<li>
-<p><code>stratify</code> : bool (default: True)</p>
-<p>If True, and the <code>cv</code> argument is integer it will follow a stratified
-K-Fold cross validation technique. If the <code>cv</code> argument is a specific
-cross validation technique, this argument is omitted.</p>
-</li>
-<li>
-<p><code>verbose</code> : int, optional (default=0)</p>
-<p>Controls the verbosity of the building process.
-- <code>verbose=0</code> (default): Prints nothing
-- <code>verbose=1</code>: Prints the number &amp; name of the regressor being fitted
-and which fold is currently being used for fitting
-- <code>verbose=2</code>: Prints info about the parameters of the
-regressor being fitted
-- <code>verbose&gt;2</code>: Changes <code>verbose</code> param of the underlying regressor to
-self.verbose - 2</p>
-</li>
-<li>
-<p><code>use_features_in_secondary</code> : bool (default: False)</p>
-<p>If True, the meta-classifier will be trained both on the predictions
-of the original classifiers and the original dataset.
-If False, the meta-classifier will be trained only on the predictions
-of the original classifiers.</p>
-</li>
-<li>
-<p><code>store_train_meta_features</code> : bool (default: False)</p>
-<p>If True, the meta-features computed from the training data used
-for fitting the meta-classifier stored in the
-<code>self.train_meta_features_</code> array, which can be
-accessed after calling <code>fit</code>.</p>
-</li>
-<li>
-<p><code>use_clones</code> : bool (default: True)</p>
-<p>Clones the classifiers for stacking classification if True (default)
-or else uses the original ones, which will be refitted on the dataset
-upon calling the <code>fit</code> method. Hence, if use_clones=True, the original
-input classifiers will remain unmodified upon using the
-StackingCVClassifier's <code>fit</code> method.
-Setting <code>use_clones=False</code> is
-recommended if you are working with estimators that are supporting
-the scikit-learn fit/predict API interface but are not compatible
-to scikit-learn's <code>clone</code> function.</p>
-</li>
-<li>
-<p><code>n_jobs</code> : int or None, optional (default=None)</p>
-<p>The number of CPUs to use to do the computation.
-<code>None</code> means 1 unless in a :obj:<code>joblib.parallel_backend</code> context.
-<code>-1</code> means using all processors. See :term:<code>Glossary &lt;n_jobs&gt;</code>
-for more details. New in v0.16.0.</p>
-</li>
-<li>
-<p><code>pre_dispatch</code> : int, or string, optional</p>
-<p>Controls the number of jobs that get dispatched during parallel
-execution. Reducing this number can be useful to avoid an
-explosion of memory consumption when more jobs get dispatched
-than CPUs can process. This parameter can be:
-- None, in which case all the jobs are immediately
-created and spawned. Use this for lightweight and
-fast-running jobs, to avoid delays due to on-demand
-spawning of the jobs
-- An int, giving the exact number of total jobs that are
-spawned
-- A string, giving an expression as a function of n_jobs,
-as in '2*n_jobs'
-New in v0.16.0.</p>
-</li>
-</ul>
-<p><strong>Attributes</strong></p>
-<ul>
-<li>
-<p><code>clfs_</code> : list, shape=[n_classifiers]</p>
-<p>Fitted classifiers (clones of the original classifiers)</p>
-</li>
-<li>
-<p><code>meta_clf_</code> : estimator</p>
-<p>Fitted meta-classifier (clone of the original meta-estimator)</p>
-</li>
-<li>
-<p><code>train_meta_features</code> : numpy array, shape = [n_samples, n_classifiers]</p>
-<p>meta-features for training data, where n_samples is the
-number of samples
-in training data and n_classifiers is the number of classfiers.</p>
-</li>
-</ul>
-<p><strong>Examples</strong></p>
-<p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/classifier/StackingCVClassifier/">http://rasbt.github.io/mlxtend/user_guide/classifier/StackingCVClassifier/</a></p>
-<h3 id="methods_6">Methods</h3>
+*fit(X, y, init_params=True)*
+
+Learn model from training data.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples]
+
+    Target values.
+
+- `init_params` : bool (default: True)
+
+    Re-initializes model parameters prior to fitting.
+    Set False to continue training with weights from
+    a previous model fitting.
+
+**Returns**
+
+- `self` : object
+
+
 <hr>
 
-<p><em>decision_function(X)</em></p>
-<p>Predict class confidence scores for X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>scores</code> : shape=(n_samples,) if n_classes == 2 else             (n_samples, n_classes).</p>
-<p>Confidence scores per (sample, class) combination. In the binary
-case, confidence score for self.classes_[1] where &gt;0 means this
-class would be predicted.</p>
-</li>
-</ul>
+*get_params(deep=True)*
+
+Get parameters for this estimator.
+
+**Parameters**
+
+- `deep` : boolean, optional
+
+    If True, will return the parameters for this estimator and
+    contained subobjects that are estimators.
+
+**Returns**
+
+- `params` : mapping of string to any
+
+    Parameter names mapped to their values.'
+
+    adapted from
+    https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
+    Author: Gael Varoquaux <gael.varoquaux@normalesup.org>
+    License: BSD 3 clause
+
 <hr>
 
-<p><em>fit(X, y, groups=None, sample_weight=None)</em></p>
-<p>Fit ensemble classifers and the meta-classifier.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : numpy array, shape = [n_samples]</p>
-<p>Target values.</p>
-</li>
-<li>
-<p><code>groups</code> : numpy array/None, shape = [n_samples]</p>
-<p>The group that each sample belongs to. This is used by specific
-folding strategies such as GroupKFold()</p>
-</li>
-<li>
-<p><code>sample_weight</code> : array-like, shape = [n_samples], optional</p>
-<p>Sample weights passed as sample_weights to each regressor
-in the regressors list as well as the meta_regressor.
-Raises error if some regressor does not support
-sample_weight in the fit() method.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
+*predict(X)*
+
+Predict targets from X.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `target_values` : array-like, shape = [n_samples]
+
+    Predicted target values.
+
 <hr>
 
-<p><em>fit_transform(X, y=None, </em><em>fit_params)</em></p>
-<p>Fit to data, then transform it.</p>
-<p>Fits transformer to X and y with optional parameters fit_params
-and returns a transformed version of X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : numpy array of shape [n_samples, n_features]</p>
-<p>Training set.</p>
-</li>
-<li>
-<p><code>y</code> : numpy array of shape [n_samples]</p>
-<p>Target values.</p>
-</li>
-<li>
-<p><code>**fit_params</code> : dict</p>
-<p>Additional fit parameters.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>X_new</code> : numpy array of shape [n_samples, n_features_new]</p>
-<p>Transformed array.</p>
-</li>
-</ul>
+*predict_proba(X)*
+
+Predict class probabilities of X from the net input.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `Class probabilties` : array-like, shape= [n_samples, n_classes]
+
+
 <hr>
 
-<p><em>get_params(deep=True)</em></p>
-<p>Return estimator parameter names for GridSearch support.</p>
+*score(X, y)*
+
+Compute the prediction accuracy
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples]
+
+    Target values (true class labels).
+
+**Returns**
+
+- `acc` : float
+
+    The prediction accuracy as a float
+    between 0.0 and 1.0 (perfect score).
+
 <hr>
 
-<p><em>predict(X)</em></p>
-<p>Predict target values for X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>labels</code> : array-like, shape = [n_samples]</p>
-<p>Predicted class labels.</p>
-</li>
-</ul>
+*set_params(**params)*
+
+Set the parameters of this estimator.
+    The method works on simple estimators as well as on nested objects
+    (such as pipelines). The latter have parameters of the form
+    ``<component>__<parameter>`` so that it's possible to update each
+    component of a nested object.
+
+**Returns**
+
+self
+
+    adapted from
+    https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
+    Author: Gael Varoquaux <gael.varoquaux@normalesup.org>
+    License: BSD 3 clause
+
+
+
+
+## StackingCVClassifier
+
+*StackingCVClassifier(classifiers, meta_classifier, use_probas=False, drop_proba_col=None, cv=2, shuffle=True, random_state=None, stratify=True, verbose=0, use_features_in_secondary=False, store_train_meta_features=False, use_clones=True, n_jobs=None, pre_dispatch='2*n_jobs')*
+
+A 'Stacking Cross-Validation' classifier for scikit-learn estimators.
+
+    New in mlxtend v0.4.3
+
+**Parameters**
+
+- `classifiers` : array-like, shape = [n_classifiers]
+
+    A list of classifiers.
+    Invoking the `fit` method on the `StackingCVClassifer` will fit clones
+    of these original classifiers that will
+    be stored in the class attribute `self.clfs_` if `use_clones=True`.
+
+- `meta_classifier` : object
+
+    The meta-classifier to be fitted on the ensemble of
+    classifiers
+
+- `use_probas` : bool (default: False)
+
+    If True, trains meta-classifier based on predicted probabilities
+    instead of class labels.
+
+- `drop_proba_col` : string (default: None)
+
+    Drops extra "probability" column in the feature set, because it is
+    redundant:
+    p(y_c) = 1 - p(y_1) + p(y_2) + ... + p(y_{c-1}).
+    This can be useful for meta-classifiers that are sensitive to perfectly
+    collinear features.
+    If 'last', drops last probability column.
+    If 'first', drops first probability column.
+    Only relevant if `use_probas=True`.
+
+- `cv` : int, cross-validation generator or an iterable, optional (default: 2)
+
+    Determines the cross-validation splitting strategy.
+    Possible inputs for cv are:
+    - None, to use the default 2-fold cross validation,
+    - integer, to specify the number of folds in a `(Stratified)KFold`,
+    - An object to be used as a cross-validation generator.
+    - An iterable yielding train, test splits.
+    For integer/None inputs, it will use either a `KFold` or
+    `StratifiedKFold` cross validation depending the value of `stratify`
+    argument.
+
+- `shuffle` : bool (default: True)
+
+    If True,  and the `cv` argument is integer, the training data will be
+    shuffled at fitting stage prior to cross-validation. If the `cv`
+    argument is a specific cross validation technique, this argument is
+    omitted.
+
+- `random_state` : int, RandomState instance or None, optional (default: None)
+
+    Constrols the randomness of the cv splitter. Used when `cv` is
+    integer and `shuffle=True`. New in v0.16.0.
+
+- `stratify` : bool (default: True)
+
+    If True, and the `cv` argument is integer it will follow a stratified
+    K-Fold cross validation technique. If the `cv` argument is a specific
+    cross validation technique, this argument is omitted.
+
+- `verbose` : int, optional (default=0)
+
+    Controls the verbosity of the building process.
+    - `verbose=0` (default): Prints nothing
+    - `verbose=1`: Prints the number & name of the regressor being fitted
+    and which fold is currently being used for fitting
+    - `verbose=2`: Prints info about the parameters of the
+    regressor being fitted
+    - `verbose>2`: Changes `verbose` param of the underlying regressor to
+    self.verbose - 2
+
+- `use_features_in_secondary` : bool (default: False)
+
+    If True, the meta-classifier will be trained both on the predictions
+    of the original classifiers and the original dataset.
+    If False, the meta-classifier will be trained only on the predictions
+    of the original classifiers.
+
+- `store_train_meta_features` : bool (default: False)
+
+    If True, the meta-features computed from the training data used
+    for fitting the meta-classifier stored in the
+    `self.train_meta_features_` array, which can be
+    accessed after calling `fit`.
+
+- `use_clones` : bool (default: True)
+
+    Clones the classifiers for stacking classification if True (default)
+    or else uses the original ones, which will be refitted on the dataset
+    upon calling the `fit` method. Hence, if use_clones=True, the original
+    input classifiers will remain unmodified upon using the
+    StackingCVClassifier's `fit` method.
+    Setting `use_clones=False` is
+    recommended if you are working with estimators that are supporting
+    the scikit-learn fit/predict API interface but are not compatible
+    to scikit-learn's `clone` function.
+
+- `n_jobs` : int or None, optional (default=None)
+
+    The number of CPUs to use to do the computation.
+    ``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.
+    ``-1`` means using all processors. See :term:`Glossary <n_jobs>`
+    for more details. New in v0.16.0.
+
+- `pre_dispatch` : int, or string, optional
+
+    Controls the number of jobs that get dispatched during parallel
+    execution. Reducing this number can be useful to avoid an
+    explosion of memory consumption when more jobs get dispatched
+    than CPUs can process. This parameter can be:
+    - None, in which case all the jobs are immediately
+    created and spawned. Use this for lightweight and
+    fast-running jobs, to avoid delays due to on-demand
+    spawning of the jobs
+    - An int, giving the exact number of total jobs that are
+    spawned
+    - A string, giving an expression as a function of n_jobs,
+    as in '2*n_jobs'
+    New in v0.16.0.
+
+**Attributes**
+
+- `clfs_` : list, shape=[n_classifiers]
+
+    Fitted classifiers (clones of the original classifiers)
+
+- `meta_clf_` : estimator
+
+    Fitted meta-classifier (clone of the original meta-estimator)
+
+- `train_meta_features` : numpy array, shape = [n_samples, n_classifiers]
+
+    meta-features for training data, where n_samples is the
+    number of samples
+    in training data and n_classifiers is the number of classfiers.
+
+**Examples**
+
+For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/classifier/StackingCVClassifier/
+
+### Methods
+
 <hr>
 
-<p><em>predict_meta_features(X)</em></p>
-<p>Get meta-features of test-data.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
-<p>Test vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>meta-features</code> : numpy array, shape = [n_samples, n_classifiers]</p>
-<p>Returns the meta-features for test data.</p>
-</li>
-</ul>
+*decision_function(X)*
+
+Predict class confidence scores for X.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `scores` : shape=(n_samples,) if n_classes == 2 else             (n_samples, n_classes).
+
+    Confidence scores per (sample, class) combination. In the binary
+    case, confidence score for self.classes_[1] where >0 means this
+    class would be predicted.
+
 <hr>
 
-<p><em>predict_proba(X)</em></p>
-<p>Predict class probabilities for X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>proba</code> : array-like, shape = [n_samples, n_classes] or a list of                 n_outputs of such arrays if n_outputs &gt; 1.</p>
-<p>Probability for each class per sample.</p>
-</li>
-</ul>
+*fit(X, y, groups=None, sample_weight=None)*
+
+Fit ensemble classifers and the meta-classifier.
+
+**Parameters**
+
+- `X` : numpy array, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+
+- `y` : numpy array, shape = [n_samples]
+
+    Target values.
+
+
+- `groups` : numpy array/None, shape = [n_samples]
+
+    The group that each sample belongs to. This is used by specific
+    folding strategies such as GroupKFold()
+
+
+- `sample_weight` : array-like, shape = [n_samples], optional
+
+    Sample weights passed as sample_weights to each regressor
+    in the regressors list as well as the meta_regressor.
+    Raises error if some regressor does not support
+    sample_weight in the fit() method.
+
+**Returns**
+
+- `self` : object
+
+
 <hr>
 
-<p><em>score(X, y, sample_weight=None)</em></p>
-<p>Return the mean accuracy on the given test data and labels.</p>
-<p>In multi-label classification, this is the subset accuracy
-which is a harsh metric since you require for each sample that
-each label set be correctly predicted.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : array-like of shape (n_samples, n_features)</p>
-<p>Test samples.</p>
-</li>
-<li>
-<p><code>y</code> : array-like of shape (n_samples,) or (n_samples, n_outputs)</p>
-<p>True labels for X.</p>
-</li>
-<li>
-<p><code>sample_weight</code> : array-like of shape (n_samples,), default=None</p>
-<p>Sample weights.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>score</code> : float</p>
-<p>Mean accuracy of self.predict(X) wrt. y.</p>
-</li>
-</ul>
+*fit_transform(X, y=None, **fit_params)*
+
+Fit to data, then transform it.
+
+    Fits transformer to X and y with optional parameters fit_params
+    and returns a transformed version of X.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix, dataframe} of shape                 (n_samples, n_features)
+
+
+
+- `y` : ndarray of shape (n_samples,), default=None
+
+    Target values.
+
+
+- `**fit_params` : dict
+
+    Additional fit parameters.
+
+**Returns**
+
+- `X_new` : ndarray array of shape (n_samples, n_features_new)
+
+    Transformed array.
+
 <hr>
 
-<p><em>set_params(</em><em>params)</em></p>
-<p>Set the parameters of this estimator.</p>
-<p>Valid parameter keys can be listed with <code>get_params()</code>.</p>
-<p><strong>Returns</strong></p>
-<p>self</p>
-<h3 id="properties">Properties</h3>
+*get_params(deep=True)*
+
+Return estimator parameter names for GridSearch support.
+
 <hr>
 
-<p><em>named_classifiers</em></p>
-<p>None</p>
-<h2 id="stackingclassifier">StackingClassifier</h2>
-<p><em>StackingClassifier(classifiers, meta_classifier, use_probas=False, drop_proba_col=None, average_probas=False, verbose=0, use_features_in_secondary=False, store_train_meta_features=False, use_clones=True, fit_base_estimators=True)</em></p>
-<p>A Stacking classifier for scikit-learn estimators for classification.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>classifiers</code> : array-like, shape = [n_classifiers]</p>
-<p>A list of classifiers.
-Invoking the <code>fit</code> method on the <code>StackingClassifer</code> will fit clones
-of these original classifiers that will
-be stored in the class attribute
-<code>self.clfs_</code> if <code>use_clones=True</code> (default) and
-<code>fit_base_estimators=True</code> (default).</p>
-</li>
-<li>
-<p><code>meta_classifier</code> : object</p>
-<p>The meta-classifier to be fitted on the ensemble of
-classifiers</p>
-</li>
-<li>
-<p><code>use_probas</code> : bool (default: False)</p>
-<p>If True, trains meta-classifier based on predicted probabilities
-instead of class labels.</p>
-</li>
-<li>
-<p><code>drop_proba_col</code> : string (default: None)</p>
-<p>Drops extra "probability" column in the feature set, because it is
-redundant:
-p(y_c) = 1 - p(y_1) + p(y_2) + ... + p(y_{c-1}).
-This can be useful for meta-classifiers that are sensitive to perfectly
-collinear features.
-If 'last', drops last probability column.
-If 'first', drops first probability column.
-Only relevant if <code>use_probas=True</code>.</p>
-</li>
-<li>
-<p><code>average_probas</code> : bool (default: False)</p>
-<p>Averages the probabilities as meta features if <code>True</code>.
-Only relevant if <code>use_probas=True</code>.</p>
-</li>
-<li>
-<p><code>verbose</code> : int, optional (default=0)</p>
-<p>Controls the verbosity of the building process.
-- <code>verbose=0</code> (default): Prints nothing
-- <code>verbose=1</code>: Prints the number &amp; name of the regressor being fitted
-- <code>verbose=2</code>: Prints info about the parameters of the
-regressor being fitted
-- <code>verbose&gt;2</code>: Changes <code>verbose</code> param of the underlying regressor to
-self.verbose - 2</p>
-</li>
-<li>
-<p><code>use_features_in_secondary</code> : bool (default: False)</p>
-<p>If True, the meta-classifier will be trained both on the predictions
-of the original classifiers and the original dataset.
-If False, the meta-classifier will be trained only on the predictions
-of the original classifiers.</p>
-</li>
-<li>
-<p><code>store_train_meta_features</code> : bool (default: False)</p>
-<p>If True, the meta-features computed from the training data used
-for fitting the meta-classifier stored in the
-<code>self.train_meta_features_</code> array, which can be
-accessed after calling <code>fit</code>.</p>
-</li>
-<li>
-<p><code>use_clones</code> : bool (default: True)</p>
-<p>Clones the classifiers for stacking classification if True (default)
-or else uses the original ones, which will be refitted on the dataset
-upon calling the <code>fit</code> method. Hence, if use_clones=True, the original
-input classifiers will remain unmodified upon using the
-StackingClassifier's <code>fit</code> method.
-Setting <code>use_clones=False</code> is
-recommended if you are working with estimators that are supporting
-the scikit-learn fit/predict API interface but are not compatible
-to scikit-learn's <code>clone</code> function.
-fit_base_estimators: bool (default: True)
-Refits classifiers in <code>classifiers</code> if True; uses references to the
-<code>classifiers</code>, otherwise (assumes that the classifiers were
-already fit).
-Note: fit_base_estimators=False will enforce use_clones to be False,
-and is incompatible to most scikit-learn wrappers!
-For instance, if any form of cross-validation is performed
-this would require the re-fitting classifiers to training folds, which
-would raise a NotFitterError if fit_base_estimators=False.
-(New in mlxtend v0.6.)</p>
-</li>
-</ul>
-<p><strong>Attributes</strong></p>
-<ul>
-<li>
-<p><code>clfs_</code> : list, shape=[n_classifiers]</p>
-<p>Fitted classifiers (clones of the original classifiers)</p>
-</li>
-<li>
-<p><code>meta_clf_</code> : estimator</p>
-<p>Fitted meta-classifier (clone of the original meta-estimator)</p>
-</li>
-<li>
-<p><code>train_meta_features</code> : numpy array, shape = [n_samples, n_classifiers]</p>
-<p>meta-features for training data, where n_samples is the
-number of samples
-in training data and n_classifiers is the number of classfiers.</p>
-</li>
-</ul>
-<p><strong>Examples</strong></p>
-<p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/classifier/StackingClassifier/">http://rasbt.github.io/mlxtend/user_guide/classifier/StackingClassifier/</a></p>
-<h3 id="methods_7">Methods</h3>
+*predict(X)*
+
+Predict target values for X.
+
+**Parameters**
+
+- `X` : numpy array, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `labels` : array-like, shape = [n_samples]
+
+    Predicted class labels.
+
 <hr>
 
-<p><em>decision_function(X)</em></p>
-<p>Predict class confidence scores for X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>scores</code> : shape=(n_samples,) if n_classes == 2 else             (n_samples, n_classes).</p>
-<p>Confidence scores per (sample, class) combination. In the binary
-case, confidence score for self.classes_[1] where &gt;0 means this
-class would be predicted.</p>
-</li>
-</ul>
+*predict_meta_features(X)*
+
+Get meta-features of test-data.
+
+**Parameters**
+
+- `X` : numpy array, shape = [n_samples, n_features]
+
+    Test vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `meta-features` : numpy array, shape = [n_samples, n_classifiers]
+
+    Returns the meta-features for test data.
+
 <hr>
 
-<p><em>fit(X, y, sample_weight=None)</em></p>
-<p>Fit ensemble classifers and the meta-classifier.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples] or [n_samples, n_outputs]</p>
-<p>Target values.</p>
-</li>
-<li>
-<p><code>sample_weight</code> : array-like, shape = [n_samples], optional</p>
-<p>Sample weights passed as sample_weights to each regressor
-in the regressors list as well as the meta_regressor.
-Raises error if some regressor does not support
-sample_weight in the fit() method.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
+*predict_proba(X)*
+
+Predict class probabilities for X.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `proba` : array-like, shape = [n_samples, n_classes] or a list of                 n_outputs of such arrays if n_outputs > 1.
+
+    Probability for each class per sample.
+
 <hr>
 
-<p><em>fit_transform(X, y=None, </em><em>fit_params)</em></p>
-<p>Fit to data, then transform it.</p>
-<p>Fits transformer to X and y with optional parameters fit_params
-and returns a transformed version of X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : numpy array of shape [n_samples, n_features]</p>
-<p>Training set.</p>
-</li>
-<li>
-<p><code>y</code> : numpy array of shape [n_samples]</p>
-<p>Target values.</p>
-</li>
-<li>
-<p><code>**fit_params</code> : dict</p>
-<p>Additional fit parameters.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>X_new</code> : numpy array of shape [n_samples, n_features_new]</p>
-<p>Transformed array.</p>
-</li>
-</ul>
+*score(X, y, sample_weight=None)*
+
+Return the mean accuracy on the given test data and labels.
+
+    In multi-label classification, this is the subset accuracy
+    which is a harsh metric since you require for each sample that
+    each label set be correctly predicted.
+
+**Parameters**
+
+- `X` : array-like of shape (n_samples, n_features)
+
+    Test samples.
+
+
+- `y` : array-like of shape (n_samples,) or (n_samples, n_outputs)
+
+    True labels for X.
+
+
+- `sample_weight` : array-like of shape (n_samples,), default=None
+
+    Sample weights.
+
+**Returns**
+
+- `score` : float
+
+    Mean accuracy of self.predict(X) wrt. y.
+
 <hr>
 
-<p><em>get_params(deep=True)</em></p>
-<p>Return estimator parameter names for GridSearch support.</p>
+*set_params(**params)*
+
+Set the parameters of this estimator.
+
+    Valid parameter keys can be listed with ``get_params()``.
+
+**Returns**
+
+self
+
+### Properties
+
 <hr>
 
-<p><em>predict(X)</em></p>
-<p>Predict target values for X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>labels</code> : array-like, shape = [n_samples]</p>
-<p>Predicted class labels.</p>
-</li>
-</ul>
+*named_classifiers*
+
+None
+
+
+
+
+## StackingClassifier
+
+*StackingClassifier(classifiers, meta_classifier, use_probas=False, drop_proba_col=None, average_probas=False, verbose=0, use_features_in_secondary=False, store_train_meta_features=False, use_clones=True, fit_base_estimators=True)*
+
+A Stacking classifier for scikit-learn estimators for classification.
+
+**Parameters**
+
+- `classifiers` : array-like, shape = [n_classifiers]
+
+    A list of classifiers.
+    Invoking the `fit` method on the `StackingClassifer` will fit clones
+    of these original classifiers that will
+    be stored in the class attribute
+    `self.clfs_` if `use_clones=True` (default) and
+    `fit_base_estimators=True` (default).
+
+- `meta_classifier` : object
+
+    The meta-classifier to be fitted on the ensemble of
+    classifiers
+
+- `use_probas` : bool (default: False)
+
+    If True, trains meta-classifier based on predicted probabilities
+    instead of class labels.
+
+- `drop_proba_col` : string (default: None)
+
+    Drops extra "probability" column in the feature set, because it is
+    redundant:
+    p(y_c) = 1 - p(y_1) + p(y_2) + ... + p(y_{c-1}).
+    This can be useful for meta-classifiers that are sensitive to perfectly
+    collinear features.
+    If 'last', drops last probability column.
+    If 'first', drops first probability column.
+    Only relevant if `use_probas=True`.
+
+- `average_probas` : bool (default: False)
+
+    Averages the probabilities as meta features if `True`.
+    Only relevant if `use_probas=True`.
+
+- `verbose` : int, optional (default=0)
+
+    Controls the verbosity of the building process.
+    - `verbose=0` (default): Prints nothing
+    - `verbose=1`: Prints the number & name of the regressor being fitted
+    - `verbose=2`: Prints info about the parameters of the
+    regressor being fitted
+    - `verbose>2`: Changes `verbose` param of the underlying regressor to
+    self.verbose - 2
+
+- `use_features_in_secondary` : bool (default: False)
+
+    If True, the meta-classifier will be trained both on the predictions
+    of the original classifiers and the original dataset.
+    If False, the meta-classifier will be trained only on the predictions
+    of the original classifiers.
+
+- `store_train_meta_features` : bool (default: False)
+
+    If True, the meta-features computed from the training data used
+    for fitting the meta-classifier stored in the
+    `self.train_meta_features_` array, which can be
+    accessed after calling `fit`.
+
+- `use_clones` : bool (default: True)
+
+    Clones the classifiers for stacking classification if True (default)
+    or else uses the original ones, which will be refitted on the dataset
+    upon calling the `fit` method. Hence, if use_clones=True, the original
+    input classifiers will remain unmodified upon using the
+    StackingClassifier's `fit` method.
+    Setting `use_clones=False` is
+    recommended if you are working with estimators that are supporting
+    the scikit-learn fit/predict API interface but are not compatible
+    to scikit-learn's `clone` function.
+    fit_base_estimators: bool (default: True)
+    Refits classifiers in `classifiers` if True; uses references to the
+    `classifiers`, otherwise (assumes that the classifiers were
+    already fit).
+    Note: fit_base_estimators=False will enforce use_clones to be False,
+    and is incompatible to most scikit-learn wrappers!
+    For instance, if any form of cross-validation is performed
+    this would require the re-fitting classifiers to training folds, which
+    would raise a NotFitterError if fit_base_estimators=False.
+    (New in mlxtend v0.6.)
+
+**Attributes**
+
+- `clfs_` : list, shape=[n_classifiers]
+
+    Fitted classifiers (clones of the original classifiers)
+
+- `meta_clf_` : estimator
+
+    Fitted meta-classifier (clone of the original meta-estimator)
+
+- `train_meta_features` : numpy array, shape = [n_samples, n_classifiers]
+
+    meta-features for training data, where n_samples is the
+    number of samples
+    in training data and n_classifiers is the number of classfiers.
+
+**Examples**
+
+For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/classifier/StackingClassifier/
+
+### Methods
+
 <hr>
 
-<p><em>predict_meta_features(X)</em></p>
-<p>Get meta-features of test-data.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
-<p>Test vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>meta-features</code> : numpy array, shape = [n_samples, n_classifiers]</p>
-<p>Returns the meta-features for test data.</p>
-</li>
-</ul>
+*decision_function(X)*
+
+Predict class confidence scores for X.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `scores` : shape=(n_samples,) if n_classes == 2 else             (n_samples, n_classes).
+
+    Confidence scores per (sample, class) combination. In the binary
+    case, confidence score for self.classes_[1] where >0 means this
+    class would be predicted.
+
 <hr>
 
-<p><em>predict_proba(X)</em></p>
-<p>Predict class probabilities for X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>proba</code> : array-like, shape = [n_samples, n_classes] or a list of                 n_outputs of such arrays if n_outputs &gt; 1.</p>
-<p>Probability for each class per sample.</p>
-</li>
-</ul>
+*fit(X, y, sample_weight=None)*
+
+Fit ensemble classifers and the meta-classifier.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples] or [n_samples, n_outputs]
+
+    Target values.
+
+- `sample_weight` : array-like, shape = [n_samples], optional
+
+    Sample weights passed as sample_weights to each regressor
+    in the regressors list as well as the meta_regressor.
+    Raises error if some regressor does not support
+    sample_weight in the fit() method.
+
+**Returns**
+
+- `self` : object
+
+
 <hr>
 
-<p><em>score(X, y, sample_weight=None)</em></p>
-<p>Return the mean accuracy on the given test data and labels.</p>
-<p>In multi-label classification, this is the subset accuracy
-which is a harsh metric since you require for each sample that
-each label set be correctly predicted.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : array-like of shape (n_samples, n_features)</p>
-<p>Test samples.</p>
-</li>
-<li>
-<p><code>y</code> : array-like of shape (n_samples,) or (n_samples, n_outputs)</p>
-<p>True labels for X.</p>
-</li>
-<li>
-<p><code>sample_weight</code> : array-like of shape (n_samples,), default=None</p>
-<p>Sample weights.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>score</code> : float</p>
-<p>Mean accuracy of self.predict(X) wrt. y.</p>
-</li>
-</ul>
+*fit_transform(X, y=None, **fit_params)*
+
+Fit to data, then transform it.
+
+    Fits transformer to X and y with optional parameters fit_params
+    and returns a transformed version of X.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix, dataframe} of shape                 (n_samples, n_features)
+
+
+
+- `y` : ndarray of shape (n_samples,), default=None
+
+    Target values.
+
+
+- `**fit_params` : dict
+
+    Additional fit parameters.
+
+**Returns**
+
+- `X_new` : ndarray array of shape (n_samples, n_features_new)
+
+    Transformed array.
+
 <hr>
 
-<p><em>set_params(</em><em>params)</em></p>
-<p>Set the parameters of this estimator.</p>
-<p>Valid parameter keys can be listed with <code>get_params()</code>.</p>
-<p><strong>Returns</strong></p>
-<p>self</p>
-<h3 id="properties_1">Properties</h3>
+*get_params(deep=True)*
+
+Return estimator parameter names for GridSearch support.
+
 <hr>
 
-<p><em>named_classifiers</em></p>
-<p>None</p></div>
+*predict(X)*
+
+Predict target values for X.
+
+**Parameters**
+
+- `X` : numpy array, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `labels` : array-like, shape = [n_samples]
+
+    Predicted class labels.
+
+<hr>
+
+*predict_meta_features(X)*
+
+Get meta-features of test-data.
+
+**Parameters**
+
+- `X` : numpy array, shape = [n_samples, n_features]
+
+    Test vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `meta-features` : numpy array, shape = [n_samples, n_classifiers]
+
+    Returns the meta-features for test data.
+
+<hr>
+
+*predict_proba(X)*
+
+Predict class probabilities for X.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `proba` : array-like, shape = [n_samples, n_classes] or a list of                 n_outputs of such arrays if n_outputs > 1.
+
+    Probability for each class per sample.
+
+<hr>
+
+*score(X, y, sample_weight=None)*
+
+Return the mean accuracy on the given test data and labels.
+
+    In multi-label classification, this is the subset accuracy
+    which is a harsh metric since you require for each sample that
+    each label set be correctly predicted.
+
+**Parameters**
+
+- `X` : array-like of shape (n_samples, n_features)
+
+    Test samples.
+
+
+- `y` : array-like of shape (n_samples,) or (n_samples, n_outputs)
+
+    True labels for X.
+
+
+- `sample_weight` : array-like of shape (n_samples,), default=None
+
+    Sample weights.
+
+**Returns**
+
+- `score` : float
+
+    Mean accuracy of self.predict(X) wrt. y.
+
+<hr>
+
+*set_params(**params)*
+
+Set the parameters of this estimator.
+
+    Valid parameter keys can be listed with ``get_params()``.
+
+**Returns**
+
+self
+
+### Properties
+
+<hr>
+
+*named_classifiers*
+
+None</div>
         
         
     </div>

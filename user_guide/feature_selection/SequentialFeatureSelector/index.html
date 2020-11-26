@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1015,8 +1027,6 @@
         <li class="first-level "><a href="#api">API</a></li>
             <li class="second-level"><a href="#methods">Methods</a></li>
                  <!--   -->
-            <li class="second-level"><a href="#properties">Properties</a></li>
-                 <!--   -->
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
@@ -1058,7 +1068,7 @@
 </ul>
 <p><strong>Step 1 (Inclusion):</strong>  </p>
 <p>
-<script type="math/tex">x^+ = \text{ arg max } J(x_k + x), \text{ where }  x \in Y - X_k</script>
+<script type="math/tex">x^+ = \text{ arg max } J(X_k + x), \text{ where }  x \in Y - X_k</script>
 <br />
 <script type="math/tex">X_{k+1} = X_k + x^+</script>
 <br />
@@ -1094,7 +1104,7 @@
 </ul>
 <p><strong>Step 1 (Exclusion):</strong>  </p>
 <p>
-<script type="math/tex">x^- = \text{ arg max } J(x_k - x), \text{  where } x \in X_k</script>
+<script type="math/tex">x^- = \text{ arg max } J(X_k - x), \text{  where } x \in X_k</script>
 <br />
 <script type="math/tex">X_{k-1} = X_k - x^-</script>
 <br />
@@ -1130,7 +1140,7 @@
 </ul>
 <p><strong>Step 1 (Exclusion):</strong>  </p>
 <p>
-<script type="math/tex">x^- = \text{ arg max } J(x_k - x), \text{  where } x \in X_k</script>
+<script type="math/tex">x^- = \text{ arg max } J(X_k - x), \text{  where } x \in X_k</script>
 <br />
 <script type="math/tex">X_{k-1} = X_k - x^-</script>
 <br />
@@ -1144,9 +1154,9 @@
 </ul>
 <p><strong>Step 2 (Conditional Inclusion):</strong><br />
 <br>
-<script type="math/tex">x^+ = \text{ arg max } J(x_k + x), \text{ where } x \in Y - X_k</script>
+<script type="math/tex">x^+ = \text{ arg max } J(X_k + x), \text{ where } x \in Y - X_k</script>
 <br />
-<em>if J(x_k + x) &gt; J(x_k + x)</em>:  <br />
+<em>if J(X_k + x) &gt; J(X_k)</em>:  <br />
 &nbsp;&nbsp;&nbsp;&nbsp; <script type="math/tex">X_{k+1} = X_k + x^+</script>
 <br />
 &nbsp;&nbsp;&nbsp;&nbsp; <script type="math/tex">k = k + 1</script>
@@ -1181,7 +1191,7 @@
 </ul>
 <p><strong>Step 1 (Inclusion):</strong><br />
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp; <script type="math/tex">x^+ = \text{ arg max } J(x_k + x), \text{ where }  x \in Y - X_k</script>
+&nbsp;&nbsp;&nbsp;&nbsp; <script type="math/tex">x^+ = \text{ arg max } J(X_k + x), \text{ where }  x \in Y - X_k</script>
 <br />
 &nbsp;&nbsp;&nbsp;&nbsp; <script type="math/tex">X_{k+1} = X_k + x^+</script>
 <br />
@@ -1191,9 +1201,9 @@
 <br> <br>
 <strong>Step 2 (Conditional Exclusion):</strong><br />
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp; <script type="math/tex">x^- = \text{ arg max } J(x_k - x), \text{ where } x \in X_k</script>
+&nbsp;&nbsp;&nbsp;&nbsp; <script type="math/tex">x^- = \text{ arg max } J(X_k - x), \text{ where } x \in X_k</script>
 <br />
-&nbsp;&nbsp;&nbsp;&nbsp;<script type="math/tex">if \; J(x_k - x) > J(x_k - x)</script>:  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;<script type="math/tex">if \; J(X_k - x) > J(X_k)</script>:  <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <script type="math/tex">X_{k-1} = X_k - x^- </script>
 <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <script type="math/tex">k = k - 1</script>
@@ -1210,6 +1220,13 @@
 </li>
 </ul>
 <p><strong>Termination:</strong> stop when <strong><em>k</em></strong> equals the number of desired features</p>
+<p>A visual illustration of the sequential backward selection process is provided below, from the paper</p>
+<ul>
+<li>Joe Bemister-Buffington, Alex J. Wolf, Sebastian Raschka, and Leslie A. Kuhn (2020)
+Machine Learning to Identify Flexibility Signatures of Class A GPCR Inhibition
+Biomolecules 2020, 10, 454. https://www.mdpi.com/2218-273X/10/3/454#</li>
+</ul>
+<p><img alt="" src="../SequentialFeatureSelector_files/sbs-gpcr2020.png" /></p>
 <h3 id="references">References</h3>
 <ul>
 <li>
@@ -1221,7 +1238,7 @@
 </ul>
 <h2 id="example-1-a-simple-sequential-forward-selection-example">Example 1 - A simple Sequential Forward Selection example</h2>
 <p>Initializing a simple classifier from scikit-learn:</p>
-<pre><code class="python">from sklearn.neighbors import KNeighborsClassifier
+<pre><code class="language-python">from sklearn.neighbors import KNeighborsClassifier
 from sklearn.datasets import load_iris
 
 iris = load_iris()
@@ -1229,9 +1246,8 @@ X = iris.data
 y = iris.target
 knn = KNeighborsClassifier(n_neighbors=4)
 </code></pre>
-
 <p>We start by selection the "best" 3 features from the Iris dataset via Sequential Forward Selection (SFS). Here, we set <code>forward=True</code> and <code>floating=False</code>. By choosing <code>cv=0</code>, we don't perform any cross-validation, therefore, the performance (here: <code>'accuracy'</code>) is computed entirely on the training set. </p>
-<pre><code class="python">from mlxtend.feature_selection import SequentialFeatureSelector as SFS
+<pre><code class="language-python">from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 
 sfs1 = SFS(knn, 
            k_features=3, 
@@ -1243,7 +1259,6 @@ sfs1 = SFS(knn,
 
 sfs1 = sfs1.fit(X, y)
 </code></pre>
-
 <pre><code>[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
@@ -1259,9 +1274,8 @@ sfs1 = sfs1.fit(X, y)
 [2019-08-20 15:49:09] Features: 3/3 -- score: 0.9733333333333334
 </code></pre>
 <p>Via the <code>subsets_</code> attribute, we can take a look at the selected feature indices at each step:</p>
-<pre><code class="python">sfs1.subsets_
+<pre><code class="language-python">sfs1.subsets_
 </code></pre>
-
 <pre><code>{1: {'feature_idx': (3,),
   'cv_scores': array([0.96]),
   'avg_score': 0.96,
@@ -1276,11 +1290,10 @@ sfs1 = sfs1.fit(X, y)
   'feature_names': ('1', '2', '3')}}
 </code></pre>
 <p>Note that the 'feature_names' entry is simply a string representation of the 'feature_idx' in this case. Optionally, we can provide custom feature names via the <code>fit</code> method's <code>custom_feature_names</code> parameter:</p>
-<pre><code class="python">feature_names = ('sepal length', 'sepal width', 'petal length', 'petal width')
+<pre><code class="language-python">feature_names = ('sepal length', 'sepal width', 'petal length', 'petal width')
 sfs1 = sfs1.fit(X, y, custom_feature_names=feature_names)
 sfs1.subsets_
 </code></pre>
-
 <pre><code>[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
@@ -1312,26 +1325,23 @@ sfs1.subsets_
   'feature_names': ('sepal width', 'petal length', 'petal width')}}
 </code></pre>
 <p>Furthermore, we can access the indices of the 3 best features directly via the <code>k_feature_idx_</code> attribute:</p>
-<pre><code class="python">sfs1.k_feature_idx_
+<pre><code class="language-python">sfs1.k_feature_idx_
 </code></pre>
-
 <pre><code>(1, 2, 3)
 </code></pre>
 <p>And similarly, to obtain the names of these features, given that we provided an argument to the <code>custom_feature_names</code> parameter, we can refer to the <code>sfs1.k_feature_names_</code> attribute:</p>
-<pre><code class="python">sfs1.k_feature_names_
+<pre><code class="language-python">sfs1.k_feature_names_
 </code></pre>
-
 <pre><code>('sepal width', 'petal length', 'petal width')
 </code></pre>
 <p>Finally, the prediction score for these 3 features can be accesses via <code>k_score_</code>:</p>
-<pre><code class="python">sfs1.k_score_
+<pre><code class="language-python">sfs1.k_score_
 </code></pre>
-
 <pre><code>0.9733333333333334
 </code></pre>
 <h2 id="example-2-toggling-between-sfs-sbs-sffs-and-sbfs">Example 2 - Toggling between SFS, SBS, SFFS, and SBFS</h2>
 <p>Using the <code>forward</code> and <code>floating</code> parameters, we can toggle between SFS, SBS, SFFS, and SBFS as shown below. Note that we are performing (stratified) 4-fold cross-validation for more robust estimates in contrast to Example 1. Via <code>n_jobs=-1</code>, we choose to run the cross-validation on all our available CPU cores.</p>
-<pre><code class="python"># Sequential Forward Selection
+<pre><code class="language-python"># Sequential Forward Selection
 sfs = SFS(knn, 
           k_features=3, 
           forward=True, 
@@ -1397,7 +1407,6 @@ print(sbfs.k_feature_idx_)
 print('CV Score:')
 print(sbfs.k_score_)
 </code></pre>
-
 <pre><code>Sequential Forward Selection (k=3):
 (1, 2, 3)
 CV Score:
@@ -1422,10 +1431,9 @@ CV Score:
 <h2 id="example-3-visualizing-the-results-in-dataframes">Example 3 - Visualizing the results in DataFrames</h2>
 <p>For our convenience, we can visualize the output from the feature selection in a pandas DataFrame format using the <code>get_metric_dict</code> method of the SequentialFeatureSelector object. The columns <code>std_dev</code> and <code>std_err</code> represent the standard deviation and standard errors of the cross-validation scores, respectively.</p>
 <p>Below, we see the DataFrame of the Sequential Forward Selector from Example 2:</p>
-<pre><code class="python">import pandas as pd
+<pre><code class="language-python">import pandas as pd
 pd.DataFrame.from_dict(sfs.get_metric_dict()).T
 </code></pre>
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1489,9 +1497,8 @@ pd.DataFrame.from_dict(sfs.get_metric_dict()).T
 </div>
 
 <p>Now, let's compare it to the Sequential Backward Selector:</p>
-<pre><code class="python">pd.DataFrame.from_dict(sbs.get_metric_dict()).T
+<pre><code class="language-python">pd.DataFrame.from_dict(sbs.get_metric_dict()).T
 </code></pre>
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1546,9 +1553,8 @@ pd.DataFrame.from_dict(sfs.get_metric_dict()).T
 
 <p>We can see that both SFS and SBFS found the same "best" 3 features, however, the intermediate steps where obviously different.</p>
 <p>The <code>ci_bound</code> column in the DataFrames above represents the confidence interval around the computed cross-validation scores. By default, a confidence interval of 95% is used, but we can use different confidence bounds via the <code>confidence_interval</code> parameter. E.g., the confidence bounds for a 90% confidence interval can be obtained as follows:</p>
-<pre><code class="python">pd.DataFrame.from_dict(sbs.get_metric_dict(confidence_interval=0.90)).T
+<pre><code class="language-python">pd.DataFrame.from_dict(sbs.get_metric_dict(confidence_interval=0.90)).T
 </code></pre>
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1603,7 +1609,7 @@ pd.DataFrame.from_dict(sfs.get_metric_dict()).T
 
 <h2 id="example-4-plotting-the-results">Example 4 - Plotting the results</h2>
 <p>After importing the little helper function <a href="../../plotting/plot_sequential_feature_selection/"><code>plotting.plot_sequential_feature_selection</code></a>, we can also visualize the results using matplotlib figures.</p>
-<pre><code class="python">from mlxtend.plotting import plot_sequential_feature_selection as plot_sfs
+<pre><code class="language-python">from mlxtend.plotting import plot_sequential_feature_selection as plot_sfs
 import matplotlib.pyplot as plt
 
 sfs = SFS(knn, 
@@ -1623,7 +1629,6 @@ plt.title('Sequential Forward Selection (w. StdDev)')
 plt.grid()
 plt.show()
 </code></pre>
-
 <pre><code>[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
@@ -1642,11 +1647,11 @@ plt.show()
 
 [2019-08-20 15:49:11] Features: 4/4 -- score: 0.9733333333333334
 </code></pre>
-<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_43_1.png" /></p>
+<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_44_1.png" /></p>
 <h2 id="example-5-sequential-feature-selection-for-regression">Example 5 - Sequential Feature Selection for Regression</h2>
 <p>Similar to the classification examples above, the <code>SequentialFeatureSelector</code> also supports scikit-learn's estimators
 for regression.</p>
-<pre><code class="python">from sklearn.linear_model import LinearRegression
+<pre><code class="language-python">from sklearn.linear_model import LinearRegression
 from sklearn.datasets import load_boston
 
 boston = load_boston()
@@ -1668,11 +1673,10 @@ plt.title('Sequential Forward Selection (w. StdErr)')
 plt.grid()
 plt.show()
 </code></pre>
-
-<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_46_0.png" /></p>
+<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_47_0.png" /></p>
 <h2 id="example-6-feature-selection-with-fixed-trainvalidation-splits">Example 6 -- Feature Selection with Fixed Train/Validation Splits</h2>
 <p>If you do not wish to use cross-validation (here: k-fold cross-validation, i.e., rotating training and validation folds), you can use the <code>PredefinedHoldoutSplit</code> class to specify your own, fixed training and validation split.</p>
-<pre><code class="python">from sklearn.datasets import load_iris
+<pre><code class="language-python">from sklearn.datasets import load_iris
 from mlxtend.evaluate import PredefinedHoldoutSplit
 import numpy as np
 
@@ -1685,11 +1689,10 @@ rng = np.random.RandomState(123)
 my_validation_indices = rng.permutation(np.arange(150))[:30]
 print(my_validation_indices)
 </code></pre>
-
 <pre><code>[ 72 112 132  88  37 138  87  42   8  90 141  33  59 116 135 104  36  13
   63  45  28 133  24 127  46  20  31 121 117   4]
 </code></pre>
-<pre><code class="python">from sklearn.neighbors import KNeighborsClassifier
+<pre><code class="language-python">from sklearn.neighbors import KNeighborsClassifier
 from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 
 
@@ -1707,7 +1710,6 @@ sfs1 = SFS(knn,
 
 sfs1 = sfs1.fit(X, y)
 </code></pre>
-
 <pre><code>[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
@@ -1723,7 +1725,7 @@ sfs1 = sfs1.fit(X, y)
 [2019-08-20 15:49:12] Features: 3/3 -- score: 0.9666666666666667
 </code></pre>
 <h2 id="example-7-using-the-selected-feature-subset-for-making-new-predictions">Example 7 -- Using the Selected Feature Subset For Making New Predictions</h2>
-<pre><code class="python"># Initialize the dataset
+<pre><code class="language-python"># Initialize the dataset
 
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.datasets import load_iris
@@ -1736,8 +1738,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 knn = KNeighborsClassifier(n_neighbors=4)
 </code></pre>
-
-<pre><code class="python"># Select the &quot;best&quot; three features via
+<pre><code class="language-python"># Select the &quot;best&quot; three features via
 # 5-fold cross-validation on the training set.
 
 from mlxtend.feature_selection import SequentialFeatureSelector as SFS
@@ -1750,13 +1751,11 @@ sfs1 = SFS(knn,
            cv=5)
 sfs1 = sfs1.fit(X_train, y_train)
 </code></pre>
-
-<pre><code class="python">print('Selected features:', sfs1.k_feature_idx_)
+<pre><code class="language-python">print('Selected features:', sfs1.k_feature_idx_)
 </code></pre>
-
 <pre><code>Selected features: (1, 2, 3)
 </code></pre>
-<pre><code class="python"># Generate the new subsets based on the selected features
+<pre><code class="language-python"># Generate the new subsets based on the selected features
 # Note that the transform call is equivalent to
 # X_train[:, sfs1.k_feature_idx_]
 
@@ -1772,11 +1771,10 @@ y_pred = knn.predict(X_test_sfs)
 acc = float((y_test == y_pred).sum()) / y_pred.shape[0]
 print('Test set accuracy: %.2f %%' % (acc * 100))
 </code></pre>
-
 <pre><code>Test set accuracy: 96.00 %
 </code></pre>
 <h2 id="example-8-sequential-feature-selection-and-gridsearch">Example 8 -- Sequential Feature Selection and GridSearch</h2>
-<pre><code class="python"># Initialize the dataset
+<pre><code class="language-python"># Initialize the dataset
 
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.datasets import load_iris
@@ -1787,9 +1785,8 @@ X, y = iris.data, iris.target
 X_train, X_test, y_train, y_test = train_test_split(
          X, y, test_size=0.2, random_state=123)
 </code></pre>
-
 <p>Use scikit-learn's <code>GridSearch</code> to tune the hyperparameters inside and outside the <code>SequentialFeatureSelector</code>:</p>
-<pre><code class="python">from sklearn.model_selection import GridSearchCV
+<pre><code class="language-python">from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 import mlxtend
@@ -1822,12 +1819,10 @@ gs = GridSearchCV(estimator=pipe,
 # run gridearch
 gs = gs.fit(X_train, y_train)
 </code></pre>
-
 <p>... and the "best" parameters determined by GridSearch are ...</p>
-<pre><code class="python">for i in range(len(gs.cv_results_['params'])):
+<pre><code class="language-python">for i in range(len(gs.cv_results_['params'])):
     print(gs.cv_results_['params'][i], 'test acc.:', gs.cv_results_['mean_test_score'][i])
 </code></pre>
-
 <pre><code>{'sfs__estimator__n_neighbors': 1, 'sfs__k_features': 1} test acc.: 0.9166666666666666
 {'sfs__estimator__n_neighbors': 1, 'sfs__k_features': 4} test acc.: 0.9416666666666667
 {'sfs__estimator__n_neighbors': 5, 'sfs__k_features': 1} test acc.: 0.9166666666666666
@@ -1835,14 +1830,13 @@ gs = gs.fit(X_train, y_train)
 {'sfs__estimator__n_neighbors': 10, 'sfs__k_features': 1} test acc.: 0.9166666666666666
 {'sfs__estimator__n_neighbors': 10, 'sfs__k_features': 4} test acc.: 0.9416666666666667
 </code></pre>
-<pre><code class="python">print(&quot;Best parameters via GridSearch&quot;, gs.best_params_)
+<pre><code class="language-python">print(&quot;Best parameters via GridSearch&quot;, gs.best_params_)
 </code></pre>
-
 <pre><code>Best parameters via GridSearch {'sfs__estimator__n_neighbors': 1, 'sfs__k_features': 4}
 </code></pre>
 <h4 id="obtaining-the-best-k-feature-indices-after-gridsearch">Obtaining the best <em>k</em> feature indices after GridSearch</h4>
 <p>If we are interested in the best <em>k</em> feature indices via <code>SequentialFeatureSelection.k_feature_idx_</code>, we have to initialize a <code>GridSearchCV</code> object with <code>refit=True</code>. Now, the grid search object will take the complete training dataset and the best parameters, which it found via cross-validation, to train the estimator pipeline.</p>
-<pre><code class="python">gs = GridSearchCV(estimator=pipe, 
+<pre><code class="language-python">gs = GridSearchCV(estimator=pipe, 
                   param_grid=param_grid, 
                   scoring='accuracy', 
                   n_jobs=1, 
@@ -1851,11 +1845,9 @@ gs = gs.fit(X_train, y_train)
                   refit=True)
 gs = gs.fit(X_train, y_train)
 </code></pre>
-
 <p>After running the grid search, we can access the individual pipeline objects of the <code>best_estimator_</code> via the <code>steps</code> attribute.</p>
-<pre><code class="python">gs.best_estimator_.steps
+<pre><code class="language-python">gs.best_estimator_.steps
 </code></pre>
-
 <pre><code>[('sfs', SequentialFeatureSelector(clone_estimator=True, cv=5,
                             estimator=KNeighborsClassifier(algorithm='auto',
                                                            leaf_size=30,
@@ -1873,43 +1865,37 @@ gs = gs.fit(X_train, y_train)
                        weights='uniform'))]
 </code></pre>
 <p>Via sub-indexing, we can then obtain the best-selected feature subset:</p>
-<pre><code class="python">print('Best features:', gs.best_estimator_.steps[0][1].k_feature_idx_)
+<pre><code class="language-python">print('Best features:', gs.best_estimator_.steps[0][1].k_feature_idx_)
 </code></pre>
-
 <pre><code>Best features: (0, 1, 2, 3)
 </code></pre>
 <p>During cross-validation, this feature combination had a CV accuracy of:</p>
-<pre><code class="python">print('Best score:', gs.best_score_)
+<pre><code class="language-python">print('Best score:', gs.best_score_)
 </code></pre>
-
 <pre><code>Best score: 0.9416666666666667
 </code></pre>
-<pre><code class="python">gs.best_params_
+<pre><code class="language-python">gs.best_params_
 </code></pre>
-
 <pre><code>{'sfs__estimator__n_neighbors': 1, 'sfs__k_features': 4}
 </code></pre>
 <p>Just to ensure that the values were indeed assigned correctly, the following number of neighbors should match the one above:</p>
-<pre><code class="python">gs.estimator.named_steps['sfs'].estimator.n_neighbors
+<pre><code class="language-python">gs.estimator.named_steps['sfs'].estimator.n_neighbors
 </code></pre>
-
 <pre><code>2
 </code></pre>
 <p><strong>Alternatively</strong>, if we can set the "best grid search parameters" in our pipeline manually if we ran <code>GridSearchCV</code> with <code>refit=False</code>. It should yield the same results:</p>
-<pre><code class="python">pipe.set_params(**gs.best_params_).fit(X_train, y_train)
+<pre><code class="language-python">pipe.set_params(**gs.best_params_).fit(X_train, y_train)
 print('Best features:', pipe.steps[0][1].k_feature_idx_)
 </code></pre>
-
 <pre><code>Best features: (0, 1, 2, 3)
 </code></pre>
 <h2 id="example-9-selecting-the-best-feature-combination-in-a-k-range">Example 9 -- Selecting the "best"  feature combination in a k-range</h2>
 <p>If <code>k_features</code> is set to to a tuple <code>(min_k, max_k)</code> (new in 0.4.2), the SFS will now select the best feature combination that it discovered by iterating from <code>k=1</code> to <code>max_k</code> (forward), or <code>max_k</code> to <code>min_k</code> (backward). The size of the returned feature subset is then within <code>max_k</code> to <code>min_k</code>, depending on which combination scored best during cross validation.</p>
-<pre><code class="python">X.shape
+<pre><code class="language-python">X.shape
 </code></pre>
-
 <pre><code>(150, 4)
 </code></pre>
-<pre><code class="python">from mlxtend.feature_selection import SequentialFeatureSelector as SFS
+<pre><code class="language-python">from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 from sklearn.neighbors import KNeighborsClassifier
 from mlxtend.data import wine_data
 from sklearn.model_selection import train_test_split
@@ -1939,17 +1925,16 @@ print('best combination (ACC: %.3f): %s\n' % (sfs1.k_score_, sfs1.k_feature_idx_
 print('all subsets:\n', sfs1.subsets_)
 plot_sfs(sfs1.get_metric_dict(), kind='std_err');
 </code></pre>
-
 <pre><code>best combination (ACC: 0.992): (0, 1, 2, 3, 6, 8, 9, 10, 11, 12)
 
 all subsets:
  {1: {'feature_idx': (6,), 'cv_scores': array([0.84615385, 0.6       , 0.88      , 0.79166667, 0.875     ]), 'avg_score': 0.7985641025641026, 'feature_names': ('6',)}, 2: {'feature_idx': (6, 9), 'cv_scores': array([0.92307692, 0.88      , 1.        , 0.95833333, 0.91666667]), 'avg_score': 0.9356153846153846, 'feature_names': ('6', '9')}, 3: {'feature_idx': (6, 9, 12), 'cv_scores': array([0.92307692, 0.92      , 0.96      , 1.        , 0.95833333]), 'avg_score': 0.9522820512820512, 'feature_names': ('6', '9', '12')}, 4: {'feature_idx': (3, 6, 9, 12), 'cv_scores': array([0.96153846, 0.96      , 0.96      , 1.        , 0.95833333]), 'avg_score': 0.9679743589743589, 'feature_names': ('3', '6', '9', '12')}, 5: {'feature_idx': (3, 6, 9, 10, 12), 'cv_scores': array([0.92307692, 0.96      , 1.        , 1.        , 1.        ]), 'avg_score': 0.9766153846153847, 'feature_names': ('3', '6', '9', '10', '12')}, 6: {'feature_idx': (2, 3, 6, 9, 10, 12), 'cv_scores': array([0.92307692, 0.96      , 1.        , 0.95833333, 1.        ]), 'avg_score': 0.9682820512820512, 'feature_names': ('2', '3', '6', '9', '10', '12')}, 7: {'feature_idx': (0, 2, 3, 6, 9, 10, 12), 'cv_scores': array([0.92307692, 0.92      , 1.        , 1.        , 1.        ]), 'avg_score': 0.9686153846153847, 'feature_names': ('0', '2', '3', '6', '9', '10', '12')}, 8: {'feature_idx': (0, 2, 3, 6, 8, 9, 10, 12), 'cv_scores': array([1.  , 0.92, 1.  , 1.  , 1.  ]), 'avg_score': 0.984, 'feature_names': ('0', '2', '3', '6', '8', '9', '10', '12')}, 9: {'feature_idx': (0, 2, 3, 6, 8, 9, 10, 11, 12), 'cv_scores': array([1.  , 0.92, 1.  , 1.  , 1.  ]), 'avg_score': 0.984, 'feature_names': ('0', '2', '3', '6', '8', '9', '10', '11', '12')}, 10: {'feature_idx': (0, 1, 2, 3, 6, 8, 9, 10, 11, 12), 'cv_scores': array([1.  , 0.96, 1.  , 1.  , 1.  ]), 'avg_score': 0.992, 'feature_names': ('0', '1', '2', '3', '6', '8', '9', '10', '11', '12')}}
 </code></pre>
-<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_80_1.png" /></p>
+<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_81_1.png" /></p>
 <h2 id="example-10-using-other-cross-validation-schemes">Example 10 -- Using other cross-validation schemes</h2>
 <p>In addition to standard k-fold and stratified k-fold, other cross validation schemes can be used with <code>SequentialFeatureSelector</code>. For example, <code>GroupKFold</code> or <code>LeaveOneOut</code> cross-validation from scikit-learn. </p>
 <h4 id="using-groupkfold-with-sequentialfeatureselector">Using GroupKFold with SequentialFeatureSelector</h4>
-<pre><code class="python">from mlxtend.feature_selection import SequentialFeatureSelector as SFS
+<pre><code class="language-python">from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 from sklearn.neighbors import KNeighborsClassifier
 from mlxtend.data import iris_data
 from sklearn.model_selection import GroupKFold
@@ -1959,7 +1944,6 @@ X, y = iris_data()
 groups = np.arange(len(y)) // 10
 print('groups: {}'.format(groups))
 </code></pre>
-
 <pre><code>groups: [ 0  0  0  0  0  0  0  0  0  0  1  1  1  1  1  1  1  1  1  1  2  2  2  2
   2  2  2  2  2  2  3  3  3  3  3  3  3  3  3  3  4  4  4  4  4  4  4  4
   4  4  5  5  5  5  5  5  5  5  5  5  6  6  6  6  6  6  6  6  6  6  7  7
@@ -1969,17 +1953,15 @@ print('groups: {}'.format(groups))
  14 14 14 14 14 14]
 </code></pre>
 <p>Calling the <code>split()</code> method of a scikit-learn cross-validator object will return a generator that yields train, test splits.</p>
-<pre><code class="python">cv_gen = GroupKFold(4).split(X, y, groups)
+<pre><code class="language-python">cv_gen = GroupKFold(4).split(X, y, groups)
 cv_gen
 </code></pre>
-
 <pre><code>&lt;generator object _BaseKFold.split at 0x7fbef94cee58&gt;
 </code></pre>
 <p>The <code>cv</code> parameter of <code>SequentialFeatureSelector</code> must be either an <code>int</code> or an iterable yielding train, test splits. This iterable can be constructed by passing the train, test split generator to the built-in <code>list()</code> function. </p>
-<pre><code class="python">cv = list(cv_gen)
+<pre><code class="language-python">cv = list(cv_gen)
 </code></pre>
-
-<pre><code class="python">knn = KNeighborsClassifier(n_neighbors=2)
+<pre><code class="language-python">knn = KNeighborsClassifier(n_neighbors=2)
 sfs = SFS(estimator=knn, 
           k_features=2,
           scoring='accuracy',
@@ -1989,13 +1971,12 @@ sfs.fit(X, y)
 
 print('best combination (ACC: %.3f): %s\n' % (sfs.k_score_, sfs.k_feature_idx_))
 </code></pre>
-
 <pre><code>best combination (ACC: 0.940): (2, 3)
 </code></pre>
 <h2 id="example-11-working-with-pandas-dataframes">Example 11 - Working with pandas DataFrames</h2>
 <h2 id="example-12-using-pandas-dataframes">Example 12 - Using Pandas DataFrames</h2>
 <p>Optionally, we can also use pandas DataFrames and pandas Series as input to the <code>fit</code> function. In this case, the column names of the pandas DataFrame will be used as feature names. However, note that if <code>custom_feature_names</code> are provided in the fit function, these <code>custom_feature_names</code> take precedence over the DataFrame column-based feature names.</p>
-<pre><code class="python">import pandas as pd
+<pre><code class="language-python">import pandas as pd
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.datasets import load_iris
 from mlxtend.feature_selection import SequentialFeatureSelector as SFS
@@ -2013,12 +1994,10 @@ sfs1 = SFS(knn,
            scoring='accuracy',
            cv=0)
 </code></pre>
-
-<pre><code class="python">X_df = pd.DataFrame(X, columns=['sepal len', 'petal len',
+<pre><code class="language-python">X_df = pd.DataFrame(X, columns=['sepal len', 'petal len',
                                 'sepal width', 'petal width'])
 X_df.head()
 </code></pre>
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -2084,10 +2063,9 @@ X_df.head()
 </div>
 
 <p>Also, the target array, <code>y</code>, can be optionally be cast as a Series:</p>
-<pre><code class="python">y_series = pd.Series(y)
+<pre><code class="language-python">y_series = pd.Series(y)
 y_series.head()
 </code></pre>
-
 <pre><code>0    0
 1    0
 2    0
@@ -2095,13 +2073,11 @@ y_series.head()
 4    0
 dtype: int64
 </code></pre>
-<pre><code class="python">sfs1 = sfs1.fit(X_df, y_series)
+<pre><code class="language-python">sfs1 = sfs1.fit(X_df, y_series)
 </code></pre>
-
 <p>Note that the only difference of passing a pandas DataFrame as input is that the sfs1.subsets_ array will now contain a new column, </p>
-<pre><code class="python">sfs1.subsets_
+<pre><code class="language-python">sfs1.subsets_
 </code></pre>
-
 <pre><code>{1: {'feature_idx': (3,),
   'cv_scores': array([0.96]),
   'avg_score': 0.96,
@@ -2120,7 +2096,7 @@ dtype: int64
 <p>Often, it may be useful to specify a fixed set of features we want to use for a given model (e.g., determined by prior knowledge or domain knowledge). Since MLxtend v 0.18.0, it is now possible to specify such features via the <code>fixed_featurs</code> attribute. This will mean that these features are guaranteed to be included in the selected subsets.</p>
 <p>Note that this feature works for all options regarding forward and backward selection, and using floating selection or not.</p>
 <p>The example below illustrates how we can set the features 0 and 2 in the dataset as fixed:</p>
-<pre><code class="python">from sklearn.neighbors import KNeighborsClassifier
+<pre><code class="language-python">from sklearn.neighbors import KNeighborsClassifier
 from sklearn.datasets import load_iris
 
 iris = load_iris()
@@ -2141,7 +2117,6 @@ sfs1 = SFS(knn,
 
 sfs1 = sfs1.fit(X, y)
 </code></pre>
-
 <pre><code>[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
@@ -2152,9 +2127,8 @@ sfs1 = sfs1.fit(X, y)
 
 [2019-08-20 15:49:16] Features: 4/4 -- score: 0.9803921568627452
 </code></pre>
-<pre><code class="python">sfs1.subsets_
+<pre><code class="language-python">sfs1.subsets_
 </code></pre>
-
 <pre><code>{2: {'feature_idx': (0, 2),
   'cv_scores': array([0.96078431, 0.92156863, 0.95833333]),
   'avg_score': 0.9468954248366014,
@@ -2169,14 +2143,12 @@ sfs1 = sfs1.fit(X, y)
   'feature_names': ('0', '1', '2', '3')}}
 </code></pre>
 <p>If the input dataset is a pandas DataFrame, we can also use the column names directly:</p>
-<pre><code class="python">import pandas as pd
+<pre><code class="language-python">import pandas as pd
 </code></pre>
-
-<pre><code class="python">X_df = pd.DataFrame(X, columns=['sepal len', 'petal len',
+<pre><code class="language-python">X_df = pd.DataFrame(X, columns=['sepal len', 'petal len',
                                 'sepal width', 'petal width'])
 X_df.head()
 </code></pre>
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -2241,7 +2213,7 @@ X_df.head()
 </table>
 </div>
 
-<pre><code class="python">sfs2 = SFS(knn, 
+<pre><code class="language-python">sfs2 = SFS(knn, 
            k_features=4, 
            forward=True, 
            floating=False, 
@@ -2252,7 +2224,6 @@ X_df.head()
 
 sfs2 = sfs2.fit(X_df, y)
 </code></pre>
-
 <pre><code>[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
@@ -2263,9 +2234,8 @@ sfs2 = sfs2.fit(X_df, y)
 
 [2019-08-20 15:49:16] Features: 4/4 -- score: 0.9803921568627452
 </code></pre>
-<pre><code class="python">sfs2.subsets_
+<pre><code class="language-python">sfs2.subsets_
 </code></pre>
-
 <pre><code>{2: {'feature_idx': (0, 1),
   'cv_scores': array([0.7254902 , 0.68627451, 0.77083333]),
   'avg_score': 0.7275326797385621,
@@ -2417,88 +2387,95 @@ array indices. The 'feature_names' is new in v 0.13.0.</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, custom_feature_names=None, groups=None, </em><em>fit_params)</em></p>
-<p>Perform feature selection and learn model from training data.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.
-New in v 0.13.0: pandas DataFrames are now also accepted as
-argument for X.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values.
-New in v 0.13.0: pandas DataFrames are now also accepted as
-argument for y.</p>
-</li>
-<li>
-<p><code>custom_feature_names</code> : None or tuple (default: tuple)</p>
-<p>Custom feature names for <code>self.k_feature_names</code> and
-<code>self.subsets_[i]['feature_names']</code>.
-(new in v 0.13.0)</p>
-</li>
-<li>
-<p><code>groups</code> : array-like, with shape (n_samples,), optional</p>
-<p>Group labels for the samples used while splitting the dataset into
-train/test set. Passed to the fit method of the cross-validator.</p>
-</li>
-<li>
-<p><code>fit_params</code> : dict of string -&gt; object, optional</p>
-<p>Parameters to pass to to the fit method of classifier.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
+*fit(X, y, custom_feature_names=None, groups=None, **fit_params)*
+
+Perform feature selection and learn model from training data.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+    New in v 0.13.0: pandas DataFrames are now also accepted as
+    argument for X.
+
+- `y` : array-like, shape = [n_samples]
+
+    Target values.
+    New in v 0.13.0: pandas DataFrames are now also accepted as
+    argument for y.
+
+- `custom_feature_names` : None or tuple (default: tuple)
+
+    Custom feature names for `self.k_feature_names` and
+    `self.subsets_[i]['feature_names']`.
+    (new in v 0.13.0)
+
+- `groups` : array-like, with shape (n_samples,), optional
+
+    Group labels for the samples used while splitting the dataset into
+    train/test set. Passed to the fit method of the cross-validator.
+
+- `fit_params` : dict of string -> object, optional
+
+    Parameters to pass to to the fit method of classifier.
+
+**Returns**
+
+- `self` : object
+
+
 <hr>
 
-<p><em>fit_transform(X, y, groups=None, </em><em>fit_params)</em></p>
-<p>Fit to training data then reduce X to its most important features.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.
-New in v 0.13.0: pandas DataFrames are now also accepted as
-argument for X.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values.
-New in v 0.13.0: a pandas Series are now also accepted as
-argument for y.</p>
-</li>
-<li>
-<p><code>groups</code> : array-like, with shape (n_samples,), optional</p>
-<p>Group labels for the samples used while splitting the dataset into
-train/test set. Passed to the fit method of the cross-validator.</p>
-</li>
-<li>
-<p><code>fit_params</code> : dict of string -&gt; object, optional</p>
-<p>Parameters to pass to to the fit method of classifier.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<p>Reduced feature subset of X, shape={n_samples, k_features}</p>
+*fit_transform(X, y, groups=None, **fit_params)*
+
+Fit to training data then reduce X to its most important features.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+    New in v 0.13.0: pandas DataFrames are now also accepted as
+    argument for X.
+
+- `y` : array-like, shape = [n_samples]
+
+    Target values.
+    New in v 0.13.0: a pandas Series are now also accepted as
+    argument for y.
+
+- `groups` : array-like, with shape (n_samples,), optional
+
+    Group labels for the samples used while splitting the dataset into
+    train/test set. Passed to the fit method of the cross-validator.
+
+- `fit_params` : dict of string -> object, optional
+
+    Parameters to pass to to the fit method of classifier.
+
+**Returns**
+
+Reduced feature subset of X, shape={n_samples, k_features}
+
 <hr>
 
-<p><em>get_metric_dict(confidence_interval=0.95)</em></p>
-<p>Return metric dictionary</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>confidence_interval</code> : float (default: 0.95)</p>
-<p>A positive float between 0.0 and 1.0 to compute the confidence
-interval bounds of the CV score averages.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<p>Dictionary with items where each dictionary value is a list
+*get_metric_dict(confidence_interval=0.95)*
+
+Return metric dictionary
+
+**Parameters**
+
+- `confidence_interval` : float (default: 0.95)
+
+    A positive float between 0.0 and 1.0 to compute the confidence
+    interval bounds of the CV score averages.
+
+**Returns**
+
+Dictionary with items where each dictionary value is a list
     with the number of iterations (number of feature subsets) as
     its length. The dictionary keys corresponding to these lists
     are as follows:
@@ -2507,55 +2484,66 @@ interval bounds of the CV score averages.</p>
     'avg_score': of CV average scores
     'std_dev': standard deviation of the CV score average
     'std_err': standard error of the CV score average
-    'ci_bound': confidence interval bound of the CV score average</p>
+    'ci_bound': confidence interval bound of the CV score average
+
 <hr>
 
-<p><em>get_params(deep=True)</em></p>
-<p>Get parameters for this estimator.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>deep</code> : boolean, optional</p>
-<p>If True, will return the parameters for this estimator and
-contained subobjects that are estimators.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>params</code> : mapping of string to any</p>
-<p>Parameter names mapped to their values.</p>
-</li>
-</ul>
+*get_params(deep=True)*
+
+Get parameters for this estimator.
+
+**Parameters**
+
+- `deep` : boolean, optional
+
+    If True, will return the parameters for this estimator and
+    contained subobjects that are estimators.
+
+**Returns**
+
+- `params` : mapping of string to any
+
+    Parameter names mapped to their values.
+
 <hr>
 
-<p><em>set_params(</em><em>params)</em></p>
-<p>Set the parameters of this estimator.
-Valid parameter keys can be listed with <code>get_params()</code>.</p>
-<p><strong>Returns</strong></p>
-<p>self</p>
+*set_params(**params)*
+
+Set the parameters of this estimator.
+Valid parameter keys can be listed with ``get_params()``.
+
+**Returns**
+
+self
+
 <hr>
 
-<p><em>transform(X)</em></p>
-<p>Reduce X to its most important features.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.
-New in v 0.13.0: pandas DataFrames are now also accepted as
-argument for X.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<p>Reduced feature subset of X, shape={n_samples, k_features}</p>
-<h3 id="properties">Properties</h3>
+*transform(X)*
+
+Reduce X to its most important features.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+    New in v 0.13.0: pandas DataFrames are now also accepted as
+    argument for X.
+
+**Returns**
+
+Reduced feature subset of X, shape={n_samples, k_features}
+
+### Properties
+
 <hr>
 
-<p><em>named_estimators</em></p>
-<p><strong>Returns</strong></p>
-<p>List of named estimator tuples, like [('svc', SVC(...))]</p></div>
+*named_estimators*
+
+**Returns**
+
+List of named estimator tuples, like [('svc', SVC(...))]</div>
         
         
     </div>

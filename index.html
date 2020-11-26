@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="user_guide/classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="user_guide/classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="user_guide/evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="user_guide/evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -977,10 +989,6 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="first-level active"><a href="#welcome-to-mlxtends-documentation">Welcome to mlxtend's documentation!</a></li>
-        <li class="first-level "><a href="#links">Links</a></li>
-        <li class="first-level "><a href="#examples">Examples</a></li>
-        <li class="first-level "><a href="#license">License</a></li>
-        <li class="first-level "><a href="#contact">Contact</a></li>
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
@@ -996,17 +1004,20 @@
 <a href="https://groups.google.com/forum/#!forum/mlxtend"><img alt="Discuss" src="https://img.shields.io/badge/discuss-google_group-blue.svg" /></a></p>
 <hr>
 
-<h2 id="links">Links</h2>
-<ul>
-<li><strong>Documentation:</strong> <a href="http://rasbt.github.io/mlxtend">http://rasbt.github.io/mlxtend</a></li>
-<li>Source code repository: <a href="https://github.com/rasbt/mlxtend">https://github.com/rasbt/mlxtend</a></li>
-<li>PyPI: <a href="https://pypi.python.org/pypi/mlxtend">https://pypi.python.org/pypi/mlxtend</a></li>
-<li>Questions? Check out the <a href="https://groups.google.com/forum/#!forum/mlxtend">Google Groups mailing list</a></li>
-</ul>
+## Links
+
+- **Documentation:** [http://rasbt.github.io/mlxtend](http://rasbt.github.io/mlxtend)
+- Source code repository: [https://github.com/rasbt/mlxtend](https://github.com/rasbt/mlxtend)
+- PyPI: [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend)
+- Questions? Check out the [Google Groups mailing list](https://groups.google.com/forum/#!forum/mlxtend)
+
 <hr>
 
-<h2 id="examples">Examples</h2>
-<pre><code class="python">import numpy as np
+
+## Examples
+
+
+<pre><code class="language-python">import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import itertools
@@ -1051,10 +1062,16 @@ for clf, lab, grd in zip([clf1, clf2, clf3, eclf],
 plt.show()
 </code></pre>
 
-<hr />
-<p><img alt="" src="img/ensemble_decision_regions_2d.png" /></p>
-<p>If you use mlxtend as part of your workflow in a scientific publication, please consider citing the mlxtend repository with the following DOI:</p>
-<p><a href="https://doi.org/10.21105/joss.00638"><img alt="DOI" src="http://joss.theoj.org/papers/10.21105/joss.00638/status.svg" /></a></p>
+
+---
+
+![](./img/ensemble_decision_regions_2d.png)
+
+If you use mlxtend as part of your workflow in a scientific publication, please consider citing the mlxtend repository with the following DOI:
+
+[![DOI](http://joss.theoj.org/papers/10.21105/joss.00638/status.svg)](https://doi.org/10.21105/joss.00638)
+
+
 <pre><code>@article{raschkas_2018_mlxtend,
   author       = {Sebastian Raschka},
   title        = {MLxtend: Providing machine learning and data science 
@@ -1071,15 +1088,19 @@ plt.show()
 }
 </code></pre>
 
-<h2 id="license">License</h2>
-<ul>
-<li>This project is released under a permissive new BSD open source license (<a href="https://github.com/rasbt/mlxtend/blob/master/LICENSE-BSD3.txt">LICENSE-BSD3.txt</a>) and commercially usable. There is no warranty; not even for merchantability or fitness for a particular purpose.</li>
-<li>In addition, you may use, copy, modify and redistribute all artistic creative works (figures and images) included in this distribution under the directory
-according to the terms and conditions of the Creative Commons Attribution 4.0 International License.  See the file <a href="https://github.com/rasbt/mlxtend/blob/master/LICENSE-CC-BY.txt">LICENSE-CC-BY.txt</a> for details. (Computer-generated graphics such as the plots produced by matplotlib fall under the BSD license mentioned above).</li>
-</ul>
-<h2 id="contact">Contact</h2>
-<p>I received a lot of feedback and questions about mlxtend recently, and I thought that it would be worthwhile to set up a public communication channel. Before you write an email with a question about mlxtend, please consider posting it here since it can also be useful to others! Please join the <a href="https://groups.google.com/forum/#!forum/mlxtend">Google Groups Mailing List</a>!</p>
-<p>If Google Groups is not for you, please feel free to write me an <a href="mailto:mail@sebastianraschka.com">email</a> or consider filing an issue on <a href="https://github.com/rasbt/mlxtend/issues">GitHub's issue tracker</a> for new feature requests or bug reports. In addition, I setup a <a href="https://gitter.im/rasbt/mlxtend?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge">Gitter channel</a> for live discussions.</p></div>
+
+
+## License
+
+- This project is released under a permissive new BSD open source license ([LICENSE-BSD3.txt](https://github.com/rasbt/mlxtend/blob/master/LICENSE-BSD3.txt)) and commercially usable. There is no warranty; not even for merchantability or fitness for a particular purpose.
+- In addition, you may use, copy, modify and redistribute all artistic creative works (figures and images) included in this distribution under the directory
+according to the terms and conditions of the Creative Commons Attribution 4.0 International License.  See the file [LICENSE-CC-BY.txt](https://github.com/rasbt/mlxtend/blob/master/LICENSE-CC-BY.txt) for details. (Computer-generated graphics such as the plots produced by matplotlib fall under the BSD license mentioned above).
+
+## Contact
+
+I received a lot of feedback and questions about mlxtend recently, and I thought that it would be worthwhile to set up a public communication channel. Before you write an email with a question about mlxtend, please consider posting it here since it can also be useful to others! Please join the [Google Groups Mailing List](https://groups.google.com/forum/#!forum/mlxtend)!
+
+If Google Groups is not for you, please feel free to write me an [email](mailto:mail@sebastianraschka.com) or consider filing an issue on [GitHub's issue tracker](https://github.com/rasbt/mlxtend/issues) for new feature requests or bug reports. In addition, I setup a [Gitter channel](https://gitter.im/rasbt/mlxtend?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) for live discussions.</div>
         
         
     </div>
@@ -1137,6 +1158,6 @@ according to the terms and conditions of the Creative Commons Attribution 4.0 In
 </html>
 
 <!--
-MkDocs version : 1.0.4
-Build Date UTC : 2020-07-30 21:39:43
+MkDocs version : 1.1.2
+Build Date UTC : 2020-11-26 04:22:41.563910+00:00
 -->

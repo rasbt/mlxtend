@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1040,7 +1052,7 @@
 </ul>
 <h2 id="example-1-computing-lift">Example 1 - Computing Lift</h2>
 <p>This examples demonstrates the basic use of the <code>lift_score</code> function using the example from the <em>Overview</em> section.</p>
-<pre><code class="python">import numpy as np
+<pre><code class="language-python">import numpy as np
 from mlxtend.evaluate import lift_score
 
 y_target =    np.array([0, 0, 1, 0, 0, 1, 1, 1, 1, 1])
@@ -1048,12 +1060,11 @@ y_predicted = np.array([1, 0, 1, 0, 0, 0, 0, 1, 0, 0])
 
 lift_score(y_target, y_predicted)
 </code></pre>
-
 <pre><code>1.1111111111111112
 </code></pre>
 <h2 id="example-2-using-lift_score-in-gridsearch">Example 2 - Using <code>lift_score</code> in <code>GridSearch</code></h2>
 <p>The <code>lift_score</code> function can also be used with scikit-learn objects, such as <code>GridSearch</code>:</p>
-<pre><code class="python">from sklearn.datasets import load_iris
+<pre><code class="language-python">from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
 from sklearn.svm import SVC
@@ -1080,7 +1091,6 @@ clf.fit(X_train, y_train)
 print(clf.best_score_)
 print(clf.best_params_)
 </code></pre>
-
 <pre><code>3.0
 {'gamma': 0.001, 'kernel': 'rbf', 'C': 1000}
 </code></pre>

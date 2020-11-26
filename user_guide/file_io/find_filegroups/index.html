@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1028,14 +1040,13 @@ dir_3/
     file_3.txt
 </code></pre>
 <p>we can use <code>find_filegroups</code> to group related files as items of a dictionary as shown below:</p>
-<pre><code class="python">from mlxtend.file_io import find_filegroups
+<pre><code class="language-python">from mlxtend.file_io import find_filegroups
 
 find_filegroups(paths=['./data_find_filegroups/dir_1', 
                        './data_find_filegroups/dir_2', 
                        './data_find_filegroups/dir_3'], 
                 substring='file_')
 </code></pre>
-
 <pre><code>{'file_1': ['./data_find_filegroups/dir_1/file_1.log',
   './data_find_filegroups/dir_2/file_1.csv',
   './data_find_filegroups/dir_3/file_1.txt'],

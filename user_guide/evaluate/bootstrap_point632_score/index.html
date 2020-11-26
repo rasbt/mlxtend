@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1049,7 +1061,7 @@ ACC_{\text{boot}} = \frac{1}{b} \sum_{i=1}^b \big(\omega \cdot \text{ACC}_{h, i}
 </ul>
 <h2 id="example-1-evaluating-the-predictive-performance-of-a-model-via-the-classic-out-of-bag-bootstrap">Example 1 -- Evaluating the predictive performance of a model via the classic out-of-bag Bootstrap</h2>
 <p>The <code>bootstrap_point632_score</code> function mimics the behavior of scikit-learn's `cross_val_score, and a typically usage example is shown below:</p>
-<pre><code class="python">from sklearn import datasets
+<pre><code class="language-python">from sklearn import datasets
 from sklearn.tree import DecisionTreeClassifier
 from mlxtend.evaluate import bootstrap_point632_score
 import numpy as np
@@ -1070,12 +1082,11 @@ lower = np.percentile(scores, 2.5)
 upper = np.percentile(scores, 97.5)
 print('95%% Confidence interval: [%.2f, %.2f]' % (100*lower, 100*upper))
 </code></pre>
-
 <pre><code>Accuracy: 94.36%
 95% Confidence interval: [88.46, 98.31]
 </code></pre>
 <h2 id="example-2-evaluating-the-predictive-performance-of-a-model-via-the-632-bootstrap">Example 2 -- Evaluating the predictive performance of a model via the .632 Bootstrap</h2>
-<pre><code class="python">from sklearn import datasets
+<pre><code class="language-python">from sklearn import datasets
 from sklearn.tree import DecisionTreeClassifier
 from mlxtend.evaluate import bootstrap_point632_score
 import numpy as np
@@ -1096,12 +1107,11 @@ lower = np.percentile(scores, 2.5)
 upper = np.percentile(scores, 97.5)
 print('95%% Confidence interval: [%.2f, %.2f]' % (100*lower, 100*upper))
 </code></pre>
-
 <pre><code>Accuracy: 96.57%
 95% Confidence interval: [92.37, 98.95]
 </code></pre>
 <h2 id="example-3-evaluating-the-predictive-performance-of-a-model-via-the-632-bootstrap">Example 3 -- Evaluating the predictive performance of a model via the .632+ Bootstrap</h2>
-<pre><code class="python">from sklearn import datasets
+<pre><code class="language-python">from sklearn import datasets
 from sklearn.tree import DecisionTreeClassifier
 from mlxtend.evaluate import bootstrap_point632_score
 import numpy as np
@@ -1122,7 +1132,6 @@ lower = np.percentile(scores, 2.5)
 upper = np.percentile(scores, 97.5)
 print('95%% Confidence interval: [%.2f, %.2f]' % (100*lower, 100*upper))
 </code></pre>
-
 <pre><code>Accuracy: 96.28%
 95% Confidence interval: [92.10, 98.90]
 </code></pre>

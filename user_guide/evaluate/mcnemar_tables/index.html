@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1015,7 +1027,7 @@
 <li>https://en.wikipedia.org/wiki/McNemar%27s_test</li>
 </ul>
 <h2 id="example-1-single-2x2-contigency-table">Example 1 - Single 2x2 Contigency Table</h2>
-<pre><code class="python">import numpy as np
+<pre><code class="language-python">import numpy as np
 from mlxtend.evaluate import mcnemar_tables
 
 y_true = np.array([0, 0, 0, 0, 0, 1, 1, 1, 1, 1])
@@ -1029,12 +1041,11 @@ tb = mcnemar_tables(y_true,
 
 tb
 </code></pre>
-
 <pre><code>{'model_0 vs model_1': array([[ 4.,  1.],
         [ 2.,  3.]])}
 </code></pre>
 <p>To visualize (and better interpret) the contigency table via matplotlib, we can use the <code>checkerboard_plot</code> function:</p>
-<pre><code class="python">from mlxtend.plotting import checkerboard_plot
+<pre><code class="language-python">from mlxtend.plotting import checkerboard_plot
 import matplotlib.pyplot as plt
 
 brd = checkerboard_plot(tb['model_0 vs model_1'],
@@ -1044,11 +1055,10 @@ brd = checkerboard_plot(tb['model_0 vs model_1'],
                         row_labels=['model 1 wrong', 'model 1 right'])
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../mcnemar_tables_files/mcnemar_tables_13_0.png" /></p>
 <h2 id="example-2-multiple-2x2-contigency-tables">Example 2 - Multiple 2x2 Contigency Tables</h2>
 <p>If more than two models are provided as input to the <code>mcnemar_tables</code> function, a 2x2 contingency table will be created for each pair of models:</p>
-<pre><code class="python">import numpy as np
+<pre><code class="language-python">import numpy as np
 from mlxtend.evaluate import mcnemar_tables
 
 y_true = np.array([0, 0, 0, 0, 0, 1, 1, 1, 1, 1])
@@ -1065,7 +1075,6 @@ tb = mcnemar_tables(y_true,
 for key, value in tb.items():
     print(key, '\n', value, '\n')
 </code></pre>
-
 <pre><code>model_0 vs model_1 
  [[ 4.  1.]
  [ 2.  3.]]

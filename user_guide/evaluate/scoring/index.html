@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1076,7 +1088,7 @@ The previous metrics take values in the range between 0 (worst) and 1 (best), wh
 <li>[3] Brian W Matthews. <a href="http://www.sciencedirect.com/science/article/pii/0005279575901099">Comparison of the predicted and observed secondary structure of T4 phage lysozyme</a>. Biochimica et Biophysica Acta (BBA)- Protein Structure, 405(2):442–451, 1975.</li>
 </ul>
 <h2 id="example-1-classification-error">Example 1 - Classification Error</h2>
-<pre><code class="python">from mlxtend.evaluate import scoring
+<pre><code class="language-python">from mlxtend.evaluate import scoring
 
 y_targ = [1, 1, 1, 0, 0, 2, 0, 3]
 y_pred = [1, 0, 1, 0, 0, 2, 1, 3]
@@ -1084,7 +1096,6 @@ res = scoring(y_target=y_targ, y_predicted=y_pred, metric='error')
 
 print('Error: %s%%' % (res * 100))
 </code></pre>
-
 <pre><code>Error: 25.0%
 </code></pre>
 <h2 id="api">API</h2>

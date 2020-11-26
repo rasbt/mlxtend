@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1021,19 +1033,23 @@
 <p>Here, <script type="math/tex">p(y=1 \mid \mathbf{x})</script> is the conditional probability that a particular sample belongs to class 1 given its features <script type="math/tex">\mathbf{x}</script>. The logit function takes inputs in the range [0, 1] and transform them to values over the entire real number range. In contrast, the logistic function takes input values over the entire real number range and transforms them to values in the range [0, 1]. In other words, the logistic function is the inverse of the logit function, and it lets us predict the conditional probability that a certain sample belongs to class 1 (or class 0).</p>
 <p><img alt="" src="../LogisticRegression_files/logistic_function.png" /></p>
 <p>After model fitting, the conditional probability <script type="math/tex">p(y=1 \mid \mathbf{x})</script> is converted to a binary class label via a threshold function <script type="math/tex">g(\cdot)</script>:</p>
-<p>$$y = g({z}) = 
- <script type="math/tex; mode=display">\begin{cases}
-  1 & \text{if $\phi(z) \ge 0.5$}\\
-  0 & \text{otherwise.}
-   \end{cases}</script>
-$$</p>
+<p>
+<script type="math/tex; mode=display">y = g({z}) = 
+ \begin{cases}
+  1 & \text{if <script type="math/tex">\phi(z) \ge 0.5</script>}\\
+  0 &amp; \text{otherwise.}
+   \end{cases}
+</script>
+</p>
 <p>or equivalently:</p>
-<p>$$y = g({z}) = 
-<script type="math/tex; mode=display">\begin{cases}
-1 & \text{if z $\ge$ 0}\\
-0 & \text{otherwise}.
-\end{cases}</script>
-$$</p>
+<p>
+<script type="math/tex; mode=display">y = g({z}) = 
+\begin{cases}
+1 & \text{if z <script type="math/tex">\ge</script> 0}\\
+0 &amp; \text{otherwise}.
+\end{cases}
+</script>
+</p>
 <h3 id="objective-function-log-likelihood">Objective Function -- Log-Likelihood</h3>
 <p>In order to parameterize a logistic regression model, we maximize the likelihood <script type="math/tex">L(\cdot)</script> (or minimize the logistic cost function).</p>
 <p>We write the likelihood as </p>
@@ -1052,12 +1068,14 @@ the log-likelihood function:</p>
 <p>
 <script type="math/tex; mode=display">J(\mathbf{w}) = \sum_{i=1}^{m} - y^{(i)} log \bigg( \phi\big(z^{(i)}\big) \bigg) - \big(1 - y^{(i)}\big) log\bigg(1-\phi\big(z^{(i)}\big)\bigg)</script>
 </p>
-<p>$$
- J\big(\phi(z), y; \mathbf{w}\big) =<script type="math/tex; mode=display">\begin{cases}
-    -log\big(\phi(z) \big) & \text{if $y = 1$}\\
-    -log\big(1- \phi(z) \big) & \text{if $y = 0$}
-  \end{cases}</script>
-$$</p>
+<p>
+<script type="math/tex; mode=display">
+ J\big(\phi(z), y; \mathbf{w}\big) =\begin{cases}
+    -log\big(\phi(z) \big) & \text{if <script type="math/tex">y = 1</script>}\
+    -log\big(1- \phi(z) \big) &amp; \text{if <script type="math/tex">y = 0</script>}
+  \end{cases}
+</script>
+</p>
 <p><img alt="" src="../LogisticRegression_files/logistic_cost.png" /></p>
 <p>As we can see in the figure above, we penalize wrong predictions with an increasingly larger cost.</p>
 <h3 id="gradient-descent-gd-and-stochastic-gradient-descent-sgd-optimization">Gradient Descent (GD)  and Stochastic Gradient Descent (SGD) Optimization</h3>
@@ -1160,7 +1178,7 @@ where</p>
 <li>Bishop, Christopher M. <a href="http://www.springer.com/br/book/9780387310732"><em>Pattern recognition and machine learning</em></a>. Springer, 2006. pp. 203-213</li>
 </ul>
 <h2 id="example-1-gradient-descent">Example 1 - Gradient Descent</h2>
-<pre><code class="python">from mlxtend.data import iris_data
+<pre><code class="language-python">from mlxtend.data import iris_data
 from mlxtend.plotting import plot_decision_regions
 from mlxtend.classifier import LogisticRegression
 import matplotlib.pyplot as plt
@@ -1193,27 +1211,24 @@ plt.xlabel('Iterations')
 plt.ylabel('Cost')
 plt.show()
 </code></pre>
-
 <pre><code>Iteration: 100/100 | Cost 0.32 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
 <p><img alt="png" src="../LogisticRegression_files/LogisticRegression_43_1.png" /></p>
 <p><img alt="png" src="../LogisticRegression_files/LogisticRegression_43_2.png" /></p>
 <h3 id="predicting-class-labels">Predicting Class Labels</h3>
-<pre><code class="python">y_pred = lr.predict(X)
+<pre><code class="language-python">y_pred = lr.predict(X)
 print('Last 3 Class Labels: %s' % y_pred[-3:])
 </code></pre>
-
 <pre><code>Last 3 Class Labels: [1 1 1]
 </code></pre>
 <h3 id="predicting-class-probabilities">Predicting Class Probabilities</h3>
-<pre><code class="python">y_pred = lr.predict_proba(X)
+<pre><code class="language-python">y_pred = lr.predict_proba(X)
 print('Last 3 Class Labels: %s' % y_pred[-3:])
 </code></pre>
-
 <pre><code>Last 3 Class Labels: [ 0.99997968  0.99339873  0.99992707]
 </code></pre>
 <h2 id="example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</h2>
-<pre><code class="python">from mlxtend.data import iris_data
+<pre><code class="language-python">from mlxtend.data import iris_data
 from mlxtend.plotting import plot_decision_regions
 from mlxtend.classifier import LogisticRegression
 import matplotlib.pyplot as plt
@@ -1246,14 +1261,13 @@ plt.xlabel('Iterations')
 plt.ylabel('Cost')
 plt.show()
 </code></pre>
-
 <pre><code>Iteration: 30/30 | Cost 0.27 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
 <p><img alt="png" src="../LogisticRegression_files/LogisticRegression_49_1.png" /></p>
 <p><img alt="png" src="../LogisticRegression_files/LogisticRegression_49_2.png" /></p>
 <h2 id="example-3-stochastic-gradient-descent-w-minibatches">Example 3 - Stochastic Gradient Descent w. Minibatches</h2>
 <p>Here, we set <code>minibatches</code> to 5, which will result in Minibatch Learning with a batch size of 20 samples (since 100 Iris samples divided by 5 minibatches equals 20).</p>
-<pre><code class="python">from mlxtend.data import iris_data
+<pre><code class="language-python">from mlxtend.data import iris_data
 from mlxtend.plotting import plot_decision_regions
 from mlxtend.classifier import LogisticRegression
 import matplotlib.pyplot as plt
@@ -1286,7 +1300,6 @@ plt.xlabel('Iterations')
 plt.ylabel('Cost')
 plt.show()
 </code></pre>
-
 <pre><code>Iteration: 30/30 | Cost 0.25 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
 <p><img alt="png" src="../LogisticRegression_files/LogisticRegression_52_1.png" /></p>
@@ -1355,89 +1368,92 @@ epoch.</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, init_params=True)</em></p>
-<p>Learn model from training data.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values.</p>
-</li>
-<li>
-<p><code>init_params</code> : bool (default: True)</p>
-<p>Re-initializes model parameters prior to fitting.
-Set False to continue training with weights from
-a previous model fitting.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
+*fit(X, y, init_params=True)*
+
+Learn model from training data.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples]
+
+    Target values.
+
+- `init_params` : bool (default: True)
+
+    Re-initializes model parameters prior to fitting.
+    Set False to continue training with weights from
+    a previous model fitting.
+
+**Returns**
+
+- `self` : object
+
+
 <hr>
 
-<p><em>predict(X)</em></p>
-<p>Predict targets from X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>target_values</code> : array-like, shape = [n_samples]</p>
-<p>Predicted target values.</p>
-</li>
-</ul>
+*predict(X)*
+
+Predict targets from X.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `target_values` : array-like, shape = [n_samples]
+
+    Predicted target values.
+
 <hr>
 
-<p><em>predict_proba(X)</em></p>
-<p>Predict class probabilities of X from the net input.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>Class 1 probability</code> : float</li>
-</ul>
+*predict_proba(X)*
+
+Predict class probabilities of X from the net input.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `Class 1 probability` : float
+
+
 <hr>
 
-<p><em>score(X, y)</em></p>
-<p>Compute the prediction accuracy</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values (true class labels).</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>acc</code> : float</p>
-<p>The prediction accuracy as a float
-between 0.0 and 1.0 (perfect score).</p>
-</li>
-</ul></div>
+*score(X, y)*
+
+Compute the prediction accuracy
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples]
+
+    Target values (true class labels).
+
+**Returns**
+
+- `acc` : float
+
+    The prediction accuracy as a float
+    between 0.0 and 1.0 (perfect score).</div>
         
         
     </div>

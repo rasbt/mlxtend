@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1040,7 +1052,7 @@ z =  \frac{ACC_1 - ACC_2}{\sqrt{2\sigma^2}} = \frac{ACC_1 - ACC_2}{\sqrt{2\cdot 
 </ul>
 <h2 id="example-1-difference-of-proportions">Example 1 - Difference of Proportions</h2>
 <p>As an example for applying this test, consider the following 2 model predictions:</p>
-<pre><code class="python">import numpy as np
+<pre><code class="language-python">import numpy as np
 
 ## Dataset:
 
@@ -1070,28 +1082,25 @@ y_model_2 = np.array([1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                       0, 0])
 </code></pre>
-
 <p>Assume, the test accuracies are as follows:</p>
-<pre><code class="python">acc_1 = np.sum(y_true == y_model_1) / y_true.shape[0]
+<pre><code class="language-python">acc_1 = np.sum(y_true == y_model_1) / y_true.shape[0]
 acc_2 = np.sum(y_true == y_model_2) / y_true.shape[0]
 
 print('Accuracy Model 1:', acc_1)
 print('Accuracy Model 2:', acc_2)
 
 </code></pre>
-
 <pre><code>Accuracy Model 1: 0.84
 Accuracy Model 2: 0.92
 </code></pre>
 <p>Now, setting a significance threshold of <script type="math/tex">\alpha=0.05</script> and conducting the test</p>
-<pre><code class="python">from mlxtend.evaluate import proportion_difference
+<pre><code class="language-python">from mlxtend.evaluate import proportion_difference
 
 z, p_value = proportion_difference(acc_1, acc_2, n_1=y_true.shape[0])
 
 print('z: %.3f' % z)
 print('p-value: %.3f' % p_value)
 </code></pre>
-
 <pre><code>z: -1.754
 p-value: 0.040
 </code></pre>

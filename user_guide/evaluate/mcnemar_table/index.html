@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1013,7 +1025,7 @@
 <li>https://en.wikipedia.org/wiki/McNemar%27s_test</li>
 </ul>
 <h2 id="example-2-2x2-contigency-table">Example 2 - 2x2 Contigency Table</h2>
-<pre><code class="python">import numpy as np
+<pre><code class="language-python">import numpy as np
 from mlxtend.evaluate import mcnemar_table
 
 y_true = np.array([0, 0, 0, 0, 0, 1, 1, 1, 1, 1])
@@ -1027,12 +1039,11 @@ tb = mcnemar_table(y_target=y_true,
 
 tb
 </code></pre>
-
 <pre><code>array([[4, 1],
        [2, 3]])
 </code></pre>
 <p>To visualize (and better interpret) the contigency table via matplotlib, we can use the <code>checkerboard_plot</code> function:</p>
-<pre><code class="python">from mlxtend.plotting import checkerboard_plot
+<pre><code class="language-python">from mlxtend.plotting import checkerboard_plot
 import matplotlib.pyplot as plt
 
 brd = checkerboard_plot(tb,
@@ -1042,7 +1053,6 @@ brd = checkerboard_plot(tb,
                         row_labels=['model 1 wrong', 'model 1 right'])
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../mcnemar_table_files/mcnemar_table_13_0.png" /></p>
 <h2 id="api">API</h2>
 <p><em>mcnemar_table(y_target, y_model1, y_model2)</em></p>

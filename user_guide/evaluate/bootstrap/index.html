@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1013,7 +1025,7 @@
 </ul>
 <h2 id="example-1-bootstrapping-the-mean">Example 1 -- Bootstrapping the Mean</h2>
 <p>This simple example illustrates how you could bootstrap the mean of a sample.</p>
-<pre><code class="python">import numpy as np
+<pre><code class="language-python">import numpy as np
 from mlxtend.evaluate import bootstrap
 
 
@@ -1025,12 +1037,11 @@ print('Mean: %.2f, SE: +/- %.2f, CI95: [%.2f, %.2f]' % (original,
                                                              ci_bounds[0],
                                                              ci_bounds[1]))
 </code></pre>
-
 <pre><code>Mean: 5.03, SE: +/- 0.11, CI95: [4.80, 5.26]
 </code></pre>
 <h2 id="example-2-bootstrapping-a-regression-fit">Example 2 - Bootstrapping a Regression Fit</h2>
 <p>This example illustrates how you can bootstrap the <script type="math/tex">R^2</script> of a regression fit on the training data.</p>
-<pre><code class="python">from mlxtend.data import autompg_data
+<pre><code class="language-python">from mlxtend.data import autompg_data
 
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
@@ -1055,7 +1066,6 @@ print('Mean: %.2f, SE: +/- %.2f, CI95: [%.2f, %.2f]' % (original,
                                                              ci_bounds[0],
                                                              ci_bounds[1]))
 </code></pre>
-
 <pre><code>Mean: 0.90, SE: +/- 0.01, CI95: [0.89, 0.92]
 </code></pre>
 <h2 id="api">API</h2>

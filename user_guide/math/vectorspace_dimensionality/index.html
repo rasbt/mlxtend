@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1001,7 +1013,7 @@
 </ul>
 <h2 id="example-1-compute-the-dimensions-of-a-vectorspace">Example 1 - Compute the dimensions of a vectorspace</h2>
 <p>Let's assume we have the two basis vectors <script type="math/tex">x=[1 \;\;\; 0]^T</script> and <script type="math/tex">y=[0\;\;\; 1]^T</script> as columns in a matrix. Due to the linear independence of the two vectors, the space that they span is naturally a plane (2D space):</p>
-<pre><code class="python">import numpy as np
+<pre><code class="language-python">import numpy as np
 from mlxtend.math import vectorspace_dimensionality
 
 
@@ -1010,36 +1022,32 @@ a = np.array([[1, 0],
 
 vectorspace_dimensionality(a)
 </code></pre>
-
 <pre><code>2
 </code></pre>
 <p>However, if one vector is a linear combination of the other, it's intuitive to see that the space the vectorset describes is merely a line, aka a 1D space:</p>
-<pre><code class="python">b = np.array([[1, 2],
+<pre><code class="language-python">b = np.array([[1, 2],
               [0, 0]])
 
 vectorspace_dimensionality(a)
 </code></pre>
-
 <pre><code>2
 </code></pre>
 <p>If 3 vectors are all linearly independent of each other, the dimensionality of the vector space is a volume (i.e., a 3D space):</p>
-<pre><code class="python">d = np.array([[1, 9,  1],
+<pre><code class="language-python">d = np.array([[1, 9,  1],
               [3, 2,  2],
               [5, 4,  3]])
 
 vectorspace_dimensionality(d)
 </code></pre>
-
 <pre><code>3
 </code></pre>
 <p>Again, if a pair of vectors is linearly dependent (here: the 1st and the 2nd row), this reduces the dimensionality by 1:</p>
-<pre><code class="python">c = np.array([[1, 2,  1],
+<pre><code class="language-python">c = np.array([[1, 2,  1],
               [3, 6,  2],
               [5, 10, 3]])
 
 vectorspace_dimensionality(c)
 </code></pre>
-
 <pre><code>2
 </code></pre>
 <h2 id="api">API</h2>

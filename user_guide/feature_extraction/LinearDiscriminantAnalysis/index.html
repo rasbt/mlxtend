@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1019,7 +1031,7 @@ In general, dimensionality reduction does not only help reducing computational c
 <li>Rao, C. Radhakrishna. "<a href="http://www.jstor.org/stable/2983775">The utilization of multiple measurements in problems of biological classification.</a>" Journal of the Royal Statistical Society. Series B (Methodological) 10.2 (1948): 159-203.</li>
 </ul>
 <h2 id="example-1-lda-on-iris">Example 1 - LDA on Iris</h2>
-<pre><code class="python">from mlxtend.data import iris_data
+<pre><code class="language-python">from mlxtend.data import iris_data
 from mlxtend.preprocessing import standardize
 from mlxtend.feature_extraction import LinearDiscriminantAnalysis
 
@@ -1030,8 +1042,7 @@ lda = LinearDiscriminantAnalysis(n_discriminants=2)
 lda.fit(X, y)
 X_lda = lda.transform(X)
 </code></pre>
-
-<pre><code class="python">import matplotlib.pyplot as plt
+<pre><code class="language-python">import matplotlib.pyplot as plt
 
 with plt.style.context('seaborn-whitegrid'):
     plt.figure(figsize=(6, 4))
@@ -1047,10 +1058,9 @@ with plt.style.context('seaborn-whitegrid'):
     plt.tight_layout()
     plt.show()
 </code></pre>
-
 <p><img alt="png" src="../LinearDiscriminantAnalysis_files/LinearDiscriminantAnalysis_11_0.png" /></p>
 <h2 id="example-2-plotting-the-between-class-variance-explained-ratio">Example 2 - Plotting the Between-Class Variance Explained Ratio</h2>
-<pre><code class="python">from mlxtend.data import iris_data
+<pre><code class="language-python">from mlxtend.data import iris_data
 from mlxtend.preprocessing import standardize
 from mlxtend.feature_extraction import LinearDiscriminantAnalysis
 
@@ -1061,15 +1071,13 @@ lda = LinearDiscriminantAnalysis(n_discriminants=None)
 lda.fit(X, y)
 X_lda = lda.transform(X)
 </code></pre>
-
-<pre><code class="python">import numpy as np
+<pre><code class="language-python">import numpy as np
 
 tot = sum(lda.e_vals_)
 var_exp = [(i / tot)*100 for i in sorted(lda.e_vals_, reverse=True)]
 cum_var_exp = np.cumsum(var_exp)
 </code></pre>
-
-<pre><code class="python">with plt.style.context('seaborn-whitegrid'):
+<pre><code class="language-python">with plt.style.context('seaborn-whitegrid'):
     fig, ax = plt.subplots(figsize=(6, 4))
     plt.bar(range(4), var_exp, alpha=0.5, align='center',
             label='individual explained variance')
@@ -1082,7 +1090,6 @@ cum_var_exp = np.cumsum(var_exp)
     plt.legend(loc='best')
     plt.tight_layout()
 </code></pre>
-
 <p><img alt="png" src="../LinearDiscriminantAnalysis_files/LinearDiscriminantAnalysis_15_0.png" /></p>
 <h2 id="api">API</h2>
 <p><em>LinearDiscriminantAnalysis(n_discriminants=None)</em></p>
@@ -1116,49 +1123,50 @@ Keeps the original dimensions of the dataset if <code>None</code>.</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, n_classes=None)</em></p>
-<p>Fit the LDA model with X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values.</p>
-</li>
-<li>
-<p><code>n_classes</code> : int (default: None)</p>
-<p>A positive integer to declare the number of class labels
-if not all class labels are present in a partial training set.
-Gets the number of class labels automatically if None.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
+*fit(X, y, n_classes=None)*
+
+Fit the LDA model with X.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples]
+
+    Target values.
+
+- `n_classes` : int (default: None)
+
+    A positive integer to declare the number of class labels
+    if not all class labels are present in a partial training set.
+    Gets the number of class labels automatically if None.
+
+**Returns**
+
+- `self` : object
+
+
 <hr>
 
-<p><em>transform(X)</em></p>
-<p>Apply the linear transformation on X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>X_projected</code> : np.ndarray, shape = [n_samples, n_discriminants]</p>
-<p>Projected training vectors.</p>
-</li>
-</ul></div>
+*transform(X)*
+
+Apply the linear transformation on X.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `X_projected` : np.ndarray, shape = [n_samples, n_discriminants]
+
+    Projected training vectors.</div>
         
         
     </div>

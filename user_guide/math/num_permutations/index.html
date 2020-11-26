@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1021,27 +1033,25 @@ k
 <li><a href="https://en.wikipedia.org/wiki/Permutation">https://en.wikipedia.org/wiki/Permutation</a></li>
 </ul>
 <h2 id="example-1-compute-the-number-of-permutations">Example 1 - Compute the number of permutations</h2>
-<pre><code class="python">from mlxtend.math import num_permutations
+<pre><code class="language-python">from mlxtend.math import num_permutations
 
 c = num_permutations(n=20, k=8, with_replacement=False)
 print('Number of ways to permute 20 elements'
       ' into 8 subelements: %d' % c)
 </code></pre>
-
 <pre><code>Number of ways to permute 20 elements into 8 subelements: 5079110400
 </code></pre>
-<pre><code class="python">from mlxtend.math import num_permutations
+<pre><code class="language-python">from mlxtend.math import num_permutations
 
 c = num_permutations(n=20, k=8, with_replacement=True)
 print('Number of ways to combine 20 elements'
       ' into 8 subelements (with replacement): %d' % c)
 </code></pre>
-
 <pre><code>Number of ways to combine 20 elements into 8 subelements (with replacement): 25600000000
 </code></pre>
 <h2 id="example-2-a-progress-tracking-use-case">Example 2 - A progress tracking use-case</h2>
 <p>It is often quite useful to track the progress of a computational expensive tasks to estimate its runtime. Here, the <code>num_combination</code> function can be used to compute the maximum number of loops of a <code>permutations</code> iterable from itertools:</p>
-<pre><code class="python">import itertools
+<pre><code class="language-python">import itertools
 import sys
 import time
 from mlxtend.math import num_permutations
@@ -1056,7 +1066,6 @@ for idx, i in enumerate(itertools.permutations(items, r=3)):
     sys.stdout.write('\rProgress: %d/%d' % (idx + 1, max_iter))
     sys.stdout.flush()
 </code></pre>
-
 <pre><code>Progress: 336/336
 </code></pre>
 <h2 id="api">API</h2>

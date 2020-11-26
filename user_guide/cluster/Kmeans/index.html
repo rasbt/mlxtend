@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1012,17 +1024,16 @@
 </ul>
 <h2 id="example-1-three-blobs">Example 1 - Three Blobs</h2>
 <h4 id="load-some-sample-data">Load some sample data:</h4>
-<pre><code class="python">import matplotlib.pyplot as plt
+<pre><code class="language-python">import matplotlib.pyplot as plt
 from mlxtend.data import three_blobs_data
 
 X, y = three_blobs_data()
 plt.scatter(X[:, 0], X[:, 1], c='white')
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../Kmeans_files/Kmeans_10_0.png" /></p>
 <h4 id="compute-the-cluster-centroids">Compute the cluster centroids:</h4>
-<pre><code class="python">from mlxtend.cluster import Kmeans
+<pre><code class="language-python">from mlxtend.cluster import Kmeans
 
 km = Kmeans(k=3, 
             max_iter=50, 
@@ -1034,7 +1045,6 @@ km.fit(X)
 print('Iterations until convergence:', km.iterations_)
 print('Final centroids:\n', km.centroids_)
 </code></pre>
-
 <pre><code>Iteration: 2/50 | Elapsed: 00:00:00 | ETA: 00:00:00
 
 Iterations until convergence: 2
@@ -1044,7 +1054,7 @@ Final centroids:
  [ 0.9329651   4.35420713]]
 </code></pre>
 <h4 id="visualize-the-cluster-memberships">Visualize the cluster memberships:</h4>
-<pre><code class="python">y_clust = km.predict(X)
+<pre><code class="language-python">y_clust = km.predict(X)
 
 plt.scatter(X[y_clust == 0, 0],
             X[y_clust == 0, 1],
@@ -1080,7 +1090,6 @@ plt.legend(loc='lower left',
 plt.grid()
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../Kmeans_files/Kmeans_14_0.png" /></p>
 <h2 id="api">API</h2>
 <p><em>Kmeans(k, max_iter=10, convergence_tolerance=1e-05, random_seed=None, print_progress=0)</em></p>
@@ -1141,45 +1150,46 @@ cluster.</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X, init_params=True)</em></p>
-<p>Learn model from training data.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>init_params</code> : bool (default: True)</p>
-<p>Re-initializes model parameters prior to fitting.
-Set False to continue training with weights from
-a previous model fitting.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
+*fit(X, init_params=True)*
+
+Learn model from training data.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `init_params` : bool (default: True)
+
+    Re-initializes model parameters prior to fitting.
+    Set False to continue training with weights from
+    a previous model fitting.
+
+**Returns**
+
+- `self` : object
+
+
 <hr>
 
-<p><em>predict(X)</em></p>
-<p>Predict targets from X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>target_values</code> : array-like, shape = [n_samples]</p>
-<p>Predicted target values.</p>
-</li>
-</ul></div>
+*predict(X)*
+
+Predict targets from X.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `target_values` : array-like, shape = [n_samples]
+
+    Predicted target values.</div>
         
         
     </div>

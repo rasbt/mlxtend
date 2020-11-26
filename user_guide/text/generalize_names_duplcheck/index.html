@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1009,7 +1021,7 @@
 <li>Adam Johnson</li>
 <li>Andrew Johnson</li>
 </ul>
-<pre><code class="python">import pandas as pd
+<pre><code class="language-python">import pandas as pd
 from io import StringIO
 
 simulated_csv = &quot;name,some_value\n&quot;\
@@ -1020,7 +1032,6 @@ simulated_csv = &quot;name,some_value\n&quot;\
 df = pd.read_csv(StringIO(simulated_csv))
 df
 </code></pre>
-
 <div>
 <table border="1" class="dataframe">
   <thead>
@@ -1051,11 +1062,10 @@ df
 </div>
 
 <p>Applying <code>generalize_names_duplcheck</code> to generate a new DataFrame with the generalized names without duplicates: </p>
-<pre><code class="python">from mlxtend.text import generalize_names_duplcheck
+<pre><code class="language-python">from mlxtend.text import generalize_names_duplcheck
 df_new = generalize_names_duplcheck(df=df, col_name='name')
 df_new
 </code></pre>
-
 <div>
 <table border="1" class="dataframe">
   <thead>

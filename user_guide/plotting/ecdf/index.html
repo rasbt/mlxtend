@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1004,7 +1016,7 @@
 <li>-</li>
 </ul>
 <h2 id="example-1-ecdf">Example 1 - ECDF</h2>
-<pre><code class="python">from mlxtend.data import iris_data
+<pre><code class="language-python">from mlxtend.data import iris_data
 from mlxtend.plotting import ecdf
 import matplotlib.pyplot as plt
 
@@ -1013,10 +1025,9 @@ X, y = iris_data()
 ax, _, _ = ecdf(x=X[:, 0], x_label='sepal length (cm)')
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../ecdf_files/ecdf_8_0.png" /></p>
 <h2 id="example-2-multiple-ecdfs">Example 2 - Multiple ECDFs</h2>
-<pre><code class="python">from mlxtend.data import iris_data
+<pre><code class="language-python">from mlxtend.data import iris_data
 from mlxtend.plotting import ecdf
 import matplotlib.pyplot as plt
 
@@ -1033,10 +1044,9 @@ ax, _, _ = ecdf(x2, ax=ax)
 plt.legend(['sepal length', 'sepal width'])
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../ecdf_files/ecdf_10_0.png" /></p>
 <h2 id="example-3-ecdf-with-percentile-thresholds">Example 3 - ECDF with Percentile Thresholds</h2>
-<pre><code class="python">from mlxtend.data import iris_data
+<pre><code class="language-python">from mlxtend.data import iris_data
 from mlxtend.plotting import ecdf
 import matplotlib.pyplot as plt
 
@@ -1051,7 +1061,6 @@ plt.show()
 print('Feature threshold at the 80th percentile:', threshold)
 print('Number of samples below the threshold:', count)
 </code></pre>
-
 <p><img alt="png" src="../ecdf_files/ecdf_12_0.png" /></p>
 <pre><code>Feature threshold at the 80th percentile: 6.5
 Number of samples below the threshold: 120

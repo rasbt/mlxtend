@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1002,7 +1014,7 @@
 <li>-</li>
 </ul>
 <h2 id="example-1-default">Example 1 - Default</h2>
-<pre><code class="python">from mlxtend.plotting import checkerboard_plot
+<pre><code class="language-python">from mlxtend.plotting import checkerboard_plot
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -1011,10 +1023,9 @@ ary = np.random.random((5, 4))
 brd = checkerboard_plot(ary)
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../checkerboard_plot_files/checkerboard_plot_8_0.png" /></p>
 <h2 id="example-2-changing-colors-and-labels">Example 2 - Changing colors and labels</h2>
-<pre><code class="python">from mlxtend.plotting import checkerboard_plot
+<pre><code class="language-python">from mlxtend.plotting import checkerboard_plot
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -1026,7 +1037,6 @@ checkerboard_plot(ary,
                   figsize=(4.5, 5))
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../checkerboard_plot_files/checkerboard_plot_10_0.png" /></p>
 <h2 id="api">API</h2>
 <p><em>checkerboard_plot(ary, cell_colors=('white', 'black'), font_colors=('black', 'white'), fmt='%.1f', figsize=None, row_labels=None, col_labels=None, fontsize=None)</em></p>

@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -991,14 +1003,13 @@
 <p>from mlxtend.preprocessing import shuffle_arrays_unison</p>
 </blockquote>
 <h2 id="example-1-scaling-a-pandas-dataframe">Example 1 - Scaling a Pandas DataFrame</h2>
-<pre><code class="python">import numpy as np
+<pre><code class="language-python">import numpy as np
 from mlxtend.preprocessing import shuffle_arrays_unison
 X = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 y = np.array([1, 2, 3])
 print('X:\n%s' % X)
 print('y:\n%s' % y)
 </code></pre>
-
 <pre><code>X:
 [[1 2 3]
  [4 5 6]
@@ -1006,11 +1017,10 @@ print('y:\n%s' % y)
 y:
 [1 2 3]
 </code></pre>
-<pre><code class="python">X2, y2 = shuffle_arrays_unison(arrays=[X, y], random_seed=3)
+<pre><code class="language-python">X2, y2 = shuffle_arrays_unison(arrays=[X, y], random_seed=3)
 print('X2:\n%s' % X2)
 print('y2:\n%s' % y2)
 </code></pre>
-
 <pre><code>X2:
 [[4 5 6]
  [1 2 3]

@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1027,17 +1039,15 @@ Now, this softmax function computes the probability that this training sample <s
 <script type="math/tex">x_3 \rightarrow \text{class }2</script>
 </li>
 </ul>
-<pre><code class="python">import numpy as np
+<pre><code class="language-python">import numpy as np
 
 y = np.array([0, 1, 2, 2])
 </code></pre>
-
 <p>First, we want to encode the class labels into a format that we can more easily work with; we apply one-hot encoding:</p>
-<pre><code class="python">y_enc = (np.arange(np.max(y) + 1) == y[:, None]).astype(float)
+<pre><code class="language-python">y_enc = (np.arange(np.max(y) + 1) == y[:, None]).astype(float)
 
 print('one-hot encoding:\n', y_enc)
 </code></pre>
-
 <pre><code>one-hot encoding:
  [[ 1.  0.  0.]
  [ 0.  1.  0.]
@@ -1047,7 +1057,7 @@ print('one-hot encoding:\n', y_enc)
 <p>A sample that belongs to class 0 (the first row) has a 1 in the first cell, a sample that belongs to class 2 has a 1 in the second cell of its row, and so forth.</p>
 <p>Next, let us define the feature matrix of our 4 training samples. Here, we assume that our dataset consists of 2 features; thus, we create a 4x2 dimensional matrix of our samples and features.
 Similarly, we create a 2x3 dimensional weight matrix (one row per feature and one column for each class).</p>
-<pre><code class="python">X = np.array([[0.1, 0.5],
+<pre><code class="language-python">X = np.array([[0.1, 0.5],
               [1.1, 2.3],
               [-1.1, -2.3],
               [-1.5, -2.5]])
@@ -1061,7 +1071,6 @@ print('Inputs X:\n', X)
 print('\nWeights W:\n', W)
 print('\nbias:\n', bias)
 </code></pre>
-
 <pre><code>Inputs X:
  [[ 0.1  0.5]
  [ 1.1  2.3]
@@ -1079,7 +1088,7 @@ bias:
 <p>
 <script type="math/tex; mode=display">\mathbf{Z} = \mathbf{X}\mathbf{W} + \mathbf{b}.</script>
 </p>
-<pre><code class="python">X = np.array([[0.1, 0.5],
+<pre><code class="language-python">X = np.array([[0.1, 0.5],
               [1.1, 2.3],
               [-1.1, -2.3],
               [-1.5, -2.5]])
@@ -1093,7 +1102,6 @@ print('Inputs X:\n', X)
 print('\nWeights W:\n', W)
 print('\nbias:\n', bias)
 </code></pre>
-
 <pre><code>Inputs X:
  [[ 0.1  0.5]
  [ 1.1  2.3]
@@ -1107,13 +1115,12 @@ Weights W:
 bias:
  [ 0.01  0.1   0.1 ]
 </code></pre>
-<pre><code class="python">def net_input(X, W, b):
+<pre><code class="language-python">def net_input(X, W, b):
     return (X.dot(W) + b)
 
 net_in = net_input(X, W, bias)
 print('net input:\n', net_in)
 </code></pre>
-
 <pre><code>net input:
  [[ 0.07  0.22  0.28]
  [ 0.35  0.78  1.12]
@@ -1124,13 +1131,12 @@ print('net input:\n', net_in)
 <p>
 <script type="math/tex; mode=display">P(y=j \mid z^{(i)}) = \phi_{softmax}(z^{(i)}) = \frac{e^{z^{(i)}}}{\sum_{j=0}^{k} e^{z_{k}^{(i)}}}.</script>
 </p>
-<pre><code class="python">def softmax(z):
+<pre><code class="language-python">def softmax(z):
     return (np.exp(z.T) / np.sum(np.exp(z), axis=1)).T
 
 smax = softmax(net_in)
 print('softmax:\n', smax)
 </code></pre>
-
 <pre><code>softmax:
  [[ 0.29450637  0.34216758  0.36332605]
  [ 0.21290077  0.32728332  0.45981591]
@@ -1144,12 +1150,11 @@ print('softmax:\n', smax)
 [ 0.21290077  0.32728332  <strong>0.45981591</strong>]  -&gt; 2<br />
 [ <strong>0.42860913</strong>  0.33380113  0.23758974]  -&gt; 0<br />
 [ <strong>0.44941979</strong>  0.32962558  0.22095463]] -&gt; 0  </p>
-<pre><code class="python">def to_classlabel(z):
+<pre><code class="language-python">def to_classlabel(z):
     return z.argmax(axis=1)
 
 print('predicted class labels: ', to_classlabel(smax))
 </code></pre>
-
 <pre><code>predicted class labels:  [2 2 0 0]
 </code></pre>
 <p>As we can see, our predictions are terribly wrong, since the correct class labels are <code>[0, 1, 2, 2]</code>. Now, in order to train our logistic model (e.g., via an optimization algorithm such as gradient descent), we need to define a cost function <script type="math/tex">J(\cdot)</script> that we want to minimize:</p>
@@ -1161,22 +1166,20 @@ print('predicted class labels: ', to_classlabel(smax))
 <script type="math/tex; mode=display">H(T_i, O_i) = -\sum_m T_i \cdot log(O_i).</script>
 </p>
 <p>Here the <script type="math/tex">T</script> stands for "target" (i.e., the <em>true</em> class labels) and the <script type="math/tex">O</script> stands for output -- the computed <em>probability</em> via softmax; <strong>not</strong> the predicted class label.</p>
-<pre><code class="python">def cross_entropy(output, y_target):
+<pre><code class="language-python">def cross_entropy(output, y_target):
     return - np.sum(np.log(output) * (y_target), axis=1)
 
 xent = cross_entropy(smax, y_enc)
 print('Cross Entropy:', xent)
 </code></pre>
-
 <pre><code>Cross Entropy: [ 1.22245465  1.11692907  1.43720989  1.50979788]
 </code></pre>
-<pre><code class="python">def cost(output, y_target):
+<pre><code class="language-python">def cost(output, y_target):
     return np.mean(cross_entropy(output, y_target))
 
 J_cost = cost(smax, y_enc)
 print('Cost: ', J_cost)
 </code></pre>
-
 <pre><code>Cost:  1.32159787159
 </code></pre>
 <p>In order to learn our softmax model -- determining the weight coefficients -- via gradient descent, we then need to compute the derivative </p>
@@ -1213,7 +1216,7 @@ print('Cost: ', J_cost)
 </p>
 <p>(Please note that we don't regularize the bias term.)</p>
 <h2 id="example-1-gradient-descent">Example 1 - Gradient Descent</h2>
-<pre><code class="python">from mlxtend.data import iris_data
+<pre><code class="language-python">from mlxtend.data import iris_data
 from mlxtend.plotting import plot_decision_regions
 from mlxtend.classifier import SoftmaxRegression
 import matplotlib.pyplot as plt
@@ -1243,30 +1246,27 @@ plt.xlabel('Iterations')
 plt.ylabel('Cost')
 plt.show()
 </code></pre>
-
 <pre><code>Iteration: 500/500 | Cost 0.06 | Elapsed: 0:00:00 | ETA: 0:00:00
 </code></pre>
 <p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_31_1.png" /></p>
 <p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_31_2.png" /></p>
 <h4 id="predicting-class-labels">Predicting Class Labels</h4>
-<pre><code class="python">y_pred = lr.predict(X)
+<pre><code class="language-python">y_pred = lr.predict(X)
 print('Last 3 Class Labels: %s' % y_pred[-3:])
 </code></pre>
-
 <pre><code>Last 3 Class Labels: [2 2 2]
 </code></pre>
 <h4 id="predicting-class-probabilities">Predicting Class Probabilities</h4>
-<pre><code class="python">y_pred = lr.predict_proba(X)
+<pre><code class="language-python">y_pred = lr.predict_proba(X)
 print('Last 3 Class Labels:\n %s' % y_pred[-3:])
 </code></pre>
-
 <pre><code>Last 3 Class Labels:
  [[  9.18728149e-09   1.68894679e-02   9.83110523e-01]
  [  2.97052325e-11   7.26356627e-04   9.99273643e-01]
  [  1.57464093e-06   1.57779528e-01   8.42218897e-01]]
 </code></pre>
 <h2 id="example-2-stochastic-gradient-descent">Example 2 - Stochastic Gradient Descent</h2>
-<pre><code class="python">from mlxtend.data import iris_data
+<pre><code class="language-python">from mlxtend.data import iris_data
 from mlxtend.plotting import plot_decision_regions
 from mlxtend.classifier import SoftmaxRegression
 import matplotlib.pyplot as plt
@@ -1292,7 +1292,6 @@ plt.xlabel('Iterations')
 plt.ylabel('Cost')
 plt.show()
 </code></pre>
-
 <p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_37_0.png" /></p>
 <p><img alt="png" src="../SoftmaxRegression_files/SoftmaxRegression_37_1.png" /></p>
 <h1 id="api">API</h1>
@@ -1362,90 +1361,95 @@ Gets the number of class labels automatically if None.</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, init_params=True)</em></p>
-<p>Learn model from training data.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values.</p>
-</li>
-<li>
-<p><code>init_params</code> : bool (default: True)</p>
-<p>Re-initializes model parameters prior to fitting.
-Set False to continue training with weights from
-a previous model fitting.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
+*fit(X, y, init_params=True)*
+
+Learn model from training data.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples]
+
+    Target values.
+
+- `init_params` : bool (default: True)
+
+    Re-initializes model parameters prior to fitting.
+    Set False to continue training with weights from
+    a previous model fitting.
+
+**Returns**
+
+- `self` : object
+
+
 <hr>
 
-<p><em>predict(X)</em></p>
-<p>Predict targets from X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>target_values</code> : array-like, shape = [n_samples]</p>
-<p>Predicted target values.</p>
-</li>
-</ul>
+*predict(X)*
+
+Predict targets from X.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `target_values` : array-like, shape = [n_samples]
+
+    Predicted target values.
+
 <hr>
 
-<p><em>predict_proba(X)</em></p>
-<p>Predict class probabilities of X from the net input.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>Class probabilties</code> : array-like, shape= [n_samples, n_classes]</li>
-</ul>
+*predict_proba(X)*
+
+Predict class probabilities of X from the net input.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `Class probabilties` : array-like, shape= [n_samples, n_classes]
+
+
 <hr>
 
-<p><em>score(X, y)</em></p>
-<p>Compute the prediction accuracy</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values (true class labels).</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>acc</code> : float</p>
-<p>The prediction accuracy as a float
-between 0.0 and 1.0 (perfect score).</p>
-</li>
-</ul>
-<p>ython</p></div>
+*score(X, y)*
+
+Compute the prediction accuracy
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples]
+
+    Target values (true class labels).
+
+**Returns**
+
+- `acc` : float
+
+    The prediction accuracy as a float
+    between 0.0 and 1.0 (perfect score).
+
+
+ython</div>
         
         
     </div>

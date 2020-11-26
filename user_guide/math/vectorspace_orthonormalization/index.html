@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1001,7 +1013,7 @@
 </ul>
 <h2 id="example-1-convert-a-set-of-vector-to-an-orthonormal-basis">Example 1 - Convert a set of vector to an orthonormal basis</h2>
 <p>Note that to convert a set of linearly independent vectors into a set of orthonormal basis vectors, the <code>vectorspace_orthonormalization</code> function expects the vectors to be arranged as columns of a matrix (here: NumPy array). Please keep in mind that the <code>vectorspace_orthonormalization</code> function also works for non-linearly independent vector sets; however, the resulting vectorset won't be orthonormal as a result. An easy way to check whether all vectors in the input set are linearly independent is to use the <code>numpy.linalg.det</code> (determinant) function.</p>
-<pre><code class="python">import numpy as np
+<pre><code class="language-python">import numpy as np
 from mlxtend.math import vectorspace_orthonormalization
 
 a = np.array([[2,   0,   4,  12],
@@ -1018,7 +1030,6 @@ print('Input vectors are%s linearly independent' % s)
 
 vectorspace_orthonormalization(a)
 </code></pre>
-
 <pre><code>Input vectors are linearly independent
 
 
@@ -1031,19 +1042,17 @@ array([[ 0.40824829, -0.1814885 ,  0.04982278,  0.89325973],
        [ 0.40824829, -0.83484711,  0.07942048, -0.36063281]])
 </code></pre>
 <p>Note that scaling the inputs equally by a factor should leave the results unchanged:</p>
-<pre><code class="python">vectorspace_orthonormalization(a/2)
+<pre><code class="language-python">vectorspace_orthonormalization(a/2)
 </code></pre>
-
 <pre><code>array([[ 0.40824829, -0.1814885 ,  0.04982278,  0.89325973],
        [ 0.        ,  0.1088931 ,  0.99349591, -0.03328918],
        [ 0.81649658,  0.50816781, -0.06462163, -0.26631346],
        [ 0.40824829, -0.83484711,  0.07942048, -0.36063281]])
 </code></pre>
 <p>However, in case of linear dependence (the second column is a linear combination of the first column in the example below), the vector elements of one of the dependent vectors will become zero. (For a pair of linear dependent vectors, the one with the larger column index will be the one that's zero-ed.)</p>
-<pre><code class="python">a[:, 1] = a[:, 0] * 2
+<pre><code class="language-python">a[:, 1] = a[:, 0] * 2
 vectorspace_orthonormalization(a)
 </code></pre>
-
 <pre><code>array([[ 0.40824829,  0.        ,  0.04155858,  0.82364839],
        [ 0.        ,  0.        ,  0.99740596, -0.06501108],
        [ 0.81649658,  0.        , -0.04155858, -0.52008861],

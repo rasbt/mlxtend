@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -986,8 +998,7 @@
                  <!--   -->
             <li class="second-level"><a href="#api">API</a></li>
                  <!-- 
-                <li class="third-level"><a href="#methods">Methods</a></li>
-                <li class="third-level"><a href="#properties">Properties</a></li>  -->
+                <li class="third-level"><a href="#methods">Methods</a></li>  -->
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
@@ -1005,7 +1016,7 @@
 <li>Breiman, Leo. "<a href="http://link.springer.com/article/10.1023/A:1018046112532#page-1">Stacked regressions.</a>" Machine learning 24.1 (1996): 49-64.</li>
 </ul>
 <h2 id="example-1-simple-stacked-regression">Example 1 - Simple Stacked Regression</h2>
-<pre><code class="python">from mlxtend.regressor import StackingRegressor
+<pre><code class="language-python">from mlxtend.regressor import StackingRegressor
 from mlxtend.data import boston_housing_data
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import Ridge
@@ -1022,8 +1033,7 @@ X = np.sort(5 * np.random.rand(40, 1), axis=0)
 y = np.sin(X).ravel()
 y[::5] += 3 * (0.5 - np.random.rand(8))
 </code></pre>
-
-<pre><code class="python"># Initializing models
+<pre><code class="language-python"># Initializing models
 
 lr = LinearRegression()
 svr_lin = SVR(kernel='linear')
@@ -1050,14 +1060,12 @@ with plt.style.context(('seaborn-whitegrid')):
 
 plt.show()
 </code></pre>
-
 <pre><code>Mean Squared Error: 0.2039
 Variance Score: 0.7049
 </code></pre>
 <p><img alt="png" src="../StackingRegressor_files/StackingRegressor_11_1.png" /></p>
-<pre><code class="python">stregr
+<pre><code class="language-python">stregr
 </code></pre>
-
 <pre><code>StackingRegressor(meta_regressor=SVR(C=1.0, cache_size=200, coef0=0.0, degree=3, epsilon=0.1,
   gamma='auto_deprecated', kernel='rbf', max_iter=-1, shrinking=True,
   tol=0.001, verbose=False),
@@ -1073,7 +1081,7 @@ Variance Score: 0.7049
 <h2 id="example-2-stacked-regression-and-gridsearch">Example 2 - Stacked Regression and GridSearch</h2>
 <p>In this second example we demonstrate how <code>StackingCVRegressor</code> works in combination with <code>GridSearchCV</code>. The stack still allows tuning hyper parameters of the base and meta models!</p>
 <p>For instance, we can use <code>estimator.get_params().keys()</code> to get a full list of tunable parameters.</p>
-<pre><code class="python">from sklearn.model_selection import GridSearchCV
+<pre><code class="language-python">from sklearn.model_selection import GridSearchCV
 from sklearn.linear_model import Lasso
 
 # Initializing models
@@ -1101,10 +1109,9 @@ grid.fit(X, y)
 
 print(&quot;Best: %f using %s&quot; % (grid.best_score_, grid.best_params_))
 </code></pre>
-
 <pre><code>Best: -0.082505 using {'lasso__alpha': 0.1, 'meta_regressor__C': 1.0, 'meta_regressor__gamma': 1.0, 'ridge__alpha': 0.1, 'svr__C': 10.0}
 </code></pre>
-<pre><code class="python">cv_keys = ('mean_test_score', 'std_test_score', 'params')
+<pre><code class="language-python">cv_keys = ('mean_test_score', 'std_test_score', 'params')
 
 for r, _ in enumerate(grid.cv_results_['mean_test_score']):
     print(&quot;%0.3f +/- %0.2f %r&quot;
@@ -1118,7 +1125,6 @@ print('...')
 print('Best parameters: %s' % grid.best_params_)
 print('Accuracy: %.2f' % grid.best_score_)
 </code></pre>
-
 <pre><code>-9.810 +/- 6.86 {'lasso__alpha': 0.1, 'meta_regressor__C': 0.1, 'meta_regressor__gamma': 0.1, 'ridge__alpha': 0.1, 'svr__C': 0.1}
 -9.591 +/- 6.67 {'lasso__alpha': 0.1, 'meta_regressor__C': 0.1, 'meta_regressor__gamma': 0.1, 'ridge__alpha': 0.1, 'svr__C': 1.0}
 -9.591 +/- 6.67 {'lasso__alpha': 0.1, 'meta_regressor__C': 0.1, 'meta_regressor__gamma': 0.1, 'ridge__alpha': 0.1, 'svr__C': 10.0}
@@ -1135,7 +1141,7 @@ print('Accuracy: %.2f' % grid.best_score_)
 Best parameters: {'lasso__alpha': 0.1, 'meta_regressor__C': 1.0, 'meta_regressor__gamma': 1.0, 'ridge__alpha': 0.1, 'svr__C': 10.0}
 Accuracy: -0.08
 </code></pre>
-<pre><code class="python"># Evaluate and visualize the fit
+<pre><code class="language-python"># Evaluate and visualize the fit
 print(&quot;Mean Squared Error: %.4f&quot;
       % np.mean((grid.predict(X) - y) ** 2))
 print('Variance Score: %.4f' % grid.score(X, y))
@@ -1146,7 +1152,6 @@ with plt.style.context(('seaborn-whitegrid')):
 
 plt.show()
 </code></pre>
-
 <pre><code>Mean Squared Error: 0.1844
 Variance Score: 0.7331
 </code></pre>
@@ -1242,152 +1247,174 @@ to scikit-learn's <code>clone</code> function.</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, sample_weight=None)</em></p>
-<p>Learn weight coefficients from training data for each regressor.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples] or [n_samples, n_targets]</p>
-<p>Target values.</p>
-</li>
-<li>
-<p><code>sample_weight</code> : array-like, shape = [n_samples], optional</p>
-<p>Sample weights passed as sample_weights to each regressor
-in the regressors list as well as the meta_regressor.
-Raises error if some regressor does not support
-sample_weight in the fit() method.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
+*fit(X, y, sample_weight=None)*
+
+Learn weight coefficients from training data for each regressor.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+- `y` : array-like, shape = [n_samples] or [n_samples, n_targets]
+
+    Target values.
+
+- `sample_weight` : array-like, shape = [n_samples], optional
+
+    Sample weights passed as sample_weights to each regressor
+    in the regressors list as well as the meta_regressor.
+    Raises error if some regressor does not support
+    sample_weight in the fit() method.
+
+**Returns**
+
+- `self` : object
+
+
 <hr>
 
-<p><em>fit_transform(X, y=None, </em><em>fit_params)</em></p>
-<p>Fit to data, then transform it.</p>
-<p>Fits transformer to X and y with optional parameters fit_params
-and returns a transformed version of X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : numpy array of shape [n_samples, n_features]</p>
-<p>Training set.</p>
-</li>
-<li>
-<p><code>y</code> : numpy array of shape [n_samples]</p>
-<p>Target values.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>X_new</code> : numpy array of shape [n_samples, n_features_new]</p>
-<p>Transformed array.</p>
-</li>
-</ul>
+*fit_transform(X, y=None, **fit_params)*
+
+Fit to data, then transform it.
+
+Fits transformer to X and y with optional parameters fit_params
+and returns a transformed version of X.
+
+**Parameters**
+
+- `X` : numpy array of shape [n_samples, n_features]
+
+    Training set.
+
+
+- `y` : numpy array of shape [n_samples]
+
+    Target values.
+
+**Returns**
+
+- `X_new` : numpy array of shape [n_samples, n_features_new]
+
+    Transformed array.
+
 <hr>
 
-<p><em>get_params(deep=True)</em></p>
-<p>Return estimator parameter names for GridSearch support.</p>
+*get_params(deep=True)*
+
+Return estimator parameter names for GridSearch support.
+
 <hr>
 
-<p><em>predict(X)</em></p>
-<p>Predict target values for X.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>y_target</code> : array-like, shape = [n_samples] or [n_samples, n_targets]</p>
-<p>Predicted target values.</p>
-</li>
-</ul>
+*predict(X)*
+
+Predict target values for X.
+
+**Parameters**
+
+- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
+
+    Training vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `y_target` : array-like, shape = [n_samples] or [n_samples, n_targets]
+
+    Predicted target values.
+
 <hr>
 
-<p><em>predict_meta_features(X)</em></p>
-<p>Get meta-features of test-data.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
-<p>Test vectors, where n_samples is the number of samples and
-n_features is the number of features.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>meta-features</code> : numpy array, shape = [n_samples, len(self.regressors)]</p>
-<p>meta-features for test data, where n_samples is the number of
-samples in test data and len(self.regressors) is the number
-of regressors.</p>
-</li>
-</ul>
+*predict_meta_features(X)*
+
+Get meta-features of test-data.
+
+**Parameters**
+
+- `X` : numpy array, shape = [n_samples, n_features]
+
+    Test vectors, where n_samples is the number of samples and
+    n_features is the number of features.
+
+**Returns**
+
+- `meta-features` : numpy array, shape = [n_samples, len(self.regressors)]
+
+    meta-features for test data, where n_samples is the number of
+    samples in test data and len(self.regressors) is the number
+    of regressors.
+
 <hr>
 
-<p><em>score(X, y, sample_weight=None)</em></p>
-<p>Returns the coefficient of determination R^2 of the prediction.</p>
-<p>The coefficient R^2 is defined as (1 - u/v), where u is the residual
-sum of squares ((y_true - y_pred) <strong> 2).sum() and v is the total
-sum of squares ((y_true - y_true.mean()) </strong> 2).sum().</p>
-<p>The best possible score is 1.0 and it can be negative (because the</p>
-<p>model can be arbitrarily worse). A constant model that always
+*score(X, y, sample_weight=None)*
+
+Returns the coefficient of determination R^2 of the prediction.
+
+The coefficient R^2 is defined as (1 - u/v), where u is the residual
+sum of squares ((y_true - y_pred) ** 2).sum() and v is the total
+sum of squares ((y_true - y_true.mean()) ** 2).sum().
+
+The best possible score is 1.0 and it can be negative (because the
+
+model can be arbitrarily worse). A constant model that always
 predicts the expected value of y, disregarding the input features,
-would get a R^2 score of 0.0.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : array-like, shape = (n_samples, n_features)</p>
-<p>Test samples.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = (n_samples) or (n_samples, n_outputs)</p>
-<p>True values for X.</p>
-</li>
-<li>
-<p><code>sample_weight</code> : array-like, shape = [n_samples], optional</p>
-<p>Sample weights.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>score</code> : float</p>
-<p>R^2 of self.predict(X) wrt. y.</p>
-</li>
-</ul>
+would get a R^2 score of 0.0.
+
+**Parameters**
+
+- `X` : array-like, shape = (n_samples, n_features)
+
+    Test samples.
+
+
+- `y` : array-like, shape = (n_samples) or (n_samples, n_outputs)
+
+    True values for X.
+
+
+- `sample_weight` : array-like, shape = [n_samples], optional
+
+    Sample weights.
+
+**Returns**
+
+- `score` : float
+
+    R^2 of self.predict(X) wrt. y.
+
 <hr>
 
-<p><em>set_params(</em><em>params)</em></p>
-<p>Set the parameters of this estimator.</p>
-<p>The method works on simple estimators as well as on nested objects
+*set_params(**params)*
+
+Set the parameters of this estimator.
+
+The method works on simple estimators as well as on nested objects
 (such as pipelines). The latter have parameters of the form
-<code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
-component of a nested object.</p>
-<p><strong>Returns</strong></p>
-<p>self</p>
-<h3 id="properties">Properties</h3>
+``<component>__<parameter>`` so that it's possible to update each
+component of a nested object.
+
+**Returns**
+
+self
+
+### Properties
+
 <hr>
 
-<p><em>coef_</em></p>
-<p>None</p>
+*coef_*
+
+None
+
 <hr>
 
-<p><em>intercept_</em></p>
-<p>None</p>
-<p>ython</p></div>
+*intercept_*
+
+None
+
+
+ython</div>
         
         
     </div>

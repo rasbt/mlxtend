@@ -148,6 +148,12 @@
         
             
 <li >
+    <a href="../../classifier/OneRClassifier/">OneRClassifier -- "One Rule" for Classification</a>
+</li>
+
+        
+            
+<li >
     <a href="../../classifier/Perceptron/">Perceptron</a>
 </li>
 
@@ -296,6 +302,12 @@
             
 <li >
     <a href="../../evaluate/confusion_matrix/">Confusion Matrix</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../evaluate/create_counterfactual/">Create Counterfactual</a>
 </li>
 
         
@@ -1015,11 +1027,10 @@ dir_3/
     file_3.txt
 </code></pre>
 <p>we can use <code>find_files</code> to return the paths to all files that contain the substring <code>_2</code> as follows: </p>
-<pre><code class="python">from mlxtend.file_io import find_files
+<pre><code class="language-python">from mlxtend.file_io import find_files
 
 find_files(substring='_2', path='./data_find_filegroups/', recursive=True)
 </code></pre>
-
 <pre><code>['./data_find_filegroups/dir_1/file_2.log',
  './data_find_filegroups/dir_2/file_2.csv',
  './data_find_filegroups/dir_3/file_2.txt']

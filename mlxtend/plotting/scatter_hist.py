@@ -3,9 +3,6 @@
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
-
-
-
 import seaborn as sns
 import pandas as pd
 import numpy as np

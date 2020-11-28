@@ -40,7 +40,6 @@ fi
 
 
 conda install matplotlib
-conda install seaborn
 conda install jupyter
 conda install pytest
 

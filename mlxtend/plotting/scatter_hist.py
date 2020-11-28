@@ -20,12 +20,10 @@ def scatter_hist(x, y, data):
     y : str or int
         DataFrame column name of the y-axis values or
         integer for the numpy ndarray column index
-    data : Pandas DataFrame object or NumPy ndarray.
-    
+    data : Pandas DataFrame object or NumPy ndarray.    
     Returns
     ---------
-    plot : matplotlib pyplot figure object
-    
+    plot : matplotlib pyplot figure object    
     """
     left, width = 0.1, 0.65
     bottom, height = 0.1, 0.65

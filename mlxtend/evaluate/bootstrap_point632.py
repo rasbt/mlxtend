@@ -149,6 +149,12 @@ def bootstrap_point632_score(estimator, X, y, n_splits=200,
         raise ValueError('The `method` must '
                          'be in %s. Got %s.' % (allowed_methods, method))
 
+    # Pandas compatibility
+    if hasattr(X, "values"):
+        X = X.values
+    if hasattr(y, "values"):
+        y = y.values
+
     _check_arrays(X, y)
 
     if clone_estimator:

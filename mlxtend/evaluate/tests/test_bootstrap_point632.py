@@ -5,6 +5,7 @@
 # License: BSD 3 clause
 
 import numpy as np
+import pandas as pd
 import pytest
 from sklearn.base import BaseEstimator
 from sklearn.linear_model import LogisticRegression
@@ -22,6 +23,18 @@ class FakeClassifier(BaseEstimator):
         pass
 
 
+def test_pandas_pass():
+    tree = DecisionTreeClassifier(random_state=123)
+    X_df = pd.DataFrame(X)
+    y_ser = pd.Series(y)
+    bootstrap_point632_score(tree, X_df, y_ser,
+                             random_seed=123, method='oob')
+    bootstrap_point632_score(tree, X_df, y_ser,
+                             random_seed=123, method='.632')
+    bootstrap_point632_score(tree, X_df, y_ser,
+                             random_seed=123, method='.632+')
+
+
 def test_defaults():
     lr = LogisticRegression(solver='liblinear', multi_class='ovr')
     scores = bootstrap_point632_score(lr, X, y, random_seed=123)
@@ -32,7 +45,8 @@ def test_defaults():
 
 def test_oob():
     tree = DecisionTreeClassifier(random_state=123)
-    scores = bootstrap_point632_score(tree, X, y, random_seed=123, method='oob')
+    scores = bootstrap_point632_score(
+        tree, X, y, random_seed=123, method='oob')
     acc = np.mean(scores)
     assert len(scores == 200)
     assert np.round(acc, 5) == 0.94667, np.round(acc, 5)

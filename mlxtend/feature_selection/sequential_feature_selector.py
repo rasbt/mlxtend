@@ -77,7 +77,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         where k_features < the full feature set.
         New in 0.4.2: A tuple containing a min and max value can be provided,
             and the SFS will consider return any feature combination between
-            min and max that scored highest in cross-validtion. For example,
+            min and max that scored highest in cross-validation. For example,
             the tuple (1, 4) will return any combination from
             1 up to 4 features instead of a fixed number of features k.
         New in 0.8.0: A string argument "best" or "parsimonious".

@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2021
 # mlxtend Machine Learning Library Extensions
 #
 # Matplotlib wrapper for generating stacked barplots.

@@ -37,7 +37,7 @@ def test_average_multiclass():
     y_pred = np.array([0, 1, 1, 0, 1, 1, 2, 2, 2, 2])
 
     y = accuracy_score(y_targ, y_pred, method='average')
-    assert_almost_equal(y, 0.5778, decimal=4)
+    assert_almost_equal(y, 0.578, decimal=3)
 
 
 def test_average_binary():
@@ -45,4 +45,4 @@ def test_average_binary():
     y_pred = np.array([0, 1, 1, 0, 1, 1, 1, 1, 1, 1])
 
     y = accuracy_score(y_targ, y_pred, method='average')
-    assert_almost_equal(y, 0.5417, decimal=4)
+    assert_almost_equal(y, 0.542, decimal=3)

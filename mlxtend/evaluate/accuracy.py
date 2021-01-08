@@ -27,7 +27,7 @@ def accuracy_score(y_target, y_predicted, method="standard",
         The chosen method for accuracy computation.
         If set to 'standard', computes overall accuracy.
         If set to 'binary', computes accuracy for class pos_label.
-        If set to 'average', computes average per class accuracy.
+        If set to 'average', computes average per-class (balanced) accuracy.
     pos_label : str or int, 1 by default.
         The class whose accuracy score is to be reported.
         Used only when `method` is set to 'binary'
@@ -65,9 +65,13 @@ def accuracy_score(y_target, y_predicted, method="standard",
         return _compute_metric(target_temp, predicted_temp, normalize)
 
     elif method == "average":
-        return sum([_compute_metric(np.where(target_temp != l, 1, 0),
-                    np.where(predicted_temp != l, 1, 0))
-                    for l in unique_labels]) / float(unique_labels.shape[0])
+        all_class_acc = []
+        for c in np.unique(y_target):
+            positive_labels = (y_target == c)
+            class_acc = np.mean((y_predicted == c)[positive_labels])
+            all_class_acc.append(class_acc)
+
+        return np.mean(all_class_acc)
 
     else:
         raise ValueError('`method` must be "standard", "average"'

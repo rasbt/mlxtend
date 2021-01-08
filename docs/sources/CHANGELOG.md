@@ -7,6 +7,26 @@ The CHANGELOG for the current development version is available at
 
 ---
 
+### Version 0.18.1 (TBD)
+
+##### Downloads
+
+- -
+
+##### New Features
+
+- -
+
+
+##### Changes
+
+- -
+
+##### Bug Fixes
+
+- Fixes problem with binary vectors when mlxtend.evaluate.accuracy has the `'average'` setting. ([#763](https://github.com/rasbt/mlxtend/pull/763))
+
+
 
 ### Version 0.18.0 (11/25/2020)
 

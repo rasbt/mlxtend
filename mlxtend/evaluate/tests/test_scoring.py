@@ -121,7 +121,7 @@ def test_avg_perclass_accuracy():
     res = scoring(y_target=y_targ,
                   y_predicted=y_pred,
                   metric='average per-class accuracy')
-    assert round(res, 3) == 0.667, res
+    assert round(res, 3) == 0.578, res
 
 
 def test_avg_perclass_error():

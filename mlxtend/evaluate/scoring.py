@@ -38,6 +38,8 @@ def scoring(y_target, y_predicted, metric='error',
         'accuracy': (TP + TN)/(FP + FN + TP + TN) = 1-ERR\n
         'average per-class accuracy': Average per-class accuracy\n
         'average per-class error':  Average per-class error\n
+        'balanced per-class accuracy': Average per-class accuracy\n
+        'balanced per-class error':  Average per-class error\n
         'error': (TP + TN)/(FP+ FN + TP + TN) = 1-ACC\n
         'false_positive_rate': FP/N = FP/(FP + TN)\n
         'true_positive_rate': TP/P = TP/(FN + TP)\n
@@ -73,6 +75,7 @@ def scoring(y_target, y_predicted, metric='error',
                    'accuracy',
                    'average per-class accuracy',
                    'average per-class error',
+                   'balanced accuracy',
                    'false_positive_rate',
                    'true_positive_rate',
                    'true_negative_rate',
@@ -114,6 +117,8 @@ def scoring(y_target, y_predicted, metric='error',
                      pred_tmp,
                      func=_error,
                      unique_labels=unique_labels)
+    elif metric == 'balanced accuracy':
+        res = accuracy_score(targ_tmp, pred_tmp, method='balanced')
 
     # binary classification metrics
     else:

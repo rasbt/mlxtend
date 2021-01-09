@@ -15,8 +15,7 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
-- -
-
+- Adds a second "balanced accuracy" interpretation ("balanced") to `accuracy_score` in addition to the existing "average" option to compute the scikit-learn-style balanced accuracy. ([#764](https://github.com/rasbt/mlxtend/pull/764))
 
 ##### Changes
 
@@ -24,9 +23,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Bug Fixes
 
-- Fixes problem with binary vectors when mlxtend.evaluate.accuracy has the `'average'` setting. ([#763](https://github.com/rasbt/mlxtend/pull/763))
-
-
+- - 
 
 ### Version 0.18.0 (11/25/2020)
 

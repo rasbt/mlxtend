@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2021
+# Sebastian Raschka 2014-2020
 # contributor: Vahid Mirjalili
 # mlxtend Machine Learning Library Extensions
 #

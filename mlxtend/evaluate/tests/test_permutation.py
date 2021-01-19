@@ -80,6 +80,7 @@ def test_invalid_func():
                   [3, 4, 5],
                   'myfunc')
 
+
 def test_paired_runs():
     permutation_test([1, 2, 3], [4, 5, 6], paired=True)
 
@@ -88,6 +89,7 @@ def test_paired_runs_approximate():
     permutation_test(
         [1, 2, 3], [4, 5, 6], paired=True, method="approximate", num_rounds=10
     )
+
 
 def test_paired_invalid_lengths():
     msg = "Populations must have same size in paired test"

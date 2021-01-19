@@ -16,6 +16,7 @@ except ImportError:
     def nottest(f):
         return f
 
+
 def all_combinations(m, n, paired=False):
     if paired:
         if m != n:

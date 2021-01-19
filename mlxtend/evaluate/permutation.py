@@ -16,6 +16,23 @@ except ImportError:
     def nottest(f):
         return f
 
+def all_combinations(m, n, paired=False):
+    if paired:
+        if m != n:
+            raise ValueError("Populations must have same size in paired test")
+            powerset_iter = chain.from_iterable(
+                combinations(range(n), r) for r in range(n)
+            )
+            for indices_1 in powerset_iter:
+                indices_2 = [i for i in range(n) if i not in indices_1]
+                indices_x = list(indices_1) + [i + n for i in indices_2]
+                indices_y = indices_2 + [i + n for i in indices_1]
+                yield indices_x, indices_y
+    else:
+        for indices_x in combinations(range(m + n), m):
+            indices_y = [i for i in range(m + n) if i not in indices_x]
+            yield list(indices_x), indices_y
+
 
 # decorator to prevent nose to consider
 # this as a unit test due to "test" in the name
@@ -51,7 +68,7 @@ def permutation_test(x, y, func='x_mean != y_mean', method='exact',
         Note that 'exact' is typically not feasible unless the dataset
         size is relatively small.
     paired : bool
-        If True, a paired test is performed by only exchanging each 
+        If True, a paired test is performed by only exchanging each
         datapoint with its associate.
     num_rounds : int (default: 1000)
         The number of permutation samples if `method='approximate'`.
@@ -116,59 +133,36 @@ def permutation_test(x, y, func='x_mean != y_mean', method='exact',
     # "n_A! x n_B!" as a scaling factor in the numerator and denominator
     # and using combinations instead of permutations simply saves computational
     # time
-    
-    if paired:
-        if m != n:
-            raise ValueError('Populations must have same size in paired test')
-        if method == 'exact':
-            powerset_iter = chain.from_iterable(
-                combinations(range(n), r) for r in range(n))
-            for indices_1 in powerset_iter:
-                indices_2 = [i for i in range(n) if i not in indices_1]
-                indices_x = list(indices_1) + [i + n for i in indices_2]
-                indices_y = indices_2 + [i + n for i in indices_1]
-                diff = func(combined[indices_x], combined[indices_y])
 
-                if diff > reference_stat or np.isclose(diff, reference_stat):
-                    at_least_as_extreme += 1.
+    if method == "exact":
+        for indices_x, indices_y in all_combinations(m, n, paired=paired):
+            diff = func(combined[list(indices_x)], combined[indices_y])
 
+            if diff > reference_stat or np.isclose(diff, reference_stat):
+                at_least_as_extreme += 1.0
+
+        if paired:
             num_rounds = 2 ** n
         else:
-            for i in range(num_rounds):
+            num_rounds = factorial(m + n) / (factorial(m) * factorial(n))
+
+    else:
+        for i in range(num_rounds):
+            if paired:
                 indices_1 = rng.randn(n) > 0
                 indices_2 = [i for i in range(n) if i not in indices_1]
                 indices_x = list(indices_1) + [i + n for i in indices_2]
                 indices_y = indices_2 + [i + n for i in indices_1]
                 diff = func(combined[indices_x], combined[indices_y])
-
-                if diff > reference_stat or np.isclose(diff, reference_stat):
-                    at_least_as_extreme += 1.
-
-            # To cover the actual experiment results
-            at_least_as_extreme += 1
-            num_rounds += 1
-    else:
-        if method == 'exact':
-            for indices_x in combinations(range(m + n), m):
-
-                indices_y = [i for i in range(m + n) if i not in indices_x]
-                diff = func(combined[list(indices_x)], combined[indices_y])
-
-                if diff > reference_stat or np.isclose(diff, reference_stat):
-                    at_least_as_extreme += 1.
-
-            num_rounds = factorial(m + n) / (factorial(m)*factorial(n))
-
-        else:
-            for i in range(num_rounds):
+            else:
                 rng.shuffle(combined)
                 diff = func(combined[:m], combined[m:])
 
-                if diff > reference_stat or np.isclose(diff, reference_stat):
-                    at_least_as_extreme += 1.
+            if diff > reference_stat or np.isclose(diff, reference_stat):
+                at_least_as_extreme += 1.
 
-            # To cover the actual experiment results
-            at_least_as_extreme += 1
-            num_rounds += 1
+        # To cover the actual experiment results
+        at_least_as_extreme += 1
+        num_rounds += 1
 
     return at_least_as_extreme / num_rounds

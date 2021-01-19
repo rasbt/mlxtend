@@ -7,7 +7,7 @@
 # License: BSD 3 clause
 
 import numpy as np
-from itertools import combinations
+from itertools import chain, combinations
 from math import factorial
 try:
     from nose.tools import nottest
@@ -21,7 +21,7 @@ except ImportError:
 # this as a unit test due to "test" in the name
 @nottest
 def permutation_test(x, y, func='x_mean != y_mean', method='exact',
-                     num_rounds=1000, seed=None):
+                     num_rounds=1000, seed=None, paired=False):
     """
     Nonparametric permutation test
 
@@ -50,6 +50,9 @@ def permutation_test(x, y, func='x_mean != y_mean', method='exact',
         given by `num_rounds`.
         Note that 'exact' is typically not feasible unless the dataset
         size is relatively small.
+    paired : bool
+        If True, a paired test is performed by only exchanging each 
+        datapoint with its associate.
     num_rounds : int (default: 1000)
         The number of permutation samples if `method='approximate'`.
     seed : int or None (default: None)
@@ -113,28 +116,59 @@ def permutation_test(x, y, func='x_mean != y_mean', method='exact',
     # "n_A! x n_B!" as a scaling factor in the numerator and denominator
     # and using combinations instead of permutations simply saves computational
     # time
+    
+    if paired:
+        if m != n:
+            raise ValueError('Populations must have same size in paired test')
+        if method == 'exact':
+            powerset_iter = chain.from_iterable(
+                combinations(range(n), r) for r in range(n))
+            for indices_1 in powerset_iter:
+                indices_2 = [i for i in range(n) if i not in indices_1]
+                indices_x = list(indices_1) + [i + n for i in indices_2]
+                indices_y = indices_2 + [i + n for i in indices_1]
+                diff = func(combined[indices_x], combined[indices_y])
 
-    if method == 'exact':
-        for indices_x in combinations(range(m + n), m):
+                if diff > reference_stat or np.isclose(diff, reference_stat):
+                    at_least_as_extreme += 1.
 
-            indices_y = [i for i in range(m + n) if i not in indices_x]
-            diff = func(combined[list(indices_x)], combined[indices_y])
+            num_rounds = 2 ** n
+        else:
+            for i in range(num_rounds):
+                indices_1 = rng.randn(n) > 0
+                indices_2 = [i for i in range(n) if i not in indices_1]
+                indices_x = list(indices_1) + [i + n for i in indices_2]
+                indices_y = indices_2 + [i + n for i in indices_1]
+                diff = func(combined[indices_x], combined[indices_y])
 
-            if diff > reference_stat or np.isclose(diff, reference_stat):
-                at_least_as_extreme += 1.
+                if diff > reference_stat or np.isclose(diff, reference_stat):
+                    at_least_as_extreme += 1.
 
-        num_rounds = factorial(m + n) / (factorial(m)*factorial(n))
-
+            # To cover the actual experiment results
+            at_least_as_extreme += 1
+            num_rounds += 1
     else:
-        for i in range(num_rounds):
-            rng.shuffle(combined)
-            diff = func(combined[:m], combined[m:])
+        if method == 'exact':
+            for indices_x in combinations(range(m + n), m):
 
-            if diff > reference_stat or np.isclose(diff, reference_stat):
-                at_least_as_extreme += 1.
+                indices_y = [i for i in range(m + n) if i not in indices_x]
+                diff = func(combined[list(indices_x)], combined[indices_y])
 
-        # To cover the actual experiment results
-        at_least_as_extreme += 1
-        num_rounds += 1
+                if diff > reference_stat or np.isclose(diff, reference_stat):
+                    at_least_as_extreme += 1.
+
+            num_rounds = factorial(m + n) / (factorial(m)*factorial(n))
+
+        else:
+            for i in range(num_rounds):
+                rng.shuffle(combined)
+                diff = func(combined[:m], combined[m:])
+
+                if diff > reference_stat or np.isclose(diff, reference_stat):
+                    at_least_as_extreme += 1.
+
+            # To cover the actual experiment results
+            at_least_as_extreme += 1
+            num_rounds += 1
 
     return at_least_as_extreme / num_rounds

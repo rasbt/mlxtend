@@ -21,14 +21,14 @@ def all_combinations(m, n, paired=False):
     if paired:
         if m != n:
             raise ValueError("Populations must have same size in paired test")
-            powerset_iter = chain.from_iterable(
-                combinations(range(n), r) for r in range(n)
-            )
-            for indices_1 in powerset_iter:
-                indices_2 = [i for i in range(n) if i not in indices_1]
-                indices_x = list(indices_1) + [i + n for i in indices_2]
-                indices_y = indices_2 + [i + n for i in indices_1]
-                yield indices_x, indices_y
+        powerset_iter = chain.from_iterable(
+            combinations(range(n), r) for r in range(n)
+        )
+        for indices_1 in powerset_iter:
+            indices_2 = [i for i in range(n) if i not in indices_1]
+            indices_x = list(indices_1) + [i + n for i in indices_2]
+            indices_y = indices_2 + [i + n for i in indices_1]
+            yield indices_x, indices_y
     else:
         for indices_x in combinations(range(m + n), m):
             indices_y = [i for i in range(m + n) if i not in indices_x]

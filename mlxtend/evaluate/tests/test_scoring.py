@@ -115,6 +115,15 @@ def test_matthews_corr_coef():
     assert round(res, 3) == 0.258, res
 
 
+def test_balanced_accuracy():
+    y_targ = np.array([0, 0, 0, 1, 1, 1, 1, 1, 2, 2])
+    y_pred = np.array([0, 1, 1, 0, 1, 1, 2, 2, 2, 2])
+    res = scoring(y_target=y_targ,
+                  y_predicted=y_pred,
+                  metric='balanced accuracy')
+    assert round(res, 3) == 0.578, res
+
+
 def test_avg_perclass_accuracy():
     y_targ = np.array([0, 0, 0, 1, 1, 1, 1, 1, 2, 2])
     y_pred = np.array([0, 1, 1, 0, 1, 1, 2, 2, 2, 2])

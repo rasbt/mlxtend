@@ -32,6 +32,22 @@ def test_standard():
     assert y_1 == 3
 
 
+def test_balanced_multiclass():
+    y_targ = np.array([0, 0, 0, 1, 1, 1, 1, 1, 2, 2])
+    y_pred = np.array([0, 1, 1, 0, 1, 1, 2, 2, 2, 2])
+
+    y = accuracy_score(y_targ, y_pred, method='balanced')
+    assert_almost_equal(y, 0.578, decimal=3)
+
+
+def test_balanced_binary():
+    y_targ = np.array([0, 0, 0, 1, 1, 1, 1, 1, 1, 0])
+    y_pred = np.array([0, 1, 1, 0, 1, 1, 1, 1, 1, 1])
+
+    y = accuracy_score(y_targ, y_pred, method='balanced')
+    assert_almost_equal(y, 0.542, decimal=3)
+
+
 def test_average():
     y_targ = np.array([0, 0, 0, 1, 1, 1, 1, 1, 2, 2])
     y_pred = np.array([0, 1, 1, 0, 1, 1, 2, 2, 2, 2])

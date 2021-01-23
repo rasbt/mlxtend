@@ -7,6 +7,26 @@ The CHANGELOG for the current development version is available at
 
 ---
 
+### Version 0.18.1 (TBD)
+
+##### Downloads
+
+- -
+
+##### New Features
+
+- Adds a second "balanced accuracy" interpretation ("balanced") to `accuracy_score` in addition to the existing "average" option to compute the scikit-learn-style balanced accuracy. ([#764](https://github.com/rasbt/mlxtend/pull/764))
+- Adds new `scatter_hist` function to `mlxtend.plotting` for generating a scattered histogram. ([#757](https://github.com/rasbt/mlxtend/issues/757) via [Maitreyee Mhasaka](https://github.com/Maitreyee1))
+
+ 
+
+##### Changes
+
+- -
+
+##### Bug Fixes
+
+- - 
 
 ### Version 0.18.0 (11/25/2020)
 
@@ -23,7 +43,7 @@ The CHANGELOG for the current development version is available at
 - The `bias_variance_decomp` function now supports Keras estimators. ([#725](https://github.com/rasbt/mlxtend/pull/725) via [@hanzigs](https://github.com/hanzigs))
 - Adds new `mlxtend.classifier.OneRClassifier` (One Rule Classfier) class, a simple rule-based classifier that is often used as a performance baseline or simple interpretable model. ([#726](https://github.com/rasbt/mlxtend/pull/726)
 - Adds new `create_counterfactual` method for creating counterfactuals to explain model predictions.  ([#740](https://github.com/rasbt/mlxtend/pull/740))
-- Adds new `scatter_hist` method for generating scattered histogram. ([#596](https://github.com/rasbt/mlxtend/issues/596))
+
 
 ##### Changes
 

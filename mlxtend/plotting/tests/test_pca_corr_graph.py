@@ -1,7 +1,14 @@
 import pytest
 from mlxtend.plotting import plot_pca_correlation_graph
 from mlxtend.data import iris_data
-from sklearn.decomposition.pca import PCA
+
+from distutils.version import LooseVersion as Version
+from sklearn import __version__ as sklearn_version
+
+if Version(sklearn_version) < '0.22':
+    from sklearn.decomposition.pca import PCA
+else:
+    from sklearn.decomposition import PCA
 
 
 def test_pass_pca_corr():
@@ -62,4 +69,3 @@ def test_not_enough_components():
         plot_pca_correlation_graph(X, variables_names=['1', '2', '3', '4'],
                                    X_pca=X_pca,
                                    explained_variance=eigen[:-1])
-        

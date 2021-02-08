@@ -3,9 +3,6 @@
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
-
-import sys
-
 import numpy as np
 from numpy import nan
 from numpy.testing import assert_almost_equal
@@ -761,12 +758,19 @@ def test_gridsearch():
          'sfs__estimator__n_neighbors': [1, 2, 3, 4]}
     ]
 
-    gs = GridSearchCV(estimator=pipe,
-                      param_grid=param_grid,
-                      n_jobs=1,
-                      iid=False,
-                      cv=5,
-                      refit=False)
+    if Version(sklearn_version) < Version("0.24.1"):
+        gs = GridSearchCV(estimator=pipe,
+                          param_grid=param_grid,
+                          n_jobs=1,
+                          iid=False,
+                          cv=5,
+                          refit=False)
+    else:
+        gs = GridSearchCV(estimator=pipe,
+                          param_grid=param_grid,
+                          n_jobs=1,
+                          cv=5,
+                          refit=False)
 
     gs = gs.fit(X, y)
 

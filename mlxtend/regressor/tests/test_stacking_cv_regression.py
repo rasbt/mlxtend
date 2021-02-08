@@ -109,12 +109,19 @@ def test_gridsearch_numerate_regr():
               'meta_regressor__C': [0.01, 1.0],
               'use_features_in_secondary': [True, False]}
 
-    grid = GridSearchCV(estimator=stack,
-                        param_grid=params,
-                        cv=5,
-                        iid=False,
-                        refit=True,
-                        verbose=0)
+    if Version(sklearn_version) < Version("0.24.1"):
+        grid = GridSearchCV(estimator=stack,
+                            param_grid=params,
+                            cv=5,
+                            iid=False,
+                            refit=True,
+                            verbose=0)
+    else:
+        grid = GridSearchCV(estimator=stack,
+                            param_grid=params,
+                            cv=5,
+                            refit=True,
+                            verbose=0)
     grid = grid.fit(X1, y)
     got = round(grid.best_score_, 1)
     assert got >= 0.1 and got <= 0.2, '%f is wrong' % got
@@ -155,11 +162,17 @@ def test_regressor_gridsearch():
 
     params = {'regressors': [[ridge, lr], [lr, ridge, lr]]}
 
-    grid = GridSearchCV(estimator=stregr,
-                        param_grid=params,
-                        iid=False,
-                        cv=5,
-                        refit=True)
+    if Version(sklearn_version) < Version("0.24.1"):
+        grid = GridSearchCV(estimator=stregr,
+                            param_grid=params,
+                            iid=False,
+                            cv=5,
+                            refit=True)
+    else:
+        grid = GridSearchCV(estimator=stregr,
+                            param_grid=params,
+                            cv=5,
+                            refit=True)
     grid.fit(X1, y)
 
     assert len(grid.best_params_['regressors']) == 3
@@ -374,12 +387,19 @@ def test_gridsearch_replace_mix():
               'linearregression': [None, lasso, ridge],
               'svr__kernel': ['poly']}
 
-    grid = GridSearchCV(estimator=stack,
-                        param_grid=params,
-                        cv=KFold(5, shuffle=True, random_state=42),
-                        iid=False,
-                        refit=True,
-                        verbose=0)
+    if Version(sklearn_version) < Version("0.24.1"):
+        grid = GridSearchCV(estimator=stack,
+                            param_grid=params,
+                            cv=KFold(5, shuffle=True, random_state=42),
+                            iid=False,
+                            refit=True,
+                            verbose=0)
+    else:
+        grid = GridSearchCV(estimator=stack,
+                            param_grid=params,
+                            cv=KFold(5, shuffle=True, random_state=42),
+                            refit=True,
+                            verbose=0)
     grid = grid.fit(X1, y)
 
     got1 = round(grid.best_score_, 2)

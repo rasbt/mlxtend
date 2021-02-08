@@ -14,6 +14,10 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from scipy.sparse import issparse
 from sklearn.model_selection import GridSearchCV
 
+from distutils.version import LooseVersion as Version
+from sklearn import __version__ as sklearn_version
+
+
 iris = load_iris()
 X, y = iris.data, iris.target
 
@@ -37,5 +41,8 @@ def test_pipeline():
     rf = RandomForestClassifier(n_estimators=10)
     param_grid = [{'randomforestclassifier__n_estimators': [1, 5, 10]}]
     pipe = make_pipeline(StandardScaler(), DenseTransformer(), rf)
-    grid = GridSearchCV(pipe, param_grid, cv=3, n_jobs=1, iid=False)
+    if Version(sklearn_version) < Version("0.24.1"):
+        grid = GridSearchCV(pipe, param_grid, cv=3, n_jobs=1, iid=False)
+    else:
+        grid = GridSearchCV(pipe, param_grid, cv=3, n_jobs=1)
     grid.fit(X, y)

@@ -20,6 +20,9 @@ from mlxtend.classifier import EnsembleVoteClassifier
 from mlxtend.data import iris_data
 from mlxtend.utils import assert_raises
 
+from distutils.version import LooseVersion as Version
+from sklearn import __version__ as sklearn_version
+
 X, y = iris_data()
 X = X[:, 1:3]
 
@@ -195,7 +198,10 @@ def test_EnsembleVoteClassifier_gridsearch():
     params = {'logisticregression__C': [1.0, 100.0],
               'randomforestclassifier__n_estimators': [20, 200]}
 
-    grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5, iid=False)
+    if Version(sklearn_version) < '0.24.1':
+        grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5, iid=False)
+    else:
+        grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
 
     X, y = iris_data()
     grid.fit(X, y)
@@ -219,7 +225,10 @@ def test_EnsembleVoteClassifier_gridsearch_enumerate_names():
               'randomforestclassifier__n_estimators': [5, 20],
               'voting': ['hard', 'soft']}
 
-    grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5, iid=False)
+    if Version(sklearn_version) < '0.24.1':
+        grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5, iid=False)
+    else:
+        grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
 
     X, y = iris_data()
     grid = grid.fit(X, y)
@@ -252,11 +261,17 @@ def test_classifier_gridsearch():
 
     params = {'clfs': [[clf1, clf1, clf1], [clf2, clf3]]}
 
-    grid = GridSearchCV(estimator=eclf,
-                        param_grid=params,
-                        iid=False,
-                        cv=5,
-                        refit=True)
+    if Version(sklearn_version) < '0.24.1':
+        grid = GridSearchCV(estimator=eclf,
+                            param_grid=params,
+                            iid=False,
+                            cv=5,
+                            refit=True)
+    else:
+        grid = GridSearchCV(estimator=eclf,
+                            param_grid=params,
+                            cv=5,
+                            refit=True)
     grid.fit(X, y)
 
     assert len(grid.best_params_['clfs']) == 2

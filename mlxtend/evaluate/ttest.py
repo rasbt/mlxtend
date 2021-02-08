@@ -189,7 +189,10 @@ def paired_ttest_kfold_cv(estimator1, estimator2, X, y,
 
     """
 
-    kf = KFold(n_splits=cv, random_state=random_seed, shuffle=shuffle)
+    if not shuffle:
+        kf = KFold(n_splits=cv, shuffle=shuffle)
+    else:
+        kf = KFold(n_splits=cv, random_state=random_seed, shuffle=shuffle)
 
     if scoring is None:
         if estimator1._estimator_type == 'classifier':

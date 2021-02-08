@@ -14,6 +14,9 @@ from sklearn import datasets
 from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import GridSearchCV
 
+from distutils.version import LooseVersion as Version
+from sklearn import __version__ as sklearn_version
+
 
 def test_ColumnSelector():
     X1_in = np.ones((4, 8))
@@ -45,12 +48,19 @@ def test_ColumnSelector_in_gridsearch():
     grid = {'columnselector__cols': [[1, 2], [1, 2, 3], 0, [1]],
             'logisticregression__C': [0.1, 1.0, 10.0]}
 
-    gsearch1 = GridSearchCV(estimator=pipe,
-                            param_grid=grid,
-                            iid=False,
-                            cv=5,
-                            n_jobs=1,
-                            refit=False)
+    if Version(sklearn_version) < Version("0.24.1"):
+        gsearch1 = GridSearchCV(estimator=pipe,
+                                param_grid=grid,
+                                iid=False,
+                                cv=5,
+                                n_jobs=1,
+                                refit=False)
+    else:
+        gsearch1 = GridSearchCV(estimator=pipe,
+                                param_grid=grid,
+                                cv=5,
+                                n_jobs=1,
+                                refit=False)
 
     gsearch1.fit(X, y)
     assert gsearch1.best_params_['columnselector__cols'] == [1, 2, 3]
@@ -105,13 +115,22 @@ def test_ColumnSelector_with_dataframe_in_gridsearch():
             'linearregression__copy_X': [True, False],
             'linearregression__fit_intercept': [True, False]
             }
-    gsearch1 = GridSearchCV(estimator=pipe,
-                            param_grid=grid,
-                            cv=5,
-                            n_jobs=1,
-                            iid=False,
-                            scoring='neg_mean_squared_error',
-                            refit=False)
+
+    if Version(sklearn_version) < Version("0.24.1"):
+        gsearch1 = GridSearchCV(estimator=pipe,
+                                param_grid=grid,
+                                cv=5,
+                                n_jobs=1,
+                                iid=False,
+                                scoring='neg_mean_squared_error',
+                                refit=False)
+    else:
+        gsearch1 = GridSearchCV(estimator=pipe,
+                                param_grid=grid,
+                                cv=5,
+                                n_jobs=1,
+                                scoring='neg_mean_squared_error',
+                                refit=False)
 
     gsearch1.fit(X, y)
     assert gsearch1.best_params_['columnselector__cols'] == ['ZN', 'RM', 'AGE']

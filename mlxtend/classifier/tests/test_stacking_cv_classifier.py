@@ -206,7 +206,10 @@ def test_gridsearch():
     params = {'meta_classifier__C': [1.0, 100.0],
               'randomforestclassifier__n_estimators': [20, 200]}
 
-    grid = GridSearchCV(estimator=sclf, param_grid=params, cv=5, iid=False)
+    if Version(sklearn_version) < '0.24.1':
+        grid = GridSearchCV(estimator=sclf, param_grid=params, cv=5, iid=False)
+    else:
+        grid = GridSearchCV(estimator=sclf, param_grid=params, cv=5)
     X, y = iris_data()
     grid.fit(X, y)
 
@@ -230,7 +233,10 @@ def test_gridsearch_enumerate_names():
               'randomforestclassifier-2__n_estimators': [5, 20],
               'use_probas': [True, False]}
 
-    grid = GridSearchCV(estimator=sclf, param_grid=params, cv=5, iid=False)
+    if Version(sklearn_version) < '0.24.1':
+        grid = GridSearchCV(estimator=sclf, param_grid=params, cv=5, iid=False)
+    else:
+        grid = GridSearchCV(estimator=sclf, param_grid=params, cv=5)
     X, y = iris_data()
     grid = grid.fit(X, y)
 
@@ -399,11 +405,17 @@ def test_classifier_gridsearch():
 
     params = {'classifiers': [[clf1], [clf1, clf2, clf3]]}
 
-    grid = GridSearchCV(estimator=sclf,
-                        param_grid=params,
-                        cv=5,
-                        iid=False,
-                        refit=True)
+    if Version(sklearn_version) < '0.24.1':
+        grid = GridSearchCV(estimator=sclf,
+                            param_grid=params,
+                            cv=5,
+                            iid=False,
+                            refit=True)
+    else:
+        grid = GridSearchCV(estimator=sclf,
+                            param_grid=params,
+                            cv=5,
+                            refit=True)
     grid.fit(X_iris, y_iris)
 
     assert len(grid.best_params_['classifiers']) == 3, \
@@ -460,8 +472,9 @@ def test_meta_feat_reordering():
     else:
         expected_value = 0.85
 
-    assert round(roc_auc_score(y_train,
-                               stclf.train_meta_features_[:, 1]), 2) == expected_value, \
+    assert round(roc_auc_score(
+        y_train,
+        stclf.train_meta_features_[:, 1]), 2) == expected_value, \
         round(roc_auc_score(y_train,
                             stclf.train_meta_features_[:, 1]), 2)
 

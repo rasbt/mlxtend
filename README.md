@@ -1,10 +1,9 @@
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.00638/status.svg)](https://doi.org/10.21105/joss.00638)
-[![Build Status](https://travis-ci.org/rasbt/mlxtend.svg?branch=master)](https://travis-ci.org/rasbt/mlxtend)
-[![Build status](https://ci.appveyor.com/api/projects/status/7vx20e0h5dxcyla2/branch/master?svg=true)](https://ci.appveyor.com/project/rasbt/mlxtend/branch/master)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2a199e28871c477d9ecf6e200b4977b9)](https://www.codacy.com/manual/rasbt/mlxtend?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rasbt/mlxtend&amp;utm_campaign=Badge_Grade)
+[![PyPI version](https://badge.fury.io/py/mlxtend.svg)](http://badge.fury.io/py/mlxtend)
+[![Anaconda-Server Badge](https://anaconda.org/conda-forge/mlxtend/badges/version.svg)](https://anaconda.org/conda-forge/mlxtend)
+[![Build statu  s](https://ci.appveyor.com/api/projects/status/7vx20e0h5dxcyla2/branch/master?svg=true)](https://ci.appveyor.com/project/rasbt/mlxtend/branch/master)
 [![Coverage Status](https://coveralls.io/repos/rasbt/mlxtend/badge.svg?branch=master&service=github)](https://coveralls.io/github/rasbt/mlxtend?branch=master)
-![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)
-![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg)
+![Python 3](https://img.shields.io/badge/python-3-blue.svg)
 ![License](https://img.shields.io/badge/license-BSD-blue.svg)
 [![Discuss](https://img.shields.io/badge/discuss-google_group-blue.svg)](https://groups.google.com/forum/#!forum/mlxtend)
 
@@ -14,7 +13,7 @@
 
 <br>
 
-Sebastian Raschka 2014-2020
+Sebastian Raschka 2014-2021
 
 <br>
 

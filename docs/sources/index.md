@@ -11,7 +11,7 @@
 [![Anaconda-Server Badge](https://anaconda.org/conda-forge/mlxtend/badges/version.svg)](https://anaconda.org/conda-forge/mlxtend)
 ![Python 3](https://img.shields.io/badge/python-3-blue.svg)
 [![License](https://img.shields.io/badge/license-BSD-blue.svg)](./license)
-[![Discuss](https://img.shields.io/badge/discuss-google_group-blue.svg)](https://groups.google.com/forum/#!forum/mlxtend)
+[![Discuss](https://img.shields.io/badge/discuss-github-blue.svg)](https://github.com/rasbt/mlxtend/discussions)
 
 <hr>
 
@@ -20,7 +20,7 @@
 - **Documentation:** [http://rasbt.github.io/mlxtend](http://rasbt.github.io/mlxtend)
 - Source code repository: [https://github.com/rasbt/mlxtend](https://github.com/rasbt/mlxtend)
 - PyPI: [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend)
-- Questions? Check out the [Google Groups mailing list](https://groups.google.com/forum/#!forum/mlxtend)
+- Questions? Check out the [GitHub Discussions board](https://github.com/rasbt/mlxtend/discussions)
 
 <hr>
 

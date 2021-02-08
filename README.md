@@ -6,7 +6,7 @@
 ![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)
 ![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg)
 ![License](https://img.shields.io/badge/license-BSD-blue.svg)
-[![Discuss](https://img.shields.io/badge/discuss-google_group-blue.svg)](https://groups.google.com/forum/#!forum/mlxtend)
+[![Discuss](https://img.shields.io/badge/discuss-github-blue.svg)](https://github.com/rasbt/mlxtend/discussions)
 
 ![](./docs/sources/img/logo.png)
 
@@ -24,7 +24,7 @@ Sebastian Raschka 2014-2020
 - PyPI: [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend)
 - Changelog: [http://rasbt.github.io/mlxtend/CHANGELOG](http://rasbt.github.io/mlxtend/CHANGELOG)
 - Contributing: [http://rasbt.github.io/mlxtend/CONTRIBUTING](http://rasbt.github.io/mlxtend/CONTRIBUTING)
-- Questions? Check out the [Google Groups mailing list](https://groups.google.com/forum/#!forum/mlxtend)
+- Questions? Check out the [GitHub Discussions board](https://github.com/rasbt/mlxtend/discussions)
 
 <br>
 <br>

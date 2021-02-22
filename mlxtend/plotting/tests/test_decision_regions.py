@@ -68,9 +68,9 @@ def test_y_int_ary():
     sr.fit(X[:, :2], y)
     assert_raises(ValueError,
                   'y must be an integer array. Found float64. '
-                  'Try passing the array as y.astype(np.integer)',
+                  'Try passing the array as y.astype(np.int64)',
                   plot_decision_regions,
-                  X[:, :2], y.astype(np.float), sr)
+                  X[:, :2], y.astype(np.float64), sr)
 
 
 def test_y_ary_dim():

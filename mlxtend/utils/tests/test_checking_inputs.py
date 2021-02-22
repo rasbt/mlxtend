@@ -64,10 +64,10 @@ def test_check_Xy_invalid_dtype_y():
 
     if (sys.version_info > (3, 0)):
         expect = ('y must be an integer array. Found <U1. '
-                  'Try passing the array as y.astype(np.integer)')
+                  'Try passing the array as y.astype(np.int64)')
     else:
         expect = ('y must be an integer array. Found |S1. '
-                  'Try passing the array as y.astype(np.integer)')
+                  'Try passing the array as y.astype(np.int64)')
     assert_raises(ValueError,
                   expect,
                   check_Xy,
@@ -84,7 +84,7 @@ def test_check_Xy_invalid_dim_y():
                   s,
                   check_Xy,
                   X,
-                  X.astype(np.integer))
+                  X.astype(np.int64))
 
 
 def test_check_Xy_invalid_dim_X():

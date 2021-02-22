@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2021
 # mlxtend Machine Learning Library Extensions
 #
 # Implementation of the logistic regression algorithm for classification.
@@ -24,20 +24,25 @@ class LogisticRegression(_BaseModel, _IterativeModel, _Classifier):
     ------------
     eta : float (default: 0.01)
         Learning rate (between 0.0 and 1.0)
+
     epochs : int (default: 50)
         Passes over the training dataset.
         Prior to each epoch, the dataset is shuffled
         if `minibatches > 1` to prevent cycles in stochastic gradient descent.
+
     l2_lambda : float
         Regularization parameter for L2 regularization.
         No regularization if l2_lambda=0.0.
+
     minibatches : int (default: 1)
         The number of minibatches for gradient-based optimization.
         If 1: Gradient Descent learning
         If len(y): Stochastic Gradient Descent (SGD) online learning
         If 1 < minibatches < len(y): SGD Minibatch learning
+
     random_seed : int (default: None)
         Set random state for shuffling and initializing the weights.
+
     print_progress : int (default: 0)
         Prints progress in fitting to stderr.
         0: No output
@@ -49,8 +54,10 @@ class LogisticRegression(_BaseModel, _IterativeModel, _Classifier):
     -----------
     w_ : 2d-array, shape={n_features, 1}
       Model weights after fitting.
+
     b_ : 1d-array, shape={1,}
       Bias unit after fitting.
+
     cost_ : list
         List of floats with cross_entropy cost (sgd or gd) for every
         epoch.
@@ -78,6 +85,17 @@ class LogisticRegression(_BaseModel, _IterativeModel, _Classifier):
         self.print_progress = print_progress
         self._is_fitted = False
 
+    def _forward(self, X):
+        z = self._net_input(X)
+        a = self._sigmoid_activation(z)
+        return a
+
+    def _backward(self, X, y_true, y_probas):
+        grad_loss_wrt_out = y_true - y_probas
+        grad_loss_wrt_w = -X.T @ grad_loss_wrt_out.reshape(-1, 1)
+        grad_loss_wrt_b = -np.sum(grad_loss_wrt_out)
+        return grad_loss_wrt_w, grad_loss_wrt_b
+
     def _fit(self, X, y, init_params=True):
 
         self._check_target_array(y, allowed={(0, 1)})
@@ -99,14 +117,15 @@ class LogisticRegression(_BaseModel, _IterativeModel, _Classifier):
                     data_ary=y,
                     shuffle=True):
 
-                y_val = self._activation(X[idx])
-                errors = (y[idx] - y_val)
-                neg_grad = X[idx].T.dot(errors).reshape(self.w_.shape)
-                l2_reg = self.l2_lambda * self.w_
-                self.w_ += self.eta * (neg_grad - l2_reg)
-                self.b_ += self.eta * errors.sum()
+                y_val = self._forward(X[idx])
+                grad_loss_wrt_w, grad_loss_wrt_b = self._backward(
+                    X[idx], y_true=y[idx], y_probas=y_val)
 
-            cost = self._logit_cost(y, self._activation(X))
+                l2_reg = self.l2_lambda * self.w_
+                self.w_ += self.eta * (-grad_loss_wrt_w - l2_reg)
+                self.b_ += self.eta * -grad_loss_wrt_b.sum()
+
+            cost = self._logit_cost(y, self._forward(X))
             self.cost_.append(cost)
             if self.print_progress:
                 self._print_progress(iteration=(i + 1),
@@ -115,17 +134,12 @@ class LogisticRegression(_BaseModel, _IterativeModel, _Classifier):
         return self
 
     def _predict(self, X):
-        # equivalent to np.where(self._activation(X) < 0.5, 0, 1)
+        # equivalent to np.where(self._forward(X) < 0.5, 0, 1)
         return np.where(self._net_input(X) < 0.0, 0, 1)
 
     def _net_input(self, X):
         """Compute the linear net input."""
         return (X.dot(self.w_) + self.b_).flatten()
-
-    def _activation(self, X):
-        """ Compute sigmoid activation."""
-        z = self._net_input(X)
-        return self._sigmoid(z)
 
     def predict_proba(self, X):
         """Predict class probabilities of X from the net input.
@@ -141,7 +155,7 @@ class LogisticRegression(_BaseModel, _IterativeModel, _Classifier):
         Class 1 probability : float
 
         """
-        return self._activation(X)
+        return self._forward(X)
 
     def _logit_cost(self, y, y_val):
         logit = -y.dot(np.log(y_val)) - ((1 - y).dot(np.log(1 - y_val)))
@@ -150,6 +164,6 @@ class LogisticRegression(_BaseModel, _IterativeModel, _Classifier):
             logit += l2
         return logit
 
-    def _sigmoid(self, z):
+    def _sigmoid_activation(self, z):
         """Compute the output of the logistic sigmoid function."""
         return 1.0 / (1.0 + np.exp(-z))

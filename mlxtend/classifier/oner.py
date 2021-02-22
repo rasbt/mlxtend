@@ -205,7 +205,7 @@ class OneRClassifier(BaseEstimator, ClassifierMixin):
 
         rules = self.prediction_dict_['rules (value: class)']
 
-        y_pred = np.zeros(X.shape[0], dtype=np.int)
+        y_pred = np.zeros(X.shape[0], dtype=np.int64)
 
         # Set up labels for those class labels in the
         # dataset for which no rule exists. We use the

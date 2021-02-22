@@ -79,7 +79,7 @@ def make_multiplexer_dataset(address_bits=2, sample_size=100,
 
     # use numpy's instead of python's round because of consistent
     # banker's rounding behavior across versions
-    n_positives = np.round(sample_size*positive_class_ratio).astype(np.int)
+    n_positives = np.round(sample_size*positive_class_ratio).astype(np.int64)
     n_negatives = sample_size - n_positives
 
     rng = np.random.RandomState(random_seed)
@@ -104,7 +104,7 @@ def make_multiplexer_dataset(address_bits=2, sample_size=100,
             y_neg.append(class_label)
 
     X, y = X_pos + X_neg, y_pos + y_neg
-    X, y = np.array(X, dtype=np.int), np.array(y, dtype=np.int)
+    X, y = np.array(X, dtype=np.int64), np.array(y, dtype=np.int64)
 
     if shuffle:
         p = rng.permutation(y.shape[0])

@@ -160,9 +160,9 @@ class SoftmaxRegression(_BaseModel, _IterativeModel,
                     X[idx], y_true=y_enc[idx], y_probas=y_probas)
 
                 # update in opp. direction of the cost gradient
-                self.w_ += (self.eta * -grad_loss_wrt_w +
-                            self.eta * self.l2 * self.w_)
-                self.b_ += (self.eta * -grad_loss_wrt_b)
+                l2_reg = self.l2 * self.w_
+                self.w_ += self.eta * (-grad_loss_wrt_w - l2_reg)
+                self.b_ += self.eta * -grad_loss_wrt_b
 
             # compute cost of the whole epoch
             y_probas = self._forward(X)

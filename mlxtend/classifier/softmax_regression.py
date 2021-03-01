@@ -140,7 +140,7 @@ class SoftmaxRegression(_BaseModel, _IterativeModel,
                 random_seed=self.random_seed)
             self.cost_ = []
 
-        y_enc = self._one_hot(y=y, n_labels=self.n_classes, dtype=np.float64)
+        y_enc = self._one_hot(y=y, n_labels=self.n_classes, dtype=np.float_)
 
         self.init_time_ = time()
         rgen = np.random.RandomState(self.random_seed)

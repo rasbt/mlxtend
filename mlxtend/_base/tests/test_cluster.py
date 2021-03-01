@@ -52,7 +52,7 @@ def test_check_labels_not_ok_1():
 
 
 def test_check_labels_integer_notok():
-    y = np.array([1., 2.], dtype=np.float64)
+    y = np.array([1., 2.], dtype=np.float_)
     cl = BlankClassifier(print_progress=0, random_seed=1)
     with pytest.raises(AttributeError) as excinfo:
         cl._check_target_array(y)

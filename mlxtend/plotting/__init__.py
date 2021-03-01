@@ -19,8 +19,7 @@ from .checkerboard import checkerboard_plot
 from .ecdf import ecdf
 from .scatterplotmatrix import scatterplotmatrix
 from .pca_correlation_graph import plot_pca_correlation_graph
-
-
+from .scatter_hist import scatter_hist
 __all__ = ["plot_learning_curves",
            "plot_decision_regions",
            "plot_confusion_matrix",
@@ -34,4 +33,5 @@ __all__ = ["plot_learning_curves",
            "checkerboard_plot",
            "ecdf",
            "scatterplotmatrix",
-           "plot_pca_correlation_graph"]
+           "plot_pca_correlation_graph",
+           "scatter_hist"]

@@ -19,7 +19,7 @@ def get_feature_quartiles(X):
         for q, class_label in zip([1.0, 0.75, 0.5, 0.25], [3, 2, 1, 0]):
             threshold = np.quantile(X[:, col], q=q)
             X_discretized[X[:, col] <= threshold, col] = class_label
-    return X_discretized.astype(np.int64)
+    return X_discretized.astype(np.int_)
 
 
 Xd = get_feature_quartiles(X)

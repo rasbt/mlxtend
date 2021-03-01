@@ -17,9 +17,9 @@ def test_defaults():
     X, y = make_multiplexer_dataset()
 
     assert X.shape == (100, 6), X.shape
-    assert X.dtype == np.int64
+    assert X.dtype == np.int_
     assert y.shape == (100, ), y.shape
-    assert y.dtype == np.int64
+    assert y.dtype == np.int_
 
 
 def test_invalid_address_bits():

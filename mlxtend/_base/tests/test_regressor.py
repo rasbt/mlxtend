@@ -29,7 +29,7 @@ def test_float_ok():
 
 
 def test_float_fail():
-    y = np.array([1, 2], dtype=np.int64)
+    y = np.array([1, 2], dtype=np.int_)
     reg = BlankRegressor()
     assert_raises(AttributeError,
                   'y must be a float array.\nFound int64',

@@ -81,18 +81,27 @@ def test_invalid_func():
                   'myfunc')
 
 
-def test_paired_runs():
-    permutation_test([1, 2, 3], [4, 5, 6], paired=True)
-
-
 def test_paired_runs_approximate():
-    permutation_test(
-        [1, 2, 3], [4, 5, 6], paired=True, method="approximate", num_rounds=10
+    a = [3.67, 1.72, 3.46, 2.60, 2.03, 2.10, 3.01]
+    b = [2.11, 1.79, 2.71, 1.89, 1.69, 1.71, 2.01]
+    p = permutation_test(
+        a, b, paired=True, method="approximate", seed=0, num_rounds=100000
     )
+    assert round(p, 3) == 0.031
+
+
+def test_paired_runs_exact():
+    a = [3.67, 1.72, 3.46, 2.60, 2.03, 2.10, 3.01]
+    b = [2.11, 1.79, 2.71, 1.89, 1.69, 1.71, 2.01]
+    p = permutation_test(
+        a, b, paired=True, method="exact"
+    )
+    assert round(p, 3) == 0.031
 
 
 def test_paired_invalid_lengths():
-    msg = "Populations must have same size in paired test"
+    msg = ('x and y must have the same'
+           ' length if `paired=True`')
     assert_raises(
         ValueError, msg, permutation_test, [1, 2, 3], [3, 4], paired=True
     )

@@ -46,7 +46,7 @@ def vectorspace_orthonormalization(ary,  # method='gram-schmidt',
     #   2c) Normalize if linearly independent,
     #       and set to zero otherwise
 
-    arr = ary.astype(np.float).copy()
+    arr = ary.astype(np.float_).copy()
 
     for i in range(arr.shape[1]):
         for j in range(i):

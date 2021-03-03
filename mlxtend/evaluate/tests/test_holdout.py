@@ -12,6 +12,9 @@ from mlxtend.evaluate import RandomHoldoutSplit
 from mlxtend.evaluate import PredefinedHoldoutSplit
 from mlxtend.data import iris_data
 
+from distutils.version import LooseVersion as Version
+from sklearn import __version__ as sklearn_version
+
 
 X, y = iris_data()
 
@@ -65,10 +68,18 @@ def test_randomholdoutsplit_in_sfs():
 def test_randomholdoutsplit_in_grid():
     params = {'n_neighbors': [1, 2, 3, 4, 5]}
 
-    grid = GridSearchCV(KNeighborsClassifier(),
-                        iid=False,
-                        param_grid=params,
-                        cv=RandomHoldoutSplit(valid_size=0.3, random_seed=123))
+    if Version(sklearn_version) < '0.24.1':
+        grid = GridSearchCV(KNeighborsClassifier(),
+                            iid=False,
+                            param_grid=params,
+                            cv=RandomHoldoutSplit(valid_size=0.3,
+                                                  random_seed=123))
+    else:
+        grid = GridSearchCV(KNeighborsClassifier(),
+                            param_grid=params,
+                            cv=RandomHoldoutSplit(valid_size=0.3,
+                                                  random_seed=123))
+
     grid.fit(X, y)
     assert grid.n_splits_ == 1
 
@@ -124,9 +135,16 @@ def test_predefinedholdoutsplit_in_sfs():
 def test_predefinedholdoutsplit_in_grid():
     params = {'n_neighbors': [1, 3, 5]}
 
-    grid = GridSearchCV(KNeighborsClassifier(),
-                        param_grid=params,
-                        iid=False,
-                        cv=PredefinedHoldoutSplit(valid_indices=[0, 1, 99]))
+    if Version(sklearn_version) < '0.24.1':
+        grid = GridSearchCV(KNeighborsClassifier(),
+                            param_grid=params,
+                            iid=False,
+                            cv=PredefinedHoldoutSplit(
+                                valid_indices=[0, 1, 99]))
+    else:
+        grid = GridSearchCV(KNeighborsClassifier(),
+                            param_grid=params,
+                            cv=PredefinedHoldoutSplit(
+                                valid_indices=[0, 1, 99]))
     grid.fit(X, y)
     assert grid.n_splits_ == 1

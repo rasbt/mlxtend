@@ -95,7 +95,6 @@
 - [plot_linear_regression](user_guide/plotting/plot_linear_regression.md)
 - [plot_sequential_feature_selection](user_guide/plotting/plot_sequential_feature_selection.md)
 - [scatterplotmatrix](user_guide/plotting/scatterplotmatrix.md)
-- [scatter_hist](user_guide/plotting/scatter_hist.md)
 - [stacked_barplot](user_guide/plotting/stacked_barplot.md)
 
 ## `preprocessing`

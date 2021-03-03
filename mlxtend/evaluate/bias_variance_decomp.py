@@ -45,8 +45,9 @@ def bias_variance_decomp(estimator, X_train, y_train, X_test, y_test,
         Currently allowed values are '0-1_loss' and 'mse'.
 
     num_rounds : int (default=200)
-        Number of bootstrap rounds for performing the bias-variance
-        decomposition.
+        Number of bootstrap rounds (sampling from the training set)
+        for performing the bias-variance decomposition. Each bootstrap
+        sample has the same size as the original training set.
 
     random_seed : int (default=None)
         Random seed for the bootstrap sampling used for the

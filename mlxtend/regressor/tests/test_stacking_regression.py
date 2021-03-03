@@ -19,6 +19,8 @@ from sklearn.model_selection import train_test_split
 from scipy import sparse
 from numpy.testing import assert_almost_equal
 from sklearn.base import clone
+from distutils.version import LooseVersion as Version
+from sklearn import __version__ as sklearn_version
 
 
 # Generating a sample dataset
@@ -160,12 +162,19 @@ def test_gridsearch():
               'svr__C': [0.01, 1.0],
               'meta_regressor__C': [0.01, 1.0]}
 
-    grid = GridSearchCV(estimator=stregr,
-                        param_grid=params,
-                        cv=5,
-                        iid=False,
-                        refit=True,
-                        verbose=0)
+    if Version(sklearn_version) < Version("0.24.1"):
+        grid = GridSearchCV(estimator=stregr,
+                            param_grid=params,
+                            cv=5,
+                            iid=False,
+                            refit=True,
+                            verbose=0)
+    else:
+        grid = GridSearchCV(estimator=stregr,
+                            param_grid=params,
+                            cv=5,
+                            refit=True,
+                            verbose=0)
     grid = grid.fit(X1, y)
     best = 0.1
     got = round(grid.best_score_, 2)
@@ -184,12 +193,19 @@ def test_gridsearch_numerate_regr():
               'svr__C': [0.01, 1.0],
               'meta_regressor__C': [0.01, 1.0]}
 
-    grid = GridSearchCV(estimator=stregr,
-                        param_grid=params,
-                        cv=5,
-                        iid=False,
-                        refit=True,
-                        verbose=0)
+    if Version(sklearn_version) < Version("0.24.1"):
+        grid = GridSearchCV(estimator=stregr,
+                            param_grid=params,
+                            cv=5,
+                            iid=False,
+                            refit=True,
+                            verbose=0)
+    else:
+        grid = GridSearchCV(estimator=stregr,
+                            param_grid=params,
+                            cv=5,
+                            refit=True,
+                            verbose=0)
     grid = grid.fit(X1, y)
     best = 0.1
     got = round(grid.best_score_, 2)
@@ -262,11 +278,17 @@ def test_regressor_gridsearch():
 
     params = {'regressors': [[lr], [lr, ridge]]}
 
-    grid = GridSearchCV(estimator=stregr,
-                        param_grid=params,
-                        cv=5,
-                        iid=False,
-                        refit=True)
+    if Version(sklearn_version) < Version("0.24.1"):
+        grid = GridSearchCV(estimator=stregr,
+                            param_grid=params,
+                            cv=5,
+                            iid=False,
+                            refit=True)
+    else:
+        grid = GridSearchCV(estimator=stregr,
+                            param_grid=params,
+                            cv=5,
+                            refit=True)
     grid.fit(X1, y)
 
     assert len(grid.best_params_['regressors']) == 2

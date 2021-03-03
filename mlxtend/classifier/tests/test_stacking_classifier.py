@@ -308,7 +308,7 @@ def test_gridsearch():
     params = {'meta_classifier__C': [1.0, 100.0],
               'randomforestclassifier__n_estimators': [20, 200]}
 
-    grid = GridSearchCV(estimator=sclf, param_grid=params, cv=5, iid=False)
+    grid = GridSearchCV(estimator=sclf, param_grid=params, cv=5)
     X, y = iris_data()
     grid.fit(X, y)
 
@@ -332,7 +332,7 @@ def test_gridsearch_enumerate_names():
               'randomforestclassifier-2__n_estimators': [5, 20],
               'use_probas': [True, False]}
 
-    grid = GridSearchCV(estimator=sclf, param_grid=params, cv=5, iid=False)
+    grid = GridSearchCV(estimator=sclf, param_grid=params, cv=5)
     X, y = iris_data()
     grid = grid.fit(X, y)
 
@@ -523,7 +523,6 @@ def test_classifier_gridsearch():
     grid = GridSearchCV(estimator=sclf,
                         param_grid=params,
                         cv=5,
-                        iid=False,
                         refit=True)
     grid.fit(X, y)
 

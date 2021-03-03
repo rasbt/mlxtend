@@ -19,7 +19,7 @@ def check_Xy(X, y, y_int=True):
 
     if 'int' not in str(y.dtype):
         raise ValueError('y must be an integer array. Found %s. '
-                         'Try passing the array as y.astype(np.integer)'
+                         'Try passing the array as y.astype(np.int_)'
                          % y.dtype)
 
     if not ('float' in str(X.dtype) or 'int' in str(X.dtype)):

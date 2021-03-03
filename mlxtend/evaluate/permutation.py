@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2021
 # mlxtend Machine Learning Library Extensions
 #
 # Nonparametric Permutation Test
@@ -7,7 +7,7 @@
 # License: BSD 3 clause
 
 import numpy as np
-from itertools import combinations
+from itertools import combinations, product
 from math import factorial
 try:
     from nose.tools import nottest
@@ -21,7 +21,7 @@ except ImportError:
 # this as a unit test due to "test" in the name
 @nottest
 def permutation_test(x, y, func='x_mean != y_mean', method='exact',
-                     num_rounds=1000, seed=None):
+                     num_rounds=1000, seed=None, paired=False):
     """
     Nonparametric permutation test
 
@@ -30,9 +30,11 @@ def permutation_test(x, y, func='x_mean != y_mean', method='exact',
     x : list or numpy array with shape (n_datapoints,)
         A list or 1D numpy array of the first sample
         (e.g., the treatment group).
+
     y : list or numpy array with shape (n_datapoints,)
         A list or 1D numpy array of the second sample
         (e.g., the control group).
+
     func : custom function or str (default: 'x_mean != y_mean')
         function to compute the statistic for the permutation test.
         - If 'x_mean != y_mean', uses
@@ -44,14 +46,21 @@ def permutation_test(x, y, func='x_mean != y_mean', method='exact',
         - If 'x_mean < y_mean', uses
           `func=lambda x, y: np.mean(y) - np.mean(x))`
            for a one-sided test.
+
     method : 'approximate' or 'exact' (default: 'exact')
         If 'exact' (default), all possible permutations are considered.
         If 'approximate' the number of drawn samples is
         given by `num_rounds`.
         Note that 'exact' is typically not feasible unless the dataset
         size is relatively small.
+
+    paired : bool
+        If True, a paired test is performed by only exchanging each
+        datapoint with its associate.
+
     num_rounds : int (default: 1000)
         The number of permutation samples if `method='approximate'`.
+
     seed : int or None (default: None)
         The random seed for generating permutation samples if
         `method='approximate'`.
@@ -59,8 +68,8 @@ def permutation_test(x, y, func='x_mean != y_mean', method='exact',
     Returns
     ----------
     p-value under the null hypothesis
-
     Examples
+
     -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/evaluate/permutation_test/
@@ -95,7 +104,16 @@ def permutation_test(x, y, func='x_mean != y_mean', method='exact',
     rng = np.random.RandomState(seed)
 
     m, n = len(x), len(y)
-    combined = np.hstack((x, y))
+
+    if paired:
+        if m != n:
+            raise ValueError('x and y must have the same'
+                             ' length if `paired=True`')
+        sample_x = np.empty(m)
+        sample_y = np.empty(n)
+
+    else:
+        combined = np.hstack((x, y))
 
     at_least_as_extreme = 0.
     reference_stat = func(x, y)
@@ -114,27 +132,60 @@ def permutation_test(x, y, func='x_mean != y_mean', method='exact',
     # and using combinations instead of permutations simply saves computational
     # time
 
-    if method == 'exact':
-        for indices_x in combinations(range(m + n), m):
+    if method == "exact":
 
-            indices_y = [i for i in range(m + n) if i not in indices_x]
-            diff = func(combined[list(indices_x)], combined[indices_y])
+        if paired:
+            for flip in product([True, False], repeat=m):
+                for i, f in enumerate(flip):
+                    if f:
+                        sample_x[i], sample_y[i] = y[i], x[i]
+                    else:
+                        sample_x[i], sample_y[i] = x[i], y[i]
 
-            if diff > reference_stat or np.isclose(diff, reference_stat):
-                at_least_as_extreme += 1.
+                diff = func(sample_x, sample_y)
+                if diff > reference_stat or np.isclose(diff, reference_stat):
+                    at_least_as_extreme += 1.0
 
-        num_rounds = factorial(m + n) / (factorial(m)*factorial(n))
+            num_rounds = 2 ** n
+
+        else:
+            for indices_x in combinations(range(m + n), m):
+                indices_y = [i for i in range(m + n) if i not in indices_x]
+                diff = func(combined[list(indices_x)], combined[indices_y])
+
+                if diff > reference_stat or np.isclose(diff, reference_stat):
+                    at_least_as_extreme += 1.0
+            num_rounds = factorial(m + n) / (factorial(m) * factorial(n))
 
     else:
-        for i in range(num_rounds):
-            rng.shuffle(combined)
-            diff = func(combined[:m], combined[m:])
+        if paired:
+            for i in range(num_rounds):
+                flip = rng.randn(m) > 0.
 
-            if diff > reference_stat or np.isclose(diff, reference_stat):
-                at_least_as_extreme += 1.
+                for i, f in enumerate(flip):
+                    if f:
+                        sample_x[i], sample_y[i] = y[i], x[i]
+                    else:
+                        sample_x[i], sample_y[i] = x[i], y[i]
 
-        # To cover the actual experiment results
-        at_least_as_extreme += 1
-        num_rounds += 1
+                diff = func(sample_x, sample_y)
+                if diff > reference_stat or np.isclose(diff, reference_stat):
+                    at_least_as_extreme += 1.
+
+            # To cover the actual experiment results
+            at_least_as_extreme += 1.
+            num_rounds += 1.
+
+        else:
+            for i in range(num_rounds):
+                rng.shuffle(combined)
+                diff = func(combined[:m], combined[m:])
+
+                if diff > reference_stat or np.isclose(diff, reference_stat):
+                    at_least_as_extreme += 1.
+
+            # To cover the actual experiment results
+            at_least_as_extreme += 1.
+            num_rounds += 1.
 
     return at_least_as_extreme / num_rounds

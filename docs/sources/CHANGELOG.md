@@ -15,8 +15,9 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
-- Adds a second "balanced accuracy" interpretation ("balanced") to `accuracy_score` in addition to the existing "average" option to compute the scikit-learn-style balanced accuracy. ([#764](https://github.com/rasbt/mlxtend/pull/764))
+- Adds a second "balanced accuracy" interpretation ("balanced") to `evaluate.accuracy_score` in addition to the existing "average" option to compute the scikit-learn-style balanced accuracy. ([#764](https://github.com/rasbt/mlxtend/pull/764))
 - Adds new `scatter_hist` function to `mlxtend.plotting` for generating a scattered histogram. ([#757](https://github.com/rasbt/mlxtend/issues/757) via [Maitreyee Mhasaka](https://github.com/Maitreyee1))
+- The `evaluate.permutation_test` function now accepts a `paired` argument to specify to support paired permutation/randomization tests. ([#768](https://github.com/rasbt/mlxtend/pull/768))
 
 ##### Changes
 

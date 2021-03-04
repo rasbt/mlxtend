@@ -98,6 +98,9 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
             - A string, giving an expression as a function of n_jobs,
               as in '2*n_jobs'
         New in v0.16.0.
+    multi_output : bool (default: False)
+        If True, allow multioutput, but forbid nan or inf values. If False,
+        y will be checked to be a vector.
 
     Attributes
     ----------
@@ -116,7 +119,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
                  shuffle=True, random_state=None, verbose=0,
                  refit=True, use_features_in_secondary=False,
                  store_train_meta_features=False, n_jobs=None,
-                 pre_dispatch='2*n_jobs'):
+                 pre_dispatch='2*n_jobs', multi_output=False):
 
         self.regressors = regressors
         self.meta_regressor = meta_regressor
@@ -129,6 +132,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         self.store_train_meta_features = store_train_meta_features
         self.n_jobs = n_jobs
         self.pre_dispatch = pre_dispatch
+        self.multi_output = multi_output
 
     def fit(self, X, y, groups=None, sample_weight=None):
         """ Fit ensemble regressors and the meta-regressor.
@@ -164,7 +168,10 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
             self.regr_ = self.regressors
             self.meta_regr_ = self.meta_regressor
 
-        X, y = check_X_y(X, y, accept_sparse=['csc', 'csr'], dtype=None)
+        X, y = check_X_y(
+            X, y, accept_sparse=['csc', 'csr'], dtype=None,
+            multi_output=self.multi_output
+        )
 
         kfold = check_cv(self.cv, y)
         if isinstance(self.cv, int):

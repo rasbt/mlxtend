@@ -31,7 +31,8 @@ X2 = np.sort(5 * np.random.rand(40, 2), axis=0)
 X3 = np.zeros((40, 3))
 y = np.sin(X1).ravel()
 y[::5] += 3 * (0.5 - np.random.rand(8))
-y2 = np.zeros((40,))
+y2 = np.sin(X2)
+y3 = np.zeros((40,))
 
 
 def test_different_models():
@@ -78,6 +79,20 @@ def test_multivariate():
     assert round(got, 2) == mse, '%f != %f' % (round(got, 2), mse)
 
 
+def test_multivariate_class():
+    lr = LinearRegression()
+    ridge = Ridge(random_state=1)
+    meta = LinearRegression(normalize=True)
+    stregr = StackingCVRegressor(regressors=[lr, ridge],
+                                 meta_regressor=meta,
+                                 multi_output=True,
+                                 random_state=0)
+    stregr.fit(X2, y2).predict(X2)
+    mse = 0.13
+    got = np.mean((stregr.predict(X2) - y2) ** 2.)
+    assert round(got, 2) == mse, got
+
+
 def test_internals():
     lr = LinearRegression()
     regressors = [lr, lr, lr, lr, lr]
@@ -86,8 +101,8 @@ def test_internals():
                                 meta_regressor=lr,
                                 cv=cv,
                                 random_state=0)
-    stack.fit(X3, y2)
-    assert stack.predict(X3).mean() == y2.mean()
+    stack.fit(X3, y3)
+    assert stack.predict(X3).mean() == y3.mean()
     assert stack.meta_regr_.intercept_ == 0.0
     assert stack.meta_regr_.coef_[0] == 0.0
     assert stack.meta_regr_.coef_[1] == 0.0
@@ -139,6 +154,7 @@ def test_get_params():
     expect = ['cv',
               'linearregression',
               'meta_regressor',
+              'multi_output',
               'n_jobs',
               'pre_dispatch',
               'random_state',

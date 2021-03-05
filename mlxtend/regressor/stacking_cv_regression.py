@@ -143,8 +143,9 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
 
-        y : numpy array, shape = [n_samples]
-            Target values.
+        y : numpy array, shape = [n_samples] or [n_samples, n_targets]
+            Target values. Multiple targets are supported only if
+            self.multi_output is True.
 
         groups : numpy array/None, shape = [n_samples]
             The group that each sample belongs to. This is used by specific
@@ -270,7 +271,8 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         meta-features : numpy array, shape = [n_samples, len(self.regressors)]
             meta-features for test data, where n_samples is the number of
             samples in test data and len(self.regressors) is the number
-            of regressors.
+            of regressors. If self.multi_output is True, then the number of
+            columns is len(self.regressors) * n_targets
 
         """
         check_is_fitted(self, 'regr_')

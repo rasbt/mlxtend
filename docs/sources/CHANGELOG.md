@@ -22,6 +22,7 @@ The CHANGELOG for the current development version is available at
 ##### Changes
 
 - Updates unit tests for scikit-learn 0.24.1 compatibility. ([#774](https://github.com/rasbt/mlxtend/pull/774))
+- Removes deprecated `res` argument from `plot_decision_regions`. ([#803](https://github.com/rasbt/mlxtend/pull/803))
 
 ##### Bug Fixes
 

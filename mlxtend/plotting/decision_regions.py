@@ -49,7 +49,6 @@ def plot_decision_regions(X, y, clf,
                           filler_feature_ranges=None,
                           ax=None,
                           X_highlight=None,
-                          res=None,
                           zoom_factor=1.,
                           legend=1,
                           hide_spines=True,
@@ -93,13 +92,6 @@ def plot_decision_regions(X, y, clf,
         one if ax=None.
     X_highlight : array-like, shape = [n_samples, n_features] (default: None)
         An array with data points that are used to highlight samples in `X`.
-    res : float or array-like, shape = (2,) (default: None)
-        This parameter was used to define the grid width,
-        but it has been deprecated in favor of
-        determining the number of points given the figure DPI and size
-        automatically for optimal results and computational efficiency.
-        To increase the resolution, it's is recommended to use to provide
-        a `dpi argument via matplotlib, e.g., `plt.figure(dpi=600)`.
     zoom_factor : float (default: 1.0)
         Controls the scale of the x- and y-axis of the decision plot.
     hide_spines : bool (default: True)
@@ -134,13 +126,6 @@ def plot_decision_regions(X, y, clf,
 
     if ax is None:
         ax = plt.gca()
-
-    if res is not None:
-        warnings.warn("The 'res' parameter has been deprecated."
-                      "To increase the resolution, it's is recommended"
-                      "to use to provide a `dpi argument via matplotlib,"
-                      "e.g., `plt.figure(dpi=600)`.",
-                      DeprecationWarning)
 
     plot_testdata = True
     if not isinstance(X_highlight, np.ndarray):

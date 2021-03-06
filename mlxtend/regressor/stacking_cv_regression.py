@@ -30,8 +30,6 @@ import numpy as np
 class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
     """A 'Stacking Cross-Validation' regressor for scikit-learn estimators.
 
-    New in mlxtend v0.7.0
-
     Parameters
     ----------
     regressors : array-like, shape = [n_regressors]
@@ -39,9 +37,11 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         Invoking the `fit` method on the `StackingCVRegressor` will fit clones
         of these original regressors that will
         be stored in the class attribute `self.regr_`.
+
     meta_regressor : object
         The meta-regressor to be fitted on the ensemble of
         regressor
+
     cv : int, cross-validation generator or iterable, optional (default: 5)
         Determines the cross-validation splitting strategy.
         Possible inputs for cv are:
@@ -50,16 +50,20 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         - An object to be used as a cross-validation generator.
         - An iterable yielding train, test splits.
         For integer/None inputs, it will use `KFold` cross-validation
+
     shuffle : bool (default: True)
         If True,  and the `cv` argument is integer, the training data will
         be shuffled at fitting stage prior to cross-validation. If the `cv`
         argument is a specific cross validation technique, this argument is
         omitted.
+
     random_state : int, RandomState instance or None, optional (default: None)
         Constrols the randomness of the cv splitter. Used when `cv` is
         integer and `shuffle=True`. New in v0.16.0.
+
     verbose : int, optional (default=0)
         Controls the verbosity of the building process. New in v0.16.0
+
     refit : bool (default: True)
         Clones the regressors for stacking regression if True (default)
         or else uses the original ones, which will be refitted on the dataset
@@ -67,23 +71,27 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         recommended if you are working with estimators that are supporting
         the scikit-learn fit/predict API interface but are not compatible
         to scikit-learn's `clone` function.
+
     use_features_in_secondary : bool (default: False)
         If True, the meta-regressor will be trained both on
         the predictions of the original regressors and the
         original dataset.
         If False, the meta-regressor will be trained only on
         the predictions of the original regressors.
+
     store_train_meta_features : bool (default: False)
         If True, the meta-features computed from the training data
         used for fitting the
         meta-regressor stored in the `self.train_meta_features_` array,
         which can be
         accessed after calling `fit`.
+
     n_jobs : int or None, optional (default=None)
         The number of CPUs to use to do the computation.
         ``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.
         ``-1`` means using all processors. See :term:`Glossary <n_jobs>`
         for more details. New in v0.16.0.
+
     pre_dispatch : int, or string, optional
         Controls the number of jobs that get dispatched during parallel
         execution. Reducing this number can be useful to avoid an
@@ -97,7 +105,10 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
               spawned
             - A string, giving an expression as a function of n_jobs,
               as in '2*n_jobs'
-        New in v0.16.0.
+
+    multi_output : bool (default: False)
+        If True, allow multi-output targets, but forbid nan or inf values.
+        If False, `y` will be checked to be a vector. (New in v0.19.0.)
 
     Attributes
     ----------
@@ -116,7 +127,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
                  shuffle=True, random_state=None, verbose=0,
                  refit=True, use_features_in_secondary=False,
                  store_train_meta_features=False, n_jobs=None,
-                 pre_dispatch='2*n_jobs'):
+                 pre_dispatch='2*n_jobs', multi_output=False):
 
         self.regressors = regressors
         self.meta_regressor = meta_regressor
@@ -129,6 +140,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         self.store_train_meta_features = store_train_meta_features
         self.n_jobs = n_jobs
         self.pre_dispatch = pre_dispatch
+        self.multi_output = multi_output
 
     def fit(self, X, y, groups=None, sample_weight=None):
         """ Fit ensemble regressors and the meta-regressor.
@@ -139,8 +151,9 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
 
-        y : numpy array, shape = [n_samples]
-            Target values.
+        y : numpy array, shape = [n_samples] or [n_samples, n_targets]
+            Target values. Multiple targets are supported only if
+            self.multi_output is True.
 
         groups : numpy array/None, shape = [n_samples]
             The group that each sample belongs to. This is used by specific
@@ -164,7 +177,10 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
             self.regr_ = self.regressors
             self.meta_regr_ = self.meta_regressor
 
-        X, y = check_X_y(X, y, accept_sparse=['csc', 'csr'], dtype=None)
+        X, y = check_X_y(
+            X, y, accept_sparse=['csc', 'csr'], dtype=None,
+            multi_output=self.multi_output
+        )
 
         kfold = check_cv(self.cv, y)
         if isinstance(self.cv, int):
@@ -263,7 +279,8 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         meta-features : numpy array, shape = [n_samples, len(self.regressors)]
             meta-features for test data, where n_samples is the number of
             samples in test data and len(self.regressors) is the number
-            of regressors.
+            of regressors. If self.multi_output is True, then the number of
+            columns is len(self.regressors) * n_targets.
 
         """
         check_is_fitted(self, 'regr_')

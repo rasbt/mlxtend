@@ -64,12 +64,11 @@ def test_multivariate_class():
     ridge = Ridge(random_state=1)
     meta = LinearRegression(normalize=True)
     stregr = StackingRegressor(regressors=[lr, ridge],
-                               meta_regressor=meta)
+                               meta_regressor=meta,
+                               multi_output=True)
     stregr.fit(X2, y2).predict(X2)
     mse = 0.12
     got = np.mean((stregr.predict(X2) - y2) ** 2.)
-    # there seems to be an issue with the following test on Windows
-    # sometimes via Appveyor
     assert round(got, 2) == mse, got
 
 
@@ -260,6 +259,7 @@ def test_get_params():
     got = sorted(list({s.split('__')[0] for s in stregr.get_params().keys()}))
     expect = ['linearregression',
               'meta_regressor',
+              'multi_output',
               'refit',
               'regressors',
               'ridge',

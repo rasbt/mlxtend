@@ -27,17 +27,14 @@ def generate_new_combinations(old_combinations):
         1      15       22
         2      17       19
         ```
-
     Returns
     -----------
     Generator of all combinations from the last step x items
     from the previous step.
-
     Examples
     -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori
-
     """
 
     items_types_in_previous_step = np.unique(old_combinations.flatten())
@@ -70,11 +67,9 @@ def generate_new_combinations_low_memory(old_combinations, X, min_support,
         1      15       22
         2      17       19
         ```
-
     X: np.array or scipy sparse matrix
       The allowed values are either 0/1 or True/False.
       For example,
-
     ```
         0     True False  True  True False  True
         1     True False  True False False  True
@@ -85,14 +80,11 @@ def generate_new_combinations_low_memory(old_combinations, X, min_support,
         6    False False  True False  True False
         7     True  True False False False False
     ```
-
     min_support : float (default: 0.5)
       A float between 0 and 1 for minumum support of the itemsets returned.
       The support is computed as the fraction
       `transactions_where_item(s)_occur / total_transactions`.
-
     is_sparse : bool True if X is sparse
-
     Returns
     -----------
     Generator of all combinations from the last step x items
@@ -101,12 +93,10 @@ def generate_new_combinations_low_memory(old_combinations, X, min_support,
     by item type ids in the ascending order.
     No combination other than generated
     do not have a chance to get enough support
-
     Examples
     -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/generate_new_combinations/
-
     """
 
     items_types_in_previous_step = np.unique(old_combinations.flatten())
@@ -131,10 +121,9 @@ def generate_new_combinations_low_memory(old_combinations, X, min_support,
             yield valid_items[index]
 
 
-def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
+def apriori(df, min_support=0.5, max_support=1, use_colnames=False, max_len=None, verbose=0,
             low_memory=False):
     """Get frequent itemsets from a one-hot DataFrame
-
     Parameters
     -----------
     df : pandas DataFrame
@@ -142,13 +131,10 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
       DataFrames with sparse data; for more info, please
       see (https://pandas.pydata.org/pandas-docs/stable/
            user_guide/sparse.html#sparse-data-structures)
-
       Please note that the old pandas SparseDataFrame format
       is no longer supported in mlxtend >= 0.17.2.
-
       The allowed values are either 0/1 or True/False.
       For example,
-
     ```
              Apple  Bananas   Beer  Chicken   Milk   Rice
         0     True    False   True     True  False   True
@@ -160,32 +146,25 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
         6    False    False   True    False   True  False
         7     True     True  False    False  False  False
     ```
-
     min_support : float (default: 0.5)
       A float between 0 and 1 for minumum support of the itemsets returned.
       The support is computed as the fraction
       `transactions_where_item(s)_occur / total_transactions`.
-
     use_colnames : bool (default: False)
       If `True`, uses the DataFrames' column names in the returned DataFrame
       instead of column indices.
-
     max_len : int (default: None)
       Maximum length of the itemsets generated. If `None` (default) all
       possible itemsets lengths (under the apriori condition) are evaluated.
-
     verbose : int (default: 0)
       Shows the number of iterations if >= 1 and `low_memory` is `True`. If
       >=1 and `low_memory` is `False`, shows the number of combinations.
-
     low_memory : bool (default: False)
       If `True`, uses an iterator to search for combinations above
       `min_support`.
       Note that while `low_memory=True` should only be used for large dataset
       if memory resources are limited, because this implementation is approx.
       3-6x slower than the default.
-
-
     Returns
     -----------
     pandas DataFrame with columns ['support', 'itemsets'] of all itemsets
@@ -196,41 +175,32 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
       sets except that it is immutable
       (For more info, see
       https://docs.python.org/3.6/library/stdtypes.html#frozenset).
-
     Examples
     -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/
-
     """
 
     def _support(_x, _n_rows, _is_sparse):
         """DRY private method to calculate support as the
         row-wise sum of values / number of rows
-
         Parameters
         -----------
-
         _x : matrix of bools or binary
-
         _n_rows : numeric, number of rows in _x
-
         _is_sparse : bool True if _x is sparse
-
         Returns
         -----------
         np.array, shape = (n_rows, )
-
         Examples
         -----------
         For usage examples, please see
         http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/
-
         """
         out = (np.sum(_x, axis=0) / _n_rows)
         return np.array(out).reshape(-1)
 
-    if min_support <= 0.:
+    if min_support < 0:
         raise ValueError('`min_support` must be a positive '
                          'number within the interval `(0, 1]`. '
                          'Got %s.' % min_support)
@@ -250,8 +220,8 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
         is_sparse = False
     support = _support(X, X.shape[0], is_sparse)
     ary_col_idx = np.arange(X.shape[1])
-    support_dict = {1: support[support >= min_support]}
-    itemset_dict = {1: ary_col_idx[support >= min_support].reshape(-1, 1)}
+    support_dict = {1: support[(support >= min_support) ]}
+    itemset_dict = {1: ary_col_idx[(support >= min_support) ].reshape(-1, 1)}
     max_itemset = 1
     rows_count = float(X.shape[0])
 
@@ -302,7 +272,7 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
                 _bools = np.all(X[:, combin], axis=2)
 
             support = _support(np.array(_bools), rows_count, is_sparse)
-            _mask = (support >= min_support).reshape(-1)
+            _mask = ((support >= min_support) & (support <= max_support)).reshape(-1)
             if any(_mask):
                 itemset_dict[next_max_itemset] = np.array(combin[_mask])
                 support_dict[next_max_itemset] = np.array(support[_mask])

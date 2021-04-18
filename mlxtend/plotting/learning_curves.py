@@ -16,8 +16,10 @@ def plot_learning_curves(X_train, y_train,
                          train_marker='o',
                          test_marker='^',
                          scoring='misclassification error',
-                         suppress_plot=False, print_model=True,
-                         style='fivethirtyeight',
+                         suppress_plot=False,
+                         print_model=True,
+                         title_fontsize=12,
+                         style='default',
                          legend_loc='best'):
     """Plots learning curves of a classifier.
 
@@ -49,8 +51,11 @@ def plot_learning_curves(X_train, y_train,
         for testing purposes.
     print_model : bool (default: True)
         Print model parameters in plot title if True.
-    style : str (default: 'fivethirtyeight')
-        Matplotlib style
+    title_fontsize : int (default: 12)
+        Determines the size of the plot title font.
+    style : str (default: 'default')
+        Matplotlib style. For more styles, please see
+        https://matplotlib.org/stable/gallery/style_sheets/style_sheets_reference.html
     legend_loc : str (default: 'best')
         Where to place the plot legend:
         {'best', 'upper left', 'upper right', 'lower left', 'lower right'}
@@ -124,7 +129,9 @@ def plot_learning_curves(X_train, y_train,
         with plt.style.context(style):
             plt.ylabel('Performance ({})'.format(scoring))
             if print_model:
-                plt.title('Learning Curves\n\n{}\n'.format(model))
+                plt.title(
+                    'Learning Curves\n\n{}\n'.format(model),
+                    fontsize=title_fontsize)
             plt.legend(loc=legend_loc, numpoints=1)
             plt.xlim([0, 110])
             max_y = max(max(test_errors), max(training_errors))

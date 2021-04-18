@@ -25,6 +25,7 @@ The CHANGELOG for the current development version is available at
 - Updates unit tests for scikit-learn 0.24.1 compatibility. ([#774](https://github.com/rasbt/mlxtend/pull/774))
 - `StackingRegressor` now requires setting `StackingRegressor(..., multi_output=True)` if the target is multi-dimensional; this allows for better input validation. ([#802](https://github.com/rasbt/mlxtend/pull/802))
 - Removes deprecated `res` argument from `plot_decision_regions`. ([#803](https://github.com/rasbt/mlxtend/pull/803))
+- Adds a `title_fontsize` parameter to `plot_learning_curves` for controlling the title font size; also the plot style is now the matplotlib default. ([#818](https://github.com/rasbt/mlxtend/pull/818))
 
 ##### Bug Fixes
 

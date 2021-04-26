@@ -26,6 +26,7 @@ The CHANGELOG for the current development version is available at
 - `StackingRegressor` now requires setting `StackingRegressor(..., multi_output=True)` if the target is multi-dimensional; this allows for better input validation. ([#802](https://github.com/rasbt/mlxtend/pull/802))
 - Removes deprecated `res` argument from `plot_decision_regions`. ([#803](https://github.com/rasbt/mlxtend/pull/803))
 - Adds a `title_fontsize` parameter to `plot_learning_curves` for controlling the title font size; also the plot style is now the matplotlib default. ([#818](https://github.com/rasbt/mlxtend/pull/818))
+- Internal change using `'c': 'none'` instead of `'c': ''` in `mlxtend.plotting.plot_decision_regions`'s scatterplot highlights to stay compatible with Matplotlib 3.4 and newer. ([#820](https://github.com/rasbt/mlxtend/pull/820))
 
 ##### Bug Fixes
 

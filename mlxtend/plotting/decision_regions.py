@@ -10,7 +10,6 @@ from itertools import cycle
 import matplotlib.pyplot as plt
 import numpy as np
 from mlxtend.utils import check_Xy, format_kwarg_dictionaries
-import warnings
 from math import floor
 from math import ceil
 
@@ -72,41 +71,56 @@ def plot_decision_regions(X, y, clf,
     ----------
     X : array-like, shape = [n_samples, n_features]
         Feature Matrix.
+
     y : array-like, shape = [n_samples]
         True class labels.
+
     clf : Classifier object.
         Must have a .predict method.
+
     feature_index : array-like (default: (0,) for 1D, (0, 1) otherwise)
         Feature indices to use for plotting. The first index in
         `feature_index` will be on the x-axis, the second index will be
         on the y-axis.
+
     filler_feature_values : dict (default: None)
         Only needed for number features > 2. Dictionary of feature
         index-value pairs for the features not being plotted.
+
     filler_feature_ranges : dict (default: None)
         Only needed for number features > 2. Dictionary of feature
         index-value pairs for the features not being plotted. Will use the
         ranges provided to select training samples for plotting.
+
     ax : matplotlib.axes.Axes (default: None)
         An existing matplotlib Axes. Creates
         one if ax=None.
+
     X_highlight : array-like, shape = [n_samples, n_features] (default: None)
         An array with data points that are used to highlight samples in `X`.
+
     zoom_factor : float (default: 1.0)
         Controls the scale of the x- and y-axis of the decision plot.
+
     hide_spines : bool (default: True)
         Hide axis spines if True.
+
     legend : int (default: 1)
         Integer to specify the legend location.
         No legend if legend is 0.
+
     markers : str (default: 's^oxv<>')
         Scatterplot markers.
+
     colors : str (default: 'red,blue,limegreen,gray,cyan')
         Comma separated list of colors.
+
     scatter_kwargs : dict (default: None)
         Keyword arguments for underlying matplotlib scatter function.
+
     contourf_kwargs : dict (default: None)
         Keyword arguments for underlying matplotlib contourf function.
+
     scatter_highlight_kwargs : dict (default: None)
         Keyword arguments for underlying matplotlib scatter function.
 
@@ -289,7 +303,7 @@ def plot_decision_regions(X, y, clf,
             x_data = X_highlight[feature_range_mask, x_index]
 
         # Make sure scatter_highlight_kwargs backwards compatible defaults
-        scatter_highlight_defaults = {'c': '',
+        scatter_highlight_defaults = {'c': 'none',
                                       'edgecolor': 'black',
                                       'alpha': 1.0,
                                       'linewidths': 1,

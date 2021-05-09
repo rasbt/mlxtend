@@ -31,10 +31,10 @@ matrix:
 
 
 before_install:
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
+    #- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
 
 install:
-    - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then sudo apt-get update; fi
+    #- if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then sudo apt-get update; fi
     - source ci/.travis_install.sh
 
 script:

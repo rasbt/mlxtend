@@ -8,6 +8,7 @@
 
 
 import os
+import pandas as pd
 import pytest
 from mlxtend.evaluate import bias_variance_decomp
 from sklearn.tree import DecisionTreeClassifier
@@ -17,6 +18,7 @@ from sklearn.ensemble import BaggingRegressor
 from mlxtend.data import iris_data
 from mlxtend.data import boston_housing_data
 from sklearn.model_selection import train_test_split
+
 
 def pandas_input_fail():
 

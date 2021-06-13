@@ -74,6 +74,14 @@ def bias_variance_decomp(estimator, X_train, y_train, X_test, y_test,
         raise NotImplementedError('loss must be one of the following: %s' %
                                   supported)
 
+    for ary in (X_train, y_train, X_test, y_test):
+        if hasattr(ary, 'loc'):
+            raise ValueError('The bias_variance_decomp does not support pandas DataFrames yet. '
+                             'Please check the inputs to X_train, y_train, X_test, y_test. '
+                             'If e.g., X_train is a pandas DataFrame, try passing it as NumPy array via '
+                             'X_train=X_train.values.')
+
+
     rng = np.random.RandomState(random_seed)
 
     if loss == '0-1_loss':

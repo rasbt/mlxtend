@@ -25,7 +25,7 @@ from sklearn.model_selection import cross_val_score
 from joblib import Parallel, delayed
 
 
-def _calc_score(selector, X, y, indices, groups=None, **fit_params):
+def _calc_score(selector, X, y, name, indices, groups=None, **fit_params):
     if selector.cv:
         scores = cross_val_score(selector.est_,
                                  X[:, indices], y,
@@ -38,7 +38,7 @@ def _calc_score(selector, X, y, indices, groups=None, **fit_params):
     else:
         selector.est_.fit(X[:, indices], y, **fit_params)
         scores = np.array([selector.scorer(selector.est_, X[:, indices], y)])
-    return indices, scores
+    return name, indices, scores
 
 
 def _get_featurenames(subsets_dict, feature_idx, custom_feature_names, X):
@@ -75,10 +75,6 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     Parameters
     ----------
     estimator : scikit-learn classifier or regressor
-    min_features : int (default: 1)
-        Minumum number of features to select
-    max_features : int (default: 1)
-        Maximum number of features to select
     print_progress : bool (default: True)
         Prints progress as the number of epochs
         to stderr.
@@ -149,14 +145,12 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     http://rasbt.github.io/mlxtend/user_guide/feature_selection/ExhaustiveFeatureSelector/
 
     """
-    def __init__(self, estimator, min_features=1, max_features=1,
+    def __init__(self, estimator, 
                  print_progress=True, scoring='accuracy',
                  cv=5, n_jobs=1,
                  pre_dispatch='2*n_jobs',
                  clone_estimator=True):
         self.estimator = estimator
-        self.min_features = min_features
-        self.max_features = max_features
         self.pre_dispatch = pre_dispatch
         self.scoring = scoring
         self.scorer = get_scorer(scoring)
@@ -176,7 +170,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         # don't mess with this unless testing
         self._TESTING_INTERRUPT_MODE = False
 
-    def fit(self, X, y, custom_feature_names=None, groups=None, **fit_params):
+    def fit(self, X, y, candidates, custom_feature_names=None, groups=None, **fit_params):
         """Perform feature selection and learn model from training data.
 
         Parameters
@@ -188,10 +182,10 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             argument for X.
         y : array-like, shape = [n_samples]
             Target values.
-        custom_feature_names : None or tuple (default: tuple)
-            Custom feature names for `self.k_feature_names` and
-            `self.subsets_[i]['feature_names']`.
-            (new in v 0.13.0)
+        candidates : iterator
+            A generator of (indices, label) where indices
+            are columns of X and label is a name for the 
+            given model.
         groups : array-like, with shape (n_samples,), optional
             Group labels for the samples used while splitting the dataset into
             train/test set. Passed to the fit method of the cross-validator.
@@ -217,83 +211,26 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         else:
             X_ = X
 
-        if (custom_feature_names is not None
-                and len(custom_feature_names) != X.shape[1]):
-            raise ValueError('If custom_feature_names is not None, '
-                             'the number of elements in custom_feature_names '
-                             'must equal the number of columns in X.')
-
-        if (not isinstance(self.max_features, int) or
-                (self.max_features > X.shape[1] or self.max_features < 1)):
-            raise AttributeError('max_features must be'
-                                 ' smaller than %d and larger than 0' %
-                                 (X.shape[1] + 1))
-
-        if (not isinstance(self.min_features, int) or
-                (self.min_features > X.shape[1] or self.min_features < 1)):
-            raise AttributeError('min_features must be'
-                                 ' smaller than %d and larger than 0'
-                                 % (X.shape[1] + 1))
-
-        if self.max_features < self.min_features:
-            raise AttributeError('min_features must be <= max_features')
-
-        candidates = chain.from_iterable(
-            combinations(range(X_.shape[1]), r=i) for i in
-            range(self.min_features, self.max_features + 1)
-        )
-
-        def ncr(n, r):
-            """Return the number of combinations of length r from n items.
-
-            Parameters
-            ----------
-            n : {integer}
-            Total number of items
-            r : {integer}
-            Number of items to select from n
-
-            Returns
-            -------
-            Number of combinations, integer
-
-            """
-
-            r = min(r, n-r)
-            if r == 0:
-                return 1
-            numer = reduce(op.mul, range(n, n-r, -1))
-            denom = reduce(op.mul, range(1, r+1))
-            return numer//denom
-
-        all_comb = np.sum([ncr(n=X_.shape[1], r=i)
-                           for i in range(self.min_features,
-                                          self.max_features + 1)])
-
-        n_jobs = min(self.n_jobs, all_comb)
+        n_jobs = self.n_jobs
         parallel = Parallel(n_jobs=n_jobs, pre_dispatch=self.pre_dispatch)
         work = enumerate(parallel(delayed(_calc_score)
-                                  (self, X_, y, c, groups=groups, **fit_params)
-                                  for c in candidates))
+                                  (self, X_, y, n, c, groups=groups, **fit_params)
+                                  for c, n in candidates))
 
         try:
-            for iteration, (c, cv_scores) in work:
+            for iteration, (n, c, cv_scores) in work:
 
                 self.subsets_[iteration] = {'feature_idx': c,
                                             'cv_scores': cv_scores,
-                                            'avg_score': np.mean(cv_scores)}
+                                            'avg_score': np.mean(cv_scores),
+                                            'feature_names': n}
 
                 if self.print_progress:
-                    sys.stderr.write('\rFeatures: %d/%d' % (
-                        iteration + 1, all_comb))
+                    sys.stderr.write('\rFeatures: %d' % (
+                        iteration + 1))
                     sys.stderr.flush()
 
                 if self._TESTING_INTERRUPT_MODE:
-                    self.subsets_, self.best_feature_names_ = \
-                        _get_featurenames(self.subsets_,
-                                          self.best_idx_,
-                                          custom_feature_names,
-                                          X)
                     raise KeyboardInterrupt
 
         except KeyboardInterrupt as e:
@@ -305,17 +242,13 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             if self.subsets_[c]['avg_score'] > max_score:
                 max_score = self.subsets_[c]['avg_score']
                 best_subset = c
+
         score = max_score
         idx = self.subsets_[best_subset]['feature_idx']
-
+        self.best_feature_names_ = self.subsets_[best_subset]['feature_names']
         self.best_idx_ = idx
         self.best_score_ = score
         self.fitted = True
-        self.subsets_, self.best_feature_names_ = \
-            _get_featurenames(self.subsets_,
-                              self.best_idx_,
-                              custom_feature_names,
-                              X)
         return self
 
     def transform(self, X):
@@ -341,7 +274,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             X_ = X
         return X_[:, self.best_idx_]
 
-    def fit_transform(self, X, y, groups=None, **fit_params):
+    def fit_transform(self, X, y, candidates, groups=None, **fit_params):
         """Fit to training data and return the best selected features from X.
 
         Parameters
@@ -364,7 +297,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         Feature subset of X, shape={n_samples, k_features}
 
         """
-        self.fit(X, y, groups=groups, **fit_params)
+        self.fit(X, y, candidates, groups=groups, **fit_params)
         return self.transform(X)
 
     def get_metric_dict(self, confidence_interval=0.95):
@@ -411,3 +344,64 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         if not self.fitted:
             raise AttributeError('ExhaustiveFeatureSelector has not been'
                                  ' fitted, yet.')
+
+def min_max_candidates(nfeatures,
+                       min_features=1,
+                       max_features=1,
+                       custom_feature_names=None):
+    """
+    Parameters
+    ----------
+    nfeatures: int
+        Number of columns in X.
+    min_features : int (default: 1)
+        Minumum number of features to select
+    max_features : int (default: 1)
+        Maximum number of features to select
+    custom_feature_names : None or tuple (default: tuple)
+            Custom feature names for `self.k_feature_names` and
+            `self.subsets_[i]['feature_names']`.
+            (new in v 0.13.0)
+    Returns
+    -------
+    candidates : iterator
+        A generator of (indices, label) where indices
+        are columns of X and label is a name for the 
+        given model. The iterator cycles through
+        all combinations of columns of nfeature total
+        of size ranging between min_features and max_features.
+        Models are labeled with a tuple of the feature names.
+        The names of the columns default to strings of integers
+        from range(nfeatures).
+
+    """
+    if (custom_feature_names is not None
+            and len(custom_feature_names) != nfeatures):
+        raise ValueError('If custom_feature_names is not None, '
+                         'the number of elements in custom_feature_names '
+                         'must equal the number of columns in X.')
+    if custom_feature_names is None:
+       custom_feature_names = ['%d' % i for i in range(nfeatures)]
+
+    if (not isinstance(max_features, int) or
+            (max_features > nfeatures or max_features < 1)):
+        raise AttributeError('max_features must be'
+                             ' smaller than %d and larger than 0' %
+                             (nfeatures + 1))
+
+    if (not isinstance(min_features, int) or
+            (min_features > nfeatures or min_features < 1)):
+        raise AttributeError('min_features must be'
+                             ' smaller than %d and larger than 0'
+                             % (nfeatures + 1))
+
+    if max_features < min_features:
+        raise AttributeError('min_features must be <= max_features')
+
+    chain_ = lambda i: ((c, tuple([custom_feature_names[n] for n in c])) for c in combinations(range(nfeatures), r=i))
+                         
+    candidates = chain.from_iterable(chain_(i) for i in
+        range(min_features, max_features + 1))
+
+    return candidates
+    

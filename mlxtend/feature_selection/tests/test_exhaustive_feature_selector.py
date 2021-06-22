@@ -10,6 +10,7 @@ import pandas as pd
 from distutils.version import LooseVersion as Version
 from numpy.testing import assert_almost_equal
 from mlxtend.feature_selection import ExhaustiveFeatureSelector as EFS
+from mlxtend.feature_selection.exhaustive_feature_selector import min_max_candidates
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from mlxtend.classifier import SoftmaxRegression
@@ -46,51 +47,42 @@ def test_minfeatures_1():
     iris = load_iris()
     X = iris.data
     y = iris.target
-    knn = KNeighborsClassifier()
 
-    efs = EFS(estimator=knn,
-              min_features=0,
-              max_features=2)
     expect = ('min_features must be smaller than 5 and larger than 0')
     assert_raises(AttributeError,
                   expect,
-                  efs.fit,
-                  X,
-                  y)
+                  min_max_candidates,
+                  X.shape[1],
+                  0,
+                  2)
 
 
 def test_maxfeatures_1():
     iris = load_iris()
     X = iris.data
     y = iris.target
-    knn = KNeighborsClassifier()
 
-    efs = EFS(estimator=knn,
-              min_features=1,
-              max_features=0)
     expect = ('max_features must be smaller than 5 and larger than 0')
     assert_raises(AttributeError,
                   expect,
-                  efs.fit,
-                  X,
-                  y)
+                  min_max_candidates,
+                  X.shape[1],
+                  1,
+                  0)
 
 
 def test_minmaxfeatures_1():
     iris = load_iris()
     X = iris.data
     y = iris.target
-    knn = KNeighborsClassifier()
 
-    efs = EFS(estimator=knn,
-              min_features=3,
-              max_features=2)
     expect = ('min_features must be <= max_features')
     assert_raises(AttributeError,
                   expect,
-                  efs.fit,
-                  X,
-                  y)
+                  min_max_candidates,
+                  X.shape[1],
+                  3,
+                  2)
 
 
 def test_knn_wo_cv():
@@ -99,12 +91,13 @@ def test_knn_wo_cv():
     y = iris.target
     knn = KNeighborsClassifier(n_neighbors=4)
     efs1 = EFS(knn,
-               min_features=2,
-               max_features=3,
                scoring='accuracy',
                cv=0,
                print_progress=False)
-    efs1 = efs1.fit(X, y)
+    candidates = min_max_candidates(X.shape[1],
+                                    min_features=2,
+                                    max_features=3)
+    efs1 = efs1.fit(X, y, candidates)
     expect = {0: {'feature_idx': (0, 1),
                   'feature_names': ('0', '1'),
                   'avg_score': 0.82666666666666666,
@@ -154,12 +147,13 @@ def test_knn_cv3():
     y = iris.target
     knn = KNeighborsClassifier(n_neighbors=4)
     efs1 = EFS(knn,
-               min_features=3,
-               max_features=3,
                scoring='accuracy',
                cv=4,
                print_progress=False)
-    efs1 = efs1.fit(X, y)
+    candidates = min_max_candidates(X.shape[1],
+                                    min_features=3,
+                                    max_features=3)
+    efs1 = efs1.fit(X, y, candidates)
     expect = {0: {'avg_score': 0.9391025641025641,
                   'feature_idx': (0, 1, 2),
                   'feature_names': ('0', '1', '2'),
@@ -202,14 +196,15 @@ def test_knn_cv3_groups():
     y = iris.target
     knn = KNeighborsClassifier(n_neighbors=4)
     efs1 = EFS(knn,
-               min_features=3,
-               max_features=3,
                scoring='accuracy',
                cv=GroupKFold(n_splits=3),
                print_progress=False)
     np.random.seed(1630672634)
+    candidates = min_max_candidates(X.shape[1],
+                                    min_features=3,
+                                    max_features=3)
     groups = np.random.randint(0, 6, size=len(y))
-    efs1 = efs1.fit(X, y, groups=groups)
+    efs1 = efs1.fit(X, y, candidates, groups=groups)
 
     expect = {0: {'cv_scores': np.array([0.97916667, 0.93877551, 0.9245283]),
                   'feature_idx': (0, 1, 2),
@@ -237,12 +232,14 @@ def test_fit_params():
     sample_weight = np.ones(X.shape[0])
     forest = RandomForestClassifier(n_estimators=100, random_state=123)
     efs1 = EFS(forest,
-               min_features=3,
-               max_features=3,
                scoring='accuracy',
                cv=4,
                print_progress=False)
-    efs1 = efs1.fit(X, y, sample_weight=sample_weight)
+
+    candidates = min_max_candidates(X.shape[1],
+                                    min_features=3,
+                                    max_features=3)
+    efs1 = efs1.fit(X, y, candidates, sample_weight=sample_weight)
     expect = {0: {'feature_idx': (0, 1, 2),
                   'feature_names': ('0', '1', '2'),
                   'cv_scores': np.array([0.947, 0.868, 0.919, 0.973]),
@@ -286,12 +283,13 @@ def test_regression():
     X, y = boston.data[:, [1, 2, 6, 8, 12]], boston.target
     lr = LinearRegression()
     efs_r = EFS(lr,
-                min_features=3,
-                max_features=4,
                 scoring='neg_mean_squared_error',
                 cv=10,
                 print_progress=False)
-    efs_r = efs_r.fit(X, y)
+    candidates = min_max_candidates(X.shape[1],
+                                    min_features=3,
+                                    max_features=4)
+    efs_r = efs_r.fit(X, y, candidates)
     assert efs_r.best_idx_ == (0, 2, 4)
     assert round(efs_r.best_score_, 4) == -40.8777
 
@@ -358,8 +356,6 @@ def test_clone_params_fail():
                   expect,
                   EFS,
                   Perceptron,
-                  min_features=2,
-                  max_features=2,
                   clone_estimator=True)
 
 
@@ -369,14 +365,15 @@ def test_clone_params_pass():
     y = iris.target
     lr = SoftmaxRegression(random_seed=1)
     efs1 = EFS(lr,
-               min_features=2,
-               max_features=2,
                scoring='accuracy',
                cv=0,
                clone_estimator=False,
                print_progress=False,
                n_jobs=1)
-    efs1 = efs1.fit(X, y)
+    candidates = min_max_candidates(X.shape[1],
+                                    min_features=2,
+                                    max_features=2)
+    efs1 = efs1.fit(X, y, candidates)
     assert(efs1.best_idx_ == (1, 3))
 
 
@@ -386,8 +383,6 @@ def test_transform_not_fitted():
     knn = KNeighborsClassifier(n_neighbors=4)
 
     efs1 = EFS(knn,
-               min_features=2,
-               max_features=2,
                scoring='accuracy',
                cv=0,
                clone_estimator=False,
@@ -409,15 +404,17 @@ def test_fit_transform():
     knn = KNeighborsClassifier(n_neighbors=4)
 
     efs1 = EFS(knn,
-               min_features=2,
-               max_features=2,
                scoring='accuracy',
                cv=0,
                clone_estimator=False,
                print_progress=False,
                n_jobs=1)
 
-    X_t = efs1.fit_transform(X, y)
+    candidates = min_max_candidates(X.shape[1],
+                                    min_features=2,
+                                    max_features=2)
+
+    X_t = efs1.fit_transform(X, y, candidates)
     assert X_t.shape == (150, 2)
 
 
@@ -425,8 +422,6 @@ def test_get_metric_dict_not_fitted():
     knn = KNeighborsClassifier(n_neighbors=4)
 
     efs1 = EFS(knn,
-               min_features=2,
-               max_features=2,
                scoring='accuracy',
                cv=0,
                clone_estimator=False,
@@ -446,16 +441,19 @@ def test_custom_feature_names():
     X = iris.data
     y = iris.target
     efs1 = EFS(knn,
-               min_features=2,
-               max_features=2,
                scoring='accuracy',
                cv=0,
                clone_estimator=False,
                print_progress=False,
                n_jobs=1)
 
-    efs1 = efs1.fit(X, y, custom_feature_names=(
+    candidates = min_max_candidates(X.shape[1],
+                                    min_features=2,
+                                    max_features=2,
+                                    custom_feature_names=(
           'sepal length', 'sepal width', 'petal length', 'petal width'))
+
+    efs1 = efs1.fit(X, y, candidates)
     assert efs1.best_idx_ == (2, 3), efs1.best_idx_
     assert efs1.best_feature_names_ == ('petal length', 'petal width')
 
@@ -467,8 +465,6 @@ def test_check_pandas_dataframe_fit():
     X = iris.data
     y = iris.target
     efs1 = EFS(knn,
-               min_features=2,
-               max_features=2,
                scoring='accuracy',
                cv=0,
                clone_estimator=False,
@@ -478,13 +474,20 @@ def test_check_pandas_dataframe_fit():
     df = pd.DataFrame(X, columns=['sepal length', 'sepal width',
                                   'petal length', 'petal width'])
 
-    sfs1 = efs1.fit(X, y)
+    candidates = min_max_candidates(X.shape[1],
+                                    min_features=2,
+                                    max_features=2)
+    sfs1 = efs1.fit(X, y, candidates)
     assert efs1.best_idx_ == (2, 3), efs1.best_idx_
     assert efs1.best_feature_names_ == ('2', '3')
     assert efs1.interrupted_ is False
 
     sfs1._TESTING_INTERRUPT_MODE = True
-    sfs1 = sfs1.fit(df, y)
+    candidates = min_max_candidates(X.shape[1],
+                                    min_features=2,
+                                    max_features=2,
+                                    custom_feature_names=df.columns)
+    sfs1 = sfs1.fit(df, y, candidates)
     assert efs1.best_idx_ == (0, 1), efs1.best_idx_
     assert efs1.best_feature_names_ == ('sepal length', 'sepal width')
     assert efs1.interrupted_ is True
@@ -496,16 +499,19 @@ def test_check_pandas_dataframe_transform():
     X = iris.data
     y = iris.target
     efs1 = EFS(knn,
-               min_features=2,
-               max_features=2,
                scoring='accuracy',
                cv=0,
                clone_estimator=False,
                print_progress=False,
                n_jobs=1)
 
+
     df = pd.DataFrame(X, columns=['sepal length', 'sepal width',
                                   'petal length', 'petal width'])
-    efs1 = efs1.fit(df, y)
+    candidates = min_max_candidates(X.shape[1],
+                                    min_features=2,
+                                    max_features=2,
+                                    custom_feature_names=df.columns)
+    efs1 = efs1.fit(df, y, candidates)
     assert efs1.best_idx_ == (2, 3)
     assert (150, 2) == efs1.transform(df).shape

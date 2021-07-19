@@ -31,7 +31,8 @@ The CHANGELOG for the current development version is available at
 
 ##### Bug Fixes
 
-- - 
+- Fixes a typo in the SequentialFeatureSelector documentation ([Issue #835](https://github.com/rasbt/mlxtend/issues/835) via [João Pedro Zanlorensi Cardoso](https://github.com/joaozanlorensi))
+
 
 ### Version 0.18.0 (11/25/2020)
 

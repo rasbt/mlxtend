@@ -76,6 +76,8 @@ def association_rules(df, metric="confidence",
     http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/
 
     """
+    if not df.shape[0]:
+        raise ValueError('The input DataFrame `df` containing the frequent itemsets is empty.')
 
     # check for mandatory columns
     if not all(col in df.columns for col in ["support", "itemsets"]):

@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import pytest
 from mlxtend.frequent_patterns import apriori, association_rules
 from numpy.testing import assert_raises as numpy_assert_raises
 
@@ -224,3 +225,9 @@ def test_on_df_with_missing_entries_support_only():
 
     assert df_result['support'].shape == (18,)
     assert int(np.isnan(df_result['support'].values).any()) != 1
+
+
+def test_with_empty_dataframe():
+    df = df_freq_items_with_colnames.iloc[:0]
+    with pytest.raises(ValueError):
+        association_rules(df) 

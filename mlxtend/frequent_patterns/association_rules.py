@@ -77,7 +77,8 @@ def association_rules(df, metric="confidence",
 
     """
     if not df.shape[0]:
-        raise ValueError('The input DataFrame `df` containing the frequent itemsets is empty.')
+        raise ValueError('The input DataFrame `df` containing '
+                         'the frequent itemsets is empty.')
 
     # check for mandatory columns
     if not all(col in df.columns for col in ["support", "itemsets"]):

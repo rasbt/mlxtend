@@ -230,4 +230,4 @@ def test_on_df_with_missing_entries_support_only():
 def test_with_empty_dataframe():
     df = df_freq_items_with_colnames.iloc[:0]
     with pytest.raises(ValueError):
-        association_rules(df) 
+        association_rules(df)

@@ -203,7 +203,8 @@ def bootstrap_point632_score(estimator, X, y, n_splits=200,
             #    "Estimating the Error Rate of a Prediction Rule: Improvement
             #     on Cross-Validation"
             #     by B. Efron, 1983, https://doi.org/10.2307/2288636
-            # Also see the discussion at https://github.com/rasbt/mlxtend/discussions/828
+            # Also see the discussion at
+            #   https://github.com/rasbt/mlxtend/discussions/828
             #
             # This also applies to the .632+ estimate in the paper
             #    "Improvements on Cross-Validation: The .632+ Bootstrap Method"

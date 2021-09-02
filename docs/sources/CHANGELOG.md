@@ -27,9 +27,9 @@ The CHANGELOG for the current development version is available at
 - Removes deprecated `res` argument from `plot_decision_regions`. ([#803](https://github.com/rasbt/mlxtend/pull/803))
 - Adds a `title_fontsize` parameter to `plot_learning_curves` for controlling the title font size; also the plot style is now the matplotlib default. ([#818](https://github.com/rasbt/mlxtend/pull/818))
 - Internal change using `'c': 'none'` instead of `'c': ''` in `mlxtend.plotting.plot_decision_regions`'s scatterplot highlights to stay compatible with Matplotlib 3.4 and newer. ([#822](https://github.com/rasbt/mlxtend/pull/822))
-- Adds a `fontcolor_threshold` parameter to the `mlxtend.plotting.plot_confusion_matrix` function as an additional option for determining the font color cut-off manually. ([#825](https://github.com/rasbt/mlxtend/pull/825))
-- The `frequent_patterns.association_rules` now raises a `ValueError` if an empty frequent itemset DataFrame is passed. ([#842](https://github.com/rasbt/mlxtend/pull/842))
-- The .632 and .632+ bootstrap method implemented in the `mlxtend.evaluate.bootstrap_point632_score` function now use the whole training set for the resubstitution weighting term instead of the internal training set that is a new bootstrap sample in each round. ([#843](https://github.com/rasbt/mlxtend/pull/843))
+- Adds a `fontcolor_threshold` parameter to the `mlxtend.plotting.plot_confusion_matrix` function as an additional option for determining the font color cut-off manually. ([#827](https://github.com/rasbt/mlxtend/pull/827))
+- The `frequent_patterns.association_rules` now raises a `ValueError` if an empty frequent itemset DataFrame is passed. ([#843](https://github.com/rasbt/mlxtend/pull/843))
+- The .632 and .632+ bootstrap method implemented in the `mlxtend.evaluate.bootstrap_point632_score` function now use the whole training set for the resubstitution weighting term instead of the internal training set that is a new bootstrap sample in each round. ([#844](https://github.com/rasbt/mlxtend/pull/844))
 
 ##### Bug Fixes
 

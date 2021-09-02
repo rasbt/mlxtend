@@ -185,13 +185,31 @@ def bootstrap_point632_score(estimator, X, y, n_splits=200,
     oob = BootstrapOutOfBag(n_splits=n_splits, random_seed=random_seed)
     scores = np.empty(dtype=np.float, shape=(n_splits,))
     cnt = 0
+
     for train, test in oob.split(X):
         cloned_est.fit(X[train], y[train])
 
         # get the prediction probability
         # for binary class uses the last column
         predicted_test_val = predict_func(X[test])
-        predicted_train_val = predict_func(X[train])
+
+        if method in ('.632', '.632+'):
+            # predictions on the internal training set:
+            # predicted_train_val = predict_func(X[train])
+
+            # compute training error on the whole training set as reported in
+            # the original .632 boostrap paper
+            # in Eq (6.12) in
+            #    "Estimating the Error Rate of a Prediction Rule: Improvement
+            #     on Cross-Validation"
+            #     by B. Efron, 1983, https://doi.org/10.2307/2288636
+            # Also see the discussion at https://github.com/rasbt/mlxtend/discussions/828
+            #
+            # This also applies to the .632+ estimate in the paper
+            #    "Improvements on Cross-Validation: The .632+ Bootstrap Method"
+            #    https://www.tandfonline.com/doi/abs/10.1080/01621459.1997.10474007
+            predicted_train_val = predict_func(X)
+
         if predict_proba:
             len_uniq = np.unique(y)
 
@@ -206,13 +224,19 @@ def bootstrap_point632_score(estimator, X, y, n_splits=200,
 
         else:
             test_err = 1 - test_acc
-            train_err = 1 - scoring_func(y[train], predicted_train_val)
+
+            # training error on the whole training set as mentioned in the
+            # previous comment above
+            train_err = 1 - scoring_func(
+                    y, predicted_train_val)
+
             if method == '.632+':
                 gamma = 1 - (no_information_rate(
                     y,
                     cloned_est.predict(X),
                     scoring_func))
-                R = (test_err - train_err) / (gamma - train_err)
+                R = (test_err - train_err) / (
+                    gamma - train_err)
                 weight = 0.632 / (1 - 0.368*R)
 
             else:

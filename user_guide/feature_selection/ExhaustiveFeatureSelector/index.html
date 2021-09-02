@@ -667,6 +667,12 @@
         
             
 <li >
+    <a href="../../plotting/scatter_hist/">Scatter Histogram</a>
+</li>
+
+        
+            
+<li >
     <a href="../../plotting/stacked_barplot/">Stacked Barplot</a>
 </li>
 
@@ -1819,91 +1825,84 @@ array indices. The 'feature_names' is new in v 0.13.0.</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-*fit(X, y, custom_feature_names=None, groups=None, **fit_params)*
-
-Perform feature selection and learn model from training data.
-
-**Parameters**
-
-- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
-
-    Training vectors, where n_samples is the number of samples and
-    n_features is the number of features.
-    New in v 0.13.0: pandas DataFrames are now also accepted as
-    argument for X.
-
-- `y` : array-like, shape = [n_samples]
-
-    Target values.
-
-- `custom_feature_names` : None or tuple (default: tuple)
-
-    Custom feature names for `self.k_feature_names` and
-    `self.subsets_[i]['feature_names']`.
-    (new in v 0.13.0)
-
-- `groups` : array-like, with shape (n_samples,), optional
-
-    Group labels for the samples used while splitting the dataset into
-    train/test set. Passed to the fit method of the cross-validator.
-
-- `fit_params` : dict of string -> object, optional
-
-    Parameters to pass to to the fit method of classifier.
-
-**Returns**
-
-- `self` : object
-
-
+<p><em>fit(X, y, custom_feature_names=None, groups=None, </em><em>fit_params)</em></p>
+<p>Perform feature selection and learn model from training data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.
+New in v 0.13.0: pandas DataFrames are now also accepted as
+argument for X.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>custom_feature_names</code> : None or tuple (default: tuple)</p>
+<p>Custom feature names for <code>self.k_feature_names</code> and
+<code>self.subsets_[i]['feature_names']</code>.
+(new in v 0.13.0)</p>
+</li>
+<li>
+<p><code>groups</code> : array-like, with shape (n_samples,), optional</p>
+<p>Group labels for the samples used while splitting the dataset into
+train/test set. Passed to the fit method of the cross-validator.</p>
+</li>
+<li>
+<p><code>fit_params</code> : dict of string -&gt; object, optional</p>
+<p>Parameters to pass to to the fit method of classifier.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
 <hr>
 
-*fit_transform(X, y, groups=None, **fit_params)*
-
-Fit to training data and return the best selected features from X.
-
-**Parameters**
-
-- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
-
-    Training vectors, where n_samples is the number of samples and
-    n_features is the number of features.
-    New in v 0.13.0: pandas DataFrames are now also accepted as
-    argument for X.
-
-- `y` : array-like, shape = [n_samples]
-
-    Target values.
-
-- `groups` : array-like, with shape (n_samples,), optional
-
-    Group labels for the samples used while splitting the dataset into
-    train/test set. Passed to the fit method of the cross-validator.
-
-- `fit_params` : dict of string -> object, optional
-
-    Parameters to pass to to the fit method of classifier.
-
-**Returns**
-
-Feature subset of X, shape={n_samples, k_features}
-
+<p><em>fit_transform(X, y, groups=None, </em><em>fit_params)</em></p>
+<p>Fit to training data and return the best selected features from X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.
+New in v 0.13.0: pandas DataFrames are now also accepted as
+argument for X.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>groups</code> : array-like, with shape (n_samples,), optional</p>
+<p>Group labels for the samples used while splitting the dataset into
+train/test set. Passed to the fit method of the cross-validator.</p>
+</li>
+<li>
+<p><code>fit_params</code> : dict of string -&gt; object, optional</p>
+<p>Parameters to pass to to the fit method of classifier.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Feature subset of X, shape={n_samples, k_features}</p>
 <hr>
 
-*get_metric_dict(confidence_interval=0.95)*
-
-Return metric dictionary
-
-**Parameters**
-
-- `confidence_interval` : float (default: 0.95)
-
-    A positive float between 0.0 and 1.0 to compute the confidence
-    interval bounds of the CV score averages.
-
-**Returns**
-
-Dictionary with items where each dictionary value is a list
+<p><em>get_metric_dict(confidence_interval=0.95)</em></p>
+<p>Return metric dictionary</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>confidence_interval</code> : float (default: 0.95)</p>
+<p>A positive float between 0.0 and 1.0 to compute the confidence
+interval bounds of the CV score averages.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Dictionary with items where each dictionary value is a list
     with the number of iterations (number of feature subsets) as
     its length. The dictionary keys corresponding to these lists
     are as follows:
@@ -1912,68 +1911,65 @@ Dictionary with items where each dictionary value is a list
     'avg_score': of CV average scores
     'std_dev': standard deviation of the CV score average
     'std_err': standard error of the CV score average
-    'ci_bound': confidence interval bound of the CV score average
-
+    'ci_bound': confidence interval bound of the CV score average</p>
 <hr>
 
-*get_params(deep=True)*
-
-Get parameters for this estimator.
-
-**Parameters**
-
-- `deep` : bool, default=True
-
-    If True, will return the parameters for this estimator and
-    contained subobjects that are estimators.
-
-**Returns**
-
-- `params` : mapping of string to any
-
-    Parameter names mapped to their values.
-
+<p><em>get_params(deep=True)</em></p>
+<p>Get parameters for this estimator.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>deep</code> : bool, default=True</p>
+<p>If True, will return the parameters for this estimator and
+contained subobjects that are estimators.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>params</code> : mapping of string to any</p>
+<p>Parameter names mapped to their values.</p>
+</li>
+</ul>
 <hr>
 
-*set_params(**params)*
-
-Set the parameters of this estimator.
-
-    The method works on simple estimators as well as on nested objects
-    (such as pipelines). The latter have parameters of the form
-    ``<component>__<parameter>`` so that it's possible to update each
-    component of a nested object.
-
-**Parameters**
-
-- `**params` : dict
-
-    Estimator parameters.
-
-**Returns**
-
-- `self` : object
-
-    Estimator instance.
-
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.</p>
+<pre><code>The method works on simple estimators as well as on nested objects
+(such as pipelines). The latter have parameters of the form
+``&lt;component&gt;__&lt;parameter&gt;`` so that it's possible to update each
+component of a nested object.
+</code></pre>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>**params</code> : dict</p>
+<p>Estimator parameters.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>self</code> : object</p>
+<p>Estimator instance.</p>
+</li>
+</ul>
 <hr>
 
-*transform(X)*
-
-Return the best selected features from X.
-
-**Parameters**
-
-- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
-
-    Training vectors, where n_samples is the number of samples and
-    n_features is the number of features.
-    New in v 0.13.0: pandas DataFrames are now also accepted as
-    argument for X.
-
-**Returns**
-
-Feature subset of X, shape={n_samples, k_features}</div>
+<p><em>transform(X)</em></p>
+<p>Return the best selected features from X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.
+New in v 0.13.0: pandas DataFrames are now also accepted as
+argument for X.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Feature subset of X, shape={n_samples, k_features}</p></div>
         
         
     </div>

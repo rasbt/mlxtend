@@ -667,6 +667,12 @@
         
             
 <li >
+    <a href="../../../user_guide/plotting/scatter_hist/">Scatter Histogram</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/plotting/stacked_barplot/">Stacked Barplot</a>
 </li>
 
@@ -1016,8 +1022,9 @@ Currently allowed values are '0-1_loss' and 'mse'.</p>
 </li>
 <li>
 <p><code>num_rounds</code> : int (default=200)</p>
-<p>Number of bootstrap rounds for performing the bias-variance
-decomposition.</p>
+<p>Number of bootstrap rounds (sampling from the training set)
+for performing the bias-variance decomposition. Each bootstrap
+sample has the same size as the original training set.</p>
 </li>
 <li>
 <p><code>random_seed</code> : int (default=None)</p>

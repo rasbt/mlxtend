@@ -667,6 +667,12 @@
         
             
 <li >
+    <a href="../../plotting/scatter_hist/">Scatter Histogram</a>
+</li>
+
+        
+            
+<li >
     <a href="../../plotting/stacked_barplot/">Stacked Barplot</a>
 </li>
 
@@ -1123,50 +1129,49 @@ Keeps the original dimensions of the dataset if <code>None</code>.</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-*fit(X, y, n_classes=None)*
-
-Fit the LDA model with X.
-
-**Parameters**
-
-- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
-
-    Training vectors, where n_samples is the number of samples and
-    n_features is the number of features.
-
-- `y` : array-like, shape = [n_samples]
-
-    Target values.
-
-- `n_classes` : int (default: None)
-
-    A positive integer to declare the number of class labels
-    if not all class labels are present in a partial training set.
-    Gets the number of class labels automatically if None.
-
-**Returns**
-
-- `self` : object
-
-
+<p><em>fit(X, y, n_classes=None)</em></p>
+<p>Fit the LDA model with X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>n_classes</code> : int (default: None)</p>
+<p>A positive integer to declare the number of class labels
+if not all class labels are present in a partial training set.
+Gets the number of class labels automatically if None.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
 <hr>
 
-*transform(X)*
-
-Apply the linear transformation on X.
-
-**Parameters**
-
-- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
-
-    Training vectors, where n_samples is the number of samples and
-    n_features is the number of features.
-
-**Returns**
-
-- `X_projected` : np.ndarray, shape = [n_samples, n_discriminants]
-
-    Projected training vectors.</div>
+<p><em>transform(X)</em></p>
+<p>Apply the linear transformation on X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>X_projected</code> : np.ndarray, shape = [n_samples, n_discriminants]</p>
+<p>Projected training vectors.</p>
+</li>
+</ul></div>
         
         
     </div>

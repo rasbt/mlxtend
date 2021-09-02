@@ -667,6 +667,12 @@
         
             
 <li >
+    <a href="../../user_guide/plotting/scatter_hist/">Scatter Histogram</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/plotting/stacked_barplot/">Stacked Barplot</a>
 </li>
 
@@ -991,11 +997,12 @@
         <li class="first-level active"><a href="#eyepadalign">EyepadAlign</a></li>
             <li class="second-level"><a href="#methods">Methods</a></li>
                  <!--   -->
+        <li class="first-level "><a href="#extract_face_landmarks">extract_face_landmarks</a></li>
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.18.0 </p>
+<p>mlxtend version: 0.19.0 </p>
 <h2 id="eyepadalign">EyepadAlign</h2>
 <p><em>EyepadAlign(verbose=0)</em></p>
 <p>Class to align/transform face images to facial landmarks,
@@ -1050,157 +1057,134 @@ from all face images in a file directory of face images.</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-*fit_directory(target_img_dir, target_height, target_width, file_extension='.jpg', pre_check=True)*
-
-Calculates the average landmarks for all face images
-    in a directory which will then be set as the target landmark set.
-
-**Arguments**
-
-- `target_img_dir` : str
-
-    Directory containing the images
-
-
-- `target_height` : int
-
-    Expected image height of the images in the directory
-
-
-- `target_width` : int
-
-    Expected image width of the images in the directory
-
-    file_extension str (default='.jpg'): File extension of the image files.
-
-    pre_check Bool (default=True): Checks that each image has the
-    dimensions specificed via `target_height`
-    and `target_width` on the whole directory first to identify
-    potential issues that are recommended
-    to be fixed before proceeding. Raises a warning for each image if
-    dimensions differ from the ones specified and expected.
-
-**Returns**
-
-- `self` : object
-
-
+<p><em>fit_directory(target_img_dir, target_height, target_width, file_extension='.jpg', pre_check=True)</em></p>
+<p>Calculates the average landmarks for all face images
+    in a directory which will then be set as the target landmark set.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li>
+<p><code>target_img_dir</code> : str</p>
+<p>Directory containing the images</p>
+</li>
+<li>
+<p><code>target_height</code> : int</p>
+<p>Expected image height of the images in the directory</p>
+</li>
+<li>
+<p><code>target_width</code> : int</p>
+<p>Expected image width of the images in the directory</p>
+<p>file_extension str (default='.jpg'): File extension of the image files.</p>
+<p>pre_check Bool (default=True): Checks that each image has the
+dimensions specificed via <code>target_height</code>
+and <code>target_width</code> on the whole directory first to identify
+potential issues that are recommended
+to be fixed before proceeding. Raises a warning for each image if
+dimensions differ from the ones specified and expected.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
 <hr>
 
-*fit_image(target_image)*
-
-Derives facial landmarks from a target image.
-
-**Arguments**
-
-- `target_image` : `uint8` numpy.array, shape=[width, height, channels]
-
-    NumPy array representation of the image data.
-
-**Returns**
-
-- `self` : object
-
-
+<p><em>fit_image(target_image)</em></p>
+<p>Derives facial landmarks from a target image.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li>
+<p><code>target_image</code> : <code>uint8</code> numpy.array, shape=[width, height, channels]</p>
+<p>NumPy array representation of the image data.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
 <hr>
 
-*fit_values(target_landmarks, target_width, target_height)*
-
-Used for determining the eye location from pre-defined
+<p><em>fit_values(target_landmarks, target_width, target_height)</em></p>
+<p>Used for determining the eye location from pre-defined
     landmark arrays, eliminating the need for re-computing
-    the average landmarks on a target image or image directory.
-
-**Arguments**
-
-- `target_landmarks` : np.array, shape=(height, width)
-
-    NumPy array containing the locations of the facial landmarks
-    as determined by `mlxtend.image.extract_face_landmarks`
-
-
-- `target_height` : int
-
-    image height
-
-
-- `target_width` : int
-
-    image width
-
-**Returns**
-
-- `self` : object
-
-
+    the average landmarks on a target image or image directory.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li>
+<p><code>target_landmarks</code> : np.array, shape=(height, width)</p>
+<p>NumPy array containing the locations of the facial landmarks
+as determined by <code>mlxtend.image.extract_face_landmarks</code></p>
+</li>
+<li>
+<p><code>target_height</code> : int</p>
+<p>image height</p>
+</li>
+<li>
+<p><code>target_width</code> : int</p>
+<p>image width</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
 <hr>
 
-*transform(img)*
-
-transforms a single face image (img) to the target landmarks
+<p><em>transform(img)</em></p>
+<p>transforms a single face image (img) to the target landmarks
     based on the location of the eyes by
-    scaling, translation and cropping (if needed):
+    scaling, translation and cropping (if needed):</p>
+<pre><code>(1) Scaling the image so that the distance of the two eyes
+in the given image (img) matches the distance of the
+two eyes in the target landmarks.
 
-    (1) Scaling the image so that the distance of the two eyes
-    in the given image (img) matches the distance of the
-    two eyes in the target landmarks.
-
-    (2) Translation is performed based on the middle point
-    between the two eyes.
-
-**Arguments**
-
-
-- `img` : np.array, shape=(height, width, channels)
-
-    Input image to be transformed.
-
-**Returns**
-
-- `self` : object
-
-
-
-
-
-## extract_face_landmarks
-
-*extract_face_landmarks(img, return_dtype=<class 'numpy.int32'>)*
-
-Function to extract face landmarks.
-
-    Note that this function requires an installation of
-    the Python version of the library "dlib": http://dlib.net
-
-**Parameters**
-
-
-- `img` : array, shape = [h, w, ?]
-
-    Numpy array of a face image or
-    imageio.core.util.Array. E.g.,
-    img = imageio.core.util.Array(ary)
-
-    Supported shapes are
-    - 3D tensors with 1
-    or more color channels, for example,
-    RGB: [h, w, 3]
-    - 2D tensors without color channel, for example,
-    Grayscale: [h, w]
-
-    return_dtype: the return data-type of the array,
-    default: np.int32.
-
-**Returns**
-
-- `landmarks` : numpy.ndarray, shape = [68, 2]
-
-    A numpy array, where each row contains a landmark/point x-y coordinates.
-    Return None if no face is detected by Dlib.
-
-**Examples**
-
-For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/image/extract_face_landmarks/</div>
+(2) Translation is performed based on the middle point
+between the two eyes.
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li>
+<p><code>img</code> : np.array, shape=(height, width, channels)</p>
+<p>Input image to be transformed.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
+<h2 id="extract_face_landmarks">extract_face_landmarks</h2>
+<p><em>extract_face_landmarks(img, return_dtype=<class 'numpy.int32'>)</em></p>
+<p>Function to extract face landmarks.</p>
+<pre><code>Note that this function requires an installation of
+the Python version of the library "dlib": http://dlib.net
+</code></pre>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>img</code> : array, shape = [h, w, ?]</p>
+<p>Numpy array of a face image or
+imageio.core.util.Array. E.g.,
+img = imageio.core.util.Array(ary)</p>
+<p>Supported shapes are
+- 3D tensors with 1
+or more color channels, for example,
+RGB: [h, w, 3]
+- 2D tensors without color channel, for example,
+Grayscale: [h, w]</p>
+<p>return_dtype: the return data-type of the array,
+default: np.int32.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>landmarks</code> : numpy.ndarray, shape = [68, 2]</p>
+<p>A numpy array, where each row contains a landmark/point x-y coordinates.
+Return None if no face is detected by Dlib.</p>
+</li>
+</ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/image/extract_face_landmarks/</p></div>
         
         
     </div>

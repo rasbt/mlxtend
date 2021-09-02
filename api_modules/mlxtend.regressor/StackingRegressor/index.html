@@ -667,6 +667,12 @@
         
             
 <li >
+    <a href="../../../user_guide/plotting/scatter_hist/">Scatter Histogram</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/plotting/stacked_barplot/">Stacked Barplot</a>
 </li>
 
@@ -981,12 +987,14 @@
         <li class="first-level active"><a href="#stackingregressor">StackingRegressor</a></li>
             <li class="second-level"><a href="#methods">Methods</a></li>
                  <!--   -->
+            <li class="second-level"><a href="#properties">Properties</a></li>
+                 <!--   -->
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
 <h2 id="stackingregressor">StackingRegressor</h2>
-<p><em>StackingRegressor(regressors, meta_regressor, verbose=0, use_features_in_secondary=False, store_train_meta_features=False, refit=True)</em></p>
+<p><em>StackingRegressor(regressors, meta_regressor, verbose=0, use_features_in_secondary=False, store_train_meta_features=False, refit=True, multi_output=False)</em></p>
 <p>A Stacking regressor for scikit-learn estimators for regression.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1071,191 +1079,173 @@ to scikit-learn's <code>clone</code> function.</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-*fit(X, y, sample_weight=None)*
-
-Learn weight coefficients from training data for each regressor.
-
-**Parameters**
-
-- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
-
-    Training vectors, where n_samples is the number of samples and
-    n_features is the number of features.
-
-- `y` : array-like, shape = [n_samples] or [n_samples, n_targets]
-
-    Target values.
-
-- `sample_weight` : array-like, shape = [n_samples], optional
-
-    Sample weights passed as sample_weights to each regressor
-    in the regressors list as well as the meta_regressor.
-    Raises error if some regressor does not support
-    sample_weight in the fit() method.
-
-**Returns**
-
-- `self` : object
-
-
+<p><em>fit(X, y, sample_weight=None)</em></p>
+<p>Learn weight coefficients from training data for each regressor.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : numpy array, shape = [n_samples] or [n_samples, n_targets]</p>
+<p>Target values. Multiple targets are supported only if
+self.multi_output is True.</p>
+</li>
+<li>
+<p><code>sample_weight</code> : array-like, shape = [n_samples], optional</p>
+<p>Sample weights passed as sample_weights to each regressor
+in the regressors list as well as the meta_regressor.
+Raises error if some regressor does not support
+sample_weight in the fit() method.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
 <hr>
 
-*fit_transform(X, y=None, **fit_params)*
-
-Fit to data, then transform it.
-
-    Fits transformer to X and y with optional parameters fit_params
-    and returns a transformed version of X.
-
-**Parameters**
-
-- `X` : {array-like, sparse matrix, dataframe} of shape                 (n_samples, n_features)
-
-
-
-- `y` : ndarray of shape (n_samples,), default=None
-
-    Target values.
-
-
-- `**fit_params` : dict
-
-    Additional fit parameters.
-
-**Returns**
-
-- `X_new` : ndarray array of shape (n_samples, n_features_new)
-
-    Transformed array.
-
+<p><em>fit_transform(X, y=None, </em><em>fit_params)</em></p>
+<p>Fit to data, then transform it.</p>
+<pre><code>Fits transformer to `X` and `y` with optional parameters `fit_params`
+and returns a transformed version of `X`.
+</code></pre>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : array-like of shape (n_samples, n_features)</p>
+<p>Input samples.</p>
+</li>
+<li>
+<p><code>y</code> :  array-like of shape (n_samples,) or (n_samples, n_outputs),                 default=None</p>
+<p>Target values (None for unsupervised transformations).</p>
+</li>
+<li>
+<p><code>**fit_params</code> : dict</p>
+<p>Additional fit parameters.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>X_new</code> : ndarray array of shape (n_samples, n_features_new)</p>
+<p>Transformed array.</p>
+</li>
+</ul>
 <hr>
 
-*get_params(deep=True)*
-
-Return estimator parameter names for GridSearch support.
-
+<p><em>get_params(deep=True)</em></p>
+<p>Return estimator parameter names for GridSearch support.</p>
 <hr>
 
-*predict(X)*
-
-Predict target values for X.
-
-**Parameters**
-
-- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
-
-    Training vectors, where n_samples is the number of samples and
-    n_features is the number of features.
-
-**Returns**
-
-- `y_target` : array-like, shape = [n_samples] or [n_samples, n_targets]
-
-    Predicted target values.
-
+<p><em>predict(X)</em></p>
+<p>Predict target values for X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>y_target</code> : array-like, shape = [n_samples] or [n_samples, n_targets]</p>
+<p>Predicted target values.</p>
+</li>
+</ul>
 <hr>
 
-*predict_meta_features(X)*
-
-Get meta-features of test-data.
-
-**Parameters**
-
-- `X` : numpy array, shape = [n_samples, n_features]
-
-    Test vectors, where n_samples is the number of samples and
-    n_features is the number of features.
-
-**Returns**
-
-- `meta-features` : numpy array, shape = [n_samples, len(self.regressors)]
-
-    meta-features for test data, where n_samples is the number of
-    samples in test data and len(self.regressors) is the number
-    of regressors.
-
+<p><em>predict_meta_features(X)</em></p>
+<p>Get meta-features of test-data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
+<p>Test vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>meta-features</code> : numpy array, shape = [n_samples, len(self.regressors)]</p>
+<p>meta-features for test data, where n_samples is the number of
+samples in test data and len(self.regressors) is the number
+of regressors. If self.multi_output is True, then the number of
+columns is len(self.regressors) * n_targets</p>
+</li>
+</ul>
 <hr>
 
-*score(X, y, sample_weight=None)*
-
-Return the coefficient of determination R^2 of the prediction.
-
-    The coefficient R^2 is defined as (1 - u/v), where u is the residual
-sum of squares ((y_true - y_pred) ** 2).sum() and v is the total
-sum of squares ((y_true - y_true.mean()) ** 2).sum().
-
-The best possible score is 1.0 and it can be negative (because the
-
-model can be arbitrarily worse). A constant model that always
-    predicts the expected value of y, disregarding the input features,
-    would get a R^2 score of 0.0.
-
-**Parameters**
-
-- `X` : array-like of shape (n_samples, n_features)
-
-    Test samples. For some estimators this may be a
-    precomputed kernel matrix or a list of generic objects instead,
-    shape = (n_samples, n_samples_fitted),
-    where n_samples_fitted is the number of
-    samples used in the fitting for the estimator.
-
-
-- `y` : array-like of shape (n_samples,) or (n_samples, n_outputs)
-
-    True values for X.
-
-
-- `sample_weight` : array-like of shape (n_samples,), default=None
-
-    Sample weights.
-
-**Returns**
-
-- `score` : float
-
-    R^2 of self.predict(X) wrt. y.
-
-**Notes**
-
-The R2 score used when calling ``score`` on a regressor uses
-    ``multioutput='uniform_average'`` from version 0.23 to keep consistent
-    with default value of :func:`~sklearn.metrics.r2_score`.
-    This influences the ``score`` method of all the multioutput
+<p><em>score(X, y, sample_weight=None)</em></p>
+<p>Return the coefficient of determination :math:<code>R^2</code> of the
+    prediction.</p>
+<pre><code>The coefficient :math:`R^2` is defined as :math:`(1 - \frac{u}{v})`,
+where :math:`u` is the residual sum of squares ``((y_true - y_pred)
+</code></pre>
+<p><strong> 2).sum()<code>and :math:`v` is the total sum of squares</code>((y_true -
+y_true.mean()) </strong> 2).sum()``. The best possible score is 1.0 and it</p>
+<p>can be negative (because the model can be arbitrarily worse). A</p>
+<p>constant model that always predicts the expected value of <code>y</code>,
+    disregarding the input features, would get a :math:<code>R^2</code> score of
+    0.0.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : array-like of shape (n_samples, n_features)</p>
+<p>Test samples. For some estimators this may be a precomputed
+kernel matrix or a list of generic objects instead with shape
+<code>(n_samples, n_samples_fitted)</code>, where <code>n_samples_fitted</code>
+is the number of samples used in the fitting for the estimator.</p>
+</li>
+<li>
+<p><code>y</code> : array-like of shape (n_samples,) or (n_samples, n_outputs)</p>
+<p>True values for <code>X</code>.</p>
+</li>
+<li>
+<p><code>sample_weight</code> : array-like of shape (n_samples,), default=None</p>
+<p>Sample weights.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>score</code> : float</p>
+<p>:math:<code>R^2</code> of <code>self.predict(X)</code> wrt. <code>y</code>.</p>
+</li>
+</ul>
+<p><strong>Notes</strong></p>
+<p>The :math:<code>R^2</code> score used when calling <code>score</code> on a regressor uses
+    <code>multioutput='uniform_average'</code> from version 0.23 to keep consistent
+    with default value of :func:<code>~sklearn.metrics.r2_score</code>.
+    This influences the <code>score</code> method of all the multioutput
     regressors (except for
-    :class:`~sklearn.multioutput.MultiOutputRegressor`).
-
+    :class:<code>~sklearn.multioutput.MultiOutputRegressor</code>).</p>
 <hr>
 
-*set_params(**params)*
-
-Set the parameters of this estimator.
-
-    Valid parameter keys can be listed with ``get_params()``.
-
-**Returns**
-
-self
-
-### Properties
-
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.</p>
+<pre><code>Valid parameter keys can be listed with ``get_params()``.
+</code></pre>
+<p><strong>Returns</strong></p>
+<p>self</p>
+<h3 id="properties">Properties</h3>
 <hr>
 
-*coef_*
-
-None
-
+<p><em>coef_</em></p>
+<p>None</p>
 <hr>
 
-*intercept_*
-
-None
-
+<p><em>intercept_</em></p>
+<p>None</p>
 <hr>
 
-*named_regressors*
-
-None</div>
+<p><em>named_regressors</em></p>
+<p>None</p></div>
         
         
     </div>

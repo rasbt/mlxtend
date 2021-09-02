@@ -667,6 +667,12 @@
         
             
 <li >
+    <a href="../../plotting/scatter_hist/">Scatter Histogram</a>
+</li>
+
+        
+            
+<li >
     <a href="../../plotting/stacked_barplot/">Stacked Barplot</a>
 </li>
 
@@ -1197,77 +1203,74 @@ Prior to each epoch, the dataset is shuffled to prevent cycles.</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-*fit(X, y, init_params=True)*
-
-Learn model from training data.
-
-**Parameters**
-
-- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
-
-    Training vectors, where n_samples is the number of samples and
-    n_features is the number of features.
-
-- `y` : array-like, shape = [n_samples]
-
-    Target values.
-
-- `init_params` : bool (default: True)
-
-    Re-initializes model parameters prior to fitting.
-    Set False to continue training with weights from
-    a previous model fitting.
-
-**Returns**
-
-- `self` : object
-
-
+<p><em>fit(X, y, init_params=True)</em></p>
+<p>Learn model from training data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>init_params</code> : bool (default: True)</p>
+<p>Re-initializes model parameters prior to fitting.
+Set False to continue training with weights from
+a previous model fitting.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
 <hr>
 
-*predict(X)*
-
-Predict targets from X.
-
-**Parameters**
-
-- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
-
-    Training vectors, where n_samples is the number of samples and
-    n_features is the number of features.
-
-**Returns**
-
-- `target_values` : array-like, shape = [n_samples]
-
-    Predicted target values.
-
+<p><em>predict(X)</em></p>
+<p>Predict targets from X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>target_values</code> : array-like, shape = [n_samples]</p>
+<p>Predicted target values.</p>
+</li>
+</ul>
 <hr>
 
-*score(X, y)*
-
-Compute the prediction accuracy
-
-**Parameters**
-
-- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
-
-    Training vectors, where n_samples is the number of samples and
-    n_features is the number of features.
-
-- `y` : array-like, shape = [n_samples]
-
-    Target values (true class labels).
-
-**Returns**
-
-- `acc` : float
-
-    The prediction accuracy as a float
-    between 0.0 and 1.0 (perfect score).
-
-
-ython</div>
+<p><em>score(X, y)</em></p>
+<p>Compute the prediction accuracy</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values (true class labels).</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>acc</code> : float</p>
+<p>The prediction accuracy as a float
+between 0.0 and 1.0 (perfect score).</p>
+</li>
+</ul>
+<p>ython</p></div>
         
         
     </div>

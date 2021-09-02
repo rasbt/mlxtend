@@ -667,6 +667,12 @@
         
             
 <li >
+    <a href="../../plotting/scatter_hist/">Scatter Histogram</a>
+</li>
+
+        
+            
+<li >
     <a href="../../plotting/stacked_barplot/">Stacked Barplot</a>
 </li>
 
@@ -1001,6 +1007,7 @@
         <li class="first-level "><a href="#example-1-generating-association-rules-from-frequent-itemsets">Example 1 -- Generating Association Rules from Frequent Itemsets</a></li>
         <li class="first-level "><a href="#example-2-rule-generation-and-selection-criteria">Example 2 -- Rule Generation and Selection Criteria</a></li>
         <li class="first-level "><a href="#example-3-frequent-itemsets-with-incomplete-antecedent-and-consequent-information">Example 3 -- Frequent Itemsets with Incomplete Antecedent and Consequent Information</a></li>
+        <li class="first-level "><a href="#example-4-pruning-association-rules">Example 4 -- Pruning Association Rules</a></li>
         <li class="first-level "><a href="#api">API</a></li>
     </ul>
 </div></div>
@@ -1047,7 +1054,7 @@
 <ul>
 <li>introduced in [5]</li>
 </ul>
-<p>Leverage computes the difference between the observed frequency of A and C appearing together and the frequency that would be expected if A and C were independent. An leverage value of 0 indicates independence.</p>
+<p>Leverage computes the difference between the observed frequency of A and C appearing together and the frequency that would be expected if A and C were independent. A leverage value of 0 indicates independence.</p>
 <h4 id="conviction">'conviction':</h4>
 <p>
 <script type="math/tex; mode=display">\text{conviction}(A\rightarrow C) = \frac{1 - \text{support}(C)}{1 - \text{confidence}(A\rightarrow C)}, \;\;\; \text{range: } [0, \infty]</script>
@@ -1138,7 +1145,7 @@ frequent_itemsets
     <tr>
       <th>5</th>
       <td>0.8</td>
-      <td>(Eggs, Kidney Beans)</td>
+      <td>(Kidney Beans, Eggs)</td>
     </tr>
     <tr>
       <th>6</th>
@@ -1158,7 +1165,7 @@ frequent_itemsets
     <tr>
       <th>9</th>
       <td>0.6</td>
-      <td>(Onion, Eggs, Kidney Beans)</td>
+      <td>(Onion, Kidney Beans, Eggs)</td>
     </tr>
     <tr>
       <th>10</th>
@@ -1206,18 +1213,6 @@ association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshol
   <tbody>
     <tr>
       <th>0</th>
-      <td>(Eggs)</td>
-      <td>(Kidney Beans)</td>
-      <td>0.8</td>
-      <td>1.0</td>
-      <td>0.8</td>
-      <td>1.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>inf</td>
-    </tr>
-    <tr>
-      <th>1</th>
       <td>(Kidney Beans)</td>
       <td>(Eggs)</td>
       <td>1.0</td>
@@ -1227,6 +1222,18 @@ association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshol
       <td>1.00</td>
       <td>0.00</td>
       <td>1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>(Eggs)</td>
+      <td>(Kidney Beans)</td>
+      <td>0.8</td>
+      <td>1.0</td>
+      <td>0.8</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>inf</td>
     </tr>
     <tr>
       <th>2</th>
@@ -1278,18 +1285,6 @@ association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshol
     </tr>
     <tr>
       <th>6</th>
-      <td>(Onion, Eggs)</td>
-      <td>(Kidney Beans)</td>
-      <td>0.6</td>
-      <td>1.0</td>
-      <td>0.6</td>
-      <td>1.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>inf</td>
-    </tr>
-    <tr>
-      <th>7</th>
       <td>(Onion, Kidney Beans)</td>
       <td>(Eggs)</td>
       <td>0.6</td>
@@ -1301,8 +1296,20 @@ association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshol
       <td>inf</td>
     </tr>
     <tr>
+      <th>7</th>
+      <td>(Onion, Eggs)</td>
+      <td>(Kidney Beans)</td>
+      <td>0.6</td>
+      <td>1.0</td>
+      <td>0.6</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>inf</td>
+    </tr>
+    <tr>
       <th>8</th>
-      <td>(Eggs, Kidney Beans)</td>
+      <td>(Kidney Beans, Eggs)</td>
       <td>(Onion)</td>
       <td>0.8</td>
       <td>0.6</td>
@@ -1315,7 +1322,7 @@ association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshol
     <tr>
       <th>9</th>
       <td>(Onion)</td>
-      <td>(Eggs, Kidney Beans)</td>
+      <td>(Kidney Beans, Eggs)</td>
       <td>0.6</td>
       <td>0.8</td>
       <td>0.6</td>
@@ -1425,7 +1432,7 @@ rules
     </tr>
     <tr>
       <th>3</th>
-      <td>(Eggs, Kidney Beans)</td>
+      <td>(Kidney Beans, Eggs)</td>
       <td>(Onion)</td>
       <td>0.8</td>
       <td>0.6</td>
@@ -1438,7 +1445,7 @@ rules
     <tr>
       <th>4</th>
       <td>(Onion)</td>
-      <td>(Eggs, Kidney Beans)</td>
+      <td>(Kidney Beans, Eggs)</td>
       <td>0.6</td>
       <td>0.8</td>
       <td>0.6</td>
@@ -1545,7 +1552,7 @@ rules
     </tr>
     <tr>
       <th>3</th>
-      <td>(Eggs, Kidney Beans)</td>
+      <td>(Kidney Beans, Eggs)</td>
       <td>(Onion)</td>
       <td>0.8</td>
       <td>0.6</td>
@@ -1559,7 +1566,7 @@ rules
     <tr>
       <th>4</th>
       <td>(Onion)</td>
-      <td>(Eggs, Kidney Beans)</td>
+      <td>(Kidney Beans, Eggs)</td>
       <td>0.6</td>
       <td>0.8</td>
       <td>0.6</td>
@@ -1675,7 +1682,7 @@ rules
   <tbody>
     <tr>
       <th>3</th>
-      <td>(Eggs, Kidney Beans)</td>
+      <td>(Kidney Beans, Eggs)</td>
       <td>(Onion)</td>
       <td>0.8</td>
       <td>0.6</td>
@@ -1823,8 +1830,8 @@ res
   <tbody>
     <tr>
       <th>0</th>
-      <td>(177)</td>
       <td>(176)</td>
+      <td>(177)</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>0.253623</td>
@@ -1835,8 +1842,8 @@ res
     </tr>
     <tr>
       <th>1</th>
-      <td>(176)</td>
       <td>(177)</td>
+      <td>(176)</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>0.253623</td>
@@ -1895,8 +1902,8 @@ res
     </tr>
     <tr>
       <th>6</th>
-      <td>(179)</td>
       <td>(176)</td>
+      <td>(179)</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>0.217391</td>
@@ -1907,8 +1914,8 @@ res
     </tr>
     <tr>
       <th>7</th>
-      <td>(176)</td>
       <td>(179)</td>
+      <td>(176)</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>0.217391</td>
@@ -1943,8 +1950,8 @@ res
     </tr>
     <tr>
       <th>10</th>
-      <td>(177)</td>
       <td>(178)</td>
+      <td>(177)</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>0.108696</td>
@@ -1955,8 +1962,8 @@ res
     </tr>
     <tr>
       <th>11</th>
-      <td>(178)</td>
       <td>(177)</td>
+      <td>(178)</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>0.108696</td>
@@ -1967,8 +1974,8 @@ res
     </tr>
     <tr>
       <th>12</th>
-      <td>(177, 178)</td>
-      <td>(176)</td>
+      <td>(178, 176)</td>
+      <td>(177)</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>0.108696</td>
@@ -1979,8 +1986,8 @@ res
     </tr>
     <tr>
       <th>13</th>
-      <td>(177, 176)</td>
-      <td>(178)</td>
+      <td>(178, 177)</td>
+      <td>(176)</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>0.108696</td>
@@ -1991,8 +1998,8 @@ res
     </tr>
     <tr>
       <th>14</th>
-      <td>(176, 178)</td>
-      <td>(177)</td>
+      <td>(176, 177)</td>
+      <td>(178)</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>0.108696</td>
@@ -2003,8 +2010,8 @@ res
     </tr>
     <tr>
       <th>15</th>
-      <td>(177)</td>
-      <td>(176, 178)</td>
+      <td>(178)</td>
+      <td>(176, 177)</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>0.108696</td>
@@ -2015,8 +2022,8 @@ res
     </tr>
     <tr>
       <th>16</th>
-      <td>(178)</td>
-      <td>(177, 176)</td>
+      <td>(176)</td>
+      <td>(178, 177)</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>0.108696</td>
@@ -2027,8 +2034,8 @@ res
     </tr>
     <tr>
       <th>17</th>
-      <td>(176)</td>
-      <td>(177, 178)</td>
+      <td>(177)</td>
+      <td>(178, 176)</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>0.108696</td>
@@ -2071,14 +2078,14 @@ res
   <tbody>
     <tr>
       <th>0</th>
-      <td>(177)</td>
       <td>(176)</td>
+      <td>(177)</td>
       <td>0.253623</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>(176)</td>
       <td>(177)</td>
+      <td>(176)</td>
       <td>0.253623</td>
     </tr>
     <tr>
@@ -2107,14 +2114,14 @@ res
     </tr>
     <tr>
       <th>6</th>
-      <td>(179)</td>
       <td>(176)</td>
+      <td>(179)</td>
       <td>0.217391</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>(176)</td>
       <td>(179)</td>
+      <td>(176)</td>
       <td>0.217391</td>
     </tr>
     <tr>
@@ -2131,51 +2138,280 @@ res
     </tr>
     <tr>
       <th>10</th>
-      <td>(177)</td>
       <td>(178)</td>
+      <td>(177)</td>
       <td>0.108696</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>(178)</td>
       <td>(177)</td>
+      <td>(178)</td>
       <td>0.108696</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>(177, 178)</td>
-      <td>(176)</td>
+      <td>(178, 176)</td>
+      <td>(177)</td>
       <td>0.108696</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>(177, 176)</td>
-      <td>(178)</td>
+      <td>(178, 177)</td>
+      <td>(176)</td>
       <td>0.108696</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>(176, 178)</td>
-      <td>(177)</td>
+      <td>(176, 177)</td>
+      <td>(178)</td>
       <td>0.108696</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>(177)</td>
-      <td>(176, 178)</td>
+      <td>(178)</td>
+      <td>(176, 177)</td>
       <td>0.108696</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>(178)</td>
-      <td>(177, 176)</td>
+      <td>(176)</td>
+      <td>(178, 177)</td>
       <td>0.108696</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>(176)</td>
-      <td>(177, 178)</td>
+      <td>(177)</td>
+      <td>(178, 176)</td>
       <td>0.108696</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="example-4-pruning-association-rules">Example 4 -- Pruning Association Rules</h2>
+<p>There is no specific API for pruning. Instead, the pandas API can be used on the resulting data frame to remove individual rows. E.g., suppose we have the following rules:</p>
+<pre><code class="language-python">import pandas as pd
+from mlxtend.preprocessing import TransactionEncoder
+from mlxtend.frequent_patterns import apriori, fpmax, fpgrowth
+from mlxtend.frequent_patterns import association_rules
+
+
+dataset = [['Milk', 'Onion', 'Nutmeg', 'Kidney Beans', 'Eggs', 'Yogurt'],
+           ['Dill', 'Onion', 'Nutmeg', 'Kidney Beans', 'Eggs', 'Yogurt'],
+           ['Milk', 'Apple', 'Kidney Beans', 'Eggs'],
+           ['Milk', 'Unicorn', 'Corn', 'Kidney Beans', 'Yogurt'],
+           ['Corn', 'Onion', 'Onion', 'Kidney Beans', 'Ice cream', 'Eggs']]
+
+te = TransactionEncoder()
+te_ary = te.fit(dataset).transform(dataset)
+df = pd.DataFrame(te_ary, columns=te.columns_)
+
+frequent_itemsets = fpgrowth(df, min_support=0.6, use_colnames=True)
+rules = association_rules(frequent_itemsets, metric=&quot;lift&quot;, min_threshold=1.2)
+rules
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>antecedents</th>
+      <th>consequents</th>
+      <th>antecedent support</th>
+      <th>consequent support</th>
+      <th>support</th>
+      <th>confidence</th>
+      <th>lift</th>
+      <th>leverage</th>
+      <th>conviction</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>(Onion)</td>
+      <td>(Eggs)</td>
+      <td>0.6</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>1.00</td>
+      <td>1.25</td>
+      <td>0.12</td>
+      <td>inf</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>(Eggs)</td>
+      <td>(Onion)</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>0.6</td>
+      <td>0.75</td>
+      <td>1.25</td>
+      <td>0.12</td>
+      <td>1.6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>(Onion, Kidney Beans)</td>
+      <td>(Eggs)</td>
+      <td>0.6</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>1.00</td>
+      <td>1.25</td>
+      <td>0.12</td>
+      <td>inf</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>(Kidney Beans, Eggs)</td>
+      <td>(Onion)</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>0.6</td>
+      <td>0.75</td>
+      <td>1.25</td>
+      <td>0.12</td>
+      <td>1.6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>(Onion)</td>
+      <td>(Kidney Beans, Eggs)</td>
+      <td>0.6</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>1.00</td>
+      <td>1.25</td>
+      <td>0.12</td>
+      <td>inf</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>(Eggs)</td>
+      <td>(Onion, Kidney Beans)</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>0.6</td>
+      <td>0.75</td>
+      <td>1.25</td>
+      <td>0.12</td>
+      <td>1.6</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>and we want to remove the rule "(Onion, Kidney Beans) -&gt; (Eggs)". In order to to this, we can define selection masks and remove this row as follows:</p>
+<pre><code class="language-python">antecedent_sele = rules['antecedents'] == frozenset({'Onion', 'Kidney Beans'}) # or  frozenset({'Kidney Beans', 'Onion'})
+consequent_sele = rules['consequents'] == frozenset({'Eggs'})
+final_sele = (antecedent_sele &amp; consequent_sele)
+
+rules.loc[ ~final_sele ]
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>antecedents</th>
+      <th>consequents</th>
+      <th>antecedent support</th>
+      <th>consequent support</th>
+      <th>support</th>
+      <th>confidence</th>
+      <th>lift</th>
+      <th>leverage</th>
+      <th>conviction</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>(Onion)</td>
+      <td>(Eggs)</td>
+      <td>0.6</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>1.00</td>
+      <td>1.25</td>
+      <td>0.12</td>
+      <td>inf</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>(Eggs)</td>
+      <td>(Onion)</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>0.6</td>
+      <td>0.75</td>
+      <td>1.25</td>
+      <td>0.12</td>
+      <td>1.6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>(Kidney Beans, Eggs)</td>
+      <td>(Onion)</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>0.6</td>
+      <td>0.75</td>
+      <td>1.25</td>
+      <td>0.12</td>
+      <td>1.6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>(Onion)</td>
+      <td>(Kidney Beans, Eggs)</td>
+      <td>0.6</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>1.00</td>
+      <td>1.25</td>
+      <td>0.12</td>
+      <td>inf</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>(Eggs)</td>
+      <td>(Onion, Kidney Beans)</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>0.6</td>
+      <td>0.75</td>
+      <td>1.25</td>
+      <td>0.12</td>
+      <td>1.6</td>
     </tr>
   </tbody>
 </table>
@@ -2184,7 +2420,7 @@ res
 <h2 id="api">API</h2>
 <p><em>association_rules(df, metric='confidence', min_threshold=0.8, support_only=False)</em></p>
 <p>Generates a DataFrame of association rules including the
-metrics 'score', 'confidence', and 'lift'</p>
+    metrics 'score', 'confidence', and 'lift'</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -2246,7 +2482,7 @@ you don't need the other metrics.</p>
     https://docs.python.org/3.6/library/stdtypes.html#frozenset).</p>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/">http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/</a></p></div>
+    http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/</p></div>
         
         
     </div>

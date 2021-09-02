@@ -667,6 +667,12 @@
         
             
 <li >
+    <a href="../../../user_guide/plotting/scatter_hist/">Scatter Histogram</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/plotting/stacked_barplot/">Stacked Barplot</a>
 </li>
 
@@ -1034,119 +1040,115 @@ http://rasbt.github.io/mlxtend/user_guide/classifier/OneRClassifier/</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-*fit(X, y)*
-
-Learn rule from training data.
-
-**Parameters**
-
-- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
-
-    Training vectors, where n_samples is the number of samples and
-    n_features is the number of features.
-
-
-- `y` : array-like, shape = [n_samples]
-
-    Target values.
-
-**Returns**
-
-- `self` : object
-
-
+<p><em>fit(X, y)</em></p>
+<p>Learn rule from training data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
 <hr>
 
-*get_params(deep=True)*
-
-Get parameters for this estimator.
-
-**Parameters**
-
-- `deep` : bool, default=True
-
-    If True, will return the parameters for this estimator and
-    contained subobjects that are estimators.
-
-**Returns**
-
-- `params` : mapping of string to any
-
-    Parameter names mapped to their values.
-
+<p><em>get_params(deep=True)</em></p>
+<p>Get parameters for this estimator.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>deep</code> : bool, default=True</p>
+<p>If True, will return the parameters for this estimator and
+contained subobjects that are estimators.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>params</code> : dict</p>
+<p>Parameter names mapped to their values.</p>
+</li>
+</ul>
 <hr>
 
-*predict(X)*
-
-Predict class labels for X.
-
-**Parameters**
-
-- `X` : {array-like, sparse matrix}, shape = [n_samples, n_features]
-
-    Training vectors, where n_samples is the number of samples and
-    n_features is the number of features.
-
-**Returns**
-
-- `maj` : array-like, shape = [n_samples]
-
-    Predicted class labels.
-
+<p><em>predict(X)</em></p>
+<p>Predict class labels for X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>maj</code> : array-like, shape = [n_samples]</p>
+<p>Predicted class labels.</p>
+</li>
+</ul>
 <hr>
 
-*score(X, y, sample_weight=None)*
-
-Return the mean accuracy on the given test data and labels.
-
-    In multi-label classification, this is the subset accuracy
-    which is a harsh metric since you require for each sample that
-    each label set be correctly predicted.
-
-**Parameters**
-
-- `X` : array-like of shape (n_samples, n_features)
-
-    Test samples.
-
-
-- `y` : array-like of shape (n_samples,) or (n_samples, n_outputs)
-
-    True labels for X.
-
-
-- `sample_weight` : array-like of shape (n_samples,), default=None
-
-    Sample weights.
-
-**Returns**
-
-- `score` : float
-
-    Mean accuracy of self.predict(X) wrt. y.
-
+<p><em>score(X, y, sample_weight=None)</em></p>
+<p>Return the mean accuracy on the given test data and labels.</p>
+<pre><code>In multi-label classification, this is the subset accuracy
+which is a harsh metric since you require for each sample that
+each label set be correctly predicted.
+</code></pre>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : array-like of shape (n_samples, n_features)</p>
+<p>Test samples.</p>
+</li>
+<li>
+<p><code>y</code> : array-like of shape (n_samples,) or (n_samples, n_outputs)</p>
+<p>True labels for <code>X</code>.</p>
+</li>
+<li>
+<p><code>sample_weight</code> : array-like of shape (n_samples,), default=None</p>
+<p>Sample weights.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>score</code> : float</p>
+<p>Mean accuracy of <code>self.predict(X)</code> wrt. <code>y</code>.</p>
+</li>
+</ul>
 <hr>
 
-*set_params(**params)*
-
-Set the parameters of this estimator.
-
-    The method works on simple estimators as well as on nested objects
-    (such as pipelines). The latter have parameters of the form
-    ``<component>__<parameter>`` so that it's possible to update each
-    component of a nested object.
-
-**Parameters**
-
-- `**params` : dict
-
-    Estimator parameters.
-
-**Returns**
-
-- `self` : object
-
-    Estimator instance.</div>
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.</p>
+<pre><code>The method works on simple estimators as well as on nested objects
+(such as :class:`~sklearn.pipeline.Pipeline`). The latter have
+parameters of the form ``&lt;component&gt;__&lt;parameter&gt;`` so that it's
+possible to update each component of a nested object.
+</code></pre>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>**params</code> : dict</p>
+<p>Estimator parameters.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>self</code> : estimator instance</p>
+<p>Estimator instance.</p>
+</li>
+</ul></div>
         
         
     </div>

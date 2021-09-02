@@ -667,6 +667,12 @@
         
             
 <li >
+    <a href="../user_guide/plotting/scatter_hist/">Scatter Histogram</a>
+</li>
+
+        
+            
+<li >
     <a href="../user_guide/plotting/stacked_barplot/">Stacked Barplot</a>
 </li>
 
@@ -991,6 +997,38 @@
         <li class="first-level active"><a href="#how-to-contribute">How to Contribute</a></li>
             <li class="second-level"><a href="#quick-contributor-checklist">Quick Contributor Checklist</a></li>
                  <!--   -->
+        <li class="first-level "><a href="#tips-for-contributors">Tips for Contributors</a></li>
+            <li class="second-level"><a href="#getting-started-creating-a-new-issue-and-forking-the-repository">Getting Started - Creating a New Issue and Forking the Repository</a></li>
+                 <!--   -->
+            <li class="second-level"><a href="#syncing-an-existing-fork">Syncing an Existing Fork</a></li>
+                 <!-- 
+                <li class="third-level"><a href="#1-configuring-a-remote-that-points-to-the-upstream-repository-on-github">1. Configuring a remote that points to the upstream repository on GitHub</a></li>
+                <li class="third-level"><a href="#2-syncing-your-fork">2. Syncing your Fork</a></li>  -->
+            <li class="second-level"><a href="#the-main-workflow-making-changes-in-a-new-topic-branch">*The Main Workflow - Making Changes in a New Topic Branch</a></li>
+                 <!-- 
+                <li class="third-level"><a href="#1-discussing-the-feature-or-modification">1. Discussing the Feature or Modification</a></li>
+                <li class="third-level"><a href="#2-creating-a-new-feature-branch">2. Creating a new feature branch</a></li>
+                <li class="third-level"><a href="#3-developing-the-new-feature-bug-fix">3. Developing the new feature / bug fix</a></li>
+                <li class="third-level"><a href="#4-testing-your-code">4. Testing your code</a></li>
+                <li class="third-level"><a href="#5-documenting-changes">5. Documenting changes</a></li>
+                <li class="third-level"><a href="#6-committing-changes">6. Committing changes</a></li>
+                <li class="third-level"><a href="#7-optional-squashing-commits">7. Optional: squashing commits</a></li>
+                <li class="third-level"><a href="#8-uploading-changes">8. Uploading changes</a></li>
+                <li class="third-level"><a href="#9-submitting-a-pull-request">9. Submitting a pull request</a></li>  -->
+        <li class="first-level "><a href="#notes-for-developers">Notes for Developers</a></li>
+            <li class="second-level"><a href="#building-the-documentation">Building the documentation</a></li>
+                 <!-- 
+                <li class="third-level"><a href="#1-building-the-api-documentation">1. Building the API documentation</a></li>
+                <li class="third-level"><a href="#2-editing-the-user-guide">2. Editing the User Guide</a></li>
+                <li class="third-level"><a href="#3-building-static-html-files-of-the-documentation">3. Building static HTML files of the documentation</a></li>
+                <li class="third-level"><a href="#4-generate-a-pdf-of-the-documentation">4. Generate a PDF of the documentation</a></li>  -->
+            <li class="second-level"><a href="#uploading-a-new-version-to-pypi">Uploading a new version to PyPI</a></li>
+                 <!-- 
+                <li class="third-level"><a href="#1-creating-a-new-testing-environment">1. Creating a new testing environment</a></li>
+                <li class="third-level"><a href="#2-installing-the-package-from-local-files">2. Installing the package from local files</a></li>
+                <li class="third-level"><a href="#3-deploying-the-package">3. Deploying the package</a></li>
+                <li class="third-level"><a href="#4-removing-the-virtual-environment">4. Removing the virtual environment</a></li>
+                <li class="third-level"><a href="#5-updating-the-conda-forge-recipe">5. Updating the conda-forge recipe</a></li>  -->
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
@@ -1019,80 +1057,49 @@ and checking off items as you go.</p>
 </ol>
 <hr>
 
-# Tips for Contributors
-
-
-## Getting Started - Creating a New Issue and Forking the Repository
-
-- If you don't have a [GitHub](https://github.com) account, yet, please create one to contribute to this project.
-- Please submit a ticket for your issue to discuss the fix or new feature before too much time and effort is spent for the implementation.
-
-![](./img/contributing/new_issue.png)
-
-- Fork the `mlxtend` repository from the GitHub web interface.
-
-![](./img/contributing/fork.png)
-
-- Clone the `mlxtend` repository to your local machine by executing
- ```git clone https://github.com/<your_username>/mlxtend.git```
-
-## Syncing an Existing Fork
-
-If you already forked mlxtend earlier, you can bring you "Fork" up to date
-with the master branch as follows:
-
-#### 1. Configuring a remote that points to the upstream repository on GitHub
-
-List the current configured remote repository of your fork by executing
-
-
+<h1 id="tips-for-contributors">Tips for Contributors</h1>
+<h2 id="getting-started-creating-a-new-issue-and-forking-the-repository">Getting Started - Creating a New Issue and Forking the Repository</h2>
+<ul>
+<li>If you don't have a <a href="https://github.com">GitHub</a> account, yet, please create one to contribute to this project.</li>
+<li>Please submit a ticket for your issue to discuss the fix or new feature before too much time and effort is spent for the implementation.</li>
+</ul>
+<p><img alt="" src="../img/contributing/new_issue.png" /></p>
+<ul>
+<li>Fork the <code>mlxtend</code> repository from the GitHub web interface.</li>
+</ul>
+<p><img alt="" src="../img/contributing/fork.png" /></p>
+<ul>
+<li>Clone the <code>mlxtend</code> repository to your local machine by executing
+ <code>git clone https://github.com/&lt;your_username&gt;/mlxtend.git</code></li>
+</ul>
+<h2 id="syncing-an-existing-fork">Syncing an Existing Fork</h2>
+<p>If you already forked mlxtend earlier, you can bring you "Fork" up to date
+with the master branch as follows:</p>
+<h4 id="1-configuring-a-remote-that-points-to-the-upstream-repository-on-github">1. Configuring a remote that points to the upstream repository on GitHub</h4>
+<p>List the current configured remote repository of your fork by executing</p>
 <pre><code class="language-bash">$ git remote -v
 </code></pre>
-
-
-If you see something like
-
-
+<p>If you see something like</p>
 <pre><code class="language-bash">origin  https://github.com/&lt;your username&gt;/mlxtend.git (fetch)
 origin  https://github.com/&lt;your username&gt;/mlxtend.git (push)
 </code></pre>
-
-you need to specify a new remote *upstream* repository via
-
-
+<p>you need to specify a new remote <em>upstream</em> repository via</p>
 <pre><code class="language-bash">$ git remote add upstream https://github.com/rasbt/mlxtend.git
 </code></pre>
-
-
-Now, verify the new upstream repository you've specified for your fork by executing
-
-
+<p>Now, verify the new upstream repository you've specified for your fork by executing</p>
 <pre><code class="language-bash">$ git remote -v
 </code></pre>
-
-
-You should see following output if everything is configured correctly:
-
-
+<p>You should see following output if everything is configured correctly:</p>
 <pre><code class="language-bash">origin  https://github.com/&lt;your username&gt;/mlxtend.git (fetch)
 origin  https://github.com/&lt;your username&gt;/mlxtend.git (push)
 upstream    https://github.com/rasbt/mlxtend.git (fetch)
 upstream    https://github.com/rasbt/mlxtend.git (push)
 </code></pre>
-
-
-#### 2. Syncing your Fork
-
-First, fetch the updates of the original project's master branch by executing:
-
-
+<h4 id="2-syncing-your-fork">2. Syncing your Fork</h4>
+<p>First, fetch the updates of the original project's master branch by executing:</p>
 <pre><code class="language-bash">$ git fetch upstream
 </code></pre>
-
-
-You should see the following output
-
-
+<p>You should see the following output</p>
 <pre><code class="language-bash">remote: Counting objects: xx, done.
 remote: Compressing objects: 100% (xx/xx), done.
 remote: Total xx (delta xx), reused xx (delta x)
@@ -1100,111 +1107,56 @@ Unpacking objects: 100% (xx/xx), done.
 From https://github.com/rasbt/mlxtend
  * [new branch]      master     -&gt; upstream/master
 </code></pre>
-
-
-This means that the commits to the `rasbt/mlxtend` master branch are now
-stored in the local branch `upstream/master`.
-
-If you are not already on your local project's master branch, execute
-
-
+<p>This means that the commits to the <code>rasbt/mlxtend</code> master branch are now
+stored in the local branch <code>upstream/master</code>.</p>
+<p>If you are not already on your local project's master branch, execute</p>
 <pre><code class="language-bash">$ git checkout master
 </code></pre>
-
-
-Finally, merge the changes in upstream/master to your local master branch by
-executing
-
-
+<p>Finally, merge the changes in upstream/master to your local master branch by
+executing</p>
 <pre><code class="language-bash">$ git merge upstream/master
 </code></pre>
-
-
-which will give you an output that looks similar to
-
-
+<p>which will give you an output that looks similar to</p>
 <pre><code class="language-bash">Updating xxx...xxx
 Fast-forward
 SOME FILE1                    |    12 +++++++
 SOME FILE2                    |    10 +++++++
 2 files changed, 22 insertions(+),
 </code></pre>
-
-
-
-## *The Main Workflow - Making Changes in a New Topic Branch
-
-Listed below are the 9 typical steps of a contribution.
-
-#### 1. Discussing the Feature or Modification
-
-Before you start coding, please discuss the new feature, bugfix, or other modification to the project
-on the project's [issue tracker](https://github.com/rasbt/mlxtend/issues). Before you open a "new issue," please
-do a quick search to see if a similar issue has been submitted already.
-
-#### 2. Creating a new feature branch
-
-Please avoid working directly on the master branch but create a new feature branch:
-
-
+<h2 id="the-main-workflow-making-changes-in-a-new-topic-branch">*The Main Workflow - Making Changes in a New Topic Branch</h2>
+<p>Listed below are the 9 typical steps of a contribution.</p>
+<h4 id="1-discussing-the-feature-or-modification">1. Discussing the Feature or Modification</h4>
+<p>Before you start coding, please discuss the new feature, bugfix, or other modification to the project
+on the project's <a href="https://github.com/rasbt/mlxtend/issues">issue tracker</a>. Before you open a "new issue," please
+do a quick search to see if a similar issue has been submitted already.</p>
+<h4 id="2-creating-a-new-feature-branch">2. Creating a new feature branch</h4>
+<p>Please avoid working directly on the master branch but create a new feature branch:</p>
 <pre><code class="language-bash">$ git branch &lt;new_feature&gt;
 </code></pre>
-
-
-Switch to the new feature branch by executing
-
-
+<p>Switch to the new feature branch by executing</p>
 <pre><code class="language-bash">$ git checkout &lt;new_feature&gt;
 </code></pre>
-
-
-#### 3. Developing the new feature / bug fix
-
-Now it's time to modify existing code or to contribute new code to the project.
-
-#### 4. Testing your code
-
-Add the respective unit tests and check if they pass:
-
-
+<h4 id="3-developing-the-new-feature-bug-fix">3. Developing the new feature / bug fix</h4>
+<p>Now it's time to modify existing code or to contribute new code to the project.</p>
+<h4 id="4-testing-your-code">4. Testing your code</h4>
+<p>Add the respective unit tests and check if they pass:</p>
 <pre><code class="language-bash">$ PYTHONPATH='.' pytest ./mlxtend ---with-coverage
 </code></pre>
-
-
-
-#### 5. Documenting changes
-
-Please add an entry to the `mlxtend/docs/sources/changelog.md` file.
-If it is a new feature, it would also be nice if you could update the documentation in appropriate location in `mlxtend/sources`.
-
-
-#### 6. Committing changes
-
-When you are ready to commit the changes, please provide a meaningful `commit` message:
-
-
+<h4 id="5-documenting-changes">5. Documenting changes</h4>
+<p>Please add an entry to the <code>mlxtend/docs/sources/changelog.md</code> file.
+If it is a new feature, it would also be nice if you could update the documentation in appropriate location in <code>mlxtend/sources</code>.</p>
+<h4 id="6-committing-changes">6. Committing changes</h4>
+<p>When you are ready to commit the changes, please provide a meaningful <code>commit</code> message:</p>
 <pre><code class="language-bash">$ git add &lt;modifies_files&gt; # or `git add .`
 $ git commit -m '&lt;meaningful commit message&gt;'
 </code></pre>
-
-
-#### 7. Optional: squashing commits
-
-If you made multiple smaller commits, it would be nice if you could group them into a larger, summarizing commit. First, list your recent commit via
-
-**Note**  
-**Due to the improved GitHub UI, this is no longer necessary/encouraged.**
-
-
-
+<h4 id="7-optional-squashing-commits">7. Optional: squashing commits</h4>
+<p>If you made multiple smaller commits, it would be nice if you could group them into a larger, summarizing commit. First, list your recent commit via</p>
+<p><strong>Note</strong><br />
+<strong>Due to the improved GitHub UI, this is no longer necessary/encouraged.</strong></p>
 <pre><code class="language-bash">$ git log
 </code></pre>
-
-
-which will list the commits from newest to oldest in the following format by default:
-
-
-
+<p>which will list the commits from newest to oldest in the following format by default:</p>
 <pre><code class="language-bash">commit 046e3af8a9127df8eac879454f029937c8a31c41
 Author: rasbt &lt;mail@sebastianraschka.com&gt;
 Date:   Tue Nov 24 03:46:37 2015 -0500
@@ -1223,236 +1175,113 @@ Date:   Tue Nov 24 02:44:45 2015 -0500
 
         added support for feature x
 </code></pre>
-
-
-Assuming that it would make sense to group these 3 commits into one, we can execute
-
-
+<p>Assuming that it would make sense to group these 3 commits into one, we can execute</p>
 <pre><code class="language-bash">$ git rebase -i HEAD~3
 </code></pre>
-
-
-which will bring our default git editor with the following contents:
-
-
+<p>which will bring our default git editor with the following contents:</p>
 <pre><code class="language-bash">pick d87934f added support for feature x
 pick c3c00f6 documented feature x
 pick 046e3af fixed setup.py
 </code></pre>
-
-
-Since `c3c00f6` and `046e3af` are related to the original commit of `feature x`, let's keep the `d87934f` and squash the 2 following commits into this initial one by changes the lines to
-
-
-
+<p>Since <code>c3c00f6</code> and <code>046e3af</code> are related to the original commit of <code>feature x</code>, let's keep the <code>d87934f</code> and squash the 2 following commits into this initial one by changes the lines to</p>
 <pre><code>pick d87934f added support for feature x
 squash c3c00f6 documented feature x
 squash 046e3af fixed setup.py
 </code></pre>
-
-
-Now, save the changes in your editor. Now, quitting the editor will apply the `rebase` changes, and the editor will open a second time, prompting you to enter a new commit message. In this case, we could enter `support for feature x` to summarize the contributions.
-
-
-#### 8. Uploading changes
-
-Push your changes to a topic branch to the git server by executing:
-
-
+<p>Now, save the changes in your editor. Now, quitting the editor will apply the <code>rebase</code> changes, and the editor will open a second time, prompting you to enter a new commit message. In this case, we could enter <code>support for feature x</code> to summarize the contributions.</p>
+<h4 id="8-uploading-changes">8. Uploading changes</h4>
+<p>Push your changes to a topic branch to the git server by executing:</p>
 <pre><code class="language-bash">$ git push origin &lt;feature_branch&gt;
 </code></pre>
-
-
-#### 9. Submitting a `pull request`
-
-Go to your GitHub repository online, select the new feature branch, and submit a new pull request:
-
-
-![](./img/contributing/pull_request.png)
-
-
+<h4 id="9-submitting-a-pull-request">9. Submitting a <code>pull request</code></h4>
+<p>Go to your GitHub repository online, select the new feature branch, and submit a new pull request:</p>
+<p><img alt="" src="../img/contributing/pull_request.png" /></p>
 <hr>
 
-# Notes for Developers
-
-
-
-## Building the documentation
-
-The documentation is built via [MkDocs](http://www.mkdocs.org); to ensure that the documentation is rendered correctly, you can view the documentation locally by executing `mkdocs serve` from the `mlxtend/docs` directory.
-
-For example,
-
-
+<h1 id="notes-for-developers">Notes for Developers</h1>
+<h2 id="building-the-documentation">Building the documentation</h2>
+<p>The documentation is built via <a href="http://www.mkdocs.org">MkDocs</a>; to ensure that the documentation is rendered correctly, you can view the documentation locally by executing <code>mkdocs serve</code> from the <code>mlxtend/docs</code> directory.</p>
+<p>For example,</p>
 <pre><code class="language-bash">~/github/mlxtend/docs$ mkdocs serve
 </code></pre>
-
-
-### 1. Building the API documentation
-
-To build the API documentation, navigate to `mlxtend/docs` and execute the `make_api.py` file from this directory via
-
-
+<h3 id="1-building-the-api-documentation">1. Building the API documentation</h3>
+<p>To build the API documentation, navigate to <code>mlxtend/docs</code> and execute the <code>make_api.py</code> file from this directory via</p>
 <pre><code class="language-python">~/github/mlxtend/docs$ python make_api.py
 </code></pre>
-
-
-This should place the API documentation into the correct directories into the two directories:
-
-- `mlxtend/docs/sources/api_modules`
-- `mlxtend/docs/sources/api_subpackes`
-
-### 2. Editing the User Guide
-
-The documents containing code examples for the "User Guide" are generated from IPython Notebook files. In order to convert a IPython notebook file to markdown after editing, please follow the following steps:
-
-1. Modify or edit the existing notebook.
-2. Execute all cells in the current notebook and make sure that no errors occur.
-3. Convert the notebook to markdown using the `ipynb2markdown.py` converter
-
-
+<p>This should place the API documentation into the correct directories into the two directories:</p>
+<ul>
+<li><code>mlxtend/docs/sources/api_modules</code></li>
+<li><code>mlxtend/docs/sources/api_subpackes</code></li>
+</ul>
+<h3 id="2-editing-the-user-guide">2. Editing the User Guide</h3>
+<p>The documents containing code examples for the "User Guide" are generated from IPython Notebook files. In order to convert a IPython notebook file to markdown after editing, please follow the following steps:</p>
+<ol>
+<li>Modify or edit the existing notebook.</li>
+<li>Execute all cells in the current notebook and make sure that no errors occur.</li>
+<li>Convert the notebook to markdown using the <code>ipynb2markdown.py</code> converter</li>
+</ol>
 <pre><code class="language-python">~/github/mlxtend/docs$ python ipynb2markdown.py --ipynb_path ./sources/user_guide/subpackage/notebookname.ipynb
 </code></pre>
-
-
-**Note**  
-
-If you are adding a new document, please also include it in the pages section in the `mlxtend/docs/mkdocs.yml` file.
-
-
-
-### 3. Building static HTML files of the documentation
-
-First, please check the documenation via localhost (http://127.0.0.1:8000/):
-
-
+<p><strong>Note</strong>  </p>
+<p>If you are adding a new document, please also include it in the pages section in the <code>mlxtend/docs/mkdocs.yml</code> file.</p>
+<h3 id="3-building-static-html-files-of-the-documentation">3. Building static HTML files of the documentation</h3>
+<p>First, please check the documenation via localhost (http://127.0.0.1:8000/):</p>
 <pre><code class="language-bash">~/github/mlxtend/docs$ mkdocs serve
 </code></pre>
-
-
-Next, build the static HTML files of the mlxtend documentation via
-
-
+<p>Next, build the static HTML files of the mlxtend documentation via</p>
 <pre><code class="language-bash">~/github/mlxtend/docs$ mkdocs build --clean
 </code></pre>
-
-
-To deploy the documentation, execute
-
-
+<p>To deploy the documentation, execute</p>
 <pre><code class="language-bash">~/github/mlxtend/docs$ mkdocs gh-deploy --clean
 </code></pre>
-
-
-### 4. Generate a PDF of the documentation
-
-To generate a PDF version of the documentation, simply `cd` into the `mlxtend/docs` directory and execute:
-
-
+<h3 id="4-generate-a-pdf-of-the-documentation">4. Generate a PDF of the documentation</h3>
+<p>To generate a PDF version of the documentation, simply <code>cd</code> into the <code>mlxtend/docs</code> directory and execute:</p>
 <pre><code class="language-bash">python md2pdf.py
 </code></pre>
-
-
-## Uploading a new version to PyPI
-
-### 1. Creating a new testing environment
-
-Assuming we are using `conda`, create a new python environment via
-
-
+<h2 id="uploading-a-new-version-to-pypi">Uploading a new version to PyPI</h2>
+<h3 id="1-creating-a-new-testing-environment">1. Creating a new testing environment</h3>
+<p>Assuming we are using <code>conda</code>, create a new python environment via</p>
 <pre><code class="language-bash">$ conda create -n 'mlxtend-testing' python=3 numpy scipy pandas
 </code></pre>
-
-
-Next, activate the environment by executing
-
-
+<p>Next, activate the environment by executing</p>
 <pre><code class="language-bash">$ source activate mlxtend-testing
 </code></pre>
-
-
-### 2. Installing the package from local files
-
-Test the installation by executing
-
-
+<h3 id="2-installing-the-package-from-local-files">2. Installing the package from local files</h3>
+<p>Test the installation by executing</p>
 <pre><code class="language-bash">$ python setup.py install --record files.txt
 </code></pre>
-
-
-the `--record files.txt` flag will create a `files.txt` file listing the locations where these files will be installed.
-
-
-Try to import the package to see if it works, for example, by executing
-
-
+<p>the <code>--record files.txt</code> flag will create a <code>files.txt</code> file listing the locations where these files will be installed.</p>
+<p>Try to import the package to see if it works, for example, by executing</p>
 <pre><code class="language-bash">$ python -c 'import mlxtend; print(mlxtend.__file__)'
 </code></pre>
-
-
-If everything seems to be fine, remove the installation via
-
-
+<p>If everything seems to be fine, remove the installation via</p>
 <pre><code class="language-bash">$ cat files.txt | xargs rm -rf ; rm files.txt
 </code></pre>
-
-
-Next, test if `pip` is able to install the packages. First, navigate to a different directory, and from there, install the package:
-
-
+<p>Next, test if <code>pip</code> is able to install the packages. First, navigate to a different directory, and from there, install the package:</p>
 <pre><code class="language-bash">$ pip install mlxtend
 </code></pre>
-
-
-and uninstall it again
-
-
+<p>and uninstall it again</p>
 <pre><code class="language-bash">$ pip uninstall mlxtend
 </code></pre>
-
-
-### 3. Deploying the package
-
-Consider deploying the package to the PyPI test server first. The setup instructions can be found [here](https://wiki.python.org/moin/TestPyPI).
-
-
+<h3 id="3-deploying-the-package">3. Deploying the package</h3>
+<p>Consider deploying the package to the PyPI test server first. The setup instructions can be found <a href="https://wiki.python.org/moin/TestPyPI">here</a>.</p>
 <pre><code class="language-bash">$ python setup.py sdist bdist_wheel upload -r https://testpypi.python.org/pypi
 </code></pre>
-
-
-Test if it can be installed from there by executing
-
-
+<p>Test if it can be installed from there by executing</p>
 <pre><code class="language-bash">$ pip install -i https://testpypi.python.org/pypi mlxtend
 </code></pre>
-
-
-and uninstall it
-
-
+<p>and uninstall it</p>
 <pre><code class="language-bash">$ pip uninstall mlxtend
 </code></pre>
-
-
-After this dry-run succeeded, repeat this process using the "real" PyPI:
-
-
+<p>After this dry-run succeeded, repeat this process using the "real" PyPI:</p>
 <pre><code class="language-bash">$ python setup.py sdist bdist_wheel upload
 </code></pre>
-
-
-### 4. Removing the virtual environment
-
-Finally, to cleanup our local drive, remove the virtual testing environment via
-
-
+<h3 id="4-removing-the-virtual-environment">4. Removing the virtual environment</h3>
+<p>Finally, to cleanup our local drive, remove the virtual testing environment via</p>
 <pre><code class="language-bash">$ conda remove --name 'mlxtend-testing' --all
 </code></pre>
-
-
-### 5. Updating the conda-forge recipe
-
-Once a new version of mlxtend has been uploaded to PyPI, update the conda-forge build recipe at https://github.com/conda-forge/mlxtend-feedstock by changing the version number in the `recipe/meta.yaml` file appropriately.</div>
+<h3 id="5-updating-the-conda-forge-recipe">5. Updating the conda-forge recipe</h3>
+<p>Once a new version of mlxtend has been uploaded to PyPI, update the conda-forge build recipe at https://github.com/conda-forge/mlxtend-feedstock by changing the version number in the <code>recipe/meta.yaml</code> file appropriately.</p></div>
         
         
     </div>

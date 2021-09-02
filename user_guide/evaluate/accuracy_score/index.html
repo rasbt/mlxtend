@@ -667,6 +667,12 @@
         
             
 <li >
+    <a href="../../plotting/scatter_hist/">Scatter Histogram</a>
+</li>
+
+        
+            
+<li >
     <a href="../../plotting/stacked_barplot/">Stacked Barplot</a>
 </li>
 
@@ -1070,8 +1076,8 @@ Class 1 accuracy: 66.67%
 from mlxtend.evaluate import accuracy_score
 
 
-y_targ = [0, 0, 0, 1, 1, 1, 2, 2, 2]
-y_pred = [1, 0, 0, 0, 1, 2, 0, 2, 2]
+y_targ = [0, 0, 0, 1, 1, 1, 2, 0, 0]
+y_pred = [1, 0, 0, 0, 1, 2, 0, 2, 1]
 
 std_acc = accuracy_score(y_targ, y_pred)
 bin_acc = accuracy_score(y_targ, y_pred, method='binary', pos_label=1)
@@ -1081,9 +1087,9 @@ print(f'Standard accuracy: {std_acc*100:.2f}%')
 print(f'Class 1 accuracy: {bin_acc*100:.2f}%')
 print(f'Average per-class accuracy: {avg_acc*100:.2f}%')
 </code></pre>
-<pre><code>Standard accuracy: 55.56%
-Class 1 accuracy: 66.67%
-Average per-class accuracy: 70.37%
+<pre><code>Standard accuracy: 33.33%
+Class 1 accuracy: 55.56%
+Average per-class accuracy: 55.56%
 </code></pre>
 <h3 id="references">References</h3>
 <ul>
@@ -1109,7 +1115,8 @@ Average per-class accuracy: 70.37%
 <p>The chosen method for accuracy computation.
 If set to 'standard', computes overall accuracy.
 If set to 'binary', computes accuracy for class pos_label.
-If set to 'average', computes average per class accuracy.</p>
+If set to 'average', computes average per-class (balanced) accuracy.
+If set to 'balanced', computes the scikit-learn-style balanced accuracy.</p>
 </li>
 <li>
 <p><code>pos_label</code> : str or int, 1 by default.</p>
@@ -1126,7 +1133,7 @@ If False, returns number of correctly classified samples.</p>
 <p>score: float</p>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/accuracy_score/">http://rasbt.github.io/mlxtend/user_guide/evaluate/accuracy_score/</a></p></div>
+    http://rasbt.github.io/mlxtend/user_guide/evaluate/accuracy_score/</p></div>
         
         
     </div>

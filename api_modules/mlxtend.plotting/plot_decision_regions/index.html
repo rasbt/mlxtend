@@ -667,6 +667,12 @@
         
             
 <li >
+    <a href="../../../user_guide/plotting/scatter_hist/">Scatter Histogram</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/plotting/stacked_barplot/">Stacked Barplot</a>
 </li>
 
@@ -984,7 +990,7 @@
         <div class="col-md-9" role="main">
 
 <h2 id="plot_decision_regions">plot_decision_regions</h2>
-<p><em>plot_decision_regions(X, y, clf, feature_index=None, filler_feature_values=None, filler_feature_ranges=None, ax=None, X_highlight=None, res=None, zoom_factor=1.0, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors='#1f77b4,#ff7f0e,#3ca02c,#d62728,#9467bd,#8c564b,#e377c2,#7f7f7f,#bcbd22,#17becf', scatter_kwargs=None, contourf_kwargs=None, scatter_highlight_kwargs=None)</em></p>
+<p><em>plot_decision_regions(X, y, clf, feature_index=None, filler_feature_values=None, filler_feature_ranges=None, ax=None, X_highlight=None, zoom_factor=1.0, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors='#1f77b4,#ff7f0e,#3ca02c,#d62728,#9467bd,#8c564b,#e377c2,#7f7f7f,#bcbd22,#17becf', scatter_kwargs=None, contourf_kwargs=None, scatter_highlight_kwargs=None)</em></p>
 <p>Plot decision regions of a classifier.</p>
 <pre><code>Please note that this functions assumes that class labels are
 labeled consecutively, e.g,. 0, 1, 2, 3, 4, and 5. If you have class
@@ -1032,15 +1038,6 @@ one if ax=None.</p>
 <li>
 <p><code>X_highlight</code> : array-like, shape = [n_samples, n_features] (default: None)</p>
 <p>An array with data points that are used to highlight samples in <code>X</code>.</p>
-</li>
-<li>
-<p><code>res</code> : float or array-like, shape = (2,) (default: None)</p>
-<p>This parameter was used to define the grid width,
-but it has been deprecated in favor of
-determining the number of points given the figure DPI and size
-automatically for optimal results and computational efficiency.
-To increase the resolution, it's is recommended to use to provide
-a <code>dpi argument via matplotlib, e.g.,</code>plt.figure(dpi=600)`.</p>
 </li>
 <li>
 <p><code>zoom_factor</code> : float (default: 1.0)</p>

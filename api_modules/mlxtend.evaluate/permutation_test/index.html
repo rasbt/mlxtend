@@ -667,6 +667,12 @@
         
             
 <li >
+    <a href="../../../user_guide/plotting/scatter_hist/">Scatter Histogram</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/plotting/stacked_barplot/">Stacked Barplot</a>
 </li>
 
@@ -984,7 +990,7 @@
         <div class="col-md-9" role="main">
 
 <h2 id="permutation_test">permutation_test</h2>
-<p><em>permutation_test(x, y, func='x_mean != y_mean', method='exact', num_rounds=1000, seed=None)</em></p>
+<p><em>permutation_test(x, y, func='x_mean != y_mean', method='exact', num_rounds=1000, seed=None, paired=False)</em></p>
 <p>Nonparametric permutation test</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1020,6 +1026,11 @@ Note that 'exact' is typically not feasible unless the dataset
 size is relatively small.</p>
 </li>
 <li>
+<p><code>paired</code> : bool</p>
+<p>If True, a paired test is performed by only exchanging each
+datapoint with its associate.</p>
+</li>
+<li>
 <p><code>num_rounds</code> : int (default: 1000)</p>
 <p>The number of permutation samples if <code>method='approximate'</code>.</p>
 </li>
@@ -1030,8 +1041,9 @@ size is relatively small.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>
-<p>p-value under the null hypothesis</p>
-<p><strong>Examples</strong></p>
+<p>p-value under the null hypothesis
+    Examples</p>
+<hr />
 <p>For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/evaluate/permutation_test/</p></div>
         

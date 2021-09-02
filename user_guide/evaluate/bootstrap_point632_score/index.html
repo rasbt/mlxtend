@@ -667,6 +667,12 @@
         
             
 <li >
+    <a href="../../plotting/scatter_hist/">Scatter Histogram</a>
+</li>
+
+        
+            
+<li >
     <a href="../../plotting/stacked_barplot/">Stacked Barplot</a>
 </li>
 
@@ -1025,14 +1031,14 @@
 <p>Vice versa, we can then compute the probability that a sample <em>is</em> chosen as <script type="math/tex">P (\text{chosen}) = 1 - \bigg(1 - \frac{1}{n}\bigg)^n \approx 0.632</script> for reasonably large datasets, so that we'd select approximately <script type="math/tex">0.632 \times n</script> uniques samples as bootstrap training sets and reserve <script type="math/tex"> 0.368 \times n </script> out-of-bag samples for testing in each iteration.</p>
 <p>Now, to address the bias that is due to this the sampling with replacement, Bradley Efron proposed the <em>.632 Estimate</em> that we mentioned earlier, which is computed via the following equation:</p>
 <p>
-<script type="math/tex; mode=display">\text{ACC}_{boot} = \frac{1}{b} \sum_{i=1}^b \big(0.632 \cdot \text{ACC}_{h, i} + 0.368 \cdot \text{ACC}_{r, i}\big), </script>
+<script type="math/tex; mode=display">\text{ACC}_{boot} = \frac{1}{b} \sum_{i=1}^b \big(0.632 \cdot \text{ACC}_{h, i} + 0.368 \cdot \text{ACC}_{train}\big), </script>
 </p>
-<p>where <script type="math/tex">\text{ACC}_{r, i}</script> is the resubstitution accuracy, and <script type="math/tex">\text{ACC}_{h, i}</script> is the accuracy on the out-of-bag sample.</p>
+<p>where <script type="math/tex">\text{ACC}_{train}</script> is the accuracy computed on the whole training set, and <script type="math/tex">\text{ACC}_{h, i}</script> is the accuracy on the out-of-bag sample.</p>
 <h3 id="632-bootstrap_1">.632+ Bootstrap</h3>
 <p>Now, while the <em>.632 Boostrap</em> attempts to address the pessimistic bias of the estimate, an optimistic bias may occur with models that tend to overfit so that Bradley Efron and Robert Tibshirani proposed the <em>The .632+ Bootstrap Method</em> (Efron and Tibshirani, 1997). Instead of using a fixed "weight" <script type="math/tex">\omega = 0.632</script> in</p>
 <p>
 <script type="math/tex; mode=display">
-ACC_{\text{boot}} = \frac{1}{b} \sum_{i=1}^b \big(\omega \cdot \text{ACC}_{h, i} + (1-\omega) \cdot \text{ACC}_{r, i} \big), </script>
+ACC_{\text{boot}} = \frac{1}{b} \sum_{i=1}^b \big(\omega \cdot \text{ACC}_{h, i} + (1-\omega) \cdot \text{ACC}_{train} \big), </script>
 </p>
 <p>we compute the weight <script type="math/tex">\gamma</script> as</p>
 <p>
@@ -1040,9 +1046,9 @@ ACC_{\text{boot}} = \frac{1}{b} \sum_{i=1}^b \big(\omega \cdot \text{ACC}_{h, i}
 </p>
 <p>where <em>R</em> is the <em>relative overfitting rate</em></p>
 <p>
-<script type="math/tex; mode=display">R = \frac{(-1) \times (\text{ACC}_{h, i} - \text{ACC}_{r, i})}{\gamma - (1 -\text{ACC}_{h, i})}.</script>
+<script type="math/tex; mode=display">R = \frac{(-1) \times (\text{ACC}_{h, i} - \text{ACC}_{train})}{\gamma - (1 -\text{ACC}_{h, i})}.</script>
 </p>
-<p>(Since we are plugging <script type="math/tex">\omega</script> into the equation for computing <script type="math/tex; mode=display">ACC_{boot}</script> that we defined above, <script type="math/tex; mode=display">\text{ACC}_{h, i}</script> and <script type="math/tex">\text{ACC}_{r, i}</script> still refer to the resubstitution and out-of-bag accuracy estimates in the <em>i</em>th bootstrap round, respectively.)</p>
+<p>(Since we are plugging <script type="math/tex">\omega</script> into the equation for computing <script type="math/tex; mode=display">ACC_{boot}</script> that we defined above, <script type="math/tex; mode=display">\text{ACC}_{h, i}</script> and <script type="math/tex">\text{ACC}_{train}</script> still refer to the out-of-bag accuracy in the <em>i</em>th bootstrap round and the whole training set accuracy, respectively.)</p>
 <p>Further, we need to determine the <em>no-information rate</em> <script type="math/tex">\gamma</script> in order to compute <em>R</em>. For instance, we can compute <script type="math/tex">\gamma</script> by fitting a model to a dataset that contains all possible combinations between samples <script type="math/tex">x_{i'}</script> and target class labels <script type="math/tex">y_{i}</script> &mdash; we pretend that the observations and class labels are independent:</p>
 <p>
 <script type="math/tex; mode=display">\gamma = \frac{1}{n^2} \sum_{i=1}^{n} \sum_{i '=1}^{n} L(y_{i}, f(x_{i '})).</script>
@@ -1069,7 +1075,7 @@ import numpy as np
 iris = datasets.load_iris()
 X = iris.data
 y = iris.target
-tree = DecisionTreeClassifier(random_state=0)
+tree = DecisionTreeClassifier(random_state=123)
 
 # Model accuracy
 scores = bootstrap_point632_score(tree, X, y, method='oob')
@@ -1082,8 +1088,8 @@ lower = np.percentile(scores, 2.5)
 upper = np.percentile(scores, 97.5)
 print('95%% Confidence interval: [%.2f, %.2f]' % (100*lower, 100*upper))
 </code></pre>
-<pre><code>Accuracy: 94.36%
-95% Confidence interval: [88.46, 98.31]
+<pre><code>Accuracy: 94.45%
+95% Confidence interval: [87.71, 100.00]
 </code></pre>
 <h2 id="example-2-evaluating-the-predictive-performance-of-a-model-via-the-632-bootstrap">Example 2 -- Evaluating the predictive performance of a model via the .632 Bootstrap</h2>
 <pre><code class="language-python">from sklearn import datasets
@@ -1094,7 +1100,7 @@ import numpy as np
 iris = datasets.load_iris()
 X = iris.data
 y = iris.target
-tree = DecisionTreeClassifier(random_state=0)
+tree = DecisionTreeClassifier(random_state=123)
 
 # Model accuracy
 scores = bootstrap_point632_score(tree, X, y)
@@ -1107,8 +1113,8 @@ lower = np.percentile(scores, 2.5)
 upper = np.percentile(scores, 97.5)
 print('95%% Confidence interval: [%.2f, %.2f]' % (100*lower, 100*upper))
 </code></pre>
-<pre><code>Accuracy: 96.57%
-95% Confidence interval: [92.37, 98.95]
+<pre><code>Accuracy: 96.42%
+95% Confidence interval: [92.41, 100.00]
 </code></pre>
 <h2 id="example-3-evaluating-the-predictive-performance-of-a-model-via-the-632-bootstrap">Example 3 -- Evaluating the predictive performance of a model via the .632+ Bootstrap</h2>
 <pre><code class="language-python">from sklearn import datasets
@@ -1119,7 +1125,7 @@ import numpy as np
 iris = datasets.load_iris()
 X = iris.data
 y = iris.target
-tree = DecisionTreeClassifier(random_state=0)
+tree = DecisionTreeClassifier(random_state=123)
 
 # Model accuracy
 scores = bootstrap_point632_score(tree, X, y, method='.632+')
@@ -1132,24 +1138,24 @@ lower = np.percentile(scores, 2.5)
 upper = np.percentile(scores, 97.5)
 print('95%% Confidence interval: [%.2f, %.2f]' % (100*lower, 100*upper))
 </code></pre>
-<pre><code>Accuracy: 96.28%
-95% Confidence interval: [92.10, 98.90]
+<pre><code>Accuracy: 96.29%
+95% Confidence interval: [91.86, 98.92]
 </code></pre>
 <h2 id="api">API</h2>
-<p><em>bootstrap_point632_score(estimator, X, y, n_splits=200, method='.632', scoring_func=None, random_seed=None, clone_estimator=True)</em></p>
+<p><em>bootstrap_point632_score(estimator, X, y, n_splits=200, method='.632', scoring_func=None, predict_proba=False, random_seed=None, clone_estimator=True)</em></p>
 <p>Implementation of the .632 [1] and .632+ [2] bootstrap
-for supervised learning</p>
-<p>References:</p>
-<ul>
-<li>[1] Efron, Bradley. 1983. “Estimating the Error Rate
-of a Prediction Rule: Improvement on Cross-Validation.”
+    for supervised learning</p>
+<pre><code>References:
+
+- [1] Efron, Bradley. 1983. "Estimating the Error Rate
+of a Prediction Rule: Improvement on Cross-Validation."
 Journal of the American Statistical Association
-78 (382): 316. doi:10.2307/2288636.</li>
-<li>[2] Efron, Bradley, and Robert Tibshirani. 1997.
-“Improvements on Cross-Validation: The .632+ Bootstrap Method.”
+78 (382): 316. doi:10.2307/2288636.
+- [2] Efron, Bradley, and Robert Tibshirani. 1997.
+"Improvements on Cross-Validation: The .632+ Bootstrap Method."
 Journal of the American Statistical Association
-92 (438): 548. doi:10.2307/2965703.</li>
-</ul>
+92 (438): 548. doi:10.2307/2965703.
+</code></pre>
 <p><strong>Parameters</strong></p>
 <ul>
 <li>
@@ -1191,6 +1197,18 @@ If none, uses classification accuracy if the</p>
     if the estimator is a regressor.</p>
 <ul>
 <li>
+<p><code>predict_proba</code> : bool</p>
+<p>Whether to use the <code>predict_proba</code> function for the
+<code>estimator</code> argument. This is to be used in conjunction
+with <code>scoring_func</code> which takes in probability values
+instead of actual predictions.
+For example, if the scoring_func is
+:meth:<code>sklearn.metrics.roc_auc_score</code>, then use
+<code>predict_proba=True</code>.
+Note that this requires <code>estimator</code> to have
+<code>predict_proba</code> method implemented.</p>
+</li>
+<li>
 <p><code>random_seed</code> : int (default=None)</p>
 <p>If int, random_seed is the seed used by
 the random number generator.</p>
@@ -1210,23 +1228,24 @@ replicate.</p>
 </li>
 </ul>
 <p><strong>Examples</strong></p>
-<pre><code>&gt;&gt;&gt; from sklearn import datasets, linear_model
-&gt;&gt;&gt; from mlxtend.evaluate import bootstrap_point632_score
-&gt;&gt;&gt; iris = datasets.load_iris()
-&gt;&gt;&gt; X = iris.data
-&gt;&gt;&gt; y = iris.target
-&gt;&gt;&gt; lr = linear_model.LogisticRegression()
-&gt;&gt;&gt; scores = bootstrap_point632_score(lr, X, y)
-&gt;&gt;&gt; acc = np.mean(scores)
-&gt;&gt;&gt; print('Accuracy:', acc)
-0.953023146884
-&gt;&gt;&gt; lower = np.percentile(scores, 2.5)
-&gt;&gt;&gt; upper = np.percentile(scores, 97.5)
-&gt;&gt;&gt; print('95%% Confidence interval: [%.2f, %.2f]' % (lower, upper))
-95% Confidence interval: [0.90, 0.98]
-</code></pre>
-<p>For more usage examples, please see
-<a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/bootstrap_point632_score/">http://rasbt.github.io/mlxtend/user_guide/evaluate/bootstrap_point632_score/</a></p></div>
+<pre><code>    &gt;&gt;&gt; from sklearn import datasets, linear_model
+    &gt;&gt;&gt; from mlxtend.evaluate import bootstrap_point632_score
+    &gt;&gt;&gt; iris = datasets.load_iris()
+    &gt;&gt;&gt; X = iris.data
+    &gt;&gt;&gt; y = iris.target
+    &gt;&gt;&gt; lr = linear_model.LogisticRegression()
+    &gt;&gt;&gt; scores = bootstrap_point632_score(lr, X, y)
+    &gt;&gt;&gt; acc = np.mean(scores)
+    &gt;&gt;&gt; print('Accuracy:', acc)
+    0.953023146884
+    &gt;&gt;&gt; lower = np.percentile(scores, 2.5)
+    &gt;&gt;&gt; upper = np.percentile(scores, 97.5)
+    &gt;&gt;&gt; print('95%% Confidence interval: [%.2f, %.2f]' % (lower, upper))
+    95% Confidence interval: [0.90, 0.98]
+
+    For more usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/evaluate/bootstrap_point632_score/
+</code></pre></div>
         
         
     </div>

@@ -667,6 +667,12 @@
         
             
 <li >
+    <a href="../../user_guide/plotting/scatter_hist/">Scatter Histogram</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/plotting/stacked_barplot/">Stacked Barplot</a>
 </li>
 
@@ -1000,13 +1006,14 @@
         <li class="first-level "><a href="#plot_pca_correlation_graph">plot_pca_correlation_graph</a></li>
         <li class="first-level "><a href="#plot_sequential_feature_selection">plot_sequential_feature_selection</a></li>
         <li class="first-level "><a href="#remove_borders">remove_borders</a></li>
+        <li class="first-level "><a href="#scatter_hist">scatter_hist</a></li>
         <li class="first-level "><a href="#scatterplotmatrix">scatterplotmatrix</a></li>
         <li class="first-level "><a href="#stacked_barplot">stacked_barplot</a></li>
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.18.0 </p>
+<p>mlxtend version: 0.19.0 </p>
 <h2 id="category_scatter">category_scatter</h2>
 <p><em>category_scatter(x, y, label_col, data, markers='sxo^v', colors=('blue', 'green', 'red', 'purple', 'gray', 'cyan'), alpha=0.7, markersize=20.0, legend_loc='best')</em></p>
 <p>Scatter plot to plot categories in different colors/markerstyles.</p>
@@ -1307,7 +1314,7 @@ No legend if legend_loc=False</p>
 <p>For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/plotting/heatmap/</p>
 <h2 id="plot_confusion_matrix">plot_confusion_matrix</h2>
-<p><em>plot_confusion_matrix(conf_mat, hide_spines=False, hide_ticks=False, figsize=None, cmap=None, colorbar=False, show_absolute=True, show_normed=False, class_names=None, figure=None, axis=None)</em></p>
+<p><em>plot_confusion_matrix(conf_mat, hide_spines=False, hide_ticks=False, figsize=None, cmap=None, colorbar=False, show_absolute=True, show_normed=False, class_names=None, figure=None, axis=None, fontcolor_threshold=0.5)</em></p>
 <p>Plot a confusion matrix via matplotlib.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1363,6 +1370,14 @@ If not <code>None</code>, ticks will be set to these values.</p>
 <p><code>axis</code> : None or Matplotlib figure axis (default: None)</p>
 <p>If None will create a new axis.</p>
 </li>
+<li>
+<p><code>fontcolor_threshold</code> : Float (default: 0.5)</p>
+<p>Sets a threshold for choosing black and white font colors
+for the cells. By default all values larger than 0.5 times
+the maximum cell value are converted to white, and everything
+equal or smaller than 0.5 times the maximum cell value are converted
+to black.</p>
+</li>
 </ul>
 <p><strong>Returns</strong></p>
 <ul>
@@ -1375,7 +1390,7 @@ If not <code>None</code>, ticks will be set to these values.</p>
 <p>For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/plotting/plot_confusion_matrix/</p>
 <h2 id="plot_decision_regions">plot_decision_regions</h2>
-<p><em>plot_decision_regions(X, y, clf, feature_index=None, filler_feature_values=None, filler_feature_ranges=None, ax=None, X_highlight=None, res=None, zoom_factor=1.0, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors='#1f77b4,#ff7f0e,#3ca02c,#d62728,#9467bd,#8c564b,#e377c2,#7f7f7f,#bcbd22,#17becf', scatter_kwargs=None, contourf_kwargs=None, scatter_highlight_kwargs=None)</em></p>
+<p><em>plot_decision_regions(X, y, clf, feature_index=None, filler_feature_values=None, filler_feature_ranges=None, ax=None, X_highlight=None, zoom_factor=1.0, legend=1, hide_spines=True, markers='s^oxv&lt;&gt;', colors='#1f77b4,#ff7f0e,#3ca02c,#d62728,#9467bd,#8c564b,#e377c2,#7f7f7f,#bcbd22,#17becf', scatter_kwargs=None, contourf_kwargs=None, scatter_highlight_kwargs=None)</em></p>
 <p>Plot decision regions of a classifier.</p>
 <pre><code>Please note that this functions assumes that class labels are
 labeled consecutively, e.g,. 0, 1, 2, 3, 4, and 5. If you have class
@@ -1425,15 +1440,6 @@ one if ax=None.</p>
 <p>An array with data points that are used to highlight samples in <code>X</code>.</p>
 </li>
 <li>
-<p><code>res</code> : float or array-like, shape = (2,) (default: None)</p>
-<p>This parameter was used to define the grid width,
-but it has been deprecated in favor of
-determining the number of points given the figure DPI and size
-automatically for optimal results and computational efficiency.
-To increase the resolution, it's is recommended to use to provide
-a <code>dpi argument via matplotlib, e.g.,</code>plt.figure(dpi=600)`.</p>
-</li>
-<li>
 <p><code>zoom_factor</code> : float (default: 1.0)</p>
 <p>Controls the scale of the x- and y-axis of the decision plot.</p>
 </li>
@@ -1475,7 +1481,7 @@ No legend if legend is 0.</p>
 <p>For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/plotting/plot_decision_regions/</p>
 <h2 id="plot_learning_curves">plot_learning_curves</h2>
-<p><em>plot_learning_curves(X_train, y_train, X_test, y_test, clf, train_marker='o', test_marker='^', scoring='misclassification error', suppress_plot=False, print_model=True, style='fivethirtyeight', legend_loc='best')</em></p>
+<p><em>plot_learning_curves(X_train, y_train, X_test, y_test, clf, train_marker='o', test_marker='^', scoring='misclassification error', suppress_plot=False, print_model=True, title_fontsize=12, style='default', legend_loc='best')</em></p>
 <p>Plots learning curves of a classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1526,8 +1532,13 @@ for testing purposes.</p>
 <p>Print model parameters in plot title if True.</p>
 </li>
 <li>
-<p><code>style</code> : str (default: 'fivethirtyeight')</p>
-<p>Matplotlib style</p>
+<p><code>title_fontsize</code> : int (default: 12)</p>
+<p>Determines the size of the plot title font.</p>
+</li>
+<li>
+<p><code>style</code> : str (default: 'default')</p>
+<p>Matplotlib style. For more styles, please see
+https://matplotlib.org/stable/gallery/style_sheets/style_sheets_reference.html</p>
 </li>
 <li>
 <p><code>legend_loc</code> : str (default: 'best')</p>
@@ -1706,6 +1717,38 @@ or plt.subplot() objects, e.g. [plt.gca()].</p>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/plotting/remove_chartjunk/</p>
+<h2 id="scatter_hist">scatter_hist</h2>
+<p><em>scatter_hist(x, y, xlabel=None, ylabel=None, figsize=(5, 5))</em></p>
+<p>Scatter plot and individual feature histograms along axes.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>x</code> : 1D array-like or Pandas Series</p>
+<p>X-axis values.</p>
+</li>
+<li>
+<p><code>y</code> : 1D array-like or Pandas Series</p>
+<p>Y-axis values.</p>
+</li>
+<li>
+<p><code>xlabel</code> : str (default: <code>None</code>)</p>
+<p>Label for the X-axis values. If <code>x</code> is a pandas Series,
+and <code>xlabel</code> is <code>None</code>, the label is inferred automatically.</p>
+</li>
+<li>
+<p><code>ylabel</code> : str (default: <code>None</code>)</p>
+<p>Label for the X-axis values. If <code>y</code> is a pandas Series,
+and <code>ylabel</code> is <code>None</code>, the label is inferred automatically.</p>
+</li>
+<li>
+<p><code>figsize</code> : tuple (default: <code>(5, 5)</code>)</p>
+<p>Matplotlib figure size.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>plot</code> : Matplotlib Figure object</li>
+</ul>
 <h2 id="scatterplotmatrix">scatterplotmatrix</h2>
 <p><em>scatterplotmatrix(X, fig_axes=None, names=None, figsize=(8, 8), alpha=1.0, </em><em>kwargs)</em></p>
 <p>Lower triangular of a scatterplot matrix</p>

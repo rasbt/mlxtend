@@ -667,6 +667,12 @@
         
             
 <li >
+    <a href="../scatter_hist/">Scatter Histogram</a>
+</li>
+
+        
+            
+<li >
     <a href="../stacked_barplot/">Stacked Barplot</a>
 </li>
 
@@ -1001,6 +1007,8 @@
                  <!--   -->
             <li class="second-level"><a href="#example-4-add-class-names">Example 4 - Add Class Names</a></li>
                  <!--   -->
+            <li class="second-level"><a href="#example-5-changing-color-maps-and-font-color">Example 5 - Changing Color Maps and Font Color</a></li>
+                 <!--   -->
             <li class="second-level"><a href="#api">API</a></li>
                  <!--   -->
     </ul>
@@ -1078,8 +1086,32 @@ fig, ax = plot_confusion_matrix(conf_mat=multiclass,
 plt.show()
 </code></pre>
 <p><img alt="png" src="../plot_confusion_matrix_files/plot_confusion_matrix_16_0.png" /></p>
+<h2 id="example-5-changing-color-maps-and-font-color">Example 5 - Changing Color Maps and Font Color</h2>
+<p>Matplotlib color maps can be chosen as alternative color map via the <code>cmap</code> argument. A list of colormaps can be found here: https://matplotlib.org/stable/tutorials/colors/colormaps.html</p>
+<pre><code class="language-python">multiclass = np.array([[2, 1, 0, 0],
+                       [1, 2, 0, 0],
+                       [0, 0, 1, 0],
+                       [0, 0, 0, 1]])
+
+fig, ax = plot_confusion_matrix(conf_mat=multiclass,
+                                colorbar=True,
+                                cmap='summer')
+
+plt.show()
+</code></pre>
+<p><img alt="png" src="../plot_confusion_matrix_files/plot_confusion_matrix_19_0.png" /></p>
+<p>As shown above, the font color threshold may not work for certain color maps. By default all values larger than 0.5 times the maximum cell value are converted to white, and everything equal or smaller than 0.5 times the maximum cell value are converted to black.</p>
+<p>If you want to change all values above to e.g., white, you can set the color threshold to a negative number. Or, if you want to make all the font colors black, choose ta threshold equal to or greater than 1.</p>
+<pre><code class="language-python">fig, ax = plot_confusion_matrix(conf_mat=multiclass,
+                                colorbar=True,
+                                fontcolor_threshold=1,
+                                cmap='summer')
+
+plt.show()
+</code></pre>
+<p><img alt="png" src="../plot_confusion_matrix_files/plot_confusion_matrix_21_0.png" /></p>
 <h2 id="api">API</h2>
-<p><em>plot_confusion_matrix(conf_mat, hide_spines=False, hide_ticks=False, figsize=None, cmap=None, colorbar=False, show_absolute=True, show_normed=False, class_names=None, figure=None, axis=None)</em></p>
+<p><em>plot_confusion_matrix(conf_mat, hide_spines=False, hide_ticks=False, figsize=None, cmap=None, colorbar=False, show_absolute=True, show_normed=False, class_names=None, figure=None, axis=None, fontcolor_threshold=0.5)</em></p>
 <p>Plot a confusion matrix via matplotlib.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1135,6 +1167,14 @@ If not <code>None</code>, ticks will be set to these values.</p>
 <p><code>axis</code> : None or Matplotlib figure axis (default: None)</p>
 <p>If None will create a new axis.</p>
 </li>
+<li>
+<p><code>fontcolor_threshold</code> : Float (default: 0.5)</p>
+<p>Sets a threshold for choosing black and white font colors
+for the cells. By default all values larger than 0.5 times
+the maximum cell value are converted to white, and everything
+equal or smaller than 0.5 times the maximum cell value are converted
+to black.</p>
+</li>
 </ul>
 <p><strong>Returns</strong></p>
 <ul>
@@ -1145,7 +1185,7 @@ If not <code>None</code>, ticks will be set to these values.</p>
 </ul>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/plotting/plot_confusion_matrix/">http://rasbt.github.io/mlxtend/user_guide/plotting/plot_confusion_matrix/</a></p></div>
+    http://rasbt.github.io/mlxtend/user_guide/plotting/plot_confusion_matrix/</p></div>
         
         
     </div>

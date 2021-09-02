@@ -667,6 +667,12 @@
         
             
 <li >
+    <a href="../scatter_hist/">Scatter Histogram</a>
+</li>
+
+        
+            
+<li >
     <a href="../stacked_barplot/">Stacked Barplot</a>
 </li>
 
@@ -1004,31 +1010,42 @@
 <blockquote>
 <p>from mlxtend.plotting import plot_learning_curves</p>
 </blockquote>
+<p>This function uses the traditional holdout method based on a training and a test (or validation) set. The test set is kept constant while the size of the training set is increased gradually. The model is fit on the training set (of varying size) and evaluated on the same test set.</p>
+<p>The learning curve can be used as follows to diagnose overfitting:</p>
+<ul>
+<li>If there is a large gap between the training and test performance, then the model is likely suffering from overfitting.</li>
+<li>If both the training and test error are very large, the model is likely underfitting the data.</li>
+</ul>
+<p>The learning curve can also be used to judge whether collecting more data can be useful. More about that in Example 1 below.</p>
 <h3 id="references">References</h3>
 <p>-</p>
 <h2 id="example-1">Example 1</h2>
+<p>The following code illustrates how we can construct a learning curve for a 5000-sample subset of the MNIST dataset. 4000 examples are used for training, and 1000 examples are reserved for testing.</p>
 <pre><code class="language-python">from mlxtend.plotting import plot_learning_curves
 import matplotlib.pyplot as plt
-from mlxtend.data import iris_data
+from mlxtend.data import mnist_data
 from mlxtend.preprocessing import shuffle_arrays_unison
 from sklearn.neighbors import KNeighborsClassifier
 import numpy as np
 
 
 # Loading some example data
-X, y = iris_data()
+X, y = mnist_data()
 X, y = shuffle_arrays_unison(arrays=[X, y], random_seed=123)
-X_train, X_test = X[:100], X[100:]
-y_train, y_test = y[:100], y[100:]
+X_train, X_test = X[:4000], X[4000:]
+y_train, y_test = y[:4000], y[4000:]
 
-clf = KNeighborsClassifier(n_neighbors=5)
+clf = KNeighborsClassifier(n_neighbors=7)
 
 plot_learning_curves(X_train, y_train, X_test, y_test, clf)
 plt.show()
 </code></pre>
-<p><img alt="png" src="../plot_learning_curves_files/plot_learning_curves_6_0.png" /></p>
+<p><img alt="png" src="../plot_learning_curves_files/plot_learning_curves_8_0.png" /></p>
+<p>As we can see from the plot above, the KNN model could benefit from additional training data. I.e., the slope indicates that if we had a larger training set, the test set error might decrease further. </p>
+<p>Also, based on the gap between training and test set performance, the model overfits slightly. This could pontentially be addressed by increasing the number of neighbors (<code>n_neighbors</code>) in KNN. </p>
+<p>While it is not relevant for analyzing the performance of the classifier, the region ~20% training set size shows that the model is underfitting (large training and test error), which is probably due to the small dataset size.</p>
 <h2 id="api">API</h2>
-<p><em>plot_learning_curves(X_train, y_train, X_test, y_test, clf, train_marker='o', test_marker='^', scoring='misclassification error', suppress_plot=False, print_model=True, style='fivethirtyeight', legend_loc='best')</em></p>
+<p><em>plot_learning_curves(X_train, y_train, X_test, y_test, clf, train_marker='o', test_marker='^', scoring='misclassification error', suppress_plot=False, print_model=True, title_fontsize=12, style='default', legend_loc='best')</em></p>
 <p>Plots learning curves of a classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1079,8 +1096,9 @@ for testing purposes.</p>
 <p>Print model parameters in plot title if True.</p>
 </li>
 <li>
-<p><code>style</code> : str (default: 'fivethirtyeight')</p>
-<p>Matplotlib style</p>
+<p><code>style</code> : str (default: 'default')</p>
+<p>Matplotlib style. For more styles, please see
+https://matplotlib.org/stable/gallery/style_sheets/style_sheets_reference.html</p>
 </li>
 <li>
 <p><code>legend_loc</code> : str (default: 'best')</p>
@@ -1094,7 +1112,7 @@ for testing purposes.</p>
 </ul>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/plotting/learning_curves/">http://rasbt.github.io/mlxtend/user_guide/plotting/learning_curves/</a></p></div>
+    http://rasbt.github.io/mlxtend/user_guide/plotting/plot_learning_curves/</p></div>
         
         
     </div>

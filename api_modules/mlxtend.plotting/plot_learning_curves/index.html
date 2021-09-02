@@ -667,6 +667,12 @@
         
             
 <li >
+    <a href="../../../user_guide/plotting/scatter_hist/">Scatter Histogram</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/plotting/stacked_barplot/">Stacked Barplot</a>
 </li>
 
@@ -984,7 +990,7 @@
         <div class="col-md-9" role="main">
 
 <h2 id="plot_learning_curves">plot_learning_curves</h2>
-<p><em>plot_learning_curves(X_train, y_train, X_test, y_test, clf, train_marker='o', test_marker='^', scoring='misclassification error', suppress_plot=False, print_model=True, style='fivethirtyeight', legend_loc='best')</em></p>
+<p><em>plot_learning_curves(X_train, y_train, X_test, y_test, clf, train_marker='o', test_marker='^', scoring='misclassification error', suppress_plot=False, print_model=True, title_fontsize=12, style='default', legend_loc='best')</em></p>
 <p>Plots learning curves of a classifier.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1035,8 +1041,13 @@ for testing purposes.</p>
 <p>Print model parameters in plot title if True.</p>
 </li>
 <li>
-<p><code>style</code> : str (default: 'fivethirtyeight')</p>
-<p>Matplotlib style</p>
+<p><code>title_fontsize</code> : int (default: 12)</p>
+<p>Determines the size of the plot title font.</p>
+</li>
+<li>
+<p><code>style</code> : str (default: 'default')</p>
+<p>Matplotlib style. For more styles, please see
+https://matplotlib.org/stable/gallery/style_sheets/style_sheets_reference.html</p>
 </li>
 <li>
 <p><code>legend_loc</code> : str (default: 'best')</p>

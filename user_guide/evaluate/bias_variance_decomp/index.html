@@ -667,6 +667,12 @@
         
             
 <li >
+    <a href="../../plotting/scatter_hist/">Scatter Histogram</a>
+</li>
+
+        
+            
+<li >
     <a href="../../plotting/stacked_barplot/">Stacked Barplot</a>
 </li>
 
@@ -1270,9 +1276,9 @@ print('Average expected loss: %.3f' % avg_expected_loss)
 print('Average bias: %.3f' % avg_bias)
 print('Average variance: %.3f' % avg_var)
 </code></pre>
-<pre><code>Average expected loss: 31.756
-Average bias: 13.856
-Average variance: 17.900
+<pre><code>Average expected loss: 31.536
+Average bias: 14.096
+Average variance: 17.440
 </code></pre>
 <p>For comparison, the bias-variance decomposition of a bagging regressor is shown below, which should intuitively have a lower variance than a single decision tree:</p>
 <pre><code class="language-python">from sklearn.ensemble import BaggingRegressor
@@ -1385,8 +1391,9 @@ Currently allowed values are '0-1_loss' and 'mse'.</p>
 </li>
 <li>
 <p><code>num_rounds</code> : int (default=200)</p>
-<p>Number of bootstrap rounds for performing the bias-variance
-decomposition.</p>
+<p>Number of bootstrap rounds (sampling from the training set)
+for performing the bias-variance decomposition. Each bootstrap
+sample has the same size as the original training set.</p>
 </li>
 <li>
 <p><code>random_seed</code> : int (default=None)</p>
@@ -1409,8 +1416,7 @@ is computed over the data points in the test set.</p>
 </ul>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/bias_variance_decomp/</p>
-<p>ython</p></div>
+    http://rasbt.github.io/mlxtend/user_guide/evaluate/bias_variance_decomp/</p></div>
         
         
     </div>

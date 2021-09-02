@@ -667,6 +667,12 @@
         
             
 <li >
+    <a href="../../../user_guide/plotting/scatter_hist/">Scatter Histogram</a>
+</li>
+
+        
+            
+<li >
     <a href="../../../user_guide/plotting/stacked_barplot/">Stacked Barplot</a>
 </li>
 
@@ -984,7 +990,7 @@
         <div class="col-md-9" role="main">
 
 <h2 id="plot_confusion_matrix">plot_confusion_matrix</h2>
-<p><em>plot_confusion_matrix(conf_mat, hide_spines=False, hide_ticks=False, figsize=None, cmap=None, colorbar=False, show_absolute=True, show_normed=False, class_names=None, figure=None, axis=None)</em></p>
+<p><em>plot_confusion_matrix(conf_mat, hide_spines=False, hide_ticks=False, figsize=None, cmap=None, colorbar=False, show_absolute=True, show_normed=False, class_names=None, figure=None, axis=None, fontcolor_threshold=0.5)</em></p>
 <p>Plot a confusion matrix via matplotlib.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1039,6 +1045,14 @@ If not <code>None</code>, ticks will be set to these values.</p>
 <li>
 <p><code>axis</code> : None or Matplotlib figure axis (default: None)</p>
 <p>If None will create a new axis.</p>
+</li>
+<li>
+<p><code>fontcolor_threshold</code> : Float (default: 0.5)</p>
+<p>Sets a threshold for choosing black and white font colors
+for the cells. By default all values larger than 0.5 times
+the maximum cell value are converted to white, and everything
+equal or smaller than 0.5 times the maximum cell value are converted
+to black.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>

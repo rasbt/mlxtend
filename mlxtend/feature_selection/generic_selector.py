@@ -57,35 +57,7 @@ class Strategy(NamedTuple):
     candidate_states: Callable
     build_submodel: Callable
     check_finished: Callable
-
-def _calc_score(selector,
-                build_submodel,
-                X,
-                y,
-                state,
-                groups=None,
-                **fit_params):
-    
-    X_state = build_submodel(X, state)
-    
-    if selector.cv:
-        scores = cross_val_score(selector.est_,
-                                 X_state,
-                                 y,
-                                 groups=groups,
-                                 cv=selector.cv,
-                                 scoring=selector.scorer,
-                                 n_jobs=1,
-                                 pre_dispatch=selector.pre_dispatch,
-                                 fit_params=fit_params)
-    else:
-        selector.est_.fit(X_state,
-                          y,
-                          **fit_params)
-        scores = np.array([selector.scorer(selector.est_,
-                                           X_state,
-                                           y)])
-    return state, scores
+    postprocess: Callable
 
 
 class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
@@ -99,7 +71,7 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         Description of search strategy: a named tuple
         with fields `initial_state`, 
         `candidate_states`, `build_submodel`, 
-        `check_finished`.
+        `check_finished` and `postprocess`.
 
     verbose: int (default: 0), level of verbosity to use in logging.
         If 0, no output,
@@ -149,7 +121,7 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         selection, where the dictionary keys are
         the states of these feature selector. The dictionary
         values are dictionaries themselves with the following
-        keys: 'cv_scores' (list individual cross-validation scores)
+        keys: 'scores' (list individual cross-validation scores)
               'avg_score' (average cross-validation score)
 
     Notes
@@ -211,8 +183,6 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             self.scorer = scoring
 
         self.fitted = False
-        self.results_ = {}
-        self.interrupted_ = False
 
         # don't mess with this unless testing
         self._TESTING_INTERRUPT_MODE = False
@@ -275,36 +245,45 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         """
 
         # reset from a potential previous fit run
-        self.results_ = {}
-        self.finished = False
         self.interrupted_ = False
+        self.finished_ = False
+
+        results_ = {}
 
         # unpack the strategy
         
-        initial_state, candidate_states, build_submodel, check_finished = self.strategy
+        (initial_state,
+         candidate_states,
+         build_submodel,
+         check_finished,
+         postprocess) = self.strategy
 
         # fit initial model
 
-
-        _state, _scores = _calc_score(self,
+        _state, _scores = _calc_score(self.estimator,
+                                      self.scorer,
                                       build_submodel,
                                       X,
                                       y,
                                       initial_state,
                                       groups=groups,
+                                      cv=self.cv,
+                                      pre_dispatch=self.pre_dispatch,
                                       **fit_params)
 
         # keep a running track of the best state
 
+        self.path_ = [deepcopy(_state)]
         self.best_state_ = _state
         self.best_score_ = np.nanmean(_scores)
 
-        self._update_results_check({_state: {'cv_scores': _scores,
-                                             'avg_score': np.nanmean(_scores)}},
-                                   check_finished)
+        self.update_results_check(results_,
+                                  {_state: {'scores': _scores,
+                                            'avg_score': np.nanmean(_scores)}},
+                                  check_finished)
                 
         try:
-            while not self.finished:
+            while not self.finished_:
 
                 batch_results = self._batch(_state,
                                             candidate_states(_state),
@@ -314,9 +293,12 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                                             groups=groups,
                                             **fit_params)
 
-                _state, _score, self.finished = self._update_results_check(batch_results,
+                _state, _score, self.finished_ = self.update_results_check(results_,
+                                                                           batch_results,
                                                                            check_finished)
                                            
+                self.path_.append(deepcopy(_state))
+
                 if self._TESTING_INTERRUPT_MODE:
                     raise KeyboardInterrupt
 
@@ -324,8 +306,8 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             self.interrupted_ = True
             sys.stderr.write('\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...')
 
+        self.selected_state_, self.results_ = postprocess(results_)
         self.fitted = True
-        self.postprocess()
         return self
 
     def transform(self, X):
@@ -345,7 +327,8 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
         """
         self._check_fitted()
-        return self.strategy.build_submodel(X, self.best_state_)
+        build_submodel = self.strategy.build_submodel
+        return build_submodel(X, self.selected_state_)
 
     def fit_transform(self,
                       X,
@@ -396,7 +379,7 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         its length. The dictionary keys corresponding to these lists
         are as follows:
             'state': tuple of the indices of the feature subset
-            'cv_scores': list with individual CV scores
+            'scores': list with individual CV scores
             'avg_score': of CV average scores
             'std_dev': standard deviation of the CV score average
             'std_err': standard error of the CV score average
@@ -412,9 +395,9 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             return bound, std_err
 
         for k in fdict:
-            std_dev = np.std(self.results_[k]['cv_scores'])
+            std_dev = np.std(self.results_[k]['scores'])
             bound, std_err = self._calc_confidence(
-                self.results_[k]['cv_scores'],
+                self.results_[k]['scores'],
                 confidence=confidence_interval)
             fdict[k]['ci_bound'] = bound
             fdict[k]['std_dev'] = std_dev
@@ -441,18 +424,21 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                                 pre_dispatch=self.pre_dispatch)
 
             work = parallel(delayed(_calc_score)
-                            (self,
+                            (self.estimator,
+                             self.scorer,
                              build_submodel,
                              X,
                              y,
                              state,
                              groups=groups,
+                             cv=self.cv,
+                             pre_dispatch=self.pre_dispatch,
                              **fit_params)
                             for state in candidates)
 
-            for state, cv_scores in work:
-                results[state] = {'cv_scores': cv_scores,
-                                  'avg_score': np.nanmean(cv_scores)}
+            for state, scores in work:
+                results[state] = {'scores': scores,
+                                  'avg_score': np.nanmean(scores)}
 
         return results
 
@@ -460,22 +446,29 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         if not self.fitted:
             raise AttributeError('{} has not been fitted yet.'.format(self.__class__))
 
-    def _update_results_check(self,
-                              batch_results,
-                              check_finished):
+    def update_results_check(self,
+                             results,
+                             batch_results,
+                             check_finished):
         """
-        Update `self.results_` with current batch
+        Update `results_` with current batch
         and return a boolean about whether 
         we should continue or not.
 
         Parameters
         ----------
 
+        results: dict
+            Dictionary of all results.
+            Keys are state with values
+            dictionaries having keys
+            `scores`, `avg_scores`.
+
         batch_results: dict
             Dictionary of results from a batch fit.
-            Keys are the state with values
+            Keys are tate with values
             dictionaries having keys
-            `cv_scores`, `avg_scores`.
+            `scores`, `avg_scores`.
 
         check_finished: callable
             Callable taking three arguments 
@@ -500,11 +493,11 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         finished = batch_results == {}
 
         if not finished:
-            self.results_.update(batch_results)
+            results.update(batch_results)
 
             (cur_state,
              cur_score,
-             finished) = check_finished(self.results_,
+             finished) = check_finished(results,
                                         self.best_state_,
                                         batch_results)
             if cur_score > self.best_score_:
@@ -514,19 +507,7 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         else:
             return None, None, True
 
-    def postprocess(self):
-        """
-        Find the best model and score from `self.results_`.
-        """
-
-        self.best_state_ = None
-        self.best_score_ = -np.inf
-
-        for state, result in self.results_.items():
-            if result['avg_score'] > self.best_score_:
-                self.best_state_ = state
-                self.best_score_ = result['avg_score']
-        
+      
 class MinMaxCandidates(object):
 
     def __init__(self,
@@ -826,7 +807,8 @@ def min_max(X,
             max_features=1,
             fixed_features=None,
             custom_feature_names=None,
-            categorical_features=None):
+            categorical_features=None,
+            parsimonious=True):
     """
     Parameters
     ----------
@@ -859,6 +841,11 @@ def min_max(X,
         For each categorical feature, there must be at most `max_bins` unique
         categories, and each categorical value must be in [0, max_bins -1].
 
+    parsimonious: bool
+        If True, use the 1sd rule: among the shortest models
+        within one standard deviation of the best score
+        pick the one with the best average score. 
+
     Returns
     -------
 
@@ -876,7 +863,7 @@ def min_max(X,
 
     check_finished: callable
         Check whether to stop. Takes two arguments:
-        `best_result` a dict with keys ['cv_scores', 'avg_score'];
+        `best_result` a dict with keys ['scores', 'avg_score'];
         and `state`.
 
     """
@@ -900,10 +887,16 @@ def min_max(X,
         initial_features = range(min_max.min_features)
     initial_state = tuple(initial_features)
 
+    if not parsimonious:
+        _postprocess = _postprocess_best
+    else:
+        _postprocess = _postprocess_best_1sd
+
     return Strategy(initial_state,
                     min_max.candidate_states,
                     build_submodel,
-                    min_max.check_finished)
+                    min_max.check_finished,
+                    _postprocess)
 
 def step(X,
          direction='forward',
@@ -913,7 +906,8 @@ def step(X,
          fixed_features=None,
          initial_features=None,
          custom_feature_names=None,
-         categorical_features=None):
+         categorical_features=None,
+         parsimonious=True):
     """
     Parameters
     ----------
@@ -953,6 +947,11 @@ def step(X,
         For each categorical feature, there must be at most `max_bins` unique
         categories, and each categorical value must be in [0, max_bins -1].
 
+    parsimonious: bool
+        If True, use the 1sd rule: among the shortest models
+        within one standard deviation of the best score
+        pick the one with the best average score. 
+
     Returns
     -------
 
@@ -970,7 +969,7 @@ def step(X,
 
     check_finished: callable
         Check whether to stop. Takes two arguments:
-        `best_result` a dict with keys ['cv_scores', 'avg_score'];
+        `best_result` a dict with keys ['scores', 'avg_score'];
         and `state`.
 
     """
@@ -1016,11 +1015,126 @@ def step(X,
     if not step.fixed_features.issubset(initial_features):
         raise ValueError('initial_features should contain %s' % str(step.fixed_features))
 
+    if not parsimonious:
+        _postprocess = _postprocess_best
+    else:
+        _postprocess = _postprocess_best_1sd
+
     return Strategy(initial_state,
                     step.candidate_states,
                     build_submodel,
-                    step.check_finished)
+                    step.check_finished,
+                    _postprocess)
+
+
+# private functions
+
+
+def _calc_score(estimator,
+                scorer,
+                build_submodel,
+                X,
+                y,
+                state,
+                groups=None,
+                cv=None,
+                pre_dispatch='2*n_jobs',
+                **fit_params):
+    
+    X_state = build_submodel(X, state)
+    
+    if cv:
+        scores = cross_val_score(estimator,
+                                 X_state,
+                                 y,
+                                 groups=groups,
+                                 cv=cv,
+                                 scoring=scorer,
+                                 n_jobs=1,
+                                 pre_dispatch=pre_dispatch,
+                                 fit_params=fit_params)
+    else:
+        estimator.fit(X_state,
+                      y,
+                          **fit_params)
+        scores = np.array([scorer(estimator,
+                                  X_state,
+                                  y)])
+    return state, scores
+
 
 def _build_submodel(column_info, X, cols):
     return np.column_stack([column_info[col].get_columns(X, fit=True)[0] for col in cols])
+
     
+def _postprocess_best(results):
+    """
+    Find the best state from `results`
+    based on `avg_score`.
+
+    Return best state and results
+    """
+
+    best_state = None
+    best_score = -np.inf
+
+    for state, result in results.items():
+        if result['avg_score'] > best_score:
+            best_state = state
+            best_score = result['avg_score']
+
+    return best_state, results
+
+def _postprocess_best_1sd(results):
+    """
+    Find the best state from `results`
+    based on `avg_score`.
+
+    Find models satisfying the 1sd rule
+    and choose the state with best score
+    among the smallest such states.
+
+    Return best state and results
+
+    Models are compared by length of state
+    """
+
+    best_state = None
+    best_score = -np.inf
+
+    for state, result in results.items():
+        if result['avg_score'] > best_score:
+            best_state = state
+            best_score = result['avg_score']
+
+    states_1sd = []
+
+    for state, result in results.items():
+        if len(state) >= len(best_state):
+            continue
+        scores = result['scores']
+        _limit = (result['avg_score'] +
+                  np.nanstd(scores) / np.sqrt(scores.shape[0]))
+        if _limit >= best_score:
+            states_1sd.append(state)
+
+    shortest_1sd = np.inf
+
+    for state in states_1sd:
+        if len(state) < shortest_1sd:
+            shortest_1sd = len(state)
+            
+    best_state_1sd = None
+    best_score_1sd = -np.inf
+
+    for state in states_1sd:
+        if ((len(state) == shortest_1sd)
+            and (results[state]['avg_score'] <=
+                 best_score_1sd)):
+            best_state_1sd = state
+            best_score_1sd = result['avg_score'][state]
+            
+    if best_state_1sd:
+        return best_state_1sd, results
+    else:
+        return best_state, results

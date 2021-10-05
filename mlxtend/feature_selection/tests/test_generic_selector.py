@@ -140,4 +140,4 @@ def test_pandas1():
                                         cv=3)
 
         step_selector.fit(D, Y)
-        
+        print(step_selector.path_)

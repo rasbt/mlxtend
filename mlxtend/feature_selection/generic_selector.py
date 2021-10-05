@@ -12,6 +12,7 @@
 # but allows custom model search
 
 import types
+from typing import NamedTuple, Any, Callable
 import sys
 from functools import partial
 from copy import deepcopy
@@ -33,14 +34,39 @@ from .columns import (_get_column_info,
                      _categorical_from_df,
                      _check_categories)
 
+class Strategy(NamedTuple):
+
+    """
+    initial_state : object
+        Initial state of feature selector.
+    state_generator : callable
+        Callable taking single argument `state` and returning
+        candidates for next batch of scores to be calculated.
+    build_submodel : callable
+        Callable taking two arguments `(X, state)` that returns
+        model matrix represented by `state`.
+    check_finished : callable
+        Callable taking three arguments 
+        `(results, best_state, batch_results)` which determines if
+        the state generator should step. Often will just check
+        if there is a better score than that at current best state
+        but can use entire set of results if desired.
+    """
+
+    initial_state : Any
+    candidate_states : Callable
+    build_submodel : Callable
+    check_finished : Callable
+
 def _calc_score(selector,
+                build_submodel,
                 X,
                 y,
                 state,
                 groups=None,
                 **fit_params):
     
-    X_state = selector.build_submodel(X, state)
+    X_state = build_submodel(X, state)
     
     if selector.cv:
         scores = cross_val_score(selector.est_,
@@ -69,20 +95,12 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
     Parameters
     ----------
     estimator : scikit-learn classifier or regressor
-    initial_state : object
-        Initial state of feature selector.
-    state_generator : callable
-        Callable taking single argument `state` and returning
-        candidates for next batch of scores to be calculated.
-    build_submodel : callable
-        Callable taking two arguments `(X, state)` that returns
-        model matrix represented by `state`.
-    check_finished : callable
-        Callable taking three arguments 
-        `(results, best_state, batch_results)` which determines if
-        the state generator should step. Often will just check
-        if there is a better score than that at current best state
-        but can use entire set of results if desired.
+    strategy : Strategy
+        Description of search strategy: a named tuple
+        with fields `initial_state`, 
+        `candidate_states`, `build_submodel`, 
+        `check_finished`.
+
     verbose : int (default: 0), level of verbosity to use in logging.
         If 0, no output,
         if 1 number of features in current set, if 2 detailed logging 
@@ -134,6 +152,11 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         keys: 'cv_scores' (list individual cross-validation scores)
               'avg_score' (average cross-validation score)
 
+    Notes
+    -----
+
+    See `Strategy` for explanation of the fields.
+
     Examples
     -----------
     For usage examples, please see
@@ -142,10 +165,7 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
     """
     def __init__(self,
                  estimator,
-                 initial_state,
-                 state_generator,
-                 build_submodel,
-                 check_finished,
+                 strategy,
                  verbose=0,
                  scoring=None,
                  cv=5,
@@ -155,10 +175,7 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                  fixed_features=None):
 
         self.estimator = estimator
-        self.initial_state = initial_state
-        self.state_generator = state_generator
-        self.build_submodel = build_submodel
-        self.check_finished = check_finished
+        self.strategy = strategy
         self.pre_dispatch = pre_dispatch
         # Want to raise meaningful error message if a
         # cross-validation generator is inputted
@@ -262,14 +279,18 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self.finished = False
         self.interrupted_ = False
 
+        # unpack the strategy
+        
+        initial_state, candidate_states, build_submodel, check_finished = self.strategy
+
         # fit initial model
 
-        _state = self.initial_state
 
         _state, _scores = _calc_score(self,
+                                      build_submodel,
                                       X,
                                       y,
-                                      _state,
+                                      initial_state,
                                       groups=groups,
                                       **fit_params)
 
@@ -278,20 +299,23 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self.best_state_ = _state
         self.best_score_ = np.nanmean(_scores)
 
-        self.update_results_check({_state: {'cv_scores': _scores,
-                                            'avg_score': np.nanmean(_scores)}})
+        self._update_results_check({_state: {'cv_scores': _scores,
+                                             'avg_score': np.nanmean(_scores)}},
+                                   check_finished)
                 
         try:
             while not self.finished:
 
                 batch_results = self._batch(_state,
+                                            candidate_states(_state),
+                                            build_submodel,
                                             X,
                                             y,
                                             groups=groups,
                                             **fit_params)
 
-                _state, _score, self.finished = self.update_results_check(batch_results)
-                print(_state, self.finished, _score, self.best_score_)
+                _state, _score, self.finished = self._update_results_check(batch_results,
+                                                                           check_finished)
                                            
                 if self._TESTING_INTERRUPT_MODE:
                     raise KeyboardInterrupt
@@ -303,38 +327,6 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self.fitted = True
         self.postprocess()
         return self
-
-    def _batch(self,
-               state,
-               X,
-               y,
-               groups=None,
-               **fit_params):
-
-        results = {}
-
-        candidates = self.state_generator(state)
-
-        if candidates is not None:
-
-            parallel = Parallel(n_jobs=self.n_jobs,
-                                verbose=self.verbose,
-                                pre_dispatch=self.pre_dispatch)
-
-            work = parallel(delayed(_calc_score)
-                            (self,
-                             X,
-                             y,
-                             state,
-                             groups=groups,
-                             **fit_params)
-                            for state in candidates)
-
-            for state, cv_scores in work:
-                results[state] = {'cv_scores': cv_scores,
-                                  'avg_score': np.nanmean(cv_scores)}
-
-        return results
 
     def transform(self, X):
         """Reduce X to its most important features.
@@ -353,7 +345,7 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
         """
         self._check_fitted()
-        return self.build_submodel(X, self.best_state_)
+        return self.strategy.build_submodel(X, self.best_state_)
 
     def fit_transform(self,
                       X,
@@ -429,12 +421,48 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             fdict[k]['std_err'] = std_err
         return fdict
 
+    # private methods
+
+    def _batch(self,
+               state,
+               candidates,
+               build_submodel,
+               X,
+               y,
+               groups=None,
+               **fit_params):
+
+        results = {}
+
+        if candidates is not None:
+
+            parallel = Parallel(n_jobs=self.n_jobs,
+                                verbose=self.verbose,
+                                pre_dispatch=self.pre_dispatch)
+
+            work = parallel(delayed(_calc_score)
+                            (self,
+                             build_submodel,
+                             X,
+                             y,
+                             state,
+                             groups=groups,
+                             **fit_params)
+                            for state in candidates)
+
+            for state, cv_scores in work:
+                results[state] = {'cv_scores': cv_scores,
+                                  'avg_score': np.nanmean(cv_scores)}
+
+        return results
+
     def _check_fitted(self):
         if not self.fitted:
             raise AttributeError('{} has not been fitted yet.'.format(self.__class__))
 
-    def update_results_check(self,
-                             batch_results):
+    def _update_results_check(self,
+                              batch_results,
+                              check_finished):
         """
         Update `self.results_` with current batch
         and return a boolean about whether 
@@ -448,6 +476,13 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             Keys are the state with values
             dictionaries having keys
             `cv_scores`, `avg_scores`.
+
+        check_finished : callable
+            Callable taking three arguments 
+            `(results, best_state, batch_results)` which determines if
+            the state generator should step. Often will just check
+            if there is a better score than that at current best state
+            but can use entire set of results if desired.
 
         Returns
         -------
@@ -469,9 +504,9 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
             (cur_state,
              cur_score,
-             finished) = self.check_finished(self.results_,
-                                             self.best_state_,
-                                             batch_results)
+             finished) = check_finished(self.results_,
+                                        self.best_state_,
+                                        batch_results)
             if cur_score > self.best_score_:
                 self.best_state_ = cur_state
                 self.best_score_ = cur_score
@@ -571,7 +606,7 @@ class MinMaxCandidates(object):
         # implied design matrix
 
         self.column_info_ = _get_column_info(X,
-                                             range(X.shape[1]),
+                                             self.columns,
                                              is_categorical,
                                              is_ordinal)
         self.column_map_ = {}
@@ -602,11 +637,11 @@ class MinMaxCandidates(object):
 
         self._have_already_run = False
         if fixed_features is not None:
-            self.fixed_features = set([self.columns[f] for f in fixed_features])
+            self.fixed_features = set([self.column_info_[f].idx for f in fixed_features])
         else:
             self.fixed_features = set([])
             
-    def __call__(self, state):
+    def candidate_states(self, state):
         """
         Produce candidates for fitting.
 
@@ -708,7 +743,7 @@ class StepCandidates(MinMaxCandidates):
                                   custom_feature_names,
                                   categorical_features)
             
-    def __call__(self, state):
+    def candidate_states(self, state):
         """
         Produce candidates for fitting.
         For stepwise search this depends on the direction.
@@ -787,12 +822,12 @@ class StepCandidates(MinMaxCandidates):
         return batch_best_state, batch_best_score, finished
 
     
-def min_max_candidates(X,
-                       min_features=1,
-                       max_features=1,
-                       fixed_features=None,
-                       custom_feature_names=None,
-                       categorical_features=None):
+def min_max(X,
+            min_features=1,
+            max_features=1,
+            fixed_features=None,
+            custom_feature_names=None,
+            categorical_features=None):
     """
     Parameters
     ----------
@@ -858,26 +893,28 @@ def min_max_candidates(X,
     # is included then we must
     # create a new design matrix
 
-    def build_submodel(column_info, X, cols):
-        return np.column_stack([column_info[col].get_columns(X, fit=True)[0] for col in cols])
-    build_submodel = partial(build_submodel, min_max.column_info_)
+    build_submodel = partial(_build_submodel, min_max.column_info_)
 
     if min_max.fixed_features:
         initial_features = sorted(min_max.fixed_features)
     else:
         initial_features = range(min_max.min_features)
     initial_state = tuple(initial_features)
-    return initial_state, min_max, build_submodel, min_max.check_finished
 
-def step_candidates(X,
-                    direction='forward',
-                    min_features=1,
-                    max_features=1,
-                    random_state=0,
-                    fixed_features=None,
-                    initial_features=None,
-                    custom_feature_names=None,
-                    categorical_features=None):
+    return Strategy(initial_state,
+                    min_max.candidate_states,
+                    build_submodel,
+                    min_max.check_finished)
+
+def step(X,
+         direction='forward',
+         min_features=1,
+         max_features=1,
+         random_state=0,
+         fixed_features=None,
+         initial_features=None,
+         custom_feature_names=None,
+         categorical_features=None):
     """
     Parameters
     ----------
@@ -951,9 +988,9 @@ def step_candidates(X,
     # is included then we must
     # create a new design matrix
 
-    def build_submodel(column_info, X, cols):
-        return np.column_stack([column_info[col].get_columns(X, fit=True)[0] for col in cols])
-    build_submodel = partial(build_submodel, step.column_info_)
+    build_submodel = partial(_build_submodel, step.column_info_)
+
+    # pick an initial state
 
     if direction in ['forward', 'both']:
         if step.fixed_features:
@@ -980,7 +1017,11 @@ def step_candidates(X,
     if not step.fixed_features.issubset(initial_features):
         raise ValueError('initial_features should contain %s' % str(step.fixed_features))
 
-    return initial_state, step, build_submodel, step.check_finished
+    return Strategy(initial_state,
+                    step.candidate_states,
+                    build_submodel,
+                    step.check_finished)
 
-
+def _build_submodel(column_info, X, cols):
+    return np.column_stack([column_info[col].get_columns(X, fit=True)[0] for col in cols])
     

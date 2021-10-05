@@ -4,9 +4,9 @@ import pytest
 
 import numpy as np
 from sklearn.linear_model import LinearRegression
-from mlxtend.feature_selection.generic_selector import (min_max,
-                                                        step,
-                                                        FeatureSelector)
+from mlxtend.feature_selection.generic_selector import FeatureSelector
+from mlxtend.feature_selection.strategy import min_max, step
+
 
 have_pandas = True
 try:

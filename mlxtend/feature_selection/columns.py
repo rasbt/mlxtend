@@ -88,7 +88,7 @@ class Column(NamedTuple):
                 self.encoder.fit(cols)
         return np.asarray(cols)
     
-def _get_column(idx, X, twodim=False):
+def _get_column(idx, X, twodim=False, loc=True):
     """
     Extract column `idx` from `X`,
     optionally making it two-dimensional
@@ -97,8 +97,13 @@ def _get_column(idx, X, twodim=False):
     """
     if isinstance(X, np.ndarray):
         col = X[:,idx]
-    else: # assuming pd.DataFrame
-        col = X[idx]
+    elif hasattr(X, 'loc'):
+        if loc:
+            col = X.loc[:,idx]
+        else: # use iloc
+            col = X.iloc[:,idx]
+    else:
+        raise ValueError('expecting an ndarray or a "loc/iloc" methods, got %s' % str(X))
     if twodim and np.asarray(col).ndim == 1:
         return np.asarray(col).reshape((-1,1))
     return np.asarray(col)
@@ -205,14 +210,9 @@ def _check_categories(categorical_features, X):
     # stopping, the mapper only gets a fraction of the training data.
     known_categories = []
 
-    if hasattr(X, 'loc'): # hacky way to assume pd.DataFrame without importing pd
-        X_list = [X[c] for c in X.columns]
-    else:
-        X_list = X.T
-
     for f_idx in range(n_features):
         if is_categorical[f_idx]:
-            categories = np.unique(X_list[f_idx])
+            categories = np.array([v for v in set(_get_column(f_idx, X, loc=False))])
             missing = []
             for c in categories:
                 try:
@@ -221,7 +221,7 @@ def _check_categories(categorical_features, X):
                     missing.append(False)
             missing = np.array(missing)
             if missing.any():
-                categories = categories[~missing]
+                categories = sorted(categories[~missing])
 
         else:
             categories = None
@@ -231,8 +231,7 @@ def _check_categories(categorical_features, X):
 
 def _categorical_from_df(df):
     """
-    Find categorical and ordinal
-    variables in a data frame.
+    Find
     """
     is_categorical = []
     is_ordinal = []

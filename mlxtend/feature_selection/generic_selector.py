@@ -37,15 +37,15 @@ from .columns import (_get_column_info,
 class Strategy(NamedTuple):
 
     """
-    initial_state : object
+    initial_state: object
         Initial state of feature selector.
-    state_generator : callable
+    state_generator: callable
         Callable taking single argument `state` and returning
         candidates for next batch of scores to be calculated.
-    build_submodel : callable
+    build_submodel: callable
         Callable taking two arguments `(X, state)` that returns
         model matrix represented by `state`.
-    check_finished : callable
+    check_finished: callable
         Callable taking three arguments 
         `(results, best_state, batch_results)` which determines if
         the state generator should step. Often will just check
@@ -53,10 +53,10 @@ class Strategy(NamedTuple):
         but can use entire set of results if desired.
     """
 
-    initial_state : Any
-    candidate_states : Callable
-    build_submodel : Callable
-    check_finished : Callable
+    initial_state: Any
+    candidate_states: Callable
+    build_submodel: Callable
+    check_finished: Callable
 
 def _calc_score(selector,
                 build_submodel,
@@ -94,18 +94,18 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
     Parameters
     ----------
-    estimator : scikit-learn classifier or regressor
-    strategy : Strategy
+    estimator: scikit-learn classifier or regressor
+    strategy: Strategy
         Description of search strategy: a named tuple
         with fields `initial_state`, 
         `candidate_states`, `build_submodel`, 
         `check_finished`.
 
-    verbose : int (default: 0), level of verbosity to use in logging.
+    verbose: int (default: 0), level of verbosity to use in logging.
         If 0, no output,
         if 1 number of features in current set, if 2 detailed logging 
         including timestamp and cv scores at step.
-    scoring : str, callable, or None (default: None)
+    scoring: str, callable, or None (default: None)
         If None (default), uses 'accuracy' for sklearn classifiers
         and 'r2' for sklearn regressors.
         If str, uses a sklearn scoring metric string identifier, for example
@@ -116,15 +116,15 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         sklearn's signature ``scorer(estimator, X, y)``; see
         http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
         for more information.
-    cv : int (default: 5)
+    cv: int (default: 5)
         Integer or iterable yielding train, test splits. If cv is an integer
         and `estimator` is a classifier (or y consists of integer class
         labels) stratified k-fold. Otherwise regular k-fold cross-validation
         is performed. No cross-validation if cv is None, False, or 0.
-    n_jobs : int (default: 1)
+    n_jobs: int (default: 1)
         The number of CPUs to use for evaluating different feature subsets
         in parallel. -1 means 'all CPUs'.
-    pre_dispatch : int, or string (default: '2*n_jobs')
+    pre_dispatch: int, or string (default: '2*n_jobs')
         Controls the number of jobs that get dispatched
         during parallel execution if `n_jobs > 1` or `n_jobs=-1`.
         Reducing this number can be useful to avoid an explosion of
@@ -136,7 +136,7 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         An int, giving the exact number of total jobs that are spawned
         A string, giving an expression as a function
             of n_jobs, as in `2*n_jobs`
-    clone_estimator : bool (default: True)
+    clone_estimator: bool (default: True)
         Clones estimator if True; works with the original estimator instance
         if False. Set to False if the estimator doesn't
         implement scikit-learn's set_params and get_params methods.
@@ -144,7 +144,7 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
     Attributes
     ----------
-    results_ : dict
+    results_: dict
         A dictionary of selected feature subsets during the
         selection, where the dictionary keys are
         the states of these feature selector. The dictionary
@@ -248,29 +248,29 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
         Parameters
         ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+        X: {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
             New in v 0.13.0: pandas DataFrames are now also accepted as
             argument for X.
-        y : array-like, shape = [n_samples]
+        y: array-like, shape = [n_samples]
             Target values.
             New in v 0.13.0: pandas DataFrames are now also accepted as
             argument for y.
-        custom_feature_names : None or tuple (default: tuple)
+        custom_feature_names: None or tuple (default: tuple)
             Custom feature names for `self.k_feature_names` and
             `self.subsets_[i]['feature_names']`.
             (new in v 0.13.0)
-        groups : array-like, with shape (n_samples,), optional
+        groups: array-like, with shape (n_samples,), optional
             Group labels for the samples used while splitting the dataset into
             train/test set. Passed to the fit method of the cross-validator.
-        fit_params : various, optional
+        fit_params: various, optional
             Additional parameters that are being passed to the estimator.
             For example, `sample_weights=weights`.
 
         Returns
         -------
-        self : object
+        self: object
 
         """
 
@@ -333,7 +333,7 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
         Parameters
         ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+        X: {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
             New in v 0.13.0: pandas DataFrames are now also accepted as
@@ -356,19 +356,19 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
         Parameters
         ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+        X: {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
             New in v 0.13.0: pandas DataFrames are now also accepted as
             argument for X.
-        y : array-like, shape = [n_samples]
+        y: array-like, shape = [n_samples]
             Target values.
             New in v 0.13.0: a pandas Series are now also accepted as
             argument for y.
-        groups : array-like, with shape (n_samples,), optional
+        groups: array-like, with shape (n_samples,), optional
             Group labels for the samples used while splitting the dataset into
             train/test set. Passed to the fit method of the cross-validator.
-        fit_params : various, optional
+        fit_params: various, optional
             Additional parameters that are being passed to the estimator.
             For example, `sample_weights=weights`.
 
@@ -385,7 +385,7 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
         Parameters
         ----------
-        confidence_interval : float (default: 0.95)
+        confidence_interval: float (default: 0.95)
             A positive float between 0.0 and 1.0 to compute the confidence
             interval bounds of the CV score averages.
 
@@ -471,13 +471,13 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         Parameters
         ----------
 
-        batch_results : dict
+        batch_results: dict
             Dictionary of results from a batch fit.
             Keys are the state with values
             dictionaries having keys
             `cv_scores`, `avg_scores`.
 
-        check_finished : callable
+        check_finished: callable
             Callable taking three arguments 
             `(results, best_state, batch_results)` which determines if
             the state generator should step. Often will just check
@@ -487,10 +487,10 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         Returns
         -------
 
-        best_state : object
+        best_state: object
             State that had the best `avg_score`
 
-        fitted : bool
+        fitted: bool
             If batch_results is empty, fitting
             has terminated so return True.
             Otherwise False.
@@ -539,30 +539,30 @@ class MinMaxCandidates(object):
         """
         Parameters
         ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+        X: {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
             New in v 0.13.0: pandas DataFrames are now also accepted as
             argument for X.
-        min_features : int (default: 1)
+        min_features: int (default: 1)
             Minumum number of features to select
-        max_features : int (default: 1)
+        max_features: int (default: 1)
             Maximum number of features to select
-        fixed_features : column identifiers, default=None
+        fixed_features: column identifiers, default=None
             Subset of features to keep. Stored as `self.columns[fixed_features]`
             where `self.columns` will correspond to columns if X is a `pd.DataFrame`
             or an array of integers if X is an `np.ndarray`
-        custom_feature_names : None or tuple (default: tuple)
+        custom_feature_names: None or tuple (default: tuple)
                 Custom feature names for `self.k_feature_names` and
                 `self.subsets_[i]['feature_names']`.
                 (new in v 0.13.0)
-        categorical_features : array-like of {bool, int} of shape (n_features) 
+        categorical_features: array-like of {bool, int} of shape (n_features) 
                 or shape (n_categorical_features,), default=None.
             Indicates the categorical features.
 
-            - None : no feature will be considered categorical.
-            - boolean array-like : boolean mask indicating categorical features.
-            - integer array-like : integer indices indicating categorical
+            - None: no feature will be considered categorical.
+            - boolean array-like: boolean mask indicating categorical features.
+            - integer array-like: integer indices indicating categorical
               features.
 
             For each categorical feature, there must be at most `max_bins` unique
@@ -648,11 +648,11 @@ class MinMaxCandidates(object):
         Parameters
         ----------
 
-        state : ignored
+        state: ignored
 
         Returns
         -------
-        candidates : iterator
+        candidates: iterator
             A generator of (indices, label) where indices
             are columns of X and label is a name for the 
             given model. The iterator cycles through
@@ -701,32 +701,32 @@ class StepCandidates(MinMaxCandidates):
         """
         Parameters
         ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+        X: {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
             New in v 0.13.0: pandas DataFrames are now also accepted as
             argument for X.
-        direction : str
+        direction: str
             One of ['forward', 'backward', 'both']
-        min_features : int (default: 1)
+        min_features: int (default: 1)
             Minumum number of features to select
-        max_features : int (default: 1)
+        max_features: int (default: 1)
             Maximum number of features to select
-        fixed_features : column identifiers, default=None
+        fixed_features: column identifiers, default=None
             Subset of features to keep. Stored as `self.columns[fixed_features]`
             where `self.columns` will correspond to columns if X is a `pd.DataFrame`
             or an array of integers if X is an `np.ndarray`
-        custom_feature_names : None or tuple (default: tuple)
+        custom_feature_names: None or tuple (default: tuple)
                 Custom feature names for `self.k_feature_names` and
                 `self.subsets_[i]['feature_names']`.
                 (new in v 0.13.0)
-        categorical_features : array-like of {bool, int} of shape (n_features) 
+        categorical_features: array-like of {bool, int} of shape (n_features) 
                 or shape (n_categorical_features,), default=None.
             Indicates the categorical features.
 
-            - None : no feature will be considered categorical.
-            - boolean array-like : boolean mask indicating categorical features.
-            - integer array-like : integer indices indicating categorical
+            - None: no feature will be considered categorical.
+            - boolean array-like: boolean mask indicating categorical features.
+            - integer array-like: integer indices indicating categorical
               features.
 
             For each categorical feature, there must be at most `max_bins` unique
@@ -761,11 +761,11 @@ class StepCandidates(MinMaxCandidates):
         Parameters
         ----------
 
-        state : ignored
+        state: ignored
 
         Returns
         -------
-        candidates : iterator
+        candidates: iterator
             A generator of (indices, label) where indices
             are columns of X and label is a name for the 
             given model. The iterator cycles through
@@ -818,7 +818,6 @@ class StepCandidates(MinMaxCandidates):
                 batch_best_state = state
                 
         finished = batch_best_score <= results[best_state]['avg_score']
-        print(batch_best_state, batch_best_score, results[best_state]['avg_score'], finished, 'BEST!!!!!!!!!!!!!!!!!!!!!!!')
         return batch_best_state, batch_best_score, finished
 
     
@@ -831,30 +830,30 @@ def min_max(X,
     """
     Parameters
     ----------
-    X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+    X: {array-like, sparse matrix}, shape = [n_samples, n_features]
         Training vectors, where n_samples is the number of samples and
         n_features is the number of features.
         New in v 0.13.0: pandas DataFrames are now also accepted as
         argument for X.
-    min_features : int (default: 1)
+    min_features: int (default: 1)
         Minumum number of features to select
-    max_features : int (default: 1)
+    max_features: int (default: 1)
         Maximum number of features to select
-    fixed_features : column identifiers, default=None
+    fixed_features: column identifiers, default=None
         Subset of features to keep. Stored as `self.columns[fixed_features]`
         where `self.columns` will correspond to columns if X is a `pd.DataFrame`
         or an array of integers if X is an `np.ndarray`
-    custom_feature_names : None or tuple (default: tuple)
+    custom_feature_names: None or tuple (default: tuple)
             Custom feature names for `self.k_feature_names` and
             `self.subsets_[i]['feature_names']`.
             (new in v 0.13.0)
-    categorical_features : array-like of {bool, int} of shape (n_features) 
+    categorical_features: array-like of {bool, int} of shape (n_features) 
             or shape (n_categorical_features,), default=None.
         Indicates the categorical features.
 
-        - None : no feature will be considered categorical.
-        - boolean array-like : boolean mask indicating categorical features.
-        - integer array-like : integer indices indicating categorical
+        - None: no feature will be considered categorical.
+        - boolean array-like: boolean mask indicating categorical features.
+        - integer array-like: integer indices indicating categorical
           features.
 
         For each categorical feature, there must be at most `max_bins` unique
@@ -863,19 +862,19 @@ def min_max(X,
     Returns
     -------
 
-    initial_state : tuple
+    initial_state: tuple
         (column_names, feature_idx)
 
-    state_generator : callable
+    state_generator: callable
         Object that proposes candidates
         based on current state. Takes a single 
         argument `state`
 
-    build_submodel : callable
+    build_submodel: callable
         Candidate generator that enumerate
         all valid subsets of columns.
 
-    check_finished : callable
+    check_finished: callable
         Check whether to stop. Takes two arguments:
         `best_result` a dict with keys ['cv_scores', 'avg_score'];
         and `state`.
@@ -918,37 +917,37 @@ def step(X,
     """
     Parameters
     ----------
-    X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+    X: {array-like, sparse matrix}, shape = [n_samples, n_features]
         Training vectors, where n_samples is the number of samples and
         n_features is the number of features.
         New in v 0.13.0: pandas DataFrames are now also accepted as
         argument for X.
-    direction : str
+    direction: str
         One of ['forward', 'backward', 'both']
-    min_features : int (default: 1)
+    min_features: int (default: 1)
         Minumum number of features to select
-    max_features : int (default: 1)
+    max_features: int (default: 1)
         Maximum number of features to select
-    fixed_features : column identifiers, default=None
+    fixed_features: column identifiers, default=None
         Subset of features to keep. Stored as `self.columns[fixed_features]`
         where `self.columns` will correspond to columns if X is a `pd.DataFrame`
         or an array of integers if X is an `np.ndarray`
-    initial_features : column identifiers, default=None
+    initial_features: column identifiers, default=None
         Subset of features to be used to initialize when direction
         is `both`. If None defaults to behavior of `forward`.
         where `self.columns` will correspond to columns if X is a `pd.DataFrame`
         or an array of integers if X is an `np.ndarray`
-    custom_feature_names : None or tuple (default: tuple)
+    custom_feature_names: None or tuple (default: tuple)
             Custom feature names for `self.k_feature_names` and
             `self.subsets_[i]['feature_names']`.
             (new in v 0.13.0)
-    categorical_features : array-like of {bool, int} of shape (n_features) 
+    categorical_features: array-like of {bool, int} of shape (n_features) 
             or shape (n_categorical_features,), default=None.
         Indicates the categorical features.
 
-        - None : no feature will be considered categorical.
-        - boolean array-like : boolean mask indicating categorical features.
-        - integer array-like : integer indices indicating categorical
+        - None: no feature will be considered categorical.
+        - boolean array-like: boolean mask indicating categorical features.
+        - integer array-like: integer indices indicating categorical
           features.
 
         For each categorical feature, there must be at most `max_bins` unique
@@ -957,19 +956,19 @@ def step(X,
     Returns
     -------
 
-    initial_state : tuple
+    initial_state: tuple
         (column_names, feature_idx)
 
-    state_generator : callable
+    state_generator: callable
         Object that proposes candidates
         based on current state. Takes a single 
         argument `state`
 
-    build_submodel : callable
+    build_submodel: callable
         Candidate generator that enumerate
         all valid subsets of columns.
 
-    check_finished : callable
+    check_finished: callable
         Check whether to stop. Takes two arguments:
         `best_result` a dict with keys ['cv_scores', 'avg_score'];
         and `state`.

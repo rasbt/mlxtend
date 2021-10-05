@@ -9,6 +9,7 @@ from sklearn.preprocessing import (OneHotEncoder,
 from sklearn.utils.validation import check_is_fitted
 from sklearn.exceptions import NotFittedError
 
+
 class Column(NamedTuple):
 
     """
@@ -22,7 +23,7 @@ class Column(NamedTuple):
     is_ordinal: bool = False
     columns: tuple = ()
     encoder: Any = None
-    
+
     def get_columns(self, X, fit=False):
 
         """
@@ -58,12 +59,14 @@ class Column(NamedTuple):
         if self.encoder is not None:
             cols = self.encoder.transform(cols)
         cols = np.asarray(cols)
-        
+
         names = self.columns
         if hasattr(self.encoder, 'columns_'):
-            names = ['{0}[{1}]'.format(self.name, c) for c in self.encoder.columns_]
+            names = ['{0}[{1}]'.format(self.name, c)
+                     for c in self.encoder.columns_]
         if not names:
-            names = ['{0}[{1}]'.format(self.name, i) for i in range(cols.shape[1])]
+            names = ['{0}[{1}]'.format(self.name, i)
+                     for i in range(cols.shape[1])]
         return cols, names
 
     def fit_encoder(self, X):
@@ -87,7 +90,11 @@ class Column(NamedTuple):
             except NotFittedError:
                 self.encoder.fit(cols)
         return np.asarray(cols)
-    
+
+
+# private functions
+
+
 def _get_column(idx, X, twodim=False, loc=True):
     """
     Extract column `idx` from `X`,
@@ -96,24 +103,32 @@ def _get_column(idx, X, twodim=False, loc=True):
     two-dimensional input
     """
     if isinstance(X, np.ndarray):
-        col = X[:,idx]
+        col = X[:, idx]
     elif hasattr(X, 'loc'):
         if loc:
-            col = X.loc[:,idx]
-        else: # use iloc
-            col = X.iloc[:,idx]
+            col = X.loc[:, idx]
+        else:   # use iloc instead
+            col = X.iloc[:, idx]
     else:
-        raise ValueError('expecting an ndarray or a "loc/iloc" methods, got %s' % str(X))
+        raise ValueError('expecting an ndarray or a ' +
+                         '"loc/iloc" methods, got %s' % str(X))
     if twodim and np.asarray(col).ndim == 1:
-        return np.asarray(col).reshape((-1,1))
+        return np.asarray(col).reshape((-1, 1))
     return np.asarray(col)
+
     
 def _get_column_info(X,
                      columns,
                      is_categorical,
                      is_ordinal,
-                     default_encoders={'categorical': OneHotEncoder(drop='first', sparse=False),
-                                       'ordinal': OrdinalEncoder()}):
+                     default_encoders={
+                         'ordinal': OrdinalEncoder(),
+                         'categorical': OneHotEncoder(drop='first',
+                                                      sparse=False)
+                         }
+                     ):
+
+
     """
     Compute a dictionary
     of `Column` instances for each column
@@ -123,6 +138,7 @@ def _get_column_info(X,
     default encoding provided.
 
     """
+
     column_info = {}
     for i, col in enumerate(columns):
         if type(col) == int:
@@ -142,7 +158,8 @@ def _get_column_info(X,
                     columns_ = encoder.columns_
                 else:
                     columns_ = range(cols.shape[1])
-                columns = ['Cat({0})[{1}]'.format(col, c) for c in range(cols.shape[1])]
+                columns = ['Cat({0})[{1}]'.format(col, c)
+                           for c in range(cols.shape[1])]
 
             column_info[col] = Column(col,
                                       name,
@@ -159,6 +176,8 @@ def _get_column_info(X,
 # extracted from method of BaseHistGradientBoosting from
 # https://github.com/scikit-learn/scikit-learn/blob/2beed55847ee70d363bdbfe14ee4401438fba057/sklearn/ensemble/_hist_gradient_boosting/gradient_boosting.py
 # max_bins is ignored
+
+
 def _check_categories(categorical_features, X):
     """Check and validate categorical features in X
 
@@ -212,12 +231,15 @@ def _check_categories(categorical_features, X):
 
     for f_idx in range(n_features):
         if is_categorical[f_idx]:
-            categories = np.array([v for v in set(_get_column(f_idx, X, loc=False))])
+            categories = np.array([v for v in
+                                   set(_get_column(f_idx,
+                                                   X,
+                                                   loc=False))])
             missing = []
             for c in categories:
                 try:
                     missing.append(np.isnan(c))
-                except TypeError: # not a float
+                except TypeError:  # not a float
                     missing.append(False)
             missing = np.array(missing)
             if missing.any():
@@ -228,6 +250,7 @@ def _check_categories(categorical_features, X):
         known_categories.append(categories)
 
     return is_categorical, known_categories
+
 
 def _categorical_from_df(df):
     """
@@ -246,5 +269,3 @@ def _categorical_from_df(df):
     is_ordinal = np.array(is_ordinal)
 
     return is_categorical, is_ordinal
-
-

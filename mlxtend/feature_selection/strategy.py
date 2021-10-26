@@ -102,15 +102,15 @@ class MinMaxCandidates(object):
         nfeatures = X_.shape[0]
 
         if (not isinstance(max_features, int) or
-                (max_features > nfeatures or max_features < 1)):
+                (max_features > nfeatures or max_features < 0)):
             raise AttributeError('max_features must be'
-                                 ' smaller than %d and larger than 0' %
+                                 ' <= than %d and >= 0' %
                                  (nfeatures + 1))
 
         if (not isinstance(min_features, int) or
-                (min_features > nfeatures or min_features < 1)):
+                (min_features > nfeatures or min_features < 0)):
             raise AttributeError('min_features must be'
-                                 ' smaller than %d and larger than 0'
+                                 ' <= %d and >= 0'
                                  % (nfeatures + 1))
 
         if max_features < min_features:
@@ -151,7 +151,6 @@ class MinMaxCandidates(object):
                                                                  new_name) for n in col.columns]),
                                                 col.encoder)
 
-        self._have_already_run = False
         if fixed_features is not None:
             self.fixed_features = set([self.column_info_[f].idx for f in fixed_features])
         else:
@@ -182,36 +181,34 @@ class MinMaxCandidates(object):
 
         """
 
-        if not self._have_already_run:
-            self._have_already_run = True # maybe could be done with a StopIteration on candidates?
-            def chain_(i):
-                return (c for c in combinations(self.columns, r=i)
-                        if self.fixed_features.issubset(c))
-            
-            candidates = chain.from_iterable(chain_(i) for i in
-                                             range(self.min_features,
-                                                   self.max_features+1))
-            return candidates
+        def chain_(i):
+            return (c for c in combinations(self.columns, r=i)
+                    if self.fixed_features.issubset(c))
+
+        candidates = chain.from_iterable(chain_(i) for i in
+                                         range(self.min_features,
+                                               self.max_features+1))
+        return candidates
         
     def check_finished(self,
                        results,
-                       best_state,
+                       best,
                        batch_results):
         """
         Check if we should continue or not. 
         For exhaustive search we stop because
         all models are fit in a single batch.
         """
+        new_best = (None, None, None)
         batch_best_score = -np.inf
-        batch_best_state = None
+        
+        for (state, iteration, scores) in batch_results:
+            avg_score = np.nanmean(scores)
+            if avg_score > batch_best_score:
+                new_best = (state, iteration, scores)
+                batch_best_score = np.nanmean(scores)
 
-        for state in batch_results:
-            if batch_results[state]['avg_score'] > batch_best_score:
-                batch_best_score = batch_results[state]['avg_score']
-                batch_best_state = state
-                
-        return batch_best_state, batch_best_score, True
-
+        return new_best, True
 
 
 class StepCandidates(MinMaxCandidates):
@@ -310,13 +307,13 @@ class StepCandidates(MinMaxCandidates):
             forward = (tuple(sorted(state | set([c]))) for c in self.columns if (c not in state and
                                                                 self.fixed_features.issubset(state | set([c]))))
         else:
-            forward = None
+            forward = []
 
         if len(state) > self.min_features: # symmetric difference
             backward = (tuple(sorted(state ^ set([c]))) for c in self.columns if (c in state and
                                                                    self.fixed_features.issubset(state ^ set([c]))))
         else:
-            backward = None
+            backward = []
 
         if self.direction == 'forward':
             return forward
@@ -327,7 +324,7 @@ class StepCandidates(MinMaxCandidates):
         
     def check_finished(self,
                        results,
-                       best_state,
+                       best,
                        batch_results):
         """
         Check if we should continue or not. 
@@ -336,17 +333,17 @@ class StepCandidates(MinMaxCandidates):
         over our current best score.
 
         """
+        new_best = (None, None, None)
         batch_best_score = -np.inf
-        batch_best_state = None
 
-        for state in batch_results:
-            if batch_results[state]['avg_score'] > batch_best_score:
-                batch_best_score = batch_results[state]['avg_score']
-                batch_best_state = state
+        for state, iteration, scores in batch_results:
+            avg_score = np.nanmean(scores)
+            if avg_score > batch_best_score:
+                new_best = (state, iteration, scores)
+                batch_best_score = avg_score
                 
-        finished = batch_best_score <= results[best_state]['avg_score']
-        return batch_best_state, batch_best_score, finished
-
+        finished = batch_best_score <= np.nanmean(best[2])
+        return new_best, finished
 
 def exhaustive(X,
                min_features=1,
@@ -536,11 +533,15 @@ def step(X,
 
     # pick an initial state
 
+    random_state = check_random_state(random_state)
+
     if direction in ['forward', 'both']:
         if step.fixed_features:
             forward_features = sorted(step.fixed_features)
         else:
-            forward_features = range(step.min_features)
+            forward_features = sorted(random_state.choice([col for col in step.column_info_],
+                                                          step.min_features,
+                                                          replace=False))
         if direction == 'forward':
             initial_features = forward_features
         else:
@@ -548,7 +549,6 @@ def step(X,
                 initial_features = forward_features
     elif direction == 'backward':
         if initial_features is None:
-            random_state = check_random_state(random_state)
             initial_features = sorted(random_state.choice([col for col in step.column_info_],
                                                           step.max_features,
                                                           replace=False))
@@ -577,8 +577,11 @@ def step(X,
 
 
 def _build_submodel(column_info, X, cols):
-    return np.column_stack([column_info[col].get_columns(X, fit=True)[0] for col in cols])
-
+    if cols:
+        return np.column_stack([column_info[col].get_columns(X, fit=True)[0] for col in cols])
+    else:
+        return np.zeros((X.shape[0], 1))
+    
     
 def _postprocess_best(results):
     """
@@ -591,17 +594,21 @@ def _postprocess_best(results):
     best_state = None
     best_score = -np.inf
 
-    for state, result in results.items():
-        if result['avg_score'] > best_score:
-            best_state = state
-            best_score = result['avg_score']
+    new_results = {}
+    for (state, iteration, scores) in results:
+        new_state = tuple(state) # [v.name for v in state])
+        avg_score = np.nanmean(scores)
+        if avg_score > best_score:
+            best_state = new_state
+            best_score = avg_score
+        new_results[new_state] = avg_score
+    return best_state, new_results
 
-    return best_state, results
 
 def _postprocess_best_1sd(results):
     """
     Find the best state from `results`
-    based on `avg_score`.
+    based on np.nanmean(scores)
 
     Find models satisfying the 1sd rule
     and choose the state with best score
@@ -615,39 +622,46 @@ def _postprocess_best_1sd(results):
     best_state = None
     best_score = -np.inf
 
-    for state, result in results.items():
-        if result['avg_score'] > best_score:
+    for state, iteration, scores in results:
+        avg_score = np.nanmean(scores)
+        if avg_score > best_score:
             best_state = state
-            best_score = result['avg_score']
+            best_score = avg_score
 
     states_1sd = []
 
-    for state, result in results.items():
+    for (state, iteration, scores) in results:
         if len(state) >= len(best_state):
             continue
-        scores = result['scores']
-        _limit = (result['avg_score'] +
+        _limit = (np.nanmean(scores) + 
                   np.nanstd(scores) / np.sqrt(scores.shape[0]))
         if _limit >= best_score:
-            states_1sd.append(state)
+            states_1sd.append((state, iteration, scores))
 
     shortest_1sd = np.inf
 
-    for state in states_1sd:
+    for (state, iteration, scores) in states_1sd:
         if len(state) < shortest_1sd:
             shortest_1sd = len(state)
             
     best_state_1sd = None
     best_score_1sd = -np.inf
 
-    for state in states_1sd:
+    for (state, iteration, scores) in states_1sd:
+        avg_score = np.nanmean(scores)
         if ((len(state) == shortest_1sd)
-            and (results[state]['avg_score'] <=
+            and (avg_score <=
                  best_score_1sd)):
             best_state_1sd = state
-            best_score_1sd = result['avg_score'][state]
+            best_score_1sd = avg_score
             
+    new_results = {}
+    for (state, iteration, scores) in results:
+        new_state = tuple(state) #[v.name for v in state])
+        new_results[new_state] = np.nanmean(scores)
     if best_state_1sd:
-        return best_state_1sd, results
+        best_state_1sd = tuple([v.name for v in best_state_1sd])
+        return best_state_1sd, new_results
     else:
-        return best_state, results
+        best_state = tuple(best_state) # [v.name for v in best_state])
+        return best_state, new_results

@@ -1,13 +1,15 @@
 # Sebastian Raschka 2014-2020
 # mlxtend Machine Learning Library Extensions
 #
-# Algorithm for generic feature selection.
+# Algorithm for sequential feature selection.
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
+
+# Modified by Jonathan Taylor 2021
 #
-# Modified for generic search
-# Jonathan Taylor 2021
+# Derives from sequential_feature_selector
+# but allows custom model search
 
 import types
 import sys
@@ -212,7 +214,7 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self.interrupted_ = False
         self.finished_ = False
 
-        results_ = {}
+        results_ = []
 
         # unpack the strategy
         
@@ -238,39 +240,42 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         # keep a running track of the best state
 
         self.path_ = [deepcopy(_state)]
-        self.best_state_ = _state
-        self.best_score_ = np.nanmean(_scores)
+        iteration = 0
+        cur = best = (_state, iteration, _scores)
 
         self.update_results_check(results_,
-                                  {_state: {'scores': _scores,
-                                            'avg_score': np.nanmean(_scores)}},
+                                  cur,
+                                  [(_state, iteration, _scores)],
                                   check_finished)
-                
+        iteration += 1
         try:
             while not self.finished_:
 
-                batch_results = self._batch(_state,
-                                            candidate_states(_state),
+                batch_results = self._batch(iteration,
+                                            cur[0],
+                                            candidate_states(cur[0]),
                                             build_submodel,
                                             X,
                                             y,
                                             groups=groups,
                                             **fit_params)
-
-                _state, _score, self.finished_ = self.update_results_check(results_,
-                                                                           batch_results,
-                                                                           check_finished)
-                                           
-                self.path_.append(deepcopy(_state))
+                iteration += 1
+                cur, best_, self.finished_ = self.update_results_check(results_,
+                                                                       best,
+                                                                       batch_results,
+                                                                       check_finished)
+                if best_:
+                    best = best_
+                self.path_.append(deepcopy(cur))
 
                 if self._TESTING_INTERRUPT_MODE:
                     raise KeyboardInterrupt
-
         except KeyboardInterrupt:
             self.interrupted_ = True
             sys.stderr.write('\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...')
 
         self.selected_state_, self.results_ = postprocess(results_)
+
         self.fitted = True
         return self
 
@@ -371,7 +376,8 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
     # private methods
 
     def _batch(self,
-               state,
+               iteration,
+               cur_state,
                candidates,
                build_submodel,
                X,
@@ -379,7 +385,7 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                groups=None,
                **fit_params):
 
-        results = {}
+        results = []
 
         if candidates is not None:
 
@@ -401,8 +407,7 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                             for state in candidates)
 
             for state, scores in work:
-                results[state] = {'scores': scores,
-                                  'avg_score': np.nanmean(scores)}
+                results.append((state, iteration, scores))
 
         return results
 
@@ -412,6 +417,7 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
     def update_results_check(self,
                              results,
+                             best,
                              batch_results,
                              check_finished):
         """
@@ -427,6 +433,9 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             Keys are state with values
             dictionaries having keys
             `scores`, `avg_scores`.
+
+        best : (state, score)
+            Current best state and score.
 
         batch_results: dict
             Dictionary of results from a batch fit.
@@ -454,28 +463,30 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
         """
 
-        finished = batch_results == {}
+        finished = batch_results == []
 
         if not finished:
-            results.update(batch_results)
 
-            (cur_state,
-             cur_score,
+            (cur,
              finished) = check_finished(results,
-                                        self.best_state_,
+                                        best,
                                         batch_results)
-            if cur_score > self.best_score_:
-                self.best_state_ = cur_state
-                self.best_score_ = cur_score
-            return cur_state, cur_score, finished
+
+            results.extend(batch_results)
+
+            if cur[2] is not None and np.nanmean(cur[2]) > np.nanmean(best[2]):
+                best = cur
+
+            return (cur,
+                    best,
+                    finished)
         else:
-            return None, None, True
-
-
+            return ((None, None, None),
+                    (None, None, None),
+                    True)
 
 
 # private functions
-
 
 def _calc_score(estimator,
                 scorer,
@@ -489,7 +500,7 @@ def _calc_score(estimator,
                 **fit_params):
     
     X_state = build_submodel(X, state)
-    
+
     if cv:
         scores = cross_val_score(estimator,
                                  X_state,
@@ -503,7 +514,7 @@ def _calc_score(estimator,
     else:
         estimator.fit(X_state,
                       y,
-                          **fit_params)
+                      **fit_params)
         scores = np.array([scorer(estimator,
                                   X_state,
                                   y)])

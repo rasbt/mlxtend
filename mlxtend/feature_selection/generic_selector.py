@@ -1,15 +1,13 @@
 # Sebastian Raschka 2014-2020
 # mlxtend Machine Learning Library Extensions
 #
-# Algorithm for sequential feature selection.
+# Algorithm for generic feature selection.
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
-
-# Modified by Jonathan Taylor 2021
 #
-# Derives from sequential_feature_selector
-# but allows custom model search
+# Modified for generic search
+# Jonathan Taylor 2021
 
 import types
 import sys

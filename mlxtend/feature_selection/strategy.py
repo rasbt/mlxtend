@@ -202,7 +202,16 @@ class MinMaxCandidates(object):
         For exhaustive search we stop because
         all models are fit in a single batch.
         """
-        return best_state, results[best_state]['avg_score'], True
+        batch_best_score = -np.inf
+        batch_best_state = None
+
+        for state in batch_results:
+            if batch_results[state]['avg_score'] > batch_best_score:
+                batch_best_score = batch_results[state]['avg_score']
+                batch_best_state = state
+                
+        return batch_best_state, batch_best_score, True
+
 
 
 class StepCandidates(MinMaxCandidates):
@@ -338,41 +347,14 @@ class StepCandidates(MinMaxCandidates):
         finished = batch_best_score <= results[best_state]['avg_score']
         return batch_best_state, batch_best_score, finished
 
-    def validate(self,
-                 current_state,
-                 proposed_state):
-        """
-        Determine if `proposed_state`
-        is a valid transition from `current_state`.
 
-        Can be used in subclasses to enforce hierarchy or
-        other properties of the model.
-
-        Parameters
-        ----------
-
-        state: object
-            Current state of the selection procedure.
-
-        proposed_state: object
-            Candidate state of the selection procedure.
-
-        Returns
-        -------
-
-        valid: bool
-            Is this a valid transition?
-        """
-    
-        return True
-
-def min_max(X,
-            min_features=1,
-            max_features=1,
-            fixed_features=None,
-            custom_feature_names=None,
-            categorical_features=None,
-            parsimonious=True):
+def exhaustive(X,
+               min_features=1,
+               max_features=1,
+               fixed_features=None,
+               custom_feature_names=None,
+               categorical_features=None,
+               parsimonious=True):
     """
     Parameters
     ----------
@@ -432,23 +414,23 @@ def min_max(X,
 
     """
 
-    min_max = MinMaxCandidates(X,
-                               min_features,
-                               max_features,
-                               fixed_features,
-                               custom_feature_names,
-                               categorical_features)
+    strategy = MinMaxCandidates(X,
+                                min_features,
+                                max_features,
+                                fixed_features,
+                                custom_feature_names,
+                                categorical_features)
     
     # if any categorical features or an intercept
     # is included then we must
     # create a new design matrix
 
-    build_submodel = partial(_build_submodel, min_max.column_info_)
+    build_submodel = partial(_build_submodel, strategy.column_info_)
 
-    if min_max.fixed_features:
-        initial_features = sorted(min_max.fixed_features)
+    if strategy.fixed_features:
+        initial_features = sorted(strategy.fixed_features)
     else:
-        initial_features = range(min_max.min_features)
+        initial_features = range(strategy.min_features)
     initial_state = tuple(initial_features)
 
     if not parsimonious:
@@ -457,9 +439,9 @@ def min_max(X,
         _postprocess = _postprocess_best_1sd
 
     return Strategy(initial_state,
-                    min_max.candidate_states,
+                    strategy.candidate_states,
                     build_submodel,
-                    min_max.check_finished,
+                    strategy.check_finished,
                     _postprocess)
 
 def step(X,

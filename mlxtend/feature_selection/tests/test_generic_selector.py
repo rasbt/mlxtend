@@ -5,7 +5,7 @@ import pytest
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from mlxtend.feature_selection.generic_selector import FeatureSelector
-from mlxtend.feature_selection.strategy import min_max, step
+from mlxtend.feature_selection.strategy import exhaustive, step
 
 
 have_pandas = True
@@ -20,47 +20,47 @@ def test_exhaustive_selector():
     X = np.random.standard_normal((n, p))
     Y = np.random.standard_normal(n)
 
-    strategy = min_max(X,
-                       max_features=4,
-                       fixed_features=[2,3])
+    strategy = exhaustive(X,
+                          max_features=4,
+                          fixed_features=[2,3])
 
-    min_max_selector = FeatureSelector(LinearRegression(),
-                                       strategy)
+    exhaustive_selector = FeatureSelector(LinearRegression(),
+                                          strategy)
 
-    min_max_selector.fit(X, Y)
+    exhaustive_selector.fit(X, Y)
 
-    strategy = min_max(X,
-                       max_features=4)
+    strategy = exhaustive(X,
+                          max_features=4)
 
-    min_max_selector = FeatureSelector(LinearRegression(),
-                                       strategy)
+    exhaustive_selector = FeatureSelector(LinearRegression(),
+                                          strategy)
 
-    min_max_selector.fit(X, Y)
-    min_max_selector.transform(X)
-    min_max_selector.fit_transform(X, Y)
+    exhaustive_selector.fit(X, Y)
+    exhaustive_selector.transform(X)
+    exhaustive_selector.fit_transform(X, Y)
 
     # test CV
 
-    strategy = min_max(X,
-                       max_features=4)
+    strategy = exhaustive(X,
+                          max_features=4)
 
-    min_max_selector = FeatureSelector(LinearRegression(),
-                                       strategy,
-                                       cv=3)
+    exhaustive_selector = FeatureSelector(LinearRegression(),
+                                          strategy,
+                                          cv=3)
     # test CV, verbose
 
-    strategy = min_max(X,
-                       max_features=4)
+    strategy = exhaustive(X,
+                          max_features=4)
 
     for cv, verbose in product([None, 3],
                                [0,1,2]):
-        min_max_selector = FeatureSelector(LinearRegression(),
-                                           strategy,
-                                           cv=3,
-                                           verbose=verbose)
+        exhaustive_selector = FeatureSelector(LinearRegression(),
+                                              strategy,
+                                              cv=3,
+                                              verbose=verbose)
 
-        min_max_selector.fit(X, Y)
-        print(min_max_selector.best_state_)
+        exhaustive_selector.fit(X, Y)
+        print(exhaustive_selector.best_state_)
 
 def test_exhaustive_categorical():
 
@@ -70,15 +70,15 @@ def test_exhaustive_categorical():
     Y = np.random.standard_normal(n)
 
     categorical_features = [True] + [False]*4
-    strategy = min_max(X,
-                       max_features=4,
-                       fixed_features=[2,3],
-                       categorical_features=categorical_features)
+    strategy = exhaustive(X,
+                          max_features=4,
+                          fixed_features=[2,3],
+                          categorical_features=categorical_features)
 
-    min_max_selector = FeatureSelector(LinearRegression(),
-                                       strategy)
+    exhaustive_selector = FeatureSelector(LinearRegression(),
+                                          strategy)
 
-    min_max_selector.fit(X, Y)
+    exhaustive_selector.fit(X, Y)
 
 
 def test_step_categorical():

@@ -114,7 +114,8 @@ def heatmap(matrix,
                         s=cell_text,
                         va='center',
                         ha='center',
-                        color="white" if normed_matrix[i, j] > np.max(normed_matrix)/2
+                        color="white" if
+                              normed_matrix[i, j] > np.max(normed_matrix)/2
                               else "black")
 
     if row_names is not None:

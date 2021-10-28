@@ -7,6 +7,32 @@ The CHANGELOG for the current development version is available at
 
 ---
 
+### Version 0.20.0 (TBD)
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.20.0.zip)
+
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.20.0.tar.gz)
+
+
+
+##### New Features
+
+- 
+
+##### Changes
+
+- - 
+
+##### Bug Fixes
+
+- Fix unreadable labels in `heatmap` for certain colormaps. ([#852](https://github.com/rasbt/mlxtend/pull/852))
+
+
+
+
+
 ### Version 0.19.0 (09/02/2021)
 
 ##### Downloads

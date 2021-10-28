@@ -179,7 +179,7 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self._set_params('estimator', 'named_estimators', **params)
         return self
 
-    def fit(self, X, y, custom_feature_names=None, groups=None, **fit_params):
+    def fit(self, X, y, groups=None, **fit_params):
         """Perform feature selection and learn model from training data.
 
         Parameters
@@ -193,10 +193,6 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             Target values.
             New in v 0.13.0: pandas DataFrames are now also accepted as
             argument for y.
-        custom_feature_names: None or tuple (default: tuple)
-            Custom feature names for `self.k_feature_names` and
-            `self.subsets_[i]['feature_names']`.
-            (new in v 0.13.0)
         groups: array-like, with shape (n_samples,), optional
             Group labels for the samples used while splitting the dataset into
             train/test set. Passed to the fit method of the cross-validator.
@@ -239,11 +235,12 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
         # keep a running track of the best state
 
-        self.path_ = [deepcopy(_state)]
         iteration = 0
+        self.path_ = [deepcopy((_state, iteration, _scores))]
         cur = best = (_state, iteration, _scores)
 
         self.update_results_check(results_,
+                                  self.path_,
                                   cur,
                                   [(_state, iteration, _scores)],
                                   check_finished)
@@ -261,6 +258,7 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                                             **fit_params)
                 iteration += 1
                 cur, best_, self.finished_ = self.update_results_check(results_,
+                                                                       self.path_,
                                                                        best,
                                                                        batch_results,
                                                                        check_finished)
@@ -417,6 +415,7 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
     def update_results_check(self,
                              results,
+                             path,
                              best,
                              batch_results,
                              check_finished):
@@ -469,6 +468,7 @@ class FeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
             (cur,
              finished) = check_finished(results,
+                                        path,
                                         best,
                                         batch_results)
 

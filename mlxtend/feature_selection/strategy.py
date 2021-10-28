@@ -99,7 +99,7 @@ class MinMaxCandidates(object):
             is_ordinal = np.zeros_like(is_categorical)
             self.columns = np.arange(X.shape[1])
 
-        nfeatures = X_.shape[0]
+        nfeatures = X_.shape[1]
 
         if (not isinstance(max_features, int) or
                 (max_features > nfeatures or max_features < 0)):
@@ -192,6 +192,7 @@ class MinMaxCandidates(object):
         
     def check_finished(self,
                        results,
+                       path,
                        best,
                        batch_results):
         """
@@ -211,11 +212,11 @@ class MinMaxCandidates(object):
         return new_best, True
 
 
-class StepCandidates(MinMaxCandidates):
+class Stepwise(MinMaxCandidates):
 
     def __init__(self,
                  X,
-                 direction='forward',
+                 direction,
                  min_features=1,
                  max_features=1,
                  fixed_features=None,
@@ -258,6 +259,7 @@ class StepCandidates(MinMaxCandidates):
         """
 
         self.direction = direction
+
         MinMaxCandidates.__init__(self,
                                   X,
                                   min_features,
@@ -321,29 +323,195 @@ class StepCandidates(MinMaxCandidates):
             return backward
         else:
             return chain.from_iterable([forward, backward])
-        
-    def check_finished(self,
-                       results,
-                       best,
-                       batch_results):
+       
+    @staticmethod
+    def first_peak(X,
+                   direction='forward',
+                   min_features=1,
+                   max_features=1,
+                   fixed_features=None,
+                   initial_features=[],
+                   custom_feature_names=None,
+                   categorical_features=None,
+                   parsimonious=True):
         """
-        Check if we should continue or not. 
+        Strategy that stops when no improvement
+        in score is possible.
 
-        For stepwise search we stop if we cannot improve
-        over our current best score.
+        Parameters
+        ----------
+        X: {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+            New in v 0.13.0: pandas DataFrames are now also accepted as
+            argument for X.
+        direction: str
+            One of ['forward', 'backward', 'both']
+        min_features: int (default: 1)
+            Minumum number of features to select
+        max_features: int (default: 1)
+            Maximum number of features to select
+        fixed_features: column identifiers, default=None
+            Subset of features to keep. Stored as `self.columns[fixed_features]`
+            where `self.columns` will correspond to columns if X is a `pd.DataFrame`
+            or an array of integers if X is an `np.ndarray`
+        initial_features: column identifiers, default=[]
+            Subset of features to be used to initialize.
+        custom_feature_names: None or tuple (default: tuple)
+                Custom feature names for `self.k_feature_names` and
+                `self.subsets_[i]['feature_names']`.
+                (new in v 0.13.0)
+        categorical_features: array-like of {bool, int} of shape (n_features) 
+                or shape (n_categorical_features,), default=None.
+            Indicates the categorical features.
+
+            - None: no feature will be considered categorical.
+            - boolean array-like: boolean mask indicating categorical features.
+            - integer array-like: integer indices indicating categorical
+              features.
+
+            For each categorical feature, there must be at most `max_bins` unique
+            categories, and each categorical value must be in [0, max_bins -1].
+
+        parsimonious: bool
+            If True, use the 1sd rule: among the shortest models
+            within one standard deviation of the best score
+            pick the one with the best average score. 
+
+        Returns
+        -------
+
+        strategy : NamedTuple
 
         """
-        new_best = (None, None, None)
-        batch_best_score = -np.inf
 
-        for state, iteration, scores in batch_results:
-            avg_score = np.nanmean(scores)
-            if avg_score > batch_best_score:
-                new_best = (state, iteration, scores)
-                batch_best_score = avg_score
-                
-        finished = batch_best_score <= np.nanmean(best[2])
-        return new_best, finished
+        step = Stepwise(X,
+                        direction,
+                        min_features,
+                        max_features,
+                        fixed_features,
+                        custom_feature_names,
+                        categorical_features)
+
+        # if any categorical features or an intercept
+        # is included then we must
+        # create a new design matrix
+
+        build_submodel = partial(_build_submodel, step.column_info_)
+
+        # pick an initial state
+
+        initial_state = tuple(initial_features)
+
+        if not step.fixed_features.issubset(initial_features):
+            raise ValueError('initial_features should contain %s' % str(step.fixed_features))
+
+        if not parsimonious:
+            _postprocess = _postprocess_best
+        else:
+            _postprocess = _postprocess_best_1sd
+
+        return Strategy(initial_state,
+                        step.candidate_states,
+                        build_submodel,
+                        first_peak,
+                        _postprocess)
+
+    @staticmethod
+    def fixed_size(X,
+                   model_size,
+                   direction='forward',
+                   min_features=1,
+                   max_features=1,
+                   fixed_features=None,
+                   initial_features=[],
+                   custom_feature_names=None,
+                   categorical_features=None,
+                   parsimonious=True):
+        """
+        Strategy that stops first time
+        a given model size is reached.
+
+        Parameters
+        ----------
+        X: {array-like, sparse matrix}, shape = [n_samples, n_features]
+            Training vectors, where n_samples is the number of samples and
+            n_features is the number of features.
+            New in v 0.13.0: pandas DataFrames are now also accepted as
+            argument for X.
+        direction: str
+            One of ['forward', 'backward', 'both']
+        min_features: int (default: 1)
+            Minumum number of features to select
+        max_features: int (default: 1)
+            Maximum number of features to select
+        fixed_features: column identifiers, default=None
+            Subset of features to keep. Stored as `self.columns[fixed_features]`
+            where `self.columns` will correspond to columns if X is a `pd.DataFrame`
+            or an array of integers if X is an `np.ndarray`
+        initial_features: column identifiers, default=[]
+            Subset of features to be used to initialize.
+        custom_feature_names: None or tuple (default: tuple)
+                Custom feature names for `self.k_feature_names` and
+                `self.subsets_[i]['feature_names']`.
+                (new in v 0.13.0)
+        categorical_features: array-like of {bool, int} of shape (n_features) 
+                or shape (n_categorical_features,), default=None.
+            Indicates the categorical features.
+
+            - None: no feature will be considered categorical.
+            - boolean array-like: boolean mask indicating categorical features.
+            - integer array-like: integer indices indicating categorical
+              features.
+
+            For each categorical feature, there must be at most `max_bins` unique
+            categories, and each categorical value must be in [0, max_bins -1].
+
+        parsimonious: bool
+            If True, use the 1sd rule: among the shortest models
+            within one standard deviation of the best score
+            pick the one with the best average score. 
+
+        Returns
+        -------
+
+        strategy : NamedTuple
+
+        """
+
+        step = Stepwise(X,
+                        direction,
+                        min_features,
+                        max_features,
+                        fixed_features,
+                        custom_feature_names,
+                        categorical_features)
+
+        # if any categorical features or an intercept
+        # is included then we must
+        # create a new design matrix
+
+        build_submodel = partial(_build_submodel, step.column_info_)
+
+        # pick an initial state
+
+        initial_state = tuple(initial_features)
+
+        if not step.fixed_features.issubset(initial_features):
+            raise ValueError('initial_features should contain %s' % str(step.fixed_features))
+
+        if not parsimonious:
+            _postprocess = _postprocess_best
+        else:
+            _postprocess = _postprocess_best_1sd
+
+        return Strategy(initial_state,
+                        step.candidate_states,
+                        build_submodel,
+                        partial(fixed_size, model_size),
+                        partial(_postprocess_fixed_size, model_size))
+    
+
 
 def exhaustive(X,
                min_features=1,
@@ -441,136 +609,52 @@ def exhaustive(X,
                     strategy.check_finished,
                     _postprocess)
 
-def step(X,
-         direction='forward',
-         min_features=1,
-         max_features=1,
-         random_state=0,
-         fixed_features=None,
-         initial_features=None,
-         custom_feature_names=None,
-         categorical_features=None,
-         parsimonious=True):
+def first_peak(results,
+               path,
+               best,
+               batch_results):
     """
-    Parameters
-    ----------
-    X: {array-like, sparse matrix}, shape = [n_samples, n_features]
-        Training vectors, where n_samples is the number of samples and
-        n_features is the number of features.
-        New in v 0.13.0: pandas DataFrames are now also accepted as
-        argument for X.
-    direction: str
-        One of ['forward', 'backward', 'both']
-    min_features: int (default: 1)
-        Minumum number of features to select
-    max_features: int (default: 1)
-        Maximum number of features to select
-    fixed_features: column identifiers, default=None
-        Subset of features to keep. Stored as `self.columns[fixed_features]`
-        where `self.columns` will correspond to columns if X is a `pd.DataFrame`
-        or an array of integers if X is an `np.ndarray`
-    initial_features: column identifiers, default=None
-        Subset of features to be used to initialize when direction
-        is `both`. If None defaults to behavior of `forward`.
-        where `self.columns` will correspond to columns if X is a `pd.DataFrame`
-        or an array of integers if X is an `np.ndarray`
-    custom_feature_names: None or tuple (default: tuple)
-            Custom feature names for `self.k_feature_names` and
-            `self.subsets_[i]['feature_names']`.
-            (new in v 0.13.0)
-    categorical_features: array-like of {bool, int} of shape (n_features) 
-            or shape (n_categorical_features,), default=None.
-        Indicates the categorical features.
+    Check if we should continue or not. 
 
-        - None: no feature will be considered categorical.
-        - boolean array-like: boolean mask indicating categorical features.
-        - integer array-like: integer indices indicating categorical
-          features.
-
-        For each categorical feature, there must be at most `max_bins` unique
-        categories, and each categorical value must be in [0, max_bins -1].
-
-    parsimonious: bool
-        If True, use the 1sd rule: among the shortest models
-        within one standard deviation of the best score
-        pick the one with the best average score. 
-
-    Returns
-    -------
-
-    initial_state: tuple
-        (column_names, feature_idx)
-
-    state_generator: callable
-        Object that proposes candidates
-        based on current state. Takes a single 
-        argument `state`
-
-    build_submodel: callable
-        Candidate generator that enumerate
-        all valid subsets of columns.
-
-    check_finished: callable
-        Check whether to stop. Takes two arguments:
-        `best_result` a dict with keys ['scores', 'avg_score'];
-        and `state`.
+    For first_peak search we stop if we cannot improve
+    over our current best score.
 
     """
+    new_best = (None, None, None)
+    batch_best_score = -np.inf
 
-    step = StepCandidates(X,
-                          direction,
-                          min_features,
-                          max_features,
-                          fixed_features,
-                          custom_feature_names,
-                          categorical_features)
-    
-    # if any categorical features or an intercept
-    # is included then we must
-    # create a new design matrix
+    for state, iteration, scores in batch_results:
+        avg_score = np.nanmean(scores)
+        if avg_score > batch_best_score:
+            new_best = (state, iteration, scores)
+            batch_best_score = avg_score
 
-    build_submodel = partial(_build_submodel, step.column_info_)
+    any_better = batch_best_score > np.nanmean(best[2])
+    return new_best, not any_better
 
-    # pick an initial state
+def fixed_size(model_size,
+               results,
+               path,
+               best,
+               batch_results):
+    """
+    Check if we should continue or not. 
 
-    random_state = check_random_state(random_state)
+    For first_peak search we stop if we cannot improve
+    over our current best score.
 
-    if direction in ['forward', 'both']:
-        if step.fixed_features:
-            forward_features = sorted(step.fixed_features)
-        else:
-            forward_features = sorted(random_state.choice([col for col in step.column_info_],
-                                                          step.min_features,
-                                                          replace=False))
-        if direction == 'forward':
-            initial_features = forward_features
-        else:
-            if initial_features is None:
-                initial_features = forward_features
-    elif direction == 'backward':
-        if initial_features is None:
-            initial_features = sorted(random_state.choice([col for col in step.column_info_],
-                                                          step.max_features,
-                                                          replace=False))
-    initial_state = tuple(initial_features)
+    """
+    new_best = (None, None, None)
+    batch_best_score = -np.inf
 
-    if len(initial_features) > step.max_features:
-        raise ValueError('initial_features should be of length <= %d' % step.max_features)
-    if len(initial_features) < step.min_features:
-        raise ValueError('initial_features should be of length >= %d' % step.min_features)
-    if not step.fixed_features.issubset(initial_features):
-        raise ValueError('initial_features should contain %s' % str(step.fixed_features))
+    for state, iteration, scores in batch_results:
+        avg_score = np.nanmean(scores)
+        if avg_score > batch_best_score:
+            new_best = (state, iteration, scores)
+            batch_best_score = avg_score
 
-    if not parsimonious:
-        _postprocess = _postprocess_best
-    else:
-        _postprocess = _postprocess_best_1sd
-
-    return Strategy(initial_state,
-                    step.candidate_states,
-                    build_submodel,
-                    step.check_finished,
-                    _postprocess)
+    any_better = batch_best_score > np.nanmean(best[2])
+    return new_best, len(new_best[0]) == model_size
 
 
 # private functions
@@ -582,6 +666,26 @@ def _build_submodel(column_info, X, cols):
     else:
         return np.zeros((X.shape[0], 1))
     
+def _postprocess_fixed_size(model_size, results):
+    """
+    Find the best state from `results`
+    based on `avg_score`.
+
+    Return best state and results
+    """
+
+    best_state = None
+    best_score = -np.inf
+
+    new_results = {}
+    for (state, iteration, scores) in results:
+        new_state = tuple(state) # [v.name for v in state])
+        avg_score = np.nanmean(scores)
+        if avg_score > best_score and len(new_state) == model_size:
+            best_state = new_state
+            best_score = avg_score
+        new_results[new_state] = avg_score
+    return best_state, new_results
     
 def _postprocess_best(results):
     """

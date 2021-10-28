@@ -5,7 +5,7 @@ import pytest
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from mlxtend.feature_selection.generic_selector import FeatureSelector
-from mlxtend.feature_selection.strategy import exhaustive, step
+from mlxtend.feature_selection.strategy import exhaustive, Stepwise
 
 
 have_pandas = True
@@ -90,10 +90,11 @@ def test_step_categorical():
     Y = np.random.standard_normal(n)
 
     categorical_features = [True] + [False]*9
-    strategy = step(X,
-                    max_features=4,
-                    fixed_features=[2,3],
-                    categorical_features=categorical_features)
+    strategy = Stepwise.first_peak(X,
+                                   max_features=4,
+                                   fixed_features=[2,3],
+                                   initial_features=[2,3],
+                                   categorical_features=categorical_features)
 
     step_selector = FeatureSelector(LinearRegression(),
                                     strategy)
@@ -112,10 +113,11 @@ def test_step_scoring():
     Y = np.random.standard_normal(n)
 
     categorical_features = [True] + [False]*9
-    strategy = step(X,
-                    max_features=4,
-                    fixed_features=[2,3],
-                    categorical_features=categorical_features)
+    strategy = Stepwise.first_peak(X,
+                                   max_features=4,
+                                   fixed_features=[2,3],
+                                   initial_features=[2,3],
+                                   categorical_features=categorical_features)
 
     step_selector = FeatureSelector(LinearRegression(),
                                     strategy,
@@ -144,11 +146,12 @@ def test_step_bigger():
     categorical_features = [True] + [False]*(p-1)
 
     for direction in ['forward', 'backward', 'both']:
-        strategy = step(X,
-                        direction=direction,
-                        max_features=p,
-                        fixed_features=[2,3],
-                        categorical_features=categorical_features)
+        strategy = Stepwise.first_peak(X,
+                                       direction=direction,
+                                       max_features=p,
+                                       fixed_features=[2,3],
+                                       initial_features=[2,3],
+                                       categorical_features=categorical_features)
 
         step_selector = FeatureSelector(LinearRegression(),
                                         strategy)
@@ -166,10 +169,11 @@ def test_pandas1():
 
     for direction in ['forward', 'backward', 'both']:
 
-        strategy = step(D,
-                        direction=direction,
-                        max_features=p,
-                        fixed_features=['A','C'])
+        strategy = Stepwise.first_peak(D,
+                                       direction=direction,
+                                       max_features=p,
+                                       fixed_features=['A','C'],
+                                       initial_features=['A','C'])
         
         step_selector = FeatureSelector(LinearRegression(),
                                         strategy,
@@ -220,11 +224,11 @@ def test_boston_forward():
     X = D.values
     Y = Boston['medv']
 
-    strategy = step(X,
-                    max_features=X.shape[1],
-                    min_features=0,
-                    direction='forward',
-                    parsimonious=False)
+    strategy = Stepwise.first_peak(X,
+                                   max_features=X.shape[1],
+                                   min_features=0,
+                                   direction='forward',
+                                   parsimonious=False)
 
     step_selector = FeatureSelector(LinearRegression(),
                                     strategy,
@@ -273,11 +277,11 @@ def test_boston_both():
     X = D.values
     Y = Boston['medv']
 
-    strategy = step(X,
-                    max_features=X.shape[1],
-                    min_features=0,
-                    direction='both',
-                    parsimonious=False)
+    strategy = Stepwise.first_peak(X,
+                                   max_features=X.shape[1],
+                                   min_features=0,
+                                   direction='both',
+                                   parsimonious=False)
 
     step_selector = FeatureSelector(LinearRegression(),
                                     strategy,
@@ -326,10 +330,11 @@ def test_boston_back():
     X = D.values
     Y = Boston['medv']
 
-    strategy = step(X,
-                    max_features=X.shape[1],
-                    direction='backward',
-                    parsimonious=False)
+    strategy = Stepwise.first_peak(X,
+                                   max_features=X.shape[1],
+                                   direction='backward',
+                                   initial_features=list(range(X.shape[1])),
+                                   parsimonious=False)
 
     step_selector = FeatureSelector(LinearRegression(),
                                     strategy,
@@ -345,3 +350,68 @@ def test_boston_back():
     assert(sorted(selected_vars) == sorted(selected_R))
     assert(np.fabs(neg_AIC(selected_model, Xsel, Y) + 3023.726) < 0.01)
 
+def test_boston_forward_3step():
+    """Ran the following R cell
+    ```{R}
+    library(MASS)
+    data(Boston)
+    M=step(glm(medv ~ 1, data=Boston), list(upper=glm(medv ~ ., data=Boston)), direction='forward', trace=FALSE, steps=3)
+    print(AIC(M))
+    names(coef(M)[2:4])
+    ```
+
+    Output:
+
+    [1] 3116.097
+    [1] "lstat"       "rm"          "ptratio"   
+
+    """
+
+    try:
+        import statsmodels.api as sm
+    except ImportError as e:
+        warnings.warn('import of statsmodels failed')
+        return
+    
+    selected_R = ["lstat", "rm", "ptratio"]
+
+    Boston = sm.datasets.get_rdataset('Boston', package='MASS').data
+    D = Boston.drop('medv', axis=1)
+    X = D.values
+    Y = Boston['medv']
+
+    strategy = Stepwise.first_peak(X,
+                                   max_features=3,
+                                   min_features=3,
+                                   initial_features=[],
+                                   direction='forward',
+                                   parsimonious=False)
+
+    step_selector = FeatureSelector(LinearRegression(),
+                                    strategy,
+                                    scoring=neg_AIC,
+                                    cv=None)
+    step_selector.fit(X, Y)
+    selected_vars = [D.columns[j] for j in step_selector.selected_state_]
+
+    strategy2 = Stepwise.fixed_size(X,
+                                    3,
+                                    max_features=X.shape[1],
+                                    min_features=0,
+                                    initial_features=[],
+                                    direction='forward')
+    step_selector2 = FeatureSelector(LinearRegression(),
+                                     strategy2,
+                                     scoring=neg_AIC,
+                                     cv=None)
+    step_selector2.fit(X, Y)
+    selected_vars2 = [D.columns[j] for j in step_selector2.selected_state_]
+    print(selected_vars, selected_vars2)
+
+    Xsel = X[:,list(step_selector.selected_state_)]
+    selected_model = LinearRegression().fit(Xsel, Y)
+    
+    assert(sorted(selected_vars) == sorted(selected_R))
+    assert(sorted(selected_vars2) == sorted(selected_R))
+    assert(np.fabs(neg_AIC(selected_model, Xsel, Y) + 3116.097) < 0.01)
+    

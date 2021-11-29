@@ -199,8 +199,8 @@ def test_knn_cv3():
                verbose=0)
     sfs1 = sfs1.fit(X, y)
     sfs1.subsets_
-    expect = {1: {'avg_score': 0.95299145299145294,
-                  'cv_scores': np.array([0.974, 0.947, 0.892, 1.]),
+    expect = {1: {'avg_score': 0.9599928876244666,
+                  'cv_scores': np.array([0.974, 0.947, 0.919, 1.]),
                   'feature_idx': (3,)},
               2: {'avg_score': 0.95993589743589736,
                   'cv_scores': np.array([0.974, 0.947, 0.919, 1.]),
@@ -208,6 +208,10 @@ def test_knn_cv3():
               3: {'avg_score': 0.9732,
                   'cv_scores': np.array([0.974, 1., 0.946, 0.973]),
                   'feature_idx': (1, 2, 3)}}
+
+    if Version(sklearn_version) < Version("1.0"):
+        expect[1]['avg_score'] = 0.95299145299145294
+        expect[1]['cv_scores'] = np.array([0.974, 0.947, 0.892, 1.]),
 
     if Version(sklearn_version) < Version("0.22"):
         expect[1]['cv_scores'] = np.array([0.97435897,

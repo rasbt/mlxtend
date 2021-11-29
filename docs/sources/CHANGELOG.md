@@ -7,11 +7,41 @@ The CHANGELOG for the current development version is available at
 
 ---
 
-### Version 0.18.1 (TBD)
+### Version 0.20.0 (TBD)
 
 ##### Downloads
 
-- -
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.20.0.zip)
+
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.20.0.tar.gz)
+
+
+
+##### New Features
+
+- 
+
+##### Changes
+
+- Due to compatibility issues with newer package versions, certain functions from six.py have been removed so that mlxtend may not work anymore with Python 2.7.
+- As an internal change to speed up unit testing, unit testing is now faciliated by GitHub workflows, and Travis CI and Appveyor hooks have been removed.
+##### Bug Fixes
+
+- Fix unreadable labels in `heatmap` for certain colormaps. ([#852](https://github.com/rasbt/mlxtend/pull/852))
+
+
+
+
+
+### Version 0.19.0 (09/02/2021)
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.19.0.zip)
+
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.19.0.tar.gz)
+
+
 
 ##### New Features
 
@@ -27,11 +57,14 @@ The CHANGELOG for the current development version is available at
 - Removes deprecated `res` argument from `plot_decision_regions`. ([#803](https://github.com/rasbt/mlxtend/pull/803))
 - Adds a `title_fontsize` parameter to `plot_learning_curves` for controlling the title font size; also the plot style is now the matplotlib default. ([#818](https://github.com/rasbt/mlxtend/pull/818))
 - Internal change using `'c': 'none'` instead of `'c': ''` in `mlxtend.plotting.plot_decision_regions`'s scatterplot highlights to stay compatible with Matplotlib 3.4 and newer. ([#822](https://github.com/rasbt/mlxtend/pull/822))
-- Adds a `fontcolor_threshold` parameter to the `mlxtend.plotting.plot_confusion_matrix` function as an additional option for determining the font color cut-off manually. ([#825](https://github.com/rasbt/mlxtend/pull/825))
+- Adds a `fontcolor_threshold` parameter to the `mlxtend.plotting.plot_confusion_matrix` function as an additional option for determining the font color cut-off manually. ([#827](https://github.com/rasbt/mlxtend/pull/827))
+- The `frequent_patterns.association_rules` now raises a `ValueError` if an empty frequent itemset DataFrame is passed. ([#843](https://github.com/rasbt/mlxtend/pull/843))
+- The .632 and .632+ bootstrap method implemented in the `mlxtend.evaluate.bootstrap_point632_score` function now use the whole training set for the resubstitution weighting term instead of the internal training set that is a new bootstrap sample in each round. ([#844](https://github.com/rasbt/mlxtend/pull/844))
 
 ##### Bug Fixes
 
-- - 
+- Fixes a typo in the SequentialFeatureSelector documentation ([#835](https://github.com/rasbt/mlxtend/issues/835) via [João Pedro Zanlorensi Cardoso](https://github.com/joaozanlorensi))
+
 
 ### Version 0.18.0 (11/25/2020)
 

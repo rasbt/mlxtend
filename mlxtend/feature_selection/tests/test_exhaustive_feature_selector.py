@@ -4,7 +4,6 @@
 #
 # License: BSD 3 clause
 
-import sys
 import numpy as np
 import pandas as pd
 from distutils.version import LooseVersion as Version
@@ -32,12 +31,12 @@ def dict_compare_utility(d1, d2):
         assert d1[i]['feature_names'] == d2[i]["feature_names"], err_msg2
         assert_almost_equal(d1[i]['avg_score'],
                             d2[i]['avg_score'],
-                            decimal=3,
+                            decimal=2,
                             err_msg=("d1[%s]['avg_score']"
                                      " != d2[%s]['avg_score']" % (i, i)))
         assert_almost_equal(d1[i]['cv_scores'],
                             d2[i]['cv_scores'],
-                            decimal=3,
+                            decimal=2,
                             err_msg=("d1[%s]['cv_scores']"
                                      " != d2[%s]['cv_scores']" % (i, i)))
 
@@ -160,22 +159,27 @@ def test_knn_cv3():
                cv=4,
                print_progress=False)
     efs1 = efs1.fit(X, y)
-    expect = {0: {'avg_score': 0.9391025641025641,
+    expect = {0: {'avg_score': 0.9329658605974395,
                   'feature_idx': (0, 1, 2),
                   'feature_names': ('0', '1', '2'),
-                  'cv_scores': np.array([0.974, 0.947, 0.892, 0.946])},
+                  'cv_scores': np.array([0.974, 0.947, 0.892, 0.919])},
               1: {'avg_score': 0.9400782361308677,
                   'feature_idx': (0, 1, 3),
                   'feature_names': ('0', '1', '3'),
                   'cv_scores': np.array([0.921, 0.947, 0.919, 0.973])},
-              2: {'avg_score': 0.95299145299145294,
+              2: {'avg_score': 0.9532361308677098,
                   'feature_idx': (0, 2, 3),
                   'feature_names': ('0', '2', '3'),
                   'cv_scores': np.array([0.974, 0.947, 0.919, 0.973])},
               3: {'avg_score': 0.97275641025641035,
                   'feature_idx': (1, 2, 3),
                   'feature_names': ('1', '2', '3'),
-                  'cv_scores': np.array([0.974, 1.   , 0.946, 0.973])}}
+                  'cv_scores': np.array([0.974, 1., 0.946, 0.973])}}
+
+    if Version(sklearn_version) < Version("1.0"):
+        expect[0]['avg_score'] = 0.9391025641025641
+        expect[0]['cv_scores'] = np.array([0.974, 0.947, 0.892, 0.946])
+        expect[2]['avg_score'] = 0.9529914529914529
 
     if Version(sklearn_version) < Version("0.22"):
         expect[0]['cv_scores'] = np.array([0.97435897, 0.94871795,

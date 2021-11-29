@@ -15,7 +15,6 @@ from sklearn.base import (BaseEstimator, ClassifierMixin, TransformerMixin,
 from sklearn.exceptions import NotFittedError
 from sklearn.preprocessing import LabelEncoder
 
-from ..externals import six
 from ..externals.name_estimators import _name_estimators
 
 
@@ -283,12 +282,11 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             return super(EnsembleVoteClassifier, self).get_params(deep=False)
         else:
             out = self.named_clfs.copy()
-            for name, step in six.iteritems(self.named_clfs):
-                for key, value in six.iteritems(step.get_params(deep=True)):
+            for name, step in self.named_clfs.items():
+                for key, value in step.get_params(deep=True).items():
                     out['%s__%s' % (name, key)] = value
 
-            for key, value in six.iteritems(
-                    super(EnsembleVoteClassifier, self).get_params(deep=False)):
+            for key, value in super(EnsembleVoteClassifier, self).get_params(deep=False).items():
                 out['%s' % key] = value
             return out
 

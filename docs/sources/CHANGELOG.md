@@ -19,7 +19,7 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
-- 
+- The `mlxtend.evaluate.bootstrap_point632_score` now supports `fit_params`. ([#861](https://github.com/rasbt/mlxtend/pull/861))
 
 ##### Changes
 

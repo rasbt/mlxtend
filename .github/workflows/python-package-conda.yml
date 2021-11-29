@@ -34,5 +34,5 @@ jobs:
         conda install imageio scikit-image
         conda install -c conda-forge dlib
         pip install markdown
-        pip install setup.py
+        pip install -e  .
         pytest -sv

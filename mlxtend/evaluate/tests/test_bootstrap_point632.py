@@ -5,6 +5,7 @@
 # License: BSD 3 clause
 
 import numpy as np
+import os
 import pandas as pd
 import pytest
 from sklearn.base import BaseEstimator
@@ -164,3 +165,28 @@ def test_scoring_proba():
                                           scoring_func=roc_auc_score,
                                           predict_proba=True,
                                           random_seed=123)
+
+
+
+if 'TRAVIS' in os.environ or os.environ.get('TRAVIS') == 'true':
+    TRAVIS = True
+else:
+    TRAVIS = False
+
+if 'APPVEYOR' in os.environ or os.environ.get('APPVEYOR') == 'true':
+    APPVEYOR = True
+else:
+    APPVEYOR = False
+
+@pytest.mark.skipif(TRAVIS or APPVEYOR, reason="TensorFlow dependency")
+def test_keras_fitparams():
+    import tensorflow as tf
+    
+    model = tf.keras.Sequential([
+    tf.keras.layers.Dense(32, activation=tf.nn.relu),
+    tf.keras.layers.Dense(1)])
+
+    optimizer = tf.keras.optimizers.Adam()
+    model.compile(loss='mean_squared_error', optimizer=optimizer)
+
+    model.fit(X, y, epochs=5)

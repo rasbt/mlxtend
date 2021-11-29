@@ -46,7 +46,8 @@ def bootstrap_point632_score(estimator, X, y, n_splits=200,
                              method='.632', scoring_func=None,
                              predict_proba=False,
                              random_seed=None,
-                             clone_estimator=True):
+                             clone_estimator=True,
+                             **fit_params):
     """
     Implementation of the .632 [1] and .632+ [2] bootstrap
     for supervised learning
@@ -112,6 +113,11 @@ def bootstrap_point632_score(estimator, X, y, n_splits=200,
     clone_estimator : bool (default=True)
         Clones the estimator if true, otherwise fits
         the original.
+
+    fit_params : additional parameters
+        Additional parameters to be passed to the .fit() function of the
+        estimator when it is fit to the bootstrap samples.
+
 
     Returns
     -------
@@ -187,7 +193,7 @@ def bootstrap_point632_score(estimator, X, y, n_splits=200,
     cnt = 0
 
     for train, test in oob.split(X):
-        cloned_est.fit(X[train], y[train])
+        cloned_est.fit(X[train], y[train], **fit_params)
 
         # get the prediction probability
         # for binary class uses the last column

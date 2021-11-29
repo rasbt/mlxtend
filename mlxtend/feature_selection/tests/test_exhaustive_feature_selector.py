@@ -31,12 +31,12 @@ def dict_compare_utility(d1, d2):
         assert d1[i]['feature_names'] == d2[i]["feature_names"], err_msg2
         assert_almost_equal(d1[i]['avg_score'],
                             d2[i]['avg_score'],
-                            decimal=3,
+                            decimal=2,
                             err_msg=("d1[%s]['avg_score']"
                                      " != d2[%s]['avg_score']" % (i, i)))
         assert_almost_equal(d1[i]['cv_scores'],
                             d2[i]['cv_scores'],
-                            decimal=3,
+                            decimal=2,
                             err_msg=("d1[%s]['cv_scores']"
                                      " != d2[%s]['cv_scores']" % (i, i)))
 

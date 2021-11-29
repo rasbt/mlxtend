@@ -1,4 +1,3 @@
-from ..externals import six
 from collections import defaultdict
 
 # The :mod:`sklearn.pipeline` module implements utilities to build a composite
@@ -19,7 +18,7 @@ def _name_estimators(estimators):
     for _, name in zip(estimators, names):
         namecount[name] += 1
 
-    for k, v in list(six.iteritems(namecount)):
+    for k, v in list(namecount.items()):
         if v == 1:
             del namecount[k]
 

@@ -34,5 +34,4 @@ jobs:
         conda install imageio scikit-image
         conda install -c conda-forge dlib
         pip install markdown
-        pytest mlxtend -sv --ignore=plotting
-        
+        pytest mlxtend/classifier

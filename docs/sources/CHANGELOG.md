@@ -25,6 +25,8 @@ The CHANGELOG for the current development version is available at
 
 - Due to compatibility issues with newer package versions, certain functions from six.py have been removed so that mlxtend may not work anymore with Python 2.7.
 - As an internal change to speed up unit testing, unit testing is now faciliated by GitHub workflows, and Travis CI and Appveyor hooks have been removed.
+- Improved axis label rotation in `mlxtend.plotting.heatmap` and `mlxtend.plotting.plot_confusion_matrix` ([#872](https://github.com/rasbt/mlxtend/pull/872))
+
 ##### Bug Fixes
 
 - Fix unreadable labels in `heatmap` for certain colormaps. ([#852](https://github.com/rasbt/mlxtend/pull/852))

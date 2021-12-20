@@ -145,7 +145,8 @@ def plot_confusion_matrix(conf_mat,
                         > np.max(conf_mat) * fontcolor_threshold else "black")
     if class_names is not None:
         tick_marks = np.arange(len(class_names))
-        plt.xticks(tick_marks, class_names, rotation=45)
+        plt.xticks(tick_marks, class_names, rotation=45,
+                   ha="right", rotation_mode="anchor")
         plt.yticks(tick_marks, class_names)
 
     if hide_spines:

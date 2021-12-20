@@ -124,7 +124,12 @@ def heatmap(matrix,
 
     if column_names is not None:
         tick_marks = np.arange(len(column_names))
-        plt.xticks(tick_marks, column_names, rotation=column_name_rotation)
+
+        if column_name_rotation:
+            plt.xticks(tick_marks, column_names, rotation=column_name_rotation,
+                       ha="right", rotation_mode="anchor")
+        else:
+            plt.xticks(tick_marks, column_names)
 
     if hide_spines:
         ax.spines['right'].set_visible(False)

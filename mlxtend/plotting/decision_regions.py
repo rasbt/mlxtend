@@ -57,6 +57,7 @@ def plot_decision_regions(X, y, clf,
                                   '#7f7f7f,#bcbd22,#17becf'),
                           scatter_kwargs=None,
                           contourf_kwargs=None,
+                          contour_kwargs=None,
                           scatter_highlight_kwargs=None):
     """Plot decision regions of a classifier.
 
@@ -120,6 +121,10 @@ def plot_decision_regions(X, y, clf,
 
     contourf_kwargs : dict (default: None)
         Keyword arguments for underlying matplotlib contourf function.
+
+    contour_kwargs : dict (default: None)
+        Keyword arguments for underlying matplotlib contour function
+        (which draws the lines between decision regions).
 
     scatter_highlight_kwargs : dict (default: None)
         Keyword arguments for underlying matplotlib scatter function.
@@ -240,10 +245,14 @@ def plot_decision_regions(X, y, clf,
                        levels=np.arange(Z.max() + 2) - 0.5,
                        **contourf_kwargs)
 
+
+    contour_kwargs_default = {'linewidths': 0.5, 'colors': 'k', 'antialiased': True}
+    contour_kwargs = format_kwarg_dictionaries(
+                        default_kwargs=contour_kwargs_default,
+                        user_kwargs=contour_kwargs,
+                        protected_keys=[])
     ax.contour(xx, yy, Z, cset.levels,
-               colors='k',
-               linewidths=0.5,
-               antialiased=True)
+               **contour_kwargs)
 
     ax.axis([xx.min(), xx.max(), yy.min(), yy.max()])
 

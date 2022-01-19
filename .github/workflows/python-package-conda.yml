@@ -35,9 +35,13 @@ jobs:
     - name: Test with pytest
       run: |
         conda config --add channels conda-forge
-        conda install numpy scipy scikit-learn pandas tensorflow joblib pytest -y
-        conda install imageio scikit-image -y
-        conda install dlib -y
+        conda install numpy scipy scikit-learn pandas tensorflow joblib pytest -y -q
+        conda install imageio scikit-image -y-q
+        conda install dlib -y -q
         pip install markdown
         pip install -e  .
+        python -c "import numpy; print(numpy.__version__)"
+        python -c "import scipy; print(scipy.__version__)"
+        python -c "import sklearn; print(sklearn.__version__)"
+        python -c "import pandas; print(pandas.__version__)"
         pytest -sv

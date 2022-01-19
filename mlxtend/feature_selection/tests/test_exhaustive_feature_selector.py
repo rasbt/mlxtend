@@ -6,7 +6,7 @@
 
 import numpy as np
 import pandas as pd
-from distutils.version import LooseVersion as Version
+from packaging.version import Version
 from numpy.testing import assert_almost_equal
 from mlxtend.feature_selection import ExhaustiveFeatureSelector as EFS
 from sklearn.ensemble import RandomForestClassifier

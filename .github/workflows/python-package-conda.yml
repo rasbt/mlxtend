@@ -1,6 +1,10 @@
-name: Python Package using Conda
+name: Tests
 
-on: [push]
+on:
+  push:
+    branches: master
+  pull_request:
+    branches: master
 
 jobs:
   build-linux:
@@ -30,9 +34,15 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        conda install numpy scipy scikit-learn pandas tensorflow joblib pytest
-        conda install imageio scikit-image
-        conda install -c conda-forge dlib
+        conda config --add channels conda-forge
+        conda update numpy scipy scikit-learn pandas -y -q
+        conda install tensorflow joblib pytest -y -q
+        conda install imageio scikit-image -y -q
+        conda install dlib -y -q
         pip install markdown
         pip install -e  .
+        python -c "import numpy; print('NumPy:', numpy.__version__)"
+        python -c "import scipy; print('SciPy:', scipy.__version__)"
+        python -c "import sklearn; print('Scikit-learn:', sklearn.__version__)"
+        python -c "import pandas; print('Pandas:', pandas.__version__)"
         pytest -sv

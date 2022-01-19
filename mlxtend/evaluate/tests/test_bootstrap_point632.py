@@ -167,7 +167,6 @@ def test_scoring_proba():
                                           random_seed=123)
 
 
-
 if 'TRAVIS' in os.environ or os.environ.get('TRAVIS') == 'true':
     TRAVIS = True
 else:
@@ -178,13 +177,14 @@ if 'APPVEYOR' in os.environ or os.environ.get('APPVEYOR') == 'true':
 else:
     APPVEYOR = False
 
+
 @pytest.mark.skipif(TRAVIS or APPVEYOR, reason="TensorFlow dependency")
 def test_keras_fitparams():
     import tensorflow as tf
-    
+
     model = tf.keras.Sequential([
-    tf.keras.layers.Dense(32, activation=tf.nn.relu),
-    tf.keras.layers.Dense(1)])
+        tf.keras.layers.Dense(32, activation=tf.nn.relu),
+        tf.keras.layers.Dense(1)])
 
     optimizer = tf.keras.optimizers.Adam()
     model.compile(loss='mean_squared_error', optimizer=optimizer)

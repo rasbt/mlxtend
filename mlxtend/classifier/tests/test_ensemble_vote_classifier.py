@@ -20,7 +20,7 @@ from mlxtend.classifier import EnsembleVoteClassifier
 from mlxtend.data import iris_data
 from mlxtend.utils import assert_raises
 
-from distutils.version import LooseVersion as Version
+from packaging.version import Version
 from sklearn import __version__ as sklearn_version
 
 X, y = iris_data()
@@ -198,7 +198,7 @@ def test_EnsembleVoteClassifier_gridsearch():
     params = {'logisticregression__C': [1.0, 100.0],
               'randomforestclassifier__n_estimators': [20, 200]}
 
-    if Version(sklearn_version) < '0.24.1':
+    if Version(sklearn_version) < Version('0.24.1'):
         grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5, iid=False)
     else:
         grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
@@ -225,7 +225,7 @@ def test_EnsembleVoteClassifier_gridsearch_enumerate_names():
               'randomforestclassifier__n_estimators': [5, 20],
               'voting': ['hard', 'soft']}
 
-    if Version(sklearn_version) < '0.24.1':
+    if Version(sklearn_version) < Version('0.24.1'):
         grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5, iid=False)
     else:
         grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
@@ -261,7 +261,7 @@ def test_classifier_gridsearch():
 
     params = {'clfs': [[clf1, clf1, clf1], [clf2, clf3]]}
 
-    if Version(sklearn_version) < '0.24.1':
+    if Version(sklearn_version) < Version('0.24.1'):
         grid = GridSearchCV(estimator=eclf,
                             param_grid=params,
                             iid=False,

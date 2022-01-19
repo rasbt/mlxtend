@@ -23,7 +23,7 @@ from mlxtend.classifier import SoftmaxRegression
 from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 from mlxtend.utils import assert_raises
 
-from distutils.version import LooseVersion as Version
+from packaging.version import Version
 from sklearn import __version__ as sklearn_version
 
 
@@ -183,7 +183,7 @@ def test_knn_wo_cv():
               3: {'avg_score': 0.97333333333333338,
                   'cv_scores': np.array([0.97333333]),
                   'feature_idx': (1, 2, 3)}}
-    dict_compare_utility(d_actual=sfs1.subsets_, d_desired=expect)
+    dict_compare_utility(d_actual=sfs1.subsets_, d_desired=expect, decimal=2)
 
 
 def test_knn_cv3():
@@ -228,7 +228,7 @@ def test_knn_cv3():
                                            0.94444444,
                                            0.97222222])
 
-    dict_compare_utility(d_actual=sfs1.subsets_, d_desired=expect)
+    dict_compare_utility(d_actual=sfs1.subsets_, d_desired=expect, decimal=2)
 
 
 def test_knn_cv3_groups():
@@ -463,7 +463,7 @@ def test_knn_scoring_metric():
                verbose=0)
     sfs5 = sfs5.fit(X, y)
 
-    if Version(sklearn_version) < '0.22':
+    if Version(sklearn_version) < Version('0.22'):
         assert round(sfs5.k_score_, 4) == 0.9728
     else:
         assert round(sfs5.k_score_, 4) == 0.9732
@@ -475,7 +475,7 @@ def test_knn_scoring_metric():
                cv=4,
                verbose=0)
     sfs6 = sfs6.fit(X, y)
-    if Version(sklearn_version) < '0.22':
+    if Version(sklearn_version) < Version('0.22'):
         assert round(sfs5.k_score_, 4) == 0.9728
     else:
         assert round(sfs5.k_score_, 4) == 0.9732
@@ -487,7 +487,7 @@ def test_knn_scoring_metric():
                scoring='f1_macro',
                cv=4)
     sfs7 = sfs7.fit(X, y)
-    if Version(sklearn_version) < '0.22':
+    if Version(sklearn_version) < Version('0.22'):
         assert round(sfs5.k_score_, 4) == 0.9727
     else:
         assert round(sfs5.k_score_, 4) == 0.9732
@@ -507,7 +507,7 @@ def test_regression():
     sfs_r = sfs_r.fit(X, y)
     assert len(sfs_r.k_feature_idx_) == 13
 
-    if Version(sklearn_version) < '0.20':
+    if Version(sklearn_version) < Version('0.20'):
         assert round(sfs_r.k_score_, 4) == -34.7631, \
             round(sfs_r.k_score_, 4)
     else:
@@ -559,7 +559,7 @@ def test_regression_in_range():
     sfs_r = sfs_r.fit(X, y)
     assert len(sfs_r.k_feature_idx_) == 9
 
-    if Version(sklearn_version) < '0.20':
+    if Version(sklearn_version) < Version('0.20'):
         assert round(sfs_r.k_score_, 4) == -31.1537, round(sfs_r.k_score_, 4)
     else:
         assert round(sfs_r.k_score_, 4) == -31.1299, round(sfs_r.k_score_, 4)

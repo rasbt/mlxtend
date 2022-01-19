@@ -12,7 +12,7 @@ from mlxtend.evaluate import RandomHoldoutSplit
 from mlxtend.evaluate import PredefinedHoldoutSplit
 from mlxtend.data import iris_data
 
-from distutils.version import LooseVersion as Version
+from packaging.version import Version
 from sklearn import __version__ as sklearn_version
 
 
@@ -68,7 +68,7 @@ def test_randomholdoutsplit_in_sfs():
 def test_randomholdoutsplit_in_grid():
     params = {'n_neighbors': [1, 2, 3, 4, 5]}
 
-    if Version(sklearn_version) < '0.24.1':
+    if Version(sklearn_version) < Version('0.24.1'):
         grid = GridSearchCV(KNeighborsClassifier(),
                             iid=False,
                             param_grid=params,
@@ -135,7 +135,7 @@ def test_predefinedholdoutsplit_in_sfs():
 def test_predefinedholdoutsplit_in_grid():
     params = {'n_neighbors': [1, 3, 5]}
 
-    if Version(sklearn_version) < '0.24.1':
+    if Version(sklearn_version) < Version('0.24.1'):
         grid = GridSearchCV(KNeighborsClassifier(),
                             param_grid=params,
                             iid=False,

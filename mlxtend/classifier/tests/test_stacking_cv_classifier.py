@@ -6,7 +6,7 @@
 # License: BSD 3 clause
 
 import random
-from distutils.version import LooseVersion as Version
+from packaging.version import Version
 
 import numpy as np
 import pandas as pd
@@ -206,7 +206,7 @@ def test_gridsearch():
     params = {'meta_classifier__C': [1.0, 100.0],
               'randomforestclassifier__n_estimators': [20, 200]}
 
-    if Version(sklearn_version) < '0.24.1':
+    if Version(sklearn_version) < Version('0.24.1'):
         grid = GridSearchCV(estimator=sclf, param_grid=params, cv=5, iid=False)
     else:
         grid = GridSearchCV(estimator=sclf, param_grid=params, cv=5)
@@ -233,7 +233,7 @@ def test_gridsearch_enumerate_names():
               'randomforestclassifier-2__n_estimators': [5, 20],
               'use_probas': [True, False]}
 
-    if Version(sklearn_version) < '0.24.1':
+    if Version(sklearn_version) < Version('0.24.1'):
         grid = GridSearchCV(estimator=sclf, param_grid=params, cv=5, iid=False)
     else:
         grid = GridSearchCV(estimator=sclf, param_grid=params, cv=5)
@@ -405,7 +405,7 @@ def test_classifier_gridsearch():
 
     params = {'classifiers': [[clf1], [clf1, clf2, clf3]]}
 
-    if Version(sklearn_version) < '0.24.1':
+    if Version(sklearn_version) < Version('0.24.1'):
         grid = GridSearchCV(estimator=sclf,
                             param_grid=params,
                             cv=5,

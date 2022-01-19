@@ -14,7 +14,7 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from scipy.sparse import issparse
 from sklearn.model_selection import GridSearchCV
 
-from distutils.version import LooseVersion as Version
+from packaging.version import Version
 from sklearn import __version__ as sklearn_version
 
 

@@ -5,7 +5,7 @@
 # License: BSD 3 clause
 
 import random
-from distutils.version import LooseVersion as Version
+from packaging.version import Version
 
 import numpy as np
 import pytest

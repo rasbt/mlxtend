@@ -183,7 +183,7 @@ def test_knn_wo_cv():
               3: {'avg_score': 0.97333333333333338,
                   'cv_scores': np.array([0.97333333]),
                   'feature_idx': (1, 2, 3)}}
-    dict_compare_utility(d_actual=sfs1.subsets_, d_desired=expect)
+    dict_compare_utility(d_actual=sfs1.subsets_, d_desired=expect, decimal=2)
 
 
 def test_knn_cv3():
@@ -228,7 +228,7 @@ def test_knn_cv3():
                                            0.94444444,
                                            0.97222222])
 
-    dict_compare_utility(d_actual=sfs1.subsets_, d_desired=expect)
+    dict_compare_utility(d_actual=sfs1.subsets_, d_desired=expect, decimal=2)
 
 
 def test_knn_cv3_groups():

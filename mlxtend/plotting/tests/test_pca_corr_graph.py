@@ -2,7 +2,7 @@ import pytest
 from mlxtend.plotting import plot_pca_correlation_graph
 from mlxtend.data import iris_data
 
-from distutils.version import LooseVersion as Version
+from packaging.version import Version
 from sklearn import __version__ as sklearn_version
 
 if Version(sklearn_version) < '0.22':
@@ -56,7 +56,8 @@ def test_no_X_PCA_but_explained_variance():
 
 
 def test_not_enough_components():
-    s = ('Number of principal components must match the number of eigenvalues. Got 2 != 1')
+    s = ('Number of principal components must match the number'
+         ' of eigenvalues. Got 2 != 1')
     with pytest.raises(
             ValueError,
             match=s):

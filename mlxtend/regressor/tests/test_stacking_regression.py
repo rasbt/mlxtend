@@ -19,7 +19,7 @@ from sklearn.model_selection import train_test_split
 from scipy import sparse
 from numpy.testing import assert_almost_equal
 from sklearn.base import clone
-from distutils.version import LooseVersion as Version
+from packaging.version import Version
 from sklearn import __version__ as sklearn_version
 
 

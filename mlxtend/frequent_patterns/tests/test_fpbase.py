@@ -11,7 +11,7 @@ from mlxtend.utils import assert_raises
 from mlxtend.preprocessing import TransactionEncoder
 import pandas as pd
 from pandas import __version__ as pandas_version
-from distutils.version import LooseVersion as Version
+from packaging.version import Version
 import sys
 from contextlib import contextmanager
 from io import StringIO

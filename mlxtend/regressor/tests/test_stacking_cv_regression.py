@@ -20,7 +20,7 @@ from sklearn.neighbors import KNeighborsRegressor
 from sklearn.svm import SVR
 from sklearn.model_selection import GridSearchCV, train_test_split, KFold
 from sklearn.base import clone
-from distutils.version import LooseVersion as Version
+from packaging.version import Version
 from sklearn import __version__ as sklearn_version
 
 

@@ -244,7 +244,7 @@ def plot_decision_regions(X, y, clf,
                        colors=colors,
                        levels=np.arange(Z.max() + 2) - 0.5,
                        **contourf_kwargs)
-    
+
     contour_kwargs_default = {
         'linewidths': 0.5, 'colors': 'k', 'antialiased': True}
     contour_kwargs = format_kwarg_dictionaries(

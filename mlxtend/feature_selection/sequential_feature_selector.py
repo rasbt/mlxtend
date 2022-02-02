@@ -567,8 +567,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
                 # early stop
                 if self.early_stop_rounds \
-                    and k != k_to_select \
-                    and self.k_features in {'best', 'parsimonious'}:
+                        and k != k_to_select \
+                        and self.k_features in {'best', 'parsimonious'}:
                     if k_score <= best_score:
                         early_stop_count -= 1
                         if early_stop_count == 0:

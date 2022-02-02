@@ -114,14 +114,11 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
     n_jobs : int (default: 1)
         The number of CPUs to use for evaluating different feature subsets
         in parallel. -1 means 'all CPUs'.
-    early_stop : bool (default: False)
-        Determines whether to prematurely stop execution if the score does not
-        improve after a number of iterations set by the `early_stop_rounds`
-        parameter.
-    early_stop_rounds : int (default 3)
-        Used when `early_stop` is True, it determines the number of iterations
-        after which, if no performance boost has been seen, execution is
-        stopped.
+    early_stop_rounds : int (default 0)
+        Enable early stopping criterion when > 0, this value determines the
+        number of iterations after which, if no performance boost has been
+        seen, execution is stopped.
+        Used only when `k_features == 'best'` or `k_features == 'parsimonious'`
     pre_dispatch : int, or string (default: '2*n_jobs')
         Controls the number of jobs that get dispatched
         during parallel execution if `n_jobs > 1` or `n_jobs=-1`.
@@ -186,8 +183,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                  forward=True, floating=False,
                  verbose=0, scoring=None,
                  cv=5, n_jobs=1,
-                 early_stop=False,
-                 early_stop_rounds=3,
+                 early_stop_rounds=0,
                  pre_dispatch='2*n_jobs',
                  clone_estimator=True,
                  fixed_features=None):
@@ -216,7 +212,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                              'an integer value greater than or equal to 0.'
                              'Got %d' % early_stop_rounds)
 
-        self.early_stop = early_stop
         self.early_stop_rounds = early_stop_rounds
 
         if fixed_features is not None:
@@ -571,7 +566,9 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     raise KeyboardInterrupt
 
                 # early stop
-                if self.early_stop and k != k_to_select:
+                if self.early_stop_rounds \
+                    and k != k_to_select \
+                    and self.k_features in {'best', 'parsimonious'}:
                     if k_score <= best_score:
                         early_stop_count -= 1
                         if early_stop_count == 0:

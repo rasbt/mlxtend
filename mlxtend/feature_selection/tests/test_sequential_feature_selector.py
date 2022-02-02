@@ -997,7 +997,7 @@ def test_run_forward_earlystop():
     knn = KNeighborsClassifier()
     esr = 2
     sfs = SFS(estimator=knn,
-              k_features=X_iris_with_noise.shape[1],
+              k_features='best',
               forward=True,
               floating=False,
               early_stop=True,
@@ -1021,7 +1021,7 @@ def test_run_backward_earlystop():
     knn = KNeighborsClassifier()
     esr = 2
     sfs = SFS(estimator=knn,
-              k_features=1,
+              k_features='best',
               forward=False,
               floating=False,
               early_stop=True,

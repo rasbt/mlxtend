@@ -115,12 +115,12 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         The number of CPUs to use for evaluating different feature subsets
         in parallel. -1 means 'all CPUs'.
     early_stop : bool (default: False)
-        Determines whether to prematurely stop execution if the score does not 
-        improve after a number of iterations set by the `early_stop_rounds` 
+        Determines whether to prematurely stop execution if the score does not
+        improve after a number of iterations set by the `early_stop_rounds`
         parameter.
     early_stop_rounds : int (default 3)
-        Used when early_stop is True, it determines the number of iterations 
-        after which, if no performance boost has been seen, execution is 
+        Used when `early_stop` is True, it determines the number of iterations
+        after which, if no performance boost has been seen, execution is
         stopped.
     pre_dispatch : int, or string (default: '2*n_jobs')
         Controls the number of jobs that get dispatched
@@ -186,7 +186,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                  forward=True, floating=False,
                  verbose=0, scoring=None,
                  cv=5, n_jobs=1,
-                 early_stop=False, 
+                 early_stop=False,
                  early_stop_rounds=3,
                  pre_dispatch='2*n_jobs',
                  clone_estimator=True,

@@ -983,3 +983,51 @@ def test_custom_feature_names():
     assert sfs1.k_feature_names_ == ('sepal width', 'petal width')
     assert sfs1.subsets_[2]['feature_names'] == ('sepal width',
                                                  'petal width')
+
+
+def test_run_forward_earlystop():
+    np.random.seed(0)
+    iris = load_iris()
+    X_iris = iris.data
+    y_iris = iris.target
+    X_iris_with_noise = np.concatenate(
+        (X_iris,
+         np.random.randn(X_iris.shape[0], X_iris.shape[1])),
+        axis=1)
+    knn = KNeighborsClassifier()
+    esr = 2
+    sfs = SFS(estimator=knn,
+              k_features=X_iris_with_noise.shape[1],
+              forward=True,
+              floating=False,
+              early_stop=True,
+              early_stop_rounds=esr,
+              verbose=0)
+    sfs.fit(X_iris_with_noise, y_iris)
+    assert len(sfs.subsets_) < X_iris_with_noise.shape[1]
+    assert all([sfs.subsets_[list(sfs.subsets_)[-esr-1]]['avg_score']
+               >= sfs.subsets_[i]['avg_score'] for i in sfs.subsets_.keys()])
+
+
+def test_run_backward_earlystop():
+    np.random.seed(0)
+    iris = load_iris()
+    X_iris = iris.data
+    y_iris = iris.target
+    X_iris_with_noise = np.concatenate(
+        (X_iris,
+         np.random.randn(X_iris.shape[0], X_iris.shape[1])),
+        axis=1)
+    knn = KNeighborsClassifier()
+    esr = 2
+    sfs = SFS(estimator=knn,
+              k_features=1,
+              forward=False,
+              floating=False,
+              early_stop=True,
+              early_stop_rounds=esr,
+              verbose=0)
+    sfs.fit(X_iris_with_noise, y_iris)
+    assert len(sfs.subsets_) > 1
+    assert all([sfs.subsets_[list(sfs.subsets_)[-esr-1]]['avg_score']
+               >= sfs.subsets_[i]['avg_score'] for i in sfs.subsets_.keys()])

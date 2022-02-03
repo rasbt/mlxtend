@@ -210,7 +210,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         if not isinstance(early_stop_rounds, int) or early_stop_rounds < 0:
             raise ValueError('Number of early stopping round should be '
                              'an integer value greater than or equal to 0.'
-                             'Got %d' % early_stop_rounds)
+                             'Got %s' % early_stop_rounds)
 
         self.early_stop_rounds = early_stop_rounds
 

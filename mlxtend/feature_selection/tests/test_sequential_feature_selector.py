@@ -978,7 +978,7 @@ def test_custom_feature_names():
                n_jobs=1)
 
     sfs1 = sfs1.fit(X, y, custom_feature_names=(
-          'sepal length', 'sepal width', 'petal length', 'petal width'))
+        'sepal length', 'sepal width', 'petal length', 'petal width'))
     assert sfs1.k_feature_idx_ == (1, 3)
     assert sfs1.k_feature_names_ == ('sepal width', 'petal width')
     assert sfs1.subsets_[2]['feature_names'] == ('sepal width',
@@ -1000,13 +1000,12 @@ def test_run_forward_earlystop():
               k_features='best',
               forward=True,
               floating=False,
-              early_stop=True,
               early_stop_rounds=esr,
               verbose=0)
     sfs.fit(X_iris_with_noise, y_iris)
     assert len(sfs.subsets_) < X_iris_with_noise.shape[1]
-    assert all([sfs.subsets_[list(sfs.subsets_)[-esr-1]]['avg_score']
-               >= sfs.subsets_[i]['avg_score'] for i in sfs.subsets_.keys()])
+    assert all([sfs.k_score_ >= sfs.subsets_[i]['avg_score']
+               for i in sfs.subsets_])
 
 
 def test_run_backward_earlystop():
@@ -1024,10 +1023,9 @@ def test_run_backward_earlystop():
               k_features='best',
               forward=False,
               floating=False,
-              early_stop=True,
               early_stop_rounds=esr,
               verbose=0)
     sfs.fit(X_iris_with_noise, y_iris)
     assert len(sfs.subsets_) > 1
-    assert all([sfs.subsets_[list(sfs.subsets_)[-esr-1]]['avg_score']
-               >= sfs.subsets_[i]['avg_score'] for i in sfs.subsets_.keys()])
+    assert all([sfs.k_score_ >= sfs.subsets_[i]['avg_score']
+               for i in sfs.subsets_])

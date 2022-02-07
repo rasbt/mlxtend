@@ -179,6 +179,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
     http://rasbt.github.io/mlxtend/user_guide/feature_selection/SequentialFeatureSelector/
 
     """
+
     def __init__(self, estimator, k_features=1,
                  forward=True, floating=False,
                  verbose=0, scoring=None,
@@ -398,6 +399,12 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             select_in_range = False
             k_to_select = self.k_features
 
+        if self.early_stop_rounds and isinstance(self.k_features, str) and\
+                not self.k_features in {'best', 'parsimonious'}:
+            raise ValueError('Early stopping is allowed only when `k_features`'
+                             ' is "best" or "parsimonious".  Got'
+                             ' `k_features=%s`' % self.k_features)
+
         orig_set = set(range(X_.shape[1]))
         n_features = X_.shape[1]
 
@@ -566,9 +573,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     raise KeyboardInterrupt
 
                 # early stop
-                if self.early_stop_rounds \
-                        and k != k_to_select \
-                        and self.k_features in {'best', 'parsimonious'}:
+                if self.early_stop_rounds and k != k_to_select:
                     if k_score <= best_score:
                         early_stop_count -= 1
                         if early_stop_count == 0:

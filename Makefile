@@ -11,6 +11,5 @@ clean: venv
 	find . -name "*.pyc" -delete
 
 deps: venv
-	pip install -U
 	pip install -Ue .
 

@@ -11,7 +11,7 @@ jobs:
 script:
   - make deps
 
-dist: trusty
+dist: bionic
 
 notifications:
   email:

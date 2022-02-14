@@ -1,6 +1,12 @@
 language: python
 python:
   - "3.6"
+  - "3.9"
+
+jobs:
+  allow_failures:
+    - python: 3.9
+  fast_finish: true
 
 script:
   - make deps

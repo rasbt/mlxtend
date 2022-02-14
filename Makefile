@@ -11,6 +11,6 @@ clean: venv
 	find . -name "*.pyc" -delete
 
 deps: venv
-	pip install -U pip==18.1
-	pip install -Ue . --process-dependency-links
+	pip install -U
+	pip install -Ue .
 

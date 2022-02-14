@@ -14,5 +14,5 @@ setup(name='mlxtend',
           "joblib>=0.13.2"
       ],
       setup_requires=["pytest-runner"],
-      tests_require=["pytest"]
+      tests_require=["pytest", "pytest-cov"]
       )

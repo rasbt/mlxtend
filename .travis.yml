@@ -8,8 +8,11 @@ jobs:
     - python: 3.9
   fast_finish: true
 
-script:
+install:
   - make deps
+
+script:
+  - make test
 
 dist: bionic
 

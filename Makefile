@@ -13,3 +13,5 @@ clean: venv
 deps: venv
 	pip install -Ue .
 
+test: venv
+	python setup.py pytest --addopts="--cov=mlxtend --cov-report term-missing --cov-report html --cov-branch"

@@ -9,6 +9,10 @@ The CHANGELOG for the current development version is available at
 
 ### Version 0.20.0 (TBD)
 
+#### New Features and Enhancements
+
+- Fix various typos in McNemar guides
+
 ##### Downloads
 
 - [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.20.0.zip)

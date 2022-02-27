@@ -25,6 +25,7 @@ The CHANGELOG for the current development version is available at
 
 - The `mlxtend.evaluate.bootstrap_point632_score` now supports `fit_params`. ([#861](https://github.com/rasbt/mlxtend/pull/861))
 - The `mlxtend/plotting/decision_regions.py` function now has a `contourf_kwargs` for matplotlib to change the look of the decision boundaries if desired. ([#881](https://github.com/rasbt/mlxtend/pull/881) via [[pbloem](https://github.com/pbloem)])
+- The `mlxtend.frequent_patterns.metrics` provides **Kulczynski metric** and **Imbalance Ratio** metrics as `kulczynski_measure` and `imbalance_ratio` ([#840](https://github.com/rasbt/mlxtend/issues/840))
 
 ##### Changes
 

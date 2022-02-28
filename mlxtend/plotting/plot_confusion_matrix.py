@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
@@ -17,6 +17,7 @@ def plot_confusion_matrix(conf_mat,
                           colorbar=False,
                           show_absolute=True,
                           show_normed=False,
+                          norm_colormap=None,
                           class_names=None,
                           figure=None,
                           axis=None,
@@ -55,6 +56,10 @@ def plot_confusion_matrix(conf_mat,
         assigned the correct label.
         At least one of  `show_absolute` or `show_normed`
         must be True.
+        
+    norm_colormap : bool (default: False)
+        Matplotlib color normalization object to normalize the
+        color scale, e.g., `matplotlib.colors.LogNorm()`.
 
     class_names : array-like, shape = [n_classes] (default: None)
         List of class names.
@@ -109,9 +114,9 @@ def plot_confusion_matrix(conf_mat,
         figsize = (len(conf_mat)*1.25, len(conf_mat)*1.25)
 
     if show_normed:
-        matshow = ax.matshow(normed_conf_mat, cmap=cmap)
+        matshow = ax.matshow(normed_conf_mat, cmap=cmap, norm=norm_colormap)
     else:
-        matshow = ax.matshow(conf_mat, cmap=cmap)
+        matshow = ax.matshow(conf_mat, cmap=cmap, norm=norm_colormap)
 
     if colorbar:
         fig.colorbar(matshow)

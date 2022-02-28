@@ -35,6 +35,7 @@ The CHANGELOG for the current development version is available at
 ##### Bug Fixes
 
 - Fix unreadable labels in `heatmap` for certain colormaps. ([#852](https://github.com/rasbt/mlxtend/pull/852))
+- Fix an issue in `mlxtend.plotting.plot_confusion_matrix` when string class names are passed ([#894](https://github.com/rasbt/mlxtend/pull/894))
 
 
 

@@ -69,12 +69,6 @@
 - [fpgrowth](user_guide/frequent_patterns/fpgrowth.md)
 - [fpmax](user_guide/frequent_patterns/fpmax.md)
 
-## `general concepts`
-- [activation-functions](user_guide/general_concepts/activation-functions.md)
-- [gradient-optimization](user_guide/general_concepts/gradient-optimization.md)
-- [linear-gradient-derivative](user_guide/general_concepts/linear-gradient-derivative.md)
-- [regularization-linear](user_guide/general_concepts/regularization-linear.md)
-
 ## `image`
 - [extract_face_landmarks](user_guide/image/extract_face_landmarks.md)
 

@@ -123,6 +123,10 @@ The CHANGELOG for the current development version is available at
 - Switched to using raw strings for regex in `mlxtend.text` to prevent deprecation warning in Python 3.8 ([#688](https://github.com/rasbt/mlxtend/pull/688))
 - Slice data in sequential forward selection before sending to parallel backend, reducing memory consumption.
 
+- Improve the runtime performance for apriori function and tests by replacing pandas' .apply with numpy's vectorize as the data show vectorize is faster than apply for the current use. ([#655](https://github.com/rasbt/mlxtend/pull/655) via [Kyle Yang](https://github.com/keyanyang))
+
+- Improve the efficiency for generate_itemsets function by replacing Python lists with Numpy's arrays and replacing iterative division with array division. ([#655](https://github.com/rasbt/mlxtend/pull/655) via [Kyle Yang](https://github.com/keyanyang))
+
 ##### Bug Fixes
 
 - Fixes axis DeprecationWarning in matplotlib v3.1.0 and newer. ([#673](https://github.com/rasbt/mlxtend/pull/673))

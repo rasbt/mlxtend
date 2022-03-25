@@ -59,18 +59,19 @@ def setup_fptree(df, min_support):
 
 
 def generate_itemsets(generator, num_itemsets, colname_map):
-    itemsets = []
-    supports = []
+    itemsets = np.array([])
+    supports = np.array([])
     for sup, iset in generator:
-        itemsets.append(frozenset(iset))
-        supports.append(sup / num_itemsets)
+        itemsets = np.append(itemsets, frozenset(iset))
+        supports = np.append(supports, sup)
+
+    supports = np.divide(supports, num_itemsets)
 
     res_df = pd.DataFrame({'support': supports, 'itemsets': itemsets})
 
     if colname_map is not None:
-        res_df['itemsets'] = res_df['itemsets'] \
-            .apply(lambda x: frozenset([colname_map[i] for i in x]))
-
+        res_df['itemsets'] = [frozenset(a) for a in np.vectorize(map)(
+            colname_map.get, res_df['itemsets'])]
     return res_df
 
 

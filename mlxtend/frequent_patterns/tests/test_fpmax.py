@@ -32,11 +32,11 @@ class TestEx1(unittest.TestCase, FPTestEx1):
 
     def test_max_len(self):
         res_df1 = fpmax(self.df)
-        max_len = np.max(res_df1['itemsets'].apply(len))
+        max_len = np.vectorize(len)(res_df1['itemsets']).max()
         assert max_len == 3
 
         res_df2 = fpmax(self.df, max_len=2)
-        max_len = np.max(res_df2['itemsets'].apply(len))
+        max_len = np.vectorize(len)(res_df2['itemsets']).max()
         assert max_len == 2
 
 

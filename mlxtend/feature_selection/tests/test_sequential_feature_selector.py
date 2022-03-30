@@ -978,8 +978,54 @@ def test_custom_feature_names():
                n_jobs=1)
 
     sfs1 = sfs1.fit(X, y, custom_feature_names=(
-          'sepal length', 'sepal width', 'petal length', 'petal width'))
+        'sepal length', 'sepal width', 'petal length', 'petal width'))
     assert sfs1.k_feature_idx_ == (1, 3)
     assert sfs1.k_feature_names_ == ('sepal width', 'petal width')
     assert sfs1.subsets_[2]['feature_names'] == ('sepal width',
                                                  'petal width')
+
+
+def test_run_forward_earlystop():
+    np.random.seed(0)
+    iris = load_iris()
+    X_iris = iris.data
+    y_iris = iris.target
+    X_iris_with_noise = np.concatenate(
+        (X_iris,
+         np.random.randn(X_iris.shape[0], X_iris.shape[1])),
+        axis=1)
+    knn = KNeighborsClassifier()
+    esr = 2
+    sfs = SFS(estimator=knn,
+              k_features='best',
+              forward=True,
+              floating=False,
+              early_stop_rounds=esr,
+              verbose=0)
+    sfs.fit(X_iris_with_noise, y_iris)
+    assert len(sfs.subsets_) < X_iris_with_noise.shape[1]
+    assert all([sfs.k_score_ >= sfs.subsets_[i]['avg_score']
+               for i in sfs.subsets_])
+
+
+def test_run_backward_earlystop():
+    np.random.seed(0)
+    iris = load_iris()
+    X_iris = iris.data
+    y_iris = iris.target
+    X_iris_with_noise = np.concatenate(
+        (X_iris,
+         np.random.randn(X_iris.shape[0], X_iris.shape[1])),
+        axis=1)
+    knn = KNeighborsClassifier()
+    esr = 2
+    sfs = SFS(estimator=knn,
+              k_features='best',
+              forward=False,
+              floating=False,
+              early_stop_rounds=esr,
+              verbose=0)
+    sfs.fit(X_iris_with_noise, y_iris)
+    assert len(sfs.subsets_) > 1
+    assert all([sfs.k_score_ >= sfs.subsets_[i]['avg_score']
+               for i in sfs.subsets_])

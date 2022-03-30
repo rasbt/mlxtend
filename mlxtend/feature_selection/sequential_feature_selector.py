@@ -114,6 +114,11 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
     n_jobs : int (default: 1)
         The number of CPUs to use for evaluating different feature subsets
         in parallel. -1 means 'all CPUs'.
+    early_stop_rounds : int (default 0)
+        Enable early stopping criterion when > 0, this value determines the
+        number of iterations after which, if no performance boost has been
+        seen, execution is stopped.
+        Used only when `k_features == 'best'` or `k_features == 'parsimonious'`
     pre_dispatch : int, or string (default: '2*n_jobs')
         Controls the number of jobs that get dispatched
         during parallel execution if `n_jobs > 1` or `n_jobs=-1`.
@@ -174,10 +179,12 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
     http://rasbt.github.io/mlxtend/user_guide/feature_selection/SequentialFeatureSelector/
 
     """
+
     def __init__(self, estimator, k_features=1,
                  forward=True, floating=False,
                  verbose=0, scoring=None,
                  cv=5, n_jobs=1,
+                 early_stop_rounds=0,
                  pre_dispatch='2*n_jobs',
                  clone_estimator=True,
                  fixed_features=None):
@@ -200,6 +207,13 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self.n_jobs = n_jobs
         self.verbose = verbose
         self.clone_estimator = clone_estimator
+
+        if not isinstance(early_stop_rounds, int) or early_stop_rounds < 0:
+            raise ValueError('Number of early stopping round should be '
+                             'an integer value greater than or equal to 0.'
+                             'Got %s' % early_stop_rounds)
+
+        self.early_stop_rounds = early_stop_rounds
 
         if fixed_features is not None:
             if isinstance(self.k_features, int) and \
@@ -385,6 +399,12 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             select_in_range = False
             k_to_select = self.k_features
 
+        if self.early_stop_rounds and isinstance(self.k_features, str) and\
+                not self.k_features in {'best', 'parsimonious'}:
+            raise ValueError('Early stopping is allowed only when `k_features`'
+                             ' is "best" or "parsimonious".  Got'
+                             ' `k_features=%s`' % self.k_features)
+
         orig_set = set(range(X_.shape[1]))
         n_features = X_.shape[1]
 
@@ -424,6 +444,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             }
         best_subset = None
         k_score = 0
+        best_score = -np.inf
+        early_stop_count = self.early_stop_rounds
 
         try:
             while k != k_to_select:
@@ -549,6 +571,18 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                                           custom_feature_names,
                                           X)
                     raise KeyboardInterrupt
+
+                # early stop
+                if self.early_stop_rounds and k != k_to_select:
+                    if k_score <= best_score:
+                        early_stop_count -= 1
+                        if early_stop_count == 0:
+                            print('Performances not improved for %d rounds. '
+                                  'Stopping now!' % self.early_stop_rounds)
+                            break
+                    else:
+                        early_stop_count = self.early_stop_rounds
+                        best_score = k_score
 
         except KeyboardInterrupt:
             self.interrupted_ = True

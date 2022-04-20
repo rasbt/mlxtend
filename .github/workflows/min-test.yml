@@ -1,4 +1,4 @@
-name: Tests
+name: Minimum Tests
 
 on:
   push:
@@ -25,22 +25,15 @@ jobs:
     - name: Install dependencies
       run: |
         conda config --add channels conda-forge
-        conda env update --file environment.yml --name base
-    - name: Lint with flake8
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        conda uninstall --all --yes
+        conda install pip --yes
+        pip install -r requirements.txt
     - name: Test with pytest
       run: |
-        conda install tensorflow joblib pytest -y -q
-        conda install imageio scikit-image -y -q
-        conda install dlib -y -q
-        pip install markdown
-        pip install -e  .
+        pip install pytest
+        pip install tensorflow
         python -c "import numpy; print('NumPy:', numpy.__version__)"
         python -c "import scipy; print('SciPy:', scipy.__version__)"
         python -c "import sklearn; print('Scikit-learn:', sklearn.__version__)"
         python -c "import pandas; print('Pandas:', pandas.__version__)"
-        pytest -sv
+        pytest -sv --ignore=image

@@ -24,18 +24,18 @@ jobs:
         echo $CONDA/bin >> $GITHUB_PATH
     - name: Install dependencies
       run: |
-        conda env update --file environment.yml --name base
+        conda config --add channels conda-forge
+        conda create -n testing python=3.8
+        conda activate testing
+        conda env update --file environment.yml
     - name: Lint with flake8
       run: |
-        conda install flake8
         # stop the build if there are Python syntax errors or undefined names
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        conda config --add channels conda-forge
-        conda install scikit-learn=1.0.2 pandas=1.3.5 numpy=1.21.4 scipy=1.7.3  -y -q
         conda install tensorflow joblib pytest -y -q
         conda install imageio scikit-image -y -q
         conda install dlib -y -q

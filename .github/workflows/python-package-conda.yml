@@ -25,7 +25,7 @@ jobs:
     - name: Install dependencies
       run: |
         conda config --add channels conda-forge
-        conda env update --file environment.yml
+        conda env update --file environment.yml --name base
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names

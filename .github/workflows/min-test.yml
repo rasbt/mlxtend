@@ -31,6 +31,7 @@ jobs:
       run: |
         pip install pytest
         pip install tensorflow
+        pip install -e .
         python -c "import numpy; print('NumPy:', numpy.__version__)"
         python -c "import scipy; print('SciPy:', scipy.__version__)"
         python -c "import sklearn; print('Scikit-learn:', sklearn.__version__)"

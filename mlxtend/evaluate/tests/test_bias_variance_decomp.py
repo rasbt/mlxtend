@@ -8,6 +8,7 @@
 
 
 import pandas as pd
+import pytest
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import BaggingClassifier

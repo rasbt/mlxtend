@@ -25,9 +25,6 @@ jobs:
     - name: Install dependencies
       run: |
         conda config --add channels conda-forge
-        conda create -n testing python=3.8
-        conda init zsh
-        conda activate testing
         conda env update --file environment.yml
     - name: Lint with flake8
       run: |

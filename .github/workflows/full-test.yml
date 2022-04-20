@@ -24,6 +24,7 @@ jobs:
         echo $CONDA/bin >> $GITHUB_PATH
     - name: Install dependencies
       run: |
+        conda create -n testing python=3.8
         conda config --add channels conda-forge
         conda init zsh
         source ~/.zshrc

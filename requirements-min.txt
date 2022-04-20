@@ -1,5 +1,5 @@
 scipy==1.2.1
-numpy==1.16.2
+numpy==1.16.5
 pandas==1.2.0
 scikit-learn==1.0.2
 matplotlib==3.0.0

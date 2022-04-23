@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2021
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # Implementation of the mulitnomial logistic regression algorithm for

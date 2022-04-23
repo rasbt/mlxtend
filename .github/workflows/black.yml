@@ -7,8 +7,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Check black version and run
-        run: |
-          black --version
-          black mlxtend
       - uses: psf/black@stable

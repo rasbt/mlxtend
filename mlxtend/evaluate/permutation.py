@@ -158,7 +158,7 @@ def permutation_test(
                 if diff > reference_stat or np.isclose(diff, reference_stat):
                     at_least_as_extreme += 1.0
 
-            num_rounds = 2 ** n
+            num_rounds = 2**n
 
         else:
             for indices_x in combinations(range(m + n), m):

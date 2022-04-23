@@ -67,8 +67,8 @@ def cochrans_q(y_target, *y_model_predictions):
         correctly_classified_collection.append(correctly_classified)
 
     numerator = (
-        num_models * sum([c ** 2 for c in correctly_classified_collection])
-        - correctly_classified_all_models ** 2
+        num_models * sum([c**2 for c in correctly_classified_collection])
+        - correctly_classified_all_models**2
     )
 
     # denominator

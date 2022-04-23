@@ -73,7 +73,7 @@ def num_permutations(n, k, with_replacement=False):
 
     """
     if with_replacement:
-        permut = n ** k
+        permut = n**k
     else:
         numerator = factorial(n)
         denominator = factorial(n - k)

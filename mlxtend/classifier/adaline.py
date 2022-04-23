@@ -115,7 +115,7 @@ class Adaline(_BaseModel, _IterativeModel, _Classifier):
 
     def _sum_squared_error_cost(self, y, y_val):
         errors = y - y_val
-        return (errors ** 2).sum() / 2.0
+        return (errors**2).sum() / 2.0
 
     def _normal_equation(self, X, y):
         """Solve linear regression analytically."""

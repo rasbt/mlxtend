@@ -77,7 +77,7 @@ def make_multiplexer_dataset(
         raise AttributeError(
             "Number of address_bits" " must be greater than 0. Got %s." % address_bits
         )
-    register_bits = 2 ** address_bits
+    register_bits = 2**address_bits
     total_bits = address_bits + register_bits
     X_pos, y_pos = [], []
     X_neg, y_neg = [], []

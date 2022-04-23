@@ -73,8 +73,8 @@ def ftest(y_target, *y_model_predictions):
 
     # sum squares of classifiers
     ssa = (
-        num_examples * sum([acc ** 2 for acc in accuracies])
-        - num_examples * num_models * avg_acc ** 2
+        num_examples * sum([acc**2 for acc in accuracies])
+        - num_examples * num_models * avg_acc**2
     )
 
     # sum squares of models
@@ -91,7 +91,7 @@ def ftest(y_target, *y_model_predictions):
 
     ssb = (
         1.0 / num_models * correctly_classified_objects
-        - num_examples * num_models * avg_acc ** 2
+        - num_examples * num_models * avg_acc**2
     )
 
     # total sum of squares
@@ -201,7 +201,7 @@ def combined_ftest_5x2cv(estimator1, estimator2, X, y, scoring=None, random_seed
         score_mean = (score_diff_1 + score_diff_2) / 2.0
         score_var = (score_diff_1 - score_mean) ** 2 + (score_diff_2 - score_mean) ** 2
 
-        differences.extend([score_diff_1 ** 2, score_diff_2 ** 2])
+        differences.extend([score_diff_1**2, score_diff_2**2])
         variances.append(score_var)
 
     numerator = sum(differences)

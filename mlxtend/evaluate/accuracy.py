@@ -72,18 +72,15 @@ def accuracy_score(
         return _compute_metric(target_temp, predicted_temp, normalize)
 
     elif method == "average":
-        return (
-            sum(
-                [
-                    _compute_metric(
-                        np.where(target_temp != lab, 1, 0),
-                        np.where(predicted_temp != lab, 1, 0),
-                    )
-                    for lab in unique_labels
-                ]
-            )
-            / float(unique_labels.shape[0])
-        )
+        return sum(
+            [
+                _compute_metric(
+                    np.where(target_temp != lab, 1, 0),
+                    np.where(predicted_temp != lab, 1, 0),
+                )
+                for lab in unique_labels
+            ]
+        ) / float(unique_labels.shape[0])
 
     elif method == "balanced":
         all_class_acc = []

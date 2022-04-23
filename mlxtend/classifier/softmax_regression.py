@@ -111,7 +111,7 @@ class SoftmaxRegression(_BaseModel, _IterativeModel, _Classifier, _MultiClass):
         return -np.sum(np.log(output) * (y_target), axis=1)
 
     def _cost(self, cross_entropy):
-        L2_term = self.l2 * np.sum(self.w_ ** 2)
+        L2_term = self.l2 * np.sum(self.w_**2)
         cross_entropy = cross_entropy + L2_term
         return 0.5 * np.mean(cross_entropy)
 

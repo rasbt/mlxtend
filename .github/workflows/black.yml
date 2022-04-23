@@ -8,3 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: psf/black@stable
+      - name: Check black version and run
+        run: |
+          black --version
+          black mlxtend

@@ -216,7 +216,7 @@ def test_too_large_train_size_(X, y, group_numbers):
         check_splits(X, y, group_numbers, cv_args, expected_results)
 
 
-def test_too_many_splits(X, y, group_numbers):
+def test_too_large_n_splits(X, y, group_numbers):
     cv_args = {'test_size': 1, 'n_splits': 10}
     expected_results = None
     error_message = (r'Not enough data to split number of groups \(6\)'
@@ -227,7 +227,7 @@ def test_too_many_splits(X, y, group_numbers):
         check_splits(X, y, group_numbers, cv_args, expected_results)
 
 
-def test_too_large_train_size_and_many_n_splits(X, y, group_numbers):
+def test_too_large_train_size_n_splits(X, y, group_numbers):
     cv_args = {'test_size': 1, 'train_size': 10, 'n_splits': 10}
     expected_results = None
     error_message = (r'Not enough data to split number of groups \(6\)'

@@ -68,20 +68,24 @@ class RandomHoldoutSplit(object):
         """
         ind = np.arange(X.shape[0])
         if self.stratify:
-            train_index, valid_index, _, _ = \
-                    train_test_split(ind, y,
-                                     test_size=self.valid_size,
-                                     shuffle=True,
-                                     stratify=y,
-                                     random_state=self.random_seed)
+            train_index, valid_index, _, _ = train_test_split(
+                ind,
+                y,
+                test_size=self.valid_size,
+                shuffle=True,
+                stratify=y,
+                random_state=self.random_seed,
+            )
 
         else:
-            train_index, valid_index, _, _ = \
-                    train_test_split(ind, y,
-                                     test_size=self.valid_size,
-                                     shuffle=True,
-                                     stratify=y,
-                                     random_state=self.random_seed)
+            train_index, valid_index, _, _ = train_test_split(
+                ind,
+                y,
+                test_size=self.valid_size,
+                shuffle=True,
+                stratify=y,
+                random_state=self.random_seed,
+            )
 
         for i in range(1):
             yield train_index, valid_index

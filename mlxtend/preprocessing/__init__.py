@@ -14,6 +14,13 @@ from .onehot import one_hot
 from .transactionencoder import TransactionEncoder
 
 
-__all__ = ["MeanCenterer", "shuffle_arrays_unison", "CopyTransformer",
-           "minmax_scaling", "standardize", "DenseTransformer",
-           "one_hot", "TransactionEncoder"]
+__all__ = [
+    "MeanCenterer",
+    "shuffle_arrays_unison",
+    "CopyTransformer",
+    "minmax_scaling",
+    "standardize",
+    "DenseTransformer",
+    "one_hot",
+    "TransactionEncoder",
+]

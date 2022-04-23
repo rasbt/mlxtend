@@ -13,10 +13,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plot_linear_regression(X, y, model=LinearRegression(),
-                           corr_func='pearsonr',
-                           scattercolor='blue', fit_style='k--', legend=True,
-                           xlim='auto'):
+def plot_linear_regression(
+    X,
+    y,
+    model=LinearRegression(),
+    corr_func="pearsonr",
+    scattercolor="blue",
+    fit_style="k--",
+    legend=True,
+    xlim="auto",
+):
     """Plot a linear regression line fit.
 
     Parameters
@@ -66,7 +72,7 @@ def plot_linear_regression(X, y, model=LinearRegression(),
 
     plt.scatter(X, y, c=scattercolor)
 
-    if xlim == 'auto':
+    if xlim == "auto":
         x_min, x_max = X[:, 0].min(), X[:, 0].max()
         x_min -= 0.2 * x_min
         x_max += 0.2 * x_max
@@ -79,16 +85,16 @@ def plot_linear_regression(X, y, model=LinearRegression(),
 
     plt.plot([x_min, x_max], [y_min, y_max], fit_style, lw=1)
 
-    if corr_func == 'pearsonr':
+    if corr_func == "pearsonr":
         corr_func = pearsonr
 
     corr_coeff, p = corr_func(X[:, 0], y)
     intercept, slope = model.intercept_, model.coef_[0]
 
     if legend:
-        leg_text = 'intercept: %.2f\nslope: %.2f' % (intercept, slope)
+        leg_text = "intercept: %.2f\nslope: %.2f" % (intercept, slope)
         if corr_func:
-            leg_text += '\ncorrelation: %.2f' % corr_coeff
-        plt.legend([leg_text], loc='best')
+            leg_text += "\ncorrelation: %.2f" % corr_coeff
+        plt.legend([leg_text], loc="best")
     regression_fit = (intercept, slope, corr_coeff)
     return regression_fit

@@ -16,24 +16,23 @@ except ImportError:
 
 
 class _BaseModel(object):
-
     def __init__(self):
         self._init_time = time()
 
     def _check_arrays(self, X, y=None):
         if isinstance(X, list):
-            raise ValueError('X must be a numpy array')
+            raise ValueError("X must be a numpy array")
         if not len(X.shape) == 2:
-            raise ValueError('X must be a 2D array. Try X[:, numpy.newaxis]')
+            raise ValueError("X must be a 2D array. Try X[:, numpy.newaxis]")
         try:
             if y is None:
                 return
-        except(AttributeError):
+        except (AttributeError):
             if not len(y.shape) == 1:
-                raise ValueError('y must be a 1D array.')
+                raise ValueError("y must be a 1D array.")
 
         if not len(y) == X.shape[0]:
-            raise ValueError('X and y must contain the same number of samples')
+            raise ValueError("X and y must contain the same number of samples")
 
     @classmethod
     def _get_param_names(cls):
@@ -49,7 +48,7 @@ class _BaseModel(object):
         """
         # fetch the constructor or the original constructor before
         # deprecation wrapping if any
-        init = getattr(cls.__init__, 'deprecated_original', cls.__init__)
+        init = getattr(cls.__init__, "deprecated_original", cls.__init__)
         if init is object.__init__:
             # No explicit constructor to introspect
             return []
@@ -58,16 +57,20 @@ class _BaseModel(object):
         # to represent
         init_signature = signature(init)
         # Consider the constructor parameters excluding 'self'
-        parameters = [p for p in init_signature.parameters.values()
-                      if p.name != 'self' and p.kind != p.VAR_KEYWORD]
+        parameters = [
+            p
+            for p in init_signature.parameters.values()
+            if p.name != "self" and p.kind != p.VAR_KEYWORD
+        ]
         for p in parameters:
             if p.kind == p.VAR_POSITIONAL:
-                raise RuntimeError("scikit-learn estimators should always "
-                                   "specify their parameters in the signature"
-                                   " of their __init__ (no varargs)."
-                                   " %s with constructor %s doesn't "
-                                   " follow this convention."
-                                   % (cls, init_signature))
+                raise RuntimeError(
+                    "scikit-learn estimators should always "
+                    "specify their parameters in the signature"
+                    " of their __init__ (no varargs)."
+                    " %s with constructor %s doesn't "
+                    " follow this convention." % (cls, init_signature)
+                )
         # Extract and sort argument names excluding 'self'
         return sorted([p.name for p in parameters])
 
@@ -94,9 +97,9 @@ class _BaseModel(object):
         out = dict()
         for key in self._get_param_names():
             value = getattr(self, key, None)
-            if deep and hasattr(value, 'get_params'):
+            if deep and hasattr(value, "get_params"):
                 deep_items = value.get_params().items()
-                out.update((key + '__' + k, val) for k, val in deep_items)
+                out.update((key + "__" + k, val) for k, val in deep_items)
             out[key] = value
         return out
 
@@ -124,12 +127,13 @@ class _BaseModel(object):
 
         nested_params = defaultdict(dict)  # grouped by prefix
         for key, value in params.items():
-            key, delim, sub_key = key.partition('__')
+            key, delim, sub_key = key.partition("__")
             if key not in valid_params:
-                raise ValueError('Invalid parameter %s for estimator %s. '
-                                 'Check the list of available parameters '
-                                 'with `estimator.get_params().keys()`.' %
-                                 (key, self))
+                raise ValueError(
+                    "Invalid parameter %s for estimator %s. "
+                    "Check the list of available parameters "
+                    "with `estimator.get_params().keys()`." % (key, self)
+                )
 
             if delim:
                 nested_params[key][sub_key] = value

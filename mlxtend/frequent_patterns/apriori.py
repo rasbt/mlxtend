@@ -51,8 +51,7 @@ def generate_new_combinations(old_combinations):
             yield item
 
 
-def generate_new_combinations_low_memory(old_combinations, X, min_support,
-                                         is_sparse):
+def generate_new_combinations_low_memory(old_combinations, X, min_support, is_sparse):
     """
     Generator of all combinations based on the last state of Apriori algorithm
     Parameters
@@ -131,8 +130,9 @@ def generate_new_combinations_low_memory(old_combinations, X, min_support,
             yield valid_items[index]
 
 
-def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
-            low_memory=False):
+def apriori(
+    df, min_support=0.5, use_colnames=False, max_len=None, verbose=0, low_memory=False
+):
     """Get frequent itemsets from a one-hot DataFrame
 
     Parameters
@@ -227,13 +227,15 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
         http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/
 
         """
-        out = (np.sum(_x, axis=0) / _n_rows)
+        out = np.sum(_x, axis=0) / _n_rows
         return np.array(out).reshape(-1)
 
-    if min_support <= 0.:
-        raise ValueError('`min_support` must be a positive '
-                         'number within the interval `(0, 1]`. '
-                         'Got %s.' % min_support)
+    if min_support <= 0.0:
+        raise ValueError(
+            "`min_support` must be a positive "
+            "number within the interval `(0, 1]`. "
+            "Got %s." % min_support
+        )
 
     fpc.valid_input_check(df)
 
@@ -257,7 +259,7 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
 
     all_ones = np.ones((int(rows_count), 1))
 
-    while max_itemset and max_itemset < (max_len or float('inf')):
+    while max_itemset and max_itemset < (max_len or float("inf")):
         next_max_itemset = max_itemset + 1
 
         # With exceptionally large datasets, the matrix operations can use a
@@ -266,7 +268,8 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
         # efficient implementation.
         if low_memory:
             combin = generate_new_combinations_low_memory(
-                itemset_dict[max_itemset], X, min_support, is_sparse)
+                itemset_dict[max_itemset], X, min_support, is_sparse
+            )
             # slightly faster than creating an array from a list of tuples
             combin = np.fromiter(combin, dtype=int)
             combin = combin.reshape(-1, next_max_itemset + 1)
@@ -275,12 +278,13 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
                 break
             if verbose:
                 print(
-                    '\rProcessing %d combinations | Sampling itemset size %d' %
-                    (combin.size, next_max_itemset), end="")
+                    "\rProcessing %d combinations | Sampling itemset size %d"
+                    % (combin.size, next_max_itemset),
+                    end="",
+                )
 
             itemset_dict[next_max_itemset] = combin[:, 1:]
-            support_dict[next_max_itemset] = combin[:, 0].astype(float) \
-                / rows_count
+            support_dict[next_max_itemset] = combin[:, 0].astype(float) / rows_count
             max_itemset = next_max_itemset
         else:
             combin = generate_new_combinations(itemset_dict[max_itemset])
@@ -291,8 +295,10 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
                 break
             if verbose:
                 print(
-                    '\rProcessing %d combinations | Sampling itemset size %d' %
-                    (combin.size, next_max_itemset), end="")
+                    "\rProcessing %d combinations | Sampling itemset size %d"
+                    % (combin.size, next_max_itemset),
+                    end="",
+                )
 
             if is_sparse:
                 _bools = X[:, combin[:, 0]] == all_ones
@@ -314,18 +320,18 @@ def apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0,
     all_res = []
     for k in sorted(itemset_dict):
         support = pd.Series(support_dict[k])
-        itemsets = pd.Series([frozenset(i) for i in itemset_dict[k]],
-                             dtype='object')
+        itemsets = pd.Series([frozenset(i) for i in itemset_dict[k]], dtype="object")
 
         res = pd.concat((support, itemsets), axis=1)
         all_res.append(res)
 
     res_df = pd.concat(all_res)
-    res_df.columns = ['support', 'itemsets']
+    res_df.columns = ["support", "itemsets"]
     if use_colnames:
         mapping = {idx: item for idx, item in enumerate(df.columns)}
-        res_df['itemsets'] = res_df['itemsets'].apply(lambda x: frozenset([
-                                                      mapping[i] for i in x]))
+        res_df["itemsets"] = res_df["itemsets"].apply(
+            lambda x: frozenset([mapping[i] for i in x])
+        )
     res_df = res_df.reset_index(drop=True)
 
     if verbose:

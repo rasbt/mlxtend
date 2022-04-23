@@ -23,24 +23,23 @@ def get_feature_quartiles(X):
 
 
 Xd = get_feature_quartiles(X)
-Xd_train, Xd_test, y_train, y_test = train_test_split(
-    Xd, y, random_state=0, stratify=y)
+Xd_train, Xd_test, y_train, y_test = train_test_split(Xd, y, random_state=0, stratify=y)
 
 
 def test_iris_quartiles_resolve_ties_first():
     oner = OneRClassifier()
     oner.fit(Xd_train, y_train)
     assert oner.feature_idx_ == 2
-    assert oner.prediction_dict_['total error'] == 16
+    assert oner.prediction_dict_["total error"] == 16
     assert round(oner.score(Xd_train, y_train), 4) == 0.8571
     assert round(oner.score(Xd_test, y_test), 4) == 0.8421
 
 
 def test_iris_quartiles_resolve_ties_chi_squared_1():
-    oner = OneRClassifier(resolve_ties='chi-squared')
+    oner = OneRClassifier(resolve_ties="chi-squared")
     oner.fit(Xd_train, y_train)
     assert oner.feature_idx_ == 2
-    assert oner.prediction_dict_['total error'] == 16
+    assert oner.prediction_dict_["total error"] == 16
     assert round(oner.score(Xd_train, y_train), 4) == 0.8571
     assert round(oner.score(Xd_test, y_test), 4) == 0.8421
     np.testing.assert_almost_equal(oner.p_value_, 0.0, decimal=7)
@@ -48,9 +47,9 @@ def test_iris_quartiles_resolve_ties_chi_squared_1():
 
 def test_iris_quartiles_resolve_ties_chi_squared_2():
     # tests with duplicate column
-    oner = OneRClassifier(resolve_ties='chi-squared')
+    oner = OneRClassifier(resolve_ties="chi-squared")
 
-    Xd_traintemp = np.zeros((Xd_train.shape[0], Xd_train.shape[1]+1))
+    Xd_traintemp = np.zeros((Xd_train.shape[0], Xd_train.shape[1] + 1))
     Xd_traintemp[:, 0] = Xd_train[:, 2]
     Xd_traintemp[:, 1] = Xd_train[:, 0]
     Xd_traintemp[:, 2] = Xd_train[:, 1]
@@ -59,5 +58,5 @@ def test_iris_quartiles_resolve_ties_chi_squared_2():
 
     oner.fit(Xd_traintemp, y_train)
     assert oner.feature_idx_ == 0
-    assert oner.prediction_dict_['total error'] == 16
+    assert oner.prediction_dict_["total error"] == 16
     assert round(oner.score(Xd_traintemp, y_train), 4) == 0.8571

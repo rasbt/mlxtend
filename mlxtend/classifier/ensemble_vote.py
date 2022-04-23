@@ -10,8 +10,7 @@
 
 import numpy as np
 import warnings
-from sklearn.base import (BaseEstimator, ClassifierMixin, TransformerMixin,
-                          clone)
+from sklearn.base import BaseEstimator, ClassifierMixin, TransformerMixin, clone
 from sklearn.exceptions import NotFittedError
 from sklearn.preprocessing import LabelEncoder
 
@@ -108,10 +107,15 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     http://rasbt.github.io/mlxtend/user_guide/classifier/EnsembleVoteClassifier/
     """
 
-    def __init__(self, clfs, voting='hard',
-                 weights=None, verbose=0,
-                 use_clones=True,
-                 fit_base_estimators=True):
+    def __init__(
+        self,
+        clfs,
+        voting="hard",
+        weights=None,
+        verbose=0,
+        use_clones=True,
+        fit_base_estimators=True,
+    ):
 
         self.clfs = clfs
         self.named_clfs = {key: value for key, value in _name_estimators(clfs)}
@@ -145,25 +149,29 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
         """
         if isinstance(y, np.ndarray) and len(y.shape) > 1 and y.shape[1] > 1:
-            raise NotImplementedError('Multilabel and multi-output'
-                                      ' classification is not supported.')
+            raise NotImplementedError(
+                "Multilabel and multi-output" " classification is not supported."
+            )
 
-        if self.voting not in ('soft', 'hard'):
-            raise ValueError("Voting must be 'soft' or 'hard'; got (voting=%r)"
-                             % self.voting)
+        if self.voting not in ("soft", "hard"):
+            raise ValueError(
+                "Voting must be 'soft' or 'hard'; got (voting=%r)" % self.voting
+            )
 
         if self.weights and len(self.weights) != len(self.clfs):
-            raise ValueError('Number of classifiers and weights must be equal'
-                             '; got %d weights, %d clfs'
-                             % (len(self.weights), len(self.clfs)))
+            raise ValueError(
+                "Number of classifiers and weights must be equal"
+                "; got %d weights, %d clfs" % (len(self.weights), len(self.clfs))
+            )
 
         self.le_ = LabelEncoder()
         self.le_.fit(y)
         self.classes_ = self.le_.classes_
 
         if not self.fit_base_estimators:
-            warnings.warn("fit_base_estimators=False "
-                          "enforces use_clones to be `False`")
+            warnings.warn(
+                "fit_base_estimators=False " "enforces use_clones to be `False`"
+            )
             self.use_clones = False
 
         if self.use_clones:
@@ -179,12 +187,13 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
                 if self.verbose > 0:
                     i = self.clfs_.index(clf) + 1
-                    print("Fitting clf%d: %s (%d/%d)" %
-                          (i, _name_estimators((clf,))[0][0], i,
-                           len(self.clfs_)))
+                    print(
+                        "Fitting clf%d: %s (%d/%d)"
+                        % (i, _name_estimators((clf,))[0][0], i, len(self.clfs_))
+                    )
 
                 if self.verbose > 2:
-                    if hasattr(clf, 'verbose'):
+                    if hasattr(clf, "verbose"):
                         clf.set_params(verbose=self.verbose - 2)
 
                 if self.verbose > 1:
@@ -193,12 +202,11 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                 if sample_weight is None:
                     clf.fit(X, self.le_.transform(y))
                 else:
-                    clf.fit(X, self.le_.transform(y),
-                            sample_weight=sample_weight)
+                    clf.fit(X, self.le_.transform(y), sample_weight=sample_weight)
         return self
 
     def predict(self, X):
-        """ Predict class labels for X.
+        """Predict class labels for X.
 
         Parameters
         ----------
@@ -212,28 +220,29 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             Predicted class labels.
 
         """
-        if not hasattr(self, 'clfs_'):
-            raise NotFittedError("Estimator not fitted, "
-                                 "call `fit` before exploiting the model.")
+        if not hasattr(self, "clfs_"):
+            raise NotFittedError(
+                "Estimator not fitted, " "call `fit` before exploiting the model."
+            )
 
-        if self.voting == 'soft':
+        if self.voting == "soft":
 
             maj = np.argmax(self.predict_proba(X), axis=1)
 
         else:  # 'hard' voting
             predictions = self._predict(X)
 
-            maj = np.apply_along_axis(lambda x:
-                                      np.argmax(np.bincount(
-                                          x, weights=self.weights)),
-                                      axis=1,
-                                      arr=predictions)
+            maj = np.apply_along_axis(
+                lambda x: np.argmax(np.bincount(x, weights=self.weights)),
+                axis=1,
+                arr=predictions,
+            )
 
         maj = self.le_.inverse_transform(maj)
         return maj
 
     def predict_proba(self, X):
-        """ Predict class probabilities for X.
+        """Predict class probabilities for X.
 
         Parameters
         ----------
@@ -247,15 +256,16 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             Weighted average probability for each class per sample.
 
         """
-        if not hasattr(self, 'clfs_'):
-            raise NotFittedError("Estimator not fitted, "
-                                 "call `fit` before exploiting the model.")
+        if not hasattr(self, "clfs_"):
+            raise NotFittedError(
+                "Estimator not fitted, " "call `fit` before exploiting the model."
+            )
 
         avg = np.average(self._predict_probas(X), axis=0, weights=self.weights)
         return avg
 
     def transform(self, X):
-        """ Return class labels or probabilities for X for each estimator.
+        """Return class labels or probabilities for X for each estimator.
 
         Parameters
         ----------
@@ -271,7 +281,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             Class labels predicted by each classifier.
 
         """
-        if self.voting == 'soft':
+        if self.voting == "soft":
             return self._predict_probas(X)
         else:
             return self._predict(X)
@@ -284,10 +294,12 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             out = self.named_clfs.copy()
             for name, step in self.named_clfs.items():
                 for key, value in step.get_params(deep=True).items():
-                    out['%s__%s' % (name, key)] = value
+                    out["%s__%s" % (name, key)] = value
 
-            for key, value in super(EnsembleVoteClassifier, self).get_params(deep=False).items():
-                out['%s' % key] = value
+            for key, value in (
+                super(EnsembleVoteClassifier, self).get_params(deep=False).items()
+            ):
+                out["%s" % key] = value
             return out
 
     def _predict(self, X):
@@ -296,8 +308,9 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         if self.fit_base_estimators:
             return np.asarray([clf.predict(X) for clf in self.clfs_]).T
         else:
-            return np.asarray([self.le_.transform(clf.predict(X))
-                               for clf in self.clfs_]).T
+            return np.asarray(
+                [self.le_.transform(clf.predict(X)) for clf in self.clfs_]
+            ).T
 
     def _predict_probas(self, X):
         """Collect results from clf.predict_proba calls."""

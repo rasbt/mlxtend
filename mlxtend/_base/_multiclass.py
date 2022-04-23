@@ -10,7 +10,6 @@ import numpy as np
 
 
 class _MultiClass(object):
-
     def __init__(self):
         pass
 

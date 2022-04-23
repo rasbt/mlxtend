@@ -16,8 +16,7 @@ from .._base import _MultiClass
 from .._base import _Classifier
 
 
-class SoftmaxRegression(_BaseModel, _IterativeModel,
-                        _Classifier,  _MultiClass):
+class SoftmaxRegression(_BaseModel, _IterativeModel, _Classifier, _MultiClass):
 
     """Softmax regression classifier.
 
@@ -73,12 +72,17 @@ class SoftmaxRegression(_BaseModel, _IterativeModel,
     http://rasbt.github.io/mlxtend/user_guide/classifier/SoftmaxRegression/
 
     """
-    def __init__(self, eta=0.01, epochs=50,
-                 l2=0.0,
-                 minibatches=1,
-                 n_classes=None,
-                 random_seed=None,
-                 print_progress=0):
+
+    def __init__(
+        self,
+        eta=0.01,
+        epochs=50,
+        l2=0.0,
+        minibatches=1,
+        n_classes=None,
+        random_seed=None,
+        print_progress=0,
+    ):
 
         _BaseModel.__init__(self)
         _IterativeModel.__init__(self)
@@ -95,7 +99,7 @@ class SoftmaxRegression(_BaseModel, _IterativeModel,
         self._is_fitted = False
 
     def _net_input(self, X):
-        return (X.dot(self.w_) + self.b_)
+        return X.dot(self.w_) + self.b_
 
     def _softmax_activation(self, z):
         e_x = np.exp(z - z.max(axis=1, keepdims=True))
@@ -104,7 +108,7 @@ class SoftmaxRegression(_BaseModel, _IterativeModel,
         # return (np.exp(z.T) / np.sum(np.exp(z), axis=1)).T
 
     def _cross_entropy(self, output, y_target):
-        return - np.sum(np.log(output) * (y_target), axis=1)
+        return -np.sum(np.log(output) * (y_target), axis=1)
 
     def _cost(self, cross_entropy):
         L2_term = self.l2 * np.sum(self.w_ ** 2)
@@ -137,7 +141,8 @@ class SoftmaxRegression(_BaseModel, _IterativeModel,
             self.b_, self.w_ = self._init_params(
                 weights_shape=(self._n_features, self.n_classes),
                 bias_shape=(self.n_classes,),
-                random_seed=self.random_seed)
+                random_seed=self.random_seed,
+            )
             self.cost_ = []
 
         y_enc = self._one_hot(y=y, n_labels=self.n_classes, dtype=np.float_)
@@ -146,10 +151,8 @@ class SoftmaxRegression(_BaseModel, _IterativeModel,
         rgen = np.random.RandomState(self.random_seed)
         for i in range(self.epochs):
             for idx in self._yield_minibatches_idx(
-                    rgen=rgen,
-                    n_batches=self.minibatches,
-                    data_ary=y,
-                    shuffle=True):
+                rgen=rgen, n_batches=self.minibatches, data_ary=y, shuffle=True
+            ):
 
                 # net_input, softmax and diff -> n_samples x n_classes:
                 y_probas = self._forward(X[idx])
@@ -157,7 +160,8 @@ class SoftmaxRegression(_BaseModel, _IterativeModel,
                 # w_ -> n_feat x n_classes
                 # b_  -> n_classes
                 grad_loss_wrt_w, grad_loss_wrt_b = self._backward(
-                    X[idx], y_true=y_enc[idx], y_probas=y_probas)
+                    X[idx], y_true=y_enc[idx], y_probas=y_probas
+                )
 
                 # update in opp. direction of the cost gradient
                 l2_reg = self.l2 * self.w_
@@ -171,9 +175,7 @@ class SoftmaxRegression(_BaseModel, _IterativeModel,
             self.cost_.append(cost)
 
             if self.print_progress:
-                self._print_progress(iteration=i + 1,
-                                     n_iter=self.epochs,
-                                     cost=cost)
+                self._print_progress(iteration=i + 1, n_iter=self.epochs, cost=cost)
 
         return self
 

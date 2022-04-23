@@ -11,40 +11,47 @@ from sklearn.base import clone
 from mlxtend.utils import assert_raises
 
 
-dataset = [['Apple', 'Beer', 'Rice', 'Chicken'],
-           ['Apple', 'Beer', 'Rice'],
-           ['Apple', 'Beer'],
-           ['Apple', 'Bananas'],
-           ['Milk', 'Beer', 'Rice', 'Chicken'],
-           ['Milk', 'Beer', 'Rice'],
-           ['Milk', 'Beer'],
-           ['Apple', 'Bananas']]
+dataset = [
+    ["Apple", "Beer", "Rice", "Chicken"],
+    ["Apple", "Beer", "Rice"],
+    ["Apple", "Beer"],
+    ["Apple", "Bananas"],
+    ["Milk", "Beer", "Rice", "Chicken"],
+    ["Milk", "Beer", "Rice"],
+    ["Milk", "Beer"],
+    ["Apple", "Bananas"],
+]
 
-data_sorted = [['Apple', 'Beer', 'Chicken', 'Rice'],
-               ['Apple', 'Beer', 'Rice'],
-               ['Apple', 'Beer'],
-               ['Apple', 'Bananas'],
-               ['Beer', 'Chicken', 'Milk', 'Rice'],
-               ['Beer', 'Milk', 'Rice'],
-               ['Beer', 'Milk'],
-               ['Apple', 'Bananas']]
+data_sorted = [
+    ["Apple", "Beer", "Chicken", "Rice"],
+    ["Apple", "Beer", "Rice"],
+    ["Apple", "Beer"],
+    ["Apple", "Bananas"],
+    ["Beer", "Chicken", "Milk", "Rice"],
+    ["Beer", "Milk", "Rice"],
+    ["Beer", "Milk"],
+    ["Apple", "Bananas"],
+]
 
 
-expect = np.array([[1, 0, 1, 1, 0, 1],
-                   [1, 0, 1, 0, 0, 1],
-                   [1, 0, 1, 0, 0, 0],
-                   [1, 1, 0, 0, 0, 0],
-                   [0, 0, 1, 1, 1, 1],
-                   [0, 0, 1, 0, 1, 1],
-                   [0, 0, 1, 0, 1, 0],
-                   [1, 1, 0, 0, 0, 0]])
+expect = np.array(
+    [
+        [1, 0, 1, 1, 0, 1],
+        [1, 0, 1, 0, 0, 1],
+        [1, 0, 1, 0, 0, 0],
+        [1, 1, 0, 0, 0, 0],
+        [0, 0, 1, 1, 1, 1],
+        [0, 0, 1, 0, 1, 1],
+        [0, 0, 1, 0, 1, 0],
+        [1, 1, 0, 0, 0, 0],
+    ]
+)
 
 
 def test_fit():
     oht = TransactionEncoder()
     oht.fit(dataset)
-    assert(oht.columns_ == ['Apple', 'Bananas', 'Beer',
-                            'Chicken', 'Milk', 'Rice'])
+    assert oht.columns_ == ["Apple", "Bananas", "Beer", "Chicken", "Milk", "Rice"]
 
 
 def test_transform():
@@ -58,7 +65,7 @@ def test_transform_sparse():
     oht = TransactionEncoder()
     oht.fit(dataset)
     trans = oht.transform(dataset, sparse=True)
-    assert(isinstance(trans, csr_matrix))
+    assert isinstance(trans, csr_matrix)
     np.testing.assert_array_equal(expect, trans.todense())
 
 
@@ -71,8 +78,9 @@ def test_fit_transform():
 def test_inverse_transform():
     oht = TransactionEncoder()
     oht.fit(dataset)
-    np.testing.assert_array_equal(np.array(data_sorted),
-                                  np.array(oht.inverse_transform(expect)))
+    np.testing.assert_array_equal(
+        np.array(data_sorted), np.array(oht.inverse_transform(expect))
+    )
 
 
 def test_cloning():
@@ -81,11 +89,8 @@ def test_cloning():
     oht.fit(dataset)
     oht2 = clone(oht)
 
-    msg = ("'TransactionEncoder' object has no attribute 'columns_'")
-    assert_raises(AttributeError,
-                  msg,
-                  oht2.transform,
-                  dataset)
+    msg = "'TransactionEncoder' object has no attribute 'columns_'"
+    assert_raises(AttributeError, msg, oht2.transform, dataset)
 
     trans = oht2.fit_transform(dataset)
     np.testing.assert_array_equal(expect, trans)

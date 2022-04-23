@@ -40,15 +40,17 @@ def mcnemar_table(y_target, y_model1, y_model2):
     """
     for ary in (y_target, y_model1, y_model2):
         if len(ary.shape) != 1:
-            raise ValueError('One or more input arrays are not 1-dimensional.')
+            raise ValueError("One or more input arrays are not 1-dimensional.")
 
     if y_target.shape[0] != y_model1.shape[0]:
-        raise ValueError('y_target and y_model1 contain a different number'
-                         ' of elements.')
+        raise ValueError(
+            "y_target and y_model1 contain a different number" " of elements."
+        )
 
     if y_target.shape[0] != y_model2.shape[0]:
-        raise ValueError('y_target and y_model2 contain a different number'
-                         ' of elements.')
+        raise ValueError(
+            "y_target and y_model2 contain a different number" " of elements."
+        )
 
     m1_vs_true = (y_target == y_model1).astype(int)
     m2_vs_true = (y_target == y_model2).astype(int)
@@ -123,19 +125,20 @@ def mcnemar_tables(y_target, *y_model_predictions):
     """
     model_lens = set()
     y_model_predictions = list(y_model_predictions)
-    for ary in ([y_target] + y_model_predictions):
+    for ary in [y_target] + y_model_predictions:
         if len(ary.shape) != 1:
-            raise ValueError('One or more input arrays are not 1-dimensional.')
+            raise ValueError("One or more input arrays are not 1-dimensional.")
         model_lens.add(ary.shape[0])
 
     if len(model_lens) > 1:
-        raise ValueError('Each prediction array must have the '
-                         'same number of samples.')
+        raise ValueError(
+            "Each prediction array must have the " "same number of samples."
+        )
 
     num_models = len(y_model_predictions)
 
     if num_models < 2:
-        raise ValueError('Provide at least 2 model prediction arrays.')
+        raise ValueError("Provide at least 2 model prediction arrays.")
 
     tables = {}
 
@@ -152,7 +155,7 @@ def mcnemar_tables(y_target, *y_model_predictions):
         tb[1, 0] = np.sum(minus_true == -1)
         tb[1, 1] = np.sum(plus_true == 0)
 
-        name_str = 'model_%s vs model_%s' % (comb[0], comb[1])
+        name_str = "model_%s vs model_%s" % (comb[0], comb[1])
         tables[name_str] = tb
 
     return tables
@@ -195,7 +198,7 @@ def mcnemar(ary, corrected=True, exact=False):
     """
 
     if not ary.shape == (2, 2):
-        raise ValueError('Input array must be a 2x2 array.')
+        raise ValueError("Input array must be a 2x2 array.")
 
     b = ary[0, 1]
     c = ary[1, 0]
@@ -203,14 +206,14 @@ def mcnemar(ary, corrected=True, exact=False):
 
     if not exact:
         if corrected:
-            chi2 = (abs(ary[0, 1] - ary[1, 0]) - 1.0)**2 / float(n)
+            chi2 = (abs(ary[0, 1] - ary[1, 0]) - 1.0) ** 2 / float(n)
         else:
-            chi2 = (ary[0, 1] - ary[1, 0])**2 / float(n)
+            chi2 = (ary[0, 1] - ary[1, 0]) ** 2 / float(n)
         p = scipy.stats.distributions.chi2.sf(chi2, 1)
 
     else:
         chi2 = min(b, c)
-        p = min(scipy.stats.binom.cdf(chi2, b + c, .5) * 2., 1.)
+        p = min(scipy.stats.binom.cdf(chi2, b + c, 0.5) * 2.0, 1.0)
 
         # this is equivalent to the following code:
         #

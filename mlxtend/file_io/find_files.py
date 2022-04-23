@@ -9,9 +9,14 @@
 import os
 
 
-def find_files(substring, path, recursive=False,
-               check_ext=None, ignore_invisible=True,
-               ignore_substring=None):
+def find_files(
+    substring,
+    path,
+    recursive=False,
+    check_ext=None,
+    ignore_invisible=True,
+    ignore_substring=None,
+):
     """Find files in a directory based on substring matching.
 
     Parameters
@@ -42,6 +47,7 @@ def find_files(substring, path, recursive=False,
     http://rasbt.github.io/mlxtend/user_guide/file_io/find_files/
 
     """
+
     def check_file(f, path):
         if not (ignore_substring and ignore_substring in f):
             if substring in f:
@@ -61,7 +67,7 @@ def find_files(substring, path, recursive=False,
 
     else:
         for f in os.listdir(path):
-            if ignore_invisible and f.startswith('.'):
+            if ignore_invisible and f.startswith("."):
                 continue
             fn = check_file(f, path)
             if fn:

@@ -13,13 +13,12 @@ import os
 import warnings
 from .utils import check_exists, download_url, extract_file
 
-predictor_path = '~/mlxtend_data/shape_predictor_68_face_landmarks.dat'
-predictor_url = ("http://dlib.net/files/"
-                 "shape_predictor_68_face_landmarks.dat.bz2")
+predictor_path = "~/mlxtend_data/shape_predictor_68_face_landmarks.dat"
+predictor_url = "http://dlib.net/files/" "shape_predictor_68_face_landmarks.dat.bz2"
 
 if not check_exists(predictor_path):
-    download_url(predictor_url, save_path='~/mlxtend_data/')
-    extract_file('~/mlxtend_data/shape_predictor_68_face_landmarks.dat.bz2')
+    download_url(predictor_url, save_path="~/mlxtend_data/")
+    extract_file("~/mlxtend_data/shape_predictor_68_face_landmarks.dat.bz2")
 
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(os.path.expanduser(predictor_path))
@@ -63,7 +62,7 @@ def extract_face_landmarks(img, return_dtype=np.int32):
     """
     faces = detector(img, 1)  # detecting faces
     if not faces:
-        warnings.warn('No face detected.')
+        warnings.warn("No face detected.")
         return None
     shape = predictor(img, faces[0])
 

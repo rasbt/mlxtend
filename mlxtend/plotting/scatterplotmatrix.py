@@ -11,8 +11,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def scatterplotmatrix(X, fig_axes=None, names=None,
-                      figsize=(8, 8), alpha=1.0, **kwargs):
+def scatterplotmatrix(
+    X, fig_axes=None, names=None, figsize=(8, 8), alpha=1.0, **kwargs
+):
     """
     Lower triangular of a scatterplot matrix
 
@@ -61,14 +62,14 @@ def scatterplotmatrix(X, fig_axes=None, names=None,
     num_examples, num_features = X.shape
 
     if fig_axes is None:
-        fig, axes = plt.subplots(nrows=num_features,
-                                 ncols=num_features,
-                                 figsize=figsize)
+        fig, axes = plt.subplots(
+            nrows=num_features, ncols=num_features, figsize=figsize
+        )
     else:
         fig, axes = fig_axes
 
     if names is None:
-        names = ['X%d' % (i+1) for i in range(num_features)]
+        names = ["X%d" % (i + 1) for i in range(num_features)]
 
     for i, j in zip(*np.triu_indices_from(axes, k=1)):
         axes[j, i].scatter(X[:, j], X[:, i], alpha=alpha, **kwargs)
@@ -78,7 +79,7 @@ def scatterplotmatrix(X, fig_axes=None, names=None,
 
     for i in range(num_features):
         axes[i, i].hist(X[:, i], alpha=alpha)
-        axes[i, i].set_ylabel('Count')
+        axes[i, i].set_ylabel("Count")
         axes[i, i].set_xlabel(names[i])
 
     return fig, axes

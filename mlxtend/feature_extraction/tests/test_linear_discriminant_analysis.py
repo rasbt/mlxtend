@@ -38,7 +38,7 @@ def test_evals():
     lda = LDA(n_discriminants=2)
     lda.fit(X, y).transform(X)
     np.set_printoptions(suppress=True)
-    print('%s' % lda.e_vals_)
+    print("%s" % lda.e_vals_)
     assert_almost_equal(lda.e_vals_, [20.90, 0.14, 0.0, 0.0], decimal=2)
 
 

@@ -11,7 +11,7 @@ import numpy as np
 
 
 def loadlocal_mnist(images_path, labels_path):
-    """ Read MNIST from ubyte files.
+    """Read MNIST from ubyte files.
 
     Parameters
     ----------
@@ -33,15 +33,11 @@ def loadlocal_mnist(images_path, labels_path):
     http://rasbt.github.io/mlxtend/user_guide/data/loadlocal_mnist/
 
     """
-    with open(labels_path, 'rb') as lbpath:
-        magic, n = struct.unpack('>II',
-                                 lbpath.read(8))
-        labels = np.fromfile(lbpath,
-                             dtype=np.uint8)
-    with open(images_path, 'rb') as imgpath:
-        magic, num, rows, cols = struct.unpack(">IIII",
-                                               imgpath.read(16))
-        images = np.fromfile(imgpath,
-                             dtype=np.uint8).reshape(len(labels), 784)
+    with open(labels_path, "rb") as lbpath:
+        magic, n = struct.unpack(">II", lbpath.read(8))
+        labels = np.fromfile(lbpath, dtype=np.uint8)
+    with open(images_path, "rb") as imgpath:
+        magic, num, rows, cols = struct.unpack(">IIII", imgpath.read(16))
+        images = np.fromfile(imgpath, dtype=np.uint8).reshape(len(labels), 784)
 
     return images, labels

@@ -9,8 +9,9 @@
 import numpy as np
 
 
-def feature_importance_permutation(X, y, predict_method,
-                                   metric, num_rounds=1, seed=None):
+def feature_importance_permutation(
+    X, y, predict_method, metric, num_rounds=1, seed=None
+):
     """Feature importance imputation via permutation importance
 
     Parameters
@@ -61,22 +62,26 @@ def feature_importance_permutation(X, y, predict_method,
     """
 
     if not isinstance(num_rounds, int):
-        raise ValueError('num_rounds must be an integer.')
+        raise ValueError("num_rounds must be an integer.")
     if num_rounds < 1:
-        raise ValueError('num_rounds must be greater than 1.')
+        raise ValueError("num_rounds must be greater than 1.")
 
-    if not (metric in ('r2', 'accuracy') or hasattr(metric, '__call__')):
-        raise ValueError('metric must be either "r2", "accuracy", '
-                         'or a function with signature func(y_true, y_pred).')
+    if not (metric in ("r2", "accuracy") or hasattr(metric, "__call__")):
+        raise ValueError(
+            'metric must be either "r2", "accuracy", '
+            "or a function with signature func(y_true, y_pred)."
+        )
 
-    if metric == 'r2':
+    if metric == "r2":
+
         def score_func(y_true, y_pred):
             sum_of_squares = np.sum(np.square(y_true - y_pred))
             res_sum_of_squares = np.sum(np.square(y_true - y_true.mean()))
-            r2_score = 1. - (sum_of_squares / res_sum_of_squares)
+            r2_score = 1.0 - (sum_of_squares / res_sum_of_squares)
             return r2_score
 
-    elif metric == 'accuracy':
+    elif metric == "accuracy":
+
         def score_func(y_true, y_pred):
             return np.mean(y_true == y_pred)
 

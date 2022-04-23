@@ -76,14 +76,16 @@ def bootstrap(x, func, num_rounds=1000, ci=0.95, ddof=1, seed=None):
 
     """
     if ci <= 0 or ci >= 1:
-        raise AttributeError('ci must be in range (0, 1)')
+        raise AttributeError("ci must be in range (0, 1)")
 
     check_output = func(x)
 
-    if (not isinstance(check_output, float)
-            and not isinstance(check_output, int)
-            and len(check_output.shape) != 0):
-        raise AttributeError('func must return a scalar')
+    if (
+        not isinstance(check_output, float)
+        and not isinstance(check_output, int)
+        and len(check_output.shape) != 0
+    ):
+        raise AttributeError("func must return a scalar")
 
     rng = np.random.RandomState(seed)
     bootstrap_replicates = np.zeros(shape=num_rounds)
@@ -102,9 +104,7 @@ def bootstrap(x, func, num_rounds=1000, ci=0.95, ddof=1, seed=None):
 
     sample_idx = np.arange(x.shape[0])
     for i in range(num_rounds):
-        bootstrap_idx = rng.choice(sample_idx,
-                                   size=sample_idx.shape[0],
-                                   replace=True)
+        bootstrap_idx = rng.choice(sample_idx, size=sample_idx.shape[0], replace=True)
 
         bootstrap_replicates[i] = func(x[bootstrap_idx])
 
@@ -112,7 +112,7 @@ def bootstrap(x, func, num_rounds=1000, ci=0.95, ddof=1, seed=None):
     standard_error = np.std(bootstrap_replicates, ddof=ddof)
 
     t = np.sort(bootstrap_replicates)
-    bound = (1 - ci) / 2.
+    bound = (1 - ci) / 2.0
 
     upper_ci = quantile(t, q=(ci + bound))
     lower_ci = quantile(t, q=bound)

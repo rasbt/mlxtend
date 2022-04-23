@@ -51,8 +51,8 @@ class Perceptron(_BaseModel, _IterativeModel, _Classifier):
     http://rasbt.github.io/mlxtend/user_guide/classifier/Perceptron/
 
     """
-    def __init__(self, eta=0.1, epochs=50, random_seed=None,
-                 print_progress=0):
+
+    def __init__(self, eta=0.1, epochs=50, random_seed=None, print_progress=0):
 
         _BaseModel.__init__(self)
         _IterativeModel.__init__(self)
@@ -66,13 +66,14 @@ class Perceptron(_BaseModel, _IterativeModel, _Classifier):
 
     def _fit(self, X, y, init_params=True):
         self._check_target_array(y, allowed={(0, 1)})
-        y_data = np.where(y == 0, -1., 1.)
+        y_data = np.where(y == 0, -1.0, 1.0)
 
         if init_params:
             self.b_, self.w_ = self._init_params(
                 weights_shape=(X.shape[1], 1),
                 bias_shape=(1,),
-                random_seed=self.random_seed)
+                random_seed=self.random_seed,
+            )
             self.cost_ = []
 
         self.init_time_ = time()
@@ -81,28 +82,25 @@ class Perceptron(_BaseModel, _IterativeModel, _Classifier):
             errors = 0
 
             for idx in self._yield_minibatches_idx(
-                    rgen=rgen,
-                    n_batches=y_data.shape[0], data_ary=y_data, shuffle=True):
+                rgen=rgen, n_batches=y_data.shape[0], data_ary=y_data, shuffle=True
+            ):
 
-                update = self.eta * (y_data[idx] -
-                                     self._to_classlabels(X[idx]))
+                update = self.eta * (y_data[idx] - self._to_classlabels(X[idx]))
                 self.w_ += (update * X[idx]).reshape(self.w_.shape)
                 self.b_ += update
                 errors += int(update != 0.0)
 
             if self.print_progress:
-                self._print_progress(iteration=i + 1,
-                                     n_iter=self.epochs,
-                                     cost=errors)
+                self._print_progress(iteration=i + 1, n_iter=self.epochs, cost=errors)
             self.cost_.append(errors)
         return self
 
     def _net_input(self, X):
-        """ Net input function """
+        """Net input function"""
         return (np.dot(X, self.w_) + self.b_).flatten()
 
     def _to_classlabels(self, X):
-        return np.where(self._net_input(X) < 0.0, -1., 1.)
+        return np.where(self._net_input(X) < 0.0, -1.0, 1.0)
 
     def _predict(self, X):
         return np.where(self._net_input(X) < 0.0, 0, 1)

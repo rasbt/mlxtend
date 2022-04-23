@@ -38,10 +38,19 @@ class ProgPercent(Prog):
         Automatic mode if `update_interval=None`.
 
     """
-    def __init__(self, iterations, track_time=True,
-                 stream=2, title='', monitor=False, update_interval=None):
-        Prog.__init__(self, iterations, track_time, stream,
-                      title, monitor, update_interval)
+
+    def __init__(
+        self,
+        iterations,
+        track_time=True,
+        stream=2,
+        title="",
+        monitor=False,
+        update_interval=None,
+    ):
+        Prog.__init__(
+            self, iterations, track_time, stream, title, monitor, update_interval
+        )
         self.last_progress = 0
         self._print()
         if monitor:
@@ -53,10 +62,10 @@ class ProgPercent(Prog):
                 self.process.get_memory_percent()
 
     def _cache_percent_indicator(self, last_progress):
-        self._cached_output += '[%3d %%]' % (last_progress)
+        self._cached_output += "[%3d %%]" % (last_progress)
 
     def _print(self, force_flush=False):
-        """ Prints formatted percentage and tracked time to the screen."""
+        """Prints formatted percentage and tracked time to the screen."""
         self._stream_flush()
         next_perc = self._calc_percent()
         if self.update_interval:
@@ -70,11 +79,12 @@ class ProgPercent(Prog):
             self.last_progress = next_perc
             self._cache_percent_indicator(self.last_progress)
             if self.track:
-                self._cached_output += ' Time elapsed: ' + \
-                                       self._get_time(self._elapsed())
+                self._cached_output += " Time elapsed: " + self._get_time(
+                    self._elapsed()
+                )
                 self._cache_eta()
             if self.item_id:
                 self._cache_item_id()
-            self._stream_out('\r%s' % self._cached_output)
+            self._stream_out("\r%s" % self._cached_output)
             self._stream_flush()
-            self._cached_output = ''
+            self._cached_output = ""

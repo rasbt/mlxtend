@@ -1,0 +1,4 @@
+{
+    "autoDocstring.docstringFormat": "numpy",
+    "editor.formatOnSave": true
+}

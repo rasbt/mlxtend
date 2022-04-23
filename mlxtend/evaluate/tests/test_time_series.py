@@ -28,7 +28,7 @@ def group_numbers():
 
 @pytest.fixture
 def not_sorted_group_numbers():
-    return np.array([5, 5, 5, 5, 4, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0])
+    return np.array([5, 5, 5, 5, 1, 1, 1, 1, 3, 3, 2, 2, 2, 4, 4, 0])
 
 
 @pytest.fixture

@@ -82,7 +82,7 @@ def heatmap(matrix,
 
     if column_names is not None and len(column_names) != matrix.shape[1]:
         raise AssertionError(f'len(column_names)'
-                             ' (got {len(column_names)})'
+                             f' (got {len(column_names)})'
                              ' should be equal to number of'
                              ' columns in the'
                              f' input array (expect {matrix.shape[1]}).')

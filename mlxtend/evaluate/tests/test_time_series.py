@@ -8,6 +8,8 @@
 import numpy as np
 import pytest
 from mlxtend.evaluate import GroupTimeSeriesSplit
+from sklearn.dummy import DummyClassifier
+from sklearn.model_selection import cross_val_score
 
 
 @pytest.fixture
@@ -258,3 +260,20 @@ def test_too_large_gap_size(X, y, group_numbers):
 
     with pytest.raises(ValueError, match=error_message):
         check_splits(X, y, group_numbers, cv_args, expected_results)
+
+
+def test_cross_val_score(X, y, group_numbers):
+    cv_args = {'test_size': 1, 'train_size': 3}
+    cv = GroupTimeSeriesSplit(**cv_args)
+
+    expected_scores = np.array([0, 0.5, 0.25])
+    clf = DummyClassifier(strategy='most_frequent')
+    scoring = 'accuracy'
+    cv_scores = cross_val_score(clf,
+                                X,
+                                y,
+                                groups=group_numbers,
+                                scoring=scoring,
+                                cv=cv)
+
+    assert np.array_equal(cv_scores, expected_scores)

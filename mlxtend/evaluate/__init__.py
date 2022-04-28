@@ -42,4 +42,4 @@ __all__ = ["scoring", "confusion_matrix",
            "ftest", "combined_ftest_5x2cv",
            "proportion_difference", "bias_variance_decomp",
            "accuracy_score", "create_counterfactual",
-           "time_series"]
+           "GroupTimeSeriesSplit"]

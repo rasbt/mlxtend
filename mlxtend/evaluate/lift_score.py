@@ -56,8 +56,9 @@ def lift_score(y_target, y_predicted, binary=True, positive_label=1):
     targ_tmp = targ_tmp.T
 
     if len(pred_tmp) != len(targ_tmp):
-        raise AttributeError('`y_target` and `y_predicted`'
-                             'don\'t have the same number of elements.')
+        raise AttributeError(
+            "`y_target` and `y_predicted`" "don't have the same number of elements."
+        )
     if binary:
         targ_tmp = np.where(targ_tmp != positive_label, 0, 1)
         pred_tmp = np.where(pred_tmp != positive_label, 0, 1)
@@ -66,11 +67,11 @@ def lift_score(y_target, y_predicted, binary=True, positive_label=1):
     binary_check_pred_tmp = np.extract(pred_tmp > 1, pred_tmp)
 
     if len(binary_check_targ_tmp) or len(binary_check_pred_tmp):
-        raise AttributeError('`y_target` and `y_predicted`'
-                             ' have different elements from 0 and 1.')
+        raise AttributeError(
+            "`y_target` and `y_predicted`" " have different elements from 0 and 1."
+        )
 
-    return (support(targ_tmp, pred_tmp) /
-            (support(targ_tmp) * support(pred_tmp)))
+    return support(targ_tmp, pred_tmp) / (support(targ_tmp) * support(pred_tmp))
 
 
 def support(y_target, y_predicted=None):

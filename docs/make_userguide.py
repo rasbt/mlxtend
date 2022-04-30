@@ -13,16 +13,16 @@ import os.path
 
 s = "# User Guide Index"
 
-yml_cont = open('mkdocs.yml', 'r')
-usr_gd = yaml.load(yml_cont)['pages'][1]['User Guide']
+yml_cont = open("mkdocs.yml", "r")
+usr_gd = yaml.load(yml_cont)["pages"][1]["User Guide"]
 for dct in usr_gd[1:]:
     subpk = list(dct.keys())[0]
-    s += '\n\n## `%s`' % subpk
+    s += "\n\n## `%s`" % subpk
     for obj in dct[subpk]:
-        bsname = os.path.basename(obj).split('.md')[0]
-        s += '\n- [%s](%s)' % (bsname, obj)
+        bsname = os.path.basename(obj).split(".md")[0]
+        s += "\n- [%s](%s)" % (bsname, obj)
 
-usr_gd_file = os.path.join('sources', 'USER_GUIDE_INDEX.md')
+usr_gd_file = os.path.join("sources", "USER_GUIDE_INDEX.md")
 
-with open(usr_gd_file, 'w') as f:
+with open(usr_gd_file, "w") as f:
     f.write(s)

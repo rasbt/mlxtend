@@ -11,34 +11,49 @@ from mlxtend.preprocessing import one_hot
 
 def test_default():
     y = np.array([0, 1, 2, 3, 4, 2])
-    expect = np.array([[1., 0., 0., 0., 0.],
-                       [0., 1., 0., 0., 0.],
-                       [0., 0., 1., 0., 0.],
-                       [0., 0., 0., 1., 0.],
-                       [0., 0., 0., 0., 1.],
-                       [0., 0., 1., 0., 0.]], dtype='float')
+    expect = np.array(
+        [
+            [1.0, 0.0, 0.0, 0.0, 0.0],
+            [0.0, 1.0, 0.0, 0.0, 0.0],
+            [0.0, 0.0, 1.0, 0.0, 0.0],
+            [0.0, 0.0, 0.0, 1.0, 0.0],
+            [0.0, 0.0, 0.0, 0.0, 1.0],
+            [0.0, 0.0, 1.0, 0.0, 0.0],
+        ],
+        dtype="float",
+    )
     out = one_hot(y)
     np.testing.assert_array_equal(expect, out)
 
 
 def test_autoguessing():
     y = np.array([0, 4, 0, 4])
-    expect = np.array([[1., 0., 0., 0., 0.],
-                       [0., 0., 0., 0., 1.],
-                       [1., 0., 0., 0., 0.],
-                       [0., 0., 0., 0., 1.]], dtype='float')
+    expect = np.array(
+        [
+            [1.0, 0.0, 0.0, 0.0, 0.0],
+            [0.0, 0.0, 0.0, 0.0, 1.0],
+            [1.0, 0.0, 0.0, 0.0, 0.0],
+            [0.0, 0.0, 0.0, 0.0, 1.0],
+        ],
+        dtype="float",
+    )
     out = one_hot(y)
     np.testing.assert_array_equal(expect, out)
 
 
 def test_list():
     y = [0, 1, 2, 3, 4, 2]
-    expect = np.array([[1., 0., 0., 0., 0.],
-                       [0., 1., 0., 0., 0.],
-                       [0., 0., 1., 0., 0.],
-                       [0., 0., 0., 1., 0.],
-                       [0., 0., 0., 0., 1.],
-                       [0., 0., 1., 0., 0.]], dtype='float')
+    expect = np.array(
+        [
+            [1.0, 0.0, 0.0, 0.0, 0.0],
+            [0.0, 1.0, 0.0, 0.0, 0.0],
+            [0.0, 0.0, 1.0, 0.0, 0.0],
+            [0.0, 0.0, 0.0, 1.0, 0.0],
+            [0.0, 0.0, 0.0, 0.0, 1.0],
+            [0.0, 0.0, 1.0, 0.0, 0.0],
+        ],
+        dtype="float",
+    )
     out = one_hot(y)
     np.testing.assert_array_equal(expect, out)
 
@@ -56,13 +71,11 @@ def test_multidim_array():
 
 
 def test_oneclass():
-    np.testing.assert_array_equal(one_hot([0]),
-                                  np.array([[0.]], dtype='float'))
+    np.testing.assert_array_equal(one_hot([0]), np.array([[0.0]], dtype="float"))
 
 
 def test_list_morelabels():
     y = [0, 1]
-    expect = np.array([[1., 0., 0.],
-                       [0., 1., 0.]], dtype='float')
+    expect = np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]], dtype="float")
     out = one_hot(y, num_labels=3)
     np.testing.assert_array_equal(expect, out)

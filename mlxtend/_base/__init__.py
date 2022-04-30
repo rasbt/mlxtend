@@ -13,6 +13,12 @@ from ._multiclass import _MultiClass
 from ._multilayer import _MultiLayer
 
 
-__all__ = ["_BaseModel",
-           "_Cluster", "_Classifier", "_Regressor", "_IterativeModel",
-           "_MultiClass", "_MultiLayer"]
+__all__ = [
+    "_BaseModel",
+    "_Cluster",
+    "_Classifier",
+    "_Regressor",
+    "_IterativeModel",
+    "_MultiClass",
+    "_MultiLayer",
+]

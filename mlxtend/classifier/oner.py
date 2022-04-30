@@ -57,12 +57,13 @@ class OneRClassifier(BaseEstimator, ClassifierMixin):
     http://rasbt.github.io/mlxtend/user_guide/classifier/OneRClassifier/
     """
 
-    def __init__(self, resolve_ties='first'):
+    def __init__(self, resolve_ties="first"):
 
-        allowed = {'first', 'chi-squared'}
+        allowed = {"first", "chi-squared"}
         if resolve_ties not in allowed:
-            raise ValueError('resolve_ties must be in %s. Got %s.'
-                             % (allowed, resolve_ties))
+            raise ValueError(
+                "resolve_ties must be in %s. Got %s." % (allowed, resolve_ties)
+            )
         self.resolve_ties = resolve_ties
 
     def fit(self, X, y):
@@ -86,10 +87,12 @@ class OneRClassifier(BaseEstimator, ClassifierMixin):
         # but better than nothing
         for c in range(X.shape[1]):
             if np.unique(X[:, c]).shape[0] == X.shape[0]:
-                warnings.warn('Feature array likely contains at least one'
-                              ' non-categorical column.'
-                              ' Column %d appears to have a unique value'
-                              ' in every row.' % c)
+                warnings.warn(
+                    "Feature array likely contains at least one"
+                    " non-categorical column."
+                    " Column %d appears to have a unique value"
+                    " in every row." % c
+                )
             break
 
         n_class_labels = np.unique(y).shape[0]
@@ -106,9 +109,7 @@ class OneRClassifier(BaseEstimator, ClassifierMixin):
             # iterate over each possible value per feature
             for feature_value in np.unique(X[:, feature_index]):
 
-                class_counts = compute_class_counts(X, y,
-                                                    feature_index,
-                                                    feature_value)
+                class_counts = compute_class_counts(X, y, feature_index, feature_value)
                 most_frequent_class = np.argmax(class_counts)
                 self.class_labels_ = np.unique(y)
 
@@ -123,35 +124,35 @@ class OneRClassifier(BaseEstimator, ClassifierMixin):
                 #  save all the corresponding rules for a given feature
                 if feature_index not in prediction_dict:
                     prediction_dict[feature_index] = {
-                        'total error': 0, 'rules (value: class)': {}
-                        }
-                prediction_dict[feature_index][
-                    'rules (value: class)'][
-                        feature_value] = most_frequent_class
-                prediction_dict[feature_index]['total error'] += error
+                        "total error": 0,
+                        "rules (value: class)": {},
+                    }
+                prediction_dict[feature_index]["rules (value: class)"][
+                    feature_value
+                ] = most_frequent_class
+                prediction_dict[feature_index]["total error"] += error
 
             # get best feature (i.e., the feature with the lowest error)
             best_err = np.inf
             best_idx = [None]
             for i in prediction_dict:
-                if prediction_dict[i]['total error'] < best_err:
-                    best_err = prediction_dict[i]['total error']
+                if prediction_dict[i]["total error"] < best_err:
+                    best_err = prediction_dict[i]["total error"]
                     best_idx[-1] = i
 
-            if self.resolve_ties == 'chi-squared':
+            if self.resolve_ties == "chi-squared":
 
                 # collect duplicates
                 for i in prediction_dict:
                     if i == best_idx[-1]:
                         continue
-                    if prediction_dict[i]['total error'] == best_err:
+                    if prediction_dict[i]["total error"] == best_err:
                         best_idx.append(i)
 
                 p_values = []
                 for feature_idx in best_idx:
 
-                    rules = prediction_dict[feature_idx][
-                        'rules (value: class)']
+                    rules = prediction_dict[feature_idx]["rules (value: class)"]
 
                     # contingency table for a given feature
                     #   (e.g., petal_width for iris)
@@ -167,8 +168,9 @@ class OneRClassifier(BaseEstimator, ClassifierMixin):
                     ary = np.zeros((n_class_labels, len(rules)))
 
                     for idx, r in enumerate(rules):
-                        ary[:, idx] = np.bincount(y[X[:, feature_idx] == r],
-                                                  minlength=n_class_labels)
+                        ary[:, idx] = np.bincount(
+                            y[X[:, feature_idx] == r], minlength=n_class_labels
+                        )
 
                     # returns "stat, p, dof, expected"
                     _, p, _, _ = chi2_contingency(ary)
@@ -177,7 +179,7 @@ class OneRClassifier(BaseEstimator, ClassifierMixin):
                 best_idx = best_idx[best_p_idx]
                 self.p_value_ = p_values[best_p_idx]
 
-            elif self.resolve_ties == 'first':
+            elif self.resolve_ties == "first":
                 best_idx = best_idx[0]
 
         self.feature_idx_ = best_idx
@@ -185,7 +187,7 @@ class OneRClassifier(BaseEstimator, ClassifierMixin):
         return self
 
     def predict(self, X):
-        """ Predict class labels for X.
+        """Predict class labels for X.
 
         Parameters
         ----------
@@ -199,11 +201,12 @@ class OneRClassifier(BaseEstimator, ClassifierMixin):
             Predicted class labels.
 
         """
-        if not hasattr(self, 'prediction_dict_'):
-            raise NotFittedError("Estimator not fitted, "
-                                 "call `fit` before using the model.")
+        if not hasattr(self, "prediction_dict_"):
+            raise NotFittedError(
+                "Estimator not fitted, " "call `fit` before using the model."
+            )
 
-        rules = self.prediction_dict_['rules (value: class)']
+        rules = self.prediction_dict_["rules (value: class)"]
 
         y_pred = np.zeros(X.shape[0], dtype=np.int_)
 
@@ -214,7 +217,7 @@ class OneRClassifier(BaseEstimator, ClassifierMixin):
         for feature_value in rules:
             class_label = rules[feature_value]
             rule_labels.add(class_label)
-        other_label = (set(self.class_labels_) - rule_labels)
+        other_label = set(self.class_labels_) - rule_labels
         if len(other_label):
             y_pred[:] = list(other_label)[0]
         # else just use "np.zeros"; we could also change this to

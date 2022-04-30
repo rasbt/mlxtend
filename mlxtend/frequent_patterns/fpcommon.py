@@ -6,7 +6,7 @@ from pandas import __version__ as pandas_version
 
 
 def setup_fptree(df, min_support):
-    num_itemsets = len(df.index)        # number of itemsets in the database
+    num_itemsets = len(df.index)  # number of itemsets in the database
 
     is_sparse = False
     if hasattr(df, "sparse"):
@@ -48,7 +48,7 @@ def setup_fptree(df, min_support):
             #    elements, shape(#nnz,)
             #  - itemsets.indptr[i] contains the offset in itemset.indices of
             #    the first non null element in row i, shape(1+#nrows,)
-            nonnull = itemsets.indices[itemsets.indptr[i]:itemsets.indptr[i+1]]
+            nonnull = itemsets.indices[itemsets.indptr[i] : itemsets.indptr[i + 1]]
         else:
             nonnull = np.where(itemsets[i, :])[0]
         itemset = [item for item in nonnull if item in rank]
@@ -65,11 +65,12 @@ def generate_itemsets(generator, num_itemsets, colname_map):
         itemsets.append(frozenset(iset))
         supports.append(sup / num_itemsets)
 
-    res_df = pd.DataFrame({'support': supports, 'itemsets': itemsets})
+    res_df = pd.DataFrame({"support": supports, "itemsets": itemsets})
 
     if colname_map is not None:
-        res_df['itemsets'] = res_df['itemsets'] \
-            .apply(lambda x: frozenset([colname_map[i] for i in x]))
+        res_df["itemsets"] = res_df["itemsets"].apply(
+            lambda x: frozenset([colname_map[i] for i in x])
+        )
 
     return res_df
 
@@ -77,24 +78,28 @@ def generate_itemsets(generator, num_itemsets, colname_map):
 def valid_input_check(df):
 
     if f"{type(df)}" == "<class 'pandas.core.frame.SparseDataFrame'>":
-        msg = ("SparseDataFrame support has been deprecated in pandas 1.0,"
-               " and is no longer supported in mlxtend. "
-               " Please"
-               " see the pandas migration guide at"
-               " https://pandas.pydata.org/pandas-docs/"
-               "stable/user_guide/sparse.html#sparse-data-structures"
-               " for supporting sparse data in DataFrames.")
+        msg = (
+            "SparseDataFrame support has been deprecated in pandas 1.0,"
+            " and is no longer supported in mlxtend. "
+            " Please"
+            " see the pandas migration guide at"
+            " https://pandas.pydata.org/pandas-docs/"
+            "stable/user_guide/sparse.html#sparse-data-structures"
+            " for supporting sparse data in DataFrames."
+        )
         raise TypeError(msg)
 
     if df.size == 0:
         return
     if hasattr(df, "sparse"):
         if not isinstance(df.columns[0], str) and df.columns[0] != 0:
-            raise ValueError('Due to current limitations in Pandas, '
-                             'if the sparse format has integer column names,'
-                             'names, please make sure they either start '
-                             'with `0` or cast them as string column names: '
-                             '`df.columns = [str(i) for i in df.columns`].')
+            raise ValueError(
+                "Due to current limitations in Pandas, "
+                "if the sparse format has integer column names,"
+                "names, please make sure they either start "
+                "with `0` or cast them as string column names: "
+                "`df.columns = [str(i) for i in df.columns`]."
+            )
 
     # Fast path: if all columns are boolean, there is nothing to checks
     all_bools = df.dtypes.apply(pd.api.types.is_bool_dtype).all()
@@ -111,8 +116,10 @@ def valid_input_check(df):
         if len(idxs[0]) > 0:
             # idxs has 1 dimension with sparse data and 2 with dense data
             val = values[tuple(loc[0] for loc in idxs)]
-            s = ('The allowed values for a DataFrame'
-                 ' are True, False, 0, 1. Found value %s' % (val))
+            s = (
+                "The allowed values for a DataFrame"
+                " are True, False, 0, 1. Found value %s" % (val)
+            )
             raise ValueError(s)
 
 
@@ -155,8 +162,9 @@ class FPTree(object):
         # Create conditional tree
         cond_tree = FPTree(rank)
         for idx, branch in enumerate(branches):
-            branch = sorted([i for i in branch if i in rank],
-                            key=rank.get, reverse=True)
+            branch = sorted(
+                [i for i in branch if i in rank], key=rank.get, reverse=True
+            )
             cond_tree.insert_itemset(branch, self.nodes[cond_item][idx].count)
         cond_tree.cond_items = self.cond_items + [cond_item]
 
@@ -209,8 +217,10 @@ class FPTree(object):
         if colnames:
             cond_items = [str(colnames[i]) for i in self.cond_items]
         cond_items = ", ".join(cond_items)
-        print('\r%d itemset(s) from tree conditioned on items (%s)' %
-              (count, cond_items), end="\n")
+        print(
+            "\r%d itemset(s) from tree conditioned on items (%s)" % (count, cond_items),
+            end="\n",
+        )
 
 
 class FPNode(object):
@@ -224,8 +234,8 @@ class FPNode(object):
             parent.children[item] = self
 
     def itempath_from_root(self):
-        """ Returns the top-down sequence of items from self to
-            (but not including) the root node. """
+        """Returns the top-down sequence of items from self to
+        (but not including) the root node."""
         path = []
         if self.item is None:
             return path

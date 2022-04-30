@@ -32,22 +32,21 @@ def test_copy():
 def test_copy_failtype():
     copy = CopyTransformer()
 
-    expect = ("X must be a list or NumPy array or SciPy sparse array."
-              " Found <class 'int'>")
+    expect = (
+        "X must be a list or NumPy array or SciPy sparse array." " Found <class 'int'>"
+    )
     if sys.version_info < (3, 0):
-        expect = expect.replace('class', 'type')
-    assert_raises(ValueError,
-                  expect,
-                  copy.transform,
-                  1)
+        expect = expect.replace("class", "type")
+    assert_raises(ValueError, expect, copy.transform, 1)
 
 
 def test_pipeline():
-    param_grid = [{'logisticregression__C': [1, 0.1, 10]}]
-    pipe = make_pipeline(StandardScaler(),
-                         CopyTransformer(),
-                         LogisticRegression(solver='liblinear',
-                                            multi_class='ovr'))
+    param_grid = [{"logisticregression__C": [1, 0.1, 10]}]
+    pipe = make_pipeline(
+        StandardScaler(),
+        CopyTransformer(),
+        LogisticRegression(solver="liblinear", multi_class="ovr"),
+    )
 
     if Version(sklearn_version) < Version("0.24.1"):
         grid = GridSearchCV(pipe, param_grid, cv=3, n_jobs=1, iid=False)

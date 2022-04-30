@@ -54,15 +54,15 @@ class PrincipalComponentAnalysis(_BaseModel):
     http://rasbt.github.io/mlxtend/user_guide/feature_extraction/PrincipalComponentAnalysis/
 
     """
-    def __init__(self, n_components=None, solver='svd', whitening=False):
-        valid_solver = {'eigen', 'svd'}
+
+    def __init__(self, n_components=None, solver="svd", whitening=False):
+        valid_solver = {"eigen", "svd"}
         if solver not in valid_solver:
-            raise AttributeError('Must be in %s. Found %s'
-                                 % (valid_solver, solver))
+            raise AttributeError("Must be in %s. Found %s" % (valid_solver, solver))
         self.solver = solver
 
         if n_components is not None and n_components < 1:
-            raise AttributeError('n_components must be > 1 or None')
+            raise AttributeError("n_components must be > 1 or None")
         self.n_components = n_components
         self._is_fitted = False
         self.whitening = whitening
@@ -95,27 +95,28 @@ class PrincipalComponentAnalysis(_BaseModel):
         else:
             n_components = self.n_components
 
-        if self.solver == 'eigen':
+        if self.solver == "eigen":
             cov_mat = self._covariance_matrix(X)
-            self.e_vals_, self.e_vecs_ =\
-                self._decomposition(cov_mat, n_samples)
-        elif self.solver == 'svd':
+            self.e_vals_, self.e_vecs_ = self._decomposition(cov_mat, n_samples)
+        elif self.solver == "svd":
             self.e_vals_, self.e_vecs_ = self._decomposition(X, n_samples)
 
-        self.w_ = self._projection_matrix(eig_vals=self.e_vals_,
-                                          eig_vecs=self.e_vecs_,
-                                          whitening=self.whitening,
-                                          n_components=n_components)
+        self.w_ = self._projection_matrix(
+            eig_vals=self.e_vals_,
+            eig_vecs=self.e_vecs_,
+            whitening=self.whitening,
+            n_components=n_components,
+        )
 
         tot = np.sum(self.e_vals_)
-        self.e_vals_normalized_ = np.array([(i / tot)
-                                            for i in sorted(self.e_vals_,
-                                            reverse=True)])
+        self.e_vals_normalized_ = np.array(
+            [(i / tot) for i in sorted(self.e_vals_, reverse=True)]
+        )
         self.loadings_ = self._loadings()
         return self
 
     def transform(self, X):
-        """ Apply the linear transformation on X.
+        """Apply the linear transformation on X.
 
         Parameters
         ----------
@@ -130,8 +131,8 @@ class PrincipalComponentAnalysis(_BaseModel):
 
         """
         self._check_arrays(X=X)
-        if not hasattr(self, 'w_'):
-            raise AttributeError('Object as not been fitted, yet.')
+        if not hasattr(self, "w_"):
+            raise AttributeError("Object as not been fitted, yet.")
 
         transformed = X.dot(self.w_)
         if self.whitening:
@@ -139,7 +140,7 @@ class PrincipalComponentAnalysis(_BaseModel):
             # norm = np.sqrt(np.diag(self.e_vals_[:self.w_.shape[1]]))
             # for i, column in enumerate(transformed.T):
             #    transformed[:, i] /= np.max(norm[:, i])
-            norm = np.diag((1./np.sqrt(self.e_vals_[:self.w_.shape[1]])))
+            norm = np.diag((1.0 / np.sqrt(self.e_vals_[: self.w_.shape[1]])))
             transformed = norm.dot(transformed.T).T
         return transformed
 
@@ -149,9 +150,9 @@ class PrincipalComponentAnalysis(_BaseModel):
         return cov_mat
 
     def _decomposition(self, mat, n_samples):
-        if self.solver == 'eigen':
+        if self.solver == "eigen":
             e_vals, e_vecs = np.linalg.eig(mat)
-        elif self.solver == 'svd':
+        elif self.solver == "svd":
             # Only SVD on mean centered data is equivalent to
             # PCA via covariance matrix (note that computing
             # the covariance matrix will implicitely center
@@ -159,10 +160,10 @@ class PrincipalComponentAnalysis(_BaseModel):
             mat_centered = mat - mat.mean(axis=0)
             u, s, v = np.linalg.svd(mat_centered.T)
             e_vecs, e_vals = u, s
-            e_vals = e_vals ** 2 / (n_samples-1)
+            e_vals = e_vals**2 / (n_samples - 1)
             if e_vals.shape[0] < e_vecs.shape[1]:
                 new_e_vals = np.zeros(e_vecs.shape[1])
-                new_e_vals[:e_vals.shape[0]] = e_vals
+                new_e_vals[: e_vals.shape[0]] = e_vals
                 e_vals = new_e_vals
 
         sort_idx = np.argsort(e_vals)[::-1]

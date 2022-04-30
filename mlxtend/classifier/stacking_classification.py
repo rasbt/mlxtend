@@ -19,8 +19,7 @@ from ..utils.base_compostion import _BaseXComposition
 from ._base_classification import _BaseStackingClassifier
 
 
-class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
-                         TransformerMixin):
+class StackingClassifier(_BaseXComposition, _BaseStackingClassifier, TransformerMixin):
 
     """A Stacking classifier for scikit-learn estimators for classification.
 
@@ -107,21 +106,29 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
     http://rasbt.github.io/mlxtend/user_guide/classifier/StackingClassifier/
     """
 
-    def __init__(self, classifiers, meta_classifier,
-                 use_probas=False, drop_proba_col=None,
-                 average_probas=False, verbose=0,
-                 use_features_in_secondary=False,
-                 store_train_meta_features=False,
-                 use_clones=True, fit_base_estimators=True):
+    def __init__(
+        self,
+        classifiers,
+        meta_classifier,
+        use_probas=False,
+        drop_proba_col=None,
+        average_probas=False,
+        verbose=0,
+        use_features_in_secondary=False,
+        store_train_meta_features=False,
+        use_clones=True,
+        fit_base_estimators=True,
+    ):
 
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier
         self.use_probas = use_probas
 
-        allowed = {None, 'first', 'last'}
+        allowed = {None, "first", "last"}
         if drop_proba_col not in allowed:
-            raise ValueError('`drop_proba_col` must be in %s. Got %s'
-                             % (allowed, drop_proba_col))
+            raise ValueError(
+                "`drop_proba_col` must be in %s. Got %s" % (allowed, drop_proba_col)
+            )
         self.drop_proba_col = drop_proba_col
 
         self.average_probas = average_probas
@@ -136,7 +143,7 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
         return _name_estimators(self.classifiers)
 
     def fit(self, X, y, sample_weight=None):
-        """ Fit ensemble classifers and the meta-classifier.
+        """Fit ensemble classifers and the meta-classifier.
 
         Parameters
         ----------
@@ -157,8 +164,9 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
 
         """
         if not self.fit_base_estimators:
-            warnings.warn("fit_base_estimators=False "
-                          "enforces use_clones to be `False`")
+            warnings.warn(
+                "fit_base_estimators=False " "enforces use_clones to be `False`"
+            )
             self.use_clones = False
 
         if self.use_clones:
@@ -176,11 +184,13 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
 
                 if self.verbose > 0:
                     i = self.clfs_.index(clf) + 1
-                    print("Fitting classifier%d: %s (%d/%d)" %
-                          (i, _name_estimators((clf,))[0][0], i, len(self.clfs_)))
+                    print(
+                        "Fitting classifier%d: %s (%d/%d)"
+                        % (i, _name_estimators((clf,))[0][0], i, len(self.clfs_))
+                    )
 
                 if self.verbose > 2:
-                    if hasattr(clf, 'verbose'):
+                    if hasattr(clf, "verbose"):
                         clf.set_params(verbose=self.verbose - 2)
 
                 if self.verbose > 1:
@@ -211,7 +221,7 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
 
     def get_params(self, deep=True):
         """Return estimator parameter names for GridSearch support."""
-        return self._get_params('named_classifiers', deep=deep)
+        return self._get_params("named_classifiers", deep=deep)
 
     def set_params(self, **params):
         """Set the parameters of this estimator.
@@ -222,11 +232,11 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
         -------
         self
         """
-        self._set_params('classifiers', 'named_classifiers', **params)
+        self._set_params("classifiers", "named_classifiers", **params)
         return self
 
     def predict_meta_features(self, X):
-        """ Get meta-features of test-data.
+        """Get meta-features of test-data.
 
         Parameters
         ----------
@@ -240,17 +250,16 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier,
             Returns the meta-features for test data.
 
         """
-        check_is_fitted(self, 'clfs_')
+        check_is_fitted(self, "clfs_")
         if self.use_probas:
-            if self.drop_proba_col == 'last':
-                probas = np.asarray([clf.predict_proba(X)[:, :-1]
-                                     for clf in self.clfs_])
-            elif self.drop_proba_col == 'first':
-                probas = np.asarray([clf.predict_proba(X)[:, 1:]
-                                     for clf in self.clfs_])
+            if self.drop_proba_col == "last":
+                probas = np.asarray(
+                    [clf.predict_proba(X)[:, :-1] for clf in self.clfs_]
+                )
+            elif self.drop_proba_col == "first":
+                probas = np.asarray([clf.predict_proba(X)[:, 1:] for clf in self.clfs_])
             else:
-                probas = np.asarray([clf.predict_proba(X)
-                                     for clf in self.clfs_])
+                probas = np.asarray([clf.predict_proba(X) for clf in self.clfs_])
             if self.average_probas:
                 vals = np.average(probas, axis=0)
             else:

@@ -73,10 +73,12 @@ def fpmax(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
     """
     fpc.valid_input_check(df)
 
-    if min_support <= 0.:
-        raise ValueError('`min_support` must be a positive '
-                         'number within the interval `(0, 1]`. '
-                         'Got %s.' % min_support)
+    if min_support <= 0.0:
+        raise ValueError(
+            "`min_support` must be a positive "
+            "number within the interval `(0, 1]`. "
+            "Got %s." % min_support
+        )
 
     colname_map = None
     if use_colnames:
@@ -85,8 +87,7 @@ def fpmax(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
     tree, rank = fpc.setup_fptree(df, min_support)
 
     minsup = math.ceil(min_support * len(df.values))  # min support as count
-    generator = fpmax_step(tree, minsup, MFITree(rank),
-                           colname_map, max_len, verbose)
+    generator = fpmax_step(tree, minsup, MFITree(rank), colname_map, max_len, verbose)
 
     return fpc.generate_itemsets(generator, len(df.values), colname_map)
 
@@ -94,7 +95,7 @@ def fpmax(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
 def fpmax_step(tree, minsup, mfit, colnames, max_len, verbose):
     count = 0
     items = list(tree.nodes.keys())
-    largest_set = sorted(tree.cond_items+items, key=mfit.rank.get)
+    largest_set = sorted(tree.cond_items + items, key=mfit.rank.get)
     if len(largest_set) == 0:
         return
     if tree.is_path():
@@ -121,8 +122,9 @@ def fpmax_step(tree, minsup, mfit, colnames, max_len, verbose):
                 return
             largest_set.remove(item)
             cond_tree = tree.conditional_tree(item, minsup)
-            for support, mfi in fpmax_step(cond_tree, minsup, mfit,
-                                           colnames, max_len, verbose):
+            for support, mfi in fpmax_step(
+                cond_tree, minsup, mfit, colnames, max_len, verbose
+            ):
                 yield support, mfi
 
 

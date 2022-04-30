@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2021
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # Implementation of the logistic regression algorithm for classification.
@@ -68,10 +68,16 @@ class LogisticRegression(_BaseModel, _IterativeModel, _Classifier):
     http://rasbt.github.io/mlxtend/user_guide/classifier/LogisticRegression/
 
     """
-    def __init__(self, eta=0.01, epochs=50,
-                 l2_lambda=0.0, minibatches=1,
-                 random_seed=None,
-                 print_progress=0):
+
+    def __init__(
+        self,
+        eta=0.01,
+        epochs=50,
+        l2_lambda=0.0,
+        minibatches=1,
+        random_seed=None,
+        print_progress=0,
+    ):
 
         _BaseModel.__init__(self)
         _IterativeModel.__init__(self)
@@ -104,7 +110,8 @@ class LogisticRegression(_BaseModel, _IterativeModel, _Classifier):
             self.b_, self.w_ = self._init_params(
                 weights_shape=(X.shape[1], 1),
                 bias_shape=(1,),
-                random_seed=self.random_seed)
+                random_seed=self.random_seed,
+            )
             self.cost_ = []
 
         self.init_time_ = time()
@@ -112,14 +119,13 @@ class LogisticRegression(_BaseModel, _IterativeModel, _Classifier):
         for i in range(self.epochs):
 
             for idx in self._yield_minibatches_idx(
-                    rgen=rgen,
-                    n_batches=self.minibatches,
-                    data_ary=y,
-                    shuffle=True):
+                rgen=rgen, n_batches=self.minibatches, data_ary=y, shuffle=True
+            ):
 
                 y_val = self._forward(X[idx])
                 grad_loss_wrt_w, grad_loss_wrt_b = self._backward(
-                    X[idx], y_true=y[idx], y_probas=y_val)
+                    X[idx], y_true=y[idx], y_probas=y_val
+                )
 
                 l2_reg = self.l2_lambda * self.w_
                 self.w_ += self.eta * (-grad_loss_wrt_w - l2_reg)
@@ -128,9 +134,7 @@ class LogisticRegression(_BaseModel, _IterativeModel, _Classifier):
             cost = self._logit_cost(y, self._forward(X))
             self.cost_.append(cost)
             if self.print_progress:
-                self._print_progress(iteration=(i + 1),
-                                     n_iter=self.epochs,
-                                     cost=cost)
+                self._print_progress(iteration=(i + 1), n_iter=self.epochs, cost=cost)
         return self
 
     def _predict(self, X):

@@ -123,11 +123,22 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
     http://rasbt.github.io/mlxtend/user_guide/regressor/StackingCVRegressor/
 
     """
-    def __init__(self, regressors, meta_regressor, cv=5,
-                 shuffle=True, random_state=None, verbose=0,
-                 refit=True, use_features_in_secondary=False,
-                 store_train_meta_features=False, n_jobs=None,
-                 pre_dispatch='2*n_jobs', multi_output=False):
+
+    def __init__(
+        self,
+        regressors,
+        meta_regressor,
+        cv=5,
+        shuffle=True,
+        random_state=None,
+        verbose=0,
+        refit=True,
+        use_features_in_secondary=False,
+        store_train_meta_features=False,
+        n_jobs=None,
+        pre_dispatch="2*n_jobs",
+        multi_output=False,
+    ):
 
         self.regressors = regressors
         self.meta_regressor = meta_regressor
@@ -143,7 +154,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         self.multi_output = multi_output
 
     def fit(self, X, y, groups=None, sample_weight=None):
-        """ Fit ensemble regressors and the meta-regressor.
+        """Fit ensemble regressors and the meta-regressor.
 
         Parameters
         ----------
@@ -178,8 +189,11 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
             self.meta_regr_ = self.meta_regressor
 
         X, y = check_X_y(
-            X, y, accept_sparse=['csc', 'csr'], dtype=None,
-            multi_output=self.multi_output
+            X,
+            y,
+            accept_sparse=["csc", "csr"],
+            dtype=None,
+            multi_output=self.multi_output,
         )
 
         kfold = check_cv(self.cv, y)
@@ -200,11 +214,22 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
             fit_params = None
         else:
             fit_params = dict(sample_weight=sample_weight)
-        meta_features = np.column_stack([cross_val_predict(
-                regr, X, y, groups=groups, cv=kfold,
-                verbose=self.verbose, n_jobs=self.n_jobs,
-                fit_params=fit_params, pre_dispatch=self.pre_dispatch)
-                    for regr in self.regr_])
+        meta_features = np.column_stack(
+            [
+                cross_val_predict(
+                    regr,
+                    X,
+                    y,
+                    groups=groups,
+                    cv=kfold,
+                    verbose=self.verbose,
+                    n_jobs=self.n_jobs,
+                    fit_params=fit_params,
+                    pre_dispatch=self.pre_dispatch,
+                )
+                for regr in self.regr_
+            ]
+        )
 
         # save meta-features for training data
         if self.store_train_meta_features:
@@ -233,7 +258,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         return self
 
     def predict(self, X):
-        """ Predict target values for X.
+        """Predict target values for X.
 
         Parameters
         ----------
@@ -252,11 +277,9 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         # the meta-model from that info.
         #
 
-        check_is_fitted(self, 'regr_')
+        check_is_fitted(self, "regr_")
 
-        meta_features = np.column_stack([
-            regr.predict(X) for regr in self.regr_
-        ])
+        meta_features = np.column_stack([regr.predict(X) for regr in self.regr_])
 
         if not self.use_features_in_secondary:
             return self.meta_regr_.predict(meta_features)
@@ -266,7 +289,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
             return self.meta_regr_.predict(np.hstack((X, meta_features)))
 
     def predict_meta_features(self, X):
-        """ Get meta-features of test-data.
+        """Get meta-features of test-data.
 
         Parameters
         ----------
@@ -283,7 +306,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
             columns is len(self.regressors) * n_targets.
 
         """
-        check_is_fitted(self, 'regr_')
+        check_is_fitted(self, "regr_")
         return np.column_stack([regr.predict(X) for regr in self.regr_])
 
     @property
@@ -299,7 +322,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         #
         # Return estimator parameter names for GridSearch support.
         #
-        return self._get_params('named_regressors', deep=deep)
+        return self._get_params("named_regressors", deep=deep)
 
     def set_params(self, **params):
         """Set the parameters of this estimator.
@@ -310,5 +333,5 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         -------
         self
         """
-        self._set_params('regressors', 'named_regressors', **params)
+        self._set_params("regressors", "named_regressors", **params)
         return self

@@ -5,10 +5,12 @@ import pandas as pd
 
 X, y = iris_data()
 df = pd.DataFrame(X)
-df.columns = (['sepal length [cm]',
-               'sepal width [cm]',
-               'petal length [cm]',
-               'petal width [cm]'])
+df.columns = [
+    "sepal length [cm]",
+    "sepal width [cm]",
+    "petal length [cm]",
+    "petal width [cm]",
+]
 
 
 def test_pass_data_as_dataframe():

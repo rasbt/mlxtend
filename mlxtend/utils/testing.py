@@ -27,8 +27,9 @@ def assert_raises(exception_type, message, func, *args, **kwargs):
     except exception_type as e:
         error_message = str(e)
         if message and message not in error_message:
-            raise AssertionError("Error message differs from the expected"
-                                 " string: %r. Got error message: %r" %
-                                 (message, error_message))
+            raise AssertionError(
+                "Error message differs from the expected"
+                " string: %r. Got error message: %r" % (message, error_message)
+            )
     else:
-        raise AssertionError('%s not raised.' % exception_type.__name__)
+        raise AssertionError("%s not raised." % exception_type.__name__)

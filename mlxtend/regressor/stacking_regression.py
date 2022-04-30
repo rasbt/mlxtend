@@ -94,10 +94,17 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
     http://rasbt.github.io/mlxtend/user_guide/regressor/StackingRegressor/
 
     """
-    def __init__(self, regressors, meta_regressor, verbose=0,
-                 use_features_in_secondary=False,
-                 store_train_meta_features=False, refit=True,
-                 multi_output=False):
+
+    def __init__(
+        self,
+        regressors,
+        meta_regressor,
+        verbose=0,
+        use_features_in_secondary=False,
+        store_train_meta_features=False,
+        refit=True,
+        multi_output=False,
+    ):
 
         self.regressors = regressors
         self.meta_regressor = meta_regressor
@@ -136,8 +143,11 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
 
         """
         X, y = check_X_y(
-            X, y, accept_sparse=['csc', 'csr'], dtype=None,
-            multi_output=self.multi_output
+            X,
+            y,
+            accept_sparse=["csc", "csr"],
+            dtype=None,
+            multi_output=self.multi_output,
         )
 
         if self.refit:
@@ -154,11 +164,13 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
 
             if self.verbose > 0:
                 i = self.regr_.index(regr) + 1
-                print("Fitting regressor%d: %s (%d/%d)" %
-                      (i, _name_estimators((regr,))[0][0], i, len(self.regr_)))
+                print(
+                    "Fitting regressor%d: %s (%d/%d)"
+                    % (i, _name_estimators((regr,))[0][0], i, len(self.regr_))
+                )
 
             if self.verbose > 2:
-                if hasattr(regr, 'verbose'):
+                if hasattr(regr, "verbose"):
                     regr.set_params(verbose=self.verbose - 2)
 
             if self.verbose > 1:
@@ -199,7 +211,7 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
 
     def get_params(self, deep=True):
         """Return estimator parameter names for GridSearch support."""
-        return self._get_params('named_regressors', deep=deep)
+        return self._get_params("named_regressors", deep=deep)
 
     def set_params(self, **params):
         """Set the parameters of this estimator.
@@ -210,11 +222,11 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         -------
         self
         """
-        self._set_params('regressors', 'named_regressors', **params)
+        self._set_params("regressors", "named_regressors", **params)
         return self
 
     def predict_meta_features(self, X):
-        """ Get meta-features of test-data.
+        """Get meta-features of test-data.
 
         Parameters
         ----------
@@ -231,11 +243,11 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
             columns is len(self.regressors) * n_targets
 
         """
-        check_is_fitted(self, 'regr_')
+        check_is_fitted(self, "regr_")
         return np.column_stack([r.predict(X) for r in self.regr_])
 
     def predict(self, X):
-        """ Predict target values for X.
+        """Predict target values for X.
 
         Parameters
         ----------
@@ -248,7 +260,7 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         y_target : array-like, shape = [n_samples] or [n_samples, n_targets]
             Predicted target values.
         """
-        check_is_fitted(self, 'regr_')
+        check_is_fitted(self, "regr_")
         meta_features = self.predict_meta_features(X)
 
         if not self.use_features_in_secondary:

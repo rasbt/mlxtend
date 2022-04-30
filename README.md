@@ -13,7 +13,7 @@
 
 <br>
 
-Sebastian Raschka 2014-2021
+Sebastian Raschka 2014-2022
 
 <br>
 

@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2021
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # Nonparametric Permutation Test
@@ -9,6 +9,7 @@
 import numpy as np
 from itertools import combinations, product
 from math import factorial
+
 try:
     from nose.tools import nottest
 except ImportError:
@@ -20,8 +21,15 @@ except ImportError:
 # decorator to prevent nose to consider
 # this as a unit test due to "test" in the name
 @nottest
-def permutation_test(x, y, func='x_mean != y_mean', method='exact',
-                     num_rounds=1000, seed=None, paired=False):
+def permutation_test(
+    x,
+    y,
+    func="x_mean != y_mean",
+    method="exact",
+    num_rounds=1000,
+    seed=None,
+    paired=False,
+):
     """
     Nonparametric permutation test
 
@@ -76,28 +84,33 @@ def permutation_test(x, y, func='x_mean != y_mean', method='exact',
 
     """
 
-    if method not in ('approximate', 'exact'):
-        raise AttributeError('method must be "approximate"'
-                             ' or "exact", got %s' % method)
+    if method not in ("approximate", "exact"):
+        raise AttributeError(
+            'method must be "approximate"' ' or "exact", got %s' % method
+        )
 
     if isinstance(func, str):
 
-        if func not in (
-                'x_mean != y_mean', 'x_mean > y_mean', 'x_mean < y_mean'):
-            raise AttributeError('Provide a custom function'
-                                 ' lambda x,y: ... or a string'
-                                 ' in ("x_mean != y_mean", '
-                                 '"x_mean > y_mean", "x_mean < y_mean")')
+        if func not in ("x_mean != y_mean", "x_mean > y_mean", "x_mean < y_mean"):
+            raise AttributeError(
+                "Provide a custom function"
+                " lambda x,y: ... or a string"
+                ' in ("x_mean != y_mean", '
+                '"x_mean > y_mean", "x_mean < y_mean")'
+            )
 
-        elif func == 'x_mean != y_mean':
+        elif func == "x_mean != y_mean":
+
             def func(x, y):
                 return np.abs(np.mean(x) - np.mean(y))
 
-        elif func == 'x_mean > y_mean':
+        elif func == "x_mean > y_mean":
+
             def func(x, y):
                 return np.mean(x) - np.mean(y)
 
         else:
+
             def func(x, y):
                 return np.mean(y) - np.mean(x)
 
@@ -107,15 +120,14 @@ def permutation_test(x, y, func='x_mean != y_mean', method='exact',
 
     if paired:
         if m != n:
-            raise ValueError('x and y must have the same'
-                             ' length if `paired=True`')
+            raise ValueError("x and y must have the same" " length if `paired=True`")
         sample_x = np.empty(m)
         sample_y = np.empty(n)
 
     else:
         combined = np.hstack((x, y))
 
-    at_least_as_extreme = 0.
+    at_least_as_extreme = 0.0
     reference_stat = func(x, y)
 
     # Note that whether we compute the combinations or permutations
@@ -146,7 +158,7 @@ def permutation_test(x, y, func='x_mean != y_mean', method='exact',
                 if diff > reference_stat or np.isclose(diff, reference_stat):
                     at_least_as_extreme += 1.0
 
-            num_rounds = 2 ** n
+            num_rounds = 2**n
 
         else:
             for indices_x in combinations(range(m + n), m):
@@ -160,7 +172,7 @@ def permutation_test(x, y, func='x_mean != y_mean', method='exact',
     else:
         if paired:
             for i in range(num_rounds):
-                flip = rng.randn(m) > 0.
+                flip = rng.randn(m) > 0.0
 
                 for i, f in enumerate(flip):
                     if f:
@@ -170,11 +182,11 @@ def permutation_test(x, y, func='x_mean != y_mean', method='exact',
 
                 diff = func(sample_x, sample_y)
                 if diff > reference_stat or np.isclose(diff, reference_stat):
-                    at_least_as_extreme += 1.
+                    at_least_as_extreme += 1.0
 
             # To cover the actual experiment results
-            at_least_as_extreme += 1.
-            num_rounds += 1.
+            at_least_as_extreme += 1.0
+            num_rounds += 1.0
 
         else:
             for i in range(num_rounds):
@@ -182,10 +194,10 @@ def permutation_test(x, y, func='x_mean != y_mean', method='exact',
                 diff = func(combined[:m], combined[m:])
 
                 if diff > reference_stat or np.isclose(diff, reference_stat):
-                    at_least_as_extreme += 1.
+                    at_least_as_extreme += 1.0
 
             # To cover the actual experiment results
-            at_least_as_extreme += 1.
-            num_rounds += 1.
+            at_least_as_extreme += 1.0
+            num_rounds += 1.0
 
     return at_least_as_extreme / num_rounds

@@ -32,7 +32,7 @@ def three_blobs_data():
     http://rasbt.github.io/mlxtend/user_guide/data/three_blobs_data
 
     """
-    tmp = np.genfromtxt(fname=DATA_PATH, delimiter=',')
+    tmp = np.genfromtxt(fname=DATA_PATH, delimiter=",")
     X, y = tmp[:, :-1], tmp[:, -1]
     y = y.astype(int)
     return X, y

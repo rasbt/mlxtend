@@ -56,27 +56,27 @@ class Counter(object):
     http://rasbt.github.io/mlxtend/user_guide/utils/Counter/
 
     """
-    def __init__(self, stderr=False, start_newline=True, precision=0,
-                 name=None):
+
+    def __init__(self, stderr=False, start_newline=True, precision=0, name=None):
         if stderr:
             self.stream = sys.stderr
         else:
             self.stream = sys.stdout
         if isinstance(precision, int):
-            self.precision = '%%.%df' % precision
+            self.precision = "%%.%df" % precision
         else:
-            self.precision = '%d'
+            self.precision = "%d"
         self.name = name
 
         if self.name is None:
-            self._print_name = ''
+            self._print_name = ""
         else:
-            self._print_name = '%s: ' % self.name
+            self._print_name = "%s: " % self.name
 
         self.start_time = time.time()
         self.curr_iter = 0
         if start_newline:
-            self.stream.write('\n')
+            self.stream.write("\n")
 
     def update(self):
         """Print current iteration and time elapsed."""
@@ -84,9 +84,10 @@ class Counter(object):
 
         self.end_time = time.time()
 
-        out = '%d iter | %s sec' % (self.curr_iter,
-                                    self.precision % (self.end_time
-                                                      - self.start_time))
+        out = "%d iter | %s sec" % (
+            self.curr_iter,
+            self.precision % (self.end_time - self.start_time),
+        )
 
-        self.stream.write('\r%s%s' % (self._print_name, out))
+        self.stream.write("\r%s%s" % (self._print_name, out))
         self.stream.flush()

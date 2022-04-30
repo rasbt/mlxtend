@@ -85,6 +85,7 @@ def heatmap(
         )
 
     if column_names is not None and len(column_names) != matrix.shape[1]:
+
         raise AssertionError(
             f"len(column_names)"
             " (got {len(column_names)})"

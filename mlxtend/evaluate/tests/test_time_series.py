@@ -47,6 +47,24 @@ def group_names():
     ])
 
 
+@pytest.fixture
+def not_sorted_group_names():
+    return np.array([
+        '2021-06', '2021-06', '2021-06', '2021-06', '2021-02', '2021-02',
+        '2021-02', '2021-02', '2021-04', '2021-04', '2021-03', '2021-03',
+        '2021-03', '2021-05', '2021-05', '2021-01'
+    ])
+
+
+@pytest.fixture
+def not_consecutive_group_names():
+    return np.array([
+        '2021-01', '2021-02', '2021-02', '2021-02', '2021-02', '2021-03',
+        '2021-03', '2021-03', '2021-04', '2021-04', '2021-05', '2021-05',
+        '2021-03', '2021-03', '2021-03', '2021-03'
+    ])
+
+
 def check_splits(X, y, groups, cv_args, expected_results):
     cv = GroupTimeSeriesSplit(**cv_args)
     results = list(cv.split(X, y, groups))
@@ -148,6 +166,28 @@ def test_partial_usage_of_data(X, y, group_numbers):
     check_splits(X, y, group_numbers, cv_args, expected_results)
 
 
+def test_not_sorted_group_numbers(X, y, not_sorted_group_numbers):
+    cv_args = {'test_size': 1, 'train_size': 3}
+    expected_results = [(np.array([0, 1, 2, 3, 4, 5, 6, 7, 8,
+                                   9]), np.array([10, 11, 12])),
+                        (np.array([4, 5, 6, 7, 8, 9, 10, 11,
+                                   12]), np.array([13, 14])),
+                        (np.array([8, 9, 10, 11, 12, 13, 14]), np.array([15]))]
+
+    check_splits(X, y, not_sorted_group_numbers, cv_args, expected_results)
+
+
+def test_not_sorted_group_names(X, y, not_sorted_group_names):
+    cv_args = {'test_size': 1, 'train_size': 3}
+    expected_results = [(np.array([0, 1, 2, 3, 4, 5, 6, 7, 8,
+                                   9]), np.array([10, 11, 12])),
+                        (np.array([4, 5, 6, 7, 8, 9, 10, 11,
+                                   12]), np.array([13, 14])),
+                        (np.array([8, 9, 10, 11, 12, 13, 14]), np.array([15]))]
+
+    check_splits(X, y, not_sorted_group_names, cv_args, expected_results)
+
+
 def test_not_specified_train_size_n_splits(X, y, group_numbers):
     cv_args = {'test_size': 1}
     expected_results = None
@@ -188,22 +228,23 @@ def test_not_specified_groups(X, y):
         check_splits(X, y, None, cv_args, expected_results)
 
 
-def test_not_sorted_groups(X, y, not_sorted_group_numbers):
+def test_not_consecutive_group_numbers(X, y, not_consecutive_group_numbers):
     cv_args = {'test_size': 1, 'train_size': 3}
     expected_results = None
-    error_message = 'The groups should be sorted in increasing order'
-
-    with pytest.raises(ValueError, match=error_message):
-        check_splits(X, y, not_sorted_group_numbers, cv_args, expected_results)
-
-
-def test_not_consecutive_groups(X, y, not_consecutive_group_numbers):
-    cv_args = {'test_size': 1, 'train_size': 3}
-    expected_results = None
-    error_message = 'The groups should be sorted in increasing order'
+    error_message = 'The groups should be consecutive'
 
     with pytest.raises(ValueError, match=error_message):
         check_splits(X, y, not_consecutive_group_numbers, cv_args,
+                     expected_results)
+
+
+def test_not_consecutive_group_names(X, y, not_consecutive_group_names):
+    cv_args = {'test_size': 1, 'train_size': 3}
+    expected_results = None
+    error_message = 'The groups should be consecutive'
+
+    with pytest.raises(ValueError, match=error_message):
+        check_splits(X, y, not_consecutive_group_names, cv_args,
                      expected_results)
 
 

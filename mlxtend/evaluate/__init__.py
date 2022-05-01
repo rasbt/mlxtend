@@ -54,4 +54,5 @@ __all__ = [
     "bias_variance_decomp",
     "accuracy_score",
     "create_counterfactual",
+    "GroupTimeSeriesSplit"
 ]

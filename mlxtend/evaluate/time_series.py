@@ -5,7 +5,7 @@
 #
 # License: BSD 3 clause
 
-from itertools import groupby
+from itertools import accumulate, groupby
 
 import numpy as np
 from sklearn.utils import indexable
@@ -89,15 +89,17 @@ class GroupTimeSeriesSplit:
         if groups is None:
             raise ValueError('The groups should be specified')
 
-        group_seqs = [group[0] for group in groupby(groups)]
-        unique_groups, group_starts_idx = np.unique(groups, return_index=True)
+        group_names, group_lengths = zip(
+            *[(group_name, len(list(group_seq)))
+              for group_name, group_seq in groupby(groups)])
+        n_groups = len(group_names)
 
-        if group_seqs != sorted(unique_groups):
-            raise ValueError('The groups should be sorted in increasing order')
+        if n_groups != len(set(group_names)):
+            raise ValueError('The groups should be consecutive')
 
-        n_groups = len(unique_groups)
+        group_starts_idx = [0] + list(accumulate(group_lengths))[:-1]
         self._n_groups = n_groups
-        groups_dict = dict(zip(unique_groups, group_starts_idx))
+        groups_dict = dict(zip(group_names, group_starts_idx))
         n_samples = len(X)
 
         self._calculate_split_params()
@@ -109,15 +111,16 @@ class GroupTimeSeriesSplit:
         test_end_idx = test_start_idx + test_size
 
         for _ in range(n_splits):
-            train_idx = np.r_[slice(groups_dict[group_seqs[train_start_idx]],
-                                    groups_dict[group_seqs[train_end_idx]])]
+            train_idx = np.r_[slice(groups_dict[group_names[train_start_idx]],
+                                    groups_dict[group_names[train_end_idx]])]
 
             if test_end_idx < n_groups:
-                test_idx = np.r_[slice(groups_dict[group_seqs[test_start_idx]],
-                                       groups_dict[group_seqs[test_end_idx]])]
+                test_idx = np.r_[slice(
+                    groups_dict[group_names[test_start_idx]],
+                    groups_dict[group_names[test_end_idx]])]
             else:
-                test_idx = np.r_[slice(groups_dict[group_seqs[test_start_idx]],
-                                       n_samples)]
+                test_idx = np.r_[slice(
+                    groups_dict[group_names[test_start_idx]], n_samples)]
 
             yield train_idx, test_idx
 

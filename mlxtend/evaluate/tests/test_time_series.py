@@ -15,7 +15,24 @@ from sklearn.model_selection import cross_val_score
 @pytest.fixture
 def X():
     return np.array(
-        [[0], [7], [6], [4], [4], [8], [0], [6], [2], [0], [5], [9], [7], [7], [7], [7]]
+        [
+            [0],
+            [7],
+            [6],
+            [4],
+            [4],
+            [8],
+            [0],
+            [6],
+            [2],
+            [0],
+            [5],
+            [9],
+            [7],
+            [7],
+            [7],
+            [7],
+        ]
     )
 
 
@@ -191,7 +208,10 @@ def test_n_splits_expanding_window(X, y, group_numbers):
     expected_results = [
         (np.array([0]), np.array([1, 2, 3, 4, 5, 6, 7, 8, 9])),
         (np.array([0, 1, 2, 3, 4]), np.array([5, 6, 7, 8, 9, 10, 11])),
-        (np.array([0, 1, 2, 3, 4, 5, 6, 7]), np.array([8, 9, 10, 11, 12, 13, 14, 15])),
+        (
+            np.array([0, 1, 2, 3, 4, 5, 6, 7]),
+            np.array([8, 9, 10, 11, 12, 13, 14, 15]),
+        ),
     ]
     check_splits(X, y, group_numbers, cv_args, expected_results)
 
@@ -200,7 +220,10 @@ def test_full_usage_of_data(X, y, group_numbers):
     cv_args = {"test_size": 3, "train_size": 2, "n_splits": 2}
     expected_results = [
         (np.array([0, 1, 2, 3, 4]), np.array([5, 6, 7, 8, 9, 10, 11])),
-        (np.array([1, 2, 3, 4, 5, 6, 7]), np.array([8, 9, 10, 11, 12, 13, 14, 15])),
+        (
+            np.array([1, 2, 3, 4, 5, 6, 7]),
+            np.array([8, 9, 10, 11, 12, 13, 14, 15]),
+        ),
     ]
     check_splits(X, y, group_numbers, cv_args, expected_results)
 
@@ -246,7 +269,11 @@ def test_not_specified_train_size_n_splits(X, y, group_numbers):
 
 
 def test_bad_window_type(X, y, group_numbers):
-    cv_args = {"test_size": 1, "train_size": 3, "window_type": "incorrect_window_type"}
+    cv_args = {
+        "test_size": 1,
+        "train_size": 3,
+        "window_type": "incorrect_window_type",
+    }
     expected_results = None
     error_message = 'Window type can be either "rolling" or "expanding"'
 
@@ -278,7 +305,9 @@ def test_not_consecutive_group_numbers(X, y, not_consecutive_group_numbers):
     error_message = "The groups should be consecutive"
 
     with pytest.raises(ValueError, match=error_message):
-        check_splits(X, y, not_consecutive_group_numbers, cv_args, expected_results)
+        check_splits(
+            X, y, not_consecutive_group_numbers, cv_args, expected_results
+        )
 
 
 def test_not_consecutive_group_names(X, y, not_consecutive_group_names):
@@ -287,7 +316,9 @@ def test_not_consecutive_group_names(X, y, not_consecutive_group_names):
     error_message = "The groups should be consecutive"
 
     with pytest.raises(ValueError, match=error_message):
-        check_splits(X, y, not_consecutive_group_names, cv_args, expected_results)
+        check_splits(
+            X, y, not_consecutive_group_names, cv_args, expected_results
+        )
 
 
 def test_too_large_train_size_(X, y, group_numbers):
@@ -362,6 +393,8 @@ def test_cross_val_score(X, y, group_numbers):
     expected_scores = np.array([0, 0.5, 0.25])
     clf = DummyClassifier(strategy="most_frequent")
     scoring = "accuracy"
-    cv_scores = cross_val_score(clf, X, y, groups=group_numbers, scoring=scoring, cv=cv)
+    cv_scores = cross_val_score(
+        clf, X, y, groups=group_numbers, scoring=scoring, cv=cv
+    )
 
     assert np.array_equal(cv_scores, expected_scores)

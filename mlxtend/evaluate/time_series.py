@@ -46,13 +46,19 @@ class GroupTimeSeriesSplit:
     ):
 
         if (train_size is None) and (n_splits is None):
-            raise ValueError("Either train_size or n_splits have to be defined")
+            raise ValueError(
+                "Either train_size or n_splits have to be defined"
+            )
 
         if window_type not in ["rolling", "expanding"]:
-            raise ValueError('Window type can be either "rolling" or "expanding"')
+            raise ValueError(
+                'Window type can be either "rolling" or "expanding"'
+            )
 
         if (train_size is not None) and (window_type == "expanding"):
-            raise ValueError("Train size can be specified only with rolling window")
+            raise ValueError(
+                "Train size can be specified only with rolling window"
+            )
 
         self.test_size = test_size
         self.train_size = train_size
@@ -176,38 +182,65 @@ class GroupTimeSeriesSplit:
         )
 
         if (train_size is None) and (n_splits is not None):
-            train_size = n_groups - gap - test_size - (n_splits - 1) * shift_size
+            train_size = (
+                n_groups - gap - test_size - (n_splits - 1) * shift_size
+            )
             self.train_size = train_size
 
             if train_size <= 0:
                 raise ValueError(
                     not_enough_data_error.format(
-                        n_groups, n_splits, train_size, test_size, gap, shift_size
+                        n_groups,
+                        n_splits,
+                        train_size,
+                        test_size,
+                        gap,
+                        shift_size,
                     )
                 )
             train_start_idx = 0
         elif (n_splits is None) and (train_size is not None):
-            n_splits = (n_groups - train_size - gap - test_size) // shift_size + 1
+            n_splits = (
+                n_groups - train_size - gap - test_size
+            ) // shift_size + 1
             self.n_splits = n_splits
 
             if self.n_splits <= 0:
                 raise ValueError(
                     not_enough_data_error.format(
-                        n_groups, n_splits, train_size, test_size, gap, shift_size
+                        n_groups,
+                        n_splits,
+                        train_size,
+                        test_size,
+                        gap,
+                        shift_size,
                     )
                 )
             train_start_idx = (
-                n_groups - train_size - gap - test_size - (n_splits - 1) * shift_size
+                n_groups
+                - train_size
+                - gap
+                - test_size
+                - (n_splits - 1) * shift_size
             )
         else:
             train_start_idx = (
-                n_groups - train_size - gap - test_size - (n_splits - 1) * shift_size
+                n_groups
+                - train_size
+                - gap
+                - test_size
+                - (n_splits - 1) * shift_size
             )
 
             if train_start_idx < 0:
                 raise ValueError(
                     not_enough_data_error.format(
-                        n_groups, n_splits, train_size, test_size, gap, shift_size
+                        n_groups,
+                        n_splits,
+                        train_size,
+                        test_size,
+                        gap,
+                        shift_size,
                     )
                 )
 

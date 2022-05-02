@@ -5,7 +5,7 @@
 #
 # License: BSD 3 clause
 
-from itertools import accumulate, groupby
+from itertools import accumulate, chain, groupby, islice
 
 import numpy as np
 from sklearn.utils import indexable
@@ -105,8 +105,11 @@ class GroupTimeSeriesSplit:
         if n_groups != len(set(group_names)):
             raise ValueError("The groups should be consecutive")
 
-        group_starts_idx = [0] + list(accumulate(group_lengths))[:-1]
         self._n_groups = n_groups
+        group_starts_idx = chain(
+            [0],
+            islice(accumulate(group_lengths), len(group_lengths) - 1),
+        )
         groups_dict = dict(zip(group_names, group_starts_idx))
         n_samples = len(X)
 

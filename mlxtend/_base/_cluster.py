@@ -11,7 +11,6 @@ from time import time
 
 
 class _Cluster(object):
-
     def __init__(self):
         pass
 
@@ -35,7 +34,7 @@ class _Cluster(object):
         """
         self._is_fitted = False
         self._check_arrays(X=X)
-        if hasattr(self, 'self.random_seed') and self.random_seed:
+        if hasattr(self, "self.random_seed") and self.random_seed:
             self._rgen = np.random.RandomState(self.random_seed)
         self._init_time = time()
         self._fit(X=X, init_params=init_params)
@@ -59,5 +58,5 @@ class _Cluster(object):
         """
         self._check_arrays(X=X)
         if not self._is_fitted:
-            raise AttributeError('Model is not fitted, yet.')
+            raise AttributeError("Model is not fitted, yet.")
         return self._predict(X)

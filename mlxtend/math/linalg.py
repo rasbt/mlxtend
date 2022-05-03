@@ -9,8 +9,7 @@
 import numpy as np
 
 
-def vectorspace_orthonormalization(ary,  # method='gram-schmidt',
-                                   eps=1e-13):
+def vectorspace_orthonormalization(ary, eps=1e-13):  # method='gram-schmidt',
     """Transforms a set of column vectors to a orthonormal basis.
 
     Given a set of orthogonal vectors, this functions converts such
@@ -98,5 +97,4 @@ def vectorspace_dimensionality(ary):
     # an orthonormal vectoset have unit length or are zero,
     # the sum of the individual
     # norms equals the dimensionality of that vector space
-    return int(np.sum(np.linalg.norm(
-        vectorspace_orthonormalization(ary), axis=0)))
+    return int(np.sum(np.linalg.norm(vectorspace_orthonormalization(ary), axis=0)))

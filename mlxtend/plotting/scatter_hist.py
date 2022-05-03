@@ -43,20 +43,19 @@ def scatter_hist(x, y, xlabel=None, ylabel=None, figsize=(5, 5)):
     rect_histx = [left, bottom + height + spacing, width, 0.2]
     rect_histy = [left + width + spacing, bottom, 0.2, height]
 
-    if hasattr(x, 'values'):
+    if hasattr(x, "values"):
         x_values = x.values
         if xlabel is None:
             xlabel = x.name
     else:
         x_values = x
 
-    if hasattr(y, 'values'):
+    if hasattr(y, "values"):
         y_values = y.values
         if ylabel is None:
             ylabel = y.name
     else:
         y_values = y
-
 
     fig = plt.figure(figsize=figsize)
     ax = fig.add_axes(rect_scatter)
@@ -72,8 +71,7 @@ def scatter_hist(x, y, xlabel=None, ylabel=None, figsize=(5, 5)):
     ax_histy.tick_params(axis="y", labelleft=False)
     ax_histx.axis("off")
     ax_histy.axis("off")
-    ax_histx.hist(x_values, edgecolor='white', bins='auto')
-    ax_histy.hist(y_values, edgecolor='white', 
-                  orientation='horizontal', bins='auto')
+    ax_histx.hist(x_values, edgecolor="white", bins="auto")
+    ax_histy.hist(y_values, edgecolor="white", orientation="horizontal", bins="auto")
     plot = ax.scatter(x_values, y_values)
     return plot

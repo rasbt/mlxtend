@@ -49,7 +49,7 @@ def wine_data():
     http://rasbt.github.io/mlxtend/user_guide/data/wine_data
 
     """
-    tmp = np.loadtxt(DATA_PATH, delimiter=',')
+    tmp = np.loadtxt(DATA_PATH, delimiter=",")
     X, y = tmp[:, :-1], tmp[:, -1]
     y = y.astype(int)
     return X, y

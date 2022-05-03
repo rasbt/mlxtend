@@ -9,7 +9,6 @@ import numpy as np
 
 
 class BlankModel(_IterativeModel):
-
     def __init__(self, print_progress=0, random_seed=1):
         self.print_progress = print_progress
         self.random_seed = random_seed
@@ -18,8 +17,8 @@ class BlankModel(_IterativeModel):
 
 def test_init():
     est = BlankModel(print_progress=0, random_seed=1)
-    assert hasattr(est, 'print_progress')
-    assert hasattr(est, 'random_seed')
+    assert hasattr(est, "print_progress")
+    assert hasattr(est, "random_seed")
 
 
 def test_shuffle():
@@ -33,14 +32,12 @@ def test_shuffle():
 
 def test_init_params():
     est = BlankModel(print_progress=0, random_seed=1)
-    b, w = est._init_params(weights_shape=(3, 3),
-                            bias_shape=(1,),
-                            random_seed=0)
+    b, w = est._init_params(weights_shape=(3, 3), bias_shape=(1,), random_seed=0)
     assert b == np.array([0.0]), b
 
-    expect_w = np.array([[0.018, 0.004, 0.01],
-                         [0.022, 0.019, -0.01],
-                         [0.01, -0.002, -0.001]])
+    expect_w = np.array(
+        [[0.018, 0.004, 0.01], [0.022, 0.019, -0.01], [0.01, -0.002, -0.001]]
+    )
     np.testing.assert_almost_equal(w, expect_w, decimal=3)
 
 
@@ -82,9 +79,8 @@ def test_minibatch_allsample():
     ary = np.array([1, 2, 3, 4, 5, 6, 7])
     est = BlankModel(print_progress=0, random_seed=1)
     rgen = np.random.RandomState(1)
-    gen_arys = est._yield_minibatches_idx(rgen=rgen,
-                                          n_batches=1,
-                                          data_ary=ary,
-                                          shuffle=False)
+    gen_arys = est._yield_minibatches_idx(
+        rgen=rgen, n_batches=1, data_ary=ary, shuffle=False
+    )
     arys = list(gen_arys)[0]
     assert (arys == np.array([0, 1, 2, 3, 4, 5, 6])).all()

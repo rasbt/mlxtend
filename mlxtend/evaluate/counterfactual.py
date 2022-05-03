@@ -11,8 +11,15 @@ import warnings
 import numpy as np
 
 
-def create_counterfactual(x_reference, y_desired, model, X_dataset,
-                          y_desired_proba=None, lammbda=0.1, random_seed=None):
+def create_counterfactual(
+    x_reference,
+    y_desired,
+    model,
+    X_dataset,
+    y_desired_proba=None,
+    lammbda=0.1,
+    random_seed=None,
+):
 
     """
     Implementation of the counterfactual method by Wachter et al. 2017
@@ -66,9 +73,11 @@ def create_counterfactual(x_reference, y_desired, model, X_dataset,
     if y_desired_proba is not None:
         use_proba = True
         if not hasattr(model, "predict_proba"):
-            raise AttributeError("Your `model` does not support "
-                                 "`predict_proba`. Set `y_desired_proba` "
-                                 " to `None` to use `predict`instead.")
+            raise AttributeError(
+                "Your `model` does not support "
+                "`predict_proba`. Set `y_desired_proba` "
+                " to `None` to use `predict`instead."
+            )
     else:
         use_proba = False
 
@@ -88,25 +97,26 @@ def create_counterfactual(x_reference, y_desired, model, X_dataset,
 
     def dist(x_reference, x_counterfact):
         numerator = np.abs(x_reference - x_counterfact)
-        return np.sum(numerator/mad)
+        return np.sum(numerator / mad)
 
     def loss(x_counterfact, lammbda):
 
         if use_proba:
-            y_predict = model.predict_proba(
-                x_counterfact.reshape(1, -1)).flatten()[y_desired]
+            y_predict = model.predict_proba(x_counterfact.reshape(1, -1)).flatten()[
+                y_desired
+            ]
         else:
             y_predict = model.predict(x_counterfact.reshape(1, -1))
 
-        diff = lammbda*(y_predict - y_to_be_annealed_to)**2
+        diff = lammbda * (y_predict - y_to_be_annealed_to) ** 2
 
         return diff + dist(x_reference, x_counterfact)
 
-    res = minimize(loss, x_counterfact, args=(lammbda), method='Nelder-Mead')
+    res = minimize(loss, x_counterfact, args=(lammbda), method="Nelder-Mead")
 
-    if not res['success']:
-        warnings.warn(res['message'])
+    if not res["success"]:
+        warnings.warn(res["message"])
 
-    x_counterfact = res['x']
+    x_counterfact = res["x"]
 
     return x_counterfact

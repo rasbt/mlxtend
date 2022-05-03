@@ -25,7 +25,7 @@ def makedir(path):
         os.makedirs(path)
 
 
-def listdir(path, extensions=''):
+def listdir(path, extensions=""):
     path = os.path.expanduser(path)
     if check_exists(path):
         return [f for f in os.listdir(path) if f.endswith(extensions)]
@@ -45,38 +45,42 @@ def read_image(filename, path=None):
 
 def download_url(url, save_path):
     from six.moves import urllib
+
     save_path = os.path.expanduser(save_path)
     if not check_exists(save_path):
         makedir(save_path)
 
-    filename = url.rpartition('/')[2]
+    filename = url.rpartition("/")[2]
     filepath = os.path.join(save_path, filename)
 
     try:
-        print('Downloading '+url+' to '+filepath)
+        print("Downloading " + url + " to " + filepath)
         urllib.request.urlretrieve(url, filepath)
     except ValueError:
-        raise Exception('Failed to download! Check URL: ' + url +
-                        ' and local path: ' + save_path)
+        raise Exception(
+            "Failed to download! Check URL: " + url + " and local path: " + save_path
+        )
 
 
 def extract_file(path, to_directory=None):
     path = os.path.expanduser(path)
-    if path.endswith('.zip'):
-        opener, mode = zipfile.ZipFile, 'r'
-    elif path.endswith(('.tar.gz', '.tgz')):
-        opener, mode = tarfile.open, 'r:gz'
-    elif path.endswith(('tar.bz2', '.tbz')):
-        opener, mode = tarfile.open, 'r:bz2'
-    elif path.endswith('.bz2'):
-        opener, mode = bz2.BZ2File, 'rb'
-        with open(path[:-4], 'wb') as fp_out, opener(path, 'rb') as fp_in:
-            for data in iter(lambda: fp_in.read(100 * 1024), b''):
+    if path.endswith(".zip"):
+        opener, mode = zipfile.ZipFile, "r"
+    elif path.endswith((".tar.gz", ".tgz")):
+        opener, mode = tarfile.open, "r:gz"
+    elif path.endswith(("tar.bz2", ".tbz")):
+        opener, mode = tarfile.open, "r:bz2"
+    elif path.endswith(".bz2"):
+        opener, mode = bz2.BZ2File, "rb"
+        with open(path[:-4], "wb") as fp_out, opener(path, "rb") as fp_in:
+            for data in iter(lambda: fp_in.read(100 * 1024), b""):
                 fp_out.write(data)
         return
     else:
-        raise (ValueError,
-               "Could not extract `{}` as no extractor is found!".format(path))
+        raise (
+            ValueError,
+            "Could not extract `{}` as no extractor is found!".format(path),
+        )
 
     if to_directory is None:
         to_directory = os.path.abspath(os.path.join(path, os.path.pardir))

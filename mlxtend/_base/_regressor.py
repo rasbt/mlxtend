@@ -11,14 +11,12 @@ from time import time
 
 
 class _Regressor(object):
-
     def __init__(self):
         pass
 
     def _check_target_array(self, y, allowed=None):
         if not isinstance(y[0], (float, np.float_)):
-            raise AttributeError('y must be a float array.\nFound %s'
-                                 % y.dtype)
+            raise AttributeError("y must be a float array.\nFound %s" % y.dtype)
 
     def fit(self, X, y, init_params=True):
         """Learn model from training data.
@@ -43,7 +41,7 @@ class _Regressor(object):
         self._is_fitted = False
         self._check_arrays(X=X, y=y)
         self._check_target_array(y)
-        if hasattr(self, 'self.random_seed') and self.random_seed:
+        if hasattr(self, "self.random_seed") and self.random_seed:
             self._rgen = np.random.RandomState(self.random_seed)
         self._init_time = time()
         self._fit(X=X, y=y, init_params=init_params)
@@ -67,5 +65,5 @@ class _Regressor(object):
         """
         self._check_arrays(X=X)
         if not self._is_fitted:
-            raise AttributeError('Model is not fitted, yet.')
+            raise AttributeError("Model is not fitted, yet.")
         return self._predict(X)

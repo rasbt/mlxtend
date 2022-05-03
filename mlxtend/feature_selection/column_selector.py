@@ -42,7 +42,7 @@ class ColumnSelector(BaseEstimator):
         self.drop_axis = drop_axis
 
     def fit_transform(self, X, y=None):
-        """ Return a slice of the input array.
+        """Return a slice of the input array.
 
         Parameters
         ----------
@@ -60,7 +60,7 @@ class ColumnSelector(BaseEstimator):
         return self.transform(X=X, y=y)
 
     def transform(self, X, y=None):
-        """ Return a slice of the input array.
+        """Return a slice of the input array.
 
         Parameters
         ----------
@@ -77,22 +77,20 @@ class ColumnSelector(BaseEstimator):
         """
 
         # We use the loc or iloc accessor if the input is a pandas dataframe
-        if hasattr(X, 'loc') or hasattr(X, 'iloc'):
+        if hasattr(X, "loc") or hasattr(X, "iloc"):
             if type(self.cols) == tuple:
                 self.cols = list(self.cols)
             types = {type(i) for i in self.cols}
             if len(types) > 1:
                 raise ValueError(
-                    'Elements in `cols` should be all of the same data type.'
+                    "Elements in `cols` should be all of the same data type."
                 )
             if isinstance(self.cols[0], int):
                 t = X.iloc[:, self.cols].values
             elif isinstance(self.cols[0], str):
                 t = X.loc[:, self.cols].values
             else:
-                raise ValueError(
-                    'Elements in `cols` should be either `int` or `str`.'
-                )
+                raise ValueError("Elements in `cols` should be either `int` or `str`.")
         else:
             t = X[:, self.cols]
 
@@ -103,7 +101,7 @@ class ColumnSelector(BaseEstimator):
         return t
 
     def fit(self, X, y=None):
-        """ Mock method. Does nothing.
+        """Mock method. Does nothing.
 
         Parameters
         ----------

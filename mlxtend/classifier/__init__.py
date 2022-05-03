@@ -14,12 +14,14 @@ from .softmax_regression import SoftmaxRegression
 from .stacking_classification import StackingClassifier
 from .stacking_cv_classification import StackingCVClassifier
 
-__all__ = ["Adaline",
-           "EnsembleVoteClassifier",
-           "LogisticRegression",
-           "MultiLayerPerceptron",
-           "OneRClassifier",
-           "Perceptron",
-           "SoftmaxRegression",
-           "StackingClassifier",
-           "StackingCVClassifier"]
+__all__ = [
+    "Adaline",
+    "EnsembleVoteClassifier",
+    "LogisticRegression",
+    "MultiLayerPerceptron",
+    "OneRClassifier",
+    "Perceptron",
+    "SoftmaxRegression",
+    "StackingClassifier",
+    "StackingCVClassifier",
+]

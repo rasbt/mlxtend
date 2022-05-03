@@ -26,10 +26,9 @@ def test_splits():
 
 
 def test_invalid_splits():
-    assert_raises(ValueError,
-                  'Number of splits must be greater than 1.',
-                  BootstrapOutOfBag,
-                  0)
+    assert_raises(
+        ValueError, "Number of splits must be greater than 1.", BootstrapOutOfBag, 0
+    )
 
 
 def test_get_n_splits():

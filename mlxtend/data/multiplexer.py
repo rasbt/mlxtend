@@ -9,9 +9,13 @@
 import numpy as np
 
 
-def make_multiplexer_dataset(address_bits=2, sample_size=100,
-                             positive_class_ratio=0.5, shuffle=False,
-                             random_seed=None):
+def make_multiplexer_dataset(
+    address_bits=2,
+    sample_size=100,
+    positive_class_ratio=0.5,
+    shuffle=False,
+    random_seed=None,
+):
     """Function to create a binary n-bit multiplexer dataset.
 
     New in mlxtend v0.9
@@ -66,12 +70,13 @@ def make_multiplexer_dataset(address_bits=2, sample_size=100,
 
     """
     if not isinstance(address_bits, int):
-        raise AttributeError('address_bits'
-                             ' must be an integer. Got %s.' %
-                             type(address_bits))
+        raise AttributeError(
+            "address_bits" " must be an integer. Got %s." % type(address_bits)
+        )
     if address_bits < 1:
-        raise AttributeError('Number of address_bits'
-                             ' must be greater than 0. Got %s.' % address_bits)
+        raise AttributeError(
+            "Number of address_bits" " must be greater than 0. Got %s." % address_bits
+        )
     register_bits = 2**address_bits
     total_bits = address_bits + register_bits
     X_pos, y_pos = [], []
@@ -79,14 +84,14 @@ def make_multiplexer_dataset(address_bits=2, sample_size=100,
 
     # use numpy's instead of python's round because of consistent
     # banker's rounding behavior across versions
-    n_positives = np.round(sample_size*positive_class_ratio).astype(np.int_)
+    n_positives = np.round(sample_size * positive_class_ratio).astype(np.int_)
     n_negatives = sample_size - n_positives
 
     rng = np.random.RandomState(random_seed)
 
     def gen_randsample():
         all_bits = [rng.randint(0, 2) for i in range(total_bits)]
-        address_str = ''.join(str(c) for c in all_bits[:address_bits])
+        address_str = "".join(str(c) for c in all_bits[:address_bits])
         register_pos = int(address_str, base=2)
         class_label = all_bits[address_bits:][register_pos]
         return all_bits, class_label

@@ -7,6 +7,7 @@ class _BaseXComposition(_BaseComposition):
     """
     parameter handler for list of estimators
     """
+
     def _set_params(self, attr, named_attr, **params):
         # Ordered parameter replacement
         # 1. root parameter
@@ -20,7 +21,7 @@ class _BaseXComposition(_BaseComposition):
             names, estimators = zip(*items)
             estimators = list(estimators)
         for name in list(params.keys()):
-            if '__' not in name and name in names:
+            if "__" not in name and name in names:
                 # replace single estimator and re-build the
                 # root estimators list
                 for i, est_name in enumerate(names):

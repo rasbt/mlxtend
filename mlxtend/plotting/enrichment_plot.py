@@ -13,11 +13,22 @@ import numpy as np
 from itertools import cycle
 
 
-def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-',
-                    alpha=0.5, lw=2, where='post', grid=True,
-                    count_label='Count',
-                    xlim='auto', ylim='auto', invert_axes=False,
-                    legend_loc='best', ax=None):
+def enrichment_plot(
+    df,
+    colors="bgrkcy",
+    markers=" ",
+    linestyles="-",
+    alpha=0.5,
+    lw=2,
+    where="post",
+    grid=True,
+    count_label="Count",
+    xlim="auto",
+    ylim="auto",
+    invert_axes=False,
+    legend_loc="best",
+    ax=None,
+):
     """Plot stacked barplots
 
     Parameters
@@ -76,7 +87,7 @@ def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-',
 
     color_gen = cycle(colors)
     marker_gen = cycle(markers)
-    linestyle_gen = cycle(linestyles.split(','))
+    linestyle_gen = cycle(linestyles.split(","))
     r = range(1, len(df_temp.index) + 1)
     labels = df_temp.columns
 
@@ -88,25 +99,27 @@ def enrichment_plot(df, colors='bgrkcy', markers=' ', linestyles='-',
         if invert_axes:
             x, y = y, x
 
-        ax.step(x,
-                y,
-                where=where,
-                label=lab,
-                color=next(color_gen),
-                alpha=alpha,
-                lw=lw,
-                marker=next(marker_gen),
-                linestyle=next(linestyle_gen))
+        ax.step(
+            x,
+            y,
+            where=where,
+            label=lab,
+            color=next(color_gen),
+            alpha=alpha,
+            lw=lw,
+            marker=next(marker_gen),
+            linestyle=next(linestyle_gen),
+        )
 
     if invert_axes:
         ax.set_ylim, ax.set_xlim = ax.set_xlim, ax.set_ylim
 
-    if ylim == 'auto':
+    if ylim == "auto":
         ax.set_ylim([np.min(y_data) - 1, np.max(y_data) + 1])
     else:
         ax.set_ylim(ylim)
 
-    if xlim == 'auto':
+    if xlim == "auto":
         df_min, df_max = np.min(x_data.min()), np.max(x_data.max())
         ax.set_xlim([df_min - 1, df_max + 1])
 

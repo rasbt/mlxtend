@@ -18,11 +18,12 @@ class CopyTransformer(BaseEstimator):
     http://rasbt.github.io/mlxtend/user_guide/preprocessing/CopyTransformer/
 
     """
+
     def __init__(self):
         pass
 
     def transform(self, X, y=None):
-        """ Return a copy of the input array.
+        """Return a copy of the input array.
 
         Parameters
         ----------
@@ -41,12 +42,13 @@ class CopyTransformer(BaseEstimator):
         elif isinstance(X, np.ndarray) or issparse(X):
             return X.copy()
         else:
-            raise ValueError('X must be a list or NumPy array'
-                             ' or SciPy sparse array. Found %s'
-                             % type(X))
+            raise ValueError(
+                "X must be a list or NumPy array"
+                " or SciPy sparse array. Found %s" % type(X)
+            )
 
     def fit_transform(self, X, y=None):
-        """ Return a copy of the input array.
+        """Return a copy of the input array.
 
         Parameters
         ----------
@@ -63,7 +65,7 @@ class CopyTransformer(BaseEstimator):
         return self.transform(X)
 
     def fit(self, X, y=None):
-        """ Mock method. Does nothing.
+        """Mock method. Does nothing.
 
         Parameters
         ----------

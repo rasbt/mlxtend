@@ -14,19 +14,18 @@ from itertools import product
 
 def _check_arrays(X, y=None):
     if isinstance(X, list):
-        raise ValueError('X must be a numpy array')
+        raise ValueError("X must be a numpy array")
     if not len(X.shape) == 2:
-        raise ValueError('X must be a 2D array. Try X[:, numpy.newaxis]')
+        raise ValueError("X must be a 2D array. Try X[:, numpy.newaxis]")
     try:
         if y is None:
             return
-    except(AttributeError):
+    except (AttributeError):
         if not len(y.shape) == 1:
-            raise ValueError('y must be a 1D array.')
+            raise ValueError("y must be a 1D array.")
 
     if not len(y) == X.shape[0]:
-        raise ValueError('X and y must contain the'
-                         'same number of samples')
+        raise ValueError("X and y must contain the" "same number of samples")
 
 
 def no_information_rate(targets, predictions, loss_fn):
@@ -39,15 +38,21 @@ def accuracy(targets, predictions):
 
 
 def mse(targets, predictions):
-    return np.mean((np.array(targets) - np.array(predictions))**2)
+    return np.mean((np.array(targets) - np.array(predictions)) ** 2)
 
 
-def bootstrap_point632_score(estimator, X, y, n_splits=200,
-                             method='.632', scoring_func=None,
-                             predict_proba=False,
-                             random_seed=None,
-                             clone_estimator=True,
-                             **fit_params):
+def bootstrap_point632_score(
+    estimator,
+    X,
+    y,
+    n_splits=200,
+    method=".632",
+    scoring_func=None,
+    predict_proba=False,
+    random_seed=None,
+    clone_estimator=True,
+    **fit_params,
+):
     """
     Implementation of the .632 [1] and .632+ [2] bootstrap
     for supervised learning
@@ -147,13 +152,15 @@ def bootstrap_point632_score(estimator, X, y, n_splits=200,
 
     """
     if not isinstance(n_splits, int) or n_splits < 1:
-        raise ValueError('Number of splits must be'
-                         ' greater than 1. Got %s.' % n_splits)
+        raise ValueError(
+            "Number of splits must be" " greater than 1. Got %s." % n_splits
+        )
 
-    allowed_methods = ('.632', '.632+', 'oob')
+    allowed_methods = (".632", ".632+", "oob")
     if not isinstance(method, str) or method not in allowed_methods:
-        raise ValueError('The `method` must '
-                         'be in %s. Got %s.' % (allowed_methods, method))
+        raise ValueError(
+            "The `method` must " "be in %s. Got %s." % (allowed_methods, method)
+        )
 
     # Pandas compatibility
     if hasattr(X, "values"):
@@ -169,23 +176,26 @@ def bootstrap_point632_score(estimator, X, y, n_splits=200,
         cloned_est = estimator
 
     if scoring_func is None:
-        if cloned_est._estimator_type == 'classifier':
+        if cloned_est._estimator_type == "classifier":
             scoring_func = accuracy
-        elif cloned_est._estimator_type == 'regressor':
+        elif cloned_est._estimator_type == "regressor":
             scoring_func = mse
         else:
-            raise AttributeError('Estimator type undefined.'
-                                 'Please provide a scoring_func argument.')
+            raise AttributeError(
+                "Estimator type undefined." "Please provide a scoring_func argument."
+            )
 
     # determine which prediction function to use
     # either label, or probability prediction
     if not predict_proba:
         predict_func = cloned_est.predict
     else:
-        if not getattr(cloned_est, 'predict_proba', None):
-            raise RuntimeError(f'The estimator {cloned_est} does not '
-                               f'support predicting probabilities via '
-                               f'`predict_proba` function.')
+        if not getattr(cloned_est, "predict_proba", None):
+            raise RuntimeError(
+                f"The estimator {cloned_est} does not "
+                f"support predicting probabilities via "
+                f"`predict_proba` function."
+            )
         predict_func = cloned_est.predict_proba
 
     oob = BootstrapOutOfBag(n_splits=n_splits, random_seed=random_seed)
@@ -199,7 +209,7 @@ def bootstrap_point632_score(estimator, X, y, n_splits=200,
         # for binary class uses the last column
         predicted_test_val = predict_func(X[test])
 
-        if method in ('.632', '.632+'):
+        if method in (".632", ".632+"):
             # predictions on the internal training set:
             # predicted_train_val = predict_func(X[train])
 
@@ -226,7 +236,7 @@ def bootstrap_point632_score(estimator, X, y, n_splits=200,
 
         test_acc = scoring_func(y[test], predicted_test_val)
 
-        if method == 'oob':
+        if method == "oob":
             acc = test_acc
 
         else:
@@ -234,22 +244,19 @@ def bootstrap_point632_score(estimator, X, y, n_splits=200,
 
             # training error on the whole training set as mentioned in the
             # previous comment above
-            train_err = 1 - scoring_func(
-                    y, predicted_train_val)
+            train_err = 1 - scoring_func(y, predicted_train_val)
 
-            if method == '.632+':
-                gamma = 1 - (no_information_rate(
-                    y,
-                    cloned_est.predict(X),
-                    scoring_func))
-                R = (test_err - train_err) / (
-                    gamma - train_err)
-                weight = 0.632 / (1 - 0.368*R)
+            if method == ".632+":
+                gamma = 1 - (
+                    no_information_rate(y, cloned_est.predict(X), scoring_func)
+                )
+                R = (test_err - train_err) / (gamma - train_err)
+                weight = 0.632 / (1 - 0.368 * R)
 
             else:
                 weight = 0.632
 
-            acc = 1 - (weight*test_err + (1. - weight)*train_err)
+            acc = 1 - (weight * test_err + (1.0 - weight) * train_err)
 
         scores[cnt] = acc
         cnt += 1

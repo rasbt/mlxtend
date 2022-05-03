@@ -71,10 +71,12 @@ def fpgrowth(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
     """
     fpc.valid_input_check(df)
 
-    if min_support <= 0.:
-        raise ValueError('`min_support` must be a positive '
-                         'number within the interval `(0, 1]`. '
-                         'Got %s.' % min_support)
+    if min_support <= 0.0:
+        raise ValueError(
+            "`min_support` must be a positive "
+            "number within the interval `(0, 1]`. "
+            "Got %s." % min_support
+        )
 
     colname_map = None
     if use_colnames:
@@ -127,6 +129,5 @@ def fpg_step(tree, minsup, colnames, max_len, verbose):
     if not tree.is_path() and (not max_len or max_len > len(tree.cond_items)):
         for item in items:
             cond_tree = tree.conditional_tree(item, minsup)
-            for sup, iset in fpg_step(cond_tree, minsup,
-                                      colnames, max_len, verbose):
+            for sup, iset in fpg_step(cond_tree, minsup, colnames, max_len, verbose):
                 yield sup, iset

@@ -11,19 +11,19 @@ This is a quick checklist about the different steps of a typical contribution to
 other open source projects). Consider copying this list to a local text file (or the issue tracker)
 and checking off items as you go.
 
-1. [ ]  Open a new "issue" on GitHub to discuss the new feature / bug fix  
-2. [ ]  Fork the mlxtend repository from GitHub (if not already done earlier)
-3. [ ]  Create and check out a new topic branch (please don't make modifications in the master branch)
-4. [ ]  Implement the new feature or apply the bug-fix  
-5. [ ]  Add appropriate unit test functions in `mlxtend/*/tests`
-6. [ ]  Run `PYTHONPATH='.' pytest ./mlxtend -sv` and make sure that all unit tests pass  
-7. [ ]  Check for style issues by running `flake8 ./mlxtend` (you may want to run `pytest` again after you made modifications to the code)
-8. [ ]  Add a note about the modification/contribution to the `./docs/sources/changelog.md` file  
-9. [ ]  Modify documentation in the appropriate location under `mlxtend/docs/sources/`  
-10. [ ]  Push the topic branch to the server and create a pull request
-11. [ ]  Check the Travis-CI build passed at [https://travis-ci.org/rasbt/mlxtend](https://travis-ci.org/rasbt/mlxtend)
-12. [ ]  Check/improve the unit test coverage at [https://coveralls.io/github/rasbt/mlxtend](https://coveralls.io/github/rasbt/mlxtend)
-13. [ ]  Check/improve the code health at [https://landscape.io/github/rasbt/mlxtend](https://landscape.io/github/rasbt/mlxtend)
+1. [ ]  Open a new "issue" on GitHub to discuss the new feature / bug fix.
+2. [ ]  Fork the mlxtend repository from GitHub (if not already done earlier).
+3. [ ]  Create and check out a new topic branch (please don't make modifications in the master branch).
+4. [ ]  Implement the new feature or apply the bug-fix.  
+5. [ ]  Add appropriate unit test functions in `mlxtend/[submodule]/tests`.
+6. [ ]  Run `PYTHONPATH='.' pytest ./mlxtend/[submodule] -sv` for the submodule you have been modifying and make sure that all unit tests pass. (optionally, just can run the unit tests for the entire package via `PYTHONPATH='.' pytest ./mlxtend/[submodule] -sv`).
+7. [ ]  Check for style issues by running `flake8 ./mlxtend` (you may want to run `pytest` again after you made modifications to the code).
+8. [ ] It is also recommended to use [black](https://black.readthedocs.io/en/stable/) to format the code automatically according to recommended style changes. After [installing](https://black.readthedocs.io/en/stable/getting_started.html#installation) `black`, you can do this via `python -m black [source_file_or_directory]`.
+9. [ ]  Add a note about the modification/contribution to the `./docs/sources/changelog.md` file.  
+10. [ ]  Modify documentation in the appropriate location under `mlxtend/docs/sources/`.  
+11. [ ]  Push the topic branch to the server and create a pull request.
+12. [ ]  Check the autimated tests passed.
+13. [ ] The atuomatic [PEP8](https://peps.python.org/pep-0008/)/[black](https://black.readthedocs.io/en/stable/) integrations may prompt you to modify the code stylistically. It would be nice if  you could apply the suggested changes.
 
 <hr>
 
@@ -389,26 +389,45 @@ $ pip uninstall mlxtend
 
 Consider deploying the package to the PyPI test server first. The setup instructions can be found [here](https://wiki.python.org/moin/TestPyPI).
 
+**First**, install Twine if  you don't have it already installed. E.g., use the following to install all recommended packages:
+
 ```bash
-$ python setup.py sdist bdist_wheel upload -r https://testpypi.python.org/pypi
+$ conda install wheel twine setuptools
 ```
 
-Test if it can be installed from there by executing
+
+**Second**, create the binaries
+
+```bash
+$ python setup.py sdist
+```
+
+```bash
+$ python setup.py bdist_wheel --universal
+```
+
+**Third**, upload the packages to the test server:
+
+```bash
+$ twine upload --repository-url https://upload.pypi.org/legacy dist/
+```
+
+Then, install it and see if it works:
 
 ```bash
 $ pip install -i https://testpypi.python.org/pypi mlxtend
 ```
 
-and uninstall it
+Next, uninstall it again as follows:
 
 ```bash
 $ pip uninstall mlxtend
 ```
 
-After this dry-run succeeded, repeat this process using the "real" PyPI:
+**Fourth**, after this dry-run succeeded, repeat this process using the "real" PyPI:
 
 ```bash
-$ python setup.py sdist bdist_wheel upload
+$ python -m twine upload  dist/*
 ```
 
 ### 4. Removing the virtual environment
@@ -418,6 +437,14 @@ Finally, to cleanup our local drive, remove the virtual testing environment via
 ```bash
 $ conda remove --name 'mlxtend-testing' --all
 ```
+
+**Note**:
+
+if you get an error like
+
+    HTTPError: 403 Forbidden from https://upload.pypi.org/legacy/
+
+make sure you have an up to date version of twine installed (helped me to uninstall in conda and install via pip.)
 
 ### 5. Updating the conda-forge recipe
 

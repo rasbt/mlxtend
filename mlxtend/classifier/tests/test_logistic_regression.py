@@ -27,38 +27,32 @@ def test_invalid_labels_1():
     lr = LogisticRegression(epochs=15, eta=0.01, random_seed=1)
 
     if sys.version_info >= (3, 0):
-        objtype = '{(0, 1)}'
+        objtype = "{(0, 1)}"
     else:
-        objtype = 'set([(0, 1)])'
+        objtype = "set([(0, 1)])"
 
-    expect = 'Labels not in %s.\nFound (1, 2)' % objtype
+    expect = "Labels not in %s.\nFound (1, 2)" % objtype
 
-    assert_raises(AttributeError,
-                  expect,
-                  lr.fit,
-                  X,
-                  y1,
-                  {(0, 1)})
+    assert_raises(AttributeError, expect, lr.fit, X, y1, {(0, 1)})
 
 
 def test_invalid_labels_2():
     y1 = np.where(y == 0, -1, 1)
     lr = LogisticRegression(epochs=15, eta=0.01, random_seed=1)
-    assert_raises(AttributeError,
-                  'y array must not contain negative labels.\nFound [-1  1]',
-                  lr.fit,
-                  X,
-                  y1,
-                  {(-1, 1)})
+    assert_raises(
+        AttributeError,
+        "y array must not contain negative labels.\nFound [-1  1]",
+        lr.fit,
+        X,
+        y1,
+        {(-1, 1)},
+    )
 
 
 def test_logistic_regression_gd():
     w = np.array([[1.2], [4.4]])
     b = np.array([0.52])
-    lr = LogisticRegression(epochs=100,
-                            eta=0.01,
-                            minibatches=1,
-                            random_seed=1)
+    lr = LogisticRegression(epochs=100, eta=0.01, minibatches=1, random_seed=1)
 
     lr.fit(X, y)
     np.testing.assert_almost_equal(lr.w_, w, 2)
@@ -69,37 +63,28 @@ def test_logistic_regression_gd():
 
 
 def test_print_progress_1():
-    lr = LogisticRegression(epochs=100,
-                            eta=0.01,
-                            minibatches=1,
-                            print_progress=1,
-                            random_seed=1)
+    lr = LogisticRegression(
+        epochs=100, eta=0.01, minibatches=1, print_progress=1, random_seed=1
+    )
     lr.fit(X, y)
 
 
 def test_print_progress_2():
-    lr = LogisticRegression(epochs=100,
-                            eta=0.01,
-                            minibatches=1,
-                            print_progress=2,
-                            random_seed=1)
+    lr = LogisticRegression(
+        epochs=100, eta=0.01, minibatches=1, print_progress=2, random_seed=1
+    )
     lr.fit(X, y)
 
 
 def test_print_progress_3():
-    lr = LogisticRegression(epochs=100,
-                            eta=0.01,
-                            minibatches=1,
-                            print_progress=3,
-                            random_seed=1)
+    lr = LogisticRegression(
+        epochs=100, eta=0.01, minibatches=1, print_progress=3, random_seed=1
+    )
     lr.fit(X, y)
 
 
 def test_score_function():
-    lr = LogisticRegression(epochs=100,
-                            eta=0.01,
-                            minibatches=1,
-                            random_seed=1)
+    lr = LogisticRegression(epochs=100, eta=0.01, minibatches=1, random_seed=1)
 
     lr.fit(X, y)
     acc = lr.score(X, y)
@@ -109,10 +94,7 @@ def test_score_function():
 def test_refit_weights():
     w = np.array([[1.2], [4.4]])
     b = np.array([0.52])
-    lr = LogisticRegression(epochs=50,
-                            eta=0.01,
-                            minibatches=1,
-                            random_seed=1)
+    lr = LogisticRegression(epochs=50, eta=0.01, minibatches=1, random_seed=1)
 
     lr.fit(X, y)
     w1 = lr.w_[0][0]
@@ -126,10 +108,7 @@ def test_refit_weights():
 
 
 def test_predict_proba():
-    lr = LogisticRegression(epochs=100,
-                            eta=0.01,
-                            minibatches=1,
-                            random_seed=1)
+    lr = LogisticRegression(epochs=100, eta=0.01, minibatches=1, random_seed=1)
 
     lr.fit(X, y)
     idx = [0, 48, 99]  # sample labels: 0, 0, 1
@@ -140,10 +119,7 @@ def test_predict_proba():
 
 def test_logistic_regression_sgd():
     w = np.array([[1.18], [4.38]])
-    lr = LogisticRegression(epochs=100,
-                            eta=0.01,
-                            minibatches=len(y),
-                            random_seed=1)
+    lr = LogisticRegression(epochs=100, eta=0.01, minibatches=len(y), random_seed=1)
 
     lr.fit(X, y)  # 0, 1 class
     np.testing.assert_almost_equal(lr.w_, w, 2)
@@ -153,11 +129,9 @@ def test_logistic_regression_sgd():
 
 
 def test_l2_regularization_gd():
-    lr = LogisticRegression(eta=0.01,
-                            epochs=20,
-                            minibatches=1,
-                            l2_lambda=1.0,
-                            random_seed=1)
+    lr = LogisticRegression(
+        eta=0.01, epochs=20, minibatches=1, l2_lambda=1.0, random_seed=1
+    )
     lr.fit(X, y)
     y_pred = lr.predict(X)
     expect_weights = np.array([[1.061], [2.280]])
@@ -169,11 +143,9 @@ def test_l2_regularization_gd():
 
 
 def test_l2_regularization_sgd():
-    lr = LogisticRegression(eta=0.01,
-                            epochs=100,
-                            minibatches=len(y),
-                            l2_lambda=1.0,
-                            random_seed=1)
+    lr = LogisticRegression(
+        eta=0.01, epochs=100, minibatches=len(y), l2_lambda=1.0, random_seed=1
+    )
     lr.fit(X, y)
     y_pred = lr.predict(X)
     expect_weights = np.array([[0.24], [0.35]])
@@ -186,11 +158,9 @@ def test_l2_regularization_sgd():
 
 def test_ary_persistency_in_shuffling():
     orig = X.copy()
-    lr = LogisticRegression(eta=0.01,
-                            epochs=100,
-                            minibatches=len(y),
-                            l2_lambda=1.0,
-                            random_seed=1)
+    lr = LogisticRegression(
+        eta=0.01, epochs=100, minibatches=len(y), l2_lambda=1.0, random_seed=1
+    )
     lr.fit(X, y)
     np.testing.assert_almost_equal(orig, X, 6)
 

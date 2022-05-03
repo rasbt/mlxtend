@@ -27,14 +27,17 @@ from joblib import Parallel, delayed
 
 def _calc_score(selector, X, y, indices, groups=None, **fit_params):
     if selector.cv:
-        scores = cross_val_score(selector.est_,
-                                 X[:, indices], y,
-                                 groups=groups,
-                                 cv=selector.cv,
-                                 scoring=selector.scorer,
-                                 n_jobs=1,
-                                 pre_dispatch=selector.pre_dispatch,
-                                 fit_params=fit_params)
+        scores = cross_val_score(
+            selector.est_,
+            X[:, indices],
+            y,
+            groups=groups,
+            cv=selector.cv,
+            scoring=selector.scorer,
+            n_jobs=1,
+            pre_dispatch=selector.pre_dispatch,
+            fit_params=fit_params,
+        )
     else:
         selector.est_.fit(X[:, indices], y, **fit_params)
         scores = np.array([selector.scorer(selector.est_, X[:, indices], y)])
@@ -45,9 +48,8 @@ def _get_featurenames(subsets_dict, feature_idx, custom_feature_names, X):
     feature_names = None
     if feature_idx is not None:
         if custom_feature_names is not None:
-            feature_names = tuple((custom_feature_names[i]
-                                   for i in feature_idx))
-        elif hasattr(X, 'loc'):
+            feature_names = tuple((custom_feature_names[i] for i in feature_idx))
+        elif hasattr(X, "loc"):
             feature_names = tuple((X.columns[i] for i in feature_idx))
         else:
             feature_names = tuple(str(i) for i in feature_idx)
@@ -55,14 +57,14 @@ def _get_featurenames(subsets_dict, feature_idx, custom_feature_names, X):
     subsets_dict_ = deepcopy(subsets_dict)
     for key in subsets_dict_:
         if custom_feature_names is not None:
-            new_tuple = tuple((custom_feature_names[i]
-                               for i in subsets_dict[key]['feature_idx']))
-        elif hasattr(X, 'loc'):
-            new_tuple = tuple((X.columns[i]
-                               for i in subsets_dict[key]['feature_idx']))
+            new_tuple = tuple(
+                (custom_feature_names[i] for i in subsets_dict[key]["feature_idx"])
+            )
+        elif hasattr(X, "loc"):
+            new_tuple = tuple((X.columns[i] for i in subsets_dict[key]["feature_idx"]))
         else:
-            new_tuple = tuple(str(i) for i in subsets_dict[key]['feature_idx'])
-        subsets_dict_[key]['feature_names'] = new_tuple
+            new_tuple = tuple(str(i) for i in subsets_dict[key]["feature_idx"])
+        subsets_dict_[key]["feature_names"] = new_tuple
 
     return subsets_dict_, feature_names
 
@@ -149,11 +151,19 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     http://rasbt.github.io/mlxtend/user_guide/feature_selection/ExhaustiveFeatureSelector/
 
     """
-    def __init__(self, estimator, min_features=1, max_features=1,
-                 print_progress=True, scoring='accuracy',
-                 cv=5, n_jobs=1,
-                 pre_dispatch='2*n_jobs',
-                 clone_estimator=True):
+
+    def __init__(
+        self,
+        estimator,
+        min_features=1,
+        max_features=1,
+        print_progress=True,
+        scoring="accuracy",
+        cv=5,
+        n_jobs=1,
+        pre_dispatch="2*n_jobs",
+        clone_estimator=True,
+    ):
         self.estimator = estimator
         self.min_features = min_features
         self.max_features = max_features
@@ -163,8 +173,9 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.cv = cv
         self.print_progress = print_progress
         self.n_jobs = n_jobs
-        self.named_est = {key: value for key, value in
-                          _name_estimators([self.estimator])}
+        self.named_est = {
+            key: value for key, value in _name_estimators([self.estimator])
+        }
         self.clone_estimator = clone_estimator
         if self.clone_estimator:
             self.est_ = clone(self.estimator)
@@ -212,35 +223,40 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.best_feature_names_ = None
         self.best_score_ = None
 
-        if hasattr(X, 'loc'):
+        if hasattr(X, "loc"):
             X_ = X.values
         else:
             X_ = X
 
-        if (custom_feature_names is not None
-                and len(custom_feature_names) != X.shape[1]):
-            raise ValueError('If custom_feature_names is not None, '
-                             'the number of elements in custom_feature_names '
-                             'must equal the number of columns in X.')
+        if custom_feature_names is not None and len(custom_feature_names) != X.shape[1]:
+            raise ValueError(
+                "If custom_feature_names is not None, "
+                "the number of elements in custom_feature_names "
+                "must equal the number of columns in X."
+            )
 
-        if (not isinstance(self.max_features, int) or
-                (self.max_features > X.shape[1] or self.max_features < 1)):
-            raise AttributeError('max_features must be'
-                                 ' smaller than %d and larger than 0' %
-                                 (X.shape[1] + 1))
+        if not isinstance(self.max_features, int) or (
+            self.max_features > X.shape[1] or self.max_features < 1
+        ):
+            raise AttributeError(
+                "max_features must be"
+                " smaller than %d and larger than 0" % (X.shape[1] + 1)
+            )
 
-        if (not isinstance(self.min_features, int) or
-                (self.min_features > X.shape[1] or self.min_features < 1)):
-            raise AttributeError('min_features must be'
-                                 ' smaller than %d and larger than 0'
-                                 % (X.shape[1] + 1))
+        if not isinstance(self.min_features, int) or (
+            self.min_features > X.shape[1] or self.min_features < 1
+        ):
+            raise AttributeError(
+                "min_features must be"
+                " smaller than %d and larger than 0" % (X.shape[1] + 1)
+            )
 
         if self.max_features < self.min_features:
-            raise AttributeError('min_features must be <= max_features')
+            raise AttributeError("min_features must be <= max_features")
 
         candidates = chain.from_iterable(
-            combinations(range(X_.shape[1]), r=i) for i in
-            range(self.min_features, self.max_features + 1)
+            combinations(range(X_.shape[1]), r=i)
+            for i in range(self.min_features, self.max_features + 1)
         )
 
         def ncr(n, r):
@@ -259,63 +275,66 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
             """
 
-            r = min(r, n-r)
+            r = min(r, n - r)
             if r == 0:
                 return 1
-            numer = reduce(op.mul, range(n, n-r, -1))
-            denom = reduce(op.mul, range(1, r+1))
-            return numer//denom
+            numer = reduce(op.mul, range(n, n - r, -1))
+            denom = reduce(op.mul, range(1, r + 1))
+            return numer // denom
 
-        all_comb = np.sum([ncr(n=X_.shape[1], r=i)
-                           for i in range(self.min_features,
-                                          self.max_features + 1)])
+        all_comb = np.sum(
+            [
+                ncr(n=X_.shape[1], r=i)
+                for i in range(self.min_features, self.max_features + 1)
+            ]
+        )
 
         n_jobs = min(self.n_jobs, all_comb)
         parallel = Parallel(n_jobs=n_jobs, pre_dispatch=self.pre_dispatch)
-        work = enumerate(parallel(delayed(_calc_score)
-                                  (self, X_, y, c, groups=groups, **fit_params)
-                                  for c in candidates))
+        work = enumerate(
+            parallel(
+                delayed(_calc_score)(self, X_, y, c, groups=groups, **fit_params)
+                for c in candidates
+            )
+        )
 
         try:
             for iteration, (c, cv_scores) in work:
 
-                self.subsets_[iteration] = {'feature_idx': c,
-                                            'cv_scores': cv_scores,
-                                            'avg_score': np.mean(cv_scores)}
+                self.subsets_[iteration] = {
+                    "feature_idx": c,
+                    "cv_scores": cv_scores,
+                    "avg_score": np.mean(cv_scores),
+                }
 
                 if self.print_progress:
-                    sys.stderr.write('\rFeatures: %d/%d' % (
-                        iteration + 1, all_comb))
+                    sys.stderr.write("\rFeatures: %d/%d" % (iteration + 1, all_comb))
                     sys.stderr.flush()
 
                 if self._TESTING_INTERRUPT_MODE:
-                    self.subsets_, self.best_feature_names_ = \
-                        _get_featurenames(self.subsets_,
-                                          self.best_idx_,
-                                          custom_feature_names,
-                                          X)
+                    self.subsets_, self.best_feature_names_ = _get_featurenames(
+                        self.subsets_, self.best_idx_, custom_feature_names, X
+                    )
                     raise KeyboardInterrupt
 
         except KeyboardInterrupt as e:
             self.interrupted_ = True
-            sys.stderr.write('\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...')
+            sys.stderr.write("\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...")
 
-        max_score = float('-inf')
+        max_score = float("-inf")
         for c in self.subsets_:
-            if self.subsets_[c]['avg_score'] > max_score:
-                max_score = self.subsets_[c]['avg_score']
+            if self.subsets_[c]["avg_score"] > max_score:
+                max_score = self.subsets_[c]["avg_score"]
                 best_subset = c
         score = max_score
-        idx = self.subsets_[best_subset]['feature_idx']
+        idx = self.subsets_[best_subset]["feature_idx"]
 
         self.best_idx_ = idx
         self.best_score_ = score
         self.fitted = True
-        self.subsets_, self.best_feature_names_ = \
-            _get_featurenames(self.subsets_,
-                              self.best_idx_,
-                              custom_feature_names,
-                              X)
+        self.subsets_, self.best_feature_names_ = _get_featurenames(
+            self.subsets_, self.best_idx_, custom_feature_names, X
+        )
         return self
 
     def transform(self, X):
@@ -335,7 +354,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
         """
         self._check_fitted()
-        if hasattr(X, 'loc'):
+        if hasattr(X, "loc"):
             X_ = X.values
         else:
             X_ = X
@@ -393,13 +412,13 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self._check_fitted()
         fdict = deepcopy(self.subsets_)
         for k in fdict:
-            std_dev = np.std(self.subsets_[k]['cv_scores'])
+            std_dev = np.std(self.subsets_[k]["cv_scores"])
             bound, std_err = self._calc_confidence(
-                self.subsets_[k]['cv_scores'],
-                confidence=confidence_interval)
-            fdict[k]['ci_bound'] = bound
-            fdict[k]['std_dev'] = std_dev
-            fdict[k]['std_err'] = std_err
+                self.subsets_[k]["cv_scores"], confidence=confidence_interval
+            )
+            fdict[k]["ci_bound"] = bound
+            fdict[k]["std_dev"] = std_dev
+            fdict[k]["std_err"] = std_err
         return fdict
 
     def _calc_confidence(self, ary, confidence=0.95):
@@ -409,5 +428,6 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
     def _check_fitted(self):
         if not self.fitted:
-            raise AttributeError('ExhaustiveFeatureSelector has not been'
-                                 ' fitted, yet.')
+            raise AttributeError(
+                "ExhaustiveFeatureSelector has not been" " fitted, yet."
+            )

@@ -44,17 +44,18 @@ def ftest(y_target, *y_model_predictions):
     # Checks
     model_lens = set()
     y_model_predictions = list(y_model_predictions)
-    for ary in ([y_target] + y_model_predictions):
+    for ary in [y_target] + y_model_predictions:
         if len(ary.shape) != 1:
-            raise ValueError('One or more input arrays are not 1-dimensional.')
+            raise ValueError("One or more input arrays are not 1-dimensional.")
         model_lens.add(ary.shape[0])
 
     if len(model_lens) > 1:
-        raise ValueError('Each prediction array must have the '
-                         'same number of samples.')
+        raise ValueError(
+            "Each prediction array must have the " "same number of samples."
+        )
 
     if num_models < 2:
-        raise ValueError('Provide at least 2 model prediction arrays.')
+        raise ValueError("Provide at least 2 model prediction arrays.")
 
     num_examples = len(y_target)
 
@@ -71,31 +72,36 @@ def ftest(y_target, *y_model_predictions):
     avg_acc = sum(accuracies) / len(accuracies)
 
     # sum squares of classifiers
-    ssa = (num_examples * sum([acc**2 for acc in accuracies])
-           - num_examples*num_models*avg_acc**2)
+    ssa = (
+        num_examples * sum([acc**2 for acc in accuracies])
+        - num_examples * num_models * avg_acc**2
+    )
 
     # sum squares of models
     binary_combin = list(itertools.product([0, 1], repeat=num_models))
-    ary = np.hstack([(y_target == mod).reshape(-1, 1) for
-                    mod in y_model_predictions]).astype(int)
+    ary = np.hstack(
+        [(y_target == mod).reshape(-1, 1) for mod in y_model_predictions]
+    ).astype(int)
     correctly_classified_objects = 0
     binary_combin_totals = np.zeros(len(binary_combin))
     for i, c in enumerate(binary_combin):
         binary_combin_totals[i] = ((ary == c).sum(axis=1) == num_models).sum()
 
-        correctly_classified_objects += (sum(c)**2 * binary_combin_totals[i])
+        correctly_classified_objects += sum(c) ** 2 * binary_combin_totals[i]
 
-    ssb = (1./num_models * correctly_classified_objects
-           - num_examples*num_models*avg_acc**2)
+    ssb = (
+        1.0 / num_models * correctly_classified_objects
+        - num_examples * num_models * avg_acc**2
+    )
 
     # total sum of squares
-    sst = num_examples*num_models*avg_acc*(1 - avg_acc)
+    sst = num_examples * num_models * avg_acc * (1 - avg_acc)
 
     # sum squares for classification-object interaction
     ssab = sst - ssa - ssb
 
     mean_ssa = ssa / (num_models - 1)
-    mean_ssab = ssab / ((num_models - 1)*(num_examples - 1))
+    mean_ssab = ssab / ((num_models - 1) * (num_examples - 1))
 
     f = mean_ssa / mean_ssab
 
@@ -107,9 +113,7 @@ def ftest(y_target, *y_model_predictions):
     return f, p_value
 
 
-def combined_ftest_5x2cv(estimator1, estimator2, X, y,
-                         scoring=None,
-                         random_seed=None):
+def combined_ftest_5x2cv(estimator1, estimator2, X, y, scoring=None, random_seed=None):
     """
     Implements the 5x2cv combined F test proposed
     by Alpaydin 1999,
@@ -164,13 +168,12 @@ def combined_ftest_5x2cv(estimator1, estimator2, X, y,
     rng = np.random.RandomState(random_seed)
 
     if scoring is None:
-        if estimator1._estimator_type == 'classifier':
-            scoring = 'accuracy'
-        elif estimator1._estimator_type == 'regressor':
-            scoring = 'r2'
+        if estimator1._estimator_type == "classifier":
+            scoring = "accuracy"
+        elif estimator1._estimator_type == "regressor":
+            scoring = "r2"
         else:
-            raise AttributeError('Estimator must '
-                                 'be a Classifier or Regressor.')
+            raise AttributeError("Estimator must " "be a Classifier or Regressor.")
     if isinstance(scoring, str):
         scorer = get_scorer(scoring)
     else:
@@ -191,21 +194,18 @@ def combined_ftest_5x2cv(estimator1, estimator2, X, y,
     for i in range(5):
 
         randint = rng.randint(low=0, high=32767)
-        X_1, X_2, y_1, y_2 = \
-            train_test_split(X, y, test_size=0.5,
-                             random_state=randint)
+        X_1, X_2, y_1, y_2 = train_test_split(X, y, test_size=0.5, random_state=randint)
 
         score_diff_1 = score_diff(X_1, X_2, y_1, y_2)
         score_diff_2 = score_diff(X_2, X_1, y_2, y_1)
-        score_mean = (score_diff_1 + score_diff_2) / 2.
-        score_var = ((score_diff_1 - score_mean)**2 +
-                     (score_diff_2 - score_mean)**2)
+        score_mean = (score_diff_1 + score_diff_2) / 2.0
+        score_var = (score_diff_1 - score_mean) ** 2 + (score_diff_2 - score_mean) ** 2
 
         differences.extend([score_diff_1**2, score_diff_2**2])
         variances.append(score_var)
 
     numerator = sum(differences)
-    denominator = 2*(sum(variances))
+    denominator = 2 * (sum(variances))
     f_stat = numerator / denominator
 
     p_value = scipy.stats.f.sf(f_stat, 10, 5)

@@ -18,7 +18,9 @@ def generator_factory(mother_class):
         for item in iteritem:
             yield item
             mbar.update()
+
     return generator_progress
+
 
 prog_percent = generator_factory(ProgPercent)
 prog_bar = generator_factory(ProgBar)

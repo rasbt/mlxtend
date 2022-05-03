@@ -245,7 +245,7 @@ def test_not_sorted_group_names(X, y, not_sorted_group_names):
 def test_not_specified_train_size_n_splits(X, y, group_numbers):
     cv_args = {"test_size": 1}
     expected_results = None
-    error_message = "Either train_size or n_splits have to be defined"
+    error_message = "Either train_size or n_splits should be defined"
 
     with pytest.raises(ValueError, match=error_message):
         check_splits(X, y, group_numbers, cv_args, expected_results)

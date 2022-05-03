@@ -26,8 +26,8 @@ class GroupTimeSeriesSplit:
         Gap size between train and test datasets.
     shift_size : int (default=1)
         Step to shift for the next fold.
-    window_type : str (default='rolling')
-        Type of the window. Possible values: 'rolling', 'expanding'.
+    window_type : str (default="rolling")
+        Type of the window. Possible values: "rolling", "expanding".
 
     Examples
     -----------
@@ -46,7 +46,7 @@ class GroupTimeSeriesSplit:
     ):
 
         if (train_size is None) and (n_splits is None):
-            raise ValueError("Either train_size or n_splits have to be defined")
+            raise ValueError("Either train_size or n_splits should be defined")
 
         if window_type not in ["rolling", "expanding"]:
             raise ValueError('Window type can be either "rolling" or "expanding"')

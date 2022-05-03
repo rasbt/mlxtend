@@ -305,9 +305,7 @@ def test_not_consecutive_group_numbers(X, y, not_consecutive_group_numbers):
     error_message = "The groups should be consecutive"
 
     with pytest.raises(ValueError, match=error_message):
-        check_splits(
-            X, y, not_consecutive_group_numbers, cv_args, expected_results
-        )
+        check_splits(X, y, not_consecutive_group_numbers, cv_args, expected_results)
 
 
 def test_not_consecutive_group_names(X, y, not_consecutive_group_names):
@@ -316,9 +314,7 @@ def test_not_consecutive_group_names(X, y, not_consecutive_group_names):
     error_message = "The groups should be consecutive"
 
     with pytest.raises(ValueError, match=error_message):
-        check_splits(
-            X, y, not_consecutive_group_names, cv_args, expected_results
-        )
+        check_splits(X, y, not_consecutive_group_names, cv_args, expected_results)
 
 
 def test_too_large_train_size_(X, y, group_numbers):
@@ -393,8 +389,6 @@ def test_cross_val_score(X, y, group_numbers):
     expected_scores = np.array([0, 0.5, 0.25])
     clf = DummyClassifier(strategy="most_frequent")
     scoring = "accuracy"
-    cv_scores = cross_val_score(
-        clf, X, y, groups=group_numbers, scoring=scoring, cv=cv
-    )
+    cv_scores = cross_val_score(clf, X, y, groups=group_numbers, scoring=scoring, cv=cv)
 
     assert np.array_equal(cv_scores, expected_scores)

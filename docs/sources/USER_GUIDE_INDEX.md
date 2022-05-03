@@ -36,6 +36,7 @@
 - [create_counterfactual](user_guide/evaluate/create_counterfactual.md)
 - [feature_importance_permutation](user_guide/evaluate/feature_importance_permutation.md)
 - [ftest](user_guide/evaluate/ftest.md)
+- [GroupTimeSeriesSplit](user_guide/evaluate/GroupTimeSeriesSplit.md)
 - [lift_score](user_guide/evaluate/lift_score.md)
 - [mcnemar_table](user_guide/evaluate/mcnemar_table.md)
 - [mcnemar_tables](user_guide/evaluate/mcnemar_tables.md)

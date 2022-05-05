@@ -38,10 +38,11 @@ There are two ways you can do this:
 
 1. [ ]  Check for style issues by running `flake8 ./mlxtend` (you may want to run `pytest` again after you made modifications to the code)
 2. [ ]  It is also recommended to use [black](https://black.readthedocs.io/en/stable/) to format the code automatically according to recommended style changes. After [installing](https://black.readthedocs.io/en/stable/getting_started.html#installation) `black`, you can do this via `python -m black [source_file_or_directory]`.
+3. [ ] Run `[isort](https://pycqa.github.io/isort/)` which will sort the imports alphabetically: `isort mypythonfile.py`
 
 **Option B**: Using pre-commit hooks (recommended)
 
-The pre-commit hooks for mlxtend will check your code via `flake8` and `black` automatically before you make a `git commit`. You can read more about pre-commit hooks [here](https://dev.to/m1yag1/how-to-setup-your-project-with-pre-commit-black-and-flake8-183k).
+The pre-commit hooks for mlxtend will check your code via `flake8`, `black`, and `isort` automatically before you make a `git commit`. You can read more about pre-commit hooks [here](https://dev.to/m1yag1/how-to-setup-your-project-with-pre-commit-black-and-flake8-183k).
 
 1. [ ] Install the pre-commit package via `pip install pre-commit`.
 2. [ ] In the `mlxtend` folder, run `pre-commit install` (you only have to do it once).

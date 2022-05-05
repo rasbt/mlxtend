@@ -1,10 +1,15 @@
-name: python-isort
-
-on: [push, pull_request]
+name: Run isort
+on:
+  - push
 
 jobs:
-  lint:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: isort/isort-action@v0.1.0
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - uses: isort/isort-action@master
+        with:
+            requirementsFiles: "requirements.txt requirements-test.txt"

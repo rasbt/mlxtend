@@ -1,1 +1,5 @@
 isort
+joblib
+dlib 
+scikit-image
+imageio

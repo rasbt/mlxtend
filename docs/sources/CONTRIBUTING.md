@@ -11,19 +11,51 @@ This is a quick checklist about the different steps of a typical contribution to
 other open source projects). Consider copying this list to a local text file (or the issue tracker)
 and checking off items as you go.
 
-1. [ ]  Open a new "issue" on GitHub to discuss the new feature / bug fix.
-2. [ ]  Fork the mlxtend repository from GitHub (if not already done earlier).
-3. [ ]  Create and check out a new topic branch (please don't make modifications in the master branch).
-4. [ ]  Implement the new feature or apply the bug-fix.  
-5. [ ]  Add appropriate unit test functions in `mlxtend/[submodule]/tests`.
-6. [ ]  Run `PYTHONPATH='.' pytest ./mlxtend/[submodule] -sv` for the submodule you have been modifying and make sure that all unit tests pass. (optionally, just can run the unit tests for the entire package via `PYTHONPATH='.' pytest ./mlxtend/[submodule] -sv`).
-7. [ ]  Check for style issues by running `flake8 ./mlxtend` (you may want to run `pytest` again after you made modifications to the code).
-8. [ ] It is also recommended to use [black](https://black.readthedocs.io/en/stable/) to format the code automatically according to recommended style changes. After [installing](https://black.readthedocs.io/en/stable/getting_started.html#installation) `black`, you can do this via `python -m black [source_file_or_directory]`.
-9. [ ]  Add a note about the modification/contribution to the `./docs/sources/changelog.md` file.  
-10. [ ]  Modify documentation in the appropriate location under `mlxtend/docs/sources/`.  
-11. [ ]  Push the topic branch to the server and create a pull request.
-12. [ ]  Check the automated tests passed.
-13. [ ] The automatic [PEP8](https://peps.python.org/pep-0008/)/[black](https://black.readthedocs.io/en/stable/) integrations may prompt you to modify the code stylistically. It would be nice if  you could apply the suggested changes.
+
+
+### 1) Making and testing code changes:
+
+1. [ ]  Open a new "issue" on GitHub to discuss the new feature / bug fix  
+2. [ ]  Fork the mlxtend repository from GitHub (if not already done earlier)
+3. [ ]  Create and check out a new topic branch (please don't make modifications in the master branch)
+4. [ ]  Implement the new feature or apply the bug-fix  
+5. [ ]  Add appropriate unit test functions in `mlxtend/*/tests`
+6. [ ]  Run `PYTHONPATH='.' pytest ./mlxtend -sv` and make sure that all unit tests pass  
+
+7. [ ]  Modify documentation in the appropriate location under `mlxtend/docs/sources/`  
+
+8. [ ]  Add a note about the modification/contribution to the `./docs/sources/changelog.md` file  
+
+
+
+### 2) Checking code style:
+
+When you check in a PR, mlxtend will run code style checks via flak8 and black. To make the contributor experience easier, we recommend you check the code style locally before pushing it to the repository. This way it is less likely that the automated checkers will complain and prompt you to make fixes.
+
+There are two ways you can do this:
+
+**Option A**: Running the tools manually
+
+1. [ ]  Check for style issues by running `flake8 ./mlxtend` (you may want to run `pytest` again after you made modifications to the code)
+2. [ ]  It is also recommended to use [black](https://black.readthedocs.io/en/stable/) to format the code automatically according to recommended style changes. After [installing](https://black.readthedocs.io/en/stable/getting_started.html#installation) `black`, you can do this via `python -m black [source_file_or_directory]`.
+3. [ ] Run `[isort](https://pycqa.github.io/isort/)` which will sort the imports alphabetically: `isort --profile black mypythonfile.py`
+
+**Option B**: Using pre-commit hooks (recommended)
+
+The pre-commit hooks for mlxtend will check your code via `flake8`, `black`, and `isort` automatically before you make a `git commit`. You can read more about pre-commit hooks [here](https://dev.to/m1yag1/how-to-setup-your-project-with-pre-commit-black-and-flake8-183k).
+
+1. [ ] Install the pre-commit package via `pip install pre-commit`.
+2. [ ] In the `mlxtend` folder, run `pre-commit install` (you only have to do it once).
+
+
+
+
+
+### 3) Submitting your code
+
+1. [ ]  Push the topic branch to the server and create a pull request.
+2. [ ]  Check the automated tests passed.
+3. [ ] The automatic [PEP8](https://peps.python.org/pep-0008/)/[black](https://black.readthedocs.io/en/stable/) integrations may prompt you to modify the code stylistically. It would be nice if  you could apply the suggested changes.
 
 <hr>
 

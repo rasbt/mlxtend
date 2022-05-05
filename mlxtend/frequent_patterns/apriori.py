@@ -6,6 +6,7 @@
 
 import numpy as np
 import pandas as pd
+
 from ..frequent_patterns import fpcommon as fpc
 
 

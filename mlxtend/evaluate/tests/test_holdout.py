@@ -5,16 +5,14 @@
 # License: BSD 3 clause
 
 import numpy as np
-from sklearn.model_selection import GridSearchCV
-from sklearn.neighbors import KNeighborsClassifier
-from mlxtend.feature_selection import SequentialFeatureSelector as SFS
-from mlxtend.evaluate import RandomHoldoutSplit
-from mlxtend.evaluate import PredefinedHoldoutSplit
-from mlxtend.data import iris_data
-
 from packaging.version import Version
 from sklearn import __version__ as sklearn_version
+from sklearn.model_selection import GridSearchCV
+from sklearn.neighbors import KNeighborsClassifier
 
+from mlxtend.data import iris_data
+from mlxtend.evaluate import PredefinedHoldoutSplit, RandomHoldoutSplit
+from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 
 X, y = iris_data()
 

@@ -5,10 +5,10 @@
 #
 # License: BSD 3 clause
 
-from scipy.optimize import minimize
 import warnings
 
 import numpy as np
+from scipy.optimize import minimize
 
 
 def create_counterfactual(

@@ -6,11 +6,11 @@
 #
 # License: BSD 3 clause
 
-import numpy as np
 from time import time
-from .._base import _BaseModel
-from .._base import _IterativeModel
-from .._base import _Classifier
+
+import numpy as np
+
+from .._base import _BaseModel, _Classifier, _IterativeModel
 
 
 class Perceptron(_BaseModel, _IterativeModel, _Classifier):

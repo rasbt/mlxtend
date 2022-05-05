@@ -6,8 +6,9 @@
 #
 # License: BSD 3 clause
 
-import numpy as np
 from time import time
+
+import numpy as np
 
 
 class _Classifier(object):

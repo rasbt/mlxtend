@@ -4,13 +4,13 @@
 #
 # License: BSD 3 clause
 
-from mlxtend.image import EyepadAlign
-from mlxtend.image import extract_face_landmarks
+import os
+
 import imageio
 import numpy as np
-import os
 import pytest
 
+from mlxtend.image import EyepadAlign, extract_face_landmarks
 
 if "TRAVIS" in os.environ or os.environ.get("TRAVIS") == "true":
     TRAVIS = True

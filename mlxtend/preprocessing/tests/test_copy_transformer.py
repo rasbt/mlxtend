@@ -4,21 +4,21 @@
 #
 # License: BSD 3 clause
 
-import numpy as np
-from mlxtend.preprocessing import CopyTransformer
-from sklearn.datasets import load_iris
-from sklearn.pipeline import make_pipeline
-from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import StandardScaler
-from sklearn.feature_extraction.text import TfidfTransformer
-from scipy.sparse import issparse
-from mlxtend.utils import assert_raises
 import sys
-from sklearn.model_selection import GridSearchCV
 
+import numpy as np
 from packaging.version import Version
+from scipy.sparse import issparse
 from sklearn import __version__ as sklearn_version
+from sklearn.datasets import load_iris
+from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import GridSearchCV
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
 
+from mlxtend.preprocessing import CopyTransformer
+from mlxtend.utils import assert_raises
 
 iris = load_iris()
 X, y = iris.data, iris.target

@@ -5,6 +5,7 @@
 # License: BSD 3 clause
 
 import numpy as np
+
 from mlxtend.utils import check_Xy
 
 

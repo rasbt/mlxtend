@@ -7,10 +7,11 @@
 # License: BSD 3 clause
 
 
-import matplotlib.pyplot as plt
-import pandas as pd
-import numpy as np
 from itertools import cycle
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 
 
 def enrichment_plot(

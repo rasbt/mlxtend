@@ -9,12 +9,13 @@
 
 import os
 import warnings
+
 import numpy as np
+from skimage.transform import AffineTransform, resize, warp
+
+from ..externals.pyprind.progbar import ProgBar
 from . import extract_face_landmarks
 from .utils import read_image
-from ..externals.pyprind.progbar import ProgBar
-from skimage.transform import warp, AffineTransform, resize
-
 
 LEFT_INDEX = np.array([36, 37, 38, 39, 40, 41])
 RIGHT_INDEX = np.array([42, 43, 44, 45, 46, 47])

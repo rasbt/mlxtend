@@ -7,6 +7,7 @@
 # License: BSD 3 clause
 
 import numpy as np
+
 from .._base import _BaseModel
 
 

@@ -4,21 +4,21 @@
 #
 # License: BSD 3 clause
 
+from .checkerboard import checkerboard_plot
 from .decision_regions import plot_decision_regions
+from .ecdf import ecdf
+from .enrichment_plot import enrichment_plot
+from .heatmap import heatmap
 from .learning_curves import plot_learning_curves
+from .pca_correlation_graph import plot_pca_correlation_graph
 from .plot_confusion_matrix import plot_confusion_matrix
-from .plot_sequential_feature_selection import plot_sequential_feature_selection
 from .plot_linear_regression import plot_linear_regression
+from .plot_sequential_feature_selection import plot_sequential_feature_selection
 from .remove_chartjunk import remove_borders
 from .scatter import category_scatter
-from .heatmap import heatmap
-from .stacked_barplot import stacked_barplot
-from .enrichment_plot import enrichment_plot
-from .checkerboard import checkerboard_plot
-from .ecdf import ecdf
-from .scatterplotmatrix import scatterplotmatrix
-from .pca_correlation_graph import plot_pca_correlation_graph
 from .scatter_hist import scatter_hist
+from .scatterplotmatrix import scatterplotmatrix
+from .stacked_barplot import stacked_barplot
 
 __all__ = [
     "plot_learning_curves",

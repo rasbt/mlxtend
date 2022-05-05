@@ -4,9 +4,9 @@
 #
 # License: BSD 3 clause
 
-from mlxtend._base import _BaseModel
-from mlxtend._base import _Regressor
 import numpy as np
+
+from mlxtend._base import _BaseModel, _Regressor
 from mlxtend.utils import assert_raises
 
 

@@ -5,9 +5,10 @@
 #
 # License: BSD 3 clause
 
+import itertools
+
 import numpy as np
 import scipy.stats
-import itertools
 
 
 def cochrans_q(y_target, *y_model_predictions):

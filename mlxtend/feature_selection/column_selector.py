@@ -7,8 +7,8 @@
 # License: BSD 3 clause
 
 
-from sklearn.base import BaseEstimator
 import numpy as np
+from sklearn.base import BaseEstimator
 
 
 class ColumnSelector(BaseEstimator):

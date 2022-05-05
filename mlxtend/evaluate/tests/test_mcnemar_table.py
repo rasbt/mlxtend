@@ -4,9 +4,10 @@
 #
 # License: BSD 3 clause
 
+import numpy as np
+
 from mlxtend.evaluate import mcnemar_table
 from mlxtend.utils import assert_raises
-import numpy as np
 
 
 def test_input_array_1d():

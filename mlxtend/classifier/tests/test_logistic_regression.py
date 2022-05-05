@@ -5,12 +5,13 @@
 # License: BSD 3 clause
 
 import sys
+
 import numpy as np
+from sklearn.base import clone
+
 from mlxtend.classifier import LogisticRegression
 from mlxtend.data import iris_data
 from mlxtend.utils import assert_raises
-from sklearn.base import clone
-
 
 X, y = iris_data()
 X = X[:, [0, 3]]  # sepal length and petal width

@@ -4,10 +4,11 @@
 #
 # License: BSD 3 clause
 
-from mlxtend.plotting import heatmap
-import pytest
 import matplotlib.pyplot as plt
 import numpy as np
+import pytest
+
+from mlxtend.plotting import heatmap
 
 plt.switch_backend("agg")
 

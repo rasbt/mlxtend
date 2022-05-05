@@ -4,12 +4,12 @@
 #
 # License: BSD 3 clause
 
-from mlxtend.classifier import MultiLayerPerceptron as MLP
-from mlxtend.data import iris_data
 import numpy as np
-from mlxtend.utils import assert_raises
 from sklearn.base import clone
 
+from mlxtend.classifier import MultiLayerPerceptron as MLP
+from mlxtend.data import iris_data
+from mlxtend.utils import assert_raises
 
 X, y = iris_data()
 X = X[:, [0, 3]]  # sepal length and petal width

@@ -4,8 +4,9 @@
 #
 # License: BSD 3 clause
 
-from mlxtend._base import _BaseModel
 import numpy as np
+
+from mlxtend._base import _BaseModel
 from mlxtend.utils import assert_raises
 
 

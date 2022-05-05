@@ -7,8 +7,8 @@
 # License: BSD 3 clause
 
 
-from sklearn.base import BaseEstimator
 from scipy.sparse import issparse
+from sklearn.base import BaseEstimator
 
 
 class DenseTransformer(BaseEstimator):

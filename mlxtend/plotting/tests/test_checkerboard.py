@@ -4,9 +4,10 @@
 #
 # License: BSD 3 clause
 
-from mlxtend.plotting import checkerboard_plot
 import matplotlib.pyplot as plt
 import numpy as np
+
+from mlxtend.plotting import checkerboard_plot
 
 plt.switch_backend("agg")
 

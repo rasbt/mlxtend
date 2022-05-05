@@ -4,12 +4,13 @@
 #
 # License: BSD 3 clause
 
-import numpy as np
-from mlxtend.utils import assert_raises
-from mlxtend.plotting import plot_decision_regions
-from mlxtend.data import iris_data
-from mlxtend.classifier import SoftmaxRegression
 import matplotlib.pyplot as plt
+import numpy as np
+
+from mlxtend.classifier import SoftmaxRegression
+from mlxtend.data import iris_data
+from mlxtend.plotting import plot_decision_regions
+from mlxtend.utils import assert_raises
 
 plt.switch_backend("agg")
 X, y = iris_data()

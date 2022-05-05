@@ -6,12 +6,14 @@
 # License: BSD 3 clause
 
 
-from mlxtend.data import iris_data
-from mlxtend.data import wine_data
-from mlxtend.data import autompg_data
-from mlxtend.data import mnist_data
-from mlxtend.data import boston_housing_data
-from mlxtend.data import three_blobs_data
+from mlxtend.data import (
+    autompg_data,
+    boston_housing_data,
+    iris_data,
+    mnist_data,
+    three_blobs_data,
+    wine_data,
+)
 
 
 def test_import_wine_data():

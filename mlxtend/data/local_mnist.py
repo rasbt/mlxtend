@@ -7,6 +7,7 @@
 # License: BSD 3 clause
 
 import struct
+
 import numpy as np
 
 

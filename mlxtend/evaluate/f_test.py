@@ -5,11 +5,12 @@
 #
 # License: BSD 3 clause
 
+import itertools
+
 import numpy as np
 import scipy.stats
-import itertools
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import get_scorer
+from sklearn.model_selection import train_test_split
 
 
 def ftest(y_target, *y_model_predictions):

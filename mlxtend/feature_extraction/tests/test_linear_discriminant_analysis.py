@@ -7,8 +7,9 @@
 import numpy as np
 import pytest
 from numpy.testing import assert_almost_equal
-from mlxtend.feature_extraction import LinearDiscriminantAnalysis as LDA
+
 from mlxtend.data import iris_data
+from mlxtend.feature_extraction import LinearDiscriminantAnalysis as LDA
 from mlxtend.preprocessing import standardize
 
 X, y = iris_data()

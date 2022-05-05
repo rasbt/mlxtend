@@ -4,10 +4,11 @@
 #
 # License: BSD 3 clause
 
+import numpy as np
+from numpy.testing import assert_array_equal, assert_raises
+
 from mlxtend.evaluate import lift_score
 from mlxtend.evaluate.lift_score import support
-from numpy.testing import assert_array_equal, assert_raises
-import numpy as np
 
 
 def test_multiclass():

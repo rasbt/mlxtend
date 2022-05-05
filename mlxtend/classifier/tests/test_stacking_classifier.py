@@ -5,11 +5,11 @@
 # License: BSD 3 clause
 
 import random
-from packaging.version import Version
 
 import numpy as np
 import pytest
 from numpy.testing import assert_almost_equal
+from packaging.version import Version
 from scipy import sparse
 from sklearn import __version__ as sklearn_version
 from sklearn import exceptions

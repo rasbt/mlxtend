@@ -4,11 +4,10 @@
 #
 # License: BSD 3 clause
 
-from mlxtend.evaluate import cochrans_q
-from mlxtend.evaluate import mcnemar_table
-from mlxtend.evaluate import mcnemar
-from mlxtend.utils import assert_raises
 import numpy as np
+
+from mlxtend.evaluate import cochrans_q, mcnemar, mcnemar_table
+from mlxtend.utils import assert_raises
 
 
 def test_input_array_1d():

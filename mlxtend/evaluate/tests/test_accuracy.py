@@ -3,8 +3,9 @@
 #
 # License: BSD 3 clause
 import numpy as np
-from mlxtend.evaluate import accuracy_score
 from numpy.testing import assert_almost_equal
+
+from mlxtend.evaluate import accuracy_score
 
 
 def test_multiclass_binary():

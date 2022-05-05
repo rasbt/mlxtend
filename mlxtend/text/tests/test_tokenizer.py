@@ -1,5 +1,4 @@
-from mlxtend.text import tokenizer_words_and_emoticons
-from mlxtend.text import tokenizer_emoticons
+from mlxtend.text import tokenizer_emoticons, tokenizer_words_and_emoticons
 
 
 def test_tokenizer_words_and_emoticons_1():

@@ -1,6 +1,7 @@
 import numpy as np
 from scipy import sparse
 from sklearn.base import ClassifierMixin
+
 from ..externals.estimator_checks import check_is_fitted
 
 

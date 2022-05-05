@@ -3,8 +3,9 @@
 #
 # License: BSD 3 clause
 
-import math
 import itertools
+import math
+
 from ..frequent_patterns import fpcommon as fpc
 
 

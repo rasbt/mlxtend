@@ -5,7 +5,7 @@
 # License: BSD 3 clause
 
 from .column_selector import ColumnSelector
-from .sequential_feature_selector import SequentialFeatureSelector
 from .exhaustive_feature_selector import ExhaustiveFeatureSelector
+from .sequential_feature_selector import SequentialFeatureSelector
 
 __all__ = ["ColumnSelector", "SequentialFeatureSelector", "ExhaustiveFeatureSelector"]

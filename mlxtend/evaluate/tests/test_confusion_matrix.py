@@ -5,8 +5,9 @@
 # License: BSD 3 clause
 
 import numpy as np
-from mlxtend.evaluate import confusion_matrix
 from numpy.testing import assert_array_equal
+
+from mlxtend.evaluate import confusion_matrix
 
 
 def test_multiclass():

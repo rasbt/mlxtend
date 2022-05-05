@@ -4,8 +4,8 @@
 #
 # License: BSD 3 clause
 
-from .principal_component_analysis import PrincipalComponentAnalysis
 from .linear_discriminant_analysis import LinearDiscriminantAnalysis
+from .principal_component_analysis import PrincipalComponentAnalysis
 from .rbf_kernel_pca import RBFKernelPCA
 
 __all__ = ["PrincipalComponentAnalysis", "LinearDiscriminantAnalysis", "RBFKernelPCA"]

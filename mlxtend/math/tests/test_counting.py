@@ -5,9 +5,7 @@
 # License: BSD 3 clause
 
 
-from mlxtend.math import factorial
-from mlxtend.math import num_permutations
-from mlxtend.math import num_combinations
+from mlxtend.math import factorial, num_combinations, num_permutations
 
 
 def test_factorial():

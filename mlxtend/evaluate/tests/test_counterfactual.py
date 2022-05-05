@@ -4,11 +4,12 @@
 #
 # License: BSD 3 clause
 
-from mlxtend.evaluate import create_counterfactual
 import numpy as np
 from sklearn.linear_model import LogisticRegression
-from mlxtend.data import iris_data
+
 from mlxtend.classifier import OneRClassifier
+from mlxtend.data import iris_data
+from mlxtend.evaluate import create_counterfactual
 from mlxtend.utils import assert_raises
 
 

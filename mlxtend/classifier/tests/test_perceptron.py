@@ -5,11 +5,13 @@
 # License: BSD 3 clause
 
 import sys
+
 import numpy as np
+from sklearn.base import clone
+
 from mlxtend.classifier import Perceptron
 from mlxtend.data import iris_data
 from mlxtend.utils import assert_raises
-from sklearn.base import clone
 
 # Iris Data
 X, y = iris_data()

@@ -7,20 +7,21 @@
 # License: BSD 3 clause
 
 import datetime
+import sys
 import types
+from copy import deepcopy
+from itertools import combinations
+
 import numpy as np
 import scipy as sp
 import scipy.stats
-import sys
-from copy import deepcopy
-from itertools import combinations
+from joblib import Parallel, delayed
+from sklearn.base import MetaEstimatorMixin, clone
 from sklearn.metrics import get_scorer
-from sklearn.base import clone
-from sklearn.base import MetaEstimatorMixin
+from sklearn.model_selection import cross_val_score
+
 from ..externals.name_estimators import _name_estimators
 from ..utils.base_compostion import _BaseXComposition
-from sklearn.model_selection import cross_val_score
-from joblib import Parallel, delayed
 
 
 def _calc_score(selector, X, y, indices, groups=None, **fit_params):

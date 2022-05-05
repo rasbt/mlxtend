@@ -1,10 +1,11 @@
-from mlxtend.data import iris_data
-import pytest
-import numpy as np
 import os
 import re
+
+import numpy as np
+import pytest
 from numpy.testing import assert_array_equal
 
+from mlxtend.data import iris_data
 
 this_dir, this_filename = os.path.split(__file__)
 this_dir = re.sub("^stset", "", this_dir[::-1])[::-1]

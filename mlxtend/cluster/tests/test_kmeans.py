@@ -4,12 +4,12 @@
 #
 # License: BSD 3 clause
 
-from mlxtend.data import three_blobs_data
-from mlxtend.cluster import Kmeans
-from mlxtend.utils import assert_raises
 import numpy as np
 from sklearn.base import clone
 
+from mlxtend.cluster import Kmeans
+from mlxtend.data import three_blobs_data
+from mlxtend.utils import assert_raises
 
 X, y = three_blobs_data()
 

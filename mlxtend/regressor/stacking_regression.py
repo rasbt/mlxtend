@@ -8,15 +8,14 @@
 #
 # License: BSD 3 clause
 
+import numpy as np
+import scipy.sparse as sparse
+from sklearn.base import RegressorMixin, TransformerMixin, clone
+from sklearn.utils import check_X_y
+
 from ..externals.estimator_checks import check_is_fitted
 from ..externals.name_estimators import _name_estimators
 from ..utils.base_compostion import _BaseXComposition
-import numpy as np
-import scipy.sparse as sparse
-from sklearn.base import RegressorMixin
-from sklearn.base import TransformerMixin
-from sklearn.base import clone
-from sklearn.utils import check_X_y
 
 
 class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):

@@ -5,9 +5,9 @@
 # License: BSD 3 clause
 
 import numpy as np
+
 from mlxtend.evaluate import permutation_test
 from mlxtend.utils import assert_raises
-
 
 treatment = [689, 656, 668, 660, 679, 663, 664, 647]
 control = [657, 623, 652, 654, 658, 660, 670, 620]

@@ -7,9 +7,10 @@
 # License: BSD 3 clause
 
 
+from itertools import cycle
+
 import matplotlib.pyplot as plt
 import numpy as np
-from itertools import cycle
 
 
 def stacked_barplot(

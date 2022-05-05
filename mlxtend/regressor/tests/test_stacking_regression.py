@@ -4,24 +4,22 @@
 #
 # License: BSD 3 clause
 
-import pytest
 import numpy as np
-from mlxtend.externals.estimator_checks import NotFittedError
-from mlxtend.utils import assert_raises
-from mlxtend.regressor import StackingRegressor
-from sklearn.linear_model import LinearRegression
-from sklearn.linear_model import Ridge
+import pytest
+from numpy.testing import assert_almost_equal
+from packaging.version import Version
+from scipy import sparse
+from sklearn import __version__ as sklearn_version
+from sklearn.base import clone
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.linear_model import LinearRegression, Ridge
+from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.svm import SVR
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import train_test_split
-from scipy import sparse
-from numpy.testing import assert_almost_equal
-from sklearn.base import clone
-from packaging.version import Version
-from sklearn import __version__ as sklearn_version
 
+from mlxtend.externals.estimator_checks import NotFittedError
+from mlxtend.regressor import StackingRegressor
+from mlxtend.utils import assert_raises
 
 # Generating a sample dataset
 np.random.seed(1)

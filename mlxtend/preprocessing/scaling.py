@@ -6,8 +6,8 @@
 #
 # License: BSD 3 clause
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 
 
 def minmax_scaling(array, columns, min_val=0, max_val=1):

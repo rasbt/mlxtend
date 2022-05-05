@@ -8,8 +8,9 @@
 #
 # License: BSD 3 clause
 
-import numpy as np
 import warnings
+
+import numpy as np
 from sklearn.base import BaseEstimator, ClassifierMixin, TransformerMixin, clone
 from sklearn.exceptions import NotFittedError
 from sklearn.preprocessing import LabelEncoder

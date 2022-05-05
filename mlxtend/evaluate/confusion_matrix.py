@@ -7,6 +7,7 @@
 # License: BSD 3 clause
 
 from itertools import product
+
 import numpy as np
 
 

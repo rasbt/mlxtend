@@ -6,8 +6,8 @@
 #
 # License: BSD 3 clause
 
-from time import time
 from collections import defaultdict
+from time import time
 
 try:
     from inspect import signature

@@ -11,10 +11,8 @@ PyPI: https://pypi.python.org/pypi/PyPrind
 """
 
 
+from .generator_factory import prog_bar, prog_percent
 from .progbar import ProgBar
 from .progpercent import ProgPercent
-from .generator_factory import prog_percent
-from .generator_factory import prog_bar
-
 
 __version__ = "2.11.2"

@@ -10,8 +10,9 @@ Code Repository: https://github.com/rasbt/pyprind
 PyPI: https://pypi.python.org/pypi/PyPrind
 """
 
-from .prog_class import Prog
 import time
+
+from .prog_class import Prog
 
 
 class ProgPercent(Prog):

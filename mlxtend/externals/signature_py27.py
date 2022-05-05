@@ -5,11 +5,11 @@ Back port of Python 3.3's function signature tools from the inspect module,
 modified to be compatible with Python 2.7 and 3.2+.
 """
 from __future__ import absolute_import, division, print_function
-import itertools
+
 import functools
+import itertools
 import re
 import types
-
 from collections import OrderedDict
 
 __version__ = "0.4"
@@ -101,7 +101,7 @@ def signature(obj):
         partial_keywords = obj.keywords or {}
         try:
             ba = sig.bind_partial(*partial_args, **partial_keywords)
-        except TypeError as ex:
+        except TypeError:
             msg = "partial object {0!r} has incorrect arguments".format(obj)
             raise ValueError(msg)
 

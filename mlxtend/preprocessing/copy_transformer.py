@@ -7,8 +7,8 @@
 # License: BSD 3 clause
 
 import numpy as np
-from sklearn.base import BaseEstimator
 from scipy.sparse import issparse
+from sklearn.base import BaseEstimator
 
 
 class CopyTransformer(BaseEstimator):

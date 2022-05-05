@@ -1,4 +1,5 @@
 import unittest
+
 import numpy as np
 from test_fpbase import (
     FPTestEdgeCases,
@@ -7,6 +8,7 @@ from test_fpbase import (
     FPTestEx2All,
     FPTestEx3All,
 )
+
 from mlxtend.frequent_patterns import fpgrowth
 
 

@@ -4,14 +4,12 @@
 #
 # License: BSD 3 clause
 
-from mlxtend.evaluate import paired_ttest_kfold_cv
-from mlxtend.data import iris_data
-from mlxtend.data import boston_housing_data
-from sklearn.linear_model import LogisticRegression
-from sklearn.linear_model import Lasso
-from sklearn.linear_model import Ridge
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.linear_model import Lasso, LogisticRegression, Ridge
 from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+
+from mlxtend.data import boston_housing_data, iris_data
+from mlxtend.evaluate import paired_ttest_kfold_cv
 
 
 def test_classifier_defaults():

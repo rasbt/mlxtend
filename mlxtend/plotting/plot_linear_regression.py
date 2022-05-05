@@ -7,10 +7,10 @@
 # License: BSD 3 clause
 
 
-from sklearn.linear_model import LinearRegression
-from scipy.stats import pearsonr
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.stats import pearsonr
+from sklearn.linear_model import LinearRegression
 
 
 def plot_linear_regression(

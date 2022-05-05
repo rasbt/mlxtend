@@ -11,9 +11,9 @@ PyPI: https://pypi.python.org/pypi/PyPrind
 """
 
 
-import time
-import sys
 import os
+import sys
+import time
 from io import UnsupportedOperation
 
 try:

@@ -6,14 +6,12 @@
 #
 # License: BSD 3 clause
 
-import numpy as np
 from time import time
+
+import numpy as np
 from scipy.special import expit
-from .._base import _BaseModel
-from .._base import _IterativeModel
-from .._base import _MultiClass
-from .._base import _MultiLayer
-from .._base import _Classifier
+
+from .._base import _BaseModel, _Classifier, _IterativeModel, _MultiClass, _MultiLayer
 
 
 class MultiLayerPerceptron(

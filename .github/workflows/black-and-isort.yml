@@ -17,5 +17,5 @@ jobs:
           pip install isort black
       - name: Run isort and black
         run: |
-          isort -c -l 88 -m 3 --profile black mlxtend/*
-          black --check mlxtend/*
+          isort --diff --line-length 88 --multi-line 3 --py 39 --profile black mlxtend/*
+          black --diff mlxtend/*

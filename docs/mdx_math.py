@@ -40,8 +40,8 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGE.
 """
 
-from markdown.inlinepatterns import Pattern
 from markdown.extensions import Extension
+from markdown.inlinepatterns import Pattern
 from markdown.util import AtomicString, etree
 
 

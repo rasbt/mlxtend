@@ -4,8 +4,9 @@
 #
 # License: BSD 3 clause
 
-from mlxtend.evaluate import proportion_difference
 import numpy as np
+
+from mlxtend.evaluate import proportion_difference
 
 
 def test_on_dataset():

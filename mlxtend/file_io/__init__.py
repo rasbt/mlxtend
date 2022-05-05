@@ -5,7 +5,7 @@
 # License: BSD 3 clause
 
 
-from .find_files import find_files
 from .find_filegroups import find_filegroups
+from .find_files import find_files
 
 __all__ = ["find_files", "find_filegroups"]

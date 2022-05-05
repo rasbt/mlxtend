@@ -8,14 +8,14 @@
 
 import numpy as np
 import pandas as pd
-from mlxtend.feature_selection import ColumnSelector
-from sklearn.linear_model import LogisticRegression, LinearRegression
-from sklearn import datasets
-from sklearn.pipeline import make_pipeline
-from sklearn.model_selection import GridSearchCV
-
 from packaging.version import Version
 from sklearn import __version__ as sklearn_version
+from sklearn import datasets
+from sklearn.linear_model import LinearRegression, LogisticRegression
+from sklearn.model_selection import GridSearchCV
+from sklearn.pipeline import make_pipeline
+
+from mlxtend.feature_selection import ColumnSelector
 
 
 def test_ColumnSelector():

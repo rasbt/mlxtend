@@ -6,6 +6,7 @@
 
 import numpy as np
 import pytest
+
 from mlxtend.preprocessing import one_hot
 
 

@@ -13,18 +13,16 @@
 #
 # License: BSD 3 clause
 
-from ..externals.estimator_checks import check_is_fitted
-from ..externals.name_estimators import _name_estimators
-from ..utils.base_compostion import _BaseXComposition
+import numpy as np
 from scipy import sparse
-from sklearn.base import RegressorMixin
-from sklearn.base import TransformerMixin
-from sklearn.base import clone
+from sklearn.base import RegressorMixin, TransformerMixin, clone
 from sklearn.model_selection import cross_val_predict
 from sklearn.model_selection._split import check_cv
 from sklearn.utils import check_X_y
 
-import numpy as np
+from ..externals.estimator_checks import check_is_fitted
+from ..externals.name_estimators import _name_estimators
+from ..utils.base_compostion import _BaseXComposition
 
 
 class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):

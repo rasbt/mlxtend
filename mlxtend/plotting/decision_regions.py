@@ -7,11 +7,12 @@
 # License: BSD 3 clause
 
 from itertools import cycle
+from math import ceil, floor
+
 import matplotlib.pyplot as plt
 import numpy as np
+
 from mlxtend.utils import check_Xy, format_kwarg_dictionaries
-from math import floor
-from math import ceil
 
 
 def get_feature_range_mask(X, filler_feature_values=None, filler_feature_ranges=None):

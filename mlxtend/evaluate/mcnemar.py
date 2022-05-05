@@ -5,9 +5,10 @@
 #
 # License: BSD 3 clause
 
+from itertools import combinations
+
 import numpy as np
 import scipy.stats
-from itertools import combinations
 
 
 def mcnemar_table(y_target, y_model1, y_model2):

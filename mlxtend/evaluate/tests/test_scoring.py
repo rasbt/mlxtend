@@ -4,8 +4,9 @@
 #
 # License: BSD 3 clause
 
-from mlxtend.evaluate import scoring
 import numpy as np
+
+from mlxtend.evaluate import scoring
 
 
 def test_metric_argument():

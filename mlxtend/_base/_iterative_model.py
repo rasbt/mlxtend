@@ -6,9 +6,10 @@
 #
 # License: BSD 3 clause
 
-import numpy as np
 from sys import stderr
 from time import time
+
+import numpy as np
 
 
 class _IterativeModel(object):

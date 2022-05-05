@@ -5,12 +5,12 @@
 # License: BSD 3 clause
 
 import numpy as np
-from numpy.testing import assert_almost_equal
-from numpy.testing import assert_allclose
-from mlxtend.utils import assert_raises
-from mlxtend.feature_extraction import PrincipalComponentAnalysis as PCA
+from numpy.testing import assert_allclose, assert_almost_equal
+
 from mlxtend.data import iris_data
+from mlxtend.feature_extraction import PrincipalComponentAnalysis as PCA
 from mlxtend.preprocessing import standardize
+from mlxtend.utils import assert_raises
 
 X, y = iris_data()
 X_std = standardize(X)

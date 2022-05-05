@@ -7,13 +7,13 @@
 # License: BSD 3 clause
 
 
-import unicodedata
-import string
 import re
+import string
 import sys
-from pandas import __version__ as pandas_version
-from packaging.version import Version
+import unicodedata
 
+from packaging.version import Version
+from pandas import __version__ as pandas_version
 
 if sys.version_info <= (3, 0):
     raise ImportError(

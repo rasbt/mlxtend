@@ -6,8 +6,8 @@
 #
 # License: BSD 3 clause
 
-import time
 import sys
+import time
 
 
 class Counter(object):

@@ -6,8 +6,10 @@
 # License: BSD 3 clause
 
 
-import numpy as np
 import sys
+
+import numpy as np
+
 from mlxtend.data import make_multiplexer_dataset
 from mlxtend.utils import assert_raises
 

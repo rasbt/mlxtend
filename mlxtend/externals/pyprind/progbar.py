@@ -11,9 +11,10 @@ PyPI: https://pypi.python.org/pypi/PyPrind
 """
 
 
-from math import floor
-from .prog_class import Prog
 import time
+from math import floor
+
+from .prog_class import Prog
 
 
 class ProgBar(Prog):

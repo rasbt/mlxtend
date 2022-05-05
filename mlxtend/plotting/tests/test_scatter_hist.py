@@ -1,7 +1,7 @@
-from mlxtend.data import iris_data
-from mlxtend.plotting import scatter_hist
 import pandas as pd
 
+from mlxtend.data import iris_data
+from mlxtend.plotting import scatter_hist
 
 X, y = iris_data()
 df = pd.DataFrame(X)

@@ -8,8 +8,9 @@
 # License: BSD 3 clause
 
 
-import yaml
 import os.path
+
+import yaml
 
 s = "# User Guide Index"
 

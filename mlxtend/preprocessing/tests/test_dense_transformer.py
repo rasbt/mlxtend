@@ -5,18 +5,17 @@
 # License: BSD 3 clause
 
 import numpy as np
-from mlxtend.preprocessing import DenseTransformer
-from sklearn.datasets import load_iris
-from sklearn.pipeline import make_pipeline
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.preprocessing import StandardScaler
-from sklearn.feature_extraction.text import TfidfTransformer
-from scipy.sparse import issparse
-from sklearn.model_selection import GridSearchCV
-
 from packaging.version import Version
+from scipy.sparse import issparse
 from sklearn import __version__ as sklearn_version
+from sklearn.datasets import load_iris
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.model_selection import GridSearchCV
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
 
+from mlxtend.preprocessing import DenseTransformer
 
 iris = load_iris()
 X, y = iris.data, iris.target

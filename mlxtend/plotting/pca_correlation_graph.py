@@ -3,9 +3,10 @@
 # A function for plotting a PCA correlation circle
 # File Author: Gabriel Azevedo Ferreira <az.fe.gabriel@gmail.com>
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
+
 from mlxtend.externals.adjust_text import adjust_text
 from mlxtend.feature_extraction import PrincipalComponentAnalysis
 

@@ -7,8 +7,9 @@
 import numpy as np
 import pytest
 from numpy.testing import assert_almost_equal
-from mlxtend.feature_extraction import RBFKernelPCA as KPCA
 from sklearn.datasets import make_moons
+
+from mlxtend.feature_extraction import RBFKernelPCA as KPCA
 
 X1, y1 = make_moons(n_samples=50, random_state=1)
 

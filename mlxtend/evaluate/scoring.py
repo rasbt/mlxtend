@@ -7,8 +7,9 @@
 # License: BSD 3 clause
 
 import numpy as np
-from mlxtend.evaluate.confusion_matrix import confusion_matrix
+
 from mlxtend.evaluate.accuracy import accuracy_score
+from mlxtend.evaluate.confusion_matrix import confusion_matrix
 
 
 def _error(true, pred):
@@ -17,8 +18,8 @@ def _error(true, pred):
 
 def _macro(true, pred, func, unique_labels):
     scores = []
-    for l in unique_labels:
-        scores.append(func(np.where(true != l, 1, 0), np.where(pred != l, 1, 0)))
+    for lab in unique_labels:
+        scores.append(func(np.where(true != lab, 1, 0), np.where(pred != lab, 1, 0)))
     return float(sum(scores)) / len(scores)
 
 

@@ -7,9 +7,8 @@
 
 import numpy as np
 from scipy import stats
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import KFold
 from sklearn.metrics import get_scorer
+from sklearn.model_selection import KFold, train_test_split
 
 
 def paired_ttest_resampled(

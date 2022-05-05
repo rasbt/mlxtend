@@ -8,6 +8,8 @@ import random
 
 import numpy as np
 import pytest
+from packaging.version import Version
+from sklearn import __version__ as sklearn_version
 from sklearn import exceptions
 from sklearn.base import clone
 from sklearn.ensemble import RandomForestClassifier
@@ -19,9 +21,6 @@ from sklearn.neighbors import KNeighborsClassifier
 from mlxtend.classifier import EnsembleVoteClassifier
 from mlxtend.data import iris_data
 from mlxtend.utils import assert_raises
-
-from packaging.version import Version
-from sklearn import __version__ as sklearn_version
 
 X, y = iris_data()
 X = X[:, 1:3]

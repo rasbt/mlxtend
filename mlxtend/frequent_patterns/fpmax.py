@@ -5,6 +5,7 @@
 
 import collections
 import math
+
 from ..frequent_patterns import fpcommon as fpc
 
 

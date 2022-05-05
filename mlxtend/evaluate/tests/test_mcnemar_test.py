@@ -4,10 +4,11 @@
 #
 # License: BSD 3 clause
 
+import numpy as np
+from numpy.testing import assert_almost_equal
+
 from mlxtend.evaluate import mcnemar
 from mlxtend.utils import assert_raises
-from numpy.testing import assert_almost_equal
-import numpy as np
 
 
 def test_input_dimensions():

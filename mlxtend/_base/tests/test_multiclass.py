@@ -4,8 +4,9 @@
 #
 # License: BSD 3 clause
 
-from mlxtend._base import _MultiClass
 import numpy as np
+
+from mlxtend._base import _MultiClass
 
 
 class BlankClassifier(_MultiClass):

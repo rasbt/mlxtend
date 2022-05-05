@@ -5,9 +5,10 @@
 # License: BSD 3 clause
 
 
-from mlxtend.preprocessing import standardize
-import pandas as pd
 import numpy as np
+import pandas as pd
+
+from mlxtend.preprocessing import standardize
 
 
 def test_pandas_standardize():

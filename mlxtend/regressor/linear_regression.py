@@ -6,11 +6,11 @@
 #
 # License: BSD 3 clause
 
-import numpy as np
 from time import time
-from .._base import _BaseModel
-from .._base import _IterativeModel
-from .._base import _Regressor
+
+import numpy as np
+
+from .._base import _BaseModel, _IterativeModel, _Regressor
 
 
 class LinearRegression(_BaseModel, _IterativeModel, _Regressor):

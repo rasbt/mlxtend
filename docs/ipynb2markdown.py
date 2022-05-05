@@ -7,13 +7,14 @@
 #
 # License: BSD 3 clause
 
-import subprocess
 import glob
-import shutil
 import os
+import shutil
+import subprocess
+
 import markdown
-from markdown.treeprocessors import Treeprocessor
 from markdown.extensions import Extension
+from markdown.treeprocessors import Treeprocessor
 from nbconvert.exporters import MarkdownExporter
 
 

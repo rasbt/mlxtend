@@ -8,9 +8,9 @@
 import pandas as pd
 from sklearn.datasets import load_iris
 from sklearn.neighbors import KNeighborsClassifier
+
 from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 from mlxtend.utils import assert_raises
-
 
 iris = load_iris()
 X_iris = iris.data

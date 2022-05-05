@@ -1,7 +1,8 @@
-import numpy as np
-import pandas as pd
 import collections
 from distutils.version import LooseVersion as Version
+
+import numpy as np
+import pandas as pd
 from pandas import __version__ as pandas_version
 
 

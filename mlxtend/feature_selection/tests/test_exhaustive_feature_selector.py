@@ -6,18 +6,18 @@
 
 import numpy as np
 import pandas as pd
-from packaging.version import Version
 from numpy.testing import assert_almost_equal
-from mlxtend.feature_selection import ExhaustiveFeatureSelector as EFS
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.neighbors import KNeighborsClassifier
-from mlxtend.classifier import SoftmaxRegression
-from sklearn.datasets import load_iris
-from sklearn.linear_model import LinearRegression
-from sklearn.datasets import load_boston
-from mlxtend.utils import assert_raises
-from sklearn.model_selection import GroupKFold
+from packaging.version import Version
 from sklearn import __version__ as sklearn_version
+from sklearn.datasets import load_boston, load_iris
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import GroupKFold
+from sklearn.neighbors import KNeighborsClassifier
+
+from mlxtend.classifier import SoftmaxRegression
+from mlxtend.feature_selection import ExhaustiveFeatureSelector as EFS
+from mlxtend.utils import assert_raises
 
 
 def dict_compare_utility(d1, d2):

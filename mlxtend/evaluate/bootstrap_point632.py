@@ -6,10 +6,12 @@
 #
 # License: BSD 3 clause
 
-import numpy as np
-from .bootstrap_outofbag import BootstrapOutOfBag
-from sklearn.base import clone
 from itertools import product
+
+import numpy as np
+from sklearn.base import clone
+
+from .bootstrap_outofbag import BootstrapOutOfBag
 
 
 def _check_arrays(X, y=None):

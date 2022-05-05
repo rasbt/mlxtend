@@ -4,11 +4,11 @@
 #
 # License: BSD 3 clause
 
-from mlxtend.classifier import OneRClassifier
 import numpy as np
-from mlxtend.data import iris_data
 from sklearn.model_selection import train_test_split
 
+from mlxtend.classifier import OneRClassifier
+from mlxtend.data import iris_data
 
 X, y = iris_data()
 

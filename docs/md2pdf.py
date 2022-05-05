@@ -8,9 +8,11 @@
 # License: BSD 3 clause
 
 
-import yaml
 import os
 import subprocess
+
+import yaml
+
 from mlxtend import __version__
 
 yaml_path = "./mkdocs.yml"

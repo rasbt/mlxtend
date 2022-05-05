@@ -1,2 +1,10 @@
-- name: python-isort
-  uses: isort/isort-action@v0.1.0
+name: python-isort
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: isort/isort-action@v0.1.0

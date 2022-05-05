@@ -1,4 +1,4 @@
-name: Lint
+name: Lint using black
 
 on: [push, pull_request]
 

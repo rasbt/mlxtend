@@ -1,4 +1,4 @@
-name: Lint using black asnd isort
+name: Lint using black and isort
 
 on: [pull_request]
 
@@ -17,5 +17,5 @@ jobs:
           pip install isort black
       - name: Run isort and black
         run: |
-          isort --diff --line-length 88 --multi-line 3 --py 39 --profile black mlxtend/*
-          black --diff mlxtend/*
+          isort --check --diff --line-length 88 --multi-line 3 --py 39 --profile black mlxtend/*
+          black --check --diff mlxtend/*

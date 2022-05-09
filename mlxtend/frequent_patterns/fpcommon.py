@@ -109,7 +109,8 @@ def valid_input_check(df):
     all_bools = df.dtypes.apply(pd.api.types.is_bool_dtype).all()
     if not all_bools:
         warnings.warn(
-            "Support for dataframe with non-bool type migth be discontinued in  the future. Use dataframe with type bool",
+            "Support for dataframe with non-bool type migth be discontinued in"
+            "the future. Use dataframe with type bool",
             DeprecationWarning,
         )
         # Pandas is much slower than numpy, so use np.where on Numpy arrays

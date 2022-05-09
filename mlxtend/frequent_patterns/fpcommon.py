@@ -1,9 +1,12 @@
 import collections
+import warnings
 from distutils.version import LooseVersion as Version
 
 import numpy as np
 import pandas as pd
 from pandas import __version__ as pandas_version
+
+warnings.simplefilter("always", DeprecationWarning)
 
 
 def setup_fptree(df, min_support):
@@ -105,6 +108,11 @@ def valid_input_check(df):
     # Fast path: if all columns are boolean, there is nothing to checks
     all_bools = df.dtypes.apply(pd.api.types.is_bool_dtype).all()
     if not all_bools:
+        warnings.warn(
+            "Support for dataframe with non-bool type migth be discontinued in "
+            "the future. Use dataframe with type bool",
+            DeprecationWarning,
+        )
         # Pandas is much slower than numpy, so use np.where on Numpy arrays
         if hasattr(df, "sparse"):
             if df.size == 0:

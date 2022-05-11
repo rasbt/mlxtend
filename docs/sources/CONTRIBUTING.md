@@ -37,8 +37,17 @@ There are two ways you can do this:
 **Option A**: Running the tools manually
 
 1. [ ]  Check for style issues by running `flake8 ./mlxtend` (you may want to run `pytest` again after you made modifications to the code)
-2. [ ]  It is also recommended to use [black](https://black.readthedocs.io/en/stable/) to format the code automatically according to recommended style changes. After [installing](https://black.readthedocs.io/en/stable/getting_started.html#installation) `black`, you can do this via `python -m black [source_file_or_directory]`.
-3. [ ] Run `[isort](https://pycqa.github.io/isort/)` which will sort the imports alphabetically: `isort --profile black mypythonfile.py`
+2. [ ]  We recommend using [black](https://black.readthedocs.io/en/stable/) to format the code automatically according to recommended style changes. After [installing](https://black.readthedocs.io/en/stable/getting_started.html#installation) `black`, you can do this via 
+
+```
+black [source_file_or_directory]
+```
+
+3. [ ] Run `[isort](https://pycqa.github.io/isort/)` which will sort the imports alphabetically. We recommend the following command:
+
+```
+isort --line-length 88 --multi-line 3 --profile black mypythonfile.py
+```
 
 **Option B**: Using pre-commit hooks (recommended)
 

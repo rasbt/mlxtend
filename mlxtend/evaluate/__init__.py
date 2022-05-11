@@ -20,13 +20,10 @@ from .lift_score import lift_score
 from .mcnemar import mcnemar, mcnemar_table, mcnemar_tables
 from .permutation import permutation_test
 from .proportion_difference import proportion_difference
-from .bias_variance_decomp import bias_variance_decomp
-from .accuracy import accuracy_score
-from .counterfactual import create_counterfactual
 from .scoring import scoring
 from .time_series import GroupTimeSeriesSplit
-from .ttest import paired_ttest_5x2cv, paired_ttest_kfold_cv, paired_ttest_resampled
-
+from .ttest import (paired_ttest_5x2cv, paired_ttest_kfold_cv,
+                    paired_ttest_resampled)
 
 __all__ = [
     "scoring",

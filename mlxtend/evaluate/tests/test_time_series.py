@@ -7,9 +7,10 @@
 
 import numpy as np
 import pytest
-from mlxtend.evaluate import GroupTimeSeriesSplit
 from sklearn.dummy import DummyClassifier
 from sklearn.model_selection import cross_val_score
+
+from mlxtend.evaluate import GroupTimeSeriesSplit
 
 
 @pytest.fixture

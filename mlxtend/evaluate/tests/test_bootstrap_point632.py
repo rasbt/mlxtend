@@ -4,8 +4,9 @@
 #
 # License: BSD 3 clause
 
-import numpy as np
 import os
+
+import numpy as np
 import pandas as pd
 import pytest
 from sklearn.base import BaseEstimator

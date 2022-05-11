@@ -8,9 +8,9 @@
 #
 # License: BSD 3 clause
 
+import numpy as np
 from matplotlib.pyplot import subplots
 from matplotlib.table import Table
-import numpy as np
 
 
 def checkerboard_plot(

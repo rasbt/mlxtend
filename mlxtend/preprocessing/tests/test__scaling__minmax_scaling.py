@@ -5,9 +5,10 @@
 # License: BSD 3 clause
 
 
-from mlxtend.preprocessing import minmax_scaling
-import pandas as pd
 import numpy as np
+import pandas as pd
+
+from mlxtend.preprocessing import minmax_scaling
 
 
 def test_minmax_scaling_arrayerror():

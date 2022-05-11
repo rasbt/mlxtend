@@ -7,15 +7,13 @@
 # License: BSD 3 clause
 
 import numpy as np
-from sklearn.datasets import make_classification
-from sklearn.datasets import make_regression
+from sklearn.datasets import make_classification, make_regression
+from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
-from sklearn.svm import SVC
-from sklearn.svm import SVR
-from sklearn.metrics import r2_score
-from sklearn.metrics import mean_squared_error
-from mlxtend.utils import assert_raises
+from sklearn.svm import SVC, SVR
+
 from mlxtend.evaluate import feature_importance_permutation
+from mlxtend.utils import assert_raises
 
 
 def test_num_rounds_not_int():

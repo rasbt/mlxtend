@@ -6,10 +6,10 @@
 
 import numpy as np
 from scipy.sparse import csr_matrix
-from mlxtend.preprocessing import TransactionEncoder
 from sklearn.base import clone
-from mlxtend.utils import assert_raises
 
+from mlxtend.preprocessing import TransactionEncoder
+from mlxtend.utils import assert_raises
 
 dataset = [
     ["Apple", "Beer", "Rice", "Chicken"],

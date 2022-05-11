@@ -8,9 +8,8 @@
 
 
 import numpy as np
-from .._base import _Cluster
-from .._base import _BaseModel
-from .._base import _IterativeModel
+
+from .._base import _BaseModel, _Cluster, _IterativeModel
 
 # from scipy.spatial.distance import euclidean
 

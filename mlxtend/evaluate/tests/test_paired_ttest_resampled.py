@@ -5,17 +5,16 @@
 # License: BSD 3 clause
 
 import sys
-from mlxtend.evaluate import paired_ttest_resampled
-from mlxtend.utils import assert_raises
-from mlxtend.data import iris_data
-from mlxtend.data import boston_housing_data
-from sklearn.linear_model import LogisticRegression
-from sklearn.linear_model import Lasso
-from sklearn.linear_model import Ridge
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.model_selection import train_test_split
+
 from packaging.version import Version
 from sklearn import __version__ as sklearn_version
+from sklearn.linear_model import Lasso, LogisticRegression, Ridge
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+
+from mlxtend.data import boston_housing_data, iris_data
+from mlxtend.evaluate import paired_ttest_resampled
+from mlxtend.utils import assert_raises
 
 
 def test_train_size():

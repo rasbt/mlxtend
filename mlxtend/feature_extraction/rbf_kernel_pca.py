@@ -8,6 +8,7 @@
 
 import numpy as np
 from scipy.spatial import distance
+
 from .._base import _BaseModel
 
 

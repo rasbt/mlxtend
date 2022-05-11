@@ -10,9 +10,9 @@
 
 import inspect
 import os
-import sys
 import pkgutil
 import shutil
+import sys
 
 
 def _obj_name(obj):

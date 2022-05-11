@@ -5,11 +5,12 @@ if sys.version_info < (3, 0):
 
     raise SkipTest
 
-from data_names import csv
-from mlxtend.text import generalize_names_duplcheck
-from mlxtend.text import generalize_names
 from io import StringIO
+
 import pandas as pd
+from data_names import csv
+
+from mlxtend.text import generalize_names, generalize_names_duplcheck
 
 
 def test_generalize_names_duplcheck():

@@ -6,11 +6,11 @@
 # License: BSD 3 clause
 
 import random
-from packaging.version import Version
 
 import numpy as np
 import pandas as pd
 import pytest
+from packaging.version import Version
 from scipy import sparse
 from sklearn import __version__ as sklearn_version
 from sklearn import datasets, exceptions

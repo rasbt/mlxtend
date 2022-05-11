@@ -8,6 +8,7 @@
 
 import os
 import re
+
 from . import find_files
 
 
@@ -91,7 +92,7 @@ def find_filegroups(
     groups = {}
     for f in base:
         basename = os.path.splitext(os.path.basename(f))[0]
-        basename = re.sub("\%s$" % rstrip, "", basename)
+        basename = re.sub(r"\%s$" % rstrip, "", basename)
         groups[basename] = [f]
 
     # groups = {os.path.splitext(os.path.basename(f))[0].rstrip(rstrip):[f]
@@ -100,7 +101,7 @@ def find_filegroups(
     for idx, r in enumerate(rest):
         for f in r:
             basename, ext = os.path.splitext(os.path.basename(f))
-            basename = re.sub("\%s$" % rstrip, "", basename)
+            basename = re.sub(r"\%s$" % rstrip, "", basename)
             try:
                 if extensions[idx + 1] == "" or ext == extensions[idx + 1]:
                     groups[basename].append(f)

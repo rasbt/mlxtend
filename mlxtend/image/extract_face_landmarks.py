@@ -7,10 +7,12 @@
 #
 # License: BSD 3 clause
 
-import dlib
-import numpy as np
 import os
 import warnings
+
+import dlib
+import numpy as np
+
 from .utils import check_exists, download_url, extract_file
 
 predictor_path = "~/mlxtend_data/shape_predictor_68_face_landmarks.dat"

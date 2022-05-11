@@ -1,9 +1,9 @@
 import pytest
-from mlxtend.plotting import plot_pca_correlation_graph
-from mlxtend.data import iris_data
-
 from packaging.version import Version
 from sklearn import __version__ as sklearn_version
+
+from mlxtend.data import iris_data
+from mlxtend.plotting import plot_pca_correlation_graph
 
 if Version(sklearn_version) < "0.22":
     from sklearn.decomposition.pca import PCA

@@ -6,9 +6,10 @@
 #
 # License: BSD 3 clause
 
-import numpy as np
 from itertools import combinations, product
 from math import factorial
+
+import numpy as np
 
 try:
     from nose.tools import nottest

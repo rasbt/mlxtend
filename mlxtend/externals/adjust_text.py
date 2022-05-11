@@ -22,13 +22,15 @@
 # SOFTWARE.
 
 from __future__ import division
+
 import sys
-from matplotlib import pyplot as plt
 from itertools import product
-import numpy as np
 from operator import itemgetter
-from matplotlib.path import get_path_collection_extents
+
 import matplotlib
+import numpy as np
+from matplotlib import pyplot as plt
+from matplotlib.path import get_path_collection_extents
 
 if sys.version_info >= (3, 0):
     xrange = range

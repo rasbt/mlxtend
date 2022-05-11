@@ -4,17 +4,19 @@
 #
 # License: BSD 3 clause
 
-import numpy as np
-from numpy.testing import assert_array_equal
-from scipy.sparse import csr_matrix
-from mlxtend.utils import assert_raises
-from mlxtend.preprocessing import TransactionEncoder
-import pandas as pd
-from pandas import __version__ as pandas_version
-from packaging.version import Version
 import sys
 from contextlib import contextmanager
 from io import StringIO
+
+import numpy as np
+import pandas as pd
+from numpy.testing import assert_array_equal
+from packaging.version import Version
+from pandas import __version__ as pandas_version
+from scipy.sparse import csr_matrix
+
+from mlxtend.preprocessing import TransactionEncoder
+from mlxtend.utils import assert_raises
 
 
 @contextmanager

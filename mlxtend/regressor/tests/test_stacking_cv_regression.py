@@ -8,21 +8,21 @@
 # License: BSD 3 clause
 
 import random
-import pytest
+
 import numpy as np
+import pytest
+from packaging.version import Version
 from scipy import sparse
+from sklearn import __version__ as sklearn_version
+from sklearn.base import clone
+from sklearn.linear_model import Lasso, LinearRegression, Ridge
+from sklearn.model_selection import GridSearchCV, KFold, train_test_split
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.svm import SVR
+
 from mlxtend.externals.estimator_checks import NotFittedError
 from mlxtend.regressor import StackingCVRegressor
 from mlxtend.utils import assert_raises
-from sklearn.linear_model import LinearRegression
-from sklearn.linear_model import Ridge, Lasso
-from sklearn.neighbors import KNeighborsRegressor
-from sklearn.svm import SVR
-from sklearn.model_selection import GridSearchCV, train_test_split, KFold
-from sklearn.base import clone
-from packaging.version import Version
-from sklearn import __version__ as sklearn_version
-
 
 # Some test data
 np.random.seed(1)

@@ -4,11 +4,12 @@
 #
 # License: BSD 3 clause
 
-from mlxtend.utils import assert_raises
-from mlxtend.utils import check_Xy, format_kwarg_dictionaries
-import numpy as np
-import sys
 import os
+import sys
+
+import numpy as np
+
+from mlxtend.utils import assert_raises, check_Xy, format_kwarg_dictionaries
 
 y = np.array([1, 2, 3, 4])
 X = np.array([[1.0, 2.0], [3.0, 4.0], [5.0, 6.0], [7.0, 8.0]])

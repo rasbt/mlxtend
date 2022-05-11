@@ -8,8 +8,9 @@
 #
 # License: BSD 3 clause
 
-import numpy as np
 import warnings
+
+import numpy as np
 from scipy.stats import chi2_contingency
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.exceptions import NotFittedError

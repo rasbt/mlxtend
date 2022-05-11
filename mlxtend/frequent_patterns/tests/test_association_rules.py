@@ -1,8 +1,9 @@
 import numpy as np
 import pandas as pd
 import pytest
-from mlxtend.frequent_patterns import apriori, association_rules
 from numpy.testing import assert_raises as numpy_assert_raises
+
+from mlxtend.frequent_patterns import apriori, association_rules
 
 one_ary = np.array(
     [

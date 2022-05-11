@@ -6,8 +6,8 @@
 
 import numpy as np
 import pytest
-from mlxtend.feature_extraction.base import _BaseFeatureExtractor
 
+from mlxtend.feature_extraction.base import _BaseFeatureExtractor
 
 X, y = np.array([[1, 2], [4, 5], [3, 9]]), np.array([1, 2, 3])
 base = _BaseFeatureExtractor()

@@ -4,10 +4,10 @@
 #
 # License: BSD 3 clause
 
-from mlxtend._base import _BaseModel
-from mlxtend._base import _Classifier
 import numpy as np
 import pytest
+
+from mlxtend._base import _BaseModel, _Classifier
 
 
 class BlankClassifier(_BaseModel, _Classifier):

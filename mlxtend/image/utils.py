@@ -7,10 +7,11 @@
 #
 # License: BSD 3 clause
 
+import bz2
 import os
 import tarfile
 import zipfile
-import bz2
+
 import imageio
 
 

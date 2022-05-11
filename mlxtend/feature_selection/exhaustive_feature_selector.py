@@ -7,22 +7,21 @@
 # License: BSD 3 clause
 
 
+import operator as op
+import sys
+from copy import deepcopy
+from functools import reduce
+from itertools import chain, combinations
+
 import numpy as np
 import scipy as sp
 import scipy.stats
-import sys
-import operator as op
-from copy import deepcopy
-from itertools import combinations
-from itertools import chain
-from functools import reduce
-from sklearn.metrics import get_scorer
-from sklearn.base import clone
-from sklearn.base import BaseEstimator
-from sklearn.base import MetaEstimatorMixin
-from ..externals.name_estimators import _name_estimators
-from sklearn.model_selection import cross_val_score
 from joblib import Parallel, delayed
+from sklearn.base import BaseEstimator, MetaEstimatorMixin, clone
+from sklearn.metrics import get_scorer
+from sklearn.model_selection import cross_val_score
+
+from ..externals.name_estimators import _name_estimators
 
 
 def _calc_score(selector, X, y, indices, groups=None, **fit_params):
@@ -317,7 +316,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                     )
                     raise KeyboardInterrupt
 
-        except KeyboardInterrupt as e:
+        except KeyboardInterrupt:
             self.interrupted_ = True
             sys.stderr.write("\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...")
 

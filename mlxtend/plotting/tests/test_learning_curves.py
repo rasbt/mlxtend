@@ -5,10 +5,11 @@
 # License: BSD 3 clause
 
 import numpy as np
-from mlxtend.plotting import plot_learning_curves
 from sklearn import datasets
-from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+
+from mlxtend.plotting import plot_learning_curves
 
 
 def test_training_size():

@@ -5,11 +5,12 @@
 # License: BSD 3 clause
 
 
-from mlxtend.regressor import LinearRegression
-from mlxtend.data import boston_housing_data
 import numpy as np
 from numpy.testing import assert_almost_equal
 from sklearn.base import clone
+
+from mlxtend.data import boston_housing_data
+from mlxtend.regressor import LinearRegression
 
 X, y = boston_housing_data()
 X_rm = X[:, 5][:, np.newaxis]

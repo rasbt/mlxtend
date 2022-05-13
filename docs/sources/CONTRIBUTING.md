@@ -46,7 +46,7 @@ black [source_file_or_directory]
 3. [ ] Run `[isort](https://pycqa.github.io/isort/)` which will sort the imports alphabetically. We recommend the following command:
 
 ```
-isort -p --line-length 88 --multi-line 3 --profile black mypythonfile.py
+isort -p biopandas --line-length 88 --multi-line 3 --profile black mypythonfile.py
 ```
 
 **Option B**: Using pre-commit hooks (recommended)

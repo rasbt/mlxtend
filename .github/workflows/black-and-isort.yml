@@ -17,5 +17,5 @@ jobs:
           pip install isort black
       - name: Run isort and black
         run: |
-          isort -p biopandas --check --diff --line-length 88 --multi-line 3 --py 39 --profile black mlxtend/*
+          isort -p mlxtend --check --diff --line-length 88 --multi-line 3 --py 39 --profile black mlxtend/*
           black --check --diff mlxtend/*

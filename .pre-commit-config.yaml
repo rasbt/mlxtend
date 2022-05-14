@@ -13,4 +13,4 @@ repos:
   hooks:
     - id: isort
       name: isort (python)
-      args: ["--profile", "black", "-p", "biopandas", "--line-length 88", "--multi-line 3"]
+      args: ["--profile", "black", "-p", "mlxtend", "--line-length 88", "--multi-line 3"]

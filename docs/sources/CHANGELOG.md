@@ -11,8 +11,6 @@ The CHANGELOG for the current development version is available at
 
 #### New Features and Enhancements
 
-- Fix various typos in McNemar guides
-
 ##### Downloads
 
 - [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.20.0.zip)
@@ -32,6 +30,8 @@ The CHANGELOG for the current development version is available at
 - Due to compatibility issues with newer package versions, certain functions from six.py have been removed so that mlxtend may not work anymore with Python 2.7.
 - As an internal change to speed up unit testing, unit testing is now faciliated by GitHub workflows, and Travis CI and Appveyor hooks have been removed.
 - Improved axis label rotation in `mlxtend.plotting.heatmap` and `mlxtend.plotting.plot_confusion_matrix` ([#872](https://github.com/rasbt/mlxtend/pull/872))
+- Fix various typos in McNemar guides.
+- Raises a warning if non-bool arrays are used in the frequent pattern functions `apriori`, `fpmax`, and `fpgrowth`. ([#934](https://github.com/rasbt/mlxtend/pull/934) via [NimaSarajpoor](https://github.com/rasbt/mlxtend/issues?q=is%3Apr+is%3Aopen+author%3ANimaSarajpoor))
 
 ##### Bug Fixes
 

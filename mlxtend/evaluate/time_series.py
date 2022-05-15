@@ -7,7 +7,10 @@
 
 from itertools import accumulate, chain, groupby, islice
 
+import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.patches import Patch
+from matplotlib.ticker import MaxNLocator
 from sklearn.utils import indexable
 
 
@@ -230,3 +233,117 @@ class GroupTimeSeriesSplit:
                 )
 
         self._train_start_idx = train_start_idx
+
+
+def print_split_info(X, y, groups, **cv_args):
+    """Print information details about splits."""
+    cv = GroupTimeSeriesSplit(**cv_args)
+    groups = np.array(groups)
+
+    for train_idx, test_idx in cv.split(X, groups=groups):
+        print("Train indices:", train_idx)
+        print("Test indices:", test_idx)
+        print("Train length:", len(train_idx))
+        print("Test length:", len(test_idx))
+        print("Train groups:", groups[train_idx])
+        print("Test groups:", groups[test_idx])
+        print("Train group size:", len(set(groups[train_idx])))
+        print("Test group size:", len(set(groups[test_idx])))
+        print("Train group months:", X.index[train_idx].values)
+        print("Test group months:", X.index[test_idx].values)
+        print()
+
+
+def plot_split_indices(cv, cv_args, X, y, groups, n_splits, image_file_path=None):
+    """Create a sample plot for indices of a cross-validation object."""
+    fig, ax = plt.subplots(figsize=(12, 4))
+    cmap_data = plt.cm.tab20
+    cmap_cv = plt.cm.coolwarm
+    lw = 10
+    marker_size = 200
+
+    for split_idx, (train_idx, test_idx) in enumerate(
+        cv.split(X=X, y=y, groups=groups)
+    ):
+        indices = np.array([np.nan] * len(X))
+        indices[test_idx] = 1
+        indices[train_idx] = 0
+
+        ax.scatter(
+            range(len(X)),
+            [split_idx + 0.5] * len(X),
+            c=indices,
+            marker="_",
+            lw=lw,
+            cmap=cmap_cv,
+            vmin=-0.4,
+            vmax=1.4,
+            s=marker_size,
+        )
+
+    ax.scatter(
+        range(len(X)),
+        [split_idx + 1.5] * len(X),
+        c=groups,
+        marker="_",
+        lw=lw,
+        cmap=cmap_data,
+        s=marker_size,
+    )
+
+    yticklabels = list(range(n_splits)) + ["group"]
+    ax.set(
+        yticks=np.arange(n_splits + 1) + 0.5,
+        yticklabels=yticklabels,
+        ylabel="CV iteration",
+        ylim=[n_splits + 1.2, -0.2],
+        xlim=[-0.5, len(indices) - 0.5],
+    )
+
+    ax.legend(
+        [Patch(color=cmap_cv(0.2)), Patch(color=cmap_cv(0.8))],
+        ["Training set", "Testing set"],
+        loc=(1.02, 0.8),
+        fontsize=13,
+    )
+
+    ax.set_title("{}\n{}".format(type(cv).__name__, cv_args), fontsize=15)
+    ax.xaxis.set_major_locator(MaxNLocator(min_n_ticks=len(X), integer=True))
+    ax.set_xlabel(xlabel="Sample index", fontsize=13)
+    ax.set_ylabel(ylabel="CV iteration", fontsize=13)
+    ax.tick_params(axis="both", which="major", labelsize=13)
+    ax.tick_params(axis="both", which="minor", labelsize=13)
+
+    plt.tight_layout()
+
+    if image_file_path:
+        plt.savefig(image_file_path, bbox_inches="tight")
+
+    plt.show()
+
+
+def plot_splits(X, y, groups, image_file_path=None, **cv_args):
+    """Visualize splits by group."""
+    cv = GroupTimeSeriesSplit(**cv_args)
+    cv._n_groups = len(np.unique(groups))
+    cv._calculate_split_params()
+    n_splits = cv.n_splits
+
+    plot_split_indices(
+        cv, cv_args, X, y, groups, n_splits, image_file_path=image_file_path
+    )
+
+
+def print_cv_info(cv, X, y, groups, clf, scores):
+    """Print information details about cross-validation usage with classifier."""
+    for split_idx, (train_idx, test_idx) in enumerate(cv.split(X, y, groups)):
+        clf.fit(X.iloc[train_idx], y.iloc[train_idx])
+        y_train_pred = clf.predict(X.iloc[train_idx])
+        y_test_pred = clf.predict(X.iloc[test_idx])
+        print(f"Split number: {split_idx + 1}")
+        print(f"Train true target: {y.iloc[train_idx].values}")
+        print(f"Train predicted target: {y_train_pred}")
+        print(f"Test true target: {y.iloc[test_idx].values}")
+        print(f"Test predicted target: {y_test_pred}")
+        print(f"Accuracy: {scores[split_idx].round(2)}")
+        print()

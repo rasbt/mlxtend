@@ -985,7 +985,7 @@
                  <!--   -->
             <li class="second-level"><a href="#example-7-a-note-about-scikit-learn-svms-and-soft-voting">Example 7 - A Note about Scikit-Learn SVMs and Soft Voting</a></li>
                  <!--   -->
-            <li class="second-level"><a href="#example-7-a-note-about-scikit-learn-svms-and-soft-votingbased-on-the-probabilities-we-would-expect-the-svm-to-predict-class-2-because-it-has-the-highest-probability-since-the-ensemblevoteclassifier-uses-the-argmax-function-internally-if-votingsoft-it-would-indeed-predict-class-2-in-this-case-even-if-the-ensemble-consists-of-only-one-svm-model">Example 7 - A Note about Scikit-Learn SVMs and Soft VotingBased on the probabilities, we would expect the SVM to predict class 2, because it has the highest probability. Since the EnsembleVoteClassifier uses the argmax function internally if voting='soft', it would indeed predict class 2 in this case even if the ensemble consists of only one SVM model.</a></li>
+            <li class="second-level"><a href="#example-7-a-note-about-scikit-learn-svms-and-soft-voting_1">Example 7 - A Note about Scikit-Learn SVMs and Soft Voting</a></li>
                  <!--   -->
             <li class="second-level"><a href="#example-8-optimizing-ensemble-weights-with-nelder-mead">Example 8 - Optimizing Ensemble Weights with Nelder-Mead</a></li>
                  <!--   -->
@@ -1439,7 +1439,8 @@ Class from SVM in Ensemble : 2
 /Users/sebastian/miniforge3/lib/python3.9/site-packages/mlxtend/classifier/ensemble_vote.py:166: UserWarning: fit_base_estimators=False enforces use_clones to be `False`
   warnings.warn("fit_base_estimators=False "
 </code></pre>
-<h2 id="example-7-a-note-about-scikit-learn-svms-and-soft-votingbased-on-the-probabilities-we-would-expect-the-svm-to-predict-class-2-because-it-has-the-highest-probability-since-the-ensemblevoteclassifier-uses-the-argmax-function-internally-if-votingsoft-it-would-indeed-predict-class-2-in-this-case-even-if-the-ensemble-consists-of-only-one-svm-model">Example 7 - A Note about Scikit-Learn SVMs and Soft VotingBased on the probabilities, we would expect the SVM to predict class 2, because it has the highest probability. Since the <code>EnsembleVoteClassifier</code> uses the <code>argmax</code> function internally if <code>voting='soft'</code>, it would indeed predict class 2 in this case even if the ensemble consists of only one SVM model.</h2>
+<h2 id="example-7-a-note-about-scikit-learn-svms-and-soft-voting_1">Example 7 - A Note about Scikit-Learn SVMs and Soft Voting</h2>
+<p>Based on the probabilities, we would expect the SVM to predict class 2, because it has the highest probability. Since the <code>EnsembleVoteClassifier</code> uses the <code>argmax</code> function internally if <code>voting='soft'</code>, it would indeed predict class 2 in this case even if the ensemble consists of only one SVM model.</p>
 <p>Note that in practice, this minor technical detail does not need to concern you, but it is useful to keep it in mind in case you are wondering about results from a 1-model SVM ensemble compared to that SVM alone -- this is not a bug.</p>
 <h2 id="example-8-optimizing-ensemble-weights-with-nelder-mead">Example 8 - Optimizing Ensemble Weights with Nelder-Mead</h2>
 <p>In this section, we will see how we can use a heuristic search method like <a href="https://en.wikipedia.org/wiki/Nelder–Mead_method">Nelder-Mead</a> for optimizing the ensemble weights.</p>

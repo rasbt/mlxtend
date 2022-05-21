@@ -985,7 +985,13 @@
                  <!--   -->
             <li class="second-level"><a href="#example-7-a-note-about-scikit-learn-svms-and-soft-voting">Example 7 - A Note about Scikit-Learn SVMs and Soft Voting</a></li>
                  <!--   -->
+            <li class="second-level"><a href="#example-7-a-note-about-scikit-learn-svms-and-soft-votingbased-on-the-probabilities-we-would-expect-the-svm-to-predict-class-2-because-it-has-the-highest-probability-since-the-ensemblevoteclassifier-uses-the-argmax-function-internally-if-votingsoft-it-would-indeed-predict-class-2-in-this-case-even-if-the-ensemble-consists-of-only-one-svm-model">Example 7 - A Note about Scikit-Learn SVMs and Soft VotingBased on the probabilities, we would expect the SVM to predict class 2, because it has the highest probability. Since the EnsembleVoteClassifier uses the argmax function internally if voting='soft', it would indeed predict class 2 in this case even if the ensemble consists of only one SVM model.</a></li>
+                 <!--   -->
+            <li class="second-level"><a href="#example-8-optimizing-ensemble-weights-with-nelder-mead">Example 8 - Optimizing Ensemble Weights with Nelder-Mead</a></li>
+                 <!--   -->
         <li class="first-level "><a href="#api">API</a></li>
+            <li class="second-level"><a href="#methods">Methods</a></li>
+                 <!--   -->
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
@@ -1143,23 +1149,16 @@ for clf, lab, grd in zip([clf1, clf2, clf3, eclf],
     fig = plot_decision_regions(X=X, y=y, clf=clf)
     plt.title(lab)
 </code></pre>
-<pre><code>/Users/kani/Documents/KatrinaLand/mlxtend/mlxtend/plotting/decision_regions.py:249: MatplotlibDeprecationWarning: Passing unsupported keyword arguments to axis() will raise a TypeError in 3.3.
-  ax.axis(xmin=xx.min(), xmax=xx.max(), y_min=yy.min(), y_max=yy.max())
-/Users/kani/Documents/KatrinaLand/mlxtend/mlxtend/plotting/decision_regions.py:249: MatplotlibDeprecationWarning: Passing unsupported keyword arguments to axis() will raise a TypeError in 3.3.
-  ax.axis(xmin=xx.min(), xmax=xx.max(), y_min=yy.min(), y_max=yy.max())
-/Users/kani/Documents/KatrinaLand/mlxtend/mlxtend/plotting/decision_regions.py:249: MatplotlibDeprecationWarning: Passing unsupported keyword arguments to axis() will raise a TypeError in 3.3.
-  ax.axis(xmin=xx.min(), xmax=xx.max(), y_min=yy.min(), y_max=yy.max())
-/Users/kani/Documents/KatrinaLand/mlxtend/mlxtend/plotting/decision_regions.py:249: MatplotlibDeprecationWarning: Passing unsupported keyword arguments to axis() will raise a TypeError in 3.3.
-  ax.axis(xmin=xx.min(), xmax=xx.max(), y_min=yy.min(), y_max=yy.max())
-</code></pre>
-<p><img alt="png" src="../EnsembleVoteClassifier_files/EnsembleVoteClassifier_24_1.png" /></p>
+<p><img alt="png" src="../EnsembleVoteClassifier_files/EnsembleVoteClassifier_24_0.png" /></p>
 <h2 id="example-2-grid-search">Example 2 - Grid Search</h2>
 <pre><code class="language-python">from sklearn import datasets
 
 iris = datasets.load_iris()
 X, y = iris.data[:, 1:3], iris.target
 </code></pre>
-<pre><code class="language-python">from sklearn.model_selection import GridSearchCV
+<pre><code class="language-python">%%capture --no-display
+
+from sklearn.model_selection import GridSearchCV
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB 
 from sklearn.ensemble import RandomForestClassifier
@@ -1184,119 +1183,10 @@ for r, _ in enumerate(grid.cv_results_['mean_test_score']):
              grid.cv_results_[cv_keys[1]][r] / 2.0,
              grid.cv_results_[cv_keys[2]][r]))
 </code></pre>
-<pre><code>/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-
-
-0.953 +/- 0.01 {'logisticregression__C': 1.0, 'randomforestclassifier__n_estimators': 20}
-0.960 +/- 0.01 {'logisticregression__C': 1.0, 'randomforestclassifier__n_estimators': 200}
-0.960 +/- 0.01 {'logisticregression__C': 100.0, 'randomforestclassifier__n_estimators': 20}
-0.960 +/- 0.01 {'logisticregression__C': 100.0, 'randomforestclassifier__n_estimators': 200}
-</code></pre>
 <p><strong>Note</strong>: If the <code>EnsembleClassifier</code> is initialized with multiple similar estimator objects, the estimator names are modified with consecutive integer indices, for example:</p>
-<pre><code class="language-python">clf1 = LogisticRegression(random_state=1)
+<pre><code class="language-python">%%capture --no-display
+
+clf1 = LogisticRegression(random_state=1)
 clf2 = RandomForestClassifier(random_state=1)
 eclf = EnsembleVoteClassifier(clfs=[clf1, clf1, clf2], 
                               voting='soft')
@@ -1307,407 +1197,6 @@ params = {'logisticregression-1__C': [1.0, 100.0],
 
 grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
 grid = grid.fit(iris.data, iris.target)
-</code></pre>
-<pre><code>/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
 </code></pre>
 <p><strong>Note</strong></p>
 <p>The <code>EnsembleVoteClass</code> also enables grid search over the <code>clfs</code> argument. However, due to the current implementation of <code>GridSearchCV</code> in scikit-learn, it is not possible to search over both, differenct classifiers and classifier parameters at the same time. For instance, while the following parameter dictionary works</p>
@@ -1723,7 +1212,9 @@ Please also refer to the documentation for alternative solver options:
 </code></pre>
 <p>returns the best feature columns, <code>k_feature_idx_</code>, given a dataset X.</p>
 <p>Thus, we simply need to construct a <code>Pipeline</code> consisting of the feature selector and the classifier in order to select different feature subsets for different algorithms. During <code>fitting</code>, the optimal feature subsets are automatically determined via the <code>GridSearchCV</code> object, and by calling <code>predict</code>, the fitted feature selector in the pipeline only passes these columns along, which resulted in the best performance for the respective classifier.</p>
-<pre><code class="language-python">from sklearn import datasets
+<pre><code class="language-python">%%capture --no-display
+
+from sklearn import datasets
 
 iris = datasets.load_iris()
 X, y = iris.data[:, :], iris.target
@@ -1773,37 +1264,6 @@ for r, _ in enumerate(grid.cv_results_['mean_test_score']):
           % (grid.cv_results_[cv_keys[0]][r],
              grid.cv_results_[cv_keys[1]][r] / 2.0,
              grid.cv_results_[cv_keys[2]][r]))
-</code></pre>
-<pre><code>/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-/Users/kani/Documents/KatrinaLand/mlxtend/venv/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:940: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-
-
-0.947 +/- 0.02 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 20}
-0.947 +/- 0.02 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 200}
-0.947 +/- 0.02 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 20}
-0.960 +/- 0.01 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 200}
-0.953 +/- 0.01 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 20}
-0.960 +/- 0.01 {'pipeline__logreg__C': 1.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 200}
-0.953 +/- 0.01 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 20}
-0.953 +/- 0.01 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 1, 'randomforestclassifier__n_estimators': 200}
-0.960 +/- 0.01 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 20}
-0.960 +/- 0.01 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 2, 'randomforestclassifier__n_estimators': 200}
-0.960 +/- 0.01 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 20}
-0.960 +/- 0.01 {'pipeline__logreg__C': 100.0, 'pipeline__sfs__k_features': 3, 'randomforestclassifier__n_estimators': 200}
 </code></pre>
 <p>The best parameters determined via GridSearch are:</p>
 <pre><code class="language-python">grid.best_params_
@@ -1897,8 +1357,11 @@ eclf.fit(X, y)
 
 print('accuracy:', np.mean(y == eclf.predict(X)))
 </code></pre>
-<pre><code>Warning: enforce use_clones to be False
-accuracy: 0.96
+<pre><code>accuracy: 0.96
+
+
+/Users/sebastian/miniforge3/lib/python3.9/site-packages/mlxtend/classifier/ensemble_vote.py:166: UserWarning: fit_base_estimators=False enforces use_clones to be `False`
+  warnings.warn("fit_base_estimators=False "
 </code></pre>
 <p>However, please note that <code>fit_base_estimators=False</code> is incompatible to any form of cross-validation that is done in e.g., <code>model_selection.cross_val_score</code> or <code>model_selection.GridSearchCV</code>, etc., since it would require the classifiers to be refit to the training folds. Thus, only use <code>fit_base_estimators=False</code> if you want to make a prediction directly without cross-validation.</p>
 <h2 id="example-6-ensembles-of-classifiers-that-operate-on-different-feature-subsets">Example 6 - Ensembles of Classifiers that Operate on Different Feature Subsets</h2>
@@ -1922,44 +1385,14 @@ eclf = EnsembleVoteClassifier(clfs=[pipe1, pipe2])
 
 eclf.fit(X, y)
 </code></pre>
-<pre><code>EnsembleVoteClassifier(clfs=[Pipeline(memory=None,
-                                      steps=[('columnselector',
-                                              ColumnSelector(cols=(0, 2),
-                                                             drop_axis=False)),
+<pre><code>EnsembleVoteClassifier(clfs=[Pipeline(steps=[('columnselector',
+                                              ColumnSelector(cols=(0, 2))),
                                              ('logisticregression',
-                                              LogisticRegression(C=1.0,
-                                                                 class_weight=None,
-                                                                 dual=False,
-                                                                 fit_intercept=True,
-                                                                 intercept_scaling=1,
-                                                                 l1_ratio=None,
-                                                                 max_iter=100,
-                                                                 multi_class='auto',
-                                                                 n_jobs=None,
-                                                                 penalty='l2',
-                                                                 random_state=None,
-                                                                 solver='lbfgs',
-                                                                 tol=0.0001,
-                                                                 v...
+                                              LogisticRegression())]),
+                             Pipeline(steps=[('columnselector',
+                                              ColumnSelector(cols=(1, 2, 3))),
                                              ('logisticregression',
-                                              LogisticRegression(C=1.0,
-                                                                 class_weight=None,
-                                                                 dual=False,
-                                                                 fit_intercept=True,
-                                                                 intercept_scaling=1,
-                                                                 l1_ratio=None,
-                                                                 max_iter=100,
-                                                                 multi_class='auto',
-                                                                 n_jobs=None,
-                                                                 penalty='l2',
-                                                                 random_state=None,
-                                                                 solver='lbfgs',
-                                                                 tol=0.0001,
-                                                                 verbose=0,
-                                                                 warm_start=False))],
-                                      verbose=False)],
-                       fit_base_estimators=True, use_clones=True, verbose=0,
-                       voting='hard', weights=None)
+                                              LogisticRegression())])])
 </code></pre>
 <h2 id="example-7-a-note-about-scikit-learn-svms-and-soft-voting">Example 7 - A Note about Scikit-Learn SVMs and Soft Voting</h2>
 <p>This section provides some additional technical insights in how probabilities are used when <code>voting='soft'</code>. </p>
@@ -1995,17 +1428,437 @@ for svm_class, e_class, svm_prob, e_prob, in zip(clf2.predict(X),
         print('Class from SVM in Ensemble :', e_class)
         print('============')
 </code></pre>
-<pre><code>Warning: enforce use_clones to be False
-============
-Probas from SVM            : [0.00910384 0.47821605 0.51268012]
+<pre><code>============
+Probas from SVM            : [0.00921708 0.49415165 0.49663127]
 Class from SVM             : 1
-Probas from SVM in Ensemble: [0.00910384 0.47821605 0.51268012]
+Probas from SVM in Ensemble: [0.00921708 0.49415165 0.49663127]
 Class from SVM in Ensemble : 2
 ============
+
+
+/Users/sebastian/miniforge3/lib/python3.9/site-packages/mlxtend/classifier/ensemble_vote.py:166: UserWarning: fit_base_estimators=False enforces use_clones to be `False`
+  warnings.warn("fit_base_estimators=False "
 </code></pre>
-<p>Based on the probabilities, we would expect the SVM to predict class 2, because it has the highest probability. Since the <code>EnsembleVoteClassifier</code> uses the <code>argmax</code> function internally if <code>voting='soft'</code>, it would indeed predict class 2 in this case even if the ensemble consists of only one SVM model.</p>
+<h2 id="example-7-a-note-about-scikit-learn-svms-and-soft-votingbased-on-the-probabilities-we-would-expect-the-svm-to-predict-class-2-because-it-has-the-highest-probability-since-the-ensemblevoteclassifier-uses-the-argmax-function-internally-if-votingsoft-it-would-indeed-predict-class-2-in-this-case-even-if-the-ensemble-consists-of-only-one-svm-model">Example 7 - A Note about Scikit-Learn SVMs and Soft VotingBased on the probabilities, we would expect the SVM to predict class 2, because it has the highest probability. Since the <code>EnsembleVoteClassifier</code> uses the <code>argmax</code> function internally if <code>voting='soft'</code>, it would indeed predict class 2 in this case even if the ensemble consists of only one SVM model.</h2>
 <p>Note that in practice, this minor technical detail does not need to concern you, but it is useful to keep it in mind in case you are wondering about results from a 1-model SVM ensemble compared to that SVM alone -- this is not a bug.</p>
-<h1 id="api">API</h1></div>
+<h2 id="example-8-optimizing-ensemble-weights-with-nelder-mead">Example 8 - Optimizing Ensemble Weights with Nelder-Mead</h2>
+<p>In this section, we will see how we can use a heuristic search method like <a href="https://en.wikipedia.org/wiki/Nelder–Mead_method">Nelder-Mead</a> for optimizing the ensemble weights.</p>
+<p>Suppose we have the following example scenario where we fit 3 individual classifiers on different subsets of the training dataset:</p>
+<pre><code class="language-python">from mlxtend.classifier import EnsembleVoteClassifier
+from mlxtend.data import mnist_data
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.tree import DecisionTreeClassifier
+
+X, y = mnist_data()
+
+X_train, X_val, y_train, y_val = train_test_split(
+    X, y, test_size=0.5, shuffle=True, random_state=1
+)
+
+clf1 = GaussianNB()
+clf2 = LogisticRegression(random_state=123, solver='newton-cg')
+clf3 = DecisionTreeClassifier(random_state=123, max_depth=2)
+
+clf1.fit(X_train[500:1000], y_train[500:1000])
+clf2.fit(X_train[750:1250], y_train[750:1250])
+clf3.fit(X_train[1250:2000], y_train[1250:2000]);
+</code></pre>
+<p>Then, we construct the an ensemble classifier from these 3 classifiers where each classifier contributes equally with weight 1:</p>
+<pre><code class="language-python">eclf = EnsembleVoteClassifier(
+    clfs=(clf1, clf2, clf3),
+    voting=&quot;soft&quot;,  # the same would also work with &quot;hard&quot; voting
+    weights=(1, 1, 1),
+    use_clones=False,
+    fit_base_estimators=False,
+)
+eclf.fit(X_train, y_train)
+eclf.score(X_val, y_val)
+</code></pre>
+<pre><code>/Users/sebastian/miniforge3/lib/python3.9/site-packages/mlxtend/classifier/ensemble_vote.py:166: UserWarning: fit_base_estimators=False enforces use_clones to be `False`
+  warnings.warn("fit_base_estimators=False "
+
+
+
+
+
+0.8012
+</code></pre>
+<p>We see that we reach 80% accuracy on the validation set. Can we do better? Maybe they indvidual classifiers shouldn't be contributing equally. Perhaps, we can use an optimization algorothm from <code>scipy.optimize</code> to find a better relative weighting of these individual classifiers.</p>
+<p>Let's set up an objective function that we want to minimize via SciPy's <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html"><code>minimize</code></a>:</p>
+<pre><code class="language-python">from scipy.optimize import minimize
+
+
+def function_to_minimize(weights, fitted_clfs):
+
+    w1, w2 = weights  # these are the new weights!
+
+    newclf = EnsembleVoteClassifier(
+        voting=&quot;soft&quot;,
+        use_clones=False,
+        fit_base_estimators=False,
+        clfs=fitted_clfs,
+        weights=(w1, w2, 1.),  # use the new weights
+    )
+
+    newclf.fit(X_train, y_train)
+    score = newclf.score(X_val, y_val)
+
+    # change accuracy to error so that smaller is better
+    score_to_minimize = 1 - score
+
+    return score_to_minimize
+</code></pre>
+<p>Note a few things:</p>
+<ol>
+<li>
+<p>We only optimize 2 out of the 3 classifier weigths. That's because the weighting is relative to each other, and it would be overkill (and too many degrees of freedom) to also optimize weight 3.</p>
+</li>
+<li>
+<p>We set <code>use_clones=False &amp; fit_base_estimators=False</code> as before, this is to make sure that we use the prefit classifiers in the ensemble classifier.</p>
+</li>
+<li>
+<p>Instead of optimizing the accuracy, we optimize the the classification error, <code>score_to_minimize = 1 - score</code>. That's because we use the <code>minimize</code> function where lower means better.</p>
+</li>
+</ol>
+<p>Next, let's choose some initial weight values and run the optimization. Via the <code>bounds</code> we specify the range (lower and upper value) for each weight so that the search doesn't go crazy:</p>
+<pre><code class="language-python">%%capture --no-display
+
+init_weights = [1., 1.]
+
+results = minimize(
+    function_to_minimize,
+    init_weights,
+    args=((clf1, clf2, clf3),),
+    bounds=((0, 5), (0, 5)),
+    method=&quot;nelder-mead&quot;,
+)
+</code></pre>
+<p>Let's look at the results!</p>
+<pre><code class="language-python">print(results)
+</code></pre>
+<pre><code> final_simplex: (array([[0.575     , 1.40625   ],
+       [0.57500153, 1.40622215],
+       [0.57508965, 1.40617647]]), array([0.1324, 0.1324, 0.1324]))
+           fun: 0.13239999999999996
+       message: 'Optimization terminated successfully.'
+          nfev: 60
+           nit: 21
+        status: 0
+       success: True
+             x: array([0.575  , 1.40625])
+</code></pre>
+<p>It looks like the search was successful and returned the following weights:</p>
+<pre><code class="language-python">solution = results[&quot;x&quot;]
+print(solution)
+</code></pre>
+<pre><code>[0.575   1.40625]
+</code></pre>
+<p>Let's use these new weights in our ensemble classifier:</p>
+<pre><code class="language-python">eclf = EnsembleVoteClassifier(
+    clfs=(clf1, clf2, clf3),
+    voting=&quot;soft&quot;,
+    weights=(solution[0], solution[1], 1),
+    use_clones=False,
+    fit_base_estimators=False,
+)
+
+eclf.fit(X_train, y_train)
+eclf.score(X_val, y_val)
+</code></pre>
+<pre><code>/Users/sebastian/miniforge3/lib/python3.9/site-packages/mlxtend/classifier/ensemble_vote.py:166: UserWarning: fit_base_estimators=False enforces use_clones to be `False`
+  warnings.warn("fit_base_estimators=False "
+
+
+
+
+
+0.8676
+</code></pre>
+<p>As we can see, the results on the validation set (0.8676) improved compared to the original ones (0.8012). Yay!</p>
+<h1 id="api">API</h1>
+<p><em>EnsembleVoteClassifier(clfs, voting='hard', weights=None, verbose=0, use_clones=True, fit_base_estimators=True)</em></p>
+<p>Soft Voting/Majority Rule classifier for scikit-learn estimators.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>clfs</code> : array-like, shape = [n_classifiers]</p>
+<p>A list of classifiers.
+Invoking the <code>fit</code> method on the <code>VotingClassifier</code> will fit clones
+of those original classifiers
+be stored in the class attribute
+if <code>use_clones=True</code> (default) and
+<code>fit_base_estimators=True</code> (default).</p>
+</li>
+<li>
+<p><code>voting</code> : str, {'hard', 'soft'} (default='hard')</p>
+<p>If 'hard', uses predicted class labels for majority rule voting.
+Else if 'soft', predicts the class label based on the argmax of
+the sums of the predicted probalities, which is recommended for
+an ensemble of well-calibrated classifiers.</p>
+</li>
+<li>
+<p><code>weights</code> : array-like, shape = [n_classifiers], optional (default=<code>None</code>)</p>
+<p>Sequence of weights (<code>float</code> or <code>int</code>) to weight the occurances of
+predicted class labels (<code>hard</code> voting) or class probabilities
+before averaging (<code>soft</code> voting). Uses uniform weights if <code>None</code>.</p>
+</li>
+<li>
+<p><code>verbose</code> : int, optional (default=0)</p>
+<p>Controls the verbosity of the building process.
+- <code>verbose=0</code> (default): Prints nothing
+- <code>verbose=1</code>: Prints the number &amp; name of the clf being fitted
+- <code>verbose=2</code>: Prints info about the parameters of the clf being fitted
+- <code>verbose&gt;2</code>: Changes <code>verbose</code> param of the underlying clf to
+self.verbose - 2</p>
+</li>
+<li>
+<p><code>use_clones</code> : bool (default: True)</p>
+<p>Clones the classifiers for stacking classification if True (default)
+or else uses the original ones, which will be refitted on the dataset
+upon calling the <code>fit</code> method. Hence, if use_clones=True, the original
+input classifiers will remain unmodified upon using the
+StackingClassifier's <code>fit</code> method.
+Setting <code>use_clones=False</code> is
+recommended if you are working with estimators that are supporting
+the scikit-learn fit/predict API interface but are not compatible
+to scikit-learn's <code>clone</code> function.</p>
+</li>
+<li>
+<p><code>fit_base_estimators</code> : bool (default: True)</p>
+<p>Refits classifiers in <code>clfs</code> if True; uses references to the <code>clfs</code>,
+otherwise (assumes that the classifiers were already fit).
+Note: fit_base_estimators=False will enforce use_clones to be False,
+and is incompatible to most scikit-learn wrappers!
+For instance, if any form of cross-validation is performed
+this would require the re-fitting classifiers to training folds, which
+would raise a NotFitterError if fit_base_estimators=False.
+(New in mlxtend v0.6.)</p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>classes_</code> : array-like, shape = [n_predictions]</p>
+</li>
+<li>
+<p><code>clf</code> : array-like, shape = [n_predictions]</p>
+<p>The input classifiers; may be overwritten if <code>use_clones=False</code></p>
+</li>
+<li>
+<p><code>clf_</code> : array-like, shape = [n_predictions]</p>
+<p>Fitted input classifiers; clones if <code>use_clones=True</code></p>
+</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code>```
+&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; from sklearn.linear_model import LogisticRegression
+&gt;&gt;&gt; from sklearn.naive_bayes import GaussianNB
+&gt;&gt;&gt; from sklearn.ensemble import RandomForestClassifier
+&gt;&gt;&gt; from mlxtend.sklearn import EnsembleVoteClassifier
+&gt;&gt;&gt; clf1 = LogisticRegression(random_seed=1)
+&gt;&gt;&gt; clf2 = RandomForestClassifier(random_seed=1)
+&gt;&gt;&gt; clf3 = GaussianNB()
+&gt;&gt;&gt; X = np.array([[-1, -1], [-2, -1], [-3, -2], [1, 1], [2, 1], [3, 2]])
+&gt;&gt;&gt; y = np.array([1, 1, 1, 2, 2, 2])
+&gt;&gt;&gt; eclf1 = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
+... voting='hard', verbose=1)
+&gt;&gt;&gt; eclf1 = eclf1.fit(X, y)
+&gt;&gt;&gt; print(eclf1.predict(X))
+[1 1 1 2 2 2]
+&gt;&gt;&gt; eclf2 = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting='soft')
+&gt;&gt;&gt; eclf2 = eclf2.fit(X, y)
+&gt;&gt;&gt; print(eclf2.predict(X))
+[1 1 1 2 2 2]
+&gt;&gt;&gt; eclf3 = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3],
+...                          voting='soft', weights=[2,1,1])
+&gt;&gt;&gt; eclf3 = eclf3.fit(X, y)
+&gt;&gt;&gt; print(eclf3.predict(X))
+[1 1 1 2 2 2]
+&gt;&gt;&gt;
+
+For more usage examples, please see
+http://rasbt.github.io/mlxtend/user_guide/classifier/EnsembleVoteClassifier/
+</code></pre>
+<p>```</p>
+<h3 id="methods">Methods</h3>
+<hr>
+
+<p><em>fit(X, y, sample_weight=None)</em></p>
+<p>Learn weight coefficients from training data for each classifier.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>sample_weight</code> : array-like, shape = [n_samples], optional</p>
+<p>Sample weights passed as sample_weights to each regressor
+in the regressors list as well as the meta_regressor.
+Raises error if some regressor does not support
+sample_weight in the fit() method.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
+<hr>
+
+<p><em>fit_transform(X, y=None, </em><em>fit_params)</em></p>
+<p>Fit to data, then transform it.</p>
+<pre><code>Fits transformer to `X` and `y` with optional parameters `fit_params`
+and returns a transformed version of `X`.
+</code></pre>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : array-like of shape (n_samples, n_features)</p>
+<p>Input samples.</p>
+</li>
+<li>
+<p><code>y</code> :  array-like of shape (n_samples,) or (n_samples, n_outputs),                 default=None</p>
+<p>Target values (None for unsupervised transformations).</p>
+</li>
+<li>
+<p><code>**fit_params</code> : dict</p>
+<p>Additional fit parameters.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>X_new</code> : ndarray array of shape (n_samples, n_features_new)</p>
+<p>Transformed array.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>get_params(deep=True)</em></p>
+<p>Return estimator parameter names for GridSearch support.</p>
+<hr>
+
+<p><em>predict(X)</em></p>
+<p>Predict class labels for X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>maj</code> : array-like, shape = [n_samples]</p>
+<p>Predicted class labels.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>predict_proba(X)</em></p>
+<p>Predict class probabilities for X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>avg</code> : array-like, shape = [n_samples, n_classes]</p>
+<p>Weighted average probability for each class per sample.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>score(X, y, sample_weight=None)</em></p>
+<p>Return the mean accuracy on the given test data and labels.</p>
+<pre><code>In multi-label classification, this is the subset accuracy
+which is a harsh metric since you require for each sample that
+each label set be correctly predicted.
+</code></pre>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : array-like of shape (n_samples, n_features)</p>
+<p>Test samples.</p>
+</li>
+<li>
+<p><code>y</code> : array-like of shape (n_samples,) or (n_samples, n_outputs)</p>
+<p>True labels for <code>X</code>.</p>
+</li>
+<li>
+<p><code>sample_weight</code> : array-like of shape (n_samples,), default=None</p>
+<p>Sample weights.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>score</code> : float</p>
+<p>Mean accuracy of <code>self.predict(X)</code> wrt. <code>y</code>.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.</p>
+<pre><code>The method works on simple estimators as well as on nested objects
+(such as :class:`~sklearn.pipeline.Pipeline`). The latter have
+parameters of the form ``&lt;component&gt;__&lt;parameter&gt;`` so that it's
+possible to update each component of a nested object.
+</code></pre>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>**params</code> : dict</p>
+<p>Estimator parameters.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>self</code> : estimator instance</p>
+<p>Estimator instance.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>transform(X)</em></p>
+<p>Return class labels or probabilities for X for each estimator.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>If</code>voting='soft'`` : array-like = [n_classifiers, n_samples, n_classes]</p>
+<p>Class probabilties calculated by each classifier.</p>
+</li>
+<li>
+<p><code>If</code>voting='hard'`` : array-like = [n_classifiers, n_samples]</p>
+<p>Class labels predicted by each classifier.</p>
+</li>
+</ul>
+<p>ython</p></div>
         
         
     </div>

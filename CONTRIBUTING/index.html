@@ -1033,9 +1033,15 @@ and checking off items as you go.</p>
 <p><strong>Option A</strong>: Running the tools manually</p>
 <ol>
 <li>[ ]  Check for style issues by running <code>flake8 ./mlxtend</code> (you may want to run <code>pytest</code> again after you made modifications to the code)</li>
-<li>[ ]  It is also recommended to use <a href="https://black.readthedocs.io/en/stable/">black</a> to format the code automatically according to recommended style changes. After <a href="https://black.readthedocs.io/en/stable/getting_started.html#installation">installing</a> <code>black</code>, you can do this via <code>python -m black [source_file_or_directory]</code>.</li>
-<li>[ ] Run <code>[isort](https://pycqa.github.io/isort/)</code> which will sort the imports alphabetically: <code>isort --profile black mypythonfile.py</code></li>
+<li>[ ]  We recommend using <a href="https://black.readthedocs.io/en/stable/">black</a> to format the code automatically according to recommended style changes. After <a href="https://black.readthedocs.io/en/stable/getting_started.html#installation">installing</a> <code>black</code>, you can do this via </li>
 </ol>
+<pre><code>black [source_file_or_directory]
+</code></pre>
+<ol>
+<li>[ ] Run <code>[isort](https://pycqa.github.io/isort/)</code> which will sort the imports alphabetically. We recommend the following command:</li>
+</ol>
+<pre><code>isort -p mlxtend --line-length 88 --multi-line 3 --profile black mypythonfile.py
+</code></pre>
 <p><strong>Option B</strong>: Using pre-commit hooks (recommended)</p>
 <p>The pre-commit hooks for mlxtend will check your code via <code>flake8</code>, <code>black</code>, and <code>isort</code> automatically before you make a <code>git commit</code>. You can read more about pre-commit hooks <a href="https://dev.to/m1yag1/how-to-setup-your-project-with-pre-commit-black-and-flake8-183k">here</a>.</p>
 <ol>

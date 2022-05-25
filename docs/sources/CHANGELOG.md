@@ -26,6 +26,7 @@ The CHANGELOG for the current development version is available at
 - The `mlxtend.evaluate.bootstrap_point632_score` now supports `fit_params`. ([#861](https://github.com/rasbt/mlxtend/pull/861))
 - The `mlxtend/plotting/decision_regions.py` function now has a `contourf_kwargs` for matplotlib to change the look of the decision boundaries if desired. ([#881](https://github.com/rasbt/mlxtend/pull/881) via [[pbloem](https://github.com/pbloem)])
 - Add a `norm_colormap` parameter to `mlxtend.plotting.plot_confusion_matrix`, to allow normalizing the colormap, e.g., using `matplotlib.colors.LogNorm()` ([#895](https://github.com/rasbt/mlxtend/pull/895))
+- Add new `GroupTimeSeriesSplit` class for evaluation in time series tasks with support of custom groups and additional parameters in comparison with scikit-learn's `TimeSeriesSplit`. ([#915](https://github.com/rasbt/mlxtend/pull/915) via [Dmitry Labazkin](https://github.com/labdmitriy))
 
 ##### Changes
 

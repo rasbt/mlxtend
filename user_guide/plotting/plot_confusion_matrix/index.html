@@ -982,6 +982,8 @@
                  <!--   -->
             <li class="second-level"><a href="#example-5-changing-color-maps-and-font-color">Example 5 - Changing Color Maps and Font Color</a></li>
                  <!--   -->
+            <li class="second-level"><a href="#example-6-normalizing-colormaps-to-highlight-off-diagonals">Example 6 - Normalizing Colormaps to Highlight Off-Diagonals</a></li>
+                 <!--   -->
             <li class="second-level"><a href="#api">API</a></li>
                  <!--   -->
     </ul>
@@ -1083,6 +1085,40 @@ plt.show()
 plt.show()
 </code></pre>
 <p><img alt="png" src="../plot_confusion_matrix_files/plot_confusion_matrix_21_0.png" /></p>
+<h2 id="example-6-normalizing-colormaps-to-highlight-off-diagonals">Example 6 - Normalizing Colormaps to Highlight Off-Diagonals</h2>
+<p>Suppose we have the following confusion matrix for a high-accuracy classifier:</p>
+<pre><code class="language-python">class_dict = {0: 'airplane',
+              1: 'automobile',
+              2: 'bird',
+              3: 'cat',
+              4: 'deer',
+              5: 'dog',
+              6: 'frog'}
+
+cmat = np.array([[972, 0, 1, 1, 1, 1, 3],
+                 [0, 1123, 3, 1, 0, 1, 2],
+                 [2, 0, 1025, 0, 0, 0, 1],
+                 [0, 0, 0, 1005, 0, 2, 0],
+                 [0, 1, 1, 0, 967, 0, 4],
+                 [0, 0, 0, 6, 0, 881, 3],
+                 [2, 3, 0, 1, 3, 4, 941]])
+
+fig, ax = plot_confusion_matrix(
+    conf_mat=cmat,
+    class_names=class_dict.values(),
+)
+</code></pre>
+<p><img alt="png" src="../plot_confusion_matrix_files/plot_confusion_matrix_24_0.png" /></p>
+<p>It can be hard to notice the cells where the models makes mistakes. With a log-normalized colormap, these mistakes off the diagonal become easier to see at a glace:</p>
+<pre><code class="language-python">import matplotlib
+
+fig, ax = plot_confusion_matrix(
+    conf_mat=cmat,
+    class_names=class_dict.values(),
+    norm_colormap=matplotlib.colors.LogNorm()  
+)
+</code></pre>
+<p><img alt="png" src="../plot_confusion_matrix_files/plot_confusion_matrix_26_0.png" /></p>
 <h2 id="api">API</h2>
 <p><em>plot_confusion_matrix(conf_mat, hide_spines=False, hide_ticks=False, figsize=None, cmap=None, colorbar=False, show_absolute=True, show_normed=False, class_names=None, figure=None, axis=None, fontcolor_threshold=0.5)</em></p>
 <p>Plot a confusion matrix via matplotlib.</p>

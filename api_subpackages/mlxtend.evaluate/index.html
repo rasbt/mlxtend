@@ -325,6 +325,12 @@
         
             
 <li >
+    <a href="../../user_guide/evaluate/GroupTimeSeriesSplit/">GroupTimeSeriesSplit: A scikit-learn compatible version of the time series validation with groups</a>
+</li>
+
+        
+            
+<li >
     <a href="../../user_guide/evaluate/lift_score/">lift_score: Lift score for classification and association rule mining</a>
 </li>
 
@@ -964,11 +970,14 @@
         <li class="first-level active"><a href="#bootstrapoutofbag">BootstrapOutOfBag</a></li>
             <li class="second-level"><a href="#methods">Methods</a></li>
                  <!--   -->
-        <li class="first-level "><a href="#predefinedholdoutsplit">PredefinedHoldoutSplit</a></li>
+        <li class="first-level "><a href="#grouptimeseriessplit">GroupTimeSeriesSplit</a></li>
             <li class="second-level"><a href="#methods_1">Methods</a></li>
                  <!--   -->
-        <li class="first-level "><a href="#randomholdoutsplit">RandomHoldoutSplit</a></li>
+        <li class="first-level "><a href="#predefinedholdoutsplit">PredefinedHoldoutSplit</a></li>
             <li class="second-level"><a href="#methods_2">Methods</a></li>
+                 <!--   -->
+        <li class="first-level "><a href="#randomholdoutsplit">RandomHoldoutSplit</a></li>
+            <li class="second-level"><a href="#methods_3">Methods</a></li>
                  <!--   -->
         <li class="first-level "><a href="#accuracy_score">accuracy_score</a></li>
         <li class="first-level "><a href="#bias_variance_decomp">bias_variance_decomp</a></li>
@@ -993,7 +1002,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.20.0dev </p>
+<p>mlxtend version: 0.20.0 </p>
 <h2 id="bootstrapoutofbag">BootstrapOutOfBag</h2>
 <p><em>BootstrapOutOfBag(n_splits=200, random_seed=None)</em></p>
 <p><strong>Parameters</strong></p>
@@ -1063,6 +1072,96 @@ the random number generator.</p>
 for compatibility, similar to <code>KFold</code> in scikit-learn.</p>
 </li>
 </ul>
+<h2 id="grouptimeseriessplit">GroupTimeSeriesSplit</h2>
+<p><em>GroupTimeSeriesSplit(test_size, train_size=None, n_splits=None, gap_size=0, shift_size=1, window_type='rolling')</em></p>
+<p>Group time series cross-validator.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>test_size</code> : int</p>
+<p>Size of test dataset.</p>
+</li>
+<li>
+<p><code>train_size</code> : int (default=None)</p>
+<p>Size of train dataset.</p>
+</li>
+<li>
+<p><code>n_splits</code> : int (default=None)</p>
+<p>Number of the splits.</p>
+</li>
+<li>
+<p><code>gap_size</code> : int (default=0)</p>
+<p>Gap size between train and test datasets.</p>
+</li>
+<li>
+<p><code>shift_size</code> : int (default=1)</p>
+<p>Step to shift for the next fold.</p>
+</li>
+<li>
+<p><code>window_type</code> : str (default="rolling")</p>
+<p>Type of the window. Possible values: "rolling", "expanding".</p>
+</li>
+</ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/evaluate/GroupTimeSeriesSplit/</p>
+<h3 id="methods_1">Methods</h3>
+<hr>
+
+<p><em>get_n_splits(X=None, y=None, groups=None)</em></p>
+<p>Returns the number of splitting iterations in the cross-validator.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : object</p>
+<p>Always ignored, exists for compatibility.</p>
+</li>
+<li>
+<p><code>y</code> : object</p>
+<p>Always ignored, exists for compatibility.</p>
+</li>
+<li>
+<p><code>groups</code> : object</p>
+<p>Always ignored, exists for compatibility.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>n_splits</code> : int</p>
+<p>Returns the number of splitting iterations in the cross-validator.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>split(X, y=None, groups=None)</em></p>
+<p>Generate indices to split data into training and test set.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : array-like</p>
+<p>Training data.</p>
+</li>
+<li>
+<p><code>y</code> : array-like (default=None)</p>
+<p>Always ignored, exists for compatibility.</p>
+</li>
+<li>
+<p><code>groups</code> : array-like (default=None)</p>
+<p>Array with group names or sequence numbers.</p>
+</li>
+</ul>
+<p><strong>Yields</strong></p>
+<ul>
+<li>
+<p><code>train</code> : ndarray</p>
+<p>The training set indices for that split.</p>
+</li>
+<li>
+<p><code>test</code> : ndarray</p>
+<p>The testing set indices for that split.</p>
+</li>
+</ul>
 <h2 id="predefinedholdoutsplit">PredefinedHoldoutSplit</h2>
 <p><em>PredefinedHoldoutSplit(valid_indices)</em></p>
 <p>Train/Validation set splitter for sklearn's GridSearchCV etc.</p>
@@ -1083,7 +1182,7 @@ for model fitting.</p>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/evaluate/PredefinedHoldoutSplit/</p>
-<h3 id="methods_1">Methods</h3>
+<h3 id="methods_2">Methods</h3>
 <hr>
 
 <p><em>get_n_splits(X=None, y=None, groups=None)</em></p>
@@ -1171,7 +1270,7 @@ split or not</p>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/evaluate/RandomHoldoutSplit/</p>
-<h3 id="methods_2">Methods</h3>
+<h3 id="methods_3">Methods</h3>
 <hr>
 
 <p><em>get_n_splits(X=None, y=None, groups=None)</em></p>

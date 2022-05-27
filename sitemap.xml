@@ -2,1052 +2,1062 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>http://rasbt.github.io/mlxtend/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/CHANGELOG/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/CONTRIBUTING/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/Code-of-Conduct/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/USER-GUIDE-INDEX/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/USER_GUIDE_INDEX/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/cite/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/contributors/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/discuss/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/installation/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/license/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.classifier/Adaline/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.classifier/EnsembleVoteClassifier/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.classifier/LogisticRegression/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.classifier/MultiLayerPerceptron/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.classifier/OneRClassifier/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.classifier/Perceptron/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.classifier/SoftmaxRegression/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.classifier/StackingCVClassifier/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.classifier/StackingClassifier/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.cluster/Kmeans/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.data/autompg_data/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.data/boston_housing_data/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.data/iris_data/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.data/loadlocal_mnist/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.data/make_multiplexer_dataset/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.data/mnist_data/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.data/three_blobs_data/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.data/wine_data/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/BootstrapOutOfBag/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/GroupTimeSeriesSplit/</loc>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/PredefinedHoldoutSplit/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/RandomHoldoutSplit/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/accuracy_score/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/bias_variance_decomp/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/bootstrap/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/bootstrap_point632_score/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/cochrans_q/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/combined_ftest_5x2cv/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/confusion_matrix/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/create_counterfactual/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/feature_importance_permutation/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/ftest/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/lift_score/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/mcnemar/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/mcnemar_table/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/mcnemar_tables/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/paired_ttest_5x2cv/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/paired_ttest_kfold_cv/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/paired_ttest_resampled/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/permutation_test/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/proportion_difference/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.evaluate/scoring/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.feature_extraction/LinearDiscriminantAnalysis/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.feature_extraction/PrincipalComponentAnalysis/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.feature_extraction/RBFKernelPCA/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.feature_selection/ColumnSelector/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.feature_selection/ExhaustiveFeatureSelector/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.feature_selection/SequentialFeatureSelector/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.file_io/find_filegroups/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.file_io/find_files/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.frequent_patterns/apriori/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.frequent_patterns/association_rules/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.frequent_patterns/fpgrowth/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.frequent_patterns/fpmax/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.image/EyepadAlign/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.image/extract_face_landmarks/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.math/factorial/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.math/num_combinations/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.math/num_permutations/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.math/vectorspace_dimensionality/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.math/vectorspace_orthonormalization/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.plotting/category_scatter/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.plotting/checkerboard_plot/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.plotting/ecdf/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.plotting/enrichment_plot/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.plotting/heatmap/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.plotting/plot_confusion_matrix/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.plotting/plot_decision_regions/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.plotting/plot_learning_curves/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.plotting/plot_linear_regression/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.plotting/plot_pca_correlation_graph/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.plotting/plot_sequential_feature_selection/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.plotting/remove_borders/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.plotting/scatter_hist/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.plotting/scatterplotmatrix/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.plotting/stacked_barplot/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.preprocessing/CopyTransformer/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.preprocessing/DenseTransformer/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.preprocessing/MeanCenterer/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.preprocessing/TransactionEncoder/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.preprocessing/minmax_scaling/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.preprocessing/one_hot/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.preprocessing/shuffle_arrays_unison/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.preprocessing/standardize/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.regressor/LinearRegression/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.regressor/StackingCVRegressor/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.regressor/StackingRegressor/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.text/generalize_names/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.text/generalize_names_duplcheck/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.text/tokenizer_emoticons/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.text/tokenizer_words_and_emoticons/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.utils/Counter/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.utils/assert_raises/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.utils/check_Xy/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_modules/mlxtend.utils/format_kwarg_dictionaries/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_subpackages/mlxtend._base/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.classifier/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.cluster/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.data/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.evaluate/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.externals/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.feature_extraction/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.feature_selection/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.file_io/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.frequent_patterns/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.image/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.math/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.plotting/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.preprocessing/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.regressor/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.text/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/api_subpackages/mlxtend.utils/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/classifier/Adaline/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/classifier/EnsembleVoteClassifier/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/classifier/LogisticRegression/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/classifier/MultiLayerPerceptron/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/classifier/OneRClassifier/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/classifier/Perceptron/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/classifier/SoftmaxRegression/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/classifier/StackingCVClassifier/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/classifier/StackingClassifier/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/cluster/Kmeans/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/data/autompg_data/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/data/boston_housing_data/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/data/iris_data/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/data/loadlocal_mnist/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/data/make_multiplexer_dataset/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/data/mnist_data/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/data/three_blobs_data/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/data/wine_data/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/BootstrapOutOfBag/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/GroupTimeSeriesSplit/</loc>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/PredefinedHoldoutSplit/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/RandomHoldoutSplit/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/accuracy_score/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/bias_variance_decomp/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/bootstrap/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/bootstrap_point632_score/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/cochrans_q/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/combined_ftest_5x2cv/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/confusion_matrix/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/create_counterfactual/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/feature_importance_permutation/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/ftest/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/lift_score/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/mcnemar/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/mcnemar_table/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/mcnemar_tables/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/paired_ttest_5x2cv/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/paired_ttest_kfold_cv/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/paired_ttest_resampled/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/permutation_test/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/proportion_difference/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/evaluate/scoring/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/feature_extraction/LinearDiscriminantAnalysis/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/feature_extraction/PrincipalComponentAnalysis/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/feature_extraction/RBFKernelPCA/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/feature_selection/ColumnSelector/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/feature_selection/ExhaustiveFeatureSelector/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/feature_selection/SequentialFeatureSelector/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/file_io/find_filegroups/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/file_io/find_files/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/fpgrowth/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/fpmax/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/image/extract_face_landmarks/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/image/eyepad_align/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/math/num_combinations/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/math/num_permutations/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/math/vectorspace_dimensionality/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/math/vectorspace_orthonormalization/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/plotting/category_scatter/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/plotting/checkerboard_plot/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/plotting/ecdf/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/plotting/enrichment_plot/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/plotting/heatmap/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/plotting/plot_confusion_matrix/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/plotting/plot_decision_regions/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/plotting/plot_learning_curves/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/plotting/plot_linear_regression/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/plotting/plot_pca_correlation_graph/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/plotting/plot_sequential_feature_selection/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/plotting/scatter_hist/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/plotting/scatterplotmatrix/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/plotting/stacked_barplot/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/preprocessing/CopyTransformer/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/preprocessing/DenseTransformer/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/preprocessing/MeanCenterer/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/preprocessing/TransactionEncoder/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/preprocessing/minmax_scaling/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/preprocessing/one-hot_encoding/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/preprocessing/shuffle_arrays_unison/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/preprocessing/standardize/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/regressor/LinearRegression/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/regressor/StackingCVRegressor/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/regressor/StackingRegressor/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/text/generalize_names/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/text/generalize_names_duplcheck/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/text/tokenizer/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://rasbt.github.io/mlxtend/user_guide/utils/Counter/</loc>
-         <lastmod>2022-05-21</lastmod>
+         <lastmod>2022-05-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

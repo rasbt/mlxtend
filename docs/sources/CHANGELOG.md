@@ -42,7 +42,7 @@ The CHANGELOG for the current development version is available at
 
 
 
-### Version 0.19.0 (09/02/2021)
+### Version 0.19.0 (2021-09-02)
 
 ##### Downloads
 
@@ -75,7 +75,7 @@ The CHANGELOG for the current development version is available at
 - Fixes a typo in the SequentialFeatureSelector documentation ([#835](https://github.com/rasbt/mlxtend/issues/835) via [João Pedro Zanlorensi Cardoso](https://github.com/joaozanlorensi))
 
 
-### Version 0.18.0 (11/25/2020)
+### Version 0.18.0 (2020-11-25)
 
 ##### Downloads
 
@@ -103,7 +103,7 @@ The CHANGELOG for the current development version is available at
 - Fixes a bug in `bias_variance_decomp` where when the `mse` loss was used, downcasting to integers caused imprecise results for small numbers. ([#749](https://github.com/rasbt/mlxtend/pull/749))
 
 
-### Version 0.17.3 (07-27-2020)
+### Version 0.17.3 (2020-07-27)
 
 ##### Downloads
 
@@ -129,7 +129,7 @@ The CHANGELOG for the current development version is available at
 - Fixes an issue with using `meshgrid` in `no_information_rate` function used by the `bootstrap_point632_score` function for the .632+ estimate. ([#688](https://github.com/rasbt/mlxtend/pull/688))
 - Fixes an issue in `fpmax` that could lead to incorrect support values. ([#692](https://github.com/rasbt/mlxtend/pull/692) via [Steve Harenberg](https://github.com/harenbergsd))
 
-### Version 0.17.2 (02-24-2020)
+### Version 0.17.2 (2020-02-24)
 
 ##### Downloads
 
@@ -185,7 +185,7 @@ The CHANGELOG for the current development version is available at
 
 
 
-### Version 0.17.0 (07/19/2019)
+### Version 0.17.0 (2019-07-19)
 
 ##### Downloads
 
@@ -217,7 +217,7 @@ The CHANGELOG for the current development version is available at
 - Fixed documentation of `iris_data()` under `iris.py` by adding a note about differences in the iris data in R and UCI machine learning repo.
 - Make sure that if the `'svd'` mode is used in PCA, the number of eigenvalues is the same as when using `'eigen'` (append 0's zeros in that case) ([#565](https://github.com/rasbt/mlxtend/pull/565))
 
-### Version 0.16.0 (05/12/2019)
+### Version 0.16.0 (2019-05-12)
 
 ##### Downloads
 
@@ -251,7 +251,7 @@ The CHANGELOG for the current development version is available at
 - SequentialFeatureSelector now supports DataFrame as input for all operating modes (forward/backward/floating). [#506](https://github.com/rasbt/mlxtend/pull/506)
 - `mlxtend.evaluate.feature_importance_permutation` now correctly accepts scoring functions with proper function signature as `metric` argument. [#528](https://github.com/rasbt/mlxtend/pull/528)
 
-### Version 0.15.0 (01-19-2019)
+### Version 0.15.0 (2019-01-19)
 
 ##### Downloads
 
@@ -275,7 +275,7 @@ The CHANGELOG for the current development version is available at
 - The eigenvectors maybe have not been sorted in certain edge cases if solver was `'eigen'` in `PrincipalComponentAnalysis` and `LinearDiscriminantAnalysis`. ([#477](https://github.com/rasbt/mlxtend/pull/477), [#478](https://github.com/rasbt/mlxtend/pull/478))
 
 
-### Version 0.14.0 (11-09-2018)
+### Version 0.14.0 (2018-11-09)
 
 ##### Downloads
 

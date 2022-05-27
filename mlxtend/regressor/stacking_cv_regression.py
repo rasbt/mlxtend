@@ -3,7 +3,7 @@
 # For explanation of approach, see:
 # dnc1994.com/2016/05/rank-10-percent-in-first-kaggle-competition-en/#Stacking
 #
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # An ensemble-learning meta-regressor for out-of-fold stacking regression

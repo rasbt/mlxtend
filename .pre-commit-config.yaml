@@ -4,7 +4,7 @@ repos:
     hooks:
       - id: isort
         name: Format imports
-        args: ["-p", "mlxtend"]
+        args: ["--project", "mlxtend", "--profile", "black"]
         
   - repo: https://github.com/psf/black
     rev: 22.3.0

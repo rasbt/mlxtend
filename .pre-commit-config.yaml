@@ -1,16 +1,19 @@
 repos:
--   repo: https://github.com/psf/black
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        name: Format imports
+        args: ["-p", "mlxtend"]
+        
+  - repo: https://github.com/psf/black
     rev: 22.3.0
     hooks:
-    - id: black
-      language_version: python3.9
--   repo: https://gitlab.com/pycqa/flake8
-    rev: 3.9.2
+      - id: black
+        name: Format code
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 4.0.1
     hooks:
-    - id: flake8
-- repo: https://github.com/pycqa/isort
-  rev: 5.10.1
-  hooks:
-    - id: isort
-      name: isort (python)
-      args: ["--profile", "black", "-p", "mlxtend", "--line-length 88", "--multi-line 3"]
+      - id: flake8
+        name: Check PEP8

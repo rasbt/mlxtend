@@ -1,4 +1,4 @@
-name: Lint using black and isort
+name: Lint using isort, black, and flake8
 
 on: [pull_request]
 
@@ -11,11 +11,13 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'
-      - name: Install isort and black
+      - name: Install isort, black, and flake8
         run: |
           python -m pip install --upgrade pip
-          pip install isort black
+          pip install isort black flake8
       - name: Run isort and black
         run: |
           isort -p mlxtend --check --diff --line-length 88 --multi-line 3 --py 39 --profile black mlxtend/*
           black --check --diff mlxtend/*
+          # exit-zero treats all errors as warnings.
+          flake8 . --count --exit-zero --statistics

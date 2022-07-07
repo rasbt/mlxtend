@@ -21,6 +21,31 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features and Enhancements
 
+- The `mlxtend.evaluate.feature_importance_permutation` function has a new `feature_groups` argument to treat user-specified feature groups as single features, which is useful for one-hot encoded features.
+
+##### Changes
+
+- None
+
+##### Bug Fixes
+
+- None
+
+
+### Version 0.20.0
+
+#### New Features and Enhancements
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.20.0.zip)
+
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.20.0.tar.gz)
+
+
+
+##### New Features and Enhancements
+
 - The `mlxtend.evaluate.bootstrap_point632_score` now supports `fit_params`. ([#861](https://github.com/rasbt/mlxtend/pull/861))
 - The `mlxtend/plotting/decision_regions.py` function now has a `contourf_kwargs` for matplotlib to change the look of the decision boundaries if desired. ([#881](https://github.com/rasbt/mlxtend/pull/881) via [[pbloem](https://github.com/pbloem)])
 - Add a `norm_colormap` parameter to `mlxtend.plotting.plot_confusion_matrix`, to allow normalizing the colormap, e.g., using `matplotlib.colors.LogNorm()` ([#895](https://github.com/rasbt/mlxtend/pull/895))

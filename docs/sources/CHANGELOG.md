@@ -21,7 +21,7 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features and Enhancements
 
-- The `mlxtend.evaluate.feature_importance_permutation` function has a new `feature_groups` argument to treat user-specified feature groups as single features, which is useful for one-hot encoded features.
+- The `mlxtend.evaluate.feature_importance_permutation` function has a new `feature_groups` argument to treat user-specified feature groups as single features, which is useful for one-hot encoded features. ([#955](https://github.com/rasbt/mlxtend/pull/955))
 
 ##### Changes
 

@@ -7,9 +7,12 @@
 # License: BSD 3 clause
 
 import numpy as np
+import pandas as pd
 from sklearn.datasets import make_classification, make_regression
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import OneHotEncoder
 from sklearn.svm import SVC, SVR
 
 from mlxtend.evaluate import feature_importance_permutation
@@ -230,3 +233,47 @@ def test_n_rounds():
     assert imp_all.shape == (X_train.shape[1], 100)
     assert imp_vals[0].mean() > 0.2
     assert imp_vals[1].mean() > 0.2
+
+
+def test_feature_groups():
+    df_data = pd.read_csv(
+        "https://gist.githubusercontent.com/rasbt/"
+        "b99bf69079bc0d601eeae8a49248d358/"
+        "raw/a114be9801647ec5460089f3a9576713dabf5f1f/"
+        "onehot-numeric-mixed-data.csv"
+    )
+
+    df_X = df_data[["measurement1", "measurement2", "measurement3", "categorical"]]
+    df_y = df_data["label"]
+
+    df_X_train, df_X_test, df_y_train, df_y_test = train_test_split(
+        df_X, df_y, test_size=0.33, random_state=42, stratify=df_y
+    )
+
+    ohe = OneHotEncoder(drop="first")
+    ohe.fit(df_X_train[["categorical"]])
+
+    df_X_train_ohe = df_X_train.drop(columns=["categorical"])
+    df_X_test_ohe = df_X_test.drop(columns=["categorical"])
+
+    ohe_train = np.asarray(ohe.transform(df_X_train[["categorical"]]).todense())
+    ohe_test = np.asarray(ohe.transform(df_X_test[["categorical"]]).todense())
+
+    X_train_ohe = np.hstack((df_X_train_ohe.values, ohe_train))
+    X_test_ohe = np.hstack((df_X_test_ohe.values, ohe_test))
+
+    model = LogisticRegression().fit(X_train_ohe, df_y_train.values)
+
+    feature_groups = [0, 1, 2, range(3, 21)]
+
+    imp_vals, imp_all = feature_importance_permutation(
+        predict_method=model.predict,
+        X=X_test_ohe,
+        y=df_y_test.values,
+        metric="accuracy",
+        num_rounds=50,
+        feature_groups=feature_groups,
+        seed=1,
+    )
+
+    assert len(imp_vals) == 4

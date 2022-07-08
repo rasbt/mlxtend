@@ -24,6 +24,38 @@ from sklearn.model_selection import cross_val_score
 from ..externals.name_estimators import _name_estimators
 
 
+def _merge_lsts(nested_lst, high_level_indices):
+    """
+    merge elements of lists into one single list
+
+    Parameters
+    ----------
+    nested_lst: List
+        a  list whose elements must be list as well.
+
+    high_level_indices: list or tuple
+        a list or tuple that contains integers that is between 0 (inclusive) and
+        length-of-high_level_indices (exclusive)
+
+    Returns
+    -------
+    out: List
+        list that is the merge of inner lists, located in `high_level_indices`
+
+
+    Example:
+    nested_lst = [[1],[2, 3],[4]]
+    high_level_indices = [1, 2]
+    >>> _merge_lsts(nested_lst, high_level_indices)
+    [2, 3, 4]
+    """
+    lst = []
+    for idx in high_level_indices:
+        lst.extend(nested_lst[idx])
+
+    return lst
+
+
 def _calc_score(selector, X, y, indices, groups=None, **fit_params):
     if selector.cv:
         scores = cross_val_score(
@@ -117,6 +149,12 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         implement scikit-learn's set_params and get_params methods.
         In addition, it is required to set cv=0, and n_jobs=1.
 
+    feature_groups : list or None (default=None)
+        Optional argument for treating certain features as a group.
+        For example `[1, 2, [3, 4, 5]]`, which can be useful for
+        interpretability, for example, if features 3, 4, 5 are one-hot
+        encoded features.
+
     Attributes
     ----------
     best_idx_ : array-like, shape = [n_predictions]
@@ -162,6 +200,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         n_jobs=1,
         pre_dispatch="2*n_jobs",
         clone_estimator=True,
+        feature_groups=None,
     ):
         self.estimator = estimator
         self.min_features = min_features
@@ -180,6 +219,9 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             self.est_ = clone(self.estimator)
         else:
             self.est_ = self.estimator
+
+        self.feature_groups = feature_groups
+
         self.fitted = False
         self.interrupted_ = False
 
@@ -234,27 +276,31 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 "must equal the number of columns in X."
             )
 
+        if self.feature_groups is None:
+            self.feature_groups = [[i] for i in range(X_.shape[1])]  # use X?
+        n_feature_groups = len(self.feature_groups)
+
         if not isinstance(self.max_features, int) or (
-            self.max_features > X.shape[1] or self.max_features < 1
+            self.max_features > n_feature_groups or self.max_features < 1
         ):
             raise AttributeError(
                 "max_features must be"
-                " smaller than %d and larger than 0" % (X.shape[1] + 1)
+                " smaller than %d and larger than 0" % (n_feature_groups + 1)
             )
 
         if not isinstance(self.min_features, int) or (
-            self.min_features > X.shape[1] or self.min_features < 1
+            self.min_features > n_feature_groups or self.min_features < 1
         ):
             raise AttributeError(
                 "min_features must be"
-                " smaller than %d and larger than 0" % (X.shape[1] + 1)
+                " smaller than %d and larger than 0" % (n_feature_groups + 1)
             )
 
         if self.max_features < self.min_features:
             raise AttributeError("min_features must be <= max_features")
 
         candidates = chain.from_iterable(
-            combinations(range(X_.shape[1]), r=i)
+            combinations(range(n_feature_groups), r=i)
             for i in range(self.min_features, self.max_features + 1)
         )
 
@@ -283,7 +329,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
         all_comb = np.sum(
             [
-                ncr(n=X_.shape[1], r=i)
+                ncr(n=n_feature_groups, r=i)
                 for i in range(self.min_features, self.max_features + 1)
             ]
         )
@@ -292,7 +338,14 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         parallel = Parallel(n_jobs=n_jobs, pre_dispatch=self.pre_dispatch)
         work = enumerate(
             parallel(
-                delayed(_calc_score)(self, X_, y, c, groups=groups, **fit_params)
+                delayed(_calc_score)(
+                    self,
+                    X_,
+                    y,
+                    _merge_lsts(self.feature_groups, c),
+                    groups=groups,
+                    **fit_params
+                )
                 for c in candidates
             )
         )

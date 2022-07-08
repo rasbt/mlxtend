@@ -151,7 +151,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
     feature_groups : list or None (default=None)
         Optional argument for treating certain features as a group.
-        For example `[1, 2, [3, 4, 5]]`, which can be useful for
+        For example `[[1], [2], [3, 4, 5]]`, which can be useful for
         interpretability, for example, if features 3, 4, 5 are one-hot
         encoded features.
 
@@ -269,6 +269,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         else:
             X_ = X
 
+        # shouldn't we use X_ now?
         if custom_feature_names is not None and len(custom_feature_names) != X.shape[1]:
             raise ValueError(
                 "If custom_feature_names is not None, "

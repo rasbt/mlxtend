@@ -354,7 +354,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             for iteration, (c, cv_scores) in work:
 
                 self.subsets_[iteration] = {
-                    "feature_idx": c,
+                    "feature_idx": tuple(c),
                     "cv_scores": cv_scores,
                     "avg_score": np.mean(cv_scores),
                 }

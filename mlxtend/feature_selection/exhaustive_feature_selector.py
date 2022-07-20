@@ -194,10 +194,10 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     [4]]`, then the `max_features` value cannot exceed 4.
 
     (2) Although two or more individual features may be considered as one group
-    throughout the feature-selection process, it does not mean the individual features
-    of that group have the same impact on the outcome. For instance, in linear regression,
-    the coefficient of the feature 2 and 3 can be different even if they are considered
-    as one group in feature_groups.
+    throughout the feature-selection process, it does not mean the individual
+    features of that group have the same impact on the outcome. For instance, in
+    linear regression, the coefficient of the feature 2 and 3 can be different
+    even if they are considered as one group in feature_groups.
 
     Examples
     -----------

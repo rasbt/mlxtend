@@ -24,36 +24,36 @@ from sklearn.model_selection import cross_val_score
 from ..externals.name_estimators import _name_estimators
 
 
-def _merge_lsts(nested_lst, high_level_indices):
+def _merge_lists(nested_list, high_level_indices):
     """
-    merge elements of lists into one single list
+    merge elements of lists (of a nested_list) into one single list
 
     Parameters
     ----------
-    nested_lst: List
+    nested_list: List
         a  list whose elements must be list as well.
 
     high_level_indices: list or tuple
-        a list or tuple that contains integers that is between 0 (inclusive) and
-        length-of-high_level_indices (exclusive)
+        a list or tuple that contains integers that are between 0 (inclusive) and
+        the length of `nested_lst` (exclusive)
 
     Returns
     -------
-    out: List
-        list that is the merge of inner lists, located in `high_level_indices`
-
+    out: tuple
+        a tuple, with elements sorted in ascending order, that is the merge of inner
+        lists whose indices are provided in `high_level_indices`
 
     Example:
-    nested_lst = [[1],[2, 3],[4]]
+    nested_list = [[1],[2, 3],[4]]
     high_level_indices = [1, 2]
-    >>> _merge_lsts(nested_lst, high_level_indices)
-    [2, 3, 4]
+    >>> _merge_lists(nested_list, high_level_indices)
+    [2, 3, 4] # merging [2, 3] and [4]
     """
     lst = []
     for idx in high_level_indices:
-        lst.extend(nested_lst[idx])
+        lst.extend(nested_list[idx])
 
-    return lst
+    return tuple(sorted(lst))
 
 
 def _calc_score(selector, X, y, indices, groups=None, **fit_params):
@@ -111,7 +111,10 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     min_features : int (default: 1)
         Minumum number of features to select
     max_features : int (default: 1)
-        Maximum number of features to select
+        Maximum number of features to select. If parameter `feature_groups` is not
+        None, the number of features is equal to the number of feature groups, i.e.
+        `len(feature_groups)`. For  example, if `feature_groups = [[0], [1], [2, 3],
+        [4]]`, then the `max_features` value cannot exceed 4.
     print_progress : bool (default: True)
         Prints progress as the number of epochs
         to stderr.
@@ -153,7 +156,8 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         Optional argument for treating certain features as a group.
         For example `[[1], [2], [3, 4, 5]]`, which can be useful for
         interpretability, for example, if features 3, 4, 5 are one-hot
-        encoded features.
+        encoded features.  (for  more details, please read the notes at the
+        bottom of this docstring).
 
     Attributes
     ----------
@@ -181,6 +185,19 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         correspond to the column names. Otherwise, the
         feature names are string representation of the feature
         array indices. The 'feature_names' is new in v 0.13.0.
+
+    Notes
+    -----
+    (1) If parameter `feature_groups` is not None, the
+    number of features is equal to the number of feature groups, i.e.
+    `len(feature_groups)`. For  example, if `feature_groups = [[0], [1], [2, 3],
+    [4]]`, then the `max_features` value cannot exceed 4.
+
+    (2) Although two or more individual features may be considered as one group
+    throughout the feature-selection process, it does not mean the individual features
+    of that group have the same impact on the outcome. For instance, in linear regression,
+    the coefficient of the feature 2 and 3 can be different even if they are considered
+    as one group in feature_groups.
 
     Examples
     -----------
@@ -269,8 +286,10 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         else:
             X_ = X
 
-        # shouldn't we use X_ now?
-        if custom_feature_names is not None and len(custom_feature_names) != X.shape[1]:
+        if (
+            custom_feature_names is not None
+            and len(custom_feature_names) != X_.shape[1]
+        ):
             raise ValueError(
                 "If custom_feature_names is not None, "
                 "the number of elements in custom_feature_names "
@@ -278,7 +297,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             )
 
         if self.feature_groups is None:
-            self.feature_groups = [[i] for i in range(X_.shape[1])]  # use X?
+            self.feature_groups = [[i] for i in range(X_.shape[1])]
         n_feature_groups = len(self.feature_groups)
 
         if not isinstance(self.max_features, int) or (
@@ -343,7 +362,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                     self,
                     X_,
                     y,
-                    _merge_lsts(self.feature_groups, c),
+                    _merge_lists(self.feature_groups, c),
                     groups=groups,
                     **fit_params
                 )
@@ -355,7 +374,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             for iteration, (c, cv_scores) in work:
 
                 self.subsets_[iteration] = {
-                    "feature_idx": tuple(c),
+                    "feature_idx": c,
                     "cv_scores": cv_scores,
                     "avg_score": np.mean(cv_scores),
                 }

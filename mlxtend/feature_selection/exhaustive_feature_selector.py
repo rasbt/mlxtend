@@ -39,7 +39,7 @@ def _merge_lists(nested_list, high_level_indices=None, add_extension=None):
         lists nested in `nested_list` will be returned.
 
     add_extension : list or tuple, default None
-        a list or tuple that will added as extenstion to the output list.
+        a list or tuple that will extend the `high_level_indices`
 
     Returns
     -------
@@ -58,12 +58,11 @@ def _merge_lists(nested_list, high_level_indices=None, add_extension=None):
 
     if add_extension is None:
         add_extension = []
+    high_level_indices.extend(add_extension)
 
     lst = []
     for idx in high_level_indices:
         lst.extend(nested_list[idx])
-
-    lst.extend(add_extension)
 
     return tuple(sorted(lst))
 

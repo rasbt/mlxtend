@@ -58,10 +58,11 @@ def _merge_lists(nested_list, high_level_indices=None, add_extension=None):
 
     if add_extension is None:
         add_extension = []
-    high_level_indices.extend(add_extension)
 
     lst = []
     for idx in high_level_indices:
+        lst.extend(nested_list[idx])
+    for idx in add_extension:
         lst.extend(nested_list[idx])
 
     return tuple(sorted(lst))

@@ -667,7 +667,7 @@ def test_knn_wo_cv_with_fixed_features():
     dict_compare_utility(d1=expect, d2=efs1.subsets_)
 
 
-def test_knn_wo_cv_with_fixed_features_and_feature_groups():
+def test_knn_wo_cv_with_fixed_features_and_feature_groups_case1():
     iris = load_iris()
     X = iris.data
     y = iris.target
@@ -700,6 +700,36 @@ def test_knn_wo_cv_with_fixed_features_and_feature_groups():
             "cv_scores": np.array([0.96]),
         },
         2: {
+            "feature_idx": (0, 1, 3),
+            "feature_names": ("0", "1", "3"),
+            "avg_score": 0.96666666666666667,
+            "cv_scores": np.array([0.96666667]),
+        },
+    }
+    dict_compare_utility(d1=expect, d2=efs1.subsets_)
+
+
+def test_knn_wo_cv_with_fixed_features_and_feature_groups_case2():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=4)
+    efs1 = EFS(
+        knn,
+        min_features=2,
+        max_features=2,
+        scoring="accuracy",
+        cv=0,
+        print_progress=False,
+        fixed_features=[0, 1, 3],
+        feature_groups=[[0, 1], [2], [3]],
+    )
+    efs1 = efs1.fit(X, y)
+    # expect is based on what provided in `test_knn_wo_cv` but excluding the
+    # items whose `feature_idx` cannot be created from `feature_groups` while
+    # considering `min_features` and  `max_features` values
+    expect = {
+        0: {
             "feature_idx": (0, 1, 3),
             "feature_names": ("0", "1", "3"),
             "avg_score": 0.96666666666666667,

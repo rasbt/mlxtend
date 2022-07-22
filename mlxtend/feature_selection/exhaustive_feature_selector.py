@@ -24,7 +24,7 @@ from sklearn.model_selection import cross_val_score
 from ..externals.name_estimators import _name_estimators
 
 
-def _merge_lists(nested_list, high_level_indices):
+def _merge_lists(nested_list, high_level_indices=None):
     """
     merge elements of lists (of a nested_list) into one single list
 
@@ -49,6 +49,9 @@ def _merge_lists(nested_list, high_level_indices):
     >>> _merge_lists(nested_list, high_level_indices)
     [2, 3, 4] # merging [2, 3] and [4]
     """
+    if high_level_indices is None:
+        high_level_indices = list(range(len(nested_list)))
+
     lst = []
     for idx in high_level_indices:
         lst.extend(nested_list[idx])

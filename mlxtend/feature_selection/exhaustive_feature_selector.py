@@ -155,7 +155,16 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         implement scikit-learn's set_params and get_params methods.
         In addition, it is required to set cv=0, and n_jobs=1.
 
-    feature_groups : list or None (default=None)
+    fixed_features : tuple (default: None)
+        If not `None`, the feature indices provided as a tuple will be
+        regarded as fixed by the feature selector. For example, if
+        `fixed_features=(1, 3, 7)`, the 2nd, 4th, and 8th feature are
+        guaranteed to be present in the solution. Note that if
+        `fixed_features` is not `None`, make sure that the number of
+        features to be selected is greater than `len(fixed_features)`.
+        In other words, ensure that `k_features > len(fixed_features)`.
+
+    feature_groups : list or None (default: None)
         Optional argument for treating certain features as a group.
         For example `[[1], [2], [3, 4, 5]]`, which can be useful for
         interpretability, for example, if features 3, 4, 5 are one-hot
@@ -220,6 +229,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         n_jobs=1,
         pre_dispatch="2*n_jobs",
         clone_estimator=True,
+        fixed_features=None,
         feature_groups=None,
     ):
         self.estimator = estimator
@@ -240,6 +250,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         else:
             self.est_ = self.estimator
 
+        self.fixed_features = fixed_features
         self.feature_groups = feature_groups
 
         self.fitted = False
@@ -280,14 +291,22 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.subsets_ = {}
         self.fitted = False
         self.interrupted_ = False
+        self.feature_names = None
         self.best_idx_ = None
         self.best_feature_names_ = None
         self.best_score_ = None
 
         if hasattr(X, "loc"):
             X_ = X.values
+            self.feature_names = list(X.columns)
         else:
             X_ = X
+
+        self.feature_names_to_idx_mapper = None
+        if self.feature_names is not None:
+            self.feature_names_to_idx_mapper = {
+                name: idx for idx, name in enumerate(self.feature_names)
+            }
 
         if (
             custom_feature_names is not None
@@ -299,29 +318,105 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 "must equal the number of columns in X."
             )
 
-        if self.feature_groups is None:
-            self.feature_groups = [[i] for i in range(X_.shape[1])]
-        n_feature_groups = len(self.feature_groups)
+        # preprocessing on fixed_featuress
+        if self.fixed_features is None:
+            self.fixed_features = tuple()
 
-        if not isinstance(self.max_features, int) or (
-            self.max_features > n_feature_groups or self.max_features < 1
-        ):
-            raise AttributeError(
-                "max_features must be"
-                " smaller than %d and larger than 0" % (n_feature_groups + 1)
+        if len(self.fixed_features) > 0 and isinstance(self.fixed_features[0], str):
+            # ASSUME all values provided in fixed_feature are string values
+            if self.feature_names_to_idx_mapper is None:
+                raise ValueError(
+                    "The input X does not contain name of features provived in"
+                    " `fixed_features`. Try passing input X as pandas DataFrames"
+                    " that, at least, contain name of features provided in"
+                    " `fixed_features`"
+                )
+
+                self.fixed_features = tuple(
+                    self.feature_names_to_idx_mapper[name]
+                    for name in self.fixed_features
+                )
+
+        if not set(self.fixed_features).issubset(set(range(X_.shape[1]))):
+            raise ValueError(
+                "`fixed_features` contains at least one feature that is not in the"
+                " input data X_."
             )
 
-        if not isinstance(self.min_features, int) or (
-            self.min_features > n_feature_groups or self.min_features < 1
+        # preprocessing on feature_groups
+        if self.feature_groups is None:
+            self.feature_groups = [[i] for i in range(X_.shape[1])]
+
+        for fg in self.feature_groups:
+            if len(fg) == 0:
+                raise ValueError("Feature group can't contain empty list.")
+
+        if isinstance(self.feature_groups[0][0], str):
+            # ASSUME all values provided in feature_groups are string values
+            if self.feature_names_to_idx_mapper is None:
+                raise ValueError(
+                    "The input X does not contain name of features provived in"
+                    " `feature_groups`. Try passing input X as pandas DataFrames"
+                    " in which the name of features match the ones provided in"
+                    " `feature_groups`"
+                )
+
+            lst = []
+            for item in self.feature_groups:
+                tmp = [self.feature_names_to_idx_mapper[name] for name in item]
+                lst.append(tmp)
+
+            self.feature_groups[:] = lst
+
+        if sorted(_merge_lists(self.feature_groups)) != sorted(
+            list(range(X_.shape[1]))
+        ):
+            raise ValueError(
+                "`feature_group` must contain all features within `range(X.shape[1])`"
+                " and there should be no duplicates in `feature_groups`"
+            )
+
+        # partitioning fixed_features according to the groups in `feature_groups`
+        # and replace `fixed_features` with their group ids
+        features_encoded_by_groupID = np.full(X_.shape[1], -1, dtype=np.int64)
+        for id, group in enumerate(self.feature_groups):
+            for idx in group:
+                features_encoded_by_groupID[idx] = id
+
+        lst = [features_encoded_by_groupID[idx] for idx in self.fixed_features]
+        if sum(len(self.feature_groups[id]) for id in set(lst)) != len(
+            self.fixed_features
+        ):
+            raise ValueError(
+                "At least one feature is specified in a fixed feature that its"
+                " group-mate(s), as provided in `feature_groups`, are missing."
+            )
+        self.fixed_features = tuple(set(lst))  # to ensure each group id appears once
+
+        n_features_ub = len(self.feature_groups)
+        n_features_lb = max(1, len(self.fixed_features))
+        # check `self.max_features`
+        if not isinstance(self.max_features, int) or (
+            self.max_features > n_features_ub or self.max_features < n_features_lb
         ):
             raise AttributeError(
-                "min_features must be"
-                " smaller than %d and larger than 0" % (n_feature_groups + 1)
+                f"max_features must be smaller than {n_features_ub + 1}"
+                f" and larger than {n_features_lb - 1}"
+            )
+
+        # check `self.min_features`
+        if not isinstance(self.min_features, int) or (
+            self.min_features > n_features_ub or self.min_features < n_features_lb
+        ):
+            raise AttributeError(
+                f"min_features must be smaller than {n_features_ub + 1}"
+                f" and larger than {n_features_lb - 1}"
             )
 
         if self.max_features < self.min_features:
             raise AttributeError("min_features must be <= max_features")
 
+        n_feature_groups = len(self.feature_groups)
         candidates = chain.from_iterable(
             combinations(range(n_feature_groups), r=i)
             for i in range(self.min_features, self.max_features + 1)
@@ -367,7 +462,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                     y,
                     _merge_lists(self.feature_groups, c),
                     groups=groups,
-                    **fit_params
+                    **fit_params,
                 )
                 for c in candidates
             )

@@ -24,7 +24,7 @@ from sklearn.model_selection import cross_val_score
 from ..externals.name_estimators import _name_estimators
 
 
-def _merge_lists(nested_list, high_level_indices=None):
+def _merge_lists(nested_list, high_level_indices=None, add_extension=None):
     """
     merge elements of lists (of a nested_list) into one single list
 
@@ -33,9 +33,13 @@ def _merge_lists(nested_list, high_level_indices=None):
     nested_list: List
         a  list whose elements must be list as well.
 
-    high_level_indices: list or tuple
+    high_level_indices: list or tuple, default None
         a list or tuple that contains integers that are between 0 (inclusive) and
-        the length of `nested_lst` (exclusive)
+        the length of `nested_lst` (exclusive). If None, the merge of all
+        lists nested in `nested_list` will be returned.
+
+    add_extension : list or tuple, default None
+        a list or tuple that will added as extenstion to the output list.
 
     Returns
     -------
@@ -52,9 +56,14 @@ def _merge_lists(nested_list, high_level_indices=None):
     if high_level_indices is None:
         high_level_indices = list(range(len(nested_list)))
 
+    if add_extension is None:
+        add_extension = []
+
     lst = []
     for idx in high_level_indices:
         lst.extend(nested_list[idx])
+
+    lst.extend(add_extension)
 
     return tuple(sorted(lst))
 
@@ -391,10 +400,11 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 "At least one feature is specified in a fixed feature that its"
                 " group-mate(s), as provided in `feature_groups`, are missing."
             )
-        self.fixed_features = tuple(set(lst))  # to ensure each group id appears once
+
+        self.fixed_feature_groups = tuple(set(lst))
 
         n_features_ub = len(self.feature_groups)
-        n_features_lb = max(1, len(self.fixed_features))
+        n_features_lb = max(1, len(self.fixed_feature_groups))
         # check `self.max_features`
         if not isinstance(self.max_features, int) or (
             self.max_features > n_features_ub or self.max_features < n_features_lb
@@ -417,9 +427,20 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             raise AttributeError("min_features must be <= max_features")
 
         n_feature_groups = len(self.feature_groups)
+        n_fixed_feature_groups = len(self.fixed_feature_groups)
+
+        mask = np.full(n_feature_groups, 1, dtype=bool)
+        for id in self.fixed_feature_groups:
+            mask[id] = False
+        IDX = np.flatnonzero(mask)  # id of groups that are not fixed
+
+        # candidates in the following lines are the non-fixed-features candidates
+        # (the fixed features will be added later to each combination)
+        min_num_candidates = self.min_features - n_fixed_feature_groups
+        max_num_candidates = self.max_features - n_fixed_feature_groups
         candidates = chain.from_iterable(
-            combinations(range(n_feature_groups), r=i)
-            for i in range(self.min_features, self.max_features + 1)
+            combinations(IDX, r=i)
+            for i in range(min_num_candidates, max_num_candidates + 1)
         )
 
         def ncr(n, r):
@@ -447,8 +468,8 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
         all_comb = np.sum(
             [
-                ncr(n=n_feature_groups, r=i)
-                for i in range(self.min_features, self.max_features + 1)
+                ncr(n=len(IDX), r=i)
+                for i in range(min_num_candidates, max_num_candidates + 1)
             ]
         )
 
@@ -460,7 +481,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                     self,
                     X_,
                     y,
-                    _merge_lists(self.feature_groups, c),
+                    _merge_lists(self.feature_groups, c, self.fixed_feature_groups),
                     groups=groups,
                     **fit_params,
                 )
@@ -470,9 +491,12 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
         try:
             for iteration, (c, cv_scores) in work:
+                c_corrected = list(c)
+                c_corrected.extend(self.fixed_feature_groups)
+                c_corrected = tuple(c_corrected)
 
                 self.subsets_[iteration] = {
-                    "feature_idx": c,
+                    "feature_idx": c_corrected,
                     "cv_scores": cv_scores,
                     "avg_score": np.mean(cv_scores),
                 }

@@ -491,12 +491,8 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
         try:
             for iteration, (c, cv_scores) in work:
-                c_corrected = list(c)
-                c_corrected.extend(self.fixed_feature_groups)
-                c_corrected = tuple(sorted(c_corrected))
-
                 self.subsets_[iteration] = {
-                    "feature_idx": c_corrected,
+                    "feature_idx": c,
                     "cv_scores": cv_scores,
                     "avg_score": np.mean(cv_scores),
                 }

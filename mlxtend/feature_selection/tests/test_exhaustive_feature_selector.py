@@ -600,9 +600,7 @@ def test_knn_wo_cv_with_feature_groups():
         feature_groups=[[0], [1, 2], [3]],
     )
     efs1 = efs1.fit(X, y)
-    # expect is based on what provided in `test_knn_wo_cv` but excluding the
-    # items whose `feature_idx` cannot be created from `feature_groups` while
-    # considering `min_features` and  `max_features` values
+    # expect is based on what provided in `test_knn_wo_cv`
     expect = {
         0: {
             "feature_idx": (0, 1, 2),
@@ -641,9 +639,7 @@ def test_knn_wo_cv_with_fixed_features():
         fixed_features=[0, 1],
     )
     efs1 = efs1.fit(X, y)
-    # expect is based on what provided in `test_knn_wo_cv` but excluding the
-    # items whose `feature_idx` cannot be created from `feature_groups` while
-    # considering `min_features` and  `max_features` values
+    # expect is based on what provided in `test_knn_wo_cv`
     expect = {
         0: {
             "feature_idx": (0, 1),
@@ -683,9 +679,7 @@ def test_knn_wo_cv_with_fixed_features_and_feature_groups_case1():
         feature_groups=[[0, 1], [2], [3]],
     )
     efs1 = efs1.fit(X, y)
-    # expect is based on what provided in `test_knn_wo_cv` but excluding the
-    # items whose `feature_idx` cannot be created from `feature_groups` while
-    # considering `min_features` and  `max_features` values
+    # expect is based on what provided in `test_knn_wo_cv`
     expect = {
         0: {
             "feature_idx": (0, 1),
@@ -727,9 +721,7 @@ def test_knn_wo_cv_with_fixed_features_and_feature_groups_case2():
         feature_groups=[[0, 1], [2], [3]],
     )
     efs1 = efs1.fit(X, y)
-    # expect is based on what provided in `test_knn_wo_cv` but excluding the
-    # items whose `feature_idx` cannot be created from `feature_groups` while
-    # considering `min_features` and  `max_features` values
+    # expect is based on what provided in `test_knn_wo_cv`
     expect = {
         0: {
             "feature_idx": (0, 1, 3),
@@ -764,9 +756,7 @@ def test_check_support_string_in_feature_groups():
         ],
     )
     efs1 = efs1.fit(df, y)
-    # expect is based on what provided in `test_knn_wo_cv` but excluding the
-    # items whose `feature_idx` cannot be created from `feature_groups` while
-    # considering `min_features` and  `max_features` values
+    # expect is based on what provided in `test_knn_wo_cv`
     expect = {
         0: {
             "feature_idx": (0, 1, 2),
@@ -810,9 +800,7 @@ def test_check_support_string_in_fixed_feature():
     )
 
     efs1 = efs1.fit(df, y)
-    # expect is based on what provided in `test_knn_wo_cv` but excluding the
-    # items whose `feature_idx` cannot be created from `feature_groups` while
-    # considering `min_features` and  `max_features` values
+    # expect is based on what provided in `test_knn_wo_cv`
     expect = {
         0: {
             "feature_idx": (0, 1),

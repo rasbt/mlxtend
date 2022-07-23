@@ -745,6 +745,10 @@ def test_check_support_string_in_feature_groups():
     iris = load_iris()
     X = iris.data
     y = iris.target
+
+    features_names = ["sepal length", "sepal width", "petal length", "petal width"]
+    df = pd.DataFrame(X, columns=features_names)
+
     knn = KNeighborsClassifier(n_neighbors=4)
     efs1 = EFS(
         knn,
@@ -759,10 +763,6 @@ def test_check_support_string_in_feature_groups():
             ["petal width"],
         ],
     )
-
-    features_names = ["sepal length", "sepal width", "petal length", "petal width"]
-    df = pd.DataFrame(X, columns=features_names)
-
     efs1 = efs1.fit(df, y)
     # expect is based on what provided in `test_knn_wo_cv` but excluding the
     # items whose `feature_idx` cannot be created from `feature_groups` while
@@ -785,6 +785,52 @@ def test_check_support_string_in_feature_groups():
             "feature_names": (features_names[1], features_names[2], features_names[3]),
             "avg_score": 0.97333333333333338,
             "cv_scores": np.array([0.97333333]),
+        },
+    }
+    dict_compare_utility(d1=expect, d2=efs1.subsets_)
+
+
+def test_check_support_string_in_fixed_feature():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+
+    features_names = ["sepal length", "sepal width", "petal length", "petal width"]
+    df = pd.DataFrame(X, columns=features_names)
+
+    knn = KNeighborsClassifier(n_neighbors=4)
+    efs1 = EFS(
+        knn,
+        min_features=2,
+        max_features=3,
+        scoring="accuracy",
+        cv=0,
+        print_progress=False,
+        fixed_features=[features_names[0], features_names[1]],
+    )
+
+    efs1 = efs1.fit(df, y)
+    # expect is based on what provided in `test_knn_wo_cv` but excluding the
+    # items whose `feature_idx` cannot be created from `feature_groups` while
+    # considering `min_features` and  `max_features` values
+    expect = {
+        0: {
+            "feature_idx": (0, 1),
+            "feature_names": (features_names[0], features_names[1]),
+            "avg_score": 0.82666666666666666,
+            "cv_scores": np.array([0.82666667]),
+        },
+        1: {
+            "feature_idx": (0, 1, 2),
+            "feature_names": (features_names[0], features_names[1], features_names[2]),
+            "avg_score": 0.95999999999999996,
+            "cv_scores": np.array([0.96]),
+        },
+        2: {
+            "feature_idx": (0, 1, 3),
+            "feature_names": (features_names[0], features_names[1], features_names[3]),
+            "avg_score": 0.96666666666666667,
+            "cv_scores": np.array([0.96666667]),
         },
     }
     dict_compare_utility(d1=expect, d2=efs1.subsets_)

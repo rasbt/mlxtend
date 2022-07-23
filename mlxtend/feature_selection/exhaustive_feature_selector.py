@@ -336,9 +336,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             if self.feature_names_to_idx_mapper is None:
                 raise ValueError(
                     "The input X does not contain name of features provived in"
-                    " `fixed_features`. Try passing input X as pandas DataFrames"
-                    " that, at least, contain name of features provided in"
-                    " `fixed_features`"
+                    " `fixed_features`. Try passing input X as pandas DataFrames."
                 )
 
                 self.fixed_features = tuple(
@@ -349,7 +347,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         if not set(self.fixed_features).issubset(set(range(X_.shape[1]))):
             raise ValueError(
                 "`fixed_features` contains at least one feature that is not in the"
-                " input data X_."
+                " input data `X`."
             )
 
         # preprocessing on feature_groups
@@ -358,7 +356,9 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
         for fg in self.feature_groups:
             if len(fg) == 0:
-                raise ValueError("Feature group can't contain empty list.")
+                raise ValueError(
+                    "Each list in the nested lists `features_group`" "cannot be empty"
+                )
 
         if isinstance(self.feature_groups[0][0], str):
             # ASSUME all values provided in feature_groups are string values
@@ -382,26 +382,32 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         ):
             raise ValueError(
                 "`feature_group` must contain all features within `range(X.shape[1])`"
-                " and there should be no duplicates in `feature_groups`"
+                " and there should be no common feature betweeen any two distinct"
+                " group of features provided in `feature_group`"
             )
 
-        # partitioning fixed_features according to the groups in `feature_groups`
-        # and replace `fixed_features` with their group ids
+        # label-encoding fixed_features according to the groups in `feature_groups`
+        # and replace each individual feature in `fixed_features` with their correspondig
+        # group id
         features_encoded_by_groupID = np.full(X_.shape[1], -1, dtype=np.int64)
         for id, group in enumerate(self.feature_groups):
             for idx in group:
                 features_encoded_by_groupID[idx] = id
 
         lst = [features_encoded_by_groupID[idx] for idx in self.fixed_features]
-        if sum(len(self.feature_groups[id]) for id in set(lst)) != len(
-            self.fixed_features
-        ):
+        fixed_features_groupID_set = set(lst)
+
+        n_fixed_features_expected = sum(
+            len(self.feature_groups[id]) for id in fixed_features_groupID_set
+        )
+        if n_fixed_features_expected != len(self.fixed_features):
             raise ValueError(
-                "At least one feature is specified in a fixed feature that its"
-                " group-mate(s), as provided in `feature_groups`, are missing."
+                "For each feature specified in the `fixed feature`, its group-mates"
+                "must be specified as `fix_features` as well when `feature_groups`"
+                "is provided."
             )
 
-        self.fixed_feature_groups = tuple(set(lst))
+        self.fixed_feature_groups = tuple(fixed_features_groupID_set)
 
         n_features_ub = len(self.feature_groups)
         n_features_lb = max(1, len(self.fixed_feature_groups))

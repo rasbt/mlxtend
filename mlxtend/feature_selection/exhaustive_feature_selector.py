@@ -421,8 +421,8 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         if self.max_features < self.min_features:
             raise AttributeError("min_features must be <= max_features")
 
-        non_fixed_groups = set(range(len(self.feature_groups))) - set(
-            self.fixed_feature_groups
+        non_fixed_groups = (
+            set(range(len(self.feature_groups))) - self.fixed_features_group_set
         )
         non_fixed_groups = sorted(list(non_fixed_groups))
 

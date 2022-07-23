@@ -339,10 +339,9 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                     " `fixed_features`. Try passing input X as pandas DataFrames."
                 )
 
-                self.fixed_features = tuple(
-                    self.feature_names_to_idx_mapper[name]
-                    for name in self.fixed_features
-                )
+            self.fixed_features = tuple(
+                self.feature_names_to_idx_mapper[name] for name in self.fixed_features
+            )
 
         if not set(self.fixed_features).issubset(set(range(X_.shape[1]))):
             raise ValueError(

@@ -498,36 +498,6 @@ def test_get_metric_dict_not_fitted():
     assert_raises(AttributeError, expect, efs1.get_metric_dict)
 
 
-def test_custom_feature_names():
-    knn = KNeighborsClassifier(n_neighbors=4)
-    iris = load_iris()
-    X = iris.data
-    y = iris.target
-    efs1 = EFS(
-        knn,
-        min_features=2,
-        max_features=2,
-        scoring="accuracy",
-        cv=0,
-        clone_estimator=False,
-        print_progress=False,
-        n_jobs=1,
-    )
-
-    efs1 = efs1.fit(
-        X,
-        y,
-        custom_feature_names=(
-            "sepal length",
-            "sepal width",
-            "petal length",
-            "petal width",
-        ),
-    )
-    assert efs1.best_idx_ == (2, 3), efs1.best_idx_
-    assert efs1.best_feature_names_ == ("petal length", "petal width")
-
-
 def test_check_pandas_dataframe_fit():
 
     knn = KNeighborsClassifier(n_neighbors=4)

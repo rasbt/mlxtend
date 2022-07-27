@@ -79,23 +79,17 @@ def _calc_score(selector, X, y, indices, groups=None, **fit_params):
     return indices, scores
 
 
-def _get_featurenames(subsets_dict, feature_idx, custom_feature_names, X):
+def _get_featurenames(subsets_dict, feature_idx, X):
     feature_names = None
     if feature_idx is not None:
-        if custom_feature_names is not None:
-            feature_names = tuple((custom_feature_names[i] for i in feature_idx))
-        elif hasattr(X, "loc"):
+        if hasattr(X, "loc"):
             feature_names = tuple((X.columns[i] for i in feature_idx))
         else:
             feature_names = tuple(str(i) for i in feature_idx)
 
     subsets_dict_ = deepcopy(subsets_dict)
     for key in subsets_dict_:
-        if custom_feature_names is not None:
-            new_tuple = tuple(
-                (custom_feature_names[i] for i in subsets_dict[key]["feature_idx"])
-            )
-        elif hasattr(X, "loc"):
+        if hasattr(X, "loc"):
             new_tuple = tuple((X.columns[i] for i in subsets_dict[key]["feature_idx"]))
         else:
             new_tuple = tuple(str(i) for i in subsets_dict[key]["feature_idx"])
@@ -112,16 +106,20 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     Parameters
     ----------
     estimator : scikit-learn classifier or regressor
+
     min_features : int (default: 1)
         Minumum number of features to select
+
     max_features : int (default: 1)
         Maximum number of features to select. If parameter `feature_groups` is not
         None, the number of features is equal to the number of feature groups, i.e.
         `len(feature_groups)`. For  example, if `feature_groups = [[0], [1], [2, 3],
         [4]]`, then the `max_features` value cannot exceed 4.
+
     print_progress : bool (default: True)
         Prints progress as the number of epochs
         to stderr.
+
     scoring : str, (default='accuracy')
         Scoring metric in {accuracy, f1, precision, recall, roc_auc}
         for classifiers,
@@ -129,15 +127,18 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         'median_absolute_error', 'r2'} for regressors,
         or a callable object or function with
         signature ``scorer(estimator, X, y)``.
+
     cv : int (default: 5)
         Scikit-learn cross-validation generator or `int`.
         If estimator is a classifier (or y consists of integer class labels),
         stratified k-fold is performed, and regular k-fold cross-validation
         otherwise.
         No cross-validation if cv is None, False, or 0.
+
     n_jobs : int (default: 1)
         The number of CPUs to use for evaluating different feature subsets
         in parallel. -1 means 'all CPUs'.
+
     pre_dispatch : int, or string (default: '2*n_jobs')
         Controls the number of jobs that get dispatched
         during parallel execution if `n_jobs > 1` or `n_jobs=-1`.
@@ -150,6 +151,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         An int, giving the exact number of total jobs that are spawned
         A string, giving an expression as a function
             of n_jobs, as in `2*n_jobs`
+
     clone_estimator : bool (default: True)
         Clones estimator if True; works with the original estimator instance
         if False. Set to False if the estimator doesn't
@@ -170,20 +172,23 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         For example `[[1], [2], [3, 4, 5]]`, which can be useful for
         interpretability, for example, if features 3, 4, 5 are one-hot
         encoded features.  (for  more details, please read the notes at the
-        bottom of this docstring).
+        bottom of this docstring).  New in v 0.21.0.
 
     Attributes
     ----------
     best_idx_ : array-like, shape = [n_predictions]
         Feature Indices of the selected feature subsets.
+
     best_feature_names_ : array-like, shape = [n_predictions]
         Feature names of the selected feature subsets. If pandas
         DataFrames are used in the `fit` method, the feature
         names correspond to the column names. Otherwise, the
         feature names are string representation of the feature
         array indices. New in v 0.13.0.
+
     best_score_ : float
         Cross validation average score of the selected subset.
+
     subsets_ : dict
         A dictionary of selected feature subsets during the
         exhaustive selection, where the dictionary keys are
@@ -260,7 +265,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         # don't mess with this unless testing
         self._TESTING_INTERRUPT_MODE = False
 
-    def fit(self, X, y, custom_feature_names=None, groups=None, **fit_params):
+    def fit(self, X, y, groups=None, **fit_params):
         """Perform feature selection and learn model from training data.
 
         Parameters
@@ -270,15 +275,14 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             n_features is the number of features.
             New in v 0.13.0: pandas DataFrames are now also accepted as
             argument for X.
+        
         y : array-like, shape = [n_samples]
             Target values.
-        custom_feature_names : None or tuple (default: tuple)
-            Custom feature names for `self.k_feature_names` and
-            `self.subsets_[i]['feature_names']`.
-            (new in v 0.13.0)
+        
         groups : array-like, with shape (n_samples,), optional
             Group labels for the samples used while splitting the dataset into
             train/test set. Passed to the fit method of the cross-validator.
+        
         fit_params : dict of string -> object, optional
             Parameters to pass to to the fit method of classifier.
 
@@ -308,16 +312,6 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             self.feature_names_to_idx_mapper = {
                 name: idx for idx, name in enumerate(self.feature_names)
             }
-
-        if (
-            custom_feature_names is not None
-            and len(custom_feature_names) != X_.shape[1]
-        ):
-            raise ValueError(
-                "If custom_feature_names is not None, "
-                "the number of elements in custom_feature_names "
-                "must equal the number of columns in X."
-            )
 
         # preprocessing on fixed_featuress
         if self.fixed_features is None:
@@ -498,7 +492,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
                 if self._TESTING_INTERRUPT_MODE:
                     self.subsets_, self.best_feature_names_ = _get_featurenames(
-                        self.subsets_, self.best_idx_, custom_feature_names, X
+                        self.subsets_, self.best_idx_, X
                     )
                     raise KeyboardInterrupt
 
@@ -518,7 +512,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.best_score_ = score
         self.fitted = True
         self.subsets_, self.best_feature_names_ = _get_featurenames(
-            self.subsets_, self.best_idx_, custom_feature_names, X
+            self.subsets_, self.best_idx_, X
         )
         return self
 

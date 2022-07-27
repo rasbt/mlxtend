@@ -275,14 +275,14 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             n_features is the number of features.
             New in v 0.13.0: pandas DataFrames are now also accepted as
             argument for X.
-        
+
         y : array-like, shape = [n_samples]
             Target values.
-        
+
         groups : array-like, with shape (n_samples,), optional
             Group labels for the samples used while splitting the dataset into
             train/test set. Passed to the fit method of the cross-validator.
-        
+
         fit_params : dict of string -> object, optional
             Parameters to pass to to the fit method of classifier.
 

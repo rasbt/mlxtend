@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
@@ -21,6 +21,7 @@ from .mcnemar import mcnemar, mcnemar_table, mcnemar_tables
 from .permutation import permutation_test
 from .proportion_difference import proportion_difference
 from .scoring import scoring
+from .time_series import GroupTimeSeriesSplit
 from .ttest import paired_ttest_5x2cv, paired_ttest_kfold_cv, paired_ttest_resampled
 
 __all__ = [
@@ -47,4 +48,5 @@ __all__ = [
     "bias_variance_decomp",
     "accuracy_score",
     "create_counterfactual",
+    "GroupTimeSeriesSplit",
 ]

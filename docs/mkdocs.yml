@@ -70,6 +70,7 @@ nav:
     - user_guide/evaluate/create_counterfactual.md
     - user_guide/evaluate/feature_importance_permutation.md
     - user_guide/evaluate/ftest.md
+    - user_guide/evaluate/GroupTimeSeriesSplit.md
     - user_guide/evaluate/lift_score.md
     - user_guide/evaluate/mcnemar_table.md
     - user_guide/evaluate/mcnemar_tables.md

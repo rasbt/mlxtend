@@ -43,7 +43,7 @@ There are two ways you can do this:
 black [source_file_or_directory]
 ```
 
-3. [ ] Run `[isort](https://pycqa.github.io/isort/)` which will sort the imports alphabetically. We recommend the following command:
+3. [ ] Run [`isort`](https://pycqa.github.io/isort/) which will sort the imports alphabetically. We recommend the following command:
 
 ```
 isort -p mlxtend --line-length 88 --multi-line 3 --profile black mypythonfile.py
@@ -65,6 +65,8 @@ The pre-commit hooks for mlxtend will check your code via `flake8`, `black`, and
 1. [ ]  Push the topic branch to the server and create a pull request.
 2. [ ]  Check the automated tests passed.
 3. [ ] The automatic [PEP8](https://peps.python.org/pep-0008/)/[black](https://black.readthedocs.io/en/stable/) integrations may prompt you to modify the code stylistically. It would be nice if  you could apply the suggested changes.
+
+
 
 <hr>
 

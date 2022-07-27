@@ -4,8 +4,10 @@
 #
 # License: BSD 3 clause
 
-from os.path import realpath, dirname, join
-from setuptools import setup, find_packages
+from os.path import dirname, join, realpath
+
+from setuptools import find_packages, setup
+
 import mlxtend
 
 VERSION = mlxtend.__version__

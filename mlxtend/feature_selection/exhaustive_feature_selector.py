@@ -317,7 +317,9 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
         fixed_feature_types = {type(i) for i in self.fixed_features}
         if len(fixed_feature_types) > 1:
-            raise ValueError(f"fixed_features values must have the same type. Found {fixed_feature_types}.")
+            raise ValueError(
+                f"fixed_features values must have the same type. Found {fixed_feature_types}."
+            )
 
         if len(self.fixed_features) > 0 and isinstance(self.fixed_features[0], str):
             if self.feature_names_to_idx_mapper is None:
@@ -345,9 +347,13 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                     "Each list in the nested lists `features_group`" "cannot be empty"
                 )
 
-        feature_group_types = {type(i) for sublist in self.feature_groups for i in sublist}
+        feature_group_types = {
+            type(i) for sublist in self.feature_groups for i in sublist
+        }
         if len(feature_group_types) > 1:
-            raise ValueError(f"fixed_features values must have the same type. Found {feature_group_types}.")
+            raise ValueError(
+                f"feature_group values must have the same type. Found {feature_group_types}."
+            )
 
         if isinstance(self.feature_groups[0][0], str):
             if self.feature_names_to_idx_mapper is None:

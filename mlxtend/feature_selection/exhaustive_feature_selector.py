@@ -292,7 +292,6 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
         """
 
-        # reset from a potential previous fit run
         self.subsets_ = {}
         self.fitted = False
         self.interrupted_ = False
@@ -313,12 +312,14 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 name: idx for idx, name in enumerate(self.feature_names)
             }
 
-        # preprocessing on fixed_featuress
         if self.fixed_features is None:
             self.fixed_features = tuple()
 
+        fixed_feature_types = {type(i) for i in self.fixed_features}
+        if len(fixed_feature_types) > 1:
+            raise ValueError(f"fixed_features values must have the same type. Found {fixed_feature_types}.")
+
         if len(self.fixed_features) > 0 and isinstance(self.fixed_features[0], str):
-            # ASSUME all values provided in fixed_feature are string values
             if self.feature_names_to_idx_mapper is None:
                 raise ValueError(
                     "The input X does not contain name of features provived in"
@@ -335,7 +336,6 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 " input data `X`."
             )
 
-        # preprocessing on feature_groups
         if self.feature_groups is None:
             self.feature_groups = [[i] for i in range(X_.shape[1])]
 
@@ -345,8 +345,11 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                     "Each list in the nested lists `features_group`" "cannot be empty"
                 )
 
+        feature_group_types = {type(i) for sublist in self.feature_groups for i in sublist}
+        if len(feature_group_types) > 1:
+            raise ValueError(f"fixed_features values must have the same type. Found {feature_group_types}.")
+
         if isinstance(self.feature_groups[0][0], str):
-            # ASSUME all values provided in feature_groups are string values
             if self.feature_names_to_idx_mapper is None:
                 raise ValueError(
                     "The input X does not contain name of features provived in"

@@ -26,7 +26,8 @@ from ..externals.name_estimators import _name_estimators
 
 def _merge_lists(nested_list, high_level_indices=None):
     """
-    merge elements of lists (of a nested_list) into one single list
+    merge elements of lists (of a nested_list) into one single tuple with elements
+    sorted in ascending order.
 
     Parameters
     ----------
@@ -48,7 +49,7 @@ def _merge_lists(nested_list, high_level_indices=None):
     nested_list = [[1],[2, 3],[4]]
     high_level_indices = [1, 2]
     >>> _merge_lists(nested_list, high_level_indices)
-    [2, 3, 4] # merging [2, 3] and [4]
+    (2, 3, 4) # merging [2, 3] and [4]
     """
     if high_level_indices is None:
         high_level_indices = list(range(len(nested_list)))
@@ -217,6 +218,11 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     linear regression, the coefficient of the feature 2 and 3 can be different
     even if they are considered as one group in feature_groups.
 
+    (3) If both fixed_features and feature_groups are specified, ensure that each
+    feature group contains the fixed_features selection. E.g., for a 3-feature set
+    fixed_features=[0, 1] and feature_groups=[[0, 1], [2]] is valid;
+    fixed_features=[0, 1] and feature_groups=[[0], [1, 2]] is not valid.
+
     Examples
     -----------
     For usage examples, please see
@@ -344,7 +350,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         for fg in self.feature_groups:
             if len(fg) == 0:
                 raise ValueError(
-                    "Each list in the nested lists `features_group`" "cannot be empty"
+                    "Each list in the nested lists `features_group` cannot be empty"
                 )
 
         feature_group_types = {

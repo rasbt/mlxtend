@@ -4,16 +4,17 @@ repos:
     hooks:
       - id: isort
         name: Format imports
-        args: ["--project", "mlxtend", "--profile", "black"]
+        args: ["--project", "mlxtend", "--line-length", " 88", "--multi-line", "3", "--py", "39", "--profile", "black", "mlxtend/*black"]
         
   - repo: https://github.com/psf/black
-    rev: 22.3.0
+    rev: 22.6.0
     hooks:
       - id: black
         name: Format code
 
   - repo: https://github.com/PyCQA/flake8
-    rev: 4.0.1
+    rev: 5.0.4
     hooks:
       - id: flake8
         name: Check PEP8
+        args: ["--config", ".flake8"]

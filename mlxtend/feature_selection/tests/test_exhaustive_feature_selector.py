@@ -498,36 +498,6 @@ def test_get_metric_dict_not_fitted():
     assert_raises(AttributeError, expect, efs1.get_metric_dict)
 
 
-def test_custom_feature_names():
-    knn = KNeighborsClassifier(n_neighbors=4)
-    iris = load_iris()
-    X = iris.data
-    y = iris.target
-    efs1 = EFS(
-        knn,
-        min_features=2,
-        max_features=2,
-        scoring="accuracy",
-        cv=0,
-        clone_estimator=False,
-        print_progress=False,
-        n_jobs=1,
-    )
-
-    efs1 = efs1.fit(
-        X,
-        y,
-        custom_feature_names=(
-            "sepal length",
-            "sepal width",
-            "petal length",
-            "petal width",
-        ),
-    )
-    assert efs1.best_idx_ == (2, 3), efs1.best_idx_
-    assert efs1.best_feature_names_ == ("petal length", "petal width")
-
-
 def test_check_pandas_dataframe_fit():
 
     knn = KNeighborsClassifier(n_neighbors=4)
@@ -583,3 +553,282 @@ def test_check_pandas_dataframe_transform():
     efs1 = efs1.fit(df, y)
     assert efs1.best_idx_ == (2, 3)
     assert (150, 2) == efs1.transform(df).shape
+
+
+def test_knn_wo_cv_with_feature_groups_integer():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=4)
+    efs1 = EFS(
+        knn,
+        min_features=2,
+        max_features=2,
+        scoring="accuracy",
+        cv=0,
+        print_progress=False,
+        feature_groups=[[0], [1, 2], [3]],
+    )
+    efs1 = efs1.fit(X, y)
+    # expect is based on what provided in `test_knn_wo_cv`
+    expect = {
+        0: {
+            "feature_idx": (0, 1, 2),
+            "feature_names": ("0", "1", "2"),
+            "avg_score": 0.95999999999999996,
+            "cv_scores": np.array([0.96]),
+        },
+        1: {
+            "feature_idx": (0, 3),
+            "feature_names": ("0", "3"),
+            "avg_score": 0.96666666666666667,
+            "cv_scores": np.array([0.96666667]),
+        },
+        2: {
+            "feature_idx": (1, 2, 3),
+            "feature_names": ("1", "2", "3"),
+            "avg_score": 0.97333333333333338,
+            "cv_scores": np.array([0.97333333]),
+        },
+    }
+    dict_compare_utility(d1=expect, d2=efs1.subsets_)
+
+
+def test_knn_wo_cv_with_feature_groups_string():
+    iris = load_iris()
+    X = iris.data
+    df_X = pd.DataFrame(
+        X, columns=["sepal length", "sepal width", "petal length", "petal width"]
+    )
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=4)
+    efs1 = EFS(
+        knn,
+        min_features=2,
+        max_features=2,
+        scoring="accuracy",
+        cv=0,
+        print_progress=False,
+        feature_groups=[
+            ["sepal length"],
+            ["sepal width", "petal length"],
+            ["petal width"],
+        ],
+    )
+    efs1 = efs1.fit(df_X, y)
+    expect = {
+        0: {
+            "feature_idx": (0, 1, 2),
+            "feature_names": ("sepal length", "sepal width", "petal length"),
+            "avg_score": 0.95999999999999996,
+            "cv_scores": np.array([0.96]),
+        },
+        1: {
+            "feature_idx": (0, 3),
+            "feature_names": ("sepal length", "petal width"),
+            "avg_score": 0.96666666666666667,
+            "cv_scores": np.array([0.96666667]),
+        },
+        2: {
+            "feature_idx": (1, 2, 3),
+            "feature_names": ("sepal width", "petal length", "petal width"),
+            "avg_score": 0.97333333333333338,
+            "cv_scores": np.array([0.97333333]),
+        },
+    }
+    dict_compare_utility(d1=expect, d2=efs1.subsets_)
+
+
+def test_knn_wo_cv_with_fixed_features_and_feature_groups_case1():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=4)
+    efs1 = EFS(
+        knn,
+        min_features=1,
+        max_features=2,
+        scoring="accuracy",
+        cv=0,
+        print_progress=False,
+        fixed_features=[0, 1],
+        feature_groups=[[0, 1], [2], [3]],
+    )
+    efs1 = efs1.fit(X, y)
+    # expect is based on what provided in `test_knn_wo_cv`
+    expect = {
+        0: {
+            "feature_idx": (0, 1),
+            "feature_names": ("0", "1"),
+            "avg_score": 0.82666666666666666,
+            "cv_scores": np.array([0.82666667]),
+        },
+        1: {
+            "feature_idx": (0, 1, 2),
+            "feature_names": ("0", "1", "2"),
+            "avg_score": 0.95999999999999996,
+            "cv_scores": np.array([0.96]),
+        },
+        2: {
+            "feature_idx": (0, 1, 3),
+            "feature_names": ("0", "1", "3"),
+            "avg_score": 0.96666666666666667,
+            "cv_scores": np.array([0.96666667]),
+        },
+    }
+    dict_compare_utility(d1=expect, d2=efs1.subsets_)
+
+
+def test_knn_wo_cv_with_fixed_features_and_feature_groups_case2():
+    # similar to case1, but `fixed_features` is now consisting of two groups
+    # [0,1] and [3]
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=4)
+    efs1 = EFS(
+        knn,
+        min_features=2,
+        max_features=2,
+        scoring="accuracy",
+        cv=0,
+        print_progress=False,
+        fixed_features=[0, 1, 3],
+        feature_groups=[[0, 1], [2], [3]],
+    )
+    efs1 = efs1.fit(X, y)
+    # expect is based on what provided in `test_knn_wo_cv`
+    expect = {
+        0: {
+            "feature_idx": (0, 1, 3),
+            "feature_names": ("0", "1", "3"),
+            "avg_score": 0.96666666666666667,
+            "cv_scores": np.array([0.96666667]),
+        },
+    }
+    dict_compare_utility(d1=expect, d2=efs1.subsets_)
+
+
+def test_check_support_string_in_feature_groups():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+
+    features_names = ["sepal length", "sepal width", "petal length", "petal width"]
+    df = pd.DataFrame(X, columns=features_names)
+
+    knn = KNeighborsClassifier(n_neighbors=4)
+    efs1 = EFS(
+        knn,
+        min_features=2,
+        max_features=2,
+        scoring="accuracy",
+        cv=0,
+        print_progress=False,
+        feature_groups=[
+            [features_names[0]],
+            [features_names[1], features_names[2]],
+            [features_names[3]],
+        ],
+    )
+    efs1 = efs1.fit(df, y)
+    # expect is based on what provided in `test_knn_wo_cv`
+    expect = {
+        0: {
+            "feature_idx": (0, 1, 2),
+            "feature_names": (features_names[0], features_names[1], features_names[2]),
+            "avg_score": 0.95999999999999996,
+            "cv_scores": np.array([0.96]),
+        },
+        1: {
+            "feature_idx": (0, 3),
+            "feature_names": (features_names[0], features_names[3]),
+            "avg_score": 0.96666666666666667,
+            "cv_scores": np.array([0.96666667]),
+        },
+        2: {
+            "feature_idx": (1, 2, 3),
+            "feature_names": (features_names[1], features_names[2], features_names[3]),
+            "avg_score": 0.97333333333333338,
+            "cv_scores": np.array([0.97333333]),
+        },
+    }
+    dict_compare_utility(d1=expect, d2=efs1.subsets_)
+
+
+def test_check_support_string_in_fixed_feature():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+
+    features_names = ["sepal length", "sepal width", "petal length", "petal width"]
+    df = pd.DataFrame(X, columns=features_names)
+
+    knn = KNeighborsClassifier(n_neighbors=4)
+    efs1 = EFS(
+        knn,
+        min_features=2,
+        max_features=3,
+        scoring="accuracy",
+        cv=0,
+        print_progress=False,
+        fixed_features=[features_names[0], features_names[1]],
+    )
+
+    efs1 = efs1.fit(df, y)
+    # expect is based on what provided in `test_knn_wo_cv`
+    expect = {
+        0: {
+            "feature_idx": (0, 1),
+            "feature_names": (features_names[0], features_names[1]),
+            "avg_score": 0.82666666666666666,
+            "cv_scores": np.array([0.82666667]),
+        },
+        1: {
+            "feature_idx": (0, 1, 2),
+            "feature_names": (features_names[0], features_names[1], features_names[2]),
+            "avg_score": 0.95999999999999996,
+            "cv_scores": np.array([0.96]),
+        },
+        2: {
+            "feature_idx": (0, 1, 3),
+            "feature_names": (features_names[0], features_names[1], features_names[3]),
+            "avg_score": 0.96666666666666667,
+            "cv_scores": np.array([0.96666667]),
+        },
+    }
+    dict_compare_utility(d1=expect, d2=efs1.subsets_)
+
+
+def test_fixed_features_and_feature_groups_pandas_and_strings():
+    iris = load_iris()
+    X = iris.data
+    feature_names = ["sepal length", "sepal width", "petal length", "petal width"]
+    df_X = pd.DataFrame(X, columns=feature_names)
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=4)
+    efs1 = EFS(
+        knn,
+        min_features=2,
+        max_features=2,
+        scoring="accuracy",
+        cv=0,
+        print_progress=False,
+        fixed_features=[feature_names[0], feature_names[1], feature_names[3]],
+        feature_groups=[
+            [feature_names[0], feature_names[1]],
+            [feature_names[2]],
+            [feature_names[3]],
+        ],
+    )
+    efs1 = efs1.fit(df_X, y)
+    # expect is based on what provided in `test_knn_wo_cv`
+    expect = {
+        0: {
+            "feature_idx": (0, 1, 3),
+            "feature_names": (feature_names[0], feature_names[1], feature_names[3]),
+            "avg_score": 0.96666666666666667,
+            "cv_scores": np.array([0.96666667]),
+        },
+    }
+    dict_compare_utility(d1=expect, d2=efs1.subsets_)

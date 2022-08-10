@@ -7,7 +7,7 @@ The CHANGELOG for the current development version is available at
 
 ---
 
-### Version 0.20.0
+### Version 0.21.0 (TBD)
 
 #### New Features and Enhancements
 
@@ -22,10 +22,11 @@ The CHANGELOG for the current development version is available at
 ##### New Features and Enhancements
 
 - The `mlxtend.evaluate.feature_importance_permutation` function has a new `feature_groups` argument to treat user-specified feature groups as single features, which is useful for one-hot encoded features. ([#955](https://github.com/rasbt/mlxtend/pull/955))
+- The `mlxtend.feature_selection.ExhaustiveFeatureSelector` also gained support for `feature_groups` with a behavior similar to the one described above.  ([#957](https://github.com/rasbt/mlxtend/pull/957) via [Nima Sarajpoor](https://github.com/NimaSarajpoor))
 
 ##### Changes
 
-- None
+- The `custom_feature_names` parameter was removed from the `ExhaustiveFeatureSelector` due to redundancy and to simplify the code base. The [`ExhaustiveFeatureSelector` documentation](http://rasbt.github.io/mlxtend/user_guide/feature_selection/ExhaustiveFeatureSelector/) illustrates how the same behavior and outcome can be achieved using pandas DataFrames.  ([#957](https://github.com/rasbt/mlxtend/pull/957))
 
 ##### Bug Fixes
 

@@ -1,18 +1,37 @@
 from setuptools import setup, find_packages
+import sys
+
+requirements = [
+          'matplotlib>=3.0.0',
+          'joblib>=0.13.2'    
+]
+
+py36_requirements = [
+       'scikit-learn~=0.20.3',
+       'numpy<1.20', # last version supported by python 3.6  
+       'pandas~=0.23.0',
+       'scipy~=1.1.0',
+]
+
+py39_requirements = [
+       'scikit-learn==1.1.1',
+       'numpy==1.23.0', # require a version which is compatible with py3.9 and is > 1.20 due to API changes  
+       'pandas',
+       'scipy~=1.9.0',
+]
+
+if sys.version_info[0] == 3 and sys.version_info[1] == 6:
+    requirements += py36_requirements
+else:
+    requirements += py39_requirements
+
 
 setup(name='mlxtend',
       version='0.0.2',
       description='Machine Learning Library Extensions',
       url='https://github.com/pelucid/mlxtend',
       packages=find_packages(),
-      install_requires=[
-          "scipy~=1.1.0",
-          "numpy>=1.16.2",
-          "pandas>=0.24.2",
-          "scikit-learn>=0.20.3",
-          "matplotlib>=3.0.0",
-          "joblib>=0.13.2"
-      ],
+      install_requires=requirements,
       setup_requires=["pytest-runner"],
       tests_require=["pytest", "pytest-cov", "tomli==1.2.2"]
       )

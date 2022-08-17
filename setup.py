@@ -33,5 +33,5 @@ setup(name='mlxtend',
       packages=find_packages(),
       install_requires=requirements,
       setup_requires=["pytest-runner"],
-      tests_require=["pytest", "pytest-cov", "tomli==1.2.2"]
+      tests_require=['pytest~=6.2', 'pytest-cov', 'tomli==1.2.2', 'coverage==6.2']
       )

@@ -11,19 +11,62 @@ This is a quick checklist about the different steps of a typical contribution to
 other open source projects). Consider copying this list to a local text file (or the issue tracker)
 and checking off items as you go.
 
+
+
+### 1) Making and testing code changes:
+
 1. [ ]  Open a new "issue" on GitHub to discuss the new feature / bug fix  
 2. [ ]  Fork the mlxtend repository from GitHub (if not already done earlier)
 3. [ ]  Create and check out a new topic branch (please don't make modifications in the master branch)
 4. [ ]  Implement the new feature or apply the bug-fix  
 5. [ ]  Add appropriate unit test functions in `mlxtend/*/tests`
 6. [ ]  Run `PYTHONPATH='.' pytest ./mlxtend -sv` and make sure that all unit tests pass  
-7. [ ]  Check for style issues by running `flake8 ./mlxtend` (you may want to run `pytest` again after you made modifications to the code)
+
+7. [ ]  Modify documentation in the appropriate location under `mlxtend/docs/sources/`  
+
 8. [ ]  Add a note about the modification/contribution to the `./docs/sources/changelog.md` file  
-9. [ ]  Modify documentation in the appropriate location under `mlxtend/docs/sources/`  
-10. [ ]  Push the topic branch to the server and create a pull request
-11. [ ]  Check the Travis-CI build passed at [https://travis-ci.org/rasbt/mlxtend](https://travis-ci.org/rasbt/mlxtend)
-12. [ ]  Check/improve the unit test coverage at [https://coveralls.io/github/rasbt/mlxtend](https://coveralls.io/github/rasbt/mlxtend)
-13. [ ]  Check/improve the code health at [https://landscape.io/github/rasbt/mlxtend](https://landscape.io/github/rasbt/mlxtend)
+
+
+
+### 2) Checking code style:
+
+When you check in a PR, mlxtend will run code style checks via flak8 and black. To make the contributor experience easier, we recommend you check the code style locally before pushing it to the repository. This way it is less likely that the automated checkers will complain and prompt you to make fixes.
+
+There are two ways you can do this:
+
+**Option A**: Running the tools manually
+
+1. [ ]  Check for style issues by running `flake8 ./mlxtend` (you may want to run `pytest` again after you made modifications to the code)
+2. [ ]  We recommend using [black](https://black.readthedocs.io/en/stable/) to format the code automatically according to recommended style changes. After [installing](https://black.readthedocs.io/en/stable/getting_started.html#installation) `black`, you can do this via 
+
+```
+black [source_file_or_directory]
+```
+
+3. [ ] Run [`isort`](https://pycqa.github.io/isort/) which will sort the imports alphabetically. We recommend the following command:
+
+```
+isort -p mlxtend --line-length 88 --multi-line 3 --profile black mypythonfile.py
+```
+
+**Option B**: Using pre-commit hooks (recommended)
+
+The pre-commit hooks for mlxtend will check your code via `flake8`, `black`, and `isort` automatically before you make a `git commit`. You can read more about pre-commit hooks [here](https://dev.to/m1yag1/how-to-setup-your-project-with-pre-commit-black-and-flake8-183k).
+
+1. [ ] Install the pre-commit package via `pip install pre-commit`.
+2. [ ] In the `mlxtend` folder, run `pre-commit install` (you only have to do it once).
+
+
+
+
+
+### 3) Submitting your code
+
+1. [ ]  Push the topic branch to the server and create a pull request.
+2. [ ]  Check the automated tests passed.
+3. [ ] The automatic [PEP8](https://peps.python.org/pep-0008/)/[black](https://black.readthedocs.io/en/stable/) integrations may prompt you to modify the code stylistically. It would be nice if  you could apply the suggested changes.
+
+
 
 <hr>
 
@@ -297,7 +340,7 @@ The documents containing code examples for the "User Guide" are generated from I
 3. Convert the notebook to markdown using the `ipynb2markdown.py` converter
 
 ```python
-~/github/mlxtend/docs$ python ipynb2markdown.py --ipynb_path ./sources/user_guide/subpackage/notebookname.ipynb
+~/github/mlxtend/docs$ python ipynb2markdown.py --ipynb ./sources/user_guide/subpackage/notebookname.ipynb
 ```
 
 **Note**  
@@ -389,26 +432,45 @@ $ pip uninstall mlxtend
 
 Consider deploying the package to the PyPI test server first. The setup instructions can be found [here](https://wiki.python.org/moin/TestPyPI).
 
+**First**, install Twine if  you don't have it already installed. E.g., use the following to install all recommended packages:
+
 ```bash
-$ python setup.py sdist bdist_wheel upload -r https://testpypi.python.org/pypi
+$ conda install wheel twine setuptools
 ```
 
-Test if it can be installed from there by executing
+
+**Second**, create the binaries
+
+```bash
+$ python setup.py sdist
+```
+
+```bash
+$ python setup.py bdist_wheel --universal
+```
+
+**Third**, upload the packages to the test server:
+
+```bash
+$ twine upload --repository-url https://upload.pypi.org/legacy dist/
+```
+
+Then, install it and see if it works:
 
 ```bash
 $ pip install -i https://testpypi.python.org/pypi mlxtend
 ```
 
-and uninstall it
+Next, uninstall it again as follows:
 
 ```bash
 $ pip uninstall mlxtend
 ```
 
-After this dry-run succeeded, repeat this process using the "real" PyPI:
+**Fourth**, after this dry-run succeeded, repeat this process using the "real" PyPI:
 
 ```bash
-$ python setup.py sdist bdist_wheel upload
+$ python -m twine upload  dist/*
 ```
 
 ### 4. Removing the virtual environment
@@ -418,6 +480,14 @@ Finally, to cleanup our local drive, remove the virtual testing environment via
 ```bash
 $ conda remove --name 'mlxtend-testing' --all
 ```
+
+**Note**:
+
+if you get an error like
+
+    HTTPError: 403 Forbidden from https://upload.pypi.org/legacy/
+
+make sure you have an up to date version of twine installed (helped me to uninstall in conda and install via pip.)
 
 ### 5. Updating the conda-forge recipe
 

@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # A function for generating per class accuracy
@@ -14,23 +14,29 @@ def _compute_metric(target_temp, predicted_temp, normalize=True):
         return (target_temp == predicted_temp).sum()
 
 
-def accuracy_score(y_target, y_predicted, method="standard",
-                   pos_label=1, normalize=True):
+def accuracy_score(
+    y_target, y_predicted, method="standard", pos_label=1, normalize=True
+):
     """General accuracy function for supervised learning.
     Parameters
     ------------
     y_target : array-like, shape=[n_values]
         True class labels or target values.
+
     y_predicted : array-like, shape=[n_values]
         Predicted class labels or target values.
+
     method : str, 'standard' by default.
         The chosen method for accuracy computation.
         If set to 'standard', computes overall accuracy.
         If set to 'binary', computes accuracy for class pos_label.
-        If set to 'average', computes average per class accuracy.
+        If set to 'average', computes average per-class (balanced) accuracy.
+        If set to 'balanced', computes the scikit-learn-style balanced accuracy.
+
     pos_label : str or int, 1 by default.
         The class whose accuracy score is to be reported.
         Used only when `method` is set to 'binary'
+
     normalize : bool, True by default.
         If True, returns fraction of correctly classified samples.
         If False, returns number of correctly classified samples.
@@ -38,6 +44,12 @@ def accuracy_score(y_target, y_predicted, method="standard",
     Returns
     ------------
     score: float
+
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/evaluate/accuracy_score/
+
     """
 
     target_temp = np.asarray(y_target)
@@ -45,8 +57,9 @@ def accuracy_score(y_target, y_predicted, method="standard",
     unique_labels = np.unique(target_temp)
 
     if len(y_target) != len(y_predicted):
-        raise AttributeError('`y_target` and `y_predicted`'
-                             ' don\'t have the same number of elements.')
+        raise AttributeError(
+            "`y_target` and `y_predicted`" " don't have the same number of elements."
+        )
     if method == "standard":
         return _compute_metric(target_temp, predicted_temp, normalize)
 
@@ -59,10 +72,27 @@ def accuracy_score(y_target, y_predicted, method="standard",
         return _compute_metric(target_temp, predicted_temp, normalize)
 
     elif method == "average":
-        return sum([_compute_metric(np.where(target_temp != l, 1, 0),
-                    np.where(predicted_temp != l, 1, 0))
-                    for l in unique_labels]) / float(unique_labels.shape[0])
+        return sum(
+            [
+                _compute_metric(
+                    np.where(target_temp != lab, 1, 0),
+                    np.where(predicted_temp != lab, 1, 0),
+                )
+                for lab in unique_labels
+            ]
+        ) / float(unique_labels.shape[0])
+
+    elif method == "balanced":
+        all_class_acc = []
+        for c in np.unique(y_target):
+            positive_labels = y_target == c
+            class_acc = np.mean((y_predicted == c)[positive_labels])
+            all_class_acc.append(class_acc)
+
+        return np.mean(all_class_acc)
 
     else:
-        raise ValueError('`method` must be "standard", "average"'
-                         'or "binary". Got "%s".' % method)
+        raise ValueError(
+            '`method` must be "standard", "average",'
+            ' "balanced", or "binary". Got "%s".' % method
+        )

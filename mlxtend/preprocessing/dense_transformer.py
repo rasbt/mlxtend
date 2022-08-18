@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # A class for transforming sparse numpy arrays into dense arrays.
@@ -7,8 +7,8 @@
 # License: BSD 3 clause
 
 
-from sklearn.base import BaseEstimator
 from scipy.sparse import issparse
+from sklearn.base import BaseEstimator
 
 
 class DenseTransformer(BaseEstimator):
@@ -25,7 +25,7 @@ class DenseTransformer(BaseEstimator):
         self.is_fitted = False
 
     def transform(self, X, y=None):
-        """ Return a dense version of the input array.
+        """Return a dense version of the input array.
 
         Parameters
         ----------
@@ -47,7 +47,7 @@ class DenseTransformer(BaseEstimator):
             return X
 
     def fit(self, X, y=None):
-        """ Mock method. Does nothing.
+        """Mock method. Does nothing.
 
         Parameters
         ----------
@@ -65,7 +65,7 @@ class DenseTransformer(BaseEstimator):
         return self
 
     def fit_transform(self, X, y=None):
-        """ Return a dense version of the input array.
+        """Return a dense version of the input array.
 
         Parameters
         ----------

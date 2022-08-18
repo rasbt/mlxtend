@@ -1,6 +1,6 @@
 # Stacking regressor
 
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # An ensemble-learning meta-regressor for stacking regression
@@ -8,14 +8,14 @@
 #
 # License: BSD 3 clause
 
+import numpy as np
+import scipy.sparse as sparse
+from sklearn.base import RegressorMixin, TransformerMixin, clone
+from sklearn.utils import check_X_y
+
 from ..externals.estimator_checks import check_is_fitted
 from ..externals.name_estimators import _name_estimators
 from ..utils.base_compostion import _BaseXComposition
-import numpy as np
-import scipy.sparse as sparse
-from sklearn.base import RegressorMixin
-from sklearn.base import TransformerMixin
-from sklearn.base import clone
 
 
 class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
@@ -30,9 +30,11 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         of those original regressors that will
         be stored in the class attribute
         `self.regr_`.
+
     meta_regressor : object
         The meta-regressor to be fitted on the ensemble of
         regressors
+
     verbose : int, optional (default=0)
         Controls the verbosity of the building process.
         - `verbose=0` (default): Prints nothing
@@ -41,12 +43,14 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
                        regressor being fitted
         - `verbose>2`: Changes `verbose` param of the underlying regressor to
            self.verbose - 2
+
     use_features_in_secondary : bool (default: False)
         If True, the meta-regressor will be trained both on
         the predictions of the original regressors and the
         original dataset.
         If False, the meta-regressor will be trained only on
         the predictions of the original regressors.
+
     store_train_meta_features : bool (default: False)
         If True, the meta-features computed from the training data
         used for fitting the
@@ -59,17 +63,22 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
     ----------
     regr_ : list, shape=[n_regressors]
         Fitted regressors (clones of the original regressors)
+
     meta_regr_ : estimator
         Fitted meta-regressor (clone of the original meta-estimator)
+
     coef_ : array-like, shape = [n_features]
         Model coefficients of the fitted meta-estimator
+
     intercept_ : float
         Intercept of the fitted meta-estimator
+
     train_meta_features : numpy array,
         shape = [n_samples, len(self.regressors)]
         meta-features for training data, where n_samples is the
         number of samples
         in training data and len(self.regressors) is the number of regressors.
+
     refit : bool (default: True)
         Clones the regressors for stacking regression if True (default)
         or else uses the original ones, which will be refitted on the dataset
@@ -84,9 +93,17 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
     http://rasbt.github.io/mlxtend/user_guide/regressor/StackingRegressor/
 
     """
-    def __init__(self, regressors, meta_regressor, verbose=0,
-                 use_features_in_secondary=False,
-                 store_train_meta_features=False, refit=True):
+
+    def __init__(
+        self,
+        regressors,
+        meta_regressor,
+        verbose=0,
+        use_features_in_secondary=False,
+        store_train_meta_features=False,
+        refit=True,
+        multi_output=False,
+    ):
 
         self.regressors = regressors
         self.meta_regressor = meta_regressor
@@ -94,6 +111,7 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         self.use_features_in_secondary = use_features_in_secondary
         self.store_train_meta_features = store_train_meta_features
         self.refit = refit
+        self.multi_output = multi_output
 
     @property
     def named_regressors(self):
@@ -107,8 +125,11 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
             Training vectors, where n_samples is the number of samples and
             n_features is the number of features.
-        y : array-like, shape = [n_samples] or [n_samples, n_targets]
-            Target values.
+
+        y : numpy array, shape = [n_samples] or [n_samples, n_targets]
+             Target values. Multiple targets are supported only if
+             self.multi_output is True.
+
         sample_weight : array-like, shape = [n_samples], optional
             Sample weights passed as sample_weights to each regressor
             in the regressors list as well as the meta_regressor.
@@ -120,6 +141,14 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         self : object
 
         """
+        X, y = check_X_y(
+            X,
+            y,
+            accept_sparse=["csc", "csr"],
+            dtype=None,
+            multi_output=self.multi_output,
+        )
+
         if self.refit:
             self.regr_ = clone(self.regressors)
             self.meta_regr_ = clone(self.meta_regressor)
@@ -134,11 +163,13 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
 
             if self.verbose > 0:
                 i = self.regr_.index(regr) + 1
-                print("Fitting regressor%d: %s (%d/%d)" %
-                      (i, _name_estimators((regr,))[0][0], i, len(self.regr_)))
+                print(
+                    "Fitting regressor%d: %s (%d/%d)"
+                    % (i, _name_estimators((regr,))[0][0], i, len(self.regr_))
+                )
 
             if self.verbose > 2:
-                if hasattr(regr, 'verbose'):
+                if hasattr(regr, "verbose"):
                     regr.set_params(verbose=self.verbose - 2)
 
             if self.verbose > 1:
@@ -179,7 +210,7 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
 
     def get_params(self, deep=True):
         """Return estimator parameter names for GridSearch support."""
-        return self._get_params('named_regressors', deep=deep)
+        return self._get_params("named_regressors", deep=deep)
 
     def set_params(self, **params):
         """Set the parameters of this estimator.
@@ -190,11 +221,11 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         -------
         self
         """
-        self._set_params('regressors', 'named_regressors', **params)
+        self._set_params("regressors", "named_regressors", **params)
         return self
 
     def predict_meta_features(self, X):
-        """ Get meta-features of test-data.
+        """Get meta-features of test-data.
 
         Parameters
         ----------
@@ -207,14 +238,15 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         meta-features : numpy array, shape = [n_samples, len(self.regressors)]
             meta-features for test data, where n_samples is the number of
             samples in test data and len(self.regressors) is the number
-            of regressors.
+            of regressors. If self.multi_output is True, then the number of
+            columns is len(self.regressors) * n_targets
 
         """
-        check_is_fitted(self, 'regr_')
+        check_is_fitted(self, "regr_")
         return np.column_stack([r.predict(X) for r in self.regr_])
 
     def predict(self, X):
-        """ Predict target values for X.
+        """Predict target values for X.
 
         Parameters
         ----------
@@ -227,7 +259,7 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         y_target : array-like, shape = [n_samples] or [n_samples, n_targets]
             Predicted target values.
         """
-        check_is_fitted(self, 'regr_')
+        check_is_fitted(self, "regr_")
         meta_features = self.predict_meta_features(X)
 
         if not self.use_features_in_secondary:

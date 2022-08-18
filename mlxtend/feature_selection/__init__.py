@@ -1,13 +1,11 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
 
 from .column_selector import ColumnSelector
-from .sequential_feature_selector import SequentialFeatureSelector
 from .exhaustive_feature_selector import ExhaustiveFeatureSelector
+from .sequential_feature_selector import SequentialFeatureSelector
 
-__all__ = ["ColumnSelector",
-           "SequentialFeatureSelector",
-           "ExhaustiveFeatureSelector"]
+__all__ = ["ColumnSelector", "SequentialFeatureSelector", "ExhaustiveFeatureSelector"]

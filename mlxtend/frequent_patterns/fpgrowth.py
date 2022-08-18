@@ -3,8 +3,9 @@
 #
 # License: BSD 3 clause
 
-import math
 import itertools
+import math
+
 from ..frequent_patterns import fpcommon as fpc
 
 
@@ -16,8 +17,7 @@ def fpgrowth(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
     df : pandas DataFrame
       pandas DataFrame the encoded format. Also supports
       DataFrames with sparse data; for more info, please
-      see (https://pandas.pydata.org/pandas-docs/stable/
-           user_guide/sparse.html#sparse-data-structures)
+      see https://pandas.pydata.org/pandas-docs/stable/user_guide/sparse.html#sparse-data-structures.
 
       Please note that the old pandas SparseDataFrame format
       is no longer supported in mlxtend >= 0.17.2.
@@ -64,13 +64,20 @@ def fpgrowth(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
       (For more info, see
       https://docs.python.org/3.6/library/stdtypes.html#frozenset).
 
+    Examples
+    ----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/fpgrowth/
+
     """
     fpc.valid_input_check(df)
 
-    if min_support <= 0.:
-        raise ValueError('`min_support` must be a positive '
-                         'number within the interval `(0, 1]`. '
-                         'Got %s.' % min_support)
+    if min_support <= 0.0:
+        raise ValueError(
+            "`min_support` must be a positive "
+            "number within the interval `(0, 1]`. "
+            "Got %s." % min_support
+        )
 
     colname_map = None
     if use_colnames:
@@ -123,6 +130,5 @@ def fpg_step(tree, minsup, colnames, max_len, verbose):
     if not tree.is_path() and (not max_len or max_len > len(tree.cond_items)):
         for item in items:
             cond_tree = tree.conditional_tree(item, minsup)
-            for sup, iset in fpg_step(cond_tree, minsup,
-                                      colnames, max_len, verbose):
+            for sup, iset in fpg_step(cond_tree, minsup, colnames, max_len, verbose):
                 yield sup, iset

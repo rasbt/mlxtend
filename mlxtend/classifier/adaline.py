@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # Implementation of the ADAptive LInear NEuron classification algorithm.
@@ -6,11 +6,11 @@
 #
 # License: BSD 3 clause
 
-import numpy as np
 from time import time
-from .._base import _BaseModel
-from .._base import _IterativeModel
-from .._base import _Classifier
+
+import numpy as np
+
+from .._base import _BaseModel, _Classifier, _IterativeModel
 
 
 class Adaline(_BaseModel, _IterativeModel, _Classifier):
@@ -58,9 +58,10 @@ class Adaline(_BaseModel, _IterativeModel, _Classifier):
     http://rasbt.github.io/mlxtend/user_guide/classifier/Adaline/
 
     """
-    def __init__(self, eta=0.01, epochs=50,
-                 minibatches=None, random_seed=None,
-                 print_progress=0):
+
+    def __init__(
+        self, eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0
+    ):
 
         _BaseModel.__init__(self)
         _IterativeModel.__init__(self)
@@ -75,13 +76,14 @@ class Adaline(_BaseModel, _IterativeModel, _Classifier):
 
     def _fit(self, X, y, init_params=True):
         self._check_target_array(y, allowed={(0, 1)})
-        y_data = np.where(y == 0, -1., 1.)
+        y_data = np.where(y == 0, -1.0, 1.0)
 
         if init_params:
             self.b_, self.w_ = self._init_params(
                 weights_shape=(X.shape[1], 1),
                 bias_shape=(1,),
-                random_seed=self.random_seed)
+                random_seed=self.random_seed,
+            )
             self.cost_ = []
 
         if self.minibatches is None:
@@ -94,28 +96,25 @@ class Adaline(_BaseModel, _IterativeModel, _Classifier):
             for i in range(self.epochs):
 
                 for idx in self._yield_minibatches_idx(
-                        rgen=rgen,
-                        n_batches=self.minibatches,
-                        data_ary=y_data,
-                        shuffle=True):
+                    rgen=rgen, n_batches=self.minibatches, data_ary=y_data, shuffle=True
+                ):
 
                     y_val = self._net_input(X[idx])
-                    errors = (y_data[idx] - y_val)
-                    self.w_ += (self.eta *
-                                X[idx].T.dot(errors).reshape(self.w_.shape))
+                    errors = y_data[idx] - y_val
+                    self.w_ += self.eta * X[idx].T.dot(errors).reshape(self.w_.shape)
                     self.b_ += self.eta * errors.sum()
 
                 cost = self._sum_squared_error_cost(y_data, self._net_input(X))
                 self.cost_.append(cost)
                 if self.print_progress:
-                    self._print_progress(iteration=(i + 1),
-                                         n_iter=self.epochs,
-                                         cost=cost)
+                    self._print_progress(
+                        iteration=(i + 1), n_iter=self.epochs, cost=cost
+                    )
 
         return self
 
     def _sum_squared_error_cost(self, y, y_val):
-        errors = (y - y_val)
+        errors = y - y_val
         return (errors**2).sum() / 2.0
 
     def _normal_equation(self, X, y):

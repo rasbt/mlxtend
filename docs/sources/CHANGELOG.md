@@ -7,8 +7,102 @@ The CHANGELOG for the current development version is available at
 
 ---
 
+### Version 0.21.0 (TBD)
 
-### Version 0.18.0 (TBD)
+#### New Features and Enhancements
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.20.0.zip)
+
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.20.0.tar.gz)
+
+
+
+##### New Features and Enhancements
+
+- The `mlxtend.evaluate.feature_importance_permutation` function has a new `feature_groups` argument to treat user-specified feature groups as single features, which is useful for one-hot encoded features. ([#955](https://github.com/rasbt/mlxtend/pull/955))
+- The `mlxtend.feature_selection.ExhaustiveFeatureSelector` also gained support for `feature_groups` with a behavior similar to the one described above.  ([#957](https://github.com/rasbt/mlxtend/pull/957) via [Nima Sarajpoor](https://github.com/NimaSarajpoor))
+
+##### Changes
+
+- The `custom_feature_names` parameter was removed from the `ExhaustiveFeatureSelector` due to redundancy and to simplify the code base. The [`ExhaustiveFeatureSelector` documentation](http://rasbt.github.io/mlxtend/user_guide/feature_selection/ExhaustiveFeatureSelector/) illustrates how the same behavior and outcome can be achieved using pandas DataFrames.  ([#957](https://github.com/rasbt/mlxtend/pull/957))
+
+##### Bug Fixes
+
+- None
+
+
+### Version 0.20.0
+
+#### New Features and Enhancements
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.20.0.zip)
+
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.20.0.tar.gz)
+
+
+
+##### New Features and Enhancements
+
+- The `mlxtend.evaluate.bootstrap_point632_score` now supports `fit_params`. ([#861](https://github.com/rasbt/mlxtend/pull/861))
+- The `mlxtend/plotting/decision_regions.py` function now has a `contourf_kwargs` for matplotlib to change the look of the decision boundaries if desired. ([#881](https://github.com/rasbt/mlxtend/pull/881) via [[pbloem](https://github.com/pbloem)])
+- Add a `norm_colormap` parameter to `mlxtend.plotting.plot_confusion_matrix`, to allow normalizing the colormap, e.g., using `matplotlib.colors.LogNorm()` ([#895](https://github.com/rasbt/mlxtend/pull/895))
+- Add new `GroupTimeSeriesSplit` class for evaluation in time series tasks with support of custom groups and additional parameters in comparison with scikit-learn's `TimeSeriesSplit`. ([#915](https://github.com/rasbt/mlxtend/pull/915) via [Dmitry Labazkin](https://github.com/labdmitriy))
+
+##### Changes
+
+- Due to compatibility issues with newer package versions, certain functions from six.py have been removed so that mlxtend may not work anymore with Python 2.7.
+- As an internal change to speed up unit testing, unit testing is now faciliated by GitHub workflows, and Travis CI and Appveyor hooks have been removed.
+- Improved axis label rotation in `mlxtend.plotting.heatmap` and `mlxtend.plotting.plot_confusion_matrix` ([#872](https://github.com/rasbt/mlxtend/pull/872))
+- Fix various typos in McNemar guides.
+- Raises a warning if non-bool arrays are used in the frequent pattern functions `apriori`, `fpmax`, and `fpgrowth`. ([#934](https://github.com/rasbt/mlxtend/pull/934) via [NimaSarajpoor](https://github.com/rasbt/mlxtend/issues?q=is%3Apr+is%3Aopen+author%3ANimaSarajpoor))
+
+##### Bug Fixes
+
+- Fix unreadable labels in `heatmap` for certain colormaps. ([#852](https://github.com/rasbt/mlxtend/pull/852))
+- Fix an issue in `mlxtend.plotting.plot_confusion_matrix` when string class names are passed ([#894](https://github.com/rasbt/mlxtend/pull/894))
+
+
+
+
+
+### Version 0.19.0 (2021-09-02)
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.19.0.zip)
+
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.19.0.tar.gz)
+
+
+
+##### New Features
+
+- Adds a second "balanced accuracy" interpretation ("balanced") to `evaluate.accuracy_score` in addition to the existing "average" option to compute the scikit-learn-style balanced accuracy. ([#764](https://github.com/rasbt/mlxtend/pull/764))
+- Adds new `scatter_hist` function to `mlxtend.plotting` for generating a scattered histogram. ([#757](https://github.com/rasbt/mlxtend/issues/757) via [Maitreyee Mhasaka](https://github.com/Maitreyee1))
+- The `evaluate.permutation_test` function now accepts a `paired` argument to specify to support paired permutation/randomization tests. ([#768](https://github.com/rasbt/mlxtend/pull/768))
+- The `StackingCVRegressor` now also supports multi-dimensional targets similar to `StackingRegressor` via `StackingCVRegressor(..., multi_output=True)`. ([#802](https://github.com/rasbt/mlxtend/pull/802) via [Marco Tiraboschi](ChromaticIsobar))
+
+##### Changes
+
+- Updates unit tests for scikit-learn 0.24.1 compatibility. ([#774](https://github.com/rasbt/mlxtend/pull/774))
+- `StackingRegressor` now requires setting `StackingRegressor(..., multi_output=True)` if the target is multi-dimensional; this allows for better input validation. ([#802](https://github.com/rasbt/mlxtend/pull/802))
+- Removes deprecated `res` argument from `plot_decision_regions`. ([#803](https://github.com/rasbt/mlxtend/pull/803))
+- Adds a `title_fontsize` parameter to `plot_learning_curves` for controlling the title font size; also the plot style is now the matplotlib default. ([#818](https://github.com/rasbt/mlxtend/pull/818))
+- Internal change using `'c': 'none'` instead of `'c': ''` in `mlxtend.plotting.plot_decision_regions`'s scatterplot highlights to stay compatible with Matplotlib 3.4 and newer. ([#822](https://github.com/rasbt/mlxtend/pull/822))
+- Adds a `fontcolor_threshold` parameter to the `mlxtend.plotting.plot_confusion_matrix` function as an additional option for determining the font color cut-off manually. ([#827](https://github.com/rasbt/mlxtend/pull/827))
+- The `frequent_patterns.association_rules` now raises a `ValueError` if an empty frequent itemset DataFrame is passed. ([#843](https://github.com/rasbt/mlxtend/pull/843))
+- The .632 and .632+ bootstrap method implemented in the `mlxtend.evaluate.bootstrap_point632_score` function now use the whole training set for the resubstitution weighting term instead of the internal training set that is a new bootstrap sample in each round. ([#844](https://github.com/rasbt/mlxtend/pull/844))
+
+##### Bug Fixes
+
+- Fixes a typo in the SequentialFeatureSelector documentation ([#835](https://github.com/rasbt/mlxtend/issues/835) via [João Pedro Zanlorensi Cardoso](https://github.com/joaozanlorensi))
+
+
+### Version 0.18.0 (2020-11-25)
 
 ##### Downloads
 
@@ -19,17 +113,50 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features
 
-- -
+- The `bias_variance_decomp` function now supports optional `fit_params` for the estimators that are fit on bootstrap samples. ([#748](https://github.com/rasbt/mlxtend/pull/748))
+- The `bias_variance_decomp` function now supports Keras estimators. ([#725](https://github.com/rasbt/mlxtend/pull/725) via [@hanzigs](https://github.com/hanzigs))
+- Adds new `mlxtend.classifier.OneRClassifier` (One Rule Classfier) class, a simple rule-based classifier that is often used as a performance baseline or simple interpretable model. ([#726](https://github.com/rasbt/mlxtend/pull/726)
+- Adds new `create_counterfactual` method for creating counterfactuals to explain model predictions.  ([#740](https://github.com/rasbt/mlxtend/pull/740))
+
 
 ##### Changes
 
-- -
+- `permutation_test` (`mlxtend.evaluate.permutation`) ìs corrected to give the proportion of permutations whose statistic is *at least as extreme* as the one observed. ([#721](https://github.com/rasbt/mlxtend/pull/721) via [Florian Charlier](https://github.com/DarthTrevis))
+- Fixes the McNemar confusion matrix layout to match the convention (and documentation), swapping the upper left and lower right cells. ([#744](https://github.com/rasbt/mlxtend/pull/744) via [mmarius](https://github.com/mmarius))
 
 ##### Bug Fixes
 
-- -
+- The loss in `LogisticRegression` for logging purposes didn't include the L2 penalty for the first weight in the weight vector (this is not the bias unit). However, since this loss function was only used for logging purposes, and the gradient remains correct, this does not have an effect on the main code. ([#741](https://github.com/rasbt/mlxtend/pull/741))
+- Fixes a bug in `bias_variance_decomp` where when the `mse` loss was used, downcasting to integers caused imprecise results for small numbers. ([#749](https://github.com/rasbt/mlxtend/pull/749))
 
-### Version 0.17.2 (02-24-2020)
+
+### Version 0.17.3 (2020-07-27)
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.17.3.zip)
+
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.17.3.tar.gz)
+
+
+##### New Features
+
+- Add `predict_proba` kwarg to bootstrap methods, to allow bootstrapping of scoring functions that take in probability values. ([#700](https://github.com/rasbt/mlxtend/pull/700) via [Adam Li](https://github.com/adam2392))
+- Add a `cell_values` parameter to `mlxtend.plotting.heatmap()` to optionally suppress cell annotations by setting `cell_values=False`. ([#703](https://github.com/rasbt/mlxtend/pull/700)
+
+##### Changes
+
+- Implemented both `use_clones` and `fit_base_estimators` (previously `refit` in `EnsembleVoteClassifier`) for `EnsembleVoteClassifier` and `StackingClassifier`. ([#670](https://github.com/rasbt/mlxtend/pull/670) via [Katrina Ni](https://github.com/nilichen))
+- Switched to using raw strings for regex in `mlxtend.text` to prevent deprecation warning in Python 3.8 ([#688](https://github.com/rasbt/mlxtend/pull/688))
+- Slice data in sequential forward selection before sending to parallel backend, reducing memory consumption.
+
+##### Bug Fixes
+
+- Fixes axis DeprecationWarning in matplotlib v3.1.0 and newer. ([#673](https://github.com/rasbt/mlxtend/pull/673))
+- Fixes an issue with using `meshgrid` in `no_information_rate` function used by the `bootstrap_point632_score` function for the .632+ estimate. ([#688](https://github.com/rasbt/mlxtend/pull/688))
+- Fixes an issue in `fpmax` that could lead to incorrect support values. ([#692](https://github.com/rasbt/mlxtend/pull/692) via [Steve Harenberg](https://github.com/harenbergsd))
+
+### Version 0.17.2 (2020-02-24)
 
 ##### Downloads
 
@@ -45,8 +172,8 @@ The CHANGELOG for the current development version is available at
 ##### Changes
 
 - The previously deprecated `OnehotTransactions` has been removed in favor of the `TransactionEncoder.`
-- Removed `SparseDataFrame` support in frequent pattern mining functions in favor of pandas >=1.0's new way for working sparse data. If you used `SparseDataFrame` formats, please see pandas' migration guide at https://pandas.pydata.org/pandas-docs/stable/user_guide/sparse.html#migrating ([#667](https://github.com/rasbt/mlxtend/pull/667))
-
+- Removed `SparseDataFrame` support in frequent pattern mining functions in favor of pandas >=1.0's new way for working sparse data. If you used `SparseDataFrame` formats, please see pandas' migration guide at https://pandas.pydata.org/pandas-docs/stable/user_guide/sparse.html#migrating. ([#667](https://github.com/rasbt/mlxtend/pull/667))
+- The `plot_confusion_matrix.py` now also accepts a matplotlib figure and axis as input to which the confusion matrix plot can be added. ([#671](https://github.com/rasbt/mlxtend/pull/634) via [Vahid Mirjalili](https://github.com/vmirly))
 
 ##### Bug Fixes
 
@@ -85,7 +212,7 @@ The CHANGELOG for the current development version is available at
 
 
 
-### Version 0.17.0 (07/19/2019)
+### Version 0.17.0 (2019-07-19)
 
 ##### Downloads
 
@@ -117,7 +244,7 @@ The CHANGELOG for the current development version is available at
 - Fixed documentation of `iris_data()` under `iris.py` by adding a note about differences in the iris data in R and UCI machine learning repo.
 - Make sure that if the `'svd'` mode is used in PCA, the number of eigenvalues is the same as when using `'eigen'` (append 0's zeros in that case) ([#565](https://github.com/rasbt/mlxtend/pull/565))
 
-### Version 0.16.0 (05/12/2019)
+### Version 0.16.0 (2019-05-12)
 
 ##### Downloads
 
@@ -151,7 +278,7 @@ The CHANGELOG for the current development version is available at
 - SequentialFeatureSelector now supports DataFrame as input for all operating modes (forward/backward/floating). [#506](https://github.com/rasbt/mlxtend/pull/506)
 - `mlxtend.evaluate.feature_importance_permutation` now correctly accepts scoring functions with proper function signature as `metric` argument. [#528](https://github.com/rasbt/mlxtend/pull/528)
 
-### Version 0.15.0 (01-19-2019)
+### Version 0.15.0 (2019-01-19)
 
 ##### Downloads
 
@@ -175,7 +302,7 @@ The CHANGELOG for the current development version is available at
 - The eigenvectors maybe have not been sorted in certain edge cases if solver was `'eigen'` in `PrincipalComponentAnalysis` and `LinearDiscriminantAnalysis`. ([#477](https://github.com/rasbt/mlxtend/pull/477), [#478](https://github.com/rasbt/mlxtend/pull/478))
 
 
-### Version 0.14.0 (11-09-2018)
+### Version 0.14.0 (2018-11-09)
 
 ##### Downloads
 

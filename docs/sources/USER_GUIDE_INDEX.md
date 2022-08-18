@@ -5,6 +5,7 @@
 - [EnsembleVoteClassifier](user_guide/classifier/EnsembleVoteClassifier.md)
 - [LogisticRegression](user_guide/classifier/LogisticRegression.md)
 - [MultiLayerPerceptron](user_guide/classifier/MultiLayerPerceptron.md)
+- [OneRClassifier](user_guide/classifier/OneRClassifier.md)
 - [Perceptron](user_guide/classifier/Perceptron.md)
 - [SoftmaxRegression](user_guide/classifier/SoftmaxRegression.md)
 - [StackingClassifier](user_guide/classifier/StackingClassifier.md)
@@ -30,10 +31,12 @@
 - [bootstrap_point632_score](user_guide/evaluate/bootstrap_point632_score.md)
 - [BootstrapOutOfBag](user_guide/evaluate/BootstrapOutOfBag.md)
 - [cochrans_q](user_guide/evaluate/cochrans_q.md)
-- [confusion_matrix](user_guide/evaluate/confusion_matrix.md)
 - [combined_ftest_5x2cv](user_guide/evaluate/combined_ftest_5x2cv.md)
+- [confusion_matrix](user_guide/evaluate/confusion_matrix.md)
+- [create_counterfactual](user_guide/evaluate/create_counterfactual.md)
 - [feature_importance_permutation](user_guide/evaluate/feature_importance_permutation.md)
 - [ftest](user_guide/evaluate/ftest.md)
+- [GroupTimeSeriesSplit](user_guide/evaluate/GroupTimeSeriesSplit.md)
 - [lift_score](user_guide/evaluate/lift_score.md)
 - [mcnemar_table](user_guide/evaluate/mcnemar_table.md)
 - [mcnemar_tables](user_guide/evaluate/mcnemar_tables.md)
@@ -67,12 +70,6 @@
 - [fpgrowth](user_guide/frequent_patterns/fpgrowth.md)
 - [fpmax](user_guide/frequent_patterns/fpmax.md)
 
-## `general concepts`
-- [activation-functions](user_guide/general_concepts/activation-functions.md)
-- [gradient-optimization](user_guide/general_concepts/gradient-optimization.md)
-- [linear-gradient-derivative](user_guide/general_concepts/linear-gradient-derivative.md)
-- [regularization-linear](user_guide/general_concepts/regularization-linear.md)
-
 ## `image`
 - [extract_face_landmarks](user_guide/image/extract_face_landmarks.md)
 
@@ -93,6 +90,7 @@
 - [plot_linear_regression](user_guide/plotting/plot_linear_regression.md)
 - [plot_sequential_feature_selection](user_guide/plotting/plot_sequential_feature_selection.md)
 - [scatterplotmatrix](user_guide/plotting/scatterplotmatrix.md)
+- [scatter_hist](user_guide/plotting/scatter_hist.md)
 - [stacked_barplot](user_guide/plotting/stacked_barplot.md)
 
 ## `preprocessing`

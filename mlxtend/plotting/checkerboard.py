@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # Implementation of the mulitnomial logistic regression algorithm for
@@ -8,19 +8,21 @@
 #
 # License: BSD 3 clause
 
+import numpy as np
 from matplotlib.pyplot import subplots
 from matplotlib.table import Table
-import numpy as np
 
 
-def checkerboard_plot(ary,
-                      cell_colors=('white', 'black'),
-                      font_colors=('black', 'white'),
-                      fmt='%.1f',
-                      figsize=None,
-                      row_labels=None,
-                      col_labels=None,
-                      fontsize=None):
+def checkerboard_plot(
+    ary,
+    cell_colors=("white", "black"),
+    font_colors=("black", "white"),
+    fmt="%.1f",
+    figsize=None,
+    row_labels=None,
+    col_labels=None,
+    fontsize=None,
+):
     """
     Plot a checkerboard table / heatmap via matplotlib.
 
@@ -76,22 +78,39 @@ def checkerboard_plot(ary,
     for (row_idx, col_idx), cell_val in np.ndenumerate(ary):
 
         idx = (col_idx + row_idx) % 2
-        tb.add_cell(row_idx, col_idx, width, height,
-                    text=fmt % cell_val,
-                    loc='center',
-                    facecolor=cell_colors[idx])
+        tb.add_cell(
+            row_idx,
+            col_idx,
+            width,
+            height,
+            text=fmt % cell_val,
+            loc="center",
+            facecolor=cell_colors[idx],
+        )
 
     for row_idx, label in enumerate(row_labels):
-        tb.add_cell(row_idx, -1,
-                    width, height,
-                    text=label, loc='right',
-                    edgecolor='none', facecolor='none')
+        tb.add_cell(
+            row_idx,
+            -1,
+            width,
+            height,
+            text=label,
+            loc="right",
+            edgecolor="none",
+            facecolor="none",
+        )
 
     for col_idx, label in enumerate(col_labels):
-        tb.add_cell(-1, col_idx,
-                    width, height / 2.,
-                    text=label, loc='center',
-                    edgecolor='none', facecolor='none')
+        tb.add_cell(
+            -1,
+            col_idx,
+            width,
+            height / 2.0,
+            text=label,
+            loc="center",
+            edgecolor="none",
+            facecolor="none",
+        )
 
     for (row_idx, col_idx), cell_val in np.ndenumerate(ary):
         idx = (col_idx + row_idx) % 2

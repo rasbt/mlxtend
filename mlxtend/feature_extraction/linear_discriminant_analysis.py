@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # Linear Discriminant Analysis for dimensionality reduction
@@ -7,6 +7,7 @@
 # License: BSD 3 clause
 
 import numpy as np
+
 from .._base import _BaseModel
 
 
@@ -35,13 +36,14 @@ class LinearDiscriminantAnalysis(_BaseModel):
     http://rasbt.github.io/mlxtend/user_guide/feature_extraction/LinearDiscriminantAnalysis/
 
     """
+
     def __init__(self, n_discriminants=None):
         if n_discriminants is not None and n_discriminants < 1:
-            raise AttributeError('n_discriminants must be > 1 or None')
+            raise AttributeError("n_discriminants must be > 1 or None")
         self.n_discriminants = n_discriminants
 
     def fit(self, X, y, n_classes=None):
-        """ Fit the LDA model with X.
+        """Fit the LDA model with X.
 
         Parameters
         ----------
@@ -80,22 +82,22 @@ class LinearDiscriminantAnalysis(_BaseModel):
         self._n_features = X.shape[1]
 
         mean_vecs = self._mean_vectors(X=X, y=y, n_classes=self._n_classes)
-        within_scatter = self._within_scatter(X=X,
-                                              y=y,
-                                              n_classes=self._n_classes,
-                                              mean_vectors=mean_vecs)
-        between_scatter = self._between_scatter(X=X,
-                                                y=y,
-                                                mean_vectors=mean_vecs)
+        within_scatter = self._within_scatter(
+            X=X, y=y, n_classes=self._n_classes, mean_vectors=mean_vecs
+        )
+        between_scatter = self._between_scatter(X=X, y=y, mean_vectors=mean_vecs)
         self.e_vals_, self.e_vecs_ = self._eigendecom(
-            within_scatter=within_scatter, between_scatter=between_scatter)
-        self.w_ = self._projection_matrix(eig_vals=self.e_vals_,
-                                          eig_vecs=self.e_vecs_,
-                                          n_discriminants=n_discriminants)
+            within_scatter=within_scatter, between_scatter=between_scatter
+        )
+        self.w_ = self._projection_matrix(
+            eig_vals=self.e_vals_,
+            eig_vecs=self.e_vecs_,
+            n_discriminants=n_discriminants,
+        )
         return self
 
     def transform(self, X):
-        """ Apply the linear transformation on X.
+        """Apply the linear transformation on X.
 
         Parameters
         ----------
@@ -109,8 +111,8 @@ class LinearDiscriminantAnalysis(_BaseModel):
             Projected training vectors.
 
         """
-        if not hasattr(self, 'w_'):
-            raise AttributeError('Object as not been fitted, yet.')
+        if not hasattr(self, "w_"):
+            raise AttributeError("Object as not been fitted, yet.")
         self._check_arrays(X=X)
         return X.dot(self.w_)
 
@@ -137,18 +139,17 @@ class LinearDiscriminantAnalysis(_BaseModel):
             n = X[y == i + 1, :].shape[0]
             mean_vec = mean_vec.reshape(X.shape[1], 1)
             overall_mean = overall_mean.reshape(X.shape[1], 1)
-            S_B += n * (mean_vec - overall_mean).dot(
-                (mean_vec - overall_mean).T)
+            S_B += n * (mean_vec - overall_mean).dot((mean_vec - overall_mean).T)
         return S_B
 
     def _eigendecom(self, within_scatter, between_scatter):
-        e_vals, e_vecs = np.linalg.eig(np.linalg.inv(within_scatter).dot(
-            between_scatter))
+        e_vals, e_vecs = np.linalg.eig(
+            np.linalg.inv(within_scatter).dot(between_scatter)
+        )
         sort_idx = np.argsort(e_vals)[::-1]
         e_vals, e_vecs = e_vals[sort_idx], e_vecs[:, sort_idx]
         return e_vals, e_vecs
 
     def _projection_matrix(self, eig_vals, eig_vecs, n_discriminants):
-        matrix_w = np.vstack([eig_vecs[:, i] for
-                              i in range(n_discriminants)]).T
+        matrix_w = np.vstack([eig_vecs[:, i] for i in range(n_discriminants)]).T
         return matrix_w

@@ -111,7 +111,6 @@ def _get_featurenames(subsets_dict, feature_idx, custom_feature_names, X):
 
 class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
     """Sequential Feature Selection for Classification and Regression.
-
     Parameters
     ----------
     estimator : scikit-learn classifier or regressor
@@ -183,7 +182,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         features to be selected is greater than `len(fixed_features)`.
         In other words, ensure that `k_features > len(fixed_features)`.
         New in mlxtend v. 0.18.0.
-
     Attributes
     ----------
     k_feature_idx_ : array-like, shape = [n_predictions]
@@ -210,12 +208,10 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         correspond to the column names. Otherwise, the
         feature names are string representation of the feature
         array indices. The 'feature_names' is new in v 0.13.0.
-
     Examples
     -----------
     For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/feature_selection/SequentialFeatureSelector/
-
     """
 
     def __init__(self, estimator, k_features=1,
@@ -313,7 +309,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
     def set_params(self, **params):
         """Set the parameters of this estimator.
         Valid parameter keys can be listed with ``get_params()``.
-
         Returns
         -------
         self
@@ -323,7 +318,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
     def fit(self, X, y, custom_feature_names=None, groups=None, **fit_params):
         """Perform feature selection and learn model from training data.
-
         Parameters
         ----------
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
@@ -344,11 +338,9 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             train/test set. Passed to the fit method of the cross-validator.
         fit_params : dict of string -> object, optional
             Parameters to pass to to the fit method of classifier.
-
         Returns
         -------
         self : object
-
         """
 
         # reset from a potential previous fit run
@@ -694,7 +686,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
     def transform(self, X):
         """Reduce X to its most important features.
-
         Parameters
         ----------
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
@@ -702,11 +693,9 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             n_features is the number of features.
             New in v 0.13.0: pandas DataFrames are now also accepted as
             argument for X.
-
         Returns
         -------
         Reduced feature subset of X, shape={n_samples, k_features}
-
         """
         self._check_fitted()
         if hasattr(X, 'loc'):
@@ -717,7 +706,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
     def fit_transform(self, X, y, groups=None, **fit_params):
         """Fit to training data then reduce X to its most important features.
-
         Parameters
         ----------
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
@@ -734,24 +722,20 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             train/test set. Passed to the fit method of the cross-validator.
         fit_params : dict of string -> object, optional
             Parameters to pass to to the fit method of classifier.
-
         Returns
         -------
         Reduced feature subset of X, shape={n_samples, k_features}
-
         """
         self.fit(X, y, groups=groups, **fit_params)
         return self.transform(X)
 
     def get_metric_dict(self, confidence_interval=0.95):
         """Return metric dictionary
-
         Parameters
         ----------
         confidence_interval : float (default: 0.95)
             A positive float between 0.0 and 1.0 to compute the confidence
             interval bounds of the CV score averages.
-
         Returns
         ----------
         Dictionary with items where each dictionary value is a list
@@ -764,7 +748,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             'std_dev': standard deviation of the CV score average
             'std_err': standard error of the CV score average
             'ci_bound': confidence interval bound of the CV score average
-
         """
         self._check_fitted()
         fdict = deepcopy(self.subsets_)

@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
@@ -27,6 +27,7 @@ class TransactionEncoder(BaseEstimator, TransformerMixin):
     http://rasbt.github.io/mlxtend/user_guide/preprocessing/TransactionEncoder/
 
     """
+
     def __init__(self):
         return None
 
@@ -118,9 +119,8 @@ class TransactionEncoder(BaseEstimator, TransformerMixin):
                     col_idx = self.columns_mapping_[item]
                     indices.append(col_idx)
                 indptr.append(len(indices))
-            non_sparse_values = [True]*len(indices)
-            array = csr_matrix((non_sparse_values, indices, indptr),
-                               dtype=bool)
+            non_sparse_values = [True] * len(indices)
+            array = csr_matrix((non_sparse_values, indices, indptr), dtype=bool)
         else:
             array = np.zeros((len(X), len(self.columns_)), dtype=bool)
             for row_idx, transaction in enumerate(X):
@@ -173,9 +173,10 @@ class TransactionEncoder(BaseEstimator, TransformerMixin):
           ```
 
         """
-        return [[self.columns_[idx]
-                 for idx, cell in enumerate(row) if cell]
-                for row in array]
+        return [
+            [self.columns_[idx] for idx, cell in enumerate(row) if cell]
+            for row in array
+        ]
 
     def fit_transform(self, X, sparse=False):
         """Fit a TransactionEncoder encoder and transform a dataset."""

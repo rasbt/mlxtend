@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
@@ -7,8 +7,9 @@
 import numpy as np
 import pytest
 from numpy.testing import assert_almost_equal
-from mlxtend.feature_extraction import RBFKernelPCA as KPCA
 from sklearn.datasets import make_moons
+
+from mlxtend.feature_extraction import RBFKernelPCA as KPCA
 
 X1, y1 = make_moons(n_samples=50, random_state=1)
 
@@ -34,8 +35,7 @@ def test_default_0components():
 def test_proj():
     pca = KPCA(n_components=2)
     pca.fit(X1[:2])
-    exp = np.array([[-0.71, -0.71],
-                    [0.71, -0.71]])
+    exp = np.array([[-0.71, -0.71], [0.71, -0.71]])
     assert_almost_equal(pca.X_projected_, exp, decimal=2)
 
 

@@ -1,13 +1,20 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
 
 import unittest
+
 import numpy as np
-from test_fpbase import FPTestEdgeCases, FPTestErrors, \
-                        FPTestEx1All, FPTestEx2All, FPTestEx3All
+from test_fpbase import (
+    FPTestEdgeCases,
+    FPTestErrors,
+    FPTestEx1All,
+    FPTestEx2All,
+    FPTestEx3All,
+)
+
 from mlxtend.frequent_patterns import apriori
 
 
@@ -38,16 +45,50 @@ class TestAprioriLowMemory(unittest.TestCase, FPTestEx1All):
 class TestAprioriBoolInput(unittest.TestCase, FPTestEx1All):
     def setUp(self):
         one_ary = np.array(
-            [[False, False, False, True, False, True, True, True, True,
-              False, True],
-             [False, False, True, True, False, True, False, True, True,
-              False, True],
-             [True, False, False, True, False, True, True, False, False,
-              False, False],
-             [False, True, False, False, False, True, True, False, False,
-              True, True],
-             [False, True, False, True, True, True, False, False, True,
-              False, False]])
+            [
+                [False, False, False, True, False, True, True, True, True, False, True],
+                [False, False, True, True, False, True, False, True, True, False, True],
+                [
+                    True,
+                    False,
+                    False,
+                    True,
+                    False,
+                    True,
+                    True,
+                    False,
+                    False,
+                    False,
+                    False,
+                ],
+                [
+                    False,
+                    True,
+                    False,
+                    False,
+                    False,
+                    True,
+                    True,
+                    False,
+                    False,
+                    True,
+                    True,
+                ],
+                [
+                    False,
+                    True,
+                    False,
+                    True,
+                    True,
+                    True,
+                    False,
+                    False,
+                    True,
+                    False,
+                    False,
+                ],
+            ]
+        )
         FPTestEx1All.setUp(self, apriori, one_ary=one_ary)
 
 

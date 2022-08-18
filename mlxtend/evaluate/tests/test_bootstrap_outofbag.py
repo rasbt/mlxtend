@@ -1,10 +1,11 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
 
 import numpy as np
+
 from mlxtend.evaluate import BootstrapOutOfBag
 from mlxtend.utils import assert_raises
 
@@ -26,10 +27,9 @@ def test_splits():
 
 
 def test_invalid_splits():
-    assert_raises(ValueError,
-                  'Number of splits must be greater than 1.',
-                  BootstrapOutOfBag,
-                  0)
+    assert_raises(
+        ValueError, "Number of splits must be greater than 1.", BootstrapOutOfBag, 0
+    )
 
 
 def test_get_n_splits():

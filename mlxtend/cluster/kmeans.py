@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # Estimator for Linear Regression
@@ -8,14 +8,14 @@
 
 
 import numpy as np
-from .._base import _Cluster
-from .._base import _BaseModel
-from .._base import _IterativeModel
+
+from .._base import _BaseModel, _Cluster, _IterativeModel
+
 # from scipy.spatial.distance import euclidean
 
 
 class Kmeans(_BaseModel, _Cluster, _IterativeModel):
-    """ K-means clustering class.
+    """K-means clustering class.
 
     Added in 0.4.1dev
 
@@ -59,9 +59,14 @@ class Kmeans(_BaseModel, _Cluster, _IterativeModel):
 
     """
 
-    def __init__(self, k, max_iter=10,
-                 convergence_tolerance=1e-05,
-                 random_seed=None, print_progress=0):
+    def __init__(
+        self,
+        k,
+        max_iter=10,
+        convergence_tolerance=1e-05,
+        random_seed=None,
+        print_progress=0,
+    ):
 
         _BaseModel.__init__(self)
         _Cluster.__init__(self)
@@ -92,26 +97,34 @@ class Kmeans(_BaseModel, _Cluster, _IterativeModel):
             # assign samples to cluster centroids
             self.clusters_ = {i: [] for i in range(self.k)}
             for sample_idx, cluster_idx in enumerate(
-                    self._get_cluster_idx(X=X, centroids=self.centroids_)):
+                self._get_cluster_idx(X=X, centroids=self.centroids_)
+            ):
                 self.clusters_[cluster_idx].append(sample_idx)
 
             # recompute centroids
-            new_centroids = np.array([np.mean(X[self.clusters_[k]], axis=0)
-                                      for k in sorted(self.clusters_.keys())])
+            new_centroids = np.array(
+                [
+                    np.mean(X[self.clusters_[k]], axis=0)
+                    for k in sorted(self.clusters_.keys())
+                ]
+            )
 
             # stop if cluster assignment doesn't change
 
-            if np.allclose(self.centroids_, new_centroids,
-                           rtol=self.convergence_tolerance,
-                           atol=1e-08, equal_nan=False):
+            if np.allclose(
+                self.centroids_,
+                new_centroids,
+                rtol=self.convergence_tolerance,
+                atol=1e-08,
+                equal_nan=False,
+            ):
                 break
             else:
                 self.centroids_ = new_centroids
 
             self.iterations_ += 1
             if self.print_progress:
-                self._print_progress(iteration=self.iterations_,
-                                     n_iter=self.max_iter)
+                self._print_progress(iteration=self.iterations_, n_iter=self.max_iter)
 
         return self
 
@@ -128,6 +141,7 @@ class Kmeans(_BaseModel, _Cluster, _IterativeModel):
         Called in self.predict
 
         """
-        pred = np.array([idx for idx in self._get_cluster_idx(X=X,
-                         centroids=self.centroids_)])
+        pred = np.array(
+            [idx for idx in self._get_cluster_idx(X=X, centroids=self.centroids_)]
+        )
         return pred

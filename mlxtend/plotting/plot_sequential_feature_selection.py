@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # Algorithm for plotting sequential feature selection.
@@ -9,15 +9,17 @@
 import matplotlib.pyplot as plt
 
 
-def plot_sequential_feature_selection(metric_dict,
-                                      figsize=None,
-                                      kind='std_dev',
-                                      color='blue',
-                                      bcolor='steelblue',
-                                      marker='o',
-                                      alpha=0.2,
-                                      ylabel='Performance',
-                                      confidence_interval=0.95):
+def plot_sequential_feature_selection(
+    metric_dict,
+    figsize=None,
+    kind="std_dev",
+    color="blue",
+    bcolor="steelblue",
+    marker="o",
+    alpha=0.2,
+    ylabel="Performance",
+    confidence_interval=0.95,
+):
     """Plot feature selection results.
 
     Parameters
@@ -54,9 +56,9 @@ def plot_sequential_feature_selection(metric_dict,
 
     """
 
-    allowed = {'std_dev', 'std_err', 'ci', None}
+    allowed = {"std_dev", "std_err", "ci", None}
     if kind not in allowed:
-        raise AttributeError('kind not in %s' % allowed)
+        raise AttributeError("kind not in %s" % allowed)
 
     # fig = plt.figure()
     if figsize is not None:
@@ -65,34 +67,26 @@ def plot_sequential_feature_selection(metric_dict,
         fig = plt.subplots()
 
     k_feat = sorted(metric_dict.keys())
-    avg = [metric_dict[k]['avg_score'] for k in k_feat]
+    avg = [metric_dict[k]["avg_score"] for k in k_feat]
 
     if kind:
         upper, lower = [], []
-        if kind == 'ci':
-            kind = 'ci_bound'
+        if kind == "ci":
+            kind = "ci_bound"
 
         for k in k_feat:
-            upper.append(metric_dict[k]['avg_score'] +
-                         metric_dict[k][kind])
-            lower.append(metric_dict[k]['avg_score'] -
-                         metric_dict[k][kind])
+            upper.append(metric_dict[k]["avg_score"] + metric_dict[k][kind])
+            lower.append(metric_dict[k]["avg_score"] - metric_dict[k][kind])
 
-        plt.fill_between(k_feat,
-                         upper,
-                         lower,
-                         alpha=alpha,
-                         color=bcolor,
-                         lw=1)
+        plt.fill_between(k_feat, upper, lower, alpha=alpha, color=bcolor, lw=1)
 
-        if kind == 'ci_bound':
-            kind = 'Confidence Interval (%d%%)' % (confidence_interval * 100)
+        if kind == "ci_bound":
+            kind = "Confidence Interval (%d%%)" % (confidence_interval * 100)
 
     plt.plot(k_feat, avg, color=color, marker=marker)
     plt.ylabel(ylabel)
-    plt.xlabel('Number of Features')
-    feature_min = len(metric_dict[k_feat[0]]['feature_idx'])
-    feature_max = len(metric_dict[k_feat[-1]]['feature_idx'])
-    plt.xticks(range(feature_min, feature_max + 1),
-               range(feature_min, feature_max + 1))
+    plt.xlabel("Number of Features")
+    feature_min = len(metric_dict[k_feat[0]]["feature_idx"])
+    feature_max = len(metric_dict[k_feat[-1]]["feature_idx"])
+    plt.xticks(range(feature_min, feature_max + 1), range(feature_min, feature_max + 1))
     return fig

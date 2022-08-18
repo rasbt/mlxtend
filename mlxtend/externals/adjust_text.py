@@ -22,13 +22,15 @@
 # SOFTWARE.
 
 from __future__ import division
+
 import sys
-from matplotlib import pyplot as plt
 from itertools import product
-import numpy as np
 from operator import itemgetter
-from matplotlib.path import get_path_collection_extents
+
 import matplotlib
+import numpy as np
+from matplotlib import pyplot as plt
+from matplotlib.path import get_path_collection_extents
 
 if sys.version_info >= (3, 0):
     xrange = range
@@ -39,7 +41,7 @@ def get_bboxes_pathcollection(sc, ax):
     for a scatter plot
     Thank you to ImportanceOfBeingErnest
     https://stackoverflow.com/a/55007838/1304161"""
-#    ax.figure.canvas.draw() # need to draw before the transforms are set.
+    #    ax.figure.canvas.draw() # need to draw before the transforms are set.
     transform = sc.get_transform()
     transOffset = sc.get_offset_transform()
     offsets = sc._offsets
@@ -61,15 +63,15 @@ def get_bboxes_pathcollection(sc, ax):
     if len(paths) and len(offsets):
         if len(paths) < len(offsets):
             # for usual scatters you have one path, but several offsets
-            paths = [paths[0]]*len(offsets)
+            paths = [paths[0]] * len(offsets)
         if len(transforms) < len(offsets):
             # often you may have a single scatter size, but several offsets
-            transforms = [transforms[0]]*len(offsets)
+            transforms = [transforms[0]] * len(offsets)
 
         for p, o, t in zip(paths, offsets, transforms):
             result = get_path_collection_extents(
-                transform.frozen(), [p], [t],
-                [o], transOffset.frozen())
+                transform.frozen(), [p], [t], [o], transOffset.frozen()
+            )
             bboxes.append(result.inverse_transformed(ax.transData))
 
     return bboxes
@@ -78,28 +80,30 @@ def get_bboxes_pathcollection(sc, ax):
 def get_text_position(text, ax=None):
     ax = ax or plt.gca()
     x, y = text.get_position()
-    return (ax.xaxis.convert_units(x),
-            ax.yaxis.convert_units(y))
+    return (ax.xaxis.convert_units(x), ax.yaxis.convert_units(y))
 
 
 def get_bboxes(objs, r, expand, ax):
     if ax is None:
         ax = plt.gca()
     try:
-        return [i.get_window_extent(r).expanded(*expand).transformed(ax.
-                transData.inverted()) for i in objs]
+        return [
+            i.get_window_extent(r)
+            .expanded(*expand)
+            .transformed(ax.transData.inverted())
+            for i in objs
+        ]
     except (AttributeError, TypeError):
         try:
-            if all([isinstance(obj, matplotlib.transforms.BboxBase)
-                    for obj in objs]):
+            if all([isinstance(obj, matplotlib.transforms.BboxBase) for obj in objs]):
                 return objs
         except TypeError:
             return get_bboxes_pathcollection(objs, ax)
 
 
 def get_midpoint(bbox):
-    cx = (bbox.x0+bbox.x1)/2
-    cy = (bbox.y0+bbox.y1)/2
+    cx = (bbox.x0 + bbox.x1) / 2
+    cy = (bbox.y0 + bbox.y1) / 2
     return cx, cy
 
 
@@ -123,8 +127,8 @@ def overlap_bbox_and_point(bbox, xp, yp):
     necessary to make the bbox not overlap the point."""
     cx, cy = get_midpoint(bbox)
 
-    dir_x = np.sign(cx-xp)
-    dir_y = np.sign(cy-yp)
+    dir_x = np.sign(cx - xp)
+    dir_y = np.sign(cy - yp)
 
     if dir_x == -1:
         dx = xp - bbox.xmax
@@ -171,9 +175,16 @@ def move_texts(texts, delta_x, delta_y, bboxes=None, renderer=None, ax=None):
         text.set_position((newx, newy))
 
 
-def optimally_align_text(x, y, texts, expand=(1., 1.), add_bboxes=[],
-                         renderer=None, ax=None,
-                         direction='xy'):
+def optimally_align_text(
+    x,
+    y,
+    texts,
+    expand=(1.0, 1.0),
+    add_bboxes=[],
+    renderer=None,
+    ax=None,
+    direction="xy",
+):
     """
     For all text objects find alignment that causes the least overlap with
     points and other texts and apply it
@@ -187,14 +198,14 @@ def optimally_align_text(x, y, texts, expand=(1., 1.), add_bboxes=[],
     xmin, xmax = sorted(ax.get_xlim())
     ymin, ymax = sorted(ax.get_ylim())
     bboxes = get_bboxes(texts, r, expand, ax=ax)
-    if 'x' not in direction:
-        ha = ['']
+    if "x" not in direction:
+        ha = [""]
     else:
-        ha = ['left', 'right', 'center']
-    if 'y' not in direction:
-        va = ['']
+        ha = ["left", "right", "center"]
+    if "y" not in direction:
+        va = [""]
     else:
-        va = ['bottom', 'top', 'center']
+        va = ["bottom", "top", "center"]
     alignment = list(product(ha, va))
     #    coords = np.array(zip(x, y))
     for i, text in enumerate(texts):
@@ -207,16 +218,21 @@ def optimally_align_text(x, y, texts, expand=(1., 1.), add_bboxes=[],
                 text.set_ha(h)
             if v:
                 text.set_va(v)
-            bbox = text.get_window_extent(r).expanded(*expand).\
-                transformed(ax.transData.inverted())
+            bbox = (
+                text.get_window_extent(r)
+                .expanded(*expand)
+                .transformed(ax.transData.inverted())
+            )
             c = len(get_points_inside_bbox(x, y, bbox))
-            intersections = [bbox.intersection(bbox, bbox2) if i != j else None
-                             for j, bbox2 in enumerate(bboxes+add_bboxes)]
-            intersections = sum([abs(b.width*b.height) if b is not None else 0
-                                 for b in intersections])
+            intersections = [
+                bbox.intersection(bbox, bbox2) if i != j else None
+                for j, bbox2 in enumerate(bboxes + add_bboxes)
+            ]
+            intersections = sum(
+                [abs(b.width * b.height) if b is not None else 0 for b in intersections]
+            )
             # Check for out-of-axes position
-            bbox = text.get_window_extent(r).\
-                transformed(ax.transData.inverted())
+            bbox = text.get_window_extent(r).transformed(ax.transData.inverted())
             x1, y1, x2, y2 = bbox.xmin, bbox.ymin, bbox.xmax, bbox.ymax
             if x1 < xmin or x2 > xmax or y1 < ymin or y2 > ymax:
                 axout = 1
@@ -230,17 +246,21 @@ def optimally_align_text(x, y, texts, expand=(1., 1.), add_bboxes=[],
         # area of intersections
         # with all text bboxes and other objects to avoid.
         a, value = min(enumerate(counts), key=itemgetter(1))
-        if 'x' in direction:
+        if "x" in direction:
             text.set_ha(alignment[a][0])
-        if 'y' in direction:
+        if "y" in direction:
             text.set_va(alignment[a][1])
-        bboxes[i] = text.get_window_extent(r).expanded(*expand).\
-            transformed(ax.transData.inverted())
+        bboxes[i] = (
+            text.get_window_extent(r)
+            .expanded(*expand)
+            .transformed(ax.transData.inverted())
+        )
     return texts
 
 
-def repel_text(texts, renderer=None, ax=None, expand=(1.2, 1.2),
-               only_use_max_min=False, move=False):
+def repel_text(
+    texts, renderer=None, ax=None, expand=(1.2, 1.2), only_use_max_min=False, move=False
+):
     """
     Repel texts from each other while expanding their bounding boxes by expand
     (x, y), e.g. (1.2, 1.2) would multiply width and height by 1.2.
@@ -265,8 +285,9 @@ def repel_text(texts, renderer=None, ax=None, expand=(1.2, 1.2),
     overlap_directions_x = np.zeros_like(overlaps_x)
     overlap_directions_y = np.zeros_like(overlaps_y)
     for i, bbox1 in enumerate(bboxes):
-        overlaps = get_points_inside_bbox(xmins*2+xmaxs*2, (ymins+ymaxs)*2,
-                                          bbox1) % len(bboxes)
+        overlaps = get_points_inside_bbox(
+            xmins * 2 + xmaxs * 2, (ymins + ymaxs) * 2, bbox1
+        ) % len(bboxes)
         overlaps = np.unique(overlaps)
         for j in overlaps:
             bbox2 = bboxes[j]
@@ -277,8 +298,8 @@ def repel_text(texts, renderer=None, ax=None, expand=(1.2, 1.2),
             overlap_directions_x[i, j] = direction[0]
             overlap_directions_y[i, j] = direction[1]
 
-    move_x = overlaps_x*overlap_directions_x
-    move_y = overlaps_y*overlap_directions_y
+    move_x = overlaps_x * overlap_directions_x
+    move_y = overlaps_y * overlap_directions_y
 
     delta_x = move_x.sum(axis=1)
     delta_y = move_y.sum(axis=1)
@@ -289,9 +310,15 @@ def repel_text(texts, renderer=None, ax=None, expand=(1.2, 1.2),
     return delta_x, delta_y, q
 
 
-def repel_text_from_bboxes(add_bboxes, texts, renderer=None, ax=None,
-                           expand=(1.2, 1.2), only_use_max_min=False,
-                           move=False):
+def repel_text_from_bboxes(
+    add_bboxes,
+    texts,
+    renderer=None,
+    ax=None,
+    expand=(1.2, 1.2),
+    only_use_max_min=False,
+    move=False,
+):
     """
     Repel texts from other objects' bboxes while expanding their (texts')
     bounding boxes by expand (x, y), e.g. (1.2, 1.2) would multiply width and
@@ -326,8 +353,8 @@ def repel_text_from_bboxes(add_bboxes, texts, renderer=None, ax=None,
             except AttributeError:
                 pass
 
-    move_x = overlaps_x*overlap_directions_x
-    move_y = overlaps_y*overlap_directions_y
+    move_x = overlaps_x * overlap_directions_x
+    move_y = overlaps_y * overlap_directions_y
 
     delta_x = move_x.sum(axis=1)
     delta_y = move_y.sum(axis=1)
@@ -338,8 +365,9 @@ def repel_text_from_bboxes(add_bboxes, texts, renderer=None, ax=None,
     return delta_x, delta_y, q
 
 
-def repel_text_from_points(x, y, texts, renderer=None, ax=None,
-                           expand=(1.2, 1.2), move=False):
+def repel_text_from_points(
+    x, y, texts, renderer=None, ax=None, expand=(1.2, 1.2), move=False
+):
     """
     Repel texts from all points specified by x and y while expanding their
     (texts'!) bounding boxes by expandby  (x, y), e.g. (1.2, 1.2)
@@ -378,8 +406,7 @@ def repel_text_from_points(x, y, texts, renderer=None, ax=None,
     return delta_x, delta_y, q
 
 
-def repel_text_from_axes(texts, ax=None, bboxes=None, renderer=None,
-                         expand=None):
+def repel_text_from_axes(texts, ax=None, bboxes=None, renderer=None, expand=None):
     if ax is None:
         ax = plt.gca()
     if renderer is None:
@@ -419,22 +446,40 @@ def float_to_tuple(a):
         try:
             b = float(a[0]), float(a[1])
         except TypeError:
-            raise TypeError('Force values must be castable to floats')
+            raise TypeError("Force values must be castable to floats")
         return b
 
 
-def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
-                expand_text=(1.05, 1.2), expand_points=(1.05, 1.2),
-                expand_objects=(1.05, 1.2), expand_align=(1.05, 1.2),
-                autoalign='xy',  va='center', ha='center',
-                force_text=(0.1, 0.25), force_points=(0.2, 0.5),
-                force_objects=(0.1, 0.25),
-                lim=500, precision=0.01,
-                only_move={'points': 'xy', 'text': 'xy', 'objects': 'xy'},
-                avoid_text=True, avoid_points=True, avoid_self=True,
-                save_steps=False, save_prefix='', save_format='png',
-                add_step_numbers=True, on_basemap=False,
-                *args, **kwargs):
+def adjust_text(
+    texts,
+    x=None,
+    y=None,
+    add_objects=None,
+    ax=None,
+    expand_text=(1.05, 1.2),
+    expand_points=(1.05, 1.2),
+    expand_objects=(1.05, 1.2),
+    expand_align=(1.05, 1.2),
+    autoalign="xy",
+    va="center",
+    ha="center",
+    force_text=(0.1, 0.25),
+    force_points=(0.2, 0.5),
+    force_objects=(0.1, 0.25),
+    lim=500,
+    precision=0.01,
+    only_move={"points": "xy", "text": "xy", "objects": "xy"},
+    avoid_text=True,
+    avoid_points=True,
+    avoid_self=True,
+    save_steps=False,
+    save_prefix="",
+    save_format="png",
+    add_step_numbers=True,
+    on_basemap=False,
+    *args,
+    **kwargs
+):
     """Iteratively adjusts the locations of texts.
 
     Call adjust_text the very last, after all plotting (especially
@@ -552,21 +597,21 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
     force_text = float_to_tuple(force_text)
     force_points = float_to_tuple(force_points)
 
-#    xdiff = np.diff(ax.get_xlim())[0]
-#    ydiff = np.diff(ax.get_ylim())[0]
+    #    xdiff = np.diff(ax.get_xlim())[0]
+    #    ydiff = np.diff(ax.get_ylim())[0]
 
     bboxes = get_bboxes(texts, r, (1.0, 1.0), ax)
     sum_width = np.sum(list(map(lambda bbox: bbox.width, bboxes)))
     sum_height = np.sum(list(map(lambda bbox: bbox.height, bboxes)))
-    if not any(list(map(lambda val: 'x' in val, only_move.values()))):
+    if not any(list(map(lambda val: "x" in val, only_move.values()))):
         precision_x = np.inf
     else:
-        precision_x = precision*sum_width
-#
-    if not any(list(map(lambda val: 'y' in val, only_move.values()))):
+        precision_x = precision * sum_width
+    #
+    if not any(list(map(lambda val: "y" in val, only_move.values()))):
         precision_y = np.inf
     else:
-        precision_y = precision*sum_height
+        precision_y = precision * sum_height
 
     if x is None:
         if y is None:
@@ -575,9 +620,9 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
             else:
                 x, y = [], []
         else:
-            raise ValueError('Please specify both x and y, or neither')
+            raise ValueError("Please specify both x and y, or neither")
     if y is None:
-        raise ValueError('Please specify both x and y, or neither')
+        raise ValueError("Please specify both x and y, or neither")
     if add_objects is None:
         text_from_objects = False
         add_bboxes = []
@@ -585,8 +630,10 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
         try:
             add_bboxes = get_bboxes(add_objects, r, (1, 1), ax)
         except ValueError:
-            raise ValueError("Can't get bounding boxes from add_objects - is'\
-                             it a flat list of matplotlib objects?")
+            raise ValueError(
+                "Can't get bounding boxes from add_objects - is'\
+                             it a flat list of matplotlib objects?"
+            )
             return
         text_from_objects = True
     for text in texts:
@@ -594,98 +641,104 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
         text.set_ha(ha)
     if save_steps:
         if add_step_numbers:
-            plt.title('Before')
-        plt.savefig('%s%s.%s' % (save_prefix,
-                                 '000a', save_format),
-                    format=save_format, dpi=150)
+            plt.title("Before")
+        plt.savefig(
+            "%s%s.%s" % (save_prefix, "000a", save_format), format=save_format, dpi=150
+        )
     elif on_basemap:
         ax.draw(r)
 
     if autoalign:
         if autoalign is True:
-            autoalign = 'xy'
+            autoalign = "xy"
         for i in range(2):
-            texts = optimally_align_text(x, y, texts, expand=expand_align,
-                                         add_bboxes=add_bboxes,
-                                         direction=autoalign, renderer=r,
-                                         ax=ax)
+            texts = optimally_align_text(
+                x,
+                y,
+                texts,
+                expand=expand_align,
+                add_bboxes=add_bboxes,
+                direction=autoalign,
+                renderer=r,
+                ax=ax,
+            )
 
     if save_steps:
         if add_step_numbers:
-            plt.title('Autoaligned')
-        plt.savefig('%s%s.%s' % (save_prefix,
-                                 '000b', save_format),
-                    format=save_format, dpi=150)
+            plt.title("Autoaligned")
+        plt.savefig(
+            "%s%s.%s" % (save_prefix, "000b", save_format), format=save_format, dpi=150
+        )
     elif on_basemap:
         ax.draw(r)
 
     texts = repel_text_from_axes(texts, ax, renderer=r, expand=expand_points)
-    history = [(np.inf, np.inf)]*10
+    history = [(np.inf, np.inf)] * 10
     for i in xrange(lim):
         #        q1, q2 = [np.inf, np.inf], [np.inf, np.inf]
 
         if avoid_text:
-            d_x_text, d_y_text, q1 = repel_text(texts, renderer=r, ax=ax,
-                                                expand=expand_text)
+            d_x_text, d_y_text, q1 = repel_text(
+                texts, renderer=r, ax=ax, expand=expand_text
+            )
         else:
-            d_x_text, d_y_text, q1 = [0]*len(texts), [0]*len(texts), (0, 0)
+            d_x_text, d_y_text, q1 = [0] * len(texts), [0] * len(texts), (0, 0)
 
         if avoid_points:
             d_x_points, d_y_points, q2 = repel_text_from_points(
-                x, y, texts,
-                ax=ax,
-                renderer=r,
-                expand=expand_points)
+                x, y, texts, ax=ax, renderer=r, expand=expand_points
+            )
         else:
-            d_x_points, d_y_points, q2 = [0]*len(texts), [0]*len(texts), (0, 0)
+            d_x_points, d_y_points, q2 = [0] * len(texts), [0] * len(texts), (0, 0)
 
         if text_from_objects:
             d_x_objects, d_y_objects, q3 = repel_text_from_bboxes(
-                add_bboxes,
-                texts,
-                ax=ax,
-                renderer=r,
-                expand=expand_objects)
+                add_bboxes, texts, ax=ax, renderer=r, expand=expand_objects
+            )
         else:
-            d_x_objects, d_y_objects, q3 = [0]*len(texts), [0]*len(texts),\
-                (0, 0)
+            d_x_objects, d_y_objects, q3 = [0] * len(texts), [0] * len(texts), (0, 0)
 
         if only_move:
-            if 'text' in only_move:
-                if 'x' not in only_move['text']:
+            if "text" in only_move:
+                if "x" not in only_move["text"]:
                     d_x_text = np.zeros_like(d_x_text)
-                if 'y' not in only_move['text']:
+                if "y" not in only_move["text"]:
                     d_y_text = np.zeros_like(d_y_text)
-            if 'points' in only_move:
-                if 'x' not in only_move['points']:
+            if "points" in only_move:
+                if "x" not in only_move["points"]:
                     d_x_points = np.zeros_like(d_x_points)
-                if 'y' not in only_move['points']:
+                if "y" not in only_move["points"]:
                     d_y_points = np.zeros_like(d_y_points)
-            if 'objects' in only_move:
-                if 'x' not in only_move['objects']:
+            if "objects" in only_move:
+                if "x" not in only_move["objects"]:
                     d_x_objects = np.zeros_like(d_x_objects)
-                if 'y' not in only_move['objects']:
+                if "y" not in only_move["objects"]:
                     d_y_objects = np.zeros_like(d_y_objects)
 
-        dx = (np.array(d_x_text) * force_text[0] +
-              np.array(d_x_points) * force_points[0] +
-              np.array(d_x_objects) * force_objects[0])
-        dy = (np.array(d_y_text) * force_text[1] +
-              np.array(d_y_points) * force_points[1] +
-              np.array(d_y_objects) * force_objects[1])
+        dx = (
+            np.array(d_x_text) * force_text[0]
+            + np.array(d_x_points) * force_points[0]
+            + np.array(d_x_objects) * force_objects[0]
+        )
+        dy = (
+            np.array(d_y_text) * force_text[1]
+            + np.array(d_y_points) * force_points[1]
+            + np.array(d_y_objects) * force_objects[1]
+        )
         qx = np.sum([q[0] for q in [q1, q2, q3]])
         qy = np.sum([q[1] for q in [q1, q2, q3]])
         histm = np.max(np.array(history), axis=0)
         history.pop(0)
         history.append((qx, qy))
-        move_texts(texts, dx, dy,
-                   bboxes=get_bboxes(texts, r, (1, 1), ax), ax=ax)
+        move_texts(texts, dx, dy, bboxes=get_bboxes(texts, r, (1, 1), ax), ax=ax)
         if save_steps:
             if add_step_numbers:
-                plt.title(i+1)
-            plt.savefig('%s%s.%s' % (save_prefix,
-                        '{0:03}'.format(i+1), save_format),
-                        format=save_format, dpi=150)
+                plt.title(i + 1)
+            plt.savefig(
+                "%s%s.%s" % (save_prefix, "{0:03}".format(i + 1), save_format),
+                format=save_format,
+                dpi=150,
+            )
         elif on_basemap:
             ax.draw(r)
         # Stop if we've reached the precision threshold,
@@ -693,29 +746,33 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
         # are both greater than the max over the last
         # 10 iterations (suggesting a
         # failure to converge)
-        if (qx < precision_x and qy < precision_y)\
-                or np.all([qx, qy] >= histm):
+        if (qx < precision_x and qy < precision_y) or np.all([qx, qy] >= histm):
             break
         # Now adding arrows from texts to their original locations if required
-    if 'arrowprops' in kwargs:
+    if "arrowprops" in kwargs:
         bboxes = get_bboxes(texts, r, (1, 1), ax)
-        kwap = kwargs.pop('arrowprops')
+        kwap = kwargs.pop("arrowprops")
         for j, (bbox, text) in enumerate(zip(bboxes, texts)):
-            ap = {'patchA': text}  # Ensure arrow is clipped by the text
+            ap = {"patchA": text}  # Ensure arrow is clipped by the text
             ap.update(kwap)  # Add arrowprops from kwargs
-            ax.annotate("",  # Add an arrow from the text to the point
-                        xy=(orig_xy[j]),
-                        xytext=get_midpoint(bbox),
-                        arrowprops=ap,
-                        *args, **kwargs)
+            ax.annotate(
+                "",  # Add an arrow from the text to the point
+                xy=(orig_xy[j]),
+                xytext=get_midpoint(bbox),
+                arrowprops=ap,
+                *args,
+                **kwargs
+            )
 
     if save_steps:
         if add_step_numbers:
-            plt.title(i+1)
-            plt.savefig('%s%s.%s' % (save_prefix,
-                        '{0:03}'.format(i+1), save_format),
-                        format=save_format, dpi=150)
+            plt.title(i + 1)
+            plt.savefig(
+                "%s%s.%s" % (save_prefix, "{0:03}".format(i + 1), save_format),
+                format=save_format,
+                dpi=150,
+            )
     elif on_basemap:
         ax.draw(r)
 
-    return i+1
+    return i + 1

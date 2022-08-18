@@ -30,7 +30,7 @@ extra_css:
   - cinder/css/font-awesome-4.0.3.css
   - cinder/css/highlight.css
 
-copyright: Copyright &copy; 2014-2019 <a href="http://sebastianraschka.com">Sebastian Raschka</a>
+copyright: Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a>
 google_analytics: ['UA-38457794-2', 'rasbt.github.io/mlxtend/']
 
 nav:
@@ -42,6 +42,7 @@ nav:
     - user_guide/classifier/EnsembleVoteClassifier.md
     - user_guide/classifier/LogisticRegression.md
     - user_guide/classifier/MultiLayerPerceptron.md
+    - user_guide/classifier/OneRClassifier.md    
     - user_guide/classifier/Perceptron.md
     - user_guide/classifier/SoftmaxRegression.md
     - user_guide/classifier/StackingClassifier.md
@@ -66,8 +67,10 @@ nav:
     - user_guide/evaluate/cochrans_q.md    
     - user_guide/evaluate/combined_ftest_5x2cv.md
     - user_guide/evaluate/confusion_matrix.md
+    - user_guide/evaluate/create_counterfactual.md
     - user_guide/evaluate/feature_importance_permutation.md
     - user_guide/evaluate/ftest.md
+    - user_guide/evaluate/GroupTimeSeriesSplit.md
     - user_guide/evaluate/lift_score.md
     - user_guide/evaluate/mcnemar_table.md
     - user_guide/evaluate/mcnemar_tables.md
@@ -95,11 +98,6 @@ nav:
     - user_guide/frequent_patterns/association_rules.md
     - user_guide/frequent_patterns/fpgrowth.md
     - user_guide/frequent_patterns/fpmax.md
-  - general concepts:
-    - user_guide/general_concepts/activation-functions.md
-    - user_guide/general_concepts/gradient-optimization.md
-    - user_guide/general_concepts/linear-gradient-derivative.md
-    - user_guide/general_concepts/regularization-linear.md
   - image:
     - user_guide/image/extract_face_landmarks.md
     - user_guide/image/eyepad_align.md
@@ -121,6 +119,7 @@ nav:
     - user_guide/plotting/plot_linear_regression.md
     - user_guide/plotting/plot_sequential_feature_selection.md
     - user_guide/plotting/scatterplotmatrix.md
+    - user_guide/plotting/scatter_hist.md
     - user_guide/plotting/stacked_barplot.md
   - preprocessing:
     - user_guide/preprocessing/CopyTransformer.md
@@ -159,6 +158,7 @@ nav:
 - Installation: installation.md
 - About:
   - Release Notes: CHANGELOG.md
+  - Code of Conduct: Code-of-Conduct.md
   - How To Contribute: CONTRIBUTING.md
   - Contributors: contributors.md
   - License: license.md

@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
@@ -7,8 +7,9 @@
 import numpy as np
 import pytest
 from numpy.testing import assert_almost_equal
-from mlxtend.feature_extraction import LinearDiscriminantAnalysis as LDA
+
 from mlxtend.data import iris_data
+from mlxtend.feature_extraction import LinearDiscriminantAnalysis as LDA
 from mlxtend.preprocessing import standardize
 
 X, y = iris_data()
@@ -38,7 +39,7 @@ def test_evals():
     lda = LDA(n_discriminants=2)
     lda.fit(X, y).transform(X)
     np.set_printoptions(suppress=True)
-    print('%s' % lda.e_vals_)
+    print("%s" % lda.e_vals_)
     assert_almost_equal(lda.e_vals_, [20.90, 0.14, 0.0, 0.0], decimal=2)
 
 

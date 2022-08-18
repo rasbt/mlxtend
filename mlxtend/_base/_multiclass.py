@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # Base Clusteer (Clutering Parent Class)
@@ -10,7 +10,6 @@ import numpy as np
 
 
 class _MultiClass(object):
-
     def __init__(self):
         pass
 

@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # Base Clusteer (Clutering Parent Class)
@@ -6,31 +6,32 @@
 #
 # License: BSD 3 clause
 
-import numpy as np
 from time import time
+
+import numpy as np
 
 
 class _Classifier(object):
-
     def __init__(self):
         pass
 
     def _check_target_array(self, y, allowed=None):
         if not isinstance(y[0], (int, np.integer)):
-            raise AttributeError('y must be an integer array.\nFound %s'
-                                 % y.dtype)
+            raise AttributeError("y must be an integer array.\nFound %s" % y.dtype)
         found_labels = np.unique(y)
         if (found_labels < 0).any():
-            raise AttributeError('y array must not contain negative labels.'
-                                 '\nFound %s' % found_labels)
+            raise AttributeError(
+                "y array must not contain negative labels." "\nFound %s" % found_labels
+            )
         if allowed is not None:
             found_labels = tuple(found_labels)
             if found_labels not in allowed:
-                raise AttributeError('Labels not in %s.\nFound %s'
-                                     % (allowed, found_labels))
+                raise AttributeError(
+                    "Labels not in %s.\nFound %s" % (allowed, found_labels)
+                )
 
     def score(self, X, y):
-        """ Compute the prediction accuracy
+        """Compute the prediction accuracy
 
         Parameters
         ----------
@@ -74,7 +75,7 @@ class _Classifier(object):
         self._is_fitted = False
         self._check_arrays(X=X, y=y)
         self._check_target_array(y)
-        if hasattr(self, 'self.random_seed') and self.random_seed:
+        if hasattr(self, "self.random_seed") and self.random_seed:
             self._rgen = np.random.RandomState(self.random_seed)
         self._init_time = time()
         self._fit(X=X, y=y, init_params=init_params)
@@ -98,5 +99,5 @@ class _Classifier(object):
         """
         self._check_arrays(X=X)
         if not self._is_fitted:
-            raise AttributeError('Model is not fitted, yet.')
+            raise AttributeError("Model is not fitted, yet.")
         return self._predict(X)

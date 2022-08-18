@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # A function for scoring predictions.
@@ -7,24 +7,25 @@
 # License: BSD 3 clause
 
 import numpy as np
-from mlxtend.evaluate.confusion_matrix import confusion_matrix
+
 from mlxtend.evaluate.accuracy import accuracy_score
+from mlxtend.evaluate.confusion_matrix import confusion_matrix
 
 
 def _error(true, pred):
-    return 1.0 - accuracy_score(true, pred, method='standard')
+    return 1.0 - accuracy_score(true, pred, method="standard")
 
 
 def _macro(true, pred, func, unique_labels):
     scores = []
-    for l in unique_labels:
-        scores.append(func(np.where(true != l, 1, 0),
-                           np.where(pred != l, 1, 0)))
+    for lab in unique_labels:
+        scores.append(func(np.where(true != lab, 1, 0), np.where(pred != lab, 1, 0)))
     return float(sum(scores)) / len(scores)
 
 
-def scoring(y_target, y_predicted, metric='error',
-            positive_label=1, unique_labels='auto'):
+def scoring(
+    y_target, y_predicted, metric="error", positive_label=1, unique_labels="auto"
+):
     """Compute a scoring metric for supervised learning.
 
     Parameters
@@ -38,6 +39,8 @@ def scoring(y_target, y_predicted, metric='error',
         'accuracy': (TP + TN)/(FP + FN + TP + TN) = 1-ERR\n
         'average per-class accuracy': Average per-class accuracy\n
         'average per-class error':  Average per-class error\n
+        'balanced per-class accuracy': Average per-class accuracy\n
+        'balanced per-class error':  Average per-class error\n
         'error': (TP + TN)/(FP+ FN + TP + TN) = 1-ACC\n
         'false_positive_rate': FP/N = FP/(FP + TN)\n
         'true_positive_rate': TP/P = TP/(FN + TP)\n
@@ -69,28 +72,32 @@ def scoring(y_target, y_predicted, metric='error',
     http://rasbt.github.io/mlxtend/user_guide/evaluate/scoring/
 
     """
-    implemented = {'error',
-                   'accuracy',
-                   'average per-class accuracy',
-                   'average per-class error',
-                   'false_positive_rate',
-                   'true_positive_rate',
-                   'true_negative_rate',
-                   'precision',
-                   'recall',
-                   'sensitivity',
-                   'specificity',
-                   'matthews_corr_coef',
-                   'f1'}
+    implemented = {
+        "error",
+        "accuracy",
+        "average per-class accuracy",
+        "average per-class error",
+        "balanced accuracy",
+        "false_positive_rate",
+        "true_positive_rate",
+        "true_negative_rate",
+        "precision",
+        "recall",
+        "sensitivity",
+        "specificity",
+        "matthews_corr_coef",
+        "f1",
+    }
 
     if metric not in implemented:
-        raise AttributeError('`metric` not in %s' % implemented)
+        raise AttributeError("`metric` not in %s" % implemented)
 
     if len(y_target) != len(y_predicted):
-        raise AttributeError('`y_target` and `y_predicted`'
-                             ' don\'t have the same number of elements.')
+        raise AttributeError(
+            "`y_target` and `y_predicted`" " don't have the same number of elements."
+        )
 
-    if unique_labels == 'auto':
+    if unique_labels == "auto":
         unique_labels = np.unique(y_target)
 
     if not isinstance(y_target, np.ndarray):
@@ -103,49 +110,52 @@ def scoring(y_target, y_predicted, metric='error',
         pred_tmp = y_predicted
 
     # multi-class metrics
-    if metric == 'accuracy':
-        res = accuracy_score(targ_tmp, pred_tmp, method='standard')
-    elif metric == 'error':
+    if metric == "accuracy":
+        res = accuracy_score(targ_tmp, pred_tmp, method="standard")
+    elif metric == "error":
         res = _error(targ_tmp, pred_tmp)
-    elif metric == 'average per-class accuracy':
-        res = accuracy_score(targ_tmp, pred_tmp, method='average')
-    elif metric == 'average per-class error':
-        res = _macro(targ_tmp,
-                     pred_tmp,
-                     func=_error,
-                     unique_labels=unique_labels)
+    elif metric == "average per-class accuracy":
+        res = accuracy_score(targ_tmp, pred_tmp, method="average")
+    elif metric == "average per-class error":
+        res = _macro(targ_tmp, pred_tmp, func=_error, unique_labels=unique_labels)
+    elif metric == "balanced accuracy":
+        res = accuracy_score(targ_tmp, pred_tmp, method="balanced")
 
     # binary classification metrics
     else:
         if len(unique_labels) > 2 or len(np.unique(pred_tmp)) > 2:
-            raise AttributeError('Metrics precision, '
-                                 'recall, and f1 only support binary'
-                                 ' class labels')
+            raise AttributeError(
+                "Metrics precision, "
+                "recall, and f1 only support binary"
+                " class labels"
+            )
 
         # `binary=True` makes sure
         # that positive label is 1 and negative label is 0
-        cm = confusion_matrix(y_target=targ_tmp,
-                              y_predicted=pred_tmp,
-                              binary=True,
-                              positive_label=positive_label)
+        cm = confusion_matrix(
+            y_target=targ_tmp,
+            y_predicted=pred_tmp,
+            binary=True,
+            positive_label=positive_label,
+        )
         tp = cm[-1, -1]
         fp = cm[0, -1]
         tn = cm[0, 0]
         fn = cm[-1, 0]
 
-        if metric == 'false_positive_rate':
+        if metric == "false_positive_rate":
             res = float(fp) / (fp + tn)
-        elif metric in {'true_positive_rate', 'recall', 'sensitivity'}:
+        elif metric in {"true_positive_rate", "recall", "sensitivity"}:
             res = float(tp) / (fn + tp)
-        elif metric in {'true_negative_rate', 'specificity'}:
+        elif metric in {"true_negative_rate", "specificity"}:
             res = float(tn) / (fp + tn)
-        elif metric == 'precision':
+        elif metric == "precision":
             res = float(tp) / (tp + fp)
-        elif metric == 'f1':
+        elif metric == "f1":
             pre = float(tp) / (tp + fp)
             rec = float(tp) / (fn + tp)
             res = 2.0 * (pre * rec) / (pre + rec)
-        elif metric == 'matthews_corr_coef':
+        elif metric == "matthews_corr_coef":
             res = float(tp * tn - fp * fn)
             res = res / np.sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))
 

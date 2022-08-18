@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # A function for generating a confusion matrix.
@@ -7,6 +7,7 @@
 # License: BSD 3 clause
 
 from itertools import product
+
 import numpy as np
 
 
@@ -47,8 +48,9 @@ def confusion_matrix(y_target, y_predicted, binary=False, positive_label=1):
         pred_tmp = y_predicted
 
     if len(y_target) != len(y_predicted):
-        raise AttributeError('`y_target` and `y_predicted`'
-                             ' don\'t have the same number of elements.')
+        raise AttributeError(
+            "`y_target` and `y_predicted`" " don't have the same number of elements."
+        )
 
     if binary:
         targ_tmp = np.where(targ_tmp != positive_label, 0, 1)

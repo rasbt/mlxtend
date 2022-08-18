@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # Feature Importance Estimation Through Permutation
@@ -9,8 +9,9 @@
 import numpy as np
 
 
-def feature_importance_permutation(X, y, predict_method,
-                                   metric, num_rounds=1, seed=None):
+def feature_importance_permutation(
+    X, y, predict_method, metric, num_rounds=1, feature_groups=None, seed=None
+):
     """Feature importance imputation via permutation importance
 
     Parameters
@@ -40,6 +41,12 @@ def feature_importance_permutation(X, y, predict_method,
         Number of rounds the feature columns are permuted to
         compute the permutation importance.
 
+    feature_groups : list or None (default=None)
+        Optional argument for treating certain features as a group.
+        For example `[1, 2, [3, 4, 5]]`, which can be useful for
+        interpretability, for example, if features 3, 4, 5 are one-hot
+        encoded features.
+
     seed : int or None (default=None)
         Random seed for permuting the feature columns.
 
@@ -61,22 +68,26 @@ def feature_importance_permutation(X, y, predict_method,
     """
 
     if not isinstance(num_rounds, int):
-        raise ValueError('num_rounds must be an integer.')
+        raise ValueError("num_rounds must be an integer.")
     if num_rounds < 1:
-        raise ValueError('num_rounds must be greater than 1.')
+        raise ValueError("num_rounds must be greater than 1.")
 
-    if not (metric in ('r2', 'accuracy') or hasattr(metric, '__call__')):
-        raise ValueError('metric must be either "r2", "accuracy", '
-                         'or a function with signature func(y_true, y_pred).')
+    if not (metric in ("r2", "accuracy") or hasattr(metric, "__call__")):
+        raise ValueError(
+            'metric must be either "r2", "accuracy", '
+            "or a function with signature func(y_true, y_pred)."
+        )
 
-    if metric == 'r2':
+    if metric == "r2":
+
         def score_func(y_true, y_pred):
             sum_of_squares = np.sum(np.square(y_true - y_pred))
             res_sum_of_squares = np.sum(np.square(y_true - y_true.mean()))
-            r2_score = 1. - (sum_of_squares / res_sum_of_squares)
+            r2_score = 1.0 - (sum_of_squares / res_sum_of_squares)
             return r2_score
 
-    elif metric == 'accuracy':
+    elif metric == "accuracy":
+
         def score_func(y_true, y_pred):
             return np.mean(y_true == y_pred)
 
@@ -85,20 +96,42 @@ def feature_importance_permutation(X, y, predict_method,
 
     rng = np.random.RandomState(seed)
 
-    mean_importance_vals = np.zeros(X.shape[1])
-    all_importance_vals = np.zeros((X.shape[1], num_rounds))
-
     baseline = score_func(y, predict_method(X))
 
-    for round_idx in range(num_rounds):
-        for col_idx in range(X.shape[1]):
-            save_col = X[:, col_idx].copy()
-            rng.shuffle(X[:, col_idx])
-            new_score = score_func(y, predict_method(X))
-            X[:, col_idx] = save_col
-            importance = baseline - new_score
-            mean_importance_vals[col_idx] += importance
-            all_importance_vals[col_idx, round_idx] = importance
-    mean_importance_vals /= num_rounds
+    if feature_groups is None:
+        mean_importance_vals = np.zeros(X.shape[1])
+        all_importance_vals = np.zeros((X.shape[1], num_rounds))
+
+        for round_idx in range(num_rounds):
+            for col_idx in range(X.shape[1]):
+                save_col = X[:, col_idx].copy()
+                rng.shuffle(X[:, col_idx])
+                new_score = score_func(y, predict_method(X))
+                X[:, col_idx] = save_col
+                importance = baseline - new_score
+                mean_importance_vals[col_idx] += importance
+                all_importance_vals[col_idx, round_idx] = importance
+        mean_importance_vals /= num_rounds
+
+    else:
+        mean_importance_vals = np.zeros(len(feature_groups))
+        all_importance_vals = np.zeros((len(feature_groups), num_rounds))
+        for round_idx in range(num_rounds):
+            for col_idx, feat in enumerate(feature_groups):
+                save_col = X[:, feat].copy()
+
+                if save_col.ndim > 1:
+                    columns = save_col.shape[1]
+                    for i in range(columns):
+                        rng.shuffle(X[:, i])
+                else:
+                    rng.shuffle(X[:, feat])
+
+                new_score = score_func(y, predict_method(X))
+                X[:, feat] = save_col
+                importance = baseline - new_score
+                mean_importance_vals[col_idx] += importance
+                all_importance_vals[col_idx, round_idx] = importance
+        mean_importance_vals /= num_rounds
 
     return mean_importance_vals, all_importance_vals

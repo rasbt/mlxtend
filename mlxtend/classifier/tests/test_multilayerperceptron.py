@@ -1,15 +1,15 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
 
-from mlxtend.classifier import MultiLayerPerceptron as MLP
-from mlxtend.data import iris_data
 import numpy as np
-from mlxtend.utils import assert_raises
 from sklearn.base import clone
 
+from mlxtend.classifier import MultiLayerPerceptron as MLP
+from mlxtend.data import iris_data
+from mlxtend.utils import assert_raises
 
 X, y = iris_data()
 X = X[:, [0, 3]]  # sepal length and petal width
@@ -24,11 +24,7 @@ X[:, 1] = (X[:, 1] - X[:, 1].mean()) / X[:, 1].std()
 
 
 def test_multiclass_gd_acc():
-    mlp = MLP(epochs=20,
-              eta=0.05,
-              hidden_layers=[10],
-              minibatches=1,
-              random_seed=1)
+    mlp = MLP(epochs=20, eta=0.05, hidden_layers=[10], minibatches=1, random_seed=1)
     mlp.fit(X, y)
     assert round(mlp.cost_[0], 2) == 0.55, mlp.cost_[0]
     assert round(mlp.cost_[-1], 2) == 0.01, mlp.cost_[-1]
@@ -36,41 +32,43 @@ def test_multiclass_gd_acc():
 
 
 def test_progress_1():
-    mlp = MLP(epochs=1,
-              eta=0.05,
-              hidden_layers=[10],
-              minibatches=1,
-              print_progress=1,
-              random_seed=1)
+    mlp = MLP(
+        epochs=1,
+        eta=0.05,
+        hidden_layers=[10],
+        minibatches=1,
+        print_progress=1,
+        random_seed=1,
+    )
     mlp.fit(X, y)
 
 
 def test_progress_2():
-    mlp = MLP(epochs=1,
-              eta=0.05,
-              hidden_layers=[10],
-              minibatches=1,
-              print_progress=2,
-              random_seed=1)
+    mlp = MLP(
+        epochs=1,
+        eta=0.05,
+        hidden_layers=[10],
+        minibatches=1,
+        print_progress=2,
+        random_seed=1,
+    )
     mlp.fit(X, y)
 
 
 def test_progress_3():
-    mlp = MLP(epochs=1,
-              eta=0.05,
-              hidden_layers=[10],
-              minibatches=1,
-              print_progress=3,
-              random_seed=1)
+    mlp = MLP(
+        epochs=1,
+        eta=0.05,
+        hidden_layers=[10],
+        minibatches=1,
+        print_progress=3,
+        random_seed=1,
+    )
     mlp.fit(X, y)
 
 
 def test_predict_proba():
-    mlp = MLP(epochs=20,
-              eta=0.05,
-              hidden_layers=[10],
-              minibatches=1,
-              random_seed=1)
+    mlp = MLP(epochs=20, eta=0.05, hidden_layers=[10], minibatches=1, random_seed=1)
     mlp.fit(X, y)
 
     pred = mlp.predict_proba(X[0, np.newaxis])
@@ -79,62 +77,55 @@ def test_predict_proba():
 
 
 def test_multiclass_sgd_acc():
-    mlp = MLP(epochs=20,
-              eta=0.05,
-              hidden_layers=[25],
-              minibatches=len(y),
-              random_seed=1)
+    mlp = MLP(
+        epochs=20, eta=0.05, hidden_layers=[25], minibatches=len(y), random_seed=1
+    )
     mlp.fit(X, y)
     assert round(mlp.cost_[-1], 3) == 0.023, mlp.cost_[-1]
     assert (y == mlp.predict(X)).all()
 
 
 def test_multiclass_minibatch_acc():
-    mlp = MLP(epochs=20,
-              eta=0.05,
-              hidden_layers=[25],
-              minibatches=5,
-              random_seed=1)
+    mlp = MLP(epochs=20, eta=0.05, hidden_layers=[25], minibatches=5, random_seed=1)
     mlp.fit(X, y)
     assert round(mlp.cost_[-1], 3) == 0.024, mlp.cost_[-1]
     assert (y == mlp.predict(X)).all()
 
 
 def test_num_hidden_layers():
-    assert_raises(AttributeError,
-                  'Currently, only 1 hidden layer is supported',
-                  MLP, 20, 0.05, [25, 10])
+    assert_raises(
+        AttributeError,
+        "Currently, only 1 hidden layer is supported",
+        MLP,
+        20,
+        0.05,
+        [25, 10],
+    )
 
 
 def test_binary_gd():
-    mlp = MLP(epochs=20,
-              eta=0.05,
-              hidden_layers=[25],
-              minibatches=5,
-              random_seed=1)
+    mlp = MLP(epochs=20, eta=0.05, hidden_layers=[25], minibatches=5, random_seed=1)
 
     mlp.fit(X_bin, y_bin)
     assert (y_bin == mlp.predict(X_bin)).all()
 
 
 def test_score_function():
-    mlp = MLP(epochs=20,
-              eta=0.05,
-              hidden_layers=[25],
-              minibatches=5,
-              random_seed=1)
+    mlp = MLP(epochs=20, eta=0.05, hidden_layers=[25], minibatches=5, random_seed=1)
     mlp.fit(X, y)
     acc = mlp.score(X, y)
     assert acc == 1.0, acc
 
 
 def test_decay_function():
-    mlp = MLP(epochs=20,
-              eta=0.05,
-              decrease_const=0.01,
-              hidden_layers=[25],
-              minibatches=5,
-              random_seed=1)
+    mlp = MLP(
+        epochs=20,
+        eta=0.05,
+        decrease_const=0.01,
+        hidden_layers=[25],
+        minibatches=5,
+        random_seed=1,
+    )
 
     mlp.fit(X, y)
     assert mlp._decr_eta < mlp.eta
@@ -143,12 +134,14 @@ def test_decay_function():
 
 
 def test_momentum_1():
-    mlp = MLP(epochs=20,
-              eta=0.05,
-              momentum=0.1,
-              hidden_layers=[25],
-              minibatches=len(y),
-              random_seed=1)
+    mlp = MLP(
+        epochs=20,
+        eta=0.05,
+        momentum=0.1,
+        hidden_layers=[25],
+        minibatches=len(y),
+        random_seed=1,
+    )
 
     mlp.fit(X, y)
     assert round(mlp.cost_[-1], 4) == 0.0057, mlp.cost_[-1]
@@ -156,11 +149,7 @@ def test_momentum_1():
 
 
 def test_retrain():
-    mlp = MLP(epochs=5,
-              eta=0.05,
-              hidden_layers=[10],
-              minibatches=len(y),
-              random_seed=1)
+    mlp = MLP(epochs=5, eta=0.05, hidden_layers=[10], minibatches=len(y), random_seed=1)
 
     mlp.fit(X, y)
     cost_1 = mlp.cost_[-1]
@@ -175,10 +164,6 @@ def test_retrain():
 
 def test_clone():
 
-    mlp = MLP(epochs=5,
-              eta=0.05,
-              hidden_layers=[10],
-              minibatches=len(y),
-              random_seed=1)
+    mlp = MLP(epochs=5, eta=0.05, hidden_layers=[10], minibatches=len(y), random_seed=1)
 
     clone(mlp)

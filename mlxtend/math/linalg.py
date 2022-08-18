@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # Functions for different linear algebra operations.
@@ -9,8 +9,7 @@
 import numpy as np
 
 
-def vectorspace_orthonormalization(ary,  # method='gram-schmidt',
-                                   eps=1e-13):
+def vectorspace_orthonormalization(ary, eps=1e-13):  # method='gram-schmidt',
     """Transforms a set of column vectors to a orthonormal basis.
 
     Given a set of orthogonal vectors, this functions converts such
@@ -31,6 +30,11 @@ def vectorspace_orthonormalization(ary,  # method='gram-schmidt',
     arr : array-like, shape=[num_vectors, num_vectors]
         An orthonormal set of vectors (arranged as columns)
 
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/math/vectorspace_orthonormalization/
+
     """
 
     # Gram-Schmidt Process
@@ -41,7 +45,7 @@ def vectorspace_orthonormalization(ary,  # method='gram-schmidt',
     #   2c) Normalize if linearly independent,
     #       and set to zero otherwise
 
-    arr = ary.astype(np.float).copy()
+    arr = ary.astype(np.float_).copy()
 
     for i in range(arr.shape[1]):
         for j in range(i):
@@ -83,10 +87,14 @@ def vectorspace_dimensionality(ary):
         An integer indicating the "dimensionality" hyper-volume spanned by
         the vector set
 
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/math/vectorspace_dimensionality/
+
     """
     # Note that since the vectors of
     # an orthonormal vectoset have unit length or are zero,
     # the sum of the individual
     # norms equals the dimensionality of that vector space
-    return int(np.sum(np.linalg.norm(
-        vectorspace_orthonormalization(ary), axis=0)))
+    return int(np.sum(np.linalg.norm(vectorspace_orthonormalization(ary), axis=0)))

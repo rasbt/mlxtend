@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # Author: Sebastian Raschka <sebastianraschka.com>
@@ -28,6 +28,12 @@ class RandomHoldoutSplit(object):
     stratify : bool (default: False)
         True or False, whether to perform a stratified
         split or not
+
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/evaluate/RandomHoldoutSplit/
+
 
     """
 
@@ -62,20 +68,24 @@ class RandomHoldoutSplit(object):
         """
         ind = np.arange(X.shape[0])
         if self.stratify:
-            train_index, valid_index, _, _ = \
-                    train_test_split(ind, y,
-                                     test_size=self.valid_size,
-                                     shuffle=True,
-                                     stratify=y,
-                                     random_state=self.random_seed)
+            train_index, valid_index, _, _ = train_test_split(
+                ind,
+                y,
+                test_size=self.valid_size,
+                shuffle=True,
+                stratify=y,
+                random_state=self.random_seed,
+            )
 
         else:
-            train_index, valid_index, _, _ = \
-                    train_test_split(ind, y,
-                                     test_size=self.valid_size,
-                                     shuffle=True,
-                                     stratify=y,
-                                     random_state=self.random_seed)
+            train_index, valid_index, _, _ = train_test_split(
+                ind,
+                y,
+                test_size=self.valid_size,
+                shuffle=True,
+                stratify=y,
+                random_state=self.random_seed,
+            )
 
         for i in range(1):
             yield train_index, valid_index
@@ -117,6 +127,11 @@ class PredefinedHoldoutSplit(object):
         to be used for validation. All other indices in the
         training set are used to for a training subset
         for model fitting.
+
+    Examples
+    -----------
+    For usage examples, please see
+    http://rasbt.github.io/mlxtend/user_guide/evaluate/PredefinedHoldoutSplit/
 
     """
 

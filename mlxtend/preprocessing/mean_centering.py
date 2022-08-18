@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # A class to apply column-based mean centering to a dataset.
@@ -25,6 +25,7 @@ class MeanCenterer(object):
     http://rasbt.github.io/mlxtend/user_guide/preprocessing/MeanCenterer/
 
     """
+
     def __init__(self):
         pass
 
@@ -46,8 +47,9 @@ class MeanCenterer(object):
         if not hasattr(self, "col_means"):
             raise AttributeError("MeanCenterer has not been fitted, yet.")
         X_tr = np.copy(self._get_array(X))
-        X_tr = np.apply_along_axis(func1d=lambda x: x - self.col_means,
-                                   axis=1, arr=X_tr)
+        X_tr = np.apply_along_axis(
+            func1d=lambda x: x - self.col_means, axis=1, arr=X_tr
+        )
         return X_tr
 
     def fit(self, X):
@@ -85,7 +87,7 @@ class MeanCenterer(object):
 
     def _get_array(self, X):
         if isinstance(X, list):
-            X_fl = np.asarray(X, dtype='float')[:, None]
+            X_fl = np.asarray(X, dtype="float")[:, None]
         else:
-            X_fl = X.astype('float')
+            X_fl = X.astype("float")
         return X_fl

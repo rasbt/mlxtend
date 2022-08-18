@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # A function for plotting decision regions of classifiers.
@@ -10,17 +10,20 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def heatmap(matrix,
-            hide_spines=False,
-            hide_ticks=False,
-            figsize=None,
-            cmap=None,
-            colorbar=True,
-            row_names=None,
-            column_names=None,
-            column_name_rotation=45,
-            cell_fmt='.2f',
-            cell_font_size=None):
+def heatmap(
+    matrix,
+    hide_spines=False,
+    hide_ticks=False,
+    figsize=None,
+    cmap=None,
+    colorbar=True,
+    row_names=None,
+    column_names=None,
+    column_name_rotation=45,
+    cell_values=True,
+    cell_fmt=".2f",
+    cell_font_size=None,
+):
     """Plot a heatmap via matplotlib.
 
     Parameters
@@ -52,11 +55,14 @@ def heatmap(matrix,
     column_name_rotation : int (default: 45)
         Number of degrees for rotating column x-tick labels.
 
+    cell_values : bool (default: True)
+        Plots cell values if True.
+
     cell_fmt : string (default: '.2f')
-        Format specification for cell values.
+        Format specification for cell values (if `cell_values=True`)
 
     cell_font_size : int (default: None)
-        Font size for cell values
+        Font size for cell values (if `cell_values=True`)
 
     Returns
     -----------
@@ -71,17 +77,22 @@ def heatmap(matrix,
     """
 
     if row_names is not None and len(row_names) != matrix.shape[0]:
-        raise AssertionError(f'len(row_names) (got {len(row_names)})'
-                             ' should be equal to number of'
-                             ' rows in the input '
-                             f' array (expect {matrix.shape[0]}).')
+        raise AssertionError(
+            f"len(row_names) (got {len(row_names)})"
+            " should be equal to number of"
+            " rows in the input "
+            f" array (expect {matrix.shape[0]})."
+        )
 
     if column_names is not None and len(column_names) != matrix.shape[1]:
-        raise AssertionError(f'len(column_names)'
-                             ' (got {len(column_names)})'
-                             ' should be equal to number of'
-                             ' columns in the'
-                             f' input array (expect {matrix.shape[1]}).')
+
+        raise AssertionError(
+            f"len(column_names)"
+            " (got {len(column_names)})"
+            " should be equal to number of"
+            " columns in the"
+            f" input array (expect {matrix.shape[1]})."
+        )
 
     fig, ax = plt.subplots(figsize=figsize)
     ax.grid(False)
@@ -90,26 +101,31 @@ def heatmap(matrix,
         cmap = plt.cm.viridis
 
     if figsize is None:
-        figsize = (len(matrix)*1.25, len(matrix)*1.25)
+        figsize = (len(matrix) * 1.25, len(matrix) * 1.25)
 
     matshow = ax.matshow(matrix, cmap=cmap)
 
     if colorbar:
         fig.colorbar(matshow)
 
-    normed_matrix = matrix.astype('float') / matrix.max()
+    normed_matrix = matrix.astype("float") / matrix.max()
 
-    for i in range(matrix.shape[0]):
-        for j in range(matrix.shape[1]):
-            cell_text = format(matrix[i, j], cell_fmt)
+    if cell_values:
+        for i in range(matrix.shape[0]):
+            for j in range(matrix.shape[1]):
+                cell_text = format(matrix[i, j], cell_fmt)
 
-            ax.text(x=j,
+                ax.text(
+                    x=j,
                     y=i,
                     size=cell_font_size,
                     s=cell_text,
-                    va='center',
-                    ha='center',
-                    color="white" if normed_matrix[i, j] < 0.5 else "black")
+                    va="center",
+                    ha="center",
+                    color="white"
+                    if normed_matrix[i, j] > np.max(normed_matrix) / 2
+                    else "black",
+                )
 
     if row_names is not None:
         tick_marks = np.arange(len(row_names))
@@ -117,15 +133,25 @@ def heatmap(matrix,
 
     if column_names is not None:
         tick_marks = np.arange(len(column_names))
-        plt.xticks(tick_marks, column_names, rotation=column_name_rotation)
+
+        if column_name_rotation:
+            plt.xticks(
+                tick_marks,
+                column_names,
+                rotation=column_name_rotation,
+                ha="right",
+                rotation_mode="anchor",
+            )
+        else:
+            plt.xticks(tick_marks, column_names)
 
     if hide_spines:
-        ax.spines['right'].set_visible(False)
-        ax.spines['top'].set_visible(False)
-        ax.spines['left'].set_visible(False)
-        ax.spines['bottom'].set_visible(False)
-    ax.yaxis.set_ticks_position('left')
-    ax.xaxis.set_ticks_position('bottom')
+        ax.spines["right"].set_visible(False)
+        ax.spines["top"].set_visible(False)
+        ax.spines["left"].set_visible(False)
+        ax.spines["bottom"].set_visible(False)
+    ax.yaxis.set_ticks_position("left")
+    ax.xaxis.set_ticks_position("bottom")
     if hide_ticks:
         ax.axes.get_yaxis().set_ticks([])
         ax.axes.get_xaxis().set_ticks([])

@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # A function for collecting file-group names from local directories.
@@ -8,11 +8,19 @@
 
 import os
 import re
+
 from . import find_files
 
 
-def find_filegroups(paths, substring='', extensions=None, validity_check=True,
-                    ignore_invisible=True, rstrip='', ignore_substring=None):
+def find_filegroups(
+    paths,
+    substring="",
+    extensions=None,
+    validity_check=True,
+    ignore_invisible=True,
+    rstrip="",
+    ignore_substring=None,
+):
     """Find and collect files from different directories in a python dictionary.
 
     Parameters
@@ -57,27 +65,34 @@ def find_filegroups(paths, substring='', extensions=None, validity_check=True,
     n = len(paths)
 
     # must have same number of paths and extensions
-    assert(len(paths) >= 2)
+    assert len(paths) >= 2
     if extensions:
-        assert(len(extensions) == n)
+        assert len(extensions) == n
     else:
-        extensions = ['' for i in range(n)]
+        extensions = ["" for i in range(n)]
 
-    base = find_files(path=paths[0],
-                      substring=substring,
-                      check_ext=extensions[0],
-                      ignore_invisible=ignore_invisible,
-                      ignore_substring=ignore_substring)
-    rest = [find_files(path=paths[i],
-                       substring=substring,
-                       check_ext=extensions[i],
-                       ignore_invisible=ignore_invisible,
-                       ignore_substring=ignore_substring) for i in range(1, n)]
+    base = find_files(
+        path=paths[0],
+        substring=substring,
+        check_ext=extensions[0],
+        ignore_invisible=ignore_invisible,
+        ignore_substring=ignore_substring,
+    )
+    rest = [
+        find_files(
+            path=paths[i],
+            substring=substring,
+            check_ext=extensions[i],
+            ignore_invisible=ignore_invisible,
+            ignore_substring=ignore_substring,
+        )
+        for i in range(1, n)
+    ]
 
     groups = {}
     for f in base:
         basename = os.path.splitext(os.path.basename(f))[0]
-        basename = re.sub('\%s$' % rstrip, '', basename)
+        basename = re.sub(r"\%s$" % rstrip, "", basename)
         groups[basename] = [f]
 
     # groups = {os.path.splitext(os.path.basename(f))[0].rstrip(rstrip):[f]
@@ -86,9 +101,9 @@ def find_filegroups(paths, substring='', extensions=None, validity_check=True,
     for idx, r in enumerate(rest):
         for f in r:
             basename, ext = os.path.splitext(os.path.basename(f))
-            basename = re.sub('\%s$' % rstrip, '', basename)
+            basename = re.sub(r"\%s$" % rstrip, "", basename)
             try:
-                if extensions[idx+1] == '' or ext == extensions[idx+1]:
+                if extensions[idx + 1] == "" or ext == extensions[idx + 1]:
                     groups[basename].append(f)
             except KeyError:
                 pass
@@ -96,8 +111,10 @@ def find_filegroups(paths, substring='', extensions=None, validity_check=True,
     if validity_check:
         lens = [len(groups[k]) for k in groups.keys()]
         if len(set(lens)) > 1:
-            raise ValueError('Warning, some keys have more/less values than'
-                             ' others. Set validity_check=False'
-                             ' to ignore this warning.')
+            raise ValueError(
+                "Warning, some keys have more/less values than"
+                " others. Set validity_check=False"
+                " to ignore this warning."
+            )
 
     return groups

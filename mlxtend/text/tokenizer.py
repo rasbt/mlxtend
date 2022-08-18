@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # Functions for tokenizing text data.
@@ -21,9 +21,9 @@ def tokenizer_words_and_emoticons(text):
     http://rasbt.github.io/mlxtend/user_guide/text/tokenizer_words_and_emoticons/
 
     """
-    text = re.sub('<[^>]*>', '', text)
-    emoticons = re.findall('(?::|;|=)(?:-)?(?:\)|\(|D|P)', text)
-    text = re.sub('[\W]+', ' ', text.lower()) + ' '.join(emoticons)
+    text = re.sub(r"<[^>]*>", "", text)
+    emoticons = re.findall(r"(?::|;|=)(?:-)?(?:\)|\(|D|P)", text)
+    text = re.sub(r"[\W]+", " ", text.lower()) + " ".join(emoticons)
     return text.split()
 
 
@@ -39,6 +39,6 @@ def tokenizer_emoticons(text):
     http://rasbt.github.io/mlxtend/user_guide/text/tokenizer_emoticons/
 
     """
-    text = re.sub('<[^>]*>', '', text)
-    emoticons = re.findall('(?::|;|=)(?:-)?(?:\)|\(|D|P)', text)
+    text = re.sub(r"<[^>]*>", "", text)
+    emoticons = re.findall(r"(?::|;|=)(?:-)?(?:\)|\(|D|P)", text)
     return emoticons

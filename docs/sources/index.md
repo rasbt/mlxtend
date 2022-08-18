@@ -6,12 +6,12 @@
 **Mlxtend (machine learning extensions) is a Python library of useful tools for the day-to-day data science tasks.**
 
 
-[![DOI](http://joss.theoj.org/papers/10.21105/joss.00638/status.svg)](https://doi.org/10.21105/joss.00638)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.00638/status.svg)](https://doi.org/10.21105/joss.00638)
 [![PyPI version](https://badge.fury.io/py/mlxtend.svg)](http://badge.fury.io/py/mlxtend)
-![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)
-![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg)
+[![Anaconda-Server Badge](https://anaconda.org/conda-forge/mlxtend/badges/version.svg)](https://anaconda.org/conda-forge/mlxtend)
+![Python 3](https://img.shields.io/badge/python-3-blue.svg)
 [![License](https://img.shields.io/badge/license-BSD-blue.svg)](./license)
-[![Discuss](https://img.shields.io/badge/discuss-google_group-blue.svg)](https://groups.google.com/forum/#!forum/mlxtend)
+[![Discuss](https://img.shields.io/badge/discuss-github-blue.svg)](https://github.com/rasbt/mlxtend/discussions)
 
 <hr>
 
@@ -20,7 +20,7 @@
 - **Documentation:** [http://rasbt.github.io/mlxtend](http://rasbt.github.io/mlxtend)
 - Source code repository: [https://github.com/rasbt/mlxtend](https://github.com/rasbt/mlxtend)
 - PyPI: [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend)
-- Questions? Check out the [Google Groups mailing list](https://groups.google.com/forum/#!forum/mlxtend)
+- Questions? Check out the [GitHub Discussions board](https://github.com/rasbt/mlxtend/discussions)
 
 <hr>
 

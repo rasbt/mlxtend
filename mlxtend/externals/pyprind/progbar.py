@@ -11,9 +11,10 @@ PyPI: https://pypi.python.org/pypi/PyPrind
 """
 
 
-from math import floor
-from .prog_class import Prog
 import time
+from math import floor
+
+from .prog_class import Prog
 
 
 class ProgBar(Prog):
@@ -42,10 +43,21 @@ class ProgBar(Prog):
         Automatic mode if update_interval=None.
 
     """
-    def __init__(self, iterations, track_time=True, width=30, bar_char='#',
-                 stream=2, title='', monitor=False, update_interval=None):
-        Prog.__init__(self, iterations, track_time,
-                      stream, title, monitor, update_interval)
+
+    def __init__(
+        self,
+        iterations,
+        track_time=True,
+        width=30,
+        bar_char="#",
+        stream=2,
+        title="",
+        monitor=False,
+        update_interval=None,
+    ):
+        Prog.__init__(
+            self, iterations, track_time, stream, title, monitor, update_interval
+        )
         self.bar_width = width
         self._adjust_width()
         self.bar_char = bar_char
@@ -72,8 +84,9 @@ class ProgBar(Prog):
 
     def _cache_progress_bar(self, progress):
         remaining = self.bar_width - progress
-        self._cached_output += '0% [{}{}] 100%'.format(self.bar_char * int(progress),
-                                               ' ' * int(remaining))
+        self._cached_output += "0% [{}{}] 100%".format(
+            self.bar_char * int(progress), " " * int(remaining)
+        )
 
     def _print(self, force_flush=False):
         progress = floor(self._calc_percent() / 100 * self.bar_width)
@@ -91,7 +104,7 @@ class ProgBar(Prog):
                 self._cache_eta()
             if self.item_id:
                 self._cache_item_id()
-            self._stream_out('\r%s' % self._cached_output)
+            self._stream_out("\r%s" % self._cached_output)
             self._stream_flush()
-            self._cached_output = ''
+            self._cached_output = ""
         self.last_progress = progress

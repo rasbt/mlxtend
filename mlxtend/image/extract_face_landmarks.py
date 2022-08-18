@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # contributor: Vahid Mirjalili
 # mlxtend Machine Learning Library Extensions
 #
@@ -7,19 +7,20 @@
 #
 # License: BSD 3 clause
 
-import dlib
-import numpy as np
 import os
 import warnings
+
+import dlib
+import numpy as np
+
 from .utils import check_exists, download_url, extract_file
 
-predictor_path = '~/mlxtend_data/shape_predictor_68_face_landmarks.dat'
-predictor_url = ("http://dlib.net/files/"
-                 "shape_predictor_68_face_landmarks.dat.bz2")
+predictor_path = "~/mlxtend_data/shape_predictor_68_face_landmarks.dat"
+predictor_url = "http://dlib.net/files/" "shape_predictor_68_face_landmarks.dat.bz2"
 
 if not check_exists(predictor_path):
-    download_url(predictor_url, save_path='~/mlxtend_data/')
-    extract_file('~/mlxtend_data/shape_predictor_68_face_landmarks.dat.bz2')
+    download_url(predictor_url, save_path="~/mlxtend_data/")
+    extract_file("~/mlxtend_data/shape_predictor_68_face_landmarks.dat.bz2")
 
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(os.path.expanduser(predictor_path))
@@ -58,12 +59,12 @@ def extract_face_landmarks(img, return_dtype=np.int32):
     Examples
     ----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/sources/image/extract_face_landmarks.ipynb
+    http://rasbt.github.io/mlxtend/user_guide/image/extract_face_landmarks/
 
     """
     faces = detector(img, 1)  # detecting faces
     if not faces:
-        warnings.warn('No face detected.')
+        warnings.warn("No face detected.")
         return None
     shape = predictor(img, faces[0])
 

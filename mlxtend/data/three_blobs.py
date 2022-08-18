@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # A function for loading a sample dataset for clustering evaluations
@@ -6,8 +6,9 @@
 #
 # License: BSD 3 clause
 
-import numpy as np
 import os
+
+import numpy as np
 
 this_dir, this_filename = os.path.split(__file__)
 DATA_PATH = os.path.join(this_dir, "data", "three_blobs.csv.gz")
@@ -32,7 +33,7 @@ def three_blobs_data():
     http://rasbt.github.io/mlxtend/user_guide/data/three_blobs_data
 
     """
-    tmp = np.genfromtxt(fname=DATA_PATH, delimiter=',')
+    tmp = np.genfromtxt(fname=DATA_PATH, delimiter=",")
     X, y = tmp[:, :-1], tmp[:, -1]
     y = y.astype(int)
     return X, y

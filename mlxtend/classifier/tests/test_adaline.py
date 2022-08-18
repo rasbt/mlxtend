@@ -1,16 +1,17 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
 
 import sys
+
 import numpy as np
+from sklearn.base import clone
+
 from mlxtend.classifier import Adaline
 from mlxtend.data import iris_data
 from mlxtend.utils import assert_raises
-from sklearn.base import clone
-
 
 # Iris Data
 X, y = iris_data()
@@ -29,38 +30,32 @@ def test_invalid_labels_1():
     ada = Adaline(epochs=15, eta=0.01, random_seed=1)
 
     if sys.version_info >= (3, 0):
-        objtype = '{(0, 1)}'
+        objtype = "{(0, 1)}"
     else:
-        objtype = 'set([(0, 1)])'
+        objtype = "set([(0, 1)])"
 
-    expect = 'Labels not in %s.\nFound (1, 2)' % objtype
+    expect = "Labels not in %s.\nFound (1, 2)" % objtype
 
-    assert_raises(AttributeError,
-                  expect,
-                  ada.fit,
-                  X,
-                  y2,
-                  {(0, 1)})
+    assert_raises(AttributeError, expect, ada.fit, X, y2, {(0, 1)})
 
 
 def test_invalid_labels_2():
     y2 = np.where(y1 == 0, -1, 1)
     ada = Adaline(epochs=15, eta=0.01, random_seed=1)
-    assert_raises(AttributeError,
-                  'y array must not contain negative labels.\nFound [-1  1]',
-                  ada.fit,
-                  X,
-                  y2,
-                  {(-1, 1)})
+    assert_raises(
+        AttributeError,
+        "y array must not contain negative labels.\nFound [-1  1]",
+        ada.fit,
+        X,
+        y2,
+        {(-1, 1)},
+    )
 
 
 def test_normal_equation():
     t1 = np.array([[-0.08], [1.02]])
     b1 = np.array([0.00])
-    ada = Adaline(epochs=30,
-                  eta=0.01,
-                  minibatches=None,
-                  random_seed=None)
+    ada = Adaline(epochs=30, eta=0.01, minibatches=None, random_seed=None)
     ada.fit(X_std, y1)
     np.testing.assert_almost_equal(ada.w_, t1, decimal=2)
     np.testing.assert_almost_equal(ada.b_, b1, decimal=2)
@@ -70,48 +65,30 @@ def test_normal_equation():
 def test_gradient_descent():
     t1 = np.array([[-0.08], [1.02]])
     b1 = np.array([0.00])
-    ada = Adaline(epochs=30,
-                  eta=0.01,
-                  minibatches=1,
-                  random_seed=1)
+    ada = Adaline(epochs=30, eta=0.01, minibatches=1, random_seed=1)
     ada.fit(X_std, y1)
     np.testing.assert_almost_equal(ada.w_, t1, decimal=2)
     np.testing.assert_almost_equal(ada.b_, b1, decimal=2)
-    assert((y1 == ada.predict(X_std)).all())
+    assert (y1 == ada.predict(X_std)).all()
 
 
 def test_print_progress_1():
-    ada = Adaline(epochs=30,
-                  eta=0.01,
-                  minibatches=1,
-                  print_progress=1,
-                  random_seed=1)
+    ada = Adaline(epochs=30, eta=0.01, minibatches=1, print_progress=1, random_seed=1)
     ada.fit(X_std, y1)
 
 
 def test_print_progress_2():
-    ada = Adaline(epochs=30,
-                  eta=0.01,
-                  minibatches=1,
-                  print_progress=2,
-                  random_seed=1)
+    ada = Adaline(epochs=30, eta=0.01, minibatches=1, print_progress=2, random_seed=1)
     ada.fit(X_std, y1)
 
 
 def test_print_progress_3():
-    ada = Adaline(epochs=30,
-                  eta=0.01,
-                  minibatches=1,
-                  print_progress=3,
-                  random_seed=1)
+    ada = Adaline(epochs=30, eta=0.01, minibatches=1, print_progress=3, random_seed=1)
     ada.fit(X_std, y1)
 
 
 def test_score_function():
-    ada = Adaline(epochs=30,
-                  eta=0.01,
-                  minibatches=1,
-                  random_seed=1)
+    ada = Adaline(epochs=30, eta=0.01, minibatches=1, random_seed=1)
     ada.fit(X_std, y1)
     acc = ada.score(X_std, y1)
     assert acc == 1.0, acc
@@ -119,33 +96,24 @@ def test_score_function():
 
 def test_refit_weights():
     t1 = np.array([[-0.08], [1.02]])
-    ada = Adaline(epochs=15,
-                  eta=0.01,
-                  minibatches=1,
-                  random_seed=1)
+    ada = Adaline(epochs=15, eta=0.01, minibatches=1, random_seed=1)
     ada.fit(X_std, y1, init_params=True)
     ada.fit(X_std, y1, init_params=False)
     np.testing.assert_almost_equal(ada.w_, t1, 2)
-    assert((y1 == ada.predict(X_std)).all())
+    assert (y1 == ada.predict(X_std)).all()
 
 
 def test_stochastic_gradient_descent():
     t1 = np.array([[-0.08], [1.02]])
-    ada = Adaline(epochs=30,
-                  eta=0.01,
-                  minibatches=len(y),
-                  random_seed=1)
+    ada = Adaline(epochs=30, eta=0.01, minibatches=len(y), random_seed=1)
     ada.fit(X_std, y1)
     np.testing.assert_almost_equal(ada.w_, t1, 2)
-    assert((y1 == ada.predict(X_std)).all())
+    assert (y1 == ada.predict(X_std)).all()
 
 
 def test_ary_persistency_in_shuffling():
     orig = X_std.copy()
-    ada = Adaline(epochs=30,
-                  eta=0.01,
-                  minibatches=len(y),
-                  random_seed=1)
+    ada = Adaline(epochs=30, eta=0.01, minibatches=len(y), random_seed=1)
     ada.fit(X_std, y1)
     np.testing.assert_almost_equal(orig, X_std, 6)
 

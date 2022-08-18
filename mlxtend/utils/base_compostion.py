@@ -1,6 +1,5 @@
 """Utilties to handle estimator list"""
 
-from ..externals import six
 from sklearn.utils.metaestimators import _BaseComposition
 
 
@@ -8,6 +7,7 @@ class _BaseXComposition(_BaseComposition):
     """
     parameter handler for list of estimators
     """
+
     def _set_params(self, attr, named_attr, **params):
         # Ordered parameter replacement
         # 1. root parameter
@@ -20,8 +20,8 @@ class _BaseXComposition(_BaseComposition):
         if items:
             names, estimators = zip(*items)
             estimators = list(estimators)
-        for name in list(six.iterkeys(params)):
-            if '__' not in name and name in names:
+        for name in list(params.keys()):
+            if "__" not in name and name in names:
                 # replace single estimator and re-build the
                 # root estimators list
                 for i, est_name in enumerate(names):

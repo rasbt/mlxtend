@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
@@ -10,10 +10,12 @@ from mlxtend.utils import assert_raises
 def test_without_message():
     def my_func():
         raise AttributeError
+
     assert_raises(AttributeError, func=my_func, message=None)
 
 
 def test_with_message():
-        def my_func():
-            raise AttributeError('Failed')
-        assert_raises(AttributeError, func=my_func, message='Failed')
+    def my_func():
+        raise AttributeError("Failed")
+
+    assert_raises(AttributeError, func=my_func, message="Failed")

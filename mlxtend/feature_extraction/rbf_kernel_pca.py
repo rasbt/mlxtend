@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # Principal Component Analysis for dimensionality reduction.
@@ -8,6 +8,7 @@
 
 import numpy as np
 from scipy.spatial import distance
+
 from .._base import _BaseModel
 
 
@@ -41,9 +42,10 @@ class RBFKernelPCA(_BaseModel):
     http://rasbt.github.io/mlxtend/user_guide/feature_extraction/RBFKernelPCA/
 
     """
+
     def __init__(self, gamma=15.0, n_components=None, copy_X=True):
         if n_components is not None and n_components < 1:
-            raise AttributeError('n_components must be > 1 or None')
+            raise AttributeError("n_components must be > 1 or None")
         self.n_components = n_components
         self.gamma = gamma
         self.copy_X = copy_X
@@ -76,8 +78,9 @@ class RBFKernelPCA(_BaseModel):
             n_components = self.n_components
         kernel_mat = self._kernel_matrix(X=X, gamma=self.gamma)
         self.e_vals_, self.e_vecs_ = self._eigendecom(kernel_mat)
-        self.X_projected_ = self._projection_matrix(eig_vecs=self.e_vecs_,
-                                                    n_components=n_components)
+        self.X_projected_ = self._projection_matrix(
+            eig_vecs=self.e_vecs_, n_components=n_components
+        )
         if self.copy_X:
             self.X_ = X.copy()
         else:
@@ -85,7 +88,7 @@ class RBFKernelPCA(_BaseModel):
         return self
 
     def transform(self, X):
-        """ Apply the non-linear transformation on X.
+        """Apply the non-linear transformation on X.
 
         Parameters
         ----------
@@ -99,24 +102,25 @@ class RBFKernelPCA(_BaseModel):
             Projected training vectors.
 
         """
-        if not hasattr(self, 'X_'):
-            raise AttributeError('Object as not been fitted, yet.')
+        if not hasattr(self, "X_"):
+            raise AttributeError("Object as not been fitted, yet.")
         self._check_arrays(X=X)
         # pair_dist = np.array([np.sum((X - row)**2) for row in self.X_])
         pair_dist = np.ones((self.X_.shape[0], X.shape[0]))
         for idx in range(X.shape[0]):
-            pair_dist[:, idx] = ((self.X_ - X[idx])**2).sum(axis=1)
+            pair_dist[:, idx] = ((self.X_ - X[idx]) ** 2).sum(axis=1)
 
         K = np.exp((-1) * self.gamma * pair_dist)
-        e_vecs = self._projection_matrix(eig_vecs=self.e_vecs_,
-                                         n_components=self.n_components)
-        return K.T.dot(e_vecs / self.e_vals_[:e_vecs.shape[1]])
+        e_vecs = self._projection_matrix(
+            eig_vecs=self.e_vecs_, n_components=self.n_components
+        )
+        return K.T.dot(e_vecs / self.e_vals_[: e_vecs.shape[1]])
 
     def _kernel_matrix(self, X, gamma):
 
         # Calculating the squared Euclidean distances for every pair of points
         # in the MxN dimensional dataset.
-        sq_dists = distance.pdist(X, 'sqeuclidean')
+        sq_dists = distance.pdist(X, "sqeuclidean")
 
         # Converting the pairwise distances into a symmetric MxM matrix.
         mat_sq_dists = distance.squareform(sq_dists)

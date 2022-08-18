@@ -1,12 +1,12 @@
 import numpy as np
 from scipy import sparse
 from sklearn.base import ClassifierMixin
+
 from ..externals.estimator_checks import check_is_fitted
 
 
 class _BaseStackingClassifier(ClassifierMixin):
-    """Base class of stacking classifiers
-    """
+    """Base class of stacking classifiers"""
 
     def _do_predict(self, X, predict_fn):
         meta_features = self.predict_meta_features(X)
@@ -19,7 +19,7 @@ class _BaseStackingClassifier(ClassifierMixin):
             return predict_fn(np.hstack((X, meta_features)))
 
     def predict(self, X):
-        """ Predict target values for X.
+        """Predict target values for X.
 
         Parameters
         ----------
@@ -33,7 +33,7 @@ class _BaseStackingClassifier(ClassifierMixin):
             Predicted class labels.
 
         """
-        check_is_fitted(self, ['clfs_', 'meta_clf_'])
+        check_is_fitted(self, ["clfs_", "meta_clf_"])
 
         return self._do_predict(X, self.meta_clf_.predict)
 
@@ -53,7 +53,7 @@ class _BaseStackingClassifier(ClassifierMixin):
             Probability for each class per sample.
 
         """
-        check_is_fitted(self, ['clfs_', 'meta_clf_'])
+        check_is_fitted(self, ["clfs_", "meta_clf_"])
 
         return self._do_predict(X, self.meta_clf_.predict_proba)
 
@@ -75,6 +75,6 @@ class _BaseStackingClassifier(ClassifierMixin):
             class would be predicted.
 
         """
-        check_is_fitted(self, ['clfs_', 'meta_clf_'])
+        check_is_fitted(self, ["clfs_", "meta_clf_"])
 
         return self._do_predict(X, self.meta_clf_.decision_function)

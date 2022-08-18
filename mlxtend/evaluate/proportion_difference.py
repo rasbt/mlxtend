@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # Author: Sebastian Raschka <sebastianraschka.com>
@@ -42,8 +42,8 @@ def proportion_difference(proportion_1, proportion_2, n_1, n_2=None):
     if n_2 is None:
         n_2 = n_1
 
-    var_1 = proportion_1*(1. - proportion_1) / n_1
-    var_2 = proportion_2*(1. - proportion_2) / n_2
+    var_1 = proportion_1 * (1.0 - proportion_1) / n_1
+    var_2 = proportion_2 * (1.0 - proportion_2) / n_2
 
     z = (proportion_1 - proportion_2) / np.sqrt(var_1 + var_2)
     p = scipy.stats.norm.cdf(z)

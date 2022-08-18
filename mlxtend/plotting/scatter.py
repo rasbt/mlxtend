@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # Matplotlib wrapper for creating scatterplots from data w. mult. categories.
@@ -7,17 +7,25 @@
 # License: BSD 3 clause
 
 
-import matplotlib.pyplot as plt
-import pandas as pd
-import numpy as np
 from itertools import cycle
 
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 
-def category_scatter(x, y, label_col, data,
-                     markers='sxo^v',
-                     colors=('blue', 'green', 'red', 'purple', 'gray', 'cyan'),
-                     alpha=0.7, markersize=20.0, legend_loc='best'):
-    """ Scatter plot to plot categories in different colors/markerstyles.
+
+def category_scatter(
+    x,
+    y,
+    label_col,
+    data,
+    markers="sxo^v",
+    colors=("blue", "green", "red", "purple", "gray", "cyan"),
+    alpha=0.7,
+    markersize=20.0,
+    legend_loc="best",
+):
+    """Scatter plot to plot categories in different colors/markerstyles.
 
     Parameters
     ----------
@@ -57,18 +65,18 @@ def category_scatter(x, y, label_col, data,
 
     if isinstance(data, pd.DataFrame):
         for i in (x, y, label_col):
-            assert(isinstance(i, str))
+            assert isinstance(i, str)
         frame = True
         labels = np.unique(data.loc[:, label_col])
 
     elif isinstance(data, np.ndarray):
         for i in (x, y, label_col):
-            assert(isinstance(i, int))
+            assert isinstance(i, int)
         frame = False
         labels = np.unique(data[:, label_col])
 
     else:
-        raise ValueError('df must be pandas.DataFrame or numpy.ndarray object')
+        raise ValueError("df must be pandas.DataFrame or numpy.ndarray object")
 
     for lab in labels:
 
@@ -79,13 +87,15 @@ def category_scatter(x, y, label_col, data,
             x_dat = data[data[:, label_col] == lab, x]
             y_dat = data[data[:, label_col] == lab, y]
 
-        plt.scatter(x_dat,
-                    y_dat,
-                    c=next(color_gen),
-                    marker=next(marker_gen),
-                    label=lab,
-                    alpha=alpha,
-                    s=markersize)
+        plt.scatter(
+            x_dat,
+            y_dat,
+            c=next(color_gen),
+            marker=next(marker_gen),
+            label=lab,
+            alpha=alpha,
+            s=markersize,
+        )
 
     if legend_loc:
         plt.legend(loc=legend_loc, scatterpoints=1)

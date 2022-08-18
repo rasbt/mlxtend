@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # A function for loading the open-source Iris Flower dataset.
@@ -6,14 +6,15 @@
 #
 # License: BSD 3 clause
 
-import numpy as np
 import os
+
+import numpy as np
 
 this_dir, this_filename = os.path.split(__file__)
 DATA_PATH = os.path.join(this_dir, "data", "iris.csv.gz")
 
 
-def iris_data(version='uci'):
+def iris_data(version="uci"):
     """Iris flower dataset.
 
     Source : https://archive.ics.uci.edu/ml/datasets/Iris
@@ -33,7 +34,7 @@ def iris_data(version='uci'):
     --------
     version : string, optional (default: 'uci').
       Version to use {'uci', 'corrected'}. 'uci' loads the dataset
-      as deposited on the UCI machine learning repository, and 
+      as deposited on the UCI machine learning repository, and
       'corrected' provides the version that is consistent with
       Fisher's original paper. See Note for details.
 
@@ -51,7 +52,7 @@ def iris_data(version='uci'):
     --------
     The Iris dataset (originally collected by Edgar Anderson) and
     available in UCI's machine learning repository is different from
-    the Iris dataset described in the original paper by  R.A. Fisher [1]). 
+    the Iris dataset described in the original paper by  R.A. Fisher [1]).
     Precisely, there are two data points (row number
     34 and 37) in UCI's Machine Learning repository are different from the
     origianlly published Iris dataset. Also, the original version of the Iris
@@ -68,11 +69,11 @@ def iris_data(version='uci'):
 
     """
     if version == "uci":
-        tmp = np.genfromtxt(fname=DATA_PATH, delimiter=',')
+        tmp = np.genfromtxt(fname=DATA_PATH, delimiter=",")
         X, y = tmp[:, :-1], tmp[:, -1]
         y = y.astype(int)
     elif version == "corrected":
-        tmp = np.genfromtxt(fname=DATA_PATH, delimiter=',')
+        tmp = np.genfromtxt(fname=DATA_PATH, delimiter=",")
         X, y = tmp[:, :-1], tmp[:, -1]
         X[34] = [4.9, 3.1, 1.5, 0.2]
         X[37] = [4.9, 3.6, 1.4, 0.1]

@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # Base Regressor (Regressor Parent Class)
@@ -6,16 +6,16 @@
 #
 # License: BSD 3 clause
 
-import numpy as np
 from time import time
-from .._base import _BaseModel
-from .._base import _IterativeModel
-from .._base import _Regressor
+
+import numpy as np
+
+from .._base import _BaseModel, _IterativeModel, _Regressor
 
 
 class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
 
-    """ Ordinary least squares linear regression.
+    """Ordinary least squares linear regression.
 
     Parameters
     ------------
@@ -66,9 +66,16 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
     http://rasbt.github.io/mlxtend/user_guide/regressor/LinearRegression/
 
     """
-    def __init__(self, method='direct', eta=0.01, epochs=50,
-                 minibatches=None, random_seed=None,
-                 print_progress=0):
+
+    def __init__(
+        self,
+        method="direct",
+        eta=0.01,
+        epochs=50,
+        minibatches=None,
+        random_seed=None,
+        print_progress=0,
+    ):
 
         _BaseModel.__init__(self)
         _IterativeModel.__init__(self)
@@ -81,15 +88,20 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
         self._is_fitted = False
         self.method = method
 
-        if method != 'sgd' and minibatches is not None:
-            raise ValueError(('Minibatches should be set to `None` '
-                              'if `method` != `sgd`. Got method=`%s`.')
-                             % (method))
+        if method != "sgd" and minibatches is not None:
+            raise ValueError(
+                (
+                    "Minibatches should be set to `None` "
+                    "if `method` != `sgd`. Got method=`%s`."
+                )
+                % (method)
+            )
 
-        supported_methods = ('sgd', 'direct', 'svd', 'qr')
+        supported_methods = ("sgd", "direct", "svd", "qr")
         if method not in supported_methods:
-            raise ValueError('`method` must be in %s. Got %s.' % (
-                             supported_methods, method))
+            raise ValueError(
+                "`method` must be in %s. Got %s." % (supported_methods, method)
+            )
 
     def _fit(self, X, y, init_params=True):
 
@@ -97,45 +109,43 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
             self.b_, self.w_ = self._init_params(
                 weights_shape=(X.shape[1], 1),
                 bias_shape=(1,),
-                random_seed=self.random_seed)
+                random_seed=self.random_seed,
+            )
             self.cost_ = []
 
         # Direct analytical method
-        if self.method == 'direct':
+        if self.method == "direct":
             self.b_, self.w_ = self._normal_equation(X, y)
         # Gradient descent or stochastic gradient descent learning
-        elif self.method == 'sgd':
+        elif self.method == "sgd":
             self.init_time_ = time()
             rgen = np.random.RandomState(self.random_seed)
             for i in range(self.epochs):
 
                 for idx in self._yield_minibatches_idx(
-                        rgen=rgen,
-                        n_batches=self.minibatches,
-                        data_ary=y,
-                        shuffle=True):
+                    rgen=rgen, n_batches=self.minibatches, data_ary=y, shuffle=True
+                ):
 
                     y_val = self._net_input(X[idx])
-                    errors = (y[idx] - y_val)
-                    self.w_ += (self.eta *
-                                X[idx].T.dot(errors).reshape(self.w_.shape))
+                    errors = y[idx] - y_val
+                    self.w_ += self.eta * X[idx].T.dot(errors).reshape(self.w_.shape)
                     self.b_ += self.eta * errors.sum()
 
                 cost = self._sum_squared_error_cost(y, self._net_input(X))
                 self.cost_.append(cost)
                 if self.print_progress:
-                    self._print_progress(iteration=(i + 1),
-                                         n_iter=self.epochs,
-                                         cost=cost)
+                    self._print_progress(
+                        iteration=(i + 1), n_iter=self.epochs, cost=cost
+                    )
         # Solve using QR decomposition
-        elif self.method == 'qr':
+        elif self.method == "qr":
             Xb = np.hstack((np.ones((X.shape[0], 1)), X))
             Q, R = np.linalg.qr(Xb)
             beta = np.dot(np.linalg.inv(R), np.dot(Q.T, y))
             self.b_ = np.array([beta[0]])
             self.w_ = beta[1:].reshape(X.shape[1], 1)
         # Solve using SVD
-        elif self.method == 'svd':
+        elif self.method == "svd":
             Xb = np.hstack((np.ones((X.shape[0], 1)), X))
             beta = np.dot(np.linalg.pinv(Xb), y)
             self.b_ = np.array([beta[0]])
@@ -160,5 +170,5 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
         return self._net_input(X)
 
     def _sum_squared_error_cost(self, y, y_val):
-        errors = (y - y_val)
+        errors = y - y_val
         return (errors**2).sum() / 2.0

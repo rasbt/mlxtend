@@ -1,10 +1,11 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
 
 import numpy as np
+
 from mlxtend.utils import check_Xy
 
 
@@ -41,7 +42,7 @@ def shuffle_arrays_unison(arrays, random_seed=None):
         np.random.seed(random_seed)
     n = len(arrays[0])
     for a in arrays:
-        assert(len(a) == n)
+        assert len(a) == n
     idx = np.random.permutation(n)
     return [a[idx] for a in arrays]
 
@@ -85,11 +86,12 @@ def shuffled_split(X, y, shuffle=True, train_size=0.75, random_seed=None):
     check_Xy(X, y, y_int=False)
 
     if train_size <= 0.0 or train_size >= 1.0:
-        raise ValueError('train_size must be a float in the range (0.0, 1.0)')
+        raise ValueError("train_size must be a float in the range (0.0, 1.0)")
 
     if shuffle:
-        X_ary, y_ary = shuffle_arrays_unison(arrays=[X.copy(), y.copy()],
-                                             random_seed=random_seed)
+        X_ary, y_ary = shuffle_arrays_unison(
+            arrays=[X.copy(), y.copy()], random_seed=random_seed
+        )
     else:
         X_ary, y_ary = X.copy(), y.copy()
 

@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2020
+# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
 #
 # Bootstrap functions
@@ -42,7 +42,7 @@ class BootstrapOutOfBag(object):
         self.random_seed = random_seed
 
         if not isinstance(n_splits, int) or n_splits < 1:
-            raise ValueError('Number of splits must be greater than 1.')
+            raise ValueError("Number of splits must be greater than 1.")
         self.n_splits = n_splits
 
     def split(self, X, y=None, groups=None):
@@ -63,9 +63,7 @@ class BootstrapOutOfBag(object):
         set_idx = set(sample_idx)
 
         for _ in range(self.n_splits):
-            train_idx = rng.choice(sample_idx,
-                                   size=sample_idx.shape[0],
-                                   replace=True)
+            train_idx = rng.choice(sample_idx, size=sample_idx.shape[0], replace=True)
             test_idx = np.array(list(set_idx - set(train_idx)))
             yield train_idx, test_idx
 

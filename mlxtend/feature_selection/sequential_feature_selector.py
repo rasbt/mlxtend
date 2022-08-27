@@ -587,17 +587,12 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         )
         return self
 
-    def _inclusion(
-        self, orig_set, subset, X, y, ignore_feature=None, groups=None, **fit_params
-    ):
-        all_avg_scores = []
-        all_cv_scores = []
-        all_subsets = []
+    def _inclusion(self, orig_set, subset, X, y, groups=None, **fit_params):
         res = (None, None, None)
         remaining = orig_set - subset
-        if remaining:
-            features = len(remaining)
-            n_jobs = min(self.n_jobs, features)
+        n = len(remaining)
+        if n > 0:
+            n_jobs = min(self.n_jobs, n)
             parallel = Parallel(
                 n_jobs=n_jobs, verbose=self.verbose, pre_dispatch=self.pre_dispatch
             )
@@ -611,9 +606,11 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     **fit_params
                 )
                 for feature in remaining
-                if feature != ignore_feature
             )
 
+            all_avg_scores = []
+            all_cv_scores = []
+            all_subsets = []
             for new_subset, cv_scores in work:
                 all_avg_scores.append(np.nanmean(cv_scores))
                 all_cv_scores.append(cv_scores)
@@ -626,14 +623,10 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
     def _exclusion(
         self, feature_set, X, y, fixed_feature=None, groups=None, **fit_params
     ):
-        n = len(feature_set)
         res = (None, None, None)
+        n = len(feature_set)
         if n > 1:
-            all_avg_scores = []
-            all_cv_scores = []
-            all_subsets = []
-            features = n
-            n_jobs = min(self.n_jobs, features)
+            n_jobs = min(self.n_jobs, n)
             parallel = Parallel(
                 n_jobs=n_jobs, verbose=self.verbose, pre_dispatch=self.pre_dispatch
             )
@@ -643,8 +636,10 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 if not fixed_feature or fixed_feature.issubset(set(p))
             )
 
+            all_avg_scores = []
+            all_cv_scores = []
+            all_subsets = []
             for p, cv_scores in work:
-
                 all_avg_scores.append(np.nanmean(cv_scores))
                 all_cv_scores.append(cv_scores)
                 all_subsets.append(p)

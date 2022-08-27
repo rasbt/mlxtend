@@ -625,7 +625,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
     ):
         res = (None, None, None)
         n = len(feature_set)
-        if n > 1:
+        if n - len(fixed_feature) > 0:
             n_jobs = min(self.n_jobs, n)
             parallel = Parallel(
                 n_jobs=n_jobs, verbose=self.verbose, pre_dispatch=self.pre_dispatch

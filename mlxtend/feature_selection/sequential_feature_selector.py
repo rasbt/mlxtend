@@ -600,13 +600,13 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         work = parallel(
             delayed(_calc_score)(
                 self,
-                X[:, tuple(subset | {feature})],
+                X[:, tuple(subset | set(p))],
                 y,
-                tuple(subset | {feature}),
+                tuple(subset | set(p)),
                 groups=groups,
                 **fit_params
             )
-            for feature in remaining
+            for p in combinations(list(remaining), r=1)
         )
 
         all_avg_scores = []

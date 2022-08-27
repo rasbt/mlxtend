@@ -439,7 +439,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
         best_subset = None
         k_score = 0
-
         try:
             while k != k_to_select:
                 prev_subset = set(k_idx)
@@ -559,8 +558,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             sys.stderr.write("\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...")
 
         if select_in_range:
-            max_score = float("-inf")
-
             max_score = float("-inf")
             for k in self.subsets_:
                 if k < min_k or k > max_k:

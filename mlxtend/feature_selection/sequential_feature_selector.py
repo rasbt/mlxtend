@@ -400,31 +400,26 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 'it must be "best" or "parsimonious"'
             )
 
-        if isinstance(self.k_features, tuple) or isinstance(self.k_features, str):
-            select_in_range = True
-            if isinstance(self.k_features, str):
-                min_k = 1
-                max_k = X_.shape[1]
-            else:
-                min_k = self.k_features[0]
-                max_k = self.k_features[1]
+        kind = None
+        if isinstance(self.k_features, str):
+            kind = self.k_features
+            self.k_features = (1, X_.shape[1])
+        elif isinstance(self.k_features, int):
+            self.k_features = (self.k_features, self.k_features)
 
-        else:
-            select_in_range = False
-            k_to_select = self.k_features
+        min_k = self.k_features[0]
+        max_k = self.k_features[1]
 
         if self.forward:
             orig_set = set(range(X_.shape[1])) - self.fixed_features_set_
             n_features = len(orig_set)
             k_idx = self.fixed_features_
-            if select_in_range:
-                k_to_select = max_k
+            k_to_select = max_k
         else:
             orig_set = set(range(X_.shape[1]))
             n_features = len(orig_set)
             k_idx = tuple(orig_set)
-            if select_in_range:
-                k_to_select = min_k
+            k_to_select = min_k
 
         k = len(k_idx)
         if k > 0:
@@ -557,18 +552,20 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             self.interrupted_ = True
             sys.stderr.write("\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...")
 
-        if select_in_range:
+        if max_k > min_k:  # k in range
             max_score = np.NINF
             for k in self.subsets_:
-                if k < min_k or k > max_k:
-                    continue
-                if self.subsets_[k]["avg_score"] > max_score:
+                if (
+                    k >= min_k
+                    and k <= max_k
+                    and self.subsets_[k]["avg_score"] > max_score
+                ):
                     max_score = self.subsets_[k]["avg_score"]
                     best_subset = k
             k_score = max_score
             k_idx = self.subsets_[best_subset]["feature_idx"]
 
-            if self.k_features == "parsimonious":
+            if kind == "parsimonious":
                 for k in self.subsets_:
                     if k >= best_subset:
                         continue

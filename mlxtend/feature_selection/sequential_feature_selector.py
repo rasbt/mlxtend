@@ -462,12 +462,12 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     new_feature = None
 
                     if self.forward:
-                        continuation_cond_1 = len(k_idx) >= 2
+                        continuation_cond = len(k_idx) >= 2
                     else:
-                        continuation_cond_1 = (n_features - len(k_idx)) >= 2
+                        continuation_cond = (n_features - len(k_idx)) >= 2
 
                     for _ in range(X_.shape[1]):
-                        if not continuation_cond_1:
+                        if not continuation_cond:
                             break
                         k_score_c = np.NINF
                         if ran_step_1:
@@ -525,7 +525,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                             k_score_c,
                             cv_scores_c,
                         )
-                        continuation_cond_1 = len(k_idx) >= 2
+                        continuation_cond = len(k_idx) >= 2
                         ran_step_1 = False
 
                 k = len(k_idx)

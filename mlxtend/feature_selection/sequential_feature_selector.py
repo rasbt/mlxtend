@@ -423,9 +423,9 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             if select_in_range:
                 k_to_select = max_k
 
-            if len(self.fixed_features) > 0:
-                k_idx = self.fixed_features_
-                k = len(k_idx)
+            k_idx = self.fixed_features_
+            k = len(k_idx)
+            if k > 0:
                 k_idx, k_score = _calc_score(
                     self, X_[:, k_idx], y, k_idx, groups=groups, **fit_params
                 )
@@ -435,9 +435,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     "avg_score": np.nanmean(k_score),
                 }
 
-            else:
-                k_idx = ()
-                k = 0
         else:
             if select_in_range:
                 k_to_select = min_k

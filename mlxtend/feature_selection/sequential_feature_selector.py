@@ -391,19 +391,20 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     " than the max k_features value."
                 )
 
+        if isinstance(self.k_features, str) and self.k_features not in {
+            "best",
+            "parsimonious",
+        }:
+            raise AttributeError(
+                "If a string argument is provided, "
+                'it must be "best" or "parsimonious"'
+            )
+
         if isinstance(self.k_features, tuple) or isinstance(self.k_features, str):
-
             select_in_range = True
-
             if isinstance(self.k_features, str):
-                if self.k_features not in {"best", "parsimonious"}:
-                    raise AttributeError(
-                        "If a string argument is provided, "
-                        'it must be "best" or "parsimonious"'
-                    )
-                else:
-                    min_k = 1
-                    max_k = X_.shape[1]
+                min_k = 1
+                max_k = X_.shape[1]
             else:
                 min_k = self.k_features[0]
                 max_k = self.k_features[1]

@@ -463,6 +463,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     )
 
                 if self.floating:
+                    ran_step_1 = True
+                    new_feature = None
 
                     if self.forward:
                         continuation_cond_1 = len(k_idx) >= 2
@@ -470,24 +472,18 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                         continuation_cond_1 = (n_features - len(k_idx)) >= 2
 
                     continuation_cond_2 = True
-                    ran_step_1 = True
-                    new_feature = None
-
                     while continuation_cond_1 and continuation_cond_2:
-                        k_score_c = None
+                        k_score_c = np.NINF
 
                         if ran_step_1:
                             (new_feature,) = set(k_idx) ^ prev_subset
 
                         if self.forward:
 
-                            fixed_features_ok = True
                             if (
-                                len(self.fixed_features) > 0
-                                and len(self.fixed_features) - len(k_idx) <= 1
+                                len(self.fixed_features) == 0
+                                or (len(self.fixed_features) - len(k_idx)) > 1
                             ):
-                                fixed_features_ok = False
-                            if fixed_features_ok:
                                 k_idx_c, k_score_c, cv_scores_c = self._exclusion(
                                     feature_set=k_idx,
                                     fixed_feature=(
@@ -509,28 +505,22 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                                 **fit_params
                             )
 
-                        if k_score_c is not None and k_score_c > k_score:
+                        if k_score_c <= k_score:
+                            break
 
-                            if len(k_idx_c) in self.subsets_:
-                                cached_score = self.subsets_[len(k_idx_c)]["avg_score"]
-                            else:
-                                cached_score = None
+                        if len(k_idx_c) in self.subsets_:
+                            cached_score = self.subsets_[len(k_idx_c)]["avg_score"]
+                            if k_score_c <= cached_score:
+                                break
 
-                            if cached_score is None or k_score_c > cached_score:
-                                prev_subset = set(k_idx)
-                                k_idx, k_score, cv_scores = (
-                                    k_idx_c,
-                                    k_score_c,
-                                    cv_scores_c,
-                                )
-                                continuation_cond_1 = len(k_idx) >= 2
-                                ran_step_1 = False
-
-                            else:
-                                continuation_cond_2 = False
-
-                        else:
-                            continuation_cond_2 = False
+                        prev_subset = set(k_idx)
+                        k_idx, k_score, cv_scores = (
+                            k_idx_c,
+                            k_score_c,
+                            cv_scores_c,
+                        )
+                        continuation_cond_1 = len(k_idx) >= 2
+                        ran_step_1 = False
 
                 k = len(k_idx)
                 # floating can lead to multiple same-sized subsets

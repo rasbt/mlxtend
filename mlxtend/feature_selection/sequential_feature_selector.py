@@ -239,6 +239,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 )
 
         self.fixed_features = fixed_features
+        if self.fixed_features is None:
+            self.fixed_features = tuple()
 
         if self.clone_estimator:
             self.est_ = clone(self.estimator)
@@ -335,7 +337,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
         if hasattr(X, "loc"):
             X_ = X.values
-            if self.fixed_features is not None:
+            if len(self.fixed_features) > 0:
                 self.fixed_features_ = tuple(
                     X.columns.get_loc(c) if isinstance(c, str) else c
                     for c in self.fixed_features
@@ -343,7 +345,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         else:
             X_ = X
 
-        if self.fixed_features is not None:
+        if len(self.fixed_features) > 0:
             self.fixed_features_set_ = set(self.fixed_features_)
 
         if custom_feature_names is not None and len(custom_feature_names) != X.shape[1]:
@@ -417,7 +419,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         orig_set = set(range(X_.shape[1]))
         n_features = X_.shape[1]
 
-        if self.forward and self.fixed_features is not None:
+        if self.forward and len(self.fixed_features) > 0:
             orig_set = set(range(X_.shape[1])) - self.fixed_features_set_
             n_features = len(orig_set)
 
@@ -425,7 +427,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             if select_in_range:
                 k_to_select = max_k
 
-            if self.fixed_features is not None:
+            if len(self.fixed_features) > 0:
                 k_idx = self.fixed_features_
                 k = len(k_idx)
                 k_idx, k_score = _calc_score(
@@ -500,7 +502,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
                             fixed_features_ok = True
                             if (
-                                self.fixed_features is not None
+                                len(self.fixed_features) > 0
                                 and len(self.fixed_features) - len(k_idx) <= 1
                             ):
                                 fixed_features_ok = False

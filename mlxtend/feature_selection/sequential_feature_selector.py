@@ -480,11 +480,11 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                                 len(self.fixed_features) == 0
                                 or (len(self.fixed_features) - len(k_idx)) > 1
                             ):
-
                                 search_set = set(k_idx)
                                 must_include_set = {
                                     new_feature
                                 } | self.fixed_features_set_
+
                                 (
                                     k_idx_c,
                                     k_score_c,
@@ -498,20 +498,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                                     groups=groups,
                                     **fit_params
                                 )
-
-                                # k_idx_c, k_score_c, cv_scores_c = self._exclusion(
-                                #    feature_set=k_idx,
-                                #    fixed_feature=(
-                                #        {new_feature} | self.fixed_features_set_
-                                #    ),
-                                #    X=X_,
-                                #    y=y,
-                                #    groups=groups,
-                                #    **fit_params
-                                # )
-
                         else:
-
                             search_set = orig_set - {new_feature}
                             must_include_set = set(k_idx)
                             k_idx_c, k_score_c, cv_scores_c = self._feature_explorer(
@@ -523,15 +510,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                                 groups=groups,
                                 **fit_params
                             )
-
-                            # k_idx_c, k_score_c, cv_scores_c = self._inclusion(
-                            #    orig_set=orig_set - {new_feature},
-                            #    subset=set(k_idx),
-                            #    X=X_,
-                            #    y=y,
-                            #    groups=groups,
-                            #    **fit_params
-                            # )
 
                         if k_score_c <= k_score:
                             break

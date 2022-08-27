@@ -422,24 +422,14 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         if self.forward:
             if select_in_range:
                 k_to_select = max_k
-
             k_idx = self.fixed_features_
-            k = len(k_idx)
-            if k > 0:
-                k_idx, k_score = _calc_score(
-                    self, X_[:, k_idx], y, k_idx, groups=groups, **fit_params
-                )
-                self.subsets_[k] = {
-                    "feature_idx": k_idx,
-                    "cv_scores": k_score,
-                    "avg_score": np.nanmean(k_score),
-                }
-
         else:
             if select_in_range:
                 k_to_select = min_k
             k_idx = tuple(orig_set)
-            k = len(k_idx)
+
+        k = len(k_idx)
+        if k > 0:
             k_idx, k_score = _calc_score(
                 self, X_[:, k_idx], y, k_idx, groups=groups, **fit_params
             )
@@ -448,6 +438,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 "cv_scores": k_score,
                 "avg_score": np.nanmean(k_score),
             }
+
         best_subset = None
         k_score = 0
 

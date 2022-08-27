@@ -588,34 +588,34 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         return self
 
     def _inclusion(self, orig_set, subset, X, y, groups=None, **fit_params):
-        res = (None, None, None)
         remaining = orig_set - subset
         n = len(remaining)
-        if n > 0:
-            n_jobs = min(self.n_jobs, n)
-            parallel = Parallel(
-                n_jobs=n_jobs, verbose=self.verbose, pre_dispatch=self.pre_dispatch
+        n_jobs = min(self.n_jobs, n)
+        parallel = Parallel(
+            n_jobs=n_jobs, verbose=self.verbose, pre_dispatch=self.pre_dispatch
+        )
+        work = parallel(
+            delayed(_calc_score)(
+                self,
+                X[:, tuple(subset | {feature})],
+                y,
+                tuple(subset | {feature}),
+                groups=groups,
+                **fit_params
             )
-            work = parallel(
-                delayed(_calc_score)(
-                    self,
-                    X[:, tuple(subset | {feature})],
-                    y,
-                    tuple(subset | {feature}),
-                    groups=groups,
-                    **fit_params
-                )
-                for feature in remaining
-            )
+            for feature in remaining
+        )
 
-            all_avg_scores = []
-            all_cv_scores = []
-            all_subsets = []
-            for new_subset, cv_scores in work:
-                all_avg_scores.append(np.nanmean(cv_scores))
-                all_cv_scores.append(cv_scores)
-                all_subsets.append(new_subset)
+        all_avg_scores = []
+        all_cv_scores = []
+        all_subsets = []
+        for new_subset, cv_scores in work:
+            all_avg_scores.append(np.nanmean(cv_scores))
+            all_cv_scores.append(cv_scores)
+            all_subsets.append(new_subset)
 
+        res = (None, None, None)
+        if len(all_avg_scores) > 0:
             best = np.argmax(all_avg_scores)
             res = (all_subsets[best], all_avg_scores[best], all_cv_scores[best])
         return res
@@ -623,27 +623,37 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
     def _exclusion(
         self, feature_set, X, y, fixed_feature=None, groups=None, **fit_params
     ):
-        res = (None, None, None)
         n = len(feature_set)
-        if n - len(fixed_feature) > 0:
-            n_jobs = min(self.n_jobs, n)
-            parallel = Parallel(
-                n_jobs=n_jobs, verbose=self.verbose, pre_dispatch=self.pre_dispatch
+        fixed_feature_set = set(fixed_feature)
+        non_fixed_feature_set = set(feature_set) - fixed_feature_set
+        non_fixed_feature = sorted(list(non_fixed_feature_set))
+        n_non_fixed = len(non_fixed_feature)
+        n_jobs = min(self.n_jobs, n)
+        parallel = Parallel(
+            n_jobs=n_jobs, verbose=self.verbose, pre_dispatch=self.pre_dispatch
+        )
+        work = parallel(
+            delayed(_calc_score)(
+                self,
+                X[:, tuple(set(p) | fixed_feature_set)],
+                y,
+                tuple(set(p) | fixed_feature_set),
+                groups=groups,
+                **fit_params
             )
-            work = parallel(
-                delayed(_calc_score)(self, X[:, p], y, p, groups=groups, **fit_params)
-                for p in combinations(feature_set, r=n - 1)
-                if not fixed_feature or fixed_feature.issubset(set(p))
-            )
+            for p in combinations(non_fixed_feature, r=n_non_fixed - 1)
+        )
 
-            all_avg_scores = []
-            all_cv_scores = []
-            all_subsets = []
-            for p, cv_scores in work:
-                all_avg_scores.append(np.nanmean(cv_scores))
-                all_cv_scores.append(cv_scores)
-                all_subsets.append(p)
+        all_avg_scores = []
+        all_cv_scores = []
+        all_subsets = []
+        for p, cv_scores in work:
+            all_avg_scores.append(np.nanmean(cv_scores))
+            all_cv_scores.append(cv_scores)
+            all_subsets.append(p)
 
+        res = (None, None, None)
+        if len(all_avg_scores) > 0:
             best = np.argmax(all_avg_scores)
             res = (all_subsets[best], all_avg_scores[best], all_cv_scores[best])
         return res

@@ -333,20 +333,16 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self.k_score_ = None
 
         self.fixed_features_ = self.fixed_features
-        self.fixed_features_set_ = set()
-
         if hasattr(X, "loc"):
             X_ = X.values
-            if len(self.fixed_features) > 0:
-                self.fixed_features_ = tuple(
-                    X.columns.get_loc(c) if isinstance(c, str) else c
-                    for c in self.fixed_features
-                )
+            self.fixed_features_ = tuple(
+                X.columns.get_loc(c) if isinstance(c, str) else c
+                for c in self.fixed_features
+            )
         else:
             X_ = X
 
-        if len(self.fixed_features) > 0:
-            self.fixed_features_set_ = set(self.fixed_features_)
+        self.fixed_features_set_ = set(self.fixed_features_)
 
         if custom_feature_names is not None and len(custom_feature_names) != X.shape[1]:
             raise ValueError(

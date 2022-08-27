@@ -441,23 +441,21 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 prev_subset = set(k_idx)
 
                 if self.forward:
-                    k_idx, k_score, cv_scores = self._inclusion(
-                        orig_set=orig_set,
-                        subset=prev_subset,
-                        X=X_,
-                        y=y,
-                        groups=groups,
-                        **fit_params
-                    )
+                    search_set = orig_set
+                    must_include_set = prev_subset
                 else:
-                    k_idx, k_score, cv_scores = self._exclusion(
-                        feature_set=prev_subset,
-                        X=X_,
-                        y=y,
-                        groups=groups,
-                        fixed_feature=self.fixed_features_set_,
-                        **fit_params
-                    )
+                    search_set = prev_subset
+                    must_include_set = self.fixed_features_set_
+
+                k_idx, k_score, cv_scores = self._feature_explorer(
+                    search_set,
+                    must_include_set,
+                    X=X_,
+                    y=y,
+                    is_forward=self.forward,
+                    groups=groups,
+                    **fit_params
+                )
 
                 if self.floating:
                     ran_step_1 = True
@@ -589,6 +587,48 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             self.subsets_, self.k_feature_idx_, custom_feature_names, X
         )
         return self
+
+    def _feature_explorer(
+        self, search_set, must_include_set, X, y, is_forward, groups=None, **fit_params
+    ):
+        remaining_set = search_set - must_include_set
+        remaining = list(remaining_set)
+        n = len(remaining)
+        if is_forward:
+            feature_search_engine = combinations(remaining, r=1)
+        else:
+            feature_search_engine = combinations(remaining, r=n - 1)
+
+        n_jobs = min(self.n_jobs, n)
+        parallel = Parallel(
+            n_jobs=n_jobs, verbose=self.verbose, pre_dispatch=self.pre_dispatch
+        )
+        work = parallel(
+            delayed(_calc_score)(
+                self,
+                X[:, tuple(set(p) | must_include_set)],
+                y,
+                tuple(set(p) | must_include_set),
+                groups=groups,
+                **fit_params
+            )
+            for p in feature_search_engine
+        )
+
+        all_avg_scores = []
+        all_cv_scores = []
+        all_subsets = []
+        for new_subset, cv_scores in work:
+            all_avg_scores.append(np.nanmean(cv_scores))
+            all_cv_scores.append(cv_scores)
+            all_subsets.append(new_subset)
+
+        res = (None, None, None)
+        if len(all_avg_scores) > 0:
+            best = np.argmax(all_avg_scores)
+            res = (all_subsets[best], all_avg_scores[best], all_cv_scores[best])
+
+        return res
 
     def _inclusion(self, orig_set, subset, X, y, groups=None, **fit_params):
         remaining = orig_set - subset

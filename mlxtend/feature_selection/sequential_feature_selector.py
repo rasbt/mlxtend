@@ -526,7 +526,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 k = len(k_idx)
                 # floating can lead to multiple same-sized subsets
                 if k not in self.subsets_ or (k_score > self.subsets_[k]["avg_score"]):
-
                     k_idx = tuple(sorted(k_idx))
                     self.subsets_[k] = {
                         "feature_idx": k_idx,
@@ -559,7 +558,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             sys.stderr.write("\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...")
 
         if select_in_range:
-            max_score = float("-inf")
+            max_score = np.NINF
             for k in self.subsets_:
                 if k < min_k or k > max_k:
                     continue

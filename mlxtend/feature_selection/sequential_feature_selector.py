@@ -414,16 +414,17 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
         if self.forward:
             orig_set = set(range(X_.shape[1])) - self.fixed_features_set_
+            n_features = len(orig_set)
+            k_idx = self.fixed_features_
             if select_in_range:
                 k_to_select = max_k
-            k_idx = self.fixed_features_
         else:
             orig_set = set(range(X_.shape[1]))
+            n_features = len(orig_set)
+            k_idx = tuple(orig_set)
             if select_in_range:
                 k_to_select = min_k
-            k_idx = tuple(orig_set)
 
-        n_features = len(orig_set)
         k = len(k_idx)
         if k > 0:
             k_idx, k_score = _calc_score(

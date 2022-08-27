@@ -508,10 +508,11 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                         if k_score_c <= k_score:
                             break
 
-                        if len(k_idx_c) in self.subsets_:
-                            cached_score = self.subsets_[len(k_idx_c)]["avg_score"]
-                            if k_score_c <= cached_score:
-                                break
+                        if (
+                            len(k_idx_c) in self.subsets_
+                            and k_score_c <= self.subsets_[len(k_idx_c)]["avg_score"]
+                        ):
+                            break
 
                         prev_subset = set(k_idx)
                         k_idx, k_score, cv_scores = (

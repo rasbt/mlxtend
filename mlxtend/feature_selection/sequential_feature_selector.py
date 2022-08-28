@@ -454,8 +454,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 )
 
                 if self.floating:
-                    ran_step_1 = True
-                    new_feature_idx = None
+                    (new_feature_idx,) = set(k_idx) ^ prev_subset
 
                     if self.forward:
                         continuation_cond = len(k_idx) >= 2
@@ -465,10 +464,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     for _ in range(X_.shape[1]):
                         if not continuation_cond:
                             break
-
-                        if ran_step_1:
-                            (new_feature_idx,) = set(k_idx) ^ prev_subset
-                            ran_step_1 = False
 
                         if self.forward:
                             if (

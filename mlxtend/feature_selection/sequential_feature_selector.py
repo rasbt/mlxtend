@@ -499,11 +499,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                         ):
                             break
 
-                        k_idx, k_score, cv_scores = (
-                            k_idx_c,
-                            k_score_c,
-                            cv_scores_c,
-                        )
+                        k_idx, k_score, cv_scores = k_idx_c, k_score_c, cv_scores_c
                         continuation_cond = len(k_idx) >= 2
                         # Does this condition work when self.forward=False? (see
                         # the condition before the outer for-loop)

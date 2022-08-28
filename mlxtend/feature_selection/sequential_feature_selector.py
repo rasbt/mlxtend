@@ -499,7 +499,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                         ):
                             break
 
-                        prev_subset = set(k_idx)
                         k_idx, k_score, cv_scores = (
                             k_idx_c,
                             k_score_c,

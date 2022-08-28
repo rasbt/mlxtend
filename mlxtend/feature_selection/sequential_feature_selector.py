@@ -584,44 +584,46 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
     def _feature_explorer(
         self, search_set, must_include_set, X, y, is_forward, groups=None, **fit_params
     ):
+        out = (None, None, None)
+
         remaining_set = search_set - must_include_set
         remaining = list(remaining_set)
         n = len(remaining)
-        if is_forward:
-            feature_search_engine = combinations(remaining, r=1)
-        else:
-            feature_search_engine = combinations(remaining, r=n - 1)
+        if n > 0:
+            if is_forward:
+                feature_search_engine = combinations(remaining, r=1)
+            else:
+                feature_search_engine = combinations(remaining, r=n - 1)
 
-        n_jobs = min(self.n_jobs, n)
-        parallel = Parallel(
-            n_jobs=n_jobs, verbose=self.verbose, pre_dispatch=self.pre_dispatch
-        )
-        work = parallel(
-            delayed(_calc_score)(
-                self,
-                X[:, tuple(set(p) | must_include_set)],
-                y,
-                tuple(set(p) | must_include_set),
-                groups=groups,
-                **fit_params
+            n_jobs = min(self.n_jobs, n)
+            parallel = Parallel(
+                n_jobs=n_jobs, verbose=self.verbose, pre_dispatch=self.pre_dispatch
             )
-            for p in feature_search_engine
-        )
+            work = parallel(
+                delayed(_calc_score)(
+                    self,
+                    X[:, tuple(set(p) | must_include_set)],
+                    y,
+                    tuple(set(p) | must_include_set),
+                    groups=groups,
+                    **fit_params
+                )
+                for p in feature_search_engine
+            )
 
-        all_avg_scores = []
-        all_cv_scores = []
-        all_subsets = []
-        for new_subset, cv_scores in work:
-            all_avg_scores.append(np.nanmean(cv_scores))
-            all_cv_scores.append(cv_scores)
-            all_subsets.append(new_subset)
+            all_avg_scores = []
+            all_cv_scores = []
+            all_subsets = []
+            for new_subset, cv_scores in work:
+                all_avg_scores.append(np.nanmean(cv_scores))
+                all_cv_scores.append(cv_scores)
+                all_subsets.append(new_subset)
 
-        res = (None, None, None)
-        if len(all_avg_scores) > 0:
-            best = np.argmax(all_avg_scores)
-            res = (all_subsets[best], all_avg_scores[best], all_cv_scores[best])
+            if len(all_avg_scores) > 0:
+                best = np.argmax(all_avg_scores)
+                out = (all_subsets[best], all_avg_scores[best], all_cv_scores[best])
 
-        return res
+        return out
 
     def transform(self, X):
         """Reduce X to its most important features.

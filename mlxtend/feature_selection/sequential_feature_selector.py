@@ -471,6 +471,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
                         if ran_step_1:
                             (new_feature,) = set(k_idx) ^ prev_subset
+                            ran_step_1 = False
 
                         if self.forward:
                             if (
@@ -511,8 +512,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                             cv_scores_c,
                         )
                         continuation_cond = len(k_idx) >= 2
-                        # does this condition work when self.forward?
-                        ran_step_1 = False
+                        # Does this condition work when self.forward=False? (see
+                        # the condition before the outer for-loop)
 
                 k = len(k_idx)
                 # floating can lead to multiple same-sized subsets

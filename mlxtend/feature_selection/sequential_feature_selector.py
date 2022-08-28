@@ -402,7 +402,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 is_parsimonious = True
 
         if isinstance(self.k_features, str):
-            self.k_features = (1, X_.shape[1])
+            self.k_features = (len(self.fixed_features_), X_.shape[1])
         elif isinstance(self.k_features, int):
             self.k_features = (self.k_features, self.k_features)
 

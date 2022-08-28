@@ -337,7 +337,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             X_ = X.values
             self.fixed_features_ = tuple(
                 X.columns.get_loc(c) if isinstance(c, str) else c
-                for c in self.fixed_features
+                for c in self.fixed_features_
             )
         else:
             X_ = X
@@ -455,7 +455,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
                 if self.floating:
                     ran_step_1 = True
-                    new_feature = None
+                    new_feature_idx = None
 
                     if self.forward:
                         continuation_cond = len(k_idx) >= 2
@@ -467,19 +467,21 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                             break
 
                         if ran_step_1:
-                            (new_feature,) = set(k_idx) ^ prev_subset
+                            (new_feature_idx,) = set(k_idx) ^ prev_subset
                             ran_step_1 = False
 
                         if self.forward:
                             if (
-                                len(self.fixed_features) > 0
-                                and (len(self.fixed_features) - len(k_idx)) <= 1
+                                len(self.fixed_features_) > 0
+                                and (len(self.fixed_features_) - len(k_idx)) <= 1
                             ):
                                 break
                             search_set = set(k_idx)
-                            must_include_set = {new_feature} | self.fixed_features_set_
+                            must_include_set = {
+                                new_feature_idx
+                            } | self.fixed_features_set_
                         else:
-                            search_set = orig_set - {new_feature}
+                            search_set = orig_set - {new_feature_idx}
                             must_include_set = set(k_idx)
 
                         k_score_c = np.NINF

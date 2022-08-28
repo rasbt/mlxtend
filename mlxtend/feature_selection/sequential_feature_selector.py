@@ -391,18 +391,17 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     " than the max k_features value."
                 )
 
-        if isinstance(self.k_features, str) and self.k_features not in {
-            "best",
-            "parsimonious",
-        }:
-            raise AttributeError(
-                "If a string argument is provided, "
-                'it must be "best" or "parsimonious"'
-            )
-
-        kind = None
+        is_parsimonious = False
         if isinstance(self.k_features, str):
-            kind = self.k_features
+            if self.k_features not in {"best", "parsimonious"}:
+                raise AttributeError(
+                    "If a string argument is provided, "
+                    'it must be "best" or "parsimonious"'
+                )
+            if self.k_features == "parsimonious":
+                is_parsimonious = True
+
+        if isinstance(self.k_features, str):
             self.k_features = (1, X_.shape[1])
         elif isinstance(self.k_features, int):
             self.k_features = (self.k_features, self.k_features)
@@ -469,46 +468,32 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     for _ in range(X_.shape[1]):
                         if not continuation_cond:
                             break
-                        k_score_c = np.NINF
+
                         if ran_step_1:
                             (new_feature,) = set(k_idx) ^ prev_subset
 
                         if self.forward:
-
                             if (
-                                len(self.fixed_features) == 0
-                                or (len(self.fixed_features) - len(k_idx)) > 1
+                                len(self.fixed_features) > 0
+                                and (len(self.fixed_features) - len(k_idx)) <= 1
                             ):
-                                search_set = set(k_idx)
-                                must_include_set = {
-                                    new_feature
-                                } | self.fixed_features_set_
-
-                                (
-                                    k_idx_c,
-                                    k_score_c,
-                                    cv_scores_c,
-                                ) = self._feature_explorer(
-                                    search_set,
-                                    must_include_set,
-                                    X=X_,
-                                    y=y,
-                                    is_forward=False,
-                                    groups=groups,
-                                    **fit_params
-                                )
+                                break
+                            search_set = set(k_idx)
+                            must_include_set = {new_feature} | self.fixed_features_set_
                         else:
                             search_set = orig_set - {new_feature}
                             must_include_set = set(k_idx)
-                            k_idx_c, k_score_c, cv_scores_c = self._feature_explorer(
-                                search_set,
-                                must_include_set,
-                                X=X_,
-                                y=y,
-                                is_forward=True,
-                                groups=groups,
-                                **fit_params
-                            )
+
+                        k_score_c = np.NINF
+                        (k_idx_c, k_score_c, cv_scores_c,) = self._feature_explorer(
+                            search_set,
+                            must_include_set,
+                            X=X_,
+                            y=y,
+                            is_forward=not self.forward,
+                            groups=groups,
+                            **fit_params
+                        )
 
                         if k_score_c <= k_score:
                             break
@@ -526,6 +511,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                             cv_scores_c,
                         )
                         continuation_cond = len(k_idx) >= 2
+                        # does this condition work when self.forward?
                         ran_step_1 = False
 
                 k = len(k_idx)
@@ -575,7 +561,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             k_score = max_score
             k_idx = self.subsets_[best_subset]["feature_idx"]
 
-            if kind == "parsimonious":
+            if is_parsimonious:
                 for k in self.subsets_:
                     if k >= best_subset:
                         continue

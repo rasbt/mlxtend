@@ -497,7 +497,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                             break
 
                         # In the floating process, we basically revisit our previous
-                        # steps. so, len(k_idx_c) is definitely exist as a key in
+                        # steps. so, len(k_idx_c) definitely exists as a key in
                         # the dictionary `self.subsets_`
                         if k_score_c <= self.subsets_[len(k_idx_c)]["avg_score"]:
                             break

@@ -496,19 +496,15 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                         if k_score_c <= k_score:
                             break
 
-                        if (
-                            len(k_idx_c) in self.subsets_
-                            and k_score_c <= self.subsets_[len(k_idx_c)]["avg_score"]
-                        ):
+                        # In the floating process, we basically revisit our previous
+                        # steps. so, len(k_idx_c) is definitely exist as a key in
+                        # the dictionary `self.subsets_`
+                        if k_score_c <= self.subsets_[len(k_idx_c)]["avg_score"]:
                             break
-
-                        k_idx, k_score, cv_scores = k_idx_c, k_score_c, cv_scores_c
-                        k = len(k_idx)
-                        # floating can lead to multiple same-sized subsets
-                        if k not in self.subsets_ or (
-                            k_score > self.subsets_[k]["avg_score"]
-                        ):
+                        else:
+                            k_idx, k_score, cv_scores = k_idx_c, k_score_c, cv_scores_c
                             k_idx = tuple(sorted(k_idx))
+                            k = len(k_idx)
                             self.subsets_[k] = {
                                 "feature_idx": k_idx,
                                 "cv_scores": cv_scores,

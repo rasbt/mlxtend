@@ -409,13 +409,12 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         min_k = self.k_features[0]
         max_k = self.k_features[1]
 
-        orig_set = set(range(X_.shape[1]))
         if self.forward:
             k_idx = self.fixed_features_
-            k_to_select = max_k
+            k_stop = max_k
         else:
-            k_idx = tuple(orig_set)
-            k_to_select = min_k
+            k_idx = tuple(range(X_.shape[1]))
+            k_stop = min_k
 
         k = len(k_idx)
         if k > 0:
@@ -428,11 +427,12 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 "avg_score": np.nanmean(k_score),
             }
 
+        orig_set = set(range(X_.shape[1]))
         best_subset = None
         k_score = 0
         try:
             for _ in range(X_.shape[1]):
-                if k == k_to_select:
+                if k == k_stop:
                     break
                 prev_subset = set(k_idx)
 
@@ -516,7 +516,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                             }
 
                 if self.verbose == 1:
-                    sys.stderr.write("\rFeatures: %d/%s" % (len(k_idx), k_to_select))
+                    sys.stderr.write("\rFeatures: %d/%s" % (len(k_idx), k_stop))
                     sys.stderr.flush()
                 elif self.verbose > 1:
                     sys.stderr.write(
@@ -524,7 +524,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                         % (
                             datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                             len(k_idx),
-                            k_to_select,
+                            k_stop,
                             k_score,
                         )
                     )

@@ -443,7 +443,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     search_set = prev_subset
                     must_include_set = self.fixed_features_set_
 
-                k_idx, k_score, cv_scores = self._feature_explorer(
+                k_idx, k_score, cv_scores = self._feature_selector(
                     search_set,
                     must_include_set,
                     X=X_,
@@ -483,7 +483,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                             search_set = orig_set - {new_feature_idx}
                             must_include_set = set(k_idx)
 
-                        (k_idx_c, k_score_c, cv_scores_c,) = self._feature_explorer(
+                        (k_idx_c, k_score_c, cv_scores_c,) = self._feature_selector(
                             search_set,
                             must_include_set,
                             X=X_,
@@ -573,9 +573,52 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         )
         return self
 
-    def _feature_explorer(
+    def _feature_selector(
         self, search_set, must_include_set, X, y, is_forward, groups=None, **fit_params
     ):
+        """Perform one round of feature selection. When `is_forward=True`, it is
+        a forward selection that searches the `search_set` to find one feature that
+        with `must_include_set` results in highest average score. When
+        `is_forward=False`, it is a backward selection that searches the `search_set`
+        for a feature that its exclusion results in a set of features that includes
+        `must_include_set` and has the highest averege score.
+
+        Parameters
+        ----------
+        self : object
+            an instance of class `SequentialFeatureSelector`
+
+        search_set : set
+            a set of features through which a feature must be selected to be included
+            (when `is_forward=True`) or to be excluded (when `is_forward=False`)
+
+        must_include_set : set
+            a set of features that must be present in the selected subset of features
+
+        X : numpy.ndarray
+            a 2D numpy array. Each row corresponds to one observation and each
+            column corresponds to one feature.
+
+        y : numpy.ndarray
+            the target variable
+
+        is_forward : bool
+            True if it is forward selection. False if it is backward selection
+
+        groups : array-like, with shape (n_samples,), optional
+            Group labels for the samples used while splitting the dataset into
+            train/test set. Passed to the fit method of the cross-validator.
+
+        fit_params : various, optional
+            Additional parameters that are being passed to the estimator.
+            For example, `sample_weights=weights`.
+
+        Returns
+        -------
+        out1 : the selected set of features that has the highest mean of cv scores
+        out2 : the mean of cv scores for the selected set of features.
+        out3 : all cv scores for the selected set of features
+        """
         out = (None, None, None)
 
         remaining_set = search_set - must_include_set
@@ -583,9 +626,9 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         n = len(remaining)
         if n > 0:
             if is_forward:
-                feature_search_engine = combinations(remaining, r=1)
+                feature_explorer = combinations(remaining, r=1)
             else:
-                feature_search_engine = combinations(remaining, r=n - 1)
+                feature_explorer = combinations(remaining, r=n - 1)
 
             n_jobs = min(self.n_jobs, n)
             parallel = Parallel(
@@ -600,7 +643,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     groups=groups,
                     **fit_params
                 )
-                for p in feature_search_engine
+                for p in feature_explorer
             )
 
             all_avg_scores = []

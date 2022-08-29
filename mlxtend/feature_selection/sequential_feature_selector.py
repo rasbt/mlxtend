@@ -453,6 +453,16 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     **fit_params
                 )
 
+                k = len(k_idx)
+                # floating can lead to multiple same-sized subsets
+                if k not in self.subsets_ or (k_score > self.subsets_[k]["avg_score"]):
+                    k_idx = tuple(sorted(k_idx))
+                    self.subsets_[k] = {
+                        "feature_idx": k_idx,
+                        "cv_scores": cv_scores,
+                        "avg_score": k_score,
+                    }
+
                 if self.floating:
                     (new_feature_idx,) = set(k_idx) ^ prev_subset
                     for _ in range(X_.shape[1]):
@@ -493,16 +503,17 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                             break
 
                         k_idx, k_score, cv_scores = k_idx_c, k_score_c, cv_scores_c
-
-                k = len(k_idx)
-                # floating can lead to multiple same-sized subsets
-                if k not in self.subsets_ or (k_score > self.subsets_[k]["avg_score"]):
-                    k_idx = tuple(sorted(k_idx))
-                    self.subsets_[k] = {
-                        "feature_idx": k_idx,
-                        "cv_scores": cv_scores,
-                        "avg_score": k_score,
-                    }
+                        k = len(k_idx)
+                        # floating can lead to multiple same-sized subsets
+                        if k not in self.subsets_ or (
+                            k_score > self.subsets_[k]["avg_score"]
+                        ):
+                            k_idx = tuple(sorted(k_idx))
+                            self.subsets_[k] = {
+                                "feature_idx": k_idx,
+                                "cv_scores": cv_scores,
+                                "avg_score": k_score,
+                            }
 
                 if self.verbose == 1:
                     sys.stderr.write("\rFeatures: %d/%s" % (len(k_idx), k_to_select))

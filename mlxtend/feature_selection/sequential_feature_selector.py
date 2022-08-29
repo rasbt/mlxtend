@@ -455,33 +455,24 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
                 if self.floating:
                     (new_feature_idx,) = set(k_idx) ^ prev_subset
-
-                    if self.forward:
-                        continuation_cond = len(k_idx) >= 2
-                    else:
-                        continuation_cond = (len(orig_set) - len(k_idx)) >= 2
-
                     for _ in range(X_.shape[1]):
-                        if not continuation_cond:
+                        if (
+                            self.forward
+                            and (len(k_idx) - len(self.fixed_features_)) <= 2
+                        ):
+                            break
+                        if not self.forward and (len(orig_set) - len(k_idx) <= 2):
                             break
 
                         if self.forward:
-                            if (
-                                len(self.fixed_features_) > 0
-                                and (len(self.fixed_features_) - len(k_idx)) <= 1
-                            ):
-                                # This always break when `len(self.fixed_features_) > 0`
-                                # the condition needs to be fixed
-                                break
                             search_set = set(k_idx)
-                            must_include_set = {
+                            must_include_set = self.fixed_features_set_ | {
                                 new_feature_idx
-                            } | self.fixed_features_set_
+                            }
                         else:
                             search_set = orig_set - {new_feature_idx}
                             must_include_set = set(k_idx)
 
-                        k_score_c = np.NINF
                         (k_idx_c, k_score_c, cv_scores_c,) = self._feature_explorer(
                             search_set,
                             must_include_set,
@@ -502,9 +493,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                             break
 
                         k_idx, k_score, cv_scores = k_idx_c, k_score_c, cv_scores_c
-                        continuation_cond = len(k_idx) >= 2
-                        # Does this condition work when self.forward=False? (see
-                        # the condition before the outer for-loop)
 
                 k = len(k_idx)
                 # floating can lead to multiple same-sized subsets

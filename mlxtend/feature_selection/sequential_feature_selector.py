@@ -470,6 +470,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                                 len(self.fixed_features_) > 0
                                 and (len(self.fixed_features_) - len(k_idx)) <= 1
                             ):
+                                # This always break when `len(self.fixed_features_) > 0`
+                                # the condition needs to be fixed
                                 break
                             search_set = set(k_idx)
                             must_include_set = {

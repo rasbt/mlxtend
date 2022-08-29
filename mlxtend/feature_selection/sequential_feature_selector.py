@@ -464,6 +464,10 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     }
 
                 if self.floating:
+                    # floating direction is opposite of self.forward, i.e. in
+                    # forward selection, we do floating in backward manner,
+                    # and in backward selection, we do floating in forward manner
+                    is_float_forward = not self.forward
                     (new_feature_idx,) = set(k_idx) ^ prev_subset
                     for _ in range(X_.shape[1]):
                         if (
@@ -474,21 +478,23 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                         if not self.forward and (len(orig_set) - len(k_idx) <= 2):
                             break
 
-                        if self.forward:
+                        if is_float_forward:
+                            # corresponding to self.forward=False
+                            search_set = orig_set - {new_feature_idx}
+                            must_include_set = set(k_idx)
+                        else:
+                            # corresponding to self.forward=True
                             search_set = set(k_idx)
                             must_include_set = self.fixed_features_set_ | {
                                 new_feature_idx
                             }
-                        else:
-                            search_set = orig_set - {new_feature_idx}
-                            must_include_set = set(k_idx)
 
                         (k_idx_c, k_score_c, cv_scores_c,) = self._feature_selector(
                             search_set,
                             must_include_set,
                             X=X_,
                             y=y,
-                            is_forward=not self.forward,
+                            is_forward=is_float_forward,
                             groups=groups,
                             **fit_params
                         )

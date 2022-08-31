@@ -431,11 +431,9 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         best_subset = None
         k_score = 0
         try:
-            for _ in range(X_.shape[1]):
-                if k == k_stop:
-                    break
+            # alternatively: for _ in range(2 ** X.shape[1]): if k==k_stop: break
+            while k != k_stop:
                 prev_subset = set(k_idx)
-
                 if self.forward:
                     search_set = orig_set
                     must_include_set = prev_subset

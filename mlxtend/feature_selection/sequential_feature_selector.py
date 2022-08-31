@@ -538,6 +538,13 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     )
                     raise KeyboardInterrupt
 
+        except KeyboardInterrupt:
+            self.interrupted_ = True
+            sys.stderr.write("\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...")
+
+        if self.interrupted_:
+            return self
+        else:
             self.fitted = True  # the completion of sequential selection process.
             max_score = np.NINF
             for k in self.subsets_:
@@ -572,11 +579,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 self.subsets_, self.k_feature_idx_, custom_feature_names, X
             )
 
-        except KeyboardInterrupt:
-            self.interrupted_ = True
-            sys.stderr.write("\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...")
-
-        return self
+            return self
 
     def _feature_selector(
         self, search_set, must_include_set, X, y, is_forward, groups=None, **fit_params

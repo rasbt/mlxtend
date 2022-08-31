@@ -531,12 +531,16 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                         )
                     )
 
+                # just to test `KeyboardInterrupt`
                 if self._TESTING_INTERRUPT_MODE:
+                    self.k_feature_idx_ = k_idx
+                    self.k_score_ = k_score
                     self.subsets_, self.k_feature_names_ = _get_featurenames(
                         self.subsets_, self.k_feature_idx_, custom_feature_names, X
                     )
                     raise KeyboardInterrupt
 
+            self.fitted = True  # the completion of sequential selection process.
             max_score = np.NINF
             for k in self.subsets_:
                 if (
@@ -546,6 +550,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 ):
                     max_score = self.subsets_[k]["avg_score"]
                     best_subset = k
+
             k_score = max_score
             k_idx = self.subsets_[best_subset]["feature_idx"]
 
@@ -563,16 +568,16 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 k_score = max_score
                 k_idx = self.subsets_[best_subset]["feature_idx"]
 
+            self.k_feature_idx_ = k_idx
+            self.k_score_ = k_score
+            self.subsets_, self.k_feature_names_ = _get_featurenames(
+                self.subsets_, self.k_feature_idx_, custom_feature_names, X
+            )
+
         except KeyboardInterrupt:
             self.interrupted_ = True
             sys.stderr.write("\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...")
 
-        self.k_feature_idx_ = k_idx
-        self.k_score_ = k_score
-        self.fitted = True
-        self.subsets_, self.k_feature_names_ = _get_featurenames(
-            self.subsets_, self.k_feature_idx_, custom_feature_names, X
-        )
         return self
 
     def _feature_selector(

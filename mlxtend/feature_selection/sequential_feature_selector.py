@@ -457,7 +457,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             if self.k_features == "parsimonious":
                 is_parsimonious = True
 
-        min_n_groups = len(self.fixed_features_group)
+        min_n_groups = len(self.fixed_features_group_set)
         max_n_groups = len(self.feature_groups)
         if isinstance(self.k_features, str):
             self.k_features = (min_n_groups, max_n_groups)

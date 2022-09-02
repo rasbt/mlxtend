@@ -24,11 +24,54 @@ from ..externals.name_estimators import _name_estimators
 from ..utils.base_compostion import _BaseXComposition
 
 
-def _calc_score(selector, X, y, indices, groups=None, **fit_params):
+def _merge_lists(nested_list, high_level_indices=None):
+    """
+    merge elements of lists (of a nested_list) into one single tuple with elements
+    sorted in ascending order.
+
+    Parameters
+    ----------
+    nested_list: List
+        a  list whose elements must be list as well.
+
+    high_level_indices: list or tuple, default None
+        a list or tuple that contains integers that are between 0 (inclusive) and
+        the length of `nested_lst` (exclusive). If None, the merge of all
+        lists nested in `nested_list` will be returned.
+
+    Returns
+    -------
+    out: tuple
+        a tuple, with elements sorted in ascending order, that is the merge of inner
+        lists whose indices are provided in `high_level_indices`
+
+    Example:
+    nested_list = [[1],[2, 3],[4]]
+    high_level_indices = [1, 2]
+    >>> _merge_lists(nested_list, high_level_indices)
+    (2, 3, 4) # merging [2, 3] and [4]
+    """
+    if high_level_indices is None:
+        high_level_indices = list(range(len(nested_list)))
+
+    out = []
+    for idx in high_level_indices:
+        out.extend(nested_list[idx])
+
+    return tuple(sorted(out))
+
+
+def _calc_score(
+    selector, X, y, indices, groups=None, feature_groups=None, **fit_params
+):
+    if feature_groups is None:
+        feature_groups = [[i] for i in range(X.shape[1])]
+
+    IDX = _merge_lists(feature_groups, indices)
     if selector.cv:
         scores = cross_val_score(
             selector.est_,
-            X,
+            X[:, IDX],
             y,
             groups=groups,
             cv=selector.cv,
@@ -38,8 +81,8 @@ def _calc_score(selector, X, y, indices, groups=None, **fit_params):
             fit_params=fit_params,
         )
     else:
-        selector.est_.fit(X, y, **fit_params)
-        scores = np.array([selector.scorer(selector.est_, X, y)])
+        selector.est_.fit(X[:, IDX], y, **fit_params)
+        scores = np.array([selector.scorer(selector.est_, X[:, IDX], y)])
     return indices, scores
 
 
@@ -191,6 +234,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         pre_dispatch="2*n_jobs",
         clone_estimator=True,
         fixed_features=None,
+        feature_groups=None,
     ):
 
         self.estimator = estimator
@@ -241,6 +285,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self.fixed_features = fixed_features
         if self.fixed_features is None:
             self.fixed_features = tuple()
+
+        self.feature_groups = feature_groups
 
         if self.clone_estimator:
             self.est_ = clone(self.estimator)
@@ -341,8 +387,18 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             )
         else:
             X_ = X
-
         self.fixed_features_set_ = set(self.fixed_features_)
+
+        if self.feature_groups is None:
+            self.feature_groups = [[i] for i in range(X_.shape[1])]
+
+        features_groupID = np.full(X_.shape[1], -1, dtype=np.int64)
+        for id, group in enumerate(self.feature_groups):
+            for idx in group:
+                features_groupID[idx] = id
+
+        lst = [features_groupID[idx] for idx in self.fixed_features]
+        self.fixed_features_group_set = set(lst)
 
         if custom_feature_names is not None and len(custom_feature_names) != X.shape[1]:
             raise ValueError(
@@ -401,25 +457,34 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             if self.k_features == "parsimonious":
                 is_parsimonious = True
 
+        min_n_groups = len(self.fixed_features_group)
+        max_n_groups = len(self.feature_groups)
         if isinstance(self.k_features, str):
-            self.k_features = (len(self.fixed_features_), X_.shape[1])
+            self.k_features = (min_n_groups, max_n_groups)
         elif isinstance(self.k_features, int):
+            # we treat k_features as k group of features
             self.k_features = (self.k_features, self.k_features)
 
         min_k = self.k_features[0]
         max_k = self.k_features[1]
 
         if self.forward:
-            k_idx = self.fixed_features_
+            k_idx = tuple(sorted(self.fixed_features_group_set))
             k_stop = max_k
         else:
-            k_idx = tuple(range(X_.shape[1]))
+            k_idx = tuple(range(max_n_groups))
             k_stop = min_k
 
         k = len(k_idx)
         if k > 0:
             k_idx, k_score = _calc_score(
-                self, X_[:, k_idx], y, k_idx, groups=groups, **fit_params
+                self,
+                X_,
+                y,
+                k_idx,
+                groups=groups,
+                feature_groups=self.feature_groups,
+                **fit_params
             )
             self.subsets_[k] = {
                 "feature_idx": k_idx,
@@ -427,11 +492,10 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 "avg_score": np.nanmean(k_score),
             }
 
-        orig_set = set(range(X_.shape[1]))
+        orig_set = set(range(max_n_groups))
         best_subset = None
         k_score = 0
         try:
-            # alternatively: for _ in range(2 ** X.shape[1]): if k==k_stop: break
             while k != k_stop:
                 prev_subset = set(k_idx)
                 if self.forward:
@@ -439,7 +503,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     must_include_set = prev_subset
                 else:
                     search_set = prev_subset
-                    must_include_set = self.fixed_features_set_
+                    must_include_set = self.fixed_features_group_set
 
                 k_idx, k_score, cv_scores = self._feature_selector(
                     search_set,
@@ -448,6 +512,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     y=y,
                     is_forward=self.forward,
                     groups=groups,
+                    feature_groups=self.feature_groups,
                     **fit_params
                 )
 
@@ -470,7 +535,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     for _ in range(X_.shape[1]):
                         if (
                             self.forward
-                            and (len(k_idx) - len(self.fixed_features_)) <= 2
+                            and (len(k_idx) - len(self.fixed_features_group_set)) <= 2
                         ):
                             break
                         if not self.forward and (len(orig_set) - len(k_idx) <= 2):
@@ -483,7 +548,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                         else:
                             # corresponding to self.forward=True
                             search_set = set(k_idx)
-                            must_include_set = self.fixed_features_set_ | {
+                            must_include_set = self.fixed_features_group_set | {
                                 new_feature_idx
                             }
 
@@ -494,6 +559,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                             y=y,
                             is_forward=is_float_forward,
                             groups=groups,
+                            feature_groups=self.feature_groups,
                             **fit_params
                         )
 
@@ -531,7 +597,11 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
                 # just to test `KeyboardInterrupt`
                 if self._TESTING_INTERRUPT_MODE:
-                    self.k_feature_idx_ = k_idx
+                    for k in self.subsets_:
+                        self.subsets_[k]["feature_idx"] = _merge_lists(
+                            self.feature_groups, self.subsets_[k]["feature_idx"]
+                        )
+                    self.k_feature_idx_ = _merge_lists(self.feature_groups, k_idx)
                     self.k_score_ = k_score
                     self.subsets_, self.k_feature_names_ = _get_featurenames(
                         self.subsets_, self.k_feature_idx_, custom_feature_names, X
@@ -573,7 +643,11 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 k_score = max_score
                 k_idx = self.subsets_[best_subset]["feature_idx"]
 
-            self.k_feature_idx_ = k_idx
+            for k in self.subsets_:
+                self.subsets_[k]["feature_idx"] = _merge_lists(
+                    self.feature_groups, self.subsets_[k]["feature_idx"]
+                )
+            self.k_feature_idx_ = _merge_lists(self.feature_groups, k_idx)
             self.k_score_ = k_score
             self.subsets_, self.k_feature_names_ = _get_featurenames(
                 self.subsets_, self.k_feature_idx_, custom_feature_names, X
@@ -582,7 +656,15 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             return self
 
     def _feature_selector(
-        self, search_set, must_include_set, X, y, is_forward, groups=None, **fit_params
+        self,
+        search_set,
+        must_include_set,
+        X,
+        y,
+        is_forward,
+        groups=None,
+        feature_groups=None,
+        **fit_params
     ):
         """Perform one round of feature selection. When `is_forward=True`, it is
         a forward selection that searches the `search_set` to find one feature that
@@ -629,6 +711,9 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         """
         out = (None, None, None)
 
+        if feature_groups is None:
+            feature_groups = [[i] for i in range(X.shape[1])]
+
         remaining_set = search_set - must_include_set
         remaining = list(remaining_set)
         n = len(remaining)
@@ -645,10 +730,11 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             work = parallel(
                 delayed(_calc_score)(
                     self,
-                    X[:, tuple(set(p) | must_include_set)],
+                    X,
                     y,
                     tuple(set(p) | must_include_set),
                     groups=groups,
+                    feature_groups=feature_groups,
                     **fit_params
                 )
                 for p in feature_explorer

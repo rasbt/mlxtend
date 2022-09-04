@@ -10,12 +10,12 @@ from numpy.testing import assert_almost_equal
 from packaging.version import Version
 from sklearn import __version__ as sklearn_version
 from sklearn.datasets import load_boston, load_iris
+from sklearn.decomposition import PCA
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import accuracy_score, make_scorer, roc_auc_score
 from sklearn.model_selection import GridSearchCV, GroupKFold
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.decomposition import PCA
 from sklearn.pipeline import Pipeline
 
 from mlxtend.classifier import SoftmaxRegression
@@ -958,6 +958,7 @@ def test_invalid_k_features():
     sfs1 = SFS(lr, k_features="something", scoring="accuracy")
     expect = 'If a string argument is provided, it must be "best" or "parsimonious"'
     assert_raises(AttributeError, expect, sfs1.fit, X, y)
+
 
 def test_verbose():
 

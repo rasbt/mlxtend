@@ -250,7 +250,9 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
         if scoring is None:
             if not hasattr(self.est_, "_estimator_type"):
-                raise AttributeError("Estimator must have an ._estimator_type for infering `scoring`")
+                raise AttributeError(
+                    "Estimator must have an ._estimator_type for infering `scoring`"
+                )
 
             if self.est_._estimator_type == "classifier":
                 scoring = "accuracy"

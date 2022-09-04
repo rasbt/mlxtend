@@ -132,15 +132,19 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             If "parsimonious" is provided as an argument, the smallest
             feature subset that is within one standard error of the
             cross-validation performance will be selected.
+
     forward : bool (default: True)
         Forward selection if True,
         backward selection otherwise
+
     floating : bool (default: False)
         Adds a conditional exclusion/inclusion if True.
+
     verbose : int (default: 0), level of verbosity to use in logging.
         If 0, no output,
         if 1 number of features in current set, if 2 detailed logging i
         ncluding timestamp and cv scores at step.
+
     scoring : str, callable, or None (default: None)
         If None (default), uses 'accuracy' for sklearn classifiers
         and 'r2' for sklearn regressors.
@@ -152,14 +156,17 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         sklearn's signature ``scorer(estimator, X, y)``; see
         http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
         for more information.
+
     cv : int (default: 5)
         Integer or iterable yielding train, test splits. If cv is an integer
         and `estimator` is a classifier (or y consists of integer class
         labels) stratified k-fold. Otherwise regular k-fold cross-validation
         is performed. No cross-validation if cv is None, False, or 0.
+
     n_jobs : int (default: 1)
         The number of CPUs to use for evaluating different feature subsets
         in parallel. -1 means 'all CPUs'.
+
     pre_dispatch : int, or string (default: '2*n_jobs')
         Controls the number of jobs that get dispatched
         during parallel execution if `n_jobs > 1` or `n_jobs=-1`.
@@ -172,11 +179,13 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         An int, giving the exact number of total jobs that are spawned
         A string, giving an expression as a function
             of n_jobs, as in `2*n_jobs`
+
     clone_estimator : bool (default: True)
         Clones estimator if True; works with the original estimator instance
         if False. Set to False if the estimator doesn't
         implement scikit-learn's set_params and get_params methods.
         In addition, it is required to set cv=0, and n_jobs=1.
+
     fixed_features : tuple (default: None)
         If not `None`, the feature indices provided as a tuple will be
         regarded as fixed by the feature selector. For example, if
@@ -189,22 +198,32 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
     feature_groups : list or None (default: None)
         Optional argument for treating certain features as a group.
-        For example `[[1], [2], [3, 4, 5]]`, which can be useful for
+        This means, the features within a group are always selected together,
+        never split.
+        For example, `feature_groups=[[1], [2], [3, 4, 5]]`
+        specifies 3 feature groups.In this case,
+        possible feature selection results with `k_features=2`
+        are `[[1], [2]`, `[[1], [3, 4, 5]]`, or `[[2], [3, 4, 5]]`.
+        Feature groups can be useful for
         interpretability, for example, if features 3, 4, 5 are one-hot
-        encoded features.
+        encoded features.  (For  more details, please read the notes at the
+        bottom of this docstring).  New in mlxtend v. 0.21.0.
 
     Attributes
     ----------
     k_feature_idx_ : array-like, shape = [n_predictions]
         Feature Indices of the selected feature subsets.
+
     k_feature_names_ : array-like, shape = [n_predictions]
         Feature names of the selected feature subsets. If pandas
         DataFrames are used in the `fit` method, the feature
         names correspond to the column names. Otherwise, the
         feature names are string representation of the feature
         array indices. New in v 0.13.0.
+
     k_score_ : float
         Cross validation average score of the selected subset.
+
     subsets_ : dict
         A dictionary of selected feature subsets during the
         sequential selection, where the dictionary keys are
@@ -221,6 +240,24 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         correspond to the column names. Otherwise, the
         feature names are string representation of the feature
         array indices. The 'feature_names' is new in v 0.13.0.
+
+    Notes
+    -----
+    (1) If parameter `feature_groups` is not None, the
+    number of features is equal to the number of feature groups, i.e.
+    `len(feature_groups)`. For  example, if `feature_groups = [[0], [1], [2, 3],
+    [4]]`, then the `max_features` value cannot exceed 4.
+
+    (2) Although two or more individual features may be considered as one group
+    throughout the feature-selection process, it does not mean the individual
+    features of that group have the same impact on the outcome. For instance, in
+    linear regression, the coefficient of the feature 2 and 3 can be different
+    even if they are considered as one group in feature_groups.
+
+    (3) If both fixed_features and feature_groups are specified, ensure that each
+    feature group contains the fixed_features selection. E.g., for a 3-feature set
+    fixed_features=[0, 1] and feature_groups=[[0, 1], [2]] is valid;
+    fixed_features=[0, 1] and feature_groups=[[0], [1, 2]] is not valid.
 
     Examples
     -----------

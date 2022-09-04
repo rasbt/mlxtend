@@ -170,10 +170,16 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
     feature_groups : list or None (default: None)
         Optional argument for treating certain features as a group.
-        For example `[[1], [2], [3, 4, 5]]`, which can be useful for
+        This means, the features within a group are always selected together,
+        never split.
+        For example, `feature_groups=[[1], [2], [3, 4, 5]]`
+        specifies 3 feature groups.In this case,
+        possible feature selection results with `k_features=2`
+        are `[[1], [2]`, `[[1], [3, 4, 5]]`, or `[[2], [3, 4, 5]]`.
+        Feature groups can be useful for
         interpretability, for example, if features 3, 4, 5 are one-hot
-        encoded features.  (for  more details, please read the notes at the
-        bottom of this docstring).  New in v 0.21.0.
+        encoded features.  (For  more details, please read the notes at the
+        bottom of this docstring).  New in mlxtend v. 0.21.0.
 
     Attributes
     ----------
@@ -203,7 +209,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         DataFrames are used in the `fit` method, the 'feature_names'
         correspond to the column names. Otherwise, the
         feature names are string representation of the feature
-        array indices. The 'feature_names' is new in v 0.13.0.
+        array indices. The 'feature_names' is new in v. 0.13.0.
 
     Notes
     -----

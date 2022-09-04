@@ -402,7 +402,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             for idx in group:
                 features_groupID[idx] = id
 
-        lst = [features_groupID[idx] for idx in self.fixed_features]
+        lst = [features_groupID[idx] for idx in self.fixed_features_]
         self.fixed_features_group_set = set(lst)
 
         if custom_feature_names is not None and len(custom_feature_names) != X.shape[1]:

@@ -10,6 +10,7 @@ from numpy.testing import assert_almost_equal
 from packaging.version import Version
 from sklearn import __version__ as sklearn_version
 from sklearn.datasets import load_boston, load_iris
+from sklearn.decomposition import PCA
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import accuracy_score, make_scorer, roc_auc_score
@@ -910,3 +911,61 @@ def test_custom_feature_names():
     assert sfs1.k_feature_idx_ == (1, 3)
     assert sfs1.k_feature_names_ == ("sepal width", "petal width")
     assert sfs1.subsets_[2]["feature_names"] == ("sepal width", "petal width")
+
+
+def test_invalid_estimator():
+    expect = "Estimator must have an ._estimator_type for infering `scoring`"
+    assert_raises(AttributeError, expect, SFS, PCA())
+
+    class PCA2(PCA):
+        def __init__(self):
+            super().__init__()
+            self._estimator_type = "something"
+
+    expect = "Estimator must be a Classifier or Regressor."
+    assert_raises(AttributeError, expect, SFS, PCA2())
+
+
+def test_invalid_feature_name_length():
+
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    lr = SoftmaxRegression(random_seed=1)
+    sfs1 = SFS(lr, scoring="accuracy")
+
+    custom_feature_names = (
+        "sepal length",
+        "sepal width",
+        "petal length",
+    )
+    expect = "If custom_feature_names is not None, the number of elements in custom_feature_names must equal the number of columns in X"
+
+    assert_raises(ValueError, expect, sfs1.fit, X, y, custom_feature_names)
+
+
+def test_invalid_k_features():
+
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    lr = SoftmaxRegression(random_seed=1)
+
+    sfs1 = SFS(lr, k_features=(1, 2, 3), scoring="accuracy")
+    expect = "k_features tuple must consist of 2 elements, a min and a max value."
+    assert_raises(AttributeError, expect, sfs1.fit, X, y)
+
+    sfs1 = SFS(lr, k_features="something", scoring="accuracy")
+    expect = 'If a string argument is provided, it must be "best" or "parsimonious"'
+    assert_raises(AttributeError, expect, sfs1.fit, X, y)
+
+
+def test_verbose():
+
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    lr = SoftmaxRegression(random_seed=1)
+
+    sfs1 = SFS(lr, k_features=1, scoring="accuracy", verbose=1)
+    sfs1.fit(X, y)

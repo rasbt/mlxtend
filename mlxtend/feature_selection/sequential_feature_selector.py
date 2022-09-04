@@ -295,12 +295,17 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self.scoring = scoring
 
         if scoring is None:
+            if not hasattr(self.est_, "_estimator_type"):
+                raise AttributeError(
+                    "Estimator must have an ._estimator_type for infering `scoring`"
+                )
+
             if self.est_._estimator_type == "classifier":
                 scoring = "accuracy"
             elif self.est_._estimator_type == "regressor":
                 scoring = "r2"
             else:
-                raise AttributeError("Estimator must " "be a Classifier or Regressor.")
+                raise AttributeError("Estimator must be a Classifier or Regressor.")
         if isinstance(scoring, str):
             self.scorer = get_scorer(scoring)
         else:
@@ -428,7 +433,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             if len(self.k_features) != 2:
                 raise AttributeError(
                     "k_features tuple must consist of 2"
-                    " elements a min and a max value."
+                    " elements, a min and a max value."
                 )
 
             if self.k_features[0] not in range(1, X_.shape[1] + 1):

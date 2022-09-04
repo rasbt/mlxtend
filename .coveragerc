@@ -1,9 +1,0 @@
-[run]
-branch = True
-source = mlxtend
-include = */mlxtend/*
-omit =
-    */mlxtend/data/*
-    */mlxtend/general_plotting/*
-    */mlxtend/externals/*
-    */setup.py

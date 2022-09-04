@@ -187,6 +187,12 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         In other words, ensure that `k_features > len(fixed_features)`.
         New in mlxtend v. 0.18.0.
 
+    feature_groups : list or None (default: None)
+        Optional argument for treating certain features as a group.
+        For example `[[1], [2], [3, 4, 5]]`, which can be useful for
+        interpretability, for example, if features 3, 4, 5 are one-hot
+        encoded features.
+
     Attributes
     ----------
     k_feature_idx_ : array-like, shape = [n_predictions]
@@ -202,7 +208,9 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
     subsets_ : dict
         A dictionary of selected feature subsets during the
         sequential selection, where the dictionary keys are
-        the lengths k of these feature subsets. The dictionary
+        the lengths k of these feature subsets. If the parameter
+        `feature_groups` is not None, the value of key indicates
+        the number of groups that are selected together. The dictionary
         values are dictionaries themselves with the following
         keys: 'feature_idx' (tuple of indices of the feature subset)
               'feature_names' (tuple of feature names of the feat. subset)
@@ -703,6 +711,9 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         groups : array-like, with shape (n_samples,), optional
             Group labels for the samples used while splitting the dataset into
             train/test set. Passed to the fit method of the cross-validator.
+
+        feature_groups : list or None (default: None)
+            Optional argument for treating certain features as a group.
 
         fit_params : various, optional
             Additional parameters that are being passed to the estimator.

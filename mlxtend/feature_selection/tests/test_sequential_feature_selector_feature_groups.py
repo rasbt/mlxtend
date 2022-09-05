@@ -4,21 +4,14 @@
 #
 # License: BSD 3 clause
 import numpy as np
-import pandas as pd
 from numpy import nan
 from numpy.testing import assert_almost_equal
-from packaging.version import Version
-from sklearn import __version__ as sklearn_version
 from sklearn.datasets import load_boston, load_iris
-from sklearn.decomposition import PCA
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import accuracy_score, make_scorer, roc_auc_score
-from sklearn.model_selection import GridSearchCV, GroupKFold
+from sklearn.metrics import roc_auc_score
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.pipeline import Pipeline
 
-from mlxtend.classifier import SoftmaxRegression
 from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 from mlxtend.utils import assert_raises
 

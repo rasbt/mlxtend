@@ -939,7 +939,10 @@ def test_invalid_feature_name_length():
         "sepal width",
         "petal length",
     )
-    expect = "If custom_feature_names is not None, the number of elements in custom_feature_names must equal the number of columns in X"
+    expect = (
+        "If custom_feature_names is not None, the number "
+        "of elements in custom_feature_names must equal the number of columns in X"
+    )
 
     assert_raises(ValueError, expect, sfs1.fit, X, y, custom_feature_names)
 

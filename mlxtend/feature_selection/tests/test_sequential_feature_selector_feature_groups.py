@@ -16,15 +16,6 @@ from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 from mlxtend.utils import assert_raises
 
 
-def nan_roc_auc_score(y_true, y_score, average="macro", sample_weight=None):
-    if len(np.unique(y_true)) != 2:
-        return np.nan
-    else:
-        return roc_auc_score(
-            y_true, y_score, average=average, sample_weight=sample_weight
-        )
-
-
 def dict_compare_utility(d_actual, d_desired, decimal=3):
     assert d_actual.keys() == d_desired.keys(), "%s != %s" % (d_actual, d_desired)
     for i in d_actual:

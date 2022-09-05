@@ -647,15 +647,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
                 # just to test `KeyboardInterrupt`
                 if self._TESTING_INTERRUPT_MODE:
-                    for k in self.subsets_:
-                        self.subsets_[k]["feature_idx"] = _merge_lists(
-                            self.feature_groups, self.subsets_[k]["feature_idx"]
-                        )
-                    self.k_feature_idx_ = _merge_lists(self.feature_groups, k_idx)
-                    self.k_score_ = k_score
-                    self.subsets_, self.k_feature_names_ = _get_featurenames(
-                        self.subsets_, self.k_feature_idx_, custom_feature_names, X
-                    )
                     raise KeyboardInterrupt
 
         except KeyboardInterrupt:
@@ -663,6 +654,16 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             sys.stderr.write("\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...")
 
         if self.interrupted_:
+            for k in self.subsets_:
+                self.subsets_[k]["feature_idx"] = _merge_lists(
+                    self.feature_groups, self.subsets_[k]["feature_idx"]
+                )
+            self.k_feature_idx_ = _merge_lists(self.feature_groups, k_idx)
+            self.k_score_ = k_score
+            self.subsets_, self.k_feature_names_ = _get_featurenames(
+                self.subsets_, self.k_feature_idx_, custom_feature_names, X
+            )
+
             return self
         else:
             self.fitted = True  # the completion of sequential selection process.

@@ -473,10 +473,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
         """
         self._check_fitted()
-        if hasattr(X, "loc"):
-            X_ = X.values
-        else:
-            X_ = X
+        X_, _ = _preprocess(X)
         return X_[:, self.best_idx_]
 
     def fit_transform(self, X, y, groups=None, **fit_params):

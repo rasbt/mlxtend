@@ -346,25 +346,88 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         if self.fixed_features_ is None:
             self.fixed_features_ = tuple()
 
-        # In the future, try to make this approach and exaustive module the same
-        # for the sake of refactorign
-        self.fixed_features_ = tuple(
-            self.feature_names_to_idx_mapper[c] if isinstance(c, str) else c
-            for c in self.fixed_features_
-        )
+        fixed_feature_types = {type(i) for i in self.fixed_features_}
+        if len(fixed_feature_types) > 1:
+            raise ValueError(
+                f"fixed_features values must have the same type. Found {fixed_feature_types}."
+            )
 
-        self.fixed_features_set_ = set(self.fixed_features_)
+        if len(self.fixed_features_) > 0 and isinstance(self.fixed_features_[0], str):
+            if self.feature_names_to_idx_mapper is None:
+                raise ValueError(
+                    "The input X does not contain name of features provived in"
+                    " `fixed_features`. Try passing input X as pandas DataFrames."
+                )
+
+            self.fixed_features_ = tuple(
+                self.feature_names_to_idx_mapper[name] for name in self.fixed_features_
+            )
+
+        if not set(self.fixed_features_).issubset(set(range(X_.shape[1]))):
+            raise ValueError(
+                "`fixed_features` contains at least one feature that is not in the"
+                " input data `X`."
+            )
 
         if self.feature_groups is None:
             self.feature_groups = [[i] for i in range(X_.shape[1])]
 
-        features_group_id = np.full(X_.shape[1], -1, dtype=np.int64)
+        for fg in self.feature_groups:
+            if len(fg) == 0:
+                raise ValueError(
+                    "Each list in the nested lists `features_group` cannot be empty"
+                )
+
+        feature_group_types = {
+            type(i) for sublist in self.feature_groups for i in sublist
+        }
+        if len(feature_group_types) > 1:
+            raise ValueError(
+                f"feature_group values must have the same type. Found {feature_group_types}."
+            )
+
+        if isinstance(self.feature_groups[0][0], str):
+            if self.feature_names_to_idx_mapper is None:
+                raise ValueError(
+                    "The input X does not contain name of features provived in"
+                    " `feature_groups`. Try passing input X as pandas DataFrames"
+                    " in which the name of features match the ones provided in"
+                    " `feature_groups`"
+                )
+
+            lst = []
+            for item in self.feature_groups:
+                tmp = [self.feature_names_to_idx_mapper[name] for name in item]
+                lst.append(tmp)
+
+            self.feature_groups = lst
+
+        if sorted(_merge_lists(self.feature_groups)) != sorted(
+            list(range(X_.shape[1]))
+        ):
+            raise ValueError(
+                "`feature_group` must contain all features within `range(X.shape[1])`"
+                " and there should be no common feature betweeen any two distinct"
+                " group of features provided in `feature_group`"
+            )
+
+        features_encoded_by_groupID = np.full(X_.shape[1], -1, dtype=np.int64)
         for group_id, group in enumerate(self.feature_groups):
             for idx in group:
-                features_group_id[idx] = group_id
+                features_encoded_by_groupID[idx] = group_id
 
-        lst = [features_group_id[idx] for idx in self.fixed_features_]
+        lst = [features_encoded_by_groupID[idx] for idx in self.fixed_features_]
         self.fixed_features_group_set = set(lst)
+
+        n_fixed_features_expected = sum(
+            len(self.feature_groups[id]) for id in self.fixed_features_group_set
+        )
+        if n_fixed_features_expected != len(self.fixed_features_):
+            raise ValueError(
+                "For each feature specified in the `fixed feature`, its group-mates"
+                "must be specified as `fix_features` as well when `feature_groups`"
+                "is provided."
+            )
 
         if (
             not isinstance(self.k_features, int)
@@ -443,7 +506,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 k_idx,
                 groups=groups,
                 feature_groups=self.feature_groups,
-                **fit_params
+                **fit_params,
             )
             self.subsets_[k] = {
                 "feature_idx": k_idx,
@@ -472,7 +535,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     is_forward=self.forward,
                     groups=groups,
                     feature_groups=self.feature_groups,
-                    **fit_params
+                    **fit_params,
                 )
 
                 k = len(k_idx)
@@ -519,7 +582,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                             is_forward=is_float_forward,
                             groups=groups,
                             feature_groups=self.feature_groups,
-                            **fit_params
+                            **fit_params,
                         )
 
                         if k_score_c <= k_score:
@@ -624,7 +687,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         is_forward,
         groups=None,
         feature_groups=None,
-        **fit_params
+        **fit_params,
     ):
         """Perform one round of feature selection. When `is_forward=True`, it is
         a forward selection that searches the `search_set` to find one feature that
@@ -698,7 +761,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     tuple(set(p) | must_include_set),
                     groups=groups,
                     feature_groups=feature_groups,
-                    **fit_params
+                    **fit_params,
                 )
                 for p in feature_explorer
             )

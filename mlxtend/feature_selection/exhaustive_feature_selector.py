@@ -303,7 +303,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 tmp = [self.feature_names_to_idx_mapper[name] for name in item]
                 lst.append(tmp)
 
-            self.feature_groups[:] = lst
+            self.feature_groups = lst
 
         if sorted(_merge_lists(self.feature_groups)) != sorted(
             list(range(X_.shape[1]))

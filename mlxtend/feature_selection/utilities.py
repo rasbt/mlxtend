@@ -58,19 +58,35 @@ def _calc_score(
     y : numpy.ndarray
         A 1D array consiting of tartget values
 
-    indices :
+    indices : list or tuple
+        A list or tuple of interger numbers. When `feature_groups` is not provided,
+        i.e. None (default), the values in indices represent the column indices of
+        X that should be consdered throughout the calculation of cross validation
+        score. When `feature_groups` is not None, the indices represent the indices
+        of the groups of features that should be considered through the calculation
+        of cross-validation score.
 
-    groups :
+    groups : array-like, with shape (n_samples,), optional
+        Group labels for the samples used while splitting the dataset into
+        train/test set. Passed to the fit method of the cross-validator.
 
-    feature_groups :
+    feature_groups : list or None (default: None)
+        Optional argument for treating certain features as a group.
+        This means, the features within a group are always selected together,
+        never split.
+        For example, `feature_groups=[[1], [2], [3, 4, 5]]`
+        specifies 3 feature groups.e
 
-    **fit_params :
+    fit_params : dict of string -> object, optional
+        Parameters to pass to to the fit method of classifier.
 
     Returns
     -------
-    indices :
+    indices : List or tuple
+        This is exactly the same as the input `indices`
 
-    scores :
+    scores : array
+        This is an array of cv scores, with length equal to the cv value.
     """
     if feature_groups is None:
         feature_groups = [[i] for i in range(X.shape[1])]

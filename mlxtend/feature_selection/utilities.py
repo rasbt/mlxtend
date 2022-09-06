@@ -42,6 +42,36 @@ def _merge_lists(nested_list, high_level_indices=None):
 def _calc_score(
     selector, X, y, indices, groups=None, feature_groups=None, **fit_params
 ):
+    """
+    calculate the cross-validation score for feature data `X` and target variable
+     `y`.
+
+    Parameters
+    ---------
+    selector : objcet with attributes est_` (estimator), `cv` (number of folds
+    in cross-validation), and `pre_dispatch`()
+
+    X : numpy.ndarray
+        A 2D array consisting of feature data, where each column corresponds to
+        one feature, and each row corresponds to one instance (or observation)
+
+    y : numpy.ndarray
+        A 1D array consiting of tartget values
+
+    indices :
+
+    groups :
+
+    feature_groups :
+
+    **fit_params :
+
+    Returns
+    -------
+    indices :
+
+    scores :
+    """
     if feature_groups is None:
         feature_groups = [[i] for i in range(X.shape[1])]
 
@@ -82,7 +112,6 @@ def _preprocess(X):
         A list consisting of name of features. When `X` is a DataFrame, it contains
         the name of columns. If it is a 2D array, features_names[i] is str(i).
     """
-
     if X.ndim != 2:
         raise ValueError(f"The input X must be 2D array. Got {X.ndim}")
 

@@ -24,23 +24,25 @@ from ..externals.name_estimators import _name_estimators
 from .utilities import _calc_score, _merge_lists, _preprocess
 
 
-def _get_featurenames(subsets_dict, feature_idx, X):
-    feature_names = None
-    if feature_idx is not None:
-        if hasattr(X, "loc"):
-            feature_names = tuple((X.columns[i] for i in feature_idx))
-        else:
-            feature_names = tuple(str(i) for i in feature_idx)
+def _get_featurenames(subsets_dict, feature_idx, X, feature_names=None):
+    """
+    X is numpy.ndarray
+    """
+    if feature_names is None or len(feature_names) == 0:
+        feature_names = [str(i) for i in range(X.shape[1])]
 
     subsets_dict_ = deepcopy(subsets_dict)
     for key in subsets_dict_:
-        if hasattr(X, "loc"):
-            new_tuple = tuple((X.columns[i] for i in subsets_dict[key]["feature_idx"]))
-        else:
-            new_tuple = tuple(str(i) for i in subsets_dict[key]["feature_idx"])
-        subsets_dict_[key]["feature_names"] = new_tuple
+        subsets_dict_[key]["feature_names"] = tuple(
+            feature_names[idx] for idx in subsets_dict[key]["feature_idx"]
+        )
 
-    return subsets_dict_, feature_names
+    if feature_idx is None:
+        feature_idx_names = None
+    else:
+        feature_idx_names = tuple(feature_names[idx] for idx in feature_idx)
+
+    return subsets_dict_, feature_idx_names
 
 
 class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
@@ -451,7 +453,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
                 if self._TESTING_INTERRUPT_MODE:
                     self.subsets_, self.best_feature_names_ = _get_featurenames(
-                        self.subsets_, self.best_idx_, X
+                        self.subsets_, self.best_idx_, X_, self.feature_names
                     )
                     raise KeyboardInterrupt
 
@@ -471,7 +473,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.best_score_ = score
         self.fitted = True
         self.subsets_, self.best_feature_names_ = _get_featurenames(
-            self.subsets_, self.best_idx_, X
+            self.subsets_, self.best_idx_, X_, self.feature_names
         )
         return self
 

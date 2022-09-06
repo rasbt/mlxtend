@@ -24,29 +24,25 @@ from ..utils.base_compostion import _BaseXComposition
 from .utilities import _calc_score, _merge_lists, _preprocess
 
 
-def _get_featurenames(subsets_dict, feature_idx, custom_feature_names, X):
-    feature_names = None
-    if feature_idx is not None:
-        if custom_feature_names is not None:
-            feature_names = tuple((custom_feature_names[i] for i in feature_idx))
-        elif hasattr(X, "loc"):
-            feature_names = tuple((X.columns[i] for i in feature_idx))
-        else:
-            feature_names = tuple(str(i) for i in feature_idx)
+def _get_featurenames(subsets_dict, feature_idx, X, feature_names):
+    """
+    X is numpy.ndarray
+    """
+    if feature_names is None or len(feature_names) == 0:
+        feature_names = [str(i) for i in range(X.shape[1])]
 
     subsets_dict_ = deepcopy(subsets_dict)
     for key in subsets_dict_:
-        if custom_feature_names is not None:
-            new_tuple = tuple(
-                (custom_feature_names[i] for i in subsets_dict[key]["feature_idx"])
-            )
-        elif hasattr(X, "loc"):
-            new_tuple = tuple((X.columns[i] for i in subsets_dict[key]["feature_idx"]))
-        else:
-            new_tuple = tuple(str(i) for i in subsets_dict[key]["feature_idx"])
-        subsets_dict_[key]["feature_names"] = new_tuple
+        subsets_dict_[key]["feature_names"] = tuple(
+            feature_names[idx] for idx in subsets_dict[key]["feature_idx"]
+        )
 
-    return subsets_dict_, feature_names
+    if feature_idx is None:
+        feature_idx_names = None
+    else:
+        feature_idx_names = tuple(feature_names[idx] for idx in feature_idx)
+
+    return subsets_dict_, feature_idx_names
 
 
 class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
@@ -327,7 +323,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self._set_params("estimator", "named_estimators", **params)
         return self
 
-    def fit(self, X, y, custom_feature_names=None, groups=None, **fit_params):
+    def fit(self, X, y, groups=None, **fit_params):
         """Perform feature selection and learn model from training data.
 
         Parameters
@@ -341,10 +337,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             Target values.
             New in v 0.13.0: pandas DataFrames are now also accepted as
             argument for y.
-        custom_feature_names : None or tuple (default: tuple)
-            Custom feature names for `self.k_feature_names` and
-            `self.subsets_[i]['feature_names']`.
-            (new in v 0.13.0)
         groups : array-like, with shape (n_samples,), optional
             Group labels for the samples used while splitting the dataset into
             train/test set. Passed to the fit method of the cross-validator.
@@ -395,13 +387,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
         lst = [features_group_id[idx] for idx in self.fixed_features_]
         self.fixed_features_group_set = set(lst)
-
-        if custom_feature_names is not None and len(custom_feature_names) != X.shape[1]:
-            raise ValueError(
-                "If custom_feature_names is not None, "
-                "the number of elements in custom_feature_names "
-                "must equal the number of columns in X."
-            )
 
         if (
             not isinstance(self.k_features, int)
@@ -607,7 +592,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             self.k_feature_idx_ = _merge_lists(self.feature_groups, k_idx)
             self.k_score_ = k_score
             self.subsets_, self.k_feature_names_ = _get_featurenames(
-                self.subsets_, self.k_feature_idx_, custom_feature_names, X
+                self.subsets_, self.k_feature_idx_, X_, self.feature_names
             )
 
             return self
@@ -647,7 +632,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             self.k_feature_idx_ = _merge_lists(self.feature_groups, k_idx)
             self.k_score_ = k_score
             self.subsets_, self.k_feature_names_ = _get_featurenames(
-                self.subsets_, self.k_feature_idx_, custom_feature_names, X
+                self.subsets_, self.k_feature_idx_, X_, self.feature_names
             )
 
             return self

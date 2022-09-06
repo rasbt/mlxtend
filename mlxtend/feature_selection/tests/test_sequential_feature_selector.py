@@ -881,38 +881,6 @@ def test_check_pandas_dataframe_transform():
     assert (150, 2) == sfs1.transform(df).shape
 
 
-def test_custom_feature_names():
-
-    iris = load_iris()
-    X = iris.data
-    y = iris.target
-    lr = SoftmaxRegression(random_seed=1)
-    sfs1 = SFS(
-        lr,
-        k_features=2,
-        forward=True,
-        floating=False,
-        scoring="accuracy",
-        cv=0,
-        verbose=0,
-        n_jobs=1,
-    )
-
-    sfs1 = sfs1.fit(
-        X,
-        y,
-        custom_feature_names=(
-            "sepal length",
-            "sepal width",
-            "petal length",
-            "petal width",
-        ),
-    )
-    assert sfs1.k_feature_idx_ == (1, 3)
-    assert sfs1.k_feature_names_ == ("sepal width", "petal width")
-    assert sfs1.subsets_[2]["feature_names"] == ("sepal width", "petal width")
-
-
 def test_invalid_estimator():
     expect = "Estimator must have an ._estimator_type for infering `scoring`"
     assert_raises(AttributeError, expect, SFS, PCA())
@@ -924,27 +892,6 @@ def test_invalid_estimator():
 
     expect = "Estimator must be a Classifier or Regressor."
     assert_raises(AttributeError, expect, SFS, PCA2())
-
-
-def test_invalid_feature_name_length():
-
-    iris = load_iris()
-    X = iris.data
-    y = iris.target
-    lr = SoftmaxRegression(random_seed=1)
-    sfs1 = SFS(lr, scoring="accuracy")
-
-    custom_feature_names = (
-        "sepal length",
-        "sepal width",
-        "petal length",
-    )
-    expect = (
-        "If custom_feature_names is not None, the number "
-        "of elements in custom_feature_names must equal the number of columns in X"
-    )
-
-    assert_raises(ValueError, expect, sfs1.fit, X, y, custom_feature_names)
 
 
 def test_invalid_k_features():

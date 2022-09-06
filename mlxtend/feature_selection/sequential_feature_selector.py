@@ -21,7 +21,7 @@ from sklearn.metrics import get_scorer
 
 from ..externals.name_estimators import _name_estimators
 from ..utils.base_compostion import _BaseXComposition
-from .utilities import _calc_score, _merge_lists
+from .utilities import _calc_score, _merge_lists, _preprocess
 
 
 def _get_featurenames(subsets_dict, feature_idx, custom_feature_names, X):
@@ -367,14 +367,24 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self.k_score_ = None
 
         self.fixed_features_ = self.fixed_features
-        if hasattr(X, "loc"):
-            X_ = X.values
-            self.fixed_features_ = tuple(
-                X.columns.get_loc(c) if isinstance(c, str) else c
-                for c in self.fixed_features_
-            )
-        else:
-            X_ = X
+
+        X_, self.feature_names = _preprocess(X)
+
+        self.feature_names_to_idx_mapper = None
+        if self.feature_names is not None:
+            # we do not need this `if` because features_names is ['0', '1', ...]
+            # when X is numpy array. So, it is always not None.
+            self.feature_names_to_idx_mapper = {
+                name: idx for idx, name in enumerate(self.feature_names)
+            }
+
+        # In the future, try to make this approach and exaustive module the same
+        # for the sake of refactorign
+        self.fixed_features_ = tuple(
+            self.feature_names_to_idx_mapper[c] if isinstance(c, str) else c
+            for c in self.fixed_features_
+        )
+
         self.fixed_features_set_ = set(self.fixed_features_)
 
         if self.feature_groups is None:

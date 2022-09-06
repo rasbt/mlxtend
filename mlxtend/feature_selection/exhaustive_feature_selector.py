@@ -21,7 +21,7 @@ from sklearn.base import BaseEstimator, MetaEstimatorMixin, clone
 from sklearn.metrics import get_scorer
 
 from ..externals.name_estimators import _name_estimators
-from .utilities import _calc_score, _merge_lists
+from .utilities import _calc_score, _merge_lists, _preprocess
 
 
 def _get_featurenames(subsets_dict, feature_idx, X):
@@ -256,11 +256,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.best_feature_names_ = None
         self.best_score_ = None
 
-        if hasattr(X, "loc"):
-            X_ = X.values
-            self.feature_names = list(X.columns)
-        else:
-            X_ = X
+        X_, self.feature_names = _preprocess(X)
 
         self.feature_names_to_idx_mapper = None
         if self.feature_names is not None:

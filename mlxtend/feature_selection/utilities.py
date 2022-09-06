@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 import numpy as np
 from sklearn.model_selection import cross_val_score
 
@@ -140,3 +142,24 @@ def _preprocess(X):
         X_ = X.copy()
 
     return X_, features_names
+
+
+def _get_featurenames(subsets_dict, feature_idx, X, feature_names=None):
+    """
+    X is numpy.ndarray
+    """
+    if feature_names is None or len(feature_names) == 0:
+        feature_names = [str(i) for i in range(X.shape[1])]
+
+    subsets_dict_ = deepcopy(subsets_dict)
+    for key in subsets_dict_:
+        subsets_dict_[key]["feature_names"] = tuple(
+            feature_names[idx] for idx in subsets_dict[key]["feature_idx"]
+        )
+
+    if feature_idx is None:
+        feature_idx_names = None
+    else:
+        feature_idx_names = tuple(feature_names[idx] for idx in feature_idx)
+
+    return subsets_dict_, feature_idx_names

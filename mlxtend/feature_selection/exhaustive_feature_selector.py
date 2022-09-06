@@ -19,29 +19,9 @@ import scipy.stats
 from joblib import Parallel, delayed
 from sklearn.base import BaseEstimator, MetaEstimatorMixin, clone
 from sklearn.metrics import get_scorer
-from sklearn.model_selection import cross_val_score
 
 from ..externals.name_estimators import _name_estimators
-from .utilities import _merge_lists
-
-
-def _calc_score(selector, X, y, indices, groups=None, **fit_params):
-    if selector.cv:
-        scores = cross_val_score(
-            selector.est_,
-            X[:, indices],
-            y,
-            groups=groups,
-            cv=selector.cv,
-            scoring=selector.scorer,
-            n_jobs=1,
-            pre_dispatch=selector.pre_dispatch,
-            fit_params=fit_params,
-        )
-    else:
-        selector.est_.fit(X[:, indices], y, **fit_params)
-        scores = np.array([selector.scorer(selector.est_, X[:, indices], y)])
-    return indices, scores
+from .utilities import _calc_score, _merge_lists
 
 
 def _get_featurenames(subsets_dict, feature_idx, X):
@@ -452,11 +432,9 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                     self,
                     X_,
                     y,
-                    _merge_lists(
-                        self.feature_groups,
-                        list(set(c).union(self.fixed_features_group_set)),
-                    ),
+                    list(set(c).union(self.fixed_features_group_set)),
                     groups=groups,
+                    feature_groups=self.feature_groups,
                     **fit_params,
                 )
                 for c in candidates
@@ -464,9 +442,9 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         )
 
         try:
-            for iteration, (c, cv_scores) in work:
+            for iteration, (indices, cv_scores) in work:
                 self.subsets_[iteration] = {
-                    "feature_idx": c,
+                    "feature_idx": _merge_lists(self.feature_groups, indices),
                     "cv_scores": cv_scores,
                     "avg_score": np.mean(cv_scores),
                 }

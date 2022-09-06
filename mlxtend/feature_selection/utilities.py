@@ -1,3 +1,7 @@
+import numpy as np
+from sklearn.model_selection import cross_val_score
+
+
 def _merge_lists(nested_list, high_level_indices=None):
     """
     merge elements of lists (of a nested_list) into one single tuple with elements
@@ -33,3 +37,28 @@ def _merge_lists(nested_list, high_level_indices=None):
         out.extend(nested_list[idx])
 
     return tuple(sorted(out))
+
+
+def _calc_score(
+    selector, X, y, indices, groups=None, feature_groups=None, **fit_params
+):
+    if feature_groups is None:
+        feature_groups = [[i] for i in range(X.shape[1])]
+
+    IDX = _merge_lists(feature_groups, indices)
+    if selector.cv:
+        scores = cross_val_score(
+            selector.est_,
+            X[:, IDX],
+            y,
+            groups=groups,
+            cv=selector.cv,
+            scoring=selector.scorer,
+            n_jobs=1,
+            pre_dispatch=selector.pre_dispatch,
+            fit_params=fit_params,
+        )
+    else:
+        selector.est_.fit(X[:, IDX], y, **fit_params)
+        scores = np.array([selector.scorer(selector.est_, X[:, IDX], y)])
+    return indices, scores

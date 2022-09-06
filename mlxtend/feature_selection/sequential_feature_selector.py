@@ -18,36 +18,10 @@ import scipy.stats
 from joblib import Parallel, delayed
 from sklearn.base import MetaEstimatorMixin, clone
 from sklearn.metrics import get_scorer
-from sklearn.model_selection import cross_val_score
 
 from ..externals.name_estimators import _name_estimators
 from ..utils.base_compostion import _BaseXComposition
-from .utilities import _merge_lists
-
-
-def _calc_score(
-    selector, X, y, indices, groups=None, feature_groups=None, **fit_params
-):
-    if feature_groups is None:
-        feature_groups = [[i] for i in range(X.shape[1])]
-
-    IDX = _merge_lists(feature_groups, indices)
-    if selector.cv:
-        scores = cross_val_score(
-            selector.est_,
-            X[:, IDX],
-            y,
-            groups=groups,
-            cv=selector.cv,
-            scoring=selector.scorer,
-            n_jobs=1,
-            pre_dispatch=selector.pre_dispatch,
-            fit_params=fit_params,
-        )
-    else:
-        selector.est_.fit(X[:, IDX], y, **fit_params)
-        scores = np.array([selector.scorer(selector.est_, X[:, IDX], y)])
-    return indices, scores
+from .utilities import _calc_score, _merge_lists
 
 
 def _get_featurenames(subsets_dict, feature_idx, custom_feature_names, X):

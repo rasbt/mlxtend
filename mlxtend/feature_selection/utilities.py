@@ -62,3 +62,36 @@ def _calc_score(
         selector.est_.fit(X[:, IDX], y, **fit_params)
         scores = np.array([selector.scorer(selector.est_, X[:, IDX], y)])
     return indices, scores
+
+
+def _preprocess(X):
+    """
+    Check if X is a DataFrame or not, and returns numpy ndarray and name of features.
+
+    Parameters
+    ----------
+    X : DataFrame or numpy.ndarray
+        A DataFrame or a 2D numpy.ndarray
+
+    Returns
+    -------
+    X_ : numpy.ndarray
+        A 2D array that is equivalanet to X.to_numpy()
+
+    features_names : List
+        A list consisting of name of features. When `X` is a DataFrame, it contains
+        the name of columns. If it is a 2D array, features_names[i] is str(i).
+    """
+
+    if X.ndim != 2:
+        raise ValueError(f"The input X must be 2D array. Got {X.ndim}")
+
+    if type(X).__name__ == "DataFrame":
+        features_names = list(X.columns)
+        X_ = X.to_numpy(copy=True)
+    else:
+        # it is numpy array
+        features_names = [str(i) for i in range(X.shape[1])]
+        X_ = X.copy()
+
+    return X_, features_names

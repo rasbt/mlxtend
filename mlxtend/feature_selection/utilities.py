@@ -126,7 +126,7 @@ def _preprocess(X):
 
     features_names : List
         A list consisting of name of features. When `X` is a DataFrame, it contains
-        the name of columns. If it is a 2D array, features_names[i] is str(i).
+        the name of columns. If it is a 2D array, it is None.
     """
     if X.ndim != 2:
         raise ValueError(f"The input X must be 2D array. Got {X.ndim}")
@@ -136,7 +136,7 @@ def _preprocess(X):
         X_ = X.to_numpy(copy=True)
     else:
         # it is numpy array
-        features_names = [str(i) for i in range(X.shape[1])]
+        features_names = None
         X_ = X.copy()
 
     return X_, features_names

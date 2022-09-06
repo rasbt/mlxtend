@@ -372,8 +372,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
         self.feature_names_to_idx_mapper = None
         if self.feature_names is not None:
-            # we do not need this `if` because features_names is ['0', '1', ...]
-            # when X is numpy array. So, it is always not None.
             self.feature_names_to_idx_mapper = {
                 name: idx for idx, name in enumerate(self.feature_names)
             }

@@ -245,27 +245,28 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 name: idx for idx, name in enumerate(self.feature_names)
             }
 
-        if self.fixed_features is None:
-            self.fixed_features = tuple()
+        self.fixed_features_ = self.fixed_features
+        if self.fixed_features_ is None:
+            self.fixed_features_ = tuple()
 
-        fixed_feature_types = {type(i) for i in self.fixed_features}
+        fixed_feature_types = {type(i) for i in self.fixed_features_}
         if len(fixed_feature_types) > 1:
             raise ValueError(
                 f"fixed_features values must have the same type. Found {fixed_feature_types}."
             )
 
-        if len(self.fixed_features) > 0 and isinstance(self.fixed_features[0], str):
+        if len(self.fixed_features_) > 0 and isinstance(self.fixed_features_[0], str):
             if self.feature_names_to_idx_mapper is None:
                 raise ValueError(
                     "The input X does not contain name of features provived in"
                     " `fixed_features`. Try passing input X as pandas DataFrames."
                 )
 
-            self.fixed_features = tuple(
-                self.feature_names_to_idx_mapper[name] for name in self.fixed_features
+            self.fixed_features_ = tuple(
+                self.feature_names_to_idx_mapper[name] for name in self.fixed_features_
             )
 
-        if not set(self.fixed_features).issubset(set(range(X_.shape[1]))):
+        if not set(self.fixed_features_).issubset(set(range(X_.shape[1]))):
             raise ValueError(
                 "`fixed_features` contains at least one feature that is not in the"
                 " input data `X`."
@@ -321,13 +322,13 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             for idx in group:
                 features_encoded_by_groupID[idx] = id
 
-        lst = [features_encoded_by_groupID[idx] for idx in self.fixed_features]
+        lst = [features_encoded_by_groupID[idx] for idx in self.fixed_features_]
         self.fixed_features_group_set = set(lst)
 
         n_fixed_features_expected = sum(
             len(self.feature_groups[id]) for id in self.fixed_features_group_set
         )
-        if n_fixed_features_expected != len(self.fixed_features):
+        if n_fixed_features_expected != len(self.fixed_features_):
             raise ValueError(
                 "For each feature specified in the `fixed feature`, its group-mates"
                 "must be specified as `fix_features` as well when `feature_groups`"

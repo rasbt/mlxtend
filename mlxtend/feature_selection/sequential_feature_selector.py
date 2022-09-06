@@ -241,9 +241,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 )
 
         self.fixed_features = fixed_features
-        if self.fixed_features is None:
-            self.fixed_features = tuple()
-
         self.feature_groups = feature_groups
 
         if self.clone_estimator:
@@ -337,8 +334,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self.k_feature_names_ = None
         self.k_score_ = None
 
-        self.fixed_features_ = self.fixed_features
-
         X_, self.feature_names = _preprocess(X)
 
         self.feature_names_to_idx_mapper = None
@@ -346,6 +341,10 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             self.feature_names_to_idx_mapper = {
                 name: idx for idx, name in enumerate(self.feature_names)
             }
+
+        self.fixed_features_ = self.fixed_features
+        if self.fixed_features_ is None:
+            self.fixed_features_ = tuple()
 
         # In the future, try to make this approach and exaustive module the same
         # for the sake of refactorign

@@ -9,6 +9,7 @@
 
 import operator as op
 import sys
+import types
 from copy import deepcopy
 from functools import reduce
 from itertools import chain, combinations
@@ -179,19 +180,50 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.min_features = min_features
         self.max_features = max_features
         self.pre_dispatch = pre_dispatch
-        self.scoring = scoring
-        self.scorer = get_scorer(scoring)
+        # Want to raise meaningful error message if a
+        # cross-validation generator is inputted
+        if isinstance(cv, types.GeneratorType):
+            err_msg = (
+                "Input cv is a generator object, which is not "
+                "supported. Instead please input an iterable yielding "
+                "train, test splits. This can usually be done by "
+                "passing a cross-validation generator to the "
+                "built-in list function. I.e. cv=list(<cv-generator>)"
+            )
+            raise TypeError(err_msg)
+
         self.cv = cv
-        self.print_progress = print_progress
         self.n_jobs = n_jobs
-        self.named_est = {
-            key: value for key, value in _name_estimators([self.estimator])
-        }
+        self.print_progress = print_progress
+
         self.clone_estimator = clone_estimator
         if self.clone_estimator:
             self.est_ = clone(self.estimator)
         else:
             self.est_ = self.estimator
+
+        self.scoring = scoring
+        if self.scoring is None:
+            if not hasattr(self.est_, "_estimator_type"):
+                raise AttributeError(
+                    "Estimator must have an ._estimator_type for infering `scoring`"
+                )
+
+            if self.est_._estimator_type == "classifier":
+                self.scoring = "accuracy"
+            elif self.est_._estimator_type == "regressor":
+                self.scoring = "r2"
+            else:
+                raise AttributeError("Estimator must be a Classifier or Regressor.")
+
+        if isinstance(self.scoring, str):
+            self.scorer = get_scorer(self.scoring)
+        else:
+            self.scorer = self.scoring
+
+        self.named_est = {
+            key: value for key, value in _name_estimators([self.estimator])
+        }
 
         self.fixed_features = fixed_features
         self.feature_groups = feature_groups
@@ -232,7 +264,6 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.subsets_ = {}
         self.fitted = False
         self.interrupted_ = False
-        self.feature_names = None
         self.best_idx_ = None
         self.best_feature_names_ = None
         self.best_score_ = None

@@ -214,22 +214,47 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self.cv = cv
         self.n_jobs = n_jobs
         self.verbose = verbose
-        self.clone_estimator = clone_estimator
 
-        if fixed_features is not None:
+        self.clone_estimator = clone_estimator
+        if self.clone_estimator:
+            self.est_ = clone(self.estimator)
+        else:
+            self.est_ = self.estimator
+
+        self.scoring = scoring
+        if self.scoring is None:
+            if not hasattr(self.est_, "_estimator_type"):
+                raise AttributeError(
+                    "Estimator must have an ._estimator_type for infering `scoring`"
+                )
+
+            if self.est_._estimator_type == "classifier":
+                self.scoring = "accuracy"
+            elif self.est_._estimator_type == "regressor":
+                self.scoring = "r2"
+            else:
+                raise AttributeError("Estimator must be a Classifier or Regressor.")
+
+        if isinstance(self.scoring, str):
+            self.scorer = get_scorer(self.scoring)
+        else:
+            self.scorer = self.scoring
+
+        self.fixed_features = fixed_features
+        if self.fixed_features is not None:
             if isinstance(self.k_features, int) and self.k_features <= len(
-                fixed_features
+                self.fixed_features
             ):
                 raise ValueError(
                     "Number of features to be selected must"
                     " be larger than the number of"
                     " features specified via `fixed_features`."
                     " Got `k_features=%d` and"
-                    " `fixed_features=%d`" % (k_features, len(fixed_features))
+                    " `fixed_features=%d`" % (k_features, len(self.fixed_features))
                 )
 
             elif isinstance(self.k_features, tuple) and self.k_features[0] <= len(
-                fixed_features
+                self.fixed_features
             ):
                 raise ValueError(
                     "The minimum number of features to"
@@ -237,37 +262,12 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     " be larger than the number of"
                     " features specified via `fixed_features`."
                     " Got `k_features=%s` and "
-                    "`len(fixed_features)=%d`" % (k_features, len(fixed_features))
+                    "`len(fixed_features)=%d`" % (k_features, len(self.fixed_features))
                 )
 
-        self.fixed_features = fixed_features
         self.feature_groups = feature_groups
 
-        if self.clone_estimator:
-            self.est_ = clone(self.estimator)
-        else:
-            self.est_ = self.estimator
-        self.scoring = scoring
-
-        if scoring is None:
-            if not hasattr(self.est_, "_estimator_type"):
-                raise AttributeError(
-                    "Estimator must have an ._estimator_type for infering `scoring`"
-                )
-
-            if self.est_._estimator_type == "classifier":
-                scoring = "accuracy"
-            elif self.est_._estimator_type == "regressor":
-                scoring = "r2"
-            else:
-                raise AttributeError("Estimator must be a Classifier or Regressor.")
-        if isinstance(scoring, str):
-            self.scorer = get_scorer(scoring)
-        else:
-            self.scorer = scoring
-
         self.fitted = False
-        self.subsets_ = {}
         self.interrupted_ = False
 
         # don't mess with this unless testing

@@ -471,8 +471,10 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             self.interrupted_ = True
             sys.stderr.write("\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...")
 
-        if not self.interrupted_:
-            self.fitted = True
+        if self.interrupted_:
+            self.fitted = False
+        else:
+            self.fitted = True  # the completion of sequential selection process.
             self.finalize_fit()
 
         return self

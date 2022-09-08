@@ -335,6 +335,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self.k_score_ = None
 
         X_, self.feature_names = _preprocess(X)
+        self.n_features = X_.shape[1]
 
         self.feature_names_to_idx_mapper = None
         if self.feature_names is not None:
@@ -469,7 +470,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     " than the max k_features value."
                 )
 
-        is_parsimonious = False
+        self.is_parsimonious = False
         if isinstance(self.k_features, str):
             if self.k_features not in {"best", "parsimonious"}:
                 raise AttributeError(
@@ -477,7 +478,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     'it must be "best" or "parsimonious"'
                 )
             if self.k_features == "parsimonious":
-                is_parsimonious = True
+                self.is_parsimonious = True
 
         min_n_groups = len(self.fixed_features_group_set)
         max_n_groups = len(self.feature_groups)
@@ -487,15 +488,15 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             # we treat k_features as k group of features
             self.k_features = (self.k_features, self.k_features)
 
-        min_k = self.k_features[0]
-        max_k = self.k_features[1]
+        self.min_k = self.k_features[0]
+        self.max_k = self.k_features[1]
 
         if self.forward:
             k_idx = tuple(sorted(self.fixed_features_group_set))
-            k_stop = max_k
+            k_stop = self.max_k
         else:
             k_idx = tuple(range(max_n_groups))
-            k_stop = min_k
+            k_stop = self.min_k
 
         k = len(k_idx)
         if k > 0:
@@ -515,8 +516,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             }
 
         orig_set = set(range(max_n_groups))
-        best_subset = None
-        k_score = 0
         try:
             while k != k_stop:
                 prev_subset = set(k_idx)
@@ -617,34 +616,52 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                         )
                     )
 
-                # just to test `KeyboardInterrupt`
-                if self._TESTING_INTERRUPT_MODE:
+                if self._TESTING_INTERRUPT_MODE:  # just to test `KeyboardInterrupt`
+                    self.finalize_fit()
                     raise KeyboardInterrupt
 
         except KeyboardInterrupt:
             self.interrupted_ = True
             sys.stderr.write("\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...")
 
-        if self.interrupted_:
-            for k in self.subsets_:
-                self.subsets_[k]["feature_idx"] = _merge_lists(
-                    self.feature_groups, self.subsets_[k]["feature_idx"]
-                )
-            self.k_feature_idx_ = _merge_lists(self.feature_groups, k_idx)
-            self.k_score_ = k_score
-            self.subsets_, self.k_feature_names_ = _get_featurenames(
-                self.subsets_, self.k_feature_idx_, X_, self.feature_names
-            )
-
-            return self
-        else:
+        if not self.interrupted_:
             self.fitted = True  # the completion of sequential selection process.
-            max_score = np.NINF
+            self.finalize_fit()
+
+        return self
+
+    def finalize_fit(self):
+        max_score = np.NINF
+        for k in self.subsets_:
+            if (
+                k >= self.min_k
+                and k <= self.max_k
+                and self.subsets_[k]["avg_score"] > max_score
+            ):
+                max_score = self.subsets_[k]["avg_score"]
+                best_subset = k
+
+        k_score = max_score
+        if k_score == np.NINF:
+            # i.e. all keys of self.subsets_ are not in interval `[self.min_k, self.max_k]`
+            # this happens if KeyboardInterrupt happens
+            keys = list(self.subsets_.keys())
+            scores = [self.subsets_[k]["avg_score"] for k in keys]
+            arg = np.argmax(scores)
+
+            k_score = scores[arg]
+            best_subset = keys[arg]
+
+        k_idx = self.subsets_[best_subset]["feature_idx"]
+
+        if self.is_parsimonious:
             for k in self.subsets_:
-                if (
-                    k >= min_k
-                    and k <= max_k
-                    and self.subsets_[k]["avg_score"] > max_score
+                if k >= best_subset:
+                    continue
+                if self.subsets_[k]["avg_score"] >= (
+                    max_score
+                    - np.std(self.subsets_[k]["cv_scores"])
+                    / self.subsets_[k]["cv_scores"].shape[0]
                 ):
                     max_score = self.subsets_[k]["avg_score"]
                     best_subset = k
@@ -652,31 +669,17 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             k_score = max_score
             k_idx = self.subsets_[best_subset]["feature_idx"]
 
-            if is_parsimonious:
-                for k in self.subsets_:
-                    if k >= best_subset:
-                        continue
-                    if self.subsets_[k]["avg_score"] >= (
-                        max_score
-                        - np.std(self.subsets_[k]["cv_scores"])
-                        / self.subsets_[k]["cv_scores"].shape[0]
-                    ):
-                        max_score = self.subsets_[k]["avg_score"]
-                        best_subset = k
-                k_score = max_score
-                k_idx = self.subsets_[best_subset]["feature_idx"]
-
-            for k in self.subsets_:
-                self.subsets_[k]["feature_idx"] = _merge_lists(
-                    self.feature_groups, self.subsets_[k]["feature_idx"]
-                )
-            self.k_feature_idx_ = _merge_lists(self.feature_groups, k_idx)
-            self.k_score_ = k_score
-            self.subsets_, self.k_feature_names_ = _get_featurenames(
-                self.subsets_, self.k_feature_idx_, X_, self.feature_names
+        for k in self.subsets_:
+            self.subsets_[k]["feature_idx"] = _merge_lists(
+                self.feature_groups, self.subsets_[k]["feature_idx"]
             )
+        self.k_feature_idx_ = _merge_lists(self.feature_groups, k_idx)
+        self.k_score_ = k_score
+        self.subsets_, self.k_feature_names_ = _get_featurenames(
+            self.subsets_, self.k_feature_idx_, self.feature_names, self.n_features
+        )
 
-            return self
+        return
 
     def _feature_selector(
         self,

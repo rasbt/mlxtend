@@ -269,6 +269,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.best_score_ = None
 
         X_, self.feature_names = _preprocess(X)
+        self.n_features = X_.shape[1]
 
         self.feature_names_to_idx_mapper = None
         if self.feature_names is not None:
@@ -297,14 +298,14 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 self.feature_names_to_idx_mapper[name] for name in self.fixed_features_
             )
 
-        if not set(self.fixed_features_).issubset(set(range(X_.shape[1]))):
+        if not set(self.fixed_features_).issubset(set(range(self.n_features))):
             raise ValueError(
                 "`fixed_features` contains at least one feature that is not in the"
                 " input data `X`."
             )
 
         if self.feature_groups is None:
-            self.feature_groups = [[i] for i in range(X_.shape[1])]
+            self.feature_groups = [[i] for i in range(self.n_features)]
 
         for fg in self.feature_groups:
             if len(fg) == 0:
@@ -337,7 +338,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             self.feature_groups = lst
 
         if sorted(_merge_lists(self.feature_groups)) != sorted(
-            list(range(X_.shape[1]))
+            list(range(self.n_features))
         ):
             raise ValueError(
                 "`feature_group` must contain all features within `range(X.shape[1])`"
@@ -348,7 +349,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         # label-encoding fixed_features according to the groups in `feature_groups`
         # and replace each individual feature in `fixed_features` with their correspondig
         # group id
-        features_encoded_by_groupID = np.full(X_.shape[1], -1, dtype=np.int64)
+        features_encoded_by_groupID = np.full(self.n_features, -1, dtype=np.int64)
         for id, group in enumerate(self.feature_groups):
             for idx in group:
                 features_encoded_by_groupID[idx] = id
@@ -462,31 +463,34 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                     sys.stderr.write("\rFeatures: %d/%d" % (iteration + 1, all_comb))
                     sys.stderr.flush()
 
-                if self._TESTING_INTERRUPT_MODE:
-                    self.subsets_, self.best_feature_names_ = _get_featurenames(
-                        self.subsets_, self.best_idx_, X_, self.feature_names
-                    )
+                if self._TESTING_INTERRUPT_MODE:  # this is just for testing
+                    self.finalize_fit()
                     raise KeyboardInterrupt
 
         except KeyboardInterrupt:
             self.interrupted_ = True
             sys.stderr.write("\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...")
 
-        max_score = float("-inf")
+        if not self.interrupted_:
+            self.fitted = True
+            self.finalize_fit()
+
+        return self
+
+    def finalize_fit(self):
+        max_score = np.NINF
         for c in self.subsets_:
             if self.subsets_[c]["avg_score"] > max_score:
-                max_score = self.subsets_[c]["avg_score"]
                 best_subset = c
-        score = max_score
-        idx = self.subsets_[best_subset]["feature_idx"]
+                max_score = self.subsets_[c]["avg_score"]
 
-        self.best_idx_ = idx
-        self.best_score_ = score
-        self.fitted = True
+        self.best_idx_ = self.subsets_[best_subset]["feature_idx"]
+        self.best_score_ = max_score
         self.subsets_, self.best_feature_names_ = _get_featurenames(
-            self.subsets_, self.best_idx_, X_, self.feature_names
+            self.subsets_, self.best_idx_, self.feature_names, self.n_features
         )
-        return self
+
+        return
 
     def transform(self, X):
         """Return the best selected features from X.

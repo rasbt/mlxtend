@@ -145,14 +145,14 @@ def test_keyboard_interrupt():
     knn = KNeighborsClassifier(n_neighbors=4)
     sfs1 = SFS(
         knn,
-        k_features=3,
+        k_features=2,
         forward=True,
         floating=False,
         cv=3,
         clone_estimator=False,
         verbose=5,
         n_jobs=1,
-        feature_groups=[[0, 1], [2, 3]],
+        feature_groups=[[0, 1], [2], [3]],
     )
 
     sfs1._TESTING_INTERRUPT_MODE = True

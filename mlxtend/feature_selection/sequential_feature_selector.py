@@ -299,6 +299,30 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self._set_params("estimator", "named_estimators", **params)
         return self
 
+    def generate_error_message_k_features(self, name):
+        if (
+            len(self.fixed_features_) == 0
+            and len(self.feature_groups_) == self.n_features
+        ):
+            err_msg = f"{name} must be between 1 and X.shape[1]."
+
+        elif (
+            len(self.fixed_features_) > 0
+            and len(self.feature_groups_) == self.n_features
+        ):
+            err_msg = f"{name} must be between 1 + len(fixed_features) and X.shape[1]."
+
+        elif (
+            len(self.fixed_features_) == 0
+            and len(self.feature_groups_) < self.n_features
+        ):
+            err_msg = f"{name} must be between 1 and len(feature_groups)."
+
+        else:  # both fixed_features and feature_groups are provided
+            err_msg = f"{name} must be more than the number of groups that appear in fixed_features and less than or equal to len(feature_groups)."
+
+        return err_msg
+
     def fit(self, X, y, groups=None, **fit_params):
         """Perform feature selection and learn model from training data.
 
@@ -370,24 +394,25 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 " input data `X`."
             )
 
-        if self.feature_groups is None:
-            self.feature_groups = [[i] for i in range(X_.shape[1])]
+        self.feature_groups_ = self.feature_groups
+        if self.feature_groups_ is None:
+            self.feature_groups_ = [[i] for i in range(X_.shape[1])]
 
-        for fg in self.feature_groups:
+        for fg in self.feature_groups_:
             if len(fg) == 0:
                 raise ValueError(
                     "Each list in the nested lists `features_group` cannot be empty"
                 )
 
         feature_group_types = {
-            type(i) for sublist in self.feature_groups for i in sublist
+            type(i) for sublist in self.feature_groups_ for i in sublist
         }
         if len(feature_group_types) > 1:
             raise ValueError(
                 f"feature_group values must have the same type. Found {feature_group_types}."
             )
 
-        if isinstance(self.feature_groups[0][0], str):
+        if isinstance(self.feature_groups_[0][0], str):
             if self.feature_names_to_idx_mapper is None:
                 raise ValueError(
                     "The input X does not contain name of features provived in"
@@ -397,13 +422,13 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 )
 
             lst = []
-            for item in self.feature_groups:
+            for item in self.feature_groups_:
                 tmp = [self.feature_names_to_idx_mapper[name] for name in item]
                 lst.append(tmp)
 
-            self.feature_groups = lst
+            self.feature_groups_ = lst
 
-        if sorted(_merge_lists(self.feature_groups)) != sorted(
+        if sorted(_merge_lists(self.feature_groups_)) != sorted(
             list(range(X_.shape[1]))
         ):
             raise ValueError(
@@ -413,7 +438,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             )
 
         features_encoded_by_groupID = np.full(X_.shape[1], -1, dtype=np.int64)
-        for group_id, group in enumerate(self.feature_groups):
+        for group_id, group in enumerate(self.feature_groups_):
             for idx in group:
                 features_encoded_by_groupID[idx] = group_id
 
@@ -421,7 +446,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self.fixed_features_group_set = set(lst)
 
         n_fixed_features_expected = sum(
-            len(self.feature_groups[id]) for id in self.fixed_features_group_set
+            len(self.feature_groups_[group_id])
+            for group_id in self.fixed_features_group_set
         )
         if n_fixed_features_expected != len(self.fixed_features_):
             raise ValueError(
@@ -430,8 +456,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 "is provided."
             )
 
-        k_lb = len(self.fixed_features_group_set)
-        k_ub = len(self.feature_groups)
+        self.k_lb = len(self.fixed_features_group_set) + 1
+        self.k_ub = len(self.feature_groups_)
 
         if (
             not isinstance(self.k_features, int)
@@ -442,13 +468,12 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 "k_features must be a positive integer" ", tuple, or string"
             )
 
+        eligible_k_values_range = range(self.k_lb, self.k_ub + 1)
         if isinstance(self.k_features, int) and (
-            self.k_features < 1 or self.k_features > X_.shape[1]
+            self.k_features not in eligible_k_values_range
         ):
-            raise AttributeError(
-                "k_features must be a positive integer"
-                " between 1 and X.shape[1], got %s" % (self.k_features,)
-            )
+            err_msg = self.generate_error_message_k_features("k_features")
+            raise AttributeError(err_msg)
 
         if isinstance(self.k_features, tuple):
             if len(self.k_features) != 2:
@@ -457,21 +482,31 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     " elements, a min and a max value."
                 )
 
-            if self.k_features[0] not in range(1, X_.shape[1] + 1):
-                raise AttributeError(
-                    "k_features tuple min value must be in" " range(1, X.shape[1]+1)."
-                )
-
-            if self.k_features[1] not in range(1, X_.shape[1] + 1):
-                raise AttributeError(
-                    "k_features tuple max value must be in" " range(1, X.shape[1]+1)."
-                )
-
             if self.k_features[0] > self.k_features[1]:
                 raise AttributeError(
                     "The min k_features value must be smaller"
                     " than the max k_features value."
                 )
+
+            if self.k_features[0] not in eligible_k_values_range:
+                err_msg = self.generate_error_message_k_features(
+                    "k_features tuple min value"
+                )
+                raise AttributeError(err_msg)
+
+                # raise AttributeError(
+                #    "k_features tuple min value must be in" " range(1, X.shape[1]+1)."
+                # )
+
+            if self.k_features[1] not in eligible_k_values_range:
+                err_msg = self.generate_error_message_k_features(
+                    "k_features tuple max value"
+                )
+                raise AttributeError(err_msg)
+
+                # raise AttributeError(
+                #    "k_features tuple max value must be in" " range(1, X.shape[1]+1)."
+                # )
 
         self.is_parsimonious = False
         if isinstance(self.k_features, str):
@@ -484,7 +519,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 self.is_parsimonious = True
 
         if isinstance(self.k_features, str):
-            self.k_features = (k_lb, k_ub)
+            self.k_features = (self.k_lb, self.k_ub)
         elif isinstance(self.k_features, int):
             # we treat k_features as k group of features
             self.k_features = (self.k_features, self.k_features)
@@ -496,7 +531,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             k_idx = tuple(sorted(self.fixed_features_group_set))
             k_stop = self.max_k
         else:
-            k_idx = tuple(range(k_ub))
+            k_idx = tuple(range(self.k_ub))
             k_stop = self.min_k
 
         k = len(k_idx)
@@ -507,7 +542,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 y,
                 k_idx,
                 groups=groups,
-                feature_groups=self.feature_groups,
+                feature_groups=self.feature_groups_,
                 **fit_params,
             )
             self.subsets_[k] = {
@@ -516,7 +551,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 "avg_score": np.nanmean(k_score),
             }
 
-        orig_set = set(range(k_ub))
+        orig_set = set(range(self.k_ub))
         try:
             while k != k_stop:
                 prev_subset = set(k_idx)
@@ -534,7 +569,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                     y=y,
                     is_forward=self.forward,
                     groups=groups,
-                    feature_groups=self.feature_groups,
+                    feature_groups=self.feature_groups_,
                     **fit_params,
                 )
 
@@ -581,7 +616,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                             y=y,
                             is_forward=is_float_forward,
                             groups=groups,
-                            feature_groups=self.feature_groups,
+                            feature_groups=self.feature_groups_,
                             **fit_params,
                         )
 
@@ -674,9 +709,9 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
         for k in self.subsets_:
             self.subsets_[k]["feature_idx"] = _merge_lists(
-                self.feature_groups, self.subsets_[k]["feature_idx"]
+                self.feature_groups_, self.subsets_[k]["feature_idx"]
             )
-        self.k_feature_idx_ = _merge_lists(self.feature_groups, k_idx)
+        self.k_feature_idx_ = _merge_lists(self.feature_groups_, k_idx)
         self.k_score_ = k_score
         self.subsets_, self.k_feature_names_ = _get_featurenames(
             self.subsets_, self.k_feature_idx_, self.feature_names, self.n_features

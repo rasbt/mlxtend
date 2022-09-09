@@ -310,7 +310,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             len(self.fixed_features_) > 0
             and len(self.feature_groups_) == self.n_features
         ):
-            err_msg = f"{name} must be between 1 + len(fixed_features) and X.shape[1]."
+            err_msg = f"{name} must be between len(fixed_features) and X.shape[1]."
 
         elif (
             len(self.fixed_features_) == 0
@@ -319,7 +319,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             err_msg = f"{name} must be between 1 and len(feature_groups)."
 
         else:  # both fixed_features and feature_groups are provided
-            err_msg = f"{name} must be more than the number of groups that appear in fixed_features and less than or equal to len(feature_groups)."
+            err_msg = f"{name} must be between the number of groups that appear in fixed_features and len(feature_groups)."
 
         return err_msg
 
@@ -456,7 +456,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 "is provided."
             )
 
-        self.k_lb = len(self.fixed_features_group_set) + 1
+        self.k_lb = max(1, len(self.fixed_features_group_set))
         self.k_ub = len(self.feature_groups_)
 
         if (

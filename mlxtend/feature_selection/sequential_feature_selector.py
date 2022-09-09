@@ -430,6 +430,9 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 "is provided."
             )
 
+        k_lb = len(self.fixed_features_group_set)
+        k_ub = len(self.feature_groups)
+
         if (
             not isinstance(self.k_features, int)
             and not isinstance(self.k_features, tuple)
@@ -480,10 +483,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             if self.k_features == "parsimonious":
                 self.is_parsimonious = True
 
-        min_n_groups = len(self.fixed_features_group_set)
-        max_n_groups = len(self.feature_groups)
         if isinstance(self.k_features, str):
-            self.k_features = (min_n_groups, max_n_groups)
+            self.k_features = (k_lb, k_ub)
         elif isinstance(self.k_features, int):
             # we treat k_features as k group of features
             self.k_features = (self.k_features, self.k_features)
@@ -495,7 +496,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             k_idx = tuple(sorted(self.fixed_features_group_set))
             k_stop = self.max_k
         else:
-            k_idx = tuple(range(max_n_groups))
+            k_idx = tuple(range(k_ub))
             k_stop = self.min_k
 
         k = len(k_idx)
@@ -515,7 +516,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                 "avg_score": np.nanmean(k_score),
             }
 
-        orig_set = set(range(max_n_groups))
+        orig_set = set(range(k_ub))
         try:
             while k != k_stop:
                 prev_subset = set(k_idx)

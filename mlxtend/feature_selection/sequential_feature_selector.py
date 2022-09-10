@@ -241,30 +241,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             self.scorer = self.scoring
 
         self.fixed_features = fixed_features
-        if self.fixed_features is not None:
-            if isinstance(self.k_features, int) and self.k_features <= len(
-                self.fixed_features
-            ):
-                raise ValueError(
-                    "Number of features to be selected must"
-                    " be larger than the number of"
-                    " features specified via `fixed_features`."
-                    " Got `k_features=%d` and"
-                    " `fixed_features=%d`" % (k_features, len(self.fixed_features))
-                )
-
-            elif isinstance(self.k_features, tuple) and self.k_features[0] <= len(
-                self.fixed_features
-            ):
-                raise ValueError(
-                    "The minimum number of features to"
-                    " be selected must"
-                    " be larger than the number of"
-                    " features specified via `fixed_features`."
-                    " Got `k_features=%s` and "
-                    "`len(fixed_features)=%d`" % (k_features, len(self.fixed_features))
-                )
-
         self.feature_groups = feature_groups
 
         self.fitted = False

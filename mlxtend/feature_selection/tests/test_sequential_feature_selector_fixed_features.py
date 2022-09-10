@@ -168,24 +168,15 @@ def test_pandas():
 
 def test_wrong_feature_number():
     knn = KNeighborsClassifier()
-    expect = (
-        "Number of features to be selected must be"
-        " larger than the number of features"
-        " specified via `fixed_features`. Got"
-        " `k_features=1` and `fixed_features=2`"
-    )
-    assert_raises(ValueError, expect, SFS, knn, k_features=1, fixed_features=(1, 3))
+    expect = "k_features must be between len(fixed_features) and X.shape[1]."
+    sfs = SFS(knn, k_features=1, fixed_features=(1, 3))
+    assert_raises(AttributeError, expect, sfs.fit, X=X_iris, y=y_iris)
 
 
 def test_wrong_feature_range():
     knn = KNeighborsClassifier()
     expect = (
-        "The minimum number of features to be "
-        "selected must be larger than the number of "
-        "features specified via "
-        "`fixed_features`. "
-        "Got `k_features=(1, 3)` and `len(fixed_features)=2`"
+        "k_features tuple min value must be between len(fixed_features) and X.shape[1]."
     )
-    assert_raises(
-        ValueError, expect, SFS, knn, k_features=(1, 3), fixed_features=(1, 3)
-    )
+    sfs = SFS(knn, k_features=(1, 3), fixed_features=(1, 3))
+    assert_raises(AttributeError, expect, sfs.fit, X=X_iris, y=y_iris)

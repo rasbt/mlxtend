@@ -215,36 +215,27 @@ def test_max_feature_subset_parsimonious():
 
 
 def test_knn_wo_cv_with_fixed_features_and_feature_groups_case1():
-    return True  # test function should be checked
-
+    # features (0, 1) gives different score?
     iris = load_iris()
     X = iris.data
     y = iris.target
     knn = KNeighborsClassifier(n_neighbors=4)
-    efs1 = SFS(
+    sfs = SFS(
         knn,
-        min_features=1,
-        max_features=2,
+        k_features=(1, 2),
         scoring="accuracy",
         cv=0,
-        print_progress=False,
         fixed_features=[0, 1],
         feature_groups=[[0, 1], [2], [3]],
     )
-    efs1 = efs1.fit(X, y)
+    sfs.fit(X, y)
     # expect is based on what provided in `test_knn_wo_cv`
     expect = {
-        0: {
+        1: {
             "feature_idx": (0, 1),
             "feature_names": ("0", "1"),
             "avg_score": 0.82666666666666666,
             "cv_scores": np.array([0.82666667]),
-        },
-        1: {
-            "feature_idx": (0, 1, 2),
-            "feature_names": ("0", "1", "2"),
-            "avg_score": 0.95999999999999996,
-            "cv_scores": np.array([0.96]),
         },
         2: {
             "feature_idx": (0, 1, 3),
@@ -253,12 +244,10 @@ def test_knn_wo_cv_with_fixed_features_and_feature_groups_case1():
             "cv_scores": np.array([0.96666667]),
         },
     }
-    dict_compare_utility(d1=expect, d2=efs1.subsets_)
+    dict_compare_utility(d_actual=expect, d_desired=sfs.subsets_)
 
 
 def test_knn_wo_cv_with_fixed_features_and_feature_groups_case2():
-
-    return True  # test function should be checked
     # similar to case1, but `fixed_features` is now consisting of two groups
     # [0,1] and [3]
     iris = load_iris()
@@ -267,22 +256,20 @@ def test_knn_wo_cv_with_fixed_features_and_feature_groups_case2():
     knn = KNeighborsClassifier(n_neighbors=4)
     efs1 = SFS(
         knn,
-        min_features=2,
-        max_features=2,
+        k_features=2,
         scoring="accuracy",
         cv=0,
-        print_progress=False,
         fixed_features=[0, 1, 3],
         feature_groups=[[0, 1], [2], [3]],
     )
     efs1 = efs1.fit(X, y)
     # expect is based on what provided in `test_knn_wo_cv`
     expect = {
-        0: {
+        2: {
             "feature_idx": (0, 1, 3),
             "feature_names": ("0", "1", "3"),
             "avg_score": 0.96666666666666667,
             "cv_scores": np.array([0.96666667]),
         },
     }
-    dict_compare_utility(d1=expect, d2=efs1.subsets_)
+    dict_compare_utility(d_actual=expect, d_desired=efs1.subsets_)

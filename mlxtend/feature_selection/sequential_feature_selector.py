@@ -172,6 +172,10 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
     fixed_features=[0, 1] and feature_groups=[[0, 1], [2]] is valid;
     fixed_features=[0, 1] and feature_groups=[[0], [1, 2]] is not valid.
 
+    (4) In case of KeyboardInterrupt, the dictionary subsets may not be completed.
+    If user is still interested in getting the best score, they can use method
+    `finalize_fit`.
+
     Examples
     -----------
     For usage examples, please see

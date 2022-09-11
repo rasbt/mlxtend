@@ -920,3 +920,57 @@ def test_verbose():
 
     sfs1 = SFS(lr, k_features=1, scoring="accuracy", verbose=1)
     sfs1.fit(X, y)
+
+
+def test_check_pandas_dataframe_with_feature_groups():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    lr = SoftmaxRegression(random_seed=1)
+    sfs1 = SFS(
+        lr,
+        k_features=2,
+        forward=True,
+        floating=False,
+        scoring="accuracy",
+        feature_groups=[
+            ["sepal length", "petal length"],
+            ["sepal width"],
+            ["petal width"],
+        ],
+        cv=0,
+        verbose=0,
+        n_jobs=1,
+    )
+
+    df = pd.DataFrame(
+        X, columns=["sepal length", "sepal width", "petal length", "petal width"]
+    )
+
+    sfs1 = sfs1.fit(df, y)
+    assert sfs1.k_feature_names_ == (
+        "sepal length",
+        "petal length",
+    ), sfs1.k_feature_names_
+    assert (150, 2) == sfs1.transform(df).shape
+
+
+def test_check_feature_groups():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    lr = SoftmaxRegression(random_seed=1)
+    sfs1 = SFS(
+        lr,
+        k_features=2,
+        forward=True,
+        floating=False,
+        scoring="accuracy",
+        feature_groups=[[0, 2], [1], [3]],
+        cv=0,
+        verbose=0,
+        n_jobs=1,
+    )
+
+    sfs1 = sfs1.fit(X, y)
+    assert sfs1.k_feature_idx_ == (0, 1), sfs1.k_feature_idx_

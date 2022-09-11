@@ -114,7 +114,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         This means, the features within a group are always selected together,
         never split.
         For example, `feature_groups=[[1], [2], [3, 4, 5]]`
-        specifies 3 feature groups.In this case,
+        specifies 3 feature groups. In this case,
         possible feature selection results with `k_features=2`
         are `[[1], [2]`, `[[1], [3, 4, 5]]`, or `[[2], [3, 4, 5]]`.
         Feature groups can be useful for

@@ -927,6 +927,11 @@ def test_check_pandas_dataframe_with_feature_groups():
     X = iris.data
     y = iris.target
     lr = SoftmaxRegression(random_seed=1)
+
+    df = pd.DataFrame(
+        X, columns=["sepal length", "sepal width", "petal length", "petal width"]
+    )
+
     sfs1 = SFS(
         lr,
         k_features=2,
@@ -943,34 +948,87 @@ def test_check_pandas_dataframe_with_feature_groups():
         n_jobs=1,
     )
 
-    df = pd.DataFrame(
-        X, columns=["sepal length", "sepal width", "petal length", "petal width"]
-    )
-
     sfs1 = sfs1.fit(df, y)
     assert sfs1.k_feature_names_ == (
-        "sepal length",
-        "petal length",
+        "sepal width",
+        "petal width",
     ), sfs1.k_feature_names_
     assert (150, 2) == sfs1.transform(df).shape
 
-
-def test_check_feature_groups():
-    iris = load_iris()
-    X = iris.data
-    y = iris.target
-    lr = SoftmaxRegression(random_seed=1)
     sfs1 = SFS(
         lr,
         k_features=2,
         forward=True,
         floating=False,
         scoring="accuracy",
-        feature_groups=[[0, 2], [1], [3]],
+        feature_groups=[
+            ["petal length", "petal width"],
+            ["sepal length"],
+            ["sepal width"],
+        ],
+        cv=0,
+        verbose=0,
+        n_jobs=1,
+    )
+
+    sfs1 = sfs1.fit(df, y)
+    assert sfs1.k_feature_names_ == (
+        "petal length",
+        "petal width",
+    ), sfs1.k_feature_names_
+
+
+def test_check_pandas_dataframe_with_feature_groups_and_fixed_features():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    lr = SoftmaxRegression(random_seed=123)
+
+    df = pd.DataFrame(
+        X, columns=["sepal length", "sepal width", "petal length", "petal width"]
+    )
+    sfs1 = SFS(
+        lr,
+        k_features=2,
+        forward=True,
+        floating=False,
+        scoring="accuracy",
+        feature_groups=[
+            ["petal length", "petal width"],
+            ["sepal length"],
+            ["sepal width"],
+        ],
+        fixed_features=["sepal length", "petal length", "petal width"],
+        cv=0,
+        verbose=0,
+        n_jobs=1,
+    )
+
+    sfs1 = sfs1.fit(df, y)
+    assert sfs1.k_feature_names_ == (
+        "sepal length",
+        "petal length",
+        "petal width",
+    ), sfs1.k_feature_names_
+
+
+def test_check_feature_groups():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    lr = SoftmaxRegression(random_seed=123)
+    sfs1 = SFS(
+        lr,
+        k_features=2,
+        forward=True,
+        floating=False,
+        scoring="accuracy",
+        feature_groups=[[2, 3], [0], [1]],
+        fixed_features=[0, 2, 3],
         cv=0,
         verbose=0,
         n_jobs=1,
     )
 
     sfs1 = sfs1.fit(X, y)
-    assert sfs1.k_feature_idx_ == (0, 1), sfs1.k_feature_idx_
+    assert sfs1.k_feature_idx_ == (0, 2, 3), sfs1.k_feature_idx_

@@ -955,9 +955,10 @@ def test_check_pandas_dataframe_with_feature_groups():
     ), sfs1.k_feature_names_
     assert (150, 2) == sfs1.transform(df).shape
 
+    # now, test with different `feature_groups`
     sfs1 = SFS(
         lr,
-        k_features=2,
+        k_features=1,
         forward=True,
         floating=False,
         scoring="accuracy",

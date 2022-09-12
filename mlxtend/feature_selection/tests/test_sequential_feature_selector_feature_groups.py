@@ -234,8 +234,8 @@ def test_knn_wo_cv_with_fixed_features_and_feature_groups_case1():
         1: {
             "feature_idx": (0, 1),
             "feature_names": ("0", "1"),
-            "avg_score": 0.82666666666666666,
-            "cv_scores": np.array([0.82666667]),
+            "avg_score": 0.8333333333333334,
+            "cv_scores": np.array([0.8333333333333334]),
         },
         2: {
             "feature_idx": (0, 1, 3),

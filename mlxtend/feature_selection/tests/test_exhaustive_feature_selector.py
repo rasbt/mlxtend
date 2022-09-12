@@ -20,7 +20,7 @@ from mlxtend.feature_selection import ExhaustiveFeatureSelector as EFS
 from mlxtend.utils import assert_raises
 
 
-def dict_compare_utility(d1, d2):
+def dict_compare_utility(d1, d2, decimal=3):
     assert d1.keys() == d2.keys(), "%s != %s" % (d1, d2)
     for i in d1:
         err_msg1 = "d1[%s]['feature_idx']" " != d2[%s]['feature_idx']" % (i, i)
@@ -30,13 +30,13 @@ def dict_compare_utility(d1, d2):
         assert_almost_equal(
             d1[i]["avg_score"],
             d2[i]["avg_score"],
-            decimal=2,
+            decimal=decimal,
             err_msg=("d1[%s]['avg_score']" " != d2[%s]['avg_score']" % (i, i)),
         )
         assert_almost_equal(
             d1[i]["cv_scores"],
             d2[i]["cv_scores"],
-            decimal=2,
+            decimal=decimal,
             err_msg=("d1[%s]['cv_scores']" " != d2[%s]['cv_scores']" % (i, i)),
         )
 
@@ -92,8 +92,8 @@ def test_knn_wo_cv():
         0: {
             "feature_idx": (0, 1),
             "feature_names": ("0", "1"),
-            "avg_score": 0.82666666666666666,
-            "cv_scores": np.array([0.82666667]),
+            "avg_score": 0.8333333333333334,
+            "cv_scores": np.array([0.8333333333333334]),
         },
         1: {
             "feature_idx": (0, 2),
@@ -660,8 +660,8 @@ def test_knn_wo_cv_with_fixed_features_and_feature_groups_case1():
         0: {
             "feature_idx": (0, 1),
             "feature_names": ("0", "1"),
-            "avg_score": 0.82666666666666666,
-            "cv_scores": np.array([0.82666667]),
+            "avg_score": 0.8333333333333334,
+            "cv_scores": np.array([0.8333333333333334]),
         },
         1: {
             "feature_idx": (0, 1, 2),
@@ -781,8 +781,8 @@ def test_check_support_string_in_fixed_feature():
         0: {
             "feature_idx": (0, 1),
             "feature_names": (features_names[0], features_names[1]),
-            "avg_score": 0.82666666666666666,
-            "cv_scores": np.array([0.82666667]),
+            "avg_score": 0.8333333333333334,
+            "cv_scores": np.array([0.8333333333333334]),
         },
         1: {
             "feature_idx": (0, 1, 2),

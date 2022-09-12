@@ -958,7 +958,7 @@ def test_check_pandas_dataframe_with_feature_groups():
     # now, test with different `feature_groups`
     sfs1 = SFS(
         lr,
-        k_features=1,
+        k_features=2,  # this is num of selected groups to form selected features
         forward=True,
         floating=False,
         scoring="accuracy",
@@ -973,7 +973,9 @@ def test_check_pandas_dataframe_with_feature_groups():
     )
 
     sfs1 = sfs1.fit(df, y)
+    # the selected fetures are sorted according their corresponding indices
     assert sfs1.k_feature_names_ == (
+        "sepal width",
         "petal length",
         "petal width",
     ), sfs1.k_feature_names_

@@ -98,7 +98,7 @@ def test_knn_wo_cv():
         1: {
             "feature_idx": (0, 2),
             "feature_names": ("0", "2"),
-            "avg_score": 0.95999999999999996,
+            "avg_score": 0.96,
             "cv_scores": np.array([0.96]),
         },
         2: {

@@ -32,7 +32,7 @@ def nan_roc_auc_score(y_true, y_score, average="macro", sample_weight=None):
         )
 
 
-def dict_compare_utility(d_actual, d_desired, decimal=3):
+def dict_compare_utility(d_actual, d_desired, decimal=2):
     assert d_actual.keys() == d_desired.keys(), "%s != %s" % (d_actual, d_desired)
     for i in d_actual:
         err_msg = "d_actual[%s]['feature_idx']" " != d_desired[%s]['feature_idx']" % (

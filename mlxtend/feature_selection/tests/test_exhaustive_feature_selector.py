@@ -20,7 +20,7 @@ from mlxtend.feature_selection import ExhaustiveFeatureSelector as EFS
 from mlxtend.utils import assert_raises
 
 
-def dict_compare_utility(d1, d2, decimal=3):
+def dict_compare_utility(d1, d2, decimal=2):
     assert d1.keys() == d2.keys(), "%s != %s" % (d1, d2)
     for i in d1:
         err_msg1 = "d1[%s]['feature_idx']" " != d2[%s]['feature_idx']" % (i, i)
@@ -98,8 +98,8 @@ def test_knn_wo_cv():
         1: {
             "feature_idx": (0, 2),
             "feature_names": ("0", "2"),
-            "avg_score": 0.96,
-            "cv_scores": np.array([0.96]),
+            "avg_score": 0.95999999999999996,
+            "cv_scores": np.array([0.95999999999999996]),
         },
         2: {
             "feature_idx": (0, 3),

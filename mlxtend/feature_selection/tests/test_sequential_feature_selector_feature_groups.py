@@ -16,7 +16,7 @@ from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 from mlxtend.utils import assert_raises
 
 
-def dict_compare_utility(d_actual, d_desired, decimal=3):
+def dict_compare_utility(d_actual, d_desired, decimal=2):
     assert d_actual.keys() == d_desired.keys(), "%s != %s" % (d_actual, d_desired)
     for i in d_actual:
         err_msg = "d_actual[%s]['feature_idx']" " != d_desired[%s]['feature_idx']" % (

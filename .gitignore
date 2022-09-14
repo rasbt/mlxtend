@@ -1,4 +1,5 @@
 # Test Suites
+htmlcov
 .coverage*
 .pytest_cache/
 

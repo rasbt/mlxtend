@@ -9,6 +9,7 @@
 
 import operator as op
 import sys
+import types
 from copy import deepcopy
 from functools import reduce
 from itertools import chain, combinations
@@ -19,84 +20,9 @@ import scipy.stats
 from joblib import Parallel, delayed
 from sklearn.base import BaseEstimator, MetaEstimatorMixin, clone
 from sklearn.metrics import get_scorer
-from sklearn.model_selection import cross_val_score
 
 from ..externals.name_estimators import _name_estimators
-
-
-def _merge_lists(nested_list, high_level_indices=None):
-    """
-    merge elements of lists (of a nested_list) into one single tuple with elements
-    sorted in ascending order.
-
-    Parameters
-    ----------
-    nested_list: List
-        a  list whose elements must be list as well.
-
-    high_level_indices: list or tuple, default None
-        a list or tuple that contains integers that are between 0 (inclusive) and
-        the length of `nested_lst` (exclusive). If None, the merge of all
-        lists nested in `nested_list` will be returned.
-
-    Returns
-    -------
-    out: tuple
-        a tuple, with elements sorted in ascending order, that is the merge of inner
-        lists whose indices are provided in `high_level_indices`
-
-    Example:
-    nested_list = [[1],[2, 3],[4]]
-    high_level_indices = [1, 2]
-    >>> _merge_lists(nested_list, high_level_indices)
-    (2, 3, 4) # merging [2, 3] and [4]
-    """
-    if high_level_indices is None:
-        high_level_indices = list(range(len(nested_list)))
-
-    out = []
-    for idx in high_level_indices:
-        out.extend(nested_list[idx])
-
-    return tuple(sorted(out))
-
-
-def _calc_score(selector, X, y, indices, groups=None, **fit_params):
-    if selector.cv:
-        scores = cross_val_score(
-            selector.est_,
-            X[:, indices],
-            y,
-            groups=groups,
-            cv=selector.cv,
-            scoring=selector.scorer,
-            n_jobs=1,
-            pre_dispatch=selector.pre_dispatch,
-            fit_params=fit_params,
-        )
-    else:
-        selector.est_.fit(X[:, indices], y, **fit_params)
-        scores = np.array([selector.scorer(selector.est_, X[:, indices], y)])
-    return indices, scores
-
-
-def _get_featurenames(subsets_dict, feature_idx, X):
-    feature_names = None
-    if feature_idx is not None:
-        if hasattr(X, "loc"):
-            feature_names = tuple((X.columns[i] for i in feature_idx))
-        else:
-            feature_names = tuple(str(i) for i in feature_idx)
-
-    subsets_dict_ = deepcopy(subsets_dict)
-    for key in subsets_dict_:
-        if hasattr(X, "loc"):
-            new_tuple = tuple((X.columns[i] for i in subsets_dict[key]["feature_idx"]))
-        else:
-            new_tuple = tuple(str(i) for i in subsets_dict[key]["feature_idx"])
-        subsets_dict_[key]["feature_names"] = new_tuple
-
-    return subsets_dict_, feature_names
+from .utilities import _calc_score, _get_featurenames, _merge_lists, _preprocess
 
 
 class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
@@ -170,10 +96,16 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
     feature_groups : list or None (default: None)
         Optional argument for treating certain features as a group.
-        For example `[[1], [2], [3, 4, 5]]`, which can be useful for
+        This means, the features within a group are always selected together,
+        never split.
+        For example, `feature_groups=[[1], [2], [3, 4, 5]]`
+        specifies 3 feature groups.In this case,
+        possible feature selection results with `k_features=2`
+        are `[[1], [2]`, `[[1], [3, 4, 5]]`, or `[[2], [3, 4, 5]]`.
+        Feature groups can be useful for
         interpretability, for example, if features 3, 4, 5 are one-hot
-        encoded features.  (for  more details, please read the notes at the
-        bottom of this docstring).  New in v 0.21.0.
+        encoded features.  (For  more details, please read the notes at the
+        bottom of this docstring).  New in mlxtend v. 0.21.0.
 
     Attributes
     ----------
@@ -203,7 +135,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         DataFrames are used in the `fit` method, the 'feature_names'
         correspond to the column names. Otherwise, the
         feature names are string representation of the feature
-        array indices. The 'feature_names' is new in v 0.13.0.
+        array indices. The 'feature_names' is new in v. 0.13.0.
 
     Notes
     -----
@@ -222,6 +154,10 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     feature group contains the fixed_features selection. E.g., for a 3-feature set
     fixed_features=[0, 1] and feature_groups=[[0, 1], [2]] is valid;
     fixed_features=[0, 1] and feature_groups=[[0], [1, 2]] is not valid.
+
+    (4) In case of KeyboardInterrupt, the dictionary subsets may not be completed.
+    If user is still interested in getting the best score, they can use method
+    `finalize_fit`.
 
     Examples
     -----------
@@ -248,19 +184,50 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.min_features = min_features
         self.max_features = max_features
         self.pre_dispatch = pre_dispatch
-        self.scoring = scoring
-        self.scorer = get_scorer(scoring)
+        # Want to raise meaningful error message if a
+        # cross-validation generator is inputted
+        if isinstance(cv, types.GeneratorType):
+            err_msg = (
+                "Input cv is a generator object, which is not "
+                "supported. Instead please input an iterable yielding "
+                "train, test splits. This can usually be done by "
+                "passing a cross-validation generator to the "
+                "built-in list function. I.e. cv=list(<cv-generator>)"
+            )
+            raise TypeError(err_msg)
+
         self.cv = cv
-        self.print_progress = print_progress
         self.n_jobs = n_jobs
-        self.named_est = {
-            key: value for key, value in _name_estimators([self.estimator])
-        }
+        self.print_progress = print_progress
+
         self.clone_estimator = clone_estimator
         if self.clone_estimator:
             self.est_ = clone(self.estimator)
         else:
             self.est_ = self.estimator
+
+        self.scoring = scoring
+        if self.scoring is None:
+            if not hasattr(self.est_, "_estimator_type"):
+                raise AttributeError(
+                    "Estimator must have an ._estimator_type for infering `scoring`"
+                )
+
+            if self.est_._estimator_type == "classifier":
+                self.scoring = "accuracy"
+            elif self.est_._estimator_type == "regressor":
+                self.scoring = "r2"
+            else:
+                raise AttributeError("Estimator must be a Classifier or Regressor.")
+
+        if isinstance(self.scoring, str):
+            self.scorer = get_scorer(self.scoring)
+        else:
+            self.scorer = self.scoring
+
+        self.named_est = {
+            key: value for key, value in _name_estimators([self.estimator])
+        }
 
         self.fixed_features = fixed_features
         self.feature_groups = feature_groups
@@ -301,16 +268,12 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.subsets_ = {}
         self.fitted = False
         self.interrupted_ = False
-        self.feature_names = None
         self.best_idx_ = None
         self.best_feature_names_ = None
         self.best_score_ = None
 
-        if hasattr(X, "loc"):
-            X_ = X.values
-            self.feature_names = list(X.columns)
-        else:
-            X_ = X
+        X_, self.feature_names = _preprocess(X)
+        self.n_features = X_.shape[1]
 
         self.feature_names_to_idx_mapper = None
         if self.feature_names is not None:
@@ -318,34 +281,35 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 name: idx for idx, name in enumerate(self.feature_names)
             }
 
-        if self.fixed_features is None:
-            self.fixed_features = tuple()
+        self.fixed_features_ = self.fixed_features
+        if self.fixed_features_ is None:
+            self.fixed_features_ = tuple()
 
-        fixed_feature_types = {type(i) for i in self.fixed_features}
+        fixed_feature_types = {type(i) for i in self.fixed_features_}
         if len(fixed_feature_types) > 1:
             raise ValueError(
                 f"fixed_features values must have the same type. Found {fixed_feature_types}."
             )
 
-        if len(self.fixed_features) > 0 and isinstance(self.fixed_features[0], str):
+        if len(self.fixed_features_) > 0 and isinstance(self.fixed_features_[0], str):
             if self.feature_names_to_idx_mapper is None:
                 raise ValueError(
                     "The input X does not contain name of features provived in"
                     " `fixed_features`. Try passing input X as pandas DataFrames."
                 )
 
-            self.fixed_features = tuple(
-                self.feature_names_to_idx_mapper[name] for name in self.fixed_features
+            self.fixed_features_ = tuple(
+                self.feature_names_to_idx_mapper[name] for name in self.fixed_features_
             )
 
-        if not set(self.fixed_features).issubset(set(range(X_.shape[1]))):
+        if not set(self.fixed_features_).issubset(set(range(self.n_features))):
             raise ValueError(
                 "`fixed_features` contains at least one feature that is not in the"
                 " input data `X`."
             )
 
         if self.feature_groups is None:
-            self.feature_groups = [[i] for i in range(X_.shape[1])]
+            self.feature_groups = [[i] for i in range(self.n_features)]
 
         for fg in self.feature_groups:
             if len(fg) == 0:
@@ -375,10 +339,10 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                 tmp = [self.feature_names_to_idx_mapper[name] for name in item]
                 lst.append(tmp)
 
-            self.feature_groups[:] = lst
+            self.feature_groups = lst
 
         if sorted(_merge_lists(self.feature_groups)) != sorted(
-            list(range(X_.shape[1]))
+            list(range(self.n_features))
         ):
             raise ValueError(
                 "`feature_group` must contain all features within `range(X.shape[1])`"
@@ -389,18 +353,18 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         # label-encoding fixed_features according to the groups in `feature_groups`
         # and replace each individual feature in `fixed_features` with their correspondig
         # group id
-        features_encoded_by_groupID = np.full(X_.shape[1], -1, dtype=np.int64)
+        features_encoded_by_groupID = np.full(self.n_features, -1, dtype=np.int64)
         for id, group in enumerate(self.feature_groups):
             for idx in group:
                 features_encoded_by_groupID[idx] = id
 
-        lst = [features_encoded_by_groupID[idx] for idx in self.fixed_features]
+        lst = [features_encoded_by_groupID[idx] for idx in self.fixed_features_]
         self.fixed_features_group_set = set(lst)
 
         n_fixed_features_expected = sum(
             len(self.feature_groups[id]) for id in self.fixed_features_group_set
         )
-        if n_fixed_features_expected != len(self.fixed_features):
+        if n_fixed_features_expected != len(self.fixed_features_):
             raise ValueError(
                 "For each feature specified in the `fixed feature`, its group-mates"
                 "must be specified as `fix_features` as well when `feature_groups`"
@@ -482,11 +446,9 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                     self,
                     X_,
                     y,
-                    _merge_lists(
-                        self.feature_groups,
-                        list(set(c).union(self.fixed_features_group_set)),
-                    ),
+                    list(set(c).union(self.fixed_features_group_set)),
                     groups=groups,
+                    feature_groups=self.feature_groups,
                     **fit_params,
                 )
                 for c in candidates
@@ -494,9 +456,9 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         )
 
         try:
-            for iteration, (c, cv_scores) in work:
+            for iteration, (indices, cv_scores) in work:
                 self.subsets_[iteration] = {
-                    "feature_idx": c,
+                    "feature_idx": _merge_lists(self.feature_groups, indices),
                     "cv_scores": cv_scores,
                     "avg_score": np.mean(cv_scores),
                 }
@@ -505,31 +467,36 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
                     sys.stderr.write("\rFeatures: %d/%d" % (iteration + 1, all_comb))
                     sys.stderr.flush()
 
-                if self._TESTING_INTERRUPT_MODE:
-                    self.subsets_, self.best_feature_names_ = _get_featurenames(
-                        self.subsets_, self.best_idx_, X
-                    )
+                if self._TESTING_INTERRUPT_MODE:  # this is just for testing
+                    self.finalize_fit()
                     raise KeyboardInterrupt
 
         except KeyboardInterrupt:
             self.interrupted_ = True
             sys.stderr.write("\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...")
 
-        max_score = float("-inf")
+        if self.interrupted_:
+            self.fitted = False
+        else:
+            self.fitted = True  # the completion of sequential selection process.
+            self.finalize_fit()
+
+        return self
+
+    def finalize_fit(self):
+        max_score = np.NINF
         for c in self.subsets_:
             if self.subsets_[c]["avg_score"] > max_score:
-                max_score = self.subsets_[c]["avg_score"]
                 best_subset = c
-        score = max_score
-        idx = self.subsets_[best_subset]["feature_idx"]
+                max_score = self.subsets_[c]["avg_score"]
 
-        self.best_idx_ = idx
-        self.best_score_ = score
-        self.fitted = True
+        self.best_idx_ = self.subsets_[best_subset]["feature_idx"]
+        self.best_score_ = max_score
         self.subsets_, self.best_feature_names_ = _get_featurenames(
-            self.subsets_, self.best_idx_, X
+            self.subsets_, self.best_idx_, self.feature_names, self.n_features
         )
-        return self
+
+        return
 
     def transform(self, X):
         """Return the best selected features from X.
@@ -548,10 +515,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
         """
         self._check_fitted()
-        if hasattr(X, "loc"):
-            X_ = X.values
-        else:
-            X_ = X
+        X_, _ = _preprocess(X)
         return X_[:, self.best_idx_]
 
     def fit_transform(self, X, y, groups=None, **fit_params):

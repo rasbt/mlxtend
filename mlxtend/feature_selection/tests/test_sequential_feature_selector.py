@@ -10,6 +10,7 @@ from numpy.testing import assert_almost_equal
 from packaging.version import Version
 from sklearn import __version__ as sklearn_version
 from sklearn.datasets import load_boston, load_iris
+from sklearn.decomposition import PCA
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import accuracy_score, make_scorer, roc_auc_score
@@ -31,7 +32,7 @@ def nan_roc_auc_score(y_true, y_score, average="macro", sample_weight=None):
         )
 
 
-def dict_compare_utility(d_actual, d_desired, decimal=3):
+def dict_compare_utility(d_actual, d_desired, decimal=2):
     assert d_actual.keys() == d_desired.keys(), "%s != %s" % (d_actual, d_desired)
     for i in d_actual:
         err_msg = "d_actual[%s]['feature_idx']" " != d_desired[%s]['feature_idx']" % (
@@ -83,7 +84,8 @@ def test_kfeatures_type_1():
     X = iris.data
     y = iris.target
     knn = KNeighborsClassifier()
-    expect = "k_features must be a positive integer between 1 and X.shape[1]," " got 0"
+    name = "k_features"
+    expect = f"{name} must be between 1 and X.shape[1]."
     sfs = SFS(estimator=knn, verbose=0, k_features=0)
     assert_raises(AttributeError, expect, sfs.fit, X, y)
 
@@ -103,7 +105,7 @@ def test_kfeatures_type_3():
     X = iris.data
     y = iris.target
     knn = KNeighborsClassifier()
-    expect = "k_features tuple min value must be in range(1, X.shape[1]+1)."
+    expect = "k_features tuple min value must be between 1 and X.shape[1]."
     sfs = SFS(estimator=knn, verbose=0, k_features=(0, 5))
     assert_raises(AttributeError, expect, sfs.fit, X, y)
 
@@ -113,7 +115,7 @@ def test_kfeatures_type_4():
     X = iris.data
     y = iris.target
     knn = KNeighborsClassifier()
-    expect = "k_features tuple max value must be in range(1, X.shape[1]+1)."
+    expect = "k_features tuple max value must be between 1 and X.shape[1]."
     sfs = SFS(estimator=knn, verbose=0, k_features=(1, 5))
     assert_raises(AttributeError, expect, sfs.fit, X, y)
 
@@ -124,7 +126,7 @@ def test_kfeatures_type_5():
     y = iris.target
     knn = KNeighborsClassifier()
     expect = (
-        "The min k_features value must be" " smaller than the max k_features value."
+        "The min k_features value must be smaller" " than the max k_features value."
     )
     sfs = SFS(estimator=knn, verbose=0, k_features=(3, 1))
     assert_raises(AttributeError, expect, sfs.fit, X, y)
@@ -880,33 +882,156 @@ def test_check_pandas_dataframe_transform():
     assert (150, 2) == sfs1.transform(df).shape
 
 
-def test_custom_feature_names():
+def test_invalid_estimator():
+    expect = "Estimator must have an ._estimator_type for infering `scoring`"
+    assert_raises(AttributeError, expect, SFS, PCA())
+
+    class PCA2(PCA):
+        def __init__(self):
+            super().__init__()
+            self._estimator_type = "something"
+
+    expect = "Estimator must be a Classifier or Regressor."
+    assert_raises(AttributeError, expect, SFS, PCA2())
+
+
+def test_invalid_k_features():
 
     iris = load_iris()
     X = iris.data
     y = iris.target
     lr = SoftmaxRegression(random_seed=1)
+
+    sfs1 = SFS(lr, k_features=(1, 2, 3), scoring="accuracy")
+    expect = "k_features tuple must consist of 2 elements, a min and a max value."
+    assert_raises(AttributeError, expect, sfs1.fit, X, y)
+
+    sfs1 = SFS(lr, k_features="something", scoring="accuracy")
+    expect = 'If a string argument is provided, it must be "best" or "parsimonious"'
+    assert_raises(AttributeError, expect, sfs1.fit, X, y)
+
+
+def test_verbose():
+
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    lr = SoftmaxRegression(random_seed=1)
+
+    sfs1 = SFS(lr, k_features=1, scoring="accuracy", verbose=1)
+    sfs1.fit(X, y)
+
+
+def test_check_pandas_dataframe_with_feature_groups():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    lr = SoftmaxRegression(random_seed=1)
+
+    df = pd.DataFrame(
+        X, columns=["sepal length", "sepal width", "petal length", "petal width"]
+    )
+
     sfs1 = SFS(
         lr,
         k_features=2,
         forward=True,
         floating=False,
         scoring="accuracy",
+        feature_groups=[
+            ["sepal length", "petal length"],
+            ["sepal width"],
+            ["petal width"],
+        ],
         cv=0,
         verbose=0,
         n_jobs=1,
     )
 
-    sfs1 = sfs1.fit(
-        X,
-        y,
-        custom_feature_names=(
-            "sepal length",
-            "sepal width",
-            "petal length",
-            "petal width",
-        ),
+    sfs1 = sfs1.fit(df, y)
+    assert sfs1.k_feature_names_ == (
+        "sepal width",
+        "petal width",
+    ), sfs1.k_feature_names_
+    assert (150, 2) == sfs1.transform(df).shape
+
+    # now, test with different `feature_groups`
+    sfs1 = SFS(
+        lr,
+        k_features=2,  # this is num of selected groups to form selected features
+        forward=True,
+        floating=False,
+        scoring="accuracy",
+        feature_groups=[
+            ["petal length", "petal width"],
+            ["sepal length"],
+            ["sepal width"],
+        ],
+        cv=0,
+        verbose=0,
+        n_jobs=1,
     )
-    assert sfs1.k_feature_idx_ == (1, 3)
-    assert sfs1.k_feature_names_ == ("sepal width", "petal width")
-    assert sfs1.subsets_[2]["feature_names"] == ("sepal width", "petal width")
+
+    sfs1 = sfs1.fit(df, y)
+    # the selected fetures are sorted according their corresponding indices
+    assert sfs1.k_feature_names_ == (
+        "sepal width",
+        "petal length",
+        "petal width",
+    ), sfs1.k_feature_names_
+
+
+def test_check_pandas_dataframe_with_feature_groups_and_fixed_features():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    lr = SoftmaxRegression(random_seed=123)
+
+    df = pd.DataFrame(
+        X, columns=["sepal length", "sepal width", "petal length", "petal width"]
+    )
+    sfs1 = SFS(
+        lr,
+        k_features=2,
+        forward=True,
+        floating=False,
+        scoring="accuracy",
+        feature_groups=[
+            ["petal length", "petal width"],
+            ["sepal length"],
+            ["sepal width"],
+        ],
+        fixed_features=["sepal length", "petal length", "petal width"],
+        cv=0,
+        verbose=0,
+        n_jobs=1,
+    )
+
+    sfs1 = sfs1.fit(df, y)
+    assert sfs1.k_feature_names_ == (
+        "sepal length",
+        "petal length",
+        "petal width",
+    ), sfs1.k_feature_names_
+
+
+def test_check_feature_groups():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    lr = SoftmaxRegression(random_seed=123)
+    sfs1 = SFS(
+        lr,
+        k_features=2,
+        forward=True,
+        floating=False,
+        scoring="accuracy",
+        feature_groups=[[2, 3], [0], [1]],
+        fixed_features=[0, 2, 3],
+        cv=0,
+        verbose=0,
+        n_jobs=1,
+    )
+
+    sfs1 = sfs1.fit(X, y)
+    assert sfs1.k_feature_idx_ == (0, 2, 3), sfs1.k_feature_idx_

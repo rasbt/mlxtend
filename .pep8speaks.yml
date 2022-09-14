@@ -7,7 +7,8 @@ scanner:
 flake8:  # Same as scanner.linter value. Other option is flake8
     max-line-length: 88  # Default is 79 in PEP 8
     ignore:  # Errors and warnings to ignore
-        - W504  # line break after binary operator
+        - W504
+        - W503  # line break after binary operator
 
 no_blank_comment: False # If True, no comment is made on PR without any errors.
 descending_issues_order: False  # If True, PEP 8 issues in message will be displayed in descending order of line numbers in the file

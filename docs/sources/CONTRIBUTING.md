@@ -22,9 +22,20 @@ and checking off items as you go.
 5. [ ]  Add appropriate unit test functions in `mlxtend/*/tests`
 6. [ ]  Run `PYTHONPATH='.' pytest ./mlxtend -sv` and make sure that all unit tests pass  
 
-7. [ ]  Modify documentation in the appropriate location under `mlxtend/docs/sources/`  
+7. [ ] Make sure the newly implemented feature has good test coverage:
 
-8. [ ]  Add a note about the modification/contribution to the `./docs/sources/changelog.md` file  
+```
+python -m pip install coverage
+# test all: 
+# coverage run --source=mlxtend --branch -m pytest .
+coverage run --source=mlxtend --branch -m pytest mlxtend/<insert_path>
+coverage html
+```
+
+
+8. [ ]  Modify documentation in the appropriate location under `mlxtend/docs/sources/`  
+
+9. [ ]  Add a note about the modification/contribution to the `./docs/sources/changelog.md` file  
 
 
 

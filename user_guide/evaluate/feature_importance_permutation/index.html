@@ -445,7 +445,7 @@
         
             
 <li >
-    <a href="../../feature_selection/SequentialFeatureSelector/">SequentialFeatureSelector: The popular forward and backward feature selection approaches incl. floating variants</a>
+    <a href="../../feature_selection/SequentialFeatureSelector/">SequentialFeatureSelector: The popular forward and backward feature selection approaches (including floating variants)</a>
 </li>
 
         
@@ -977,8 +977,14 @@
                 <li class="third-level"><a href="#feature-importance-via-random-forest">Feature importance via random forest</a></li>
                 <li class="third-level"><a href="#permutation-importance">Permutation Importance</a></li>
                 <li class="third-level"><a href="#support-vector-machines">Support Vector Machines</a></li>  -->
-            <li class="second-level"><a href="#example-1-feature-importance-for-regressors">Example 1 -- Feature Importance for Regressors</a></li>
+            <li class="second-level"><a href="#example-2-feature-importance-for-regressors">Example 2 -- Feature Importance for Regressors</a></li>
                  <!--   -->
+            <li class="second-level"><a href="#example-3-feature-importance-with-one-hot-encoded-features">Example 3 -- Feature Importance With One-Hot-Encoded Features</a></li>
+                 <!-- 
+                <li class="third-level"><a href="#preparing-the-dataset">Preparing the Dataset</a></li>
+                <li class="third-level"><a href="#fitting-a-baseline-model-for-analysis">Fitting a Baseline Model for Analysis</a></li>
+                <li class="third-level"><a href="#regular-permutation-importance">Regular Permutation Importance</a></li>
+                <li class="third-level"><a href="#with-feature-groups">With Feature Groups</a></li>  -->
             <li class="second-level"><a href="#api">API</a></li>
                  <!--   -->
     </ul>
@@ -1045,9 +1051,9 @@ importance_vals = forest.feature_importances_
 print(importance_vals)
 </code></pre>
 <pre><code>Training accuracy: 100.0
-Test accuracy: 95.0666666667
-[ 0.283357    0.30846795  0.24204291  0.02229767  0.02364941  0.02390578
-  0.02501543  0.0234225   0.02370816  0.0241332 ]
+Test accuracy: 95.06666666666666
+[0.283357   0.30846795 0.24204291 0.02229767 0.02364941 0.02390578
+ 0.02501543 0.0234225  0.02370816 0.0241332 ]
 </code></pre>
 <p>There are several strategies for computing the feature importance in random forest. The method implemented in scikit-learn (used in the next code example) is based on the Breiman and Friedman's CART (Breiman, Friedman, "Classification and regression trees", 1984), the so-called <em>mean impurity decrease</em>. Here, the importance value of a features is computed by averaging the impurity decrease for that feature, when splitting a parent node into two child nodes, across all the trees in the ensemble. Note that the impurity decrease values are weighted by the number of samples that are in the respective nodes. This process is repeated for all features in the dataset, and the feature importance values are then normalized so that they sum up to 1. In CART, the authors also note that this fast way of computing feature importance values is relatively consistent with the permutation importance.</p>
 <p>Next, let's visualize the feature importance values from the random forest including a measure of the <em>mean impurity decrease</em> variability (here: standard deviation):</p>
@@ -1129,8 +1135,8 @@ svm.fit(X_train, y_train)
 print('Training accuracy', np.mean(svm.predict(X_train) == y_train)*100)
 print('Test accuracy', np.mean(svm.predict(X_test) == y_test)*100)
 </code></pre>
-<pre><code>Training accuracy 95.0857142857
-Test accuracy 94.9666666667
+<pre><code>Training accuracy 94.87142857142857
+Test accuracy 94.89999999999999
 </code></pre>
 <pre><code class="language-python">imp_vals, imp_all = feature_importance_permutation(
     predict_method=svm.predict, 
@@ -1153,7 +1159,7 @@ plt.xlim([-1, X.shape[1]])
 plt.show()
 </code></pre>
 <p><img alt="png" src="../feature_importance_permutation_files/feature_importance_permutation_32_0.png" /></p>
-<h2 id="example-1-feature-importance-for-regressors">Example 1 -- Feature Importance for Regressors</h2>
+<h2 id="example-2-feature-importance-for-regressors">Example 2 -- Feature Importance for Regressors</h2>
 <pre><code class="language-python">import numpy as np
 import matplotlib.pyplot as plt
 from mlxtend.evaluate import feature_importance_permutation
@@ -1185,7 +1191,7 @@ imp_vals, _ = feature_importance_permutation(
 
 imp_vals
 </code></pre>
-<pre><code>array([ 0.43676245,  0.22231268,  0.00146906,  0.01611528, -0.00522067])
+<pre><code>array([ 0.43309137,  0.22058866,  0.00148447,  0.01613953, -0.00529505])
 </code></pre>
 <pre><code class="language-python">plt.figure()
 plt.bar(range(X.shape[1]), imp_vals)
@@ -1195,8 +1201,223 @@ plt.ylim([0, 0.5])
 plt.show()
 </code></pre>
 <p><img alt="png" src="../feature_importance_permutation_files/feature_importance_permutation_35_0.png" /></p>
+<h2 id="example-3-feature-importance-with-one-hot-encoded-features">Example 3 -- Feature Importance With One-Hot-Encoded Features</h2>
+<p>Upon one-hot encoding, a feature variable with 10 distinct categories will be split into 10 new feature columns (or 9, if you drop a redundant column). If we want to treat each new feature column as an individual feature variable, we can use the <code>feature_importance_permutation</code> as usual. </p>
+<p>This is illustrated in the example below.</p>
+<h3 id="preparing-the-dataset">Preparing the Dataset</h3>
+<p>Here, we look at a dataset that consists of one categorical feature (<code>'categorical'</code>) and 3 numerical features (<code>'measurement1'</code>, <code>'measurement2'</code>, and <code>'measurement3'</code>).</p>
+<pre><code class="language-python">import pandas as pd
+
+
+df_data = pd.read_csv('https://gist.githubusercontent.com/rasbt/b99bf69079bc0d601eeae8a49248d358/raw/a114be9801647ec5460089f3a9576713dabf5f1f/onehot-numeric-mixed-data.csv')
+df_data.head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>categorical</th>
+      <th>measurement1</th>
+      <th>measurement2</th>
+      <th>label</th>
+      <th>measurement3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>F</td>
+      <td>1.428571</td>
+      <td>2.721313</td>
+      <td>0</td>
+      <td>2.089</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>R</td>
+      <td>0.685939</td>
+      <td>0.982976</td>
+      <td>0</td>
+      <td>0.637</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>P</td>
+      <td>1.055817</td>
+      <td>0.624210</td>
+      <td>0</td>
+      <td>0.226</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>S</td>
+      <td>0.995956</td>
+      <td>0.321101</td>
+      <td>0</td>
+      <td>0.138</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>R</td>
+      <td>1.376773</td>
+      <td>1.578309</td>
+      <td>0</td>
+      <td>0.478</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">from sklearn.model_selection import train_test_split
+
+
+df_X = df_data[['measurement1', 'measurement2', 'measurement3', 'categorical']]
+df_y = df_data['label']
+
+
+df_X_train, df_X_test, df_y_train, df_y_test = train_test_split(
+     df_X, df_y, test_size=0.33, random_state=42, stratify=df_y)
+</code></pre>
+<p>Here, we do the one-hot encoding on the categorical feature and merge it back with the numerical columns:</p>
+<pre><code class="language-python">from sklearn.preprocessing import OneHotEncoder
+import numpy as np
+
+
+ohe = OneHotEncoder(drop='first')
+ohe.fit(df_X_train[['categorical']])
+
+df_X_train_ohe = df_X_train.drop(columns=['categorical'])
+df_X_test_ohe = df_X_test.drop(columns=['categorical'])
+
+ohe_train = np.asarray(ohe.transform(df_X_train[['categorical']]).todense())
+ohe_test = np.asarray(ohe.transform(df_X_test[['categorical']]).todense())
+
+X_train_ohe = np.hstack((df_X_train_ohe.values, ohe_train))
+X_test_ohe = np.hstack((df_X_test_ohe.values, ohe_test))
+</code></pre>
+<pre><code class="language-python"># look at first 3 rows
+print(X_train_ohe[:3])
+</code></pre>
+<pre><code>[[0.65747208 0.95105388 0.36       0.         0.         0.
+  0.         0.         0.         0.         0.         0.
+  0.         0.         0.         1.         0.         0.
+  0.         0.         0.        ]
+ [1.17503636 1.01094494 0.653      0.         0.         0.
+  0.         0.         0.         0.         0.         0.
+  0.         0.         0.         0.         1.         0.
+  0.         0.         0.        ]
+ [1.25516647 0.67575824 0.176      0.         0.         0.
+  0.         0.         0.         0.         0.         0.
+  0.         0.         1.         0.         0.         0.
+  0.         0.         0.        ]]
+</code></pre>
+<h3 id="fitting-a-baseline-model-for-analysis">Fitting a Baseline Model for Analysis</h3>
+<pre><code class="language-python">from sklearn.neural_network import MLPClassifier
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+from sklearn.model_selection import GridSearchCV
+
+
+pipe = make_pipeline(StandardScaler(),
+                     MLPClassifier(max_iter=10000, random_state=123))
+
+params = {
+    'mlpclassifier__hidden_layer_sizes': [(30, 20, 10), 
+                                          (20, 10), 
+                                          (20,),
+                                          (10,)],
+    'mlpclassifier__activation': ['tanh', 'relu'],
+    'mlpclassifier__solver': ['sgd'],
+    'mlpclassifier__alpha': [0.0001],
+    'mlpclassifier__learning_rate': ['adaptive'],
+}
+
+gs = GridSearchCV(estimator=pipe, 
+                  param_grid=params, 
+                  scoring='accuracy', 
+                  refit=True,
+                  n_jobs=-1,
+                  cv=10)
+
+gs = gs.fit(X_train_ohe, df_y_train.values)
+model = gs.best_estimator_
+</code></pre>
+<h3 id="regular-permutation-importance">Regular Permutation Importance</h3>
+<p>Here, we compute the feature importance the regular way were each one-hot encoded feature is treated as an individiual variable.</p>
+<pre><code class="language-python">from mlxtend.evaluate import feature_importance_permutation
+</code></pre>
+<pre><code class="language-python">imp_vals, imp_all = feature_importance_permutation(
+    predict_method=model.predict, 
+    X=X_test_ohe,
+    y=df_y_test.values,
+    metric='accuracy',
+    num_rounds=50,
+    seed=1)
+</code></pre>
+<pre><code class="language-python">feat_names_with_ohe = ['measurement1', 'measurement2', 'measurement3'] \
+    + [f'categorical_ohe_{i}' for i in range(2, 20)]
+</code></pre>
+<pre><code class="language-python">%matplotlib inline
+import matplotlib.pyplot as plt
+
+
+std = np.std(imp_all, axis=1)
+indices = np.argsort(imp_vals)[::-1]
+
+plt.figure()
+#plt.title(&quot;Feature importance via permutation importance w. std. dev.&quot;)
+plt.bar(range(len(feat_names_with_ohe)), imp_vals[indices],
+        yerr=std[indices])
+plt.xticks(range(len(feat_names_with_ohe)),
+           np.array(feat_names_with_ohe)[indices], rotation=90)
+plt.xlim([-1, len(feat_names_with_ohe)])
+plt.show()
+</code></pre>
+<p><img alt="png" src="../feature_importance_permutation_files/feature_importance_permutation_52_0.png" /></p>
+<p>However, notice that if we have a lot of categorical values, the feature importance of the individual binary features (after one hot encoding) are now hard to interpret. In certain cases, it would be desireable to treat the one-hot encoded binary features as a single variable in feature permutation importance evaluation. We can achieve this using feature groups.</p>
+<h3 id="with-feature-groups">With Feature Groups</h3>
+<p>In the example below, all the one-hot encoded variables are treated as a feature group. This means, they are are all shuffled and analyzed as a single feature inside the feature permutation importance analysis.</p>
+<pre><code class="language-python">feature_groups = [0, 1, 2, range(3, 21)]
+
+imp_vals, imp_all = feature_importance_permutation(
+    predict_method=model.predict, 
+    X=X_test_ohe,
+    y=df_y_test.values,
+    metric='accuracy',
+    num_rounds=50,
+    feature_groups=feature_groups,
+    seed=1)
+</code></pre>
+<pre><code class="language-python">feature_names = ['measurement1', 'measurement2', 'measurement3', 'categorical']
+
+std = np.std(imp_all, axis=1)
+indices = np.argsort(imp_vals)[::-1]
+
+plt.figure()
+plt.bar(range(len(feature_names)), imp_vals[indices],
+        yerr=std[indices])
+plt.xticks(range(len(feature_names)),
+           np.array(feature_names)[indices], rotation=90)
+plt.xlim([-1, len(feature_names)])
+plt.show()
+</code></pre>
+<p><img alt="png" src="../feature_importance_permutation_files/feature_importance_permutation_57_0.png" /></p>
 <h2 id="api">API</h2>
-<p><em>feature_importance_permutation(X, y, predict_method, metric, num_rounds=1, seed=None)</em></p>
+<p><em>feature_importance_permutation(X, y, predict_method, metric, num_rounds=1, feature_groups=None, seed=None)</em></p>
 <p>Feature importance imputation via permutation importance</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1230,6 +1451,13 @@ similar shape to the <code>y</code> array.</p>
 compute the permutation importance.</p>
 </li>
 <li>
+<p><code>feature_groups</code> : list or None (default=None)</p>
+<p>Optional argument for treating certain features as a group.
+For example <code>[1, 2, [3, 4, 5]]</code>, which can be useful for
+interpretability, for example, if features 3, 4, 5 are one-hot
+encoded features.</p>
+</li>
+<li>
 <p><code>seed</code> : int or None (default=None)</p>
 <p>Random seed for permuting the feature columns.</p>
 </li>
@@ -1247,7 +1475,9 @@ it contains the same values as the first array, mean_importance_vals.</p>
 </ul>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
-    <a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/feature_importance_permutation/">http://rasbt.github.io/mlxtend/user_guide/evaluate/feature_importance_permutation/</a></p></div>
+    http://rasbt.github.io/mlxtend/user_guide/evaluate/feature_importance_permutation/</p>
+<p>ython
+ython</p></div>
         
         
     </div>
@@ -1255,7 +1485,7 @@ it contains the same values as the first array, mean_importance_vals.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2022 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

@@ -445,7 +445,7 @@
         
             
 <li >
-    <a href="../SequentialFeatureSelector/">SequentialFeatureSelector: The popular forward and backward feature selection approaches incl. floating variants</a>
+    <a href="../SequentialFeatureSelector/">SequentialFeatureSelector: The popular forward and backward feature selection approaches (including floating variants)</a>
 </li>
 
         
@@ -971,7 +971,9 @@
             <li class="second-level"><a href="#overview">Overview</a></li>
                  <!--   -->
             <li class="second-level"><a href="#example-1-a-simple-iris-example">Example 1 - A simple Iris example</a></li>
-                 <!--   -->
+                 <!-- 
+                <li class="third-level"><a href="#feature-names">Feature Names</a></li>
+                <li class="third-level"><a href="#detailed-outputs">Detailed Outputs</a></li>  -->
             <li class="second-level"><a href="#example-2-visualizing-the-feature-selection-results">Example 2 - Visualizing the feature selection results</a></li>
                  <!--   -->
             <li class="second-level"><a href="#example-3-exhaustive-feature-selection-for-regression-analysis">Example 3 - Exhaustive feature selection for regression analysis</a></li>
@@ -983,9 +985,11 @@
             <li class="second-level"><a href="#example-6-exhaustive-feature-selection-and-gridsearch">Example 6 - Exhaustive feature selection and GridSearch</a></li>
                  <!-- 
                 <li class="third-level"><a href="#obtaining-the-best-k-feature-indices-after-gridsearch">Obtaining the best k feature indices after GridSearch</a></li>  -->
-            <li class="second-level"><a href="#example-7-working-with-pandas-dataframes">Example 7 - Working with pandas DataFrames</a></li>
+            <li class="second-level"><a href="#example-7-exhaustive-feature-selection-with-loocv">Example 7 - Exhaustive Feature Selection with LOOCV</a></li>
                  <!--   -->
-            <li class="second-level"><a href="#example-8-exhaustive-feature-selection-with-loocv">Example 8 - Exhaustive Feature Selection with LOOCV</a></li>
+            <li class="second-level"><a href="#example-8-interrupting-long-runs-for-intermediate-results">Example 8 - Interrupting Long Runs for Intermediate Results</a></li>
+                 <!--   -->
+            <li class="second-level"><a href="#example-9-working-with-feature-groups">Example 9 - Working with Feature Groups</a></li>
                  <!--   -->
             <li class="second-level"><a href="#api">API</a></li>
                  <!-- 
@@ -1050,81 +1054,156 @@ Best accuracy score: 0.97
 Best subset (indices): (0, 2, 3)
 Best subset (corresponding names): ('0', '2', '3')
 </code></pre>
-<p>Note that in the example above, the  'best_feature_names_' are simply a string equivalent of the feature indices. However, we can provide custom feature names to the <code>fit</code> function for this mapping:</p>
-<pre><code class="language-python">feature_names = ('sepal length', 'sepal width', 'petal length', 'petal width')
-efs1 = efs1.fit(X, y, custom_feature_names=feature_names)
+<h3 id="feature-names">Feature Names</h3>
+<p>When working with large datasets, the feature indices might be hard to interpret. In this case, we recommend using pandas DataFrames with distinct column names as input:</p>
+<pre><code class="language-python">import pandas as pd
+
+df_X = pd.DataFrame(X, columns=[&quot;Sepal length&quot;, &quot;Sepal width&quot;, &quot;Petal length&quot;, &quot;Petal width&quot;])
+df_X.head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Sepal length</th>
+      <th>Sepal width</th>
+      <th>Petal length</th>
+      <th>Petal width</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">efs1 = efs1.fit(df_X, y)
+
+print('Best accuracy score: %.2f' % efs1.best_score_)
+print('Best subset (indices):', efs1.best_idx_)
 print('Best subset (corresponding names):', efs1.best_feature_names_)
 </code></pre>
 <pre><code>Features: 15/15
 
-Best subset (corresponding names): ('sepal length', 'petal length', 'petal width')
+Best accuracy score: 0.97
+Best subset (indices): (0, 2, 3)
+Best subset (corresponding names): ('Sepal length', 'Petal length', 'Petal width')
 </code></pre>
+<h3 id="detailed-outputs">Detailed Outputs</h3>
 <p>Via the <code>subsets_</code> attribute, we can take a look at the selected feature indices at each step:</p>
 <pre><code class="language-python">efs1.subsets_
 </code></pre>
 <pre><code>{0: {'feature_idx': (0,),
-  'cv_scores': array([0.53333333, 0.63333333, 0.73333333, 0.76666667, 0.63333333]),
-  'avg_score': 0.6599999999999999,
-  'feature_names': ('sepal length',)},
+  'cv_scores': array([0.53333333, 0.63333333, 0.7       , 0.8       , 0.56666667]),
+  'avg_score': 0.6466666666666667,
+  'feature_names': ('Sepal length',)},
  1: {'feature_idx': (1,),
-  'cv_scores': array([0.53333333, 0.66666667, 0.63333333, 0.53333333, 0.56666667]),
-  'avg_score': 0.5866666666666667,
-  'feature_names': ('sepal width',)},
+  'cv_scores': array([0.43333333, 0.63333333, 0.53333333, 0.43333333, 0.5       ]),
+  'avg_score': 0.5066666666666666,
+  'feature_names': ('Sepal width',)},
  2: {'feature_idx': (2,),
-  'cv_scores': array([0.93333333, 1.        , 0.9       , 0.93333333, 1.        ]),
-  'avg_score': 0.9533333333333334,
-  'feature_names': ('petal length',)},
+  'cv_scores': array([0.93333333, 0.93333333, 0.9       , 0.93333333, 1.        ]),
+  'avg_score': 0.9400000000000001,
+  'feature_names': ('Petal length',)},
  3: {'feature_idx': (3,),
-  'cv_scores': array([0.96666667, 0.96666667, 0.93333333, 0.86666667, 1.        ]),
-  'avg_score': 0.9466666666666667,
-  'feature_names': ('petal width',)},
+  'cv_scores': array([0.96666667, 0.96666667, 0.93333333, 0.93333333, 1.        ]),
+  'avg_score': 0.96,
+  'feature_names': ('Petal width',)},
  4: {'feature_idx': (0, 1),
-  'cv_scores': array([0.66666667, 0.8       , 0.63333333, 0.86666667, 0.66666667]),
-  'avg_score': 0.7266666666666667,
-  'feature_names': ('sepal length', 'sepal width')},
+  'cv_scores': array([0.66666667, 0.8       , 0.7       , 0.86666667, 0.66666667]),
+  'avg_score': 0.74,
+  'feature_names': ('Sepal length', 'Sepal width')},
  5: {'feature_idx': (0, 2),
   'cv_scores': array([0.96666667, 1.        , 0.86666667, 0.93333333, 0.96666667]),
   'avg_score': 0.9466666666666667,
-  'feature_names': ('sepal length', 'petal length')},
+  'feature_names': ('Sepal length', 'Petal length')},
  6: {'feature_idx': (0, 3),
   'cv_scores': array([0.96666667, 0.96666667, 0.9       , 0.93333333, 1.        ]),
   'avg_score': 0.9533333333333334,
-  'feature_names': ('sepal length', 'petal width')},
+  'feature_names': ('Sepal length', 'Petal width')},
  7: {'feature_idx': (1, 2),
-  'cv_scores': array([0.96666667, 1.        , 0.9       , 0.93333333, 0.93333333]),
-  'avg_score': 0.9466666666666667,
-  'feature_names': ('sepal width', 'petal length')},
+  'cv_scores': array([0.93333333, 0.93333333, 0.9       , 0.93333333, 0.93333333]),
+  'avg_score': 0.9266666666666667,
+  'feature_names': ('Sepal width', 'Petal length')},
  8: {'feature_idx': (1, 3),
   'cv_scores': array([0.96666667, 0.96666667, 0.86666667, 0.93333333, 0.96666667]),
   'avg_score': 0.9400000000000001,
-  'feature_names': ('sepal width', 'petal width')},
+  'feature_names': ('Sepal width', 'Petal width')},
  9: {'feature_idx': (2, 3),
   'cv_scores': array([0.96666667, 0.96666667, 0.9       , 0.93333333, 1.        ]),
   'avg_score': 0.9533333333333334,
-  'feature_names': ('petal length', 'petal width')},
+  'feature_names': ('Petal length', 'Petal width')},
  10: {'feature_idx': (0, 1, 2),
   'cv_scores': array([0.96666667, 0.96666667, 0.86666667, 0.93333333, 0.96666667]),
   'avg_score': 0.9400000000000001,
-  'feature_names': ('sepal length', 'sepal width', 'petal length')},
+  'feature_names': ('Sepal length', 'Sepal width', 'Petal length')},
  11: {'feature_idx': (0, 1, 3),
   'cv_scores': array([0.93333333, 0.96666667, 0.9       , 0.93333333, 1.        ]),
   'avg_score': 0.9466666666666667,
-  'feature_names': ('sepal length', 'sepal width', 'petal width')},
+  'feature_names': ('Sepal length', 'Sepal width', 'Petal width')},
  12: {'feature_idx': (0, 2, 3),
   'cv_scores': array([0.96666667, 0.96666667, 0.96666667, 0.96666667, 1.        ]),
   'avg_score': 0.9733333333333334,
-  'feature_names': ('sepal length', 'petal length', 'petal width')},
+  'feature_names': ('Sepal length', 'Petal length', 'Petal width')},
  13: {'feature_idx': (1, 2, 3),
   'cv_scores': array([0.96666667, 0.96666667, 0.93333333, 0.93333333, 1.        ]),
   'avg_score': 0.96,
-  'feature_names': ('sepal width', 'petal length', 'petal width')},
+  'feature_names': ('Sepal width', 'Petal length', 'Petal width')},
  14: {'feature_idx': (0, 1, 2, 3),
   'cv_scores': array([0.96666667, 0.96666667, 0.93333333, 0.96666667, 1.        ]),
   'avg_score': 0.9666666666666668,
-  'feature_names': ('sepal length',
-   'sepal width',
-   'petal length',
-   'petal width')}}
+  'feature_names': ('Sepal length',
+   'Sepal width',
+   'Petal length',
+   'Petal width')}}
 </code></pre>
 <h2 id="example-2-visualizing-the-feature-selection-results">Example 2 - Visualizing the feature selection results</h2>
 <p>For our convenience, we can visualize the output from the feature selection in a pandas DataFrame format using the <code>get_metric_dict</code> method of the <code>ExhaustiveFeatureSelector</code> object. The columns <code>std_dev</code> and <code>std_err</code> represent the standard deviation and standard errors of the cross-validation scores, respectively.</p>
@@ -1146,7 +1225,10 @@ efs1 = EFS(knn,
 
 feature_names = ('sepal length', 'sepal width',
                  'petal length', 'petal width')
-efs1 = efs1.fit(X, y, custom_feature_names=feature_names)
+
+df_X = pd.DataFrame(
+    X, columns=[&quot;Sepal length&quot;, &quot;Sepal width&quot;, &quot;Petal length&quot;, &quot;Petal width&quot;])
+efs1 = efs1.fit(df_X, y)
 
 df = pd.DataFrame.from_dict(efs1.get_metric_dict()).T
 df.sort_values('avg_score', inplace=True, ascending=False)
@@ -1187,150 +1269,150 @@ df
       <td>(0, 2, 3)</td>
       <td>[0.9666666666666667, 0.9666666666666667, 0.966...</td>
       <td>0.973333</td>
-      <td>(sepal length, petal length, petal width)</td>
-      <td>0.0171372</td>
-      <td>0.0133333</td>
-      <td>0.00666667</td>
+      <td>(Sepal length, Petal length, Petal width)</td>
+      <td>0.017137</td>
+      <td>0.013333</td>
+      <td>0.006667</td>
     </tr>
     <tr>
       <th>14</th>
       <td>(0, 1, 2, 3)</td>
       <td>[0.9666666666666667, 0.9666666666666667, 0.933...</td>
       <td>0.966667</td>
-      <td>(sepal length, sepal width, petal length, peta...</td>
-      <td>0.0270963</td>
-      <td>0.0210819</td>
-      <td>0.0105409</td>
+      <td>(Sepal length, Sepal width, Petal length, Peta...</td>
+      <td>0.027096</td>
+      <td>0.021082</td>
+      <td>0.010541</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>(3,)</td>
+      <td>[0.9666666666666667, 0.9666666666666667, 0.933...</td>
+      <td>0.96</td>
+      <td>(Petal width,)</td>
+      <td>0.032061</td>
+      <td>0.024944</td>
+      <td>0.012472</td>
     </tr>
     <tr>
       <th>13</th>
       <td>(1, 2, 3)</td>
       <td>[0.9666666666666667, 0.9666666666666667, 0.933...</td>
       <td>0.96</td>
-      <td>(sepal width, petal length, petal width)</td>
-      <td>0.0320608</td>
-      <td>0.0249444</td>
-      <td>0.0124722</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>(2,)</td>
-      <td>[0.9333333333333333, 1.0, 0.9, 0.9333333333333...</td>
-      <td>0.953333</td>
-      <td>(petal length,)</td>
-      <td>0.0514116</td>
-      <td>0.04</td>
-      <td>0.02</td>
+      <td>(Sepal width, Petal length, Petal width)</td>
+      <td>0.032061</td>
+      <td>0.024944</td>
+      <td>0.012472</td>
     </tr>
     <tr>
       <th>6</th>
       <td>(0, 3)</td>
       <td>[0.9666666666666667, 0.9666666666666667, 0.9, ...</td>
       <td>0.953333</td>
-      <td>(sepal length, petal width)</td>
-      <td>0.0436915</td>
-      <td>0.0339935</td>
-      <td>0.0169967</td>
+      <td>(Sepal length, Petal width)</td>
+      <td>0.043691</td>
+      <td>0.033993</td>
+      <td>0.016997</td>
     </tr>
     <tr>
       <th>9</th>
       <td>(2, 3)</td>
       <td>[0.9666666666666667, 0.9666666666666667, 0.9, ...</td>
       <td>0.953333</td>
-      <td>(petal length, petal width)</td>
-      <td>0.0436915</td>
-      <td>0.0339935</td>
-      <td>0.0169967</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>(3,)</td>
-      <td>[0.9666666666666667, 0.9666666666666667, 0.933...</td>
-      <td>0.946667</td>
-      <td>(petal width,)</td>
-      <td>0.0581151</td>
-      <td>0.0452155</td>
-      <td>0.0226078</td>
+      <td>(Petal length, Petal width)</td>
+      <td>0.043691</td>
+      <td>0.033993</td>
+      <td>0.016997</td>
     </tr>
     <tr>
       <th>5</th>
       <td>(0, 2)</td>
       <td>[0.9666666666666667, 1.0, 0.8666666666666667, ...</td>
       <td>0.946667</td>
-      <td>(sepal length, petal length)</td>
-      <td>0.0581151</td>
-      <td>0.0452155</td>
-      <td>0.0226078</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>(1, 2)</td>
-      <td>[0.9666666666666667, 1.0, 0.9, 0.9333333333333...</td>
-      <td>0.946667</td>
-      <td>(sepal width, petal length)</td>
-      <td>0.0436915</td>
-      <td>0.0339935</td>
-      <td>0.0169967</td>
+      <td>(Sepal length, Petal length)</td>
+      <td>0.058115</td>
+      <td>0.045216</td>
+      <td>0.022608</td>
     </tr>
     <tr>
       <th>11</th>
       <td>(0, 1, 3)</td>
       <td>[0.9333333333333333, 0.9666666666666667, 0.9, ...</td>
       <td>0.946667</td>
-      <td>(sepal length, sepal width, petal width)</td>
-      <td>0.0436915</td>
-      <td>0.0339935</td>
-      <td>0.0169967</td>
+      <td>(Sepal length, Sepal width, Petal width)</td>
+      <td>0.043691</td>
+      <td>0.033993</td>
+      <td>0.016997</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>(2,)</td>
+      <td>[0.9333333333333333, 0.9333333333333333, 0.9, ...</td>
+      <td>0.94</td>
+      <td>(Petal length,)</td>
+      <td>0.041977</td>
+      <td>0.03266</td>
+      <td>0.01633</td>
     </tr>
     <tr>
       <th>8</th>
       <td>(1, 3)</td>
       <td>[0.9666666666666667, 0.9666666666666667, 0.866...</td>
       <td>0.94</td>
-      <td>(sepal width, petal width)</td>
-      <td>0.0499631</td>
+      <td>(Sepal width, Petal width)</td>
+      <td>0.049963</td>
       <td>0.038873</td>
-      <td>0.0194365</td>
+      <td>0.019437</td>
     </tr>
     <tr>
       <th>10</th>
       <td>(0, 1, 2)</td>
       <td>[0.9666666666666667, 0.9666666666666667, 0.866...</td>
       <td>0.94</td>
-      <td>(sepal length, sepal width, petal length)</td>
-      <td>0.0499631</td>
+      <td>(Sepal length, Sepal width, Petal length)</td>
+      <td>0.049963</td>
       <td>0.038873</td>
-      <td>0.0194365</td>
+      <td>0.019437</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>(1, 2)</td>
+      <td>[0.9333333333333333, 0.9333333333333333, 0.9, ...</td>
+      <td>0.926667</td>
+      <td>(Sepal width, Petal length)</td>
+      <td>0.017137</td>
+      <td>0.013333</td>
+      <td>0.006667</td>
     </tr>
     <tr>
       <th>4</th>
       <td>(0, 1)</td>
-      <td>[0.6666666666666666, 0.8, 0.6333333333333333, ...</td>
-      <td>0.726667</td>
-      <td>(sepal length, sepal width)</td>
-      <td>0.11623</td>
-      <td>0.0904311</td>
-      <td>0.0452155</td>
+      <td>[0.6666666666666666, 0.8, 0.7, 0.8666666666666...</td>
+      <td>0.74</td>
+      <td>(Sepal length, Sepal width)</td>
+      <td>0.102823</td>
+      <td>0.08</td>
+      <td>0.04</td>
     </tr>
     <tr>
       <th>0</th>
       <td>(0,)</td>
-      <td>[0.5333333333333333, 0.6333333333333333, 0.733...</td>
-      <td>0.66</td>
-      <td>(sepal length,)</td>
-      <td>0.106334</td>
-      <td>0.0827312</td>
-      <td>0.0413656</td>
+      <td>[0.5333333333333333, 0.6333333333333333, 0.7, ...</td>
+      <td>0.646667</td>
+      <td>(Sepal length,)</td>
+      <td>0.122983</td>
+      <td>0.095685</td>
+      <td>0.047842</td>
     </tr>
     <tr>
       <th>1</th>
       <td>(1,)</td>
-      <td>[0.5333333333333333, 0.6666666666666666, 0.633...</td>
-      <td>0.586667</td>
-      <td>(sepal width,)</td>
-      <td>0.0696117</td>
-      <td>0.0541603</td>
-      <td>0.0270801</td>
+      <td>[0.43333333333333335, 0.6333333333333333, 0.53...</td>
+      <td>0.506667</td>
+      <td>(Sepal width,)</td>
+      <td>0.095416</td>
+      <td>0.074237</td>
+      <td>0.037118</td>
     </tr>
   </tbody>
 </table>
@@ -1368,7 +1450,7 @@ plt.xticks(k_feat,
            rotation=90)
 plt.show()
 </code></pre>
-<p><img alt="png" src="../ExhaustiveFeatureSelector_files/ExhaustiveFeatureSelector_19_0.png" /></p>
+<p><img alt="png" src="../ExhaustiveFeatureSelector_files/ExhaustiveFeatureSelector_22_0.png" /></p>
 <h2 id="example-3-exhaustive-feature-selection-for-regression-analysis">Example 3 - Exhaustive feature selection for regression analysis</h2>
 <p>Similar to the classification examples above, the <code>SequentialFeatureSelector</code> also supports scikit-learn's estimators
 for regression.</p>
@@ -1391,7 +1473,43 @@ efs.fit(X, y)
 print('Best MSE score: %.2f' % efs.best_score_ * (-1))
 print('Best subset:', efs.best_idx_)
 </code></pre>
-<pre><code>Features: 377/377
+<pre><code>/Users/sebastianraschka/miniforge3/lib/python3.9/site-packages/sklearn/utils/deprecation.py:87: FutureWarning: Function load_boston is deprecated; `load_boston` is deprecated in 1.0 and will be removed in 1.2.
+
+    The Boston housing prices dataset has an ethical problem. You can refer to
+    the documentation of this function for further details.
+
+    The scikit-learn maintainers therefore strongly discourage the use of this
+    dataset unless the purpose of the code is to study and educate about
+    ethical issues in data science and machine learning.
+
+    In this special case, you can fetch the dataset from the original
+    source::
+
+        import pandas as pd
+        import numpy as np
+
+
+        data_url = "http://lib.stat.cmu.edu/datasets/boston"
+        raw_df = pd.read_csv(data_url, sep="\s+", skiprows=22, header=None)
+        data = np.hstack([raw_df.values[::2, :], raw_df.values[1::2, :2]])
+        target = raw_df.values[1::2, 2]
+
+    Alternative datasets include the California housing dataset (i.e.
+    :func:`~sklearn.datasets.fetch_california_housing`) and the Ames housing
+    dataset. You can load the datasets as follows::
+
+        from sklearn.datasets import fetch_california_housing
+        housing = fetch_california_housing()
+
+    for the California housing dataset and::
+
+        from sklearn.datasets import fetch_openml
+        housing = fetch_openml(name="house_prices", as_frame=True)
+
+    for the Ames housing dataset.
+
+  warnings.warn(msg, category=FutureWarning)
+Features: 377/377
 
 
 Best subset: (0, 1, 4, 6, 7, 8, 9, 10, 11, 12)
@@ -1424,7 +1542,43 @@ efs.fit(X, y)
 print('Best R2 score: %.2f' % efs.best_score_ * (-1))
 print('Best subset:', efs.best_idx_)
 </code></pre>
-<pre><code>Features: 377/377
+<pre><code>/Users/sebastianraschka/miniforge3/lib/python3.9/site-packages/sklearn/utils/deprecation.py:87: FutureWarning: Function load_boston is deprecated; `load_boston` is deprecated in 1.0 and will be removed in 1.2.
+
+    The Boston housing prices dataset has an ethical problem. You can refer to
+    the documentation of this function for further details.
+
+    The scikit-learn maintainers therefore strongly discourage the use of this
+    dataset unless the purpose of the code is to study and educate about
+    ethical issues in data science and machine learning.
+
+    In this special case, you can fetch the dataset from the original
+    source::
+
+        import pandas as pd
+        import numpy as np
+
+
+        data_url = "http://lib.stat.cmu.edu/datasets/boston"
+        raw_df = pd.read_csv(data_url, sep="\s+", skiprows=22, header=None)
+        data = np.hstack([raw_df.values[::2, :], raw_df.values[1::2, :2]])
+        target = raw_df.values[1::2, 2]
+
+    Alternative datasets include the California housing dataset (i.e.
+    :func:`~sklearn.datasets.fetch_california_housing`) and the Ames housing
+    dataset. You can load the datasets as follows::
+
+        from sklearn.datasets import fetch_california_housing
+        housing = fetch_california_housing()
+
+    for the California housing dataset and::
+
+        from sklearn.datasets import fetch_openml
+        housing = fetch_openml(name="house_prices", as_frame=True)
+
+    for the Ames housing dataset.
+
+  warnings.warn(msg, category=FutureWarning)
+Features: 377/377
 
 
 Best subset: (1, 3, 5, 6, 7, 8, 9, 10, 11, 12)
@@ -1551,13 +1705,7 @@ gs = GridSearchCV(estimator=pipe,
 # run gridearch
 gs = gs.fit(X_train, y_train)
 </code></pre>
-<pre><code>[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
-
-
-Fitting 2 folds for each of 3 candidates, totalling 6 fits
-
-
-[Parallel(n_jobs=1)]: Done   6 out of   6 | elapsed:    3.2s finished
+<pre><code>Fitting 2 folds for each of 3 candidates, totalling 6 fits
 </code></pre>
 <p>... and the "best" parameters determined by GridSearch are ...</p>
 <pre><code class="language-python">print(&quot;Best parameters via GridSearch&quot;, gs.best_params_)
@@ -1578,13 +1726,7 @@ Fitting 2 folds for each of 3 candidates, totalling 6 fits
 <pre><code class="language-python">gs = gs.fit(X_train, y_train)
 gs.best_estimator_.steps
 </code></pre>
-<pre><code>[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
-
-
-Fitting 2 folds for each of 3 candidates, totalling 6 fits
-
-
-[Parallel(n_jobs=1)]: Done   6 out of   6 | elapsed:    3.1s finished
+<pre><code>Fitting 2 folds for each of 3 candidates, totalling 6 fits
 
 
 
@@ -1596,7 +1738,8 @@ Fitting 2 folds for each of 3 candidates, totalling 6 fits
                                                          multi_class='multinomial',
                                                          random_state=123,
                                                          solver='newton-cg'),
-                            max_features=3, min_features=2, print_progress=False)),
+                            feature_groups=[[0], [1], [2], [3]], max_features=3,
+                            min_features=2, print_progress=False)),
  ('logisticregression',
   LogisticRegression(multi_class='multinomial', random_state=123,
                      solver='newton-cg'))]
@@ -1621,43 +1764,7 @@ print('Best features:', pipe.steps[0][1].best_idx_)
 </code></pre>
 <pre><code>Best features: (2, 3)
 </code></pre>
-<h2 id="example-7-working-with-pandas-dataframes">Example 7 - Working with pandas DataFrames</h2>
-<p>Optionally, we can also use pandas DataFrames and pandas Series as input to the <code>fit</code> function. In this case, the column names of the pandas DataFrame will be used as feature names. However, note that if <code>custom_feature_names</code> are provided in the fit function, these <code>custom_feature_names</code> take precedence over the DataFrame column-based feature names.</p>
-<pre><code class="language-python">import pandas as pd
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.datasets import load_iris
-
-iris = load_iris()
-col_names = ('sepal length', 'sepal width',
-             'petal length', 'petal width')
-X_df = pd.DataFrame(iris.data, columns=col_names)
-y_series = pd.Series(iris.target)
-knn = KNeighborsClassifier(n_neighbors=4)
-</code></pre>
-<pre><code class="language-python">from mlxtend.feature_selection import ExhaustiveFeatureSelector as EFS
-
-knn = KNeighborsClassifier(n_neighbors=3)
-
-efs1 = EFS(knn, 
-           min_features=1,
-           max_features=4,
-           scoring='accuracy',
-           print_progress=True,
-           cv=5)
-
-efs1 = efs1.fit(X_df, y_series)
-
-print('Best accuracy score: %.2f' % efs1.best_score_)
-print('Best subset (indices):', efs1.best_idx_)
-print('Best subset (corresponding names):', efs1.best_feature_names_)
-</code></pre>
-<pre><code>Features: 15/15
-
-Best accuracy score: 0.97
-Best subset (indices): (0, 2, 3)
-Best subset (corresponding names): ('sepal length', 'petal length', 'petal width')
-</code></pre>
-<h2 id="example-8-exhaustive-feature-selection-with-loocv">Example 8 - Exhaustive Feature Selection with LOOCV</h2>
+<h2 id="example-7-exhaustive-feature-selection-with-loocv">Example 7 - Exhaustive Feature Selection with LOOCV</h2>
 <p>The <code>ExhaustiveFeatureSelector</code> is not restricted to k-fold cross-validation. You can use any type of cross-validation method that supports the general scikit-learn cross-validation API. </p>
 <p>The following example illustrates the use of scikit-learn's <code>LeaveOneOut</code> cross-validation method in combination with the exhaustive feature selector.</p>
 <pre><code class="language-python">from sklearn.neighbors import KNeighborsClassifier
@@ -1691,8 +1798,161 @@ Best accuracy score: 0.96
 Best subset (indices): (3,)
 Best subset (corresponding names): ('3',)
 </code></pre>
+<h2 id="example-8-interrupting-long-runs-for-intermediate-results">Example 8 - Interrupting Long Runs for Intermediate Results</h2>
+<p>If your run is taking too long, it is possible to trigger a <code>KeyboardInterrupt</code> (e.g., ctrl+c on a Mac, or interrupting the cell in a Jupyter notebook) to obtain temporary results.</p>
+<p><strong>Toy dataset</strong></p>
+<pre><code class="language-python">from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+
+
+X, y = make_classification(
+    n_samples=200000,
+    n_features=6,
+    n_informative=2,
+    n_redundant=1,
+    n_repeated=1,
+    n_clusters_per_class=2,
+    flip_y=0.05,
+    class_sep=0.5,
+    random_state=123,
+)
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=123
+)
+</code></pre>
+<p><strong>Long run with interruption</strong></p>
+<pre><code class="language-python">from mlxtend.feature_selection import ExhaustiveFeatureSelector as EFS
+from sklearn.linear_model import LogisticRegression
+
+model = LogisticRegression(max_iter=10000)
+
+efs1 = EFS(model, 
+           min_features=1, 
+           max_features=4,
+           print_progress=True,
+           scoring='accuracy')
+
+efs1 = efs1.fit(X_train, y_train)
+</code></pre>
+<pre><code>Features: 56/56
+</code></pre>
+<p><strong>Finalizing the fit</strong></p>
+<p>Note that the feature selection run hasn't finished, so certain attributes may not be available. In order to use the EFS instance, it is recommended to call <code>finalize_fit</code>, which will make EFS estimator appear as "fitted" process the temporary results:</p>
+<pre><code class="language-python">efs1.finalize_fit()
+</code></pre>
+<pre><code class="language-python">print('Best accuracy score: %.2f' % efs1.best_score_)
+print('Best subset (indices):', efs1.best_idx_)
+</code></pre>
+<pre><code>Best accuracy score: 0.73
+Best subset (indices): (1, 2)
+</code></pre>
+<h2 id="example-9-working-with-feature-groups">Example 9 - Working with Feature Groups</h2>
+<p>Since mlxtend v0.21.0, it is possible to specify feature groups. Feature groups allow you to group certain features together, such that they are always selected as a group. This can be very useful in contexts similar to one-hot encoding -- if you want to treat the one-hot encoded feature as a single feature:</p>
+<p><img alt="" src="../SequentialFeatureSelector_files/feature_groups.jpeg" /></p>
+<p>In the following example, we specify sepal length and sepal width as a feature group so that they are always selected together:</p>
+<pre><code class="language-python">from sklearn.datasets import load_iris
+import pandas as pd
+
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+X_df = pd.DataFrame(X, columns=['sepal len', 'petal len',
+                                'sepal wid', 'petal wid'])
+X_df.head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal len</th>
+      <th>petal len</th>
+      <th>sepal wid</th>
+      <th>petal wid</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">from sklearn.neighbors import KNeighborsClassifier
+from mlxtend.feature_selection import ExhaustiveFeatureSelector as EFS
+
+knn = KNeighborsClassifier(n_neighbors=3)
+
+efs1 = EFS(knn, 
+           min_features=2,
+           max_features=2,
+           scoring='accuracy',
+           feature_groups=[['sepal len', 'sepal wid'], ['petal len'], ['petal wid']],
+           cv=3)
+
+efs1 = efs1.fit(X_df, y)
+
+print('Best accuracy score: %.2f' % efs1.best_score_)
+print('Best subset (indices):', efs1.best_idx_)
+print('Best subset (corresponding names):', efs1.best_feature_names_)
+</code></pre>
+<pre><code>Features: 3/3
+
+Best accuracy score: 0.97
+Best subset (indices): (0, 2, 3)
+Best subset (corresponding names): ('sepal len', 'sepal wid', 'petal wid')
+</code></pre>
+<p>Notice that the returned number of features is 3, since the number of <code>min_features</code> and <code>max_features</code> corresponds to the number of feature groups. I.e., we have 2 feature groups in <code>['sepal len', 'sepal wid'], ['petal wid']</code>, but it expands to 3 features.</p>
 <h2 id="api">API</h2>
-<p><em>ExhaustiveFeatureSelector(estimator, min_features=1, max_features=1, print_progress=True, scoring='accuracy', cv=5, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
+<p><em>ExhaustiveFeatureSelector(estimator, min_features=1, max_features=1, print_progress=True, scoring='accuracy', cv=5, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True, fixed_features=None, feature_groups=None)*</p>
 <p>Exhaustive Feature Selection for Classification and Regression.
     (new in v0.4.3)</p>
 <p><strong>Parameters</strong></p>
@@ -1706,7 +1966,10 @@ Best subset (corresponding names): ('3',)
 </li>
 <li>
 <p><code>max_features</code> : int (default: 1)</p>
-<p>Maximum number of features to select</p>
+<p>Maximum number of features to select. If parameter <code>feature_groups</code> is not
+None, the number of features is equal to the number of feature groups, i.e.
+<code>len(feature_groups)</code>. For  example, if <code>feature_groups = [[0], [1], [2, 3],
+[4]]</code>, then the <code>max_features</code> value cannot exceed 4.</p>
 </li>
 <li>
 <p><code>print_progress</code> : bool (default: True)</p>
@@ -1756,6 +2019,30 @@ if False. Set to False if the estimator doesn't
 implement scikit-learn's set_params and get_params methods.
 In addition, it is required to set cv=0, and n_jobs=1.</p>
 </li>
+<li>
+<p><code>fixed_features</code> : tuple (default: None)</p>
+<p>If not <code>None</code>, the feature indices provided as a tuple will be
+regarded as fixed by the feature selector. For example, if
+<code>fixed_features=(1, 3, 7)</code>, the 2nd, 4th, and 8th feature are
+guaranteed to be present in the solution. Note that if
+<code>fixed_features</code> is not <code>None</code>, make sure that the number of
+features to be selected is greater than <code>len(fixed_features)</code>.
+In other words, ensure that <code>k_features &gt; len(fixed_features)</code>.</p>
+</li>
+<li>
+<p><code>feature_groups</code> : list or None (default: None)</p>
+<p>Optional argument for treating certain features as a group.
+This means, the features within a group are always selected together,
+never split.
+For example, <code>feature_groups=[[1], [2], [3, 4, 5]]</code>
+specifies 3 feature groups.In this case,
+possible feature selection results with <code>k_features=2</code>
+are <code>[[1], [2]</code>, <code>[[1], [3, 4, 5]]</code>, or <code>[[2], [3, 4, 5]]</code>.
+Feature groups can be useful for
+interpretability, for example, if features 3, 4, 5 are one-hot
+encoded features.  (For  more details, please read the notes at the
+bottom of this docstring).  New in mlxtend v. 0.21.0.</p>
+</li>
 </ul>
 <p><strong>Attributes</strong></p>
 <ul>
@@ -1789,16 +2076,32 @@ Note that if pandas
 DataFrames are used in the <code>fit</code> method, the 'feature_names'
 correspond to the column names. Otherwise, the
 feature names are string representation of the feature
-array indices. The 'feature_names' is new in v 0.13.0.</p>
+array indices. The 'feature_names' is new in v. 0.13.0.</p>
 </li>
 </ul>
+<p><strong>Notes</strong></p>
+<p>(1) If parameter <code>feature_groups</code> is not None, the
+    number of features is equal to the number of feature groups, i.e.
+    <code>len(feature_groups)</code>. For  example, if <code>feature_groups = [[0], [1], [2, 3],
+    [4]]</code>, then the <code>max_features</code> value cannot exceed 4.</p>
+<pre><code>(2) Although two or more individual features may be considered as one group
+throughout the feature-selection process, it does not mean the individual
+features of that group have the same impact on the outcome. For instance, in
+linear regression, the coefficient of the feature 2 and 3 can be different
+even if they are considered as one group in feature_groups.
+
+(3) If both fixed_features and feature_groups are specified, ensure that each
+feature group contains the fixed_features selection. E.g., for a 3-feature set
+fixed_features=[0, 1] and feature_groups=[[0, 1], [2]] is valid;
+fixed_features=[0, 1] and feature_groups=[[0], [1, 2]] is not valid.
+</code></pre>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/feature_selection/ExhaustiveFeatureSelector/</p>
 <h3 id="methods">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, custom_feature_names=None, groups=None, </em><em>fit_params)</em></p>
+<p><em>fit(X, y, groups=None, </em><em>fit_params)</em></p>
 <p>Perform feature selection and learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1812,12 +2115,6 @@ argument for X.</p>
 <li>
 <p><code>y</code> : array-like, shape = [n_samples]</p>
 <p>Target values.</p>
-</li>
-<li>
-<p><code>custom_feature_names</code> : None or tuple (default: tuple)</p>
-<p>Custom feature names for <code>self.k_feature_names</code> and
-<code>self.subsets_[i]['feature_names']</code>.
-(new in v 0.13.0)</p>
 </li>
 <li>
 <p><code>groups</code> : array-like, with shape (n_samples,), optional</p>
@@ -1900,7 +2197,7 @@ contained subobjects that are estimators.</p>
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>params</code> : mapping of string to any</p>
+<p><code>params</code> : dict</p>
 <p>Parameter names mapped to their values.</p>
 </li>
 </ul>
@@ -1909,9 +2206,9 @@ contained subobjects that are estimators.</p>
 <p><em>set_params(</em><em>params)</em></p>
 <p>Set the parameters of this estimator.</p>
 <pre><code>The method works on simple estimators as well as on nested objects
-(such as pipelines). The latter have parameters of the form
-``&lt;component&gt;__&lt;parameter&gt;`` so that it's possible to update each
-component of a nested object.
+(such as :class:`~sklearn.pipeline.Pipeline`). The latter have
+parameters of the form ``&lt;component&gt;__&lt;parameter&gt;`` so that it's
+possible to update each component of a nested object.
 </code></pre>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1923,7 +2220,7 @@ component of a nested object.
 <p><strong>Returns</strong></p>
 <ul>
 <li>
-<p><code>self</code> : object</p>
+<p><code>self</code> : estimator instance</p>
 <p>Estimator instance.</p>
 </li>
 </ul>
@@ -1950,7 +2247,7 @@ argument for X.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2022 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

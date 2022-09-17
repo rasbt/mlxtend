@@ -445,7 +445,7 @@
         
             
 <li >
-    <a href="../user_guide/feature_selection/SequentialFeatureSelector/">SequentialFeatureSelector: The popular forward and backward feature selection approaches incl. floating variants</a>
+    <a href="../user_guide/feature_selection/SequentialFeatureSelector/">SequentialFeatureSelector: The popular forward and backward feature selection approaches (including floating variants)</a>
 </li>
 
         
@@ -1027,6 +1027,17 @@ and checking off items as you go.</p>
 <p>[ ]  Run <code>PYTHONPATH='.' pytest ./mlxtend -sv</code> and make sure that all unit tests pass  </p>
 </li>
 <li>
+<p>[ ] Make sure the newly implemented feature has good test coverage:</p>
+</li>
+</ol>
+<pre><code>python -m pip install coverage
+# test all: 
+# coverage run --source=mlxtend --branch -m pytest .
+coverage run --source=mlxtend --branch -m pytest mlxtend/&lt;insert_path&gt;
+coverage html
+</code></pre>
+<ol>
+<li>
 <p>[ ]  Modify documentation in the appropriate location under <code>mlxtend/docs/sources/</code>  </p>
 </li>
 <li>
@@ -1044,7 +1055,7 @@ and checking off items as you go.</p>
 <pre><code>black [source_file_or_directory]
 </code></pre>
 <ol>
-<li>[ ] Run <code>[isort](https://pycqa.github.io/isort/)</code> which will sort the imports alphabetically. We recommend the following command:</li>
+<li>[ ] Run <a href="https://pycqa.github.io/isort/"><code>isort</code></a> which will sort the imports alphabetically. We recommend the following command:</li>
 </ol>
 <pre><code>isort -p mlxtend --line-length 88 --multi-line 3 --profile black mypythonfile.py
 </code></pre>
@@ -1308,7 +1319,7 @@ squash 046e3af fixed setup.py
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2022 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

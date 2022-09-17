@@ -445,7 +445,7 @@
         
             
 <li >
-    <a href="../../user_guide/feature_selection/SequentialFeatureSelector/">SequentialFeatureSelector: The popular forward and backward feature selection approaches incl. floating variants</a>
+    <a href="../../user_guide/feature_selection/SequentialFeatureSelector/">SequentialFeatureSelector: The popular forward and backward feature selection approaches (including floating variants)</a>
 </li>
 
         
@@ -982,7 +982,7 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.20.0 </p>
+<p>mlxtend version: 0.21.0 </p>
 <h2 id="columnselector">ColumnSelector</h2>
 <p><em>ColumnSelector(cols=None, drop_axis=False)</em></p>
 <p>Object for selecting specific columns from a data set.</p>
@@ -1113,7 +1113,7 @@ n_features is the number of features.</p>
 </li>
 </ul>
 <h2 id="exhaustivefeatureselector">ExhaustiveFeatureSelector</h2>
-<p><em>ExhaustiveFeatureSelector(estimator, min_features=1, max_features=1, print_progress=True, scoring='accuracy', cv=5, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True)*</p>
+<p><em>ExhaustiveFeatureSelector(estimator, min_features=1, max_features=1, print_progress=True, scoring='accuracy', cv=5, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True, fixed_features=None, feature_groups=None)*</p>
 <p>Exhaustive Feature Selection for Classification and Regression.
     (new in v0.4.3)</p>
 <p><strong>Parameters</strong></p>
@@ -1127,7 +1127,10 @@ n_features is the number of features.</p>
 </li>
 <li>
 <p><code>max_features</code> : int (default: 1)</p>
-<p>Maximum number of features to select</p>
+<p>Maximum number of features to select. If parameter <code>feature_groups</code> is not
+None, the number of features is equal to the number of feature groups, i.e.
+<code>len(feature_groups)</code>. For  example, if <code>feature_groups = [[0], [1], [2, 3],
+[4]]</code>, then the <code>max_features</code> value cannot exceed 4.</p>
 </li>
 <li>
 <p><code>print_progress</code> : bool (default: True)</p>
@@ -1177,6 +1180,30 @@ if False. Set to False if the estimator doesn't
 implement scikit-learn's set_params and get_params methods.
 In addition, it is required to set cv=0, and n_jobs=1.</p>
 </li>
+<li>
+<p><code>fixed_features</code> : tuple (default: None)</p>
+<p>If not <code>None</code>, the feature indices provided as a tuple will be
+regarded as fixed by the feature selector. For example, if
+<code>fixed_features=(1, 3, 7)</code>, the 2nd, 4th, and 8th feature are
+guaranteed to be present in the solution. Note that if
+<code>fixed_features</code> is not <code>None</code>, make sure that the number of
+features to be selected is greater than <code>len(fixed_features)</code>.
+In other words, ensure that <code>k_features &gt; len(fixed_features)</code>.</p>
+</li>
+<li>
+<p><code>feature_groups</code> : list or None (default: None)</p>
+<p>Optional argument for treating certain features as a group.
+This means, the features within a group are always selected together,
+never split.
+For example, <code>feature_groups=[[1], [2], [3, 4, 5]]</code>
+specifies 3 feature groups.In this case,
+possible feature selection results with <code>k_features=2</code>
+are <code>[[1], [2]</code>, <code>[[1], [3, 4, 5]]</code>, or <code>[[2], [3, 4, 5]]</code>.
+Feature groups can be useful for
+interpretability, for example, if features 3, 4, 5 are one-hot
+encoded features.  (For  more details, please read the notes at the
+bottom of this docstring).  New in mlxtend v. 0.21.0.</p>
+</li>
 </ul>
 <p><strong>Attributes</strong></p>
 <ul>
@@ -1210,16 +1237,40 @@ Note that if pandas
 DataFrames are used in the <code>fit</code> method, the 'feature_names'
 correspond to the column names. Otherwise, the
 feature names are string representation of the feature
-array indices. The 'feature_names' is new in v 0.13.0.</p>
+array indices. The 'feature_names' is new in v. 0.13.0.</p>
 </li>
 </ul>
+<p><strong>Notes</strong></p>
+<p>(1) If parameter <code>feature_groups</code> is not None, the
+    number of features is equal to the number of feature groups, i.e.
+    <code>len(feature_groups)</code>. For  example, if <code>feature_groups = [[0], [1], [2, 3],
+    [4]]</code>, then the <code>max_features</code> value cannot exceed 4.</p>
+<pre><code>(2) Although two or more individual features may be considered as one group
+throughout the feature-selection process, it does not mean the individual
+features of that group have the same impact on the outcome. For instance, in
+linear regression, the coefficient of the feature 2 and 3 can be different
+even if they are considered as one group in feature_groups.
+
+(3) If both fixed_features and feature_groups are specified, ensure that each
+feature group contains the fixed_features selection. E.g., for a 3-feature set
+fixed_features=[0, 1] and feature_groups=[[0, 1], [2]] is valid;
+fixed_features=[0, 1] and feature_groups=[[0], [1, 2]] is not valid.
+
+(4) In case of KeyboardInterrupt, the dictionary subsets may not be completed.
+If user is still interested in getting the best score, they can use method
+`finalize_fit`.
+</code></pre>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/feature_selection/ExhaustiveFeatureSelector/</p>
 <h3 id="methods_1">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, custom_feature_names=None, groups=None, </em><em>fit_params)</em></p>
+<p><em>finalize_fit()</em></p>
+<p>None</p>
+<hr>
+
+<p><em>fit(X, y, groups=None, </em><em>fit_params)</em></p>
 <p>Perform feature selection and learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1233,12 +1284,6 @@ argument for X.</p>
 <li>
 <p><code>y</code> : array-like, shape = [n_samples]</p>
 <p>Target values.</p>
-</li>
-<li>
-<p><code>custom_feature_names</code> : None or tuple (default: tuple)</p>
-<p>Custom feature names for <code>self.k_feature_names</code> and
-<code>self.subsets_[i]['feature_names']</code>.
-(new in v 0.13.0)</p>
 </li>
 <li>
 <p><code>groups</code> : array-like, with shape (n_samples,), optional</p>
@@ -1365,7 +1410,7 @@ argument for X.</p>
 <p><strong>Returns</strong></p>
 <p>Feature subset of X, shape={n_samples, k_features}</p>
 <h2 id="sequentialfeatureselector">SequentialFeatureSelector</h2>
-<p><em>SequentialFeatureSelector(estimator, k_features=1, forward=True, floating=False, verbose=0, scoring=None, cv=5, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True, fixed_features=None)*</p>
+<p><em>SequentialFeatureSelector(estimator, k_features=1, forward=True, floating=False, verbose=0, scoring=None, cv=5, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True, fixed_features=None, feature_groups=None)*</p>
 <p>Sequential Feature Selection for Classification and Regression.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1460,6 +1505,20 @@ features to be selected is greater than <code>len(fixed_features)</code>.
 In other words, ensure that <code>k_features &gt; len(fixed_features)</code>.
 New in mlxtend v. 0.18.0.</p>
 </li>
+<li>
+<p><code>feature_groups</code> : list or None (default: None)</p>
+<p>Optional argument for treating certain features as a group.
+This means, the features within a group are always selected together,
+never split.
+For example, <code>feature_groups=[[1], [2], [3, 4, 5]]</code>
+specifies 3 feature groups. In this case,
+possible feature selection results with <code>k_features=2</code>
+are <code>[[1], [2]</code>, <code>[[1], [3, 4, 5]]</code>, or <code>[[2], [3, 4, 5]]</code>.
+Feature groups can be useful for
+interpretability, for example, if features 3, 4, 5 are one-hot
+encoded features.  (For  more details, please read the notes at the
+bottom of this docstring).  New in mlxtend v. 0.21.0.</p>
+</li>
 </ul>
 <p><strong>Attributes</strong></p>
 <ul>
@@ -1483,7 +1542,9 @@ array indices. New in v 0.13.0.</p>
 <p><code>subsets_</code> : dict</p>
 <p>A dictionary of selected feature subsets during the
 sequential selection, where the dictionary keys are
-the lengths k of these feature subsets. The dictionary
+the lengths k of these feature subsets. If the parameter
+<code>feature_groups</code> is not None, the value of key indicates
+the number of groups that are selected together. The dictionary
 values are dictionaries themselves with the following
 keys: 'feature_idx' (tuple of indices of the feature subset)
 'feature_names' (tuple of feature names of the feat. subset)
@@ -1496,13 +1557,37 @@ feature names are string representation of the feature
 array indices. The 'feature_names' is new in v 0.13.0.</p>
 </li>
 </ul>
+<p><strong>Notes</strong></p>
+<p>(1) If parameter <code>feature_groups</code> is not None, the
+    number of features is equal to the number of feature groups, i.e.
+    <code>len(feature_groups)</code>. For  example, if <code>feature_groups = [[0], [1], [2, 3],
+    [4]]</code>, then the <code>max_features</code> value cannot exceed 4.</p>
+<pre><code>(2) Although two or more individual features may be considered as one group
+throughout the feature-selection process, it does not mean the individual
+features of that group have the same impact on the outcome. For instance, in
+linear regression, the coefficient of the feature 2 and 3 can be different
+even if they are considered as one group in feature_groups.
+
+(3) If both fixed_features and feature_groups are specified, ensure that each
+feature group contains the fixed_features selection. E.g., for a 3-feature set
+fixed_features=[0, 1] and feature_groups=[[0, 1], [2]] is valid;
+fixed_features=[0, 1] and feature_groups=[[0], [1, 2]] is not valid.
+
+(4) In case of KeyboardInterrupt, the dictionary subsets may not be completed.
+If user is still interested in getting the best score, they can use method
+`finalize_fit`.
+</code></pre>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/feature_selection/SequentialFeatureSelector/</p>
 <h3 id="methods_2">Methods</h3>
 <hr>
 
-<p><em>fit(X, y, custom_feature_names=None, groups=None, </em><em>fit_params)</em></p>
+<p><em>finalize_fit()</em></p>
+<p>None</p>
+<hr>
+
+<p><em>fit(X, y, groups=None, </em><em>fit_params)</em></p>
 <p>Perform feature selection and learn model from training data.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1518,12 +1603,6 @@ argument for X.</p>
 <p>Target values.
 New in v 0.13.0: pandas DataFrames are now also accepted as
 argument for y.</p>
-</li>
-<li>
-<p><code>custom_feature_names</code> : None or tuple (default: tuple)</p>
-<p>Custom feature names for <code>self.k_feature_names</code> and
-<code>self.subsets_[i]['feature_names']</code>.
-(new in v 0.13.0)</p>
 </li>
 <li>
 <p><code>groups</code> : array-like, with shape (n_samples,), optional</p>
@@ -1572,6 +1651,10 @@ For example, <code>sample_weights=weights</code>.</p>
 </ul>
 <p><strong>Returns</strong></p>
 <p>Reduced feature subset of X, shape={n_samples, k_features}</p>
+<hr>
+
+<p><em>generate_error_message_k_features(name)</em></p>
+<p>None</p>
 <hr>
 
 <p><em>get_metric_dict(confidence_interval=0.95)</em></p>
@@ -1650,7 +1733,7 @@ argument for X.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2022 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

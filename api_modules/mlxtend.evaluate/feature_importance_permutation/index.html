@@ -445,7 +445,7 @@
         
             
 <li >
-    <a href="../../../user_guide/feature_selection/SequentialFeatureSelector/">SequentialFeatureSelector: The popular forward and backward feature selection approaches incl. floating variants</a>
+    <a href="../../../user_guide/feature_selection/SequentialFeatureSelector/">SequentialFeatureSelector: The popular forward and backward feature selection approaches (including floating variants)</a>
 </li>
 
         
@@ -963,7 +963,7 @@
         <div class="col-md-9" role="main">
 
 <h2 id="feature_importance_permutation">feature_importance_permutation</h2>
-<p><em>feature_importance_permutation(X, y, predict_method, metric, num_rounds=1, seed=None)</em></p>
+<p><em>feature_importance_permutation(X, y, predict_method, metric, num_rounds=1, feature_groups=None, seed=None)</em></p>
 <p>Feature importance imputation via permutation importance</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -997,6 +997,13 @@ similar shape to the <code>y</code> array.</p>
 compute the permutation importance.</p>
 </li>
 <li>
+<p><code>feature_groups</code> : list or None (default=None)</p>
+<p>Optional argument for treating certain features as a group.
+For example <code>[1, 2, [3, 4, 5]]</code>, which can be useful for
+interpretability, for example, if features 3, 4, 5 are one-hot
+encoded features.</p>
+</li>
+<li>
 <p><code>seed</code> : int or None (default=None)</p>
 <p>Random seed for permuting the feature columns.</p>
 </li>
@@ -1022,7 +1029,7 @@ it contains the same values as the first array, mean_importance_vals.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2022 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

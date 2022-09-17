@@ -10,7 +10,7 @@
     <link rel="canonical" href="http://rasbt.github.io/mlxtend/user_guide/feature_selection/SequentialFeatureSelector/">
     <link rel="shortcut icon" href="../../../img/favicon.ico">
 
-    <title>SequentialFeatureSelector: The popular forward and backward feature selection approaches incl. floating variants - mlxtend</title>
+    <title>SequentialFeatureSelector: The popular forward and backward feature selection approaches (including floating variants) - mlxtend</title>
 
     <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -445,7 +445,7 @@
         
             
 <li class="active">
-    <a href="./">SequentialFeatureSelector: The popular forward and backward feature selection approaches incl. floating variants</a>
+    <a href="./">SequentialFeatureSelector: The popular forward and backward feature selection approaches (including floating variants)</a>
 </li>
 
         
@@ -967,14 +967,22 @@
         
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="first-level active"><a href="#sequentialfeatureselector-the-popular-forward-and-backward-feature-selection-approaches-incl-floating-variants">SequentialFeatureSelector: The popular forward and backward feature selection approaches incl. floating variants</a></li>
+        <li class="first-level active"><a href="#sequentialfeatureselector-the-popular-forward-and-backward-feature-selection-approaches-including-floating-variants">SequentialFeatureSelector: The popular forward and backward feature selection approaches (including floating variants)</a></li>
             <li class="second-level"><a href="#overview">Overview</a></li>
-                 <!-- 
-                <li class="third-level"><a href="#sequential-forward-selection-sfs">Sequential Forward Selection (SFS)</a></li>
-                <li class="third-level"><a href="#sequential-backward-selection-sbs">Sequential Backward Selection (SBS)</a></li>
-                <li class="third-level"><a href="#sequential-backward-floating-selection-sbfs">Sequential Backward Floating Selection (SBFS)</a></li>
-                <li class="third-level"><a href="#sequential-forward-floating-selection-sffs">Sequential Forward Floating Selection (SFFS)</a></li>
-                <li class="third-level"><a href="#references">References</a></li>  -->
+                 <!--   -->
+        <li class="first-level "><a href="#tutorial-videos">Tutorial Videos</a></li>
+        <li class="first-level "><a href="#visual-illustration">Visual Illustration</a></li>
+        <li class="first-level "><a href="#algorithmic-details">Algorithmic Details</a></li>
+            <li class="second-level"><a href="#sequential-forward-selection-sfs">Sequential Forward Selection (SFS)</a></li>
+                 <!--   -->
+            <li class="second-level"><a href="#sequential-backward-selection-sbs">Sequential Backward Selection (SBS)</a></li>
+                 <!--   -->
+            <li class="second-level"><a href="#sequential-backward-floating-selection-sbfs">Sequential Backward Floating Selection (SBFS)</a></li>
+                 <!--   -->
+            <li class="second-level"><a href="#sequential-forward-floating-selection-sffs">Sequential Forward Floating Selection (SFFS)</a></li>
+                 <!--   -->
+            <li class="second-level"><a href="#references">References</a></li>
+                 <!--   -->
             <li class="second-level"><a href="#example-1-a-simple-sequential-forward-selection-example">Example 1 - A simple Sequential Forward Selection example</a></li>
                  <!--   -->
             <li class="second-level"><a href="#example-2-toggling-between-sfs-sbs-sffs-and-sbfs">Example 2 - Toggling between SFS, SBS, SFFS, and SBFS</a></li>
@@ -990,17 +998,19 @@
             <li class="second-level"><a href="#example-7-using-the-selected-feature-subset-for-making-new-predictions">Example 7 -- Using the Selected Feature Subset For Making New Predictions</a></li>
                  <!--   -->
             <li class="second-level"><a href="#example-8-sequential-feature-selection-and-gridsearch">Example 8 -- Sequential Feature Selection and GridSearch</a></li>
-                 <!-- 
-                <li class="third-level"><a href="#using-the-same-estimator-inside-and-outside-sfs">Using the same estimator inside and outside SFS</a></li>
-                <li class="third-level"><a href="#using-a-different-estimator-inside-and-outside-sfs">Using a different estimator inside and outside SFS</a></li>  -->
+                 <!--   -->
             <li class="second-level"><a href="#example-9-selecting-the-best-feature-combination-in-a-k-range">Example 9 -- Selecting the "best"  feature combination in a k-range</a></li>
                  <!--   -->
             <li class="second-level"><a href="#example-10-using-other-cross-validation-schemes">Example 10 -- Using other cross-validation schemes</a></li>
                  <!-- 
                 <li class="third-level"><a href="#using-groupkfold-with-sequentialfeatureselector">Using GroupKFold with SequentialFeatureSelector</a></li>  -->
-            <li class="second-level"><a href="#example-11-using-pandas-dataframes">Example 11 - Using Pandas DataFrames</a></li>
+            <li class="second-level"><a href="#example-11-interrupting-long-runs-for-intermediate-results">Example 11 - Interrupting Long Runs for Intermediate Results</a></li>
                  <!--   -->
-            <li class="second-level"><a href="#example-12-specifying-fixed-feature-sets">Example 12 - Specifying Fixed Feature Sets</a></li>
+            <li class="second-level"><a href="#example-12-using-pandas-dataframes">Example 12 - Using Pandas DataFrames</a></li>
+                 <!--   -->
+            <li class="second-level"><a href="#example-13-specifying-fixed-feature-sets">Example 13 - Specifying Fixed Feature Sets</a></li>
+                 <!--   -->
+            <li class="second-level"><a href="#example-13-working-with-feature-groups">Example 13 - Working with Feature Groups</a></li>
                  <!--   -->
         <li class="first-level "><a href="#api">API</a></li>
             <li class="second-level"><a href="#methods">Methods</a></li>
@@ -1011,25 +1021,38 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="sequentialfeatureselector-the-popular-forward-and-backward-feature-selection-approaches-incl-floating-variants">SequentialFeatureSelector: The popular forward and backward feature selection approaches incl. floating variants</h1>
+<h1 id="sequentialfeatureselector-the-popular-forward-and-backward-feature-selection-approaches-including-floating-variants">SequentialFeatureSelector: The popular forward and backward feature selection approaches (including floating variants)</h1>
 <p>Implementation of <em>sequential feature algorithms</em> (SFAs) -- greedy search algorithms -- that have been developed as a suboptimal solution to the computationally often not feasible exhaustive search.</p>
 <blockquote>
 <p>from mlxtend.feature_selection import SequentialFeatureSelector</p>
 </blockquote>
 <h2 id="overview">Overview</h2>
-<p>Sequential feature selection algorithms are a family of greedy search algorithms that are used to reduce an initial <em>d</em>-dimensional feature space to a <em>k</em>-dimensional feature subspace where <em>k &lt; d</em>. The motivation behind feature selection algorithms is to automatically select a subset of features that is most relevant to the problem. The goal of feature selection is two-fold: We want to improve the computational efficiency and reduce the generalization error of the model by removing irrelevant features or noise. A wrapper approach such as sequential feature selection is especially useful if embedded feature selection -- for example, a regularization penalty like LASSO -- is not applicable.</p>
-<p>In a nutshell, SFAs remove or add one feature at the time based on the classifier performance until a feature subset of the desired size <em>k</em> is reached. There are 4 different flavors of SFAs available via the <code>SequentialFeatureSelector</code>:</p>
+<p>Sequential feature selection algorithms are a family of greedy search algorithms that are used to reduce an initial <em>d</em>-dimensional feature space to a <em>k</em>-dimensional feature subspace where <em>k &lt; d</em>. The motivation behind feature selection algorithms is to automatically select a subset of features most relevant to the problem. The goal of feature selection is two-fold: We want to improve the computational efficiency and reduce the model's generalization error by removing irrelevant features or noise. In addition, a wrapper approach such as sequential feature selection is advantageous if embedded feature selection -- for example, a regularization penalty like LASSO -- is not applicable.</p>
+<p>In a nutshell, SFAs remove or add one feature at a time based on the classifier performance until a feature subset of the desired size <em>k</em> is reached. There are four different flavors of SFAs available via the <code>SequentialFeatureSelector</code>:</p>
 <ol>
 <li>Sequential Forward Selection (SFS)</li>
 <li>Sequential Backward Selection (SBS)</li>
 <li>Sequential Forward Floating Selection (SFFS)</li>
 <li>Sequential Backward Floating Selection (SBFS)</li>
 </ol>
-<p>The <strong><em>floating</em></strong> variants, SFFS and SBFS, can be considered as extensions to the simpler SFS and SBS algorithms. The floating algorithms have an additional exclusion or inclusion step to remove features once they were included (or excluded), so that a larger number of feature subset combinations can be sampled. It is important to emphasize that this step is conditional and only occurs if the resulting feature subset is assessed as "better" by the criterion function after removal (or addition) of a particular feature. Furthermore, I added an optional check to skip the conditional exclusion steps if the algorithm gets stuck in cycles.  </p>
+<p>The <strong><em>floating</em></strong> variants, SFFS and SBFS, can be considered extensions to the simpler SFS and SBS algorithms. The floating algorithms have an additional exclusion or inclusion step to remove features once they were included (or excluded) so that a larger number of feature subset combinations can be sampled. It is important to emphasize that this step is conditional and only occurs if the resulting feature subset is assessed as "better" by the criterion function after the removal (or addition) of a particular feature. Furthermore, I added an optional check to skip the conditional exclusion steps if the algorithm gets stuck in cycles.  </p>
 <hr />
 <p>How is this different from <em>Recursive Feature Elimination</em> (RFE)  -- e.g., as implemented in <code>sklearn.feature_selection.RFE</code>? RFE is computationally less complex using the feature weight coefficients (e.g., linear models) or feature importance (tree-based algorithms) to eliminate features recursively, whereas SFSs eliminate (or add) features based on a user-defined classifier/regression performance metric.</p>
 <hr />
-<p>The SFAs  are outlined in pseudo code below:</p>
+<h1 id="tutorial-videos">Tutorial Videos</h1>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0vCXcGJg5Bo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/KYypVSwqqHI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<h1 id="visual-illustration">Visual Illustration</h1>
+<p>A visual illustration of the sequential backward selection process is provided below, from the paper</p>
+<ul>
+<li>Joe Bemister-Buffington, Alex J. Wolf, Sebastian Raschka, and Leslie A. Kuhn (2020)
+Machine Learning to Identify Flexibility Signatures of Class A GPCR Inhibition
+Biomolecules 2020, 10, 454. https://www.mdpi.com/2218-273X/10/3/454#</li>
+</ul>
+<p><img alt="" src="../SequentialFeatureSelector_files/sbs-gpcr2020.png" /></p>
+<h1 id="algorithmic-details">Algorithmic Details</h1>
 <h3 id="sequential-forward-selection-sfs">Sequential Forward Selection (SFS)</h3>
 <p><strong>Input:</strong> <script type="math/tex">Y = \{y_1, y_2, ..., y_d\}</script>
 </p>
@@ -1200,13 +1223,6 @@
 </li>
 </ul>
 <p><strong>Termination:</strong> stop when <strong><em>k</em></strong> equals the number of desired features</p>
-<p>A visual illustration of the sequential backward selection process is provided below, from the paper</p>
-<ul>
-<li>Joe Bemister-Buffington, Alex J. Wolf, Sebastian Raschka, and Leslie A. Kuhn (2020)
-Machine Learning to Identify Flexibility Signatures of Class A GPCR Inhibition
-Biomolecules 2020, 10, 454. https://www.mdpi.com/2218-273X/10/3/454#</li>
-</ul>
-<p><img alt="" src="../SequentialFeatureSelector_files/sbs-gpcr2020.png" /></p>
 <h3 id="references">References</h3>
 <ul>
 <li>
@@ -1243,15 +1259,15 @@ sfs1 = sfs1.fit(X, y)
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
 
-[2022-01-04 08:41:07] Features: 1/3 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2022-09-06 20:51:22] Features: 1/3 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s finished
 
-[2022-01-04 08:41:07] Features: 2/3 -- score: 0.9733333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2022-09-06 20:51:22] Features: 2/3 -- score: 0.9733333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
 
-[2022-01-04 08:41:07] Features: 3/3 -- score: 0.9733333333333334
+[2022-09-06 20:51:22] Features: 3/3 -- score: 0.9733333333333334
 </code></pre>
 <p>Via the <code>subsets_</code> attribute, we can take a look at the selected feature indices at each step:</p>
 <pre><code class="language-python">sfs1.subsets_
@@ -1278,15 +1294,15 @@ sfs1.subsets_
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
 
-[2022-01-04 08:41:07] Features: 1/3 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2022-09-06 20:51:22] Features: 1/3 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s finished
 
-[2022-01-04 08:41:07] Features: 2/3 -- score: 0.9733333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2022-09-06 20:51:22] Features: 2/3 -- score: 0.9733333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
 
-[2022-01-04 08:41:07] Features: 3/3 -- score: 0.9733333333333334
+[2022-09-06 20:51:22] Features: 3/3 -- score: 0.9733333333333334
 
 
 
@@ -1387,7 +1403,24 @@ print(sbfs.k_feature_idx_)
 print('CV Score:')
 print(sbfs.k_score_)
 </code></pre>
-<pre><code>Sequential Forward Selection (k=3):
+<pre><code>/Users/sebastianraschka/miniforge3/lib/python3.9/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version &gt;=1.16.5 and &lt;1.23.0 is required for this version of SciPy (detected version 1.23.1
+  warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion}"
+/Users/sebastianraschka/miniforge3/lib/python3.9/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version &gt;=1.16.5 and &lt;1.23.0 is required for this version of SciPy (detected version 1.23.1
+  warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion}"
+/Users/sebastianraschka/miniforge3/lib/python3.9/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version &gt;=1.16.5 and &lt;1.23.0 is required for this version of SciPy (detected version 1.23.1
+  warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion}"
+/Users/sebastianraschka/miniforge3/lib/python3.9/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version &gt;=1.16.5 and &lt;1.23.0 is required for this version of SciPy (detected version 1.23.1
+  warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion}"
+/Users/sebastianraschka/miniforge3/lib/python3.9/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version &gt;=1.16.5 and &lt;1.23.0 is required for this version of SciPy (detected version 1.23.1
+  warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion}"
+/Users/sebastianraschka/miniforge3/lib/python3.9/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version &gt;=1.16.5 and &lt;1.23.0 is required for this version of SciPy (detected version 1.23.1
+  warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion}"
+/Users/sebastianraschka/miniforge3/lib/python3.9/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version &gt;=1.16.5 and &lt;1.23.0 is required for this version of SciPy (detected version 1.23.1
+  warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion}"
+
+
+
+Sequential Forward Selection (k=3):
 (1, 2, 3)
 CV Score:
 0.9731507823613088
@@ -1401,6 +1434,14 @@ Sequential Forward Floating Selection (k=3):
 (1, 2, 3)
 CV Score:
 0.9731507823613088
+
+
+/Users/sebastianraschka/miniforge3/lib/python3.9/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version &gt;=1.16.5 and &lt;1.23.0 is required for this version of SciPy (detected version 1.23.1
+  warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion}"
+/Users/sebastianraschka/miniforge3/lib/python3.9/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version &gt;=1.16.5 and &lt;1.23.0 is required for this version of SciPy (detected version 1.23.1
+  warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion}"
+
+
 
 Sequential Backward Floating Selection (k=3):
 (1, 2, 3)
@@ -1613,21 +1654,21 @@ plt.show()
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
 
-[2022-01-04 08:41:08] Features: 1/4 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2022-09-06 20:51:24] Features: 1/4 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s finished
 
-[2022-01-04 08:41:08] Features: 2/4 -- score: 0.9666666666666668[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2022-09-06 20:51:24] Features: 2/4 -- score: 0.9666666666666668[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
 
-[2022-01-04 08:41:08] Features: 3/4 -- score: 0.9533333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2022-09-06 20:51:24] Features: 3/4 -- score: 0.9533333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s finished
 
-[2022-01-04 08:41:08] Features: 4/4 -- score: 0.9733333333333334
+[2022-09-06 20:51:24] Features: 4/4 -- score: 0.9733333333333334
 </code></pre>
-<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_44_1.png" /></p>
+<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_49_1.png" /></p>
 <h2 id="example-5-sequential-feature-selection-for-regression">Example 5 - Sequential Feature Selection for Regression</h2>
 <p>Similar to the classification examples above, the <code>SequentialFeatureSelector</code> also supports scikit-learn's estimators
 for regression.</p>
@@ -1653,7 +1694,7 @@ plt.title('Sequential Forward Selection (w. StdErr)')
 plt.grid()
 plt.show()
 </code></pre>
-<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_47_0.png" /></p>
+<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_52_0.png" /></p>
 <h2 id="example-6-feature-selection-with-fixed-trainvalidation-splits">Example 6 -- Feature Selection with Fixed Train/Validation Splits</h2>
 <p>If you do not wish to use cross-validation (here: k-fold cross-validation, i.e., rotating training and validation folds), you can use the <code>PredefinedHoldoutSplit</code> class to specify your own, fixed training and validation split.</p>
 <pre><code class="language-python">from sklearn.datasets import load_iris
@@ -1694,15 +1735,15 @@ sfs1 = sfs1.fit(X, y)
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
 
-[2022-01-04 08:41:09] Features: 1/3 -- score: 0.9666666666666667[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2022-09-06 20:51:25] Features: 1/3 -- score: 0.9666666666666667[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s finished
 
-[2022-01-04 08:41:09] Features: 2/3 -- score: 0.9666666666666667[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2022-09-06 20:51:25] Features: 2/3 -- score: 0.9666666666666667[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
 
-[2022-01-04 08:41:09] Features: 3/3 -- score: 0.9666666666666667
+[2022-09-06 20:51:25] Features: 3/3 -- score: 0.9666666666666667
 </code></pre>
 <h2 id="example-7-using-the-selected-feature-subset-for-making-new-predictions">Example 7 -- Using the Selected Feature Subset For Making New Predictions</h2>
 <pre><code class="language-python"># Initialize the dataset
@@ -1754,6 +1795,7 @@ print('Test set accuracy: %.2f %%' % (acc * 100))
 <pre><code>Test set accuracy: 96.00 %
 </code></pre>
 <h2 id="example-8-sequential-feature-selection-and-gridsearch">Example 8 -- Sequential Feature Selection and GridSearch</h2>
+<p>In the following example, we are tuning the SFS's estimator using GridSearch. To avoid unwanted behavior or side-effects, it's recommended to use the estimator inside and outside of SFS as separate instances.</p>
 <pre><code class="language-python"># Initialize the dataset
 
 from sklearn.neighbors import KNeighborsClassifier
@@ -1765,70 +1807,6 @@ X, y = iris.data, iris.target
 X_train, X_test, y_train, y_test = train_test_split(
          X, y, test_size=0.2, random_state=123)
 </code></pre>
-<h3 id="using-the-same-estimator-inside-and-outside-sfs">Using the same estimator inside and outside SFS</h3>
-<p>The typical usecase, to avoid overfitting, is to use the same estimator inside and outside the feature selection object. The following code shows how to tune this estimator inside the <code>SFS</code>:</p>
-<pre><code class="language-python">from sklearn.model_selection import GridSearchCV
-from sklearn.pipeline import Pipeline
-from mlxtend.feature_selection import SequentialFeatureSelector as SFS
-import mlxtend
-
-knn1 = KNeighborsClassifier()
-
-sfs1 = SFS(estimator=knn1, 
-           k_features=3,
-           forward=True, 
-           floating=False, 
-           scoring='accuracy',
-           cv=5)
-
-pipe = Pipeline([('sfs', sfs1), 
-                 ('knn1', knn1)])
-
-param_grid = {
-    'sfs__k_features': [1, 2, 3],
-    'sfs__estimator__n_neighbors': [3, 4, 7]
-  }
-
-gs = GridSearchCV(estimator=pipe, 
-                  param_grid=param_grid, 
-                  scoring='accuracy', 
-                  n_jobs=1, 
-                  cv=5,
-                  refit=False)
-
-# run gridearch
-gs = gs.fit(X_train, y_train)
-</code></pre>
-<p>Let's take a look at the suggested hyperparameters below:</p>
-<pre><code class="language-python">for i in range(len(gs.cv_results_['params'])):
-    print(gs.cv_results_['params'][i], 'test acc.:', gs.cv_results_['mean_test_score'][i])
-</code></pre>
-<pre><code>{'sfs__estimator__n_neighbors': 3, 'sfs__k_features': 1} test acc.: 0.925
-{'sfs__estimator__n_neighbors': 3, 'sfs__k_features': 2} test acc.: 0.9166666666666667
-{'sfs__estimator__n_neighbors': 3, 'sfs__k_features': 3} test acc.: 0.95
-{'sfs__estimator__n_neighbors': 4, 'sfs__k_features': 1} test acc.: 0.925
-{'sfs__estimator__n_neighbors': 4, 'sfs__k_features': 2} test acc.: 0.9166666666666667
-{'sfs__estimator__n_neighbors': 4, 'sfs__k_features': 3} test acc.: 0.95
-{'sfs__estimator__n_neighbors': 7, 'sfs__k_features': 1} test acc.: 0.925
-{'sfs__estimator__n_neighbors': 7, 'sfs__k_features': 2} test acc.: 0.9166666666666667
-{'sfs__estimator__n_neighbors': 7, 'sfs__k_features': 3} test acc.: 0.95
-</code></pre>
-<p>The "best" parameters determined by GridSearch are ...</p>
-<pre><code class="language-python">print(&quot;Best parameters via GridSearch&quot;, gs.best_params_)
-</code></pre>
-<pre><code>Best parameters via GridSearch {'sfs__estimator__n_neighbors': 3, 'sfs__k_features': 3}
-</code></pre>
-<p>(Note that in case of a tie, scikit-learn usually uses the parameter combination with the lowest index -- the one that comes first.)</p>
-<p>Please note that it is currently not recommended to work with "<code>refit=True</code>" or use <code>gs.best_estimator_</code>.  Instead, to adopt the best model after grid search, it is recommended to carry out this step manually via the following code:</p>
-<pre><code class="language-python">pipe.set_params(**gs.best_params_).fit(X_train, y_train)
-</code></pre>
-<pre><code>Pipeline(steps=[('sfs',
-                 SequentialFeatureSelector(estimator=KNeighborsClassifier(n_neighbors=3),
-                                           k_features=3, scoring='accuracy')),
-                ('knn1', KNeighborsClassifier(n_neighbors=3))])
-</code></pre>
-<h3 id="using-a-different-estimator-inside-and-outside-sfs">Using a different estimator inside and outside SFS</h3>
-<p>For additional flexibility in the pipeline, you may want to use a different estimator inside and outside SFS. In the example below, this is shown via the distinct <code>knn1</code> and <code>knn2</code> estimator objects:</p>
 <pre><code class="language-python">from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 from mlxtend.feature_selection import SequentialFeatureSelector as SFS
@@ -1863,6 +1841,10 @@ gs = GridSearchCV(estimator=pipe,
 # run gridearch
 gs = gs.fit(X_train, y_train)
 </code></pre>
+<p>Let's take a look at the suggested hyperparameters below:</p>
+<p>for i in range(len(gs.cv_results_['params'])):
+    print(gs.cv_results_['params'][i], 'test acc.:', gs.cv_results_['mean_test_score'][i])</p>
+<p>The "best" parameters determined by GridSearch are ...</p>
 <pre><code class="language-python">print(&quot;Best parameters via GridSearch&quot;, gs.best_params_)
 </code></pre>
 <pre><code>Best parameters via GridSearch {'knn2__n_neighbors': 7, 'sfs__estimator__n_neighbors': 3, 'sfs__k_features': 3}
@@ -1915,7 +1897,7 @@ plot_sfs(sfs1.get_metric_dict(), kind='std_err');
 all subsets:
  {1: {'feature_idx': (6,), 'cv_scores': array([0.84 , 0.64 , 0.84 , 0.8  , 0.875]), 'avg_score': 0.799, 'feature_names': ('6',)}, 2: {'feature_idx': (6, 9), 'cv_scores': array([0.92      , 0.88      , 1.        , 0.96      , 0.91666667]), 'avg_score': 0.9353333333333333, 'feature_names': ('6', '9')}, 3: {'feature_idx': (6, 9, 12), 'cv_scores': array([0.92      , 0.92      , 0.96      , 1.        , 0.95833333]), 'avg_score': 0.9516666666666665, 'feature_names': ('6', '9', '12')}, 4: {'feature_idx': (3, 6, 9, 12), 'cv_scores': array([0.96      , 0.96      , 0.96      , 1.        , 0.95833333]), 'avg_score': 0.9676666666666666, 'feature_names': ('3', '6', '9', '12')}, 5: {'feature_idx': (3, 6, 9, 10, 12), 'cv_scores': array([0.92, 0.96, 1.  , 1.  , 1.  ]), 'avg_score': 0.976, 'feature_names': ('3', '6', '9', '10', '12')}, 6: {'feature_idx': (2, 3, 6, 9, 10, 12), 'cv_scores': array([0.92, 0.96, 1.  , 0.96, 1.  ]), 'avg_score': 0.968, 'feature_names': ('2', '3', '6', '9', '10', '12')}, 7: {'feature_idx': (0, 2, 3, 6, 9, 10, 12), 'cv_scores': array([0.92, 0.92, 1.  , 1.  , 1.  ]), 'avg_score': 0.968, 'feature_names': ('0', '2', '3', '6', '9', '10', '12')}, 8: {'feature_idx': (0, 2, 3, 6, 8, 9, 10, 12), 'cv_scores': array([1.  , 0.92, 1.  , 1.  , 1.  ]), 'avg_score': 0.984, 'feature_names': ('0', '2', '3', '6', '8', '9', '10', '12')}, 9: {'feature_idx': (0, 2, 3, 6, 8, 9, 10, 11, 12), 'cv_scores': array([1.  , 0.92, 1.  , 1.  , 1.  ]), 'avg_score': 0.984, 'feature_names': ('0', '2', '3', '6', '8', '9', '10', '11', '12')}, 10: {'feature_idx': (0, 1, 2, 3, 6, 8, 9, 10, 11, 12), 'cv_scores': array([1.  , 0.96, 1.  , 1.  , 1.  ]), 'avg_score': 0.992, 'feature_names': ('0', '1', '2', '3', '6', '8', '9', '10', '11', '12')}}
 </code></pre>
-<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_76_1.png" /></p>
+<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_74_1.png" /></p>
 <h2 id="example-10-using-other-cross-validation-schemes">Example 10 -- Using other cross-validation schemes</h2>
 <p>In addition to standard k-fold and stratified k-fold, other cross validation schemes can be used with <code>SequentialFeatureSelector</code>. For example, <code>GroupKFold</code> or <code>LeaveOneOut</code> cross-validation from scikit-learn. </p>
 <h4 id="using-groupkfold-with-sequentialfeatureselector">Using GroupKFold with SequentialFeatureSelector</h4>
@@ -1941,7 +1923,7 @@ print('groups: {}'.format(groups))
 <pre><code class="language-python">cv_gen = GroupKFold(4).split(X, y, groups)
 cv_gen
 </code></pre>
-<pre><code>&lt;generator object _BaseKFold.split at 0x145ddacf0&gt;
+<pre><code>&lt;generator object _BaseKFold.split at 0x2877b27b0&gt;
 </code></pre>
 <p>The <code>cv</code> parameter of <code>SequentialFeatureSelector</code> must be either an <code>int</code> or an iterable yielding train, test splits. This iterable can be constructed by passing the train, test split generator to the built-in <code>list()</code> function. </p>
 <pre><code class="language-python">cv = list(cv_gen)
@@ -1958,7 +1940,72 @@ print('best combination (ACC: %.3f): %s\n' % (sfs.k_score_, sfs.k_feature_idx_))
 </code></pre>
 <pre><code>best combination (ACC: 0.940): (2, 3)
 </code></pre>
-<h2 id="example-11-using-pandas-dataframes">Example 11 - Using Pandas DataFrames</h2>
+<h2 id="example-11-interrupting-long-runs-for-intermediate-results">Example 11 - Interrupting Long Runs for Intermediate Results</h2>
+<p>If your run is taking too long, it is possible to trigger a <code>KeyboardInterrupt</code> (e.g., ctrl+c on a Mac, or interrupting the cell in a Jupyter notebook) to obtain temporary results.</p>
+<p><strong>Toy dataset</strong></p>
+<pre><code class="language-python">from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+
+
+X, y = make_classification(
+    n_samples=20000,
+    n_features=500,
+    n_informative=10,
+    n_redundant=40,
+    n_repeated=25,
+    n_clusters_per_class=5,
+    flip_y=0.05,
+    class_sep=0.5,
+    random_state=123,
+)
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=123
+)
+</code></pre>
+<pre><code>/Users/sebastianraschka/miniforge3/lib/python3.9/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version &gt;=1.16.5 and &lt;1.23.0 is required for this version of SciPy (detected version 1.23.3
+  warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion}"
+</code></pre>
+<p><strong>Long run with interruption</strong></p>
+<pre><code class="language-python">from mlxtend.feature_selection import SequentialFeatureSelector as SFS
+from sklearn.linear_model import LogisticRegression
+
+model = LogisticRegression()
+
+sfs1 = SFS(model, 
+           k_features=10, 
+           forward=True, 
+           floating=False, 
+           verbose=2,
+           scoring='accuracy',
+           cv=5)
+
+sfs1 = sfs1.fit(X_train, y_train)
+</code></pre>
+<pre><code>[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done 500 out of 500 | elapsed:    7.8s finished
+
+[2022-09-13 21:10:39] Features: 1/10 -- score: 0.5965[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.2s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done 499 out of 499 | elapsed:   25.5s finished
+
+[2022-09-13 21:11:04] Features: 2/10 -- score: 0.6256875000000001[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.1s remaining:    0.0s
+
+STOPPING EARLY DUE TO KEYBOARD INTERRUPT...
+</code></pre>
+<p><strong>Finalizing the fit</strong></p>
+<p>Note that the feature selection run hasn't finished, so certain attributes may not be available. In order to use the SFS instance, it is recommended to call <code>finalize_fit</code>, which will make SFS estimator appear as "fitted" process the temporary results:</p>
+<pre><code class="language-python">sfs1.finalize_fit()
+</code></pre>
+<pre><code class="language-python">print(sfs1.k_feature_idx_)
+print(sfs1.k_score_)
+</code></pre>
+<pre><code>(128, 160)
+0.6256875000000001
+</code></pre>
+<h2 id="example-12-using-pandas-dataframes">Example 12 - Using Pandas DataFrames</h2>
 <p>Optionally, we can also use pandas DataFrames and pandas Series as input to the <code>fit</code> function. In this case, the column names of the pandas DataFrame will be used as feature names. However, note that if <code>custom_feature_names</code> are provided in the fit function, these <code>custom_feature_names</code> take precedence over the DataFrame column-based feature names.</p>
 <pre><code class="language-python">import pandas as pd
 from sklearn.neighbors import KNeighborsClassifier
@@ -2076,8 +2123,8 @@ dtype: int64
   'feature_names': ('petal len', 'sepal width', 'petal width')}}
 </code></pre>
 <p>In mlxtend version &gt;= 0.13 pandas DataFrames are supported as feature inputs to the <code>SequentianFeatureSelector</code> instead of NumPy arrays or other NumPy-like array types.</p>
-<h2 id="example-12-specifying-fixed-feature-sets">Example 12 - Specifying Fixed Feature Sets</h2>
-<p>Often, it may be useful to specify a fixed set of features we want to use for a given model (e.g., determined by prior knowledge or domain knowledge). Since MLxtend v 0.18.0, it is now possible to specify such features via the <code>fixed_featurs</code> attribute. This will mean that these features are guaranteed to be included in the selected subsets.</p>
+<h2 id="example-13-specifying-fixed-feature-sets">Example 13 - Specifying Fixed Feature Sets</h2>
+<p>Often, it may be useful to specify a fixed set of features we want to use for a given model (e.g., determined by prior knowledge or domain knowledge). Since MLxtend v 0.18.0, it is now possible to specify such features via the <code>fixed_features</code> attribute. This will mean that these features are guaranteed to be included in the selected subsets.</p>
 <p>Note that this feature works for all options regarding forward and backward selection, and using floating selection or not.</p>
 <p>The example below illustrates how we can set the features 0 and 2 in the dataset as fixed:</p>
 <pre><code class="language-python">from sklearn.neighbors import KNeighborsClassifier
@@ -2105,11 +2152,11 @@ sfs1 = sfs1.fit(X, y)
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
 
-[2022-01-04 08:41:13] Features: 3/4 -- score: 0.9733333333333333[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2022-09-13 21:17:21] Features: 3/4 -- score: 0.9733333333333333[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s finished
 
-[2022-01-04 08:41:13] Features: 4/4 -- score: 0.9733333333333333
+[2022-09-13 21:17:21] Features: 4/4 -- score: 0.9733333333333333
 </code></pre>
 <pre><code class="language-python">sfs1.subsets_
 </code></pre>
@@ -2206,17 +2253,17 @@ X_df.head()
            fixed_features=('sepal len', 'petal len'),
            cv=3)
 
-sfs2 = sfs2.fit(X_df, y)
+sfs2 = sfs2.fit(X_df, y_series)
 </code></pre>
 <pre><code>[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
 
-[2022-01-04 08:41:13] Features: 3/4 -- score: 0.9466666666666667[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2022-09-13 21:17:25] Features: 3/4 -- score: 0.9466666666666667[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s finished
 
-[2022-01-04 08:41:13] Features: 4/4 -- score: 0.9733333333333333
+[2022-09-13 21:17:25] Features: 4/4 -- score: 0.9733333333333333
 </code></pre>
 <pre><code class="language-python">sfs2.subsets_
 </code></pre>
@@ -2233,8 +2280,109 @@ sfs2 = sfs2.fit(X_df, y)
   'avg_score': 0.9733333333333333,
   'feature_names': ('sepal len', 'petal len', 'sepal width', 'petal width')}}
 </code></pre>
+<h2 id="example-13-working-with-feature-groups">Example 13 - Working with Feature Groups</h2>
+<p>Since mlxtend v0.21.0, it is possible to specify feature groups. Feature groups allow you to group certain features together, such that they are always selected as a group. This can be very useful in contexts similar to one-hot encoding -- if you want to treat the one-hot encoded feature as a single feature:</p>
+<p><img alt="" src="../SequentialFeatureSelector_files/feature_groups.jpeg" /></p>
+<p>In the following example, we specify sepal length and sepal width as a feature group so that they are always selected together:</p>
+<pre><code class="language-python">from sklearn.datasets import load_iris
+import pandas as pd
+
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+X_df = pd.DataFrame(X, columns=['sepal len', 'petal len',
+                                'sepal wid', 'petal wid'])
+X_df.head()
+
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal len</th>
+      <th>petal len</th>
+      <th>sepal wid</th>
+      <th>petal wid</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">from sklearn.neighbors import KNeighborsClassifier
+from mlxtend.feature_selection import SequentialFeatureSelector as SFS
+
+knn = KNeighborsClassifier(n_neighbors=3)
+
+sfs1 = SFS(knn, 
+           k_features=2, 
+           scoring='accuracy',
+           feature_groups=(['sepal len', 'sepal wid'], ['petal len'], ['petal wid']),
+           cv=3)
+
+sfs1 = sfs1.fit(X_df, y)
+</code></pre>
+<pre><code class="language-python">sfs1 = SFS(knn, 
+           k_features=2, 
+           scoring='accuracy',
+           feature_groups=[[0, 2], [1], [3]],
+           cv=3)
+
+sfs1 = sfs1.fit(X, y)
+</code></pre>
 <h1 id="api">API</h1>
-<p><em>SequentialFeatureSelector(estimator, k_features=1, forward=True, floating=False, verbose=0, scoring=None, cv=5, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True, fixed_features=None)*</p>
+<p><em>SequentialFeatureSelector(estimator, k_features=1, forward=True, floating=False, verbose=0, scoring=None, cv=5, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True, fixed_features=None, feature_groups=None)*</p>
 <p>Sequential Feature Selection for Classification and Regression.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -2329,6 +2477,20 @@ features to be selected is greater than <code>len(fixed_features)</code>.
 In other words, ensure that <code>k_features &gt; len(fixed_features)</code>.
 New in mlxtend v. 0.18.0.</p>
 </li>
+<li>
+<p><code>feature_groups</code> : list or None (default: None)</p>
+<p>Optional argument for treating certain features as a group.
+This means, the features within a group are always selected together,
+never split.
+For example, <code>feature_groups=[[1], [2], [3, 4, 5]]</code>
+specifies 3 feature groups.In this case,
+possible feature selection results with <code>k_features=2</code>
+are <code>[[1], [2]</code>, <code>[[1], [3, 4, 5]]</code>, or <code>[[2], [3, 4, 5]]</code>.
+Feature groups can be useful for
+interpretability, for example, if features 3, 4, 5 are one-hot
+encoded features.  (For  more details, please read the notes at the
+bottom of this docstring).  New in mlxtend v. 0.21.0.</p>
+</li>
 </ul>
 <p><strong>Attributes</strong></p>
 <ul>
@@ -2352,7 +2514,9 @@ array indices. New in v 0.13.0.</p>
 <p><code>subsets_</code> : dict</p>
 <p>A dictionary of selected feature subsets during the
 sequential selection, where the dictionary keys are
-the lengths k of these feature subsets. The dictionary
+the lengths k of these feature subsets. If the parameter
+<code>feature_groups</code> is not None, the value of key indicates
+the number of groups that are selected together. The dictionary
 values are dictionaries themselves with the following
 keys: 'feature_idx' (tuple of indices of the feature subset)
 'feature_names' (tuple of feature names of the feat. subset)
@@ -2365,6 +2529,22 @@ feature names are string representation of the feature
 array indices. The 'feature_names' is new in v 0.13.0.</p>
 </li>
 </ul>
+<p><strong>Notes</strong></p>
+<p>(1) If parameter <code>feature_groups</code> is not None, the
+    number of features is equal to the number of feature groups, i.e.
+    <code>len(feature_groups)</code>. For  example, if <code>feature_groups = [[0], [1], [2, 3],
+    [4]]</code>, then the <code>max_features</code> value cannot exceed 4.</p>
+<pre><code>(2) Although two or more individual features may be considered as one group
+throughout the feature-selection process, it does not mean the individual
+features of that group have the same impact on the outcome. For instance, in
+linear regression, the coefficient of the feature 2 and 3 can be different
+even if they are considered as one group in feature_groups.
+
+(3) If both fixed_features and feature_groups are specified, ensure that each
+feature group contains the fixed_features selection. E.g., for a 3-feature set
+fixed_features=[0, 1] and feature_groups=[[0, 1], [2]] is valid;
+fixed_features=[0, 1] and feature_groups=[[0], [1, 2]] is not valid.
+</code></pre>
 <p><strong>Examples</strong></p>
 <p>For usage examples, please see
     http://rasbt.github.io/mlxtend/user_guide/feature_selection/SequentialFeatureSelector/</p>
@@ -2511,7 +2691,8 @@ argument for X.</p>
 
 <p><em>named_estimators</em></p>
 <p><strong>Returns</strong></p>
-<p>List of named estimator tuples, like [('svc', SVC(...))]</p></div>
+<p>List of named estimator tuples, like [('svc', SVC(...))]</p>
+<p>ython</p></div>
         
         
     </div>
@@ -2519,7 +2700,7 @@ argument for X.</p>
     <footer class="col-md-12 text-center">
         <hr>
         <p>
-        <small>Copyright &copy; 2014-2020 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
+        <small>Copyright &copy; 2014-2022 <a href="http://sebastianraschka.com">Sebastian Raschka</a><br></small>
         
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>

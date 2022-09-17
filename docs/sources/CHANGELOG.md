@@ -7,15 +7,14 @@ The CHANGELOG for the current development version is available at
 
 ---
 
-### Version 0.21.0 (TBD)
+### Version 0.21.0 (09/17/2022)
 
-#### New Features and Enhancements
 
 ##### Downloads
 
-- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.20.0.zip)
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.21.0.zip)
 
-- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.20.0.tar.gz)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.21.0.tar.gz)
 
 
 
@@ -34,9 +33,8 @@ The CHANGELOG for the current development version is available at
 
 
 
-### Version 0.20.0
+### Version 0.20.0 (05/26/2022)
 
-#### New Features and Enhancements
 
 ##### Downloads
 

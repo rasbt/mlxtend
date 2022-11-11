@@ -215,6 +215,7 @@ def mcnemar(ary, corrected=True, exact=False):
     else:
         chi2 = min(b, c)
         p = min(scipy.stats.binom.cdf(chi2, b + c, 0.5) * 2.0, 1.0)
+        chi2 = None
 
         # this is equivalent to the following code:
         #

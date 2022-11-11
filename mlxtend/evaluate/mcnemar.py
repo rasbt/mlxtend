@@ -97,8 +97,8 @@ def mcnemar_tables(y_target, *y_model_predictions):
 
         - y_true = np.array([0, 0, 0, 0, 0, 1, 1, 1, 1, 1])
         - y_mod0 = np.array([0, 1, 0, 0, 0, 1, 1, 0, 0, 0])
-        - y_mod0 = np.array([0, 0, 1, 1, 0, 1, 1, 0, 0, 0])
-        - y_mod0 = np.array([0, 1, 1, 1, 0, 1, 0, 0, 0, 0])
+        - y_mod1 = np.array([0, 0, 1, 1, 0, 1, 1, 0, 0, 0])
+        - y_mod2 = np.array([0, 1, 1, 1, 0, 1, 0, 0, 0, 0])
 
         would result in the following dictionary:
 

@@ -41,7 +41,7 @@ def test_exact():
     chi2, p = (None, 4.4344492637555101e-06)
     chi2p, pp = mcnemar(tb, exact=True)
 
-    assert chi2 is None
+    assert chi2p is None
     assert_almost_equal(p, pp, decimal=7)
     assert p < 4.45e-06
 
@@ -52,6 +52,6 @@ def test_exact_corrected():
     chi2, p = (None, 4.4344492637555101e-06)
     chi2p, pp = mcnemar(tb, exact=True, corrected=False)
 
-    assert chi2 is None
+    assert chi2p is None
     assert_almost_equal(p, pp, decimal=7)
     assert p < 4.45e-06

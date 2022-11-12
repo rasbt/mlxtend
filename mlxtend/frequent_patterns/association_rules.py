@@ -28,7 +28,7 @@ def association_rules(df, metric="confidence", min_threshold=0.8, support_only=F
       Metric to evaluate if a rule is of interest.
       **Automatically set to 'support' if `support_only=True`.**
       Otherwise, supported metrics are 'support', 'confidence', 'lift',
-      'leverage', and 'conviction'
+      'leverage', 'conviction' and 'zhangs_metric'
       These metrics are computed as follows:
 
       - support(A->C) = support(A+C) [aka 'support'], range: [0, 1]\n
@@ -38,6 +38,9 @@ def association_rules(df, metric="confidence", min_threshold=0.8, support_only=F
         range: [-1, 1]\n
       - conviction = [1 - support(C)] / [1 - confidence(A->C)],
         range: [0, inf]\n
+      - zhangs_metric(A->C) =
+        leverage(A->C) / max(support(A->C)*(1-support(A)), support(A)*(support(C)-support(A->C)))
+        range: [-1,1]\n
 
     min_threshold : float (default: 0.8)
       Minimal threshold for the evaluation metric,
@@ -104,6 +107,16 @@ def association_rules(df, metric="confidence", min_threshold=0.8, support_only=F
 
         return conviction
 
+    def zhangs_metric_helper(sAC, sA, sC):
+        denominator = np.maximum(sAC * (1 - sA), sA * (sC - sAC))
+        numerator = metric_dict["leverage"](sAC, sA, sC)
+
+        with np.errstate(divide="ignore", invalid="ignore"):
+            # ignoring the divide by 0 warning since it is addressed in the below np.where
+            zhangs_metric = np.where(denominator == 0, 0, numerator / denominator)
+
+        return zhangs_metric
+
     # metrics for association rules
     metric_dict = {
         "antecedent support": lambda _, sA, __: sA,
@@ -113,6 +126,7 @@ def association_rules(df, metric="confidence", min_threshold=0.8, support_only=F
         "lift": lambda sAC, sA, sC: metric_dict["confidence"](sAC, sA, sC) / sC,
         "leverage": lambda sAC, sA, sC: metric_dict["support"](sAC, sA, sC) - sA * sC,
         "conviction": lambda sAC, sA, sC: conviction_helper(sAC, sA, sC),
+        "zhangs_metric": lambda sAC, sA, sC: zhangs_metric_helper(sAC, sA, sC),
     }
 
     columns_ordered = [
@@ -123,6 +137,7 @@ def association_rules(df, metric="confidence", min_threshold=0.8, support_only=F
         "lift",
         "leverage",
         "conviction",
+        "zhangs_metric",
     ]
 
     # check for metric compliance

@@ -134,7 +134,7 @@ def association_rules(df, metric="confidence", min_threshold=0.8, support_only=F
         "lift",
         "leverage",
         "conviction",
-        "zhangs_metric"
+        "zhangs_metric",
     ]
 
     # check for metric compliance

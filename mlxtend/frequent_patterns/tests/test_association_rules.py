@@ -45,7 +45,7 @@ columns_ordered = [
     "lift",
     "leverage",
     "conviction",
-    "zhangs_metric"
+    "zhangs_metric",
 ]
 
 

@@ -169,7 +169,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.le_.fit(y)
         self.classes_ = self.le_.classes_
 
-        if not self.fit_base_estimators:
+        if not self.fit_base_estimators and self.use_clones:
             warnings.warn(
                 "fit_base_estimators=False " "enforces use_clones to be `False`"
             )

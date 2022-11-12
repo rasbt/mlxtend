@@ -213,8 +213,8 @@ def mcnemar(ary, corrected=True, exact=False):
         p = scipy.stats.distributions.chi2.sf(chi2, 1)
 
     else:
-        chi2 = min(b, c)
-        p = min(scipy.stats.binom.cdf(chi2, b + c, 0.5) * 2.0, 1.0)
+        chi2 = None
+        p = min(scipy.stats.binom.cdf(min(b, c), b + c, 0.5) * 2.0, 1.0)
 
         # this is equivalent to the following code:
         #

@@ -111,7 +111,7 @@ def association_rules(df, metric="confidence", min_threshold=0.8, support_only=F
         denominator = np.maximum(sAC * (1 - sA), sA * (sC - sAC))
         numerator = metric_dict["leverage"](sAC, sA, sC)
 
-        with np.errstate(divide='ignore', invalid='ignore'):
+        with np.errstate(divide="ignore", invalid="ignore"):
             # ignoring the divide by 0 warning since it is addressed in the below np.where
             zhangs_metric = np.where(denominator == 0, 0, numerator / denominator)
 

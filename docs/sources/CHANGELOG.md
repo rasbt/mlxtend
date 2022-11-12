@@ -7,6 +7,23 @@ The CHANGELOG for the current development version is available at
 
 ---
 
+
+
+Version 0.22.0dev (TBD)
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.22.0.zip)
+
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.22.0.tar.gz)
+
+##### Changes
+
+- When `ExhaustiveFeatureSelector` is run with `n_jobs == 1`, joblib is now disabled, which enables more immediate (live) feedback when the `verbose` mode is enabled. [#985](https://github.com/rasbt/mlxtend/pull/985) via [Nima Sarajpoor]
+
+
+
+
 ### Version 0.21.0 (09/17/2022)
 
 

@@ -20,8 +20,11 @@ Version 0.22.0dev (TBD)
 ##### Changes
 
 - When `ExhaustiveFeatureSelector` is run with `n_jobs == 1`, joblib is now disabled, which enables more immediate (live) feedback when the `verbose` mode is enabled. [#985](https://github.com/rasbt/mlxtend/pull/985) via [Nima Sarajpoor]
+- Disabled unnecessary warning in EnsembleVoteClassifier [#941](https://github.com/rasbt/mlxtend/issues/941)
 
+##### New Features and Enhancements
 
+- The `mlxtend.frequent_patterns.association_rules` function has a new metric - Zhangs Metric, which measures both association and dissociation. ([#980](https://github.com/rasbt/mlxtend/pull/980))
 
 
 ### Version 0.21.0 (09/17/2022)
@@ -37,7 +40,6 @@ Version 0.22.0dev (TBD)
 
 ##### New Features and Enhancements
 
-- The `mlxtend.frequent_patterns.association_rules` function has a new metric - Zhangs Metric, which measures both association and dissociation. ([#980](https://github.com/rasbt/mlxtend/pull/980))
 - The `mlxtend.evaluate.feature_importance_permutation` function has a new `feature_groups` argument to treat user-specified feature groups as single features, which is useful for one-hot encoded features. ([#955](https://github.com/rasbt/mlxtend/pull/955))
 - The `mlxtend.feature_selection.ExhaustiveFeatureSelector` and `SequentialFeatureSelector` also gained support for `feature_groups` with a behavior similar to the one described above.  ([#957](https://github.com/rasbt/mlxtend/pull/957) and [#965](https://github.com/rasbt/mlxtend/pull/965) via [Nima Sarajpoor](https://github.com/NimaSarajpoor))
 

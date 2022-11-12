@@ -38,7 +38,7 @@ def association_rules(df, metric="confidence", min_threshold=0.8, support_only=F
         range: [-1, 1]\n
       - conviction = [1 - support(C)] / [1 - confidence(A->C)],
         range: [0, inf]\n
-      - zhangs_metric(A->C) = 
+      - zhangs_metric(A->C) =
         leverage(A->C) / max(support(A->C)*(1-support(A)), support(A)*(support(C)-support(A->C)))
         range: [-1,1]\n
 
@@ -108,9 +108,12 @@ def association_rules(df, metric="confidence", min_threshold=0.8, support_only=F
         return conviction
 
     def zhangs_metric_helper(sAC, sA, sC):
-        denominator = np.maximum(sAC*(1-sA),sA*(sC-sAC))
+        denominator = np.maximum(sAC * (1 - sA), sA * (sC - sAC))
         numerator = metric_dict["leverage"](sAC, sA, sC)
-        zhangs_metric = np.where(denominator == 0,0,numerator/denominator)
+
+        with np.errstate(divide='ignore', invalid='ignore'):
+            # ignoring the divide by 0 warning since it is addressed in the below np.where
+            zhangs_metric = np.where(denominator == 0, 0, numerator / denominator)
 
         return zhangs_metric
 
@@ -126,7 +129,7 @@ def association_rules(df, metric="confidence", min_threshold=0.8, support_only=F
         "zhangs_metric": lambda sAC, sA, sC: zhangs_metric_helper(sAC, sA, sC),
     }
 
-    columns_ordered = [ 
+    columns_ordered = [
         "antecedent support",
         "consequent support",
         "support",

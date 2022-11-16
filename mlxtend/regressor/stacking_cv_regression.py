@@ -1,7 +1,7 @@
 # Out-of-fold stacking regressor
 #
 # For explanation of approach, see:
-# dnc1994.com/2016/05/rank-10-percent-in-first-kaggle-competition-en/#Stacking
+# https://web.archive.org/web/20170720114355/dnc1994.com/2016/05/rank-10-percent-in-first-kaggle-competition-en/
 #
 # Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions

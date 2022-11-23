@@ -12,6 +12,7 @@ from math import ceil, floor
 import matplotlib.pyplot as plt
 import numpy as np
 
+from multiprocessing import  Pool
 from ray.util.multiprocessing.pool import Pool
 
 from mlxtend.utils import check_Xy, format_kwarg_dictionaries
@@ -42,8 +43,13 @@ def get_feature_range_mask(X, filler_feature_values=None, filler_feature_ranges=
 
     return mask
 
+                
+def parallel(X_predict):
+    Z = clf.predict(X_predict.astype(X.dtype))
+    return Z
 
-def plot_decision_regions2(
+
+def plot_decision_regions(
     X,
     y,
     clf,
@@ -65,6 +71,7 @@ def plot_decision_regions2(
     contourf_kwargs=None,
     contour_kwargs=None,
     scatter_highlight_kwargs=None,
+    cluster=None
 ):
     """Plot decision regions of a classifier.
 
@@ -248,12 +255,8 @@ def plot_decision_regions2(
         if dim > 2:
             for feature_idx in filler_feature_values:
                 X_predict[:, feature_idx] = filler_feature_values[feature_idx]
-                
-    def parallel(X_predict):
-        Z = clf.predict(X_predict.astype(X.dtype))
-        return Z
     
-    if len(X_predict)>50:
+    if cluster=='ray':
         cpus=int(ray.available_resources()['CPU'])
         partQuant=len(X_predict)/cpus
         partitions=[]
@@ -263,11 +266,23 @@ def plot_decision_regions2(
         partitions.append(X_predict[end:])
         pool = Pool(cpus)
         Z = pool.map(parallel, [x for x in partitions])
+        pool.close()
         Z = np.concatenate(Z)
         Z = Z.reshape(xx.shape)
     else:
-        Z = clf.predict(X_predict.astype(X.dtype))
-        Z = Z.reshape(xx.shape)
+        cpus=mp.cpu_count()
+        partQuant=len(X_predict)/cpus
+        partitions=[]
+        for n in range(cpus-1):
+            start,end=np.floor(partQuant*n).astype(int),np.floor(partQuant*(n+1)).astype(int)
+            partitions.append(X_predict[start:end])
+        partitions.append(X_predict[end:])
+        pool = mp.Pool(cpus)
+        Z = pool.map(parallel, [x for x in partitions])
+        pool.close()
+        Z = np.concatenate(Z)
+        Z = Z.reshape(xx.shape)        
+
     
     # Plot decisoin region
     # Make sure contourf_kwargs has backwards compatible defaults

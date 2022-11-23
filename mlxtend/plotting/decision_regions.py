@@ -12,6 +12,8 @@ from math import ceil, floor
 import matplotlib.pyplot as plt
 import numpy as np
 
+from ray.util.multiprocessing.pool import Pool
+
 from mlxtend.utils import check_Xy, format_kwarg_dictionaries
 
 
@@ -41,7 +43,7 @@ def get_feature_range_mask(X, filler_feature_values=None, filler_feature_ranges=
     return mask
 
 
-def plot_decision_regions(
+def plot_decision_regions2(
     X,
     y,
     clf,
@@ -246,8 +248,27 @@ def plot_decision_regions(
         if dim > 2:
             for feature_idx in filler_feature_values:
                 X_predict[:, feature_idx] = filler_feature_values[feature_idx]
-    Z = clf.predict(X_predict.astype(X.dtype))
-    Z = Z.reshape(xx.shape)
+                
+    def parallel(X_predict):
+        Z = clf.predict(X_predict.astype(X.dtype))
+        return Z
+    
+    if len(X_predict)>50:
+        cpus=int(ray.available_resources()['CPU'])
+        partQuant=len(X_predict)/cpus
+        partitions=[]
+        for n in range(cpus-1):
+            start,end=np.floor(partQuant*n).astype(int),np.floor(partQuant*(n+1)).astype(int)
+            partitions.append(X_predict[start:end])
+        partitions.append(X_predict[end:])
+        pool = Pool(cpus)
+        Z = pool.map(parallel, [x for x in partitions])
+        Z = np.concatenate(Z)
+        Z = Z.reshape(xx.shape)
+    else:
+        Z = clf.predict(X_predict.astype(X.dtype))
+        Z = Z.reshape(xx.shape)
+    
     # Plot decisoin region
     # Make sure contourf_kwargs has backwards compatible defaults
     contourf_kwargs_default = {"alpha": 0.45, "antialiased": True}

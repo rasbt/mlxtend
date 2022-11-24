@@ -13,7 +13,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from multiprocessing import  Pool
-from ray.util.multiprocessing.pool import Pool
 
 from mlxtend.utils import check_Xy, format_kwarg_dictionaries
 
@@ -71,7 +70,7 @@ def plot_decision_regions(
     contourf_kwargs=None,
     contour_kwargs=None,
     scatter_highlight_kwargs=None,
-    cluster=None
+    n_jobs=None
 ):
     """Plot decision regions of a classifier.
 
@@ -218,6 +217,12 @@ def plot_decision_regions(
                 "Column(s) {} need to be accounted for in either "
                 "feature_index or filler_feature_values".format(missing_cols)
             )
+            
+     # Check that the n_jobs isn't higher than the available CPU cores           
+    if n_jobs > mp.cpu_count():
+        raise ValueError(
+                "Number of defined CPU cores is more than the available resources {} ".format(mp.cpu_count())
+            )
 
     marker_gen = cycle(list(markers))
 
@@ -256,32 +261,35 @@ def plot_decision_regions(
             for feature_idx in filler_feature_values:
                 X_predict[:, feature_idx] = filler_feature_values[feature_idx]
     
-    if cluster=='ray':
-        cpus=int(ray.available_resources()['CPU'])
+    if n_jobs==None:
+        Z = clf.predict(X_predict.astype(X.dtype))
+        Z = Z.reshape(xx.shape)
+    elif n_jobs==-1:
+        cpus=mp.cpu_count()
+        pool = mp.Pool(cpus)
         partQuant=len(X_predict)/cpus
         partitions=[]
         for n in range(cpus-1):
             start,end=np.floor(partQuant*n).astype(int),np.floor(partQuant*(n+1)).astype(int)
             partitions.append(X_predict[start:end])
         partitions.append(X_predict[end:])
-        pool = Pool(cpus)
         Z = pool.map(parallel, [x for x in partitions])
         pool.close()
         Z = np.concatenate(Z)
         Z = Z.reshape(xx.shape)
     else:
-        cpus=mp.cpu_count()
+        cpus=n_jobs
+        pool = mp.Pool(cpus)
         partQuant=len(X_predict)/cpus
         partitions=[]
         for n in range(cpus-1):
             start,end=np.floor(partQuant*n).astype(int),np.floor(partQuant*(n+1)).astype(int)
             partitions.append(X_predict[start:end])
         partitions.append(X_predict[end:])
-        pool = mp.Pool(cpus)
         Z = pool.map(parallel, [x for x in partitions])
         pool.close()
         Z = np.concatenate(Z)
-        Z = Z.reshape(xx.shape)        
+        Z = Z.reshape(xx.shape) 
 
     
     # Plot decisoin region

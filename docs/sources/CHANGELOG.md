@@ -25,7 +25,7 @@ Version 0.22.0dev (TBD)
 ##### New Features and Enhancements
 
 - The `mlxtend.frequent_patterns.association_rules` function has a new metric - Zhangs Metric, which measures both association and dissociation. ([#980](https://github.com/rasbt/mlxtend/pull/980))
-
+- Internal `fpmax` code improvement that avoids casting a sparse DataFrame into a dense NumPy array. ([#1000](https://github.com/rasbt/mlxtend/pull/1000) via [Tim Kellogg](https://github.com/tkellogg))
 
 ### Version 0.21.0 (09/17/2022)
 

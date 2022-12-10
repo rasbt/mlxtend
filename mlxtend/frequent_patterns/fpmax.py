@@ -87,10 +87,10 @@ def fpmax(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
 
     tree, rank = fpc.setup_fptree(df, min_support)
 
-    minsup = math.ceil(min_support * len(df.values))  # min support as count
+    minsup = math.ceil(min_support * len(df))  # min support as count
     generator = fpmax_step(tree, minsup, MFITree(rank), colname_map, max_len, verbose)
 
-    return fpc.generate_itemsets(generator, len(df.values), colname_map)
+    return fpc.generate_itemsets(generator, len(df), colname_map)
 
 
 def fpmax_step(tree, minsup, mfit, colnames, max_len, verbose):

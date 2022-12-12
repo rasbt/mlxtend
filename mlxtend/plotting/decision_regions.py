@@ -12,7 +12,7 @@ from math import ceil, floor
 import matplotlib.pyplot as plt
 import numpy as np
 
-from multiprocessing import  Pool
+import multiprocessing as mp
 
 from mlxtend.utils import check_Xy, format_kwarg_dictionaries
 

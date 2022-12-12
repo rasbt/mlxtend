@@ -264,21 +264,11 @@ def plot_decision_regions(
     if n_jobs==None:
         Z = clf.predict(X_predict.astype(X.dtype))
         Z = Z.reshape(xx.shape)
-    elif n_jobs==-1:
-        cpus=mp.cpu_count()
-        pool = mp.Pool(cpus)
-        partQuant=len(X_predict)/cpus
-        partitions=[]
-        for n in range(cpus-1):
-            start,end=np.floor(partQuant*n).astype(int),np.floor(partQuant*(n+1)).astype(int)
-            partitions.append(X_predict[start:end])
-        partitions.append(X_predict[end:])
-        Z = pool.map(parallel, [x for x in partitions])
-        pool.close()
-        Z = np.concatenate(Z)
-        Z = Z.reshape(xx.shape)
     else:
-        cpus=n_jobs
+        if n_jobs==-1:
+            cpus=mp.cpu_count()
+        else:
+            cpus=n_jobs
         pool = mp.Pool(cpus)
         partQuant=len(X_predict)/cpus
         partitions=[]

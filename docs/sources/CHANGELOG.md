@@ -21,6 +21,7 @@ Version 0.22.0dev (TBD)
 
 - When `ExhaustiveFeatureSelector` is run with `n_jobs == 1`, joblib is now disabled, which enables more immediate (live) feedback when the `verbose` mode is enabled. [#985](https://github.com/rasbt/mlxtend/pull/985) via [Nima Sarajpoor]
 - Disabled unnecessary warning in EnsembleVoteClassifier [#941](https://github.com/rasbt/mlxtend/issues/941)
+- Fixed various documentation issues [#849] [#951]
 
 ##### New Features and Enhancements
 

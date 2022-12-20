@@ -43,12 +43,12 @@ def get_feature_range_mask(X, filler_feature_values=None, filler_feature_ranges=
     return mask
 
                 
-def parallel(X_predict):
-    Z = clf.predict(X_predict.astype(X.dtype))
+def parallel(X_predict, clf, xtype):
+    Z = clf.predict(X_predict.astype(xtype))
     return Z
 
 
-def plot_decision_regions(
+def plot_decision_regions2(
     X,
     y,
     clf,
@@ -156,6 +156,9 @@ def plot_decision_regions(
     check_Xy(X, y, y_int=True)  # Validate X and y arrays
     dim = X.shape[1]
 
+    if n_jobs is None:
+        n_jobs = 1
+
     if ax is None:
         ax = plt.gca()
 
@@ -261,7 +264,7 @@ def plot_decision_regions(
             for feature_idx in filler_feature_values:
                 X_predict[:, feature_idx] = filler_feature_values[feature_idx]
     
-    if n_jobs==None:
+    if n_jobs==1:
         Z = clf.predict(X_predict.astype(X.dtype))
         Z = Z.reshape(xx.shape)
     else:
@@ -276,7 +279,8 @@ def plot_decision_regions(
             start,end=np.floor(partQuant*n).astype(int),np.floor(partQuant*(n+1)).astype(int)
             partitions.append(X_predict[start:end])
         partitions.append(X_predict[end:])
-        Z = pool.map(parallel, [x for x in partitions])
+        xtype=X.dtype
+        Z = pool.starmap(parallel, [(x, clf, xtype) for x in partitions])
         pool.close()
         Z = np.concatenate(Z)
         Z = Z.reshape(xx.shape) 

@@ -48,7 +48,7 @@ def parallel(X_predict, clf, xtype):
     return Z
 
 
-def plot_decision_regions2(
+def plot_decision_regions(
     X,
     y,
     clf,

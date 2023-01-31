@@ -59,7 +59,7 @@ class PrincipalComponentAnalysis(_BaseModel):
     def __init__(self, n_components=None, solver="svd", whitening=False):
         valid_solver = {"eigen", "svd"}
         if solver not in valid_solver:
-            raise AttributeError("Must be in %s. Found %s" % (valid_solver, solver))
+            raise AttributeError(f"Must be in {valid_solver}. Found {solver})
         self.solver = solver
 
         if n_components is not None and n_components < 1:

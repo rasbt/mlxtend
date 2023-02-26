@@ -14,7 +14,6 @@ from mlxtend.text import generalize_names, generalize_names_duplcheck
 
 
 def test_generalize_names_duplcheck():
-
     df = pd.read_csv(StringIO(csv))
 
     # duplicates before

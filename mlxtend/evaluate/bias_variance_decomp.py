@@ -107,7 +107,6 @@ def bias_variance_decomp(
 
         # Keras support
         if estimator.__class__.__name__ in ["Sequential", "Functional"]:
-
             # reset model
             for ix, layer in enumerate(estimator.layers):
                 if hasattr(estimator.layers[ix], "kernel_initializer") and hasattr(

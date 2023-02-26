@@ -53,7 +53,6 @@ class Perceptron(_BaseModel, _IterativeModel, _Classifier):
     """
 
     def __init__(self, eta=0.1, epochs=50, random_seed=None, print_progress=0):
-
         _BaseModel.__init__(self)
         _IterativeModel.__init__(self)
         _Classifier.__init__(self)
@@ -84,7 +83,6 @@ class Perceptron(_BaseModel, _IterativeModel, _Classifier):
             for idx in self._yield_minibatches_idx(
                 rgen=rgen, n_batches=y_data.shape[0], data_ary=y_data, shuffle=True
             ):
-
                 update = self.eta * (y_data[idx] - self._to_classlabels(X[idx]))
                 self.w_ += (update * X[idx]).reshape(self.w_.shape)
                 self.b_ += update

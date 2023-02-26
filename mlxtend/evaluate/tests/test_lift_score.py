@@ -34,7 +34,6 @@ def test_multiclass_with_false_binary():
 
 
 def test_binary_with_numpy():
-
     y_targ = np.array([1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0])
     y_pred = np.array([1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0])
     x = 1.25

@@ -53,7 +53,6 @@ def test_default_components_zero():
 
 
 def test_evals():
-
     pca = PCA(n_components=2, solver="eigen")
     pca.fit(X_std)
 
@@ -66,7 +65,6 @@ def test_evals():
 
 
 def test_loadings():
-
     expect = np.array(
         [
             [0.9, -0.4, -0.3, 0.0],

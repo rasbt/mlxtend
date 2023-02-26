@@ -144,7 +144,6 @@ def mcnemar_tables(y_target, *y_model_predictions):
     tables = {}
 
     for comb in combinations(range(num_models), 2):
-
         tb = np.zeros((2, 2))
         model1_vs_true = (y_target == y_model_predictions[comb[0]]).astype(int)
         model2_vs_true = (y_target == y_model_predictions[comb[1]]).astype(int)

@@ -76,7 +76,6 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
         random_seed=None,
         print_progress=0,
     ):
-
         _BaseModel.__init__(self)
         _IterativeModel.__init__(self)
         _Regressor.__init__(self)
@@ -104,7 +103,6 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
             )
 
     def _fit(self, X, y, init_params=True):
-
         if init_params:
             self.b_, self.w_ = self._init_params(
                 weights_shape=(X.shape[1], 1),
@@ -121,11 +119,9 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
             self.init_time_ = time()
             rgen = np.random.RandomState(self.random_seed)
             for i in range(self.epochs):
-
                 for idx in self._yield_minibatches_idx(
                     rgen=rgen, n_batches=self.minibatches, data_ary=y, shuffle=True
                 ):
-
                     y_val = self._net_input(X[idx])
                     errors = y[idx] - y_val
                     self.w_ += self.eta * X[idx].T.dot(errors).reshape(self.w_.shape)

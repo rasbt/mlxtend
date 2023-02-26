@@ -13,7 +13,6 @@ plt.switch_backend("agg")
 
 
 def test_runs():
-
     ary = np.random.random((6, 4))
     checkerboard_plot(
         ary,

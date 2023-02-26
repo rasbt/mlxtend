@@ -163,7 +163,6 @@ def test_retrain():
 
 
 def test_clone():
-
     mlp = MLP(epochs=5, eta=0.05, hidden_layers=[10], minibatches=len(y), random_seed=1)
 
     clone(mlp)

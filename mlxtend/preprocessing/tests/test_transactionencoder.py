@@ -84,7 +84,6 @@ def test_inverse_transform():
 
 
 def test_cloning():
-
     oht = TransactionEncoder()
     oht.fit(dataset)
     oht2 = clone(oht)

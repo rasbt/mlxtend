@@ -198,7 +198,6 @@ class FPTestEx1(object):
 
     def test_sparse_with_zero(self):
         if Version(pandas_version) < Version("1.2"):
-
             # needs to be revisited in future when pandas bug
             # in https://github.com/pandas-dev/pandas/issues/29814
             # is fixed

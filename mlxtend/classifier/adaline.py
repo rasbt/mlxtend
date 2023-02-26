@@ -62,7 +62,6 @@ class Adaline(_BaseModel, _IterativeModel, _Classifier):
     def __init__(
         self, eta=0.01, epochs=50, minibatches=None, random_seed=None, print_progress=0
     ):
-
         _BaseModel.__init__(self)
         _IterativeModel.__init__(self)
         _Classifier.__init__(self)
@@ -94,11 +93,9 @@ class Adaline(_BaseModel, _IterativeModel, _Classifier):
             self.init_time_ = time()
             rgen = np.random.RandomState(self.random_seed)
             for i in range(self.epochs):
-
                 for idx in self._yield_minibatches_idx(
                     rgen=rgen, n_batches=self.minibatches, data_ary=y_data, shuffle=True
                 ):
-
                     y_val = self._net_input(X[idx])
                     errors = y_data[idx] - y_val
                     self.w_ += self.eta * X[idx].T.dot(errors).reshape(self.w_.shape)

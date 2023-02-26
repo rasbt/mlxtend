@@ -23,7 +23,7 @@ class _BaseFeatureExtractor(object):
         try:
             if y is None:
                 return
-        except (AttributeError):
+        except AttributeError:
             if not len(y.shape) == 1:
                 raise ValueError("y must be a 1D array.")
 

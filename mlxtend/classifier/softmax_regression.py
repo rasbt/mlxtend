@@ -82,7 +82,6 @@ class SoftmaxRegression(_BaseModel, _IterativeModel, _Classifier, _MultiClass):
         random_seed=None,
         print_progress=0,
     ):
-
         _BaseModel.__init__(self)
         _IterativeModel.__init__(self)
         _Classifier.__init__(self)
@@ -123,7 +122,6 @@ class SoftmaxRegression(_BaseModel, _IterativeModel, _Classifier, _MultiClass):
         return a
 
     def _backward(self, X, y_true, y_probas):
-
         grad_loss_wrt_out = y_true - y_probas
         # gradient -> n_features x n_classes
         grad_loss_wrt_w = -np.dot(X.T, grad_loss_wrt_out)
@@ -152,7 +150,6 @@ class SoftmaxRegression(_BaseModel, _IterativeModel, _Classifier, _MultiClass):
             for idx in self._yield_minibatches_idx(
                 rgen=rgen, n_batches=self.minibatches, data_ary=y, shuffle=True
             ):
-
                 # net_input, softmax and diff -> n_samples x n_classes:
                 y_probas = self._forward(X[idx])
 

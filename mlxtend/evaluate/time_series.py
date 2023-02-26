@@ -47,7 +47,6 @@ class GroupTimeSeriesSplit:
         shift_size=1,
         window_type="rolling",
     ):
-
         if (train_size is None) and (n_splits is None):
             raise ValueError("Either train_size or n_splits should be defined")
 

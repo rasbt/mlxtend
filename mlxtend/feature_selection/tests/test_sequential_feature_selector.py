@@ -501,7 +501,6 @@ def test_regression_in_range():
 def test_clone_params_fail():
     class Perceptron(object):
         def __init__(self, eta=0.1, epochs=50, random_seed=None, print_progress=0):
-
             self.eta = eta
             self.epochs = epochs
             self.random_seed = random_seed
@@ -527,7 +526,6 @@ def test_clone_params_fail():
                 for idx in self._yield_minibatches_idx(
                     rgen=rgen, n_batches=y_data.shape[0], data_ary=y_data, shuffle=True
                 ):
-
                     update = self.eta * (y_data[idx] - self._to_classlabels(X[idx]))
                     self.w_ += (update * X[idx]).reshape(self.w_.shape)
                     self.b_ += update
@@ -896,7 +894,6 @@ def test_invalid_estimator():
 
 
 def test_invalid_k_features():
-
     iris = load_iris()
     X = iris.data
     y = iris.target
@@ -912,7 +909,6 @@ def test_invalid_k_features():
 
 
 def test_verbose():
-
     iris = load_iris()
     X = iris.data
     y = iris.target

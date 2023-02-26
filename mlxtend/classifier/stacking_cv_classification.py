@@ -159,7 +159,6 @@ class StackingCVClassifier(
         n_jobs=None,
         pre_dispatch="2*n_jobs",
     ):
-
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier
         self.use_probas = use_probas
@@ -243,7 +242,6 @@ class StackingCVClassifier(
         meta_features = None
 
         for n, model in enumerate(self.clfs_):
-
             if self.verbose > 0:
                 i = self.clfs_.index(model) + 1
                 print(

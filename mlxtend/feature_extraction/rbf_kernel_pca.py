@@ -117,7 +117,6 @@ class RBFKernelPCA(_BaseModel):
         return K.T.dot(e_vecs / self.e_vals_[: e_vecs.shape[1]])
 
     def _kernel_matrix(self, X, gamma):
-
         # Calculating the squared Euclidean distances for every pair of points
         # in the MxN dimensional dataset.
         sq_dists = distance.pdist(X, "sqeuclidean")

@@ -120,7 +120,6 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier, Transformer
         use_clones=True,
         fit_base_estimators=True,
     ):
-
         self.classifiers = classifiers
         self.meta_classifier = meta_classifier
         self.use_probas = use_probas
@@ -182,7 +181,6 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier, Transformer
                 print("Fitting %d classifiers..." % (len(self.classifiers)))
 
             for clf in self.clfs_:
-
                 if self.verbose > 0:
                     i = self.clfs_.index(clf) + 1
                     print(

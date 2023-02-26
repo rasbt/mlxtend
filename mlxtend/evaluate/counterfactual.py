@@ -20,7 +20,6 @@ def create_counterfactual(
     lammbda=0.1,
     random_seed=None,
 ):
-
     """
     Implementation of the counterfactual method by Wachter et al. 2017
 
@@ -100,7 +99,6 @@ def create_counterfactual(
         return np.sum(numerator / mad)
 
     def loss(x_counterfact, lammbda):
-
         if use_proba:
             y_predict = model.predict_proba(x_counterfact.reshape(1, -1)).flatten()[
                 y_desired

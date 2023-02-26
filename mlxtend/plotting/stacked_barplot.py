@@ -79,7 +79,6 @@ def stacked_barplot(
     )
 
     for i, c in enumerate(df.columns[1:]):
-
         bar_pos = [p + width * (i + 1) for p in pos]
         label_pos.append(bar_pos)
         plt.bar(

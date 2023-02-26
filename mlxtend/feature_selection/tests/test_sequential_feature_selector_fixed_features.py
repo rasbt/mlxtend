@@ -146,7 +146,6 @@ def test_run_floating_backward_with_range():
 
 
 def test_pandas():
-
     X_df = pd.DataFrame(
         X_iris, columns=["sepal length", "sepal width", "petal width", "petal width"]
     )

@@ -78,7 +78,6 @@ class LogisticRegression(_BaseModel, _IterativeModel, _Classifier):
         random_seed=None,
         print_progress=0,
     ):
-
         _BaseModel.__init__(self)
         _IterativeModel.__init__(self)
         _Classifier.__init__(self)
@@ -103,7 +102,6 @@ class LogisticRegression(_BaseModel, _IterativeModel, _Classifier):
         return grad_loss_wrt_w, grad_loss_wrt_b
 
     def _fit(self, X, y, init_params=True):
-
         self._check_target_array(y, allowed={(0, 1)})
 
         if init_params:
@@ -117,11 +115,9 @@ class LogisticRegression(_BaseModel, _IterativeModel, _Classifier):
         self.init_time_ = time()
         rgen = np.random.RandomState(self.random_seed)
         for i in range(self.epochs):
-
             for idx in self._yield_minibatches_idx(
                 rgen=rgen, n_batches=self.minibatches, data_ary=y, shuffle=True
             ):
-
                 y_val = self._forward(X[idx])
                 grad_loss_wrt_w, grad_loss_wrt_b = self._backward(
                     X[idx], y_true=y[idx], y_probas=y_val

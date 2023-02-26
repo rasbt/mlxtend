@@ -9,7 +9,6 @@ from mlxtend.text import generalize_names
 
 
 def test_generalize_names():
-
     assert generalize_names("Samuel Eto'o") == "etoo s"
     assert generalize_names("Eto'o, Samuel") == "etoo s"
     assert generalize_names("Eto'o, Samuel") == "etoo s"

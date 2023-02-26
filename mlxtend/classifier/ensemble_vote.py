@@ -117,7 +117,6 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         use_clones=True,
         fit_base_estimators=True,
     ):
-
         self.clfs = clfs
         self.named_clfs = {key: value for key, value in _name_estimators(clfs)}
         self.voting = voting
@@ -185,7 +184,6 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                 print("Fitting %d classifiers..." % (len(self.clfs)))
 
             for clf in self.clfs_:
-
                 if self.verbose > 0:
                     i = self.clfs_.index(clf) + 1
                     print(
@@ -227,7 +225,6 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             )
 
         if self.voting == "soft":
-
             maj = np.argmax(self.predict_proba(X), axis=1)
 
         else:  # 'hard' voting

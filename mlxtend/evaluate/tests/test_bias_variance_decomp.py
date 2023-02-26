@@ -20,7 +20,6 @@ from mlxtend.evaluate import bias_variance_decomp
 
 
 def pandas_input_fail():
-
     X, y = iris_data()
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.3, random_state=123, shuffle=True, stratify=y
@@ -37,7 +36,6 @@ def pandas_input_fail():
 
 
 def test_01_loss_tree():
-
     X, y = iris_data()
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.3, random_state=123, shuffle=True, stratify=y
@@ -54,7 +52,6 @@ def test_01_loss_tree():
 
 
 def test_01_loss_bagging():
-
     X, y = iris_data()
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.3, random_state=123, shuffle=True, stratify=y
@@ -72,7 +69,6 @@ def test_01_loss_bagging():
 
 
 def test_mse_tree():
-
     X, y = boston_housing_data()
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.3, random_state=123, shuffle=True
@@ -89,7 +85,6 @@ def test_mse_tree():
 
 
 def test_mse_bagging():
-
     X, y = boston_housing_data()
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.3, random_state=123, shuffle=True
@@ -120,7 +115,6 @@ else:
 
 @pytest.mark.skipif(TRAVIS or APPVEYOR, reason="TensorFlow dependency")
 def test_keras():
-
     import tensorflow as tf
 
     X, y = boston_housing_data()

@@ -162,7 +162,6 @@ def test_weight_unsupported_no_weight():
 
 
 def test_StackingClassifier_proba_avg_1():
-
     np.random.seed(123)
     meta = LogisticRegression(solver="liblinear", multi_class="ovr", random_state=1)
     clf1 = RandomForestClassifier(n_estimators=10)
@@ -177,7 +176,6 @@ def test_StackingClassifier_proba_avg_1():
 
 
 def test_StackingClassifier_proba_concat_1():
-
     np.random.seed(123)
     meta = LogisticRegression(solver="liblinear", multi_class="ovr")
     clf1 = RandomForestClassifier(n_estimators=10)

@@ -80,7 +80,6 @@ def generate_itemsets(generator, num_itemsets, colname_map):
 
 
 def valid_input_check(df):
-
     if f"{type(df)}" == "<class 'pandas.core.frame.SparseDataFrame'>":
         msg = (
             "SparseDataFrame support has been deprecated in pandas 1.0,"

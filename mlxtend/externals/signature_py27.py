@@ -239,7 +239,6 @@ class Parameter(object):
     def __init__(
         self, name, kind, default=_empty, annotation=_empty, _partial_kwarg=False
     ):
-
         if kind not in (
             _POSITIONAL_ONLY,
             _POSITIONAL_OR_KEYWORD,

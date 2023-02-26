@@ -56,7 +56,6 @@ def test_check_Xy_invalid_dtype_X():
 
 
 def test_check_Xy_invalid_dtype_y():
-
     if sys.version_info > (3, 0):
         expect = (
             "y must be an integer array. Found <U1. "

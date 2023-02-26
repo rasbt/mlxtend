@@ -493,7 +493,6 @@ def test_on_dataset():
 
 
 def test_compare_to_mcnemar_on_2_models():
-
     y_true = np.array(
         [
             0,

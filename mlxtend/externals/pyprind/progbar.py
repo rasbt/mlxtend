@@ -98,7 +98,6 @@ class ProgBar(Prog):
             do_update = progress > self.last_progress
 
         if do_update and self.active:
-
             self._cache_progress_bar(progress)
             if self.track:
                 self._cache_eta()

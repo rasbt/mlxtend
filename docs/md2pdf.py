@@ -84,7 +84,6 @@ header-includes:
         with open(md_path, "r") as f_in:
             content = f_in.readlines()
             if md.startswith("user_guide"):
-
                 title = gen_title(md)
                 f_out.write(title + "\n")
                 if content[0].startswith("# "):

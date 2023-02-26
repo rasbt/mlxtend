@@ -104,7 +104,6 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         refit=True,
         multi_output=False,
     ):
-
         self.regressors = regressors
         self.meta_regressor = meta_regressor
         self.verbose = verbose
@@ -160,7 +159,6 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
             print("Fitting %d regressors..." % (len(self.regressors)))
 
         for regr in self.regr_:
-
             if self.verbose > 0:
                 i = self.regr_.index(regr) + 1
                 print(

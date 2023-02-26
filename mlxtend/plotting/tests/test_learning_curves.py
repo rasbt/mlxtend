@@ -13,7 +13,6 @@ from mlxtend.plotting import plot_learning_curves
 
 
 def test_training_size():
-
     iris = datasets.load_iris()
     X = iris.data
     y = iris.target

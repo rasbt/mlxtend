@@ -193,7 +193,6 @@ def test_frozenset_selection():
 
 
 def test_override_metric_with_support():
-
     res_df = association_rules(df_freq_items_with_colnames, min_threshold=0.8)
     # default metric is confidence
     assert res_df.values.shape[0] == 9

@@ -9,14 +9,14 @@ import math
 
 from ..frequent_patterns import fpcommon as fpc
 
-def hmine(
-        df, 
-        min_support=0.5, 
-        use_colnames=False, 
-        max_len=None, 
-        verbose=0
-) -> pd.DataFrame:
 
+def hmine(
+    df,
+    min_support=0.5,
+    use_colnames=False,
+    max_len=None,
+    verbose=0
+) -> pd.DataFrame:
     """
     Get frequent itemsets from a one-hot DataFrame
 
@@ -100,33 +100,24 @@ def hmine(
     else:
         # dense DataFrame
         itemsets = df.values
-    
+    if is_sparse:
+        is_sparse
     single_items = np.array(df.columns)
     itemsets_shape = itemsets.shape[0]
-    itemsets, single_items, single_items_support = itemset_optimisation(
-                                                                itemsets, 
-                                                                single_items, 
-                                                                minsup)
+    itemsets, single_items, single_items_support = itemset_optimisation(itemsets, single_items, minsup)
     numeric_single_items = np.arange(len(single_items))
     frequent_itemsets = {}
     for item in numeric_single_items:
         if single_items_support[item] >= minsup:
             supp = single_items_support[item] / itemsets_shape
             frequent_itemsets[frozenset([single_items[item]])] = supp
-        
         if max_len == 1:
             continue
-        # Recursive call to find frequent itemsets      
-        frequent_itemsets = hmine_driver(
-                                [item], 
-                                itemsets, 
-                                minsup,
-                                itemsets_shape, 
-                                max_len,
-                                verbose,
-                                single_items, 
-                                frequent_itemsets)
-    
+        # Recursive call to find frequent itemsets
+        frequent_itemsets = hmine_driver([item], itemsets, minsup,
+                                         itemsets_shape, max_len, verbose,
+                                         single_items, frequent_itemsets)
+    # Convert the dictionary to a DataFrame
     res_df = pd.DataFrame([frequent_itemsets.values(), frequent_itemsets.keys()]).T
     res_df.columns = ["support", "itemsets"]
 
@@ -136,17 +127,18 @@ def hmine(
 
     return res_df
 
+
 def itemset_optimisation(
-        itemsets:np.array, 
-        single_items: np.array, 
-        minsup:int
+        itemsets: np.array,
+        single_items: np.array,
+        minsup: int,
 ) -> tuple:
 
     """
     Downward-closure property of H-Mine algorithm.
-    Optimises the itemsets matrix by removing items that do not 
-    meet the minimum support(For more info, see 
-    http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/hmine/).
+        Optimises the itemsets matrix by removing items that do not
+        meet the minimum support(For more info, see
+        http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/hmine/).
 
     Args:
         itemsets (np.array): matrix of bools or binary
@@ -167,15 +159,16 @@ def itemset_optimisation(
 
     return itemsets, single_items, single_items_support
 
+
 def hmine_driver(
-        item:list, 
-        itemsets:np.array, 
-        minsup:int, 
-        itemsets_shape:int,
-        max_len:int, 
-        verbose:int,
-        single_items:np.array, 
-        frequent_itemsets:dict
+    item: list,
+    itemsets: np.array,
+    minsup: int,
+    itemsets_shape: int,
+    max_len: int,
+    verbose: int,
+    single_items: np.array,
+    frequent_itemsets: dict
 ) -> dict:
 
     """
@@ -202,40 +195,29 @@ def hmine_driver(
     # Early stopping if the length of the item is greater than max_len
     if max_len and len(item) >= max_len:
         return frequent_itemsets
-    
-    projected_itemsets = create_projected_itemsets(
-                                        item, 
-                                        itemsets)
-    initial_supports = np.array(np.sum(projected_itemsets,axis = 0)).reshape(-1)
+    projected_itemsets = create_projected_itemsets(item, itemsets)
+    initial_supports = np.array(np.sum(projected_itemsets, axis=0)).reshape(-1)
     suffixes = np.nonzero(initial_supports >= minsup)[0]
     suffixes = suffixes[np.nonzero(suffixes > item[-1])[0]]
 
     if verbose:
         print(f"{len(suffixes)} itemset(s) from the suffixes on item(s) (%s)" % (", ".join(single_items[item])))
-    
     for suffix in suffixes:
         new_item = item.copy()
         new_item.append(suffix)
         supp = initial_supports[suffix] / itemsets_shape
         frequent_itemsets[frozenset(single_items[new_item])] = supp
         # Recursive call to find frequent itemsets
-        frequent_itemsets = hmine_driver(
-            new_item, 
-            projected_itemsets, 
-            minsup, 
-            itemsets_shape,
-            max_len, 
-            verbose,
-            single_items, 
-            frequent_itemsets)
-    
+        frequent_itemsets = hmine_driver(new_item, projected_itemsets, minsup,
+                                         itemsets_shape, max_len, verbose,
+                                         single_items, frequent_itemsets)
     return frequent_itemsets
 
+
 def create_projected_itemsets(
-        item:list, 
-        itemsets:np.array
+    item: list,
+    itemsets: np.array
 ) -> np.array:
-    
     """
     Creates the projected itemsets for the given item.(For more info, see
     http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/hmine/)
@@ -248,6 +230,6 @@ def create_projected_itemsets(
         projected_itemsets(np.array): projected itemsets for the given item
     """
 
-    indices = np.nonzero(np.sum(itemsets[:,item],axis = 1) == len(item))[0]
-    projected_itemsets = itemsets[indices,:]
+    indices = np.nonzero(np.sum(itemsets[:, item], axis=1) == len(item))[0]
+    projected_itemsets = itemsets[indices, :]
     return projected_itemsets

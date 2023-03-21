@@ -17,6 +17,7 @@ from test_fpbase import (
 
 from mlxtend.frequent_patterns import hmine
 
+
 class TestEdgeCases(unittest.TestCase, FPTestEdgeCases):
     def setUp(self):
         FPTestEdgeCases.setUp(self, hmine)
@@ -30,6 +31,7 @@ class TestErrors(unittest.TestCase, FPTestErrors):
 class TestHmine(unittest.TestCase, FPTestEx1All):
     def setUp(self):
         FPTestEx1All.setUp(self, hmine)
+
 
 class TestHmineBoolInput(unittest.TestCase, FPTestEx1All):
     def setUp(self):

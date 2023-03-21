@@ -932,3 +932,10 @@ imput arrays via `transform` and `fit_transform`
 ### Version 0.1.1 (2014-08-13)
 
 - Simplified code for ColumnSelector.
+
+##### New Features
+
+- Added `mlxtend.frequent_patterns.hmine` for mining frequent itemsets using the H-Mine algorithm.
+- Added `mlxtend.frequent_patterns.test.hmine` for testing the H-Mine algorithm.
+- Imported hmine for `mlexxtend.frequent_patterns.__init__` and added the `__all__` list. 
+- Added `docs.sources.user_guide.frequent_patterns.hmine` for the H-Mine user guide.

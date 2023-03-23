@@ -67,7 +67,6 @@ class Kmeans(_BaseModel, _Cluster, _IterativeModel):
         random_seed=None,
         print_progress=0,
     ):
-
         _BaseModel.__init__(self)
         _Cluster.__init__(self)
         _IterativeModel.__init__(self)

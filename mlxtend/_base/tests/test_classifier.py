@@ -44,7 +44,6 @@ def test_check_labels_not_ok_1():
     y = np.array([1, 3, 2])
     cl = BlankClassifier(print_progress=0, random_seed=1)
     with pytest.raises(AttributeError) as excinfo:
-
         cl._check_target_array(y, {(0, 1), (1, 2)})
         assert excinfo.value.message == (
             "Labels not in {(1, 2), (0, 1)}" ".\nFound (1, 2, 3)"

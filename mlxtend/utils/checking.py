@@ -10,7 +10,6 @@ import numpy as np
 
 
 def check_Xy(X, y, y_int=True):
-
     # check types
     if not isinstance(X, np.ndarray):
         raise ValueError("X must be a NumPy array. Found %s" % type(X))

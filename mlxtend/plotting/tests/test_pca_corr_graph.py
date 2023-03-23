@@ -33,7 +33,6 @@ def test_X_PCA_but_no_explained_variance():
         match="If `X_pca` is not None, the `explained variance` "
         "values should not be `None`.",
     ):
-
         X, y = iris_data()
         pca = PCA(n_components=2)
         X_pca = pca.fit_transform(X)
@@ -52,7 +51,6 @@ def test_no_X_PCA_but_explained_variance():
         match="If `explained variance` is not None, the "
         "`X_pca` values should not be `None`.",
     ):
-
         X, y = iris_data()
         pca = PCA(n_components=2)
         pca.fit(X)
@@ -72,7 +70,6 @@ def test_not_enough_components():
         " of eigenvalues. Got 2 != 1"
     )
     with pytest.raises(ValueError, match=s):
-
         X, y = iris_data()
         pca = PCA(n_components=2)
         X_pca = pca.fit_transform(X)

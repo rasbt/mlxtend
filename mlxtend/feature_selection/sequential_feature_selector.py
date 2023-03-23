@@ -198,7 +198,6 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         fixed_features=None,
         feature_groups=None,
     ):
-
         self.estimator = estimator
         self.k_features = k_features
         self.forward = forward
@@ -589,7 +588,11 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                                 new_feature_idx
                             }
 
-                        (k_idx_c, k_score_c, cv_scores_c,) = self._feature_selector(
+                        (
+                            k_idx_c,
+                            k_score_c,
+                            cv_scores_c,
+                        ) = self._feature_selector(
                             search_set,
                             must_include_set,
                             X=X_,

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 Math extension for Python-Markdown
 ==================================
@@ -80,7 +78,7 @@ class MathExtension(Extension):
                 return _wrap_node(node, "".join(m.group(2, 3, 4)), "div")
 
         inlinemathpatterns = (
-            Pattern(r"(?<!\\|\$)(\$)([^\$]+)(\$)"),  #  $...$
+            Pattern(r"(?<!\\|\$)(\$)([^\$]+)(\$)"),  # $...$
             Pattern(r"(?<!\\)(\\\()(.+?)(\\\))"),  # \(...\)
         )
         mathpatterns = (

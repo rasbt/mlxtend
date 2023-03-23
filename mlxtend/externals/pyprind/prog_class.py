@@ -92,14 +92,13 @@ class Prog:
     def _check_stream(self):
         """Determines which output stream (stdout, stderr, or custom) to use"""
         if self.stream:
-
             try:
                 supported = "PYCHARM_HOSTED" in os.environ or os.isatty(
                     sys.stdout.fileno()
                 )
 
             # a fix for IPython notebook "IOStream has no fileno."
-            except (UnsupportedOperation):
+            except UnsupportedOperation:
                 supported = True
 
             else:

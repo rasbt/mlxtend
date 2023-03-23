@@ -137,7 +137,6 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         pre_dispatch="2*n_jobs",
         multi_output=False,
     ):
-
         self.regressors = regressors
         self.meta_regressor = meta_regressor
         self.cv = cv

@@ -94,7 +94,6 @@ class MultiLayerPerceptron(
         random_seed=None,
         print_progress=0,
     ):
-
         _BaseModel.__init__(self)
         _Classifier.__init__(self)
         _IterativeModel.__init__(self)
@@ -117,7 +116,6 @@ class MultiLayerPerceptron(
         self._is_fitted = False
 
     def _fit(self, X, y, init_params=True):
-
         self._check_target_array(y)
 
         if init_params:
@@ -155,7 +153,6 @@ class MultiLayerPerceptron(
             for idx in self._yield_minibatches_idx(
                 rgen=rgen, n_batches=self.minibatches, data_ary=y, shuffle=True
             ):
-
                 net_1, act_1, net_out, act_out = self._feedforward(X[idx])
 
                 # GRADIENTS VIA BACKPROPAGATION
@@ -225,7 +222,6 @@ class MultiLayerPerceptron(
         return self
 
     def _feedforward(self, X):
-
         # [n_samples, n_features] dot [n_features, n_hidden]
         # -> [n_samples, n_hidden]
         net_1 = np.dot(X, self.w_["1"]) + self.b_["1"]

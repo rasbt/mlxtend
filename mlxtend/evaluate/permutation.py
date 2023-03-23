@@ -91,7 +91,6 @@ def permutation_test(
         )
 
     if isinstance(func, str):
-
         if func not in ("x_mean != y_mean", "x_mean > y_mean", "x_mean < y_mean"):
             raise AttributeError(
                 "Provide a custom function"
@@ -146,7 +145,6 @@ def permutation_test(
     # time
 
     if method == "exact":
-
         if paired:
             for flip in product([True, False], repeat=m):
                 for i, f in enumerate(flip):

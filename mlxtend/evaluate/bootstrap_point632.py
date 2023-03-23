@@ -22,7 +22,7 @@ def _check_arrays(X, y=None):
     try:
         if y is None:
             return
-    except (AttributeError):
+    except AttributeError:
         if not len(y.shape) == 1:
             raise ValueError("y must be a 1D array.")
 
@@ -201,7 +201,7 @@ def bootstrap_point632_score(
         predict_func = cloned_est.predict_proba
 
     oob = BootstrapOutOfBag(n_splits=n_splits, random_seed=random_seed)
-    scores = np.empty(dtype=np.float, shape=(n_splits,))
+    scores = np.empty(dtype=float, shape=(n_splits,))
     cnt = 0
 
     for train, test in oob.split(X):

@@ -79,7 +79,6 @@ def category_scatter(
         raise ValueError("df must be pandas.DataFrame or numpy.ndarray object")
 
     for lab in labels:
-
         if frame:
             x_dat = data.loc[data.loc[:, label_col] == lab, x]
             y_dat = data.loc[data.loc[:, label_col] == lab, y]

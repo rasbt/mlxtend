@@ -103,7 +103,6 @@ def paired_ttest_resampled(
 
     score_diff = []
     for i in range(num_rounds):
-
         randint = rng.randint(low=0, high=32767)
 
         X_train, X_test, y_train, y_test = train_test_split(
@@ -305,7 +304,6 @@ def paired_ttest_5x2cv(estimator1, estimator2, X, y, scoring=None, random_seed=N
     first_diff = None
 
     def score_diff(X_1, X_2, y_1, y_2):
-
         estimator1.fit(X_1, y_1)
         estimator2.fit(X_1, y_1)
         est1_score = scorer(estimator1, X_2, y_2)
@@ -314,7 +312,6 @@ def paired_ttest_5x2cv(estimator1, estimator2, X, y, scoring=None, random_seed=N
         return score_diff
 
     for i in range(5):
-
         randint = rng.randint(low=0, high=32767)
         X_1, X_2, y_1, y_2 = train_test_split(X, y, test_size=0.5, random_state=randint)
 

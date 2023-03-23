@@ -62,9 +62,9 @@ def plot_linear_regression(
 
     """
     if isinstance(X, list):
-        X = np.asarray(X, dtype=np.float)
+        X = np.asarray(X, dtype=float)
     if isinstance(y, list):
-        y = np.asarray(y, dtype=np.float)
+        y = np.asarray(y, dtype=float)
     if len(X.shape) == 1:
         X = X[:, np.newaxis]
 

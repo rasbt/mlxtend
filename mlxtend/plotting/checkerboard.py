@@ -76,7 +76,6 @@ def checkerboard_plot(
     width, height = 1.0 / n_cols, 1.0 / n_rows
 
     for (row_idx, col_idx), cell_val in np.ndenumerate(ary):
-
         idx = (col_idx + row_idx) % 2
         tb.add_cell(
             row_idx,

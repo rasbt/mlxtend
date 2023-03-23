@@ -97,7 +97,6 @@ def make_multiplexer_dataset(
         return all_bits, class_label
 
     while len(y_pos) < n_positives or len(y_neg) < n_negatives:
-
         all_bits, class_label = gen_randsample()
 
         if class_label and len(y_pos) < n_positives:

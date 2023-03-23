@@ -59,7 +59,6 @@ class OneRClassifier(BaseEstimator, ClassifierMixin):
     """
 
     def __init__(self, resolve_ties="first"):
-
         allowed = {"first", "chi-squared"}
         if resolve_ties not in allowed:
             raise ValueError(
@@ -106,10 +105,8 @@ class OneRClassifier(BaseEstimator, ClassifierMixin):
 
         # iterate over features
         for feature_index in np.arange(X.shape[1]):
-
             # iterate over each possible value per feature
             for feature_value in np.unique(X[:, feature_index]):
-
                 class_counts = compute_class_counts(X, y, feature_index, feature_value)
                 most_frequent_class = np.argmax(class_counts)
                 self.class_labels_ = np.unique(y)
@@ -142,7 +139,6 @@ class OneRClassifier(BaseEstimator, ClassifierMixin):
                     best_idx[-1] = i
 
             if self.resolve_ties == "chi-squared":
-
                 # collect duplicates
                 for i in prediction_dict:
                     if i == best_idx[-1]:
@@ -152,7 +148,6 @@ class OneRClassifier(BaseEstimator, ClassifierMixin):
 
                 p_values = []
                 for feature_idx in best_idx:
-
                     rules = prediction_dict[feature_idx]["rules (value: class)"]
 
                     # contingency table for a given feature

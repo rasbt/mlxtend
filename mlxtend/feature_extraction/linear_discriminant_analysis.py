@@ -69,7 +69,6 @@ class LinearDiscriminantAnalysis(_BaseModel):
         return self
 
     def _fit(self, X, y, n_classes=None):
-
         if self.n_discriminants is None or self.n_discriminants > X.shape[1]:
             n_discriminants = X.shape[1]
         else:

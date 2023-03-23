@@ -27,7 +27,6 @@ X = X[:, 1:3]
 
 
 def test_EnsembleVoteClassifier():
-
     np.random.seed(123)
     clf1 = LogisticRegression(solver="liblinear", multi_class="ovr")
     clf2 = RandomForestClassifier(n_estimators=10)
@@ -164,7 +163,6 @@ def test_1model_probas():
 
 
 def test_EnsembleVoteClassifier_weights():
-
     np.random.seed(123)
     clf1 = LogisticRegression(solver="liblinear", multi_class="ovr")
     clf2 = RandomForestClassifier(n_estimators=10)
@@ -179,7 +177,6 @@ def test_EnsembleVoteClassifier_weights():
 
 
 def test_EnsembleVoteClassifier_gridsearch():
-
     clf1 = LogisticRegression(solver="liblinear", multi_class="ovr", random_state=1)
     clf2 = RandomForestClassifier(random_state=1)
     clf3 = GaussianNB()
@@ -204,7 +201,6 @@ def test_EnsembleVoteClassifier_gridsearch():
 
 
 def test_EnsembleVoteClassifier_gridsearch_enumerate_names():
-
     clf1 = LogisticRegression(solver="liblinear", multi_class="ovr", random_state=1)
     clf2 = RandomForestClassifier(random_state=1)
     eclf = EnsembleVoteClassifier(clfs=[clf1, clf1, clf2])
@@ -300,7 +296,6 @@ def test_string_labels_python_list():
 
 
 def test_clone():
-
     clf1 = LogisticRegression(solver="liblinear", multi_class="ovr")
     clf2 = RandomForestClassifier(n_estimators=10)
     clf3 = GaussianNB()

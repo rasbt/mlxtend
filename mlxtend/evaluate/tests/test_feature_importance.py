@@ -62,7 +62,6 @@ def test_metric_wrong():
 
 
 def test_classification():
-
     X, y = make_classification(
         n_samples=1000,
         n_features=6,
@@ -99,7 +98,6 @@ def test_classification():
 
 
 def test_regression():
-
     X, y = make_regression(
         n_samples=1000,
         n_features=5,
@@ -133,7 +131,6 @@ def test_regression():
 
 
 def test_regression_custom_r2():
-
     X, y = make_regression(
         n_samples=1000,
         n_features=5,
@@ -167,7 +164,6 @@ def test_regression_custom_r2():
 
 
 def test_regression_custom_mse():
-
     X, y = make_regression(
         n_samples=1000,
         n_features=5,
@@ -201,7 +197,6 @@ def test_regression_custom_mse():
 
 
 def test_n_rounds():
-
     X, y = make_classification(
         n_samples=1000,
         n_features=6,

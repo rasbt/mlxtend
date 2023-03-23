@@ -260,7 +260,6 @@ def generate_api_docs(
     # get subpackages
     api_docs = {}
     for importer, pkg_name, is_pkg in pkgutil.iter_modules(package.__path__, prefix):
-
         if ignore_packages is not None and pkg_name in ignore_packages:
             if printlog:
                 print("ignored %s" % pkg_name)
@@ -372,7 +371,6 @@ def summarize_methdods_and_functions(
             new_output.append(str_above_header)
         for p in sorted(module_paths):
             with open(p, "r") as r:
-
                 new_output.extend(r.readlines())
                 new_output.extend(["\n", "\n", "\n"])
 
@@ -397,7 +395,6 @@ def summarize_methdods_and_functions(
 
 
 if __name__ == "__main__":
-
     import argparse
 
     parser = argparse.ArgumentParser(

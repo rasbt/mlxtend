@@ -15,7 +15,6 @@ from mlxtend.utils import assert_raises
 
 
 def test_defaults():
-
     X, y = make_multiplexer_dataset()
 
     assert X.shape == (100, 6), X.shape
@@ -25,7 +24,6 @@ def test_defaults():
 
 
 def test_invalid_address_bits():
-
     msg_1 = "address_bits must be an integer. Got <class 'float'>."
 
     # for Python 2.7:

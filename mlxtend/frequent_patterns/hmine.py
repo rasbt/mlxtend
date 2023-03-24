@@ -3,9 +3,10 @@
 #
 # License: BSD 3 clause
 
+import math
+
 import numpy as np
 import pandas as pd
-import math
 
 from ..frequent_patterns import fpcommon as fpc
 

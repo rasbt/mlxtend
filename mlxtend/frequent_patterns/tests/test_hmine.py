@@ -6,8 +6,8 @@
 
 import unittest
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 from test_fpbase import (
     FPTestEdgeCases,
     FPTestErrors,
@@ -16,9 +16,7 @@ from test_fpbase import (
     FPTestEx3All,
 )
 
-from mlxtend.frequent_patterns import hmine
-from mlxtend.frequent_patterns import fpgrowth
-from mlxtend.frequent_patterns import apriori
+from mlxtend.frequent_patterns import apriori, fpgrowth, hmine
 
 
 class TestEdgeCases(unittest.TestCase, FPTestEdgeCases):

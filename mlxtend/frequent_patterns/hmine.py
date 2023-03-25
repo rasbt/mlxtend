@@ -12,11 +12,7 @@ from ..frequent_patterns import fpcommon as fpc
 
 
 def hmine(
-    df,
-    min_support=0.5,
-    use_colnames=False,
-    max_len=None,
-    verbose=0
+    df, min_support=0.5, use_colnames=False, max_len=None, verbose=0
 ) -> pd.DataFrame:
     """
     Get frequent itemsets from a one-hot DataFrame
@@ -87,7 +83,7 @@ def hmine(
             "number within the interval `(0, 1]`. "
             "Got %s." % min_support
         )
-    # Calculate the minimum support based on the number of transactions(Abs. support)
+    # Calculate the minimum support based on the number of transactions (absolute support)
     minsup = math.ceil(min_support * len(df))
 
     is_sparse = False
@@ -105,7 +101,9 @@ def hmine(
         is_sparse
     single_items = np.array(df.columns)
     itemsets_shape = itemsets.shape[0]
-    itemsets, single_items, single_items_support = itemset_optimisation(itemsets, single_items, minsup)
+    itemsets, single_items, single_items_support = itemset_optimisation(
+        itemsets, single_items, minsup
+    )
     numeric_single_items = np.arange(len(single_items))
     frequent_itemsets = {}
     for item in numeric_single_items:
@@ -115,31 +113,39 @@ def hmine(
         if max_len == 1:
             continue
         # Recursive call to find frequent itemsets
-        frequent_itemsets = hmine_driver([item], itemsets, minsup,
-                                         itemsets_shape, max_len, verbose,
-                                         single_items, frequent_itemsets)
+        frequent_itemsets = hmine_driver(
+            [item],
+            itemsets,
+            minsup,
+            itemsets_shape,
+            max_len,
+            verbose,
+            single_items,
+            frequent_itemsets,
+        )
     # Convert the dictionary to a DataFrame
     res_df = pd.DataFrame([frequent_itemsets.values(), frequent_itemsets.keys()]).T
     res_df.columns = ["support", "itemsets"]
 
     if not use_colnames:
         mapping = {item: idx for idx, item in enumerate(df.columns)}
-        res_df["itemsets"] = res_df["itemsets"].apply(lambda x: frozenset([mapping[i] for i in x]))
+        res_df["itemsets"] = res_df["itemsets"].apply(
+            lambda x: frozenset([mapping[i] for i in x])
+        )
 
     return res_df
 
 
 def itemset_optimisation(
-        itemsets: np.array,
-        single_items: np.array,
-        minsup: int,
+    itemsets: np.array,
+    single_items: np.array,
+    minsup: int,
 ) -> tuple:
-
     """
     Downward-closure property of H-Mine algorithm.
-        Optimises the itemsets matrix by removing items that do not
-        meet the minimum support(For more info, see
-        http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/hmine/).
+        Optimizes the itemsets matrix by removing items that do not
+        meet the minimum support. (For more info, see
+        http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/hmine/)
 
     Args:
         itemsets (np.array): matrix of bools or binary
@@ -169,16 +175,15 @@ def hmine_driver(
     max_len: int,
     verbose: int,
     single_items: np.array,
-    frequent_itemsets: dict
+    frequent_itemsets: dict,
 ) -> dict:
-
     """
     Driver function for the hmine algorithm.
     Recursively generates frequent itemsets.
     Also works for sparse matrix.
     egg: item = [1] -> [1,2] -> [1,2,3] -> [1,2,4] -> [1,2,5]
-    For more info, see:(
-    http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/hmine/)
+    For more info, see
+    http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/hmine/
 
     Args:
         item (list): list of items
@@ -202,25 +207,31 @@ def hmine_driver(
     suffixes = suffixes[np.nonzero(suffixes > item[-1])[0]]
 
     if verbose:
-        print(f"{len(suffixes)} itemset(s) from the suffixes on item(s) (%s)" % (", ".join(single_items[item])))
+        print(
+            f"{len(suffixes)} itemset(s) from the suffixes on item(s) ({', '.join(single_items[item])})"
+        )
     for suffix in suffixes:
         new_item = item.copy()
         new_item.append(suffix)
         supp = initial_supports[suffix] / itemsets_shape
         frequent_itemsets[frozenset(single_items[new_item])] = supp
         # Recursive call to find frequent itemsets
-        frequent_itemsets = hmine_driver(new_item, projected_itemsets, minsup,
-                                         itemsets_shape, max_len, verbose,
-                                         single_items, frequent_itemsets)
+        frequent_itemsets = hmine_driver(
+            new_item,
+            projected_itemsets,
+            minsup,
+            itemsets_shape,
+            max_len,
+            verbose,
+            single_items,
+            frequent_itemsets,
+        )
     return frequent_itemsets
 
 
-def create_projected_itemsets(
-    item: list,
-    itemsets: np.array
-) -> np.array:
+def create_projected_itemsets(item: list, itemsets: np.array) -> np.array:
     """
-    Creates the projected itemsets for the given item.(For more info, see
+    Creates the projected itemsets for the given item. (For more info, see
     http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/hmine/)
 
     Args:

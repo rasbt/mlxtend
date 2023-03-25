@@ -1,6 +1,5 @@
-# Sebastian Raschka 2014-2022
 # mlxtend Machine Learning Library Extensions
-# Author: Sebastian Raschka <sebastianraschka.com>
+# Author: Fatih Sen <fatih.sn2000@gmail.com>
 #
 # License: BSD 3 clause
 
@@ -96,13 +95,51 @@ class TestEx3(unittest.TestCase, FPTestEx3All):
 
 class TestCorrect(unittest.TestCase):
     def setUp(self):
-        self.one_ary = np.array([
-                                [False, False, False, True, False, True, True, True, True, False, True],
-                                [False, False, True, True, False, True, False, True, True, False, True],
-                                [True, False, False, True, False, True, True, False, False, False, False],
-                                [False, True, False, False, False, True, True, False, False, True, True],
-                                [False, True, False, True, True, True, False, False, True, False, False],
-                                ])
+        self.one_ary = np.array(
+            [
+                [False, False, False, True, False, True, True, True, True, False, True],
+                [False, False, True, True, False, True, False, True, True, False, True],
+                [
+                    True,
+                    False,
+                    False,
+                    True,
+                    False,
+                    True,
+                    True,
+                    False,
+                    False,
+                    False,
+                    False,
+                ],
+                [
+                    False,
+                    True,
+                    False,
+                    False,
+                    False,
+                    True,
+                    True,
+                    False,
+                    False,
+                    True,
+                    True,
+                ],
+                [
+                    False,
+                    True,
+                    False,
+                    True,
+                    True,
+                    True,
+                    False,
+                    False,
+                    True,
+                    False,
+                    False,
+                ],
+            ]
+        )
         self.cols = [
             "Apple",
             "Corn",
@@ -119,7 +156,6 @@ class TestCorrect(unittest.TestCase):
         self.df = pd.DataFrame(self.one_ary, columns=self.cols)
 
     def test_compare_correct(self):
-
         expect = pd.DataFrame(
             [
                 [0.8, np.array([3])],

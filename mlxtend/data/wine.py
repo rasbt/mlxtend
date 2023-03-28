@@ -47,7 +47,7 @@ def wine_data():
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/data/wine_data
+    https://rasbt.github.io/mlxtend/user_guide/data/wine_data
 
     """
     tmp = np.loadtxt(DATA_PATH, delimiter=",")

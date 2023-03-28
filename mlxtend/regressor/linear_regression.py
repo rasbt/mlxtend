@@ -63,7 +63,7 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/regressor/LinearRegression/
+    https://rasbt.github.io/mlxtend/user_guide/regressor/LinearRegression/
 
     """
 

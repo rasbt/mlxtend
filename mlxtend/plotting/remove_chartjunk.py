@@ -27,7 +27,7 @@ def remove_borders(axes, left=False, bottom=False, right=True, top=True):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/plotting/remove_chartjunk/
+    https://rasbt.github.io/mlxtend/user_guide/plotting/remove_chartjunk/
 
     """
     for ax in axes:

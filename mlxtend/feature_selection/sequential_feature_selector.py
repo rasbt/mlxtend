@@ -67,7 +67,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         'median_absolute_error', 'r2'} for regressors.
         If a callable object or function is provided, it has to be conform with
         sklearn's signature ``scorer(estimator, X, y)``; see
-        http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
+        https://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
         for more information.
 
     cv : int (default: 5)
@@ -179,7 +179,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/feature_selection/SequentialFeatureSelector/
+    https://rasbt.github.io/mlxtend/user_guide/feature_selection/SequentialFeatureSelector/
 
     """
 

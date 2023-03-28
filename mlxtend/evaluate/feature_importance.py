@@ -63,7 +63,7 @@ def feature_importance_permutation(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/feature_importance_permutation/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/feature_importance_permutation/
 
     """
 

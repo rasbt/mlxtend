@@ -321,7 +321,7 @@ Go to your GitHub repository online, select the new feature branch, and submit a
 
 ## Building the documentation
 
-The documentation is built via [MkDocs](http://www.mkdocs.org); to ensure that the documentation is rendered correctly, you can view the documentation locally by executing `mkdocs serve` from the `mlxtend/docs` directory.
+The documentation is built via [MkDocs](https://www.mkdocs.org); to ensure that the documentation is rendered correctly, you can view the documentation locally by executing `mkdocs serve` from the `mlxtend/docs` directory.
 
 For example,
 
@@ -362,7 +362,7 @@ If you are adding a new document, please also include it in the pages section in
 
 ### 3. Building static HTML files of the documentation
 
-First, please check the documenation via localhost (http://127.0.0.1:8000/):
+First, please check the documenation via localhost (https://127.0.0.1:8000/):
 
 ```bash
 ~/github/mlxtend/docs$ mkdocs serve

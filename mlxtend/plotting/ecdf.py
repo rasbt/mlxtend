@@ -60,7 +60,7 @@ def ecdf(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/plotting/ecdf/
+    https://rasbt.github.io/mlxtend/user_guide/plotting/ecdf/
 
     """
     if ax is None:

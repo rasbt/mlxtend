@@ -7,7 +7,7 @@
 
 
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.00638/status.svg)](https://doi.org/10.21105/joss.00638)
-[![PyPI version](https://badge.fury.io/py/mlxtend.svg)](http://badge.fury.io/py/mlxtend)
+[![PyPI version](https://badge.fury.io/py/mlxtend.svg)](https://badge.fury.io/py/mlxtend)
 [![Anaconda-Server Badge](https://anaconda.org/conda-forge/mlxtend/badges/version.svg)](https://anaconda.org/conda-forge/mlxtend)
 ![Python 3](https://img.shields.io/badge/python-3-blue.svg)
 [![License](https://img.shields.io/badge/license-BSD-blue.svg)](./license)
@@ -17,7 +17,7 @@
 
 ## Links
 
-- **Documentation:** [http://rasbt.github.io/mlxtend](http://rasbt.github.io/mlxtend)
+- **Documentation:** [https://rasbt.github.io/mlxtend](https://rasbt.github.io/mlxtend)
 - Source code repository: [https://github.com/rasbt/mlxtend](https://github.com/rasbt/mlxtend)
 - PyPI: [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend)
 - Questions? Check out the [GitHub Discussions board](https://github.com/rasbt/mlxtend/discussions)
@@ -79,7 +79,7 @@ plt.show()
 
 If you use mlxtend as part of your workflow in a scientific publication, please consider citing the mlxtend repository with the following DOI:
 
-[![DOI](http://joss.theoj.org/papers/10.21105/joss.00638/status.svg)](https://doi.org/10.21105/joss.00638)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.00638/status.svg)](https://doi.org/10.21105/joss.00638)
 
 ```
 @article{raschkas_2018_mlxtend,
@@ -94,7 +94,7 @@ If you use mlxtend as part of your workflow in a scientific publication, please 
   year         = 2018,
   publisher    = {The Open Journal},
   doi          = {10.21105/joss.00638},
-  url          = {http://joss.theoj.org/papers/10.21105/joss.00638}
+  url          = {https://joss.theoj.org/papers/10.21105/joss.00638}
 }
 ```
 

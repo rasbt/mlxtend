@@ -37,7 +37,7 @@ def generate_new_combinations(old_combinations):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori
+    https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori
 
     """
 
@@ -105,7 +105,7 @@ def generate_new_combinations_low_memory(old_combinations, X, min_support, is_sp
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/generate_new_combinations/
+    https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/generate_new_combinations/
 
     """
 
@@ -201,7 +201,7 @@ def apriori(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/
+    https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/
 
     """
 
@@ -225,7 +225,7 @@ def apriori(
         Examples
         -----------
         For usage examples, please see
-        http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/
+        https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/
 
         """
         out = np.sum(_x, axis=0) / _n_rows

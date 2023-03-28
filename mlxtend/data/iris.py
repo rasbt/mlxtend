@@ -65,7 +65,7 @@ def iris_data(version="uci"):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/data/iris_data/
+    https://rasbt.github.io/mlxtend/user_guide/data/iris_data/
 
     """
     if version == "uci":

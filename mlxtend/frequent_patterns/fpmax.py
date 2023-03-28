@@ -69,7 +69,7 @@ def fpmax(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
     Examples
     ----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/fpmax/
+    https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/fpmax/
 
     """
     fpc.valid_input_check(df)

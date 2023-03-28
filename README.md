@@ -1,5 +1,5 @@
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.00638/status.svg)](https://doi.org/10.21105/joss.00638)
-[![PyPI version](https://badge.fury.io/py/mlxtend.svg)](http://badge.fury.io/py/mlxtend)
+[![PyPI version](https://badge.fury.io/py/mlxtend.svg)](https://badge.fury.io/py/mlxtend)
 [![Anaconda-Server Badge](https://anaconda.org/conda-forge/mlxtend/badges/version.svg)](https://anaconda.org/conda-forge/mlxtend)
 [![Build status](https://ci.appveyor.com/api/projects/status/7vx20e0h5dxcyla2/branch/master?svg=true)](https://ci.appveyor.com/project/rasbt/mlxtend/branch/master)
 [![codecov](https://codecov.io/gh/rasbt/mlxtend/branch/master/graph/badge.svg)](https://codecov.io/gh/rasbt/mlxtend)
@@ -19,10 +19,10 @@ Sebastian Raschka 2014-2022
 
 ## Links
 
-- **Documentation:** [http://rasbt.github.io/mlxtend](http://rasbt.github.io/mlxtend)
+- **Documentation:** [https://rasbt.github.io/mlxtend](https://rasbt.github.io/mlxtend)
 - PyPI: [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend)
-- Changelog: [http://rasbt.github.io/mlxtend/CHANGELOG](http://rasbt.github.io/mlxtend/CHANGELOG)
-- Contributing: [http://rasbt.github.io/mlxtend/CONTRIBUTING](http://rasbt.github.io/mlxtend/CONTRIBUTING)
+- Changelog: [https://rasbt.github.io/mlxtend/CHANGELOG](https://rasbt.github.io/mlxtend/CHANGELOG)
+- Contributing: [https://rasbt.github.io/mlxtend/CONTRIBUTING](https://rasbt.github.io/mlxtend/CONTRIBUTING)
 - Questions? Check out the [GitHub Discussions board](https://github.com/rasbt/mlxtend/discussions)
 
 <br>
@@ -126,7 +126,7 @@ If you use mlxtend as part of your workflow in a scientific publication, please 
   year         = 2018,
   publisher    = {The Open Journal},
   doi          = {10.21105/joss.00638},
-  url          = {http://joss.theoj.org/papers/10.21105/joss.00638}
+  url          = {https://joss.theoj.org/papers/10.21105/joss.00638}
 }
 ```
 

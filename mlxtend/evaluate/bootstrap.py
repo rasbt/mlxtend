@@ -72,7 +72,7 @@ def bootstrap(x, func, num_rounds=1000, ci=0.95, ddof=1, seed=None):
     >>>
 
     For more usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/bootstrap/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/bootstrap/
 
     """
     if ci <= 0 or ci >= 1:

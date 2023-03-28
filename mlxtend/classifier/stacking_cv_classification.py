@@ -138,7 +138,7 @@ class StackingCVClassifier(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/classifier/StackingCVClassifier/
+    https://rasbt.github.io/mlxtend/user_guide/classifier/StackingCVClassifier/
 
     """
 

@@ -65,7 +65,7 @@ class EyepadAlign(object):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/image/eyepad_align/
+    https://rasbt.github.io/mlxtend/user_guide/image/eyepad_align/
 
     """
 

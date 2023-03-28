@@ -48,7 +48,7 @@ class Perceptron(_BaseModel, _IterativeModel, _Classifier):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/classifier/Perceptron/
+    https://rasbt.github.io/mlxtend/user_guide/classifier/Perceptron/
 
     """
 

@@ -150,7 +150,7 @@ def bootstrap_point632_score(
     95% Confidence interval: [0.90, 0.98]
 
     For more usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/bootstrap_point632_score/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/bootstrap_point632_score/
 
     """
     if not isinstance(n_splits, int) or n_splits < 1:

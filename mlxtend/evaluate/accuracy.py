@@ -48,7 +48,7 @@ def accuracy_score(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/accuracy_score/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/accuracy_score/
 
     """
 

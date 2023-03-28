@@ -69,7 +69,7 @@ def scoring(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/scoring/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/scoring/
 
     """
     implemented = {

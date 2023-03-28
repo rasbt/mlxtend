@@ -32,7 +32,7 @@ class RandomHoldoutSplit(object):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/RandomHoldoutSplit/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/RandomHoldoutSplit/
 
 
     """
@@ -131,7 +131,7 @@ class PredefinedHoldoutSplit(object):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/PredefinedHoldoutSplit/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/PredefinedHoldoutSplit/
 
     """
 

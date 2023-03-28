@@ -55,7 +55,7 @@ def scatterplotmatrix(
     Examples
     ----------
     For more usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/plotting/scatterplotmatrix/
+    https://rasbt.github.io/mlxtend/user_guide/plotting/scatterplotmatrix/
 
     """
 

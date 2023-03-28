@@ -52,7 +52,7 @@ class PrincipalComponentAnalysis(_BaseModel):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/feature_extraction/PrincipalComponentAnalysis/
+    https://rasbt.github.io/mlxtend/user_guide/feature_extraction/PrincipalComponentAnalysis/
 
     """
 

@@ -68,7 +68,7 @@ class SoftmaxRegression(_BaseModel, _IterativeModel, _Classifier, _MultiClass):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/classifier/SoftmaxRegression/
+    https://rasbt.github.io/mlxtend/user_guide/classifier/SoftmaxRegression/
 
     """
 

@@ -22,7 +22,7 @@ class MeanCenterer(object):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/preprocessing/MeanCenterer/
+    https://rasbt.github.io/mlxtend/user_guide/preprocessing/MeanCenterer/
 
     """
 

@@ -32,7 +32,7 @@ def minmax_scaling(array, columns, min_val=0, max_val=1):
     Examples
     ----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/preprocessing/minmax_scaling/
+    https://rasbt.github.io/mlxtend/user_guide/preprocessing/minmax_scaling/
 
     """
     ary_new = array.astype(float)
@@ -95,7 +95,7 @@ def standardize(array, columns=None, ddof=0, return_params=False, params=None):
     Examples
     ----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/preprocessing/standardize/
+    https://rasbt.github.io/mlxtend/user_guide/preprocessing/standardize/
 
     """
     ary_new = array.astype(float)

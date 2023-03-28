@@ -33,7 +33,7 @@ class LinearDiscriminantAnalysis(_BaseModel):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/feature_extraction/LinearDiscriminantAnalysis/
+    https://rasbt.github.io/mlxtend/user_guide/feature_extraction/LinearDiscriminantAnalysis/
 
     """
 

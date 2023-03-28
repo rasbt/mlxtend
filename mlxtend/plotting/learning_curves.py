@@ -71,7 +71,7 @@ def plot_learning_curves(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/plotting/plot_learning_curves/
+    https://rasbt.github.io/mlxtend/user_guide/plotting/plot_learning_curves/
 
     """
     if scoring != "misclassification error":

@@ -81,7 +81,7 @@ def permutation_test(
 
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/permutation_test/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/permutation_test/
 
     """
 

@@ -56,7 +56,7 @@ def category_scatter(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/plotting/category_scatter/
+    https://rasbt.github.io/mlxtend/user_guide/plotting/category_scatter/
 
     """
     fig = plt.figure()

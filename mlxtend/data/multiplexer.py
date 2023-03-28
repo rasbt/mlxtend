@@ -66,7 +66,7 @@ def make_multiplexer_dataset(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/data/make_multiplexer_dataset
+    https://rasbt.github.io/mlxtend/user_guide/data/make_multiplexer_dataset
 
     """
     if not isinstance(address_bits, int):

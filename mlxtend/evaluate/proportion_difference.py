@@ -36,7 +36,7 @@ def proportion_difference(proportion_1, proportion_2, n_1, n_2=None):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/proportion_difference/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/proportion_difference/
 
     """
     if n_2 is None:

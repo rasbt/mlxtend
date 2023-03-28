@@ -34,7 +34,7 @@ def cochrans_q(y_target, *y_model_predictions):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/cochrans_q/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/cochrans_q/
 
     """
 

@@ -17,7 +17,7 @@ DATA_PATH = os.path.join(this_dir, "data", "mnist_5k.csv.gz")
 def mnist_data():
     """5000 samples from the MNIST handwritten digits dataset.
 
-    Data Source : http://yann.lecun.com/exdb/mnist/
+    Data Source : https://yann.lecun.com/exdb/mnist/
 
     Returns
     --------
@@ -30,7 +30,7 @@ def mnist_data():
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/data/mnist_data/
+    https://rasbt.github.io/mlxtend/user_guide/data/mnist_data/
 
     """
     tmp = np.genfromtxt(fname=DATA_PATH, delimiter=",")

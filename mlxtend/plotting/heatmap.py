@@ -72,7 +72,7 @@ def heatmap(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/plotting/heatmap/
+    https://rasbt.github.io/mlxtend/user_guide/plotting/heatmap/
 
     """
 

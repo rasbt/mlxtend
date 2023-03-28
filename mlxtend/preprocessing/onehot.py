@@ -29,7 +29,7 @@ def one_hot(y, num_labels="auto", dtype="float"):
     Examples
     ----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/preprocessing/one_hot/
+    https://rasbt.github.io/mlxtend/user_guide/preprocessing/one_hot/
 
     """
     if not (num_labels == "auto" or isinstance(num_labels, int)):

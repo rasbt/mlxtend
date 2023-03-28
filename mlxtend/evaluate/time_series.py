@@ -35,7 +35,7 @@ class GroupTimeSeriesSplit:
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/GroupTimeSeriesSplit/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/GroupTimeSeriesSplit/
     """
 
     def __init__(

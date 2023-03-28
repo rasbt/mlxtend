@@ -30,7 +30,7 @@ def three_blobs_data():
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/data/three_blobs_data
+    https://rasbt.github.io/mlxtend/user_guide/data/three_blobs_data
 
     """
     tmp = np.genfromtxt(fname=DATA_PATH, delimiter=",")

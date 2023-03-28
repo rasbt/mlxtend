@@ -45,7 +45,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 mlxtend documentation figures are licensed under a
 Creative Commons Attribution 4.0 International License.
 
-<http://creativecommons.org/licenses/by-sa/4.0/>.
+<https://creativecommons.org/licenses/by-sa/4.0/>.
 
 #### You are free to:
 

@@ -104,7 +104,7 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier, Transformer
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/classifier/StackingClassifier/
+    https://rasbt.github.io/mlxtend/user_guide/classifier/StackingClassifier/
     """
 
     def __init__(

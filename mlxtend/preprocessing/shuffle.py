@@ -36,7 +36,7 @@ def shuffle_arrays_unison(arrays, random_seed=None):
     >>>
 
     For more usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/preprocessing/shuffle_arrays_unison/
+    https://rasbt.github.io/mlxtend/user_guide/preprocessing/shuffle_arrays_unison/
     """
     if random_seed:
         np.random.seed(random_seed)
@@ -80,7 +80,7 @@ def shuffled_split(X, y, shuffle=True, train_size=0.75, random_seed=None):
          Target values for testing.
 
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/preprocessing/shuffled_split/
+    https://rasbt.github.io/mlxtend/user_guide/preprocessing/shuffled_split/
 
     """
     check_Xy(X, y, y_int=False)

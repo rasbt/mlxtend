@@ -16,7 +16,7 @@ class DenseTransformer(BaseEstimator):
     Convert a sparse array into a dense array.
 
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/preprocessing/DenseTransformer/
+    https://rasbt.github.io/mlxtend/user_guide/preprocessing/DenseTransformer/
 
     """
 

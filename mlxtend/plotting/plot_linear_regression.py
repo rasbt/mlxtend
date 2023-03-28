@@ -58,7 +58,7 @@ def plot_linear_regression(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/plotting/plot_linear_regression/
+    https://rasbt.github.io/mlxtend/user_guide/plotting/plot_linear_regression/
 
     """
     if isinstance(X, list):

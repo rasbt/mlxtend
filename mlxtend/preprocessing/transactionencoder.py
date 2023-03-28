@@ -24,7 +24,7 @@ class TransactionEncoder(BaseEstimator, TransformerMixin):
     Examples
     ------------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/preprocessing/TransactionEncoder/
+    https://rasbt.github.io/mlxtend/user_guide/preprocessing/TransactionEncoder/
 
     """
 

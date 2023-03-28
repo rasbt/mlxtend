@@ -96,7 +96,7 @@ def plot_pca_correlation_graph(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/plotting/plot_pca_correlation_graph/
+    https://rasbt.github.io/mlxtend/user_guide/plotting/plot_pca_correlation_graph/
 
     """
 

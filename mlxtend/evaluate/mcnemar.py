@@ -36,7 +36,7 @@ def mcnemar_table(y_target, y_model1, y_model2):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/mcnemar_table/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/mcnemar_table/
 
     """
     for ary in (y_target, y_model1, y_model2):
@@ -121,7 +121,7 @@ def mcnemar_tables(y_target, *y_model_predictions):
     -----------
 
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/mcnemar_tables/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/mcnemar_tables/
 
     """
     model_lens = set()
@@ -193,7 +193,7 @@ def mcnemar(ary, corrected=True, exact=False):
     -----------
 
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/mcnemar/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/mcnemar/
 
     """
 

@@ -162,7 +162,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/feature_selection/ExhaustiveFeatureSelector/
+    https://rasbt.github.io/mlxtend/user_guide/feature_selection/ExhaustiveFeatureSelector/
 
     """
 

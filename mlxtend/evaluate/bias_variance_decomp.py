@@ -74,7 +74,7 @@ def bias_variance_decomp(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/bias_variance_decomp/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/bias_variance_decomp/
 
     """
     supported = ["0-1_loss", "mse"]

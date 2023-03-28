@@ -105,7 +105,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     >>>
 
     For more usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/classifier/EnsembleVoteClassifier/
+    https://rasbt.github.io/mlxtend/user_guide/classifier/EnsembleVoteClassifier/
     """
 
     def __init__(

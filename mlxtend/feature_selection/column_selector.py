@@ -33,7 +33,7 @@ class ColumnSelector(BaseEstimator):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/feature_selection/ColumnSelector/
+    https://rasbt.github.io/mlxtend/user_guide/feature_selection/ColumnSelector/
 
     """
 

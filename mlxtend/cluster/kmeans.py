@@ -55,7 +55,7 @@ class Kmeans(_BaseModel, _Cluster, _IterativeModel):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/classifier/Kmeans/
+    https://rasbt.github.io/mlxtend/user_guide/classifier/Kmeans/
 
     """
 

@@ -51,7 +51,7 @@ def boston_housing_data():
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/data/boston_housing_data/
+    https://rasbt.github.io/mlxtend/user_guide/data/boston_housing_data/
 
     """
     tmp = np.genfromtxt(fname=DATA_PATH, delimiter=",", dtype=float)

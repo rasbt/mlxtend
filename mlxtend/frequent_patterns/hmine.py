@@ -72,7 +72,7 @@ def hmine(
     Examples
     ----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/hmine/
+    https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/hmine/
 
     """
 
@@ -145,7 +145,7 @@ def itemset_optimisation(
     Downward-closure property of H-Mine algorithm.
         Optimizes the itemsets matrix by removing items that do not
         meet the minimum support. (For more info, see
-        http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/hmine/)
+        https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/hmine/)
 
     Args:
         itemsets (np.array): matrix of bools or binary
@@ -183,7 +183,7 @@ def hmine_driver(
     Also works for sparse matrix.
     egg: item = [1] -> [1,2] -> [1,2,3] -> [1,2,4] -> [1,2,5]
     For more info, see
-    http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/hmine/
+    https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/hmine/
 
     Args:
         item (list): list of items
@@ -232,7 +232,7 @@ def hmine_driver(
 def create_projected_itemsets(item: list, itemsets: np.array) -> np.array:
     """
     Creates the projected itemsets for the given item. (For more info, see
-    http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/hmine/)
+    https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/hmine/)
 
     Args:
         item (list): list of items

@@ -58,7 +58,7 @@ def checkerboard_plot(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/plotting/checkerboard_plot/
+    https://rasbt.github.io/mlxtend/user_guide/plotting/checkerboard_plot/
 
     """
 

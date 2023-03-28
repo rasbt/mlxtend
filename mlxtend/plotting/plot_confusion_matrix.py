@@ -88,7 +88,7 @@ def plot_confusion_matrix(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/plotting/plot_confusion_matrix/
+    https://rasbt.github.io/mlxtend/user_guide/plotting/plot_confusion_matrix/
 
     """
     if not (show_absolute or show_normed):

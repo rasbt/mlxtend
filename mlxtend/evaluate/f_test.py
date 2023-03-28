@@ -36,7 +36,7 @@ def ftest(y_target, *y_model_predictions):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/ftest/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/ftest/
 
     """
 
@@ -142,7 +142,7 @@ def combined_ftest_5x2cv(estimator1, estimator2, X, y, scoring=None, random_seed
         'median_absolute_error', 'r2'} for regressors.
         If a callable object or function is provided, it has to be conform with
         sklearn's signature ``scorer(estimator, X, y)``; see
-        http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
+        https://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
         for more information.
 
     random_seed : int or None (default: None)
@@ -163,7 +163,7 @@ def combined_ftest_5x2cv(estimator1, estimator2, X, y, scoring=None, random_seed
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/combined_ftest_5x2cv/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/combined_ftest_5x2cv/
 
     """
     rng = np.random.RandomState(random_seed)

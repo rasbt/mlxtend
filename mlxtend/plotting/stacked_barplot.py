@@ -53,7 +53,7 @@ def stacked_barplot(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/plotting/stacked_barplot/
+    https://rasbt.github.io/mlxtend/user_guide/plotting/stacked_barplot/
 
     """
     # Setting the positions and width for the bars

@@ -118,7 +118,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/regressor/StackingCVRegressor/
+    https://rasbt.github.io/mlxtend/user_guide/regressor/StackingCVRegressor/
 
     """
 

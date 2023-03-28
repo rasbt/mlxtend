@@ -1,6 +1,6 @@
 # Soft Voting/Majority Rule classifier
 
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Implementation of an meta-classification algorithm for majority voting.

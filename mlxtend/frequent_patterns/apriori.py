@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # myxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #

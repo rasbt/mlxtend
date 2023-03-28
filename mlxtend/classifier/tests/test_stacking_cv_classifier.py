@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 # Authors: Sebastian Raschka <sebastianraschka.com>
 #          Reiichiro Nakano <github.com/reiinakano>

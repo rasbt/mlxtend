@@ -41,7 +41,7 @@ def lift_score(y_target, y_predicted, binary=True, positive_label=1):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/lift_score/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/lift_score/
     """
     if not isinstance(y_target, np.ndarray):
         targ_tmp = np.asarray(y_target)

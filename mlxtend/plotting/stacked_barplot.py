@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Matplotlib wrapper for generating stacked barplots.
@@ -53,7 +53,7 @@ def stacked_barplot(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/plotting/stacked_barplot/
+    https://rasbt.github.io/mlxtend/user_guide/plotting/stacked_barplot/
 
     """
     # Setting the positions and width for the bars

@@ -3,7 +3,7 @@
 # For explanation of approach, see:
 # https://web.archive.org/web/20170720114355/dnc1994.com/2016/05/rank-10-percent-in-first-kaggle-competition-en/
 #
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # An ensemble-learning meta-regressor for out-of-fold stacking regression
@@ -118,7 +118,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/regressor/StackingCVRegressor/
+    https://rasbt.github.io/mlxtend/user_guide/regressor/StackingCVRegressor/
 
     """
 

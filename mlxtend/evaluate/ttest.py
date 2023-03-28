@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Author: Sebastian Raschka <sebastianraschka.com>
@@ -58,7 +58,7 @@ def paired_ttest_resampled(
         'median_absolute_error', 'r2'} for regressors.
         If a callable object or function is provided, it has to be conform with
         sklearn's signature ``scorer(estimator, X, y)``; see
-        http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
+        https://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
         for more information.
 
     random_seed : int or None (default: None)
@@ -79,7 +79,7 @@ def paired_ttest_resampled(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/paired_ttest_resampled/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/paired_ttest_resampled/
 
     """
     if not isinstance(test_size, int) and not isinstance(test_size, float):
@@ -161,7 +161,7 @@ def paired_ttest_kfold_cv(
         'median_absolute_error', 'r2'} for regressors.
         If a callable object or function is provided, it has to be conform with
         sklearn's signature ``scorer(estimator, X, y)``; see
-        http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
+        https://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
         for more information.
 
     shuffle : bool (default: True)
@@ -188,7 +188,7 @@ def paired_ttest_kfold_cv(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/paired_ttest_kfold_cv/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/paired_ttest_kfold_cv/
 
     """
 
@@ -262,7 +262,7 @@ def paired_ttest_5x2cv(estimator1, estimator2, X, y, scoring=None, random_seed=N
         'median_absolute_error', 'r2'} for regressors.
         If a callable object or function is provided, it has to be conform with
         sklearn's signature ``scorer(estimator, X, y)``; see
-        http://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
+        https://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
         for more information.
 
     random_seed : int or None (default: None)
@@ -283,7 +283,7 @@ def paired_ttest_5x2cv(estimator1, estimator2, X, y, scoring=None, random_seed=N
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/paired_ttest_5x2cv/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/paired_ttest_5x2cv/
 
     """
     rng = np.random.RandomState(random_seed)

@@ -65,7 +65,7 @@ or Twitter: https://twitter.com/rasbt
 
 This project is hosted at https://github.com/rasbt/mlxtend
 
-The documentation can be found at http://rasbt.github.io/mlxtend/
+The documentation can be found at https://rasbt.github.io/mlxtend/
 
 """,
 )

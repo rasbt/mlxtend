@@ -2,7 +2,7 @@
 
 <!-- 
 If this is your first Pull Request for the MLxtend repository, please review
-the code of conduct, which is available at http://rasbt.github.io/mlxtend/Code-of-Conduct/. 
+the code of conduct, which is available at https://rasbt.github.io/mlxtend/Code-of-Conduct/. 
 -->
 
 
@@ -23,7 +23,7 @@ close the listed issue upon merging this Pull Request.
 ### Pull Request Checklist
 
 <!--
-Please fill out the following checklist if applicable. For more more information and help, please see the Contributor Documentation avaialable at http://rasbt.github.io/mlxtend/contributing/.
+Please fill out the following checklist if applicable. For more more information and help, please see the Contributor Documentation avaialable at https://rasbt.github.io/mlxtend/contributing/.
 -->
 
 - [ ] Added a note about the modification or contribution to the `./docs/sources/CHANGELOG.md` file (if applicable)

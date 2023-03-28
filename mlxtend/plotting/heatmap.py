@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # A function for plotting decision regions of classifiers.
@@ -72,7 +72,7 @@ def heatmap(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/plotting/heatmap/
+    https://rasbt.github.io/mlxtend/user_guide/plotting/heatmap/
 
     """
 

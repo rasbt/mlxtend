@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Nonparametric Permutation Test
@@ -74,7 +74,7 @@ def bias_variance_decomp(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/bias_variance_decomp/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/bias_variance_decomp/
 
     """
     supported = ["0-1_loss", "mse"]

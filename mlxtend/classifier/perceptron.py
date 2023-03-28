@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Implementation of Rosenblatt's perceptron algorithm for classification.
@@ -48,7 +48,7 @@ class Perceptron(_BaseModel, _IterativeModel, _Classifier):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/classifier/Perceptron/
+    https://rasbt.github.io/mlxtend/user_guide/classifier/Perceptron/
 
     """
 

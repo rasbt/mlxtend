@@ -1,6 +1,6 @@
 # Soft Voting/Majority Rule classifier
 
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Implementation of an meta-classification algorithm for majority voting.
@@ -105,7 +105,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     >>>
 
     For more usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/classifier/EnsembleVoteClassifier/
+    https://rasbt.github.io/mlxtend/user_guide/classifier/EnsembleVoteClassifier/
     """
 
     def __init__(

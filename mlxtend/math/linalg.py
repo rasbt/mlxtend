@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Functions for different linear algebra operations.
@@ -33,7 +33,7 @@ def vectorspace_orthonormalization(ary, eps=1e-13):  # method='gram-schmidt',
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/math/vectorspace_orthonormalization/
+    https://rasbt.github.io/mlxtend/user_guide/math/vectorspace_orthonormalization/
 
     """
 
@@ -90,7 +90,7 @@ def vectorspace_dimensionality(ary):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/math/vectorspace_dimensionality/
+    https://rasbt.github.io/mlxtend/user_guide/math/vectorspace_dimensionality/
 
     """
     # Note that since the vectors of

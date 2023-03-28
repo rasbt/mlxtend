@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # A Class that returns a copy of a dataset in a scikit-learn pipeline.
@@ -15,7 +15,7 @@ class CopyTransformer(BaseEstimator):
     """Transformer that returns a copy of the input array
 
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/preprocessing/CopyTransformer/
+    https://rasbt.github.io/mlxtend/user_guide/preprocessing/CopyTransformer/
 
     """
 

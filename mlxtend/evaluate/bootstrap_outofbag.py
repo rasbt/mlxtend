@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Bootstrap functions
@@ -34,7 +34,7 @@ class BootstrapOutOfBag(object):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/BootstrapOutOfBag/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/BootstrapOutOfBag/
 
     """
 

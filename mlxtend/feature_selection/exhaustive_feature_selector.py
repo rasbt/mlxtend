@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Algorithm for exhaustive feature selection.
@@ -162,7 +162,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/feature_selection/ExhaustiveFeatureSelector/
+    https://rasbt.github.io/mlxtend/user_guide/feature_selection/ExhaustiveFeatureSelector/
 
     """
 

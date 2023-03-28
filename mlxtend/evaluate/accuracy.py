@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # A function for generating per class accuracy
@@ -48,7 +48,7 @@ def accuracy_score(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/accuracy_score/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/accuracy_score/
 
     """
 

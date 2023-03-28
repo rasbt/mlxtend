@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # A function for loading the open-source Boston Housing dataset.
@@ -51,7 +51,7 @@ def boston_housing_data():
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/data/boston_housing_data/
+    https://rasbt.github.io/mlxtend/user_guide/data/boston_housing_data/
 
     """
     tmp = np.genfromtxt(fname=DATA_PATH, delimiter=",", dtype=float)

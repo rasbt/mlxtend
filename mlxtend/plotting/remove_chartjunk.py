@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # A function for removing chart junk from matplotlib plots
@@ -27,7 +27,7 @@ def remove_borders(axes, left=False, bottom=False, right=True, top=True):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/plotting/remove_chartjunk/
+    https://rasbt.github.io/mlxtend/user_guide/plotting/remove_chartjunk/
 
     """
     for ax in axes:

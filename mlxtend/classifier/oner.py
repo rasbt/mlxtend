@@ -1,6 +1,6 @@
 # OneR classifier
 
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # The classic OneR (One Rule) classifier
@@ -55,7 +55,7 @@ class OneRClassifier(BaseEstimator, ClassifierMixin):
         (And classify as class 1 otherwise.)
 
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/classifier/OneRClassifier/
+    https://rasbt.github.io/mlxtend/user_guide/classifier/OneRClassifier/
     """
 
     def __init__(self, resolve_ties="first"):

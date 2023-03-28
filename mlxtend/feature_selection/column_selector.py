@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Object for selecting a dataset column in scikit-learn pipelines.
@@ -33,7 +33,7 @@ class ColumnSelector(BaseEstimator):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/feature_selection/ColumnSelector/
+    https://rasbt.github.io/mlxtend/user_guide/feature_selection/ColumnSelector/
 
     """
 

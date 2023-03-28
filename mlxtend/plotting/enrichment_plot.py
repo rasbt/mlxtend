@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # A function for plotting enrichment plots.
@@ -75,7 +75,7 @@ def enrichment_plot(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/plotting/enrichment_plot/
+    https://rasbt.github.io/mlxtend/user_guide/plotting/enrichment_plot/
 
     """
     if isinstance(df, pd.Series):

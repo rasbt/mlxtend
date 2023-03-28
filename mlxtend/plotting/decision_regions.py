@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # A function for plotting decision regions of classifiers.
@@ -70,7 +70,7 @@ def plot_decision_regions(
     labeled consecutively, e.g,. 0, 1, 2, 3, 4, and 5. If you have class
     labels with integer labels > 4, you may want to provide additional colors
     and/or markers as `colors` and `markers` arguments.
-    See http://matplotlib.org/examples/color/named_colors.html for more
+    See https://matplotlib.org/examples/color/named_colors.html for more
     information.
 
     Parameters
@@ -141,7 +141,7 @@ def plot_decision_regions(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/plotting/plot_decision_regions/
+    https://rasbt.github.io/mlxtend/user_guide/plotting/plot_decision_regions/
 
     """
 

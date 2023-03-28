@@ -1,6 +1,6 @@
 # Stacking classifier
 
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # An ensemble-learning meta-classifier for stacking
@@ -104,7 +104,7 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier, Transformer
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/classifier/StackingClassifier/
+    https://rasbt.github.io/mlxtend/user_guide/classifier/StackingClassifier/
     """
 
     def __init__(

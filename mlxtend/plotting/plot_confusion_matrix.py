@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
@@ -88,7 +88,7 @@ def plot_confusion_matrix(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/plotting/plot_confusion_matrix/
+    https://rasbt.github.io/mlxtend/user_guide/plotting/plot_confusion_matrix/
 
     """
     if not (show_absolute or show_normed):

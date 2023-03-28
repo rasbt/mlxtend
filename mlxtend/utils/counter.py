@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # A counter class for printing the progress of an iterator.
@@ -53,7 +53,7 @@ class Counter(object):
     The counter was last updated 0 seconds ago.
 
     For more usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/utils/Counter/
+    https://rasbt.github.io/mlxtend/user_guide/utils/Counter/
 
     """
 

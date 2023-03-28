@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Functions for different counting operations.
@@ -35,7 +35,7 @@ def num_combinations(n, k, with_replacement=False):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/math/num_combinations/
+    https://rasbt.github.io/mlxtend/user_guide/math/num_combinations/
 
     """
     if with_replacement:
@@ -69,7 +69,7 @@ def num_permutations(n, k, with_replacement=False):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/math/num_permutations/
+    https://rasbt.github.io/mlxtend/user_guide/math/num_permutations/
 
     """
     if with_replacement:

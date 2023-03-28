@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Algorithm for plotting sequential feature selection.
@@ -52,7 +52,7 @@ def plot_sequential_feature_selection(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/plotting/plot_sequential_feature_selection/
+    https://rasbt.github.io/mlxtend/user_guide/plotting/plot_sequential_feature_selection/
 
     """
 

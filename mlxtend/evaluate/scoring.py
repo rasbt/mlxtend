@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # A function for scoring predictions.
@@ -69,7 +69,7 @@ def scoring(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/scoring/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/scoring/
 
     """
     implemented = {

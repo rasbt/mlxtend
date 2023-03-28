@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # A class for transforming sparse numpy arrays into dense arrays.
@@ -16,7 +16,7 @@ class DenseTransformer(BaseEstimator):
     Convert a sparse array into a dense array.
 
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/preprocessing/DenseTransformer/
+    https://rasbt.github.io/mlxtend/user_guide/preprocessing/DenseTransformer/
 
     """
 

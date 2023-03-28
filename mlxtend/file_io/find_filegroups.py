@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # A function for collecting file-group names from local directories.
@@ -59,7 +59,7 @@ def find_filegroups(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/file_io/find_filegroups/
+    https://rasbt.github.io/mlxtend/user_guide/file_io/find_filegroups/
 
     """
     n = len(paths)

@@ -47,7 +47,7 @@ Version 0.22.0dev (TBD)
 
 ##### Changes
 
-- The `custom_feature_names` parameter was removed from the `ExhaustiveFeatureSelector` due to redundancy and to simplify the code base. The [`ExhaustiveFeatureSelector` documentation](http://rasbt.github.io/mlxtend/user_guide/feature_selection/ExhaustiveFeatureSelector/) illustrates how the same behavior and outcome can be achieved using pandas DataFrames.  ([#957](https://github.com/rasbt/mlxtend/pull/957))
+- The `custom_feature_names` parameter was removed from the `ExhaustiveFeatureSelector` due to redundancy and to simplify the code base. The [`ExhaustiveFeatureSelector` documentation](https://rasbt.github.io/mlxtend/user_guide/feature_selection/ExhaustiveFeatureSelector/) illustrates how the same behavior and outcome can be achieved using pandas DataFrames.  ([#957](https://github.com/rasbt/mlxtend/pull/957))
 
 ##### Bug Fixes
 
@@ -280,7 +280,7 @@ Version 0.22.0dev (TBD)
 - Other stacking estimators, including `StackingClassifier`, `StackingCVClassifier` and `StackingRegressor`, support grid search over the `regressors` and even a single base regressor. ([#522](https://github.com/rasbt/mlxtend/pull/522) via [Qiang Gu](https://github.com/qiaguhttps://github.com/qiagu))
 - Adds multiprocessing support to `StackingCVClassifier`. ([#522](https://github.com/rasbt/mlxtend/pull/522) via [Qiang Gu](https://github.com/qiaguhttps://github.com/qiagu))
 - Adds multiprocessing support to `StackingCVRegressor`. ([#512](https://github.com/rasbt/mlxtend/pull/512) via [Qiang Gu](https://github.com/qiaguhttps://github.com/qiagu))
--  Now, the `StackingCVRegressor` also enables grid search over the `regressors` and even a single base regressor. When there are level-mixed parameters, `GridSearchCV` will try to replace hyperparameters in a top-down order (see the [documentation](http://rasbt.github.io/mlxtend/user_guide/regressor/StackingCVRegressor/) for examples details). ([#515](https://github.com/rasbt/mlxtend/pull/512) via [Qiang Gu](https://github.com/qiaguhttps://github.com/qiagu))
+-  Now, the `StackingCVRegressor` also enables grid search over the `regressors` and even a single base regressor. When there are level-mixed parameters, `GridSearchCV` will try to replace hyperparameters in a top-down order (see the [documentation](https://rasbt.github.io/mlxtend/user_guide/regressor/StackingCVRegressor/) for examples details). ([#515](https://github.com/rasbt/mlxtend/pull/512) via [Qiang Gu](https://github.com/qiaguhttps://github.com/qiagu))
 - Adds a `verbose` parameter to `apriori` to show the current iteration number as well as the itemset size currently being sampled. ([#519](https://github.com/rasbt/mlxtend/pull/519)
 - Adds an optional `class_name` parameter to the confusion matrix function to display class names on the axis as tick marks. ([#487](https://github.com/rasbt/mlxtend/pull/487) via [sandpiturtle](https://github.com/qiaguhttps://github.com/sandpiturtle))
 - Adds a `pca.e_vals_normalized_` attribute to PCA for storing the eigenvalues also in normalized form; this is commonly referred to as variance explained ratios. [#545](https://github.com/rasbt/mlxtend/pull/545)
@@ -573,8 +573,8 @@ Note that this didn't cause any difference in performance on any of the test sce
 
 ##### New Features
 
-- New [mlxtend.plotting.ecdf](http://rasbt.github.io/mlxtend/user_guide/plotting/ecdf/) function for plotting empirical cumulative distribution functions ([#196](https://github.com/rasbt/mlxtend/pull/196)).
-- New [`StackingCVRegressor`](http://rasbt.github.io/mlxtend/user_guide/regressor/StackingCVRegressor/) for stacking regressors with out-of-fold predictions to prevent overfitting ([#201](https://github.com/rasbt/mlxtend/pull/201)via [Eike Dehling](https://github.com/EikeDehling)).
+- New [mlxtend.plotting.ecdf](https://rasbt.github.io/mlxtend/user_guide/plotting/ecdf/) function for plotting empirical cumulative distribution functions ([#196](https://github.com/rasbt/mlxtend/pull/196)).
+- New [`StackingCVRegressor`](https://rasbt.github.io/mlxtend/user_guide/regressor/StackingCVRegressor/) for stacking regressors with out-of-fold predictions to prevent overfitting ([#201](https://github.com/rasbt/mlxtend/pull/201)via [Eike Dehling](https://github.com/EikeDehling)).
 
 ##### Changes
 
@@ -587,7 +587,7 @@ Note that this didn't cause any difference in performance on any of the test sce
 ##### Bug Fixes
 
 - `SequentialFeatureSelector` now correctly accepts a `None` argument for the `scoring` parameter to infer the default scoring metric from scikit-learn classifiers and regressors ([#171](https://github.com/rasbt/mlxtend/pull/171)).
-- The `plot_decision_regions` function now supports pre-existing axes objects generated via matplotlib's `plt.subplots`. ([#184](https://github.com/rasbt/mlxtend/pull/184), [see example](http://rasbt.github.io/mlxtend/user_guide/plotting/plot_decision_regions/#example-6-working-with-existing-axes-objects-using-subplots))
+- The `plot_decision_regions` function now supports pre-existing axes objects generated via matplotlib's `plt.subplots`. ([#184](https://github.com/rasbt/mlxtend/pull/184), [see example](https://rasbt.github.io/mlxtend/user_guide/plotting/plot_decision_regions/#example-6-working-with-existing-axes-objects-using-subplots))
 - Made `math.num_combinations` and `math.num_permutations` numerically stable for large numbers of combinations and permutations ([#200](https://github.com/rasbt/mlxtend/pull/200)).
 
 
@@ -680,7 +680,7 @@ Note that this didn't cause any difference in performance on any of the test sce
 
 - [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.4.2.zip)
 - [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.4.2.tar.gz)
-- [PDF documentation](http://sebastianraschka.com/pdf/mlxtend-latest.pdf)
+- [PDF documentation](https://sebastianraschka.com/pdf/mlxtend-latest.pdf)
 
 ##### New Features
 
@@ -713,7 +713,7 @@ imput arrays via `transform` and `fit_transform`
 
 - [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.4.1.zip)
 - [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.4.1.tar.gz)
-- [PDF documentation](http://sebastianraschka.com/pdf/mlxtend-0.4.1.pdf)
+- [PDF documentation](https://sebastianraschka.com/pdf/mlxtend-0.4.1.pdf)
 
 ##### New Features
 

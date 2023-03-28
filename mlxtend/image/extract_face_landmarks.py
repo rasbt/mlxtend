@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # contributor: Vahid Mirjalili
 # mlxtend Machine Learning Library Extensions
 #
@@ -16,7 +16,7 @@ import numpy as np
 from .utils import check_exists, download_url, extract_file
 
 predictor_path = "~/mlxtend_data/shape_predictor_68_face_landmarks.dat"
-predictor_url = "http://dlib.net/files/" "shape_predictor_68_face_landmarks.dat.bz2"
+predictor_url = "https://dlib.net/files/" "shape_predictor_68_face_landmarks.dat.bz2"
 
 if not check_exists(predictor_path):
     download_url(predictor_url, save_path="~/mlxtend_data/")
@@ -30,7 +30,7 @@ def extract_face_landmarks(img, return_dtype=np.int32):
     """Function to extract face landmarks.
 
     Note that this function requires an installation of
-    the Python version of the library "dlib": http://dlib.net
+    the Python version of the library "dlib": https://dlib.net
 
     Parameters
     ----------
@@ -59,7 +59,7 @@ def extract_face_landmarks(img, return_dtype=np.int32):
     Examples
     ----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/image/extract_face_landmarks/
+    https://rasbt.github.io/mlxtend/user_guide/image/extract_face_landmarks/
 
     """
     faces = detector(img, 1)  # detecting faces

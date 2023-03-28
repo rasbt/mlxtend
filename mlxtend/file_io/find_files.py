@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # A function for searching files in local directories.
@@ -44,7 +44,7 @@ def find_files(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/file_io/find_files/
+    https://rasbt.github.io/mlxtend/user_guide/file_io/find_files/
 
     """
 

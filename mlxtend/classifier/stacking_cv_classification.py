@@ -1,6 +1,6 @@
 # Stacking CV classifier
 
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # An ensemble-learning meta-classifier for stacking
@@ -138,7 +138,7 @@ class StackingCVClassifier(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/classifier/StackingCVClassifier/
+    https://rasbt.github.io/mlxtend/user_guide/classifier/StackingCVClassifier/
 
     """
 

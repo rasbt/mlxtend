@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
@@ -8,5 +8,6 @@ from .apriori import apriori
 from .association_rules import association_rules
 from .fpgrowth import fpgrowth
 from .fpmax import fpmax
+from .hmine import hmine
 
-__all__ = ["apriori", "association_rules", "fpgrowth", "fpmax"]
+__all__ = ["apriori", "association_rules", "fpgrowth", "fpmax", "hmine"]

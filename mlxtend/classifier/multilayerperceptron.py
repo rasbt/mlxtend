@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Implementation of a Multi-layer Perceptron in Tensorflow
@@ -75,7 +75,7 @@ class MultiLayerPerceptron(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/classifier/MultiLayerPerceptron/
+    https://rasbt.github.io/mlxtend/user_guide/classifier/MultiLayerPerceptron/
 
     """
 

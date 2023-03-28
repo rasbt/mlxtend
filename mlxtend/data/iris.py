@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # A function for loading the open-source Iris Flower dataset.
@@ -65,7 +65,7 @@ def iris_data(version="uci"):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/data/iris_data/
+    https://rasbt.github.io/mlxtend/user_guide/data/iris_data/
 
     """
     if version == "uci":

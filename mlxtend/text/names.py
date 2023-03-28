@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Function for processing names.
@@ -46,7 +46,7 @@ def generalize_names(name, output_sep=" ", firstname_output_letters=1):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/text/generalize_names/
+    https://rasbt.github.io/mlxtend/user_guide/text/generalize_names/
 
     """
     # set first and last name positions
@@ -137,7 +137,7 @@ def generalize_names_duplcheck(df, col_name):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/text/generalize_names_duplcheck/
+    https://rasbt.github.io/mlxtend/user_guide/text/generalize_names_duplcheck/
 
     """
     df_new = df.copy()

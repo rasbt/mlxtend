@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Nonparametric Permutation Test
@@ -81,7 +81,7 @@ def permutation_test(
 
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/permutation_test/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/permutation_test/
 
     """
 

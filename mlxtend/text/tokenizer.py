@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Functions for tokenizing text data.
@@ -18,7 +18,7 @@ def tokenizer_words_and_emoticons(text):
     ['this', 'is', 'a', 'test', ':)', ':(', ':-)']
 
     For more usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/text/tokenizer_words_and_emoticons/
+    https://rasbt.github.io/mlxtend/user_guide/text/tokenizer_words_and_emoticons/
 
     """
     text = re.sub(r"<[^>]*>", "", text)
@@ -36,7 +36,7 @@ def tokenizer_emoticons(text):
     [':)', ':(', ':-)']
 
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/text/tokenizer_emoticons/
+    https://rasbt.github.io/mlxtend/user_guide/text/tokenizer_emoticons/
 
     """
     text = re.sub(r"<[^>]*>", "", text)

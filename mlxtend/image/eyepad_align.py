@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # contributor: Vahid Mirjalili
 # mlxtend Machine Learning Library Extensions
 #
@@ -65,7 +65,7 @@ class EyepadAlign(object):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/image/eyepad_align/
+    https://rasbt.github.io/mlxtend/user_guide/image/eyepad_align/
 
     """
 

@@ -10,7 +10,7 @@ according to the terms and conditions of the Creative Commons Attribution 4.0 In
 
 New BSD License
 
-Copyright (c) 2014-2022, Sebastian Raschka. All rights reserved.
+Copyright (c) 2014-2023, Sebastian Raschka. All rights reserved.
 
 
 Redistribution and use in source and binary forms, with or without
@@ -45,7 +45,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 mlxtend documentation figures are licensed under a
 Creative Commons Attribution 4.0 International License.
 
-<http://creativecommons.org/licenses/by-sa/4.0/>.
+<https://creativecommons.org/licenses/by-sa/4.0/>.
 
 #### You are free to:
 

@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
@@ -29,7 +29,7 @@ def one_hot(y, num_labels="auto", dtype="float"):
     Examples
     ----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/preprocessing/one_hot/
+    https://rasbt.github.io/mlxtend/user_guide/preprocessing/one_hot/
 
     """
     if not (num_labels == "auto" or isinstance(num_labels, int)):

@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Linear Discriminant Analysis for dimensionality reduction
@@ -33,7 +33,7 @@ class LinearDiscriminantAnalysis(_BaseModel):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/feature_extraction/LinearDiscriminantAnalysis/
+    https://rasbt.github.io/mlxtend/user_guide/feature_extraction/LinearDiscriminantAnalysis/
 
     """
 

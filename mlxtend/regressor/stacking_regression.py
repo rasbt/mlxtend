@@ -1,6 +1,6 @@
 # Stacking regressor
 
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # An ensemble-learning meta-regressor for stacking regression
@@ -90,7 +90,7 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/regressor/StackingRegressor/
+    https://rasbt.github.io/mlxtend/user_guide/regressor/StackingRegressor/
 
     """
 

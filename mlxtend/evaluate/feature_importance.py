@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Feature Importance Estimation Through Permutation
@@ -63,7 +63,7 @@ def feature_importance_permutation(
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/feature_importance_permutation/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/feature_importance_permutation/
 
     """
 

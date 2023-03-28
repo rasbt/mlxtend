@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Matplotlib wrapper for generating stacked barplots.
@@ -55,7 +55,7 @@ def scatterplotmatrix(
     Examples
     ----------
     For more usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/plotting/scatterplotmatrix/
+    https://rasbt.github.io/mlxtend/user_guide/plotting/scatterplotmatrix/
 
     """
 

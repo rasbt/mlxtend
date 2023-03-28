@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Implementation of the mulitnomial logistic regression algorithm for
@@ -68,7 +68,7 @@ class SoftmaxRegression(_BaseModel, _IterativeModel, _Classifier, _MultiClass):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/classifier/SoftmaxRegression/
+    https://rasbt.github.io/mlxtend/user_guide/classifier/SoftmaxRegression/
 
     """
 

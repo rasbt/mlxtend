@@ -1,6 +1,6 @@
 # Out-of-fold stacking regressor tests
 #
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 #
 # mlxtend Machine Learning Library Extensions
 # Author: Eike Dehling <e.e.dehling@gmail.com>

@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Implementation of the ADAptive LInear NEuron classification algorithm.
@@ -55,7 +55,7 @@ class Adaline(_BaseModel, _IterativeModel, _Classifier):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/classifier/Adaline/
+    https://rasbt.github.io/mlxtend/user_guide/classifier/Adaline/
 
     """
 

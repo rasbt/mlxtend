@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # A function for loading a sample dataset for clustering evaluations
@@ -30,7 +30,7 @@ def three_blobs_data():
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/data/three_blobs_data
+    https://rasbt.github.io/mlxtend/user_guide/data/three_blobs_data
 
     """
     tmp = np.genfromtxt(fname=DATA_PATH, delimiter=",")

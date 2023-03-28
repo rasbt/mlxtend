@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # A function for loading the open-source AutoMPG dataset.
@@ -43,7 +43,7 @@ def autompg_data():
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/data/autompg_data/
+    https://rasbt.github.io/mlxtend/user_guide/data/autompg_data/
 
     """
     tmp = np.genfromtxt(fname=DATA_PATH, delimiter=",")

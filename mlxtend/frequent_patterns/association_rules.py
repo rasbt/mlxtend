@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Function for generating association rules
@@ -76,7 +76,7 @@ def association_rules(df, metric="confidence", min_threshold=0.8, support_only=F
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/
+    https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/
 
     """
     if not df.shape[0]:

@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Principal Component Analysis for dimensionality reduction.
@@ -52,7 +52,7 @@ class PrincipalComponentAnalysis(_BaseModel):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/feature_extraction/PrincipalComponentAnalysis/
+    https://rasbt.github.io/mlxtend/user_guide/feature_extraction/PrincipalComponentAnalysis/
 
     """
 

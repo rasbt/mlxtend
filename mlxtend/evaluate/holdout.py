@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Author: Sebastian Raschka <sebastianraschka.com>
@@ -32,7 +32,7 @@ class RandomHoldoutSplit(object):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/RandomHoldoutSplit/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/RandomHoldoutSplit/
 
 
     """
@@ -131,7 +131,7 @@ class PredefinedHoldoutSplit(object):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/PredefinedHoldoutSplit/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/PredefinedHoldoutSplit/
 
     """
 

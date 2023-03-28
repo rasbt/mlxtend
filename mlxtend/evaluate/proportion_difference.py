@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Author: Sebastian Raschka <sebastianraschka.com>
@@ -36,7 +36,7 @@ def proportion_difference(proportion_1, proportion_2, n_1, n_2=None):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/evaluate/proportion_difference/
+    https://rasbt.github.io/mlxtend/user_guide/evaluate/proportion_difference/
 
     """
     if n_2 is None:

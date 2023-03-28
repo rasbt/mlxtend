@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # A function for loading the open-source Wine dataset.
@@ -47,7 +47,7 @@ def wine_data():
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/data/wine_data
+    https://rasbt.github.io/mlxtend/user_guide/data/wine_data
 
     """
     tmp = np.loadtxt(DATA_PATH, delimiter=",")

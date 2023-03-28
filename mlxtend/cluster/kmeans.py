@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2022
+# Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
 # Estimator for Linear Regression
@@ -55,7 +55,7 @@ class Kmeans(_BaseModel, _Cluster, _IterativeModel):
     Examples
     -----------
     For usage examples, please see
-    http://rasbt.github.io/mlxtend/user_guide/classifier/Kmeans/
+    https://rasbt.github.io/mlxtend/user_guide/classifier/Kmeans/
 
     """
 

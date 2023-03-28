@@ -19,14 +19,15 @@ Version 0.22.0dev (TBD)
 
 ##### Changes
 
-- When `ExhaustiveFeatureSelector` is run with `n_jobs == 1`, joblib is now disabled, which enables more immediate (live) feedback when the `verbose` mode is enabled. [#985](https://github.com/rasbt/mlxtend/pull/985) via [Nima Sarajpoor]
-- Disabled unnecessary warning in EnsembleVoteClassifier [#941](https://github.com/rasbt/mlxtend/issues/941)
-- Fixed various documentation issues [#849] [#951]
+- When `ExhaustiveFeatureSelector` is run with `n_jobs == 1`, joblib is now disabled, which enables more immediate (live) feedback when the `verbose` mode is enabled. ([#985](https://github.com/rasbt/mlxtend/pull/985) via [Nima Sarajpoor](https://github.com/NimaSarajpoor))
+- Disabled unnecessary warning in EnsembleVoteClassifier ([#941](https://github.com/rasbt/mlxtend/issues/941))
+- Fixed various documentation issues ([#849](https://github.com/rasbt/mlxtend/issues/849) and [#951](https://github.com/rasbt/mlxtend/issues/951) via [Lekshmanan Natarajan](https://github.com/zuari1993))
 
 ##### New Features and Enhancements
 
 - The `mlxtend.frequent_patterns.association_rules` function has a new metric - Zhangs Metric, which measures both association and dissociation. ([#980](https://github.com/rasbt/mlxtend/pull/980))
 - Internal `fpmax` code improvement that avoids casting a sparse DataFrame into a dense NumPy array. ([#1000](https://github.com/rasbt/mlxtend/pull/1000) via [Tim Kellogg](https://github.com/tkellogg))
+- Added `mlxtend.frequent_patterns.hmine` algorithm and documentation for mining frequent itemsets using the H-Mine algorithm. ([#1020](https://github.com/rasbt/mlxtend/pull/1020) via [Fatih Sen](https://github.com/fatihsen20))
 
 ### Version 0.21.0 (09/17/2022)
 

@@ -6,6 +6,7 @@
 #
 # License: BSD 3 clause
 
+import multiprocessing as mp
 from itertools import cycle
 from math import ceil, floor
 
@@ -41,6 +42,11 @@ def get_feature_range_mask(X, filler_feature_values=None, filler_feature_ranges=
     return mask
 
 
+def parallel(X_predict, clf, xtype):
+    Z = clf.predict(X_predict.astype(xtype))
+    return Z
+
+
 def plot_decision_regions(
     X,
     y,
@@ -63,6 +69,7 @@ def plot_decision_regions(
     contourf_kwargs=None,
     contour_kwargs=None,
     scatter_highlight_kwargs=None,
+    n_jobs=None,
 ):
     """Plot decision regions of a classifier.
 
@@ -134,6 +141,12 @@ def plot_decision_regions(
     scatter_highlight_kwargs : dict (default: None)
         Keyword arguments for underlying matplotlib scatter function.
 
+    n_jobs : int or None, optional (default=None)
+        The number of CPUs to use to do the computation using Python's
+        multiprocessing library.
+        `None` means 1.
+        `-1` means using all processors. New in v0.22.0.
+
     Returns
     ---------
     ax : matplotlib.axes.Axes object
@@ -147,6 +160,9 @@ def plot_decision_regions(
 
     check_Xy(X, y, y_int=True)  # Validate X and y arrays
     dim = X.shape[1]
+
+    if n_jobs is None:
+        n_jobs = 1
 
     if ax is None:
         ax = plt.gca()
@@ -210,6 +226,14 @@ def plot_decision_regions(
                 "feature_index or filler_feature_values".format(missing_cols)
             )
 
+    # Check that the n_jobs isn't higher than the available CPU cores
+    if n_jobs > mp.cpu_count():
+        raise ValueError(
+            "Number of defined CPU cores is more than the available resources {} ".format(
+                mp.cpu_count()
+            )
+        )
+
     marker_gen = cycle(list(markers))
 
     n_classes = np.unique(y).shape[0]
@@ -246,8 +270,30 @@ def plot_decision_regions(
         if dim > 2:
             for feature_idx in filler_feature_values:
                 X_predict[:, feature_idx] = filler_feature_values[feature_idx]
-    Z = clf.predict(X_predict.astype(X.dtype))
-    Z = Z.reshape(xx.shape)
+
+    if n_jobs == 1:
+        Z = clf.predict(X_predict.astype(X.dtype))
+        Z = Z.reshape(xx.shape)
+    else:
+        if n_jobs == -1:
+            cpus = mp.cpu_count()
+        else:
+            cpus = n_jobs
+        pool = mp.Pool(cpus)
+        partQuant = len(X_predict) / cpus
+        partitions = []
+        for n in range(cpus - 1):
+            start, end = np.floor(partQuant * n).astype(int), np.floor(
+                partQuant * (n + 1)
+            ).astype(int)
+            partitions.append(X_predict[start:end])
+        partitions.append(X_predict[end:])
+        xtype = X.dtype
+        Z = pool.starmap(parallel, [(x, clf, xtype) for x in partitions])
+        pool.close()
+        Z = np.concatenate(Z)
+        Z = Z.reshape(xx.shape)
+
     # Plot decisoin region
     # Make sure contourf_kwargs has backwards compatible defaults
     contourf_kwargs_default = {"alpha": 0.45, "antialiased": True}

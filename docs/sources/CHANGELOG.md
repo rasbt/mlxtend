@@ -27,6 +27,7 @@ Version 0.22.0dev (TBD)
 
 - The `mlxtend.frequent_patterns.association_rules` function has a new metric - Zhangs Metric, which measures both association and dissociation. ([#980](https://github.com/rasbt/mlxtend/pull/980))
 - Internal `fpmax` code improvement that avoids casting a sparse DataFrame into a dense NumPy array. ([#1000](https://github.com/rasbt/mlxtend/pull/1000) via [Tim Kellogg](https://github.com/tkellogg))
+- The `plot_decision_regions` function now has a `n_jobs` parameter to parallelize the computation. (In a particular use case, on a small dataset,  there was a 21x speed-up (449 seconds vs 21 seconds on local HPC instance of 36 cores). ([#998](https://github.com/rasbt/mlxtend/pull/998) via [Khalid ElHaj](https://github.com/Ne-oL))
 - Added `mlxtend.frequent_patterns.hmine` algorithm and documentation for mining frequent itemsets using the H-Mine algorithm. ([#1020](https://github.com/rasbt/mlxtend/pull/1020) via [Fatih Sen](https://github.com/fatihsen20))
 
 ### Version 0.21.0 (09/17/2022)

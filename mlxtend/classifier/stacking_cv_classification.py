@@ -106,8 +106,8 @@ class StackingCVClassifier(
         to scikit-learn's `clone` function.
     n_jobs : int or None, optional (default=None)
         The number of CPUs to use to do the computation.
-        ``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.
-        ``-1`` means using all processors. See :term:`Glossary <n_jobs>`
+        `None` means 1 unless in a `joblib.parallel_backend` context.
+        `-1` means using all processors.
         for more details. New in v0.16.0.
     pre_dispatch : int, or string, optional
         Controls the number of jobs that get dispatched during parallel

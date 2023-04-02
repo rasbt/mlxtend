@@ -23,6 +23,7 @@ def heatmap(
     cell_values=True,
     cell_fmt=".2f",
     cell_font_size=None,
+    text_color_threshold=None,
 ):
     """Plot a heatmap via matplotlib.
 
@@ -63,6 +64,11 @@ def heatmap(
 
     cell_font_size : int (default: None)
         Font size for cell values (if `cell_values=True`)
+
+    text_color_threshold : float (default: None)
+        Threshold for the black/white text threshold of the text
+        annotation. Default (None) tried to infer a good threshold
+        automatically using `np.max(normed_matrix) / 2`.
 
     Returns
     -----------
@@ -108,6 +114,10 @@ def heatmap(
         fig.colorbar(matshow)
 
     normed_matrix = matrix.astype("float") / matrix.max()
+    if text_color_threshold is None:
+        thres_value = np.max(normed_matrix) / 2
+    else:
+        thres_value = text_color_threshold
 
     if cell_values:
         for i in range(matrix.shape[0]):
@@ -121,9 +131,7 @@ def heatmap(
                     s=cell_text,
                     va="center",
                     ha="center",
-                    color="white"
-                    if normed_matrix[i, j] > np.max(normed_matrix) / 2
-                    else "black",
+                    color="white" if normed_matrix[i, j] > thres_value else "black",
                 )
 
     if row_names is not None:

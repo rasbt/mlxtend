@@ -9,7 +9,23 @@ The CHANGELOG for the current development version is available at
 
 
 
-Version 0.22.0 (4 April 2023)
+### Version 0.23.0dev (Next Release)
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.23.0.zip)
+
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.23.0.tar.gz)
+
+##### Changes
+
+- ...
+
+##### New Features and Enhancements
+
+- ...
+
+### Version 0.22.0 (4 April 2023)
 
 ##### Downloads
 

@@ -4,7 +4,7 @@ site_author: Sebastian Raschka
 site_description: A library consisting of useful tools and extensions for the day-to-day data science tasks.
 
 repo_url: https://github.com/rasbt/mlxtend
-repo_name: mlxtend
+repo_name: GitHub
 edit_uri: https://github.com/rasbt/mlxtend/tree/master/docs/sources
 
 #include_search: true # not necessary for this theme

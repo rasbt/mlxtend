@@ -10,9 +10,10 @@ edit_uri: docs/sources/user_guide/
 #include_search: true # not necessary for this theme
 docs_dir: sources
 
-theme:
-    name: null
-    custom_dir: 'custom_theme/'
+#theme:
+#    name: null
+#    custom_dir: 'custom_theme/'
+theme: yeti
 
 markdown_extensions:
   - tables

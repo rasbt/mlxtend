@@ -7,7 +7,7 @@
 ![License](https://img.shields.io/badge/license-BSD-blue.svg)
 [![Discuss](https://img.shields.io/badge/discuss-github-blue.svg)](https://github.com/rasbt/mlxtend/discussions)
 
-![](./docs/sources/img/logo.png)
+<img src="./docs/sources/img/logo.png" alt="mlxtend logo" width="300px">
 
 **Mlxtend (machine learning extensions) is a Python library of useful tools for the day-to-day data science tasks.**
 

@@ -1,37 +1,132 @@
-body {
-    padding-top: 70px;
+html {
+    /* The nav header is 3.40625rem high, plus 20px for the margin-top of the
+       main container. */
+    scroll-padding-top: calc(3.40625rem + 20px);
 }
 
-h1[id]:before, h2[id]:before, h3[id]:before, h4[id]:before, h5[id]:before, h6[id]:before {
-    content: "";
-    display: block;
-    margin-top: 0px;
-    height: 75px;
+body > .container {
+    margin-top: 20px;
 }
 
-p > img {
-    max-width: 100%;
-    height: auto;
+.navbar.fixed-top {
+    position: -webkit-sticky;
+    position: sticky;
 }
 
-ul.nav li.first-level {
-    font-weight: bold;
-}
-
-ul.nav li.third-level {
-    padding-left: 12px;
-}
-
-div.col-md-3 {
-    padding-left: 0;
-}
-
-div.col-md-9 {
-    padding-bottom: 100px;
-}
-
-div.source-links {
+.source-links {
     float: right;
+}
+
+.col-md-9 img {
+    max-width: 100%;
+}
+
+pre, code {
+    background: #eee;
+    color: #000;
+    border: 1px solid rgba(0,0,0,0.125);
+}
+
+pre {
+    padding: 0.5em;
+}
+
+code {
+    padding: 1px 3px;
+}
+
+pre code {
+    border: none;
+    /* Override styles from hljs theme */
+    background: transparent !important;
+    padding: 0 !important;
+}
+
+a code {
+    color: #008cba;
+}
+
+a:hover code {
+    color: #00526e;
+}
+
+kbd {
+    padding: 2px 4px;
+    font-size: 90%;
+    color: #fff;
+    background-color: #333;
+    border-radius: 3px;
+    -webkit-box-shadow: inset 0 -1px 0 rgba(0,0,0,.25);
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,.25);
+}
+
+footer {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: 200;
+}
+
+.modal-dialog {
+    margin-top: 60px;
+}
+
+/* Style the admonitions. */
+
+.admonition {
+    margin-bottom: 1rem;
+    border: 1px solid rgba(0,0,0,0.125);
+}
+
+.admonition > .admonition-title {
+    margin: 0;
+    padding: 0.75rem 1rem;
+    background: rgba(0,0,0,0.03);
+    border-bottom: 1px solid rgba(0,0,0,0.125);
+    font-size: 1rem;
+}
+
+.admonition > * {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.admonition > *:not(.admonition-title):first-of-type,
+.admonition > .admonition-title + * {
+    margin-top: 1rem;
+}
+
+.admonition > *:last-child {
+    margin-bottom: 1rem;
+}
+
+/* Style each kind of admonition. */
+
+.admonition.note, .admonition.note > .admonition-title {
+    border-color: #3db5d8;
+}
+
+.admonition.note > .admonition-title {
+    background: #5bc0de;
+    color: #fff;
+}
+
+.admonition.warning, .admonition.warning > .admonition-title {
+    border-color: #d08002;
+}
+
+.admonition.warning > .admonition-title {
+    background: #e99002;
+    color: #fff;
+}
+
+.admonition.danger, .admonition.danger > .admonition-title {
+    border-color: #ea2f10;
+}
+
+.admonition.danger > .admonition-title {
+    background: #f04124;
+    color: #fff;
 }
 
 /*
@@ -41,22 +136,41 @@ div.source-links {
  * sections of docs content.
  */
 
-/* By default it's not affixed in mobile views, so undo that */
 .bs-sidebar.affix {
-    position: static;
+    position: -webkit-sticky;
+    position: sticky;
+    /* The nav header is 3.40625rem high, plus 20px for the margin-top of the
+       main container. */
+    top: calc(3.40625rem + 20px);
 }
 
-.bs-sidebar.well {
+.bs-sidebar.card {
     padding: 0;
 }
 
+/* Toggle (vertically flip) sidebar collapse icon */
+.bs-sidebar .navbar-toggler span {
+    -moz-transform: scale(1, -1);
+    -webkit-transform: scale(1, -1);
+    -o-transform: scale(1, -1);
+    -ms-transform: scale(1, -1);
+    transform: scale(1, -1);
+}
+
+.bs-sidebar .navbar-toggler.collapsed span {
+    -moz-transform: scale(1, 1);
+    -webkit-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+}
+
 /* First level of nav */
-.bs-sidenav {
-    margin-top: 30px;
-    margin-bottom: 30px;
+.bs-sidebar > .navbar-collapse > .nav {
     padding-top:    10px;
     padding-bottom: 10px;
     border-radius: 5px;
+    width: 100%;
 }
 
 /* All levels of nav */
@@ -70,79 +184,64 @@ div.source-links {
     text-decoration: none;
     border-right: 1px solid;
 }
-.bs-sidebar .nav > .active > a,
-.bs-sidebar .nav > .active:hover > a,
-.bs-sidebar .nav > .active:focus > a {
+.bs-sidebar .nav > li > a.active,
+.bs-sidebar .nav > li > a.active:hover,
+.bs-sidebar .nav > li > a.active:focus {
     font-weight: bold;
     background-color: transparent;
     border-right: 1px solid;
 }
 
-/* Nav: second level (shown on .active) */
-.bs-sidebar .nav .nav {
-    display: none; /* Hide by default, but at >768px, show it */
-    margin-bottom: 8px;
+.bs-sidebar .nav .nav .nav {
+    margin-left: 1em;
 }
+
+.bs-sidebar .nav > li > a {
+    font-weight: bold;
+}
+
 .bs-sidebar .nav .nav > li > a {
-    padding-top:    3px;
-    padding-bottom: 3px;
-    padding-left: 30px;
-    font-size: 90%;
+    font-weight: normal;
 }
 
-/* Show and affix the side nav when space allows it */
-@media (min-width: 992px) {
-    .bs-sidebar .nav > .active > ul {
-        display: block;
-    }
-    /* Widen the fixed sidebar */
-    .bs-sidebar.affix,
-    .bs-sidebar.affix-bottom {
-        width: 213px;
-    }
-    .bs-sidebar.affix {
-        position: fixed; /* Undo the static from mobile first approach */
-        top: 80px;
-    }
-    .bs-sidebar.affix-bottom {
-        position: absolute; /* Undo the static from mobile first approach */
-    }
-    .bs-sidebar.affix-bottom .bs-sidenav,
-    .bs-sidebar.affix .bs-sidenav {
-        margin-top: 0;
-        margin-bottom: 0;
-    }
+.headerlink {
+    display: none;
+    padding-left: .5em;
 }
-@media (min-width: 1200px) {
-    /* Widen the fixed sidebar again */
-    .bs-sidebar.affix-bottom,
-    .bs-sidebar.affix {
-        width: 263px;
+
+h1:hover .headerlink, h2:hover .headerlink, h3:hover .headerlink, h4:hover .headerlink, h5:hover .headerlink, h6:hover .headerlink{
+    display:inline-block;
+}
+
+@media (max-width: 991.98px) {
+    .navbar-collapse.show {
+        overflow-y: auto;
+        max-height: calc(100vh - 3.40625rem);
     }
 }
 
-
-/* Added to support >2 level nav in drop down */
-
-.dropdown-submenu {
-    position: relative;
+.bg-primary .dropdown-item.open {
+    color: #fff;
+    background-color: #0079a1;
 }
 
-.dropdown-submenu>.dropdown-menu {
-    top: 0;
-    left: 100%;
-    margin-top: 0px;
-    margin-left: 0px;
-    -webkit-border-radius: 0 6px 6px 6px;
-    -moz-border-radius: 0 6px 6px;
-    border-radius: 0 6px 6px 6px;
+.bg-light .dropdown-item.open {
+    color: rgba(0,0,0,0.7);
+    background-color: #fbfbfb;
 }
 
-.dropdown-submenu:hover>.dropdown-menu {
-    display: block;
+.bg-dark .dropdown-item.open {
+    color: #fff;
+    background-color: #262626;
 }
 
-.dropdown-submenu>a:after {
+.dropdown-submenu > .dropdown-menu {
+    margin: 0 0 0 1.5rem;
+    padding: 0;
+    border-width: 0;
+}
+
+.dropdown-submenu > a::after {
     display: block;
     content: " ";
     float: right;
@@ -156,18 +255,29 @@ div.source-links {
     margin-right: -10px;
 }
 
-.dropdown-submenu:hover>a:after {
+dropdown-submenu:hover > a::after {
     border-left-color: #fff;
 }
 
-.dropdown-submenu.pull-left {
-    float: none;
+.bg-light dropdown-submenu:hover > a::after {
+    border-left-color: rgba(0,0,0,0.7);
 }
 
-.dropdown-submenu.pull-left>.dropdown-menu {
-    left: -100%;
-    margin-left: 00px;
-    -webkit-border-radius: 6px 0 6px 6px;
-    -moz-border-radius: 6px 0 6px 6px;
-    border-radius: 6px 0 6px 6px;
+@media (min-width: 992px) {
+    .dropdown-menu {
+        overflow-y: auto;
+        max-height: calc(100vh - 3.40625rem);
+    }
+
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .dropdown-submenu > .dropdown-menu {
+        position: fixed !important;
+        margin-top: -9px;
+        margin-left: -2px;
+        border-width: 1px;
+        padding: 0.5rem 0;
+    }
 }

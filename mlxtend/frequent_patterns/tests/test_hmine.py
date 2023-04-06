@@ -13,6 +13,7 @@ from test_fpbase import (
     FPTestEx1All,
     FPTestEx2All,
     FPTestEx3All,
+    compare_dataframes,
 )
 
 from mlxtend.frequent_patterns import apriori, fpgrowth, hmine
@@ -176,23 +177,9 @@ class TestCorrect(unittest.TestCase):
         for algo in algorithms.keys():
             self.setUp()
             res_df = algo(self.df, min_support=0.6)
-            compare_df(res_df, expect)
+            compare_dataframes(res_df, expect)
             algorithms[algo] = res_df
 
-        compare_df(algorithms[hmine], algorithms[fpgrowth])
-        compare_df(algorithms[hmine], algorithms[apriori])
-        compare_df(algorithms[fpgrowth], algorithms[apriori])
-
-
-def compare_df(df1, df2):
-    itemsets1 = [sorted(list(i)) for i in df1["itemsets"]]
-    itemsets2 = [sorted(list(i)) for i in df2["itemsets"]]
-    rows1 = sorted(zip(itemsets1, df1["support"]))
-    rows2 = sorted(zip(itemsets2, df2["support"]))
-    for row1, row2 in zip(rows1, rows2):
-        if row1[0] != row2[0]:
-            msg = f"Expected different frequent itemsets\nx:{row1[0]}\ny:{row2[0]}"
-            raise AssertionError(msg)
-        elif row1[1] != row2[1]:
-            msg = f"Expected different support\nx:{row1[1]}\ny:{row2[1]}"
-            raise AssertionError(msg)
+        compare_dataframes(algorithms[hmine], algorithms[fpgrowth])
+        compare_dataframes(algorithms[hmine], algorithms[apriori])
+        compare_dataframes(algorithms[fpgrowth], algorithms[apriori])

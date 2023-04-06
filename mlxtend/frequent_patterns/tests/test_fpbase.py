@@ -104,12 +104,12 @@ class FPTestErrors(object):
         test_with_dataframe(sdf)
 
     def test_sparsedataframe_notzero_column(self):
-        dfs = self.df.astype(pd.SparseDtype("int", np.nan))
+        dfs = self.df.astype(pd.SparseDtype("int", 0))
 
         dfs.columns = [i for i in range(len(dfs.columns))]
         self.fpalgo(dfs)
 
-        dfs = self.df.astype(pd.SparseDtype("int", np.nan))
+        dfs = self.df.astype(pd.SparseDtype("int", 0))
 
         dfs.columns = [i + 1 for i in range(len(dfs.columns))]
         assert_raises(
@@ -334,5 +334,10 @@ def compare_dataframes(df1, df2):
     rows1 = sorted(zip(itemsets1, df1["support"]))
     rows2 = sorted(zip(itemsets2, df2["support"]))
 
-    for r1, r2 in zip(rows1, rows2):
-        assert_array_equal(r1, r2)
+    for row1, row2 in zip(rows1, rows2):
+        if row1[0] != row2[0]:
+            msg = f"Expected different frequent itemsets\nx:{row1[0]}\ny:{row2[0]}"
+            raise AssertionError(msg)
+        elif row1[1] != row2[1]:
+            msg = f"Expected different support\nx:{row1[1]}\ny:{row2[1]}"
+            raise AssertionError(msg)

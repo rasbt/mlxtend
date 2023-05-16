@@ -9,7 +9,7 @@ import pandas as pd
 from numpy.testing import assert_almost_equal
 from packaging.version import Version
 from sklearn import __version__ as sklearn_version
-from sklearn.datasets import load_boston, load_iris
+from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import GroupKFold
@@ -334,7 +334,9 @@ def test_fit_params():
 
 
 def test_regression():
-    boston = load_boston()
+    data_url = "http://lib.stat.cmu.edu/datasets/boston"
+    raw_df = pd.read_csv(data_url, sep="\s+", skiprows=22, header=None)
+    boston = raw_df.values[1::2, 2]
     X, y = boston.data[:, [1, 2, 6, 8, 12]], boston.target
     lr = LinearRegression()
     efs_r = EFS(

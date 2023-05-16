@@ -58,7 +58,7 @@ def test_multivariate():
 def test_multivariate_class():
     lr = LinearRegression()
     ridge = Ridge(random_state=1)
-    meta = LinearRegression(normalize=True)
+    meta = LinearRegression()
     stregr = StackingRegressor(
         regressors=[lr, ridge], meta_regressor=meta, multi_output=True
     )

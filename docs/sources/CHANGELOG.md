@@ -19,7 +19,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- ...
+- Changed the signature of the `LinearRegression` model of sklearn in the test removing the `normalize` parameter as it is deprecated. ([#1036](https://github.com/rasbt/mlxtend/issues/1036))
 
 ##### New Features and Enhancements
 

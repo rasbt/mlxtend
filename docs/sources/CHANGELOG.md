@@ -23,7 +23,7 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features and Enhancements
 
-- ...
+- Document how to use `SequentialFeatureSelector` and multiclass ROC AUC. 
 
 ### Version 0.22.0 (4 April 2023)
 

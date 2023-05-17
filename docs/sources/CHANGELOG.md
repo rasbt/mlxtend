@@ -19,7 +19,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- ...
+- Address NumPy deprecations to make mlxtend compatible to NumPy 1.24 
 
 ##### New Features and Enhancements
 

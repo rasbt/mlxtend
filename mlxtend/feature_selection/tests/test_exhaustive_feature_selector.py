@@ -4,7 +4,6 @@
 #
 # License: BSD 3 clause
 
-from mlxtend.data import boston_housing_data
 import numpy as np
 import pandas as pd
 from numpy.testing import assert_almost_equal
@@ -17,6 +16,7 @@ from sklearn.model_selection import GroupKFold
 from sklearn.neighbors import KNeighborsClassifier
 
 from mlxtend.classifier import SoftmaxRegression
+from mlxtend.data import boston_housing_data
 from mlxtend.feature_selection import ExhaustiveFeatureSelector as EFS
 from mlxtend.utils import assert_raises
 

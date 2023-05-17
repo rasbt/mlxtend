@@ -748,6 +748,8 @@ Best subset (indices): (0, 2, 3)
 Best subset (corresponding names): ('0', '2', '3')
 </code></pre>
 <h3 id="feature-names">Feature Names</h3>
+<pre><code class="language-python">
+</code></pre>
 <p>When working with large datasets, the feature indices might be hard to interpret. In this case, we recommend using pandas DataFrames with distinct column names as input:</p>
 <pre><code class="language-python">import pandas as pd
 
@@ -1143,7 +1145,7 @@ plt.xticks(k_feat,
            rotation=90)
 plt.show()
 </code></pre>
-<p><img alt="png" src="../ExhaustiveFeatureSelector_files/ExhaustiveFeatureSelector_22_0.png" /></p>
+<p><img alt="png" src="../ExhaustiveFeatureSelector_files/ExhaustiveFeatureSelector_23_0.png" /></p>
 <h2 id="example-3-exhaustive-feature-selection-for-regression-analysis">Example 3 - Exhaustive feature selection for regression analysis</h2>
 <p>Similar to the classification examples above, the <code>SequentialFeatureSelector</code> also supports scikit-learn's estimators
 for regression.</p>

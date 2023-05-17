@@ -715,6 +715,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#example-14-multiclass-metrics" class="nav-link">Example 14 - Multiclass Metrics</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
             
@@ -965,15 +969,15 @@ sfs1 = sfs1.fit(X, y)
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
 
-[2022-09-06 20:51:22] Features: 1/3 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2023-05-17 08:25:56] Features: 1/3 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s finished
 
-[2022-09-06 20:51:22] Features: 2/3 -- score: 0.9733333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2023-05-17 08:25:56] Features: 2/3 -- score: 0.9733333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
 
-[2022-09-06 20:51:22] Features: 3/3 -- score: 0.9733333333333334
+[2023-05-17 08:25:56] Features: 3/3 -- score: 0.9733333333333334
 </code></pre>
 <p>Via the <code>subsets_</code> attribute, we can take a look at the selected feature indices at each step:</p>
 <pre><code class="language-python">sfs1.subsets_
@@ -991,24 +995,22 @@ sfs1 = sfs1.fit(X, y)
   'avg_score': 0.9733333333333334,
   'feature_names': ('1', '2', '3')}}
 </code></pre>
-<p>Note that the 'feature_names' entry is simply a string representation of the 'feature_idx' in this case. Optionally, we can provide custom feature names via the <code>fit</code> method's <code>custom_feature_names</code> parameter:</p>
-<pre><code class="language-python">feature_names = ('sepal length', 'sepal width', 'petal length', 'petal width')
-sfs1 = sfs1.fit(X, y, custom_feature_names=feature_names)
+<pre><code class="language-python">sfs1 = sfs1.fit(X, y)
 sfs1.subsets_
 </code></pre>
 <pre><code>[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
 
-[2022-09-06 20:51:22] Features: 1/3 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2023-05-17 08:25:56] Features: 1/3 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s finished
 
-[2022-09-06 20:51:22] Features: 2/3 -- score: 0.9733333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2023-05-17 08:25:56] Features: 2/3 -- score: 0.9733333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
 
-[2022-09-06 20:51:22] Features: 3/3 -- score: 0.9733333333333334
+[2023-05-17 08:25:56] Features: 3/3 -- score: 0.9733333333333334
 
 
 
@@ -1016,30 +1018,123 @@ sfs1.subsets_
 {1: {'feature_idx': (3,),
   'cv_scores': array([0.96]),
   'avg_score': 0.96,
-  'feature_names': ('petal width',)},
+  'feature_names': ('3',)},
  2: {'feature_idx': (2, 3),
   'cv_scores': array([0.97333333]),
   'avg_score': 0.9733333333333334,
-  'feature_names': ('petal length', 'petal width')},
+  'feature_names': ('2', '3')},
  3: {'feature_idx': (1, 2, 3),
   'cv_scores': array([0.97333333]),
   'avg_score': 0.9733333333333334,
-  'feature_names': ('sepal width', 'petal length', 'petal width')}}
+  'feature_names': ('1', '2', '3')}}
 </code></pre>
 <p>Furthermore, we can access the indices of the 3 best features directly via the <code>k_feature_idx_</code> attribute:</p>
 <pre><code class="language-python">sfs1.k_feature_idx_
 </code></pre>
 <pre><code>(1, 2, 3)
 </code></pre>
-<p>And similarly, to obtain the names of these features, given that we provided an argument to the <code>custom_feature_names</code> parameter, we can refer to the <code>sfs1.k_feature_names_</code> attribute:</p>
-<pre><code class="language-python">sfs1.k_feature_names_
-</code></pre>
-<pre><code>('sepal width', 'petal length', 'petal width')
-</code></pre>
 <p>Finally, the prediction score for these 3 features can be accesses via <code>k_score_</code>:</p>
 <pre><code class="language-python">sfs1.k_score_
 </code></pre>
 <pre><code>0.9733333333333334
+</code></pre>
+<p><strong>Feature Names</strong></p>
+<p>When working with large datasets, the feature indices might be hard to interpret. In this case, we recommend using pandas DataFrames with distinct column names as input:</p>
+<pre><code class="language-python">import pandas as pd
+
+df_X = pd.DataFrame(X, columns=[&quot;Sepal length&quot;, &quot;Sepal width&quot;, &quot;Petal length&quot;, &quot;Petal width&quot;])
+df_X.head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Sepal length</th>
+      <th>Sepal width</th>
+      <th>Petal length</th>
+      <th>Petal width</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">sfs1 = sfs1.fit(df_X, y)
+
+print('Best accuracy score: %.2f' % sfs1.k_score_)
+print('Best subset (indices):', sfs1.k_feature_idx_)
+print('Best subset (corresponding names):', sfs1.k_feature_names_)
+</code></pre>
+<pre><code>[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
+
+[2023-05-17 08:25:56] Features: 1/3 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s finished
+
+[2023-05-17 08:25:56] Features: 2/3 -- score: 0.9733333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+
+
+Best accuracy score: 0.97
+Best subset (indices): (1, 2, 3)
+Best subset (corresponding names): ('Sepal width', 'Petal length', 'Petal width')
+
+
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
+
+[2023-05-17 08:25:56] Features: 3/3 -- score: 0.9733333333333334
 </code></pre>
 <h2 id="example-2-toggling-between-sfs-sbs-sffs-and-sbfs">Example 2 - Toggling between SFS, SBS, SFFS, and SBFS</h2>
 <p>Using the <code>forward</code> and <code>floating</code> parameters, we can toggle between SFS, SBS, SFFS, and SBFS as shown below. Note that we are performing (stratified) 4-fold cross-validation for more robust estimates in contrast to Example 1. Via <code>n_jobs=-1</code>, we choose to run the cross-validation on all our available CPU cores.</p>
@@ -1109,24 +1204,7 @@ print(sbfs.k_feature_idx_)
 print('CV Score:')
 print(sbfs.k_score_)
 </code></pre>
-<pre><code>/Users/sebastianraschka/miniforge3/lib/python3.9/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version &gt;=1.16.5 and &lt;1.23.0 is required for this version of SciPy (detected version 1.23.1
-  warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion}"
-/Users/sebastianraschka/miniforge3/lib/python3.9/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version &gt;=1.16.5 and &lt;1.23.0 is required for this version of SciPy (detected version 1.23.1
-  warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion}"
-/Users/sebastianraschka/miniforge3/lib/python3.9/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version &gt;=1.16.5 and &lt;1.23.0 is required for this version of SciPy (detected version 1.23.1
-  warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion}"
-/Users/sebastianraschka/miniforge3/lib/python3.9/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version &gt;=1.16.5 and &lt;1.23.0 is required for this version of SciPy (detected version 1.23.1
-  warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion}"
-/Users/sebastianraschka/miniforge3/lib/python3.9/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version &gt;=1.16.5 and &lt;1.23.0 is required for this version of SciPy (detected version 1.23.1
-  warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion}"
-/Users/sebastianraschka/miniforge3/lib/python3.9/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version &gt;=1.16.5 and &lt;1.23.0 is required for this version of SciPy (detected version 1.23.1
-  warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion}"
-/Users/sebastianraschka/miniforge3/lib/python3.9/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version &gt;=1.16.5 and &lt;1.23.0 is required for this version of SciPy (detected version 1.23.1
-  warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion}"
-
-
-
-Sequential Forward Selection (k=3):
+<pre><code>Sequential Forward Selection (k=3):
 (1, 2, 3)
 CV Score:
 0.9731507823613088
@@ -1140,14 +1218,6 @@ Sequential Forward Floating Selection (k=3):
 (1, 2, 3)
 CV Score:
 0.9731507823613088
-
-
-/Users/sebastianraschka/miniforge3/lib/python3.9/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version &gt;=1.16.5 and &lt;1.23.0 is required for this version of SciPy (detected version 1.23.1
-  warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion}"
-/Users/sebastianraschka/miniforge3/lib/python3.9/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version &gt;=1.16.5 and &lt;1.23.0 is required for this version of SciPy (detected version 1.23.1
-  warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion}"
-
-
 
 Sequential Backward Floating Selection (k=3):
 (1, 2, 3)
@@ -1360,21 +1430,21 @@ plt.show()
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
 
-[2022-09-06 20:51:24] Features: 1/4 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2023-05-17 08:25:57] Features: 1/4 -- score: 0.96[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s finished
 
-[2022-09-06 20:51:24] Features: 2/4 -- score: 0.9666666666666668[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2023-05-17 08:25:57] Features: 2/4 -- score: 0.9666666666666668[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
 
-[2022-09-06 20:51:24] Features: 3/4 -- score: 0.9533333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2023-05-17 08:25:57] Features: 3/4 -- score: 0.9533333333333334[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s finished
 
-[2022-09-06 20:51:24] Features: 4/4 -- score: 0.9733333333333334
+[2023-05-17 08:25:57] Features: 4/4 -- score: 0.9733333333333334
 </code></pre>
-<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_49_1.png" /></p>
+<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_50_1.png" /></p>
 <h2 id="example-5-sequential-feature-selection-for-regression">Example 5 - Sequential Feature Selection for Regression</h2>
 <p>Similar to the classification examples above, the <code>SequentialFeatureSelector</code> also supports scikit-learn's estimators
 for regression.</p>
@@ -1400,7 +1470,7 @@ plt.title('Sequential Forward Selection (w. StdErr)')
 plt.grid()
 plt.show()
 </code></pre>
-<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_52_0.png" /></p>
+<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_53_0.png" /></p>
 <h2 id="example-6-feature-selection-with-fixed-trainvalidation-splits">Example 6 -- Feature Selection with Fixed Train/Validation Splits</h2>
 <p>If you do not wish to use cross-validation (here: k-fold cross-validation, i.e., rotating training and validation folds), you can use the <code>PredefinedHoldoutSplit</code> class to specify your own, fixed training and validation split.</p>
 <pre><code class="language-python">from sklearn.datasets import load_iris
@@ -1441,15 +1511,15 @@ sfs1 = sfs1.fit(X, y)
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
 
-[2022-09-06 20:51:25] Features: 1/3 -- score: 0.9666666666666667[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2023-05-17 08:25:58] Features: 1/3 -- score: 0.9666666666666667[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s finished
 
-[2022-09-06 20:51:25] Features: 2/3 -- score: 0.9666666666666667[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2023-05-17 08:25:59] Features: 2/3 -- score: 0.9666666666666667[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
 
-[2022-09-06 20:51:25] Features: 3/3 -- score: 0.9666666666666667
+[2023-05-17 08:25:59] Features: 3/3 -- score: 0.9666666666666667
 </code></pre>
 <h2 id="example-7-using-the-selected-feature-subset-for-making-new-predictions">Example 7 -- Using the Selected Feature Subset For Making New Predictions</h2>
 <pre><code class="language-python"># Initialize the dataset
@@ -1557,11 +1627,18 @@ gs = gs.fit(X_train, y_train)
 </code></pre>
 <pre><code class="language-python">pipe.set_params(**gs.best_params_).fit(X_train, y_train)
 </code></pre>
-<pre><code>Pipeline(steps=[('sfs',
+<style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style>
+<div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[(&#x27;sfs&#x27;,
                  SequentialFeatureSelector(estimator=KNeighborsClassifier(n_neighbors=3),
-                                           k_features=3, scoring='accuracy')),
-                ('knn2', KNeighborsClassifier(n_neighbors=7))])
-</code></pre>
+                                           k_features=(3, 3),
+                                           scoring=&#x27;accuracy&#x27;)),
+                (&#x27;knn2&#x27;, KNeighborsClassifier(n_neighbors=7))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" ><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;sfs&#x27;,
+                 SequentialFeatureSelector(estimator=KNeighborsClassifier(n_neighbors=3),
+                                           k_features=(3, 3),
+                                           scoring=&#x27;accuracy&#x27;)),
+                (&#x27;knn2&#x27;, KNeighborsClassifier(n_neighbors=7))])</pre></div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" ><label for="sk-estimator-id-2" class="sk-toggleable__label sk-toggleable__label-arrow">sfs: SequentialFeatureSelector</label><div class="sk-toggleable__content"><pre>SequentialFeatureSelector(estimator=KNeighborsClassifier(n_neighbors=3),
+                          k_features=(3, 3), scoring=&#x27;accuracy&#x27;)</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" ><label for="sk-estimator-id-3" class="sk-toggleable__label sk-toggleable__label-arrow">estimator: KNeighborsClassifier</label><div class="sk-toggleable__content"><pre>KNeighborsClassifier(n_neighbors=3)</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" ><label for="sk-estimator-id-4" class="sk-toggleable__label sk-toggleable__label-arrow">KNeighborsClassifier</label><div class="sk-toggleable__content"><pre>KNeighborsClassifier(n_neighbors=3)</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox" ><label for="sk-estimator-id-5" class="sk-toggleable__label sk-toggleable__label-arrow">KNeighborsClassifier</label><div class="sk-toggleable__content"><pre>KNeighborsClassifier(n_neighbors=7)</pre></div></div></div></div></div></div></div>
+
 <h2 id="example-9-selecting-the-best-feature-combination-in-a-k-range">Example 9 -- Selecting the "best"  feature combination in a k-range</h2>
 <p>If <code>k_features</code> is set to to a tuple <code>(min_k, max_k)</code> (new in 0.4.2), the SFS will now select the best feature combination that it discovered by iterating from <code>k=1</code> to <code>max_k</code> (forward), or <code>max_k</code> to <code>min_k</code> (backward). The size of the returned feature subset is then within <code>max_k</code> to <code>min_k</code>, depending on which combination scored best during cross validation.</p>
 <pre><code class="language-python">X.shape
@@ -1603,7 +1680,7 @@ plot_sfs(sfs1.get_metric_dict(), kind='std_err');
 all subsets:
  {1: {'feature_idx': (6,), 'cv_scores': array([0.84 , 0.64 , 0.84 , 0.8  , 0.875]), 'avg_score': 0.799, 'feature_names': ('6',)}, 2: {'feature_idx': (6, 9), 'cv_scores': array([0.92      , 0.88      , 1.        , 0.96      , 0.91666667]), 'avg_score': 0.9353333333333333, 'feature_names': ('6', '9')}, 3: {'feature_idx': (6, 9, 12), 'cv_scores': array([0.92      , 0.92      , 0.96      , 1.        , 0.95833333]), 'avg_score': 0.9516666666666665, 'feature_names': ('6', '9', '12')}, 4: {'feature_idx': (3, 6, 9, 12), 'cv_scores': array([0.96      , 0.96      , 0.96      , 1.        , 0.95833333]), 'avg_score': 0.9676666666666666, 'feature_names': ('3', '6', '9', '12')}, 5: {'feature_idx': (3, 6, 9, 10, 12), 'cv_scores': array([0.92, 0.96, 1.  , 1.  , 1.  ]), 'avg_score': 0.976, 'feature_names': ('3', '6', '9', '10', '12')}, 6: {'feature_idx': (2, 3, 6, 9, 10, 12), 'cv_scores': array([0.92, 0.96, 1.  , 0.96, 1.  ]), 'avg_score': 0.968, 'feature_names': ('2', '3', '6', '9', '10', '12')}, 7: {'feature_idx': (0, 2, 3, 6, 9, 10, 12), 'cv_scores': array([0.92, 0.92, 1.  , 1.  , 1.  ]), 'avg_score': 0.968, 'feature_names': ('0', '2', '3', '6', '9', '10', '12')}, 8: {'feature_idx': (0, 2, 3, 6, 8, 9, 10, 12), 'cv_scores': array([1.  , 0.92, 1.  , 1.  , 1.  ]), 'avg_score': 0.984, 'feature_names': ('0', '2', '3', '6', '8', '9', '10', '12')}, 9: {'feature_idx': (0, 2, 3, 6, 8, 9, 10, 11, 12), 'cv_scores': array([1.  , 0.92, 1.  , 1.  , 1.  ]), 'avg_score': 0.984, 'feature_names': ('0', '2', '3', '6', '8', '9', '10', '11', '12')}, 10: {'feature_idx': (0, 1, 2, 3, 6, 8, 9, 10, 11, 12), 'cv_scores': array([1.  , 0.96, 1.  , 1.  , 1.  ]), 'avg_score': 0.992, 'feature_names': ('0', '1', '2', '3', '6', '8', '9', '10', '11', '12')}}
 </code></pre>
-<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_74_1.png" /></p>
+<p><img alt="png" src="../SequentialFeatureSelector_files/SequentialFeatureSelector_75_1.png" /></p>
 <h2 id="example-10-using-other-cross-validation-schemes">Example 10 -- Using other cross-validation schemes</h2>
 <p>In addition to standard k-fold and stratified k-fold, other cross validation schemes can be used with <code>SequentialFeatureSelector</code>. For example, <code>GroupKFold</code> or <code>LeaveOneOut</code> cross-validation from scikit-learn. </p>
 <h4 id="using-groupkfold-with-sequentialfeatureselector">Using GroupKFold with SequentialFeatureSelector</h4>
@@ -1629,7 +1706,7 @@ print('groups: {}'.format(groups))
 <pre><code class="language-python">cv_gen = GroupKFold(4).split(X, y, groups)
 cv_gen
 </code></pre>
-<pre><code>&lt;generator object _BaseKFold.split at 0x2877b27b0&gt;
+<pre><code>&lt;generator object _BaseKFold.split at 0x12d803580&gt;
 </code></pre>
 <p>The <code>cv</code> parameter of <code>SequentialFeatureSelector</code> must be either an <code>int</code> or an iterable yielding train, test splits. This iterable can be constructed by passing the train, test split generator to the built-in <code>list()</code> function. </p>
 <pre><code class="language-python">cv = list(cv_gen)
@@ -1669,9 +1746,6 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=123
 )
 </code></pre>
-<pre><code>/Users/sebastianraschka/miniforge3/lib/python3.9/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version &gt;=1.16.5 and &lt;1.23.0 is required for this version of SciPy (detected version 1.23.3
-  warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion}"
-</code></pre>
 <p><strong>Long run with interruption</strong></p>
 <pre><code class="language-python">from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 from sklearn.linear_model import LogisticRegression
@@ -1690,16 +1764,45 @@ sfs1 = sfs1.fit(X_train, y_train)
 </code></pre>
 <pre><code>[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
-[Parallel(n_jobs=1)]: Done 500 out of 500 | elapsed:    7.8s finished
+[Parallel(n_jobs=1)]: Done 500 out of 500 | elapsed:    8.2s finished
 
-[2022-09-13 21:10:39] Features: 1/10 -- score: 0.5965[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
-[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.2s remaining:    0.0s
-[Parallel(n_jobs=1)]: Done 499 out of 499 | elapsed:   25.5s finished
+[2023-05-17 08:26:11] Features: 1/10 -- score: 0.5965[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done 499 out of 499 | elapsed:   13.7s finished
 
-[2022-09-13 21:11:04] Features: 2/10 -- score: 0.6256875000000001[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2023-05-17 08:26:25] Features: 2/10 -- score: 0.6256875000000001[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done 498 out of 498 | elapsed:   18.2s finished
+
+[2023-05-17 08:26:43] Features: 3/10 -- score: 0.642[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done 497 out of 497 | elapsed:   20.4s finished
+
+[2023-05-17 08:27:03] Features: 4/10 -- score: 0.6463125[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done 496 out of 496 | elapsed:   22.3s finished
+
+[2023-05-17 08:27:26] Features: 5/10 -- score: 0.6495000000000001[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.1s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done 495 out of 495 | elapsed:   25.7s finished
 
-STOPPING EARLY DUE TO KEYBOARD INTERRUPT...
+[2023-05-17 08:27:52] Features: 6/10 -- score: 0.6514374999999999[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.1s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done 494 out of 494 | elapsed:   26.3s finished
+
+[2023-05-17 08:28:18] Features: 7/10 -- score: 0.6533749999999999[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.1s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done 493 out of 493 | elapsed:   26.0s finished
+
+[2023-05-17 08:28:44] Features: 8/10 -- score: 0.6545624999999999[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.1s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done 492 out of 492 | elapsed:   27.5s finished
+
+[2023-05-17 08:29:11] Features: 9/10 -- score: 0.6549375[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.1s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done 491 out of 491 | elapsed:   27.1s finished
+
+[2023-05-17 08:29:39] Features: 10/10 -- score: 0.6554374999999999
 </code></pre>
 <p><strong>Finalizing the fit</strong></p>
 <p>Note that the feature selection run hasn't finished, so certain attributes may not be available. In order to use the SFS instance, it is recommended to call <code>finalize_fit</code>, which will make SFS estimator appear as "fitted" process the temporary results:</p>
@@ -1708,8 +1811,8 @@ STOPPING EARLY DUE TO KEYBOARD INTERRUPT...
 <pre><code class="language-python">print(sfs1.k_feature_idx_)
 print(sfs1.k_score_)
 </code></pre>
-<pre><code>(128, 160)
-0.6256875000000001
+<pre><code>(30, 128, 144, 160, 184, 229, 256, 356, 439, 458)
+0.6554374999999999
 </code></pre>
 <h2 id="example-12-using-pandas-dataframes">Example 12 - Using Pandas DataFrames</h2>
 <p>Optionally, we can also use pandas DataFrames and pandas Series as input to the <code>fit</code> function. In this case, the column names of the pandas DataFrame will be used as feature names. However, note that if <code>custom_feature_names</code> are provided in the fit function, these <code>custom_feature_names</code> take precedence over the DataFrame column-based feature names.</p>
@@ -1858,11 +1961,11 @@ sfs1 = sfs1.fit(X, y)
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
 
-[2022-09-13 21:17:21] Features: 3/4 -- score: 0.9733333333333333[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2023-05-17 08:29:39] Features: 3/4 -- score: 0.9733333333333333[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s finished
 
-[2022-09-13 21:17:21] Features: 4/4 -- score: 0.9733333333333333
+[2023-05-17 08:29:39] Features: 4/4 -- score: 0.9733333333333333
 </code></pre>
 <pre><code class="language-python">sfs1.subsets_
 </code></pre>
@@ -1965,11 +2068,11 @@ sfs2 = sfs2.fit(X_df, y_series)
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s finished
 
-[2022-09-13 21:17:25] Features: 3/4 -- score: 0.9466666666666667[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[2023-05-17 08:29:39] Features: 3/4 -- score: 0.9466666666666667[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
 [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s finished
 
-[2022-09-13 21:17:25] Features: 4/4 -- score: 0.9733333333333333
+[2023-05-17 08:29:39] Features: 4/4 -- score: 0.9733333333333333
 </code></pre>
 <pre><code class="language-python">sfs2.subsets_
 </code></pre>
@@ -2079,326 +2182,45 @@ sfs1 = SFS(knn,
 
 sfs1 = sfs1.fit(X_df, y)
 </code></pre>
-<pre><code class="language-python">sfs1 = SFS(knn, 
+<p>sfs1 = SFS(knn, 
            k_features=2, 
            scoring='accuracy',
            feature_groups=[[0, 2], [1], [3]],
-           cv=3)
+           cv=3)</p>
+<p>sfs1 = sfs1.fit(X, y)</p>
+<h2 id="example-14-multiclass-metrics">Example 14 - Multiclass Metrics</h2>
+<p>Certain scoring metrics like ROC AUC are originally designed for binary classification. However, they can also be used for multiclass settings. It is best to consult <a href="https://scikit-learn.org/stable/modules/model_evaluation.html#common-cases-predefined-values">this scikit-learn metrics table</a> for this.</p>
+<p>For example, we can use a ROC AUC One-Vs-Rest score via <code>‘"roc_auc_ovr"</code> as shown below.</p>
+<pre><code class="language-python">from sklearn.datasets import make_blobs
+X, y = make_blobs(n_samples=10, centers=4, n_features=5, random_state=0)
+</code></pre>
+<pre><code class="language-python">from mlxtend.feature_selection import SequentialFeatureSelector as SFS
+
+sfs1 = SFS(knn, 
+           k_features=3, 
+           forward=True, 
+           floating=False, 
+           verbose=2,
+           scoring='roc_auc_ovr',
+           cv=0)
 
 sfs1 = sfs1.fit(X, y)
 </code></pre>
-<h1 id="api">API</h1>
-<p><em>SequentialFeatureSelector(estimator, k_features=1, forward=True, floating=False, verbose=0, scoring=None, cv=5, n_jobs=1, pre_dispatch='2</em>n_jobs', clone_estimator=True, fixed_features=None, feature_groups=None)*</p>
-<p>Sequential Feature Selection for Classification and Regression.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>estimator</code> : scikit-learn classifier or regressor</p>
-</li>
-<li>
-<p><code>k_features</code> : int or tuple or str (default: 1)</p>
-<p>Number of features to select,
-where k_features &lt; the full feature set.
-New in 0.4.2: A tuple containing a min and max value can be provided,
-and the SFS will consider return any feature combination between
-min and max that scored highest in cross-validation. For example,
-the tuple (1, 4) will return any combination from
-1 up to 4 features instead of a fixed number of features k.
-New in 0.8.0: A string argument "best" or "parsimonious".
-If "best" is provided, the feature selector will return the
-feature subset with the best cross-validation performance.
-If "parsimonious" is provided as an argument, the smallest
-feature subset that is within one standard error of the
-cross-validation performance will be selected.</p>
-</li>
-<li>
-<p><code>forward</code> : bool (default: True)</p>
-<p>Forward selection if True,
-backward selection otherwise</p>
-</li>
-<li>
-<p><code>floating</code> : bool (default: False)</p>
-<p>Adds a conditional exclusion/inclusion if True.</p>
-</li>
-<li>
-<p><code>verbose</code> : int (default: 0), level of verbosity to use in logging.</p>
-<p>If 0, no output,
-if 1 number of features in current set, if 2 detailed logging i
-ncluding timestamp and cv scores at step.</p>
-</li>
-<li>
-<p><code>scoring</code> : str, callable, or None (default: None)</p>
-<p>If None (default), uses 'accuracy' for sklearn classifiers
-and 'r2' for sklearn regressors.
-If str, uses a sklearn scoring metric string identifier, for example
-{accuracy, f1, precision, recall, roc_auc} for classifiers,
-{'mean_absolute_error', 'mean_squared_error'/'neg_mean_squared_error',
-'median_absolute_error', 'r2'} for regressors.
-If a callable object or function is provided, it has to be conform with
-sklearn's signature <code>scorer(estimator, X, y)</code>; see
-https://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
-for more information.</p>
-</li>
-<li>
-<p><code>cv</code> : int (default: 5)</p>
-<p>Integer or iterable yielding train, test splits. If cv is an integer
-and <code>estimator</code> is a classifier (or y consists of integer class
-labels) stratified k-fold. Otherwise regular k-fold cross-validation
-is performed. No cross-validation if cv is None, False, or 0.</p>
-</li>
-<li>
-<p><code>n_jobs</code> : int (default: 1)</p>
-<p>The number of CPUs to use for evaluating different feature subsets
-in parallel. -1 means 'all CPUs'.</p>
-</li>
-<li>
-<p><code>pre_dispatch</code> : int, or string (default: '2*n_jobs')</p>
-<p>Controls the number of jobs that get dispatched
-during parallel execution if <code>n_jobs &gt; 1</code> or <code>n_jobs=-1</code>.
-Reducing this number can be useful to avoid an explosion of
-memory consumption when more jobs get dispatched than CPUs can process.
-This parameter can be:
-None, in which case all the jobs are immediately created and spawned.
-Use this for lightweight and fast-running jobs,
-to avoid delays due to on-demand spawning of the jobs
-An int, giving the exact number of total jobs that are spawned
-A string, giving an expression as a function
-of n_jobs, as in <code>2*n_jobs</code></p>
-</li>
-<li>
-<p><code>clone_estimator</code> : bool (default: True)</p>
-<p>Clones estimator if True; works with the original estimator instance
-if False. Set to False if the estimator doesn't
-implement scikit-learn's set_params and get_params methods.
-In addition, it is required to set cv=0, and n_jobs=1.</p>
-</li>
-<li>
-<p><code>fixed_features</code> : tuple (default: None)</p>
-<p>If not <code>None</code>, the feature indices provided as a tuple will be
-regarded as fixed by the feature selector. For example, if
-<code>fixed_features=(1, 3, 7)</code>, the 2nd, 4th, and 8th feature are
-guaranteed to be present in the solution. Note that if
-<code>fixed_features</code> is not <code>None</code>, make sure that the number of
-features to be selected is greater than <code>len(fixed_features)</code>.
-In other words, ensure that <code>k_features &gt; len(fixed_features)</code>.
-New in mlxtend v. 0.18.0.</p>
-</li>
-<li>
-<p><code>feature_groups</code> : list or None (default: None)</p>
-<p>Optional argument for treating certain features as a group.
-This means, the features within a group are always selected together,
-never split.
-For example, <code>feature_groups=[[1], [2], [3, 4, 5]]</code>
-specifies 3 feature groups.In this case,
-possible feature selection results with <code>k_features=2</code>
-are <code>[[1], [2]</code>, <code>[[1], [3, 4, 5]]</code>, or <code>[[2], [3, 4, 5]]</code>.
-Feature groups can be useful for
-interpretability, for example, if features 3, 4, 5 are one-hot
-encoded features.  (For  more details, please read the notes at the
-bottom of this docstring).  New in mlxtend v. 0.21.0.</p>
-</li>
-</ul>
-<p><strong>Attributes</strong></p>
-<ul>
-<li>
-<p><code>k_feature_idx_</code> : array-like, shape = [n_predictions]</p>
-<p>Feature Indices of the selected feature subsets.</p>
-</li>
-<li>
-<p><code>k_feature_names_</code> : array-like, shape = [n_predictions]</p>
-<p>Feature names of the selected feature subsets. If pandas
-DataFrames are used in the <code>fit</code> method, the feature
-names correspond to the column names. Otherwise, the
-feature names are string representation of the feature
-array indices. New in v 0.13.0.</p>
-</li>
-<li>
-<p><code>k_score_</code> : float</p>
-<p>Cross validation average score of the selected subset.</p>
-</li>
-<li>
-<p><code>subsets_</code> : dict</p>
-<p>A dictionary of selected feature subsets during the
-sequential selection, where the dictionary keys are
-the lengths k of these feature subsets. If the parameter
-<code>feature_groups</code> is not None, the value of key indicates
-the number of groups that are selected together. The dictionary
-values are dictionaries themselves with the following
-keys: 'feature_idx' (tuple of indices of the feature subset)
-'feature_names' (tuple of feature names of the feat. subset)
-'cv_scores' (list individual cross-validation scores)
-'avg_score' (average cross-validation score)
-Note that if pandas
-DataFrames are used in the <code>fit</code> method, the 'feature_names'
-correspond to the column names. Otherwise, the
-feature names are string representation of the feature
-array indices. The 'feature_names' is new in v 0.13.0.</p>
-</li>
-</ul>
-<p><strong>Notes</strong></p>
-<p>(1) If parameter <code>feature_groups</code> is not None, the
-    number of features is equal to the number of feature groups, i.e.
-    <code>len(feature_groups)</code>. For  example, if <code>feature_groups = [[0], [1], [2, 3],
-    [4]]</code>, then the <code>max_features</code> value cannot exceed 4.</p>
-<pre><code>(2) Although two or more individual features may be considered as one group
-throughout the feature-selection process, it does not mean the individual
-features of that group have the same impact on the outcome. For instance, in
-linear regression, the coefficient of the feature 2 and 3 can be different
-even if they are considered as one group in feature_groups.
+<pre><code>[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done   5 out of   5 | elapsed:    0.0s finished
 
-(3) If both fixed_features and feature_groups are specified, ensure that each
-feature group contains the fixed_features selection. E.g., for a 3-feature set
-fixed_features=[0, 1] and feature_groups=[[0, 1], [2]] is valid;
-fixed_features=[0, 1] and feature_groups=[[0], [1, 2]] is not valid.
+[2023-05-17 08:32:27] Features: 1/3 -- score: 1.0[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s finished
+
+[2023-05-17 08:32:27] Features: 2/3 -- score: 1.0[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s finished
+
+[2023-05-17 08:32:27] Features: 3/3 -- score: 1.0
 </code></pre>
-<p><strong>Examples</strong></p>
-<p>For usage examples, please see
-    https://rasbt.github.io/mlxtend/user_guide/feature_selection/SequentialFeatureSelector/</p>
-<h3 id="methods">Methods</h3>
-<hr>
-
-<p><em>fit(X, y, custom_feature_names=None, groups=None, </em><em>fit_params)</em></p>
-<p>Perform feature selection and learn model from training data.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.
-New in v 0.13.0: pandas DataFrames are now also accepted as
-argument for X.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values.
-New in v 0.13.0: pandas DataFrames are now also accepted as
-argument for y.</p>
-</li>
-<li>
-<p><code>custom_feature_names</code> : None or tuple (default: tuple)</p>
-<p>Custom feature names for <code>self.k_feature_names</code> and
-<code>self.subsets_[i]['feature_names']</code>.
-(new in v 0.13.0)</p>
-</li>
-<li>
-<p><code>groups</code> : array-like, with shape (n_samples,), optional</p>
-<p>Group labels for the samples used while splitting the dataset into
-train/test set. Passed to the fit method of the cross-validator.</p>
-</li>
-<li>
-<p><code>fit_params</code> : various, optional</p>
-<p>Additional parameters that are being passed to the estimator.
-For example, <code>sample_weights=weights</code>.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li><code>self</code> : object</li>
-</ul>
-<hr>
-
-<p><em>fit_transform(X, y, groups=None, </em><em>fit_params)</em></p>
-<p>Fit to training data then reduce X to its most important features.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.
-New in v 0.13.0: pandas DataFrames are now also accepted as
-argument for X.</p>
-</li>
-<li>
-<p><code>y</code> : array-like, shape = [n_samples]</p>
-<p>Target values.
-New in v 0.13.0: a pandas Series are now also accepted as
-argument for y.</p>
-</li>
-<li>
-<p><code>groups</code> : array-like, with shape (n_samples,), optional</p>
-<p>Group labels for the samples used while splitting the dataset into
-train/test set. Passed to the fit method of the cross-validator.</p>
-</li>
-<li>
-<p><code>fit_params</code> : various, optional</p>
-<p>Additional parameters that are being passed to the estimator.
-For example, <code>sample_weights=weights</code>.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<p>Reduced feature subset of X, shape={n_samples, k_features}</p>
-<hr>
-
-<p><em>get_metric_dict(confidence_interval=0.95)</em></p>
-<p>Return metric dictionary</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>confidence_interval</code> : float (default: 0.95)</p>
-<p>A positive float between 0.0 and 1.0 to compute the confidence
-interval bounds of the CV score averages.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<p>Dictionary with items where each dictionary value is a list
-    with the number of iterations (number of feature subsets) as
-    its length. The dictionary keys corresponding to these lists
-    are as follows:
-    'feature_idx': tuple of the indices of the feature subset
-    'cv_scores': list with individual CV scores
-    'avg_score': of CV average scores
-    'std_dev': standard deviation of the CV score average
-    'std_err': standard error of the CV score average
-    'ci_bound': confidence interval bound of the CV score average</p>
-<hr>
-
-<p><em>get_params(deep=True)</em></p>
-<p>Get parameters for this estimator.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>deep</code> : bool, default=True</p>
-<p>If True, will return the parameters for this estimator and
-contained subobjects that are estimators.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<ul>
-<li>
-<p><code>params</code> : dict</p>
-<p>Parameter names mapped to their values.</p>
-</li>
-</ul>
-<hr>
-
-<p><em>set_params(</em><em>params)</em></p>
-<p>Set the parameters of this estimator.
-    Valid parameter keys can be listed with <code>get_params()</code>.</p>
-<p><strong>Returns</strong></p>
-<p>self</p>
-<hr>
-
-<p><em>transform(X)</em></p>
-<p>Reduce X to its most important features.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li>
-<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
-<p>Training vectors, where n_samples is the number of samples and
-n_features is the number of features.
-New in v 0.13.0: pandas DataFrames are now also accepted as
-argument for X.</p>
-</li>
-</ul>
-<p><strong>Returns</strong></p>
-<p>Reduced feature subset of X, shape={n_samples, k_features}</p>
-<h3 id="properties">Properties</h3>
-<hr>
-
-<p><em>named_estimators</em></p>
-<p><strong>Returns</strong></p>
-<p>List of named estimator tuples, like [('svc', SVC(...))]</p>
-<p>ython</p></div>
+<h1 id="api">API</h1></div>
             </div>
         </div>
 

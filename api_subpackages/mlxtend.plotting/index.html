@@ -717,7 +717,7 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.22.0 </p>
+<p>mlxtend version: 0.23.0dev </p>
 <h2 id="category_scatter">category_scatter</h2>
 <p><em>category_scatter(x, y, label_col, data, markers='sxo^v', colors=('blue', 'green', 'red', 'purple', 'gray', 'cyan'), alpha=0.7, markersize=20.0, legend_loc='best')</em></p>
 <p>Scatter plot to plot categories in different colors/markerstyles.</p>
@@ -954,7 +954,7 @@ No legend if legend_loc=False</p>
 <p>For usage examples, please see
     https://rasbt.github.io/mlxtend/user_guide/plotting/enrichment_plot/</p>
 <h2 id="heatmap">heatmap</h2>
-<p><em>heatmap(matrix, hide_spines=False, hide_ticks=False, figsize=None, cmap=None, colorbar=True, row_names=None, column_names=None, column_name_rotation=45, cell_values=True, cell_fmt='.2f', cell_font_size=None)</em></p>
+<p><em>heatmap(matrix, hide_spines=False, hide_ticks=False, figsize=None, cmap=None, colorbar=True, row_names=None, column_names=None, column_name_rotation=45, cell_values=True, cell_fmt='.2f', cell_font_size=None, text_color_threshold=None)</em></p>
 <p>Plot a heatmap via matplotlib.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1005,6 +1005,12 @@ No legend if legend_loc=False</p>
 <li>
 <p><code>cell_font_size</code> : int (default: None)</p>
 <p>Font size for cell values (if <code>cell_values=True</code>)</p>
+</li>
+<li>
+<p><code>text_color_threshold</code> : float (default: None)</p>
+<p>Threshold for the black/white text threshold of the text
+annotation. Default (None) tried to infer a good threshold
+automatically using <code>np.max(normed_matrix) / 2</code>.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>

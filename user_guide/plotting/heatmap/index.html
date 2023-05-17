@@ -847,7 +847,7 @@ plt.show()
 </code></pre>
 <p><img alt="png" src="../heatmap_files/heatmap_13_0.png" /></p>
 <h2 id="api">API</h2>
-<p><em>heatmap(matrix, hide_spines=False, hide_ticks=False, figsize=None, cmap=None, colorbar=True, row_names=None, column_names=None, column_name_rotation=45, cell_values=True, cell_fmt='.2f', cell_font_size=None)</em></p>
+<p><em>heatmap(matrix, hide_spines=False, hide_ticks=False, figsize=None, cmap=None, colorbar=True, row_names=None, column_names=None, column_name_rotation=45, cell_values=True, cell_fmt='.2f', cell_font_size=None, text_color_threshold=None)</em></p>
 <p>Plot a heatmap via matplotlib.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -898,6 +898,12 @@ plt.show()
 <li>
 <p><code>cell_font_size</code> : int (default: None)</p>
 <p>Font size for cell values (if <code>cell_values=True</code>)</p>
+</li>
+<li>
+<p><code>text_color_threshold</code> : float (default: None)</p>
+<p>Threshold for the black/white text threshold of the text
+annotation. Default (None) tried to infer a good threshold
+automatically using <code>np.max(normed_matrix) / 2</code>.</p>
 </li>
 </ul>
 <p><strong>Returns</strong></p>

@@ -682,7 +682,7 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.22.0 </p>
+<p>mlxtend version: 0.23.0dev </p>
 <h2 id="copytransformer">CopyTransformer</h2>
 <p><em>CopyTransformer()</em></p>
 <p>Transformer that returns a copy of the input array</p>
@@ -1055,6 +1055,32 @@ transaction.</p>
 ['Milk', 'Beer', 'Rice'],
 ['Milk', 'Beer'],
 ['Apple', 'Bananas']]</code></p>
+</li>
+</ul>
+<hr>
+
+<p><em>set_output(</em>, transform=None)*</p>
+<p>Set output container.</p>
+<pre><code>See :ref:`sphx_glr_auto_examples_miscellaneous_plot_set_output.py`
+for an example on how to use the API.
+</code></pre>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>transform</code> : {"default", "pandas"}, default=None</p>
+<p>Configure output of <code>transform</code> and <code>fit_transform</code>.</p>
+<ul>
+<li><code>"default"</code>: Default output format of a transformer</li>
+<li><code>"pandas"</code>: DataFrame output</li>
+<li><code>None</code>: Transform configuration is unchanged</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>self</code> : estimator instance</p>
+<p>Estimator instance.</p>
 </li>
 </ul>
 <hr>

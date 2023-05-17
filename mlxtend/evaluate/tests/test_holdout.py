@@ -389,7 +389,6 @@ def test_predefinedholdoutsplit_default_iter():
         ]
     )
     expect_valid_ind = np.array([0, 1, 99])
-
     np.testing.assert_equal(train_ind, expect_train_ind)
     assert (valid_ind == expect_valid_ind).all()
 

@@ -144,7 +144,7 @@ def bias_variance_decomp(
         var = np.zeros(pred.shape)
 
         for pred in all_pred:
-            var += (pred != main_predictions).astype(np.int)
+            var += (pred != main_predictions).astype(np.int_)
         var /= num_rounds
 
         avg_var = var.sum() / y_test.shape[0]

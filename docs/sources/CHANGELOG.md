@@ -19,7 +19,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- ...
+- Changed the signature of the `LinearRegression` model of sklearn in the test removing the `normalize` parameter as it is deprecated. ([#1036](https://github.com/rasbt/mlxtend/issues/1036))
 
 ##### New Features and Enhancements
 
@@ -806,7 +806,6 @@ imput arrays via `transform` and `fit_transform`
 - Sequential Feature Selection algorithms were unified into a single `SequentialFeatureSelector` class with parameters to enable floating selection and toggle between forward and backward selection.
 - Stratified sampling of MNIST (now 500x random samples from each of the 10 digit categories)
 - Renaming `mlxtend.plotting` to `mlxtend.general_plotting` in order to distinguish general plotting function from specialized utility function such as `evaluate.plot_decision_regions`
-- Changing the signature of the `LinearRegression` model of sklearn and removing `normalize` parameter as it is depreciated.
 
 ### Version 0.2.9 (2015-07-14)
 

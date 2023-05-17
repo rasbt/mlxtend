@@ -4,6 +4,7 @@
 #
 # License: BSD 3 clause
 
+from mlxtend.data import boston_housing_data
 import numpy as np
 import pandas as pd
 from numpy.testing import assert_almost_equal
@@ -334,10 +335,8 @@ def test_fit_params():
 
 
 def test_regression():
-    data_url = "http://lib.stat.cmu.edu/datasets/boston"
-    raw_df = pd.read_csv(data_url, sep="\s+", skiprows=22, header=None)
-    boston = raw_df.values[1::2, 2]
-    X, y = boston.data[:, [1, 2, 6, 8, 12]], boston.target
+    X, y = boston_housing_data()
+    X = X[:, [1, 2, 6, 8, 12]]
     lr = LinearRegression()
     efs_r = EFS(
         lr,

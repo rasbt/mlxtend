@@ -164,7 +164,7 @@ class PredefinedHoldoutSplit(object):
         """
 
         ind = np.arange(X.shape[0])
-        train_mask = np.ones(X.shape[0], dtype=bool)
+        train_mask = np.ones(X.shape[0], dtype=np.bool_)
         train_mask[self.valid_indices] = False
         valid_mask = np.where(train_mask, False, True)
 

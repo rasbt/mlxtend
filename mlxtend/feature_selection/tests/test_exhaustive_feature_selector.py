@@ -9,13 +9,14 @@ import pandas as pd
 from numpy.testing import assert_almost_equal
 from packaging.version import Version
 from sklearn import __version__ as sklearn_version
-from sklearn.datasets import load_boston, load_iris
+from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import GroupKFold
 from sklearn.neighbors import KNeighborsClassifier
 
 from mlxtend.classifier import SoftmaxRegression
+from mlxtend.data import boston_housing_data
 from mlxtend.feature_selection import ExhaustiveFeatureSelector as EFS
 from mlxtend.utils import assert_raises
 
@@ -334,8 +335,8 @@ def test_fit_params():
 
 
 def test_regression():
-    boston = load_boston()
-    X, y = boston.data[:, [1, 2, 6, 8, 12]], boston.target
+    X, y = boston_housing_data()
+    X = X[:, [1, 2, 6, 8, 12]]
     lr = LinearRegression()
     efs_r = EFS(
         lr,

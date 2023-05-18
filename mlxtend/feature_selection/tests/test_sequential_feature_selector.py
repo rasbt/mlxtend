@@ -3,13 +3,14 @@
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
+from mlxtend.data import boston_housing_data
 import numpy as np
 import pandas as pd
 from numpy import nan
 from numpy.testing import assert_almost_equal
 from packaging.version import Version
 from sklearn import __version__ as sklearn_version
-from sklearn.datasets import load_boston, load_iris
+from sklearn.datasets import load_iris
 from sklearn.decomposition import PCA
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LinearRegression
@@ -421,8 +422,7 @@ def test_knn_scoring_metric():
 
 
 def test_regression():
-    boston = load_boston()
-    X, y = boston.data, boston.target
+    X, y = boston_housing_data()
     lr = LinearRegression()
     sfs_r = SFS(
         lr,

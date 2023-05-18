@@ -3,10 +3,11 @@
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
+from mlxtend.data import boston_housing_data
 import numpy as np
 from numpy import nan
 from numpy.testing import assert_almost_equal
-from sklearn.datasets import load_boston, load_iris
+from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import roc_auc_score
@@ -99,8 +100,7 @@ def test_knn_wo_cv_feature_groups_default():
 
 
 def test_regression_sbfs():
-    boston = load_boston()
-    X, y = boston.data, boston.target
+    X, y = boston_housing_data
     lr = LinearRegression()
     sfs_r = SFS(
         lr,

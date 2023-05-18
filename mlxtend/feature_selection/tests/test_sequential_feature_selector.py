@@ -3,7 +3,6 @@
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
-from mlxtend.data import boston_housing_data
 import numpy as np
 import pandas as pd
 from numpy import nan
@@ -20,6 +19,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.pipeline import Pipeline
 
 from mlxtend.classifier import SoftmaxRegression
+from mlxtend.data import boston_housing_data
 from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 from mlxtend.utils import assert_raises
 
@@ -443,8 +443,7 @@ def test_regression():
 
 
 def test_regression_sffs():
-    boston = load_boston()
-    X, y = boston.data, boston.target
+    X, y = boston_housing_data()
     lr = LinearRegression()
     sfs_r = SFS(
         lr,
@@ -460,8 +459,7 @@ def test_regression_sffs():
 
 
 def test_regression_sbfs():
-    boston = load_boston()
-    X, y = boston.data, boston.target
+    X, y = boston_housing_data()
     lr = LinearRegression()
     sfs_r = SFS(
         lr,
@@ -477,8 +475,7 @@ def test_regression_sbfs():
 
 
 def test_regression_in_range():
-    boston = load_boston()
-    X, y = boston.data, boston.target
+    X, y = boston_housing_data()
     lr = LinearRegression()
     sfs_r = SFS(
         lr,
@@ -722,9 +719,7 @@ def test_string_scoring_clf():
 
 
 def test_max_feature_subset_size_in_tuple_range():
-    boston = load_boston()
-    X, y = boston.data, boston.target
-
+    X, y = boston_housing_data()
     lr = LinearRegression()
 
     sfs = SFS(
@@ -741,8 +736,7 @@ def test_max_feature_subset_size_in_tuple_range():
 
 
 def test_max_feature_subset_best():
-    boston = load_boston()
-    X, y = boston.data, boston.target
+    X, y = boston_housing_data()
     lr = LinearRegression()
 
     sfs = SFS(lr, k_features="best", forward=True, floating=False, cv=10)
@@ -752,8 +746,7 @@ def test_max_feature_subset_best():
 
 
 def test_max_feature_subset_parsimonious():
-    boston = load_boston()
-    X, y = boston.data, boston.target
+    X, y = boston_housing_data()
     lr = LinearRegression()
 
     sfs = SFS(lr, k_features="parsimonious", forward=True, floating=False, cv=10)

@@ -99,7 +99,7 @@ def test_knn_wo_cv_feature_groups_default():
 
 
 def test_regression_sbfs():
-    X, y = boston_housing_data
+    X, y = boston_housing_data()
     lr = LinearRegression()
     sfs_r = SFS(
         lr,
@@ -162,7 +162,7 @@ def test_keyboard_interrupt():
 
 
 def test_max_feature_subset_best():
-    X, y = boston_housing_data
+    X, y = boston_housing_data()
     lr = LinearRegression()
 
     sfs = SFS(
@@ -187,7 +187,7 @@ def test_max_feature_subset_best():
 
 
 def test_max_feature_subset_parsimonious():
-    X, y = boston_housing_data
+    X, y = boston_housing_data()
     lr = LinearRegression()
 
     sfs = SFS(

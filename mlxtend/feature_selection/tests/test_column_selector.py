@@ -87,7 +87,9 @@ def test_ColumnSelector_with_dataframe_and_int_columns():
 def test_ColumnSelector_with_dataframe_drop_axis():
     iris = datasets.load_iris()
     df_in = pd.DataFrame(iris.data, columns=iris.feature_names)
-    X1_out = ColumnSelector(cols="petal length (cm)", drop_axis=True).transform(df_in)
+    X1_out = ColumnSelector(cols=("petal length (cm)",), drop_axis=True).transform(
+        df_in
+    )
     assert X1_out.shape == (150,)
 
     X1_out = ColumnSelector(cols=("petal length (cm)",), drop_axis=True).transform(
@@ -109,8 +111,8 @@ def test_ColumnSelector_with_dataframe_in_gridsearch():
     pipe = make_pipeline(ColumnSelector(), LogisticRegression())
     grid = {
         "columnselector__cols": [
-            ["petal length (cm)", "petal width(cm)"],
-            ["sepal length (cm)", "sepal width (cm)", "petal width(cm)"],
+            ["petal length (cm)", "petal width (cm)"],
+            ["sepal length (cm)", "sepal width (cm)", "petal width (cm)"],
         ],
     }
 
@@ -126,5 +128,5 @@ def test_ColumnSelector_with_dataframe_in_gridsearch():
     gsearch1.fit(X, y)
     assert gsearch1.best_params_["columnselector__cols"] == [
         "petal length (cm)",
-        "petal width(cm)",
+        "petal width (cm)",
     ]

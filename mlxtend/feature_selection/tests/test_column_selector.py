@@ -11,7 +11,7 @@ import pandas as pd
 from packaging.version import Version
 from sklearn import __version__ as sklearn_version
 from sklearn import datasets
-from sklearn.linear_model import LinearRegression, LogisticRegression
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import make_pipeline
 
@@ -64,16 +64,20 @@ def test_ColumnSelector_in_gridsearch():
 
 
 def test_ColumnSelector_with_dataframe():
-    boston = datasets.load_boston()
-    df_in = pd.DataFrame(boston.data, columns=boston.feature_names)
-    df_out = ColumnSelector(cols=("ZN", "CRIM")).transform(df_in)
-    assert df_out.shape == (506, 2)
+    iris = datasets.load_iris()
+    df_in = pd.DataFrame(iris.data, columns=iris.feature_names)
+    df_out = ColumnSelector(cols=("sepal length (cm)", "sepal width (cm)")).transform(
+        df_in
+    )
+    assert df_out.shape == (150, 2)
 
 
 def test_ColumnSelector_with_dataframe_and_int_columns():
-    boston = datasets.load_boston()
-    df_in = pd.DataFrame(boston.data, columns=boston.feature_names)
-    df_out_str = ColumnSelector(cols=("INDUS", "CHAS")).transform(df_in)
+    iris = datasets.load_iris()
+    df_in = pd.DataFrame(iris.data, columns=iris.feature_names)
+    df_out_str = ColumnSelector(
+        cols=("petal length (cm)", "petal width (cm)")
+    ).transform(df_in)
     df_out_int = ColumnSelector(cols=(2, 3)).transform(df_in)
 
     np.testing.assert_array_equal(df_out_str[:, 0], df_out_int[:, 0])
@@ -81,51 +85,46 @@ def test_ColumnSelector_with_dataframe_and_int_columns():
 
 
 def test_ColumnSelector_with_dataframe_drop_axis():
-    boston = datasets.load_boston()
-    df_in = pd.DataFrame(boston.data, columns=boston.feature_names)
-    X1_out = ColumnSelector(cols="ZN", drop_axis=True).transform(df_in)
-    assert X1_out.shape == (506,)
+    iris = datasets.load_iris()
+    df_in = pd.DataFrame(iris.data, columns=iris.feature_names)
+    X1_out = ColumnSelector(cols="petal length (cm)", drop_axis=True).transform(df_in)
+    assert X1_out.shape == (150,)
 
-    X1_out = ColumnSelector(cols=("ZN",), drop_axis=True).transform(df_in)
-    assert X1_out.shape == (506,)
+    X1_out = ColumnSelector(cols=("petal length (cm)",), drop_axis=True).transform(
+        df_in
+    )
+    assert X1_out.shape == (150,)
 
-    X1_out = ColumnSelector(cols="ZN").transform(df_in)
-    assert X1_out.shape == (506, 1)
+    X1_out = ColumnSelector(cols="petal length (cm)").transform(df_in)
+    assert X1_out.shape == (150, 1)
 
-    X1_out = ColumnSelector(cols=("ZN",)).transform(df_in)
-    assert X1_out.shape == (506, 1)
+    X1_out = ColumnSelector(cols=("petal length (cm)",)).transform(df_in)
+    assert X1_out.shape == (150, 1)
 
 
 def test_ColumnSelector_with_dataframe_in_gridsearch():
-    boston = datasets.load_boston()
-    X = pd.DataFrame(boston.data, columns=boston.feature_names)
-    y = boston.target
-    pipe = make_pipeline(ColumnSelector(), LinearRegression())
+    iris = datasets.load_iris()
+    X = pd.DataFrame(iris.data, columns=iris.feature_names)
+    y = iris.target
+    pipe = make_pipeline(ColumnSelector(), LogisticRegression())
     grid = {
-        "columnselector__cols": [["ZN", "RM"], ["ZN", "RM", "AGE"], "ZN", ["RM"]],
-        "linearregression__copy_X": [True, False],
-        "linearregression__fit_intercept": [True, False],
+        "columnselector__cols": [
+            ["petal length (cm)", "petal width(cm)"],
+            ["sepal length (cm)", "sepal width (cm)", "petal width(cm)"],
+        ],
     }
 
-    if Version(sklearn_version) < Version("0.24.1"):
-        gsearch1 = GridSearchCV(
-            estimator=pipe,
-            param_grid=grid,
-            cv=5,
-            n_jobs=1,
-            iid=False,
-            scoring="neg_mean_squared_error",
-            refit=False,
-        )
-    else:
-        gsearch1 = GridSearchCV(
-            estimator=pipe,
-            param_grid=grid,
-            cv=5,
-            n_jobs=1,
-            scoring="neg_mean_squared_error",
-            refit=False,
-        )
+    gsearch1 = GridSearchCV(
+        estimator=pipe,
+        param_grid=grid,
+        cv=5,
+        n_jobs=1,
+        scoring="accuracy",
+        refit=False,
+    )
 
     gsearch1.fit(X, y)
-    assert gsearch1.best_params_["columnselector__cols"] == ["ZN", "RM", "AGE"]
+    assert gsearch1.best_params_["columnselector__cols"] == [
+        "petal length (cm)",
+        "petal width(cm)",
+    ]

@@ -179,7 +179,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         clone_estimator=True,
         fixed_features=None,
         feature_groups=None,
-        feature_range=None
+        feature_range = None
     ):
         self.estimator = estimator
         self.min_features = min_features
@@ -403,8 +403,9 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
         # candidates in the following lines are the non-fixed-features candidates
         # (the fixed features will be added later to each combination)
-        if self.min_features is None and self.max_features is None:
-            if self.feature_range is None:
+        
+        if self.min_features == None and self.max_features == None:
+            if self.feature_range == None:
                 min_num_candidates = 1
                 max_num_candidates = 1
             elif self.feature_range == "all":

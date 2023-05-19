@@ -21,7 +21,7 @@ The CHANGELOG for the current development version is available at
 
 - Address NumPy deprecations to make mlxtend compatible to NumPy 1.24 
 - Changed the signature of the `LinearRegression` model of sklearn in the test removing the `normalize` parameter as it is deprecated. ([#1036](https://github.com/rasbt/mlxtend/issues/1036))
-
+- Added a new parameter called `feature_range` in the class `ExhaustiveFeatureSelector`
 ##### New Features and Enhancements
 
 - Document how to use `SequentialFeatureSelector` and multiclass ROC AUC. 

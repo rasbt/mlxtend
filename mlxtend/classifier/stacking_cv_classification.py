@@ -140,7 +140,7 @@ class StackingCVClassifier(
         meta-features for training data, where n_samples is the
         number of samples
         in training data and n_classifiers is the number of classfiers.
-        
+
 
     Examples
     -----------

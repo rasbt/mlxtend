@@ -165,7 +165,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             )
 
         self.le_ = LabelEncoder()
-        y_transform = self.le_.fit(y_transform)
+        y_transform = self.le_.fit(y)
         self.classes_ = self.le_.classes_
 
         if not self.fit_base_estimators and self.use_clones:
@@ -199,9 +199,9 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                     print(_name_estimators((clf,))[0][1])
 
                 if sample_weight is None:
-                    clf.fit(X, self.le_.transform(y))
+                    clf.fit(X, y_transform)
                 else:
-                    clf.fit(X, self.le_.transform(y), sample_weight=sample_weight)
+                    clf.fit(X, y_transform, sample_weight=sample_weight)
         return self
 
     def predict(self, X):

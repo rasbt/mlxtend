@@ -203,7 +203,7 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier, Transformer
                 if sample_weight is None:
                     clf.fit(X, y_transform)
                 else:
-                    clf.fit(X, yy_transform, sample_weight=sample_weight)
+                    clf.fit(X, y_transform, sample_weight=sample_weight)
 
         meta_features = self.predict_meta_features(X)
 

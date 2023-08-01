@@ -19,6 +19,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
+- Adds `classes_` attribute to `StackingClassifier`, `StackingCVClassifier` and `EnsembleVoteClassifier` to make these models compatible with scikit-learn 2.3.0 utility functions. ([#1060](https://github.com/rasbt/mlxtend/issues/1060))
 - Address NumPy deprecations to make mlxtend compatible to NumPy 1.24 
 - Changed the signature of the `LinearRegression` model of sklearn in the test removing the `normalize` parameter as it is deprecated. ([#1036](https://github.com/rasbt/mlxtend/issues/1036))
 

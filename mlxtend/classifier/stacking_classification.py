@@ -13,6 +13,7 @@ import warnings
 import numpy as np
 from scipy import sparse
 from sklearn.base import TransformerMixin, clone
+from sklearn.preprocessing import LabelEncoder
 
 from ..externals.estimator_checks import check_is_fitted
 from ..externals.name_estimators import _name_estimators
@@ -163,6 +164,11 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier, Transformer
         self : object
 
         """
+
+        self.le_ = LabelEncoder()
+        y_transform = self.le_.fit_transform(y)
+        self.classes_ = self.le_.classes_
+
         if not self.fit_base_estimators:
             warnings.warn(
                 "fit_base_estimators=False " "enforces use_clones to be `False`"
@@ -195,9 +201,9 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier, Transformer
                 if self.verbose > 1:
                     print(_name_estimators((clf,))[0][1])
                 if sample_weight is None:
-                    clf.fit(X, y)
+                    clf.fit(X, y_transform)
                 else:
-                    clf.fit(X, y, sample_weight=sample_weight)
+                    clf.fit(X, yy_transform, sample_weight=sample_weight)
 
         meta_features = self.predict_meta_features(X)
 
@@ -212,9 +218,9 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier, Transformer
             meta_features = np.hstack((X, meta_features))
 
         if sample_weight is None:
-            self.meta_clf_.fit(meta_features, y)
+            self.meta_clf_.fit(meta_features, y_transform)
         else:
-            self.meta_clf_.fit(meta_features, y, sample_weight=sample_weight)
+            self.meta_clf_.fit(meta_features, y_transform, sample_weight=sample_weight)
 
         return self
 

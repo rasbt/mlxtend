@@ -14,6 +14,7 @@ from scipy import sparse
 from sklearn.base import TransformerMixin, clone
 from sklearn.model_selection import cross_val_predict
 from sklearn.model_selection._split import check_cv
+from sklearn.preprocessing import LabelEncoder
 
 from ..externals.estimator_checks import check_is_fitted
 from ..externals.name_estimators import _name_estimators
@@ -130,10 +131,16 @@ class StackingCVClassifier(
         Fitted classifiers (clones of the original classifiers)
     meta_clf_ : estimator
         Fitted meta-classifier (clone of the original meta-estimator)
+    le_ : `sklearn.preprocessing.LabelEncoder`
+        Transformer used to encode the labels during fit and decode during
+        prediction.
+    classes_ : ndarray of shape (n_classes,)
+        The classes labels.
     train_meta_features : numpy array, shape = [n_samples, n_classifiers]
         meta-features for training data, where n_samples is the
         number of samples
         in training data and n_classifiers is the number of classfiers.
+        
 
     Examples
     -----------
@@ -212,6 +219,11 @@ class StackingCVClassifier(
         self : object
 
         """
+
+        self.le_ = LabelEncoder()
+        y_transform = self.le_.fit_transform(y)
+        self.classes_ = self.le_.classes_
+
         if self.use_clones:
             self.clfs_ = clone(self.classifiers)
             self.meta_clf_ = clone(self.meta_classifier)
@@ -221,7 +233,7 @@ class StackingCVClassifier(
         if self.verbose > 0:
             print("Fitting %d classifiers..." % (len(self.classifiers)))
 
-        final_cv = check_cv(self.cv, y, classifier=self.stratify)
+        final_cv = check_cv(self.cv, y_transform, classifier=self.stratify)
         if isinstance(self.cv, int):
             # Override shuffle parameter in case of self generated
             # cross-validation strategy
@@ -287,18 +299,18 @@ class StackingCVClassifier(
         # Fit the base models correctly this time using ALL the training set
         for model in self.clfs_:
             if sample_weight is None:
-                model.fit(X, y)
+                model.fit(X, y_transform)
             else:
-                model.fit(X, y, sample_weight=sample_weight)
+                model.fit(X, y_transform, sample_weight=sample_weight)
 
         # Fit the secondary model
         if self.use_features_in_secondary:
             meta_features = self._stack_first_level_features(X, meta_features)
 
         if sample_weight is None:
-            self.meta_clf_.fit(meta_features, y)
+            self.meta_clf_.fit(meta_features, y_transform)
         else:
-            self.meta_clf_.fit(meta_features, y, sample_weight=sample_weight)
+            self.meta_clf_.fit(meta_features, y_transform, sample_weight=sample_weight)
 
         return self
 

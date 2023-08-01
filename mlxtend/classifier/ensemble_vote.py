@@ -165,7 +165,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
             )
 
         self.le_ = LabelEncoder()
-        self.le_.fit(y)
+        y_transform = self.le_.fit(y_transform)
         self.classes_ = self.le_.classes_
 
         if not self.fit_base_estimators and self.use_clones:

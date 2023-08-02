@@ -31,6 +31,7 @@ jobs:
         conda config --add channels conda-forge
         conda update conda -y -q
         conda create -n testenv python=3.9 -y
+        conda init zsh
         conda update conda -y -q
         conda activate testenv
         conda install scikit-learn=1.0.2 pandas=1.3.5  -y -q

@@ -30,6 +30,8 @@ jobs:
         conda update conda -y -q
         conda config --add channels conda-forge
         conda update conda -y -q
+        conda create new testenv python=3.9 --yes
+        conda activate testenv
         conda install scikit-learn=1.0.2 pandas=1.3.5  -y -q
         conda install tensorflow joblib pytest -y -q
         conda install imageio scikit-image -y -q

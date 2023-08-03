@@ -30,9 +30,9 @@ jobs:
         conda config --add channels conda-forge
         conda update conda -y -q
         conda install libcblas -y -q
-        conda install scikit-learn=1.0.2 pandas=1.3.5  -y -q
-        conda install tensorflow joblib pytest -y -q
-        conda install imageio scikit-image -y -q
+        pip install scikit-learn=1.0.2 pandas=1.3.5
+        pip install tensorflow joblib pytest -y -q
+        pip install imageio scikit-image -y -q
         conda install dlib -y -q
         pip install markdown
         pip install coverage

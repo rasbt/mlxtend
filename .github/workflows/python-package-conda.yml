@@ -28,7 +28,7 @@ jobs:
     - name: Test with pytest
       run: |
         conda config --add channels conda-forge
-        conda update libcblas -y -q
+        conda install libcblas -y -q
         conda install scikit-learn=1.0.2 pandas=1.3.5  -y -q
         conda install tensorflow joblib pytest -y -q
         conda install imageio scikit-image -y -q

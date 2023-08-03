@@ -25,6 +25,7 @@ jobs:
     - name: Install dependencies
       run: |
         conda env update --file environment.yml --name base
+        conda install python=3.9 -y -q
     - name: Test with pytest
       run: |
         conda config --add channels conda-forge

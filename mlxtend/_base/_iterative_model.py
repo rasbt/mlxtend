@@ -1,7 +1,7 @@
 # Sebastian Raschka 2014-2023
 # mlxtend Machine Learning Library Extensions
 #
-# Base Clusteer (Clutering Parent Class)
+# Base Iterative Model (Iterative Model Parent Class)
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause

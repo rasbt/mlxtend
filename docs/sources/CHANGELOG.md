@@ -21,6 +21,8 @@ The CHANGELOG for the current development version is available at
 
 - Address NumPy deprecations to make mlxtend compatible to NumPy 1.24 
 - Changed the signature of the `LinearRegression` model of sklearn in the test removing the `normalize` parameter as it is deprecated. ([#1036](https://github.com/rasbt/mlxtend/issues/1036))
+- Add `pyproject.toml` to support PEP 518 builds
+- Fixed installation from sdist failing
 
 ##### New Features and Enhancements
 

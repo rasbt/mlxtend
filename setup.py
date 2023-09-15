@@ -4,14 +4,23 @@
 #
 # License: BSD 3 clause
 
-from os.path import dirname, join, realpath
+from os.path import abspath, dirname, join, realpath
 
 from setuptools import find_packages, setup
 
-import mlxtend
-
-VERSION = mlxtend.__version__
 PROJECT_ROOT = dirname(realpath(__file__))
+
+
+def get_version(rel_path):
+    here = abspath(dirname(__file__))
+    with open(join(here, rel_path), "r") as f:
+        for line in f.readlines():
+            if line.startswith("__version__"):
+                delim = '"' if '"' in line else "'"
+                return line.split(delim)[1]
+        else:
+            raise RuntimeError("Unable to find version string.")
+
 
 REQUIREMENTS_FILE = join(PROJECT_ROOT, "requirements.txt")
 
@@ -20,7 +29,7 @@ with open(REQUIREMENTS_FILE) as f:
 
 setup(
     name="mlxtend",
-    version=VERSION,
+    version=get_version("mlxtend/__init__.py"),
     description="Machine Learning Library Extensions",
     author="Sebastian Raschka",
     author_email="mail@sebastianraschka.com",

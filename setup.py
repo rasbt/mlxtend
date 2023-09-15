@@ -18,9 +18,6 @@ REQUIREMENTS_FILE = join(PROJECT_ROOT, "requirements.txt")
 with open(REQUIREMENTS_FILE) as f:
     install_reqs = f.read().splitlines()
 
-install_reqs.append("setuptools")
-
-
 setup(
     name="mlxtend",
     version=VERSION,

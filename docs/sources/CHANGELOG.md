@@ -23,6 +23,7 @@ The CHANGELOG for the current development version is available at
 - Changed the signature of the `LinearRegression` model of sklearn in the test removing the `normalize` parameter as it is deprecated. ([#1036](https://github.com/rasbt/mlxtend/issues/1036))
 - Add `pyproject.toml` to support PEP 518 builds
 - Fixed installation from sdist failing
+- Converted configuration to `pyproject.toml` 
 
 ##### New Features and Enhancements
 

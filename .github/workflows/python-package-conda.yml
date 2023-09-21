@@ -28,13 +28,11 @@ jobs:
     - name: Test with pytest
       run: |
         conda update conda -y -q
-        conda config --add channels conda-forge
-        conda update conda -y -q
         pip install scikit-learn=1.0.2
         pip install pandas=1.3.5
-        conda install tensorflow joblib pytest -y -q
-        conda install imageio scikit-image -y -q
-        conda install dlib -y -q
+        pip install  tensorflow joblib pytest
+        pip install  imageio scikit-image
+        pip install  dlib
         pip install markdown
         pip install coverage
         pip install -e  .

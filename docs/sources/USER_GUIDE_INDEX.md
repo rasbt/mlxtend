@@ -70,9 +70,6 @@
 - [fpgrowth](user_guide/frequent_patterns/fpgrowth.md)
 - [fpmax](user_guide/frequent_patterns/fpmax.md)
 
-## `image`
-- [extract_face_landmarks](user_guide/image/extract_face_landmarks.md)
-
 ## `math`
 - [num_combinations](user_guide/math/num_combinations.md)
 - [num_permutations](user_guide/math/num_permutations.md)

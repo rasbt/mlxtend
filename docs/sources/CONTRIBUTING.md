@@ -446,18 +446,23 @@ Consider deploying the package to the PyPI test server first. The setup instruct
 **First**, install Twine if  you don't have it already installed. E.g., use the following to install all recommended packages:
 
 ```bash
-$ conda install wheel twine setuptools
+$ python -m pip install twine build
 ```
 
-
-**Second**, create the binaries
+**Second**, create the distribution. This by default creates an sdist and wheel
+in the ``./dist`` directory.
 
 ```bash
-$ python setup.py sdist
+$ python -m build
 ```
 
+Install the wheel and sdist to make sure they work.
+The distributions file names will change with each version.
+
 ```bash
-$ python setup.py bdist_wheel --universal
+python -m pip install ./dist/mlxtend-0.23.0.dev0.tar.gz --force-reinstall
+python -m pip install ./dist/mlxtend-0.23.0.dev0-py3-none-any.whl --force-reinstall
+python -m pip uninstall mlxtend
 ```
 
 **Third**, upload the packages to the test server:

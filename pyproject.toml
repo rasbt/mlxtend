@@ -1,0 +1,58 @@
+[build-system]
+requires = [
+  "setuptools >= 59.0.0",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mlxtend"
+authors = [
+    {name = "Sebastian Raschka", email = "mail@sebastianraschka.com"}
+]
+description="Machine Learning Library Extensions"
+dynamic = ["version", "dependencies"]
+license= {text = "BSD 3-Clause"}
+readme = "README.md"
+classifiers=[
+    "License :: OSI Approved :: BSD License",
+    "Development Status :: 5 - Production/Stable",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX",
+    "Operating System :: Unix",
+    "Operating System :: MacOS",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+]
+
+[project.optional-dependencies]
+testing = ["pytest"]
+docs = ["mkdocs"]
+
+[project.urls]
+Homepage = "https://github.com/rasbt/mlxtend"
+Documentation = "https://rasbt.github.io/mlxtend"
+Repository = "https://github.com/rasbt/mlxtend"
+
+[tool.setuptools]
+platforms = ["any"]
+
+[tool.setuptools.dynamic]
+version = {attr = "mlxtend.__version__"}
+dependencies = {file = "requirements.txt"}
+
+[tool.setuptools.package-data]
+"*" = ["LICENSE-BSD3.txt", "LICENSE-CC-BY.txt", "README.md", "requirements.txt"]
+
+[tool.pytest.ini_options]
+norecursedirs = [
+    "plotting/*",
+    "image/*",
+    "build/",
+]

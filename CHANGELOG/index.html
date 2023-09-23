@@ -320,20 +320,6 @@
   </li>
                                     
   <li class="dropdown-submenu">
-    <a href="#" class="dropdown-item">image</a>
-    <ul class="dropdown-menu">
-            
-<li>
-    <a href="../user_guide/image/extract_face_landmarks/" class="dropdown-item">extract_face_landmarks: extract 68 landmark features from face images</a>
-</li>
-            
-<li>
-    <a href="../user_guide/image/eyepad_align/" class="dropdown-item">EyepadAlign:  align face images based on eye location</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
     <a href="#" class="dropdown-item">math</a>
     <ul class="dropdown-menu">
             
@@ -539,10 +525,6 @@
 </li>
                                     
 <li>
-    <a href="../api_subpackages/mlxtend.image/" class="dropdown-item">Mlxtend.image</a>
-</li>
-                                    
-<li>
     <a href="../api_subpackages/mlxtend.plotting/" class="dropdown-item">Mlxtend.plotting</a>
 </li>
                                     
@@ -652,19 +634,24 @@
 <p>The CHANGELOG for the current development version is available at
 <a href="https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md">https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md</a>.</p>
 <hr />
-<h3 id="version-0230dev-next-release">Version 0.23.0dev (Next Release)</h3>
+<h3 id="version-0230-22-sep-2023">Version 0.23.0 (22 Sep 2023)</h3>
 <h5 id="downloads">Downloads</h5>
 <ul>
 <li>
-<p><a href="https://github.com/rasbt/mlxtend/archive/v0.23.0.zip">Source code (zip)</a></p>
+<p><a href="https://github.com/rasbt/mlxtend/archive/v0.21.1.zip">Source code (zip)</a></p>
 </li>
 <li>
-<p><a href="https://github.com/rasbt/mlxtend/archive/v0.23.0.tar.gz">Source code (tar.gz)</a></p>
+<p><a href="https://github.com/rasbt/mlxtend/archive/v0.22.1.tar.gz">Source code (tar.gz)</a></p>
 </li>
 </ul>
 <h5 id="changes">Changes</h5>
 <ul>
-<li>...</li>
+<li>Address NumPy deprecations to make mlxtend compatible to NumPy 1.24 </li>
+<li>Changed the signature of the <code>LinearRegression</code> model of sklearn in the test removing the <code>normalize</code> parameter as it is deprecated. (<a href="https://github.com/rasbt/mlxtend/issues/1036">#1036</a>)</li>
+<li>Add <code>pyproject.toml</code> to support PEP 518 builds (<a href="https://github.com/rasbt/mlxtend/issues/1065">#1065</a> via <a href="https://github.com/jmahlik">jmahlik</a>)</li>
+<li>Fixed installation from sdist failing (<a href="https://github.com/rasbt/mlxtend/issues/1065">#1065</a> via <a href="https://github.com/jmahlik">jmahlik</a>)</li>
+<li>Converted configuration to <code>pyproject.toml</code> (<a href="https://github.com/rasbt/mlxtend/issues/1065">#1065</a> via <a href="https://github.com/jmahlik">jmahlik</a>)</li>
+<li>Remove <code>mlxtend.image</code>  submodule with face recognition functions due to poor <code>dlib</code> support in modern environments.</li>
 </ul>
 <h5 id="new-features-and-enhancements">New Features and Enhancements</h5>
 <ul>

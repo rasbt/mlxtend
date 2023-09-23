@@ -320,20 +320,6 @@
   </li>
                                     
   <li class="dropdown-submenu">
-    <a href="#" class="dropdown-item">image</a>
-    <ul class="dropdown-menu">
-            
-<li>
-    <a href="../user_guide/image/extract_face_landmarks/" class="dropdown-item">extract_face_landmarks: extract 68 landmark features from face images</a>
-</li>
-            
-<li>
-    <a href="../user_guide/image/eyepad_align/" class="dropdown-item">EyepadAlign:  align face images based on eye location</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
     <a href="#" class="dropdown-item">math</a>
     <ul class="dropdown-menu">
             
@@ -536,10 +522,6 @@
                                     
 <li>
     <a href="../api_subpackages/mlxtend.frequent_patterns/" class="dropdown-item">Mlxtend.frequent patterns</a>
-</li>
-                                    
-<li>
-    <a href="../api_subpackages/mlxtend.image/" class="dropdown-item">Mlxtend.image</a>
 </li>
                                     
 <li>
@@ -954,12 +936,17 @@ squash 046e3af fixed setup.py
 <h3 id="3-deploying-the-package">3. Deploying the package</h3>
 <p>Consider deploying the package to the PyPI test server first. The setup instructions can be found <a href="https://wiki.python.org/moin/TestPyPI">here</a>.</p>
 <p><strong>First</strong>, install Twine if  you don't have it already installed. E.g., use the following to install all recommended packages:</p>
-<pre><code class="language-bash">$ conda install wheel twine setuptools
+<pre><code class="language-bash">$ python -m pip install twine build
 </code></pre>
-<p><strong>Second</strong>, create the binaries</p>
-<pre><code class="language-bash">$ python setup.py sdist
+<p><strong>Second</strong>, create the distribution. This by default creates an sdist and wheel
+in the <code>./dist</code> directory.</p>
+<pre><code class="language-bash">$ python -m build
 </code></pre>
-<pre><code class="language-bash">$ python setup.py bdist_wheel --universal
+<p>Install the wheel and sdist to make sure they work.
+The distributions file names will change with each version.</p>
+<pre><code class="language-bash">python -m pip install ./dist/mlxtend-0.23.0.dev0.tar.gz --force-reinstall
+python -m pip install ./dist/mlxtend-0.23.0.dev0-py3-none-any.whl --force-reinstall
+python -m pip uninstall mlxtend
 </code></pre>
 <p><strong>Third</strong>, upload the packages to the test server:</p>
 <pre><code class="language-bash">$ twine upload --repository-url https://upload.pypi.org/legacy dist/

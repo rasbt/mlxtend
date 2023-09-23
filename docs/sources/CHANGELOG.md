@@ -9,21 +9,22 @@ The CHANGELOG for the current development version is available at
 
 
 
-### Version 0.23.0dev (Next Release)
+### Version 0.23.0 (22 Sep 2023)
 
 ##### Downloads
 
-- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.23.0.zip)
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.21.1.zip)
 
-- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.23.0.tar.gz)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.22.1.tar.gz)
 
 ##### Changes
 
 - Address NumPy deprecations to make mlxtend compatible to NumPy 1.24 
 - Changed the signature of the `LinearRegression` model of sklearn in the test removing the `normalize` parameter as it is deprecated. ([#1036](https://github.com/rasbt/mlxtend/issues/1036))
-- Add `pyproject.toml` to support PEP 518 builds
-- Fixed installation from sdist failing
-- Converted configuration to `pyproject.toml` 
+- Add `pyproject.toml` to support PEP 518 builds ([#1065](https://github.com/rasbt/mlxtend/issues/1065) via [jmahlik](https://github.com/jmahlik))
+- Fixed installation from sdist failing ([#1065](https://github.com/rasbt/mlxtend/issues/1065) via [jmahlik](https://github.com/jmahlik))
+- Converted configuration to `pyproject.toml` ([#1065](https://github.com/rasbt/mlxtend/issues/1065) via [jmahlik](https://github.com/jmahlik))
+- Remove `mlxtend.image`  submodule with face recognition functions due to poor `dlib` support in modern environments.
 
 ##### New Features and Enhancements
 

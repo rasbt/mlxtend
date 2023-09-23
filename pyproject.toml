@@ -33,7 +33,7 @@ classifiers=[
 
 [project.optional-dependencies]
 testing = ["pytest"]
-docs = ["mkdocs", "pip install python-markdown-math", "mkdocs-bootswatch", "nbconvert"]
+docs = ["mkdocs", "python-markdown-math", "mkdocs-bootswatch", "nbconvert"]
 
 [project.urls]
 Homepage = "https://github.com/rasbt/mlxtend"

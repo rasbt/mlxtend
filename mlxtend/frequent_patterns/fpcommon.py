@@ -1,6 +1,5 @@
 import collections
 import warnings
-from packaging.version import LooseVersion as Version
 
 import numpy as np
 import pandas as pd

@@ -30,7 +30,7 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGE.
 """
 
-from distutils.core import setup
+from setuptools import setup
 
 long_description = """This extension adds math formulas support to Python-Markdown_
 (works with version 2.6 or newer).

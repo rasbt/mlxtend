@@ -47,8 +47,12 @@ platforms = ["any"]
 version = {attr = "mlxtend.__version__"}
 dependencies = {file = "requirements.txt"}
 
+[tool.setuptools.packages.find]
+include = ["mlxtend", "mlxtend.*"]
+namespaces = false
+
 [tool.setuptools.package-data]
-"*" = ["LICENSE-BSD3.txt", "LICENSE-CC-BY.txt", "README.md", "requirements.txt"]
+mlxtend = ["LICENSE-BSD3.txt", "LICENSE-CC-BY.txt", "README.md", "requirements.txt", "mlxtend/data/data/*"]
 
 [tool.pytest.ini_options]
 norecursedirs = [

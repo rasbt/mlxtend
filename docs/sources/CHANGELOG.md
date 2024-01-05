@@ -7,15 +7,28 @@ The CHANGELOG for the current development version is available at
 
 ---
 
+### Version 0.23.1 (5 Jan 2024)
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.23.1.zip)
+
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.23.1.tar.gz)
+
+##### Changes
+
+- Updated dependency on distutils for python 3.12 and above ([#1072](https://github.com/rasbt/mlxtend/issues/1072) via [peanutsee](https://github.com/peanutsee))
+
+
 
 
 ### Version 0.23.0 (22 Sep 2023)
 
 ##### Downloads
 
-- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.21.1.zip)
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.23.0.zip)
 
-- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.22.1.tar.gz)
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.23.0.tar.gz)
 
 ##### Changes
 

@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2023
+# Sebastian Raschka 2014-2024
 # mlxtend Machine Learning Library Extensions
 #
 # A class to apply column-based mean centering to a dataset.

@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2023
+# Sebastian Raschka 2014-2024
 # mlxtend Machine Learning Library Extensions
 #
 # Implementation of the logistic regression algorithm for classification.

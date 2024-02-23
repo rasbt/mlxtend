@@ -7,6 +7,7 @@
 # License: BSD 3 clause
 
 import numpy as np
+import scipy as sp
 
 from .._base import _BaseModel
 
@@ -152,14 +153,14 @@ class PrincipalComponentAnalysis(_BaseModel):
 
     def _decomposition(self, mat, n_samples):
         if self.solver == "eigen":
-            e_vals, e_vecs = np.linalg.eig(mat)
+            e_vals, e_vecs = sp.linalg.eig(mat)
         elif self.solver == "svd":
             # Only SVD on mean centered data is equivalent to
             # PCA via covariance matrix (note that computing
-            # the covariance matrix will implicitely center
+            # the covariance matrix will implicitly center
             # the data)
             mat_centered = mat - mat.mean(axis=0)
-            u, s, v = np.linalg.svd(mat_centered.T)
+            u, s, _ = sp.linalg.svd(mat_centered.T, lapack_driver="gesvd")
             e_vecs, e_vals = u, s
             e_vals = e_vals**2 / (n_samples - 1)
             if e_vals.shape[0] < e_vecs.shape[1]:

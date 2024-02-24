@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Sebastian Raschka">
+        <link rel="canonical" href="https://rasbt.github.io/mlxtend/user_guide/classifier/StackingCVClassifier/">
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>StackingCVClassifier: Stacking with cross-validation - mlxtend</title>
+        <link href="../../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/color-brewer.min.css">
+        <link href="../../../cinder/css/base.css" rel="stylesheet">
+        <link href="../../../cinder/css/bootstrap-custom.css" rel="stylesheet">
+        <link href="../../../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../../cinder/css/cinder.css" rel="stylesheet">
+        <link href="../../../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../../../cinder/css/highlight.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', "UA-38457794-2", "rasbt.github.io/mlxtend/");
+            ga('send', 'pageview');
+        </script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../../..">mlxtend</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../../USER_GUIDE_INDEX/" class="dropdown-item">User Guide Index</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">classifier</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../Adaline/" class="dropdown-item">Adaline: Adaptive Linear Neuron Classifier</a>
+</li>
+            
+<li>
+    <a href="../EnsembleVoteClassifier/" class="dropdown-item">EnsembleVoteClassifier: A majority voting classifier</a>
+</li>
+            
+<li>
+    <a href="../LogisticRegression/" class="dropdown-item">LogisticRegression: A binary classifier</a>
+</li>
+            
+<li>
+    <a href="../MultiLayerPerceptron/" class="dropdown-item">MultilayerPerceptron: A simple multilayer neural network</a>
+</li>
+            
+<li>
+    <a href="../OneRClassifier/" class="dropdown-item">OneRClassifier: One Rule (OneR) method for classification</a>
+</li>
+            
+<li>
+    <a href="../Perceptron/" class="dropdown-item">Perceptron: A simple binary classifier</a>
+</li>
+            
+<li>
+    <a href="../SoftmaxRegression/" class="dropdown-item">SoftmaxRegression: Multiclass version of logistic regression</a>
+</li>
+            
+<li>
+    <a href="../StackingClassifier/" class="dropdown-item">StackingClassifier: Simple stacking</a>
+</li>
+            
+<li>
+    <a href="./" class="dropdown-item active">StackingCVClassifier: Stacking with cross-validation</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">cluster</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../cluster/Kmeans/" class="dropdown-item">Kmeans: k-means clustering</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">data</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../data/autompg_data/" class="dropdown-item">autompg_data: The Auto-MPG dataset for regression</a>
+</li>
+            
+<li>
+    <a href="../../data/boston_housing_data/" class="dropdown-item">boston_housing_data: The Boston housing dataset for regression</a>
+</li>
+            
+<li>
+    <a href="../../data/iris_data/" class="dropdown-item">iris_data: The 3-class iris dataset for classification</a>
+</li>
+            
+<li>
+    <a href="../../data/loadlocal_mnist/" class="dropdown-item">loadlocal_mnist: A function for loading MNIST from the original ubyte files</a>
+</li>
+            
+<li>
+    <a href="../../data/make_multiplexer_dataset/" class="dropdown-item">make_multiplexer_dataset: A function for creating multiplexer data</a>
+</li>
+            
+<li>
+    <a href="../../data/mnist_data/" class="dropdown-item">mnist_data: A subset of the MNIST dataset for classification</a>
+</li>
+            
+<li>
+    <a href="../../data/three_blobs_data/" class="dropdown-item">three_blobs_data: The synthetic blobs for classification</a>
+</li>
+            
+<li>
+    <a href="../../data/wine_data/" class="dropdown-item">wine_data: A 3-class wine dataset for classification</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">evaluate</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../evaluate/accuracy_score/" class="dropdown-item">accuracy_score: Computing standard, balanced, and per-class accuracy</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/bias_variance_decomp/" class="dropdown-item">bias_variance_decomp: Bias-variance decomposition for classification and regression losses</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/bootstrap/" class="dropdown-item">bootstrap: The ordinary nonparametric boostrap for arbitrary parameters</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/bootstrap_point632_score/" class="dropdown-item">bootstrap_point632_score: The .632 and .632+ boostrap for classifier evaluation</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/BootstrapOutOfBag/" class="dropdown-item">BootstrapOutOfBag: A scikit-learn compatible version of the out-of-bag bootstrap</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/cochrans_q/" class="dropdown-item">cochrans_q: Cochran's Q test for comparing multiple classifiers</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/combined_ftest_5x2cv/" class="dropdown-item">combined_ftest_5x2cv: 5x2cv combined F test for classifier comparisons</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/confusion_matrix/" class="dropdown-item">confusion_matrix: creating a confusion matrix for model evaluation</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/create_counterfactual/" class="dropdown-item">create_counterfactual: Interpreting models via counterfactuals</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/feature_importance_permutation/" class="dropdown-item">feature_importance_permutation: Estimate feature importance via feature permutation.</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/ftest/" class="dropdown-item">ftest: F-test for classifier comparisons</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/GroupTimeSeriesSplit/" class="dropdown-item">GroupTimeSeriesSplit: A scikit-learn compatible version of the time series validation with groups</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/lift_score/" class="dropdown-item">lift_score: Lift score for classification and association rule mining</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/mcnemar_table/" class="dropdown-item">mcnemar_table: Contingency table for McNemar's test</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/mcnemar_tables/" class="dropdown-item">mcnemar_tables: contingency tables for McNemar's test and Cochran's Q test</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/mcnemar/" class="dropdown-item">mcnemar: McNemar's test for classifier comparisons</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/paired_ttest_5x2cv/" class="dropdown-item">paired_ttest_5x2cv: 5x2cv paired t test for classifier comparisons</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/paired_ttest_kfold_cv/" class="dropdown-item">paired_ttest_kfold_cv: K-fold cross-validated paired t test</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/paired_ttest_resampled/" class="dropdown-item">paired_ttest_resample: Resampled paired t test</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/permutation_test/" class="dropdown-item">permutation_test: Permutation test for hypothesis testing</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/PredefinedHoldoutSplit/" class="dropdown-item">PredefinedHoldoutSplit: Utility for the holdout method compatible with scikit-learn</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/RandomHoldoutSplit/" class="dropdown-item">RandomHoldoutSplit: split a dataset into a train and validation subset for validation</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/scoring/" class="dropdown-item">scoring: computing various performance metrics</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">feature_extraction</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../feature_extraction/LinearDiscriminantAnalysis/" class="dropdown-item">LinearDiscriminantAnalysis: Linear discriminant analysis for dimensionality reduction</a>
+</li>
+            
+<li>
+    <a href="../../feature_extraction/PrincipalComponentAnalysis/" class="dropdown-item">PrincipalComponentAnalysis: Principal component analysis (PCA) for dimensionality reduction</a>
+</li>
+            
+<li>
+    <a href="../../feature_extraction/RBFKernelPCA/" class="dropdown-item">RBFKernelPCA</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">feature_selection</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../feature_selection/ColumnSelector/" class="dropdown-item">ColumnSelector: Scikit-learn utility function to select specific columns in a pipeline</a>
+</li>
+            
+<li>
+    <a href="../../feature_selection/ExhaustiveFeatureSelector/" class="dropdown-item">ExhaustiveFeatureSelector: Optimal feature sets by considering all possible feature combinations</a>
+</li>
+            
+<li>
+    <a href="../../feature_selection/SequentialFeatureSelector/" class="dropdown-item">SequentialFeatureSelector: The popular forward and backward feature selection approaches (including floating variants)</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">file_io</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../file_io/find_filegroups/" class="dropdown-item">find_filegroups: Find files that only differ via their file extensions</a>
+</li>
+            
+<li>
+    <a href="../../file_io/find_files/" class="dropdown-item">find_files: Find files based on substring matches</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">frequent_patterns</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../frequent_patterns/apriori/" class="dropdown-item">Apriori</a>
+</li>
+            
+<li>
+    <a href="../../frequent_patterns/association_rules/" class="dropdown-item">Association rules</a>
+</li>
+            
+<li>
+    <a href="../../frequent_patterns/fpgrowth/" class="dropdown-item">Fpgrowth</a>
+</li>
+            
+<li>
+    <a href="../../frequent_patterns/fpmax/" class="dropdown-item">Fpmax</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">math</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../math/num_combinations/" class="dropdown-item">num_combinations: combinations for creating subsequences of k elements</a>
+</li>
+            
+<li>
+    <a href="../../math/num_permutations/" class="dropdown-item">num_permutations: number of permutations for creating subsequences of k elements</a>
+</li>
+            
+<li>
+    <a href="../../math/vectorspace_dimensionality/" class="dropdown-item">vectorspace_dimensionality: compute the number of dimensions that a set of vectors spans</a>
+</li>
+            
+<li>
+    <a href="../../math/vectorspace_orthonormalization/" class="dropdown-item">vectorspace_orthonormalization: Converts a set of linearly independent vectors to a set of orthonormal basis vectors</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">plotting</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../plotting/category_scatter/" class="dropdown-item">Scategory_scatter: Create a scatterplot with categories in different colors</a>
+</li>
+            
+<li>
+    <a href="../../plotting/checkerboard_plot/" class="dropdown-item">checkerboard_plot: Create a checkerboard plot in matplotlib</a>
+</li>
+            
+<li>
+    <a href="../../plotting/plot_pca_correlation_graph/" class="dropdown-item">plot_pca_correlation_graph: plot correlations between original features and principal components</a>
+</li>
+            
+<li>
+    <a href="../../plotting/ecdf/" class="dropdown-item">ecdf: Create an empirical cumulative distribution function plot</a>
+</li>
+            
+<li>
+    <a href="../../plotting/enrichment_plot/" class="dropdown-item">enrichment_plot: create an enrichment plot for cumulative counts</a>
+</li>
+            
+<li>
+    <a href="../../plotting/heatmap/" class="dropdown-item">heatmap: Create a heatmap in matplotlib</a>
+</li>
+            
+<li>
+    <a href="../../plotting/plot_confusion_matrix/" class="dropdown-item">plot_confusion_matrix: Visualize confusion matrices</a>
+</li>
+            
+<li>
+    <a href="../../plotting/plot_decision_regions/" class="dropdown-item">plot_decision_regions: Visualize the decision regions of a classifier</a>
+</li>
+            
+<li>
+    <a href="../../plotting/plot_learning_curves/" class="dropdown-item">plot_learning_curves: Plot learning curves from training and test sets</a>
+</li>
+            
+<li>
+    <a href="../../plotting/plot_linear_regression/" class="dropdown-item">plot_linear_regression: A quick way for plotting linear regression fits</a>
+</li>
+            
+<li>
+    <a href="../../plotting/plot_sequential_feature_selection/" class="dropdown-item">plot_sequential_feature_selection: Visualize selected feature subset performances from the SequentialFeatureSelector</a>
+</li>
+            
+<li>
+    <a href="../../plotting/scatterplotmatrix/" class="dropdown-item">scatterplotmatrix: visualize datasets via a scatter plot matrix</a>
+</li>
+            
+<li>
+    <a href="../../plotting/scatter_hist/" class="dropdown-item">scatter_hist: create a scatter histogram plot</a>
+</li>
+            
+<li>
+    <a href="../../plotting/stacked_barplot/" class="dropdown-item">stacked_barplot: Plot stacked bar plots in matplotlib</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">preprocessing</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../preprocessing/CopyTransformer/" class="dropdown-item">CopyTransformer: A function that creates a copy of the input array in a scikit-learn pipeline</a>
+</li>
+            
+<li>
+    <a href="../../preprocessing/DenseTransformer/" class="dropdown-item">DenseTransformer: Transforms a sparse into a dense NumPy array, e.g., in a scikit-learn pipeline</a>
+</li>
+            
+<li>
+    <a href="../../preprocessing/MeanCenterer/" class="dropdown-item">MeanCenterer: column-based mean centering on a NumPy array</a>
+</li>
+            
+<li>
+    <a href="../../preprocessing/minmax_scaling/" class="dropdown-item">MinMaxScaling: Min-max scaling fpr pandas DataFrames and NumPy arrays</a>
+</li>
+            
+<li>
+    <a href="../../preprocessing/one-hot_encoding/" class="dropdown-item">One hot encoding</a>
+</li>
+            
+<li>
+    <a href="../../preprocessing/shuffle_arrays_unison/" class="dropdown-item">shuffle_arrays_unison: shuffle arrays in a consistent fashion</a>
+</li>
+            
+<li>
+    <a href="../../preprocessing/standardize/" class="dropdown-item">standardize: A function to standardize columns in a 2D NumPy array</a>
+</li>
+            
+<li>
+    <a href="../../preprocessing/TransactionEncoder/" class="dropdown-item">TransactionEncoder</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">regressor</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../regressor/LinearRegression/" class="dropdown-item">LinearRegression: An implementation of ordinary least-squares linear regression</a>
+</li>
+            
+<li>
+    <a href="../../regressor/StackingCVRegressor/" class="dropdown-item">StackingCVRegressor: stacking with cross-validation for regression</a>
+</li>
+            
+<li>
+    <a href="../../regressor/StackingRegressor/" class="dropdown-item">StackingRegressor: a simple stacking implementation for regression</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">text</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../text/generalize_names/" class="dropdown-item">generalize_names: convert names into a generalized format</a>
+</li>
+            
+<li>
+    <a href="../../text/generalize_names_duplcheck/" class="dropdown-item">generalize_names_duplcheck: Generalize names while preventing duplicates among different names</a>
+</li>
+            
+<li>
+    <a href="../../text/tokenizer/" class="dropdown-item">tokenizer_emoticons: tokenizers for emoticons</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">utils</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../utils/Counter/" class="dropdown-item">Counter: A simple progress counter</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.classifier/" class="dropdown-item">Mlxtend.classifier</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.cluster/" class="dropdown-item">Mlxtend.cluster</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.data/" class="dropdown-item">Mlxtend.data</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.evaluate/" class="dropdown-item">Mlxtend.evaluate</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.feature_extraction/" class="dropdown-item">Mlxtend.feature extraction</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.feature_selection/" class="dropdown-item">Mlxtend.feature selection</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.file_io/" class="dropdown-item">Mlxtend.file io</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.frequent_patterns/" class="dropdown-item">Mlxtend.frequent patterns</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.plotting/" class="dropdown-item">Mlxtend.plotting</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.preprocessing/" class="dropdown-item">Mlxtend.preprocessing</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.regressor/" class="dropdown-item">Mlxtend.regressor</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.text/" class="dropdown-item">Mlxtend.text</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.utils/" class="dropdown-item">Mlxtend.utils</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../../installation/" class="nav-link">Installation</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../../CHANGELOG/" class="dropdown-item">Release Notes</a>
+</li>
+                                    
+<li>
+    <a href="../../../Code-of-Conduct/" class="dropdown-item">Code of Conduct</a>
+</li>
+                                    
+<li>
+    <a href="../../../CONTRIBUTING/" class="dropdown-item">How To Contribute</a>
+</li>
+                                    
+<li>
+    <a href="../../../contributors/" class="dropdown-item">Contributors</a>
+</li>
+                                    
+<li>
+    <a href="../../../license/" class="dropdown-item">License</a>
+</li>
+                                    
+<li>
+    <a href="../../../cite/" class="dropdown-item">Citing Mlxtend</a>
+</li>
+                                    
+<li>
+    <a href="../../../discuss/" class="dropdown-item">Discuss</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../StackingClassifier/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../../cluster/Kmeans/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/rasbt/mlxtend/tree/master/docs/sources/user_guide/classifier/StackingCVClassifier.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#stackingcvclassifier-stacking-with-cross-validation" class="nav-link">StackingCVClassifier: Stacking with cross-validation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#overview" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#example-1-simple-stacking-cv-classification" class="nav-link">Example 1 - Simple Stacking CV Classification</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#example-2-using-probabilities-as-meta-features" class="nav-link">Example 2 - Using Probabilities as Meta-Features</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#example-3-stacked-cv-classification-and-gridsearch" class="nav-link">Example 3 - Stacked CV Classification and GridSearch</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#example-4-stacking-of-classifiers-that-operate-on-different-feature-subsets" class="nav-link">Example 4 - Stacking of Classifiers that Operate on Different Feature Subsets</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#example-5-roc-curve-with-decision_function" class="nav-link">Example 5 -- ROC Curve with decision_function</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#api" class="nav-link">API</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="stackingcvclassifier-stacking-with-cross-validation">StackingCVClassifier: Stacking with cross-validation</h1>
+<p>An ensemble-learning meta-classifier for stacking using cross-validation to prepare the inputs for the level-2 classifier to prevent overfitting.</p>
+<blockquote>
+<p>from mlxtend.classifier import StackingCVClassifier</p>
+</blockquote>
+<h1 id="overview">Overview</h1>
+<p>Stacking is an ensemble learning technique to combine multiple classification models via a meta-classifier. The <code>StackingCVClassifier</code> extends the standard stacking algorithm (implemented as <a href="../StackingClassifier/"><code>StackingClassifier</code></a>) using cross-validation to prepare the input data for the level-2 classifier. </p>
+<p>In the standard stacking procedure, the first-level classifiers are fit to the same training set that is used prepare the inputs for the second-level classifier, which may lead to overfitting. The <code>StackingCVClassifier</code>, however, uses the concept of cross-validation: the dataset is split into <em>k</em> folds, and in <em>k</em> successive rounds, <em>k-1</em> folds are used to fit the first level classifier; in each round, the first-level classifiers are then applied to the remaining 1 subset that was not used for model fitting in each iteration. The resulting predictions are then stacked and provided -- as input data -- to the second-level classifier. After the training of the <code>StackingCVClassifier</code>, the first-level classifiers are fit to the entire dataset as illustrated in the figure below.</p>
+<p><img alt="" src="../StackingCVClassifier_files/stacking_cv_classification_overview.png" /></p>
+<p>More formally, the Stacking Cross-Validation algorithm can be summarized as follows (source: [1]):</p>
+<p><img alt="" src="../StackingCVClassifier_files/stacking_cv_algorithm.png" /></p>
+<h3 id="references">References</h3>
+<ul>
+<li>[1] Tang, J., S. Alelyani, and H. Liu. "<a href="https://books.google.com/books?id=nwQZCwAAQBAJ&amp;lpg=PA500&amp;dq=stacking%20classifier%20subsets&amp;pg=PA499#v=onepage&amp;q&amp;f=false">Data Classification: Algorithms and Applications.</a>" Data Mining and Knowledge Discovery Series, CRC Press (2015): pp. 498-500.</li>
+<li>[2] Wolpert, David H. "<a href="https://www.sciencedirect.com/science/article/pii/S0893608005800231">Stacked generalization.</a>" Neural networks 5.2 (1992): 241-259.</li>
+<li>[3] Marios Michailidis (2017), StackNet, StackNet Meta Modelling Framework, https://github.com/kaz-Anova/StackNet</li>
+</ul>
+<h2 id="example-1-simple-stacking-cv-classification">Example 1 - Simple Stacking CV Classification</h2>
+<pre><code class="language-python">from sklearn import datasets
+
+iris = datasets.load_iris()
+X, y = iris.data[:, 1:3], iris.target
+</code></pre>
+<pre><code class="language-python">from sklearn import model_selection
+from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB 
+from sklearn.ensemble import RandomForestClassifier
+from mlxtend.classifier import StackingCVClassifier
+import numpy as np
+import warnings
+
+warnings.simplefilter('ignore')
+
+RANDOM_SEED = 42
+
+clf1 = KNeighborsClassifier(n_neighbors=1)
+clf2 = RandomForestClassifier(random_state=RANDOM_SEED)
+clf3 = GaussianNB()
+lr = LogisticRegression()
+
+# Starting from v0.16.0, StackingCVRegressor supports
+# `random_state` to get deterministic result.
+sclf = StackingCVClassifier(classifiers=[clf1, clf2, clf3],
+                            meta_classifier=lr,
+                            random_state=RANDOM_SEED)
+
+print('3-fold cross validation:\n')
+
+for clf, label in zip([clf1, clf2, clf3, sclf], 
+                      ['KNN', 
+                       'Random Forest', 
+                       'Naive Bayes',
+                       'StackingClassifier']):
+
+    scores = model_selection.cross_val_score(clf, X, y, 
+                                              cv=3, scoring='accuracy')
+    print(&quot;Accuracy: %0.2f (+/- %0.2f) [%s]&quot; 
+          % (scores.mean(), scores.std(), label))
+</code></pre>
+<pre><code>3-fold cross validation:
+
+Accuracy: 0.91 (+/- 0.01) [KNN]
+Accuracy: 0.95 (+/- 0.01) [Random Forest]
+Accuracy: 0.91 (+/- 0.02) [Naive Bayes]
+Accuracy: 0.93 (+/- 0.02) [StackingClassifier]
+</code></pre>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+from mlxtend.plotting import plot_decision_regions
+import matplotlib.gridspec as gridspec
+import itertools
+
+gs = gridspec.GridSpec(2, 2)
+
+fig = plt.figure(figsize=(10,8))
+
+for clf, lab, grd in zip([clf1, clf2, clf3, sclf], 
+                         ['KNN', 
+                          'Random Forest', 
+                          'Naive Bayes',
+                          'StackingCVClassifier'],
+                          itertools.product([0, 1], repeat=2)):
+
+    clf.fit(X, y)
+    ax = plt.subplot(gs[grd[0], grd[1]])
+    fig = plot_decision_regions(X=X, y=y, clf=clf)
+    plt.title(lab)
+plt.show()
+</code></pre>
+<p><img alt="png" src="../StackingCVClassifier_files/StackingCVClassifier_13_0.png" /></p>
+<h2 id="example-2-using-probabilities-as-meta-features">Example 2 - Using Probabilities as Meta-Features</h2>
+<p>Alternatively, the class-probabilities of the first-level classifiers can be used to train the meta-classifier (2nd-level classifier) by setting <code>use_probas=True</code>. For example, in a 3-class setting with 2 level-1 classifiers, these classifiers may make the following "probability" predictions for 1 training sample:</p>
+<ul>
+<li>classifier 1: [0.2, 0.5, 0.3]</li>
+<li>classifier 2: [0.3, 0.4, 0.4]</li>
+</ul>
+<p>This results in <em>k</em> features, where <em>k</em> = [n_classes * n_classifiers], by stacking these level-1 probabilities:</p>
+<ul>
+<li>[0.2, 0.5, 0.3, 0.3, 0.4, 0.4]</li>
+</ul>
+<pre><code class="language-python">clf1 = KNeighborsClassifier(n_neighbors=1)
+clf2 = RandomForestClassifier(random_state=1)
+clf3 = GaussianNB()
+lr = LogisticRegression()
+
+sclf = StackingCVClassifier(classifiers=[clf1, clf2, clf3],
+                            use_probas=True,
+                            meta_classifier=lr,
+                            random_state=42)
+
+print('3-fold cross validation:\n')
+
+for clf, label in zip([clf1, clf2, clf3, sclf], 
+                      ['KNN', 
+                       'Random Forest', 
+                       'Naive Bayes',
+                       'StackingClassifier']):
+
+    scores = model_selection.cross_val_score(clf, X, y, 
+                                              cv=3, scoring='accuracy')
+    print(&quot;Accuracy: %0.2f (+/- %0.2f) [%s]&quot; 
+          % (scores.mean(), scores.std(), label))
+</code></pre>
+<pre><code>3-fold cross validation:
+
+Accuracy: 0.91 (+/- 0.01) [KNN]
+Accuracy: 0.95 (+/- 0.01) [Random Forest]
+Accuracy: 0.91 (+/- 0.02) [Naive Bayes]
+Accuracy: 0.95 (+/- 0.02) [StackingClassifier]
+</code></pre>
+<h2 id="example-3-stacked-cv-classification-and-gridsearch">Example 3 - Stacked CV Classification and GridSearch</h2>
+<p>The stack allows tuning hyper parameters of the base and meta models! A full list of tunable parameters can be obtained via <code>estimator.get_params().keys()</code>.</p>
+<pre><code class="language-python">from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB 
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import GridSearchCV
+from mlxtend.classifier import StackingCVClassifier
+
+# Initializing models
+
+clf1 = KNeighborsClassifier(n_neighbors=1)
+clf2 = RandomForestClassifier(random_state=RANDOM_SEED)
+clf3 = GaussianNB()
+lr = LogisticRegression()
+
+sclf = StackingCVClassifier(classifiers=[clf1, clf2, clf3], 
+                            meta_classifier=lr,
+                            random_state=42)
+
+params = {'kneighborsclassifier__n_neighbors': [1, 5],
+          'randomforestclassifier__n_estimators': [10, 50],
+          'meta_classifier__C': [0.1, 10.0]}
+
+grid = GridSearchCV(estimator=sclf, 
+                    param_grid=params, 
+                    cv=5,
+                    refit=True)
+grid.fit(X, y)
+
+cv_keys = ('mean_test_score', 'std_test_score', 'params')
+
+for r, _ in enumerate(grid.cv_results_['mean_test_score']):
+    print(&quot;%0.3f +/- %0.2f %r&quot;
+          % (grid.cv_results_[cv_keys[0]][r],
+             grid.cv_results_[cv_keys[1]][r] / 2.0,
+             grid.cv_results_[cv_keys[2]][r]))
+
+print('Best parameters: %s' % grid.best_params_)
+print('Accuracy: %.2f' % grid.best_score_)
+</code></pre>
+<pre><code>0.947 +/- 0.03 {'kneighborsclassifier__n_neighbors': 1, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.933 +/- 0.02 {'kneighborsclassifier__n_neighbors': 1, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.940 +/- 0.02 {'kneighborsclassifier__n_neighbors': 1, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.940 +/- 0.02 {'kneighborsclassifier__n_neighbors': 1, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+0.953 +/- 0.02 {'kneighborsclassifier__n_neighbors': 5, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.953 +/- 0.02 {'kneighborsclassifier__n_neighbors': 5, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.953 +/- 0.02 {'kneighborsclassifier__n_neighbors': 5, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.953 +/- 0.02 {'kneighborsclassifier__n_neighbors': 5, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+Best parameters: {'kneighborsclassifier__n_neighbors': 5, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+Accuracy: 0.95
+</code></pre>
+<p>In case we are planning to use a regression algorithm multiple times, all we need to do is to add an additional number suffix in the parameter grid as shown below:</p>
+<pre><code class="language-python">from sklearn.model_selection import GridSearchCV
+
+# Initializing models
+
+clf1 = KNeighborsClassifier(n_neighbors=1)
+clf2 = RandomForestClassifier(random_state=RANDOM_SEED)
+clf3 = GaussianNB()
+lr = LogisticRegression()
+
+sclf = StackingCVClassifier(classifiers=[clf1, clf1, clf2, clf3], 
+                            meta_classifier=lr,
+                            random_state=RANDOM_SEED)
+
+params = {'kneighborsclassifier-1__n_neighbors': [1, 5],
+          'kneighborsclassifier-2__n_neighbors': [1, 5],
+          'randomforestclassifier__n_estimators': [10, 50],
+          'meta_classifier__C': [0.1, 10.0]}
+
+grid = GridSearchCV(estimator=sclf, 
+                    param_grid=params, 
+                    cv=5,
+                    refit=True)
+grid.fit(X, y)
+
+cv_keys = ('mean_test_score', 'std_test_score', 'params')
+
+for r, _ in enumerate(grid.cv_results_['mean_test_score']):
+    print(&quot;%0.3f +/- %0.2f %r&quot;
+          % (grid.cv_results_[cv_keys[0]][r],
+             grid.cv_results_[cv_keys[1]][r] / 2.0,
+             grid.cv_results_[cv_keys[2]][r]))
+
+print('Best parameters: %s' % grid.best_params_)
+print('Accuracy: %.2f' % grid.best_score_)
+</code></pre>
+<pre><code>0.940 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.940 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.940 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.940 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 1, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+0.960 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.953 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.953 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.953 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+0.960 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.953 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.953 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.953 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 1, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+0.953 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+0.953 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 50}
+0.953 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 10}
+0.953 +/- 0.02 {'kneighborsclassifier-1__n_neighbors': 5, 'kneighborsclassifier-2__n_neighbors': 5, 'meta_classifier__C': 10.0, 'randomforestclassifier__n_estimators': 50}
+Best parameters: {'kneighborsclassifier-1__n_neighbors': 1, 'kneighborsclassifier-2__n_neighbors': 5, 'meta_classifier__C': 0.1, 'randomforestclassifier__n_estimators': 10}
+Accuracy: 0.96
+</code></pre>
+<p><strong>Note</strong></p>
+<p>The <code>StackingClassifier</code> also enables grid search over the <code>classifiers</code> argument. When there are level-mixed hyperparameters, GridSearchCV will try to replace hyperparameters in a top-down order, i.e., classifers -&gt; single base classifier -&gt; classifier hyperparameter. For instance,  given a hyperparameter grid such as</p>
+<pre><code>params = {'randomforestclassifier__n_estimators': [1, 100],
+'classifiers': [(clf1, clf1, clf1), (clf2, clf3)]}
+</code></pre>
+<p>it will first use the instance settings of either (clf1, clf1, clf1) or (clf2, clf3). Then it will replace the <code>'n_estimators'</code> settings for a matching classifier based on <code>'randomforestclassifier__n_estimators': [1, 100]</code>.</p>
+<h2 id="example-4-stacking-of-classifiers-that-operate-on-different-feature-subsets">Example 4 - Stacking of Classifiers that Operate on Different Feature Subsets</h2>
+<p>The different level-1 classifiers can be fit to different subsets of features in the training dataset. The following example illustrates how this can be done on a technical level using scikit-learn pipelines and the <code>ColumnSelector</code>:</p>
+<pre><code class="language-python">from sklearn.datasets import load_iris
+from mlxtend.classifier import StackingCVClassifier
+from mlxtend.feature_selection import ColumnSelector
+from sklearn.pipeline import make_pipeline
+from sklearn.linear_model import LogisticRegression
+
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+pipe1 = make_pipeline(ColumnSelector(cols=(0, 2)),
+                      LogisticRegression())
+pipe2 = make_pipeline(ColumnSelector(cols=(1, 2, 3)),
+                      LogisticRegression())
+
+sclf = StackingCVClassifier(classifiers=[pipe1, pipe2], 
+                            meta_classifier=LogisticRegression(),
+                            random_state=42)
+
+sclf.fit(X, y)
+</code></pre>
+<pre><code>StackingCVClassifier(classifiers=[Pipeline(memory=None,
+                                           steps=[('columnselector',
+                                                   ColumnSelector(cols=(0, 2),
+                                                                  drop_axis=False)),
+                                                  ('logisticregression',
+                                                   LogisticRegression(C=1.0,
+                                                                      class_weight=None,
+                                                                      dual=False,
+                                                                      fit_intercept=True,
+                                                                      intercept_scaling=1,
+                                                                      l1_ratio=None,
+                                                                      max_iter=100,
+                                                                      multi_class='auto',
+                                                                      n_jobs=None,
+                                                                      penalty='l2',
+                                                                      random_state=None,
+                                                                      solver='lbfgs',
+                                                                      tol=0.0...
+                                                        fit_intercept=True,
+                                                        intercept_scaling=1,
+                                                        l1_ratio=None,
+                                                        max_iter=100,
+                                                        multi_class='auto',
+                                                        n_jobs=None,
+                                                        penalty='l2',
+                                                        random_state=None,
+                                                        solver='lbfgs',
+                                                        tol=0.0001, verbose=0,
+                                                        warm_start=False),
+                     n_jobs=None, pre_dispatch='2*n_jobs', random_state=42,
+                     shuffle=True, store_train_meta_features=False,
+                     stratify=True, use_clones=True,
+                     use_features_in_secondary=False, use_probas=False,
+                     verbose=0)
+</code></pre>
+<h2 id="example-5-roc-curve-with-decision_function">Example 5 -- ROC Curve with <code>decision_function</code></h2>
+<p>Like other scikit-learn classifiers, the <code>StackingCVClassifier</code> has an <code>decision_function</code> method that can be used for plotting ROC curves. Note that the <code>decision_function</code> expects and requires the meta-classifier to implement a <code>decision_function</code>.</p>
+<pre><code class="language-python">from sklearn import model_selection
+from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
+from mlxtend.classifier import StackingCVClassifier
+from sklearn.metrics import roc_curve, auc
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn import datasets
+from sklearn.preprocessing import label_binarize
+from sklearn.multiclass import OneVsRestClassifier
+
+
+iris = datasets.load_iris()
+X, y = iris.data[:, [0, 1]], iris.target
+
+
+# Binarize the output
+y = label_binarize(y, classes=[0, 1, 2])
+n_classes = y.shape[1]
+
+
+
+RANDOM_SEED = 42
+
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.33, random_state=RANDOM_SEED)
+
+clf1 =  LogisticRegression()
+clf2 = RandomForestClassifier(random_state=RANDOM_SEED)
+clf3 = SVC(random_state=RANDOM_SEED)
+lr = LogisticRegression()
+
+
+sclf = StackingCVClassifier(classifiers=[clf1, clf2, clf3],
+                            meta_classifier=lr)
+
+
+# Learn to predict each class against the other
+classifier = OneVsRestClassifier(sclf)
+</code></pre>
+<p><strong>Using <code>predict_proba()</code></strong></p>
+<pre><code class="language-python">y_score = classifier.fit(X_train, y_train).predict_proba(X_test)
+
+# Compute ROC curve and ROC area for each class
+fpr = dict()
+tpr = dict()
+roc_auc = dict()
+for i in range(n_classes):
+    fpr[i], tpr[i], _ = roc_curve(y_test[:, i], y_score[:, i])
+    roc_auc[i] = auc(fpr[i], tpr[i])
+
+# Compute micro-average ROC curve and ROC area
+fpr[&quot;micro&quot;], tpr[&quot;micro&quot;], _ = roc_curve(y_test.ravel(), y_score.ravel())
+roc_auc[&quot;micro&quot;] = auc(fpr[&quot;micro&quot;], tpr[&quot;micro&quot;])
+
+plt.figure()
+lw = 2
+plt.plot(fpr[2], tpr[2], color='darkorange',
+         lw=lw, label='ROC curve (area = %0.2f)' % roc_auc[2])
+plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.05])
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Receiver operating characteristic example')
+plt.legend(loc=&quot;lower right&quot;)
+plt.show()
+</code></pre>
+<p><img alt="png" src="../StackingCVClassifier_files/StackingCVClassifier_30_0.png" /></p>
+<p><strong>Using <code>decision_function()</code></strong></p>
+<pre><code class="language-python">y_score = classifier.fit(X_train, y_train).decision_function(X_test)
+
+# Compute ROC curve and ROC area for each class
+fpr = dict()
+tpr = dict()
+roc_auc = dict()
+for i in range(n_classes):
+    fpr[i], tpr[i], _ = roc_curve(y_test[:, i], y_score[:, i])
+    roc_auc[i] = auc(fpr[i], tpr[i])
+
+# Compute micro-average ROC curve and ROC area
+fpr[&quot;micro&quot;], tpr[&quot;micro&quot;], _ = roc_curve(y_test.ravel(), y_score.ravel())
+roc_auc[&quot;micro&quot;] = auc(fpr[&quot;micro&quot;], tpr[&quot;micro&quot;])
+
+plt.figure()
+lw = 2
+plt.plot(fpr[2], tpr[2], color='darkorange',
+         lw=lw, label='ROC curve (area = %0.2f)' % roc_auc[2])
+plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.05])
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Receiver operating characteristic example')
+plt.legend(loc=&quot;lower right&quot;)
+plt.show()
+</code></pre>
+<p><img alt="png" src="../StackingCVClassifier_files/StackingCVClassifier_32_0.png" /></p>
+<h1 id="api">API</h1>
+<p><em>StackingCVClassifier(classifiers, meta_classifier, use_probas=False, drop_proba_col=None, cv=2, shuffle=True, random_state=None, stratify=True, verbose=0, use_features_in_secondary=False, store_train_meta_features=False, use_clones=True, n_jobs=None, pre_dispatch='2</em>n_jobs')*</p>
+<p>A 'Stacking Cross-Validation' classifier for scikit-learn estimators.</p>
+<p>New in mlxtend v0.4.3</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>classifiers</code> : array-like, shape = [n_classifiers]</p>
+<p>A list of classifiers.
+Invoking the <code>fit</code> method on the <code>StackingCVClassifer</code> will fit clones
+of these original classifiers that will
+be stored in the class attribute <code>self.clfs_</code>.</p>
+</li>
+<li>
+<p><code>meta_classifier</code> : object</p>
+<p>The meta-classifier to be fitted on the ensemble of
+classifiers</p>
+</li>
+<li>
+<p><code>use_probas</code> : bool (default: False)</p>
+<p>If True, trains meta-classifier based on predicted probabilities
+instead of class labels.</p>
+</li>
+<li>
+<p><code>drop_proba_col</code> : string (default: None)</p>
+<p>Drops extra "probability" column in the feature set, because it is
+redundant:
+p(y_c) = 1 - p(y_1) + p(y_2) + ... + p(y_{c-1}).
+This can be useful for meta-classifiers that are sensitive to perfectly
+collinear features.
+If <code>last</code>, drops last probability column.
+If <code>first</code>, drops first probability column.
+Only relevant if <code>use_probas=True</code>.</p>
+</li>
+<li>
+<p><code>cv</code> : int, cross-validation generator or an iterable, optional (default: 2)</p>
+<p>Determines the cross-validation splitting strategy.
+Possible inputs for cv are:
+- None, to use the default 2-fold cross validation,
+- integer, to specify the number of folds in a <code>(Stratified)KFold</code>,
+- An object to be used as a cross-validation generator.
+- An iterable yielding train, test splits.
+For integer/None inputs, it will use either a <code>KFold</code> or
+<code>StratifiedKFold</code> cross validation depending the value of <code>stratify</code>
+argument.</p>
+</li>
+<li>
+<p><code>shuffle</code> : bool (default: True)</p>
+<p>If True,  and the <code>cv</code> argument is integer, the training data will be
+shuffled at fitting stage prior to cross-validation. If the <code>cv</code>
+argument is a specific cross validation technique, this argument is
+omitted.</p>
+</li>
+<li>
+<p><code>random_state</code> : int, RandomState instance or None, optional (default: None)</p>
+<p>Constrols the randomness of the cv splitter. Used when <code>cv</code> is
+integer and <code>shuffle=True</code>. New in v0.16.0.</p>
+</li>
+<li>
+<p><code>stratify</code> : bool (default: True)</p>
+<p>If True, and the <code>cv</code> argument is integer it will follow a stratified
+K-Fold cross validation technique. If the <code>cv</code> argument is a specific
+cross validation technique, this argument is omitted.</p>
+</li>
+<li>
+<p><code>verbose</code> : int, optional (default=0)</p>
+<p>Controls the verbosity of the building process.
+- <code>verbose=0</code> (default): Prints nothing
+- <code>verbose=1</code>: Prints the number &amp; name of the regressor being fitted
+and which fold is currently being used for fitting
+- <code>verbose=2</code>: Prints info about the parameters of the
+regressor being fitted
+- <code>verbose&gt;2</code>: Changes <code>verbose</code> param of the underlying regressor to
+self.verbose - 2</p>
+</li>
+<li>
+<p><code>use_features_in_secondary</code> : bool (default: False)</p>
+<p>If True, the meta-classifier will be trained both on the predictions
+of the original classifiers and the original dataset.
+If False, the meta-classifier will be trained only on the predictions
+of the original classifiers.</p>
+</li>
+<li>
+<p><code>store_train_meta_features</code> : bool (default: False)</p>
+<p>If True, the meta-features computed from the training data used
+for fitting the meta-classifier stored in the
+<code>self.train_meta_features_</code> array, which can be
+accessed after calling <code>fit</code>.</p>
+</li>
+<li>
+<p><code>use_clones</code> : bool (default: True)</p>
+<p>Clones the classifiers for stacking classification if True (default)
+or else uses the original ones, which will be refitted on the dataset
+upon calling the <code>fit</code> method. Hence, if use_clones=True, the original
+input classifiers will remain unmodified upon using the
+StackingCVClassifier's <code>fit</code> method.
+Setting <code>use_clones=False</code> is
+recommended if you are working with estimators that are supporting
+the scikit-learn fit/predict API interface but are not compatible
+to scikit-learn's <code>clone</code> function.</p>
+</li>
+<li>
+<p><code>n_jobs</code> : int or None, optional (default=None)</p>
+<p>The number of CPUs to use to do the computation.
+<code>None</code> means 1 unless in a :obj:<code>joblib.parallel_backend</code> context.
+<code>-1</code> means using all processors. See :term:<code>Glossary &lt;n_jobs&gt;</code>
+for more details. New in v0.16.0.</p>
+</li>
+<li>
+<p><code>pre_dispatch</code> : int, or string, optional</p>
+<p>Controls the number of jobs that get dispatched during parallel
+execution. Reducing this number can be useful to avoid an
+explosion of memory consumption when more jobs get dispatched
+than CPUs can process. This parameter can be:
+- None, in which case all the jobs are immediately
+created and spawned. Use this for lightweight and
+fast-running jobs, to avoid delays due to on-demand
+spawning of the jobs
+- An int, giving the exact number of total jobs that are
+spawned
+- A string, giving an expression as a function of n_jobs,
+as in '2*n_jobs'
+New in v0.16.0.</p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>clfs_</code> : list, shape=[n_classifiers]</p>
+<p>Fitted classifiers (clones of the original classifiers)</p>
+</li>
+<li>
+<p><code>meta_clf_</code> : estimator</p>
+<p>Fitted meta-classifier (clone of the original meta-estimator)</p>
+</li>
+<li>
+<p><code>train_meta_features</code> : numpy array, shape = [n_samples, n_classifiers]</p>
+<p>meta-features for training data, where n_samples is the
+number of samples
+in training data and n_classifiers is the number of classfiers.</p>
+</li>
+</ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="https://rasbt.github.io/mlxtend/user_guide/classifier/StackingCVClassifier/">https://rasbt.github.io/mlxtend/user_guide/classifier/StackingCVClassifier/</a></p>
+<h3 id="methods">Methods</h3>
+<hr>
+
+<p><em>decision_function(X)</em></p>
+<p>Predict class confidence scores for X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>scores</code> : shape=(n_samples,) if n_classes == 2 else             (n_samples, n_classes).</p>
+<p>Confidence scores per (sample, class) combination. In the binary
+case, confidence score for self.classes_[1] where &gt;0 means this
+class would be predicted.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>fit(X, y, groups=None, sample_weight=None)</em></p>
+<p>Fit ensemble classifers and the meta-classifier.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : numpy array, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>groups</code> : numpy array/None, shape = [n_samples]</p>
+<p>The group that each sample belongs to. This is used by specific
+folding strategies such as GroupKFold()</p>
+</li>
+<li>
+<p><code>sample_weight</code> : array-like, shape = [n_samples], optional</p>
+<p>Sample weights passed as sample_weights to each regressor
+in the regressors list as well as the meta_regressor.
+Raises error if some regressor does not support
+sample_weight in the fit() method.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
+<hr>
+
+<p><em>fit_transform(X, y=None, </em><em>fit_params)</em></p>
+<p>Fit to data, then transform it.</p>
+<p>Fits transformer to X and y with optional parameters fit_params
+and returns a transformed version of X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : numpy array of shape [n_samples, n_features]</p>
+<p>Training set.</p>
+</li>
+<li>
+<p><code>y</code> : numpy array of shape [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>**fit_params</code> : dict</p>
+<p>Additional fit parameters.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>X_new</code> : numpy array of shape [n_samples, n_features_new]</p>
+<p>Transformed array.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>get_params(deep=True)</em></p>
+<p>Return estimator parameter names for GridSearch support.</p>
+<hr>
+
+<p><em>predict(X)</em></p>
+<p>Predict target values for X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>labels</code> : array-like, shape = [n_samples]</p>
+<p>Predicted class labels.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>predict_meta_features(X)</em></p>
+<p>Get meta-features of test-data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : numpy array, shape = [n_samples, n_features]</p>
+<p>Test vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>meta-features</code> : numpy array, shape = [n_samples, n_classifiers]</p>
+<p>Returns the meta-features for test data.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>predict_proba(X)</em></p>
+<p>Predict class probabilities for X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>proba</code> : array-like, shape = [n_samples, n_classes] or a list of                 n_outputs of such arrays if n_outputs &gt; 1.</p>
+<p>Probability for each class per sample.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>score(X, y, sample_weight=None)</em></p>
+<p>Return the mean accuracy on the given test data and labels.</p>
+<p>In multi-label classification, this is the subset accuracy
+which is a harsh metric since you require for each sample that
+each label set be correctly predicted.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : array-like of shape (n_samples, n_features)</p>
+<p>Test samples.</p>
+</li>
+<li>
+<p><code>y</code> : array-like of shape (n_samples,) or (n_samples, n_outputs)</p>
+<p>True labels for X.</p>
+</li>
+<li>
+<p><code>sample_weight</code> : array-like of shape (n_samples,), default=None</p>
+<p>Sample weights.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>score</code> : float</p>
+<p>Mean accuracy of self.predict(X) wrt. y.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.</p>
+<p>Valid parameter keys can be listed with <code>get_params()</code>.</p>
+<p><strong>Returns</strong></p>
+<p>self</p>
+<h3 id="properties">Properties</h3>
+<hr>
+
+<p><em>named_classifiers</em></p>
+<p>None</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2014-2023 <a href="https://sebastianraschka.com">Sebastian Raschka</a></p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../../js/jquery-3.6.0.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../../js/base.js"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+        <script src="../../../mathjaxhelper.js"></script>
+        <script src="../../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

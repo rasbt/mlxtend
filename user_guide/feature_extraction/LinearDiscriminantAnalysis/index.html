@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Sebastian Raschka">
+        <link rel="canonical" href="https://rasbt.github.io/mlxtend/user_guide/feature_extraction/LinearDiscriminantAnalysis/">
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>LinearDiscriminantAnalysis: Linear discriminant analysis for dimensionality reduction - mlxtend</title>
+        <link href="../../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/color-brewer.min.css">
+        <link href="../../../cinder/css/base.css" rel="stylesheet">
+        <link href="../../../cinder/css/bootstrap-custom.css" rel="stylesheet">
+        <link href="../../../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../../cinder/css/cinder.css" rel="stylesheet">
+        <link href="../../../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../../../cinder/css/highlight.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', "UA-38457794-2", "rasbt.github.io/mlxtend/");
+            ga('send', 'pageview');
+        </script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../../..">mlxtend</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../../USER_GUIDE_INDEX/" class="dropdown-item">User Guide Index</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">classifier</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../classifier/Adaline/" class="dropdown-item">Adaline: Adaptive Linear Neuron Classifier</a>
+</li>
+            
+<li>
+    <a href="../../classifier/EnsembleVoteClassifier/" class="dropdown-item">EnsembleVoteClassifier: A majority voting classifier</a>
+</li>
+            
+<li>
+    <a href="../../classifier/LogisticRegression/" class="dropdown-item">LogisticRegression: A binary classifier</a>
+</li>
+            
+<li>
+    <a href="../../classifier/MultiLayerPerceptron/" class="dropdown-item">MultilayerPerceptron: A simple multilayer neural network</a>
+</li>
+            
+<li>
+    <a href="../../classifier/OneRClassifier/" class="dropdown-item">OneRClassifier: One Rule (OneR) method for classification</a>
+</li>
+            
+<li>
+    <a href="../../classifier/Perceptron/" class="dropdown-item">Perceptron: A simple binary classifier</a>
+</li>
+            
+<li>
+    <a href="../../classifier/SoftmaxRegression/" class="dropdown-item">SoftmaxRegression: Multiclass version of logistic regression</a>
+</li>
+            
+<li>
+    <a href="../../classifier/StackingClassifier/" class="dropdown-item">StackingClassifier: Simple stacking</a>
+</li>
+            
+<li>
+    <a href="../../classifier/StackingCVClassifier/" class="dropdown-item">StackingCVClassifier: Stacking with cross-validation</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">cluster</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../cluster/Kmeans/" class="dropdown-item">Kmeans: k-means clustering</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">data</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../data/autompg_data/" class="dropdown-item">autompg_data: The Auto-MPG dataset for regression</a>
+</li>
+            
+<li>
+    <a href="../../data/boston_housing_data/" class="dropdown-item">boston_housing_data: The Boston housing dataset for regression</a>
+</li>
+            
+<li>
+    <a href="../../data/iris_data/" class="dropdown-item">iris_data: The 3-class iris dataset for classification</a>
+</li>
+            
+<li>
+    <a href="../../data/loadlocal_mnist/" class="dropdown-item">loadlocal_mnist: A function for loading MNIST from the original ubyte files</a>
+</li>
+            
+<li>
+    <a href="../../data/make_multiplexer_dataset/" class="dropdown-item">make_multiplexer_dataset: A function for creating multiplexer data</a>
+</li>
+            
+<li>
+    <a href="../../data/mnist_data/" class="dropdown-item">mnist_data: A subset of the MNIST dataset for classification</a>
+</li>
+            
+<li>
+    <a href="../../data/three_blobs_data/" class="dropdown-item">three_blobs_data: The synthetic blobs for classification</a>
+</li>
+            
+<li>
+    <a href="../../data/wine_data/" class="dropdown-item">wine_data: A 3-class wine dataset for classification</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">evaluate</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../evaluate/accuracy_score/" class="dropdown-item">accuracy_score: Computing standard, balanced, and per-class accuracy</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/bias_variance_decomp/" class="dropdown-item">bias_variance_decomp: Bias-variance decomposition for classification and regression losses</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/bootstrap/" class="dropdown-item">bootstrap: The ordinary nonparametric boostrap for arbitrary parameters</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/bootstrap_point632_score/" class="dropdown-item">bootstrap_point632_score: The .632 and .632+ boostrap for classifier evaluation</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/BootstrapOutOfBag/" class="dropdown-item">BootstrapOutOfBag: A scikit-learn compatible version of the out-of-bag bootstrap</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/cochrans_q/" class="dropdown-item">cochrans_q: Cochran's Q test for comparing multiple classifiers</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/combined_ftest_5x2cv/" class="dropdown-item">combined_ftest_5x2cv: 5x2cv combined F test for classifier comparisons</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/confusion_matrix/" class="dropdown-item">confusion_matrix: creating a confusion matrix for model evaluation</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/create_counterfactual/" class="dropdown-item">create_counterfactual: Interpreting models via counterfactuals</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/feature_importance_permutation/" class="dropdown-item">feature_importance_permutation: Estimate feature importance via feature permutation.</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/ftest/" class="dropdown-item">ftest: F-test for classifier comparisons</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/GroupTimeSeriesSplit/" class="dropdown-item">GroupTimeSeriesSplit: A scikit-learn compatible version of the time series validation with groups</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/lift_score/" class="dropdown-item">lift_score: Lift score for classification and association rule mining</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/mcnemar_table/" class="dropdown-item">mcnemar_table: Contingency table for McNemar's test</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/mcnemar_tables/" class="dropdown-item">mcnemar_tables: contingency tables for McNemar's test and Cochran's Q test</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/mcnemar/" class="dropdown-item">mcnemar: McNemar's test for classifier comparisons</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/paired_ttest_5x2cv/" class="dropdown-item">paired_ttest_5x2cv: 5x2cv paired t test for classifier comparisons</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/paired_ttest_kfold_cv/" class="dropdown-item">paired_ttest_kfold_cv: K-fold cross-validated paired t test</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/paired_ttest_resampled/" class="dropdown-item">paired_ttest_resample: Resampled paired t test</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/permutation_test/" class="dropdown-item">permutation_test: Permutation test for hypothesis testing</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/PredefinedHoldoutSplit/" class="dropdown-item">PredefinedHoldoutSplit: Utility for the holdout method compatible with scikit-learn</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/RandomHoldoutSplit/" class="dropdown-item">RandomHoldoutSplit: split a dataset into a train and validation subset for validation</a>
+</li>
+            
+<li>
+    <a href="../../evaluate/scoring/" class="dropdown-item">scoring: computing various performance metrics</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">feature_extraction</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="./" class="dropdown-item active">LinearDiscriminantAnalysis: Linear discriminant analysis for dimensionality reduction</a>
+</li>
+            
+<li>
+    <a href="../PrincipalComponentAnalysis/" class="dropdown-item">PrincipalComponentAnalysis: Principal component analysis (PCA) for dimensionality reduction</a>
+</li>
+            
+<li>
+    <a href="../RBFKernelPCA/" class="dropdown-item">RBFKernelPCA</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">feature_selection</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../feature_selection/ColumnSelector/" class="dropdown-item">ColumnSelector: Scikit-learn utility function to select specific columns in a pipeline</a>
+</li>
+            
+<li>
+    <a href="../../feature_selection/ExhaustiveFeatureSelector/" class="dropdown-item">ExhaustiveFeatureSelector: Optimal feature sets by considering all possible feature combinations</a>
+</li>
+            
+<li>
+    <a href="../../feature_selection/SequentialFeatureSelector/" class="dropdown-item">SequentialFeatureSelector: The popular forward and backward feature selection approaches (including floating variants)</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">file_io</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../file_io/find_filegroups/" class="dropdown-item">find_filegroups: Find files that only differ via their file extensions</a>
+</li>
+            
+<li>
+    <a href="../../file_io/find_files/" class="dropdown-item">find_files: Find files based on substring matches</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">frequent_patterns</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../frequent_patterns/apriori/" class="dropdown-item">Apriori</a>
+</li>
+            
+<li>
+    <a href="../../frequent_patterns/association_rules/" class="dropdown-item">Association rules</a>
+</li>
+            
+<li>
+    <a href="../../frequent_patterns/fpgrowth/" class="dropdown-item">Fpgrowth</a>
+</li>
+            
+<li>
+    <a href="../../frequent_patterns/fpmax/" class="dropdown-item">Fpmax</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">math</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../math/num_combinations/" class="dropdown-item">num_combinations: combinations for creating subsequences of k elements</a>
+</li>
+            
+<li>
+    <a href="../../math/num_permutations/" class="dropdown-item">num_permutations: number of permutations for creating subsequences of k elements</a>
+</li>
+            
+<li>
+    <a href="../../math/vectorspace_dimensionality/" class="dropdown-item">vectorspace_dimensionality: compute the number of dimensions that a set of vectors spans</a>
+</li>
+            
+<li>
+    <a href="../../math/vectorspace_orthonormalization/" class="dropdown-item">vectorspace_orthonormalization: Converts a set of linearly independent vectors to a set of orthonormal basis vectors</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">plotting</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../plotting/category_scatter/" class="dropdown-item">Scategory_scatter: Create a scatterplot with categories in different colors</a>
+</li>
+            
+<li>
+    <a href="../../plotting/checkerboard_plot/" class="dropdown-item">checkerboard_plot: Create a checkerboard plot in matplotlib</a>
+</li>
+            
+<li>
+    <a href="../../plotting/plot_pca_correlation_graph/" class="dropdown-item">plot_pca_correlation_graph: plot correlations between original features and principal components</a>
+</li>
+            
+<li>
+    <a href="../../plotting/ecdf/" class="dropdown-item">ecdf: Create an empirical cumulative distribution function plot</a>
+</li>
+            
+<li>
+    <a href="../../plotting/enrichment_plot/" class="dropdown-item">enrichment_plot: create an enrichment plot for cumulative counts</a>
+</li>
+            
+<li>
+    <a href="../../plotting/heatmap/" class="dropdown-item">heatmap: Create a heatmap in matplotlib</a>
+</li>
+            
+<li>
+    <a href="../../plotting/plot_confusion_matrix/" class="dropdown-item">plot_confusion_matrix: Visualize confusion matrices</a>
+</li>
+            
+<li>
+    <a href="../../plotting/plot_decision_regions/" class="dropdown-item">plot_decision_regions: Visualize the decision regions of a classifier</a>
+</li>
+            
+<li>
+    <a href="../../plotting/plot_learning_curves/" class="dropdown-item">plot_learning_curves: Plot learning curves from training and test sets</a>
+</li>
+            
+<li>
+    <a href="../../plotting/plot_linear_regression/" class="dropdown-item">plot_linear_regression: A quick way for plotting linear regression fits</a>
+</li>
+            
+<li>
+    <a href="../../plotting/plot_sequential_feature_selection/" class="dropdown-item">plot_sequential_feature_selection: Visualize selected feature subset performances from the SequentialFeatureSelector</a>
+</li>
+            
+<li>
+    <a href="../../plotting/scatterplotmatrix/" class="dropdown-item">scatterplotmatrix: visualize datasets via a scatter plot matrix</a>
+</li>
+            
+<li>
+    <a href="../../plotting/scatter_hist/" class="dropdown-item">scatter_hist: create a scatter histogram plot</a>
+</li>
+            
+<li>
+    <a href="../../plotting/stacked_barplot/" class="dropdown-item">stacked_barplot: Plot stacked bar plots in matplotlib</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">preprocessing</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../preprocessing/CopyTransformer/" class="dropdown-item">CopyTransformer: A function that creates a copy of the input array in a scikit-learn pipeline</a>
+</li>
+            
+<li>
+    <a href="../../preprocessing/DenseTransformer/" class="dropdown-item">DenseTransformer: Transforms a sparse into a dense NumPy array, e.g., in a scikit-learn pipeline</a>
+</li>
+            
+<li>
+    <a href="../../preprocessing/MeanCenterer/" class="dropdown-item">MeanCenterer: column-based mean centering on a NumPy array</a>
+</li>
+            
+<li>
+    <a href="../../preprocessing/minmax_scaling/" class="dropdown-item">MinMaxScaling: Min-max scaling fpr pandas DataFrames and NumPy arrays</a>
+</li>
+            
+<li>
+    <a href="../../preprocessing/one-hot_encoding/" class="dropdown-item">One hot encoding</a>
+</li>
+            
+<li>
+    <a href="../../preprocessing/shuffle_arrays_unison/" class="dropdown-item">shuffle_arrays_unison: shuffle arrays in a consistent fashion</a>
+</li>
+            
+<li>
+    <a href="../../preprocessing/standardize/" class="dropdown-item">standardize: A function to standardize columns in a 2D NumPy array</a>
+</li>
+            
+<li>
+    <a href="../../preprocessing/TransactionEncoder/" class="dropdown-item">TransactionEncoder</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">regressor</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../regressor/LinearRegression/" class="dropdown-item">LinearRegression: An implementation of ordinary least-squares linear regression</a>
+</li>
+            
+<li>
+    <a href="../../regressor/StackingCVRegressor/" class="dropdown-item">StackingCVRegressor: stacking with cross-validation for regression</a>
+</li>
+            
+<li>
+    <a href="../../regressor/StackingRegressor/" class="dropdown-item">StackingRegressor: a simple stacking implementation for regression</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">text</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../text/generalize_names/" class="dropdown-item">generalize_names: convert names into a generalized format</a>
+</li>
+            
+<li>
+    <a href="../../text/generalize_names_duplcheck/" class="dropdown-item">generalize_names_duplcheck: Generalize names while preventing duplicates among different names</a>
+</li>
+            
+<li>
+    <a href="../../text/tokenizer/" class="dropdown-item">tokenizer_emoticons: tokenizers for emoticons</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">utils</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../utils/Counter/" class="dropdown-item">Counter: A simple progress counter</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.classifier/" class="dropdown-item">Mlxtend.classifier</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.cluster/" class="dropdown-item">Mlxtend.cluster</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.data/" class="dropdown-item">Mlxtend.data</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.evaluate/" class="dropdown-item">Mlxtend.evaluate</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.feature_extraction/" class="dropdown-item">Mlxtend.feature extraction</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.feature_selection/" class="dropdown-item">Mlxtend.feature selection</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.file_io/" class="dropdown-item">Mlxtend.file io</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.frequent_patterns/" class="dropdown-item">Mlxtend.frequent patterns</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.plotting/" class="dropdown-item">Mlxtend.plotting</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.preprocessing/" class="dropdown-item">Mlxtend.preprocessing</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.regressor/" class="dropdown-item">Mlxtend.regressor</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.text/" class="dropdown-item">Mlxtend.text</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.utils/" class="dropdown-item">Mlxtend.utils</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../../installation/" class="nav-link">Installation</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../../CHANGELOG/" class="dropdown-item">Release Notes</a>
+</li>
+                                    
+<li>
+    <a href="../../../Code-of-Conduct/" class="dropdown-item">Code of Conduct</a>
+</li>
+                                    
+<li>
+    <a href="../../../CONTRIBUTING/" class="dropdown-item">How To Contribute</a>
+</li>
+                                    
+<li>
+    <a href="../../../contributors/" class="dropdown-item">Contributors</a>
+</li>
+                                    
+<li>
+    <a href="../../../license/" class="dropdown-item">License</a>
+</li>
+                                    
+<li>
+    <a href="../../../cite/" class="dropdown-item">Citing Mlxtend</a>
+</li>
+                                    
+<li>
+    <a href="../../../discuss/" class="dropdown-item">Discuss</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../../evaluate/scoring/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../PrincipalComponentAnalysis/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/rasbt/mlxtend/tree/master/docs/sources/user_guide/feature_extraction/LinearDiscriminantAnalysis.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#lineardiscriminantanalysis-linear-discriminant-analysis-for-dimensionality-reduction" class="nav-link">LinearDiscriminantAnalysis: Linear discriminant analysis for dimensionality reduction</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#overview" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#example-1-lda-on-iris" class="nav-link">Example 1 - LDA on Iris</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#example-2-plotting-the-between-class-variance-explained-ratio" class="nav-link">Example 2 - Plotting the Between-Class Variance Explained Ratio</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#api" class="nav-link">API</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="lineardiscriminantanalysis-linear-discriminant-analysis-for-dimensionality-reduction">LinearDiscriminantAnalysis: Linear discriminant analysis for dimensionality reduction</h1>
+<p>Implementation of Linear Discriminant Analysis for dimensionality reduction</p>
+<blockquote>
+<p>from mlxtend.feature_extraction import LinearDiscriminantAnalysis</p>
+</blockquote>
+<h2 id="overview">Overview</h2>
+<p>Linear Discriminant Analysis (LDA) is most commonly used as dimensionality reduction technique in the pre-processing step for pattern-classification and machine learning applications.
+The goal is to project a dataset onto a lower-dimensional space with good class-separability in order avoid overfitting ("curse of dimensionality") and also reduce computational costs.</p>
+<p>Ronald A. Fisher formulated the <em>Linear Discriminant</em> in 1936 (<a href="https://onlinelibrary.wiley.com/doi/10.1111/j.1469-1809.1936.tb02137.x/abstract">The Use of Multiple  Measurements in Taxonomic Problems</a>), and it also has some practical uses as classifier. The original Linear discriminant was described for a 2-class problem, and it was then later generalized as "multi-class Linear Discriminant Analysis" or "Multiple Discriminant Analysis" by C. R. Rao in 1948 (<a href="https://www.jstor.org/stable/2983775">The utilization of multiple measurements in problems of biological classification</a>)</p>
+<p><strong>The general LDA approach is very similar to a Principal Component Analysis, but in addition to finding the component axes that maximize the variance of our data (PCA), we are additionally interested in the axes that maximize the separation between multiple classes (LDA).</strong></p>
+<p>So, in a nutshell, often the goal of an LDA is to project a feature space (a dataset n-dimensional samples) onto a smaller subspace <script type="math/tex">k</script> (where <script type="math/tex">k \leq n-1</script>) while maintaining the class-discriminatory information. <br />
+In general, dimensionality reduction does not only help reducing computational costs for a given classification task, but it can also be helpful to avoid overfitting by minimizing the error in parameter estimation ("curse of dimensionality").</p>
+<h4 id="summarizing-the-lda-approach-in-5-steps">Summarizing the LDA approach in 5 steps</h4>
+<p>Listed below are the 5 general steps for performing a linear discriminant analysis.</p>
+<ol>
+<li>Compute the <script type="math/tex">d</script>-dimensional mean vectors for the different classes from the dataset.</li>
+<li>Compute the scatter matrices (in-between-class and within-class scatter matrix).</li>
+<li>Compute the eigenvectors (<script type="math/tex">\mathbf{e_1}, \; \mathbf{e_2}, \; ..., \; \mathbf{e_d}</script>) and corresponding eigenvalues (<script type="math/tex">\mathbf{\lambda_1}, \; \mathbf{\lambda_2}, \; ..., \; \mathbf{\lambda_d}</script>) for the scatter matrices.</li>
+<li>Sort the eigenvectors by decreasing eigenvalues and choose <script type="math/tex">k</script> eigenvectors with the largest eigenvalues to form a <script type="math/tex">k \times d</script> dimensional matrix <script type="math/tex">\mathbf{W}</script> (where every column represents an eigenvector).</li>
+<li>Use this <script type="math/tex">k \times d</script> eigenvector matrix to transform the samples onto the new subspace. This can be summarized by the mathematical equation: <script type="math/tex">\mathbf{Y} = \mathbf{X} \times \mathbf{W}</script> (where <script type="math/tex">\mathbf{X}</script> is a <script type="math/tex">n \times d</script>-dimensional matrix representing the <script type="math/tex">n</script> samples, and <script type="math/tex">\mathbf{y}</script> are the transformed <script type="math/tex">n \times k</script>-dimensional samples in the new subspace).</li>
+</ol>
+<h3 id="references">References</h3>
+<ul>
+<li>Fisher, Ronald A. "<a href="https://onlinelibrary.wiley.com/doi/10.1111/j.1469-1809.1936.tb02137.x/abstract">The use of multiple measurements in taxonomic problems.</a>" Annals of eugenics 7.2 (1936): 179-188.</li>
+<li>Rao, C. Radhakrishna. "<a href="https://www.jstor.org/stable/2983775">The utilization of multiple measurements in problems of biological classification.</a>" Journal of the Royal Statistical Society. Series B (Methodological) 10.2 (1948): 159-203.</li>
+</ul>
+<h2 id="example-1-lda-on-iris">Example 1 - LDA on Iris</h2>
+<pre><code class="language-python">from mlxtend.data import iris_data
+from mlxtend.preprocessing import standardize
+from mlxtend.feature_extraction import LinearDiscriminantAnalysis
+
+X, y = iris_data()
+X = standardize(X)
+
+lda = LinearDiscriminantAnalysis(n_discriminants=2)
+lda.fit(X, y)
+X_lda = lda.transform(X)
+</code></pre>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+
+with plt.style.context('seaborn-whitegrid'):
+    plt.figure(figsize=(6, 4))
+    for lab, col in zip((0, 1, 2),
+                        ('blue', 'red', 'green')):
+        plt.scatter(X_lda[y == lab, 0],
+                    X_lda[y == lab, 1],
+                    label=lab,
+                    c=col)
+    plt.xlabel('Linear Discriminant 1')
+    plt.ylabel('Linear Discriminant 2')
+    plt.legend(loc='lower right')
+    plt.tight_layout()
+    plt.show()
+</code></pre>
+<p><img alt="png" src="../LinearDiscriminantAnalysis_files/LinearDiscriminantAnalysis_11_0.png" /></p>
+<h2 id="example-2-plotting-the-between-class-variance-explained-ratio">Example 2 - Plotting the Between-Class Variance Explained Ratio</h2>
+<pre><code class="language-python">from mlxtend.data import iris_data
+from mlxtend.preprocessing import standardize
+from mlxtend.feature_extraction import LinearDiscriminantAnalysis
+
+X, y = iris_data()
+X = standardize(X)
+
+lda = LinearDiscriminantAnalysis(n_discriminants=None)
+lda.fit(X, y)
+X_lda = lda.transform(X)
+</code></pre>
+<pre><code class="language-python">import numpy as np
+
+tot = sum(lda.e_vals_)
+var_exp = [(i / tot)*100 for i in sorted(lda.e_vals_, reverse=True)]
+cum_var_exp = np.cumsum(var_exp)
+</code></pre>
+<pre><code class="language-python">with plt.style.context('seaborn-whitegrid'):
+    fig, ax = plt.subplots(figsize=(6, 4))
+    plt.bar(range(4), var_exp, alpha=0.5, align='center',
+            label='individual explained variance')
+    plt.step(range(4), cum_var_exp, where='mid',
+             label='cumulative explained variance')
+    plt.ylabel('Explained variance ratio')
+    plt.xlabel('Principal components')
+    plt.xticks(range(4))
+    ax.set_xticklabels(np.arange(1, X.shape[1] + 1))
+    plt.legend(loc='best')
+    plt.tight_layout()
+</code></pre>
+<p><img alt="png" src="../LinearDiscriminantAnalysis_files/LinearDiscriminantAnalysis_15_0.png" /></p>
+<h2 id="api">API</h2>
+<p><em>LinearDiscriminantAnalysis(n_discriminants=None)</em></p>
+<p>Linear Discriminant Analysis Class</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>n_discriminants</code> : int (default: None)</p>
+<p>The number of discrimants for transformation.
+Keeps the original dimensions of the dataset if <code>None</code>.</p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>w_</code> : array-like, shape=[n_features, n_discriminants]</p>
+<p>Projection matrix</p>
+</li>
+<li>
+<p><code>e_vals_</code> : array-like, shape=[n_features]</p>
+<p>Eigenvalues in sorted order.</p>
+</li>
+<li>
+<p><code>e_vecs_</code> : array-like, shape=[n_features]</p>
+<p>Eigenvectors in sorted order.</p>
+</li>
+</ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    <a href="https://rasbt.github.io/mlxtend/user_guide/feature_extraction/LinearDiscriminantAnalysis/">https://rasbt.github.io/mlxtend/user_guide/feature_extraction/LinearDiscriminantAnalysis/</a></p>
+<h3 id="methods">Methods</h3>
+<hr>
+
+<p><em>fit(X, y, n_classes=None)</em></p>
+<p>Fit the LDA model with X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>n_classes</code> : int (default: None)</p>
+<p>A positive integer to declare the number of class labels
+if not all class labels are present in a partial training set.
+Gets the number of class labels automatically if None.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
+<hr>
+
+<p><em>transform(X)</em></p>
+<p>Apply the linear transformation on X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>X_projected</code> : np.ndarray, shape = [n_samples, n_discriminants]</p>
+<p>Projected training vectors.</p>
+</li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2014-2023 <a href="https://sebastianraschka.com">Sebastian Raschka</a></p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../../js/jquery-3.6.0.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../../js/base.js"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+        <script src="../../../mathjaxhelper.js"></script>
+        <script src="../../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

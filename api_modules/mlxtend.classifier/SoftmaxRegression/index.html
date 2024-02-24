@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Sebastian Raschka">
+        <link rel="canonical" href="https://rasbt.github.io/mlxtend/api_modules/mlxtend.classifier/SoftmaxRegression/">
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>SoftmaxRegression - mlxtend</title>
+        <link href="../../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/color-brewer.min.css">
+        <link href="../../../cinder/css/base.css" rel="stylesheet">
+        <link href="../../../cinder/css/bootstrap-custom.css" rel="stylesheet">
+        <link href="../../../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../../cinder/css/cinder.css" rel="stylesheet">
+        <link href="../../../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../../../cinder/css/highlight.css" rel="stylesheet">
+
+        <script src="../../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-38457794-2', 'rasbt.github.io/mlxtend/');
+            ga('send', 'pageview');
+        </script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../../..">mlxtend</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../../USER_GUIDE_INDEX/" class="dropdown-item">User Guide Index</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">classifier</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../../user_guide/classifier/Adaline.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/classifier/EnsembleVoteClassifier.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/classifier/LogisticRegression.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/classifier/MultiLayerPerceptron.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/classifier/OneRClassifier.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/classifier/Perceptron.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/classifier/SoftmaxRegression.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/classifier/StackingClassifier.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/classifier/StackingCVClassifier.md" class="dropdown-item">None</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">cluster</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../../user_guide/cluster/Kmeans.md" class="dropdown-item">None</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">data</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../../user_guide/data/autompg_data.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/data/boston_housing_data.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/data/iris_data.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/data/loadlocal_mnist.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/data/make_multiplexer_dataset.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/data/mnist_data.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/data/three_blobs_data.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/data/wine_data.md" class="dropdown-item">None</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">evaluate</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../../user_guide/evaluate/accuracy_score.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/evaluate/bias_variance_decomp.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/evaluate/bootstrap.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/evaluate/bootstrap_point632_score.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/evaluate/BootstrapOutOfBag.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/evaluate/cochrans_q.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/evaluate/combined_ftest_5x2cv.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/evaluate/confusion_matrix.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/evaluate/create_counterfactual.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/evaluate/feature_importance_permutation.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/evaluate/ftest.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/evaluate/GroupTimeSeriesSplit.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/evaluate/lift_score.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/evaluate/mcnemar_table.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/evaluate/mcnemar_tables.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/evaluate/mcnemar.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/evaluate/paired_ttest_5x2cv.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/evaluate/paired_ttest_kfold_cv.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/evaluate/paired_ttest_resampled.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/evaluate/permutation_test.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/evaluate/PredefinedHoldoutSplit.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/evaluate/RandomHoldoutSplit.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/evaluate/scoring.md" class="dropdown-item">None</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">feature_extraction</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../../user_guide/feature_extraction/LinearDiscriminantAnalysis.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/feature_extraction/PrincipalComponentAnalysis.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/feature_extraction/RBFKernelPCA.md" class="dropdown-item">None</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">feature_selection</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../../user_guide/feature_selection/ColumnSelector.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/feature_selection/ExhaustiveFeatureSelector.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/feature_selection/SequentialFeatureSelector.md" class="dropdown-item">None</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">file_io</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../../user_guide/file_io/find_filegroups.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/file_io/find_files.md" class="dropdown-item">None</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">frequent_patterns</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../../user_guide/frequent_patterns/apriori.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/frequent_patterns/association_rules.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/frequent_patterns/fpgrowth.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/frequent_patterns/fpmax.md" class="dropdown-item">None</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">math</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../../user_guide/math/num_combinations.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/math/num_permutations.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/math/vectorspace_dimensionality.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/math/vectorspace_orthonormalization.md" class="dropdown-item">None</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">plotting</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../../user_guide/plotting/category_scatter.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/plotting/checkerboard_plot.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/plotting/plot_pca_correlation_graph.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/plotting/ecdf.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/plotting/enrichment_plot.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/plotting/heatmap.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/plotting/plot_confusion_matrix.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/plotting/plot_decision_regions.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/plotting/plot_learning_curves.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/plotting/plot_linear_regression.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/plotting/plot_sequential_feature_selection.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/plotting/scatterplotmatrix.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/plotting/scatter_hist.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/plotting/stacked_barplot.md" class="dropdown-item">None</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">preprocessing</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../../user_guide/preprocessing/CopyTransformer.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/preprocessing/DenseTransformer.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/preprocessing/MeanCenterer.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/preprocessing/minmax_scaling.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/preprocessing/one-hot_encoding.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/preprocessing/shuffle_arrays_unison.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/preprocessing/standardize.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/preprocessing/TransactionEncoder.md" class="dropdown-item">None</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">regressor</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../../user_guide/regressor/LinearRegression.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/regressor/StackingCVRegressor.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/regressor/StackingRegressor.md" class="dropdown-item">None</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">text</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../../user_guide/text/generalize_names.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/text/generalize_names_duplcheck.md" class="dropdown-item">None</a>
+</li>
+            
+<li>
+    <a href="../../../user_guide/text/tokenizer.md" class="dropdown-item">None</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">utils</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../../user_guide/utils/Counter.md" class="dropdown-item">None</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.classifier/" class="dropdown-item">Mlxtend.classifier</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.cluster/" class="dropdown-item">Mlxtend.cluster</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.data/" class="dropdown-item">Mlxtend.data</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.evaluate/" class="dropdown-item">Mlxtend.evaluate</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.feature_extraction/" class="dropdown-item">Mlxtend.feature extraction</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.feature_selection/" class="dropdown-item">Mlxtend.feature selection</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.file_io/" class="dropdown-item">Mlxtend.file io</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.frequent_patterns/" class="dropdown-item">Mlxtend.frequent patterns</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.plotting/" class="dropdown-item">Mlxtend.plotting</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.preprocessing/" class="dropdown-item">Mlxtend.preprocessing</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.regressor/" class="dropdown-item">Mlxtend.regressor</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.text/" class="dropdown-item">Mlxtend.text</a>
+</li>
+                                    
+<li>
+    <a href="../../../api_subpackages/mlxtend.utils/" class="dropdown-item">Mlxtend.utils</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../../installation/" class="nav-link">Installation</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../../CHANGELOG/" class="dropdown-item">Release Notes</a>
+</li>
+                                    
+<li>
+    <a href="../../../Code-of-Conduct/" class="dropdown-item">Code of Conduct</a>
+</li>
+                                    
+<li>
+    <a href="../../../CONTRIBUTING/" class="dropdown-item">How To Contribute</a>
+</li>
+                                    
+<li>
+    <a href="../../../contributors/" class="dropdown-item">Contributors</a>
+</li>
+                                    
+<li>
+    <a href="../../../license/" class="dropdown-item">License</a>
+</li>
+                                    
+<li>
+    <a href="../../../cite/" class="dropdown-item">Citing Mlxtend</a>
+</li>
+                                    
+<li>
+    <a href="../../../discuss/" class="dropdown-item">Discuss</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/rasbt/mlxtend/tree/master/docs/sources/api_modules/mlxtend.classifier/SoftmaxRegression.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#softmaxregression" class="nav-link">SoftmaxRegression</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h2 id="softmaxregression">SoftmaxRegression</h2>
+<p><em>SoftmaxRegression(eta=0.01, epochs=50, l2=0.0, minibatches=1, n_classes=None, random_seed=None, print_progress=0)</em></p>
+<p>Softmax regression classifier.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>eta</code> : float (default: 0.01)</p>
+<p>Learning rate (between 0.0 and 1.0)</p>
+</li>
+<li>
+<p><code>epochs</code> : int (default: 50)</p>
+<p>Passes over the training dataset.
+Prior to each epoch, the dataset is shuffled
+if <code>minibatches &gt; 1</code> to prevent cycles in stochastic gradient descent.</p>
+</li>
+<li>
+<p><code>l2</code> : float</p>
+<p>Regularization parameter for L2 regularization.
+No regularization if l2=0.0.</p>
+</li>
+<li>
+<p><code>minibatches</code> : int (default: 1)</p>
+<p>The number of minibatches for gradient-based optimization.
+If 1: Gradient Descent learning
+If len(y): Stochastic Gradient Descent (SGD) online learning
+If 1 &lt; minibatches &lt; len(y): SGD Minibatch learning</p>
+</li>
+<li>
+<p><code>n_classes</code> : int (default: None)</p>
+<p>A positive integer to declare the number of class labels
+if not all class labels are present in a partial training set.
+Gets the number of class labels automatically if None.</p>
+</li>
+<li>
+<p><code>random_seed</code> : int (default: None)</p>
+<p>Set random state for shuffling and initializing the weights.</p>
+</li>
+<li>
+<p><code>print_progress</code> : int (default: 0)</p>
+<p>Prints progress in fitting to stderr.
+0: No output
+1: Epochs elapsed and cost
+2: 1 plus time elapsed
+3: 2 plus estimated time until completion</p>
+</li>
+</ul>
+<p><strong>Attributes</strong></p>
+<ul>
+<li>
+<p><code>w_</code> : 2d-array, shape={n_features, 1}</p>
+<p>Model weights after fitting.</p>
+</li>
+<li>
+<p><code>b_</code> : 1d-array, shape={1,}</p>
+<p>Bias unit after fitting.</p>
+</li>
+<li>
+<p><code>cost_</code> : list</p>
+<p>List of floats, the average cross_entropy for each epoch.</p>
+</li>
+</ul>
+<p><strong>Examples</strong></p>
+<p>For usage examples, please see
+    https://rasbt.github.io/mlxtend/user_guide/classifier/SoftmaxRegression/</p>
+<h3 id="methods">Methods</h3>
+<hr>
+
+<p><em>fit(X, y, init_params=True)</em></p>
+<p>Learn model from training data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values.</p>
+</li>
+<li>
+<p><code>init_params</code> : bool (default: True)</p>
+<p>Re-initializes model parameters prior to fitting.
+Set False to continue training with weights from
+a previous model fitting.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>self</code> : object</li>
+</ul>
+<hr>
+
+<p><em>get_params(deep=True)</em></p>
+<p>Get parameters for this estimator.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>deep</code> : boolean, optional</p>
+<p>If True, will return the parameters for this estimator and
+contained subobjects that are estimators.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>params</code> : mapping of string to any</p>
+<p>Parameter names mapped to their values.'</p>
+<p>adapted from
+https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
+Author: Gael Varoquaux <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;">&#103;&#97;&#101;&#108;&#46;&#118;&#97;&#114;&#111;&#113;&#117;&#97;&#117;&#120;&#64;&#110;&#111;&#114;&#109;&#97;&#108;&#101;&#115;&#117;&#112;&#46;&#111;&#114;&#103;</a>
+License: BSD 3 clause</p>
+</li>
+</ul>
+<hr>
+
+<p><em>predict(X)</em></p>
+<p>Predict targets from X.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>target_values</code> : array-like, shape = [n_samples]</p>
+<p>Predicted target values.</p>
+</li>
+</ul>
+<hr>
+
+<p><em>predict_proba(X)</em></p>
+<p>Predict class probabilities of X from the net input.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li><code>Class probabilties</code> : array-like, shape= [n_samples, n_classes]</li>
+</ul>
+<hr>
+
+<p><em>score(X, y)</em></p>
+<p>Compute the prediction accuracy</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><code>X</code> : {array-like, sparse matrix}, shape = [n_samples, n_features]</p>
+<p>Training vectors, where n_samples is the number of samples and
+n_features is the number of features.</p>
+</li>
+<li>
+<p><code>y</code> : array-like, shape = [n_samples]</p>
+<p>Target values (true class labels).</p>
+</li>
+</ul>
+<p><strong>Returns</strong></p>
+<ul>
+<li>
+<p><code>acc</code> : float</p>
+<p>The prediction accuracy as a float
+between 0.0 and 1.0 (perfect score).</p>
+</li>
+</ul>
+<hr>
+
+<p><em>set_params(</em><em>params)</em></p>
+<p>Set the parameters of this estimator.
+    The method works on simple estimators as well as on nested objects
+    (such as pipelines). The latter have parameters of the form
+    <code>&lt;component&gt;__&lt;parameter&gt;</code> so that it's possible to update each
+    component of a nested object.</p>
+<p><strong>Returns</strong></p>
+<p>self</p>
+<pre><code>adapted from
+https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/base.py
+Author: Gael Varoquaux &lt;gael.varoquaux@normalesup.org&gt;
+License: BSD 3 clause
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2014-2023 <a href="https://sebastianraschka.com">Sebastian Raschka</a></p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../../js/base.js" defer></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" defer></script>
+        <script src="../../../mathjaxhelper.js" defer></script>
+        <script src="../../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

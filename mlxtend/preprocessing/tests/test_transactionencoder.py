@@ -5,6 +5,7 @@
 # License: BSD 3 clause
 
 import numpy as np
+import pandas as pd
 from scipy.sparse import csr_matrix
 from sklearn.base import clone
 
@@ -102,6 +103,15 @@ def test_get_feature_names_out():
 
 
 def test_set_output():
-    """Assert TransactionEncoder has attribute set_output."""
+    """Assert TransactionEncoder has attribute set_output.
+
+    When configured, the transformed output of TransactionEncoder
+    should be a pandas.DataFrame with the correct column names and the
+    values should match those of the original numpy.array.
+    """
     oht = TransactionEncoder()
     assert hasattr(oht, "set_output")
+    oht = oht.set_output(transform="pandas")
+    out = oht.fit_transform(dataset)
+    assert isinstance(out, pd.DataFrame)
+    assert out.columns.to_list() == oht.columns_

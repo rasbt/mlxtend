@@ -100,18 +100,21 @@ def test_get_feature_names_out():
     """Assert TransactionEncoder has attribute get_feature_names_out."""
     oht = TransactionEncoder()
     assert hasattr(oht, "get_feature_names_out")
+    oht.fit(dataset)
+    np.testing.assert_array_equal(oht.get_feature_names_out(), oht.columns_)
 
 
 def test_set_output():
     """Assert TransactionEncoder has attribute set_output.
 
-    When configured, the transformed output of TransactionEncoder
-    should be a pandas.DataFrame with the correct column names and the
-    values should match those of the original numpy.array.
+    When transform="pandas", the transformed output of
+    TransactionEncoder should be a pandas.DataFrame with the correct
+    column names and the values should match those of the original
+    numpy.array.
     """
     oht = TransactionEncoder()
     assert hasattr(oht, "set_output")
     oht = oht.set_output(transform="pandas")
     out = oht.fit_transform(dataset)
     assert isinstance(out, pd.DataFrame)
-    assert out.columns.to_list() == oht.columns_
+    np.testing.assert_array_equal(out.columns, oht.columns_)

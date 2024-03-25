@@ -16,7 +16,7 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features and Enhancements
 
-- Integrated scikit-learn's `set_output` method into `TransactionEncoder` ([#1085](https://github.com/rasbt/mlxtend/issues/1085) via [it176131](https://github.com/it176131))
+- Integrated scikit-learn's `set_output` method into `TransactionEncoder` ([#1087](https://github.com/rasbt/mlxtend/issues/1087) via [it176131](https://github.com/it176131))
 
 
 

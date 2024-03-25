@@ -181,3 +181,15 @@ class TransactionEncoder(BaseEstimator, TransformerMixin):
     def fit_transform(self, X, sparse=False):
         """Fit a TransactionEncoder encoder and transform a dataset."""
         return self.fit(X).transform(X, sparse=sparse)
+
+    def get_feature_names_out(self, input_features=None):
+        """Used to get the column names of pandas output.
+
+        This method combined with the TransformerMixin exposes the
+        set_output API to the TransactionEncoder. This allows the user
+        to set the transformed output to a pandas.DataFrame by default.
+
+        See  https://scikit-learn.org/stable/developers/develop.html#developer-api-set-output
+        for more details.
+        """
+        ...

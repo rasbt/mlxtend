@@ -93,3 +93,15 @@ def test_cloning():
 
     trans = oht2.fit_transform(dataset)
     np.testing.assert_array_equal(expect, trans)
+
+
+def test_get_feature_names_out():
+    """Assert TransactionEncoder has attribute get_feature_names_out."""
+    oht = TransactionEncoder()
+    assert hasattr(oht, "get_feature_names_out")
+
+
+def test_set_output():
+    """Assert TransactionEncoder has attribute set_output."""
+    oht = TransactionEncoder()
+    assert hasattr(oht, "set_output")

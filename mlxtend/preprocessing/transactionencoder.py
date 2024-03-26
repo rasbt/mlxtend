@@ -7,7 +7,7 @@
 import numpy as np
 from scipy.sparse import csr_matrix
 from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.utils.validation import check_is_fitted, _check_feature_names_in
+from sklearn.utils.validation import _check_feature_names_in, check_is_fitted
 
 
 class TransactionEncoder(BaseEstimator, TransformerMixin):

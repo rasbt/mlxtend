@@ -25,7 +25,6 @@ from .utilities import _calc_score, _get_featurenames, _merge_lists, _preprocess
 
 
 class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
-
     """Sequential Feature Selection for Classification and Regression.
 
     Parameters

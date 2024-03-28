@@ -14,7 +14,6 @@ from .._base import _BaseModel, _Classifier, _IterativeModel
 
 
 class LogisticRegression(_BaseModel, _IterativeModel, _Classifier):
-
     """Logistic regression classifier.
 
     Note that this implementation of Logistic Regression

@@ -21,7 +21,6 @@ from ._base_classification import _BaseStackingClassifier
 
 
 class StackingClassifier(_BaseXComposition, _BaseStackingClassifier, TransformerMixin):
-
     """A Stacking classifier for scikit-learn estimators for classification.
 
     Parameters

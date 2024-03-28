@@ -14,7 +14,6 @@ from .._base import _BaseModel, _Classifier, _IterativeModel
 
 
 class Adaline(_BaseModel, _IterativeModel, _Classifier):
-
     """ADAptive LInear NEuron classifier.
 
     Note that this implementation of Adaline expects binary class labels

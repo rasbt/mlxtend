@@ -10,7 +10,6 @@ Code Repository: https://github.com/rasbt/pyprind
 PyPI: https://pypi.python.org/pypi/PyPrind
 """
 
-
 import os
 import sys
 import time

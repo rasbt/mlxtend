@@ -14,7 +14,6 @@ from .._base import _BaseModel, _Classifier, _IterativeModel
 
 
 class Perceptron(_BaseModel, _IterativeModel, _Classifier):
-
     """Perceptron classifier.
 
     Note that this implementation of the Perceptron expects binary class labels

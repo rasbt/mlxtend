@@ -14,7 +14,6 @@ from .._base import _BaseModel, _IterativeModel, _Regressor
 
 
 class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
-
     """Ordinary least squares linear regression.
 
     Parameters

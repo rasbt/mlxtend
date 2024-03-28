@@ -11,7 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 5
-
+    env:
+      GITHUB_ACTIONS_CI: true
     steps:
     - uses: actions/checkout@v2
     - name: Set up Miniconda

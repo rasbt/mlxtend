@@ -26,6 +26,7 @@ jobs:
       run: |
         conda config --add channels conda-forge
         conda create -n mlxtend python=3.10 --yes
+        conda init
         conda activate mlxtend
         conda env update environment.yml
         pip install scikit-learn==1.1.3

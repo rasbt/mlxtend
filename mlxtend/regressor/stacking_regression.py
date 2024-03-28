@@ -19,7 +19,6 @@ from ..utils.base_compostion import _BaseXComposition
 
 
 class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
-
     """A Stacking regressor for scikit-learn estimators for regression.
 
     Parameters

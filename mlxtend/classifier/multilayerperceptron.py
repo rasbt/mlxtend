@@ -17,7 +17,6 @@ from .._base import _BaseModel, _Classifier, _IterativeModel, _MultiClass, _Mult
 class MultiLayerPerceptron(
     _BaseModel, _IterativeModel, _MultiClass, _MultiLayer, _Classifier
 ):
-
     """Multi-layer perceptron classifier with logistic sigmoid activations
 
     Parameters

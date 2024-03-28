@@ -10,7 +10,6 @@ import numpy as np
 
 
 class MeanCenterer(object):
-
     """Column centering of vectors and matrices.
 
     Attributes

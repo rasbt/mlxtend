@@ -19,7 +19,6 @@ from ..externals.name_estimators import _name_estimators
 
 
 class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
-
     """Soft Voting/Majority Rule classifier for scikit-learn estimators.
 
     Parameters

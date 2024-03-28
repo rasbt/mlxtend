@@ -113,7 +113,12 @@ else:
     APPVEYOR = False
 
 
-@pytest.mark.skipif(TRAVIS or APPVEYOR, reason="TensorFlow dependency")
+GITHUB_ACTIONS = os.getenv("GITHUB_ACTIONS_CI", "false").lower() == "true"
+
+
+@pytest.mark.skipif(
+    TRAVIS or APPVEYOR or GITHUB_ACTIONS, reason="TensorFlow dependency"
+)
 def test_keras():
     import tensorflow as tf
 

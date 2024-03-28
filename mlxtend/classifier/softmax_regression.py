@@ -16,7 +16,6 @@ from .._base import _BaseModel, _Classifier, _IterativeModel, _MultiClass
 
 
 class SoftmaxRegression(_BaseModel, _IterativeModel, _Classifier, _MultiClass):
-
     """Softmax regression classifier.
 
     Parameters

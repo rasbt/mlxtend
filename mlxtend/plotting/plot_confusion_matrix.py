@@ -156,9 +156,11 @@ def plot_confusion_matrix(
                     s=cell_text,
                     va="center",
                     ha="center",
-                    color="white"
-                    if conf_mat[i, j] > np.max(conf_mat) * fontcolor_threshold
-                    else "black",
+                    color=(
+                        "white"
+                        if conf_mat[i, j] > np.max(conf_mat) * fontcolor_threshold
+                        else "black"
+                    ),
                 )
     if class_names is not None:
         tick_marks = np.arange(len(class_names))

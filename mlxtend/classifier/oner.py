@@ -17,7 +17,6 @@ from sklearn.exceptions import NotFittedError
 
 
 class OneRClassifier(BaseEstimator, ClassifierMixin):
-
     """OneR (One Rule) Classifier.
 
     Parameters

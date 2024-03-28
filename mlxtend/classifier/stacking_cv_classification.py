@@ -26,7 +26,6 @@ from ._base_classification import _BaseStackingClassifier
 class StackingCVClassifier(
     _BaseXComposition, _BaseStackingClassifier, TransformerMixin
 ):
-
     """A 'Stacking Cross-Validation' classifier for scikit-learn estimators.
 
     New in mlxtend v0.4.3

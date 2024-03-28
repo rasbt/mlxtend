@@ -58,7 +58,7 @@ def test_01_loss_bagging():
     )
 
     tree = DecisionTreeClassifier(random_state=123)
-    bag = BaggingClassifier(base_estimator=tree, random_state=123)
+    bag = BaggingClassifier(estimator=tree, random_state=123)
     avg_expected_loss, avg_bias, avg_var = bias_variance_decomp(
         bag, X_train, y_train, X_test, y_test, loss="0-1_loss", random_seed=123
     )
@@ -91,7 +91,7 @@ def test_mse_bagging():
     )
 
     tree = DecisionTreeRegressor(random_state=123)
-    bag = BaggingRegressor(base_estimator=tree, n_estimators=10, random_state=123)
+    bag = BaggingRegressor(estimator=tree, n_estimators=10, random_state=123)
 
     avg_expected_loss, avg_bias, avg_var = bias_variance_decomp(
         bag, X_train, y_train, X_test, y_test, loss="mse", random_seed=123

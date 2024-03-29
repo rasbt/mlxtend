@@ -79,9 +79,7 @@ def test_fit_transform():
 def test_inverse_transform():
     oht = TransactionEncoder()
     oht.fit(dataset)
-    np.testing.assert_array_equal(
-        np.array(data_sorted), np.array(oht.inverse_transform(expect))
-    )
+    assert data_sorted == oht.inverse_transform(expect)
 
 
 def test_cloning():

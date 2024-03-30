@@ -171,7 +171,6 @@ def test_no_weight_support_with_no_weight():
     sclf.fit(X_iris, y_iris)
 
 
-
 def test_StackingClassifier_proba():
     np.random.seed(12)
     meta = LogisticRegression(multi_class="ovr", solver="liblinear")

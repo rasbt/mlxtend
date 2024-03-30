@@ -4,10 +4,10 @@
 #
 # License: BSD 3 clause
 
+import platform
 import random
 
 import numpy as np
-import platform
 import pytest
 from numpy.testing import assert_almost_equal
 from packaging.version import Version

@@ -20,4 +20,4 @@ jobs:
           isort -p mlxtend --check --diff --line-length 88 --multi-line 3 --py 39 --profile black mlxtend/*
           black --check --diff mlxtend/*
           # exit-zero treats all errors as warnings.
-          flake8 . --config=.flake8 --count --exit-zero --statistics 
+          flake8 . --config=.flake8 --count --exit-zero --statistics

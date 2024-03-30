@@ -186,7 +186,7 @@ class TransactionEncoder(BaseEstimator, TransformerMixin):
     def get_feature_names_out(self):
         """Used to get the column names of pandas output.
 
-        This method combined with the TransformerMixin exposes the
+        This method combined with the `TransformerMixin` exposes the
         set_output API to the TransactionEncoder. This allows the user
         to set the transformed output to a pandas.DataFrame by default.
 

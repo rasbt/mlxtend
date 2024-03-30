@@ -550,7 +550,7 @@ def test_decision_function():
 
     if Version(sklearn_version) < Version("0.21"):
         assert scores_mean == 0.96, scores_mean
-    elif platform.system() == 'Darwin':
+    elif platform.system() == "Darwin":
         assert scores_mean == 0.93, scores_mean
     else:
         assert scores_mean == 0.94, scores_mean

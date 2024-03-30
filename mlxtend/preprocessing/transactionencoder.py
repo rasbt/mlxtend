@@ -188,7 +188,7 @@ class TransactionEncoder(BaseEstimator, TransformerMixin):
 
         This method combined with the `TransformerMixin` exposes the
         set_output API to the `TransactionEncoder`. This allows the user
-        to set the transformed output to a pandas.DataFrame by default.
+        to set the transformed output to a `pandas.DataFrame` by default.
 
         See  https://scikit-learn.org/stable/developers/develop.html#developer-api-set-output
         for more details.

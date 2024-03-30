@@ -1,0 +1,25 @@
+name: Format Python code with Black
+
+on: [pull_request]
+
+jobs:
+  black:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x' # Set the Python version you want to use
+    - name: Install Black
+      run: pip install black
+    - name: Run Black Check
+      run: black --check .
+    - name: Run Black Format
+      if: failure() # This ensures Black format runs only if the Black Check fails
+      run: |
+        black .
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git commit -am "Apply Black Formatting" --allow-empty
+        git push

@@ -7,6 +7,7 @@
 import numpy as np
 from scipy.sparse import csr_matrix
 from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.utils.validation import _check_feature_names_in, check_is_fitted
 
 
 class TransactionEncoder(BaseEstimator, TransformerMixin):
@@ -181,3 +182,16 @@ class TransactionEncoder(BaseEstimator, TransformerMixin):
     def fit_transform(self, X, sparse=False):
         """Fit a TransactionEncoder encoder and transform a dataset."""
         return self.fit(X).transform(X, sparse=sparse)
+
+    def get_feature_names_out(self):
+        """Used to get the column names of pandas output.
+
+        This method combined with the `TransformerMixin` exposes the
+        set_output API to the `TransactionEncoder`. This allows the user
+        to set the transformed output to a `pandas.DataFrame` by default.
+
+        See  https://scikit-learn.org/stable/developers/develop.html#developer-api-set-output
+        for more details.
+        """
+        check_is_fitted(self, attributes="columns_")
+        return _check_feature_names_in(estimator=self, input_features=self.columns_)

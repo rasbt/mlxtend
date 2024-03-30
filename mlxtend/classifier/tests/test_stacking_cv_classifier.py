@@ -40,9 +40,6 @@ breast_cancer = datasets.load_breast_cancer()
 X_breast, y_breast = breast_cancer.data[:, 1:3], breast_cancer.target
 
 
-@pytest.mark.skip(
-    reason="scikit-learn implemented a StackingClassifier in 0.22. It has built-in cross-validation."
-)
 def test_StackingCVClassifier():
     np.random.seed(123)
     meta = LogisticRegression(multi_class="ovr", solver="liblinear")
@@ -174,9 +171,7 @@ def test_no_weight_support_with_no_weight():
     sclf.fit(X_iris, y_iris)
 
 
-@pytest.mark.skip(
-    reason="scikit-learn implemented a StackingClassifier in 0.22. It has built-in cross-validation."
-)
+
 def test_StackingClassifier_proba():
     np.random.seed(12)
     meta = LogisticRegression(multi_class="ovr", solver="liblinear")
@@ -245,9 +240,6 @@ def test_gridsearch_enumerate_names():
     grid = grid.fit(X, y)
 
 
-@pytest.mark.skip(
-    reason="scikit-learn implemented a StackingClassifier in 0.22. It has built-in cross-validation."
-)
 def test_use_probas():
     np.random.seed(123)
     meta = LogisticRegression(multi_class="ovr", solver="liblinear")
@@ -262,9 +254,6 @@ def test_use_probas():
     assert scores_mean == 0.94, scores_mean
 
 
-@pytest.mark.skip(
-    reason="scikit-learn implemented a StackingClassifier in 0.22. It has built-in cross-validation."
-)
 def test_use_features_in_secondary():
     np.random.seed(123)
     meta = LogisticRegression(multi_class="ovr", solver="liblinear")
@@ -282,9 +271,6 @@ def test_use_features_in_secondary():
     assert scores_mean == 0.93, scores_mean
 
 
-@pytest.mark.skip(
-    reason="scikit-learn implemented a StackingClassifier in 0.22. It has built-in cross-validation."
-)
 def test_do_not_stratify():
     meta = LogisticRegression(multi_class="ovr", solver="liblinear")
     clf1 = RandomForestClassifier(n_estimators=10)
@@ -298,9 +284,6 @@ def test_do_not_stratify():
     assert scores_mean == 0.93, scores.mean()
 
 
-@pytest.mark.skip(
-    reason="scikit-learn implemented a StackingClassifier in 0.22. It has built-in cross-validation."
-)
 def test_cross_validation_technique():
     # This is like the `test_do_not_stratify` but instead
     # autogenerating the cross validation strategy it provides
@@ -640,9 +623,6 @@ def test_works_with_df_if_fold_indexes_missing():
         )
 
 
-@pytest.mark.skip(
-    reason="scikit-learn implemented a StackingClassifier in 0.22. It has built-in cross-validation."
-)
 def test_decision_function():
     np.random.seed(123)
 

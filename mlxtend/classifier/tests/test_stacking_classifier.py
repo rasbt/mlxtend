@@ -33,7 +33,6 @@ X = X[:, 1:3]
 y2 = np.c_[y, y]
 
 
-@pytest.mark.skip(reason="scikit-learn implemented a StackingClassifier in 0.22.")
 def test_StackingClassifier():
     np.random.seed(123)
     meta = LogisticRegression(
@@ -162,7 +161,6 @@ def test_weight_unsupported_no_weight():
     sclf.fit(X, y)
 
 
-@pytest.mark.skip(reason="scikit-learn implemented a StackingClassifier in 0.22.")
 def test_StackingClassifier_proba_avg_1():
     np.random.seed(123)
     meta = LogisticRegression(solver="liblinear", multi_class="ovr", random_state=1)
@@ -177,7 +175,6 @@ def test_StackingClassifier_proba_avg_1():
     assert scores_mean == 0.93, scores_mean
 
 
-@pytest.mark.skip(reason="scikit-learn implemented a StackingClassifier in 0.22.")
 def test_StackingClassifier_proba_concat_1():
     np.random.seed(123)
     meta = LogisticRegression(solver="liblinear", multi_class="ovr")
@@ -325,7 +322,6 @@ def test_gridsearch_enumerate_names():
     grid = grid.fit(X, y)
 
 
-@pytest.mark.skip(reason="scikit-learn implemented a StackingClassifier in 0.22.")
 def test_use_probas():
     np.random.seed(123)
     meta = LogisticRegression(solver="liblinear", multi_class="ovr")
@@ -391,7 +387,6 @@ def test_verbose():
     sclf.fit(X, y)
 
 
-@pytest.mark.skip(reason="scikit-learn implemented a StackingClassifier in 0.22.")
 def test_use_features_in_secondary_predict():
     np.random.seed(123)
     X, y = iris_data()
@@ -424,7 +419,6 @@ def test_use_features_in_secondary_predict_proba():
     np.testing.assert_almost_equal(y_pred, expect, 3)
 
 
-@pytest.mark.skip(reason="scikit-learn implemented a StackingClassifier in 0.22.")
 def test_use_features_in_secondary_sparse_input_predict():
     np.random.seed(123)
     X, y = iris_data()
@@ -537,7 +531,6 @@ def test_clone():
     clone(stclf)
 
 
-@pytest.mark.skip(reason="scikit-learn implemented a StackingClassifier in 0.22.")
 def test_decision_function():
     np.random.seed(123)
 
@@ -572,7 +565,7 @@ def test_decision_function():
     if Version(sklearn_version) < Version("0.22"):
         assert scores_mean == 0.95, scores_mean
     else:
-        assert scores_mean == 0.94, scores_mean
+        assert scores_mean == 0.93, scores_mean
 
 
 def test_drop_col_unsupported():

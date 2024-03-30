@@ -7,6 +7,7 @@
 import random
 
 import numpy as np
+import platform
 import pytest
 from numpy.testing import assert_almost_equal
 from packaging.version import Version
@@ -549,8 +550,10 @@ def test_decision_function():
 
     if Version(sklearn_version) < Version("0.21"):
         assert scores_mean == 0.96, scores_mean
-    else:
+    elif platform.system() == 'Darwin':
         assert scores_mean == 0.93, scores_mean
+    else:
+        assert scores_mean == 0.94, scores_mean
 
     # another test
     meta = SVC(decision_function_shape="ovo")

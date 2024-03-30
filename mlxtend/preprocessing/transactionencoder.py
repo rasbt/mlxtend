@@ -187,7 +187,7 @@ class TransactionEncoder(BaseEstimator, TransformerMixin):
         """Used to get the column names of pandas output.
 
         This method combined with the `TransformerMixin` exposes the
-        set_output API to the TransactionEncoder. This allows the user
+        set_output API to the `TransactionEncoder`. This allows the user
         to set the transformed output to a pandas.DataFrame by default.
 
         See  https://scikit-learn.org/stable/developers/develop.html#developer-api-set-output

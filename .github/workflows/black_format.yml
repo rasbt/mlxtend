@@ -16,10 +16,10 @@ jobs:
     - name: Run Black Check
       run: black --check .
     - name: Run Black Format
-      if: failure() # This ensures Black format runs only if the Black Check fails
+      if: failure()
       run: |
-        black .
+        black . --exclude '/(\.ipynb)/' # Exclude .ipynb files in formatting
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         git commit -am "Apply Black Formatting" --allow-empty
-        git push
+        git push origin HEAD:${{ github.head_ref }} # Push to the correct branch

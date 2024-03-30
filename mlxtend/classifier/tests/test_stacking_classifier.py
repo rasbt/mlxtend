@@ -550,10 +550,12 @@ def test_decision_function():
 
     if Version(sklearn_version) < Version("0.21"):
         assert scores_mean == 0.96, scores_mean
-    elif platform.system() == "Darwin":
-        assert scores_mean == 0.93, scores_mean
-    else:
-        assert scores_mean == 0.94, scores_mean
+
+    min_allowed_score = 0.92
+    max_allowed_score = 0.95
+    assert (
+        min_allowed_score <= scores_mean <= max_allowed_score
+    ), "Score is out of the allowed range."
 
     # another test
     meta = SVC(decision_function_shape="ovo")

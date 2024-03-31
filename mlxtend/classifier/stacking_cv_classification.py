@@ -14,6 +14,7 @@ from scipy import sparse
 from sklearn.base import TransformerMixin, clone
 from sklearn.model_selection import cross_val_predict
 from sklearn.model_selection._split import check_cv
+from sklearn.preprocessing import LabelEncoder
 
 from ..externals.estimator_checks import check_is_fitted
 from ..externals.name_estimators import _name_estimators
@@ -26,7 +27,6 @@ from ._base_classification import _BaseStackingClassifier
 class StackingCVClassifier(
     _BaseXComposition, _BaseStackingClassifier, TransformerMixin
 ):
-
     """A 'Stacking Cross-Validation' classifier for scikit-learn estimators.
 
     New in mlxtend v0.4.3
@@ -130,6 +130,9 @@ class StackingCVClassifier(
         Fitted classifiers (clones of the original classifiers)
     meta_clf_ : estimator
         Fitted meta-classifier (clone of the original meta-estimator)
+    classes_ : ndarray of shape (n_classes,) or list of ndarray if `y` \
+            is of type `"multilabel-indicator"`.
+            Class labels.
     train_meta_features : numpy array, shape = [n_samples, n_classifiers]
         meta-features for training data, where n_samples is the
         number of samples
@@ -220,6 +223,13 @@ class StackingCVClassifier(
             self.meta_clf_ = self.meta_classifier
         if self.verbose > 0:
             print("Fitting %d classifiers..." % (len(self.classifiers)))
+
+        if y.ndim > 1:
+            self._label_encoder = [LabelEncoder().fit(yk) for yk in y.T]
+            self.classes_ = [le.classes_ for le in self._label_encoder]
+        else:
+            self._label_encoder = LabelEncoder().fit(y)
+            self.classes_ = self._label_encoder.classes_
 
         final_cv = check_cv(self.cv, y, classifier=self.stratify)
         if isinstance(self.cv, int):

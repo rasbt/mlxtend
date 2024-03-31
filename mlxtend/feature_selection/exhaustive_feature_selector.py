@@ -26,7 +26,6 @@ from .utilities import _calc_score, _get_featurenames, _merge_lists, _preprocess
 
 
 class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
-
     """Exhaustive Feature Selection for Classification and Regression.
        (new in v0.4.3)
 

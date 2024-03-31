@@ -5,6 +5,7 @@
 # License: BSD 3 clause
 
 import numpy as np
+import pandas as pd
 from scipy.sparse import csr_matrix
 from sklearn.base import clone
 
@@ -78,9 +79,7 @@ def test_fit_transform():
 def test_inverse_transform():
     oht = TransactionEncoder()
     oht.fit(dataset)
-    np.testing.assert_array_equal(
-        np.array(data_sorted), np.array(oht.inverse_transform(expect))
-    )
+    assert data_sorted == oht.inverse_transform(expect)
 
 
 def test_cloning():
@@ -93,3 +92,27 @@ def test_cloning():
 
     trans = oht2.fit_transform(dataset)
     np.testing.assert_array_equal(expect, trans)
+
+
+def test_get_feature_names_out():
+    """Assert TransactionEncoder has attribute get_feature_names_out."""
+    oht = TransactionEncoder()
+    assert hasattr(oht, "get_feature_names_out")
+    oht.fit(dataset)
+    np.testing.assert_array_equal(oht.get_feature_names_out(), oht.columns_)
+
+
+def test_set_output():
+    """Assert TransactionEncoder has attribute set_output.
+
+    When transform="pandas", the transformed output of
+    TransactionEncoder should be a pandas.DataFrame with the correct
+    column names and the values should match those of the original
+    numpy.array.
+    """
+    oht = TransactionEncoder()
+    assert hasattr(oht, "set_output")
+    oht = oht.set_output(transform="pandas")
+    out = oht.fit_transform(dataset)
+    assert isinstance(out, pd.DataFrame)
+    np.testing.assert_array_equal(out.columns, oht.columns_)

@@ -406,10 +406,10 @@ $ source activate mlxtend-testing
 
 ### 2. Installing the package from local files
 
-Test the installation by executing
+Test the installation by executing the following from within the mlxtend main directory:
 
 ```bash
-$ python setup.py install --record files.txt
+$ pip install . -e
 ```
 
 the `--record files.txt` flag will create a `files.txt` file listing the locations where these files will be installed.
@@ -430,6 +430,7 @@ $ cat files.txt | xargs rm -rf ; rm files.txt
 Next, test if `pip` is able to install the packages. First, navigate to a different directory, and from there, install the package:
 
 ```bash
+$ pip uninstall
 $ pip install mlxtend
 ```
 

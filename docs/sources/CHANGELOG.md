@@ -31,7 +31,8 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- Add `n_classes_` attribute to stacking classifiers for compatibility with scikit-learn 1.3 ([#1091](https://github.com/rasbt/mlxtend/issues/1091)
+- Add `n_classes_` attribute to stacking classifiers for compatibility with scikit-learn 1.3 ([#1091](https://github.com/rasbt/mlxtend/issues/1091))
+- Use Scipy's instead of NumPy's decompositions in PCA for improved accuracy in edge cases ([#1080](https://github.com/rasbt/mlxtend/issues/1080) via [[fkdosilovic](https://github.com/rasbt/mlxtend/issues?q=is%3Apr+is%3Aopen+author%3Afkdosilovic)])
 
 
 

@@ -14,7 +14,7 @@ import numpy as np
 import pandas as pd
 
 
-def association_rules(df, metric="confidence", min_threshold=0.8, support_only=False):
+def association_rules(df: pd.DataFrame, metric="confidence", min_threshold=0.8, support_only=False) -> pd.DataFrame:
     """Generates a DataFrame of association rules including the
     metrics 'score', 'confidence', and 'lift'
 
@@ -116,6 +116,14 @@ def association_rules(df, metric="confidence", min_threshold=0.8, support_only=F
             zhangs_metric = np.where(denominator == 0, 0, numerator / denominator)
 
         return zhangs_metric
+    
+    def jaccard_metric_helper(sAC, sA, sC):
+        numerator = metric_dict["support"](sAC, sA, sC)
+        denominator = sA + sC - numerator
+
+        jaccard_metric = numerator / denominator
+        return jaccard_metric
+
 
     # metrics for association rules
     metric_dict = {
@@ -127,6 +135,7 @@ def association_rules(df, metric="confidence", min_threshold=0.8, support_only=F
         "leverage": lambda sAC, sA, sC: metric_dict["support"](sAC, sA, sC) - sA * sC,
         "conviction": lambda sAC, sA, sC: conviction_helper(sAC, sA, sC),
         "zhangs_metric": lambda sAC, sA, sC: zhangs_metric_helper(sAC, sA, sC),
+        "jaccard": lambda sAC, sA, sC: jaccard_metric_helper(sAC, sA, sC),
     }
 
     columns_ordered = [
@@ -138,6 +147,7 @@ def association_rules(df, metric="confidence", min_threshold=0.8, support_only=F
         "leverage",
         "conviction",
         "zhangs_metric",
+        "jaccard"
     ]
 
     # check for metric compliance

@@ -13,8 +13,21 @@ from itertools import combinations
 import numpy as np
 import pandas as pd
 
+_metrics = [
+        "antecedent support",
+        "consequent support",
+        "support",
+        "confidence",
+        "lift",
+        "leverage",
+        "conviction",
+        "zhangs_metric",
+        "jaccard",
+        "centered_confidence",
+        "certainty",
+]
 
-def association_rules(df: pd.DataFrame, metric="confidence", min_threshold=0.8, support_only=False) -> pd.DataFrame:
+def association_rules(df: pd.DataFrame, metric = "confidence", min_threshold = 0.8, support_only = False, return_metrics: list = _metrics) -> pd.DataFrame:
     """Generates a DataFrame of association rules including the
     metrics 'score', 'confidence', and 'lift'
 
@@ -147,20 +160,6 @@ def association_rules(df: pd.DataFrame, metric="confidence", min_threshold=0.8, 
         "certainty": lambda sAC, sA, sC: certainty_metric_helper(sAC, sA, sC),
     }
 
-    columns_ordered = [
-        "antecedent support",
-        "consequent support",
-        "support",
-        "confidence",
-        "lift",
-        "leverage",
-        "conviction",
-        "zhangs_metric",
-        "jaccard",
-        "centered_confidence",
-        "certainty",
-    ]
-
     # check for metric compliance
     if support_only:
         metric = "support"
@@ -221,7 +220,7 @@ def association_rules(df: pd.DataFrame, metric="confidence", min_threshold=0.8, 
 
     # check if frequent rule was generated
     if not rule_supports:
-        return pd.DataFrame(columns=["antecedents", "consequents"] + columns_ordered)
+        return pd.DataFrame(columns=["antecedents", "consequents"] + return_metrics)
 
     else:
         # generate metrics
@@ -233,7 +232,7 @@ def association_rules(df: pd.DataFrame, metric="confidence", min_threshold=0.8, 
 
         if support_only:
             sAC = rule_supports[0]
-            for m in columns_ordered:
+            for m in return_metrics:
                 df_res[m] = np.nan
             df_res["support"] = sAC
 
@@ -241,7 +240,7 @@ def association_rules(df: pd.DataFrame, metric="confidence", min_threshold=0.8, 
             sAC = rule_supports[0]
             sA = rule_supports[1]
             sC = rule_supports[2]
-            for m in columns_ordered:
+            for m in return_metrics:
                 df_res[m] = metric_dict[m](sAC, sA, sC)
 
         return df_res

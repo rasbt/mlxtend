@@ -178,6 +178,17 @@ def test_confidence():
     assert res_df.values.shape[0] == 9
 
 
+def test_jaccard():
+    res_df = association_rules(df_freq_items, min_threshold=0.7, metric="jaccard")
+    assert res_df.values.shape[0] == 8
+
+    res_df = association_rules(
+        df_freq_items_with_colnames, min_threshold=0.7, metric="jaccard"
+    )
+    assert res_df.values.shape[0] == 8
+
+
+
 def test_frozenset_selection():
     res_df = association_rules(df_freq_items)
 

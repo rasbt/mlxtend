@@ -23,7 +23,6 @@ _metrics = [
         "conviction",
         "zhangs_metric",
         "jaccard",
-        "centered_confidence",
         "certainty",
 ]
 
@@ -138,7 +137,7 @@ def association_rules(df: pd.DataFrame, metric = "confidence", min_threshold = 0
         return jaccard_metric
     
     def certainty_metric_helper(sAC, sA, sC):
-        certainty_num = metric_dict["centered_confidence"](sAC, sA, sC)
+        certainty_num = metric_dict["confidence"](sAC, sA, sC) - sC
         certainty_denom = 1 - sC
 
         cert_metric = np.where(certainty_denom == 0, 0, certainty_num / certainty_denom)
@@ -156,7 +155,6 @@ def association_rules(df: pd.DataFrame, metric = "confidence", min_threshold = 0
         "conviction": lambda sAC, sA, sC: conviction_helper(sAC, sA, sC),
         "zhangs_metric": lambda sAC, sA, sC: zhangs_metric_helper(sAC, sA, sC),
         "jaccard": lambda sAC, sA, sC: jaccard_metric_helper(sAC, sA, sC),
-        "centered_confidence": lambda sAC, sA, sC: metric_dict["confidence"](sAC, sA, sC) - sC,
         "certainty": lambda sAC, sA, sC: certainty_metric_helper(sAC, sA, sC),
     }
 

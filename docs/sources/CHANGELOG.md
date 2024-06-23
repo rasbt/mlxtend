@@ -6,6 +6,24 @@ The CHANGELOG for the current development version is available at
 [https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md](https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md).
 
 ---
+
+### Version 0.23.3 (TBD)
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.23.3.zip)
+
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.23.3.tar.gz)
+
+##### New Features and Enhancements
+
+- [`mlxtend.frequent_patterns.association_rules`](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/) Implemented three new metrics: Jaccard, Certainty, and Kulczynski. ([#1096](https://github.com/rasbt/mlxtend/issues/1096))
+
+##### Changes
+
+- [`mlxtend.frequent_patterns.association_rules`](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/) Added optional parameter 'return_metrics' to only return a given list of metrics, rather than every possible metric.
+
+
 ### Version 0.23.2 (TBD)
 
 ##### Downloads

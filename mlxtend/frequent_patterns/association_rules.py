@@ -13,21 +13,21 @@ from itertools import combinations
 import numpy as np
 import pandas as pd
 
-_metrics = [
-        "antecedent support",
-        "consequent support",
-        "support",
-        "confidence",
-        "lift",
-        "leverage",
-        "conviction",
-        "zhangs_metric",
-        "jaccard",
-        "certainty",
-        "kulczynski"
-]
+_metrics = ["antecedent support",
+            "consequent support",
+            "support",
+            "confidence",
+            "lift",
+            "leverage",
+            "conviction",
+            "zhangs_metric",
+            "jaccard",
+            "certainty",
+            "kulczynski"
+            ]
 
-def association_rules(df: pd.DataFrame, metric = "confidence", min_threshold = 0.8, support_only = False, return_metrics: list = _metrics) -> pd.DataFrame:
+
+def association_rules(df: pd.DataFrame, metric="confidence", min_threshold=0.8, support_only=False, return_metrics: list = _metrics) -> pd.DataFrame:
     """Generates a DataFrame of association rules including the
     metrics 'score', 'confidence', and 'lift'
 
@@ -103,10 +103,10 @@ def association_rules(df: pd.DataFrame, metric = "confidence", min_threshold = 0
             "Dataframe needs to contain the\
                          columns 'support' and 'itemsets'"
         )
-    
+
     def kulczynski_helper(sAC, sA, sC):
-        conf_AC = sAC / sA 
-        conf_CA = sAC / sC 
+        conf_AC = sAC / sA
+        conf_CA = sAC / sC
         kulczynski = (conf_AC + conf_CA) / 2
         return kulczynski
 
@@ -135,21 +135,20 @@ def association_rules(df: pd.DataFrame, metric = "confidence", min_threshold = 0
             zhangs_metric = np.where(denominator == 0, 0, numerator / denominator)
 
         return zhangs_metric
-    
+
     def jaccard_metric_helper(sAC, sA, sC):
         numerator = metric_dict["support"](sAC, sA, sC)
         denominator = sA + sC - numerator
 
         jaccard_metric = numerator / denominator
         return jaccard_metric
-    
+
     def certainty_metric_helper(sAC, sA, sC):
         certainty_num = metric_dict["confidence"](sAC, sA, sC) - sC
         certainty_denom = 1 - sC
 
         cert_metric = np.where(certainty_denom == 0, 0, certainty_num / certainty_denom)
         return cert_metric
-
 
     # metrics for association rules
     metric_dict = {

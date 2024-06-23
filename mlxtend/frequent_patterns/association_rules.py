@@ -24,6 +24,7 @@ _metrics = [
         "zhangs_metric",
         "jaccard",
         "certainty",
+        "kulczynski"
 ]
 
 def association_rules(df: pd.DataFrame, metric = "confidence", min_threshold = 0.8, support_only = False, return_metrics: list = _metrics) -> pd.DataFrame:

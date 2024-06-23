@@ -102,6 +102,12 @@ def association_rules(df: pd.DataFrame, metric = "confidence", min_threshold = 0
             "Dataframe needs to contain the\
                          columns 'support' and 'itemsets'"
         )
+    
+    def kulczynski_helper(sAC, sA, sC):
+        conf_AC = sAC / sA 
+        conf_CA = sAC / sC 
+        kulczynski = (conf_AC + conf_CA) / 2
+        return kulczynski
 
     def conviction_helper(sAC, sA, sC):
         confidence = sAC / sA
@@ -156,6 +162,7 @@ def association_rules(df: pd.DataFrame, metric = "confidence", min_threshold = 0
         "zhangs_metric": lambda sAC, sA, sC: zhangs_metric_helper(sAC, sA, sC),
         "jaccard": lambda sAC, sA, sC: jaccard_metric_helper(sAC, sA, sC),
         "certainty": lambda sAC, sA, sC: certainty_metric_helper(sAC, sA, sC),
+        "kulczynski": lambda sAC, sA, sC: kulczynski_helper(sAC, sA, sC),
     }
 
     # check for metric compliance

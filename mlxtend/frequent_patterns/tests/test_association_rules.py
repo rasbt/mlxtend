@@ -75,15 +75,11 @@ def test_default():
 
         columns=columns_ordered,
     )
-    print(res_df.columns)
-    
+
     expect["antecedents"] = expect["antecedents"].apply(lambda x: str(frozenset(x)))
     expect["consequents"] = expect["consequents"].apply(lambda x: str(frozenset(x)))
     expect.sort_values(columns_ordered, inplace=True)
     expect.reset_index(inplace=True, drop=True)
-    print(expect == res_df)
-    print(expect)
-    print(res_df)
     assert res_df.equals(expect), res_df
 
 

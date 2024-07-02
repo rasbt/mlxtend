@@ -52,6 +52,7 @@ columns_ordered = [
 ]
 
 
+# fmt: off
 def test_default():
     res_df = association_rules(df_freq_items)
     res_df["antecedents"] = res_df["antecedents"].apply(lambda x: str(frozenset(x)))

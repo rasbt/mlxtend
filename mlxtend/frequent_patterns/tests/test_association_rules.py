@@ -46,9 +46,13 @@ columns_ordered = [
     "leverage",
     "conviction",
     "zhangs_metric",
+    "jaccard",
+    "certainty",
+    "kulczynski",
 ]
 
 
+# fmt: off
 def test_default():
     res_df = association_rules(df_freq_items)
     res_df["antecedents"] = res_df["antecedents"].apply(lambda x: str(frozenset(x)))
@@ -58,16 +62,17 @@ def test_default():
 
     expect = pd.DataFrame(
         [
-            [(8,), (5,), 0.6, 1.0, 0.6, 1.0, 1.0, 0.0, np.inf, 0],
-            [(6,), (5,), 0.6, 1.0, 0.6, 1.0, 1.0, 0.0, np.inf, 0],
-            [(8, 3), (5,), 0.6, 1.0, 0.6, 1.0, 1.0, 0.0, np.inf, 0],
-            [(8, 5), (3,), 0.6, 0.8, 0.6, 1.0, 1.25, 0.12, np.inf, 0.5],
-            [(8,), (3, 5), 0.6, 0.8, 0.6, 1.0, 1.25, 0.12, np.inf, 0.5],
-            [(3,), (5,), 0.8, 1.0, 0.8, 1.0, 1.0, 0.0, np.inf, 0],
-            [(5,), (3,), 1.0, 0.8, 0.8, 0.8, 1.0, 0.0, 1.0, 0],
-            [(10,), (5,), 0.6, 1.0, 0.6, 1.0, 1.0, 0.0, np.inf, 0],
-            [(8,), (3,), 0.6, 0.8, 0.6, 1.0, 1.25, 0.12, np.inf, 0.5],
+            [(8,), (5,), 0.6, 1.0, 0.6, 1.0, 1.0, 0.0, np.inf, 0, 0.6, 0.0, 0.8],
+            [(6,), (5,), 0.6, 1.0, 0.6, 1.0, 1.0, 0.0, np.inf, 0, 0.6, 0.0, 0.8],
+            [(8, 3), (5,), 0.6, 1.0, 0.6, 1.0, 1.0, 0.0, np.inf, 0, 0.6, 0.0, 0.8],
+            [(8, 5), (3,), 0.6, 0.8, 0.6, 1.0, 1.25, 0.12, np.inf, 0.5, 0.75, 1.0, 0.875],
+            [(8,), (3, 5), 0.6, 0.8, 0.6, 1.0, 1.25, 0.12, np.inf, 0.5, 0.75, 1.0, 0.875],
+            [(3,), (5,), 0.8, 1.0, 0.8, 1.0, 1.0, 0.0, np.inf, 0, 0.8, 0.0, 0.9],
+            [(5,), (3,), 1.0, 0.8, 0.8, 0.8, 1.0, 0.0, 1.0, 0.0, 0.8, 0.0, 0.9],
+            [(10,), (5,), 0.6, 1.0, 0.6, 1.0, 1.0, 0.0, np.inf, 0, 0.6, 0.0, 0.8],
+            [(8,), (3,), 0.6, 0.8, 0.6, 1.0, 1.25, 0.12, np.inf, 0.5, 0.75, 1.0, 0.875],
         ],
+
         columns=columns_ordered,
     )
 
@@ -75,8 +80,8 @@ def test_default():
     expect["consequents"] = expect["consequents"].apply(lambda x: str(frozenset(x)))
     expect.sort_values(columns_ordered, inplace=True)
     expect.reset_index(inplace=True, drop=True)
-
     assert res_df.equals(expect), res_df
+# fmt: on
 
 
 def test_datatypes():
@@ -130,6 +135,9 @@ def test_empty_result():
             "leverage",
             "conviction",
             "zhangs_metric",
+            "jaccard",
+            "certainty",
+            "kulczynski",
         ]
     )
     res_df = association_rules(df_freq_items, min_threshold=2)
@@ -174,6 +182,36 @@ def test_confidence():
         df_freq_items_with_colnames, min_threshold=0.8, metric="confidence"
     )
     assert res_df.values.shape[0] == 9
+
+
+def test_jaccard():
+    res_df = association_rules(df_freq_items, min_threshold=0.7, metric="jaccard")
+    assert res_df.values.shape[0] == 8
+
+    res_df = association_rules(
+        df_freq_items_with_colnames, min_threshold=0.7, metric="jaccard"
+    )
+    assert res_df.values.shape[0] == 8
+
+
+def test_certainty():
+    res_df = association_rules(df_freq_items, metric="certainty", min_threshold=0.6)
+    assert res_df.values.shape[0] == 3
+
+    res_df = association_rules(
+        df_freq_items_with_colnames, metric="certainty", min_threshold=0.6
+    )
+    assert res_df.values.shape[0] == 3
+
+
+def test_kulczynski():
+    res_df = association_rules(df_freq_items, metric="kulczynski", min_threshold=0.9)
+    assert res_df.values.shape[0] == 2
+
+    res_df = association_rules(
+        df_freq_items_with_colnames, metric="kulczynski", min_threshold=0.6
+    )
+    assert res_df.values.shape[0] == 16
 
 
 def test_frozenset_selection():

@@ -13,8 +13,28 @@ from itertools import combinations
 import numpy as np
 import pandas as pd
 
+_metrics = [
+    "antecedent support",
+    "consequent support",
+    "support",
+    "confidence",
+    "lift",
+    "leverage",
+    "conviction",
+    "zhangs_metric",
+    "jaccard",
+    "certainty",
+    "kulczynski",
+]
 
-def association_rules(df, metric="confidence", min_threshold=0.8, support_only=False):
+
+def association_rules(
+    df: pd.DataFrame,
+    metric="confidence",
+    min_threshold=0.8,
+    support_only=False,
+    return_metrics: list = _metrics,
+) -> pd.DataFrame:
     """Generates a DataFrame of association rules including the
     metrics 'score', 'confidence', and 'lift'
 
@@ -91,6 +111,12 @@ def association_rules(df, metric="confidence", min_threshold=0.8, support_only=F
                          columns 'support' and 'itemsets'"
         )
 
+    def kulczynski_helper(sAC, sA, sC):
+        conf_AC = sAC / sA
+        conf_CA = sAC / sC
+        kulczynski = (conf_AC + conf_CA) / 2
+        return kulczynski
+
     def conviction_helper(sAC, sA, sC):
         confidence = sAC / sA
         conviction = np.empty(confidence.shape, dtype=float)
@@ -117,6 +143,20 @@ def association_rules(df, metric="confidence", min_threshold=0.8, support_only=F
 
         return zhangs_metric
 
+    def jaccard_metric_helper(sAC, sA, sC):
+        numerator = metric_dict["support"](sAC, sA, sC)
+        denominator = sA + sC - numerator
+
+        jaccard_metric = numerator / denominator
+        return jaccard_metric
+
+    def certainty_metric_helper(sAC, sA, sC):
+        certainty_num = metric_dict["confidence"](sAC, sA, sC) - sC
+        certainty_denom = 1 - sC
+
+        cert_metric = np.where(certainty_denom == 0, 0, certainty_num / certainty_denom)
+        return cert_metric
+
     # metrics for association rules
     metric_dict = {
         "antecedent support": lambda _, sA, __: sA,
@@ -127,18 +167,10 @@ def association_rules(df, metric="confidence", min_threshold=0.8, support_only=F
         "leverage": lambda sAC, sA, sC: metric_dict["support"](sAC, sA, sC) - sA * sC,
         "conviction": lambda sAC, sA, sC: conviction_helper(sAC, sA, sC),
         "zhangs_metric": lambda sAC, sA, sC: zhangs_metric_helper(sAC, sA, sC),
+        "jaccard": lambda sAC, sA, sC: jaccard_metric_helper(sAC, sA, sC),
+        "certainty": lambda sAC, sA, sC: certainty_metric_helper(sAC, sA, sC),
+        "kulczynski": lambda sAC, sA, sC: kulczynski_helper(sAC, sA, sC),
     }
-
-    columns_ordered = [
-        "antecedent support",
-        "consequent support",
-        "support",
-        "confidence",
-        "lift",
-        "leverage",
-        "conviction",
-        "zhangs_metric",
-    ]
 
     # check for metric compliance
     if support_only:
@@ -200,7 +232,7 @@ def association_rules(df, metric="confidence", min_threshold=0.8, support_only=F
 
     # check if frequent rule was generated
     if not rule_supports:
-        return pd.DataFrame(columns=["antecedents", "consequents"] + columns_ordered)
+        return pd.DataFrame(columns=["antecedents", "consequents"] + return_metrics)
 
     else:
         # generate metrics
@@ -212,7 +244,7 @@ def association_rules(df, metric="confidence", min_threshold=0.8, support_only=F
 
         if support_only:
             sAC = rule_supports[0]
-            for m in columns_ordered:
+            for m in return_metrics:
                 df_res[m] = np.nan
             df_res["support"] = sAC
 
@@ -220,7 +252,7 @@ def association_rules(df, metric="confidence", min_threshold=0.8, support_only=F
             sAC = rule_supports[0]
             sA = rule_supports[1]
             sC = rule_supports[2]
-            for m in columns_ordered:
+            for m in return_metrics:
                 df_res[m] = metric_dict[m](sAC, sA, sC)
 
         return df_res

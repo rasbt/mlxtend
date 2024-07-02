@@ -6,6 +6,8 @@ The CHANGELOG for the current development version is available at
 [https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md](https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md).
 
 ---
+
+
 ### Version 0.23.2 (TBD)
 
 ##### Downloads
@@ -16,20 +18,12 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features and Enhancements
 
+- [`mlxtend.frequent_patterns.association_rules`](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/) Implemented three new metrics: Jaccard, Certainty, and Kulczynski. ([#1096](https://github.com/rasbt/mlxtend/issues/1096))
 - Integrated scikit-learn's `set_output` method into `TransactionEncoder` ([#1087](https://github.com/rasbt/mlxtend/issues/1087) via [it176131](https://github.com/it176131))
 
-
-
-
-### Version 0.23.2 (TBD)
-
-##### Downloads
-
-- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.23.2.zip)
-
-- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.23.2.tar.gz)
-
 ##### Changes
+
+- [`mlxtend.frequent_patterns.association_rules`](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/) Added optional parameter 'return_metrics' to only return a given list of metrics, rather than every possible metric.
 
 - Add `n_classes_` attribute to stacking classifiers for compatibility with scikit-learn 1.3 ([#1091](https://github.com/rasbt/mlxtend/issues/1091))
 - Use Scipy's instead of NumPy's decompositions in PCA for improved accuracy in edge cases ([#1080](https://github.com/rasbt/mlxtend/issues/1080) via [[fkdosilovic](https://github.com/rasbt/mlxtend/issues?q=is%3Apr+is%3Aopen+author%3Afkdosilovic)])

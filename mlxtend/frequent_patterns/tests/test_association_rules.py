@@ -48,7 +48,7 @@ columns_ordered = [
     "zhangs_metric",
     "jaccard",
     "certainty",
-    "kulczynski"
+    "kulczynski",
 ]
 
 
@@ -81,6 +81,7 @@ def test_default():
     expect.sort_values(columns_ordered, inplace=True)
     expect.reset_index(inplace=True, drop=True)
     assert res_df.equals(expect), res_df
+# fmt: on
 
 
 def test_datatypes():
@@ -197,7 +198,9 @@ def test_certainty():
     res_df = association_rules(df_freq_items, metric="certainty", min_threshold=0.6)
     assert res_df.values.shape[0] == 3
 
-    res_df = association_rules(df_freq_items_with_colnames, metric="certainty", min_threshold=0.6)
+    res_df = association_rules(
+        df_freq_items_with_colnames, metric="certainty", min_threshold=0.6
+    )
     assert res_df.values.shape[0] == 3
 
 
@@ -205,7 +208,9 @@ def test_kulczynski():
     res_df = association_rules(df_freq_items, metric="kulczynski", min_threshold=0.9)
     assert res_df.values.shape[0] == 2
 
-    res_df = association_rules(df_freq_items_with_colnames, metric="kulczynski", min_threshold=0.6)
+    res_df = association_rules(
+        df_freq_items_with_colnames, metric="kulczynski", min_threshold=0.6
+    )
     assert res_df.values.shape[0] == 16
 
 

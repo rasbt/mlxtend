@@ -13,21 +13,28 @@ from itertools import combinations
 import numpy as np
 import pandas as pd
 
-_metrics = ["antecedent support",
-            "consequent support",
-            "support",
-            "confidence",
-            "lift",
-            "leverage",
-            "conviction",
-            "zhangs_metric",
-            "jaccard",
-            "certainty",
-            "kulczynski"
-            ]
+_metrics = [
+    "antecedent support",
+    "consequent support",
+    "support",
+    "confidence",
+    "lift",
+    "leverage",
+    "conviction",
+    "zhangs_metric",
+    "jaccard",
+    "certainty",
+    "kulczynski",
+]
 
 
-def association_rules(df: pd.DataFrame, metric="confidence", min_threshold=0.8, support_only=False, return_metrics: list = _metrics) -> pd.DataFrame:
+def association_rules(
+    df: pd.DataFrame,
+    metric="confidence",
+    min_threshold=0.8,
+    support_only=False,
+    return_metrics: list = _metrics,
+) -> pd.DataFrame:
     """Generates a DataFrame of association rules including the
     metrics 'score', 'confidence', and 'lift'
 

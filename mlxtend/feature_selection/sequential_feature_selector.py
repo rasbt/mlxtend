@@ -651,7 +651,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         return self
 
     def finalize_fit(self):
-        max_score = np.NINF
+        max_score = -np.inf
         for k in self.subsets_:
             if (
                 k >= self.min_k

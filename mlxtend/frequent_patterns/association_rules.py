@@ -19,17 +19,21 @@ _metrics = [
     "support",
     "confidence",
     "lift",
+    "representativity",
     "leverage",
     "conviction",
     "zhangs_metric",
-    "jaccard",
-    "certainty",
-    "kulczynski",
+    # "jaccard",
+    # "certainty",
+    # "kulczynski"
 ]
 
 
 def association_rules(
     df: pd.DataFrame,
+    df_or: pd.DataFrame,
+    num_itemsets: int,
+    disabled: np.ndarray,
     metric="confidence",
     min_threshold=0.8,
     support_only=False,
@@ -117,25 +121,22 @@ def association_rules(
         kulczynski = (conf_AC + conf_CA) / 2
         return kulczynski
 
-    def conviction_helper(sAC, sA, sC):
-        confidence = sAC / sA
-        conviction = np.empty(confidence.shape, dtype=float)
+    def conviction_helper(conf, sC):
+        conviction = np.empty(conf.shape, dtype=float)
         if not len(conviction.shape):
             conviction = conviction[np.newaxis]
-            confidence = confidence[np.newaxis]
-            sAC = sAC[np.newaxis]
-            sA = sA[np.newaxis]
+            conf = conf[np.newaxis]
             sC = sC[np.newaxis]
         conviction[:] = np.inf
-        conviction[confidence < 1.0] = (1.0 - sC[confidence < 1.0]) / (
-            1.0 - confidence[confidence < 1.0]
+        conviction[conf < 1.0] = (1.0 - sC[conf < 1.0]) / (
+            1.0 - conf[conf < 1.0]
         )
 
         return conviction
 
-    def zhangs_metric_helper(sAC, sA, sC):
+    def zhangs_metric_helper(sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_):
         denominator = np.maximum(sAC * (1 - sA), sA * (sC - sAC))
-        numerator = metric_dict["leverage"](sAC, sA, sC)
+        numerator = metric_dict["leverage"](sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_)
 
         with np.errstate(divide="ignore", invalid="ignore"):
             # ignoring the divide by 0 warning since it is addressed in the below np.where
@@ -159,17 +160,18 @@ def association_rules(
 
     # metrics for association rules
     metric_dict = {
-        "antecedent support": lambda _, sA, __: sA,
-        "consequent support": lambda _, __, sC: sC,
-        "support": lambda sAC, _, __: sAC,
-        "confidence": lambda sAC, sA, _: sAC / sA,
-        "lift": lambda sAC, sA, sC: metric_dict["confidence"](sAC, sA, sC) / sC,
-        "leverage": lambda sAC, sA, sC: metric_dict["support"](sAC, sA, sC) - sA * sC,
-        "conviction": lambda sAC, sA, sC: conviction_helper(sAC, sA, sC),
-        "zhangs_metric": lambda sAC, sA, sC: zhangs_metric_helper(sAC, sA, sC),
-        "jaccard": lambda sAC, sA, sC: jaccard_metric_helper(sAC, sA, sC),
-        "certainty": lambda sAC, sA, sC: certainty_metric_helper(sAC, sA, sC),
-        "kulczynski": lambda sAC, sA, sC: kulczynski_helper(sAC, sA, sC),
+        "antecedent support": lambda _, sA, ___, ____, _____, ______, _______, ________: sA,
+        "consequent support": lambda _, __, sC, ____, _____, ______, _______, ________: sC,
+        "support": lambda sAC, _, __, ___, ____, _____, ______, _______: sAC,
+        "confidence": lambda sAC, sA, _, disAC, disA, __, dis_int, ___: (sAC*(num_itemsets - disAC)) / (sA*(num_itemsets - disA) - dis_int),
+        "lift": lambda sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_: metric_dict["confidence"](sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_) / (sC*(num_itemsets - disC) - dis_int_),
+        "representativity": lambda _, __, disAC, ____, ___, ______, _______, ________ : (num_itemsets-disAC)/num_itemsets,
+        "leverage": lambda sAC, sA, sC, _, __, ____, _____, ______: metric_dict["support"](sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_) - sA * sC,
+        "conviction": lambda sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_: conviction_helper(metric_dict["confidence"](sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_), sC),
+        "zhangs_metric": lambda sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_: zhangs_metric_helper(sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_),
+        # "jaccard": lambda sAC, sA, sC: jaccard_metric_helper(sAC, sA, sC),
+        # "certainty": lambda sAC, sA, sC: certainty_metric_helper(sAC, sA, sC),
+        # "kulczynski": lambda sAC, sA, sC: kulczynski_helper(sAC, sA, sC),
     }
 
     # check for metric compliance
@@ -192,6 +194,10 @@ def association_rules(
     rule_consequents = []
     rule_supports = []
 
+    # assign columns from original df to be the same on the disabled.
+    disabled = pd.DataFrame(disabled)
+    disabled.columns = df_or.columns
+
     # iterate over all frequent itemsets
     for k in frequent_items_dict.keys():
         sAC = frequent_items_dict[k]
@@ -212,6 +218,59 @@ def association_rules(
                     try:
                         sA = frequent_items_dict[antecedent]
                         sC = frequent_items_dict[consequent]
+
+                        an=list(antecedent)
+                        con=list(consequent)
+                        an.extend(con)
+
+                        dec=disabled.loc[:,an]
+                        _dec=disabled.loc[:,list(antecedent)]
+                        __dec=disabled.loc[:,list(consequent)]
+                        dec_=df_or.loc[:,list(antecedent)]
+                        dec__=df_or.loc[:,list(consequent)]
+
+                        disAC=0
+                        disA=0
+                        disC=0
+                        dis_int=0
+                        dis_int_=0
+                        for i in range(len(dec.index)):
+                            v=list(dec.iloc[i,:])
+                            x=list(_dec.iloc[i,:])
+                            y=list(__dec.iloc[i,:])
+                            z=list(dec_.iloc[i,:])
+                            w=list(dec__.iloc[i,:])
+                            # if (1 in x) and all(x=='?' for x in y): ##
+                            if 1 in set(v):
+                                disAC+=1
+                            if 1 in set(x):
+                                disA+=1
+                            if 1 in y:
+                                disC+=1
+
+                        # for i in range(len(_dec.index)):
+                            # x=list(_dec.iloc[i,:])
+                            # y=list(__dec.iloc[i,:])
+                            # if 1 in set(x):
+                            #     disA+=1
+                            # if 1 in y:
+                            #     disC+=1
+
+                        # for i in range(len(__dec.index)):
+                        #     x=list(__dec.iloc[i,:])
+                        #     y=list(_dec.iloc[i,:])
+                        #     z=list(dec_.iloc[i,:])
+                        #     w=list(dec__.iloc[i,:])
+                            # if (1 in x) and (True in np.isnan(y)) and (0 not in z):
+
+                            # if (1 in x) and ((0 not in z) and ('?' not in z)):
+                            # if (1 in x) and ((0 not in z) and (1 in z)):
+                            if (1 in y) and all(j==1 for j in z):
+                                dis_int+=1
+                            # if (1 in y) and ((0 not in w) and ('?' not in w)):
+                            if (1 in x) and all(j==1 for j in w):
+                                dis_int_+=1
+
                     except KeyError as e:
                         s = (
                             str(e) + "You are likely getting this error"
@@ -224,11 +283,12 @@ def association_rules(
                         raise KeyError(s)
                     # check for the threshold
 
-                score = metric_dict[metric](sAC, sA, sC)
+                score = metric_dict[metric](sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_)
+                # print(score)
                 if score >= min_threshold:
                     rule_antecedents.append(antecedent)
                     rule_consequents.append(consequent)
-                    rule_supports.append([sAC, sA, sC])
+                    rule_supports.append([sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_])
 
     # check if frequent rule was generated
     if not rule_supports:
@@ -252,7 +312,13 @@ def association_rules(
             sAC = rule_supports[0]
             sA = rule_supports[1]
             sC = rule_supports[2]
+            disAC = rule_supports[3]
+            disA = rule_supports[4]
+            disC = rule_supports[5]
+            dis_int = rule_supports[6]
+            dis_int_= rule_supports[7]
+            
             for m in return_metrics:
-                df_res[m] = metric_dict[m](sAC, sA, sC)
+                df_res[m] = metric_dict[m](sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_)
 
         return df_res

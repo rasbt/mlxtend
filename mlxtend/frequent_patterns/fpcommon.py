@@ -17,6 +17,9 @@ def setup_fptree(df, min_support):
         if df.size == 0:
             itemsets = df.values
         else:
+            # df.replace('?',np.nan,inplace=True)
+            # itemsets=df.values
+            # itemsets=csr_matrix(itemsets)
             itemsets = df.sparse.to_coo().tocsr()
             is_sparse = True
     else:
@@ -25,7 +28,19 @@ def setup_fptree(df, min_support):
 
     # support of each individual item
     # if itemsets is sparse, np.sum returns an np.matrix of shape (1, N)
-    item_support = np.array(np.sum(itemsets, axis=0) / float(num_itemsets))
+    disabled=df.copy()
+    disabled = np.where(pd.isna(disabled), 1, np.nan) + np.where((disabled == 0) | (disabled == 1), np.nan, 0)
+    # disabled.replace(1,np.nan,inplace=True)
+    # disabled.replace(0,np.nan,inplace=True)
+    # disabled.replace('?',1,inplace=True)
+
+    # for y in range(itemsets.shape[1]):
+    #     for x in range(itemsets.shape[0]):
+    #         if itemsets[x,y]=='?':
+    #             itemsets[x,y]=np.nan
+
+    item_support = np.array(np.nansum(itemsets, axis=0)
+                    / (float(num_itemsets) - np.nansum(disabled, axis=0)))
     item_support = item_support.reshape(-1)
 
     items = np.nonzero(item_support >= min_support)[0]
@@ -58,15 +73,51 @@ def setup_fptree(df, min_support):
         itemset.sort(key=rank.get, reverse=True)
         tree.insert_itemset(itemset)
 
-    return tree, rank
+    return tree, disabled, df, rank
 
 
-def generate_itemsets(generator, num_itemsets, colname_map):
+def generate_itemsets(generator, df_or, disabled, num_itemsets, colname_map):
     itemsets = []
     supports = []
+    df = df_or.copy().values
     for sup, iset in generator:
         itemsets.append(frozenset(iset))
-        supports.append(sup / num_itemsets)
+        dec=disabled[:,iset]
+        _dec=df[:,iset]
+        if len(iset)==1:
+            # dec=disabled[:,iset]
+            supports.append((sup - np.nansum(dec))
+                            / (num_itemsets - np.nansum(dec)))
+        elif len(iset)>1:
+            # dec=disabled[:,iset]
+            # _dec=df[:,iset]
+
+            denom=0
+            num=0
+            for i in range(dec.shape[0]):
+                x=list(dec[i,:])
+                y=list(_dec[i,:])
+                if 1 in set(x):
+                    denom+=1
+                    if (0 not in set(y)) or (all(np.isnan(x) for x in y)):
+                        num-=1
+
+            # for i in range(_dec.shape[0]):
+                #also counting the transactions that have all passes but at least
+                #one '?'.
+                # z=list(dec[i,:])
+                # y=list(_dec[i,:])
+                # if (True in np.isnan(y)) and (1 in y) and (0 not in y):
+                # if ((True in np.isnan(y)) and (1 in y) and (0 not in y)) or (all(np.isnan(y))):
+
+                # if (1 in z) and ((0 not in y) and ('?' not in y)):
+                # if ((1 in x) and (0 not in set(y))) or (all(np.isnan(x) for x in y)):
+                #     num-=1
+                    
+            if (num_itemsets-denom==0):
+                supports.append(0)
+            else:
+                supports.append((sup + num) / (num_itemsets - denom))
 
     res_df = pd.DataFrame({"support": supports, "itemsets": itemsets})
 
@@ -120,7 +171,7 @@ def valid_input_check(df):
                 values = df.sparse.to_coo().tocoo().data
         else:
             values = df.values
-        idxs = np.where((values != 1) & (values != 0))
+        idxs = np.where((values != 1) & (values != 0) & (~np.isnan(values)))
         if len(idxs[0]) > 0:
             # idxs has 1 dimension with sparse data and 2 with dense data
             val = values[tuple(loc[0] for loc in idxs)]

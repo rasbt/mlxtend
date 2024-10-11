@@ -18,11 +18,18 @@ The CHANGELOG for the current development version is available at
 
 ##### New Features and Enhancements
 
-- [`mlxtend.frequent_patterns.association_rules`](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/) Implemented three new metrics: Jaccard, Certainty, and Kulczynski. ([#1096](https://github.com/rasbt/mlxtend/issues/1096))
-- Integrated scikit-learn's `set_output` method into `TransactionEncoder` ([#1087](https://github.com/rasbt/mlxtend/issues/1087) via [it176131](https://github.com/it176131))
+-  Implement the FP-Growth and FP-Max algorithms with the possibility of missing values in the input dataset. Added a new metric Representativity for the association rules generated ([#1004](https://github.com/rasbt/mlxtend/issues/1004) via [zazass8](https://github.com/zazass8)).
+Files updated:
+  - ['mlxtend.frequent_patterns.fpcommon']
+  - ['mlxtend.frequent_patterns.fpgrowth'](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/fpgrowth/)
+  - ['mlxtend.frequent_patterns.fpmax'](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/fpmax/)
+  - [`mlxtend.frequent_patterns.association_rules`](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/)
+- [`mlxtend.frequent_patterns.association_rules`](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/)Implemented three new metrics: Jaccard, Certainty, and Kulczynski. ([#1096](https://github.com/rasbt/mlxtend/issues/1096))
+- Integrated scikit-learn's `set_output` method into `TransactionEncoder` ([#1087](https://github.com/rasbt/mlxtend/issues/1087) via[it176131](https://github.com/it176131))
 
 ##### Changes
 
+- [`mlxtend.frequent_patterns.fpcommon`] Added the null_values parameter in valid_input_check signature to check in case the input also includes null values. Changes the returns statements and function signatures for setup_fptree and generated_itemsets respectively to return the disabled array created and to include it as a parameter. Added code in [`mlxtend.frequent_patterns.fpcommon`] and [`mlxtend.frequent_patterns.association_rules`](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/) to implement the algorithms in case null values exist when null_values is True.
 - [`mlxtend.frequent_patterns.association_rules`](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/) Added optional parameter 'return_metrics' to only return a given list of metrics, rather than every possible metric.
 
 - Add `n_classes_` attribute to stacking classifiers for compatibility with scikit-learn 1.3 ([#1091](https://github.com/rasbt/mlxtend/issues/1091))

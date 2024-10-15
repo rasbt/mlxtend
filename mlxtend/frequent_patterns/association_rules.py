@@ -9,9 +9,12 @@
 # License: BSD 3 clause
 
 from itertools import combinations
+from typing import Optional
 
 import numpy as np
 import pandas as pd
+
+from ..frequent_patterns import fpcommon as fpc
 
 _metrics = [
     "antecedent support",
@@ -31,8 +34,8 @@ _metrics = [
 
 def association_rules(
     df: pd.DataFrame,
-    df_or: pd.DataFrame,
     num_itemsets: int,
+    df_orig: Optional[pd.DataFrame] = None,
     null_values=False,
     metric="confidence",
     min_threshold=0.8,
@@ -48,13 +51,13 @@ def association_rules(
       pandas DataFrame of frequent itemsets
       with columns ['support', 'itemsets']
 
-    df_or : pandas DataFrame
-      DataFrame with original input data
+    df_orig : pandas DataFrame (default: None)
+      DataFrame with original input data. Only provided when null_values exist
 
     num_itemsets : int
       Number of transactions in original input data
 
-    null_values : bool (default: True)
+    null_values : bool (default: False)
       In case there are null values as NaNs in the original input data
 
     metric : string (default: 'confidence')
@@ -112,6 +115,13 @@ def association_rules(
     https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/
 
     """
+    # if null values exist, df_orig must be provided
+    if null_values and df_orig is None:
+        raise TypeError("If null values exist, df_orig must be provided.")
+
+    # check for valid input
+    fpc.valid_input_check(df_orig, null_values)
+
     if not df.shape[0]:
         raise ValueError(
             "The input DataFrame `df` containing " "the frequent itemsets is empty."
@@ -125,8 +135,8 @@ def association_rules(
         )
 
     def kulczynski_helper(sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_):
-        conf_AC = sAC / sA
-        conf_CA = sAC / sC
+        conf_AC = sAC * (num_itemsets - disAC) / (sA * (num_itemsets - disA) - dis_int)
+        conf_CA = sAC * (num_itemsets - disAC) / (sC * (num_itemsets - disC) - dis_int_)
         kulczynski = (conf_AC + conf_CA) / 2
         return kulczynski
 
@@ -234,13 +244,21 @@ def association_rules(
     rule_supports = []
 
     # Define the disabled df, assign columns from original df to be the same on the disabled.
-    disabled = df_or.copy()
     if null_values:
+        disabled = df_orig.copy()
         disabled = np.where(pd.isna(disabled), 1, np.nan) + np.where(
             (disabled == 0) | (disabled == 1), np.nan, 0
         )
         disabled = pd.DataFrame(disabled)
-        disabled.columns = df_or.columns
+        if all(isinstance(key, str) for key in list(frequent_items_dict.keys())[0]):
+            disabled.columns = df_orig.columns
+
+        if all(
+            isinstance(key, np.int64) for key in list(frequent_items_dict.keys())[0]
+        ):
+            cols = np.arange(0, len(df_orig.columns), 1)
+            disabled.columns = cols
+            df_orig.columns = cols
 
     # iterate over all frequent itemsets
     for k in frequent_items_dict.keys():
@@ -280,8 +298,8 @@ def association_rules(
                             __dec = disabled.loc[:, list(consequent)]
 
                             # select data of antecedent and consequent from original
-                            dec_ = df_or.loc[:, list(antecedent)]
-                            dec__ = df_or.loc[:, list(consequent)]
+                            dec_ = df_orig.loc[:, list(antecedent)]
+                            dec__ = df_orig.loc[:, list(consequent)]
 
                             # disabled counts
                             disAC, disA, disC, dis_int, dis_int_ = 0, 0, 0, 0, 0

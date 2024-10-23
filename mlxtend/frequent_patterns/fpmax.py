@@ -9,7 +9,9 @@ import math
 from ..frequent_patterns import fpcommon as fpc
 
 
-def fpmax(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
+def fpmax(
+    df, min_support=0.5, null_values=False, use_colnames=False, max_len=None, verbose=0
+):
     """Get maximal frequent itemsets from a one-hot DataFrame
 
     Parameters
@@ -43,6 +45,9 @@ def fpmax(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
       The support is computed as the fraction
       transactions_where_item(s)_occur / total_transactions.
 
+    null_values : bool (default: True)
+      In case there are null values as NaNs in the original input data
+
     use_colnames : bool (default: False)
       If true, uses the DataFrames' column names in the returned DataFrame
       instead of column indices.
@@ -72,7 +77,7 @@ def fpmax(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
     https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/fpmax/
 
     """
-    fpc.valid_input_check(df)
+    fpc.valid_input_check(df, null_values)
 
     if min_support <= 0.0:
         raise ValueError(
@@ -85,12 +90,14 @@ def fpmax(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0):
     if use_colnames:
         colname_map = {idx: item for idx, item in enumerate(df.columns)}
 
-    tree, rank = fpc.setup_fptree(df, min_support)
+    tree, disabled, rank = fpc.setup_fptree(df, min_support)
 
     minsup = math.ceil(min_support * len(df))  # min support as count
     generator = fpmax_step(tree, minsup, MFITree(rank), colname_map, max_len, verbose)
 
-    return fpc.generate_itemsets(generator, len(df), colname_map)
+    return fpc.generate_itemsets(
+        generator, df, disabled, min_support, len(df), colname_map
+    )
 
 
 def fpmax_step(tree, minsup, mfit, colnames, max_len, verbose):

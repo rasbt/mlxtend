@@ -651,7 +651,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         return self
 
     def finalize_fit(self):
-        if np.__version__ < '2.0':
+        if np.__version__ < "2.0":
             ninf = np.NINF
         else:
             ninf = -np.inf

@@ -654,7 +654,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         if np.__version__ < '2.0':
             ninf = np.NINF
         else:
-            ninf = -np.inf        
+            ninf = -np.inf
         max_score = ninf
         for k in self.subsets_:
             if (

@@ -23,6 +23,8 @@ Files updated:
   - ['mlxtend.frequent_patterns.fpcommon']
   - ['mlxtend.frequent_patterns.fpgrowth'](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/fpgrowth/)
   - ['mlxtend.frequent_patterns.fpmax'](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/fpmax/)
+  - ['mlxtend/feature_selection/utilities.py'](https://github.com/rasbt/mlxtend/blob/master/mlxtend/feature_selection/utilities.py)
+      - Modified `_calc_score` function to ensure compatibility with *scikit-learn* versions 1.4 and above by dynamically selecting between `fit_params` and `params` in `cross_val_score`.
   - [`mlxtend.feature_selection.SequentialFeatureSelector`](https://github.com/rasbt/mlxtend/blob/master/mlxtend/feature_selection/sequential_feature_selector.py)
     - Updated negative infinity constant to be compatible with old and new (>=2.0) `numpy` versions
   - [`mlxtend.frequent_patterns.association_rules`](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/)

@@ -1,6 +1,5 @@
-from copy import deepcopy
-
 import numpy as np
+from sklearn import __version__ as sklearn_version
 from sklearn.model_selection import cross_val_score
 
 
@@ -94,6 +93,9 @@ def _calc_score(
         feature_groups = [[i] for i in range(X.shape[1])]
 
     IDX = _merge_lists(feature_groups, indices)
+
+    param_name = "fit_params" if sklearn_version < "1.4" else "params"
+
     if selector.cv:
         scores = cross_val_score(
             selector.est_,
@@ -104,7 +106,7 @@ def _calc_score(
             scoring=selector.scorer,
             n_jobs=1,
             pre_dispatch=selector.pre_dispatch,
-            fit_params=fit_params,
+            **{param_name: fit_params},
         )
     else:
         selector.est_.fit(X[:, IDX], y, **fit_params)

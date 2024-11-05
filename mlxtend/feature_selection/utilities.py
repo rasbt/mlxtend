@@ -1,6 +1,6 @@
 import numpy as np
-from sklearn.model_selection import cross_val_score
 from sklearn import __version__ as sklearn_version
+from sklearn.model_selection import cross_val_score
 
 
 def _merge_lists(nested_list, high_level_indices=None):

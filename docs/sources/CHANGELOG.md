@@ -31,7 +31,6 @@ Files updated:
     - Implemented three new metrics: Jaccard, Certainty, and Kulczynski. ([#1096](https://github.com/rasbt/mlxtend/issues/1096))
   - Integrated scikit-learn's `set_output` method into `TransactionEncoder` ([#1087](https://github.com/rasbt/mlxtend/issues/1087) via [it176131](https://github.com/it176131))
 
-
 ##### Changes
 
 - [`mlxtend.frequent_patterns.fpcommon`] Added the null_values parameter in valid_input_check signature to check in case the input also includes null values. Changes the returns statements and function signatures for setup_fptree and generated_itemsets respectively to return the disabled array created and to include it as a parameter. Added code in [`mlxtend.frequent_patterns.fpcommon`] and [`mlxtend.frequent_patterns.association_rules`](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/) to implement the algorithms in case null values exist when null_values is True.

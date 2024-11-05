@@ -94,7 +94,7 @@ def _calc_score(
 
     IDX = _merge_lists(feature_groups, indices)
 
-    param_name = 'fit_params' if sklearn_version < '1.4' else 'params'
+    param_name = "fit_params" if sklearn_version < "1.4" else "params"
 
     if selector.cv:
         scores = cross_val_score(

@@ -106,7 +106,7 @@ def _calc_score(
             scoring=selector.scorer,
             n_jobs=1,
             pre_dispatch=selector.pre_dispatch,
-            **{param_name: fit_params}
+            **{param_name: fit_params},
         )
     else:
         selector.est_.fit(X[:, IDX], y, **fit_params)

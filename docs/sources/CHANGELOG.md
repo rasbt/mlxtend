@@ -8,7 +8,7 @@ The CHANGELOG for the current development version is available at
 ---
 
 
-### Version 0.23.2 (TBD)
+### Version 0.23.2  (5 Nov 2024)
 
 ##### Downloads
 
@@ -19,7 +19,7 @@ The CHANGELOG for the current development version is available at
 ##### New Features and Enhancements
 
 -  Implement the FP-Growth and FP-Max algorithms with the possibility of missing values in the input dataset. Added a new metric Representativity for the association rules generated ([#1004](https://github.com/rasbt/mlxtend/issues/1004) via [zazass8](https://github.com/zazass8)).
-Files updated:
+  Files updated:
   - ['mlxtend.frequent_patterns.fpcommon']
   - ['mlxtend.frequent_patterns.fpgrowth'](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/fpgrowth/)
   - ['mlxtend.frequent_patterns.fpmax'](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/fpmax/)

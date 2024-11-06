@@ -314,6 +314,8 @@ def plot_split_indices(cv, cv_args, X, y, groups, n_splits, image_file_path=None
     ax.tick_params(axis="both", which="major", labelsize=13)
     ax.tick_params(axis="both", which="minor", labelsize=13)
 
+    ax.xaxis.set_major_locator(MaxNLocator(integer=True))
+
     plt.tight_layout()
 
     if image_file_path:

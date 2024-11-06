@@ -7,6 +7,19 @@ The CHANGELOG for the current development version is available at
 
 ---
 
+### Version 0.23.3  (tbd)
+
+##### Downloads
+...
+
+##### New Features and Enhancements
+
+Files updated:
+  - ['mlxtend.evaluate.time_series.plot_splits'](https://github.com/rasbt/mlxtend/blob/master/mlxtend/evaluate/time_series.py)
+    - Fixed and improved `plot_splits`
+
+##### Changes
+...
 
 ### Version 0.23.2  (5 Nov 2024)
 

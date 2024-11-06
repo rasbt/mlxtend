@@ -308,6 +308,7 @@ def plot_split_indices(cv, cv_args, X, y, groups, n_splits, image_file_path=None
     )
 
     ax.set_title("{}\n{}".format(type(cv).__name__, cv_args), fontsize=15)
+    ax.set_xlim(0, len(X))
     ax.xaxis.set_major_locator(MaxNLocator(integer=True))
     ax.set_xlabel(xlabel="Sample index", fontsize=13)
     ax.set_ylabel(ylabel="CV iteration", fontsize=13)

@@ -302,6 +302,7 @@ def plot_split_indices(cv, cv_args, X, y, groups, n_splits, image_file_path=None
     ax.legend(
         [Patch(color=cmap_cv(0.2)), Patch(color=cmap_cv(0.8))],
         ["Training set", "Testing set"],
+        title="Data Splits",
         loc=(1.02, 0.8),
         fontsize=13,
     )

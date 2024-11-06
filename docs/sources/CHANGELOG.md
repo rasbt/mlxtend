@@ -16,7 +16,7 @@ The CHANGELOG for the current development version is available at
 
 Files updated:
   - ['mlxtend.evaluate.time_series.plot_splits'](https://github.com/rasbt/mlxtend/blob/master/mlxtend/evaluate/time_series.py)
-    - Fixed and improved `plot_splits`
+    - Fixed `test_end_idx` and improved `plot_splits`
 
 ##### Changes
 ...

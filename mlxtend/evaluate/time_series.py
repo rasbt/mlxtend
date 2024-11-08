@@ -129,7 +129,7 @@ class GroupTimeSeriesSplit:
                 test_idx = np.r_[
                     slice(
                         groups_dict[group_names[test_start_idx]],
-                        groups_dict[group_names[test_end_idx]] - 1,
+                        groups_dict[group_names[test_end_idx]],
                     )
                 ]
             else:

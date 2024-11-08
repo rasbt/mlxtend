@@ -299,11 +299,31 @@ def plot_split_indices(cv, cv_args, X, y, groups, n_splits, image_file_path=None
         xlim=[-0.5, len(indices) - 0.5],
     )
 
-    ax.legend(
+    legend_splits = ax.legend(
         [Patch(color=cmap_cv(0.2)), Patch(color=cmap_cv(0.8))],
         ["Training set", "Testing set"],
         title="Data Splits",
-        loc=(1.02, 0.8),
+        loc="upper right",
+        fontsize=13,
+    )
+
+    ax.add_artist(legend_splits)
+
+    group_labels = [f"{group}" for group in groups]
+    cmap = plt.cm.get_cmap("tab20", len(group_labels))
+
+    unique_patches = {}
+    for i in range(len(group_labels)):
+        if group_labels[i] not in unique_patches:
+            unique_patches[group_labels[i]] = Patch(
+                color=cmap(i), label=group_labels[i]
+            )
+
+    ax.legend(
+        handles=list(unique_patches.values()),
+        title="Groups",
+        loc="center left",
+        bbox_to_anchor=(1.02, 0.5),
         fontsize=13,
     )
 

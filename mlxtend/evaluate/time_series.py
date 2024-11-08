@@ -309,15 +309,12 @@ def plot_split_indices(cv, cv_args, X, y, groups, n_splits, image_file_path=None
 
     ax.add_artist(legend_splits)
 
-    group_labels = [f"{group}" for group in groups]
+    group_labels = [f"{group}" for group in np.unique(groups)]
     cmap = plt.cm.get_cmap("tab20", len(group_labels))
 
     unique_patches = {}
-    for i in range(len(group_labels)):
-        if group_labels[i] not in unique_patches:
-            unique_patches[group_labels[i]] = Patch(
-                color=cmap(i), label=group_labels[i]
-            )
+    for i, group in enumerate(np.unique(groups)):
+        unique_patches[group] = Patch(color=cmap(i), label=f"{group}")
 
     ax.legend(
         handles=list(unique_patches.values()),

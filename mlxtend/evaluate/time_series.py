@@ -290,7 +290,7 @@ def plot_split_indices(cv, cv_args, X, y, groups, n_splits, image_file_path=None
         s=marker_size,
     )
 
-    yticklabels = list(range(n_splits)) + ["group"]
+    yticklabels = list(range(1, n_splits + 1)) + ["group"]
     ax.set(
         yticks=np.arange(n_splits + 1) + 0.5,
         yticklabels=yticklabels,

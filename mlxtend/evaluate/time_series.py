@@ -290,7 +290,7 @@ def plot_split_indices(cv, cv_args, X, y, groups, n_splits, image_file_path=None
         s=marker_size,
     )
 
-    yticklabels = list(range(n_splits)) + ["group"]
+    yticklabels = list(range(1, n_splits + 1)) + ["group"]
     ax.set(
         yticks=np.arange(n_splits + 1) + 0.5,
         yticklabels=yticklabels,
@@ -299,15 +299,34 @@ def plot_split_indices(cv, cv_args, X, y, groups, n_splits, image_file_path=None
         xlim=[-0.5, len(indices) - 0.5],
     )
 
-    ax.legend(
+    legend_splits = ax.legend(
         [Patch(color=cmap_cv(0.2)), Patch(color=cmap_cv(0.8))],
         ["Training set", "Testing set"],
-        loc=(1.02, 0.8),
+        title="Data Splits",
+        loc="upper right",
+        fontsize=13,
+    )
+
+    ax.add_artist(legend_splits)
+
+    group_labels = [f"{group}" for group in np.unique(groups)]
+    cmap = plt.cm.get_cmap("tab20", len(group_labels))
+
+    unique_patches = {}
+    for i, group in enumerate(np.unique(groups)):
+        unique_patches[group] = Patch(color=cmap(i), label=f"{group}")
+
+    ax.legend(
+        handles=list(unique_patches.values()),
+        title="Groups",
+        loc="center left",
+        bbox_to_anchor=(1.02, 0.5),
         fontsize=13,
     )
 
     ax.set_title("{}\n{}".format(type(cv).__name__, cv_args), fontsize=15)
-    ax.xaxis.set_major_locator(MaxNLocator(min_n_ticks=len(X), integer=True))
+    ax.set_xlim(0, len(X))
+    ax.xaxis.set_major_locator(MaxNLocator(integer=True))
     ax.set_xlabel(xlabel="Sample index", fontsize=13)
     ax.set_ylabel(ylabel="CV iteration", fontsize=13)
     ax.tick_params(axis="both", which="major", labelsize=13)

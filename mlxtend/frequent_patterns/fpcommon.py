@@ -25,9 +25,16 @@ def setup_fptree(df, min_support):
 
     # support of each individual item
     # if itemsets is sparse, np.sum returns an np.matrix of shape (1, N)
-    item_support = np.array(np.sum(itemsets, axis=0) / float(num_itemsets))
-    item_support = item_support.reshape(-1)
+    disabled = df.copy()
+    disabled = np.where(pd.isna(disabled), 1, np.nan) + np.where(
+        (disabled == 0) | (disabled == 1), np.nan, 0
+    )
 
+    item_support = np.array(
+        np.sum(np.logical_or(df.values == 1, df.values is True), axis=0)
+        / (float(num_itemsets) - np.nansum(disabled, axis=0))
+    )
+    item_support = item_support.reshape(-1)
     items = np.nonzero(item_support >= min_support)[0]
 
     # Define ordering on items for inserting into FPTree
@@ -58,17 +65,50 @@ def setup_fptree(df, min_support):
         itemset.sort(key=rank.get, reverse=True)
         tree.insert_itemset(itemset)
 
-    return tree, rank
+    return tree, disabled, rank
 
 
-def generate_itemsets(generator, num_itemsets, colname_map):
+def generate_itemsets(generator, df, disabled, min_support, num_itemsets, colname_map):
     itemsets = []
     supports = []
     for sup, iset in generator:
         itemsets.append(frozenset(iset))
-        supports.append(sup / num_itemsets)
+        # select data of iset from disabled dataset
+        dec = disabled[:, iset]
+        # select data of iset from original dataset
+        _dec = df.values[:, iset]
+
+        # case if iset only has one element
+        if len(iset) == 1:
+            supports.append((sup - np.nansum(dec)) / (num_itemsets - np.nansum(dec)))
+
+        # case if iset has multiple elements
+        elif len(iset) > 1:
+            denom = 0
+            num = 0
+            for i in range(dec.shape[0]):
+                # select the i-th iset from disabled dataset
+                item_dsbl = list(dec[i, :])
+                # select the i-th iset from original dataset
+                item_orig = list(_dec[i, :])
+
+                # check and keep count if there is a null value in iset of disabled
+                if 1 in set(item_dsbl):
+                    denom += 1
+
+                    # check and keep count if item doesn't exist OR all values are null in iset of original
+                    if (0 not in set(item_orig)) or (
+                        all(np.isnan(x) for x in item_orig)
+                    ):
+                        num -= 1
+
+            if num_itemsets - denom == 0:
+                supports.append(0)
+            else:
+                supports.append((sup + num) / (num_itemsets - denom))
 
     res_df = pd.DataFrame({"support": supports, "itemsets": itemsets})
+    res_df = res_df[res_df["support"] >= min_support]
 
     if colname_map is not None:
         res_df["itemsets"] = res_df["itemsets"].apply(
@@ -78,7 +118,11 @@ def generate_itemsets(generator, num_itemsets, colname_map):
     return res_df
 
 
-def valid_input_check(df):
+def valid_input_check(df, null_values=False):
+    # Return early if df is None
+    if df is None:
+        return
+
     if f"{type(df)}" == "<class 'pandas.core.frame.SparseDataFrame'>":
         msg = (
             "SparseDataFrame support has been deprecated in pandas 1.0,"
@@ -104,7 +148,15 @@ def valid_input_check(df):
             )
 
     # Fast path: if all columns are boolean, there is nothing to checks
-    all_bools = df.dtypes.apply(pd.api.types.is_bool_dtype).all()
+    if null_values:
+        all_bools = (
+            df.apply(lambda col: col.apply(lambda x: pd.isna(x) or isinstance(x, bool)))
+            .all()
+            .all()
+        )
+    else:
+        all_bools = df.dtypes.apply(pd.api.types.is_bool_dtype).all()
+
     if not all_bools:
         warnings.warn(
             "DataFrames with non-bool types result in worse computational"
@@ -112,6 +164,20 @@ def valid_input_check(df):
             "Please use a DataFrame with bool type",
             DeprecationWarning,
         )
+
+        # If null_values is True but no NaNs are found, raise an error
+        has_nans = pd.isna(df).any().any()
+        if null_values and not has_nans:
+            warnings.warn(
+                "null_values=True is inefficient when there are no NaN values in the DataFrame."
+                "Set null_values=False for faster output."
+            )
+        # If null_values is False but NaNs are found, raise an error
+        if not null_values and has_nans:
+            raise ValueError(
+                "NaN values are not permitted in the DataFrame when null_values=False."
+            )
+
         # Pandas is much slower than numpy, so use np.where on Numpy arrays
         if hasattr(df, "sparse"):
             if df.size == 0:
@@ -120,7 +186,13 @@ def valid_input_check(df):
                 values = df.sparse.to_coo().tocoo().data
         else:
             values = df.values
-        idxs = np.where((values != 1) & (values != 0))
+
+        # Ignore NaNs if null_values is True
+        if null_values:
+            idxs = np.where((values != 1) & (values != 0) & (~np.isnan(values)))
+        else:
+            idxs = np.where((values != 1) & (values != 0))
+
         if len(idxs[0]) > 0:
             # idxs has 1 dimension with sparse data and 2 with dense data
             val = values[tuple(loc[0] for loc in idxs)]
@@ -128,6 +200,12 @@ def valid_input_check(df):
                 "The allowed values for a DataFrame"
                 " are True, False, 0, 1. Found value %s" % (val)
             )
+
+            if null_values:
+                s = (
+                    "The allowed values for a DataFrame"
+                    " are True, False, 0, 1, NaN. Found value %s" % (val)
+                )
             raise ValueError(s)
 
 

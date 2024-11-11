@@ -483,7 +483,11 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         return self
 
     def finalize_fit(self):
-        max_score = -np.inf
+        if np.__version__ < "2.0":
+            ninf = np.NINF
+        else:
+            ninf = -np.inf
+        max_score = ninf
         for c in self.subsets_:
             if self.subsets_[c]["avg_score"] > max_score:
                 best_subset = c

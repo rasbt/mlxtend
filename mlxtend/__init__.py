@@ -4,4 +4,4 @@
 #
 # License: BSD 3 clause
 
-__version__ = "0.23.2"
+__version__ = "0.23.3"

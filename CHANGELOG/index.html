@@ -12,25 +12,22 @@
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/color-brewer.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/color-brewer.min.css">
         <link href="../cinder/css/base.css" rel="stylesheet">
         <link href="../cinder/css/bootstrap-custom.css" rel="stylesheet">
         <link href="../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../cinder/css/cinder.css" rel="stylesheet">
         <link href="../cinder/css/font-awesome-4.0.3.css" rel="stylesheet">
         <link href="../cinder/css/highlight.css" rel="stylesheet">
-
-        <script src="../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../js/bootstrap.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
             m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
             })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-            ga('create', 'UA-38457794-2', 'rasbt.github.io/mlxtend/');
+            ga('create', "UA-38457794-2", "rasbt.github.io/mlxtend/");
             ga('send', 'pageview');
         </script> 
     </head>
@@ -178,7 +175,7 @@
 </li>
             
 <li>
-    <a href="../user_guide/evaluate/combined_ftest_5x2cv/" class="dropdown-item">combined_ftest_5x2cv: 5x2cv combined *F* test for classifier comparisons</a>
+    <a href="../user_guide/evaluate/combined_ftest_5x2cv/" class="dropdown-item">combined_ftest_5x2cv: 5x2cv combined F test for classifier comparisons</a>
 </li>
             
 <li>
@@ -218,15 +215,15 @@
 </li>
             
 <li>
-    <a href="../user_guide/evaluate/paired_ttest_5x2cv/" class="dropdown-item">paired_ttest_5x2cv: 5x2cv paired *t* test for classifier comparisons</a>
+    <a href="../user_guide/evaluate/paired_ttest_5x2cv/" class="dropdown-item">paired_ttest_5x2cv: 5x2cv paired t test for classifier comparisons</a>
 </li>
             
 <li>
-    <a href="../user_guide/evaluate/paired_ttest_kfold_cv/" class="dropdown-item">paired_ttest_kfold_cv: K-fold cross-validated paired *t* test</a>
+    <a href="../user_guide/evaluate/paired_ttest_kfold_cv/" class="dropdown-item">paired_ttest_kfold_cv: K-fold cross-validated paired t test</a>
 </li>
             
 <li>
-    <a href="../user_guide/evaluate/paired_ttest_resampled/" class="dropdown-item">paired_ttest_resample: Resampled paired *t* test</a>
+    <a href="../user_guide/evaluate/paired_ttest_resampled/" class="dropdown-item">paired_ttest_resample: Resampled paired t test</a>
 </li>
             
 <li>
@@ -324,11 +321,11 @@
     <ul class="dropdown-menu">
             
 <li>
-    <a href="../user_guide/math/num_combinations/" class="dropdown-item">num_combinations: combinations for creating subsequences of *k* elements</a>
+    <a href="../user_guide/math/num_combinations/" class="dropdown-item">num_combinations: combinations for creating subsequences of k elements</a>
 </li>
             
 <li>
-    <a href="../user_guide/math/num_permutations/" class="dropdown-item">num_permutations: number of permutations for creating subsequences of *k* elements</a>
+    <a href="../user_guide/math/num_permutations/" class="dropdown-item">num_permutations: number of permutations for creating subsequences of k elements</a>
 </li>
             
 <li>
@@ -634,8 +631,29 @@
 <p>The CHANGELOG for the current development version is available at
 <a href="https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md">https://github.com/rasbt/mlxtend/blob/master/docs/sources/CHANGELOG.md</a>.</p>
 <hr />
-<h3 id="version-0232-5-nov-2024">Version 0.23.2  (5 Nov 2024)</h3>
+<h3 id="version-0233-15-nov-2024">Version 0.23.3  (15 Nov 2024)</h3>
 <h5 id="downloads">Downloads</h5>
+<ul>
+<li>
+<p><a href="https://github.com/rasbt/mlxtend/archive/v0.23.3.zip">Source code (zip)</a></p>
+</li>
+<li>
+<p><a href="https://github.com/rasbt/mlxtend/archive/v0.23.3.tar.gz">Source code (tar.gz)</a></p>
+</li>
+</ul>
+<h5 id="new-features-and-enhancements">New Features and Enhancements</h5>
+<p>Files updated:
+  - <a href="https://github.com/rasbt/mlxtend/blob/master/mlxtend/evaluate/time_series.py"><code>mlxtend.evaluate.time_series.plot_splits</code></a>
+    - Improved <code>plot_splits</code> for better visualization of time series splits</p>
+<h5 id="changes">Changes</h5>
+<ul>
+<li><a href="https://github.com/rasbt/mlxtend/blob/master/mlxtend/feature_selection/exhaustive_feature_selector.py"><code>mlxtend/feature_selection/exhaustive_feature_selector.py</code></a><ul>
+<li>np.inf update to support for NumPy 2.0</li>
+</ul>
+</li>
+</ul>
+<h3 id="version-0232-5-nov-2024">Version 0.23.2  (5 Nov 2024)</h3>
+<h5 id="downloads_1">Downloads</h5>
 <ul>
 <li>
 <p><a href="https://github.com/rasbt/mlxtend/archive/v0.23.2.zip">Source code (zip)</a></p>
@@ -644,7 +662,7 @@
 <p><a href="https://github.com/rasbt/mlxtend/archive/v0.23.2.tar.gz">Source code (tar.gz)</a></p>
 </li>
 </ul>
-<h5 id="new-features-and-enhancements">New Features and Enhancements</h5>
+<h5 id="new-features-and-enhancements_1">New Features and Enhancements</h5>
 <ul>
 <li>Implement the FP-Growth and FP-Max algorithms with the possibility of missing values in the input dataset. Added a new metric Representativity for the association rules generated (<a href="https://github.com/rasbt/mlxtend/issues/1004">#1004</a> via <a href="https://github.com/zazass8">zazass8</a>).
   Files updated:</li>
@@ -665,7 +683,7 @@
 </li>
 <li>Integrated scikit-learn's <code>set_output</code> method into <code>TransactionEncoder</code> (<a href="https://github.com/rasbt/mlxtend/issues/1087">#1087</a> via <a href="https://github.com/it176131">it176131</a>)</li>
 </ul>
-<h5 id="changes">Changes</h5>
+<h5 id="changes_1">Changes</h5>
 <ul>
 <li>[<code>mlxtend.frequent_patterns.fpcommon</code>] Added the null_values parameter in valid_input_check signature to check in case the input also includes null values. Changes the returns statements and function signatures for setup_fptree and generated_itemsets respectively to return the disabled array created and to include it as a parameter. Added code in [<code>mlxtend.frequent_patterns.fpcommon</code>] and <a href="https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/"><code>mlxtend.frequent_patterns.association_rules</code></a> to implement the algorithms in case null values exist when null_values is True.</li>
 <li>
@@ -677,7 +695,7 @@
 <li>Use Scipy's instead of NumPy's decompositions in PCA for improved accuracy in edge cases (<a href="https://github.com/rasbt/mlxtend/issues/1080">#1080</a> via [<a href="https://github.com/rasbt/mlxtend/issues?q=is%3Apr+is%3Aopen+author%3Afkdosilovic">fkdosilovic</a>])</li>
 </ul>
 <h3 id="version-0231-5-jan-2024">Version 0.23.1 (5 Jan 2024)</h3>
-<h5 id="downloads_1">Downloads</h5>
+<h5 id="downloads_2">Downloads</h5>
 <ul>
 <li>
 <p><a href="https://github.com/rasbt/mlxtend/archive/v0.23.1.zip">Source code (zip)</a></p>
@@ -686,12 +704,12 @@
 <p><a href="https://github.com/rasbt/mlxtend/archive/v0.23.1.tar.gz">Source code (tar.gz)</a></p>
 </li>
 </ul>
-<h5 id="changes_1">Changes</h5>
+<h5 id="changes_2">Changes</h5>
 <ul>
 <li>Updated dependency on distutils for python 3.12 and above (<a href="https://github.com/rasbt/mlxtend/issues/1072">#1072</a> via <a href="https://github.com/peanutsee">peanutsee</a>)</li>
 </ul>
 <h3 id="version-0230-22-sep-2023">Version 0.23.0 (22 Sep 2023)</h3>
-<h5 id="downloads_2">Downloads</h5>
+<h5 id="downloads_3">Downloads</h5>
 <ul>
 <li>
 <p><a href="https://github.com/rasbt/mlxtend/archive/v0.23.0.zip">Source code (zip)</a></p>
@@ -700,7 +718,7 @@
 <p><a href="https://github.com/rasbt/mlxtend/archive/v0.23.0.tar.gz">Source code (tar.gz)</a></p>
 </li>
 </ul>
-<h5 id="changes_2">Changes</h5>
+<h5 id="changes_3">Changes</h5>
 <ul>
 <li>Address NumPy deprecations to make mlxtend compatible to NumPy 1.24 </li>
 <li>Changed the signature of the <code>LinearRegression</code> model of sklearn in the test removing the <code>normalize</code> parameter as it is deprecated. (<a href="https://github.com/rasbt/mlxtend/issues/1036">#1036</a>)</li>
@@ -709,12 +727,12 @@
 <li>Converted configuration to <code>pyproject.toml</code> (<a href="https://github.com/rasbt/mlxtend/issues/1065">#1065</a> via <a href="https://github.com/jmahlik">jmahlik</a>)</li>
 <li>Remove <code>mlxtend.image</code>  submodule with face recognition functions due to poor <code>dlib</code> support in modern environments.</li>
 </ul>
-<h5 id="new-features-and-enhancements_1">New Features and Enhancements</h5>
+<h5 id="new-features-and-enhancements_2">New Features and Enhancements</h5>
 <ul>
 <li>Document how to use <code>SequentialFeatureSelector</code> and multiclass ROC AUC. </li>
 </ul>
 <h3 id="version-0220-4-april-2023">Version 0.22.0 (4 April 2023)</h3>
-<h5 id="downloads_3">Downloads</h5>
+<h5 id="downloads_4">Downloads</h5>
 <ul>
 <li>
 <p><a href="https://github.com/rasbt/mlxtend/archive/v0.22.0.zip">Source code (zip)</a></p>
@@ -723,14 +741,14 @@
 <p><a href="https://github.com/rasbt/mlxtend/archive/v0.22.0.tar.gz">Source code (tar.gz)</a></p>
 </li>
 </ul>
-<h5 id="changes_3">Changes</h5>
+<h5 id="changes_4">Changes</h5>
 <ul>
 <li>When <a href="https://rasbt.github.io/mlxtend/user_guide/feature_selection/ExhaustiveFeatureSelector/"><code>ExhaustiveFeatureSelector</code></a> is run with <code>n_jobs == 1</code>, joblib is now disabled, which enables more immediate (live) feedback when the <code>verbose</code> mode is enabled. (<a href="https://github.com/rasbt/mlxtend/pull/985">#985</a> via <a href="https://github.com/NimaSarajpoor">Nima Sarajpoor</a>)</li>
 <li>Disabled unnecessary warning in <a href="https://rasbt.github.io/mlxtend/user_guide/classifier/EnsembleVoteClassifier/"><code>EnsembleVoteClassifier</code></a> (<a href="https://github.com/rasbt/mlxtend/issues/941">#941</a>)</li>
 <li>Fixed various documentation issues (<a href="https://github.com/rasbt/mlxtend/issues/849">#849</a> and <a href="https://github.com/rasbt/mlxtend/issues/951">#951</a> via <a href="https://github.com/zuari1993">Lekshmanan Natarajan</a>)</li>
 <li>Fixed "Edit on GitHub" button  (<a href="https://github.com/rasbt/mlxtend/issues/1024">#1024</a>)</li>
 </ul>
-<h5 id="new-features-and-enhancements_2">New Features and Enhancements</h5>
+<h5 id="new-features-and-enhancements_3">New Features and Enhancements</h5>
 <ul>
 <li>The <a href="https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/"><code>mlxtend.frequent_patterns.association_rules</code></a> function has a new metric - Zhang's Metric, which measures both association and dissociation. (<a href="https://github.com/rasbt/mlxtend/pull/980">#980</a>)</li>
 <li>Internal <a href="https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/"><code>mlxtend.frequent_patterns.fpmax</code></a> code improvement that avoids casting a sparse DataFrame into a dense NumPy array. (<a href="https://github.com/rasbt/mlxtend/pull/1000">#1000</a> via <a href="https://github.com/tkellogg">Tim Kellogg</a>)</li>
@@ -738,7 +756,7 @@
 <li>Added <a href="https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/hmine/"><code>mlxtend.frequent_patterns.hmine</code></a> algorithm and documentation for mining frequent itemsets using the H-Mine algorithm. (<a href="https://github.com/rasbt/mlxtend/pull/1020">#1020</a> via <a href="https://github.com/fatihsen20">Fatih Sen</a>)</li>
 </ul>
 <h3 id="version-0210-09172022">Version 0.21.0 (09/17/2022)</h3>
-<h5 id="downloads_4">Downloads</h5>
+<h5 id="downloads_5">Downloads</h5>
 <ul>
 <li>
 <p><a href="https://github.com/rasbt/mlxtend/archive/v0.21.0.zip">Source code (zip)</a></p>
@@ -747,12 +765,12 @@
 <p><a href="https://github.com/rasbt/mlxtend/archive/v0.21.0.tar.gz">Source code (tar.gz)</a></p>
 </li>
 </ul>
-<h5 id="new-features-and-enhancements_3">New Features and Enhancements</h5>
+<h5 id="new-features-and-enhancements_4">New Features and Enhancements</h5>
 <ul>
 <li>The <code>mlxtend.evaluate.feature_importance_permutation</code> function has a new <code>feature_groups</code> argument to treat user-specified feature groups as single features, which is useful for one-hot encoded features. (<a href="https://github.com/rasbt/mlxtend/pull/955">#955</a>)</li>
 <li>The <code>mlxtend.feature_selection.ExhaustiveFeatureSelector</code> and <code>SequentialFeatureSelector</code> also gained support for <code>feature_groups</code> with a behavior similar to the one described above.  (<a href="https://github.com/rasbt/mlxtend/pull/957">#957</a> and <a href="https://github.com/rasbt/mlxtend/pull/965">#965</a> via <a href="https://github.com/NimaSarajpoor">Nima Sarajpoor</a>)</li>
 </ul>
-<h5 id="changes_4">Changes</h5>
+<h5 id="changes_5">Changes</h5>
 <ul>
 <li>The <code>custom_feature_names</code> parameter was removed from the <code>ExhaustiveFeatureSelector</code> due to redundancy and to simplify the code base. The <a href="https://rasbt.github.io/mlxtend/user_guide/feature_selection/ExhaustiveFeatureSelector/"><code>ExhaustiveFeatureSelector</code> documentation</a> illustrates how the same behavior and outcome can be achieved using pandas DataFrames.  (<a href="https://github.com/rasbt/mlxtend/pull/957">#957</a>)</li>
 </ul>
@@ -761,7 +779,7 @@
 <li>None</li>
 </ul>
 <h3 id="version-0200-05262022">Version 0.20.0 (05/26/2022)</h3>
-<h5 id="downloads_5">Downloads</h5>
+<h5 id="downloads_6">Downloads</h5>
 <ul>
 <li>
 <p><a href="https://github.com/rasbt/mlxtend/archive/v0.20.0.zip">Source code (zip)</a></p>
@@ -770,14 +788,14 @@
 <p><a href="https://github.com/rasbt/mlxtend/archive/v0.20.0.tar.gz">Source code (tar.gz)</a></p>
 </li>
 </ul>
-<h5 id="new-features-and-enhancements_4">New Features and Enhancements</h5>
+<h5 id="new-features-and-enhancements_5">New Features and Enhancements</h5>
 <ul>
 <li>The <code>mlxtend.evaluate.bootstrap_point632_score</code> now supports <code>fit_params</code>. (<a href="https://github.com/rasbt/mlxtend/pull/861">#861</a>)</li>
 <li>The <code>mlxtend/plotting/decision_regions.py</code> function now has a <code>contourf_kwargs</code> for matplotlib to change the look of the decision boundaries if desired. (<a href="https://github.com/rasbt/mlxtend/pull/881">#881</a> via [<a href="https://github.com/pbloem">pbloem</a>])</li>
 <li>Add a <code>norm_colormap</code> parameter to <code>mlxtend.plotting.plot_confusion_matrix</code>, to allow normalizing the colormap, e.g., using <code>matplotlib.colors.LogNorm()</code> (<a href="https://github.com/rasbt/mlxtend/pull/895">#895</a>)</li>
 <li>Add new <code>GroupTimeSeriesSplit</code> class for evaluation in time series tasks with support of custom groups and additional parameters in comparison with scikit-learn's <code>TimeSeriesSplit</code>. (<a href="https://github.com/rasbt/mlxtend/pull/915">#915</a> via <a href="https://github.com/labdmitriy">Dmitry Labazkin</a>)</li>
 </ul>
-<h5 id="changes_5">Changes</h5>
+<h5 id="changes_6">Changes</h5>
 <ul>
 <li>Due to compatibility issues with newer package versions, certain functions from six.py have been removed so that mlxtend may not work anymore with Python 2.7.</li>
 <li>As an internal change to speed up unit testing, unit testing is now faciliated by GitHub workflows, and Travis CI and Appveyor hooks have been removed.</li>
@@ -791,7 +809,7 @@
 <li>Fix an issue in <code>mlxtend.plotting.plot_confusion_matrix</code> when string class names are passed (<a href="https://github.com/rasbt/mlxtend/pull/894">#894</a>)</li>
 </ul>
 <h3 id="version-0190-2021-09-02">Version 0.19.0 (2021-09-02)</h3>
-<h5 id="downloads_6">Downloads</h5>
+<h5 id="downloads_7">Downloads</h5>
 <ul>
 <li>
 <p><a href="https://github.com/rasbt/mlxtend/archive/v0.19.0.zip">Source code (zip)</a></p>
@@ -807,7 +825,7 @@
 <li>The <code>evaluate.permutation_test</code> function now accepts a <code>paired</code> argument to specify to support paired permutation/randomization tests. (<a href="https://github.com/rasbt/mlxtend/pull/768">#768</a>)</li>
 <li>The <code>StackingCVRegressor</code> now also supports multi-dimensional targets similar to <code>StackingRegressor</code> via <code>StackingCVRegressor(..., multi_output=True)</code>. (<a href="https://github.com/rasbt/mlxtend/pull/802">#802</a> via <a href="ChromaticIsobar">Marco Tiraboschi</a>)</li>
 </ul>
-<h5 id="changes_6">Changes</h5>
+<h5 id="changes_7">Changes</h5>
 <ul>
 <li>Updates unit tests for scikit-learn 0.24.1 compatibility. (<a href="https://github.com/rasbt/mlxtend/pull/774">#774</a>)</li>
 <li><code>StackingRegressor</code> now requires setting <code>StackingRegressor(..., multi_output=True)</code> if the target is multi-dimensional; this allows for better input validation. (<a href="https://github.com/rasbt/mlxtend/pull/802">#802</a>)</li>
@@ -823,7 +841,7 @@
 <li>Fixes a typo in the SequentialFeatureSelector documentation (<a href="https://github.com/rasbt/mlxtend/issues/835">#835</a> via <a href="https://github.com/joaozanlorensi">João Pedro Zanlorensi Cardoso</a>)</li>
 </ul>
 <h3 id="version-0180-2020-11-25">Version 0.18.0 (2020-11-25)</h3>
-<h5 id="downloads_7">Downloads</h5>
+<h5 id="downloads_8">Downloads</h5>
 <ul>
 <li>
 <p><a href="https://github.com/rasbt/mlxtend/archive/v0.18.0.zip">Source code (zip)</a></p>
@@ -839,7 +857,7 @@
 <li>Adds new <code>mlxtend.classifier.OneRClassifier</code> (One Rule Classfier) class, a simple rule-based classifier that is often used as a performance baseline or simple interpretable model. (<a href="https://github.com/rasbt/mlxtend/pull/726">#726</a></li>
 <li>Adds new <code>create_counterfactual</code> method for creating counterfactuals to explain model predictions.  (<a href="https://github.com/rasbt/mlxtend/pull/740">#740</a>)</li>
 </ul>
-<h5 id="changes_7">Changes</h5>
+<h5 id="changes_8">Changes</h5>
 <ul>
 <li><code>permutation_test</code> (<code>mlxtend.evaluate.permutation</code>) ìs corrected to give the proportion of permutations whose statistic is <em>at least as extreme</em> as the one observed. (<a href="https://github.com/rasbt/mlxtend/pull/721">#721</a> via <a href="https://github.com/DarthTrevis">Florian Charlier</a>)</li>
 <li>Fixes the McNemar confusion matrix layout to match the convention (and documentation), swapping the upper left and lower right cells. (<a href="https://github.com/rasbt/mlxtend/pull/744">#744</a> via <a href="https://github.com/mmarius">mmarius</a>)</li>
@@ -850,7 +868,7 @@
 <li>Fixes a bug in <code>bias_variance_decomp</code> where when the <code>mse</code> loss was used, downcasting to integers caused imprecise results for small numbers. (<a href="https://github.com/rasbt/mlxtend/pull/749">#749</a>)</li>
 </ul>
 <h3 id="version-0173-2020-07-27">Version 0.17.3 (2020-07-27)</h3>
-<h5 id="downloads_8">Downloads</h5>
+<h5 id="downloads_9">Downloads</h5>
 <ul>
 <li>
 <p><a href="https://github.com/rasbt/mlxtend/archive/v0.17.3.zip">Source code (zip)</a></p>
@@ -864,7 +882,7 @@
 <li>Add <code>predict_proba</code> kwarg to bootstrap methods, to allow bootstrapping of scoring functions that take in probability values. (<a href="https://github.com/rasbt/mlxtend/pull/700">#700</a> via <a href="https://github.com/adam2392">Adam Li</a>)</li>
 <li>Add a <code>cell_values</code> parameter to <code>mlxtend.plotting.heatmap()</code> to optionally suppress cell annotations by setting <code>cell_values=False</code>. (<a href="https://github.com/rasbt/mlxtend/pull/700">#703</a></li>
 </ul>
-<h5 id="changes_8">Changes</h5>
+<h5 id="changes_9">Changes</h5>
 <ul>
 <li>Implemented both <code>use_clones</code> and <code>fit_base_estimators</code> (previously <code>refit</code> in <code>EnsembleVoteClassifier</code>) for <code>EnsembleVoteClassifier</code> and <code>StackingClassifier</code>. (<a href="https://github.com/rasbt/mlxtend/pull/670">#670</a> via <a href="https://github.com/nilichen">Katrina Ni</a>)</li>
 <li>Switched to using raw strings for regex in <code>mlxtend.text</code> to prevent deprecation warning in Python 3.8 (<a href="https://github.com/rasbt/mlxtend/pull/688">#688</a>)</li>
@@ -877,7 +895,7 @@
 <li>Fixes an issue in <code>fpmax</code> that could lead to incorrect support values. (<a href="https://github.com/rasbt/mlxtend/pull/692">#692</a> via <a href="https://github.com/harenbergsd">Steve Harenberg</a>)</li>
 </ul>
 <h3 id="version-0172-2020-02-24">Version 0.17.2 (2020-02-24)</h3>
-<h5 id="downloads_9">Downloads</h5>
+<h5 id="downloads_10">Downloads</h5>
 <ul>
 <li>
 <p><a href="https://github.com/rasbt/mlxtend/archive/v0.17.2.zip">Source code (zip)</a></p>
@@ -890,7 +908,7 @@
 <ul>
 <li>-</li>
 </ul>
-<h5 id="changes_9">Changes</h5>
+<h5 id="changes_10">Changes</h5>
 <ul>
 <li>The previously deprecated <code>OnehotTransactions</code> has been removed in favor of the <code>TransactionEncoder.</code></li>
 <li>Removed <code>SparseDataFrame</code> support in frequent pattern mining functions in favor of pandas &gt;=1.0's new way for working sparse data. If you used <code>SparseDataFrame</code> formats, please see pandas' migration guide at https://pandas.pydata.org/pandas-docs/stable/user_guide/sparse.html#migrating. (<a href="https://github.com/rasbt/mlxtend/pull/667">#667</a>)</li>
@@ -901,7 +919,7 @@
 <li>-</li>
 </ul>
 <h3 id="version-0171-2020-01-28">Version 0.17.1 (2020-01-28)</h3>
-<h5 id="downloads_10">Downloads</h5>
+<h5 id="downloads_11">Downloads</h5>
 <ul>
 <li>
 <p><a href="https://github.com/rasbt/mlxtend/archive/v0.17.1.zip">Source code (zip)</a></p>
@@ -916,7 +934,7 @@
 <li>Adds a new <code>accuracy_score</code> function to <code>mlxtend.evaluate</code> for computing basic classifcation accuracy, per-class accuracy, and average per-class accuracy. (<a href="https://github.com/rasbt/mlxtend/pull/624">#624</a> via <a href="https://github.com/deepandas11">Deepan Das</a>)</li>
 <li><code>StackingClassifier</code> and <code>StackingCVClassifier</code>now have a <code>decision_function</code> method, which serves as a preferred choice over <code>predict_proba</code> in calculating roc_auc and average_precision scores when the meta estimator is a linear model or support vector classifier. (<a href="https://github.com/rasbt/mlxtend/pull/634">#634</a> via <a href="https://github.com/qiagu">Qiang Gu</a>)</li>
 </ul>
-<h5 id="changes_10">Changes</h5>
+<h5 id="changes_11">Changes</h5>
 <ul>
 <li>Improve the runtime performance for the <code>apriori</code> frequent itemset generating function when <code>low_memory=True</code>. Setting <code>low_memory=False</code> (default) is still faster for small itemsets, but <code>low_memory=True</code> can be much faster for large itemsets and requires less memory.  Also, input validation for  <code>apriori</code>, ̀ fpgrowth<code>and</code>fpmax<code>takes a significant amount of time when input pandas DataFrame is large; this is now dramatically reduced when input contains boolean values (and not zeros/ones), which is the case when using</code>TransactionEncoder`. (<a href="https://github.com/rasbt/mlxtend/pull/619">#619</a> via <a href="https://github.com/dbarbier">Denis Barbier</a>)</li>
 <li>Add support for newer sparse pandas DataFrame for frequent itemset algorithms. Also, input validation for  <code>apriori</code>, ̀ fpgrowth<code>and</code>fpmax` runs much faster on sparse DataFrame when input pandas DataFrame contains integer values. (<a href="https://github.com/rasbt/mlxtend/pull/621">#621</a> via <a href="https://github.com/dbarbier">Denis Barbier</a>)</li>
@@ -932,7 +950,7 @@
 <li>Disable input validation for <code>StackingCVClassifier</code> because it causes issues if pipelines are used as input. <a href="https://github.com/rasbt/mlxtend/pull/606">#606</a></li>
 </ul>
 <h3 id="version-0170-2019-07-19">Version 0.17.0 (2019-07-19)</h3>
-<h5 id="downloads_11">Downloads</h5>
+<h5 id="downloads_12">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.17.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.17.0.tar.gz">Source code (tar.gz)</a></li>
@@ -951,7 +969,7 @@
 <li>New <code>low_memory</code> option for the <code>apriori</code> frequent itemset generating function. Setting <code>low_memory=False</code> (default) uses a substantially optimized version of the algorithm that is 3-6x faster than the original implementation (<code>low_memory=True</code>). (<a href="https://github.com/rasbt/mlxtend/pull/567">#567</a> via <a href="https://github.com/jmayse">jmayse</a>)</li>
 <li>Added numerically stable OLS methods which uses <code>QR decomposition</code> and <code>Singular Value Decomposition</code> (SVD) methods to <code>LinearRegression</code> in <code>mlxtend.regressor.linear_regression</code>. (<a href="https://github.com/rasbt/mlxtend/pull/575">#575</a> via <a href="https://github.com/PuneetGrov3r">PuneetGrov3r</a>)</li>
 </ul>
-<h5 id="changes_11">Changes</h5>
+<h5 id="changes_12">Changes</h5>
 <ul>
 <li>Now uses the latest joblib library under the hood for multiprocessing instead of <code>sklearn.externals.joblib</code>. (<a href="https://github.com/rasbt/mlxtend/pull/547">#547</a>)</li>
 <li>Changes to <code>StackingCVClassifier</code> and <code>StackingCVRegressor</code> such that first-level models are allowed to generate output of non-numeric type. (<a href="https://github.com/rasbt/mlxtend/pull/562">#562</a>)</li>
@@ -962,7 +980,7 @@
 <li>Make sure that if the <code>'svd'</code> mode is used in PCA, the number of eigenvalues is the same as when using <code>'eigen'</code> (append 0's zeros in that case) (<a href="https://github.com/rasbt/mlxtend/pull/565">#565</a>)</li>
 </ul>
 <h3 id="version-0160-2019-05-12">Version 0.16.0 (2019-05-12)</h3>
-<h5 id="downloads_12">Downloads</h5>
+<h5 id="downloads_13">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.16.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.16.0.tar.gz">Source code (tar.gz)</a></li>
@@ -980,7 +998,7 @@
 <li>Adds an optional <code>class_name</code> parameter to the confusion matrix function to display class names on the axis as tick marks. (<a href="https://github.com/rasbt/mlxtend/pull/487">#487</a> via <a href="https://github.com/qiaguhttps://github.com/sandpiturtle">sandpiturtle</a>)</li>
 <li>Adds a <code>pca.e_vals_normalized_</code> attribute to PCA for storing the eigenvalues also in normalized form; this is commonly referred to as variance explained ratios. <a href="https://github.com/rasbt/mlxtend/pull/545">#545</a></li>
 </ul>
-<h5 id="changes_12">Changes</h5>
+<h5 id="changes_13">Changes</h5>
 <ul>
 <li>Due to new features, restructuring, and better scikit-learn support (for <code>GridSearchCV</code>, etc.) the <code>StackingCVRegressor</code>'s meta regressor is now being accessed via <code>'meta_regressor__*</code> in the parameter grid. E.g., if a <code>RandomForestRegressor</code> as meta- egressor was previously tuned via <code>'randomforestregressor__n_estimators'</code>, this has now changed to <code>'meta_regressor__n_estimators'</code>. (<a href="https://github.com/rasbt/mlxtend/pull/512">#515</a> via <a href="https://github.com/qiaguhttps://github.com/qiagu">Qiang Gu</a>)</li>
 <li>The same change mentioned above is now applied to other stacking estimators, including <code>StackingClassifier</code>, <code>StackingCVClassifier</code> and <code>StackingRegressor</code>. (<a href="https://github.com/rasbt/mlxtend/pull/522">#522</a> via <a href="https://github.com/qiaguhttps://github.com/qiagu">Qiang Gu</a>)</li>
@@ -995,7 +1013,7 @@
 <li><code>mlxtend.evaluate.feature_importance_permutation</code> now correctly accepts scoring functions with proper function signature as <code>metric</code> argument. <a href="https://github.com/rasbt/mlxtend/pull/528">#528</a></li>
 </ul>
 <h3 id="version-0150-2019-01-19">Version 0.15.0 (2019-01-19)</h3>
-<h5 id="downloads_13">Downloads</h5>
+<h5 id="downloads_14">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.15.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.15.0.tar.gz">Source code (tar.gz)</a></li>
@@ -1006,7 +1024,7 @@
 <li>Adds a new function, <code>mlxtend.evaluate.bias_variance_decomp</code> that decomposes the loss of a regressor or classifier into bias and variance terms. (<a href="https://github.com/rasbt/mlxtend/pull/470">#470</a>)</li>
 <li>Adds a <code>whitening</code> parameter to <code>PrincipalComponentAnalysis</code>, to optionally whiten the transformed data such that the features have unit variance. (<a href="https://github.com/rasbt/mlxtend/pull/475">#475</a>)</li>
 </ul>
-<h5 id="changes_13">Changes</h5>
+<h5 id="changes_14">Changes</h5>
 <ul>
 <li>Changed the default solver in <code>PrincipalComponentAnalysis</code> to <code>'svd'</code> instead of <code>'eigen'</code> to improve numerical stability. (<a href="https://github.com/rasbt/mlxtend/pull/474">#474</a>)</li>
 <li>The <code>mlxtend.image.extract_face_landmarks</code> now returns <code>None</code> if no facial landmarks were detected instead of an array of all zeros. (<a href="https://github.com/rasbt/mlxtend/pull/466">#466</a>)</li>
@@ -1016,7 +1034,7 @@
 <li>The eigenvectors maybe have not been sorted in certain edge cases if solver was <code>'eigen'</code> in <code>PrincipalComponentAnalysis</code> and <code>LinearDiscriminantAnalysis</code>. (<a href="https://github.com/rasbt/mlxtend/pull/477">#477</a>, <a href="https://github.com/rasbt/mlxtend/pull/478">#478</a>)</li>
 </ul>
 <h3 id="version-0140-2018-11-09">Version 0.14.0 (2018-11-09)</h3>
-<h5 id="downloads_14">Downloads</h5>
+<h5 id="downloads_15">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.14.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.14.0.tar.gz">Source code (tar.gz)</a></li>
@@ -1035,7 +1053,7 @@
 <li>Added a new <code>mlxtend.evaluate.combined_ftest_5x2cv</code> function to perform an combined 5x2cv F-Test for comparing the performance of two models. (<a href="https://github.com/rasbt/mlxtend/pull/461">#461</a>)</li>
 <li>Added a new <code>mlxtend.evaluate.difference_proportions</code> test for comparing two proportions (e.g., classifier accuracies) (<a href="https://github.com/rasbt/mlxtend/pull/462">#462</a>)</li>
 </ul>
-<h5 id="changes_14">Changes</h5>
+<h5 id="changes_15">Changes</h5>
 <ul>
 <li>Addressed deprecations warnings in NumPy 0.15. (<a href="https://github.com/rasbt/mlxtend/pull/425">#425</a>)</li>
 <li>Because of complications in PR (<a href="https://github.com/rasbt/mlxtend/pull/459">#459</a>), Python 2.7 was now dropped; since official support for Python 2.7 by the Python Software Foundation is ending in approx. 12 months anyways, this re-focussing will hopefully free up some developer time with regard to not having to worry about backward compatibility</li>
@@ -1045,7 +1063,7 @@
 <li>Fixed an issue with a missing import in <code>mlxtend.plotting.plot_confusion_matrix</code>. (<a href="https://github.com/rasbt/mlxtend/pull/428">#428</a>)</li>
 </ul>
 <h3 id="version-0130-2018-07-20">Version 0.13.0 (2018-07-20)</h3>
-<h5 id="downloads_15">Downloads</h5>
+<h5 id="downloads_16">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.13.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.13.0.tar.gz">Source code (tar.gz)</a></li>
@@ -1063,7 +1081,7 @@
 <li>Added support for merging the meta features with the original input features in <code>StackingRegressor</code> (via <code>use_features_in_secondary</code>) like it is already supported in the other Stacking classes. (<a href="https://github.com/rasbt/mlxtend/pull/418">#418</a>)</li>
 <li>Added a <code>support_only</code> to the <code>association_rules</code> function, which allow constructing association rules (based on the support metric only) for cropped input DataFrames that don't contain a complete set of antecedent and consequent support values. (<a href="https://github.com/rasbt/mlxtend/pull/421">#421</a>)</li>
 </ul>
-<h5 id="changes_15">Changes</h5>
+<h5 id="changes_16">Changes</h5>
 <ul>
 <li>Itemsets generated with <code>apriori</code> are now <code>frozenset</code>s (<a href="https://github.com/rasbt/mlxtend/issues/393">#393</a> by <a href="https://github.com/WLaney">William Laney</a> and <a href="https://github.com/rasbt/mlxtend/issues/394">#394</a>)</li>
 <li>Now raises an error if a input DataFrame to <code>apriori</code> contains non 0, 1, True, False values. <a href="https://github.com/rasbt/mlxtend/issues/419">#419</a>)</li>
@@ -1077,7 +1095,7 @@
 <li>Allow <code>StackingCVClassifier</code> to work with sparse matrices when <code>use_features_in_secondary=True</code>  (<a href="https://github.com/rasbt/mlxtend/issues/417">#417</a>)</li>
 </ul>
 <h3 id="version-0120-2018-21-04">Version 0.12.0 (2018-21-04)</h3>
-<h5 id="downloads_16">Downloads</h5>
+<h5 id="downloads_17">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.12.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.12.0.tar.gz">Source code (tar.gz)</a></li>
@@ -1089,7 +1107,7 @@
 <li>The fit method of the <code>SequentialFeatureSelector</code> now optionally accepts
 <code>**fit_params</code> for the estimator that is used for the feature selection. (<a href="https://github.com/rasbt/mlxtend/pull/350">#350</a> by Zach Griffith)</li>
 </ul>
-<h5 id="changes_16">Changes</h5>
+<h5 id="changes_17">Changes</h5>
 <ul>
 <li>Replaced <code>plot_decision_regions</code> colors by a colorblind-friendly palette and adds contour lines for decision regions. (<a href="https://github.com/rasbt/mlxtend/issues/348">#348</a>)</li>
 <li>All stacking estimators now raise <code>NonFittedErrors</code> if any method for inference is called prior to fitting the estimator. (<a href="https://github.com/rasbt/mlxtend/issues/353">#353</a>)</li>
@@ -1102,7 +1120,7 @@
 <li>Many documentation improvements, including links to the User Guides in the API docs (<a href="https://github.com/rasbt/mlxtend/pull/371">#371</a>)</li>
 </ul>
 <h3 id="version-0110-2018-03-14">Version 0.11.0 (2018-03-14)</h3>
-<h5 id="downloads_17">Downloads</h5>
+<h5 id="downloads_18">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.11.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.11.0.tar.gz">Source code (tar.gz)</a></li>
@@ -1119,7 +1137,7 @@
 <li>A <code>refit</code> parameter was added to stacking classes (similar to the <code>refit</code> parameter in the <code>EnsembleVoteClassifier</code>), to support classifiers and regressors that follow the scikit-learn API but are not compatible with scikit-learn's <code>clone</code> function. (<a href="https://github.com/rasbt/mlxtend/issues/322">#322</a>)</li>
 <li>The <code>ColumnSelector</code> now has a <code>drop_axis</code> argument to use it in pipelines with <code>CountVectorizers</code>. (<a href="https://github.com/rasbt/mlxtend/pull/333">#333</a>)</li>
 </ul>
-<h5 id="changes_17">Changes</h5>
+<h5 id="changes_18">Changes</h5>
 <ul>
 <li>Raises an informative error message if <code>predict</code> or <code>predict_meta_features</code> is called prior to calling the <code>fit</code> method in <code>StackingRegressor</code> and <code>StackingCVRegressor</code>. (<a href="https://github.com/rasbt/mlxtend/issues/315">#315</a>)</li>
 <li>The <code>plot_decision_regions</code> function now automatically determines the optimal setting based on the feature dimensions and supports anti-aliasing. The old <code>res</code>  parameter has been deprecated. (<a href="https://github.com/rasbt/mlxtend/pull/309">#309</a> by <a href="https://github.com/arteymix">Guillaume Poirier-Morency</a>)</li>
@@ -1135,7 +1153,7 @@
 <li>Fixed bug that raised an indexing error if the number of items was &lt;= 1 when computing association rules using the conviction metric. (<a href="https://github.com/rasbt/mlxtend/issues/340">#340</a>)</li>
 </ul>
 <h3 id="version-0100-2017-12-22">Version 0.10.0 (2017-12-22)</h3>
-<h5 id="downloads_18">Downloads</h5>
+<h5 id="downloads_19">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.10.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.10.0.tar.gz">Source code (tar.gz)</a></li>
@@ -1148,7 +1166,7 @@
 <li>New function (<code>evaluate.mcnemar_tables</code>) for creating multiple 2x2 contigency from model predictions arrays that can be used in multiple McNemar (post-hoc) tests or Cochran's Q or F tests, etc. (<a href="https://github.com/rasbt/mlxtend/issues/307">#307</a>)</li>
 <li>New function (<code>evaluate.cochrans_q</code>) for performing Cochran's Q test to compare the accuracy of multiple classifiers. (<a href="https://github.com/rasbt/mlxtend/issues/310">#310</a>)</li>
 </ul>
-<h5 id="changes_18">Changes</h5>
+<h5 id="changes_19">Changes</h5>
 <ul>
 <li>Added <code>requirements.txt</code> to <code>setup.py</code>. (<a href="https://github.com/rasbt/mlxtend/issues/304">#304</a> via <a href="https://github.com/ColCarroll">Colin Carrol</a>)</li>
 </ul>
@@ -1158,7 +1176,7 @@
 <li><code>nose</code> is not required to use the library (<a href="https://github.com/rasbt/mlxtend/issues/302">#302</a>)</li>
 </ul>
 <h3 id="version-091-2017-11-19">Version 0.9.1 (2017-11-19)</h3>
-<h5 id="downloads_19">Downloads</h5>
+<h5 id="downloads_20">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.9.1.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.9.1.tar.gz">Source code (tar.gz)</a></li>
@@ -1168,7 +1186,7 @@
 <li>Added <code>mlxtend.evaluate.bootstrap_point632_score</code> to evaluate the performance of estimators using the .632 bootstrap. (<a href="https://github.com/rasbt/mlxtend/pull/283">#283</a>)</li>
 <li>New <code>max_len</code> parameter for the frequent itemset generation via the <code>apriori</code> function to allow for early stopping. (<a href="https://github.com/rasbt/mlxtend/pull/270">#270</a>)</li>
 </ul>
-<h5 id="changes_19">Changes</h5>
+<h5 id="changes_20">Changes</h5>
 <ul>
 <li>All feature index tuples in <code>SequentialFeatureSelector</code> or now in sorted order. (<a href="https://github.com/rasbt/mlxtend/pull/262">#262</a>)</li>
 <li>The <code>SequentialFeatureSelector</code> now runs the continuation of the floating inclusion/exclusion as described in Novovicova &amp; Kittler (1994).
@@ -1181,7 +1199,7 @@ Note that this didn't cause any difference in performance on any of the test sce
 <li>Fixed an deprecation error that occured with McNemar test when using SciPy 1.0. (<a href="https://github.com/rasbt/mlxtend/pull/283">#283</a>)</li>
 </ul>
 <h3 id="version-090-2017-10-21">Version 0.9.0 (2017-10-21)</h3>
-<h5 id="downloads_20">Downloads</h5>
+<h5 id="downloads_21">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.9.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.9.0.tar.gz">Source code (tar.gz)</a></li>
@@ -1196,7 +1214,7 @@ Note that this didn't cause any difference in performance on any of the test sce
 <li>Added a new <code>BootstrapOutOfBag</code> class, an implementation of the out-of-bag bootstrap to evaluate supervised learning algorithms. (<a href="https://github.com/rasbt/mlxtend/pull/265">#265</a>)</li>
 <li>The parameters for <code>StackingClassifier</code>, <code>StackingCVClassifier</code>, <code>StackingRegressor</code>, <code>StackingCVRegressor</code>, and <code>EnsembleVoteClassifier</code> can now be tuned using scikit-learn's <code>GridSearchCV</code> (<a href="https://github.com/rasbt/mlxtend/pull/254">#254</a> via <a href="https://github.com/jrbourbeau">James Bourbeau</a>)</li>
 </ul>
-<h5 id="changes_20">Changes</h5>
+<h5 id="changes_21">Changes</h5>
 <ul>
 <li>The <code>'support'</code> column returned by <code>frequent_patterns.association_rules</code> was changed to compute the support of "antecedant union consequent", and new <code>antecedant support'</code> and <code>'consequent support'</code> column were added to avoid ambiguity. (<a href="https://github.com/rasbt/mlxtend/pull/245">#245</a>)</li>
 <li>Allow the <code>OnehotTransactions</code> to be cloned via scikit-learn's <code>clone</code> function, which is required by e.g., scikit-learn's <code>FeatureUnion</code> or <code>GridSearchCV</code> (via <a href="https://github.com/iaroslav-ai">Iaroslav Shcherbatyi</a>). (<a href="https://github.com/rasbt/mlxtend/pull/249">#249</a>)</li>
@@ -1208,7 +1226,7 @@ Note that this didn't cause any difference in performance on any of the test sce
 <li>The vectors from SVD in <code>PrincipalComponentAnalysis</code> are now being scaled so that the eigenvalues via <code>solver='eigen'</code> and <code>solver='svd'</code> now store eigenvalues that have the same magnitudes. (<a href="https://github.com/rasbt/mlxtend/pull/251">#251</a>)</li>
 </ul>
 <h3 id="version-080-2017-09-09">Version 0.8.0 (2017-09-09)</h3>
-<h5 id="downloads_21">Downloads</h5>
+<h5 id="downloads_22">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.8.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.8.0.tar.gz">Source code (tar.gz)</a></li>
@@ -1218,7 +1236,7 @@ Note that this didn't cause any difference in performance on any of the test sce
 <li>Added a <code>mlxtend.evaluate.bootstrap</code> that implements the ordinary nonparametric bootstrap to bootstrap a single statistic (for example, the mean. median, R^2 of a regression fit, and so forth) <a href="https://github.com/rasbt/mlxtend/pull/232">#232</a></li>
 <li><code>SequentialFeatureSelecor</code>'s <code>k_features</code> now accepts a string argument "best" or "parsimonious" for more "automated" feature selection. For instance, if "best" is provided, the feature selector will return the feature subset with the best cross-validation performance. If "parsimonious" is provided as an argument, the smallest feature subset that is within one standard error of the cross-validation performance will be selected. <a href="https://github.com/rasbt/mlxtend/pull/238">#238</a></li>
 </ul>
-<h5 id="changes_21">Changes</h5>
+<h5 id="changes_22">Changes</h5>
 <ul>
 <li><code>SequentialFeatureSelector</code> now uses <code>np.nanmean</code> over normal mean to support scorers that may return <code>np.nan</code>  <a href="https://github.com/rasbt/mlxtend/pull/211">#211</a> (via <a href="https://github.com/mrkaiser">mrkaiser</a>)</li>
 <li>The <code>skip_if_stuck</code> parameter was removed from <code>SequentialFeatureSelector</code> in favor of a more efficient implementation comparing the conditional inclusion/exclusion results (in the floating versions) to the performances of previously sampled feature sets that were cached <a href="https://github.com/rasbt/mlxtend/pull/237">#237</a></li>
@@ -1229,7 +1247,7 @@ Note that this didn't cause any difference in performance on any of the test sce
 <li>Fixed a bug where the <code>SequentialFeatureSelector</code> selected a feature subset larger than then specified via the <code>k_features</code> tuple max-value <a href="https://github.com/rasbt/mlxtend/pull/213">#213</a></li>
 </ul>
 <h3 id="version-070-2017-06-22">Version 0.7.0 (2017-06-22)</h3>
-<h5 id="downloads_22">Downloads</h5>
+<h5 id="downloads_23">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.7.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.7.0.tar.gz">Source code (tar.gz)</a></li>
@@ -1239,7 +1257,7 @@ Note that this didn't cause any difference in performance on any of the test sce
 <li>New <a href="https://rasbt.github.io/mlxtend/user_guide/plotting/ecdf/">mlxtend.plotting.ecdf</a> function for plotting empirical cumulative distribution functions (<a href="https://github.com/rasbt/mlxtend/pull/196">#196</a>).</li>
 <li>New <a href="https://rasbt.github.io/mlxtend/user_guide/regressor/StackingCVRegressor/"><code>StackingCVRegressor</code></a> for stacking regressors with out-of-fold predictions to prevent overfitting (<a href="https://github.com/rasbt/mlxtend/pull/201">#201</a>via <a href="https://github.com/EikeDehling">Eike Dehling</a>).</li>
 </ul>
-<h5 id="changes_22">Changes</h5>
+<h5 id="changes_23">Changes</h5>
 <ul>
 <li>The TensorFlow estimator have been removed from mlxtend, since TensorFlow has now very convenient ways to build on estimators, which render those implementations obsolete.</li>
 <li><code>plot_decision_regions</code> now supports plotting decision regions for more than 2 training features <a href="https://github.com/rasbt/mlxtend/pull/189">#189</a>, via <a href="https://github.com/jrbourbeau">James Bourbeau</a>).</li>
@@ -1254,7 +1272,7 @@ Note that this didn't cause any difference in performance on any of the test sce
 <li>Made <code>math.num_combinations</code> and <code>math.num_permutations</code> numerically stable for large numbers of combinations and permutations (<a href="https://github.com/rasbt/mlxtend/pull/200">#200</a>).</li>
 </ul>
 <h3 id="version-060-2017-03-18">Version 0.6.0 (2017-03-18)</h3>
-<h5 id="downloads_23">Downloads</h5>
+<h5 id="downloads_24">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.6.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.6.0.tar.gz">Source code (tar.gz)</a></li>
@@ -1263,7 +1281,7 @@ Note that this didn't cause any difference in performance on any of the test sce
 <ul>
 <li>An <code>association_rules</code> function is implemented that allows to generate rules based on a list of frequent itemsets (via <a href="https://github.com/JoshuaGoerner">Joshua Goerner</a>).</li>
 </ul>
-<h5 id="changes_23">Changes</h5>
+<h5 id="changes_24">Changes</h5>
 <ul>
 <li>Adds a black <code>edgecolor</code> to plots via <code>plotting.plot_decision_regions</code> to make markers more distinguishable from the background in <code>matplotlib&gt;=2.0</code>.</li>
 <li>The <code>association</code> submodule was renamed to <code>frequent_patterns</code>.</li>
@@ -1274,7 +1292,7 @@ Note that this didn't cause any difference in performance on any of the test sce
 <li>Fixed typos in autompg and wine datasets (via <a href="https://github.com/jrbourbeau">James Bourbeau</a>).</li>
 </ul>
 <h3 id="version-051-2017-02-14">Version 0.5.1 (2017-02-14)</h3>
-<h5 id="downloads_24">Downloads</h5>
+<h5 id="downloads_25">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.5.1.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.5.1.tar.gz">Source code (tar.gz)</a></li>
@@ -1286,7 +1304,7 @@ Note that this didn't cause any difference in performance on any of the test sce
 <li><code>StackingClassifier</code> and <code>StackingRegressor</code> support multivariate targets if the underlying models do (via <a href="https://github.com/kernc">kernc</a>).</li>
 <li><code>StackingClassifier</code> has a new <code>use_features_in_secondary</code> attribute like <code>StackingCVClassifier</code>.</li>
 </ul>
-<h5 id="changes_24">Changes</h5>
+<h5 id="changes_25">Changes</h5>
 <ul>
 <li>Changed default verbosity level in <code>SequentialFeatureSelector</code> to 0</li>
 <li>The <code>EnsembleVoteClassifier</code> now raises a <code>NotFittedError</code> if the estimator wasn't <code>fit</code> before calling <code>predict</code>. (via <a href="https://github.com/avloss">Anton Loss</a>)</li>
@@ -1300,7 +1318,7 @@ Note that this didn't cause any difference in performance on any of the test sce
 <li>Fixed a bug that could occur in the <code>SequentialFeatureSelector</code> if there are similarly-well performing subsets in the floating variants (via <a href="https://github.com/zacwellmer">Zac Wellmer</a>).</li>
 </ul>
 <h3 id="version-050-2016-11-09">Version 0.5.0 (2016-11-09)</h3>
-<h5 id="downloads_25">Downloads</h5>
+<h5 id="downloads_26">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.5.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.5.0.tar.gz">Source code (tar.gz)</a></li>
@@ -1316,7 +1334,7 @@ Note that this didn't cause any difference in performance on any of the test sce
 <li>New <code>checkerboard_plot</code> function in <code>plotting</code> to plot checkerboard tables / heat maps</li>
 <li>New <code>mcnemar_table</code> and <code>mcnemar</code> functions in <code>evaluate</code> to compute 2x2 contingency tables and McNemar's test</li>
 </ul>
-<h5 id="changes_25">Changes</h5>
+<h5 id="changes_26">Changes</h5>
 <ul>
 <li>All plotting functions have been moved to <code>mlxtend.plotting</code> for compatibility reasons with continuous integration services and to make the installation of <code>matplotlib</code> optional for users of <code>mlxtend</code>'s core functionality</li>
 <li>Added a compatibility layer for <code>scikit-learn 0.18</code> using the new <code>model_selection</code> module  while maintaining backwards compatibility to scikit-learn 0.17.</li>
@@ -1327,7 +1345,7 @@ Note that this didn't cause any difference in performance on any of the test sce
 <li>Raise <code>AttributeError</code> in <code>plot_decision_regions</code> when the <code>X_higlight</code> argument is a 1D array (<a href="https://github.com/chkoar">chkoar</a>)</li>
 </ul>
 <h3 id="version-042-2016-08-24">Version 0.4.2 (2016-08-24)</h3>
-<h5 id="downloads_26">Downloads</h5>
+<h5 id="downloads_27">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.4.2.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.4.2.tar.gz">Source code (tar.gz)</a></li>
@@ -1338,7 +1356,7 @@ Note that this didn't cause any difference in performance on any of the test sce
 <li>Added <code>preprocessing.CopyTransformer</code>, a mock class that returns copies of
 imput arrays via <code>transform</code> and <code>fit_transform</code></li>
 </ul>
-<h5 id="changes_26">Changes</h5>
+<h5 id="changes_27">Changes</h5>
 <ul>
 <li>Added AppVeyor to CI to ensure MS Windows compatibility</li>
 <li>Dataset are now saved as compressed .txt or .csv files rather than being imported as Python objects</li>
@@ -1359,7 +1377,7 @@ imput arrays via <code>transform</code> and <code>fit_transform</code></li>
 <li>Fixed rare bug in MLP <code>_layer_mapping</code> functions that caused a swap between the random number generation seed when initializing weights and biases</li>
 </ul>
 <h3 id="version-041-2016-05-01">Version 0.4.1 (2016-05-01)</h3>
-<h5 id="downloads_27">Downloads</h5>
+<h5 id="downloads_28">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.4.1.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.4.1.tar.gz">Source code (tar.gz)</a></li>
@@ -1371,7 +1389,7 @@ imput arrays via <code>transform</code> and <code>fit_transform</code></li>
 <li>New k-means clustering estimator (<a href="../user_guide/cluster/Kmeans/"><code>cluster.Kmeans</code></a>)</li>
 <li>New TensorFlow k-means clustering estimator (<code>tf_cluster.Kmeans</code>)</li>
 </ul>
-<h5 id="changes_27">Changes</h5>
+<h5 id="changes_28">Changes</h5>
 <ul>
 <li>Due to refactoring of the estimator classes, the <code>init_weights</code> parameter of the <code>fit</code> methods was globally renamed to <code>init_params</code></li>
 <li>Overall performance improvements of estimators due to code clean-up and refactoring</li>
@@ -1403,12 +1421,12 @@ imput arrays via <code>transform</code> and <code>fit_transform</code></li>
 <li>New RBF Kernel Principal Component Analysis class via <a href="../user_guide/feature_extraction/RBFKernelPCA/"><code>mlxtend.feature_extraction.RBFKernelPCA</code></a></li>
 <li>New Linear Discriminant Analysis class via <a href="../user_guide/feature_extraction/LinearDiscriminantAnalysis/"><code>mlxtend.feature_extraction.LinearDiscriminantAnalysis</code></a></li>
 </ul>
-<h5 id="changes_28">Changes</h5>
+<h5 id="changes_29">Changes</h5>
 <ul>
 <li>The <code>column</code> parameter in <code>mlxtend.preprocessing.standardize</code> now defaults to <code>None</code> to standardize all columns more conveniently</li>
 </ul>
 <h3 id="version-030-2016-01-31">Version 0.3.0 (2016-01-31)</h3>
-<h5 id="downloads_28">Downloads</h5>
+<h5 id="downloads_29">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.3.0.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.3.0.tar.gz">Source code (tar.gz)</a></li>
@@ -1426,7 +1444,7 @@ imput arrays via <code>transform</code> and <code>fit_transform</code></li>
 <li>Added Boston <code>housing dataset</code></li>
 <li>New <code>shuffle</code> parameter for <code>classifier.NeuralNetMLP</code></li>
 </ul>
-<h5 id="changes_29">Changes</h5>
+<h5 id="changes_30">Changes</h5>
 <ul>
 <li>The <code>mlxtend.preprocessing.standardize</code> function now optionally returns the parameters, which are estimated from the array, for re-use. A further improvement makes the <code>standardize</code> function smarter in order to avoid zero-division errors</li>
 <li>Cosmetic improvements to the <code>evaluate.plot_decision_regions</code> function such as hiding plot axes</li>
@@ -1439,7 +1457,7 @@ imput arrays via <code>transform</code> and <code>fit_transform</code></li>
 <li>Renaming <code>mlxtend.plotting</code> to <code>mlxtend.general_plotting</code> in order to distinguish general plotting function from specialized utility function such as <code>evaluate.plot_decision_regions</code></li>
 </ul>
 <h3 id="version-029-2015-07-14">Version 0.2.9 (2015-07-14)</h3>
-<h5 id="downloads_29">Downloads</h5>
+<h5 id="downloads_30">Downloads</h5>
 <ul>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.2.9.zip">Source code (zip)</a></li>
 <li><a href="https://github.com/rasbt/mlxtend/archive/v0.2.9.tar.gz">Source code (tar.gz)</a></li>
@@ -1448,7 +1466,7 @@ imput arrays via <code>transform</code> and <code>fit_transform</code></li>
 <ul>
 <li>Sequential Feature Selection algorithms: SFS, SFFS, SBS, and SFBS</li>
 </ul>
-<h5 id="changes_30">Changes</h5>
+<h5 id="changes_31">Changes</h5>
 <ul>
 <li>Changed <code>regularization</code> &amp; <code>lambda</code> parameters in <code>LogisticRegression</code> to single parameter <code>l2_lambda</code></li>
 </ul>
@@ -1586,14 +1604,16 @@ imput arrays via <code>transform</code> and <code>fit_transform</code></li>
                 <p>Copyright &copy; 2014-2023 <a href="https://sebastianraschka.com">Sebastian Raschka</a></p>
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
         <script>
             var base_url = "..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
-        <script src="../js/base.js" defer></script>
-        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" defer></script>
-        <script src="../mathjaxhelper.js" defer></script>
-        <script src="../search/main.js" defer></script>
+        <script src="../js/base.js"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+        <script src="../mathjaxhelper.js"></script>
+        <script src="../search/main.js"></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">

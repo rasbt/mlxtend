@@ -7,19 +7,24 @@ The CHANGELOG for the current development version is available at
 
 ---
 
-### Version 0.23.3  (tbd)
+### Version 0.23.3  (15 Nov 2024)
 
 ##### Downloads
-...
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.23.3.zip)
+
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.23.3.tar.gz)
 
 ##### New Features and Enhancements
 
 Files updated:
-  - ['mlxtend.evaluate.time_series.plot_splits'](https://github.com/rasbt/mlxtend/blob/master/mlxtend/evaluate/time_series.py)
+  - [`mlxtend.evaluate.time_series.plot_splits`](https://github.com/rasbt/mlxtend/blob/master/mlxtend/evaluate/time_series.py)
     - Improved `plot_splits` for better visualization of time series splits
 
 ##### Changes
-...
+
+  - [`mlxtend/feature_selection/exhaustive_feature_selector.py`](https://github.com/rasbt/mlxtend/blob/master/mlxtend/feature_selection/exhaustive_feature_selector.py)
+    - np.inf update to support for NumPy 2.0
 
 ### Version 0.23.2  (5 Nov 2024)
 

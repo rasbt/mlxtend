@@ -143,7 +143,7 @@ class MultiLayerPerceptron(
                 prev_grad_b_out = np.zeros(shape=self.b_["out"].shape)
                 prev_grad_w_out = np.zeros(shape=self.w_["out"].shape)
 
-        y_enc = self._one_hot(y=y, n_labels=self.n_classes, dtype=np.float_)
+        y_enc = self._one_hot(y=y, n_labels=self.n_classes, dtype=np.float64)
 
         self.init_time_ = time()
 

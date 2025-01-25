@@ -34,7 +34,7 @@ _metrics = [
 
 def association_rules(
     df: pd.DataFrame,
-    num_itemsets: int,
+    num_itemsets: Optional[int] = 1,
     df_orig: Optional[pd.DataFrame] = None,
     null_values=False,
     metric="confidence",
@@ -54,8 +54,8 @@ def association_rules(
     df_orig : pandas DataFrame (default: None)
       DataFrame with original input data. Only provided when null_values exist
 
-    num_itemsets : int
-      Number of transactions in original input data
+    num_itemsets : int (default: 1)
+      Number of transactions in original input data (df_orig)
 
     null_values : bool (default: False)
       In case there are null values as NaNs in the original input data
@@ -118,6 +118,10 @@ def association_rules(
     # if null values exist, df_orig must be provided
     if null_values and df_orig is None:
         raise TypeError("If null values exist, df_orig must be provided.")
+
+    # if null values exist, num_itemsets must be provided
+    if null_values and num_itemsets == 1:
+        raise TypeError("If null values exist, num_itemsets must be provided.")
 
     # check for valid input
     fpc.valid_input_check(df_orig, null_values)
@@ -285,7 +289,6 @@ def association_rules(
                         # if the input dataframe is complete
                         if not null_values:
                             disAC, disA, disC, dis_int, dis_int_ = 0, 0, 0, 0, 0
-                            num_itemsets = 1
 
                         else:
                             an = list(antecedent)

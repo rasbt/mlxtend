@@ -31,7 +31,7 @@ def setup_fptree(df, min_support):
     )
 
     item_support = np.array(
-        np.sum(np.logical_or(df.values == 1, df.values is True), axis=0)
+        np.nansum(df.values, axis=0)
         / (float(num_itemsets) - np.nansum(disabled, axis=0))
     )
     item_support = item_support.reshape(-1)

@@ -7,8 +7,26 @@ The CHANGELOG for the current development version is available at
 
 ---
 
+### Version 0.23.3  (15 Nov 2024)
 
-### Version 0.23.2 (TBD)
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.23.3.zip)
+
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.23.3.tar.gz)
+
+##### New Features and Enhancements
+
+Files updated:
+  - [`mlxtend.evaluate.time_series.plot_splits`](https://github.com/rasbt/mlxtend/blob/master/mlxtend/evaluate/time_series.py)
+    - Improved `plot_splits` for better visualization of time series splits
+
+##### Changes
+
+  - [`mlxtend/feature_selection/exhaustive_feature_selector.py`](https://github.com/rasbt/mlxtend/blob/master/mlxtend/feature_selection/exhaustive_feature_selector.py)
+    - np.inf update to support for NumPy 2.0
+
+### Version 0.23.2  (5 Nov 2024)
 
 ##### Downloads
 
@@ -19,13 +37,17 @@ The CHANGELOG for the current development version is available at
 ##### New Features and Enhancements
 
 -  Implement the FP-Growth and FP-Max algorithms with the possibility of missing values in the input dataset. Added a new metric Representativity for the association rules generated ([#1004](https://github.com/rasbt/mlxtend/issues/1004) via [zazass8](https://github.com/zazass8)).
-Files updated:
+  Files updated:
   - ['mlxtend.frequent_patterns.fpcommon']
   - ['mlxtend.frequent_patterns.fpgrowth'](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/fpgrowth/)
   - ['mlxtend.frequent_patterns.fpmax'](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/fpmax/)
+  - ['mlxtend/feature_selection/utilities.py'](https://github.com/rasbt/mlxtend/blob/master/mlxtend/feature_selection/utilities.py)
+      - Modified `_calc_score` function to ensure compatibility with *scikit-learn* versions 1.4 and above by dynamically selecting between `fit_params` and `params` in `cross_val_score`.
+  - [`mlxtend.feature_selection.SequentialFeatureSelector`](https://github.com/rasbt/mlxtend/blob/master/mlxtend/feature_selection/sequential_feature_selector.py)
+    - Updated negative infinity constant to be compatible with old and new (>=2.0) `numpy` versions
   - [`mlxtend.frequent_patterns.association_rules`](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/)
-- [`mlxtend.frequent_patterns.association_rules`](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/)Implemented three new metrics: Jaccard, Certainty, and Kulczynski. ([#1096](https://github.com/rasbt/mlxtend/issues/1096))
-- Integrated scikit-learn's `set_output` method into `TransactionEncoder` ([#1087](https://github.com/rasbt/mlxtend/issues/1087) via[it176131](https://github.com/it176131))
+    - Implemented three new metrics: Jaccard, Certainty, and Kulczynski. ([#1096](https://github.com/rasbt/mlxtend/issues/1096))
+  - Integrated scikit-learn's `set_output` method into `TransactionEncoder` ([#1087](https://github.com/rasbt/mlxtend/issues/1087) via [it176131](https://github.com/it176131))
 
 ##### Changes
 

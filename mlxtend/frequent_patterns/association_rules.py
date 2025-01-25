@@ -119,6 +119,7 @@ def association_rules(
     if null_values and df_orig is None:
         raise TypeError("If null values exist, df_orig must be provided.")
 
+
     # if null values exist, num_itemsets must be provided
     if null_values and num_itemsets == 1:
         raise TypeError("If null values exist, num_itemsets must be provided.")

@@ -646,7 +646,7 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p>mlxtend version: 0.23.1 </p>
+<p>mlxtend version: 0.23.4 </p>
 <h2 id="apriori">apriori</h2>
 <p><em>apriori(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0, low_memory=False)</em></p>
 <p>Get frequent itemsets from a one-hot DataFrame</p>
@@ -717,7 +717,7 @@ if memory resources are limited, because this implementation is approx.
 <p>For usage examples, please see
     https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/</p>
 <h2 id="association_rules">association_rules</h2>
-<p><em>association_rules(df, metric='confidence', min_threshold=0.8, support_only=False)</em></p>
+<p><em>association_rules(df: pandas.core.frame.DataFrame, num_itemsets: Union[int, NoneType] = 1, df_orig: Union[pandas.core.frame.DataFrame, NoneType] = None, null_values=False, metric='confidence', min_threshold=0.8, support_only=False, return_metrics: list = ['antecedent support', 'consequent support', 'support', 'confidence', 'lift', 'representativity', 'leverage', 'conviction', 'zhangs_metric', 'jaccard', 'certainty', 'kulczynski']) -&gt; pandas.core.frame.DataFrame</em></p>
 <p>Generates a DataFrame of association rules including the
     metrics 'score', 'confidence', and 'lift'</p>
 <p><strong>Parameters</strong></p>
@@ -726,6 +726,18 @@ if memory resources are limited, because this implementation is approx.
 <p><code>df</code> : pandas DataFrame</p>
 <p>pandas DataFrame of frequent itemsets
 with columns ['support', 'itemsets']</p>
+</li>
+<li>
+<p><code>df_orig</code> : pandas DataFrame (default: None)</p>
+<p>DataFrame with original input data. Only provided when null_values exist</p>
+</li>
+<li>
+<p><code>num_itemsets</code> : int (default: 1)</p>
+<p>Number of transactions in original input data (df_orig)</p>
+</li>
+<li>
+<p><code>null_values</code> : bool (default: False)</p>
+<p>In case there are null values as NaNs in the original input data</p>
 </li>
 <li>
 <p><code>metric</code> : string (default: 'confidence')</p>
@@ -787,7 +799,7 @@ you don't need the other metrics.</p>
 <p>For usage examples, please see
     https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/</p>
 <h2 id="fpgrowth">fpgrowth</h2>
-<p><em>fpgrowth(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0)</em></p>
+<p><em>fpgrowth(df, min_support=0.5, null_values=False, use_colnames=False, max_len=None, verbose=0)</em></p>
 <p>Get frequent itemsets from a one-hot DataFrame</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -817,6 +829,10 @@ The support is computed as the fraction
 transactions_where_item(s)_occur / total_transactions.</p>
 </li>
 <li>
+<p><code>null_values</code> : bool (default: False)</p>
+<p>In case there are null values as NaNs in the original input data</p>
+</li>
+<li>
 <p><code>use_colnames</code> : bool (default: False)</p>
 <p>If true, uses the DataFrames' column names in the returned DataFrame
 instead of column indices.</p>
@@ -844,7 +860,7 @@ possible itemsets lengths are evaluated.</p>
 <p>For usage examples, please see
     https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/fpgrowth/</p>
 <h2 id="fpmax">fpmax</h2>
-<p><em>fpmax(df, min_support=0.5, use_colnames=False, max_len=None, verbose=0)</em></p>
+<p><em>fpmax(df, min_support=0.5, null_values=False, use_colnames=False, max_len=None, verbose=0)</em></p>
 <p>Get maximal frequent itemsets from a one-hot DataFrame</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -873,6 +889,10 @@ For example,</p>
 <p>A float between 0 and 1 for minimum support of the itemsets returned.
 The support is computed as the fraction
 transactions_where_item(s)_occur / total_transactions.</p>
+</li>
+<li>
+<p><code>null_values</code> : bool (default: True)</p>
+<p>In case there are null values as NaNs in the original input data</p>
 </li>
 <li>
 <p><code>use_colnames</code> : bool (default: False)</p>

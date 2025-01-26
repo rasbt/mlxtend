@@ -617,7 +617,7 @@
                     <div class="col-md-9" role="main">
 
 <h2 id="association_rules">association_rules</h2>
-<p><em>association_rules(df, metric='confidence', min_threshold=0.8, support_only=False)</em></p>
+<p><em>association_rules(df: pandas.core.frame.DataFrame, num_itemsets: Union[int, NoneType] = 1, df_orig: Union[pandas.core.frame.DataFrame, NoneType] = None, null_values=False, metric='confidence', min_threshold=0.8, support_only=False, return_metrics: list = ['antecedent support', 'consequent support', 'support', 'confidence', 'lift', 'representativity', 'leverage', 'conviction', 'zhangs_metric', 'jaccard', 'certainty', 'kulczynski']) -&gt; pandas.core.frame.DataFrame</em></p>
 <p>Generates a DataFrame of association rules including the
     metrics 'score', 'confidence', and 'lift'</p>
 <p><strong>Parameters</strong></p>
@@ -626,6 +626,18 @@
 <p><code>df</code> : pandas DataFrame</p>
 <p>pandas DataFrame of frequent itemsets
 with columns ['support', 'itemsets']</p>
+</li>
+<li>
+<p><code>df_orig</code> : pandas DataFrame (default: None)</p>
+<p>DataFrame with original input data. Only provided when null_values exist</p>
+</li>
+<li>
+<p><code>num_itemsets</code> : int (default: 1)</p>
+<p>Number of transactions in original input data (df_orig)</p>
+</li>
+<li>
+<p><code>null_values</code> : bool (default: False)</p>
+<p>In case there are null values as NaNs in the original input data</p>
 </li>
 <li>
 <p><code>metric</code> : string (default: 'confidence')</p>

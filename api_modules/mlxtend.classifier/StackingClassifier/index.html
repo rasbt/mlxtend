@@ -714,6 +714,10 @@ would raise a NotFitterError if fit_base_estimators=False.
 <p>Fitted meta-classifier (clone of the original meta-estimator)</p>
 </li>
 <li>
+<p><code>classes_</code> : ndarray of shape (n_classes,) or list of ndarray if <code>y</code>             is of type <code>"multilabel-indicator"</code>.</p>
+<p>Class labels.</p>
+</li>
+<li>
 <p><code>train_meta_features</code> : numpy array, shape = [n_samples, n_classifiers]</p>
 <p>meta-features for training data, where n_samples is the
 number of samples

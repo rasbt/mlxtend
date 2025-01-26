@@ -656,6 +656,17 @@ transaction.</p>
 <p>Fit a TransactionEncoder encoder and transform a dataset.</p>
 <hr>
 
+<p><em>get_feature_names_out()</em></p>
+<p>Used to get the column names of pandas output.</p>
+<pre><code>This method combined with the `TransformerMixin` exposes the
+set_output API to the `TransactionEncoder`. This allows the user
+to set the transformed output to a `pandas.DataFrame` by default.
+
+See  https://scikit-learn.org/stable/developers/develop.html#developer-api-set-output
+for more details.
+</code></pre>
+<hr>
+
 <p><em>get_params(deep=True)</em></p>
 <p>Get parameters for this estimator.</p>
 <p><strong>Parameters</strong></p>

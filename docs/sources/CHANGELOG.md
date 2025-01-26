@@ -7,6 +7,25 @@ The CHANGELOG for the current development version is available at
 
 ---
 
+### Version 0.24.4  (25 Nov 2025)
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.23.4.zip)
+
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.23.4.tar.gz)
+
+##### New Features and Enhancements
+
+- Improved memory efficiency in association rule implementations and now optional `num_itemsets` parameter  ([#1121](https://github.com/rasbt/mlxtend/issues/1121) via [zazass8](https://github.com/zazass8))
+
+##### Changes
+
+- `np.float_` update to support for NumPy 2.0 ([#1119](https://github.com/rasbt/mlxtend/issues/1119) via [Bot-wxt1221](https://github.com/Bot-wxt1221))
+
+
+---
+
 ### Version 0.23.3  (15 Nov 2024)
 
 ##### Downloads
@@ -84,7 +103,7 @@ Files updated:
 
 ##### Changes
 
-- Address NumPy deprecations to make mlxtend compatible to NumPy 1.24 
+- Address NumPy deprecations to make mlxtend compatible to NumPy 1.24
 - Changed the signature of the `LinearRegression` model of sklearn in the test removing the `normalize` parameter as it is deprecated. ([#1036](https://github.com/rasbt/mlxtend/issues/1036))
 - Add `pyproject.toml` to support PEP 518 builds ([#1065](https://github.com/rasbt/mlxtend/issues/1065) via [jmahlik](https://github.com/jmahlik))
 - Fixed installation from sdist failing ([#1065](https://github.com/rasbt/mlxtend/issues/1065) via [jmahlik](https://github.com/jmahlik))
@@ -93,7 +112,7 @@ Files updated:
 
 ##### New Features and Enhancements
 
-- Document how to use `SequentialFeatureSelector` and multiclass ROC AUC. 
+- Document how to use `SequentialFeatureSelector` and multiclass ROC AUC.
 
 ### Version 0.22.0 (4 April 2023)
 

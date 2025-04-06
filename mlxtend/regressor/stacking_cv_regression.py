@@ -212,7 +212,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
             fit_params = None
         else:
             fit_params = dict(sample_weight=sample_weight)
-        param_name = "fit_params" if sklearn_version < "1.4" else "params"    
+        param_name = "fit_params" if sklearn_version < "1.4" else "params"
         meta_features = np.column_stack(
             [
                 cross_val_predict(

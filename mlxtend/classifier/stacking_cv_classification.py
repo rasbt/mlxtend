@@ -11,6 +11,7 @@
 
 import numpy as np
 from scipy import sparse
+from sklearn import __version__ as sklearn_version
 from sklearn.base import TransformerMixin, clone
 from sklearn.model_selection import cross_val_predict
 from sklearn.model_selection._split import check_cv
@@ -266,6 +267,7 @@ class StackingCVClassifier(
             if self.verbose > 1:
                 print(_name_estimators((model,))[0][1])
 
+            param_name = "fit_params" if sklearn_version < "1.4" else "params"
             prediction = cross_val_predict(
                 model,
                 X,
@@ -273,7 +275,7 @@ class StackingCVClassifier(
                 groups=groups,
                 cv=final_cv,
                 n_jobs=self.n_jobs,
-                fit_params=fit_params,
+                **{param_name: fit_params},
                 verbose=self.verbose,
                 pre_dispatch=self.pre_dispatch,
                 method="predict_proba" if self.use_probas else "predict",

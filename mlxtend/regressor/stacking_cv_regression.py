@@ -15,6 +15,7 @@
 
 import numpy as np
 from scipy import sparse
+from sklearn import __version__ as sklearn_version
 from sklearn.base import RegressorMixin, TransformerMixin, clone
 from sklearn.model_selection import cross_val_predict
 from sklearn.model_selection._split import check_cv
@@ -211,6 +212,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
             fit_params = None
         else:
             fit_params = dict(sample_weight=sample_weight)
+        param_name = "fit_params" if sklearn_version < "1.4" else "params"
         meta_features = np.column_stack(
             [
                 cross_val_predict(
@@ -221,7 +223,7 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
                     cv=kfold,
                     verbose=self.verbose,
                     n_jobs=self.n_jobs,
-                    fit_params=fit_params,
+                    **{param_name: fit_params},
                     pre_dispatch=self.pre_dispatch,
                 )
                 for regr in self.regr_

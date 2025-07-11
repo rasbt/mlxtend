@@ -5,8 +5,6 @@ import numpy as np
 import pandas as pd
 from pandas import __version__ as pandas_version
 
-warnings.simplefilter("always", DeprecationWarning)
-
 
 def setup_fptree(df, min_support):
     num_itemsets = len(df.index)  # number of itemsets in the database

@@ -28,6 +28,8 @@ The CHANGELOG for the current development version is available at
 
 - `np.float_` update to support for NumPy 2.0 ([#1119](https://github.com/rasbt/mlxtend/issues/1119) via [Bot-wxt1221](https://github.com/Bot-wxt1221))
 
+- Added optional `method` parameter to `create_counterfactual()` in `mlxtend.evaluate.counterfactual`, enabling alternative optimization strategies. ([#1029](https://github.com/rasbt/mlxtend/issues/1029) via [dhruvi003](https://github.com/dhruvi003))
+
 
 ---
 

@@ -98,6 +98,13 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         implement scikit-learn's set_params and get_params methods.
         In addition, it is required to set cv=0, and n_jobs=1.
 
+    tol : float or None (default: None)
+        The tolerance value to set for the early stopping criterion.
+        If the absolute difference between the current feature subset's
+        cross-validation score and the best score achieved so far is less
+        than or equal to `tol`, the selection process will terminate early.
+        The search will stop if `|current_score - best_score| <= tol`.
+
     fixed_features : tuple (default: None)
         If not `None`, the feature indices provided as a tuple will be
         regarded as fixed by the feature selector. For example, if
@@ -194,6 +201,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         n_jobs=1,
         pre_dispatch="2*n_jobs",
         clone_estimator=True,
+        tol=None, # Adding
         fixed_features=None,
         feature_groups=None,
     ):
@@ -218,6 +226,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self.verbose = verbose
 
         self.clone_estimator = clone_estimator
+        self.tol = tol  
         if self.clone_estimator:
             self.est_ = clone(self.estimator)
         else:

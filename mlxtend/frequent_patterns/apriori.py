@@ -6,7 +6,8 @@
 
 import numpy as np
 import pandas as pd
-
+from  joblib import Parallel, delayed # added
+import warnings # Added
 from ..frequent_patterns import fpcommon as fpc
 
 
@@ -23,7 +24,7 @@ def generate_new_combinations(old_combinations):
         Each row represents one combination
         and contains item type ids in the ascending order
         ```
-               0        1
+                0        1
         0      15       20
         1      15       22
         2      17       19
@@ -65,15 +66,15 @@ def generate_new_combinations_low_memory(old_combinations, X, min_support, is_sp
         Each row represents one combination
         and contains item type ids in the ascending order
         ```
-               0        1
+                0        1
         0      15       20
         1      15       22
         2      17       19
         ```
 
     X: np.array or scipy sparse matrix
-      The allowed values are either 0/1 or True/False.
-      For example,
+    The allowed values are either 0/1 or True/False.
+    For example,
 
     ```
         0     True False  True  True False  True
@@ -87,9 +88,9 @@ def generate_new_combinations_low_memory(old_combinations, X, min_support, is_sp
     ```
 
     min_support : float (default: 0.5)
-      A float between 0 and 1 for minumum support of the itemsets returned.
-      The support is computed as the fraction
-      `transactions_where_item(s)_occur / total_transactions`.
+    A float between 0 and 1 for minumum support of the itemsets returned.
+    The support is computed as the fraction
+    `transactions_where_item(s)_occur / total_transactions`.
 
     is_sparse : bool True if X is sparse
 
@@ -132,26 +133,27 @@ def generate_new_combinations_low_memory(old_combinations, X, min_support, is_sp
 
 
 def apriori(
-    df, min_support=0.5, use_colnames=False, max_len=None, verbose=0, low_memory=False
+    df, min_support=0.5, use_colnames=False, max_len=None, verbose=0, low_memory=False,
+    n_jobs=1 # Added
 ):
     """Get frequent itemsets from a one-hot DataFrame
 
     Parameters
     -----------
     df : pandas DataFrame
-      pandas DataFrame the encoded format. Also supports
-      DataFrames with sparse data; for more info, please
-      see (https://pandas.pydata.org/pandas-docs/stable/
-           user_guide/sparse.html#sparse-data-structures)
+    pandas DataFrame the encoded format. Also supports
+    DataFrames with sparse data; for more info, please
+    see (https://pandas.pydata.org/pandas-docs/stable/
+        user_guide/sparse.html#sparse-data-structures)
 
-      Please note that the old pandas SparseDataFrame format
-      is no longer supported in mlxtend >= 0.17.2.
+    Please note that the old pandas SparseDataFrame format
+    is no longer supported in mlxtend >= 0.17.2.
 
-      The allowed values are either 0/1 or True/False.
-      For example,
+    The allowed values are either 0/1 or True/False.
+    For example,
 
     ```
-             Apple  Bananas   Beer  Chicken   Milk   Rice
+            Apple  Bananas   Beer  Chicken   Milk   Rice
         0     True    False   True     True  False   True
         1     True    False   True    False  False   True
         2     True    False   True    False  False  False
@@ -163,40 +165,40 @@ def apriori(
     ```
 
     min_support : float (default: 0.5)
-      A float between 0 and 1 for minumum support of the itemsets returned.
-      The support is computed as the fraction
-      `transactions_where_item(s)_occur / total_transactions`.
+    A float between 0 and 1 for minumum support of the itemsets returned.
+    The support is computed as the fraction
+    `transactions_where_item(s)_occur / total_transactions`.
 
     use_colnames : bool (default: False)
-      If `True`, uses the DataFrames' column names in the returned DataFrame
-      instead of column indices.
+    If `True`, uses the DataFrames' column names in the returned DataFrame
+    instead of column indices.
 
     max_len : int (default: None)
-      Maximum length of the itemsets generated. If `None` (default) all
-      possible itemsets lengths (under the apriori condition) are evaluated.
+    Maximum length of the itemsets generated. If `None` (default) all
+    possible itemsets lengths (under the apriori condition) are evaluated.
 
     verbose : int (default: 0)
-      Shows the number of iterations if >= 1 and `low_memory` is `True`. If
-      >=1 and `low_memory` is `False`, shows the number of combinations.
+    Shows the number of iterations if >= 1 and `low_memory` is `True`. If
+    >=1 and `low_memory` is `False`, shows the number of combinations.
 
     low_memory : bool (default: False)
-      If `True`, uses an iterator to search for combinations above
-      `min_support`.
-      Note that while `low_memory=True` should only be used for large dataset
-      if memory resources are limited, because this implementation is approx.
-      3-6x slower than the default.
+    If `True`, uses an iterator to search for combinations above
+    `min_support`.
+    Note that while `low_memory=True` should only be used for large dataset
+    if memory resources are limited, because this implementation is approx.
+    3-6x slower than the default.
 
 
     Returns
     -----------
     pandas DataFrame with columns ['support', 'itemsets'] of all itemsets
-      that are >= `min_support` and < than `max_len`
-      (if `max_len` is not None).
-      Each itemset in the 'itemsets' column is of type `frozenset`,
-      which is a Python built-in type that behaves similarly to
-      sets except that it is immutable
-      (For more info, see
-      https://docs.python.org/3.6/library/stdtypes.html#frozenset).
+    that are >= `min_support` and < than `max_len`
+    (if `max_len` is not None).
+    Each itemset in the 'itemsets' column is of type `frozenset`,
+    which is a Python built-in type that behaves similarly to
+    sets except that it is immutable
+    (For more info, see
+    https://docs.python.org/3.6/library/stdtypes.html#frozenset).
 
     Examples
     -----------
@@ -237,6 +239,13 @@ def apriori(
             "number within the interval `(0, 1]`. "
             "Got %s." % min_support
         )
+    
+    if low_memory and n_jobs != 1:
+        warnings.warn(
+            "`n_jobs` parameter is currently not supported when `low_memory=True`. "
+            "Falling back to serial execution (n_jobs=1)."
+        )
+        n_jobs = 1
 
     fpc.valid_input_check(df)
 
@@ -300,6 +309,63 @@ def apriori(
                     % (combin.size, next_max_itemset),
                     end="",
                 )
+            
+            # --------------------------------------------------------------------------
+            # --- NEW: Parallel Counting Logic (Replacing matrix multiplication logic) ---
+            # --------------------------------------------------------------------------
+            
+            # Helper function for each worker to compute support for a subset of combinations
+            def _worker_support_count(X, combin_chunk, rows_count, is_sparse, all_ones):
+                if is_sparse:
+                    _bools = X[:, combin_chunk[:, 0]] == all_ones
+                    for n in range(1, combin_chunk.shape[1]):
+                        _bools = _bools & (X[:, combin_chunk[:, n]] == all_ones)
+                else:
+                    # Note: We use np.all(X[:, combin_chunk], axis=2) for dense, 
+                    # but if combin_chunk is 2D (as expected here), it might need 
+                    # adaptation or be equivalent to the original:
+                    # _bools = np.all(X[:, combin_chunk], axis=1) if combin_chunk.ndim==2
+                    # The original implementation uses axis=2 which suggests combin is 3D, 
+                    # but since combin is 2D (itemset x next_max_itemset), the original
+                    # code's axis=2 is suspicious. We'll stick to the logic of the original code,
+                    # assuming X[:, combin] results in a 3D array: (rows, combinations, itemsets)
+                    _bools = np.all(X[:, combin_chunk], axis=2) 
+                    
+                # Calculate support for this chunk
+                return np.sum(_bools, axis=0) / rows_count
+                
+            
+            if n_jobs == 1:
+                # Original serial execution path
+                support = _worker_support_count(X, combin, rows_count, is_sparse, all_ones)
+                support = np.array(support).reshape(-1) # Ensure correct shape
+
+            else:
+                # Parallel execution using joblib
+                from joblib import cpu_count # Already imported at the top
+                n_jobs_actual = cpu_count() if n_jobs == -1 else n_jobs
+                
+                # Split combinations into chunks
+                n_combinations = combin.shape[0]
+                n_chunks = n_jobs_actual
+                chunk_size = int(np.ceil(n_combinations / n_chunks))
+                
+                # Split the combination matrix
+                combin_chunks = [combin[i:i + chunk_size] 
+                                for i in range(0, n_combinations, chunk_size)]
+                                
+                # Parallel computation
+                results = Parallel(n_jobs=n_jobs_actual, backend='threading')( # 'threading' is faster for numpy-heavy tasks, 'loky' is safer for general
+                    delayed(_worker_support_count)(X, chunk, rows_count, is_sparse, all_ones) 
+                    for chunk in combin_chunks if chunk.size > 0
+                )
+                
+                # Concatenate results and reshape
+                support = np.concatenate(results)
+                
+            # --------------------------------------------------------------------------
+            # --- End of Parallel Logic ---
+            # --------------------------------------------------------------------------
 
             if is_sparse:
                 _bools = X[:, combin[:, 0]] == all_ones

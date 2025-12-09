@@ -7,13 +7,8 @@
 import unittest
 
 import numpy as np
-from test_fpbase import (
-    FPTestEdgeCases,
-    FPTestErrors,
-    FPTestEx1All,
-    FPTestEx2All,
-    FPTestEx3All,
-)
+from test_fpbase import (FPTestEdgeCases, FPTestErrors, FPTestEx1All,
+                         FPTestEx2All, FPTestEx3All)
 
 from mlxtend.frequent_patterns import apriori
 

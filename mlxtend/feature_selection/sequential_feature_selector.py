@@ -21,7 +21,8 @@ from sklearn.metrics import get_scorer
 
 from ..externals.name_estimators import _name_estimators
 from ..utils.base_compostion import _BaseXComposition
-from .utilities import _calc_score, _get_featurenames, _merge_lists, _preprocess
+from .utilities import (_calc_score, _get_featurenames, _merge_lists,
+                        _preprocess)
 
 
 class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):

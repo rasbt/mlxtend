@@ -11,7 +11,8 @@ from time import time
 import numpy as np
 from scipy.special import expit
 
-from .._base import _BaseModel, _Classifier, _IterativeModel, _MultiClass, _MultiLayer
+from .._base import (_BaseModel, _Classifier, _IterativeModel, _MultiClass,
+                     _MultiLayer)
 
 
 class MultiLayerPerceptron(

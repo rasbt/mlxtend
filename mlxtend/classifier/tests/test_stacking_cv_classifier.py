@@ -16,14 +16,11 @@ from sklearn import __version__ as sklearn_version
 from sklearn import datasets, exceptions
 from sklearn.base import clone
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LogisticRegression, PassiveAggressiveClassifier
+from sklearn.linear_model import (LogisticRegression,
+                                  PassiveAggressiveClassifier)
 from sklearn.metrics import roc_auc_score
-from sklearn.model_selection import (
-    GridSearchCV,
-    KFold,
-    cross_val_score,
-    train_test_split,
-)
+from sklearn.model_selection import (GridSearchCV, KFold, cross_val_score,
+                                     train_test_split)
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC

@@ -13,7 +13,8 @@ from .learning_curves import plot_learning_curves
 from .pca_correlation_graph import plot_pca_correlation_graph
 from .plot_confusion_matrix import plot_confusion_matrix
 from .plot_linear_regression import plot_linear_regression
-from .plot_sequential_feature_selection import plot_sequential_feature_selection
+from .plot_sequential_feature_selection import \
+    plot_sequential_feature_selection
 from .remove_chartjunk import remove_borders
 from .scatter import category_scatter
 from .scatter_hist import scatter_hist

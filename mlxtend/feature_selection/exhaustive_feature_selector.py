@@ -22,7 +22,8 @@ from sklearn.base import BaseEstimator, MetaEstimatorMixin, clone
 from sklearn.metrics import get_scorer
 
 from ..externals.name_estimators import _name_estimators
-from .utilities import _calc_score, _get_featurenames, _merge_lists, _preprocess
+from .utilities import (_calc_score, _get_featurenames, _merge_lists,
+                        _preprocess)
 
 
 class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):

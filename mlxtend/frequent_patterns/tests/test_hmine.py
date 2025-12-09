@@ -7,14 +7,8 @@ import unittest
 
 import numpy as np
 import pandas as pd
-from test_fpbase import (
-    FPTestEdgeCases,
-    FPTestErrors,
-    FPTestEx1All,
-    FPTestEx2All,
-    FPTestEx3All,
-    compare_dataframes,
-)
+from test_fpbase import (FPTestEdgeCases, FPTestErrors, FPTestEx1All,
+                         FPTestEx2All, FPTestEx3All, compare_dataframes)
 
 from mlxtend.frequent_patterns import apriori, fpgrowth, hmine
 

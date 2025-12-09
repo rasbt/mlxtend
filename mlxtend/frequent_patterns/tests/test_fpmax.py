@@ -2,14 +2,8 @@ import unittest
 
 import numpy as np
 import pandas as pd
-from test_fpbase import (
-    FPTestEdgeCases,
-    FPTestErrors,
-    FPTestEx1,
-    FPTestEx2,
-    FPTestEx3All,
-    compare_dataframes,
-)
+from test_fpbase import (FPTestEdgeCases, FPTestErrors, FPTestEx1, FPTestEx2,
+                         FPTestEx3All, compare_dataframes)
 
 from mlxtend.frequent_patterns import fpmax
 

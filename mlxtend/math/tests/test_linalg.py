@@ -7,7 +7,8 @@
 
 import numpy as np
 
-from mlxtend.math import vectorspace_dimensionality, vectorspace_orthonormalization
+from mlxtend.math import (vectorspace_dimensionality,
+                          vectorspace_orthonormalization)
 
 
 def test_vectorspace_orthonormalization():

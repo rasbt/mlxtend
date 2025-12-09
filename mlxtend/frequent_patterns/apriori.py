@@ -4,10 +4,12 @@
 #
 # License: BSD 3 clause
 
+import warnings  # Added
+
 import numpy as np
 import pandas as pd
-from  joblib import Parallel, delayed # added
-import warnings # Added
+from joblib import Parallel, delayed  # added
+
 from ..frequent_patterns import fpcommon as fpc
 
 
@@ -342,7 +344,7 @@ def apriori(
 
             else:
                 # Parallel execution using joblib
-                from joblib import cpu_count # Already imported at the top
+                from joblib import cpu_count  # Already imported at the top
                 n_jobs_actual = cpu_count() if n_jobs == -1 else n_jobs
                 
                 # Split combinations into chunks

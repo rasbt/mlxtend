@@ -146,6 +146,7 @@ def test_scoring_proba():
             random_seed=123,
         )
 
+
 if "TRAVIS" in os.environ or os.environ.get("TRAVIS") == "true":
     TRAVIS = True
 else:

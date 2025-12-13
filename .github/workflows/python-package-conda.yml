@@ -1,4 +1,4 @@
-name: Unit tests
+name: Unit tests (conda)
 
 on:
   push:

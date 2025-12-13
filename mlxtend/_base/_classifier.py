@@ -18,13 +18,15 @@ class _Classifier(object):
     def _check_target_array(self, y, allowed=None):
         if not isinstance(y[0], (int, np.integer)):
             raise AttributeError("y must be an integer array.\nFound %s" % y.dtype)
-        found_labels = np.unique(y)
-        if (found_labels < 0).any():
+        labels = [int(lbl) for lbl in np.unique(y)]
+        labels_arr = np.asarray(labels)
+        if (labels_arr < 0).any():
             raise AttributeError(
-                "y array must not contain negative labels." "\nFound %s" % found_labels
+                "y array must not contain negative labels.\nFound %s"
+                % np.array2string(labels_arr)
             )
         if allowed is not None:
-            found_labels = tuple(found_labels)
+            found_labels = tuple(labels)
             if found_labels not in allowed:
                 raise AttributeError(
                     "Labels not in %s.\nFound %s" % (allowed, found_labels)

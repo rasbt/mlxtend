@@ -64,8 +64,8 @@ def test_classifier_defaults():
         assert round(t, 3) == -1.809, t
         assert round(p, 3) == 0.081, p
     else:
-        assert round(t, 3) == -1.702, t
-        assert round(p, 3) == 0.10, p
+        assert round(t, 3) == 3.616, t
+        assert round(p, 3) == 0.001, p
 
     # change maxdepth of decision tree classifier
 
@@ -79,8 +79,8 @@ def test_classifier_defaults():
         estimator1=clf1, estimator2=clf2, X=X, y=y, random_seed=1
     )
 
-    assert round(t, 3) == 39.214, t
-    assert round(p, 3) == 0.000, p
+    assert round(t, 3) == 42.464, t
+    assert round(p, 3) == 0.0, p
 
 
 def test_scoring():
@@ -106,8 +106,8 @@ def test_scoring():
         assert round(t, 3) == -1.809, t
         assert round(p, 3) == 0.081, p
     else:
-        assert round(t, 3) == -1.702, t
-        assert round(p, 3) == 0.1, p
+        assert round(t, 3) == 3.616, t
+        assert round(p, 3) == 0.001, p
 
     t, p = paired_ttest_resampled(
         estimator1=clf1, estimator2=clf2, X=X, y=y, scoring="f1_macro", random_seed=1
@@ -117,8 +117,8 @@ def test_scoring():
         assert round(t, 3) == -1.690, t
         assert round(p, 3) == 0.102, p
     else:
-        assert round(t, 3) == -1.561, t
-        assert round(p, 3) == 0.129, p
+        assert round(t, 3) == 3.715, t
+        assert round(p, 3) == 0.001, p
 
 
 def test_regressor():

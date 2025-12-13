@@ -20,6 +20,7 @@ import scipy.stats
 from joblib import Parallel, delayed
 from sklearn.base import BaseEstimator, MetaEstimatorMixin, clone
 from sklearn.metrics import get_scorer
+from sklearn.utils._tags import get_tags
 
 from ..externals.name_estimators import _name_estimators
 from .utilities import _calc_score, _get_featurenames, _merge_lists, _preprocess
@@ -207,14 +208,22 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
         self.scoring = scoring
         if self.scoring is None:
-            if not hasattr(self.est_, "_estimator_type"):
+            try:
+                est_type = get_tags(self.est_).estimator_type
+            except Exception:
+                est_type = getattr(self.est_, "_estimator_type", None)
+            else:
+                if est_type is None:
+                    est_type = getattr(self.est_, "_estimator_type", None)
+
+            if est_type is None:
                 raise AttributeError(
                     "Estimator must have an ._estimator_type for infering `scoring`"
                 )
 
-            if self.est_._estimator_type == "classifier":
+            if est_type == "classifier":
                 self.scoring = "accuracy"
-            elif self.est_._estimator_type == "regressor":
+            elif est_type == "regressor":
                 self.scoring = "r2"
             else:
                 raise AttributeError("Estimator must be a Classifier or Regressor.")

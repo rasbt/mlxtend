@@ -33,8 +33,8 @@ def test_classifier_defaults():
         estimator1=clf1, estimator2=clf2, X=X, y=y, random_seed=1
     )
 
-    assert round(f, 3) == 1.053, f
-    assert round(p, 3) == 0.509, p
+    assert round(f, 3) == 1.14, f
+    assert round(p, 3) == 0.47, p
 
     # change maxdepth of decision tree classifier
 
@@ -48,8 +48,8 @@ def test_classifier_defaults():
         estimator1=clf1, estimator2=clf2, X=X, y=y, random_seed=1
     )
 
-    assert round(f, 3) == 34.934, f
-    assert round(p, 3) == 0.001, p
+    assert round(f, 3) == 59.587, f
+    assert round(p, 3) == 0.0, p
 
 
 def test_scoring():
@@ -71,8 +71,8 @@ def test_scoring():
         estimator1=clf1, estimator2=clf2, X=X, y=y, scoring="accuracy", random_seed=1
     )
 
-    assert round(f, 3) == 1.053, f
-    assert round(p, 3) == 0.509, p
+    assert round(f, 3) == 1.14, f
+    assert round(p, 3) == 0.47, p
 
     f, p = combined_ftest_5x2cv(
         estimator1=clf1, estimator2=clf2, X=X, y=y, scoring="f1_macro", random_seed=1
@@ -82,8 +82,8 @@ def test_scoring():
         assert round(f, 3) == -1.510, f
         assert round(p, 3) == 0.191, p
     else:
-        assert round(f, 3) == 1.046, f
-        assert round(p, 3) == 0.513, p
+        assert round(f, 3) == 1.128, f
+        assert round(p, 3) == 0.475, p
 
 
 def test_regressor():

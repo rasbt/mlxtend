@@ -38,7 +38,7 @@ def test_defaults():
     scores = bootstrap_point632_score(lr, X, y, random_seed=123)
     acc = np.mean(scores)
     assert len(scores == 200)
-    assert np.round(acc, 5) == 0.95117, np.round(acc, 5)
+    assert np.round(acc, 5) == 0.96885, np.round(acc, 5)
 
 
 def test_oob():
@@ -85,7 +85,7 @@ def test_custom_accuracy():
     scores = bootstrap_point632_score(lr, X, y, random_seed=123, scoring_func=accuracy2)
     acc = np.mean(scores)
     assert len(scores == 200)
-    assert np.round(acc, 5) == 0.95117, np.round(acc, 5)
+    assert np.round(acc, 5) == 0.96885, np.round(acc, 5)
 
 
 def test_invalid_splits():

@@ -230,13 +230,21 @@ def test_n_rounds():
     assert imp_vals[1].mean() > 0.2
 
 
+
 def test_feature_groups():
-    df_data = pd.read_csv(
-        "https://gist.githubusercontent.com/rasbt/"
-        "b99bf69079bc0d601eeae8a49248d358/"
-        "raw/a114be9801647ec5460089f3a9576713dabf5f1f/"
-        "onehot-numeric-mixed-data.csv"
+    rng = np.random.RandomState(1)
+    df_data = pd.DataFrame(
+        {
+            "measurement1": rng.normal(size=60),
+            "measurement2": rng.normal(loc=1.0, size=60),
+            "measurement3": rng.normal(loc=-0.5, size=60),
+            "categorical": rng.choice(["a", "b", "c"], size=60),
+        }
     )
+    df_data["label"] = (
+        (df_data["measurement1"] + df_data["measurement2"] > 0)
+        | (df_data["categorical"] == "a")
+    ).astype(int)
 
     df_X = df_data[["measurement1", "measurement2", "measurement3", "categorical"]]
     df_y = df_data["label"]
@@ -259,7 +267,7 @@ def test_feature_groups():
 
     model = LogisticRegression().fit(X_train_ohe, df_y_train.values)
 
-    feature_groups = [0, 1, 2, range(3, 21)]
+    feature_groups = [0, 1, 2, range(3, X_train_ohe.shape[1])]
 
     imp_vals, imp_all = feature_importance_permutation(
         predict_method=model.predict,

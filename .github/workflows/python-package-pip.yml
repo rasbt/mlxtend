@@ -1,0 +1,35 @@
+name: Unit tests
+
+on:
+  push:
+    branches: master
+  pull_request:
+    branches: master
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 5
+    env:
+      GITHUB_ACTIONS_CI: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies (pip)
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest coverage
+          pip install -e .
+
+      - name: Show dependency versions
+        run: |
+          python -c "import numpy; print('NumPy:', numpy.__version__)"
+          python -c "import scipy; print('SciPy:', scipy.__version__)"
+          python -c "import sklearn; print('Scikit-learn:', sklearn.__version__)"
+          python -c "im

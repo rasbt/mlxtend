@@ -8,7 +8,7 @@ from pandas import __version__ as pandas_version
 warnings.simplefilter("always", DeprecationWarning)
 
 
-def setup_fptree(df, min_support):
+def setup_fptree(df, min_support, null_values=False):
     num_itemsets = len(df.index)  # number of itemsets in the database
 
     is_sparse = False
@@ -25,15 +25,18 @@ def setup_fptree(df, min_support):
 
     # support of each individual item
     # if itemsets is sparse, np.sum returns an np.matrix of shape (1, N)
-    disabled = df.copy()
-    disabled = np.where(pd.isna(disabled), 1, np.nan) + np.where(
-        (disabled == 0) | (disabled == 1), np.nan, 0
-    )
-
-    item_support = np.array(
-        np.nansum(df.values, axis=0)
-        / (float(num_itemsets) - np.nansum(disabled, axis=0))
-    )
+    disabled = None
+    if null_values:
+        disabled = df.copy()
+        disabled = np.where(pd.isna(disabled), 1, np.nan) + np.where(
+            (disabled == 0) | (disabled == 1), np.nan, 0
+        )
+        item_support = np.array(
+            np.nansum(df.values, axis=0)
+            / (float(num_itemsets) - np.nansum(disabled, axis=0))
+        )
+    else:
+        item_support = np.array(np.sum(df.values, axis=0) / float(num_itemsets))
     item_support = item_support.reshape(-1)
     items = np.nonzero(item_support >= min_support)[0]
 
@@ -68,44 +71,55 @@ def setup_fptree(df, min_support):
     return tree, disabled, rank
 
 
-def generate_itemsets(generator, df, disabled, min_support, num_itemsets, colname_map):
+def generate_itemsets(
+    generator, df, disabled, min_support, num_itemsets, colname_map, null_values=False
+):
     itemsets = []
     supports = []
-    for sup, iset in generator:
-        itemsets.append(frozenset(iset))
-        # select data of iset from disabled dataset
-        dec = disabled[:, iset]
-        # select data of iset from original dataset
-        _dec = df.values[:, iset]
+    if not null_values or disabled is None:
+        for sup, iset in generator:
+            support = sup / float(num_itemsets)
+            if support >= min_support:
+                itemsets.append(frozenset(iset))
+                supports.append(support)
+    else:
+        for sup, iset in generator:
+            itemsets.append(frozenset(iset))
+            # select data of iset from disabled dataset
+            dec = disabled[:, iset]
+            # select data of iset from original dataset
+            _dec = df.values[:, iset]
 
-        # case if iset only has one element
-        if len(iset) == 1:
-            supports.append((sup - np.nansum(dec)) / (num_itemsets - np.nansum(dec)))
+            # case if iset only has one element
+            if len(iset) == 1:
+                supports.append(
+                    (sup - np.nansum(dec)) / (num_itemsets - np.nansum(dec))
+                )
 
-        # case if iset has multiple elements
-        elif len(iset) > 1:
-            denom = 0
-            num = 0
-            for i in range(dec.shape[0]):
-                # select the i-th iset from disabled dataset
-                item_dsbl = list(dec[i, :])
-                # select the i-th iset from original dataset
-                item_orig = list(_dec[i, :])
+            # case if iset has multiple elements
+            elif len(iset) > 1:
+                denom = 0
+                num = 0
+                for i in range(dec.shape[0]):
+                    # select the i-th iset from disabled dataset
+                    item_dsbl = list(dec[i, :])
+                    # select the i-th iset from original dataset
+                    item_orig = list(_dec[i, :])
 
-                # check and keep count if there is a null value in iset of disabled
-                if 1 in set(item_dsbl):
-                    denom += 1
+                    # check and keep count if there is a null value in iset of disabled
+                    if 1 in set(item_dsbl):
+                        denom += 1
 
-                    # check and keep count if item doesn't exist OR all values are null in iset of original
-                    if (0 not in set(item_orig)) or (
-                        all(np.isnan(x) for x in item_orig)
-                    ):
-                        num -= 1
+                        # check and keep count if item doesn't exist OR all values are null in iset of original
+                        if (0 not in set(item_orig)) or (
+                            all(np.isnan(x) for x in item_orig)
+                        ):
+                            num -= 1
 
-            if num_itemsets - denom == 0:
-                supports.append(0)
-            else:
-                supports.append((sup + num) / (num_itemsets - denom))
+                if num_itemsets - denom == 0:
+                    supports.append(0)
+                else:
+                    supports.append((sup + num) / (num_itemsets - denom))
 
     res_df = pd.DataFrame({"support": supports, "itemsets": itemsets})
     res_df = res_df[res_df["support"] >= min_support]

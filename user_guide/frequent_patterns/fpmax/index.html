@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,9 +10,13 @@
         <link rel="shortcut icon" href="../../../img/favicon.ico">
         <title>Fpmax - mlxtend</title>
         <link href="../../../css/bootstrap.min.css" rel="stylesheet">
-        <link href="../../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../../css/brands.min.css" rel="stylesheet">
+        <link href="../../../css/solid.min.css" rel="stylesheet">
+        <link href="../../../css/v4-font-face.min.css" rel="stylesheet">
         <link href="../../../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/color-brewer.min.css">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/color-brewer.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
         <link href="../../../cinder/css/base.css" rel="stylesheet">
         <link href="../../../cinder/css/bootstrap-custom.css" rel="stylesheet">
         <link href="../../../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
@@ -37,7 +41,7 @@
             <div class="container">
                 <a class="navbar-brand" href="../../..">mlxtend</a>
                 <!-- Expander button -->
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -45,11 +49,11 @@
                 <div id="navbar-collapse" class="navbar-collapse collapse">
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
-                            <li class="navitem">
+                            <li class="nav-item">
                                 <a href="../../.." class="nav-link">Home</a>
                             </li>
-                            <li class="dropdown active">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">User Guide</a>
                                 <ul class="dropdown-menu">
                                     
 <li>
@@ -77,7 +81,7 @@
 </li>
             
 <li>
-    <a href="../../classifier/OneRClassifier/" class="dropdown-item">OneRClassifier: One Rule (OneR) method for classfication</a>
+    <a href="../../classifier/OneRClassifier/" class="dropdown-item">OneRClassifier: One Rule (OneR) method for classification</a>
 </li>
             
 <li>
@@ -311,7 +315,7 @@
 </li>
             
 <li>
-    <a href="./" class="dropdown-item active">Fpmax</a>
+    <a href="./" class="dropdown-item active" aria-current="page">Fpmax</a>
 </li>
     </ul>
   </li>
@@ -485,8 +489,8 @@
   </li>
                                 </ul>
                             </li>
-                            <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">API</a>
                                 <ul class="dropdown-menu">
                                     
 <li>
@@ -542,11 +546,11 @@
 </li>
                                 </ul>
                             </li>
-                            <li class="navitem">
+                            <li class="nav-item">
                                 <a href="../../../installation/" class="nav-link">Installation</a>
                             </li>
-                            <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">About</a>
                                 <ul class="dropdown-menu">
                                     
 <li>
@@ -580,9 +584,9 @@
                             </li>
                         </ul>
 
-                    <ul class="nav navbar-nav ml-auto">
+                    <ul class="nav navbar-nav ms-md-auto">
                         <li class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
@@ -597,7 +601,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="https://github.com/rasbt/mlxtend/tree/master/docs/sources/user_guide/frequent_patterns/fpmax.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/rasbt/mlxtend/tree/master/docs/sources/user_guide/frequent_patterns/fpmax.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -606,48 +610,48 @@
 
         <div class="container">
             <div class="row">
-                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
     <div class="navbar-header">
-        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
             <span class="fa fa-angle-down"></span>
         </button>
     </div>
 
     
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="2"><a href="#fpmax-maximal-itemsets-via-the-fp-max-algorithm" class="nav-link">fpmax: Maximal itemsets via the FP-Max algorithm</a>
+            <li class="nav-item" data-bs-level="2"><a href="#fpmax-maximal-itemsets-via-the-fp-max-algorithm" class="nav-link">fpmax: Maximal itemsets via the FP-Max algorithm</a>
               <ul class="nav flex-column">
               </ul>
             </li>
             
-            <li class="nav-item" data-level="2"><a href="#overview" class="nav-link">Overview</a>
+            <li class="nav-item" data-bs-level="2"><a href="#overview" class="nav-link">Overview</a>
               <ul class="nav flex-column">
               </ul>
             </li>
             
-            <li class="nav-item" data-level="2"><a href="#references" class="nav-link">References</a>
+            <li class="nav-item" data-bs-level="2"><a href="#references" class="nav-link">References</a>
               <ul class="nav flex-column">
               </ul>
             </li>
             
-            <li class="nav-item" data-level="2"><a href="#related" class="nav-link">Related</a>
+            <li class="nav-item" data-bs-level="2"><a href="#related" class="nav-link">Related</a>
               <ul class="nav flex-column">
               </ul>
             </li>
             
-            <li class="nav-item" data-level="2"><a href="#example-1-maximal-itemsets" class="nav-link">Example 1 -- Maximal Itemsets</a>
+            <li class="nav-item" data-bs-level="2"><a href="#example-1-maximal-itemsets" class="nav-link">Example 1 -- Maximal Itemsets</a>
               <ul class="nav flex-column">
               </ul>
             </li>
             
-            <li class="nav-item" data-level="2"><a href="#more-examples" class="nav-link">More Examples</a>
+            <li class="nav-item" data-bs-level="2"><a href="#more-examples" class="nav-link">More Examples</a>
               <ul class="nav flex-column">
               </ul>
             </li>
             
-            <li class="nav-item" data-level="2"><a href="#api" class="nav-link">API</a>
+            <li class="nav-item" data-bs-level="2"><a href="#api" class="nav-link">API</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -666,9 +670,11 @@
 <p>In contrast to Apriori, <a href="../fpgrowth/">FP-Growth</a> is a frequent pattern generation algorithm that inserts items into a pattern search tree, which allows it to have a linear increase in runtime with respect to the number of unique items or entries.</p>
 <p>FP-Max is a variant of FP-Growth, which focuses on obtaining maximal itemsets.
 <strong>An itemset X is said to maximal if X is frequent and there exists no frequent super-pattern containing X.</strong> In other words, a frequent pattern X cannot be sub-pattern of larger frequent pattern to qualify for the definition <em>maximal itemset</em>.</p>
+<p>Same as in <a href="../fpgrowth/">FP-Growth</a>, a new feature is implemented in this algorithm, which is the sub-case when the input contains missing information [2]. The same structure and logic of the algorithm is kept, while "ignoring" the missing values in the data. That gives a more realistic indication of the frequency of existence in the items/itemsets that are generated from the algorithm. The support is computed differently where for a single item, the cardinality of null values is deducted from the cardinality of all transactions in the database. For the case of an itemset, of more than one elements, the cardinality of null values in at least one item in them itemset is deducted from the cardinality of all transactions in the database.</p>
 <h2 id="references">References</h2>
 <ul>
 <li>[1] Grahne, G., &amp; Zhu, J. (2003, November). Efficiently using prefix-trees in mining frequent itemsets. In FIMI (Vol. 90).</li>
+<li>[2] Ragel, A. and Crémilleux, B., 1998. "<a href="https://link.springer.com/chapter/10.1007/3-540-64383-4_22">Treatment of missing values for association rules</a>". In Research and Development in Knowledge Discovery and Data Mining: Second Pacific-Asia Conference, PAKDD-98 Melbourne, Australia, April 15–17, 1998 Proceedings 2 (pp. 258-270). Springer Berlin Heidelberg.</li>
 </ul>
 <h2 id="related">Related</h2>
 <ul>
@@ -891,6 +897,175 @@ fpmax(df, min_support=0.6)
 </table>
 </div>
 
+<p>The example below implements the algorithm when there is missing information from the data, by arbitrarily removing datapoints from the original dataset.</p>
+<pre><code class="language-python">import numpy as np
+from mlxtend.frequent_patterns import fpmax
+
+rows, columns = df.shape
+idx = np.random.randint(0, rows, 10)
+col = np.random.randint(0, columns, 10)
+
+for i in range(10):
+    df.iloc[idx[i], col[i]] = np.nan
+
+df
+</code></pre>
+<pre><code>C:\Users\User\AppData\Local\Temp\ipykernel_2788\2505244757.py:9: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value 'nan' has dtype incompatible with bool, please explicitly cast to a compatible dtype first.
+  df.iloc[idx[i], col[i]] = np.nan
+C:\Users\User\AppData\Local\Temp\ipykernel_2788\2505244757.py:9: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value 'nan' has dtype incompatible with bool, please explicitly cast to a compatible dtype first.
+  df.iloc[idx[i], col[i]] = np.nan
+C:\Users\User\AppData\Local\Temp\ipykernel_2788\2505244757.py:9: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value 'nan' has dtype incompatible with bool, please explicitly cast to a compatible dtype first.
+  df.iloc[idx[i], col[i]] = np.nan
+C:\Users\User\AppData\Local\Temp\ipykernel_2788\2505244757.py:9: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value 'nan' has dtype incompatible with bool, please explicitly cast to a compatible dtype first.
+  df.iloc[idx[i], col[i]] = np.nan
+C:\Users\User\AppData\Local\Temp\ipykernel_2788\2505244757.py:9: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value 'nan' has dtype incompatible with bool, please explicitly cast to a compatible dtype first.
+  df.iloc[idx[i], col[i]] = np.nan
+C:\Users\User\AppData\Local\Temp\ipykernel_2788\2505244757.py:9: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value 'nan' has dtype incompatible with bool, please explicitly cast to a compatible dtype first.
+  df.iloc[idx[i], col[i]] = np.nan
+C:\Users\User\AppData\Local\Temp\ipykernel_2788\2505244757.py:9: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value 'nan' has dtype incompatible with bool, please explicitly cast to a compatible dtype first.
+  df.iloc[idx[i], col[i]] = np.nan
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Apple</th>
+      <th>Corn</th>
+      <th>Dill</th>
+      <th>Eggs</th>
+      <th>Ice cream</th>
+      <th>Kidney Beans</th>
+      <th>Milk</th>
+      <th>Nutmeg</th>
+      <th>Onion</th>
+      <th>Unicorn</th>
+      <th>Yogurt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>False</td>
+      <td>NaN</td>
+      <td>True</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NaN</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>The same function as above is applied by setting <code>null_values=True</code> with at least 60% support:</p>
+<pre><code class="language-python">fpmax(df, min_support=0.6, null_values = True, use_colnames=True)
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>support</th>
+      <th>itemsets</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.666667</td>
+      <td>(Eggs, Kidney Beans, Onion)</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 <h2 id="more-examples">More Examples</h2>
 <p>Please note that since the <code>fpmax</code> function is a drop-in replacement for <code>fpgrowth</code> and <code>apriori</code>, it comes with the same set of function arguments and return arguments. Thus, for more examples, please see the <a href="../apriori/"><code>apriori</code></a> documentation.</p>
 <h2 id="api">API</h2>
@@ -963,8 +1138,7 @@ possible itemsets lengths are evaluated.</p>
                 <p>Copyright &copy; 2014-2023 <a href="https://sebastianraschka.com">Sebastian Raschka</a></p>
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
-        <script src="../../../js/jquery-3.6.0.min.js"></script>
-        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/bootstrap.bundle.min.js"></script>
         <script>
             var base_url = "../../..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
@@ -979,7 +1153,7 @@ possible itemsets lengths are evaluated.</p>
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="searchModalLabel">Search</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p>From here you can search these documents. Enter your search terms below.</p>
@@ -999,7 +1173,7 @@ possible itemsets lengths are evaluated.</p>
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <table class="table">

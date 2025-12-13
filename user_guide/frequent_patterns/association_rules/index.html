@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,9 +10,13 @@
         <link rel="shortcut icon" href="../../../img/favicon.ico">
         <title>Association rules - mlxtend</title>
         <link href="../../../css/bootstrap.min.css" rel="stylesheet">
-        <link href="../../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../../css/brands.min.css" rel="stylesheet">
+        <link href="../../../css/solid.min.css" rel="stylesheet">
+        <link href="../../../css/v4-font-face.min.css" rel="stylesheet">
         <link href="../../../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/color-brewer.min.css">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/color-brewer.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
         <link href="../../../cinder/css/base.css" rel="stylesheet">
         <link href="../../../cinder/css/bootstrap-custom.css" rel="stylesheet">
         <link href="../../../cinder/css/bootstrap-custom.min.css" rel="stylesheet">
@@ -37,7 +41,7 @@
             <div class="container">
                 <a class="navbar-brand" href="../../..">mlxtend</a>
                 <!-- Expander button -->
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -45,11 +49,11 @@
                 <div id="navbar-collapse" class="navbar-collapse collapse">
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
-                            <li class="navitem">
+                            <li class="nav-item">
                                 <a href="../../.." class="nav-link">Home</a>
                             </li>
-                            <li class="dropdown active">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">User Guide</a>
                                 <ul class="dropdown-menu">
                                     
 <li>
@@ -77,7 +81,7 @@
 </li>
             
 <li>
-    <a href="../../classifier/OneRClassifier/" class="dropdown-item">OneRClassifier: One Rule (OneR) method for classfication</a>
+    <a href="../../classifier/OneRClassifier/" class="dropdown-item">OneRClassifier: One Rule (OneR) method for classification</a>
 </li>
             
 <li>
@@ -303,7 +307,7 @@
 </li>
             
 <li>
-    <a href="./" class="dropdown-item active">Association rules</a>
+    <a href="./" class="dropdown-item active" aria-current="page">Association rules</a>
 </li>
             
 <li>
@@ -485,8 +489,8 @@
   </li>
                                 </ul>
                             </li>
-                            <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">API <b class="caret"></b></a>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">API</a>
                                 <ul class="dropdown-menu">
                                     
 <li>
@@ -542,11 +546,11 @@
 </li>
                                 </ul>
                             </li>
-                            <li class="navitem">
+                            <li class="nav-item">
                                 <a href="../../../installation/" class="nav-link">Installation</a>
                             </li>
-                            <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">About</a>
                                 <ul class="dropdown-menu">
                                     
 <li>
@@ -580,9 +584,9 @@
                             </li>
                         </ul>
 
-                    <ul class="nav navbar-nav ml-auto">
+                    <ul class="nav navbar-nav ms-md-auto">
                         <li class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
@@ -597,7 +601,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="https://github.com/rasbt/mlxtend/tree/master/docs/sources/user_guide/frequent_patterns/association_rules.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/rasbt/mlxtend/tree/master/docs/sources/user_guide/frequent_patterns/association_rules.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -606,53 +610,58 @@
 
         <div class="container">
             <div class="row">
-                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
     <div class="navbar-header">
-        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
             <span class="fa fa-angle-down"></span>
         </button>
     </div>
 
     
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="2"><a href="#association_rules-association-rules-generation-from-frequent-itemsets" class="nav-link">association_rules: Association rules generation from frequent itemsets</a>
+            <li class="nav-item" data-bs-level="2"><a href="#association_rules-association-rules-generation-from-frequent-itemsets" class="nav-link">association_rules: Association rules generation from frequent itemsets</a>
               <ul class="nav flex-column">
               </ul>
             </li>
             
-            <li class="nav-item" data-level="2"><a href="#overview" class="nav-link">Overview</a>
+            <li class="nav-item" data-bs-level="2"><a href="#overview" class="nav-link">Overview</a>
               <ul class="nav flex-column">
               </ul>
             </li>
             
-            <li class="nav-item" data-level="2"><a href="#references" class="nav-link">References</a>
+            <li class="nav-item" data-bs-level="2"><a href="#references" class="nav-link">References</a>
               <ul class="nav flex-column">
               </ul>
             </li>
             
-            <li class="nav-item" data-level="2"><a href="#example-1-generating-association-rules-from-frequent-itemsets" class="nav-link">Example 1 -- Generating Association Rules from Frequent Itemsets</a>
+            <li class="nav-item" data-bs-level="2"><a href="#example-1-generating-association-rules-from-frequent-itemsets" class="nav-link">Example 1 -- Generating Association Rules from Frequent Itemsets</a>
               <ul class="nav flex-column">
               </ul>
             </li>
             
-            <li class="nav-item" data-level="2"><a href="#example-2-rule-generation-and-selection-criteria" class="nav-link">Example 2 -- Rule Generation and Selection Criteria</a>
+            <li class="nav-item" data-bs-level="2"><a href="#example-2-rule-generation-and-selection-criteria" class="nav-link">Example 2 -- Rule Generation and Selection Criteria</a>
               <ul class="nav flex-column">
               </ul>
             </li>
             
-            <li class="nav-item" data-level="2"><a href="#example-3-frequent-itemsets-with-incomplete-antecedent-and-consequent-information" class="nav-link">Example 3 -- Frequent Itemsets with Incomplete Antecedent and Consequent Information</a>
+            <li class="nav-item" data-bs-level="2"><a href="#example-3-frequent-itemsets-with-incomplete-antecedent-and-consequent-information" class="nav-link">Example 3 -- Frequent Itemsets with Incomplete Antecedent and Consequent Information</a>
               <ul class="nav flex-column">
               </ul>
             </li>
             
-            <li class="nav-item" data-level="2"><a href="#example-4-pruning-association-rules" class="nav-link">Example 4 -- Pruning Association Rules</a>
+            <li class="nav-item" data-bs-level="2"><a href="#example-4-pruning-association-rules" class="nav-link">Example 4 -- Pruning Association Rules</a>
               <ul class="nav flex-column">
               </ul>
             </li>
             
-            <li class="nav-item" data-level="2"><a href="#api" class="nav-link">API</a>
+            <li class="nav-item" data-bs-level="2"><a href="#example-5-generating-association-rules-from-data-with-missing-information" class="nav-link">Example 5 -- Generating Association Rules from data with missing information</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#api" class="nav-link">API</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -719,6 +728,57 @@
 <li>introduced in [7]</li>
 </ul>
 <p>Measures both association and dissociation. Value ranges between -1 and 1. A positive value (&gt;0) indicates Association and negative value indicated dissociation.</p>
+<h4 id="jaccard">'jaccard':</h4>
+<p>
+<script type="math/tex; mode=display">\text{jaccard}(A\rightarrow C) = \frac{\text{support}(A\rightarrow C)}{\text{support}(A) + \text{support}(C) - \text{support}(A\rightarrow C)}, \;\;\; \text{range: } [0, 1]</script>
+</p>
+<ul>
+<li>introduced in [8]</li>
+</ul>
+<p>Measures similarity between A and C. Value ranges between 0 and 1. A value of 0 indicates complete dissimilarity, and a value of 1 indicates complete similarity.</p>
+<h4 id="certainty">'certainty':</h4>
+<p>
+<script type="math/tex; mode=display">\text{certainty}(A\rightarrow C) = \frac{\text{confidence}(A\rightarrow C) - \text{support}(C)}{1 - \text{support}(C)}, \;\;\; \text{range: } [-1, 1]</script>
+</p>
+<ul>
+<li>introduced in [9]</li>
+</ul>
+<p>Measures
+the certainty between A and C. Value ranges from -1 and 1, where 0 indicates independence. </p>
+<h4 id="kulczynski">'kulczynski':</h4>
+<p>
+<script type="math/tex; mode=display">\text{Kulczynski}(A\rightarrow C) = \frac{1}{2}\left(\frac{\text{support}(A\rightarrow C)}{\text{support}(A)} + \frac{\text{support}(A\rightarrow C)}{\text{support}(C)}\right), \;\;\; \text{range: } [0, 1]</script>
+</p>
+<ul>
+<li>introduced in [10]</li>
+</ul>
+<p>Measures the association between A and C. Value ranges from 0 to 1. Rules near 0 or 1 are considered negatively or positively associated, respectively. Rules near 0.5 are considered to be unintresting.</p>
+<h3 id="generating-association-rules-with-th-existence-of-missing-values">Generating association rules with th existence of missing values</h3>
+<p>As it is already implemented in the FP-Growth/FP-Max algorithms, now the corresponding association rules are generated while addressing the issue of missing information in the input. As before, the supports are used from the algorithm and using these the rest of the metrics are re-formulated in a different way. We still use the so called "disabled" array from the original dataframe, where it swaps the null values with ones and the rest with NaNs. For these association rules to make sense, a count corresponding to each sub-case is kept. The cases are when a null value is present in the antecedent, consequent and the combination of both respectively and when there's a NaN in the consequent and all the rest are present in the antecedent and vice versa. According to [11], the metrics are re-defined below:</p>
+<h4 id="support_1">'support':</h4>
+<p>
+<script type="math/tex; mode=display">\text{Support}(A\rightarrow C) = \frac{|B_{AC}|}{|B| - |\text{Dis}(AC)|}, \;\;\; \text{range: } [0, 1]</script>
+</p>
+<p>where <script type="math/tex">|B_{AC}|</script> is the count of both A and C occuring/existing, <script type="math/tex">|B|</script> is the number of transactions and <script type="math/tex">|\text{Dis}(AC)|</script> is the count kept if there is a NaN either in A or C, since </p>
+<p>
+<script type="math/tex; mode=display">\text{Dis}(AC) = \text{Dis}(A)\cup\text{Dis}(C)</script>
+</p>
+<h4 id="confidence_1">'confidence':</h4>
+<p>
+<script type="math/tex; mode=display">\text{Confidence}(A\rightarrow C) = \frac{|B_{AC}|}{|B_{A}| - |\text{Dis}(C)\cap B_{A}|}, \;\;\; \text{range: } [0, 1]</script>
+</p>
+<p>where <script type="math/tex">|\text{Dis}(C)\cap B_{A}|</script> is the count kept if there is a NaN in C AND an occurence of existence in A. In the code, this formula has been re-arranged using the supports obtained from the algorithm and is formulated as 
+ <code>sAC*(num_itemsets - disAC) / (sA*(num_itemsets - disA) - dis_int)</code>
+where <code>sAC*(num_itemsets - disAC)</code> is the count kept both in A and C, <code>sA*(num_itemsets - disA)</code> is the count kept in A and <code>dis_int</code> is the term mentioned above.</p>
+<h4 id="representativity">'representativity':</h4>
+<p>
+<script type="math/tex; mode=display">\text{Representativity}(A) = \frac{|B| - |\text{Dis}(A)|}{|B|}, \;\;\; \text{range: } [0, 1]</script>
+</p>
+<ul>
+<li>introduced in [11]</li>
+</ul>
+<p>A new metric induced according to [11], that essentially represents how much information is present in itemset A across all the transactions in the database.</p>
+<p>The rest of the metrics are derived according to re-formulated support and confidence metrics, while their formulas are kept identical as before but given the "new" support and confidence.</p>
 <h2 id="references">References</h2>
 <p>[1] Tan, Steinbach, Kumar. Introduction to Data Mining. Pearson New International Edition. Harlow: Pearson Education Ltd., 2014. (pp. 327-414).</p>
 <p>[2] Michael Hahsler, https://michael.hahsler.net/research/association_rules/measures.html</p>
@@ -727,6 +787,10 @@
 <p>[5]  Piatetsky-Shapiro, G., Discovery, analysis, and presentation of strong rules. Knowledge Discovery in Databases, 1991: p. 229-248.</p>
 <p>[6] Sergey Brin, Rajeev Motwani, Jeffrey D. Ullman, and Shalom Turk. Dynamic itemset counting and implication rules for market basket data. In SIGMOD 1997, Proceedings ACM SIGMOD International Conference on Management of Data, pages 255-264, Tucson, Arizona, USA, May 1997</p>
 <p>[7]  Xiaowei Yan , Chengqi Zhang &amp; Shichao Zhang (2009) CONFIDENCE METRICS FOR ASSOCIATION RULE MINING, Applied Artificial Intelligence, 23:8, 713-737 https://www.tandfonline.com/doi/pdf/10.1080/08839510903208062.</p>
+<p>[8] Pang-Ning Tan, Vipin Kumar, Jaideep Srivastava. Selecting the right objective measure for association analysis. Information Systems, Volume 29, Issue 4, 2004, Pages 293-313.</p>
+<p>[9] Berzal Fernando, Blanco Ignacio, Sánchez Daniel, Vila, María-Amparo. Measuring the accuracy and interest of association rules: A new framework. Intelligent Data Analysis, Volume 6, no. 3, 2002, Pages 221-235.</p>
+<p>[10] Wu, T., Chen, Y., Han, J. Re-examination of interestingness measures in pattern mining: a unified framework. Data Min Knowl Disc 21, 371–397 (2010). https://doi.org/10.1007/s10618-009-0161-2.</p>
+<p>[11] Ragel, A. and Crémilleux, B., 1998. "<a href="https://link.springer.com/chapter/10.1007/3-540-64383-4_22">Treatment of missing values for association rules</a>". In Research and Development in Knowledge Discovery and Data Mining: Second Pacific-Asia Conference, PAKDD-98 Melbourne, Australia, April 15–17, 1998 Proceedings 2 (pp. 258-270). Springer Berlin Heidelberg.</p>
 <h2 id="example-1-generating-association-rules-from-frequent-itemsets">Example 1 -- Generating Association Rules from Frequent Itemsets</h2>
 <p>The <code>generate_rules</code> takes dataframes of frequent itemsets as produced by the <code>apriori</code>, <code>fpgrowth</code>, or <code>fpmax</code> functions in <em>mlxtend.association</em>. To demonstrate the usage of the <code>generate_rules</code> method, we first create a pandas <code>DataFrame</code> of frequent itemsets as generated by the <a href="../fpgrowth/"><code>fpgrowth</code></a> function:</p>
 <pre><code class="language-python">import pandas as pd
@@ -792,12 +856,12 @@ frequent_itemsets
     <tr>
       <th>3</th>
       <td>0.6</td>
-      <td>(Onion)</td>
+      <td>(Milk)</td>
     </tr>
     <tr>
       <th>4</th>
       <td>0.6</td>
-      <td>(Milk)</td>
+      <td>(Onion)</td>
     </tr>
     <tr>
       <th>5</th>
@@ -812,22 +876,22 @@ frequent_itemsets
     <tr>
       <th>7</th>
       <td>0.6</td>
-      <td>(Eggs, Onion)</td>
+      <td>(Kidney Beans, Milk)</td>
     </tr>
     <tr>
       <th>8</th>
       <td>0.6</td>
-      <td>(Kidney Beans, Onion)</td>
+      <td>(Onion, Eggs)</td>
     </tr>
     <tr>
       <th>9</th>
       <td>0.6</td>
-      <td>(Eggs, Kidney Beans, Onion)</td>
+      <td>(Kidney Beans, Onion)</td>
     </tr>
     <tr>
       <th>10</th>
       <td>0.6</td>
-      <td>(Kidney Beans, Milk)</td>
+      <td>(Kidney Beans, Onion, Eggs)</td>
     </tr>
   </tbody>
 </table>
@@ -836,7 +900,10 @@ frequent_itemsets
 <p>The <code>generate_rules()</code> function allows you to (1) specify your metric of interest and (2) the according threshold. Currently implemented measures are <strong>confidence</strong> and <strong>lift</strong>. Let's say you are interested in rules derived from the frequent itemsets only if the level of confidence is above the 70 percent threshold (<code>min_threshold=0.7</code>):</p>
 <pre><code class="language-python">from mlxtend.frequent_patterns import association_rules
 
-association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshold=0.7)
+association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshold=0.7, num_itemsets=len(df.index))
+</code></pre>
+<pre><code>/home/marcelo/anaconda3/envs/analysis/lib/python3.10/site-packages/mlxtend/frequent_patterns/association_rules.py:182: RuntimeWarning: invalid value encountered in divide
+  cert_metric = np.where(certainty_denom == 0, 0, certainty_num / certainty_denom)
 </code></pre>
 <div>
 <style scoped>
@@ -863,9 +930,13 @@ association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshol
       <th>support</th>
       <th>confidence</th>
       <th>lift</th>
+      <th>representativity</th>
       <th>leverage</th>
       <th>conviction</th>
       <th>zhangs_metric</th>
+      <th>jaccard</th>
+      <th>certainty</th>
+      <th>kulczynski</th>
     </tr>
   </thead>
   <tbody>
@@ -878,9 +949,13 @@ association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshol
       <td>0.8</td>
       <td>0.80</td>
       <td>1.00</td>
+      <td>1.0</td>
       <td>0.00</td>
       <td>1.0</td>
       <td>0.0</td>
+      <td>0.80</td>
+      <td>0.000</td>
+      <td>0.900</td>
     </tr>
     <tr>
       <th>1</th>
@@ -891,9 +966,13 @@ association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshol
       <td>0.8</td>
       <td>1.00</td>
       <td>1.00</td>
+      <td>1.0</td>
       <td>0.00</td>
       <td>inf</td>
       <td>0.0</td>
+      <td>0.80</td>
+      <td>0.000</td>
+      <td>0.900</td>
     </tr>
     <tr>
       <th>2</th>
@@ -904,22 +983,30 @@ association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshol
       <td>0.6</td>
       <td>1.00</td>
       <td>1.00</td>
+      <td>1.0</td>
       <td>0.00</td>
       <td>inf</td>
       <td>0.0</td>
+      <td>0.60</td>
+      <td>0.000</td>
+      <td>0.800</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>(Eggs)</td>
-      <td>(Onion)</td>
-      <td>0.8</td>
+      <td>(Milk)</td>
+      <td>(Kidney Beans)</td>
       <td>0.6</td>
-      <td>0.6</td>
-      <td>0.75</td>
-      <td>1.25</td>
-      <td>0.12</td>
-      <td>1.6</td>
       <td>1.0</td>
+      <td>0.6</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.0</td>
+      <td>0.00</td>
+      <td>inf</td>
+      <td>0.0</td>
+      <td>0.60</td>
+      <td>0.000</td>
+      <td>0.800</td>
     </tr>
     <tr>
       <th>4</th>
@@ -930,12 +1017,33 @@ association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshol
       <td>0.6</td>
       <td>1.00</td>
       <td>1.25</td>
+      <td>1.0</td>
       <td>0.12</td>
       <td>inf</td>
       <td>0.5</td>
+      <td>0.75</td>
+      <td>1.000</td>
+      <td>0.875</td>
     </tr>
     <tr>
       <th>5</th>
+      <td>(Eggs)</td>
+      <td>(Onion)</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>0.6</td>
+      <td>0.75</td>
+      <td>1.25</td>
+      <td>1.0</td>
+      <td>0.12</td>
+      <td>1.6</td>
+      <td>1.0</td>
+      <td>0.75</td>
+      <td>0.375</td>
+      <td>0.875</td>
+    </tr>
+    <tr>
+      <th>6</th>
       <td>(Onion)</td>
       <td>(Kidney Beans)</td>
       <td>0.6</td>
@@ -943,12 +1051,33 @@ association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshol
       <td>0.6</td>
       <td>1.00</td>
       <td>1.00</td>
+      <td>1.0</td>
       <td>0.00</td>
       <td>inf</td>
       <td>0.0</td>
+      <td>0.60</td>
+      <td>0.000</td>
+      <td>0.800</td>
     </tr>
     <tr>
-      <th>6</th>
+      <th>7</th>
+      <td>(Kidney Beans, Onion)</td>
+      <td>(Eggs)</td>
+      <td>0.6</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>1.00</td>
+      <td>1.25</td>
+      <td>1.0</td>
+      <td>0.12</td>
+      <td>inf</td>
+      <td>0.5</td>
+      <td>0.75</td>
+      <td>1.000</td>
+      <td>0.875</td>
+    </tr>
+    <tr>
+      <th>8</th>
       <td>(Kidney Beans, Eggs)</td>
       <td>(Onion)</td>
       <td>0.8</td>
@@ -956,12 +1085,16 @@ association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshol
       <td>0.6</td>
       <td>0.75</td>
       <td>1.25</td>
+      <td>1.0</td>
       <td>0.12</td>
       <td>1.6</td>
       <td>1.0</td>
+      <td>0.75</td>
+      <td>0.375</td>
+      <td>0.875</td>
     </tr>
     <tr>
-      <th>7</th>
+      <th>9</th>
       <td>(Onion, Eggs)</td>
       <td>(Kidney Beans)</td>
       <td>0.6</td>
@@ -969,35 +1102,13 @@ association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshol
       <td>0.6</td>
       <td>1.00</td>
       <td>1.00</td>
+      <td>1.0</td>
       <td>0.00</td>
       <td>inf</td>
       <td>0.0</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>(Kidney Beans, Onion)</td>
-      <td>(Eggs)</td>
-      <td>0.6</td>
-      <td>0.8</td>
-      <td>0.6</td>
-      <td>1.00</td>
-      <td>1.25</td>
-      <td>0.12</td>
-      <td>inf</td>
-      <td>0.5</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>(Eggs)</td>
-      <td>(Kidney Beans, Onion)</td>
-      <td>0.8</td>
-      <td>0.6</td>
-      <td>0.6</td>
-      <td>0.75</td>
-      <td>1.25</td>
-      <td>0.12</td>
-      <td>1.6</td>
-      <td>1.0</td>
+      <td>0.60</td>
+      <td>0.000</td>
+      <td>0.800</td>
     </tr>
     <tr>
       <th>10</th>
@@ -1008,22 +1119,30 @@ association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshol
       <td>0.6</td>
       <td>1.00</td>
       <td>1.25</td>
+      <td>1.0</td>
       <td>0.12</td>
       <td>inf</td>
       <td>0.5</td>
+      <td>0.75</td>
+      <td>1.000</td>
+      <td>0.875</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>(Milk)</td>
-      <td>(Kidney Beans)</td>
+      <td>(Eggs)</td>
+      <td>(Kidney Beans, Onion)</td>
+      <td>0.8</td>
       <td>0.6</td>
+      <td>0.6</td>
+      <td>0.75</td>
+      <td>1.25</td>
       <td>1.0</td>
-      <td>0.6</td>
-      <td>1.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>inf</td>
-      <td>0.0</td>
+      <td>0.12</td>
+      <td>1.6</td>
+      <td>1.0</td>
+      <td>0.75</td>
+      <td>0.375</td>
+      <td>0.875</td>
     </tr>
   </tbody>
 </table>
@@ -1031,7 +1150,7 @@ association_rules(frequent_itemsets, metric=&quot;confidence&quot;, min_threshol
 
 <h2 id="example-2-rule-generation-and-selection-criteria">Example 2 -- Rule Generation and Selection Criteria</h2>
 <p>If you are interested in rules according to a different metric of interest, you can simply adjust the <code>metric</code> and <code>min_threshold</code> arguments . E.g. if you are only interested in rules that have a lift score of &gt;= 1.2, you would do the following:</p>
-<pre><code class="language-python">rules = association_rules(frequent_itemsets, metric=&quot;lift&quot;, min_threshold=1.2)
+<pre><code class="language-python">rules = association_rules(frequent_itemsets, metric=&quot;lift&quot;, min_threshold=1.2, num_itemsets=len(df.index))
 rules
 </code></pre>
 <div>
@@ -1059,79 +1178,86 @@ rules
       <th>support</th>
       <th>confidence</th>
       <th>lift</th>
+      <th>representativity</th>
       <th>leverage</th>
       <th>conviction</th>
       <th>zhangs_metric</th>
+      <th>jaccard</th>
+      <th>certainty</th>
+      <th>kulczynski</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>(Eggs)</td>
       <td>(Onion)</td>
+      <td>(Eggs)</td>
+      <td>0.6</td>
       <td>0.8</td>
       <td>0.6</td>
-      <td>0.6</td>
-      <td>0.75</td>
+      <td>1.00</td>
       <td>1.25</td>
-      <td>0.12</td>
-      <td>1.6</td>
       <td>1.0</td>
+      <td>0.12</td>
+      <td>inf</td>
+      <td>0.5</td>
+      <td>0.75</td>
+      <td>1.000</td>
+      <td>0.875</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>(Onion)</td>
       <td>(Eggs)</td>
-      <td>0.6</td>
+      <td>(Onion)</td>
       <td>0.8</td>
       <td>0.6</td>
-      <td>1.00</td>
+      <td>0.6</td>
+      <td>0.75</td>
       <td>1.25</td>
+      <td>1.0</td>
       <td>0.12</td>
-      <td>inf</td>
-      <td>0.5</td>
+      <td>1.6</td>
+      <td>1.0</td>
+      <td>0.75</td>
+      <td>0.375</td>
+      <td>0.875</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>(Kidney Beans, Eggs)</td>
-      <td>(Onion)</td>
+      <td>(Kidney Beans, Onion)</td>
+      <td>(Eggs)</td>
+      <td>0.6</td>
       <td>0.8</td>
       <td>0.6</td>
-      <td>0.6</td>
-      <td>0.75</td>
+      <td>1.00</td>
       <td>1.25</td>
-      <td>0.12</td>
-      <td>1.6</td>
       <td>1.0</td>
+      <td>0.12</td>
+      <td>inf</td>
+      <td>0.5</td>
+      <td>0.75</td>
+      <td>1.000</td>
+      <td>0.875</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>(Kidney Beans, Onion)</td>
-      <td>(Eggs)</td>
-      <td>0.6</td>
-      <td>0.8</td>
-      <td>0.6</td>
-      <td>1.00</td>
-      <td>1.25</td>
-      <td>0.12</td>
-      <td>inf</td>
-      <td>0.5</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>(Eggs)</td>
-      <td>(Kidney Beans, Onion)</td>
+      <td>(Kidney Beans, Eggs)</td>
+      <td>(Onion)</td>
       <td>0.8</td>
       <td>0.6</td>
       <td>0.6</td>
       <td>0.75</td>
       <td>1.25</td>
+      <td>1.0</td>
       <td>0.12</td>
       <td>1.6</td>
       <td>1.0</td>
+      <td>0.75</td>
+      <td>0.375</td>
+      <td>0.875</td>
     </tr>
     <tr>
-      <th>5</th>
+      <th>4</th>
       <td>(Onion)</td>
       <td>(Kidney Beans, Eggs)</td>
       <td>0.6</td>
@@ -1139,9 +1265,30 @@ rules
       <td>0.6</td>
       <td>1.00</td>
       <td>1.25</td>
+      <td>1.0</td>
       <td>0.12</td>
       <td>inf</td>
       <td>0.5</td>
+      <td>0.75</td>
+      <td>1.000</td>
+      <td>0.875</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>(Eggs)</td>
+      <td>(Kidney Beans, Onion)</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>0.6</td>
+      <td>0.75</td>
+      <td>1.25</td>
+      <td>1.0</td>
+      <td>0.12</td>
+      <td>1.6</td>
+      <td>1.0</td>
+      <td>0.75</td>
+      <td>0.375</td>
+      <td>0.875</td>
     </tr>
   </tbody>
 </table>
@@ -1182,85 +1329,91 @@ rules
       <th>support</th>
       <th>confidence</th>
       <th>lift</th>
+      <th>representativity</th>
       <th>leverage</th>
       <th>conviction</th>
       <th>zhangs_metric</th>
+      <th>jaccard</th>
+      <th>certainty</th>
+      <th>kulczynski</th>
       <th>antecedent_len</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>(Eggs)</td>
       <td>(Onion)</td>
+      <td>(Eggs)</td>
+      <td>0.6</td>
       <td>0.8</td>
       <td>0.6</td>
-      <td>0.6</td>
-      <td>0.75</td>
+      <td>1.00</td>
       <td>1.25</td>
-      <td>0.12</td>
-      <td>1.6</td>
       <td>1.0</td>
+      <td>0.12</td>
+      <td>inf</td>
+      <td>0.5</td>
+      <td>0.75</td>
+      <td>1.000</td>
+      <td>0.875</td>
       <td>1</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>(Onion)</td>
       <td>(Eggs)</td>
-      <td>0.6</td>
+      <td>(Onion)</td>
       <td>0.8</td>
       <td>0.6</td>
-      <td>1.00</td>
+      <td>0.6</td>
+      <td>0.75</td>
       <td>1.25</td>
+      <td>1.0</td>
       <td>0.12</td>
-      <td>inf</td>
-      <td>0.5</td>
+      <td>1.6</td>
+      <td>1.0</td>
+      <td>0.75</td>
+      <td>0.375</td>
+      <td>0.875</td>
       <td>1</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>(Kidney Beans, Eggs)</td>
-      <td>(Onion)</td>
+      <td>(Kidney Beans, Onion)</td>
+      <td>(Eggs)</td>
+      <td>0.6</td>
       <td>0.8</td>
       <td>0.6</td>
-      <td>0.6</td>
-      <td>0.75</td>
+      <td>1.00</td>
       <td>1.25</td>
-      <td>0.12</td>
-      <td>1.6</td>
       <td>1.0</td>
+      <td>0.12</td>
+      <td>inf</td>
+      <td>0.5</td>
+      <td>0.75</td>
+      <td>1.000</td>
+      <td>0.875</td>
       <td>2</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>(Kidney Beans, Onion)</td>
-      <td>(Eggs)</td>
-      <td>0.6</td>
-      <td>0.8</td>
-      <td>0.6</td>
-      <td>1.00</td>
-      <td>1.25</td>
-      <td>0.12</td>
-      <td>inf</td>
-      <td>0.5</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>(Eggs)</td>
-      <td>(Kidney Beans, Onion)</td>
+      <td>(Kidney Beans, Eggs)</td>
+      <td>(Onion)</td>
       <td>0.8</td>
       <td>0.6</td>
       <td>0.6</td>
       <td>0.75</td>
       <td>1.25</td>
+      <td>1.0</td>
       <td>0.12</td>
       <td>1.6</td>
       <td>1.0</td>
-      <td>1</td>
+      <td>0.75</td>
+      <td>0.375</td>
+      <td>0.875</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>5</th>
+      <th>4</th>
       <td>(Onion)</td>
       <td>(Kidney Beans, Eggs)</td>
       <td>0.6</td>
@@ -1268,9 +1421,31 @@ rules
       <td>0.6</td>
       <td>1.00</td>
       <td>1.25</td>
+      <td>1.0</td>
       <td>0.12</td>
       <td>inf</td>
       <td>0.5</td>
+      <td>0.75</td>
+      <td>1.000</td>
+      <td>0.875</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>(Eggs)</td>
+      <td>(Kidney Beans, Onion)</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>0.6</td>
+      <td>0.75</td>
+      <td>1.25</td>
+      <td>1.0</td>
+      <td>0.12</td>
+      <td>1.6</td>
+      <td>1.0</td>
+      <td>0.75</td>
+      <td>0.375</td>
+      <td>0.875</td>
       <td>1</td>
     </tr>
   </tbody>
@@ -1307,15 +1482,19 @@ rules
       <th>support</th>
       <th>confidence</th>
       <th>lift</th>
+      <th>representativity</th>
       <th>leverage</th>
       <th>conviction</th>
       <th>zhangs_metric</th>
+      <th>jaccard</th>
+      <th>certainty</th>
+      <th>kulczynski</th>
       <th>antecedent_len</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>3</th>
+      <th>2</th>
       <td>(Kidney Beans, Onion)</td>
       <td>(Eggs)</td>
       <td>0.6</td>
@@ -1323,9 +1502,13 @@ rules
       <td>0.6</td>
       <td>1.0</td>
       <td>1.25</td>
+      <td>1.0</td>
       <td>0.12</td>
       <td>inf</td>
       <td>0.5</td>
+      <td>0.75</td>
+      <td>1.0</td>
+      <td>0.875</td>
       <td>2</td>
     </tr>
   </tbody>
@@ -1360,15 +1543,19 @@ rules
       <th>support</th>
       <th>confidence</th>
       <th>lift</th>
+      <th>representativity</th>
       <th>leverage</th>
       <th>conviction</th>
       <th>zhangs_metric</th>
+      <th>jaccard</th>
+      <th>certainty</th>
+      <th>kulczynski</th>
       <th>antecedent_len</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>2</th>
+      <th>3</th>
       <td>(Kidney Beans, Eggs)</td>
       <td>(Onion)</td>
       <td>0.8</td>
@@ -1376,9 +1563,13 @@ rules
       <td>0.6</td>
       <td>0.75</td>
       <td>1.25</td>
+      <td>1.0</td>
       <td>0.12</td>
       <td>1.6</td>
       <td>1.0</td>
+      <td>0.75</td>
+      <td>0.375</td>
+      <td>0.875</td>
       <td>2</td>
     </tr>
   </tbody>
@@ -1483,7 +1674,7 @@ freq_itemsets
 <p>"NaN's" will be assigned to all other metric columns:</p>
 <pre><code class="language-python">from mlxtend.frequent_patterns import association_rules
 
-res = association_rules(freq_itemsets, support_only=True, min_threshold=0.1)
+res = association_rules(freq_itemsets, support_only=True, min_threshold=0.1, num_itemsets=0)
 res
 </code></pre>
 <div>
@@ -1511,9 +1702,13 @@ res
       <th>support</th>
       <th>confidence</th>
       <th>lift</th>
+      <th>representativity</th>
       <th>leverage</th>
       <th>conviction</th>
       <th>zhangs_metric</th>
+      <th>jaccard</th>
+      <th>certainty</th>
+      <th>kulczynski</th>
     </tr>
   </thead>
   <tbody>
@@ -1524,6 +1719,10 @@ res
       <td>NaN</td>
       <td>NaN</td>
       <td>0.253623</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1542,6 +1741,10 @@ res
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>2</th>
@@ -1550,6 +1753,10 @@ res
       <td>NaN</td>
       <td>NaN</td>
       <td>0.253623</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1568,14 +1775,22 @@ res
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>(178)</td>
       <td>(176)</td>
+      <td>(178)</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>0.217391</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1584,11 +1799,15 @@ res
     </tr>
     <tr>
       <th>5</th>
-      <td>(176)</td>
       <td>(178)</td>
+      <td>(176)</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>0.217391</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1597,11 +1816,15 @@ res
     </tr>
     <tr>
       <th>6</th>
-      <td>(179)</td>
       <td>(176)</td>
+      <td>(179)</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>0.217391</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1610,11 +1833,15 @@ res
     </tr>
     <tr>
       <th>7</th>
-      <td>(176)</td>
       <td>(179)</td>
+      <td>(176)</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>0.217391</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1633,6 +1860,10 @@ res
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>9</th>
@@ -1641,6 +1872,10 @@ res
       <td>NaN</td>
       <td>NaN</td>
       <td>0.181159</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1659,6 +1894,10 @@ res
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>11</th>
@@ -1672,10 +1911,14 @@ res
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>(178, 176)</td>
+      <td>(176, 178)</td>
       <td>(177)</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1685,14 +1928,22 @@ res
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>(178, 177)</td>
-      <td>(176)</td>
+      <td>(176, 177)</td>
+      <td>(178)</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>0.108696</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1701,11 +1952,15 @@ res
     </tr>
     <tr>
       <th>14</th>
-      <td>(177, 176)</td>
-      <td>(178)</td>
+      <td>(178, 177)</td>
+      <td>(176)</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>0.108696</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1714,11 +1969,15 @@ res
     </tr>
     <tr>
       <th>15</th>
-      <td>(178)</td>
-      <td>(177, 176)</td>
+      <td>(176)</td>
+      <td>(178, 177)</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>0.108696</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1727,11 +1986,15 @@ res
     </tr>
     <tr>
       <th>16</th>
-      <td>(176)</td>
-      <td>(178, 177)</td>
+      <td>(178)</td>
+      <td>(176, 177)</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>0.108696</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1741,10 +2004,14 @@ res
     <tr>
       <th>17</th>
       <td>(177)</td>
-      <td>(178, 176)</td>
+      <td>(176, 178)</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>0.108696</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1809,26 +2076,26 @@ res
     </tr>
     <tr>
       <th>4</th>
-      <td>(178)</td>
       <td>(176)</td>
+      <td>(178)</td>
       <td>0.217391</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>(176)</td>
       <td>(178)</td>
+      <td>(176)</td>
       <td>0.217391</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>(179)</td>
       <td>(176)</td>
+      <td>(179)</td>
       <td>0.217391</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>(176)</td>
       <td>(179)</td>
+      <td>(176)</td>
       <td>0.217391</td>
     </tr>
     <tr>
@@ -1857,38 +2124,38 @@ res
     </tr>
     <tr>
       <th>12</th>
-      <td>(178, 176)</td>
+      <td>(176, 178)</td>
       <td>(177)</td>
       <td>0.108696</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>(178, 177)</td>
-      <td>(176)</td>
+      <td>(176, 177)</td>
+      <td>(178)</td>
       <td>0.108696</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>(177, 176)</td>
-      <td>(178)</td>
+      <td>(178, 177)</td>
+      <td>(176)</td>
       <td>0.108696</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>(178)</td>
-      <td>(177, 176)</td>
+      <td>(176)</td>
+      <td>(178, 177)</td>
       <td>0.108696</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>(176)</td>
-      <td>(178, 177)</td>
+      <td>(178)</td>
+      <td>(176, 177)</td>
       <td>0.108696</td>
     </tr>
     <tr>
       <th>17</th>
       <td>(177)</td>
-      <td>(178, 176)</td>
+      <td>(176, 178)</td>
       <td>0.108696</td>
     </tr>
   </tbody>
@@ -1914,7 +2181,7 @@ te_ary = te.fit(dataset).transform(dataset)
 df = pd.DataFrame(te_ary, columns=te.columns_)
 
 frequent_itemsets = fpgrowth(df, min_support=0.6, use_colnames=True)
-rules = association_rules(frequent_itemsets, metric=&quot;lift&quot;, min_threshold=1.2)
+rules = association_rules(frequent_itemsets, metric=&quot;lift&quot;, min_threshold=1.2, num_itemsets=len(df.index))
 rules
 </code></pre>
 <div>
@@ -1942,79 +2209,86 @@ rules
       <th>support</th>
       <th>confidence</th>
       <th>lift</th>
+      <th>representativity</th>
       <th>leverage</th>
       <th>conviction</th>
       <th>zhangs_metric</th>
+      <th>jaccard</th>
+      <th>certainty</th>
+      <th>kulczynski</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>(Eggs)</td>
       <td>(Onion)</td>
+      <td>(Eggs)</td>
+      <td>0.6</td>
       <td>0.8</td>
       <td>0.6</td>
-      <td>0.6</td>
-      <td>0.75</td>
+      <td>1.00</td>
       <td>1.25</td>
-      <td>0.12</td>
-      <td>1.6</td>
       <td>1.0</td>
+      <td>0.12</td>
+      <td>inf</td>
+      <td>0.5</td>
+      <td>0.75</td>
+      <td>1.000</td>
+      <td>0.875</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>(Onion)</td>
       <td>(Eggs)</td>
-      <td>0.6</td>
+      <td>(Onion)</td>
       <td>0.8</td>
       <td>0.6</td>
-      <td>1.00</td>
+      <td>0.6</td>
+      <td>0.75</td>
       <td>1.25</td>
+      <td>1.0</td>
       <td>0.12</td>
-      <td>inf</td>
-      <td>0.5</td>
+      <td>1.6</td>
+      <td>1.0</td>
+      <td>0.75</td>
+      <td>0.375</td>
+      <td>0.875</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>(Kidney Beans, Eggs)</td>
-      <td>(Onion)</td>
+      <td>(Kidney Beans, Onion)</td>
+      <td>(Eggs)</td>
+      <td>0.6</td>
       <td>0.8</td>
       <td>0.6</td>
-      <td>0.6</td>
-      <td>0.75</td>
+      <td>1.00</td>
       <td>1.25</td>
-      <td>0.12</td>
-      <td>1.6</td>
       <td>1.0</td>
+      <td>0.12</td>
+      <td>inf</td>
+      <td>0.5</td>
+      <td>0.75</td>
+      <td>1.000</td>
+      <td>0.875</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>(Kidney Beans, Onion)</td>
-      <td>(Eggs)</td>
-      <td>0.6</td>
-      <td>0.8</td>
-      <td>0.6</td>
-      <td>1.00</td>
-      <td>1.25</td>
-      <td>0.12</td>
-      <td>inf</td>
-      <td>0.5</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>(Eggs)</td>
-      <td>(Kidney Beans, Onion)</td>
+      <td>(Kidney Beans, Eggs)</td>
+      <td>(Onion)</td>
       <td>0.8</td>
       <td>0.6</td>
       <td>0.6</td>
       <td>0.75</td>
       <td>1.25</td>
+      <td>1.0</td>
       <td>0.12</td>
       <td>1.6</td>
       <td>1.0</td>
+      <td>0.75</td>
+      <td>0.375</td>
+      <td>0.875</td>
     </tr>
     <tr>
-      <th>5</th>
+      <th>4</th>
       <td>(Onion)</td>
       <td>(Kidney Beans, Eggs)</td>
       <td>0.6</td>
@@ -2022,9 +2296,30 @@ rules
       <td>0.6</td>
       <td>1.00</td>
       <td>1.25</td>
+      <td>1.0</td>
       <td>0.12</td>
       <td>inf</td>
       <td>0.5</td>
+      <td>0.75</td>
+      <td>1.000</td>
+      <td>0.875</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>(Eggs)</td>
+      <td>(Kidney Beans, Onion)</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>0.6</td>
+      <td>0.75</td>
+      <td>1.25</td>
+      <td>1.0</td>
+      <td>0.12</td>
+      <td>1.6</td>
+      <td>1.0</td>
+      <td>0.75</td>
+      <td>0.375</td>
+      <td>0.875</td>
     </tr>
   </tbody>
 </table>
@@ -2062,27 +2357,18 @@ rules.loc[ ~final_sele ]
       <th>support</th>
       <th>confidence</th>
       <th>lift</th>
+      <th>representativity</th>
       <th>leverage</th>
       <th>conviction</th>
       <th>zhangs_metric</th>
+      <th>jaccard</th>
+      <th>certainty</th>
+      <th>kulczynski</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>(Eggs)</td>
-      <td>(Onion)</td>
-      <td>0.8</td>
-      <td>0.6</td>
-      <td>0.6</td>
-      <td>0.75</td>
-      <td>1.25</td>
-      <td>0.12</td>
-      <td>1.6</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
       <td>(Onion)</td>
       <td>(Eggs)</td>
       <td>0.6</td>
@@ -2090,12 +2376,33 @@ rules.loc[ ~final_sele ]
       <td>0.6</td>
       <td>1.00</td>
       <td>1.25</td>
+      <td>1.0</td>
       <td>0.12</td>
       <td>inf</td>
       <td>0.5</td>
+      <td>0.75</td>
+      <td>1.000</td>
+      <td>0.875</td>
     </tr>
     <tr>
-      <th>2</th>
+      <th>1</th>
+      <td>(Eggs)</td>
+      <td>(Onion)</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>0.6</td>
+      <td>0.75</td>
+      <td>1.25</td>
+      <td>1.0</td>
+      <td>0.12</td>
+      <td>1.6</td>
+      <td>1.0</td>
+      <td>0.75</td>
+      <td>0.375</td>
+      <td>0.875</td>
+    </tr>
+    <tr>
+      <th>3</th>
       <td>(Kidney Beans, Eggs)</td>
       <td>(Onion)</td>
       <td>0.8</td>
@@ -2103,12 +2410,33 @@ rules.loc[ ~final_sele ]
       <td>0.6</td>
       <td>0.75</td>
       <td>1.25</td>
+      <td>1.0</td>
       <td>0.12</td>
       <td>1.6</td>
       <td>1.0</td>
+      <td>0.75</td>
+      <td>0.375</td>
+      <td>0.875</td>
     </tr>
     <tr>
       <th>4</th>
+      <td>(Onion)</td>
+      <td>(Kidney Beans, Eggs)</td>
+      <td>0.6</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>1.00</td>
+      <td>1.25</td>
+      <td>1.0</td>
+      <td>0.12</td>
+      <td>inf</td>
+      <td>0.5</td>
+      <td>0.75</td>
+      <td>1.000</td>
+      <td>0.875</td>
+    </tr>
+    <tr>
+      <th>5</th>
       <td>(Eggs)</td>
       <td>(Kidney Beans, Onion)</td>
       <td>0.8</td>
@@ -2116,22 +2444,243 @@ rules.loc[ ~final_sele ]
       <td>0.6</td>
       <td>0.75</td>
       <td>1.25</td>
+      <td>1.0</td>
       <td>0.12</td>
       <td>1.6</td>
       <td>1.0</td>
+      <td>0.75</td>
+      <td>0.375</td>
+      <td>0.875</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="example-5-generating-association-rules-from-data-with-missing-information">Example 5 -- Generating Association Rules from data with missing information</h2>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+from mlxtend.preprocessing import TransactionEncoder
+from mlxtend.frequent_patterns import apriori, fpmax, fpgrowth
+from mlxtend.frequent_patterns import association_rules
+
+
+dataset = [['Milk', 'Onion', 'Nutmeg', 'Kidney Beans', 'Eggs', 'Yogurt'],
+           ['Dill', 'Onion', 'Nutmeg', 'Kidney Beans', 'Eggs', 'Yogurt'],
+           ['Milk', 'Apple', 'Kidney Beans', 'Eggs'],
+           ['Milk', 'Unicorn', 'Corn', 'Kidney Beans', 'Yogurt'],
+           ['Corn', 'Onion', 'Onion', 'Kidney Beans', 'Ice cream', 'Eggs']]
+
+te = TransactionEncoder()
+te_ary = te.fit(dataset).transform(dataset)
+df = pd.DataFrame(te_ary, columns=te.columns_)
+
+rows, columns = df.shape
+idx = np.random.randint(0, rows, 10)
+col = np.random.randint(0, columns, 10)
+
+for i in range(10):
+    df.iloc[idx[i], col[i]] = np.nan
+
+df
+</code></pre>
+<pre><code>/tmp/ipykernel_34953/2823279667.py:23: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value 'nan' has dtype incompatible with bool, please explicitly cast to a compatible dtype first.
+  df.iloc[idx[i], col[i]] = np.nan
+/tmp/ipykernel_34953/2823279667.py:23: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value 'nan' has dtype incompatible with bool, please explicitly cast to a compatible dtype first.
+  df.iloc[idx[i], col[i]] = np.nan
+/tmp/ipykernel_34953/2823279667.py:23: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value 'nan' has dtype incompatible with bool, please explicitly cast to a compatible dtype first.
+  df.iloc[idx[i], col[i]] = np.nan
+/tmp/ipykernel_34953/2823279667.py:23: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value 'nan' has dtype incompatible with bool, please explicitly cast to a compatible dtype first.
+  df.iloc[idx[i], col[i]] = np.nan
+/tmp/ipykernel_34953/2823279667.py:23: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value 'nan' has dtype incompatible with bool, please explicitly cast to a compatible dtype first.
+  df.iloc[idx[i], col[i]] = np.nan
+/tmp/ipykernel_34953/2823279667.py:23: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value 'nan' has dtype incompatible with bool, please explicitly cast to a compatible dtype first.
+  df.iloc[idx[i], col[i]] = np.nan
+/tmp/ipykernel_34953/2823279667.py:23: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value 'nan' has dtype incompatible with bool, please explicitly cast to a compatible dtype first.
+  df.iloc[idx[i], col[i]] = np.nan
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Apple</th>
+      <th>Corn</th>
+      <th>Dill</th>
+      <th>Eggs</th>
+      <th>Ice cream</th>
+      <th>Kidney Beans</th>
+      <th>Milk</th>
+      <th>Nutmeg</th>
+      <th>Onion</th>
+      <th>Unicorn</th>
+      <th>Yogurt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>5</th>
-      <td>(Onion)</td>
-      <td>(Kidney Beans, Eggs)</td>
-      <td>0.6</td>
+      <th>1</th>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>False</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>False</td>
+      <td>NaN</td>
+      <td>False</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>The example below, shows the same implementations as above but with the case when a dataset has missing values. The function still allows you to (1) specify your metric of interest and (2) the according threshold. Now we have to set <code>null_values=True</code> to both <code>fpgrowth</code>/<code>fpmax</code> and also include the original <code>df</code> and its size as parameters to the function. We try the example below using <code>metric="confidence"</code> and <code>min_threshold=0.8</code>.</p>
+<pre><code class="language-python">frequent_itemsets = fpgrowth(df, min_support=0.6, null_values = True, use_colnames=True)
+# frequent_itemsets = fpmax(df, min_support=0.6, null_values = True, use_colnames=True)
+rules = association_rules(frequent_itemsets, len(df), df, null_values = True, metric=&quot;confidence&quot;, min_threshold=0.8)
+rules
+</code></pre>
+<pre><code>/home/marcelo/anaconda3/envs/analysis/lib/python3.10/site-packages/mlxtend/frequent_patterns/association_rules.py:182: RuntimeWarning: invalid value encountered in divide
+  cert_metric = np.where(certainty_denom == 0, 0, certainty_num / certainty_denom)
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>antecedents</th>
+      <th>consequents</th>
+      <th>antecedent support</th>
+      <th>consequent support</th>
+      <th>support</th>
+      <th>confidence</th>
+      <th>lift</th>
+      <th>representativity</th>
+      <th>leverage</th>
+      <th>conviction</th>
+      <th>zhangs_metric</th>
+      <th>jaccard</th>
+      <th>certainty</th>
+      <th>kulczynski</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>(Eggs)</td>
+      <td>(Kidney Beans)</td>
+      <td>0.80</td>
+      <td>1.0</td>
+      <td>0.75</td>
+      <td>1.0</td>
+      <td>1.0</td>
       <td>0.8</td>
-      <td>0.6</td>
-      <td>1.00</td>
-      <td>1.25</td>
-      <td>0.12</td>
+      <td>-0.05</td>
       <td>inf</td>
-      <td>0.5</td>
+      <td>-0.25</td>
+      <td>0.714286</td>
+      <td>0.0</td>
+      <td>0.875</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>(Milk)</td>
+      <td>(Kidney Beans)</td>
+      <td>0.75</td>
+      <td>1.0</td>
+      <td>0.75</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.8</td>
+      <td>0.00</td>
+      <td>inf</td>
+      <td>0.00</td>
+      <td>0.750000</td>
+      <td>0.0</td>
+      <td>0.875</td>
     </tr>
   </tbody>
 </table>
@@ -2146,8 +2695,7 @@ rules.loc[ ~final_sele ]
                 <p>Copyright &copy; 2014-2023 <a href="https://sebastianraschka.com">Sebastian Raschka</a></p>
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
-        <script src="../../../js/jquery-3.6.0.min.js"></script>
-        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/bootstrap.bundle.min.js"></script>
         <script>
             var base_url = "../../..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
@@ -2162,7 +2710,7 @@ rules.loc[ ~final_sele ]
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="searchModalLabel">Search</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p>From here you can search these documents. Enter your search terms below.</p>
@@ -2182,7 +2730,7 @@ rules.loc[ ~final_sele ]
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <table class="table">

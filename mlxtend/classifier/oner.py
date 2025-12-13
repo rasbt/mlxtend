@@ -1,6 +1,6 @@
 # OneR classifier
 
-# Sebastian Raschka 2014-2024
+# Sebastian Raschka 2014-2026
 # mlxtend Machine Learning Library Extensions
 #
 # The classic OneR (One Rule) classifier

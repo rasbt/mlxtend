@@ -141,6 +141,9 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier, Transformer
         self.use_clones = use_clones
         self.fit_base_estimators = fit_base_estimators
 
+    def __sklearn_tags__(self):
+        return _BaseStackingClassifier.__sklearn_tags__(self)
+
     @property
     def named_classifiers(self):
         return _name_estimators(self.classifiers)

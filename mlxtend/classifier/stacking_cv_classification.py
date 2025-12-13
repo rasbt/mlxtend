@@ -185,6 +185,9 @@ class StackingCVClassifier(
         self.n_jobs = n_jobs
         self.pre_dispatch = pre_dispatch
 
+    def __sklearn_tags__(self):
+        return _BaseStackingClassifier.__sklearn_tags__(self)
+
     @property
     def named_classifiers(self):
         return _name_estimators(self.classifiers)

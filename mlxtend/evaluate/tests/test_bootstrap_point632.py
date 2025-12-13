@@ -19,7 +19,6 @@ from mlxtend.utils import assert_raises
 
 X, y = iris_data()
 
-
 class FakeClassifier(BaseEstimator):
     def __init__(self):
         pass
@@ -35,7 +34,7 @@ def test_pandas_pass():
 
 
 def test_defaults():
-    lr = LogisticRegression(solver="liblinear", multi_class="ovr")
+    lr = LogisticRegression(solver="lbfgs")
     scores = bootstrap_point632_score(lr, X, y, random_seed=123)
     acc = np.mean(scores)
     assert len(scores == 200)
@@ -82,7 +81,7 @@ def test_custom_accuracy():
     def accuracy2(targets, predictions):
         return sum([i == j for i, j in zip(targets, predictions)]) / len(targets)
 
-    lr = LogisticRegression(solver="liblinear", multi_class="ovr")
+    lr = LogisticRegression(solver="lbfgs")
     scores = bootstrap_point632_score(lr, X, y, random_seed=123, scoring_func=accuracy2)
     acc = np.mean(scores)
     assert len(scores == 200)
@@ -91,24 +90,24 @@ def test_custom_accuracy():
 
 def test_invalid_splits():
     msg = "Number of splits must be greater than 1. Got -1."
-    lr = LogisticRegression(solver="liblinear", multi_class="ovr")
+    lr = LogisticRegression(solver="lbfgs")
     assert_raises(ValueError, msg, bootstrap_point632_score, lr, X, y, -1)
 
 
 def test_allowed_methods():
     msg = "The `method` must be in ('.632', '.632+', 'oob'). Got 1."
-    lr = LogisticRegression(solver="liblinear", multi_class="ovr")
+    lr = LogisticRegression(solver="lbfgs")
     assert_raises(ValueError, msg, bootstrap_point632_score, lr, X, y, 200, 1)
 
     msg = "The `method` must be in ('.632', '.632+', 'oob'). Got test."
-    lr = LogisticRegression(solver="liblinear", multi_class="ovr")
+    lr = LogisticRegression(solver="lbfgs")
     assert_raises(ValueError, msg, bootstrap_point632_score, lr, X, y, 200, "test")
 
 
 def test_scoring():
     from sklearn.metrics import f1_score
 
-    lr = LogisticRegression(solver="liblinear", multi_class="ovr")
+    lr = LogisticRegression(solver="lbfgs")
     scores = bootstrap_point632_score(
         lr, X[:100], y[:100], scoring_func=f1_score, random_seed=123
     )
@@ -120,7 +119,7 @@ def test_scoring():
 def test_scoring_proba():
     from sklearn.metrics import roc_auc_score
 
-    lr = LogisticRegression(solver="liblinear", multi_class="ovr")
+    lr = LogisticRegression(solver="lbfgs")
 
     # test predict_proba
     scores = bootstrap_point632_score(
@@ -146,7 +145,6 @@ def test_scoring_proba():
             random_seed=123,
         )
 
-
 if "TRAVIS" in os.environ or os.environ.get("TRAVIS") == "true":
     TRAVIS = True
 else:
@@ -157,13 +155,14 @@ if "APPVEYOR" in os.environ or os.environ.get("APPVEYOR") == "true":
 else:
     APPVEYOR = False
 
-
 GITHUB_ACTIONS = os.getenv("GITHUB_ACTIONS_CI", "false").lower() == "true"
 
 
 @pytest.mark.skipif(
     TRAVIS or APPVEYOR or GITHUB_ACTIONS, reason="TensorFlow dependency"
 )
+
+
 def test_keras_fitparams():
     import tensorflow as tf
 

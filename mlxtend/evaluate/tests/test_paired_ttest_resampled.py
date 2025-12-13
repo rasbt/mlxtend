@@ -19,7 +19,7 @@ from mlxtend.utils import assert_raises
 
 def test_train_size():
     X, y = iris_data()
-    clf1 = LogisticRegression(solver="liblinear", multi_class="ovr")
+    clf1 = LogisticRegression(solver="lbfgs")
     clf2 = DecisionTreeClassifier()
 
     expected_err_msg = (
@@ -43,7 +43,7 @@ def test_train_size():
 
 def test_classifier_defaults():
     X, y = iris_data()
-    clf1 = LogisticRegression(multi_class="ovr", solver="liblinear", random_state=1)
+    clf1 = LogisticRegression(solver="lbfgs", random_state=1)
     clf2 = DecisionTreeClassifier(random_state=1)
 
     X_train, X_test, y_train, y_test = train_test_split(
@@ -85,7 +85,7 @@ def test_classifier_defaults():
 
 def test_scoring():
     X, y = iris_data()
-    clf1 = LogisticRegression(multi_class="ovr", solver="liblinear", random_state=1)
+    clf1 = LogisticRegression(solver="lbfgs", random_state=1)
     clf2 = DecisionTreeClassifier(random_state=1)
 
     X_train, X_test, y_train, y_test = train_test_split(

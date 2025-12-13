@@ -30,16 +30,13 @@ from mlxtend.utils import assert_raises
 X, y = iris_data()
 X = X[:, 1:3]
 
-
 y2 = np.c_[y, y]
 
 
 def test_StackingClassifier():
     np.random.seed(123)
     meta = LogisticRegression(
-        solver="liblinear",
-        multi_class="ovr",
-    )
+        solver="lbfgs")
     clf1 = RandomForestClassifier(n_estimators=10)
     clf2 = GaussianNB()
     sclf = StackingClassifier(classifiers=[clf1, clf2], meta_classifier=meta)
@@ -50,12 +47,12 @@ def test_StackingClassifier():
     if Version(sklearn_version) < Version("0.20"):
         assert scores_mean == 0.95, scores_mean
     else:
-        assert scores_mean == 0.95, scores_mean
+        assert scores_mean == 0.93, scores_mean
 
 
 def test_fit_base_estimators_false():
     np.random.seed(123)
-    meta = LogisticRegression(solver="liblinear", multi_class="ovr")
+    meta = LogisticRegression(solver="lbfgs")
     clf1 = RandomForestClassifier(n_estimators=10)
     clf2 = GaussianNB()
 
@@ -74,7 +71,7 @@ def test_use_clones():
     np.random.seed(123)
     X, y = iris_data()
 
-    meta = LogisticRegression(solver="liblinear", multi_class="ovr")
+    meta = LogisticRegression(solver="lbfgs")
     clf1 = RandomForestClassifier(n_estimators=10)
     clf2 = GaussianNB()
     StackingClassifier(
@@ -109,14 +106,14 @@ def test_sample_weight():
     w = np.array([random.random() for _ in range(len(y))])
 
     np.random.seed(123)
-    meta = LogisticRegression(solver="liblinear", multi_class="ovr")
+    meta = LogisticRegression(solver="lbfgs")
     clf1 = RandomForestClassifier(n_estimators=10)
     clf2 = GaussianNB()
     sclf = StackingClassifier(classifiers=[clf1, clf2], meta_classifier=meta)
     prob1 = sclf.fit(X, y, sample_weight=w).predict_proba(X)
 
     np.random.seed(123)
-    meta = LogisticRegression(solver="liblinear", multi_class="ovr")
+    meta = LogisticRegression(solver="lbfgs")
     clf1 = RandomForestClassifier(n_estimators=10)
     clf2 = GaussianNB()
     sclf = StackingClassifier(classifiers=[clf1, clf2], meta_classifier=meta)
@@ -126,7 +123,7 @@ def test_sample_weight():
     assert maxdiff > 1e-3, "max diff is %.4f" % maxdiff
 
     np.random.seed(123)
-    meta = LogisticRegression(solver="liblinear", multi_class="ovr")
+    meta = LogisticRegression(solver="lbfgs")
     clf1 = RandomForestClassifier(n_estimators=10)
     clf2 = GaussianNB()
     sclf = StackingClassifier(classifiers=[clf1, clf2], meta_classifier=meta)
@@ -139,7 +136,7 @@ def test_sample_weight():
 def test_weight_unsupported():
     # Error since KNN does not support sample_weight
     np.random.seed(123)
-    meta = LogisticRegression(solver="liblinear", multi_class="ovr")
+    meta = LogisticRegression(solver="lbfgs")
     clf1 = RandomForestClassifier(n_estimators=10)
     clf2 = GaussianNB()
     clf3 = KNeighborsClassifier()
@@ -154,7 +151,7 @@ def test_weight_unsupported():
 def test_weight_unsupported_no_weight():
     # This is okay since we do not pass sample weight
     np.random.seed(123)
-    meta = LogisticRegression(solver="liblinear", multi_class="ovr")
+    meta = LogisticRegression(solver="lbfgs")
     clf1 = RandomForestClassifier(n_estimators=10)
     clf2 = GaussianNB()
     clf3 = KNeighborsClassifier()
@@ -164,7 +161,7 @@ def test_weight_unsupported_no_weight():
 
 def test_StackingClassifier_proba_avg_1():
     np.random.seed(123)
-    meta = LogisticRegression(solver="liblinear", multi_class="ovr", random_state=1)
+    meta = LogisticRegression(solver="lbfgs", random_state=1)
     clf1 = RandomForestClassifier(n_estimators=10)
     clf2 = GaussianNB()
     sclf = StackingClassifier(
@@ -178,7 +175,7 @@ def test_StackingClassifier_proba_avg_1():
 
 def test_StackingClassifier_proba_concat_1():
     np.random.seed(123)
-    meta = LogisticRegression(solver="liblinear", multi_class="ovr")
+    meta = LogisticRegression(solver="lbfgs")
     clf1 = RandomForestClassifier(n_estimators=10)
     clf2 = GaussianNB()
     sclf = StackingClassifier(
@@ -195,7 +192,7 @@ def test_StackingClassifier_proba_concat_1():
 
 def test_StackingClassifier_avg_vs_concat():
     np.random.seed(123)
-    lr1 = LogisticRegression(solver="liblinear", multi_class="ovr")
+    lr1 = LogisticRegression(solver="lbfgs")
     sclf1 = StackingClassifier(
         classifiers=[lr1, lr1],
         use_probas=True,
@@ -226,7 +223,7 @@ def test_StackingClassifier_avg_vs_concat():
 
 def test_StackingClassifier_drop_proba_col():
     np.random.seed(123)
-    lr1 = LogisticRegression(solver="liblinear", multi_class="ovr")
+    lr1 = LogisticRegression(solver="lbfgs")
     sclf1 = StackingClassifier(
         classifiers=[lr1, lr1],
         use_probas=True,
@@ -285,7 +282,7 @@ def test_multivariate_class():
 
 def test_gridsearch():
     np.random.seed(123)
-    meta = LogisticRegression(solver="liblinear", multi_class="ovr")
+    meta = LogisticRegression(solver="lbfgs")
     clf1 = RandomForestClassifier(n_estimators=10)
     clf2 = GaussianNB()
     sclf = StackingClassifier(classifiers=[clf1, clf2], meta_classifier=meta)
@@ -301,12 +298,12 @@ def test_gridsearch():
 
     mean_scores = [round(s, 2) for s in grid.cv_results_["mean_test_score"]]
 
-    assert mean_scores == [0.95, 0.97, 0.96, 0.96], mean_scores
+    assert mean_scores == [0.95, 0.97, 0.95, 0.96], mean_scores
 
 
 def test_gridsearch_enumerate_names():
     np.random.seed(123)
-    meta = LogisticRegression(solver="liblinear", multi_class="ovr")
+    meta = LogisticRegression(solver="lbfgs")
     clf1 = RandomForestClassifier(n_estimators=10)
     clf2 = GaussianNB()
     sclf = StackingClassifier(classifiers=[clf1, clf1, clf2], meta_classifier=meta)
@@ -325,7 +322,7 @@ def test_gridsearch_enumerate_names():
 
 def test_use_probas():
     np.random.seed(123)
-    meta = LogisticRegression(solver="liblinear", multi_class="ovr")
+    meta = LogisticRegression(solver="lbfgs")
     clf1 = RandomForestClassifier(n_estimators=10)
     clf2 = GaussianNB()
     sclf = StackingClassifier(
@@ -339,7 +336,7 @@ def test_use_probas():
 
 def test_not_fitted():
     np.random.seed(123)
-    meta = LogisticRegression(solver="liblinear", multi_class="ovr")
+    meta = LogisticRegression(solver="lbfgs")
     clf1 = RandomForestClassifier(n_estimators=10)
     clf2 = GaussianNB()
     sclf = StackingClassifier(
@@ -378,7 +375,7 @@ def test_not_fitted():
 
 def test_verbose():
     np.random.seed(123)
-    meta = LogisticRegression(solver="liblinear", multi_class="ovr")
+    meta = LogisticRegression(solver="lbfgs")
     clf1 = RandomForestClassifier(n_estimators=10)
     clf2 = GaussianNB()
     sclf = StackingClassifier(
@@ -391,7 +388,7 @@ def test_verbose():
 def test_use_features_in_secondary_predict():
     np.random.seed(123)
     X, y = iris_data()
-    meta = LogisticRegression(solver="liblinear", multi_class="ovr")
+    meta = LogisticRegression(solver="lbfgs")
     clf1 = RandomForestClassifier(n_estimators=10)
     clf2 = GaussianNB()
     sclf = StackingClassifier(
@@ -400,13 +397,13 @@ def test_use_features_in_secondary_predict():
 
     scores = cross_val_score(sclf, X, y, cv=5, scoring="accuracy")
     scores_mean = round(scores.mean(), 2)
-    assert scores_mean == 0.95, scores_mean
+    assert scores_mean == 0.94, scores_mean
 
 
 def test_use_features_in_secondary_predict_proba():
     np.random.seed(123)
     X, y = iris_data()
-    meta = LogisticRegression(solver="liblinear", multi_class="ovr", random_state=1)
+    meta = LogisticRegression(solver="lbfgs", random_state=1)
     clf1 = RandomForestClassifier(n_estimators=10, random_state=1)
     clf2 = GaussianNB()
     sclf = StackingClassifier(
@@ -416,14 +413,14 @@ def test_use_features_in_secondary_predict_proba():
     sclf.fit(X, y)
     idx = [0, 1, 2]
     y_pred = sclf.predict_proba(X[idx])[:, 0]
-    expect = np.array([0.916, 0.828, 0.889])
+    expect = np.array([0.987, 0.980, 0.989])
     np.testing.assert_almost_equal(y_pred, expect, 3)
 
 
 def test_use_features_in_secondary_sparse_input_predict():
     np.random.seed(123)
     X, y = iris_data()
-    meta = LogisticRegression(solver="liblinear", multi_class="ovr", random_state=1)
+    meta = LogisticRegression(solver="lbfgs", random_state=1)
     clf1 = RandomForestClassifier(n_estimators=10, random_state=1)
     sclf = StackingClassifier(
         classifiers=[clf1], use_features_in_secondary=True, meta_classifier=meta
@@ -436,7 +433,7 @@ def test_use_features_in_secondary_sparse_input_predict():
 
 def test_use_features_in_secondary_sparse_input_predict_proba():
     np.random.seed(123)
-    meta = LogisticRegression(solver="liblinear", multi_class="ovr")
+    meta = LogisticRegression(solver="lbfgs")
     clf1 = RandomForestClassifier(n_estimators=10)
     sclf = StackingClassifier(
         classifiers=[clf1], use_features_in_secondary=True, meta_classifier=meta
@@ -445,7 +442,7 @@ def test_use_features_in_secondary_sparse_input_predict_proba():
     sclf.fit(sparse.csr_matrix(X), y)
     idx = [0, 1, 2]
     y_pred = sclf.predict_proba(sparse.csr_matrix(X[idx]))[:, 0]
-    expect = np.array([0.910, 0.829, 0.882])
+    expect = np.array([0.986, 0.973, 0.984])
     np.testing.assert_almost_equal(y_pred, expect, 3)
 
 
@@ -454,7 +451,7 @@ def test_get_params():
     clf1 = KNeighborsClassifier(n_neighbors=1)
     clf2 = RandomForestClassifier(n_estimators=10)
     clf3 = GaussianNB()
-    lr = LogisticRegression(solver="liblinear", multi_class="ovr")
+    lr = LogisticRegression(solver="lbfgs")
     sclf = StackingClassifier(classifiers=[clf1, clf2, clf3], meta_classifier=lr)
 
     got = sorted(list({s.split("__")[0] for s in sclf.get_params().keys()}))
@@ -481,7 +478,7 @@ def test_classifier_gridsearch():
     clf1 = KNeighborsClassifier(n_neighbors=1)
     clf2 = RandomForestClassifier(n_estimators=10)
     clf3 = GaussianNB()
-    lr = LogisticRegression(solver="liblinear", multi_class="ovr")
+    lr = LogisticRegression(solver="lbfgs")
     sclf = StackingClassifier(classifiers=[clf1, clf2, clf3], meta_classifier=lr)
 
     params = {"classifiers": [[clf1, clf1, clf1], [clf2, clf3]]}
@@ -495,7 +492,7 @@ def test_classifier_gridsearch():
 def test_train_meta_features_():
     np.random.seed(123)
     knn = KNeighborsClassifier()
-    lr = LogisticRegression(solver="liblinear", multi_class="ovr")
+    lr = LogisticRegression(solver="lbfgs")
     gnb = GaussianNB()
     stclf = StackingClassifier(
         classifiers=[knn, gnb], meta_classifier=lr, store_train_meta_features=True
@@ -508,7 +505,7 @@ def test_train_meta_features_():
 
 def test_predict_meta_features():
     knn = KNeighborsClassifier()
-    lr = LogisticRegression(solver="liblinear", multi_class="ovr", random_state=1)
+    lr = LogisticRegression(solver="lbfgs", random_state=1)
     gnb = GaussianNB()
     X_train, X_test, y_train, _ = train_test_split(X, y, test_size=0.3)
 
@@ -524,7 +521,7 @@ def test_predict_meta_features():
 def test_clone():
     np.random.seed(1)
     knn = KNeighborsClassifier()
-    lr = LogisticRegression(solver="liblinear", multi_class="ovr")
+    lr = LogisticRegression(solver="lbfgs")
     gnb = GaussianNB()
     stclf = StackingClassifier(
         classifiers=[knn, gnb], meta_classifier=lr, store_train_meta_features=True

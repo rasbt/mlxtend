@@ -43,7 +43,7 @@ def test_ColumnSelector_in_gridsearch():
     iris = datasets.load_iris()
     X, y = iris.data, iris.target
     pipe = make_pipeline(
-        ColumnSelector(), LogisticRegression(multi_class="ovr", solver="liblinear")
+        ColumnSelector(), LogisticRegression(solver="lbfgs")
     )
     grid = {
         "columnselector__cols": [[1, 2], [1, 2, 3], 0, [1]],

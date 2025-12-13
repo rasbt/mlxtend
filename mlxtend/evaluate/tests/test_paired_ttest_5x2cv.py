@@ -16,7 +16,7 @@ from mlxtend.evaluate import paired_ttest_5x2cv
 
 def test_classifier_defaults():
     X, y = iris_data()
-    clf1 = LogisticRegression(random_state=1, multi_class="ovr", solver="liblinear")
+    clf1 = LogisticRegression(random_state=1, solver="lbfgs")
     clf2 = DecisionTreeClassifier(random_state=1)
 
     X_train, X_test, y_train, y_test = train_test_split(
@@ -50,7 +50,7 @@ def test_classifier_defaults():
 
 def test_scoring():
     X, y = iris_data()
-    clf1 = LogisticRegression(random_state=1, solver="liblinear", multi_class="ovr")
+    clf1 = LogisticRegression(random_state=1, solver="lbfgs")
     clf2 = DecisionTreeClassifier(random_state=1)
 
     X_train, X_test, y_train, y_test = train_test_split(

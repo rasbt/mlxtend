@@ -1,12 +1,25 @@
 import numpy as np
 from scipy import sparse
-from sklearn.base import ClassifierMixin
+from sklearn.base import BaseEstimator, ClassifierMixin
+from sklearn.utils._tags import ClassifierTags
 
 from ..externals.estimator_checks import check_is_fitted
 
 
 class _BaseStackingClassifier(ClassifierMixin):
     """Base class of stacking classifiers"""
+
+    _estimator_type = "classifier"
+
+    def __sklearn_tags__(self):
+        try:
+            tags = BaseEstimator.__sklearn_tags__(self)
+            tags.estimator_type = "classifier"
+            tags.classifier_tags = ClassifierTags()
+            tags.target_tags.required = True
+            return tags
+        except Exception:
+            return {"estimator_type": "classifier"}
 
     def _do_predict(self, X, predict_fn):
         meta_features = self.predict_meta_features(X)

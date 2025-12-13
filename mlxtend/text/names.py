@@ -140,9 +140,8 @@ def generalize_names_duplcheck(df, col_name):
     https://rasbt.github.io/mlxtend/user_guide/text/generalize_names_duplcheck/
 
     """
-    df_new = df.copy()
-
-    df_new.drop_duplicates(subset=[col_name], inplace=True)
+    df_new = df.copy(deep=True)
+    df_new = df_new.drop_duplicates(subset=[col_name])
 
     df_new[col_name] = df_new[col_name].apply(generalize_names)
 

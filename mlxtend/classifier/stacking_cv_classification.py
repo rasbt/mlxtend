@@ -1,6 +1,6 @@
 # Stacking CV classifier
 
-# Sebastian Raschka 2014-2024
+# Sebastian Raschka 2014-2026
 # mlxtend Machine Learning Library Extensions
 #
 # An ensemble-learning meta-classifier for stacking
@@ -184,6 +184,9 @@ class StackingCVClassifier(
         self.use_clones = use_clones
         self.n_jobs = n_jobs
         self.pre_dispatch = pre_dispatch
+
+    def __sklearn_tags__(self):
+        return _BaseStackingClassifier.__sklearn_tags__(self)
 
     @property
     def named_classifiers(self):

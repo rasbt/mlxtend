@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2024
+# Sebastian Raschka 2014-2026
 # mlxtend Machine Learning Library Extensions
 #
 # Object for selecting a dataset column in scikit-learn pipelines.
@@ -42,9 +42,7 @@ def test_ColumnSelector_drop_axis():
 def test_ColumnSelector_in_gridsearch():
     iris = datasets.load_iris()
     X, y = iris.data, iris.target
-    pipe = make_pipeline(
-        ColumnSelector(), LogisticRegression(multi_class="ovr", solver="liblinear")
-    )
+    pipe = make_pipeline(ColumnSelector(), LogisticRegression(solver="lbfgs"))
     grid = {
         "columnselector__cols": [[1, 2], [1, 2, 3], 0, [1]],
         "logisticregression__C": [0.1, 1.0, 10.0],

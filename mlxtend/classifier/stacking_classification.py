@@ -1,6 +1,6 @@
 # Stacking classifier
 
-# Sebastian Raschka 2014-2024
+# Sebastian Raschka 2014-2026
 # mlxtend Machine Learning Library Extensions
 #
 # An ensemble-learning meta-classifier for stacking
@@ -140,6 +140,9 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier, Transformer
         self.store_train_meta_features = store_train_meta_features
         self.use_clones = use_clones
         self.fit_base_estimators = fit_base_estimators
+
+    def __sklearn_tags__(self):
+        return _BaseStackingClassifier.__sklearn_tags__(self)
 
     @property
     def named_classifiers(self):

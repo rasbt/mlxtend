@@ -90,13 +90,19 @@ def fpmax(
     if use_colnames:
         colname_map = {idx: item for idx, item in enumerate(df.columns)}
 
-    tree, disabled, rank = fpc.setup_fptree(df, min_support)
+    tree, disabled, rank = fpc.setup_fptree(df, min_support, null_values=null_values)
 
     minsup = math.ceil(min_support * len(df))  # min support as count
     generator = fpmax_step(tree, minsup, MFITree(rank), colname_map, max_len, verbose)
 
     return fpc.generate_itemsets(
-        generator, df, disabled, min_support, len(df), colname_map
+        generator,
+        df,
+        disabled,
+        min_support,
+        len(df),
+        colname_map,
+        null_values=null_values,
     )
 
 

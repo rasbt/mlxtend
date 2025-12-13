@@ -99,7 +99,9 @@ def _create_dataframe(n_rows=10000, n_cols=400):
     support_values[:n_very_low] = rng.uniform(0.0001, 0.009, n_very_low)
 
     n_medium = int(n_cols * 0.06)
-    support_values[n_very_low : n_very_low + n_medium] = rng.uniform(0.01, 0.1, n_medium)
+    support_values[n_very_low : n_very_low + n_medium] = rng.uniform(
+        0.01, 0.1, n_medium
+    )
 
     n_high = n_cols - n_very_low - n_medium
     support_values[n_very_low + n_medium :] = rng.uniform(0.1, 0.65, n_high)
@@ -120,9 +122,7 @@ def test_fpgrowth_completes_within_5_seconds():
     frequent_itemsets = fpgrowth(df, min_support=0.01, use_colnames=True)
     elapsed_time = time.perf_counter() - start_time
 
-    assert (
-        elapsed_time < 5
-    ), (
+    assert elapsed_time < 5, (
         f"fpgrowth took {elapsed_time:.2f}s on df shape {df.shape} "
         f"and density {df.values.mean():.4f} with "
         f"{len(frequent_itemsets)} itemsets found"

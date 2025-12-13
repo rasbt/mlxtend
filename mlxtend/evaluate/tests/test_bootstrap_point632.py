@@ -19,6 +19,7 @@ from mlxtend.utils import assert_raises
 
 X, y = iris_data()
 
+
 class FakeClassifier(BaseEstimator):
     def __init__(self):
         pass
@@ -161,8 +162,6 @@ GITHUB_ACTIONS = os.getenv("GITHUB_ACTIONS_CI", "false").lower() == "true"
 @pytest.mark.skipif(
     TRAVIS or APPVEYOR or GITHUB_ACTIONS, reason="TensorFlow dependency"
 )
-
-
 def test_keras_fitparams():
     import tensorflow as tf
 

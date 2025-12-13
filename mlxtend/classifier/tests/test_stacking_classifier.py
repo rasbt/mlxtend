@@ -35,8 +35,7 @@ y2 = np.c_[y, y]
 
 def test_StackingClassifier():
     np.random.seed(123)
-    meta = LogisticRegression(
-        solver="lbfgs")
+    meta = LogisticRegression(solver="lbfgs")
     clf1 = RandomForestClassifier(n_estimators=10)
     clf2 = GaussianNB()
     sclf = StackingClassifier(classifiers=[clf1, clf2], meta_classifier=meta)

@@ -230,7 +230,6 @@ def test_n_rounds():
     assert imp_vals[1].mean() > 0.2
 
 
-
 def test_feature_groups():
     rng = np.random.RandomState(1)
     df_data = pd.DataFrame(

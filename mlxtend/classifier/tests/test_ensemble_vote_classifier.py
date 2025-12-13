@@ -133,9 +133,7 @@ def test_no_weight_support_with_no_weight():
 
 
 def test_1model_labels():
-    clf = LogisticRegression(
-        solver="newton-cg", random_state=123
-    )
+    clf = LogisticRegression(solver="newton-cg", random_state=123)
     ens_clf_1 = EnsembleVoteClassifier(clfs=[clf], voting="soft", weights=None)
     ens_clf_2 = EnsembleVoteClassifier(clfs=[clf], voting="soft", weights=[1.0])
 
@@ -148,9 +146,7 @@ def test_1model_labels():
 
 
 def test_1model_probas():
-    clf = LogisticRegression(
-        solver="newton-cg", random_state=123
-    )
+    clf = LogisticRegression(solver="newton-cg", random_state=123)
     ens_clf_1 = EnsembleVoteClassifier(clfs=[clf], voting="soft", weights=None)
     ens_clf_2 = EnsembleVoteClassifier(clfs=[clf], voting="soft", weights=[1.0])
 

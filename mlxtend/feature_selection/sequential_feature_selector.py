@@ -204,7 +204,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self.forward = forward
         self.floating = floating
         self.pre_dispatch = pre_dispatch
-        self.tol=tol 
+        self.tol = tol 
         # Want to raise meaningful error message if a
         # cross-validation generator is inputted
         if isinstance(cv, types.GeneratorType):

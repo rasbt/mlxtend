@@ -12,14 +12,15 @@ from scipy.optimize import minimize
 
 
 def create_counterfactual(
-    x_reference,
-    y_desired,
-    model,
-    X_dataset,
-    y_desired_proba=None,
-    lammbda=0.1,
-    random_seed=None,
-):
+        x_reference,
+        y_desired,
+        model,
+        X_dataset,
+        y_desired_proba=None,
+        lammbda=0.1,
+        random_seed=None,
+        feature_names_to_vary=None,
+    ):
     """
     Implementation of the counterfactual method by Wachter et al. 2017
 

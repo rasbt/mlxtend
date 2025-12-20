@@ -197,7 +197,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         clone_estimator=True,
         fixed_features=None,
         feature_groups=None,
-        tol=None 
+        tol=None,
     ):
         self.estimator = estimator
         self.k_features = k_features

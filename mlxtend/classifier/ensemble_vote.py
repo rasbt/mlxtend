@@ -17,6 +17,7 @@ from sklearn.preprocessing import LabelEncoder
 
 from ..externals.name_estimators import _name_estimators
 
+from sklearn.utils._tags import ClassifierTags
 
 class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     """Soft Voting/Majority Rule classifier for scikit-learn estimators.
@@ -312,3 +313,10 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     def _predict_probas(self, X):
         """Collect results from clf.predict_proba calls."""
         return np.asarray([clf.predict_proba(X) for clf in self.clfs_])
+    
+    def __sklearn_tags__(self):
+        tags = super().__sklearn_tags__()
+        tags.estimator_type = "classifier"
+        tags.classifier_tags = ClassifierTags()
+        tags.target_tags.required = True
+        return tags

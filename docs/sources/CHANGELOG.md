@@ -7,12 +7,24 @@ The CHANGELOG for the current development version is available at
 
 ---
 
+### Version 0.24.0  (13 Dec 2025)
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.24.0.zip)
+
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.24.0.tar.gz)
+
+
 ##### Changes
 
-  - [`mlxtend/classifier/stacking_cv_classification.py`](https://github.com/rasbt/mlxtend/blob/master/mlxtend/classifier/stacking_cv_classification.py) and [`mlxtend/regressor/stacking_cv_regression.py`](https://github.com/rasbt/mlxtend/blob/master/mlxtend/regressor/stacking_cv_regression.py)
+- Compatibility with latest scikit-learn (1.8.0) and pandas versions (2.3.3)
+- [`mlxtend/classifier/stacking_cv_classification.py`](https://github.com/rasbt/mlxtend/blob/master/mlxtend/classifier/stacking_cv_classification.py) and [`mlxtend/regressor/stacking_cv_regression.py`](https://github.com/rasbt/mlxtend/blob/master/mlxtend/regressor/stacking_cv_regression.py)
       - Modified `meta_features` to ensure compatibility with *scikit-learn* versions 1.4 and above by dynamically selecting between `fit_params` and `params` in `cross_val_predict`.
 
-### Version 0.24.4  (25 Nov 2025)
+---
+
+### Version 0.23.4  (25 Nov 2024)
 
 ##### Downloads
 

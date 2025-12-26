@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2024
+# Sebastian Raschka 2014-2026
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
@@ -16,7 +16,7 @@ from mlxtend.evaluate import paired_ttest_5x2cv
 
 def test_classifier_defaults():
     X, y = iris_data()
-    clf1 = LogisticRegression(random_state=1, multi_class="ovr", solver="liblinear")
+    clf1 = LogisticRegression(random_state=1, solver="lbfgs")
     clf2 = DecisionTreeClassifier(random_state=1)
 
     X_train, X_test, y_train, y_test = train_test_split(
@@ -31,8 +31,8 @@ def test_classifier_defaults():
 
     t, p = paired_ttest_5x2cv(estimator1=clf1, estimator2=clf2, X=X, y=y, random_seed=1)
 
-    assert round(t, 3) == -1.539, t
-    assert round(p, 3) == 0.184, p
+    assert round(t, 3) == 0.0, t
+    assert round(p, 3) == 1.0, p
 
     # change maxdepth of decision tree classifier
 
@@ -44,13 +44,13 @@ def test_classifier_defaults():
 
     t, p = paired_ttest_5x2cv(estimator1=clf1, estimator2=clf2, X=X, y=y, random_seed=1)
 
-    assert round(t, 3) == 5.386, t
-    assert round(p, 3) == 0.003, p
+    assert round(t, 3) == 7.269, t
+    assert round(p, 3) == 0.001, p
 
 
 def test_scoring():
     X, y = iris_data()
-    clf1 = LogisticRegression(random_state=1, solver="liblinear", multi_class="ovr")
+    clf1 = LogisticRegression(random_state=1, solver="lbfgs")
     clf2 = DecisionTreeClassifier(random_state=1)
 
     X_train, X_test, y_train, y_test = train_test_split(
@@ -67,8 +67,8 @@ def test_scoring():
         estimator1=clf1, estimator2=clf2, X=X, y=y, scoring="accuracy", random_seed=1
     )
 
-    assert round(t, 3) == -1.539, t
-    assert round(p, 3) == 0.184, p
+    assert round(t, 3) == 0.0, t
+    assert round(p, 3) == 1.0, p
 
     t, p = paired_ttest_5x2cv(
         estimator1=clf1, estimator2=clf2, X=X, y=y, scoring="f1_macro", random_seed=1
@@ -78,8 +78,8 @@ def test_scoring():
         assert round(t, 3) == -1.510, t
         assert round(p, 3) == 0.191, p
     else:
-        assert round(t, 3) == -1.506, t
-        assert round(p, 3) == 0.192, p
+        assert round(t, 3) == 0.0, t
+        assert round(p, 3) == 1.0, p
 
 
 def test_regressor():

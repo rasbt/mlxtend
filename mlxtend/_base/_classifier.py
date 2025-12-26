@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2024
+# Sebastian Raschka 2014-2026
 # mlxtend Machine Learning Library Extensions
 #
 # Base Classifier (Classification Parent Class)
@@ -9,22 +9,35 @@
 from time import time
 
 import numpy as np
+from sklearn.utils._tags import ClassifierTags, Tags, TargetTags
 
 
 class _Classifier(object):
+    _estimator_type = "classifier"
+
     def __init__(self):
         pass
+
+    def __sklearn_tags__(self):
+        return Tags(
+            estimator_type="classifier",
+            target_tags=TargetTags(required=True),
+            classifier_tags=ClassifierTags(),
+        )
 
     def _check_target_array(self, y, allowed=None):
         if not isinstance(y[0], (int, np.integer)):
             raise AttributeError("y must be an integer array.\nFound %s" % y.dtype)
-        found_labels = np.unique(y)
-        if (found_labels < 0).any():
+        labels = [int(lbl) for lbl in np.unique(y)]
+        labels_arr = np.asarray(labels)
+        self.classes_ = labels_arr
+        if (labels_arr < 0).any():
             raise AttributeError(
-                "y array must not contain negative labels." "\nFound %s" % found_labels
+                "y array must not contain negative labels.\nFound %s"
+                % np.array2string(labels_arr)
             )
         if allowed is not None:
-            found_labels = tuple(found_labels)
+            found_labels = tuple(labels)
             if found_labels not in allowed:
                 raise AttributeError(
                     "Labels not in %s.\nFound %s" % (allowed, found_labels)
@@ -75,6 +88,7 @@ class _Classifier(object):
         self._is_fitted = False
         self._check_arrays(X=X, y=y)
         self._check_target_array(y)
+        self.n_features_in_ = X.shape[1]
         if hasattr(self, "self.random_seed") and self.random_seed:
             self._rgen = np.random.RandomState(self.random_seed)
         self._init_time = time()

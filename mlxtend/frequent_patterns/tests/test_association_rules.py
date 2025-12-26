@@ -56,8 +56,10 @@ columns_ordered = [
 # fmt: off
 def test_default():
     res_df = association_rules(df_freq_items, len(df))
-    res_df["antecedents"] = res_df["antecedents"].apply(lambda x: str(frozenset(x)))
-    res_df["consequents"] = res_df["consequents"].apply(lambda x: str(frozenset(x)))
+    res_df["antecedents"] = res_df["antecedents"].apply(lambda x: str(frozenset(sorted(x))))
+    res_df["consequents"] = res_df["consequents"].apply(lambda x: str(frozenset(sorted(x))))
+    res_df = res_df.round(3)
+    
     res_df.sort_values(columns_ordered, inplace=True)
     res_df.reset_index(inplace=True, drop=True)
 

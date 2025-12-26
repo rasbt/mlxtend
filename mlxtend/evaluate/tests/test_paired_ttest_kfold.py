@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2024
+# Sebastian Raschka 2014-2026
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
@@ -14,7 +14,7 @@ from mlxtend.evaluate import paired_ttest_kfold_cv
 
 def test_classifier_defaults():
     X, y = iris_data()
-    clf1 = LogisticRegression(random_state=1, multi_class="ovr", solver="liblinear")
+    clf1 = LogisticRegression(random_state=1, solver="lbfgs")
     clf2 = DecisionTreeClassifier(random_state=1)
 
     X_train, X_test, y_train, y_test = train_test_split(
@@ -31,8 +31,8 @@ def test_classifier_defaults():
         estimator1=clf1, estimator2=clf2, X=X, y=y, random_seed=1
     )
 
-    assert round(t, 3) == -1.861, t
-    assert round(p, 3) == 0.096, p
+    assert round(t, 3) == 0.0, t
+    assert round(p, 3) == 1.0, p
 
     # change maxdepth of decision tree classifier
 
@@ -46,13 +46,13 @@ def test_classifier_defaults():
         estimator1=clf1, estimator2=clf2, X=X, y=y, random_seed=1
     )
 
-    assert round(t, 3) == 13.491, t
-    assert round(p, 3) == 0.000, p
+    assert round(t, 3) == 22.277, t
+    assert round(p, 3) == 0.0, p
 
 
 def test_scoring():
     X, y = iris_data()
-    clf1 = LogisticRegression(random_state=1, solver="liblinear", multi_class="ovr")
+    clf1 = LogisticRegression(random_state=1, solver="lbfgs")
     clf2 = DecisionTreeClassifier(random_state=1)
 
     X_train, X_test, y_train, y_test = train_test_split(
@@ -62,15 +62,15 @@ def test_scoring():
     score1 = clf1.fit(X_train, y_train).score(X_test, y_test)
     score2 = clf2.fit(X_train, y_train).score(X_test, y_test)
 
-    assert round(score1, 2) == 0.96, round(score1, 2)
+    assert round(score1, 2) == 0.95, round(score1, 2)
     assert round(score2, 2) == 0.91, round(score2, 2)
 
     t, p = paired_ttest_kfold_cv(
         estimator1=clf1, estimator2=clf2, X=X, y=y, scoring="accuracy", random_seed=1
     )
 
-    assert round(t, 3) == -1.861, t
-    assert round(p, 3) == 0.096, p
+    assert round(t, 3) == 0.0, t
+    assert round(p, 3) == 1.0, p
 
     t, p = paired_ttest_kfold_cv(
         estimator1=clf1,
@@ -81,8 +81,8 @@ def test_scoring():
         random_seed=1,
     )
 
-    assert round(t, 3) == -1.861, t
-    assert round(p, 3) == 0.096, p
+    assert round(t, 3) == 0.0, t
+    assert round(p, 3) == 1.0, p
 
 
 def test_regressor():

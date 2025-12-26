@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2024
+# Sebastian Raschka 2014-2026
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
@@ -45,7 +45,7 @@ def test_pipeline():
     pipe = make_pipeline(
         StandardScaler(),
         CopyTransformer(),
-        LogisticRegression(solver="liblinear", multi_class="ovr"),
+        LogisticRegression(solver="lbfgs"),
     )
 
     if Version(sklearn_version) < Version("0.24.1"):

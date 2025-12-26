@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2024
+# Sebastian Raschka 2014-2026
 # mlxtend Machine Learning Library Extensions
 #
 # Author: Sebastian Raschka <sebastianraschka.com>
@@ -11,6 +11,14 @@ import numpy as np
 import scipy.stats
 from sklearn.metrics import get_scorer
 from sklearn.model_selection import train_test_split
+from sklearn.utils._tags import get_tags
+
+
+def _infer_estimator_type(estimator):
+    try:
+        return get_tags(estimator).estimator_type
+    except Exception:
+        return getattr(estimator, "_estimator_type", None)
 
 
 def ftest(y_target, *y_model_predictions):
@@ -169,9 +177,10 @@ def combined_ftest_5x2cv(estimator1, estimator2, X, y, scoring=None, random_seed
     rng = np.random.RandomState(random_seed)
 
     if scoring is None:
-        if estimator1._estimator_type == "classifier":
+        est_type = _infer_estimator_type(estimator1)
+        if est_type == "classifier":
             scoring = "accuracy"
-        elif estimator1._estimator_type == "regressor":
+        elif est_type == "regressor":
             scoring = "r2"
         else:
             raise AttributeError("Estimator must " "be a Classifier or Regressor.")

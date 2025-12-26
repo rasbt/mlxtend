@@ -88,12 +88,18 @@ def fpgrowth(
     if use_colnames:
         colname_map = {idx: item for idx, item in enumerate(df.columns)}
 
-    tree, disabled, _ = fpc.setup_fptree(df, min_support)
+    tree, disabled, _ = fpc.setup_fptree(df, min_support, null_values=null_values)
     minsup = math.ceil(min_support * len(df.index))  # min support as count
     generator = fpg_step(tree, minsup, colname_map, max_len, verbose)
 
     return fpc.generate_itemsets(
-        generator, df, disabled, min_support, len(df.index), colname_map
+        generator,
+        df,
+        disabled,
+        min_support,
+        len(df.index),
+        colname_map,
+        null_values=null_values,
     )
 
 

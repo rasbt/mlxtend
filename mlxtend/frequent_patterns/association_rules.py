@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2024
+# Sebastian Raschka 2014-2026
 # mlxtend Machine Learning Library Extensions
 #
 # Function for generating association rules
@@ -239,7 +239,11 @@ def association_rules(
     # get dict of {frequent itemset} -> support
     keys = df["itemsets"].values
     values = df["support"].values
-    frozenset_vect = np.vectorize(lambda x: frozenset(x))
+    frozenset_vect = np.vectorize(
+        lambda x: frozenset(
+            int(item) if isinstance(item, np.generic) else item for item in x
+        )
+    )
     frequent_items_dict = dict(zip(frozenset_vect(keys), values))
 
     # prepare buckets to collect frequent rules
@@ -249,20 +253,20 @@ def association_rules(
 
     # Define the disabled df, assign columns from original df to be the same on the disabled.
     if null_values:
+        first_itemset = next(iter(frequent_items_dict.keys()))
+        df_orig = df_orig.copy()
         disabled = df_orig.copy()
         disabled = np.where(pd.isna(disabled), 1, np.nan) + np.where(
             (disabled == 0) | (disabled == 1), np.nan, 0
         )
         disabled = pd.DataFrame(disabled)
-        if all(isinstance(key, str) for key in list(frequent_items_dict.keys())[0]):
+        if all(isinstance(key, str) for key in first_itemset):
             disabled.columns = df_orig.columns
 
-        if all(
-            isinstance(key, np.int64) for key in list(frequent_items_dict.keys())[0]
-        ):
+        if all(isinstance(key, (np.integer, int)) for key in first_itemset):
             cols = np.arange(0, len(df_orig.columns), 1)
             disabled.columns = cols
-            df_orig.columns = cols
+            df_orig = df_orig.rename(columns=dict(zip(df_orig.columns, cols)))
 
     # iterate over all frequent itemsets
     for k in frequent_items_dict.keys():

@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2024
+# Sebastian Raschka 2014-2026
 # mlxtend Machine Learning Library Extensions
 #
 # A function for fetching the open-source MNIST dataset.

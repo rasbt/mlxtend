@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2024
+# Sebastian Raschka 2014-2026
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
@@ -19,7 +19,7 @@ from mlxtend.utils import assert_raises
 
 def test_train_size():
     X, y = iris_data()
-    clf1 = LogisticRegression(solver="liblinear", multi_class="ovr")
+    clf1 = LogisticRegression(solver="lbfgs")
     clf2 = DecisionTreeClassifier()
 
     expected_err_msg = (
@@ -43,7 +43,7 @@ def test_train_size():
 
 def test_classifier_defaults():
     X, y = iris_data()
-    clf1 = LogisticRegression(multi_class="ovr", solver="liblinear", random_state=1)
+    clf1 = LogisticRegression(solver="lbfgs", random_state=1)
     clf2 = DecisionTreeClassifier(random_state=1)
 
     X_train, X_test, y_train, y_test = train_test_split(
@@ -64,8 +64,8 @@ def test_classifier_defaults():
         assert round(t, 3) == -1.809, t
         assert round(p, 3) == 0.081, p
     else:
-        assert round(t, 3) == -1.702, t
-        assert round(p, 3) == 0.10, p
+        assert round(t, 3) == 3.616, t
+        assert round(p, 3) == 0.001, p
 
     # change maxdepth of decision tree classifier
 
@@ -79,13 +79,13 @@ def test_classifier_defaults():
         estimator1=clf1, estimator2=clf2, X=X, y=y, random_seed=1
     )
 
-    assert round(t, 3) == 39.214, t
-    assert round(p, 3) == 0.000, p
+    assert round(t, 3) == 42.464, t
+    assert round(p, 3) == 0.0, p
 
 
 def test_scoring():
     X, y = iris_data()
-    clf1 = LogisticRegression(multi_class="ovr", solver="liblinear", random_state=1)
+    clf1 = LogisticRegression(solver="lbfgs", random_state=1)
     clf2 = DecisionTreeClassifier(random_state=1)
 
     X_train, X_test, y_train, y_test = train_test_split(
@@ -106,8 +106,8 @@ def test_scoring():
         assert round(t, 3) == -1.809, t
         assert round(p, 3) == 0.081, p
     else:
-        assert round(t, 3) == -1.702, t
-        assert round(p, 3) == 0.1, p
+        assert round(t, 3) == 3.616, t
+        assert round(p, 3) == 0.001, p
 
     t, p = paired_ttest_resampled(
         estimator1=clf1, estimator2=clf2, X=X, y=y, scoring="f1_macro", random_seed=1
@@ -117,8 +117,8 @@ def test_scoring():
         assert round(t, 3) == -1.690, t
         assert round(p, 3) == 0.102, p
     else:
-        assert round(t, 3) == -1.561, t
-        assert round(p, 3) == 0.129, p
+        assert round(t, 3) == 3.715, t
+        assert round(p, 3) == 0.001, p
 
 
 def test_regressor():

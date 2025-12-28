@@ -46,7 +46,6 @@
 - [paired_ttest_resampled](user_guide/evaluate/paired_ttest_resampled.md)
 - [permutation_test](user_guide/evaluate/permutation_test.md)
 - [PredefinedHoldoutSplit](user_guide/evaluate/PredefinedHoldoutSplit.md)
-- [proportion_difference](user_guide/evaluate/proportion_difference.md)
 - [RandomHoldoutSplit](user_guide/evaluate/RandomHoldoutSplit.md)
 - [scoring](user_guide/evaluate/scoring.md)
 
@@ -73,15 +72,17 @@
 ## `math`
 - [num_combinations](user_guide/math/num_combinations.md)
 - [num_permutations](user_guide/math/num_permutations.md)
+- [vectorspace_dimensionality](user_guide/math/vectorspace_dimensionality.md)
+- [vectorspace_orthonormalization](user_guide/math/vectorspace_orthonormalization.md)
 
 ## `plotting`
 - [category_scatter](user_guide/plotting/category_scatter.md)
 - [checkerboard_plot](user_guide/plotting/checkerboard_plot.md)
+- [plot_pca_correlation_graph](user_guide/plotting/plot_pca_correlation_graph.md)
 - [ecdf](user_guide/plotting/ecdf.md)
 - [enrichment_plot](user_guide/plotting/enrichment_plot.md)
 - [heatmap](user_guide/plotting/heatmap.md)
 - [plot_confusion_matrix](user_guide/plotting/plot_confusion_matrix.md)
-- [plot_pca_correlation_graph](user_guide/plotting/plot_pca_correlation_graph.md)
 - [plot_decision_regions](user_guide/plotting/plot_decision_regions.md)
 - [plot_learning_curves](user_guide/plotting/plot_learning_curves.md)
 - [plot_linear_regression](user_guide/plotting/plot_linear_regression.md)

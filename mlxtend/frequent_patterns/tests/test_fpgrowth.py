@@ -1,6 +1,8 @@
+import time
 import unittest
 
 import numpy as np
+import pandas as pd
 from test_fpbase import (
     FPTestEdgeCases,
     FPTestErrors,
@@ -85,3 +87,43 @@ class TestEx2(unittest.TestCase, FPTestEx2All):
 class TestEx3(unittest.TestCase, FPTestEx3All):
     def setUp(self):
         FPTestEx3All.setUp(self, fpgrowth)
+
+
+# Adopted from https://github.com/rasbt/mlxtend/issues/1130
+def _create_dataframe(n_rows=10000, n_cols=400):
+    rng = np.random.default_rng(42)
+
+    # Generate realistic sparse boolean data with varying support levels
+    support_values = np.zeros(n_cols)
+    n_very_low = int(n_cols * 0.9)
+    support_values[:n_very_low] = rng.uniform(0.0001, 0.009, n_very_low)
+
+    n_medium = int(n_cols * 0.06)
+    support_values[n_very_low : n_very_low + n_medium] = rng.uniform(
+        0.01, 0.1, n_medium
+    )
+
+    n_high = n_cols - n_very_low - n_medium
+    support_values[n_very_low + n_medium :] = rng.uniform(0.1, 0.65, n_high)
+
+    data = {}
+    for i in range(n_cols):
+        col_name = f"feature_{i:04d}"
+        prob = support_values[i]
+        data[col_name] = rng.random(n_rows) < prob
+
+    return pd.DataFrame(data)
+
+
+def test_fpgrowth_completes_within_5_seconds():
+    """Ensure fpgrowth runs within 5 seconds on a sparse dataset."""
+    df = _create_dataframe()
+    start_time = time.perf_counter()
+    frequent_itemsets = fpgrowth(df, min_support=0.01, use_colnames=True)
+    elapsed_time = time.perf_counter() - start_time
+
+    assert elapsed_time < 5, (
+        f"fpgrowth took {elapsed_time:.2f}s on df shape {df.shape} "
+        f"and density {df.values.mean():.4f} with "
+        f"{len(frequent_itemsets)} itemsets found"
+    )

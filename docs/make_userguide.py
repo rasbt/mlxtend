@@ -1,6 +1,6 @@
 # API generator script
 #
-# Sebastian Raschka 2014-2024
+# Sebastian Raschka 2014-2026
 # mlxtend Machine Learning Library Extensions
 #
 # Author: Sebastian Raschka <sebastianraschka.com>
@@ -14,8 +14,21 @@ import yaml
 
 s = "# User Guide Index"
 
-yml_cont = open("mkdocs.yml", "r")
-usr_gd = yaml.load(yml_cont)["pages"][1]["User Guide"]
+with open("mkdocs.yml", "r") as yml_cont:
+    mkdocs_cfg = yaml.safe_load(yml_cont) or {}
+
+nav = mkdocs_cfg.get("nav")
+if not nav:
+    raise KeyError("'nav' section missing from mkdocs.yml")
+
+user_guide_entry = next(
+    (item for item in nav if isinstance(item, dict) and "User Guide" in item),
+    None,
+)
+if not user_guide_entry:
+    raise KeyError("'User Guide' section missing from mkdocs.yml")
+
+usr_gd = user_guide_entry["User Guide"]
 for dct in usr_gd[1:]:
     subpk = list(dct.keys())[0]
     s += "\n\n## `%s`" % subpk

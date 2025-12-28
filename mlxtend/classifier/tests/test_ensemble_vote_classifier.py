@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2024
+# Sebastian Raschka 2014-2026
 # mlxtend Machine Learning Library Extensions
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
@@ -28,19 +28,19 @@ X = X[:, 1:3]
 
 def test_EnsembleVoteClassifier():
     np.random.seed(123)
-    clf1 = LogisticRegression(solver="liblinear", multi_class="ovr")
+    clf1 = LogisticRegression(solver="lbfgs", max_iter=500)
     clf2 = RandomForestClassifier(n_estimators=10)
     clf3 = GaussianNB()
     eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting="hard")
 
     scores = cross_val_score(eclf, X, y, cv=5, scoring="accuracy")
     scores_mean = round(scores.mean(), 2)
-    assert scores_mean == 0.94
+    assert scores_mean == 0.87
 
 
 def test_fit_base_estimators_false():
     np.random.seed(123)
-    clf1 = LogisticRegression(solver="liblinear", multi_class="ovr")
+    clf1 = LogisticRegression(solver="lbfgs", max_iter=500)
     clf2 = RandomForestClassifier(n_estimators=10)
     clf3 = GaussianNB()
 
@@ -53,12 +53,12 @@ def test_fit_base_estimators_false():
     )
 
     eclf.fit(X, y)
-    assert round(eclf.score(X, y), 2) == 0.97
+    assert round(eclf.score(X, y), 2) == 0.96
 
 
 def test_use_clones():
     np.random.seed(123)
-    clf1 = LogisticRegression(solver="liblinear", multi_class="ovr")
+    clf1 = LogisticRegression(solver="lbfgs", max_iter=500)
     clf2 = RandomForestClassifier(n_estimators=10)
     clf3 = GaussianNB()
     EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], use_clones=True).fit(X, y)
@@ -80,7 +80,7 @@ def test_use_clones():
 def test_sample_weight():
     # with no weight
     np.random.seed(123)
-    clf1 = LogisticRegression(solver="liblinear", multi_class="ovr")
+    clf1 = LogisticRegression(solver="lbfgs", max_iter=500)
     clf2 = RandomForestClassifier(n_estimators=10)
     clf3 = GaussianNB()
     eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting="hard")
@@ -89,7 +89,7 @@ def test_sample_weight():
     # with weight = 1
     w = np.ones(len(y))
     np.random.seed(123)
-    clf1 = LogisticRegression(solver="liblinear", multi_class="ovr")
+    clf1 = LogisticRegression(solver="lbfgs", max_iter=500)
     clf2 = RandomForestClassifier(n_estimators=10)
     clf3 = GaussianNB()
     eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting="hard")
@@ -99,7 +99,7 @@ def test_sample_weight():
     random.seed(87)
     w = np.array([random.random() for _ in range(len(y))])
     np.random.seed(123)
-    clf1 = LogisticRegression(solver="liblinear", multi_class="ovr")
+    clf1 = LogisticRegression(solver="lbfgs", max_iter=500)
     clf2 = RandomForestClassifier(n_estimators=10)
     clf3 = GaussianNB()
     eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting="hard")
@@ -114,7 +114,7 @@ def test_sample_weight():
 def test_no_weight_support():
     random.seed(87)
     w = np.array([random.random() for _ in range(len(y))])
-    logi = LogisticRegression(solver="liblinear", multi_class="ovr")
+    logi = LogisticRegression(solver="lbfgs", max_iter=500)
     rf = RandomForestClassifier(n_estimators=10)
     gnb = GaussianNB()
     knn = KNeighborsClassifier()
@@ -124,7 +124,7 @@ def test_no_weight_support():
 
 
 def test_no_weight_support_with_no_weight():
-    logi = LogisticRegression(solver="liblinear", multi_class="ovr")
+    logi = LogisticRegression(solver="lbfgs", max_iter=500)
     rf = RandomForestClassifier(n_estimators=10)
     gnb = GaussianNB()
     knn = KNeighborsClassifier()
@@ -160,7 +160,7 @@ def test_1model_probas():
 
 def test_EnsembleVoteClassifier_weights():
     np.random.seed(123)
-    clf1 = LogisticRegression(solver="liblinear", multi_class="ovr")
+    clf1 = LogisticRegression(solver="lbfgs", max_iter=500)
     clf2 = RandomForestClassifier(n_estimators=10)
     clf3 = GaussianNB()
     eclf = EnsembleVoteClassifier(
@@ -169,11 +169,11 @@ def test_EnsembleVoteClassifier_weights():
 
     scores = cross_val_score(eclf, X, y, cv=5, scoring="accuracy")
     scores_mean = round(scores.mean(), 2)
-    assert scores_mean == 0.93
+    assert scores_mean == 0.87
 
 
 def test_EnsembleVoteClassifier_gridsearch():
-    clf1 = LogisticRegression(solver="liblinear", multi_class="ovr", random_state=1)
+    clf1 = LogisticRegression(solver="lbfgs", random_state=1, max_iter=500)
     clf2 = RandomForestClassifier(random_state=1)
     clf3 = GaussianNB()
     eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting="soft")
@@ -193,11 +193,11 @@ def test_EnsembleVoteClassifier_gridsearch():
 
     mean_scores = [round(s, 2) for s in grid.cv_results_["mean_test_score"]]
 
-    assert mean_scores == [0.95, 0.96, 0.96, 0.95]
+    assert mean_scores == [0.93, 0.92, 0.93, 0.93]
 
 
 def test_EnsembleVoteClassifier_gridsearch_enumerate_names():
-    clf1 = LogisticRegression(solver="liblinear", multi_class="ovr", random_state=1)
+    clf1 = LogisticRegression(solver="lbfgs", random_state=1, max_iter=500)
     clf2 = RandomForestClassifier(random_state=1)
     eclf = EnsembleVoteClassifier(clfs=[clf1, clf1, clf2])
 
@@ -254,12 +254,12 @@ def test_classifier_gridsearch():
         grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5, refit=True)
     grid.fit(X, y)
 
-    assert len(grid.best_params_["clfs"]) == 2
+    assert len(grid.best_params_["clfs"]) == 3
 
 
 def test_string_labels_numpy_array():
     np.random.seed(123)
-    clf1 = LogisticRegression(solver="liblinear", multi_class="ovr")
+    clf1 = LogisticRegression(solver="lbfgs", max_iter=500)
     clf2 = RandomForestClassifier(n_estimators=10)
     clf3 = GaussianNB()
     eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting="hard")
@@ -272,12 +272,12 @@ def test_string_labels_numpy_array():
 
     scores = cross_val_score(eclf, X, y_str, cv=5, scoring="accuracy")
     scores_mean = round(scores.mean(), 2)
-    assert scores_mean == 0.94
+    assert scores_mean == 0.87
 
 
 def test_string_labels_python_list():
     np.random.seed(123)
-    clf1 = LogisticRegression(solver="liblinear", multi_class="ovr")
+    clf1 = LogisticRegression(solver="lbfgs", max_iter=500)
     clf2 = RandomForestClassifier(n_estimators=10)
     clf3 = GaussianNB()
     eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting="hard")
@@ -288,11 +288,11 @@ def test_string_labels_python_list():
 
     scores = cross_val_score(eclf, X, y_str, cv=5, scoring="accuracy")
     scores_mean = round(scores.mean(), 2)
-    assert scores_mean == 0.94
+    assert scores_mean == 0.87
 
 
 def test_clone():
-    clf1 = LogisticRegression(solver="liblinear", multi_class="ovr")
+    clf1 = LogisticRegression(solver="lbfgs", max_iter=500)
     clf2 = RandomForestClassifier(n_estimators=10)
     clf3 = GaussianNB()
     eclf = EnsembleVoteClassifier(

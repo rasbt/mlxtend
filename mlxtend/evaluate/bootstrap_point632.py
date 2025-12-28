@@ -1,4 +1,4 @@
-# Sebastian Raschka 2014-2024
+# Sebastian Raschka 2014-2026
 # mlxtend Machine Learning Library Extensions
 #
 # Bootstrap functions
@@ -178,13 +178,20 @@ def bootstrap_point632_score(
         cloned_est = estimator
 
     if scoring_func is None:
-        if cloned_est._estimator_type == "classifier":
+        try:
+            from sklearn.utils._tags import get_tags
+
+            estimator_type = get_tags(cloned_est).estimator_type
+        except Exception:
+            estimator_type = getattr(cloned_est, "_estimator_type", None)
+
+        if estimator_type == "classifier":
             scoring_func = accuracy
-        elif cloned_est._estimator_type == "regressor":
+        elif estimator_type == "regressor":
             scoring_func = mse
         else:
             raise AttributeError(
-                "Estimator type undefined." "Please provide a scoring_func argument."
+                "Estimator type undefined. Please provide a scoring_func argument."
             )
 
     # determine which prediction function to use

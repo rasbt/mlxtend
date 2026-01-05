@@ -4,8 +4,7 @@ import numpy as np
 import pytest
 
 from mlxtend.classifier import Perceptron
-from mlxtend.utils.serialization import (load_model_from_json,
-                                         save_model_to_json)
+from mlxtend.utils.serialization import load_model_from_json, save_model_to_json
 
 
 def test_serialization_perceptron():

@@ -5,6 +5,7 @@
 #
 # License: BSD 3 clause
 
+
 import warnings
 
 import numpy as np
@@ -17,8 +18,10 @@ def create_counterfactual(
     model,
     X_dataset,
     y_desired_proba=None,
-    lammbda=0.1,
+    lammbda=10,
     random_seed=None,
+    fixed_features=None,
+    method="Nelder-Mead",
 ):
     """
     Implementation of the counterfactual method by Wachter et al. 2017
@@ -27,8 +30,8 @@ def create_counterfactual(
 
     - Wachter, S., Mittelstadt, B., & Russell, C. (2017).
     Counterfactual explanations without opening the black box:
-     Automated decisions and the GDPR. Harv. JL & Tech., 31, 841.,
-     https://arxiv.org/abs/1711.00399
+    Automated decisions and the GDPR. Harv. JL & Tech., 31, 841.,
+    https://arxiv.org/abs/1711.00399
 
     Parameters
     ----------
@@ -79,42 +82,53 @@ def create_counterfactual(
             )
     else:
         use_proba = False
-
     if y_desired_proba is None:
         # class label
+
         y_to_be_annealed_to = y_desired
     else:
         # class proba corresponding to class label y_desired
-        y_to_be_annealed_to = y_desired_proba
 
-    # start with random counterfactual
+        y_to_be_annealed_to = y_desired_proba
+    all_indices = np.arange(x_reference.shape[0])
+    if fixed_features is not None:
+        varying_indices = np.array([i for i in all_indices if i not in fixed_features])
+    else:
+        varying_indices = all_indices
     rng = np.random.RandomState(random_seed)
-    x_counterfact = X_dataset[rng.randint(X_dataset.shape[0])]
+    initial_x = X_dataset[rng.randint(X_dataset.shape[0])].copy()
+
+    if fixed_features is not None:
+        initial_x[list(fixed_features)] = x_reference[list(fixed_features)]
+    x0 = initial_x[varying_indices]
 
     # compute median absolute deviation
+
     mad = np.abs(np.median(X_dataset, axis=0) - x_reference)
 
     def dist(x_reference, x_counterfact):
         numerator = np.abs(x_reference - x_counterfact)
-        return np.sum(numerator / mad)
+        return np.sum(numerator / (mad + 1e-8))
 
-    def loss(x_counterfact, lammbda):
+    def loss(varying_values, lammbda):
+        current_x = x_reference.copy()
+        current_x[varying_indices] = varying_values
+
         if use_proba:
-            y_predict = model.predict_proba(x_counterfact.reshape(1, -1)).flatten()[
+            y_predict = model.predict_proba(current_x.reshape(1, -1)).flatten()[
                 y_desired
             ]
         else:
-            y_predict = model.predict(x_counterfact.reshape(1, -1))
-
+            y_predict = model.predict(current_x.reshape(1, -1))
         diff = lammbda * (y_predict - y_to_be_annealed_to) ** 2
 
-        return diff + dist(x_reference, x_counterfact)
+        return diff + dist(x_reference, current_x)
 
-    res = minimize(loss, x_counterfact, args=(lammbda), method="Nelder-Mead")
+    res = minimize(loss, x0, args=(lammbda,), method=method)
 
     if not res["success"]:
         warnings.warn(res["message"])
+    final_counterfactual = x_reference.copy()
+    final_counterfactual[varying_indices] = res["x"]
 
-    x_counterfact = res["x"]
-
-    return x_counterfact
+    return final_counterfactual

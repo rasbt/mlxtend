@@ -19,10 +19,12 @@ from .scatter import category_scatter
 from .scatter_hist import scatter_hist
 from .scatterplotmatrix import scatterplotmatrix
 from .stacked_barplot import stacked_barplot
+from .decision_regions_3d import plot_decision_regions_3d
 
 __all__ = [
     "plot_learning_curves",
     "plot_decision_regions",
+    "plot_decision_regions_3d",
     "plot_confusion_matrix",
     "plot_sequential_feature_selection",
     "plot_linear_regression",

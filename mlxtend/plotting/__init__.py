@@ -4,6 +4,7 @@
 #
 # License: BSD 3 clause
 
+
 from .checkerboard import checkerboard_plot
 from .decision_regions import plot_decision_regions
 from .ecdf import ecdf

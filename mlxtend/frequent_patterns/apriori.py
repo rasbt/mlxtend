@@ -4,8 +4,10 @@
 #
 # License: BSD 3 clause
 
+
 import numpy as np
 import pandas as pd
+from joblib import Parallel, delayed
 
 from ..frequent_patterns import fpcommon as fpc
 
@@ -131,8 +133,19 @@ def generate_new_combinations_low_memory(old_combinations, X, min_support, is_sp
             yield valid_items[index]
 
 
+def _get_support_parallel(combin_chunk, X, rows_count):
+    _bools = np.all(X[:, combin_chunk], axis=2)
+    return np.sum(_bools, axis=0) / rows_count
+
+
 def apriori(
-    df, min_support=0.5, use_colnames=False, max_len=None, verbose=0, low_memory=False
+    df,
+    min_support=0.5,
+    use_colnames=False,
+    max_len=None,
+    verbose=0,
+    low_memory=False,
+    n_jobs=1,
 ):
     """Get frequent itemsets from a one-hot DataFrame
 
@@ -237,11 +250,11 @@ def apriori(
             "number within the interval `(0, 1]`. "
             "Got %s." % min_support
         )
-
     fpc.valid_input_check(df)
 
     if hasattr(df, "sparse"):
         # DataFrame with SparseArray (pandas >= 0.24)
+
         if df.size == 0:
             X = df.values
         else:
@@ -249,6 +262,7 @@ def apriori(
         is_sparse = True
     else:
         # dense DataFrame
+
         X = df.values
         is_sparse = False
     support = _support(X, X.shape[0], is_sparse)
@@ -267,11 +281,13 @@ def apriori(
         # substantial amount of memory. For low memory applications or large
         # datasets, set `low_memory=True` to use a slower but more memory-
         # efficient implementation.
+
         if low_memory:
             combin = generate_new_combinations_low_memory(
                 itemset_dict[max_itemset], X, min_support, is_sparse
             )
             # slightly faster than creating an array from a list of tuples
+
             combin = np.fromiter(combin, dtype=int)
             combin = combin.reshape(-1, next_max_itemset + 1)
 
@@ -283,7 +299,6 @@ def apriori(
                     % (combin.size, next_max_itemset),
                     end="",
                 )
-
             itemset_dict[next_max_itemset] = combin[:, 1:]
             support_dict[next_max_itemset] = combin[:, 0].astype(float) / rows_count
             max_itemset = next_max_itemset
@@ -300,15 +315,22 @@ def apriori(
                     % (combin.size, next_max_itemset),
                     end="",
                 )
-
             if is_sparse:
                 _bools = X[:, combin[:, 0]] == all_ones
                 for n in range(1, combin.shape[1]):
                     _bools = _bools & (X[:, combin[:, n]] == all_ones)
+                support = _support(np.array(_bools), rows_count, is_sparse)
             else:
-                _bools = np.all(X[:, combin], axis=2)
-
-            support = _support(np.array(_bools), rows_count, is_sparse)
+                if n_jobs == 1:
+                    _bools = np.all(X[:, combin], axis=2)
+                    support = _support(np.array(_bools), rows_count, is_sparse)
+                else:
+                    chunks = np.array_split(combin, n_jobs if n_jobs > 0 else 4)
+                    results = Parallel(n_jobs=n_jobs)(
+                        delayed(_get_support_parallel)(chunk, X, rows_count)
+                        for chunk in chunks
+                    )
+                    support = np.concatenate(results)
             _mask = (support >= min_support).reshape(-1)
             if any(_mask):
                 itemset_dict[next_max_itemset] = np.array(combin[_mask])
@@ -316,8 +338,8 @@ def apriori(
                 max_itemset = next_max_itemset
             else:
                 # Exit condition
-                break
 
+                break
     all_res = []
     for k in sorted(itemset_dict):
         support = pd.Series(support_dict[k])
@@ -325,7 +347,6 @@ def apriori(
 
         res = pd.concat((support, itemsets), axis=1)
         all_res.append(res)
-
     res_df = pd.concat(all_res)
     res_df.columns = ["support", "itemsets"]
     if use_colnames:
@@ -337,5 +358,4 @@ def apriori(
 
     if verbose:
         print()  # adds newline if verbose counter was used
-
     return res_df

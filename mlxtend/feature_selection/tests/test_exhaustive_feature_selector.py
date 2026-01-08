@@ -382,7 +382,7 @@ def test_clone_params_fail():
                     update = self.eta * (y_data[idx] - self._to_classlabels(X[idx]))
                     self.w_ += (update * X[idx]).reshape(self.w_.shape)
                     self.b_ += update
-                    errors += int(np.any(update != 0.0))
+                    errors += int(update.item() != 0.0)
 
                 if self.print_progress:
                     self._print_progress(

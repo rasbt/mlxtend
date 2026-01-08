@@ -10,6 +10,13 @@
 <img src="./docs/sources/img/logo.png" alt="mlxtend logo" width="300px">
 
 **Mlxtend (machine learning extensions) is a Python library of useful tools for the day-to-day data science tasks.**
+It is primarily used for:
+- Ensemble methods such as stacking and voting classifiers
+- Feature selection and feature extraction techniques
+- Visualization utilities (e.g., decision regions, confusion matrices)
+- Plotting helpers for model analysis
+- Frequent pattern mining, including the Apriori algorithm for association rule mining
+
 
 <br>
 

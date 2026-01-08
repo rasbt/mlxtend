@@ -4,8 +4,10 @@
 #
 # License: BSD 3 clause
 
+
 from .checkerboard import checkerboard_plot
 from .decision_regions import plot_decision_regions
+from .decision_regions_3d import plot_decision_regions_3d
 from .ecdf import ecdf
 from .enrichment_plot import enrichment_plot
 from .heatmap import heatmap
@@ -23,6 +25,7 @@ from .stacked_barplot import stacked_barplot
 __all__ = [
     "plot_learning_curves",
     "plot_decision_regions",
+    "plot_decision_regions_3d",
     "plot_confusion_matrix",
     "plot_sequential_feature_selection",
     "plot_linear_regression",

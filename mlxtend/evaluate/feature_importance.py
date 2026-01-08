@@ -121,9 +121,8 @@ def feature_importance_permutation(
                 save_col = X[:, feat].copy()
 
                 if save_col.ndim > 1:
-                    columns = save_col.shape[1]
-                    for i in range(columns):
-                        rng.shuffle(X[:, i])
+                    shuffled_indices = rng.permutation(X.shape[0])
+                    X[:, feat] = X[shuffled_indices][:, feat]
                 else:
                     rng.shuffle(X[:, feat])
 

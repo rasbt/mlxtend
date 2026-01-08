@@ -34,7 +34,7 @@ _metrics = [
 
 def association_rules(
     df: pd.DataFrame,
-    num_itemsets: Optional[int] = 1,
+    num_itemsets: Optional[int] = None,
     df_orig: Optional[pd.DataFrame] = None,
     null_values=False,
     metric="confidence",
@@ -120,15 +120,20 @@ def association_rules(
         raise TypeError("If null values exist, df_orig must be provided.")
 
     # if null values exist, num_itemsets must be provided
-    if null_values and num_itemsets == 1:
+    if null_values and df_orig is None and num_itemsets is None:
         raise TypeError("If null values exist, num_itemsets must be provided.")
 
+    if num_itemsets is None:
+        if df_orig is not None:
+            num_itemsets = len(df_orig)
+        else:
+            num_itemsets = 1
     # check for valid input
     fpc.valid_input_check(df_orig, null_values)
 
     if not df.shape[0]:
         raise ValueError(
-            "The input DataFrame `df` containing " "the frequent itemsets is empty."
+            "The input DataFrame `df` containing the frequent itemsets is empty."
         )
 
     # check for mandatory columns
@@ -188,8 +193,22 @@ def association_rules(
 
     # metrics for association rules
     metric_dict = {
-        "antecedent support": lambda _, sA, ___, ____, _____, ______, _______, ________: sA,
-        "consequent support": lambda _, __, sC, ____, _____, ______, _______, ________: sC,
+        "antecedent support": lambda _,
+        sA,
+        ___,
+        ____,
+        _____,
+        ______,
+        _______,
+        ________: sA,
+        "consequent support": lambda _,
+        __,
+        sC,
+        ____,
+        _____,
+        ______,
+        _______,
+        ________: sC,
         "support": lambda sAC, _, __, ___, ____, _____, ______, _______: sAC,
         "confidence": lambda sAC, sA, _, disAC, disA, __, dis_int, ___: (
             sAC * (num_itemsets - disAC)
@@ -207,19 +226,47 @@ def association_rules(
             "support"
         ](sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_)
         - sA * sC,
-        "conviction": lambda sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_: conviction_helper(
+        "conviction": lambda sAC,
+        sA,
+        sC,
+        disAC,
+        disA,
+        disC,
+        dis_int,
+        dis_int_: conviction_helper(
             metric_dict["confidence"](
                 sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
             ),
             sC,
         ),
-        "zhangs_metric": lambda sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_: zhangs_metric_helper(
+        "zhangs_metric": lambda sAC,
+        sA,
+        sC,
+        disAC,
+        disA,
+        disC,
+        dis_int,
+        dis_int_: zhangs_metric_helper(
             sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
         ),
-        "jaccard": lambda sAC, sA, sC, _, __, ____, _____, ______: jaccard_metric_helper(
+        "jaccard": lambda sAC,
+        sA,
+        sC,
+        _,
+        __,
+        ____,
+        _____,
+        ______: jaccard_metric_helper(
             sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
         ),
-        "certainty": lambda sAC, sA, sC, _, __, ____, _____, ______: certainty_metric_helper(
+        "certainty": lambda sAC,
+        sA,
+        sC,
+        _,
+        __,
+        ____,
+        _____,
+        ______: certainty_metric_helper(
             sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
         ),
         "kulczynski": lambda sAC, sA, sC, _, __, ____, _____, ______: kulczynski_helper(

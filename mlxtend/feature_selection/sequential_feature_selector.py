@@ -197,12 +197,14 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         clone_estimator=True,
         fixed_features=None,
         feature_groups=None,
+        tol = None 
     ):
         self.estimator = estimator
         self.k_features = k_features
         self.forward = forward
         self.floating = floating
         self.pre_dispatch = pre_dispatch
+        self.tol=tol 
         # Want to raise meaningful error message if a
         # cross-validation generator is inputted
         if isinstance(cv, types.GeneratorType):
@@ -568,6 +570,13 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
                         "cv_scores": cv_scores,
                         "avg_score": k_score,
                     }
+
+                if self.tol is not None and k > 1:
+                    prev_k = k - 1 if self.forward else k + 1
+                    if prev_k in self.subsets_:
+                        diff = k_score - self.subsets_[prev_k]["avg_score"]
+                        if diff < self.tol:
+                            k_stop = k
 
                 if self.floating:
                     # floating direction is opposite of self.forward, i.e. in

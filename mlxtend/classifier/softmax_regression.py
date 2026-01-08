@@ -14,6 +14,7 @@ import numpy as np
 
 from .._base import _BaseModel, _Classifier, _IterativeModel, _MultiClass
 
+from sklearn.utils._tags import ClassifierTags
 
 class SoftmaxRegression(_BaseModel, _IterativeModel, _Classifier, _MultiClass):
     """Softmax regression classifier.
@@ -193,3 +194,10 @@ class SoftmaxRegression(_BaseModel, _IterativeModel, _Classifier, _MultiClass):
     def _predict(self, X):
         probas = self.predict_proba(X)
         return self._to_classlabels(probas)
+    
+    def __sklearn_tags__(self):
+        tags = super().__sklearn_tags__()
+        tags.estimator_type = "classifier"
+        tags.classifier_tags = ClassifierTags()
+        tags.target_tags.required = True
+        return tags

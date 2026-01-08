@@ -13,6 +13,7 @@ from scipy.special import expit
 
 from .._base import _BaseModel, _Classifier, _IterativeModel, _MultiClass, _MultiLayer
 
+from sklearn.utils._tags import ClassifierTags
 
 class MultiLayerPerceptron(
     _BaseModel, _IterativeModel, _MultiClass, _MultiLayer, _Classifier
@@ -282,3 +283,10 @@ class MultiLayerPerceptron(
         """
         # return 1.0 / (1.0 + np.exp(-z))
         return expit(z)
+    
+    def __sklearn_tags__(self):
+        tags = super().__sklearn_tags__()
+        tags.estimator_type = "classifier"
+        tags.classifier_tags = ClassifierTags()
+        tags.target_tags.required = True
+        return tags

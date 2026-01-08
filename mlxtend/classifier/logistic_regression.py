@@ -12,6 +12,7 @@ import numpy as np
 
 from .._base import _BaseModel, _Classifier, _IterativeModel
 
+from sklearn.utils._tags import ClassifierTags
 
 class LogisticRegression(_BaseModel, _IterativeModel, _Classifier):
     """Logistic regression classifier.
@@ -166,3 +167,10 @@ class LogisticRegression(_BaseModel, _IterativeModel, _Classifier):
     def _sigmoid_activation(self, z):
         """Compute the output of the logistic sigmoid function."""
         return 1.0 / (1.0 + np.exp(-z))
+    
+    def __sklearn_tags__(self):
+        tags = super().__sklearn_tags__()
+        tags.estimator_type = "classifier"
+        tags.classifier_tags = ClassifierTags()
+        tags.target_tags.required = True
+        return tags

@@ -7,6 +7,21 @@ The CHANGELOG for the current development version is available at
 
 ---
 
+### Version 0.25.0  (TBD)
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.25.0.zip)
+
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.25.0.tar.gz)
+
+##### Changes
+
+- Removed explicit `multi_class="multinomial"` arguments, which are deprecated in newer versions of scikit-learn, from LogisticRegression usage in examples / notebooks / tests ([#1147](https://github.com/rasbt/mlxtend/issues/1147) via [sachinn854](https://github.com/sachinn854))
+
+- Added multiprocessing support for apriori via the `n_jobs` parameter ([#1151](https://github.com/rasbt/mlxtend/issues/1151) via [mariam851](https://github.com/mariam851))
+
+
 ### Version 0.24.0  (13 Dec 2025)
 
 ##### Downloads

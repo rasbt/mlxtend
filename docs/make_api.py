@@ -28,10 +28,11 @@ def make_markdown_url(line_string, s):
     new_line = []
     old_line = line_string.split(" ")
     for token in old_line:
-        if not token.startswith(s):
-            new_line.append(token)
-        else:
+        # Prevent double-wrapping if the token is already a markdown link
+        if token.startswith(s) and not (token.startswith("[") or token.endswith("]")):
             new_line.append("[%s](%s)" % (token, token))
+        else:
+            new_line.append(token)
     return " ".join(new_line)
 
 

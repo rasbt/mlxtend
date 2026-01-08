@@ -7,6 +7,19 @@ The CHANGELOG for the current development version is available at
 
 ---
 
+### Version 0.25.0  (TBD)
+
+##### Downloads
+
+- [Source code (zip)](https://github.com/rasbt/mlxtend/archive/v0.25.0.zip)
+
+- [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.25.0.tar.gz)
+
+##### Changes
+
+- Added multiprocessing support for apriori via the `n_jobs` parameter ([#1151](https://github.com/rasbt/mlxtend/issues/1151) via [mariam851](https://github.com/mariam851))
+
+
 ### Version 0.24.0  (13 Dec 2025)
 
 ##### Downloads

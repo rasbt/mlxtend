@@ -29,7 +29,8 @@ jobs:
       - name: Install test dependencies (conda)
         shell: bash -l {0}
         run: |
-          conda install -y pytest coverage
+          # Pinning numpy and scikit-learn to prevent the issues reported in #982
+          conda install -y pytest coverage "numpy>=1.22,<2.4" "scikit-learn>=1.0" "numba>=0.59.0"
 
       - name: Install package and run tests
         shell: bash -l {0}

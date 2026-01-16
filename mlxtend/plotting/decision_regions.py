@@ -236,7 +236,12 @@ def plot_decision_regions(
 
     marker_gen = cycle(list(markers))
 
-    n_classes = np.unique(y).shape[0]
+    unique_labels = np.unique(y)
+    n_classes = unique_labels.shape[0]
+    label_to_index = {
+        label: i for i, label in enumerate(unique_labels)
+    } 
+
     colors = colors.split(",")
     colors_gen = cycle(colors)
     colors = [next(colors_gen) for c in range(n_classes)]
@@ -283,9 +288,10 @@ def plot_decision_regions(
         partQuant = len(X_predict) / cpus
         partitions = []
         for n in range(cpus - 1):
-            start, end = np.floor(partQuant * n).astype(int), np.floor(
-                partQuant * (n + 1)
-            ).astype(int)
+            start, end = (
+                np.floor(partQuant * n).astype(int),
+                np.floor(partQuant * (n + 1)).astype(int),
+            )
             partitions.append(X_predict[start:end])
         partitions.append(X_predict[end:])
         xtype = X.dtype
@@ -293,6 +299,9 @@ def plot_decision_regions(
         pool.close()
         Z = np.concatenate(Z)
         Z = Z.reshape(xx.shape)
+
+    Z_indexed = np.vectorize(label_to_index.get)(Z)
+    Z_indexed = Z_indexed.reshape(xx.shape)
 
     # Plot decisoin region
     # Make sure contourf_kwargs has backwards compatible defaults
@@ -303,7 +312,12 @@ def plot_decision_regions(
         protected_keys=["colors", "levels"],
     )
     cset = ax.contourf(
-        xx, yy, Z, colors=colors, levels=np.arange(Z.max() + 2) - 0.5, **contourf_kwargs
+        xx,
+        yy,
+        Z_indexed,
+        colors=colors,
+        levels=np.arange(Z.max() + 2) - 0.5,
+        **contourf_kwargs,
     )
 
     contour_kwargs_default = {"linewidths": 0.5, "colors": "k", "antialiased": True}
@@ -312,7 +326,7 @@ def plot_decision_regions(
         user_kwargs=contour_kwargs,
         protected_keys=[],
     )
-    ax.contour(xx, yy, Z, cset.levels, **contour_kwargs)
+    ax.contour(xx, yy, Z_indexed, cset.levels, **contour_kwargs)
 
     ax.axis([xx.min(), xx.max(), yy.min(), yy.max()])
 
@@ -349,7 +363,7 @@ def plot_decision_regions(
             c=colors[idx],
             marker=next(marker_gen),
             label=c,
-            **scatter_kwargs
+            **scatter_kwargs,
         )
 
     if hide_spines:

@@ -33,7 +33,7 @@ def test_copy_failtype():
     copy = CopyTransformer()
 
     expect = (
-        "X must be a list or NumPy array or SciPy sparse array." " Found <class 'int'>"
+        "X must be a list or NumPy array or SciPy sparse array. Found <class 'int'>"
     )
     if sys.version_info < (3, 0):
         expect = expect.replace("class", "type")

@@ -25,7 +25,7 @@ def bias_variance_decomp(
     loss="0-1_loss",
     num_rounds=200,
     random_seed=None,
-    **fit_params
+    **fit_params,
 ):
     """
     estimator : object

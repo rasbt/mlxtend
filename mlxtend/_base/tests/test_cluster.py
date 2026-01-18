@@ -46,7 +46,7 @@ def test_check_labels_not_ok_1():
     with pytest.raises(AttributeError) as excinfo:
         cl._check_target_array(y, {(0, 1), (1, 2)})
         assert excinfo.value.message == (
-            "Labels not in" " {(1, 2), (0, 1)}." "\nFound (1, 2, 3)"
+            "Labels not in {(1, 2), (0, 1)}.\nFound (1, 2, 3)"
         )
 
 
@@ -55,9 +55,7 @@ def test_check_labels_integer_notok():
     cl = BlankClassifier(print_progress=0, random_seed=1)
     with pytest.raises(AttributeError) as excinfo:
         cl._check_target_array(y)
-        assert excinfo.value.message == (
-            "y must be an integer" " array.\nFound float64"
-        )
+        assert excinfo.value.message == ("y must be an integer array.\nFound float64")
 
 
 def test_check_labels_positive_notok():
@@ -66,7 +64,7 @@ def test_check_labels_positive_notok():
     with pytest.raises(AttributeError) as excinfo:
         cl._check_target_array(y)
         assert excinfo.value.message == (
-            "y array must not " "contain negative " "labels.\nFound [-1  1]"
+            "y array must not contain negative labels.\nFound [-1  1]"
         )
 
 
@@ -76,7 +74,7 @@ def test_predict_fail():
     est._is_fitted = False
     with pytest.raises(AttributeError) as excinfo:
         est.predict(X)
-        assert excinfo.value.message == ("Model is not " "fitted, yet.")
+        assert excinfo.value.message == ("Model is not fitted, yet.")
 
 
 def test_predict_pass():
@@ -93,7 +91,7 @@ def test_fit_1():
     with pytest.raises(TypeError) as excinfo:
         est.fit(X)
         assert excinfo.value.message == (
-            "fit() missing 1" "required positional argument: 'y'"
+            "fit() missing 1required positional argument: 'y'"
         )
 
 

@@ -71,11 +71,11 @@ def make_multiplexer_dataset(
     """
     if not isinstance(address_bits, int):
         raise AttributeError(
-            "address_bits" " must be an integer. Got %s." % type(address_bits)
+            "address_bits must be an integer. Got %s." % type(address_bits)
         )
     if address_bits < 1:
         raise AttributeError(
-            "Number of address_bits" " must be greater than 0. Got %s." % address_bits
+            "Number of address_bits must be greater than 0. Got %s." % address_bits
         )
     register_bits = 2**address_bits
     total_bits = address_bits + register_bits

@@ -283,9 +283,10 @@ def plot_decision_regions(
         partQuant = len(X_predict) / cpus
         partitions = []
         for n in range(cpus - 1):
-            start, end = np.floor(partQuant * n).astype(int), np.floor(
-                partQuant * (n + 1)
-            ).astype(int)
+            start, end = (
+                np.floor(partQuant * n).astype(int),
+                np.floor(partQuant * (n + 1)).astype(int),
+            )
             partitions.append(X_predict[start:end])
         partitions.append(X_predict[end:])
         xtype = X.dtype
@@ -349,7 +350,7 @@ def plot_decision_regions(
             c=colors[idx],
             marker=next(marker_gen),
             label=c,
-            **scatter_kwargs
+            **scatter_kwargs,
         )
 
     if hide_spines:

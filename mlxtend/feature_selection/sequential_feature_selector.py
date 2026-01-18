@@ -451,7 +451,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
             and not isinstance(self.k_features, str)
         ):
             raise AttributeError(
-                "k_features must be a positive integer" ", tuple, or string"
+                "k_features must be a positive integer, tuple, or string"
             )
 
         eligible_k_values_range = range(self.k_lb, self.k_ub + 1)
@@ -906,6 +906,4 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
 
     def _check_fitted(self):
         if not self.fitted:
-            raise AttributeError(
-                "SequentialFeatureSelector has not been" " fitted, yet."
-            )
+            raise AttributeError("SequentialFeatureSelector has not been fitted, yet.")

@@ -59,9 +59,7 @@ def ftest(y_target, *y_model_predictions):
         model_lens.add(ary.shape[0])
 
     if len(model_lens) > 1:
-        raise ValueError(
-            "Each prediction array must have the " "same number of samples."
-        )
+        raise ValueError("Each prediction array must have the same number of samples.")
 
     if num_models < 2:
         raise ValueError("Provide at least 2 model prediction arrays.")
@@ -183,7 +181,7 @@ def combined_ftest_5x2cv(estimator1, estimator2, X, y, scoring=None, random_seed
         elif est_type == "regressor":
             scoring = "r2"
         else:
-            raise AttributeError("Estimator must " "be a Classifier or Regressor.")
+            raise AttributeError("Estimator must be a Classifier or Regressor.")
     if isinstance(scoring, str):
         scorer = get_scorer(scoring)
     else:

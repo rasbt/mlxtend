@@ -88,7 +88,7 @@ def test_check_Xy_invalid_dim_X():
 def test_check_Xy_unequal_length_X():
     assert_raises(
         ValueError,
-        ("y and X must contain the same number of samples. " "Got y: 4, X: 3"),
+        ("y and X must contain the same number of samples. Got y: 4, X: 3"),
         check_Xy,
         X[1:],
         y,
@@ -98,7 +98,7 @@ def test_check_Xy_unequal_length_X():
 def test_check_Xy_unequal_length_y():
     assert_raises(
         ValueError,
-        ("y and X must contain the same number of samples. " "Got y: 3, X: 4"),
+        ("y and X must contain the same number of samples. Got y: 3, X: 4"),
         check_Xy,
         X,
         y[1:],
@@ -132,7 +132,7 @@ def test_format_kwarg_dictionaries_no_user_kwargs():
 
 def test_format_kwarg_dictionaries_default_kwargs_invalid_type():
     invalid_kwargs = "not a dictionary"
-    message = "d must be of type dict or None, but got " "{} instead".format(
+    message = "d must be of type dict or None, but got {} instead".format(
         type(invalid_kwargs)
     )
     assert_raises(
@@ -142,7 +142,7 @@ def test_format_kwarg_dictionaries_default_kwargs_invalid_type():
 
 def test_format_kwarg_dictionaries_user_kwargs_invalid_type():
     invalid_kwargs = "not a dictionary"
-    message = "d must be of type dict or None, but got " "{} instead".format(
+    message = "d must be of type dict or None, but got {} instead".format(
         type(invalid_kwargs)
     )
     assert_raises(

@@ -170,9 +170,7 @@ class StackingClassifier(_BaseXComposition, _BaseStackingClassifier, Transformer
 
         """
         if not self.fit_base_estimators:
-            warnings.warn(
-                "fit_base_estimators=False " "enforces use_clones to be `False`"
-            )
+            warnings.warn("fit_base_estimators=False enforces use_clones to be `False`")
             self.use_clones = False
 
         if self.use_clones:

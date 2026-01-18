@@ -44,7 +44,7 @@ def minmax_scaling(array, columns, min_val=0, max_val=1):
     elif isinstance(ary_new, np.ndarray):
         ary_newt = ary_new
     else:
-        raise AttributeError("Input array must be a pandas" "DataFrame or NumPy array")
+        raise AttributeError("Input array must be a pandasDataFrame or NumPy array")
 
     numerator = ary_newt[:, columns] - ary_newt[:, columns].min(axis=0)
     denominator = ary_newt[:, columns].max(axis=0) - ary_newt[:, columns].min(axis=0)
@@ -113,7 +113,7 @@ def standardize(array, columns=None, ddof=0, return_params=False, params=None):
             columns = list(range(ary_new.shape[1]))
 
     else:
-        raise AttributeError("Input array must be a pandas " "DataFrame or NumPy array")
+        raise AttributeError("Input array must be a pandas DataFrame or NumPy array")
 
     if params is not None:
         parameters = params

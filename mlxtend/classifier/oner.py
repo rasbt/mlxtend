@@ -198,7 +198,7 @@ class OneRClassifier(BaseEstimator, ClassifierMixin):
         """
         if not hasattr(self, "prediction_dict_"):
             raise NotFittedError(
-                "Estimator not fitted, " "call `fit` before using the model."
+                "Estimator not fitted, call `fit` before using the model."
             )
 
         rules = self.prediction_dict_["rules (value: class)"]

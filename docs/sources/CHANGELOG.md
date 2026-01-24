@@ -21,6 +21,8 @@ The CHANGELOG for the current development version is available at
 
 - Added multiprocessing support for apriori via the `n_jobs` parameter ([#1151](https://github.com/rasbt/mlxtend/issues/1151) via [mariam851](https://github.com/mariam851))
 
+- Fixes an edge-case bug where decision regions plots didn't have unique colors ([#1157](https://github.com/rasbt/mlxtend/issues/1157) via [mariam851](https://github.com/mariam851))
+
 
 ### Version 0.24.0  (13 Dec 2025)
 

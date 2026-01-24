@@ -630,10 +630,8 @@ def adjust_text(
         try:
             add_bboxes = get_bboxes(add_objects, r, (1, 1), ax)
         except ValueError:
-            raise ValueError(
-                "Can't get bounding boxes from add_objects - is'\
-                             it a flat list of matplotlib objects?"
-            )
+            raise ValueError("Can't get bounding boxes from add_objects - is'\
+                             it a flat list of matplotlib objects?")
             return
         text_from_objects = True
     for text in texts:

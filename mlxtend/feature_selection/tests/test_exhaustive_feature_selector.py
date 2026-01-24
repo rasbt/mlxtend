@@ -11,7 +11,7 @@ from packaging.version import Version
 from sklearn import __version__ as sklearn_version
 from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.model_selection import GroupKFold
 from sklearn.neighbors import KNeighborsClassifier
 
@@ -382,7 +382,7 @@ def test_clone_params_fail():
                     update = self.eta * (y_data[idx] - self._to_classlabels(X[idx]))
                     self.w_ += (update * X[idx]).reshape(self.w_.shape)
                     self.b_ += update
-                    errors += int(update != 0.0)
+                    errors += int(update.item() != 0.0)
 
                 if self.print_progress:
                     self._print_progress(
@@ -830,3 +830,16 @@ def test_fixed_features_and_feature_groups_pandas_and_strings():
         },
     }
     dict_compare_utility(d1=expect, d2=efs1.subsets_)
+
+
+def test_logistic_regression_compatibility():
+    iris = load_iris()
+    X, y = iris.data, iris.target
+
+    lr = LogisticRegression(solver="lbfgs", max_iter=1000)
+
+    efs = EFS(estimator=lr, min_features=1, max_features=1, cv=2, print_progress=False)
+    efs.fit(X, y)
+
+    assert efs.best_idx_ == (3,)
+    assert efs.best_score_ > 0.90

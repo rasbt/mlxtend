@@ -6,6 +6,7 @@
 #
 # License: BSD 3 clause
 
+
 import multiprocessing as mp
 from itertools import cycle
 from math import ceil, floor
@@ -29,7 +30,6 @@ def get_feature_range_mask(X, filler_feature_values=None, filler_feature_ranges=
         raise ValueError("filler_feature_values must not be None")
     elif filler_feature_ranges is None:
         raise ValueError("filler_feature_ranges must not be None")
-
     mask = np.ones(X.shape[0], dtype=bool)
     for feature_idx in filler_feature_ranges:
         feature_value = filler_feature_values[feature_idx]
@@ -38,7 +38,6 @@ def get_feature_range_mask(X, filler_feature_values=None, filler_feature_ranges=
         low_limit = feature_value - feature_width
         feature_mask = (X[:, feature_idx] > low_limit) & (X[:, feature_idx] < upp_limit)
         mask = mask & feature_mask
-
     return mask
 
 
@@ -163,10 +162,8 @@ def plot_decision_regions(
 
     if n_jobs is None:
         n_jobs = 1
-
     if ax is None:
         ax = plt.gca()
-
     plot_testdata = True
     if not isinstance(X_highlight, np.ndarray):
         if X_highlight is not None:
@@ -175,9 +172,9 @@ def plot_decision_regions(
             plot_testdata = False
     elif len(X_highlight.shape) < 2:
         raise ValueError("X_highlight must be a 2D array")
-
     if feature_index is not None:
         # Unpack and validate the feature_index values
+
         if dim == 1:
             raise ValueError("feature_index requires more than one training feature")
         try:
@@ -197,23 +194,22 @@ def plot_decision_regions(
     else:
         feature_index = (0, 1)
         x_index, y_index = feature_index
-
     # Extra input validation for higher number of training features
+
     if dim > 2:
         if filler_feature_values is None:
             raise ValueError(
                 "Filler values must be provided when "
                 "X has more than 2 training features."
             )
-
         if filler_feature_ranges is not None:
             if not set(filler_feature_values) == set(filler_feature_ranges):
                 raise ValueError(
                     "filler_feature_values and filler_feature_ranges must "
                     "have the same keys"
                 )
-
         # Check that all columns in X are accounted for
+
         column_check = np.zeros(dim, dtype=bool)
         for idx in filler_feature_values:
             column_check[idx] = True
@@ -225,23 +221,26 @@ def plot_decision_regions(
                 "Column(s) {} need to be accounted for in either "
                 "feature_index or filler_feature_values".format(missing_cols)
             )
-
     # Check that the n_jobs isn't higher than the available CPU cores
+
     if n_jobs > mp.cpu_count():
         raise ValueError(
             "Number of defined CPU cores is more than the available resources {} ".format(
                 mp.cpu_count()
             )
         )
-
     marker_gen = cycle(list(markers))
 
-    n_classes = np.unique(y).shape[0]
+    unique_labels = np.unique(y)
+    n_classes = unique_labels.shape[0]
+    label_to_index = {label: i for i, label in enumerate(unique_labels)}
+
     colors = colors.split(",")
     colors_gen = cycle(colors)
     colors = [next(colors_gen) for c in range(n_classes)]
 
     # Get minimum and maximum
+
     x_min, x_max = (
         X[:, x_index].min() - 1.0 / zoom_factor,
         X[:, x_index].max() + 1.0 / zoom_factor,
@@ -253,7 +252,6 @@ def plot_decision_regions(
             X[:, y_index].min() - 1.0 / zoom_factor,
             X[:, y_index].max() + 1.0 / zoom_factor,
         )
-
     xnum, ynum = plt.gcf().dpi * plt.gcf().get_size_inches()
     xnum, ynum = floor(xnum), ceil(ynum)
     xx, yy = np.meshgrid(
@@ -270,7 +268,6 @@ def plot_decision_regions(
         if dim > 2:
             for feature_idx in filler_feature_values:
                 X_predict[:, feature_idx] = filler_feature_values[feature_idx]
-
     if n_jobs == 1:
         Z = clf.predict(X_predict.astype(X.dtype))
         Z = Z.reshape(xx.shape)
@@ -283,9 +280,10 @@ def plot_decision_regions(
         partQuant = len(X_predict) / cpus
         partitions = []
         for n in range(cpus - 1):
-            start, end = np.floor(partQuant * n).astype(int), np.floor(
-                partQuant * (n + 1)
-            ).astype(int)
+            start, end = (
+                np.floor(partQuant * n).astype(int),
+                np.floor(partQuant * (n + 1)).astype(int),
+            )
             partitions.append(X_predict[start:end])
         partitions.append(X_predict[end:])
         xtype = X.dtype
@@ -293,9 +291,12 @@ def plot_decision_regions(
         pool.close()
         Z = np.concatenate(Z)
         Z = Z.reshape(xx.shape)
+    Z_indexed = np.vectorize(label_to_index.get)(Z)
+    Z_indexed = Z_indexed.reshape(xx.shape)
 
     # Plot decisoin region
     # Make sure contourf_kwargs has backwards compatible defaults
+
     contourf_kwargs_default = {"alpha": 0.45, "antialiased": True}
     contourf_kwargs = format_kwarg_dictionaries(
         default_kwargs=contourf_kwargs_default,
@@ -303,7 +304,12 @@ def plot_decision_regions(
         protected_keys=["colors", "levels"],
     )
     cset = ax.contourf(
-        xx, yy, Z, colors=colors, levels=np.arange(Z.max() + 2) - 0.5, **contourf_kwargs
+        xx,
+        yy,
+        Z_indexed,
+        colors=colors,
+        levels=np.arange(Z.max() + 2) - 0.5,
+        **contourf_kwargs,
     )
 
     contour_kwargs_default = {"linewidths": 0.5, "colors": "k", "antialiased": True}
@@ -312,12 +318,13 @@ def plot_decision_regions(
         user_kwargs=contour_kwargs,
         protected_keys=[],
     )
-    ax.contour(xx, yy, Z, cset.levels, **contour_kwargs)
+    ax.contour(xx, yy, Z_indexed, cset.levels, **contour_kwargs)
 
     ax.axis([xx.min(), xx.max(), yy.min(), yy.max()])
 
     # Scatter training data samples
     # Make sure scatter_kwargs has backwards compatible defaults
+
     scatter_kwargs_default = {"alpha": 0.8, "edgecolor": "black"}
     scatter_kwargs = format_kwarg_dictionaries(
         default_kwargs=scatter_kwargs_default,
@@ -342,16 +349,14 @@ def plot_decision_regions(
             x_data = X[class_mask & feature_range_mask, x_index]
         else:
             continue
-
         ax.scatter(
             x=x_data,
             y=y_data,
             c=colors[idx],
             marker=next(marker_gen),
             label=c,
-            **scatter_kwargs
+            **scatter_kwargs,
         )
-
     if hide_spines:
         ax.spines["right"].set_visible(False)
         ax.spines["top"].set_visible(False)
@@ -361,7 +366,6 @@ def plot_decision_regions(
     ax.xaxis.set_ticks_position("bottom")
     if dim == 1:
         ax.axes.get_yaxis().set_ticks([])
-
     if plot_testdata:
         if dim == 1:
             x_data = X_highlight
@@ -377,8 +381,8 @@ def plot_decision_regions(
             )
             y_data = X_highlight[feature_range_mask, y_index]
             x_data = X_highlight[feature_range_mask, x_index]
-
         # Make sure scatter_highlight_kwargs backwards compatible defaults
+
         scatter_highlight_defaults = {
             "c": "none",
             "edgecolor": "black",
@@ -392,12 +396,10 @@ def plot_decision_regions(
             user_kwargs=scatter_highlight_kwargs,
         )
         ax.scatter(x_data, y_data, **scatter_highlight_kwargs)
-
     if legend:
         if dim > 2 and filler_feature_ranges is None:
             pass
         else:
             handles, labels = ax.get_legend_handles_labels()
             ax.legend(handles, labels, framealpha=0.3, scatterpoints=1, loc=legend)
-
     return ax

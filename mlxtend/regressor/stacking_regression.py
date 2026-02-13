@@ -17,6 +17,7 @@ from ..externals.estimator_checks import check_is_fitted
 from ..externals.name_estimators import _name_estimators
 from ..utils.base_compostion import _BaseXComposition
 
+from sklearn.utils._tags import EstimatorTags
 
 class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
     """A Stacking regressor for scikit-learn estimators for regression.
@@ -265,3 +266,8 @@ class StackingRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
             return self.meta_regr_.predict(sparse.hstack((X, meta_features)))
         else:
             return self.meta_regr_.predict(np.hstack((X, meta_features)))
+        
+    def __sklearn_tags__(self):
+        tags = super().__sklearn_tags__()
+        tags.estimator_type = "regressor" 
+        return tags

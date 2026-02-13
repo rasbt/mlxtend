@@ -25,6 +25,7 @@ from ..externals.estimator_checks import check_is_fitted
 from ..externals.name_estimators import _name_estimators
 from ..utils.base_compostion import _BaseXComposition
 
+from sklearn.utils._tags import EstimatorTags
 
 class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
     """A 'Stacking Cross-Validation' regressor for scikit-learn estimators.
@@ -334,3 +335,8 @@ class StackingCVRegressor(_BaseXComposition, RegressorMixin, TransformerMixin):
         """
         self._set_params("regressors", "named_regressors", **params)
         return self
+    
+    def __sklearn_tags__(self):
+        tags = super().__sklearn_tags__()
+        tags.estimator_type = "regressor"
+        return tags

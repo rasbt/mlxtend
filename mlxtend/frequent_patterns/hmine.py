@@ -77,7 +77,9 @@ def hmine(
     """
 
     fpc.valid_input_check(df)
-    if min_support <= 0.0:
+    # See issue #864: reject min_support outside (0, 1] up front (mirrors
+    # apriori / fpgrowth / fpmax). Fractional support cannot exceed 1.
+    if min_support <= 0.0 or min_support > 1.0:
         raise ValueError(
             "`min_support` must be a positive "
             "number within the interval `(0, 1]`. "

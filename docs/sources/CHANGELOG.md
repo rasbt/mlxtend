@@ -23,6 +23,8 @@ The CHANGELOG for the current development version is available at
 
 - Fixes an edge-case bug where decision regions plots didn't have unique colors ([#1157](https://github.com/rasbt/mlxtend/issues/1157) via [mariam851](https://github.com/mariam851))
 
+- Reject `min_support` values outside the documented `(0, 1]` interval in `apriori`, `fpgrowth`, `fpmax`, and `hmine`. The previous check only caught `<= 0`, so passing e.g. `min_support=2` silently returned an empty result ([#864](https://github.com/rasbt/mlxtend/issues/864) via [jbbqqf](https://github.com/jbbqqf))
+
 
 ### Version 0.24.0  (13 Dec 2025)
 

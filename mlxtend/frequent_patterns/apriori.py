@@ -244,7 +244,11 @@ def apriori(
         out = np.sum(_x, axis=0) / _n_rows
         return np.array(out).reshape(-1)
 
-    if min_support <= 0.0:
+    # Reject min_support outside (0, 1]. The check used to only catch
+    # `<= 0`, which let callers pass values such as `min_support=2`
+    # silently — apriori would then run and return an empty DataFrame
+    # because no itemset can have a fractional support > 1 (issue #864).
+    if min_support <= 0.0 or min_support > 1.0:
         raise ValueError(
             "`min_support` must be a positive "
             "number within the interval `(0, 1]`. "

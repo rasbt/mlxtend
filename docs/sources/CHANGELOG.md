@@ -23,6 +23,8 @@ The CHANGELOG for the current development version is available at
 
 - Fixes an edge-case bug where decision regions plots didn't have unique colors ([#1157](https://github.com/rasbt/mlxtend/issues/1157) via [mariam851](https://github.com/mariam851))
 
+- Add a `top_k` argument to `ExhaustiveFeatureSelector.get_metric_dict()` so callers can cap the returned dictionary to the highest-scoring subsets without materialising every evaluated combination ([#610](https://github.com/rasbt/mlxtend/issues/610) via [jbbqqf](https://github.com/jbbqqf))
+
 
 ### Version 0.24.0  (13 Dec 2025)
 

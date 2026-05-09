@@ -556,7 +556,7 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         self.fit(X, y, groups=groups, **fit_params)
         return self.transform(X)
 
-    def get_metric_dict(self, confidence_interval=0.95):
+    def get_metric_dict(self, confidence_interval=0.95, top_k=None):
         """Return metric dictionary
 
         Parameters
@@ -564,6 +564,16 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         confidence_interval : float (default: 0.95)
             A positive float between 0.0 and 1.0 to compute the confidence
             interval bounds of the CV score averages.
+        top_k : int or None (default: None)
+            If a positive integer, restrict the returned dictionary to the
+            top-`top_k` feature subsets ranked by `avg_score` descending.
+            ExhaustiveFeatureSelector can produce a very large number of
+            evaluated subsets, and downstream consumers (notably
+            ``pd.DataFrame.from_dict(..., orient='index')``) materialise
+            every entry in memory; ``top_k`` lets callers cap that without
+            re-implementing the ranking themselves (issue #610).
+            ``None`` (default) preserves the historical behaviour and
+            returns all subsets.
 
         Returns
         ----------
@@ -589,6 +599,19 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             fdict[k]["ci_bound"] = bound
             fdict[k]["std_dev"] = std_dev
             fdict[k]["std_err"] = std_err
+        if top_k is not None:
+            if not isinstance(top_k, (int, np.integer)) or top_k <= 0:
+                raise ValueError(
+                    "`top_k` must be a positive integer or None. " "Got %r." % (top_k,)
+                )
+            # Sort iteration keys by avg_score descending and take the top
+            # ones. We preserve the original iteration keys (rather than
+            # re-numbering) so downstream code can still cross-reference
+            # `subsets_` using the same keys.
+            ranked = sorted(fdict, key=lambda k: fdict[k]["avg_score"], reverse=True)[
+                :top_k
+            ]
+            fdict = {k: fdict[k] for k in ranked}
         return fdict
 
     def _calc_confidence(self, ary, confidence=0.95):

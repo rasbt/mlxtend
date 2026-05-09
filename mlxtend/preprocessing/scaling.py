@@ -124,9 +124,16 @@ def standardize(array, columns=None, ddof=0, return_params=False, params=None):
         }
     are_constant = np.all(ary_newt[:, columns] == ary_newt[0, columns], axis=0)
 
+    # For constant columns the standard deviation is 0 (or NaN with some ddof
+    # values), so dividing by it would propagate NaNs / Infs. Forcing std to
+    # 1.0 means the subtraction (col - mean) below collapses the column to
+    # exactly 0.0, matching the contract documented in the "Notes" section
+    # ("If all values in a given column are the same, these values are all
+    # set to 0.0"). The previous version also pre-zeroed the column before
+    # the divide, but that turned (0 - mean) / 1 into -mean instead of 0
+    # -- see issue #1058.
     for c, b in zip(columns, are_constant):
         if b:
-            ary_newt[:, c] = np.zeros(dim[0])
             parameters["stds"][c] = 1.0
 
     ary_newt[:, columns] = (ary_newt[:, columns] - parameters["avgs"]) / parameters[

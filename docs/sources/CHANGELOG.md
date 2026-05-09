@@ -23,6 +23,8 @@ The CHANGELOG for the current development version is available at
 
 - Fixes an edge-case bug where decision regions plots didn't have unique colors ([#1157](https://github.com/rasbt/mlxtend/issues/1157) via [mariam851](https://github.com/mariam851))
 
+- Fix `preprocessing.standardize` so a constant column is mapped to all-zeros (as the docstring promises) instead of `-mean(column)` ([#1058](https://github.com/rasbt/mlxtend/issues/1058) via [jbbqqf](https://github.com/jbbqqf))
+
 
 ### Version 0.24.0  (13 Dec 2025)
 

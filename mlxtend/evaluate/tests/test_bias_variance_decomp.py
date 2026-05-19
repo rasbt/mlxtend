@@ -19,20 +19,34 @@ from mlxtend.data import boston_housing_data, iris_data
 from mlxtend.evaluate import bias_variance_decomp
 
 
-def pandas_input_fail():
+def test_pandas_input():
     X, y = iris_data()
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.3, random_state=123, shuffle=True, stratify=y
     )
 
-    X_train = pd.DataFrame(X_train)
+    # Convert to pandas
+    X_train_df = pd.DataFrame(X_train)
+    y_train_series = pd.Series(y_train)
+    X_test_df = pd.DataFrame(X_test)
+    y_test_series = pd.Series(y_test)
 
     tree = DecisionTreeClassifier(random_state=123)
 
-    with pytest.raises(ValueError):
-        avg_expected_loss, avg_bias, avg_var = bias_variance_decomp(
-            tree, X_train, y_train, X_test, y_test, loss="0-1_loss", random_seed=123
-        )
+    avg_expected_loss, avg_bias, avg_var = bias_variance_decomp(
+        tree,
+        X_train_df,
+        y_train_series,
+        X_test_df,
+        y_test_series,
+        loss="0-1_loss",
+        random_seed=123,
+    )
+
+    # Should produce same results as numpy version
+    assert round(avg_expected_loss, 3) == 0.062
+    assert round(avg_bias, 3) == 0.022
+    assert round(avg_var, 3) == 0.040
 
 
 def test_01_loss_tree():

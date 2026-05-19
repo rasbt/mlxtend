@@ -23,6 +23,8 @@ The CHANGELOG for the current development version is available at
 
 - Fixes an edge-case bug where decision regions plots didn't have unique colors ([#1157](https://github.com/rasbt/mlxtend/issues/1157) via [mariam851](https://github.com/mariam851))
 
+- `bias_variance_decomp` now accepts pandas DataFrames and Series as input, in addition to NumPy arrays. ([#1070](https://github.com/rasbt/mlxtend/issues/1070) via [berns722](https://github.com/berns722))
+
 
 ### Version 0.24.0  (13 Dec 2025)
 

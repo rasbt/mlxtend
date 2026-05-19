@@ -25,26 +25,26 @@ def bias_variance_decomp(
     loss="0-1_loss",
     num_rounds=200,
     random_seed=None,
-    **fit_params
+    **fit_params,
 ):
     """
     estimator : object
         A classifier or regressor object or class implementing both a
         `fit` and `predict` method similar to the scikit-learn API.
 
-    X_train : array-like, shape=(num_examples, num_features)
-        A training dataset for drawing the bootstrap samples to carry
-        out the bias-variance decomposition.
+    X_train : array-like or pandas DataFrame, shape=(num_examples, num_features)
+    A training dataset for drawing the bootstrap samples to carry
+    out the bias-variance decomposition.
 
-    y_train : array-like, shape=(num_examples)
+    y_train : array-like or pandas Series, shape=(num_examples)
         Targets (class labels, continuous values in case of regression)
         associated with the `X_train` examples.
 
-    X_test : array-like, shape=(num_examples, num_features)
+    X_test : array-like or pandas DataFrame, shape=(num_examples, num_features)
         The test dataset for computing the average loss, bias,
         and variance.
 
-    y_test : array-like, shape=(num_examples)
+    y_test : array-like or pandas Series, shape=(num_examples)
         Targets (class labels, continuous values in case of regression)
         associated with the `X_test` examples.
 
@@ -81,17 +81,15 @@ def bias_variance_decomp(
     if loss not in supported:
         raise NotImplementedError("loss must be one of the following: %s" % supported)
 
-    for ary in (X_train, y_train, X_test, y_test):
-        if hasattr(ary, "loc"):
-            raise ValueError(
-                "The bias_variance_decomp does not "
-                "support pandas DataFrames yet. "
-                "Please check the inputs to "
-                "X_train, y_train, X_test, y_test. "
-                "If e.g., X_train is a pandas "
-                "DataFrame, try passing it as NumPy array via "
-                "X_train=X_train.values."
-            )
+        # Convert pandas inputs to numpy arrays
+    if hasattr(X_train, "loc"):
+        X_train = X_train.to_numpy() if hasattr(X_train, "to_numpy") else X_train.values
+    if hasattr(y_train, "loc"):
+        y_train = y_train.to_numpy() if hasattr(y_train, "to_numpy") else y_train.values
+    if hasattr(X_test, "loc"):
+        X_test = X_test.to_numpy() if hasattr(X_test, "to_numpy") else X_test.values
+    if hasattr(y_test, "loc"):
+        y_test = y_test.to_numpy() if hasattr(y_test, "to_numpy") else y_test.values
 
     rng = np.random.RandomState(random_seed)
 

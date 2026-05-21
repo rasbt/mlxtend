@@ -72,3 +72,25 @@ def test_numpy_minmax_scaling():
 
     np.testing.assert_allclose(df_out1, ary_out1, rtol=1e-03)
     assert (df_out2 == ary_out2).all()
+
+
+def test_constant_column_numpy_issue_1167():
+    ary = np.array([[5, 1], [5, 2], [5, 3]])
+    result = minmax_scaling(ary, columns=[0, 1])
+    expected = np.array([[0.0, 0.0], [0.0, 0.5], [0.0, 1.0]])
+    assert result.shape == (3, 2)
+    assert not np.isnan(result).any()
+    np.testing.assert_allclose(result, expected, rtol=1e-03)
+
+
+def test_constant_column_pandas_issue_1167():
+    df = pd.DataFrame(
+        {"s1": pd.Series([5, 5, 5, 5, 5, 5]), "s2": pd.Series([10, 9, 8, 7, 6, 5])}
+    )
+    result = minmax_scaling(df, ["s1", "s2"])
+    expected = np.array(
+        [[0.0, 1.0], [0.0, 0.8], [0.0, 0.6], [0.0, 0.4], [0.0, 0.2], [0.0, 0.0]]
+    )
+    assert result.shape == (6, 2)
+    assert not np.isnan(result.values).any()
+    np.testing.assert_allclose(result.values, expected, rtol=1e-03)

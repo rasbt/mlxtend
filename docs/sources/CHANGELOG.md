@@ -25,6 +25,8 @@ The CHANGELOG for the current development version is available at
 
 - `bias_variance_decomp` now accepts pandas DataFrames and Series as input, in addition to NumPy arrays. ([#1070](https://github.com/rasbt/mlxtend/issues/1070) via [berns722](https://github.com/berns722))
 
+- Fix `preprocessing.minmax_scaling` returning `NaN` for constant columns; constant columns are now mapped to `min_val` instead of triggering a `0 / 0` divide. ([#1167](https://github.com/rasbt/mlxtend/issues/1167))
+
 
 ### Version 0.24.0  (13 Dec 2025)
 

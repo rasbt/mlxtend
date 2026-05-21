@@ -68,8 +68,17 @@ def bias_variance_decomp(
     Returns
     ----------
     avg_expected_loss, avg_bias, avg_var : returns the average expected
-        average bias, and average bias (all floats), where the average
-        is computed over the data points in the test set.
+        loss, average bias, and average variance (all floats), where the
+        average is computed over the data points in the test set.
+
+        Note that for the ``'mse'`` loss, ``avg_bias`` reports the
+        average **squared** bias
+        (``mean((main_predictions - y_test) ** 2)``) — i.e. the term
+        that already appears squared in the standard bias-variance
+        decomposition ``Loss = Bias^2 + Variance``. For the
+        ``'0-1_loss'``, ``avg_bias`` is the misclassification rate of
+        the main prediction (the majority vote across bootstrap
+        replicates), which is the 0-1 analogue of squared bias.
 
     Examples
     -----------
@@ -154,6 +163,10 @@ def bias_variance_decomp(
 
         main_predictions = np.mean(all_pred, axis=0)
 
+        # `avg_bias` here is the average *squared* bias — the Bias^2
+        # term in the standard decomposition Loss = Bias^2 + Variance.
+        # See the Returns section of the docstring; the variable is
+        # kept named `avg_bias` for backwards compatibility.
         avg_bias = np.sum((main_predictions - y_test) ** 2) / y_test.size
         avg_var = np.sum((main_predictions - all_pred) ** 2) / all_pred.size
 

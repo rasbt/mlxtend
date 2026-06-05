@@ -1,0 +1,21 @@
+﻿2026-06-05T21:46:23.9397729Z ##[group]Run uv run --group dev python -c "import numpy; print('NumPy:', numpy.__version__)"
+2026-06-05T21:46:23.9398430Z [36;1muv run --group dev python -c "import numpy; print('NumPy:', numpy.__version__)"[0m
+2026-06-05T21:46:23.9399002Z [36;1muv run --group dev python -c "import scipy; print('SciPy:', scipy.__version__)"[0m
+2026-06-05T21:46:23.9399607Z [36;1muv run --group dev python -c "import sklearn; print('Scikit-learn:', sklearn.__version__)"[0m
+2026-06-05T21:46:23.9400197Z [36;1muv run --group dev python -c "import pandas; print('Pandas:', pandas.__version__)"[0m
+2026-06-05T21:46:23.9427162Z shell: /usr/bin/bash -e {0}
+2026-06-05T21:46:23.9427415Z env:
+2026-06-05T21:46:23.9427604Z   GITHUB_ACTIONS_CI: true
+2026-06-05T21:46:23.9427901Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:23.9428342Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
+2026-06-05T21:46:23.9428776Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:23.9429184Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:23.9429556Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:23.9429935Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
+2026-06-05T21:46:23.9430319Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+2026-06-05T21:46:23.9430686Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-06-05T21:46:23.9430972Z ##[endgroup]
+2026-06-05T21:46:24.2857180Z NumPy: 2.4.6
+2026-06-05T21:46:24.4371819Z SciPy: 1.17.1
+2026-06-05T21:46:28.2483301Z Scikit-learn: 1.9.0
+2026-06-05T21:46:28.6834921Z Pandas: 3.0.3

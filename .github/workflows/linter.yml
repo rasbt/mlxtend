@@ -11,13 +11,13 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
-      - name: Install isort, black, and flake8
-        run: |
-          python -m pip install --upgrade pip
-          pip install isort black flake8
+      - name: Install uv
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
+      - name: Install dependencies
+        run: uv sync --frozen --group dev
       - name: Run isort and black
         run: |
-          isort -p mlxtend --check --diff --line-length 88 --multi-line 3 --py 39 --profile black mlxtend/*
-          black --check --diff mlxtend/*
+          uv run --group dev python -m isort -p mlxtend --check --diff --line-length 88 --multi-line 3 --py 39 --profile black mlxtend/*
+          uv run --group dev python -m black --check --diff mlxtend/*
           # exit-zero treats all errors as warnings.
-          flake8 . --config=.flake8 --count --exit-zero --statistics
+          uv run --group dev python -m flake8 . --config=.flake8 --count --exit-zero --statistics

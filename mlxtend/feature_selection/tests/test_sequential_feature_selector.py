@@ -306,6 +306,29 @@ def test_knn_option_sfs():
     assert sfs1.k_feature_idx_ == (1, 2, 3)
 
 
+def test_knn_option_sfs_stops_when_score_gain_is_below_tol():
+    iris = load_iris()
+    X = iris.data
+    y = iris.target
+    knn = KNeighborsClassifier(n_neighbors=4)
+
+    sfs = SFS(
+        knn,
+        k_features=4,
+        forward=True,
+        floating=False,
+        scoring="accuracy",
+        cv=4,
+        verbose=0,
+        tol=0.02,
+    )
+    sfs = sfs.fit(X, y)
+
+    assert sorted(sfs.subsets_) == [1, 2]
+    assert sfs.subsets_[2]["avg_score"] - sfs.subsets_[1]["avg_score"] < sfs.tol
+    assert sfs.k_feature_idx_ == (3,)
+
+
 def test_knn_option_sffs():
     iris = load_iris()
     X = iris.data

@@ -9,6 +9,7 @@
 
 import os
 
+import numpy as np
 import pandas as pd
 import pytest
 from sklearn.ensemble import BaggingClassifier, BaggingRegressor
@@ -17,6 +18,20 @@ from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
 
 from mlxtend.data import boston_housing_data, iris_data
 from mlxtend.evaluate import bias_variance_decomp
+
+
+class FixedPredictionRegressor:
+    def __init__(self, predictions):
+        self.predictions = predictions
+        self.predict_idx = 0
+
+    def fit(self, X, y):
+        return self
+
+    def predict(self, X):
+        pred = self.predictions[self.predict_idx]
+        self.predict_idx += 1
+        return pred
 
 
 def test_pandas_input():
@@ -115,6 +130,27 @@ def test_mse_bagging():
     assert avg_expected_loss == pytest.approx(20.24, rel=0.02)
     assert avg_bias == pytest.approx(15.63, rel=0.02)
     assert avg_var == pytest.approx(4.61, rel=0.02)
+
+
+def test_mse_bias_is_squared_bias():
+    predictions = np.array([[1.0, 3.0], [2.0, 5.0], [4.0, 7.0]])
+    y_test = np.array([2.0, 4.0])
+    regressor = FixedPredictionRegressor(predictions)
+
+    _, avg_bias, _ = bias_variance_decomp(
+        regressor,
+        X_train=np.array([[0.0], [1.0], [2.0]]),
+        y_train=np.array([0.0, 1.0, 2.0]),
+        X_test=np.array([[0.0], [1.0]]),
+        y_test=y_test,
+        loss="mse",
+        num_rounds=3,
+        random_seed=123,
+    )
+
+    main_predictions = predictions.mean(axis=0)
+    expected_squared_bias = np.mean((main_predictions - y_test) ** 2)
+    assert avg_bias == pytest.approx(expected_squared_bias)
 
 
 if "TRAVIS" in os.environ or os.environ.get("TRAVIS") == "true":

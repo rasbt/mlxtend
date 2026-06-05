@@ -10,9 +10,18 @@ authors = [
     {name = "Sebastian Raschka", email = "mail@sebastianraschka.com"}
 ]
 description="Machine Learning Library Extensions"
-dynamic = ["version", "dependencies"]
+dynamic = ["version"]
+requires-python = ">=3.11"
 license= {text = "BSD 3-Clause"}
 readme = "README.md"
+dependencies = [
+    "scipy>=1.16.3",
+    "numpy>=2.3.5",
+    "pandas>=2.3.3",
+    "scikit-learn>=1.8.0",
+    "matplotlib>=3.10.8",
+    "joblib>=1.5.2",
+]
 classifiers=[
     "License :: OSI Approved :: BSD License",
     "Development Status :: 5 - Production/Stable",
@@ -20,10 +29,6 @@ classifiers=[
     "Operating System :: POSIX",
     "Operating System :: Unix",
     "Operating System :: MacOS",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Topic :: Scientific/Engineering",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
@@ -32,8 +37,28 @@ classifiers=[
 ]
 
 [project.optional-dependencies]
-testing = ["pytest"]
-docs = ["mkdocs", "python-markdown-math", "mkdocs-bootswatch", "nbconvert"]
+testing = ["coverage", "pytest"]
+docs = ["mkdocs", "python-markdown-math", "mkdocs-bootswatch", "nbconvert", "markdown", "pyyaml"]
+
+[dependency-groups]
+dev = [
+    "black",
+    "build",
+    "coverage",
+    "flake8",
+    "isort",
+    "pre-commit",
+    "pytest",
+    "twine",
+]
+docs = [
+    "markdown",
+    "mkdocs",
+    "mkdocs-bootswatch",
+    "nbconvert",
+    "python-markdown-math",
+    "pyyaml",
+]
 
 [project.urls]
 Homepage = "https://github.com/rasbt/mlxtend"
@@ -45,14 +70,13 @@ platforms = ["any"]
 
 [tool.setuptools.dynamic]
 version = {attr = "mlxtend.__version__"}
-dependencies = {file = "requirements.txt"}
 
 [tool.setuptools.packages.find]
 include = ["mlxtend", "mlxtend.*"]
 namespaces = false
 
 [tool.setuptools.package-data]
-mlxtend = ["LICENSE-BSD3.txt", "LICENSE-CC-BY.txt", "README.md", "requirements.txt", "mlxtend/data/data/*"]
+mlxtend = ["LICENSE-BSD3.txt", "LICENSE-CC-BY.txt", "README.md", "mlxtend/data/data/*"]
 
 [tool.pytest.ini_options]
 norecursedirs = [

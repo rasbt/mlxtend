@@ -23,9 +23,11 @@ The CHANGELOG for the current development version is available at
 
 - Fixes an edge-case bug where decision regions plots didn't have unique colors ([#1157](https://github.com/rasbt/mlxtend/issues/1157) via [mariam851](https://github.com/mariam851))
 
+- `minmax_scaling` no longer returns silent NaNs for constant columns; constant columns are now collapsed to `min_val`, mirroring the existing contract of `standardize`. ([#1167](https://github.com/rasbt/mlxtend/issues/1167) via [jbbqqf](https://github.com/jbbqqf))
+
 - `bias_variance_decomp` now accepts pandas DataFrames and Series as input, in addition to NumPy arrays. ([#1070](https://github.com/rasbt/mlxtend/issues/1070) via [berns722](https://github.com/berns722))
 
-- `minmax_scaling` no longer returns silent NaNs for constant columns; constant columns are now collapsed to `min_val`, mirroring the existing contract of `standardize`. ([#1167](https://github.com/rasbt/mlxtend/issues/1167) via [jbbqqf](https://github.com/jbbqqf))
+- Clarified in the `bias_variance_decomp` docstring that, for the `mse` loss, `avg_bias` is the average *squared* bias (the `Bias^2` term in `Loss = Bias^2 + Variance`), and fixed a typo in the `Returns` section that previously read "average bias, and average bias". Behaviour unchanged. ([#1083](https://github.com/rasbt/mlxtend/issues/1083) via [jbbqqf](https://github.com/jbbqqf))
 
 
 ### Version 0.24.0  (13 Dec 2025)

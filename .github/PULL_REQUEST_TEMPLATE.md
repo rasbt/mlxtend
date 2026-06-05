@@ -29,8 +29,8 @@ Please fill out the following checklist if applicable. For more more information
 - [ ] Added a note about the modification or contribution to the `./docs/sources/CHANGELOG.md` file (if applicable)
 - [ ] Added appropriate unit test functions in the `./mlxtend/*/tests` directories (if applicable)
 - [ ] Modify documentation in the corresponding Jupyter Notebook under `mlxtend/docs/sources/` (if applicable)
-- [ ] Ran `PYTHONPATH='.' pytest ./mlxtend -sv` and make sure that all unit tests pass (for small modifications, it might be sufficient to only run the specific test file, e.g., `PYTHONPATH='.' pytest ./mlxtend/classifier/tests/test_stacking_cv_classifier.py -sv`)
-- [ ] Checked for style issues by running `flake8 ./mlxtend`
+- [ ] Ran `uv run --group dev python -m pytest ./mlxtend -sv` and make sure that all unit tests pass (for small modifications, it might be sufficient to only run the specific test file, e.g., `uv run --group dev python -m pytest ./mlxtend/classifier/tests/test_stacking_cv_classifier.py -sv`)
+- [ ] Checked for style issues by running `uv run --group dev python -m flake8 ./mlxtend`
 
 
 <!--NOTE  

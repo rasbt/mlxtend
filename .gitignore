@@ -24,7 +24,6 @@ dist/
 MANIFEST
 
 # Temporary files
-uv.lock
 .coverage
 .ipynb_checkpoints
 

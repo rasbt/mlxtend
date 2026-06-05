@@ -1,0 +1,90 @@
+﻿2026-06-05T21:46:16.2904627Z ##[group]Run actions/checkout@v4
+2026-06-05T21:46:16.2906069Z with:
+2026-06-05T21:46:16.2906937Z   repository: rasbt/mlxtend
+2026-06-05T21:46:16.2918458Z   token: ***
+2026-06-05T21:46:16.2919323Z   ssh-strict: true
+2026-06-05T21:46:16.2920185Z   ssh-user: git
+2026-06-05T21:46:16.2921065Z   persist-credentials: true
+2026-06-05T21:46:16.2922191Z   clean: true
+2026-06-05T21:46:16.2923077Z   sparse-checkout-cone-mode: true
+2026-06-05T21:46:16.2924124Z   fetch-depth: 1
+2026-06-05T21:46:16.2924990Z   fetch-tags: false
+2026-06-05T21:46:16.2925880Z   show-progress: true
+2026-06-05T21:46:16.2926775Z   lfs: false
+2026-06-05T21:46:16.2927606Z   submodules: false
+2026-06-05T21:46:16.2928510Z   set-safe-directory: true
+2026-06-05T21:46:16.2929742Z env:
+2026-06-05T21:46:16.2930575Z   GITHUB_ACTIONS_CI: true
+2026-06-05T21:46:16.2931932Z ##[endgroup]
+2026-06-05T21:46:16.4089120Z Syncing repository: rasbt/mlxtend
+2026-06-05T21:46:16.4092169Z ##[group]Getting Git version info
+2026-06-05T21:46:16.4093616Z Working directory is '/home/runner/work/mlxtend/mlxtend'
+2026-06-05T21:46:16.4095738Z [command]/usr/bin/git version
+2026-06-05T21:46:16.4167164Z git version 2.54.0
+2026-06-05T21:46:16.4194459Z ##[endgroup]
+2026-06-05T21:46:16.4210043Z Temporarily overriding HOME='/home/runner/work/_temp/5d415e69-e728-4a20-b972-b3a49d8183b7' before making global git config changes
+2026-06-05T21:46:16.4213212Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-05T21:46:16.4216043Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/mlxtend/mlxtend
+2026-06-05T21:46:16.4259633Z Deleting the contents of '/home/runner/work/mlxtend/mlxtend'
+2026-06-05T21:46:16.4263453Z ##[group]Initializing the repository
+2026-06-05T21:46:16.4267332Z [command]/usr/bin/git init /home/runner/work/mlxtend/mlxtend
+2026-06-05T21:46:16.4367407Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-06-05T21:46:16.4370042Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-06-05T21:46:16.4373534Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-06-05T21:46:16.4377216Z hint: call:
+2026-06-05T21:46:16.4379390Z hint:
+2026-06-05T21:46:16.4380973Z hint: 	git config --global init.defaultBranch <name>
+2026-06-05T21:46:16.4382630Z hint:
+2026-06-05T21:46:16.4383909Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-06-05T21:46:16.4386415Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-06-05T21:46:16.4387988Z hint:
+2026-06-05T21:46:16.4388894Z hint: 	git branch -m <name>
+2026-06-05T21:46:16.4389999Z hint:
+2026-06-05T21:46:16.4391992Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-06-05T21:46:16.4394161Z Initialized empty Git repository in /home/runner/work/mlxtend/mlxtend/.git/
+2026-06-05T21:46:16.4397597Z [command]/usr/bin/git remote add origin https://github.com/rasbt/mlxtend
+2026-06-05T21:46:16.4437531Z ##[endgroup]
+2026-06-05T21:46:16.4439081Z ##[group]Disabling automatic garbage collection
+2026-06-05T21:46:16.4441084Z [command]/usr/bin/git config --local gc.auto 0
+2026-06-05T21:46:16.4470421Z ##[endgroup]
+2026-06-05T21:46:16.4472199Z ##[group]Setting up auth
+2026-06-05T21:46:16.4477441Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-05T21:46:16.4511220Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-05T21:46:16.4846294Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-05T21:46:16.4876685Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-05T21:46:16.5096530Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-05T21:46:16.5137143Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-05T21:46:16.5358613Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-06-05T21:46:16.5395236Z ##[endgroup]
+2026-06-05T21:46:16.5397945Z ##[group]Fetching the repository
+2026-06-05T21:46:16.5406658Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +9a8e4bbf40b249fb36d7e07f3ce3f04b8e794df0:refs/remotes/pull/1172/merge
+2026-06-05T21:46:18.1433984Z From https://github.com/rasbt/mlxtend
+2026-06-05T21:46:18.1435292Z  * [new ref]         9a8e4bbf40b249fb36d7e07f3ce3f04b8e794df0 -> pull/1172/merge
+2026-06-05T21:46:18.1471734Z ##[endgroup]
+2026-06-05T21:46:18.1472415Z ##[group]Determining the checkout info
+2026-06-05T21:46:18.1483314Z ##[endgroup]
+2026-06-05T21:46:18.1490341Z [command]/usr/bin/git sparse-checkout disable
+2026-06-05T21:46:18.1527939Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-06-05T21:46:18.1553719Z ##[group]Checking out the ref
+2026-06-05T21:46:18.1582361Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/1172/merge
+2026-06-05T21:46:18.2760001Z Note: switching to 'refs/remotes/pull/1172/merge'.
+2026-06-05T21:46:18.2760607Z 
+2026-06-05T21:46:18.2761063Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-06-05T21:46:18.2762290Z changes and commit them, and you can discard any commits you make in this
+2026-06-05T21:46:18.2763262Z state without impacting any branches by switching back to a branch.
+2026-06-05T21:46:18.2782032Z 
+2026-06-05T21:46:18.2804108Z If you want to create a new branch to retain commits you create, you may
+2026-06-05T21:46:18.2812546Z do so (now or later) by using -c with the switch command. Example:
+2026-06-05T21:46:18.2812866Z 
+2026-06-05T21:46:18.2813001Z   git switch -c <new-branch-name>
+2026-06-05T21:46:18.2813367Z 
+2026-06-05T21:46:18.2813554Z Or undo this operation with:
+2026-06-05T21:46:18.2813862Z 
+2026-06-05T21:46:18.2814025Z   git switch -
+2026-06-05T21:46:18.2815571Z 
+2026-06-05T21:46:18.2816005Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-06-05T21:46:18.2816598Z 
+2026-06-05T21:46:18.2817175Z HEAD is now at 9a8e4bb Merge f1bc51026782c6fb0c361fc9997b00885c0c9b63 into 4420064bbf8e21aa504e69a61b96f438b742e872
+2026-06-05T21:46:18.2818542Z ##[endgroup]
+2026-06-05T21:46:18.2843634Z [command]/usr/bin/git log -1 --format=%H
+2026-06-05T21:46:18.2868749Z 9a8e4bbf40b249fb36d7e07f3ce3f04b8e794df0

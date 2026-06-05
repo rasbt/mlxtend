@@ -24,6 +24,8 @@ jobs:
       - name: Install dependencies (pip)
         run: |
           python -m pip install --upgrade pip
+          # Fixing #982 by pinning numpy to a version compatible with numba
+          pip install "numpy>=1.22,<2.4" 
           pip install pytest coverage
           pip install -e .
 

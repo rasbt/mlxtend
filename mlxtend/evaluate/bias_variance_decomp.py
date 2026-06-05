@@ -104,8 +104,7 @@ def bias_variance_decomp(
         X_boot, y_boot = _draw_bootstrap_sample(rng, X_train, y_train)
 
         # Keras support
-        if estimator.__class__.__name__ in ["Sequential", "Functional"]:
-            # reset model
+        if estimator.__class__.__name__ in ["Sequential", "Functional", "Model"]:
             for ix, layer in enumerate(estimator.layers):
                 if hasattr(estimator.layers[ix], "kernel_initializer") and hasattr(
                     estimator.layers[ix], "bias_initializer"
@@ -126,6 +125,7 @@ def bias_variance_decomp(
             pred = estimator.predict(X_test).reshape(1, -1)
         else:
             pred = estimator.fit(X_boot, y_boot, **fit_params).predict(X_test)
+
         all_pred[i] = pred
 
     if loss == "0-1_loss":

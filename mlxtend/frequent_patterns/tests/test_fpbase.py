@@ -326,6 +326,19 @@ class FPTestEx3All(FPTestEx3):
             min_support=0.0,
         )
 
+    def test_output4_min_support_above_one_issue_864(self):
+        # Regression test for #864: min_support is a fraction in (0, 1].
+        # Values > 1 used to pass silently, returning an empty result;
+        # they now raise the same ValueError as min_support <= 0.
+        assert_raises(
+            ValueError,
+            "`min_support` must be a positive "
+            "number within the interval `(0, 1]`. Got 2.",
+            self.fpalgo,
+            self.df,
+            min_support=2,
+        )
+
 
 def compare_dataframes(df1, df2):
     itemsets1 = [sorted(list(i)) for i in df1["itemsets"]]

@@ -258,7 +258,7 @@ def apriori(
         out = np.sum(_x, axis=0) / _n_rows
         return np.array(out).reshape(-1)
 
-    if min_support <= 0.0:
+    if min_support <= 0.0 or min_support > 1.0:
         raise ValueError(
             "`min_support` must be a positive "
             "number within the interval `(0, 1]`. "

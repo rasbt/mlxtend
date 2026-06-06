@@ -77,7 +77,7 @@ def fpgrowth(
     """
     fpc.valid_input_check(df, null_values)
 
-    if min_support <= 0.0:
+    if min_support <= 0.0 or min_support > 1.0:
         raise ValueError(
             "`min_support` must be a positive "
             "number within the interval `(0, 1]`. "

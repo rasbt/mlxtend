@@ -25,6 +25,8 @@ The CHANGELOG for the current development version is available at
 
 - Fix `preprocessing.standardize` so a constant column is mapped to all-zeros (as the docstring promises) instead of `-mean(column)` ([#1058](https://github.com/rasbt/mlxtend/issues/1058) via [jbbqqf](https://github.com/jbbqqf))
 
+- Reject `min_support` values outside the documented `(0, 1]` interval in `apriori`, `fpgrowth`, `fpmax`, and `hmine`. The previous check only caught `<= 0`, so passing e.g. `min_support=2` silently returned an empty result ([#864](https://github.com/rasbt/mlxtend/issues/864) via [jbbqqf](https://github.com/jbbqqf))
+
 - Add a `top_k` argument to `ExhaustiveFeatureSelector.get_metric_dict()` so callers can request only the highest-scoring subsets before converting the result to a DataFrame ([#610](https://github.com/rasbt/mlxtend/issues/610) via [jbbqqf](https://github.com/jbbqqf))
 
 - `minmax_scaling` no longer returns silent NaNs for constant columns; constant columns are now collapsed to `min_val`, mirroring the existing contract of `standardize`. ([#1167](https://github.com/rasbt/mlxtend/issues/1167) via [jbbqqf](https://github.com/jbbqqf))

@@ -1,0 +1,51 @@
+﻿2026-06-05T21:46:18.5120974Z ##[group]Run astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
+2026-06-05T21:46:18.5121697Z with:
+2026-06-05T21:46:18.5121911Z   activate-environment: false
+2026-06-05T21:46:18.5122159Z   no-project: false
+2026-06-05T21:46:18.5122434Z   working-directory: /home/runner/work/mlxtend/mlxtend
+2026-06-05T21:46:18.5126114Z   github-token: ***
+2026-06-05T21:46:18.5126351Z   enable-cache: auto
+2026-06-05T21:46:18.5126914Z   cache-dependency-glob: **/*requirements*.txt
+**/*requirements*.in
+**/*constraints*.txt
+**/*constraints*.in
+**/pyproject.toml
+**/uv.lock
+**/*.py.lock
+
+2026-06-05T21:46:18.5127525Z   restore-cache: true
+2026-06-05T21:46:18.5127733Z   save-cache: true
+2026-06-05T21:46:18.5127933Z   prune-cache: true
+2026-06-05T21:46:18.5128161Z   cache-python: false
+2026-06-05T21:46:18.5128405Z   ignore-nothing-to-cache: false
+2026-06-05T21:46:18.5128679Z   ignore-empty-workdir: false
+2026-06-05T21:46:18.5128932Z   add-problem-matchers: true
+2026-06-05T21:46:18.5129174Z   resolution-strategy: highest
+2026-06-05T21:46:18.5129437Z env:
+2026-06-05T21:46:18.5129616Z   GITHUB_ACTIONS_CI: true
+2026-06-05T21:46:18.5129911Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:18.5130358Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
+2026-06-05T21:46:18.5130787Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:18.5131160Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:18.5131850Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:18.5132246Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
+2026-06-05T21:46:18.5132563Z ##[endgroup]
+2026-06-05T21:46:18.6913945Z Trying to find version for uv in: /home/runner/work/mlxtend/mlxtend/uv.toml
+2026-06-05T21:46:18.6924180Z Could not find file: /home/runner/work/mlxtend/mlxtend/uv.toml
+2026-06-05T21:46:18.6925039Z Trying to find version for uv in: /home/runner/work/mlxtend/mlxtend/pyproject.toml
+2026-06-05T21:46:18.6925664Z Could not determine uv version from uv.toml or pyproject.toml. Falling back to latest.
+2026-06-05T21:46:18.6926643Z Fetching manifest data from https://raw.githubusercontent.com/astral-sh/versions/main/v1/uv.ndjson ...
+2026-06-05T21:46:18.8368998Z Downloading uv from "https://releases.astral.sh/github/uv/releases/download/0.11.19/uv-x86_64-unknown-linux-gnu.tar.gz" ...
+2026-06-05T21:46:19.2278329Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/1e55a3fb-270d-4bca-9ce6-b287415ee8f9 -f /home/runner/work/_temp/3a333580-5ac1-4763-bf0f-4167f6df8fa4
+2026-06-05T21:46:19.7111515Z Added /home/runner/.local/bin to the path
+2026-06-05T21:46:19.7115370Z Added /opt/hostedtoolcache/uv/0.11.19/x86_64 to the path
+2026-06-05T21:46:19.7116957Z Set UV_PYTHON_INSTALL_DIR to /home/runner/work/_temp/uv-python-dir
+2026-06-05T21:46:19.7118121Z Added /home/runner/work/_temp/uv-python-dir to the path
+2026-06-05T21:46:19.7127762Z Set UV_CACHE_DIR to /home/runner/work/_temp/setup-uv-cache
+2026-06-05T21:46:19.7128179Z Successfully installed uv version 0.11.19
+2026-06-05T21:46:19.8130189Z Searching files using cache dependency glob: /home/runner/work/mlxtend/mlxtend/**/*requirements*.txt,/home/runner/work/mlxtend/mlxtend/**/*requirements*.in,/home/runner/work/mlxtend/mlxtend/**/*constraints*.txt,/home/runner/work/mlxtend/mlxtend/**/*constraints*.in,/home/runner/work/mlxtend/mlxtend/**/pyproject.toml,/home/runner/work/mlxtend/mlxtend/**/uv.lock,/home/runner/work/mlxtend/mlxtend/**/*.py.lock
+2026-06-05T21:46:19.9429174Z /home/runner/work/mlxtend/mlxtend/pyproject.toml
+2026-06-05T21:46:19.9446898Z /home/runner/work/mlxtend/mlxtend/requirements.txt
+2026-06-05T21:46:19.9466171Z Found 2 files to hash.
+2026-06-05T21:46:19.9537118Z Trying to restore cache from GitHub Actions cache with key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.11.15-pruned-8d5ce4b1053ebcaaec81c9e46e3fcdb2271bd0f215114dd82e633d0bf00c4e97
+2026-06-05T21:46:20.1417935Z No GitHub Actions cache found for key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.11.15-pruned-8d5ce4b1053ebcaaec81c9e46e3fcdb2271bd0f215114dd82e633d0bf00c4e97

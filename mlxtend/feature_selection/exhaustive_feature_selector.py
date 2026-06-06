@@ -569,8 +569,9 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             top-`top_k` feature subsets ranked by `avg_score` descending.
             ExhaustiveFeatureSelector can produce a very large number of
             evaluated subsets, and downstream consumers (notably
-            ``pd.DataFrame.from_dict(..., orient='index')``) materialise
-            every entry in memory; ``top_k`` lets callers cap that without
+            ``pd.DataFrame.from_dict(..., orient='index')``) often only need
+            the highest-scoring entries. ``top_k`` lets callers cap the
+            returned dictionary before such conversions without
             re-implementing the ranking themselves (issue #610).
             ``None`` (default) preserves the historical behaviour and
             returns all subsets.
@@ -590,7 +591,22 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
         """
         self._check_fitted()
-        fdict = deepcopy(self.subsets_)
+        if top_k is not None:
+            if not isinstance(top_k, (int, np.integer)) or top_k <= 0:
+                raise ValueError(
+                    "`top_k` must be a positive integer or None. " "Got %r." % (top_k,)
+                )
+            # Preserve the original iteration keys so downstream code can
+            # still cross-reference `subsets_` using the same keys.
+            subset_keys = sorted(
+                self.subsets_,
+                key=lambda k: self.subsets_[k]["avg_score"],
+                reverse=True,
+            )[:top_k]
+            fdict = {k: deepcopy(self.subsets_[k]) for k in subset_keys}
+        else:
+            fdict = deepcopy(self.subsets_)
+
         for k in fdict:
             std_dev = np.std(self.subsets_[k]["cv_scores"])
             bound, std_err = self._calc_confidence(
@@ -599,19 +615,6 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             fdict[k]["ci_bound"] = bound
             fdict[k]["std_dev"] = std_dev
             fdict[k]["std_err"] = std_err
-        if top_k is not None:
-            if not isinstance(top_k, (int, np.integer)) or top_k <= 0:
-                raise ValueError(
-                    "`top_k` must be a positive integer or None. " "Got %r." % (top_k,)
-                )
-            # Sort iteration keys by avg_score descending and take the top
-            # ones. We preserve the original iteration keys (rather than
-            # re-numbering) so downstream code can still cross-reference
-            # `subsets_` using the same keys.
-            ranked = sorted(fdict, key=lambda k: fdict[k]["avg_score"], reverse=True)[
-                :top_k
-            ]
-            fdict = {k: fdict[k] for k in ranked}
         return fdict
 
     def _calc_confidence(self, ary, confidence=0.95):

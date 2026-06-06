@@ -3,13 +3,32 @@
 # Author: Sebastian Raschka <sebastianraschka.com>
 #
 # License: BSD 3 clause
-
+from itertools import groupby
 
 import numpy as np
 import pandas as pd
 from joblib import Parallel, delayed
 
 from ..frequent_patterns import fpcommon as fpc
+
+
+def _apriori_gen(old_combinations):
+    old_combinations = sorted(tuple(combination) for combination in old_combinations)
+    set_old_combinations = set(old_combinations)
+
+    for i, old_combination in enumerate(old_combinations):
+        prefix = old_combination[:-1]
+        for other_combination in old_combinations[i + 1 :]:
+            if prefix != other_combination[:-1]:
+                break
+
+            candidate = old_combination + (other_combination[-1],)
+            for idx in range(len(candidate) - 2):
+                test_candidate = candidate[:idx] + candidate[idx + 1 :]
+                if test_candidate not in set_old_combinations:
+                    break
+            else:
+                yield candidate
 
 
 def generate_new_combinations(old_combinations):
@@ -33,8 +52,10 @@ def generate_new_combinations(old_combinations):
 
     Returns
     -----------
-    Generator of all combinations from the last step x items
-    from the previous step.
+    Generator of combinations based on the last state of Apriori algorithm.
+    In order to reduce the number of candidates, this function implements the
+    apriori-gen join and prune steps described in section 2.1.1 of the
+    Apriori paper.
 
     Examples
     -----------
@@ -43,15 +64,8 @@ def generate_new_combinations(old_combinations):
 
     """
 
-    items_types_in_previous_step = np.unique(old_combinations.flatten())
-    for old_combination in old_combinations:
-        max_combination = old_combination[-1]
-        mask = items_types_in_previous_step > max_combination
-        valid_items = items_types_in_previous_step[mask]
-        old_tuple = tuple(old_combination)
-        for item in valid_items:
-            yield from old_tuple
-            yield item
+    for candidate in _apriori_gen(old_combinations):
+        yield from candidate
 
 
 def generate_new_combinations_low_memory(old_combinations, X, min_support, is_sparse):
@@ -111,25 +125,25 @@ def generate_new_combinations_low_memory(old_combinations, X, min_support, is_sp
 
     """
 
-    items_types_in_previous_step = np.unique(old_combinations.flatten())
     rows_count = X.shape[0]
     threshold = min_support * rows_count
-    for old_combination in old_combinations:
-        max_combination = old_combination[-1]
-        mask = items_types_in_previous_step > max_combination
-        valid_items = items_types_in_previous_step[mask]
-        old_tuple = tuple(old_combination)
+    for prefix, candidates in groupby(
+        _apriori_gen(old_combinations), key=lambda x: x[:-1]
+    ):
+        valid_items = np.fromiter(
+            (candidate[-1] for candidate in candidates), dtype=int
+        )
         if is_sparse:
-            mask_rows = X[:, old_tuple].toarray().all(axis=1)
+            mask_rows = X[:, prefix].toarray().all(axis=1)
             X_cols = X[:, valid_items].toarray()
             supports = X_cols[mask_rows].sum(axis=0)
         else:
-            mask_rows = X[:, old_tuple].all(axis=1)
+            mask_rows = X[:, prefix].all(axis=1)
             supports = X[mask_rows][:, valid_items].sum(axis=0)
         valid_indices = (supports >= threshold).nonzero()[0]
         for index in valid_indices:
             yield supports[index]
-            yield from old_tuple
+            yield from prefix
             yield valid_items[index]
 
 

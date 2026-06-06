@@ -1,6 +1,5 @@
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.00638/status.svg)](https://doi.org/10.21105/joss.00638)
 [![PyPI version](https://badge.fury.io/py/mlxtend.svg)](https://badge.fury.io/py/mlxtend)
-[![Anaconda-Server Badge](https://anaconda.org/conda-forge/mlxtend/badges/version.svg)](https://anaconda.org/conda-forge/mlxtend)
 [![Build status](https://ci.appveyor.com/api/projects/status/7vx20e0h5dxcyla2/branch/master?svg=true)](https://ci.appveyor.com/project/rasbt/mlxtend/branch/master)
 [![codecov](https://codecov.io/gh/rasbt/mlxtend/branch/master/graph/badge.svg)](https://codecov.io/gh/rasbt/mlxtend)
 ![Python 3](https://img.shields.io/badge/python-3-blue.svg)
@@ -37,39 +36,36 @@ Sebastian Raschka 2014-2026
 
 ## Installing mlxtend
 
-#### PyPI
+#### Using uv
 
-To install mlxtend, just execute  
-
-```bash
-pip install mlxtend  
-```
-
-Alternatively, you could download the package manually from the Python Package Index [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend), unzip it, navigate into the package, and use the command:
+To add mlxtend to a uv-managed project, run
 
 ```bash
-python setup.py install
+uv add mlxtend
 ```
 
-#### Conda
-If you use conda, to install mlxtend just execute
+For a one-off command without changing your current project, run
 
 ```bash
-conda install -c conda-forge mlxtend 
+uv run --with mlxtend python -c "import mlxtend; print(mlxtend.__version__)"
 ```
+
 
 #### Dev Version
 
 The mlxtend version on PyPI may always be one step behind; you can install the latest development version from the GitHub repository by executing
 
 ```bash
-pip install git+git://github.com/rasbt/mlxtend.git#egg=mlxtend
+uv add "mlxtend @ git+https://github.com/rasbt/mlxtend.git"
 ```
 
-Or, you can fork the GitHub repository from https://github.com/rasbt/mlxtend and install mlxtend from your local drive via
+Or, you can fork the GitHub repository from https://github.com/rasbt/mlxtend and run mlxtend from your local checkout via
 
 ```bash
-python setup.py install
+git clone https://github.com/<your_username>/mlxtend.git
+cd mlxtend
+uv sync --group dev
+uv run python -c "import mlxtend; print(mlxtend.__version__)"
 ```
 
 <br>

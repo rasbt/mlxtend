@@ -1,0 +1,45 @@
+﻿2026-06-05T21:30:01.0264682Z Current runner version: '2.334.0'
+2026-06-05T21:30:01.0300327Z ##[group]Runner Image Provisioner
+2026-06-05T21:30:01.0301532Z Hosted Compute Agent
+2026-06-05T21:30:01.0302520Z Version: 20260520.533
+2026-06-05T21:30:01.0303674Z Commit: 189110e25284a9812c124fd27b339e2fb4f2f9db
+2026-06-05T21:30:01.0304882Z Build Date: 2026-05-20T17:44:04Z
+2026-06-05T21:30:01.0305978Z Worker ID: {6593473c-1578-4bdc-b383-0957ccdbe86a}
+2026-06-05T21:30:01.0307043Z Azure Region: eastus
+2026-06-05T21:30:01.0307985Z ##[endgroup]
+2026-06-05T21:30:01.0310119Z ##[group]Operating System
+2026-06-05T21:30:01.0311198Z Ubuntu
+2026-06-05T21:30:01.0312029Z 24.04.4
+2026-06-05T21:30:01.0312910Z LTS
+2026-06-05T21:30:01.0313932Z ##[endgroup]
+2026-06-05T21:30:01.0314770Z ##[group]Runner Image
+2026-06-05T21:30:01.0315761Z Image: ubuntu-24.04
+2026-06-05T21:30:01.0316677Z Version: 20260525.161.1
+2026-06-05T21:30:01.0318410Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260525.161/images/ubuntu/Ubuntu2404-Readme.md
+2026-06-05T21:30:01.0321068Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260525.161
+2026-06-05T21:30:01.0322717Z ##[endgroup]
+2026-06-05T21:30:01.0327616Z ##[group]GITHUB_TOKEN Permissions
+2026-06-05T21:30:01.0331051Z Actions: write
+2026-06-05T21:30:01.0332069Z ArtifactMetadata: write
+2026-06-05T21:30:01.0333149Z Attestations: write
+2026-06-05T21:30:01.0334282Z Checks: write
+2026-06-05T21:30:01.0335179Z CodeQuality: write
+2026-06-05T21:30:01.0336118Z Contents: write
+2026-06-05T21:30:01.0336936Z Deployments: write
+2026-06-05T21:30:01.0337878Z Discussions: write
+2026-06-05T21:30:01.0338757Z Issues: write
+2026-06-05T21:30:01.0339622Z Metadata: read
+2026-06-05T21:30:01.0340481Z Models: read
+2026-06-05T21:30:01.0341268Z Packages: write
+2026-06-05T21:30:01.0342316Z Pages: write
+2026-06-05T21:30:01.0343184Z PullRequests: write
+2026-06-05T21:30:01.0344355Z RepositoryProjects: write
+2026-06-05T21:30:01.0345328Z SecurityEvents: write
+2026-06-05T21:30:01.0346210Z Statuses: write
+2026-06-05T21:30:01.0347085Z VulnerabilityAlerts: read
+2026-06-05T21:30:01.0348144Z ##[endgroup]
+2026-06-05T21:30:01.0351366Z Secret source: Actions
+2026-06-05T21:30:01.0352457Z Prepare workflow directory
+2026-06-05T21:30:01.0817841Z Prepare all required actions
+2026-06-05T21:30:01.0871168Z Getting action download info
+2026-06-05T21:30:01.4158625Z ##[error]Unable to resolve action `astral-sh/setup-uv@v8`, unable to find version `v8`

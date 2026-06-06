@@ -478,7 +478,7 @@ def adjust_text(
     add_step_numbers=True,
     on_basemap=False,
     *args,
-    **kwargs
+    **kwargs,
 ):
     """Iteratively adjusts the locations of texts.
 
@@ -759,7 +759,7 @@ def adjust_text(
                 xytext=get_midpoint(bbox),
                 arrowprops=ap,
                 *args,
-                **kwargs
+                **kwargs,
             )
 
     if save_steps:

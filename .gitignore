@@ -1,3 +1,4 @@
+./temp
 # Test Suites
 htmlcov
 .coverage*
@@ -23,7 +24,6 @@ dist/
 MANIFEST
 
 # Temporary files
-uv.lock
 .coverage
 .ipynb_checkpoints
 

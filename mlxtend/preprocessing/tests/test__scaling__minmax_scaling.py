@@ -72,3 +72,46 @@ def test_numpy_minmax_scaling():
 
     np.testing.assert_allclose(df_out1, ary_out1, rtol=1e-03)
     assert (df_out2 == ary_out2).all()
+
+
+def test_minmax_scaling_constant_column_numpy():
+    # Regression for #1167: a constant column has zero range so the
+    # naive (x - min) / (max - min) computes 0/0 and produces NaN. The
+    # sibling `standardize` already collapses constant columns to 0.0;
+    # `minmax_scaling` should match that contract instead of returning
+    # NaN silently with a RuntimeWarning.
+    ary = np.array([[5, 1], [5, 2], [5, 3]])
+
+    out = minmax_scaling(ary, columns=[0, 1], min_val=0, max_val=1)
+
+    expected = np.array([[0.0, 0.0], [0.0, 0.5], [0.0, 1.0]])
+    assert not np.isnan(out).any(), (
+        "minmax_scaling produced NaN for a constant column; "
+        "expected the column to be flattened to min_val (0.0)."
+    )
+    np.testing.assert_allclose(out, expected, rtol=1e-03)
+
+
+def test_minmax_scaling_constant_column_pandas():
+    # Same as above, exercised through the pandas DataFrame branch so the
+    # `.loc`-based indexing path is covered too.
+    df = pd.DataFrame({"const": [5, 5, 5], "var": [1, 2, 3]})
+
+    out = minmax_scaling(df, columns=["const", "var"], min_val=0, max_val=1)
+
+    expected = np.array([[0.0, 0.0], [0.0, 0.5], [0.0, 1.0]])
+    assert not np.isnan(out.values).any()
+    np.testing.assert_allclose(out.values, expected, rtol=1e-03)
+
+
+def test_minmax_scaling_constant_column_custom_range():
+    # When `min_val` is non-zero, a flattened constant column should
+    # settle at `min_val` (the lower bound of the requested range),
+    # because every value is at the column minimum.
+    ary = np.array([[7, 1], [7, 2], [7, 3]])
+
+    out = minmax_scaling(ary, columns=[0, 1], min_val=50, max_val=100)
+
+    assert not np.isnan(out).any()
+    expected = np.array([[50.0, 50.0], [50.0, 75.0], [50.0, 100.0]])
+    np.testing.assert_allclose(out, expected, rtol=1e-03)

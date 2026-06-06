@@ -1,0 +1,727 @@
+﻿2026-06-05T21:46:13.9509648Z Current runner version: '2.334.0'
+2026-06-05T21:46:13.9534939Z ##[group]Runner Image Provisioner
+2026-06-05T21:46:13.9535889Z Hosted Compute Agent
+2026-06-05T21:46:13.9536504Z Version: 20260520.533
+2026-06-05T21:46:13.9537137Z Commit: 189110e25284a9812c124fd27b339e2fb4f2f9db
+2026-06-05T21:46:13.9538019Z Build Date: 2026-05-20T17:44:04Z
+2026-06-05T21:46:13.9538706Z Worker ID: {3264144a-4296-4ca9-818f-558160546e26}
+2026-06-05T21:46:13.9539518Z Azure Region: westcentralus
+2026-06-05T21:46:13.9540199Z ##[endgroup]
+2026-06-05T21:46:13.9541988Z ##[group]Operating System
+2026-06-05T21:46:13.9542771Z Ubuntu
+2026-06-05T21:46:13.9543316Z 24.04.4
+2026-06-05T21:46:13.9543903Z LTS
+2026-06-05T21:46:13.9544448Z ##[endgroup]
+2026-06-05T21:46:13.9545001Z ##[group]Runner Image
+2026-06-05T21:46:13.9545679Z Image: ubuntu-24.04
+2026-06-05T21:46:13.9546254Z Version: 20260525.161.1
+2026-06-05T21:46:13.9547567Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260525.161/images/ubuntu/Ubuntu2404-Readme.md
+2026-06-05T21:46:13.9549131Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260525.161
+2026-06-05T21:46:13.9550201Z ##[endgroup]
+2026-06-05T21:46:13.9553591Z ##[group]GITHUB_TOKEN Permissions
+2026-06-05T21:46:13.9555929Z Actions: write
+2026-06-05T21:46:13.9556584Z ArtifactMetadata: write
+2026-06-05T21:46:13.9557232Z Attestations: write
+2026-06-05T21:46:13.9557884Z Checks: write
+2026-06-05T21:46:13.9558450Z CodeQuality: write
+2026-06-05T21:46:13.9559046Z Contents: write
+2026-06-05T21:46:13.9559733Z Deployments: write
+2026-06-05T21:46:13.9560311Z Discussions: write
+2026-06-05T21:46:13.9560934Z Issues: write
+2026-06-05T21:46:13.9561862Z Metadata: read
+2026-06-05T21:46:13.9562473Z Models: read
+2026-06-05T21:46:13.9563125Z Packages: write
+2026-06-05T21:46:13.9563854Z Pages: write
+2026-06-05T21:46:13.9564514Z PullRequests: write
+2026-06-05T21:46:13.9565108Z RepositoryProjects: write
+2026-06-05T21:46:13.9565725Z SecurityEvents: write
+2026-06-05T21:46:13.9566383Z Statuses: write
+2026-06-05T21:46:13.9566998Z VulnerabilityAlerts: read
+2026-06-05T21:46:13.9567691Z ##[endgroup]
+2026-06-05T21:46:13.9569810Z Secret source: Actions
+2026-06-05T21:46:13.9570570Z Prepare workflow directory
+2026-06-05T21:46:13.9985948Z Prepare all required actions
+2026-06-05T21:46:14.0027362Z Getting action download info
+2026-06-05T21:46:14.4621193Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-06-05T21:46:14.5755647Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-06-05T21:46:14.6554029Z Download action repository 'astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b' (SHA:08807647e7069bb48b6ef5acd8ec9567f424441b)
+2026-06-05T21:46:15.5128835Z Download action repository 'codecov/codecov-action@v4' (SHA:b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238)
+2026-06-05T21:46:16.1983419Z Complete job name: build-linux
+2026-06-05T21:46:16.2904670Z ##[group]Run actions/checkout@v4
+2026-06-05T21:46:16.2906081Z with:
+2026-06-05T21:46:16.2906942Z   repository: rasbt/mlxtend
+2026-06-05T21:46:16.2918465Z   token: ***
+2026-06-05T21:46:16.2919333Z   ssh-strict: true
+2026-06-05T21:46:16.2920188Z   ssh-user: git
+2026-06-05T21:46:16.2921068Z   persist-credentials: true
+2026-06-05T21:46:16.2922197Z   clean: true
+2026-06-05T21:46:16.2923081Z   sparse-checkout-cone-mode: true
+2026-06-05T21:46:16.2924133Z   fetch-depth: 1
+2026-06-05T21:46:16.2924994Z   fetch-tags: false
+2026-06-05T21:46:16.2925883Z   show-progress: true
+2026-06-05T21:46:16.2926779Z   lfs: false
+2026-06-05T21:46:16.2927610Z   submodules: false
+2026-06-05T21:46:16.2928514Z   set-safe-directory: true
+2026-06-05T21:46:16.2929753Z env:
+2026-06-05T21:46:16.2930580Z   GITHUB_ACTIONS_CI: true
+2026-06-05T21:46:16.2931943Z ##[endgroup]
+2026-06-05T21:46:16.4089170Z Syncing repository: rasbt/mlxtend
+2026-06-05T21:46:16.4092190Z ##[group]Getting Git version info
+2026-06-05T21:46:16.4093687Z Working directory is '/home/runner/work/mlxtend/mlxtend'
+2026-06-05T21:46:16.4095742Z [command]/usr/bin/git version
+2026-06-05T21:46:16.4167191Z git version 2.54.0
+2026-06-05T21:46:16.4194478Z ##[endgroup]
+2026-06-05T21:46:16.4210067Z Temporarily overriding HOME='/home/runner/work/_temp/5d415e69-e728-4a20-b972-b3a49d8183b7' before making global git config changes
+2026-06-05T21:46:16.4213220Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-05T21:46:16.4216057Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/mlxtend/mlxtend
+2026-06-05T21:46:16.4259658Z Deleting the contents of '/home/runner/work/mlxtend/mlxtend'
+2026-06-05T21:46:16.4263469Z ##[group]Initializing the repository
+2026-06-05T21:46:16.4267347Z [command]/usr/bin/git init /home/runner/work/mlxtend/mlxtend
+2026-06-05T21:46:16.4367443Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-06-05T21:46:16.4370085Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-06-05T21:46:16.4373554Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-06-05T21:46:16.4377237Z hint: call:
+2026-06-05T21:46:16.4379402Z hint:
+2026-06-05T21:46:16.4380982Z hint: 	git config --global init.defaultBranch <name>
+2026-06-05T21:46:16.4382640Z hint:
+2026-06-05T21:46:16.4383915Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-06-05T21:46:16.4386426Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-06-05T21:46:16.4387992Z hint:
+2026-06-05T21:46:16.4388899Z hint: 	git branch -m <name>
+2026-06-05T21:46:16.4390007Z hint:
+2026-06-05T21:46:16.4392010Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-06-05T21:46:16.4394166Z Initialized empty Git repository in /home/runner/work/mlxtend/mlxtend/.git/
+2026-06-05T21:46:16.4397604Z [command]/usr/bin/git remote add origin https://github.com/rasbt/mlxtend
+2026-06-05T21:46:16.4437576Z ##[endgroup]
+2026-06-05T21:46:16.4439086Z ##[group]Disabling automatic garbage collection
+2026-06-05T21:46:16.4441099Z [command]/usr/bin/git config --local gc.auto 0
+2026-06-05T21:46:16.4470440Z ##[endgroup]
+2026-06-05T21:46:16.4472209Z ##[group]Setting up auth
+2026-06-05T21:46:16.4477461Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-05T21:46:16.4511415Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-05T21:46:16.4846365Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-05T21:46:16.4876718Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-05T21:46:16.5097011Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-05T21:46:16.5137171Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-05T21:46:16.5358655Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-06-05T21:46:16.5395278Z ##[endgroup]
+2026-06-05T21:46:16.5397968Z ##[group]Fetching the repository
+2026-06-05T21:46:16.5406683Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +9a8e4bbf40b249fb36d7e07f3ce3f04b8e794df0:refs/remotes/pull/1172/merge
+2026-06-05T21:46:18.1434039Z From https://github.com/rasbt/mlxtend
+2026-06-05T21:46:18.1435303Z  * [new ref]         9a8e4bbf40b249fb36d7e07f3ce3f04b8e794df0 -> pull/1172/merge
+2026-06-05T21:46:18.1471751Z ##[endgroup]
+2026-06-05T21:46:18.1472422Z ##[group]Determining the checkout info
+2026-06-05T21:46:18.1483328Z ##[endgroup]
+2026-06-05T21:46:18.1490383Z [command]/usr/bin/git sparse-checkout disable
+2026-06-05T21:46:18.1527960Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-06-05T21:46:18.1553736Z ##[group]Checking out the ref
+2026-06-05T21:46:18.1582383Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/1172/merge
+2026-06-05T21:46:18.2760055Z Note: switching to 'refs/remotes/pull/1172/merge'.
+2026-06-05T21:46:18.2760613Z 
+2026-06-05T21:46:18.2761072Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-06-05T21:46:18.2762300Z changes and commit them, and you can discard any commits you make in this
+2026-06-05T21:46:18.2763286Z state without impacting any branches by switching back to a branch.
+2026-06-05T21:46:18.2782075Z 
+2026-06-05T21:46:18.2804124Z If you want to create a new branch to retain commits you create, you may
+2026-06-05T21:46:18.2812558Z do so (now or later) by using -c with the switch command. Example:
+2026-06-05T21:46:18.2812870Z 
+2026-06-05T21:46:18.2813068Z   git switch -c <new-branch-name>
+2026-06-05T21:46:18.2813372Z 
+2026-06-05T21:46:18.2813559Z Or undo this operation with:
+2026-06-05T21:46:18.2813865Z 
+2026-06-05T21:46:18.2814030Z   git switch -
+2026-06-05T21:46:18.2815586Z 
+2026-06-05T21:46:18.2816010Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-06-05T21:46:18.2816603Z 
+2026-06-05T21:46:18.2817180Z HEAD is now at 9a8e4bb Merge f1bc51026782c6fb0c361fc9997b00885c0c9b63 into 4420064bbf8e21aa504e69a61b96f438b742e872
+2026-06-05T21:46:18.2818546Z ##[endgroup]
+2026-06-05T21:46:18.2843651Z [command]/usr/bin/git log -1 --format=%H
+2026-06-05T21:46:18.2868764Z 9a8e4bbf40b249fb36d7e07f3ce3f04b8e794df0
+2026-06-05T21:46:18.3112928Z ##[group]Run actions/setup-python@v5
+2026-06-05T21:46:18.3113239Z with:
+2026-06-05T21:46:18.3113459Z   python-version: 3.11
+2026-06-05T21:46:18.3113685Z   check-latest: false
+2026-06-05T21:46:18.3116843Z   token: ***
+2026-06-05T21:46:18.3117057Z   update-environment: true
+2026-06-05T21:46:18.3117300Z   allow-prereleases: false
+2026-06-05T21:46:18.3117558Z   freethreaded: false
+2026-06-05T21:46:18.3117763Z env:
+2026-06-05T21:46:18.3117965Z   GITHUB_ACTIONS_CI: true
+2026-06-05T21:46:18.3118184Z ##[endgroup]
+2026-06-05T21:46:18.4833716Z ##[group]Installed versions
+2026-06-05T21:46:18.4930911Z Successfully set up CPython (3.11.15)
+2026-06-05T21:46:18.4932090Z ##[endgroup]
+2026-06-05T21:46:18.5120988Z ##[group]Run astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
+2026-06-05T21:46:18.5121702Z with:
+2026-06-05T21:46:18.5121914Z   activate-environment: false
+2026-06-05T21:46:18.5122162Z   no-project: false
+2026-06-05T21:46:18.5122437Z   working-directory: /home/runner/work/mlxtend/mlxtend
+2026-06-05T21:46:18.5126120Z   github-token: ***
+2026-06-05T21:46:18.5126354Z   enable-cache: auto
+2026-06-05T21:46:18.5126925Z   cache-dependency-glob: **/*requirements*.txt
+**/*requirements*.in
+**/*constraints*.txt
+**/*constraints*.in
+**/pyproject.toml
+**/uv.lock
+**/*.py.lock
+
+2026-06-05T21:46:18.5127527Z   restore-cache: true
+2026-06-05T21:46:18.5127736Z   save-cache: true
+2026-06-05T21:46:18.5127936Z   prune-cache: true
+2026-06-05T21:46:18.5128163Z   cache-python: false
+2026-06-05T21:46:18.5128407Z   ignore-nothing-to-cache: false
+2026-06-05T21:46:18.5128682Z   ignore-empty-workdir: false
+2026-06-05T21:46:18.5128935Z   add-problem-matchers: true
+2026-06-05T21:46:18.5129209Z   resolution-strategy: highest
+2026-06-05T21:46:18.5129439Z env:
+2026-06-05T21:46:18.5129619Z   GITHUB_ACTIONS_CI: true
+2026-06-05T21:46:18.5129914Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:18.5130361Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
+2026-06-05T21:46:18.5130789Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:18.5131162Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:18.5131855Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:18.5132249Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
+2026-06-05T21:46:18.5132565Z ##[endgroup]
+2026-06-05T21:46:18.6913985Z Trying to find version for uv in: /home/runner/work/mlxtend/mlxtend/uv.toml
+2026-06-05T21:46:18.6924200Z Could not find file: /home/runner/work/mlxtend/mlxtend/uv.toml
+2026-06-05T21:46:18.6925044Z Trying to find version for uv in: /home/runner/work/mlxtend/mlxtend/pyproject.toml
+2026-06-05T21:46:18.6925702Z Could not determine uv version from uv.toml or pyproject.toml. Falling back to latest.
+2026-06-05T21:46:18.6926646Z Fetching manifest data from https://raw.githubusercontent.com/astral-sh/versions/main/v1/uv.ndjson ...
+2026-06-05T21:46:18.8369048Z Downloading uv from "https://releases.astral.sh/github/uv/releases/download/0.11.19/uv-x86_64-unknown-linux-gnu.tar.gz" ...
+2026-06-05T21:46:19.2278376Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/1e55a3fb-270d-4bca-9ce6-b287415ee8f9 -f /home/runner/work/_temp/3a333580-5ac1-4763-bf0f-4167f6df8fa4
+2026-06-05T21:46:19.7111557Z Added /home/runner/.local/bin to the path
+2026-06-05T21:46:19.7115381Z Added /opt/hostedtoolcache/uv/0.11.19/x86_64 to the path
+2026-06-05T21:46:19.7116964Z Set UV_PYTHON_INSTALL_DIR to /home/runner/work/_temp/uv-python-dir
+2026-06-05T21:46:19.7118127Z Added /home/runner/work/_temp/uv-python-dir to the path
+2026-06-05T21:46:19.7127792Z Set UV_CACHE_DIR to /home/runner/work/_temp/setup-uv-cache
+2026-06-05T21:46:19.7128182Z Successfully installed uv version 0.11.19
+2026-06-05T21:46:19.8130228Z Searching files using cache dependency glob: /home/runner/work/mlxtend/mlxtend/**/*requirements*.txt,/home/runner/work/mlxtend/mlxtend/**/*requirements*.in,/home/runner/work/mlxtend/mlxtend/**/*constraints*.txt,/home/runner/work/mlxtend/mlxtend/**/*constraints*.in,/home/runner/work/mlxtend/mlxtend/**/pyproject.toml,/home/runner/work/mlxtend/mlxtend/**/uv.lock,/home/runner/work/mlxtend/mlxtend/**/*.py.lock
+2026-06-05T21:46:19.9429217Z /home/runner/work/mlxtend/mlxtend/pyproject.toml
+2026-06-05T21:46:19.9446915Z /home/runner/work/mlxtend/mlxtend/requirements.txt
+2026-06-05T21:46:19.9466187Z Found 2 files to hash.
+2026-06-05T21:46:19.9537137Z Trying to restore cache from GitHub Actions cache with key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.11.15-pruned-8d5ce4b1053ebcaaec81c9e46e3fcdb2271bd0f215114dd82e633d0bf00c4e97
+2026-06-05T21:46:20.1418342Z No GitHub Actions cache found for key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.11.15-pruned-8d5ce4b1053ebcaaec81c9e46e3fcdb2271bd0f215114dd82e633d0bf00c4e97
+2026-06-05T21:46:20.2066983Z ##[group]Run uv sync --group dev --python 3.11
+2026-06-05T21:46:20.2067400Z [36;1muv sync --group dev --python 3.11[0m
+2026-06-05T21:46:20.2097805Z shell: /usr/bin/bash -e {0}
+2026-06-05T21:46:20.2098057Z env:
+2026-06-05T21:46:20.2098247Z   GITHUB_ACTIONS_CI: true
+2026-06-05T21:46:20.2098547Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:20.2098978Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
+2026-06-05T21:46:20.2099393Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:20.2099765Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:20.2100174Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:20.2100550Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
+2026-06-05T21:46:20.2100946Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+2026-06-05T21:46:20.2101646Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-06-05T21:46:20.2101985Z ##[endgroup]
+2026-06-05T21:46:20.2644541Z Using CPython 3.11.15 interpreter at: /opt/hostedtoolcache/Python/3.11.15/x64/bin/python3.11
+2026-06-05T21:46:20.2645059Z Creating virtual environment at: .venv
+2026-06-05T21:46:22.0798321Z Resolved 111 packages in 1.81s
+2026-06-05T21:46:22.0916445Z    Building mlxtend @ file:///home/runner/work/mlxtend/mlxtend
+2026-06-05T21:46:22.1599671Z Downloading pygments (1.2MiB)
+2026-06-05T21:46:22.1626031Z Downloading kiwisolver (1.4MiB)
+2026-06-05T21:46:22.1941639Z Downloading cryptography (4.5MiB)
+2026-06-05T21:46:22.1954527Z Downloading fonttools (4.8MiB)
+2026-06-05T21:46:22.1958188Z Downloading numpy (16.1MiB)
+2026-06-05T21:46:22.1960558Z Downloading scikit-learn (8.9MiB)
+2026-06-05T21:46:22.1972818Z Downloading scipy (33.7MiB)
+2026-06-05T21:46:22.1973439Z Downloading black (1.8MiB)
+2026-06-05T21:46:22.1973910Z Downloading pillow (6.8MiB)
+2026-06-05T21:46:22.1982097Z Downloading virtualenv (7.2MiB)
+2026-06-05T21:46:22.1982992Z Downloading pandas (10.8MiB)
+2026-06-05T21:46:22.2005000Z Downloading matplotlib (8.4MiB)
+2026-06-05T21:46:22.3807001Z       Built mlxtend @ file:///home/runner/work/mlxtend/mlxtend
+2026-06-05T21:46:22.6061073Z  Downloaded kiwisolver
+2026-06-05T21:46:22.7348006Z  Downloaded black
+2026-06-05T21:46:22.8535790Z  Downloaded pygments
+2026-06-05T21:46:22.9745736Z  Downloaded cryptography
+2026-06-05T21:46:22.9821571Z  Downloaded fonttools
+2026-06-05T21:46:23.1245262Z  Downloaded pillow
+2026-06-05T21:46:23.1660987Z  Downloaded virtualenv
+2026-06-05T21:46:23.3213261Z  Downloaded matplotlib
+2026-06-05T21:46:23.3535839Z  Downloaded scikit-learn
+2026-06-05T21:46:23.5982762Z  Downloaded numpy
+2026-06-05T21:46:23.8305566Z  Downloaded pandas
+2026-06-05T21:46:23.8342106Z  Downloaded scipy
+2026-06-05T21:46:23.8345030Z Prepared 73 packages in 1.74s
+2026-06-05T21:46:23.9162042Z Installed 73 packages in 81ms
+2026-06-05T21:46:23.9162659Z  + backports-tarfile==1.2.0
+2026-06-05T21:46:23.9163137Z  + black==26.5.1
+2026-06-05T21:46:23.9163572Z  + build==1.5.0
+2026-06-05T21:46:23.9163965Z  + certifi==2026.5.20
+2026-06-05T21:46:23.9164373Z  + cffi==2.0.0
+2026-06-05T21:46:23.9164757Z  + cfgv==3.5.0
+2026-06-05T21:46:23.9165173Z  + charset-normalizer==3.4.7
+2026-06-05T21:46:23.9165649Z  + click==8.4.1
+2026-06-05T21:46:23.9166284Z  + contourpy==1.3.3
+2026-06-05T21:46:23.9166683Z  + coverage==7.14.1
+2026-06-05T21:46:23.9167195Z  + cryptography==48.0.0
+2026-06-05T21:46:23.9167653Z  + cycler==0.12.1
+2026-06-05T21:46:23.9168269Z  + distlib==0.4.1
+2026-06-05T21:46:23.9168677Z  + docutils==0.23
+2026-06-05T21:46:23.9169260Z  + filelock==3.29.1
+2026-06-05T21:46:23.9169847Z  + flake8==7.3.0
+2026-06-05T21:46:23.9170220Z  + fonttools==4.63.0
+2026-06-05T21:46:23.9170761Z  + id==1.6.1
+2026-06-05T21:46:23.9171165Z  + identify==2.6.19
+2026-06-05T21:46:23.9171839Z  + idna==3.18
+2026-06-05T21:46:23.9172208Z  + importlib-metadata==9.0.0
+2026-06-05T21:46:23.9172625Z  + iniconfig==2.3.0
+2026-06-05T21:46:23.9172977Z  + isort==8.0.1
+2026-06-05T21:46:23.9173332Z  + jaraco-classes==3.4.0
+2026-06-05T21:46:23.9174038Z  + jaraco-context==6.1.2
+2026-06-05T21:46:23.9174456Z  + jaraco-functools==4.5.0
+2026-06-05T21:46:23.9174856Z  + jeepney==0.9.0
+2026-06-05T21:46:23.9175207Z  + joblib==1.5.3
+2026-06-05T21:46:23.9175546Z  + keyring==25.7.0
+2026-06-05T21:46:23.9175899Z  + kiwisolver==1.5.0
+2026-06-05T21:46:23.9176273Z  + markdown-it-py==4.2.0
+2026-06-05T21:46:23.9176658Z  + matplotlib==3.10.9
+2026-06-05T21:46:23.9177008Z  + mccabe==0.7.0
+2026-06-05T21:46:23.9177342Z  + mdurl==0.1.2
+2026-06-05T21:46:23.9177860Z  + mlxtend==0.24.0 (from file:///home/runner/work/mlxtend/mlxtend)
+2026-06-05T21:46:23.9178462Z  + more-itertools==11.1.0
+2026-06-05T21:46:23.9178867Z  + mypy-extensions==1.1.0
+2026-06-05T21:46:23.9179242Z  + narwhals==2.22.1
+2026-06-05T21:46:23.9179573Z  + nh3==0.3.5
+2026-06-05T21:46:23.9179890Z  + nodeenv==1.10.0
+2026-06-05T21:46:23.9180220Z  + numpy==2.4.6
+2026-06-05T21:46:23.9180560Z  + packaging==26.2
+2026-06-05T21:46:23.9180895Z  + pandas==3.0.3
+2026-06-05T21:46:23.9181428Z  + pathspec==1.1.1
+2026-06-05T21:46:23.9181782Z  + pillow==12.2.0
+2026-06-05T21:46:23.9182122Z  + platformdirs==4.10.0
+2026-06-05T21:46:23.9182481Z  + pluggy==1.6.0
+2026-06-05T21:46:23.9182809Z  + pre-commit==4.6.0
+2026-06-05T21:46:23.9183164Z  + pycodestyle==2.14.0
+2026-06-05T21:46:23.9183522Z  + pycparser==3.0
+2026-06-05T21:46:23.9183848Z  + pyflakes==3.4.0
+2026-06-05T21:46:23.9184179Z  + pygments==2.20.0
+2026-06-05T21:46:23.9184511Z  + pyparsing==3.3.2
+2026-06-05T21:46:23.9184870Z  + pyproject-hooks==1.2.0
+2026-06-05T21:46:23.9185236Z  + pytest==9.0.3
+2026-06-05T21:46:23.9185593Z  + python-dateutil==2.9.0.post0
+2026-06-05T21:46:23.9186014Z  + python-discovery==1.4.0
+2026-06-05T21:46:23.9186615Z  + pytokens==0.4.1
+2026-06-05T21:46:23.9186946Z  + pyyaml==6.0.3
+2026-06-05T21:46:23.9187291Z  + readme-renderer==44.0
+2026-06-05T21:46:23.9187664Z  + requests==2.34.2
+2026-06-05T21:46:23.9188183Z  + requests-toolbelt==1.0.0
+2026-06-05T21:46:23.9188597Z  + rfc3986==2.0.0
+2026-06-05T21:46:23.9188924Z  + rich==15.0.0
+2026-06-05T21:46:23.9189257Z  + scikit-learn==1.9.0
+2026-06-05T21:46:23.9189573Z  + scipy==1.17.1
+2026-06-05T21:46:23.9189879Z  + secretstorage==3.5.0
+2026-06-05T21:46:23.9190197Z  + six==1.17.0
+2026-06-05T21:46:23.9190509Z  + threadpoolctl==3.6.0
+2026-06-05T21:46:23.9190830Z  + twine==6.2.0
+2026-06-05T21:46:23.9191114Z  + urllib3==2.7.0
+2026-06-05T21:46:23.9191923Z  + virtualenv==21.4.2
+2026-06-05T21:46:23.9192267Z  + zipp==4.1.0
+2026-06-05T21:46:23.9397741Z ##[group]Run uv run --group dev python -c "import numpy; print('NumPy:', numpy.__version__)"
+2026-06-05T21:46:23.9398433Z [36;1muv run --group dev python -c "import numpy; print('NumPy:', numpy.__version__)"[0m
+2026-06-05T21:46:23.9399012Z [36;1muv run --group dev python -c "import scipy; print('SciPy:', scipy.__version__)"[0m
+2026-06-05T21:46:23.9399610Z [36;1muv run --group dev python -c "import sklearn; print('Scikit-learn:', sklearn.__version__)"[0m
+2026-06-05T21:46:23.9400199Z [36;1muv run --group dev python -c "import pandas; print('Pandas:', pandas.__version__)"[0m
+2026-06-05T21:46:23.9427168Z shell: /usr/bin/bash -e {0}
+2026-06-05T21:46:23.9427417Z env:
+2026-06-05T21:46:23.9427606Z   GITHUB_ACTIONS_CI: true
+2026-06-05T21:46:23.9427903Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:23.9428345Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
+2026-06-05T21:46:23.9428813Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:23.9429187Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:23.9429558Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:23.9429937Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
+2026-06-05T21:46:23.9430321Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+2026-06-05T21:46:23.9430688Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-06-05T21:46:23.9430974Z ##[endgroup]
+2026-06-05T21:46:24.2857221Z NumPy: 2.4.6
+2026-06-05T21:46:24.4371853Z SciPy: 1.17.1
+2026-06-05T21:46:28.2483348Z Scikit-learn: 1.9.0
+2026-06-05T21:46:28.6834964Z Pandas: 3.0.3
+2026-06-05T21:46:28.7262109Z ##[group]Run uv run --group dev python -m coverage run --source=mlxtend --branch -m pytest mlxtend
+2026-06-05T21:46:28.7263321Z [36;1muv run --group dev python -m coverage run --source=mlxtend --branch -m pytest mlxtend[0m
+2026-06-05T21:46:28.7264165Z [36;1muv run --group dev python -m coverage xml[0m
+2026-06-05T21:46:28.7303597Z shell: /usr/bin/bash -e {0}
+2026-06-05T21:46:28.7304039Z env:
+2026-06-05T21:46:28.7304369Z   GITHUB_ACTIONS_CI: true
+2026-06-05T21:46:28.7304901Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:28.7305658Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
+2026-06-05T21:46:28.7306408Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:28.7307089Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:28.7307776Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:28.7308511Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
+2026-06-05T21:46:28.7309276Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+2026-06-05T21:46:28.7309926Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-06-05T21:46:28.7310446Z ##[endgroup]
+2026-06-05T21:46:36.4784977Z ============================= test session starts ==============================
+2026-06-05T21:46:36.4786462Z platform linux -- Python 3.11.15, pytest-9.0.3, pluggy-1.6.0
+2026-06-05T21:46:36.4787721Z rootdir: /home/runner/work/mlxtend/mlxtend
+2026-06-05T21:46:36.4788696Z configfile: pyproject.toml
+2026-06-05T21:46:36.4789763Z collected 704 items
+2026-06-05T21:46:36.4790055Z 
+2026-06-05T21:46:36.4838200Z mlxtend/_base/tests/test_base_model.py ....                              [  0%]
+2026-06-05T21:46:36.4941651Z mlxtend/_base/tests/test_classifier.py .........                         [  1%]
+2026-06-05T21:46:36.5056467Z mlxtend/_base/tests/test_cluster.py ..........                           [  3%]
+2026-06-05T21:46:36.5148893Z mlxtend/_base/tests/test_iterative_model.py .......                      [  4%]
+2026-06-05T21:46:36.5186025Z mlxtend/_base/tests/test_multiclass.py ...                               [  4%]
+2026-06-05T21:46:36.5226973Z mlxtend/_base/tests/test_multilayer.py ...                               [  5%]
+2026-06-05T21:46:36.5293670Z mlxtend/_base/tests/test_regressor.py ......                             [  5%]
+2026-06-05T21:46:36.7195917Z mlxtend/classifier/tests/test_adaline.py ............                    [  7%]
+2026-06-05T21:46:53.0472585Z mlxtend/classifier/tests/test_ensemble_vote_classifier.py ...F.......... [  9%]
+2026-06-05T21:46:53.3316812Z ..                                                                       [  9%]
+2026-06-05T21:46:54.5284991Z mlxtend/classifier/tests/test_logistic_regression.py ..............      [ 11%]
+2026-06-05T21:46:55.0975967Z mlxtend/classifier/tests/test_multilayerperceptron.py ..............     [ 13%]
+2026-06-05T21:46:55.1159191Z mlxtend/classifier/tests/test_oner.py ...                                [ 14%]
+2026-06-05T21:46:55.4903937Z mlxtend/classifier/tests/test_perceptron.py .........                    [ 15%]
+2026-06-05T21:46:56.4630914Z mlxtend/classifier/tests/test_softmax_regression.py .............        [ 17%]
+2026-06-05T21:47:10.7412613Z mlxtend/classifier/tests/test_stacking_classifier.py ...F............... [ 20%]
+2026-06-05T21:47:11.6163814Z ........                                                                 [ 21%]
+2026-06-05T21:47:44.0532642Z mlxtend/classifier/tests/test_stacking_cv_classifier.py ..F............. [ 23%]
+2026-06-05T21:47:47.1917572Z ...........                                                              [ 25%]
+2026-06-05T21:47:47.2459659Z mlxtend/cluster/tests/test_kmeans.py .........                           [ 26%]
+2026-06-05T21:47:49.6009922Z mlxtend/data/tests/test_datasets.py ......                               [ 27%]
+2026-06-05T21:47:49.6094928Z mlxtend/data/tests/test_iris.py ...                                      [ 27%]
+2026-06-05T21:47:49.6796005Z mlxtend/data/tests/test_multiplexer.py ......                            [ 28%]
+2026-06-05T21:47:49.6863470Z mlxtend/evaluate/tests/test_accuracy.py .....                            [ 29%]
+2026-06-05T21:48:02.6790632Z mlxtend/evaluate/tests/test_bias_variance_decomp.py .....s               [ 30%]
+2026-06-05T21:48:02.7080796Z mlxtend/evaluate/tests/test_bootstrap.py ...                             [ 30%]
+2026-06-05T21:48:02.7172076Z mlxtend/evaluate/tests/test_bootstrap_outofbag.py ....                   [ 31%]
+2026-06-05T21:48:29.4512284Z mlxtend/evaluate/tests/test_bootstrap_point632.py ..........s            [ 32%]
+2026-06-05T21:48:29.4601714Z mlxtend/evaluate/tests/test_cochran_q.py ......                          [ 33%]
+2026-06-05T21:48:31.1922531Z mlxtend/evaluate/tests/test_combined_ftest_5x2cv.py ...                  [ 33%]
+2026-06-05T21:48:31.1961986Z mlxtend/evaluate/tests/test_confusion_matrix.py ..                       [ 34%]
+2026-06-05T21:48:32.0081588Z mlxtend/evaluate/tests/test_counterfactual.py .....                      [ 34%]
+2026-06-05T21:48:32.0144554Z mlxtend/evaluate/tests/test_f_test.py .....                              [ 35%]
+2026-06-05T21:48:34.0412291Z mlxtend/evaluate/tests/test_feature_importance.py .........              [ 36%]
+2026-06-05T21:48:34.2188034Z mlxtend/evaluate/tests/test_holdout.py ......                            [ 37%]
+2026-06-05T21:48:34.2289976Z mlxtend/evaluate/tests/test_lift_score.py ........                       [ 38%]
+2026-06-05T21:48:34.2374195Z mlxtend/evaluate/tests/test_mcnemar_table.py .......                     [ 39%]
+2026-06-05T21:48:34.2471903Z mlxtend/evaluate/tests/test_mcnemar_tables.py ........                   [ 41%]
+2026-06-05T21:48:34.2541357Z mlxtend/evaluate/tests/test_mcnemar_test.py .....                        [ 41%]
+2026-06-05T21:48:35.9682724Z mlxtend/evaluate/tests/test_paired_ttest_5x2cv.py ...                    [ 42%]
+2026-06-05T21:48:37.7072220Z mlxtend/evaluate/tests/test_paired_ttest_kfold.py ...                    [ 42%]
+2026-06-05T21:48:42.7018444Z mlxtend/evaluate/tests/test_paired_ttest_resampled.py ....               [ 43%]
+2026-06-05T21:48:53.1365522Z mlxtend/evaluate/tests/test_permutation.py ..........                    [ 44%]
+2026-06-05T21:48:53.1383948Z mlxtend/evaluate/tests/test_proportion_difference.py .                   [ 44%]
+2026-06-05T21:48:53.1577094Z mlxtend/evaluate/tests/test_scoring.py ................                  [ 47%]
+2026-06-05T21:48:53.2038605Z mlxtend/evaluate/tests/test_time_series.py .......................       [ 50%]
+2026-06-05T21:48:53.2099004Z mlxtend/feature_extraction/tests/test_base.py .....                      [ 50%]
+2026-06-05T21:48:53.2271953Z mlxtend/feature_extraction/tests/test_kernel_pca.py ........             [ 52%]
+2026-06-05T21:48:53.2341743Z mlxtend/feature_extraction/tests/test_linear_discriminant_analysis.py .. [ 52%]
+2026-06-05T21:48:53.2461580Z ....                                                                     [ 52%]
+2026-06-05T21:48:53.2551824Z mlxtend/feature_extraction/tests/test_principal_component_analysis.py .. [ 53%]
+2026-06-05T21:48:53.2851761Z .........                                                                [ 54%]
+2026-06-05T21:48:54.6378270Z mlxtend/feature_selection/tests/test_column_selector.py .......          [ 55%]
+2026-06-05T21:48:54.7082033Z mlxtend/feature_selection/tests/test_exhaustive_feature_selector.py .... [ 56%]
+2026-06-05T21:48:58.7332076Z ..F................                                                      [ 58%]
+2026-06-05T21:49:02.7041196Z mlxtend/feature_selection/tests/test_sequential_feature_selector.py .... [ 59%]
+2026-06-05T21:50:00.0703238Z .........................................                                [ 65%]
+2026-06-05T21:50:00.1793061Z mlxtend/feature_selection/tests/test_sequential_feature_selector_feature_groups.py . [ 65%]
+2026-06-05T21:50:09.8242500Z .........                                                                [ 66%]
+2026-06-05T21:50:09.9010480Z mlxtend/feature_selection/tests/test_sequential_feature_selector_fixed_features.py . [ 66%]
+2026-06-05T21:50:10.5731716Z ..........                                                               [ 68%]
+2026-06-05T21:50:10.8378637Z mlxtend/frequent_patterns/tests/test_apriori.py ........................ [ 71%]
+2026-06-05T21:50:10.8386473Z                                                                          [ 71%]
+2026-06-05T21:50:11.0158932Z mlxtend/frequent_patterns/tests/test_association_rules.py .............. [ 73%]
+2026-06-05T21:50:11.0565699Z ......                                                                   [ 74%]
+2026-06-05T21:50:12.9891012Z mlxtend/frequent_patterns/tests/test_fpgrowth.py ...................     [ 77%]
+2026-06-05T21:50:13.1393833Z mlxtend/frequent_patterns/tests/test_fpmax.py .................          [ 79%]
+2026-06-05T21:50:13.3422649Z mlxtend/frequent_patterns/tests/test_hmine.py ...................        [ 82%]
+2026-06-05T21:50:13.3483761Z mlxtend/math/tests/test_counting.py ...                                  [ 82%]
+2026-06-05T21:50:13.3516066Z mlxtend/math/tests/test_linalg.py ..                                     [ 82%]
+2026-06-05T21:50:13.3697114Z mlxtend/preprocessing/tests/test__scaling__minmax_scaling.py ...         [ 83%]
+2026-06-05T21:50:13.4024677Z mlxtend/preprocessing/tests/test__scaling__standardizing.py .........    [ 84%]
+2026-06-05T21:50:13.5472236Z mlxtend/preprocessing/tests/test_copy_transformer.py ....                [ 85%]
+2026-06-05T21:50:13.7421087Z mlxtend/preprocessing/tests/test_dense_transformer.py ...                [ 85%]
+2026-06-05T21:50:13.7460968Z mlxtend/preprocessing/tests/test_mean_centering.py ...                   [ 86%]
+2026-06-05T21:50:13.7544377Z mlxtend/preprocessing/tests/test_onehot.py .......                       [ 87%]
+2026-06-05T21:50:13.7559755Z mlxtend/preprocessing/tests/test_shuffle_shuffle_arrays_unison.py .      [ 87%]
+2026-06-05T21:50:13.7665654Z mlxtend/preprocessing/tests/test_transactionencoder.py ........          [ 88%]
+2026-06-05T21:50:24.5867896Z mlxtend/regressor/tests/test_linear_regression.py ................       [ 90%]
+2026-06-05T21:50:31.9457650Z mlxtend/regressor/tests/test_stacking_cv_regression.py ................. [ 93%]
+2026-06-05T21:50:32.0554986Z ..s                                                                      [ 93%]
+2026-06-05T21:50:33.4445017Z mlxtend/regressor/tests/test_stacking_regression.py .................... [ 96%]
+2026-06-05T21:50:33.5172573Z ..                                                                       [ 96%]
+2026-06-05T21:50:33.5197540Z mlxtend/text/tests/test_generalize_names.py .                            [ 96%]
+2026-06-05T21:50:33.5492359Z mlxtend/text/tests/test_generalize_names_duplcheck.py .                  [ 96%]
+2026-06-05T21:50:33.5521239Z mlxtend/text/tests/test_tokenizer.py ..                                  [ 97%]
+2026-06-05T21:50:33.5705165Z mlxtend/utils/tests/test_checking_inputs.py .................            [ 99%]
+2026-06-05T21:50:33.5720568Z mlxtend/utils/tests/test_counter.py .                                    [ 99%]
+2026-06-05T21:50:33.5803895Z mlxtend/utils/tests/test_testing.py ..                                   [100%]
+2026-06-05T21:50:33.5804531Z 
+2026-06-05T21:50:33.5804781Z =================================== FAILURES ===================================
+2026-06-05T21:50:33.5805502Z ______________________________ test_sample_weight ______________________________
+2026-06-05T21:50:33.5805974Z 
+2026-06-05T21:50:33.5806145Z     def test_sample_weight():
+2026-06-05T21:50:33.5806575Z         # with no weight
+2026-06-05T21:50:33.5806969Z         np.random.seed(123)
+2026-06-05T21:50:33.5807514Z         clf1 = LogisticRegression(solver="lbfgs", max_iter=500)
+2026-06-05T21:50:33.5808180Z         clf2 = RandomForestClassifier(n_estimators=10)
+2026-06-05T21:50:33.5808711Z         clf3 = GaussianNB()
+2026-06-05T21:50:33.5809302Z         eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting="hard")
+2026-06-05T21:50:33.5809993Z         prob1 = eclf.fit(X, y).predict_proba(X)
+2026-06-05T21:50:33.5810468Z     
+2026-06-05T21:50:33.5811072Z         # with weight = 1
+2026-06-05T21:50:33.5811813Z         w = np.ones(len(y))
+2026-06-05T21:50:33.5812230Z         np.random.seed(123)
+2026-06-05T21:50:33.5812744Z         clf1 = LogisticRegression(solver="lbfgs", max_iter=500)
+2026-06-05T21:50:33.5813403Z         clf2 = RandomForestClassifier(n_estimators=10)
+2026-06-05T21:50:33.5813925Z         clf3 = GaussianNB()
+2026-06-05T21:50:33.5814510Z         eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting="hard")
+2026-06-05T21:50:33.5815281Z         prob2 = eclf.fit(X, y, sample_weight=w).predict_proba(X)
+2026-06-05T21:50:33.5815826Z     
+2026-06-05T21:50:33.5816126Z         # with random weight
+2026-06-05T21:50:33.5816513Z         random.seed(87)
+2026-06-05T21:50:33.5816959Z         w = np.array([random.random() for _ in range(len(y))])
+2026-06-05T21:50:33.5817481Z         np.random.seed(123)
+2026-06-05T21:50:33.5817956Z         clf1 = LogisticRegression(solver="lbfgs", max_iter=500)
+2026-06-05T21:50:33.5818567Z         clf2 = RandomForestClassifier(n_estimators=10)
+2026-06-05T21:50:33.5819063Z         clf3 = GaussianNB()
+2026-06-05T21:50:33.5819613Z         eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting="hard")
+2026-06-05T21:50:33.5820344Z         prob3 = eclf.fit(X, y, sample_weight=w).predict_proba(X)
+2026-06-05T21:50:33.5820857Z     
+2026-06-05T21:50:33.5821200Z         diff12 = np.max(np.abs(prob1 - prob2))
+2026-06-05T21:50:33.5821925Z         diff23 = np.max(np.abs(prob2 - prob3))
+2026-06-05T21:50:33.5822488Z >       assert diff12 < 1e-3, "max diff is %.4f" % diff12
+2026-06-05T21:50:33.5823288Z E       AssertionError: max diff is 0.1333
+2026-06-05T21:50:33.5823802Z E       assert np.float64(0.13333333333333336) < 0.001
+2026-06-05T21:50:33.5824154Z 
+2026-06-05T21:50:33.5824527Z mlxtend/classifier/tests/test_ensemble_vote_classifier.py:110: AssertionError
+2026-06-05T21:50:33.5825315Z ______________________________ test_sample_weight ______________________________
+2026-06-05T21:50:33.5825735Z 
+2026-06-05T21:50:33.5825887Z     def test_sample_weight():
+2026-06-05T21:50:33.5826234Z         # Make sure that:
+2026-06-05T21:50:33.5826575Z         #    prediction with weight
+2026-06-05T21:50:33.5826973Z         # != prediction with no weight
+2026-06-05T21:50:33.5827369Z         # == prediction with weight ones
+2026-06-05T21:50:33.5827758Z         random.seed(87)
+2026-06-05T21:50:33.5828152Z         w = np.array([random.random() for _ in range(len(y))])
+2026-06-05T21:50:33.5828591Z     
+2026-06-05T21:50:33.5828859Z         np.random.seed(123)
+2026-06-05T21:50:33.5829265Z         meta = LogisticRegression(solver="lbfgs")
+2026-06-05T21:50:33.5829747Z         clf1 = RandomForestClassifier(n_estimators=10)
+2026-06-05T21:50:33.5830193Z         clf2 = GaussianNB()
+2026-06-05T21:50:33.5830708Z         sclf = StackingClassifier(classifiers=[clf1, clf2], meta_classifier=meta)
+2026-06-05T21:50:33.5831624Z         prob1 = sclf.fit(X, y, sample_weight=w).predict_proba(X)
+2026-06-05T21:50:33.5832089Z     
+2026-06-05T21:50:33.5832430Z         np.random.seed(123)
+2026-06-05T21:50:33.5832807Z         meta = LogisticRegression(solver="lbfgs")
+2026-06-05T21:50:33.5833290Z         clf1 = RandomForestClassifier(n_estimators=10)
+2026-06-05T21:50:33.5833717Z         clf2 = GaussianNB()
+2026-06-05T21:50:33.5834217Z         sclf = StackingClassifier(classifiers=[clf1, clf2], meta_classifier=meta)
+2026-06-05T21:50:33.5834890Z         prob2 = sclf.fit(X, y, sample_weight=None).predict_proba(X)
+2026-06-05T21:50:33.5835354Z     
+2026-06-05T21:50:33.5835647Z         maxdiff = np.max(np.abs(prob1 - prob2))
+2026-06-05T21:50:33.5836125Z         assert maxdiff > 1e-3, "max diff is %.4f" % maxdiff
+2026-06-05T21:50:33.5836556Z     
+2026-06-05T21:50:33.5836810Z         np.random.seed(123)
+2026-06-05T21:50:33.5837175Z         meta = LogisticRegression(solver="lbfgs")
+2026-06-05T21:50:33.5837660Z         clf1 = RandomForestClassifier(n_estimators=10)
+2026-06-05T21:50:33.5838088Z         clf2 = GaussianNB()
+2026-06-05T21:50:33.5838824Z         sclf = StackingClassifier(classifiers=[clf1, clf2], meta_classifier=meta)
+2026-06-05T21:50:33.5839554Z         prob3 = sclf.fit(X, y, sample_weight=np.ones(len(y))).predict_proba(X)
+2026-06-05T21:50:33.5840066Z     
+2026-06-05T21:50:33.5840349Z         maxdiff = np.max(np.abs(prob2 - prob3))
+2026-06-05T21:50:33.5840811Z >       assert maxdiff < 1e-3, "max diff is %.4f" % maxdiff
+2026-06-05T21:50:33.5841459Z E       AssertionError: max diff is 0.7115
+2026-06-05T21:50:33.5841918Z E       assert np.float64(0.7114642106488971) < 0.001
+2026-06-05T21:50:33.5842213Z 
+2026-06-05T21:50:33.5842520Z mlxtend/classifier/tests/test_stacking_classifier.py:132: AssertionError
+2026-06-05T21:50:33.5843220Z ______________________________ test_sample_weight ______________________________
+2026-06-05T21:50:33.5843634Z 
+2026-06-05T21:50:33.5843774Z     def test_sample_weight():
+2026-06-05T21:50:33.5844131Z         # with no weight given
+2026-06-05T21:50:33.5844476Z         np.random.seed(123)
+2026-06-05T21:50:33.5844858Z         meta = LogisticRegression(solver="lbfgs")
+2026-06-05T21:50:33.5845340Z         clf1 = RandomForestClassifier(n_estimators=10)
+2026-06-05T21:50:33.5845771Z         clf2 = GaussianNB()
+2026-06-05T21:50:33.5846122Z         sclf = StackingCVClassifier(
+2026-06-05T21:50:33.5846636Z             classifiers=[clf1, clf2], meta_classifier=meta, shuffle=False
+2026-06-05T21:50:33.5847157Z         )
+2026-06-05T21:50:33.5847540Z         prob1 = sclf.fit(X_iris, y_iris).predict_proba(X_iris)
+2026-06-05T21:50:33.5847987Z     
+2026-06-05T21:50:33.5848237Z         # with weight = 1
+2026-06-05T21:50:33.5848949Z         np.random.seed(123)
+2026-06-05T21:50:33.5849333Z         meta = LogisticRegression(solver="lbfgs")
+2026-06-05T21:50:33.5849820Z         clf1 = RandomForestClassifier(n_estimators=10)
+2026-06-05T21:50:33.5850274Z         clf2 = GaussianNB()
+2026-06-05T21:50:33.5850613Z         sclf = StackingCVClassifier(
+2026-06-05T21:50:33.5851119Z             classifiers=[clf1, clf2], meta_classifier=meta, shuffle=False
+2026-06-05T21:50:33.5851840Z         )
+2026-06-05T21:50:33.5852116Z         w = np.ones(len(y_iris))
+2026-06-05T21:50:33.5852624Z         prob2 = sclf.fit(X_iris, y_iris, sample_weight=w).predict_proba(X_iris)
+2026-06-05T21:50:33.5853150Z     
+2026-06-05T21:50:33.5853418Z         # with random weight
+2026-06-05T21:50:33.5853764Z         random.seed(87)
+2026-06-05T21:50:33.5854185Z         w = np.array([random.random() for _ in range(len(y_iris))])
+2026-06-05T21:50:33.5854670Z         np.random.seed(123)
+2026-06-05T21:50:33.5855041Z         meta = LogisticRegression(solver="lbfgs")
+2026-06-05T21:50:33.5855537Z         clf1 = RandomForestClassifier(n_estimators=10)
+2026-06-05T21:50:33.5855985Z         clf2 = GaussianNB()
+2026-06-05T21:50:33.5856330Z         sclf = StackingCVClassifier(
+2026-06-05T21:50:33.5856835Z             classifiers=[clf1, clf2], meta_classifier=meta, shuffle=False
+2026-06-05T21:50:33.5857330Z         )
+2026-06-05T21:50:33.5857747Z         prob3 = sclf.fit(X_iris, y_iris, sample_weight=w).predict_proba(X_iris)
+2026-06-05T21:50:33.5858277Z     
+2026-06-05T21:50:33.5858569Z         diff12 = np.max(np.abs(prob1 - prob2))
+2026-06-05T21:50:33.5859013Z         diff23 = np.max(np.abs(prob2 - prob3))
+2026-06-05T21:50:33.5859467Z >       assert diff12 < 1e-3, "max diff is %.4f" % diff12
+2026-06-05T21:50:33.5859920Z E       AssertionError: max diff is 0.4160
+2026-06-05T21:50:33.5860356Z E       assert np.float64(0.4160229243598369) < 0.001
+2026-06-05T21:50:33.5860651Z 
+2026-06-05T21:50:33.5860955Z mlxtend/classifier/tests/test_stacking_cv_classifier.py:128: AssertionError
+2026-06-05T21:50:33.5861826Z _______________________________ test_fit_params ________________________________
+2026-06-05T21:50:33.5862242Z 
+2026-06-05T21:50:33.5862381Z     def test_fit_params():
+2026-06-05T21:50:33.5862720Z         iris = load_iris()
+2026-06-05T21:50:33.5863035Z         X = iris.data
+2026-06-05T21:50:33.5863331Z         y = iris.target
+2026-06-05T21:50:33.5863667Z         sample_weight = np.ones(X.shape[0])
+2026-06-05T21:50:33.5864694Z         forest = RandomForestClassifier(n_estimators=100, random_state=123)
+2026-06-05T21:50:33.5865268Z         efs1 = EFS(
+2026-06-05T21:50:33.5865554Z             forest,
+2026-06-05T21:50:33.5865834Z             min_features=3,
+2026-06-05T21:50:33.5866150Z             max_features=3,
+2026-06-05T21:50:33.5866470Z             scoring="accuracy",
+2026-06-05T21:50:33.5866796Z             cv=4,
+2026-06-05T21:50:33.5867090Z             print_progress=False,
+2026-06-05T21:50:33.5867429Z         )
+2026-06-05T21:50:33.5867757Z         efs1 = efs1.fit(X, y, sample_weight=sample_weight)
+2026-06-05T21:50:33.5868191Z         expect = {
+2026-06-05T21:50:33.5868463Z             0: {
+2026-06-05T21:50:33.5868748Z                 "feature_idx": (0, 1, 2),
+2026-06-05T21:50:33.5869134Z                 "feature_names": ("0", "1", "2"),
+2026-06-05T21:50:33.5869588Z                 "cv_scores": np.array([0.947, 0.868, 0.919, 0.973]),
+2026-06-05T21:50:33.5870055Z                 "avg_score": 0.9269203413940257,
+2026-06-05T21:50:33.5870435Z             },
+2026-06-05T21:50:33.5870697Z             1: {
+2026-06-05T21:50:33.5870973Z                 "feature_idx": (0, 1, 3),
+2026-06-05T21:50:33.5871539Z                 "feature_names": ("0", "1", "3"),
+2026-06-05T21:50:33.5871993Z                 "cv_scores": np.array([0.921, 0.921, 0.892, 1.0]),
+2026-06-05T21:50:33.5872438Z                 "avg_score": 0.9337606837606838,
+2026-06-05T21:50:33.5872817Z             },
+2026-06-05T21:50:33.5873061Z             2: {
+2026-06-05T21:50:33.5873338Z                 "feature_idx": (0, 2, 3),
+2026-06-05T21:50:33.5873917Z                 "feature_names": ("0", "2", "3"),
+2026-06-05T21:50:33.5874375Z                 "cv_scores": np.array([0.974, 0.947, 0.919, 0.973]),
+2026-06-05T21:50:33.5874851Z                 "avg_score": 0.9532361308677098,
+2026-06-05T21:50:33.5875226Z             },
+2026-06-05T21:50:33.5875487Z             3: {
+2026-06-05T21:50:33.5875783Z                 "feature_idx": (1, 2, 3),
+2026-06-05T21:50:33.5876182Z                 "feature_names": ("1", "2", "3"),
+2026-06-05T21:50:33.5876656Z                 "cv_scores": np.array([0.974, 0.947, 0.892, 1.0]),
+2026-06-05T21:50:33.5877118Z                 "avg_score": 0.9532361308677098,
+2026-06-05T21:50:33.5877496Z             },
+2026-06-05T21:50:33.5877760Z         }
+2026-06-05T21:50:33.5878007Z     
+2026-06-05T21:50:33.5878319Z         if Version(sklearn_version) < Version("0.22"):
+2026-06-05T21:50:33.5878792Z             expect[0]["avg_score"] = 0.9401709401709402
+2026-06-05T21:50:33.5879234Z             expect[0]["cv_scores"] = np.array(
+2026-06-05T21:50:33.5879695Z                 [0.94871795, 0.92307692, 0.91666667, 0.97222222]
+2026-06-05T21:50:33.5880120Z             )
+2026-06-05T21:50:33.5880421Z             expect[1]["cv_scores"] = np.array(
+2026-06-05T21:50:33.5880863Z                 [0.94871795, 0.92307692, 0.91666667, 0.97222222]
+2026-06-05T21:50:33.5881440Z             )
+2026-06-05T21:50:33.5881737Z             expect[2]["cv_scores"] = np.array(
+2026-06-05T21:50:33.5882185Z                 [0.94871795, 0.92307692, 0.91666667, 0.97222222]
+2026-06-05T21:50:33.5882595Z             )
+2026-06-05T21:50:33.5882903Z             expect[2]["avg_score"] = 0.9599358974358974
+2026-06-05T21:50:33.5883355Z             expect[3]["avg_score"] = 0.9599358974358974
+2026-06-05T21:50:33.5883916Z             expect[3]["cv_scores"] = np.array([0.97435897, 0.94871795, 0.91666667, 1.0])
+2026-06-05T21:50:33.5884502Z             assert round(efs1.best_score_, 4) == 0.9599
+2026-06-05T21:50:33.5884902Z     
+2026-06-05T21:50:33.5885142Z         else:
+2026-06-05T21:50:33.5885455Z >           assert round(efs1.best_score_, 4) == 0.9532
+2026-06-05T21:50:33.5885896Z E           assert np.float64(0.96) == 0.9532
+2026-06-05T21:50:33.5886414Z E            +  where np.float64(0.96) = round(np.float64(0.9599928876244666), 4)
+2026-06-05T21:50:33.5888203Z E            +    where np.float64(0.9599928876244666) = ExhaustiveFeatureSelector(cv=4,\n                          estimator=RandomForestClassifier(random_state=123),\n        ...   feature_groups=[[0], [1], [2], [3]], max_features=3,\n                          min_features=3, print_progress=False).best_score_
+2026-06-05T21:50:33.5889570Z 
+2026-06-05T21:50:33.5889935Z mlxtend/feature_selection/tests/test_exhaustive_feature_selector.py:331: AssertionError
+2026-06-05T21:50:33.5890649Z =============================== warnings summary ===============================
+2026-06-05T21:50:33.5891180Z mlxtend/frequent_patterns/fpcommon.py:175: 2 warnings
+2026-06-05T21:50:33.5891955Z mlxtend/frequent_patterns/tests/test_apriori.py: 27 warnings
+2026-06-05T21:50:33.5892621Z mlxtend/frequent_patterns/tests/test_association_rules.py: 2 warnings
+2026-06-05T21:50:33.5893276Z mlxtend/frequent_patterns/tests/test_fpgrowth.py: 16 warnings
+2026-06-05T21:50:33.5893859Z mlxtend/frequent_patterns/tests/test_fpmax.py: 17 warnings
+2026-06-05T21:50:33.9407506Z mlxtend/frequent_patterns/tests/test_hmine.py: 16 warnings
+2026-06-05T21:50:33.9410513Z   /home/runner/work/mlxtend/mlxtend/mlxtend/frequent_patterns/fpcommon.py:175: DeprecationWarning: DataFrames with non-bool types result in worse computationalperformance and their support might be discontinued in the future.Please use a DataFrame with bool type
+2026-06-05T21:50:33.9413629Z     warnings.warn(
+2026-06-05T21:50:33.9413951Z 
+2026-06-05T21:50:33.9414673Z mlxtend/classifier/tests/test_ensemble_vote_classifier.py::test_fit_base_estimators_false
+2026-06-05T21:50:33.9416791Z   /home/runner/work/mlxtend/mlxtend/mlxtend/classifier/ensemble_vote.py:171: UserWarning: fit_base_estimators=False enforces use_clones to be `False`
+2026-06-05T21:50:33.9418383Z     warnings.warn(
+2026-06-05T21:50:33.9418603Z 
+2026-06-05T21:50:33.9419059Z mlxtend/classifier/tests/test_stacking_classifier.py::test_fit_base_estimators_false
+2026-06-05T21:50:33.9420547Z   /home/runner/work/mlxtend/mlxtend/mlxtend/classifier/stacking_classification.py:173: UserWarning: fit_base_estimators=False enforces use_clones to be `False`
+2026-06-05T21:50:33.9422019Z     warnings.warn(
+2026-06-05T21:50:33.9422240Z 
+2026-06-05T21:50:33.9422552Z mlxtend/classifier/tests/test_stacking_classifier.py: 1 warning
+2026-06-05T21:50:33.9423288Z mlxtend/evaluate/tests/test_bootstrap_point632.py: 70 warnings
+2026-06-05T21:50:33.9424021Z mlxtend/evaluate/tests/test_combined_ftest_5x2cv.py: 4 warnings
+2026-06-05T21:50:33.9424773Z mlxtend/evaluate/tests/test_paired_ttest_5x2cv.py: 4 warnings
+2026-06-05T21:50:33.9425492Z mlxtend/evaluate/tests/test_paired_ttest_kfold.py: 8 warnings
+2026-06-05T21:50:33.9426223Z mlxtend/evaluate/tests/test_paired_ttest_resampled.py: 4 warnings
+2026-06-05T21:50:33.9427634Z   /home/runner/work/mlxtend/mlxtend/.venv/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py:599: ConvergenceWarning: lbfgs failed to converge after 100 iteration(s) (status=1):
+2026-06-05T21:50:33.9428981Z   STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+2026-06-05T21:50:33.9429418Z   
+2026-06-05T21:50:33.9429888Z   Increase the number of iterations to improve the convergence (max_iter=100).
+2026-06-05T21:50:33.9430606Z   You might also want to scale the data as shown in:
+2026-06-05T21:50:33.9431458Z       https://scikit-learn.org/stable/modules/preprocessing.html
+2026-06-05T21:50:33.9432216Z   Please also refer to the documentation for alternative solver options:
+2026-06-05T21:50:33.9433067Z       https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+2026-06-05T21:50:33.9433763Z     n_iter_i = _check_optimize_result(
+2026-06-05T21:50:33.9434059Z 
+2026-06-05T21:50:33.9434349Z mlxtend/classifier/tests/test_stacking_classifier.py: 11 warnings
+2026-06-05T21:50:33.9435095Z mlxtend/classifier/tests/test_stacking_cv_classifier.py: 11 warnings
+2026-06-05T21:50:33.9437310Z   /home/runner/work/mlxtend/mlxtend/.venv/lib/python3.11/site-packages/sklearn/utils/deprecation.py:71: FutureWarning: Class PassiveAggressiveClassifier is deprecated; this is deprecated in version 1.8 and will be removed in 1.10. Use `SGDClassifier(loss='hinge', penalty=None, learning_rate='pa1', eta0=1.0)` instead.
+2026-06-05T21:50:33.9439638Z     warnings.warn(msg, category=FutureWarning)
+2026-06-05T21:50:33.9439985Z 
+2026-06-05T21:50:33.9440305Z mlxtend/evaluate/tests/test_counterfactual.py::test__medium_lambda
+2026-06-05T21:50:33.9441726Z   /home/runner/work/mlxtend/mlxtend/mlxtend/evaluate/counterfactual.py:116: UserWarning: Maximum number of function evaluations has been exceeded.
+2026-06-05T21:50:33.9442816Z     warnings.warn(res["message"])
+2026-06-05T21:50:33.9443082Z 
+2026-06-05T21:50:33.9443477Z mlxtend/evaluate/tests/test_holdout.py::test_randomholdoutsplit_in_sfs
+2026-06-05T21:50:33.9444318Z mlxtend/evaluate/tests/test_holdout.py::test_predefinedholdoutsplit_in_sfs
+2026-06-05T21:50:33.9446111Z   /home/runner/work/mlxtend/mlxtend/mlxtend/feature_selection/sequential_feature_selector.py:903: SmallSampleWarning: One or more sample arguments is too small; all returned values will be NaN. See documentation for sample size requirements.
+2026-06-05T21:50:33.9447696Z     std_err = scipy.stats.sem(ary)
+2026-06-05T21:50:33.9447974Z 
+2026-06-05T21:50:33.9448304Z mlxtend/frequent_patterns/tests/test_association_rules.py: 10 warnings
+2026-06-05T21:50:33.9449500Z   /home/runner/work/mlxtend/mlxtend/mlxtend/frequent_patterns/association_rules.py:184: RuntimeWarning: invalid value encountered in divide
+2026-06-05T21:50:33.9450738Z     cert_metric = np.where(certainty_denom == 0, 0, certainty_num / certainty_denom)
+2026-06-05T21:50:33.9451410Z 
+2026-06-05T21:50:33.9451746Z mlxtend/frequent_patterns/tests/test_association_rules.py::test_certainty
+2026-06-05T21:50:33.9452961Z   /home/runner/work/mlxtend/mlxtend/mlxtend/frequent_patterns/association_rules.py:184: RuntimeWarning: invalid value encountered in scalar divide
+2026-06-05T21:50:33.9454454Z     cert_metric = np.where(certainty_denom == 0, 0, certainty_num / certainty_denom)
+2026-06-05T21:50:33.9454984Z 
+2026-06-05T21:50:33.9455301Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2026-06-05T21:50:33.9456036Z =========================== short test summary info ============================
+2026-06-05T21:50:33.9457079Z FAILED mlxtend/classifier/tests/test_ensemble_vote_classifier.py::test_sample_weight - AssertionError: max diff is 0.1333
+2026-06-05T21:50:33.9458033Z assert np.float64(0.13333333333333336) < 0.001
+2026-06-05T21:50:33.9458911Z FAILED mlxtend/classifier/tests/test_stacking_classifier.py::test_sample_weight - AssertionError: max diff is 0.7115
+2026-06-05T21:50:33.9459828Z assert np.float64(0.7114642106488971) < 0.001
+2026-06-05T21:50:33.9460733Z FAILED mlxtend/classifier/tests/test_stacking_cv_classifier.py::test_sample_weight - AssertionError: max diff is 0.4160
+2026-06-05T21:50:33.9461913Z assert np.float64(0.4160229243598369) < 0.001
+2026-06-05T21:50:33.9462876Z FAILED mlxtend/feature_selection/tests/test_exhaustive_feature_selector.py::test_fit_params - assert np.float64(0.96) == 0.9532
+2026-06-05T21:50:33.9463936Z  +  where np.float64(0.96) = round(np.float64(0.9599928876244666), 4)
+2026-06-05T21:50:33.9465709Z  +    where np.float64(0.9599928876244666) = ExhaustiveFeatureSelector(cv=4,\n                          estimator=RandomForestClassifier(random_state=123),\n        ...   feature_groups=[[0], [1], [2], [3]], max_features=3,\n                          min_features=3, print_progress=False).best_score_
+2026-06-05T21:50:33.9467556Z ====== 4 failed, 697 passed, 3 skipped, 209 warnings in 243.96s (0:04:03) ======
+2026-06-05T21:50:34.3157803Z ##[error]Process completed with exit code 1.
+2026-06-05T21:50:34.3284288Z Post job cleanup.
+2026-06-05T21:50:34.4295146Z [command]/usr/bin/git version
+2026-06-05T21:50:34.4341224Z git version 2.54.0
+2026-06-05T21:50:34.4387992Z Temporarily overriding HOME='/home/runner/work/_temp/fd97abf1-9bef-47a5-8fc6-8fb1cfb8d0fa' before making global git config changes
+2026-06-05T21:50:34.4389382Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-05T21:50:34.4394900Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/mlxtend/mlxtend
+2026-06-05T21:50:34.4431432Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-05T21:50:34.4464000Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-05T21:50:34.4702050Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-05T21:50:34.4728046Z http.https://github.com/.extraheader
+2026-06-05T21:50:34.4742233Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-06-05T21:50:34.4772757Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-05T21:50:34.4997059Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-05T21:50:34.5033296Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-05T21:50:34.5377440Z Cleaning up orphan processes
+2026-06-05T21:50:34.5659841Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4, actions/setup-python@v5. Actions will be forced to run with Node.js 24 by default starting June 16th, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -1,0 +1,118 @@
+﻿2026-06-05T21:46:20.2066961Z ##[group]Run uv sync --group dev --python 3.11
+2026-06-05T21:46:20.2067397Z [36;1muv sync --group dev --python 3.11[0m
+2026-06-05T21:46:20.2097795Z shell: /usr/bin/bash -e {0}
+2026-06-05T21:46:20.2098055Z env:
+2026-06-05T21:46:20.2098245Z   GITHUB_ACTIONS_CI: true
+2026-06-05T21:46:20.2098544Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:20.2098975Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
+2026-06-05T21:46:20.2099391Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:20.2099763Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:20.2100172Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:20.2100548Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
+2026-06-05T21:46:20.2100944Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+2026-06-05T21:46:20.2101642Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-06-05T21:46:20.2101947Z ##[endgroup]
+2026-06-05T21:46:20.2644499Z Using CPython 3.11.15 interpreter at: /opt/hostedtoolcache/Python/3.11.15/x64/bin/python3.11
+2026-06-05T21:46:20.2645056Z Creating virtual environment at: .venv
+2026-06-05T21:46:22.0798245Z Resolved 111 packages in 1.81s
+2026-06-05T21:46:22.0916410Z    Building mlxtend @ file:///home/runner/work/mlxtend/mlxtend
+2026-06-05T21:46:22.1599616Z Downloading pygments (1.2MiB)
+2026-06-05T21:46:22.1626014Z Downloading kiwisolver (1.4MiB)
+2026-06-05T21:46:22.1941606Z Downloading cryptography (4.5MiB)
+2026-06-05T21:46:22.1954501Z Downloading fonttools (4.8MiB)
+2026-06-05T21:46:22.1958175Z Downloading numpy (16.1MiB)
+2026-06-05T21:46:22.1960545Z Downloading scikit-learn (8.9MiB)
+2026-06-05T21:46:22.1972791Z Downloading scipy (33.7MiB)
+2026-06-05T21:46:22.1973427Z Downloading black (1.8MiB)
+2026-06-05T21:46:22.1973903Z Downloading pillow (6.8MiB)
+2026-06-05T21:46:22.1982081Z Downloading virtualenv (7.2MiB)
+2026-06-05T21:46:22.1982959Z Downloading pandas (10.8MiB)
+2026-06-05T21:46:22.2004984Z Downloading matplotlib (8.4MiB)
+2026-06-05T21:46:22.3806942Z       Built mlxtend @ file:///home/runner/work/mlxtend/mlxtend
+2026-06-05T21:46:22.6061028Z  Downloaded kiwisolver
+2026-06-05T21:46:22.7347949Z  Downloaded black
+2026-06-05T21:46:22.8535751Z  Downloaded pygments
+2026-06-05T21:46:22.9745693Z  Downloaded cryptography
+2026-06-05T21:46:22.9821549Z  Downloaded fonttools
+2026-06-05T21:46:23.1245219Z  Downloaded pillow
+2026-06-05T21:46:23.1660942Z  Downloaded virtualenv
+2026-06-05T21:46:23.3213228Z  Downloaded matplotlib
+2026-06-05T21:46:23.3535809Z  Downloaded scikit-learn
+2026-06-05T21:46:23.5982714Z  Downloaded numpy
+2026-06-05T21:46:23.8305521Z  Downloaded pandas
+2026-06-05T21:46:23.8342043Z  Downloaded scipy
+2026-06-05T21:46:23.8345013Z Prepared 73 packages in 1.74s
+2026-06-05T21:46:23.9161990Z Installed 73 packages in 81ms
+2026-06-05T21:46:23.9162653Z  + backports-tarfile==1.2.0
+2026-06-05T21:46:23.9163133Z  + black==26.5.1
+2026-06-05T21:46:23.9163524Z  + build==1.5.0
+2026-06-05T21:46:23.9163961Z  + certifi==2026.5.20
+2026-06-05T21:46:23.9164369Z  + cffi==2.0.0
+2026-06-05T21:46:23.9164754Z  + cfgv==3.5.0
+2026-06-05T21:46:23.9165168Z  + charset-normalizer==3.4.7
+2026-06-05T21:46:23.9165646Z  + click==8.4.1
+2026-06-05T21:46:23.9166267Z  + contourpy==1.3.3
+2026-06-05T21:46:23.9166680Z  + coverage==7.14.1
+2026-06-05T21:46:23.9167190Z  + cryptography==48.0.0
+2026-06-05T21:46:23.9167650Z  + cycler==0.12.1
+2026-06-05T21:46:23.9168265Z  + distlib==0.4.1
+2026-06-05T21:46:23.9168672Z  + docutils==0.23
+2026-06-05T21:46:23.9169255Z  + filelock==3.29.1
+2026-06-05T21:46:23.9169842Z  + flake8==7.3.0
+2026-06-05T21:46:23.9170216Z  + fonttools==4.63.0
+2026-06-05T21:46:23.9170757Z  + id==1.6.1
+2026-06-05T21:46:23.9171162Z  + identify==2.6.19
+2026-06-05T21:46:23.9171832Z  + idna==3.18
+2026-06-05T21:46:23.9172205Z  + importlib-metadata==9.0.0
+2026-06-05T21:46:23.9172621Z  + iniconfig==2.3.0
+2026-06-05T21:46:23.9172974Z  + isort==8.0.1
+2026-06-05T21:46:23.9173329Z  + jaraco-classes==3.4.0
+2026-06-05T21:46:23.9173725Z  + jaraco-context==6.1.2
+2026-06-05T21:46:23.9174453Z  + jaraco-functools==4.5.0
+2026-06-05T21:46:23.9174853Z  + jeepney==0.9.0
+2026-06-05T21:46:23.9175193Z  + joblib==1.5.3
+2026-06-05T21:46:23.9175542Z  + keyring==25.7.0
+2026-06-05T21:46:23.9175897Z  + kiwisolver==1.5.0
+2026-06-05T21:46:23.9176269Z  + markdown-it-py==4.2.0
+2026-06-05T21:46:23.9176655Z  + matplotlib==3.10.9
+2026-06-05T21:46:23.9177005Z  + mccabe==0.7.0
+2026-06-05T21:46:23.9177339Z  + mdurl==0.1.2
+2026-06-05T21:46:23.9177856Z  + mlxtend==0.24.0 (from file:///home/runner/work/mlxtend/mlxtend)
+2026-06-05T21:46:23.9178458Z  + more-itertools==11.1.0
+2026-06-05T21:46:23.9178863Z  + mypy-extensions==1.1.0
+2026-06-05T21:46:23.9179238Z  + narwhals==2.22.1
+2026-06-05T21:46:23.9179570Z  + nh3==0.3.5
+2026-06-05T21:46:23.9179888Z  + nodeenv==1.10.0
+2026-06-05T21:46:23.9180217Z  + numpy==2.4.6
+2026-06-05T21:46:23.9180550Z  + packaging==26.2
+2026-06-05T21:46:23.9180892Z  + pandas==3.0.3
+2026-06-05T21:46:23.9181227Z  + pathspec==1.1.1
+2026-06-05T21:46:23.9181778Z  + pillow==12.2.0
+2026-06-05T21:46:23.9182119Z  + platformdirs==4.10.0
+2026-06-05T21:46:23.9182478Z  + pluggy==1.6.0
+2026-06-05T21:46:23.9182806Z  + pre-commit==4.6.0
+2026-06-05T21:46:23.9183161Z  + pycodestyle==2.14.0
+2026-06-05T21:46:23.9183519Z  + pycparser==3.0
+2026-06-05T21:46:23.9183844Z  + pyflakes==3.4.0
+2026-06-05T21:46:23.9184176Z  + pygments==2.20.0
+2026-06-05T21:46:23.9184508Z  + pyparsing==3.3.2
+2026-06-05T21:46:23.9184867Z  + pyproject-hooks==1.2.0
+2026-06-05T21:46:23.9185233Z  + pytest==9.0.3
+2026-06-05T21:46:23.9185590Z  + python-dateutil==2.9.0.post0
+2026-06-05T21:46:23.9186010Z  + python-discovery==1.4.0
+2026-06-05T21:46:23.9186611Z  + pytokens==0.4.1
+2026-06-05T21:46:23.9186943Z  + pyyaml==6.0.3
+2026-06-05T21:46:23.9187288Z  + readme-renderer==44.0
+2026-06-05T21:46:23.9187661Z  + requests==2.34.2
+2026-06-05T21:46:23.9188180Z  + requests-toolbelt==1.0.0
+2026-06-05T21:46:23.9188594Z  + rfc3986==2.0.0
+2026-06-05T21:46:23.9188921Z  + rich==15.0.0
+2026-06-05T21:46:23.9189247Z  + scikit-learn==1.9.0
+2026-06-05T21:46:23.9189570Z  + scipy==1.17.1
+2026-06-05T21:46:23.9189875Z  + secretstorage==3.5.0
+2026-06-05T21:46:23.9190194Z  + six==1.17.0
+2026-06-05T21:46:23.9190498Z  + threadpoolctl==3.6.0
+2026-06-05T21:46:23.9190827Z  + twine==6.2.0
+2026-06-05T21:46:23.9191111Z  + urllib3==2.7.0
+2026-06-05T21:46:23.9191915Z  + virtualenv==21.4.2
+2026-06-05T21:46:23.9192263Z  + zipp==4.1.0

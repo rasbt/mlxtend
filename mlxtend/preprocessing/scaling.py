@@ -48,6 +48,14 @@ def minmax_scaling(array, columns, min_val=0, max_val=1):
 
     numerator = ary_newt[:, columns] - ary_newt[:, columns].min(axis=0)
     denominator = ary_newt[:, columns].max(axis=0) - ary_newt[:, columns].min(axis=0)
+
+    # Handle constant columns (zero range) - works for both numpy and pandas
+    if np.any(denominator == 0):
+        raise ValueError(
+            "One or more columns have zero range (all values are identical). "
+            "minmax_scaling cannot be applied to constant columns."
+        )
+
     ary_newt[:, columns] = numerator / denominator
 
     if not min_val == 0 and not max_val == 1:

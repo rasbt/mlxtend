@@ -17,6 +17,8 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
+- `minmax_scaling` now raises a `ValueError` for constant columns instead of returning NaN values ([#1171](https://github.com/rasbt/mlxtend/pull/1171) via [karthikankam](https://github.com/karthikankam))
+
 - Removed explicit `multi_class="multinomial"` arguments, which are deprecated in newer versions of scikit-learn, from LogisticRegression usage in examples / notebooks / tests ([#1147](https://github.com/rasbt/mlxtend/issues/1147) via [sachinn854](https://github.com/sachinn854))
 
 - Added multiprocessing support for apriori via the `n_jobs` parameter ([#1151](https://github.com/rasbt/mlxtend/issues/1151) via [mariam851](https://github.com/mariam851))
@@ -24,6 +26,10 @@ The CHANGELOG for the current development version is available at
 - Fixes an edge-case bug where decision regions plots didn't have unique colors ([#1157](https://github.com/rasbt/mlxtend/issues/1157) via [mariam851](https://github.com/mariam851))
 
 - Reject `min_support` values outside the documented `(0, 1]` interval in `apriori`, `fpgrowth`, `fpmax`, and `hmine`. The previous check only caught `<= 0`, so passing e.g. `min_support=2` silently returned an empty result ([#864](https://github.com/rasbt/mlxtend/issues/864) via [jbbqqf](https://github.com/jbbqqf))
+
+- `bias_variance_decomp` now accepts pandas DataFrames and Series as input, in addition to NumPy arrays. ([#1070](https://github.com/rasbt/mlxtend/issues/1070) via [berns722](https://github.com/berns722))
+
+- Clarified in the `bias_variance_decomp` docstring that, for the `mse` loss, `avg_bias` is the average *squared* bias (the `Bias^2` term in `Loss = Bias^2 + Variance`), and fixed a typo in the `Returns` section that previously read "average bias, and average bias". Behaviour unchanged. ([#1083](https://github.com/rasbt/mlxtend/issues/1083) via [jbbqqf](https://github.com/jbbqqf))
 
 
 ### Version 0.24.0  (13 Dec 2025)

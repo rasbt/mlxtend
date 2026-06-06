@@ -2,64 +2,53 @@
 
 ---
 
-### PyPI
+### Using uv
 
-To install mlxtend, just execute  
-
-```bash
-pip install mlxtend  
-```
-
-Alternatively, you download the package manually from the Python Package Index [https://pypi.python.org/pypi/mlxtend](https://pypi.python.org/pypi/mlxtend), unzip it, navigate into the package, and use the following command from inside the mlxtend folder:
+To add mlxtend to a uv-managed project, run
 
 ```bash
-pip install .
+uv add mlxtend
 ```
 
-##### Upgrading via `pip`
-
-To upgrade an existing version of mlxtend from PyPI, execute
+For a one-off command without changing your current project, run
 
 ```bash
-pip install mlxtend --upgrade --no-deps
+uv run --with mlxtend python -c "import mlxtend; print(mlxtend.__version__)"
 ```
 
-Please note that the dependencies (NumPy and SciPy) will also be upgraded if you omit the `--no-deps` flag; use the `--no-deps` ("no dependencies") flag if you don't want this.
+##### Upgrading via uv
+
+To upgrade an existing uv project dependency, run
+
+```bash
+uv add -U mlxtend
+```
+
+This updates the dependency in your project and syncs the environment.
 
 ##### Installing mlxtend from the source distribution
 
-In rare cases, users reported problems on certain systems with the default `pip` installation command, which installs mlxtend from the binary distribution ("wheels") on PyPI. If you should encounter similar problems, you could try to install mlxtend from the source distribution instead via
+In rare cases, users reported problems on certain systems with the default binary distribution from PyPI. If you encounter a similar problem, try installing mlxtend from the source distribution instead:
 
 ```bash
-pip install --no-binary :all: mlxtend
+uv add --no-binary-package mlxtend mlxtend
 ```
 
-Also, I would appreciate it if you could report any issues that occur when using `pip install mlxtend` in hope that we can fix these in future releases.
-
-### Conda
-
-The mlxtend package is also [available through conda forge](https://github.com/conda-forge/mlxtend-feedstock). 
-
-To install mlxtend using conda, use the following command:
-
-    conda install mlxtend --channel conda-forge
-
-or simply 
-
-    conda install mlxtend
-
-if you added conda-forge to your channels (`conda config --add channels conda-forge`).
+Also, I would appreciate it if you could report any issues that occur when installing mlxtend so we can fix these in future releases.
 
 ### Dev Version
 
-The mlxtend version on PyPI may always one step behind; you can install the latest development version from the GitHub repository by executing
+The mlxtend version on PyPI may always be one step behind; you can install the latest development version from the GitHub repository by executing
 
 ```bash
-pip install git+git://github.com/rasbt/mlxtend.git
+uv add "mlxtend @ git+https://github.com/rasbt/mlxtend.git"
 ```
 
-Or, you can fork the GitHub repository from https://github.com/rasbt/mlxtend and install mlxtend from your local drive via
+Or, you can fork the GitHub repository from https://github.com/rasbt/mlxtend and run mlxtend from your local checkout via
 
 ```bash
-pip install .
+git clone https://github.com/<your_username>/mlxtend.git
+cd mlxtend
+uv sync --group dev
+uv run python -c "import mlxtend; print(mlxtend.__version__)"
 ```

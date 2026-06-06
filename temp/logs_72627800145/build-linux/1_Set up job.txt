@@ -1,0 +1,49 @@
+﻿2026-06-05T21:46:13.9508795Z Current runner version: '2.334.0'
+2026-06-05T21:46:13.9534915Z ##[group]Runner Image Provisioner
+2026-06-05T21:46:13.9535883Z Hosted Compute Agent
+2026-06-05T21:46:13.9536501Z Version: 20260520.533
+2026-06-05T21:46:13.9537134Z Commit: 189110e25284a9812c124fd27b339e2fb4f2f9db
+2026-06-05T21:46:13.9538015Z Build Date: 2026-05-20T17:44:04Z
+2026-06-05T21:46:13.9538703Z Worker ID: {3264144a-4296-4ca9-818f-558160546e26}
+2026-06-05T21:46:13.9539514Z Azure Region: westcentralus
+2026-06-05T21:46:13.9540196Z ##[endgroup]
+2026-06-05T21:46:13.9541973Z ##[group]Operating System
+2026-06-05T21:46:13.9542766Z Ubuntu
+2026-06-05T21:46:13.9543313Z 24.04.4
+2026-06-05T21:46:13.9543817Z LTS
+2026-06-05T21:46:13.9544445Z ##[endgroup]
+2026-06-05T21:46:13.9544998Z ##[group]Runner Image
+2026-06-05T21:46:13.9545675Z Image: ubuntu-24.04
+2026-06-05T21:46:13.9546251Z Version: 20260525.161.1
+2026-06-05T21:46:13.9547315Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260525.161/images/ubuntu/Ubuntu2404-Readme.md
+2026-06-05T21:46:13.9549127Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260525.161
+2026-06-05T21:46:13.9550196Z ##[endgroup]
+2026-06-05T21:46:13.9553580Z ##[group]GITHUB_TOKEN Permissions
+2026-06-05T21:46:13.9555903Z Actions: write
+2026-06-05T21:46:13.9556580Z ArtifactMetadata: write
+2026-06-05T21:46:13.9557229Z Attestations: write
+2026-06-05T21:46:13.9557881Z Checks: write
+2026-06-05T21:46:13.9558447Z CodeQuality: write
+2026-06-05T21:46:13.9559043Z Contents: write
+2026-06-05T21:46:13.9559731Z Deployments: write
+2026-06-05T21:46:13.9560308Z Discussions: write
+2026-06-05T21:46:13.9560931Z Issues: write
+2026-06-05T21:46:13.9561855Z Metadata: read
+2026-06-05T21:46:13.9562470Z Models: read
+2026-06-05T21:46:13.9563121Z Packages: write
+2026-06-05T21:46:13.9563850Z Pages: write
+2026-06-05T21:46:13.9564510Z PullRequests: write
+2026-06-05T21:46:13.9565105Z RepositoryProjects: write
+2026-06-05T21:46:13.9565722Z SecurityEvents: write
+2026-06-05T21:46:13.9566364Z Statuses: write
+2026-06-05T21:46:13.9566994Z VulnerabilityAlerts: read
+2026-06-05T21:46:13.9567638Z ##[endgroup]
+2026-06-05T21:46:13.9569792Z Secret source: Actions
+2026-06-05T21:46:13.9570565Z Prepare workflow directory
+2026-06-05T21:46:13.9985907Z Prepare all required actions
+2026-06-05T21:46:14.0027316Z Getting action download info
+2026-06-05T21:46:14.4621156Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-06-05T21:46:14.5755607Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-06-05T21:46:14.6554004Z Download action repository 'astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b' (SHA:08807647e7069bb48b6ef5acd8ec9567f424441b)
+2026-06-05T21:46:15.5128789Z Download action repository 'codecov/codecov-action@v4' (SHA:b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238)
+2026-06-05T21:46:16.1983379Z Complete job name: build-linux

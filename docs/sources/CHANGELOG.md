@@ -25,6 +25,14 @@ The CHANGELOG for the current development version is available at
 
 - Fix `preprocessing.standardize` so a constant column is mapped to all-zeros (as the docstring promises) instead of `-mean(column)` ([#1058](https://github.com/rasbt/mlxtend/issues/1058) via [jbbqqf](https://github.com/jbbqqf))
 
+- Add a `top_k` argument to `ExhaustiveFeatureSelector.get_metric_dict()` so callers can request only the highest-scoring subsets before converting the result to a DataFrame ([#610](https://github.com/rasbt/mlxtend/issues/610) via [jbbqqf](https://github.com/jbbqqf))
+
+- `minmax_scaling` no longer returns silent NaNs for constant columns; constant columns are now collapsed to `min_val`, mirroring the existing contract of `standardize`. ([#1167](https://github.com/rasbt/mlxtend/issues/1167) via [jbbqqf](https://github.com/jbbqqf))
+
+- `bias_variance_decomp` now accepts pandas DataFrames and Series as input, in addition to NumPy arrays. ([#1070](https://github.com/rasbt/mlxtend/issues/1070) via [berns722](https://github.com/berns722))
+
+- Clarified in the `bias_variance_decomp` docstring that, for the `mse` loss, `avg_bias` is the average *squared* bias (the `Bias^2` term in `Loss = Bias^2 + Variance`), and fixed a typo in the `Returns` section that previously read "average bias, and average bias". Behaviour unchanged. ([#1083](https://github.com/rasbt/mlxtend/issues/1083) via [jbbqqf](https://github.com/jbbqqf))
+
 
 ### Version 0.24.0  (13 Dec 2025)
 

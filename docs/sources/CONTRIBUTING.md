@@ -20,16 +20,16 @@ and checking off items as you go.
 3. [ ]  Create and check out a new topic branch (please don't make modifications in the master branch)
 4. [ ]  Implement the new feature or apply the bug-fix  
 5. [ ]  Add appropriate unit test functions in `mlxtend/*/tests`
-6. [ ]  Run `PYTHONPATH='.' pytest ./mlxtend -sv` and make sure that all unit tests pass  
+6. [ ]  Run `uv run --group dev python -m pytest ./mlxtend -sv` and make sure that all unit tests pass  
 
 7. [ ] Make sure the newly implemented feature has good test coverage:
 
 ```
-python -m pip install coverage
+uv sync --group dev
 # test all: 
-# coverage run --source=mlxtend --branch -m pytest .
-coverage run --source=mlxtend --branch -m pytest mlxtend/<insert_path>
-coverage html
+# uv run --group dev python -m coverage run --source=mlxtend --branch -m pytest .
+uv run --group dev python -m coverage run --source=mlxtend --branch -m pytest mlxtend/<insert_path>
+uv run --group dev python -m coverage html
 ```
 
 
@@ -47,25 +47,25 @@ There are two ways you can do this:
 
 **Option A**: Running the tools manually
 
-1. [ ]  Check for style issues by running `flake8 ./mlxtend` (you may want to run `pytest` again after you made modifications to the code)
-2. [ ]  We recommend using [black](https://black.readthedocs.io/en/stable/) to format the code automatically according to recommended style changes. After [installing](https://black.readthedocs.io/en/stable/getting_started.html#installation) `black`, you can do this via 
+1. [ ]  Check for style issues by running `uv run --group dev python -m flake8 ./mlxtend` (you may want to run `uv run --group dev python -m pytest` again after you made modifications to the code)
+2. [ ]  We recommend using [black](https://black.readthedocs.io/en/stable/) to format the code automatically according to recommended style changes. After running `uv sync --group dev`, you can do this via 
 
 ```
-black [source_file_or_directory]
+uv run --group dev python -m black [source_file_or_directory]
 ```
 
 3. [ ] Run [`isort`](https://pycqa.github.io/isort/) which will sort the imports alphabetically. We recommend the following command:
 
 ```
-isort -p mlxtend --line-length 88 --multi-line 3 --profile black mypythonfile.py
+uv run --group dev python -m isort -p mlxtend --line-length 88 --multi-line 3 --profile black mypythonfile.py
 ```
 
 **Option B**: Using pre-commit hooks (recommended)
 
 The pre-commit hooks for mlxtend will check your code via `flake8`, `black`, and `isort` automatically before you make a `git commit`. You can read more about pre-commit hooks [here](https://dev.to/m1yag1/how-to-setup-your-project-with-pre-commit-black-and-flake8-183k).
 
-1. [ ] Install the pre-commit package via `pip install pre-commit`.
-2. [ ] In the `mlxtend` folder, run `pre-commit install` (you only have to do it once).
+1. [ ] Install the development dependencies via `uv sync --group dev`.
+2. [ ] In the `mlxtend` folder, run `uv run --group dev python -m pre_commit install` (you only have to do it once).
 
 
 
@@ -392,110 +392,68 @@ python md2pdf.py
 
 ### 1. Creating a new testing environment
 
-Assuming we are using `conda`, create a new python environment via
+From the mlxtend repository root, create the uv environment with the development tools:
 
 ```bash
-$ conda create -n 'mlxtend-testing' python=3 numpy scipy pandas
-```
-
-Next, activate the environment by executing
-
-```bash
-$ source activate mlxtend-testing
+$ uv sync --group dev --python 3.11
 ```
 
 ### 2. Installing the package from local files
 
-Test the installation by executing the following from within the mlxtend main directory:
+Test the editable local checkout:
 
 ```bash
-$ pip install . -e
+$ uv run python -c 'import mlxtend; print(mlxtend.__file__)'
 ```
 
-the `--record files.txt` flag will create a `files.txt` file listing the locations where these files will be installed.
-
-
-Try to import the package to see if it works, for example, by executing
+Run the test suite from the same uv environment:
 
 ```bash
-$ python -c 'import mlxtend; print(mlxtend.__file__)'
+$ uv run --group dev python -m pytest mlxtend
 ```
 
-If everything seems to be fine, remove the installation via
-
-```bash
-$ cat files.txt | xargs rm -rf ; rm files.txt
-```
-
-Next, test if `pip` is able to install the packages. First, navigate to a different directory, and from there, install the package:
-
-```bash
-$ pip uninstall
-$ pip install mlxtend
-```
-
-and uninstall it again
-
-```bash
-$ pip uninstall mlxtend
-```
-
-### 3. Deploying the package
+### 3. Building and checking the package
 
 Consider deploying the package to the PyPI test server first. The setup instructions can be found [here](https://wiki.python.org/moin/TestPyPI).
 
-**First**, install Twine if  you don't have it already installed. E.g., use the following to install all recommended packages:
+Create the source distribution and wheel in the `./dist` directory:
 
 ```bash
-$ python -m pip install twine build
+$ uv build
 ```
 
-**Second**, create the distribution. This by default creates an sdist and wheel
-in the ``./dist`` directory.
+Check the distribution metadata:
 
 ```bash
-$ python -m build
+$ uv run --group dev python -m twine check --strict dist/*
 ```
 
-Install the wheel and sdist to make sure they work.
-The distributions file names will change with each version.
+Install the wheel and source distribution in isolated uv environments to make sure both work.
+The distribution filenames change with each version.
 
 ```bash
-python -m pip install ./dist/mlxtend-0.23.0.dev0.tar.gz --force-reinstall
-python -m pip install ./dist/mlxtend-0.23.0.dev0-py3-none-any.whl --force-reinstall
-python -m pip uninstall mlxtend
+$ uv run --isolated --with ./dist/mlxtend-*.tar.gz python -c 'import mlxtend; print(mlxtend.__version__)'
+$ uv run --isolated --with ./dist/mlxtend-*-py3-none-any.whl python -c 'import mlxtend; print(mlxtend.__version__)'
 ```
 
-**Third**, upload the packages to the test server:
+### 4. Deploying the package
+
+Upload the package to the PyPI test server:
 
 ```bash
-$ twine upload --repository-url https://upload.pypi.org/legacy dist/
+$ uv run --group dev python -m twine upload --repository testpypi dist/*
 ```
 
-Then, install it and see if it works:
+Then, install it from the PyPI test server and check that it imports:
 
 ```bash
-$ pip install -i https://testpypi.python.org/pypi mlxtend
+$ uv run --isolated --default-index https://test.pypi.org/simple/ --index https://pypi.org/simple --with mlxtend python -c 'import mlxtend; print(mlxtend.__version__)'
 ```
 
-Next, uninstall it again as follows:
+After this dry run succeeds, repeat the upload using the real PyPI repository:
 
 ```bash
-$ pip uninstall mlxtend
-```
-
-**Fourth**, after this dry-run succeeded, repeat this process using the "real" PyPI:
-
-```bash
-$ python -m twine upload  dist/*
-```
-
-### 4. Removing the virtual environment
-
-Finally, to cleanup our local drive, remove the virtual testing environment via
-
-```bash
-$ conda remove --name 'mlxtend-testing' --all
+$ uv run --group dev python -m twine upload dist/*
 ```
 
 **Note**:
@@ -504,8 +462,4 @@ if you get an error like
 
     HTTPError: 403 Forbidden from https://upload.pypi.org/legacy/
 
-make sure you have an up to date version of twine installed (helped me to uninstall in conda and install via pip.)
-
-### 5. Updating the conda-forge recipe
-
-Once a new version of mlxtend has been uploaded to PyPI, update the conda-forge build recipe at https://github.com/conda-forge/mlxtend-feedstock by changing the version number in the `recipe/meta.yaml` file appropriately.
+make sure you have an up to date version of twine in the uv development environment.

@@ -133,10 +133,8 @@ def association_rules(
 
     # check for mandatory columns
     if not all(col in df.columns for col in ["support", "itemsets"]):
-        raise ValueError(
-            "Dataframe needs to contain the\
-                         columns 'support' and 'itemsets'"
-        )
+        raise ValueError("Dataframe needs to contain the\
+                         columns 'support' and 'itemsets'")
 
     def kulczynski_helper(sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_):
         conf_AC = sAC * (num_itemsets - disAC) / (sA * (num_itemsets - disA) - dis_int)

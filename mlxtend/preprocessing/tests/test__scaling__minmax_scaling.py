@@ -72,3 +72,23 @@ def test_numpy_minmax_scaling():
 
     np.testing.assert_allclose(df_out1, ary_out1, rtol=1e-03)
     assert (df_out2 == ary_out2).all()
+
+
+def test_minmax_scaling_raises_for_constant_columns():
+    err_msg = "One or more columns have zero range " "(all values are identical)."
+
+    ary = np.array([[5, 1], [5, 2], [5, 3]])
+    try:
+        minmax_scaling(ary, [0, 1])
+    except ValueError as exc:
+        assert err_msg in str(exc)
+    else:
+        raise AssertionError
+
+    df = pd.DataFrame({"constant": [5, 5, 5], "varying": [1, 2, 3]})
+    try:
+        minmax_scaling(df, ["constant", "varying"])
+    except ValueError as exc:
+        assert err_msg in str(exc)
+    else:
+        raise AssertionError

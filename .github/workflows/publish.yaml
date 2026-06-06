@@ -25,14 +25,15 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          python-version: "3.11"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
 
       - name: Build source and wheel distributions
         run: |
-          python -m pip install --upgrade build twine
-          pip install importlib_metadata==7.2.1
-          python -m build
-          twine check --strict dist/*
+          uv build
+          uv run --group dev python -m twine check --strict dist/*
       - name: Publish distribution to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:

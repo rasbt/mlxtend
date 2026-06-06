@@ -25,26 +25,26 @@ def bias_variance_decomp(
     loss="0-1_loss",
     num_rounds=200,
     random_seed=None,
-    **fit_params
+    **fit_params,
 ):
     """
     estimator : object
         A classifier or regressor object or class implementing both a
         `fit` and `predict` method similar to the scikit-learn API.
 
-    X_train : array-like, shape=(num_examples, num_features)
-        A training dataset for drawing the bootstrap samples to carry
-        out the bias-variance decomposition.
+    X_train : array-like or pandas DataFrame, shape=(num_examples, num_features)
+    A training dataset for drawing the bootstrap samples to carry
+    out the bias-variance decomposition.
 
-    y_train : array-like, shape=(num_examples)
+    y_train : array-like or pandas Series, shape=(num_examples)
         Targets (class labels, continuous values in case of regression)
         associated with the `X_train` examples.
 
-    X_test : array-like, shape=(num_examples, num_features)
+    X_test : array-like or pandas DataFrame, shape=(num_examples, num_features)
         The test dataset for computing the average loss, bias,
         and variance.
 
-    y_test : array-like, shape=(num_examples)
+    y_test : array-like or pandas Series, shape=(num_examples)
         Targets (class labels, continuous values in case of regression)
         associated with the `X_test` examples.
 
@@ -68,8 +68,17 @@ def bias_variance_decomp(
     Returns
     ----------
     avg_expected_loss, avg_bias, avg_var : returns the average expected
-        average bias, and average bias (all floats), where the average
-        is computed over the data points in the test set.
+        loss, average bias, and average variance (all floats), where the
+        average is computed over the data points in the test set.
+
+        Note that for the ``'mse'`` loss, ``avg_bias`` reports the
+        average **squared** bias
+        (``mean((main_predictions - y_test) ** 2)``) — i.e. the term
+        that already appears squared in the standard bias-variance
+        decomposition ``Loss = Bias^2 + Variance``. For the
+        ``'0-1_loss'``, ``avg_bias`` is the misclassification rate of
+        the main prediction (the majority vote across bootstrap
+        replicates), which is the 0-1 analogue of squared bias.
 
     Examples
     -----------
@@ -81,17 +90,15 @@ def bias_variance_decomp(
     if loss not in supported:
         raise NotImplementedError("loss must be one of the following: %s" % supported)
 
-    for ary in (X_train, y_train, X_test, y_test):
-        if hasattr(ary, "loc"):
-            raise ValueError(
-                "The bias_variance_decomp does not "
-                "support pandas DataFrames yet. "
-                "Please check the inputs to "
-                "X_train, y_train, X_test, y_test. "
-                "If e.g., X_train is a pandas "
-                "DataFrame, try passing it as NumPy array via "
-                "X_train=X_train.values."
-            )
+        # Convert pandas inputs to numpy arrays
+    if hasattr(X_train, "loc"):
+        X_train = X_train.to_numpy() if hasattr(X_train, "to_numpy") else X_train.values
+    if hasattr(y_train, "loc"):
+        y_train = y_train.to_numpy() if hasattr(y_train, "to_numpy") else y_train.values
+    if hasattr(X_test, "loc"):
+        X_test = X_test.to_numpy() if hasattr(X_test, "to_numpy") else X_test.values
+    if hasattr(y_test, "loc"):
+        y_test = y_test.to_numpy() if hasattr(y_test, "to_numpy") else y_test.values
 
     rng = np.random.RandomState(random_seed)
 
@@ -156,6 +163,10 @@ def bias_variance_decomp(
 
         main_predictions = np.mean(all_pred, axis=0)
 
+        # `avg_bias` here is the average *squared* bias — the Bias^2
+        # term in the standard decomposition Loss = Bias^2 + Variance.
+        # See the Returns section of the docstring; the variable is
+        # kept named `avg_bias` for backwards compatibility.
         avg_bias = np.sum((main_predictions - y_test) ** 2) / y_test.size
         avg_var = np.sum((main_predictions - all_pred) ** 2) / all_pred.size
 

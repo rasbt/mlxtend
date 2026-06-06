@@ -1,0 +1,368 @@
+﻿2026-06-05T21:46:28.7262088Z ##[group]Run uv run --group dev python -m coverage run --source=mlxtend --branch -m pytest mlxtend
+2026-06-05T21:46:28.7263315Z [36;1muv run --group dev python -m coverage run --source=mlxtend --branch -m pytest mlxtend[0m
+2026-06-05T21:46:28.7264157Z [36;1muv run --group dev python -m coverage xml[0m
+2026-06-05T21:46:28.7303587Z shell: /usr/bin/bash -e {0}
+2026-06-05T21:46:28.7304020Z env:
+2026-06-05T21:46:28.7304363Z   GITHUB_ACTIONS_CI: true
+2026-06-05T21:46:28.7304895Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:28.7305651Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
+2026-06-05T21:46:28.7306400Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:28.7307084Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:28.7307772Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+2026-06-05T21:46:28.7308458Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
+2026-06-05T21:46:28.7309269Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+2026-06-05T21:46:28.7309920Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-06-05T21:46:28.7310441Z ##[endgroup]
+2026-06-05T21:46:36.4784933Z ============================= test session starts ==============================
+2026-06-05T21:46:36.4786454Z platform linux -- Python 3.11.15, pytest-9.0.3, pluggy-1.6.0
+2026-06-05T21:46:36.4787714Z rootdir: /home/runner/work/mlxtend/mlxtend
+2026-06-05T21:46:36.4788683Z configfile: pyproject.toml
+2026-06-05T21:46:36.4789757Z collected 704 items
+2026-06-05T21:46:36.4790051Z 
+2026-06-05T21:46:36.4838185Z mlxtend/_base/tests/test_base_model.py ....                              [  0%]
+2026-06-05T21:46:36.4941638Z mlxtend/_base/tests/test_classifier.py .........                         [  1%]
+2026-06-05T21:46:36.5056458Z mlxtend/_base/tests/test_cluster.py ..........                           [  3%]
+2026-06-05T21:46:36.5148868Z mlxtend/_base/tests/test_iterative_model.py .......                      [  4%]
+2026-06-05T21:46:36.5186015Z mlxtend/_base/tests/test_multiclass.py ...                               [  4%]
+2026-06-05T21:46:36.5226966Z mlxtend/_base/tests/test_multilayer.py ...                               [  5%]
+2026-06-05T21:46:36.5293663Z mlxtend/_base/tests/test_regressor.py ......                             [  5%]
+2026-06-05T21:46:36.7195881Z mlxtend/classifier/tests/test_adaline.py ............                    [  7%]
+2026-06-05T21:46:53.0472536Z mlxtend/classifier/tests/test_ensemble_vote_classifier.py ...F.......... [  9%]
+2026-06-05T21:46:53.3316758Z ..                                                                       [  9%]
+2026-06-05T21:46:54.5284933Z mlxtend/classifier/tests/test_logistic_regression.py ..............      [ 11%]
+2026-06-05T21:46:55.0975909Z mlxtend/classifier/tests/test_multilayerperceptron.py ..............     [ 13%]
+2026-06-05T21:46:55.1159153Z mlxtend/classifier/tests/test_oner.py ...                                [ 14%]
+2026-06-05T21:46:55.4903878Z mlxtend/classifier/tests/test_perceptron.py .........                    [ 15%]
+2026-06-05T21:46:56.4630864Z mlxtend/classifier/tests/test_softmax_regression.py .............        [ 17%]
+2026-06-05T21:47:10.7412569Z mlxtend/classifier/tests/test_stacking_classifier.py ...F............... [ 20%]
+2026-06-05T21:47:11.6163766Z ........                                                                 [ 21%]
+2026-06-05T21:47:44.0532594Z mlxtend/classifier/tests/test_stacking_cv_classifier.py ..F............. [ 23%]
+2026-06-05T21:47:47.1917528Z ...........                                                              [ 25%]
+2026-06-05T21:47:47.2459623Z mlxtend/cluster/tests/test_kmeans.py .........                           [ 26%]
+2026-06-05T21:47:49.6009878Z mlxtend/data/tests/test_datasets.py ......                               [ 27%]
+2026-06-05T21:47:49.6094907Z mlxtend/data/tests/test_iris.py ...                                      [ 27%]
+2026-06-05T21:47:49.6795571Z mlxtend/data/tests/test_multiplexer.py ......                            [ 28%]
+2026-06-05T21:47:49.6863460Z mlxtend/evaluate/tests/test_accuracy.py .....                            [ 29%]
+2026-06-05T21:48:02.6790591Z mlxtend/evaluate/tests/test_bias_variance_decomp.py .....s               [ 30%]
+2026-06-05T21:48:02.7080781Z mlxtend/evaluate/tests/test_bootstrap.py ...                             [ 30%]
+2026-06-05T21:48:02.7172061Z mlxtend/evaluate/tests/test_bootstrap_outofbag.py ....                   [ 31%]
+2026-06-05T21:48:29.4512241Z mlxtend/evaluate/tests/test_bootstrap_point632.py ..........s            [ 32%]
+2026-06-05T21:48:29.4601708Z mlxtend/evaluate/tests/test_cochran_q.py ......                          [ 33%]
+2026-06-05T21:48:31.1922485Z mlxtend/evaluate/tests/test_combined_ftest_5x2cv.py ...                  [ 33%]
+2026-06-05T21:48:31.1961949Z mlxtend/evaluate/tests/test_confusion_matrix.py ..                       [ 34%]
+2026-06-05T21:48:32.0081227Z mlxtend/evaluate/tests/test_counterfactual.py .....                      [ 34%]
+2026-06-05T21:48:32.0144522Z mlxtend/evaluate/tests/test_f_test.py .....                              [ 35%]
+2026-06-05T21:48:34.0412247Z mlxtend/evaluate/tests/test_feature_importance.py .........              [ 36%]
+2026-06-05T21:48:34.2187993Z mlxtend/evaluate/tests/test_holdout.py ......                            [ 37%]
+2026-06-05T21:48:34.2289964Z mlxtend/evaluate/tests/test_lift_score.py ........                       [ 38%]
+2026-06-05T21:48:34.2374186Z mlxtend/evaluate/tests/test_mcnemar_table.py .......                     [ 39%]
+2026-06-05T21:48:34.2471893Z mlxtend/evaluate/tests/test_mcnemar_tables.py ........                   [ 41%]
+2026-06-05T21:48:34.2541348Z mlxtend/evaluate/tests/test_mcnemar_test.py .....                        [ 41%]
+2026-06-05T21:48:35.9682684Z mlxtend/evaluate/tests/test_paired_ttest_5x2cv.py ...                    [ 42%]
+2026-06-05T21:48:37.7072176Z mlxtend/evaluate/tests/test_paired_ttest_kfold.py ...                    [ 42%]
+2026-06-05T21:48:42.7018371Z mlxtend/evaluate/tests/test_paired_ttest_resampled.py ....               [ 43%]
+2026-06-05T21:48:53.1365476Z mlxtend/evaluate/tests/test_permutation.py ..........                    [ 44%]
+2026-06-05T21:48:53.1383930Z mlxtend/evaluate/tests/test_proportion_difference.py .                   [ 44%]
+2026-06-05T21:48:53.1577071Z mlxtend/evaluate/tests/test_scoring.py ................                  [ 47%]
+2026-06-05T21:48:53.2038575Z mlxtend/evaluate/tests/test_time_series.py .......................       [ 50%]
+2026-06-05T21:48:53.2098986Z mlxtend/feature_extraction/tests/test_base.py .....                      [ 50%]
+2026-06-05T21:48:53.2271933Z mlxtend/feature_extraction/tests/test_kernel_pca.py ........             [ 52%]
+2026-06-05T21:48:53.2341736Z mlxtend/feature_extraction/tests/test_linear_discriminant_analysis.py .. [ 52%]
+2026-06-05T21:48:53.2461574Z ....                                                                     [ 52%]
+2026-06-05T21:48:53.2551788Z mlxtend/feature_extraction/tests/test_principal_component_analysis.py .. [ 53%]
+2026-06-05T21:48:53.2851750Z .........                                                                [ 54%]
+2026-06-05T21:48:54.6378225Z mlxtend/feature_selection/tests/test_column_selector.py .......          [ 55%]
+2026-06-05T21:48:54.7082003Z mlxtend/feature_selection/tests/test_exhaustive_feature_selector.py .... [ 56%]
+2026-06-05T21:48:58.7332034Z ..F................                                                      [ 58%]
+2026-06-05T21:49:02.7041150Z mlxtend/feature_selection/tests/test_sequential_feature_selector.py .... [ 59%]
+2026-06-05T21:50:00.0703188Z .........................................                                [ 65%]
+2026-06-05T21:50:00.1793012Z mlxtend/feature_selection/tests/test_sequential_feature_selector_feature_groups.py . [ 65%]
+2026-06-05T21:50:09.8242453Z .........                                                                [ 66%]
+2026-06-05T21:50:09.9009929Z mlxtend/feature_selection/tests/test_sequential_feature_selector_fixed_features.py . [ 66%]
+2026-06-05T21:50:10.5731665Z ..........                                                               [ 68%]
+2026-06-05T21:50:10.8378605Z mlxtend/frequent_patterns/tests/test_apriori.py ........................ [ 71%]
+2026-06-05T21:50:10.8386465Z                                                                          [ 71%]
+2026-06-05T21:50:11.0158888Z mlxtend/frequent_patterns/tests/test_association_rules.py .............. [ 73%]
+2026-06-05T21:50:11.0565656Z ......                                                                   [ 74%]
+2026-06-05T21:50:12.9890973Z mlxtend/frequent_patterns/tests/test_fpgrowth.py ...................     [ 77%]
+2026-06-05T21:50:13.1393792Z mlxtend/frequent_patterns/tests/test_fpmax.py .................          [ 79%]
+2026-06-05T21:50:13.3422608Z mlxtend/frequent_patterns/tests/test_hmine.py ...................        [ 82%]
+2026-06-05T21:50:13.3483734Z mlxtend/math/tests/test_counting.py ...                                  [ 82%]
+2026-06-05T21:50:13.3516013Z mlxtend/math/tests/test_linalg.py ..                                     [ 82%]
+2026-06-05T21:50:13.3697092Z mlxtend/preprocessing/tests/test__scaling__minmax_scaling.py ...         [ 83%]
+2026-06-05T21:50:13.4024629Z mlxtend/preprocessing/tests/test__scaling__standardizing.py .........    [ 84%]
+2026-06-05T21:50:13.5472194Z mlxtend/preprocessing/tests/test_copy_transformer.py ....                [ 85%]
+2026-06-05T21:50:13.7421039Z mlxtend/preprocessing/tests/test_dense_transformer.py ...                [ 85%]
+2026-06-05T21:50:13.7460928Z mlxtend/preprocessing/tests/test_mean_centering.py ...                   [ 86%]
+2026-06-05T21:50:13.7544345Z mlxtend/preprocessing/tests/test_onehot.py .......                       [ 87%]
+2026-06-05T21:50:13.7559737Z mlxtend/preprocessing/tests/test_shuffle_shuffle_arrays_unison.py .      [ 87%]
+2026-06-05T21:50:13.7665642Z mlxtend/preprocessing/tests/test_transactionencoder.py ........          [ 88%]
+2026-06-05T21:50:24.5867803Z mlxtend/regressor/tests/test_linear_regression.py ................       [ 90%]
+2026-06-05T21:50:31.9457602Z mlxtend/regressor/tests/test_stacking_cv_regression.py ................. [ 93%]
+2026-06-05T21:50:32.0554940Z ..s                                                                      [ 93%]
+2026-06-05T21:50:33.4444976Z mlxtend/regressor/tests/test_stacking_regression.py .................... [ 96%]
+2026-06-05T21:50:33.5172534Z ..                                                                       [ 96%]
+2026-06-05T21:50:33.5197517Z mlxtend/text/tests/test_generalize_names.py .                            [ 96%]
+2026-06-05T21:50:33.5492328Z mlxtend/text/tests/test_generalize_names_duplcheck.py .                  [ 96%]
+2026-06-05T21:50:33.5521216Z mlxtend/text/tests/test_tokenizer.py ..                                  [ 97%]
+2026-06-05T21:50:33.5705144Z mlxtend/utils/tests/test_checking_inputs.py .................            [ 99%]
+2026-06-05T21:50:33.5720525Z mlxtend/utils/tests/test_counter.py .                                    [ 99%]
+2026-06-05T21:50:33.5803874Z mlxtend/utils/tests/test_testing.py ..                                   [100%]
+2026-06-05T21:50:33.5804526Z 
+2026-06-05T21:50:33.5804777Z =================================== FAILURES ===================================
+2026-06-05T21:50:33.5805498Z ______________________________ test_sample_weight ______________________________
+2026-06-05T21:50:33.5805970Z 
+2026-06-05T21:50:33.5806141Z     def test_sample_weight():
+2026-06-05T21:50:33.5806571Z         # with no weight
+2026-06-05T21:50:33.5806965Z         np.random.seed(123)
+2026-06-05T21:50:33.5807509Z         clf1 = LogisticRegression(solver="lbfgs", max_iter=500)
+2026-06-05T21:50:33.5808174Z         clf2 = RandomForestClassifier(n_estimators=10)
+2026-06-05T21:50:33.5808707Z         clf3 = GaussianNB()
+2026-06-05T21:50:33.5809297Z         eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting="hard")
+2026-06-05T21:50:33.5809986Z         prob1 = eclf.fit(X, y).predict_proba(X)
+2026-06-05T21:50:33.5810457Z     
+2026-06-05T21:50:33.5810771Z         # with weight = 1
+2026-06-05T21:50:33.5811805Z         w = np.ones(len(y))
+2026-06-05T21:50:33.5812224Z         np.random.seed(123)
+2026-06-05T21:50:33.5812738Z         clf1 = LogisticRegression(solver="lbfgs", max_iter=500)
+2026-06-05T21:50:33.5813398Z         clf2 = RandomForestClassifier(n_estimators=10)
+2026-06-05T21:50:33.5813920Z         clf3 = GaussianNB()
+2026-06-05T21:50:33.5814503Z         eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting="hard")
+2026-06-05T21:50:33.5815275Z         prob2 = eclf.fit(X, y, sample_weight=w).predict_proba(X)
+2026-06-05T21:50:33.5815821Z     
+2026-06-05T21:50:33.5816122Z         # with random weight
+2026-06-05T21:50:33.5816510Z         random.seed(87)
+2026-06-05T21:50:33.5816955Z         w = np.array([random.random() for _ in range(len(y))])
+2026-06-05T21:50:33.5817478Z         np.random.seed(123)
+2026-06-05T21:50:33.5817952Z         clf1 = LogisticRegression(solver="lbfgs", max_iter=500)
+2026-06-05T21:50:33.5818554Z         clf2 = RandomForestClassifier(n_estimators=10)
+2026-06-05T21:50:33.5819060Z         clf3 = GaussianNB()
+2026-06-05T21:50:33.5819609Z         eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting="hard")
+2026-06-05T21:50:33.5820340Z         prob3 = eclf.fit(X, y, sample_weight=w).predict_proba(X)
+2026-06-05T21:50:33.5820854Z     
+2026-06-05T21:50:33.5821196Z         diff12 = np.max(np.abs(prob1 - prob2))
+2026-06-05T21:50:33.5821917Z         diff23 = np.max(np.abs(prob2 - prob3))
+2026-06-05T21:50:33.5822483Z >       assert diff12 < 1e-3, "max diff is %.4f" % diff12
+2026-06-05T21:50:33.5823282Z E       AssertionError: max diff is 0.1333
+2026-06-05T21:50:33.5823797Z E       assert np.float64(0.13333333333333336) < 0.001
+2026-06-05T21:50:33.5824149Z 
+2026-06-05T21:50:33.5824522Z mlxtend/classifier/tests/test_ensemble_vote_classifier.py:110: AssertionError
+2026-06-05T21:50:33.5825310Z ______________________________ test_sample_weight ______________________________
+2026-06-05T21:50:33.5825732Z 
+2026-06-05T21:50:33.5825876Z     def test_sample_weight():
+2026-06-05T21:50:33.5826231Z         # Make sure that:
+2026-06-05T21:50:33.5826571Z         #    prediction with weight
+2026-06-05T21:50:33.5826970Z         # != prediction with no weight
+2026-06-05T21:50:33.5827366Z         # == prediction with weight ones
+2026-06-05T21:50:33.5827755Z         random.seed(87)
+2026-06-05T21:50:33.5828149Z         w = np.array([random.random() for _ in range(len(y))])
+2026-06-05T21:50:33.5828587Z     
+2026-06-05T21:50:33.5828856Z         np.random.seed(123)
+2026-06-05T21:50:33.5829260Z         meta = LogisticRegression(solver="lbfgs")
+2026-06-05T21:50:33.5829741Z         clf1 = RandomForestClassifier(n_estimators=10)
+2026-06-05T21:50:33.5830190Z         clf2 = GaussianNB()
+2026-06-05T21:50:33.5830704Z         sclf = StackingClassifier(classifiers=[clf1, clf2], meta_classifier=meta)
+2026-06-05T21:50:33.5831617Z         prob1 = sclf.fit(X, y, sample_weight=w).predict_proba(X)
+2026-06-05T21:50:33.5832085Z     
+2026-06-05T21:50:33.5832417Z         np.random.seed(123)
+2026-06-05T21:50:33.5832803Z         meta = LogisticRegression(solver="lbfgs")
+2026-06-05T21:50:33.5833285Z         clf1 = RandomForestClassifier(n_estimators=10)
+2026-06-05T21:50:33.5833713Z         clf2 = GaussianNB()
+2026-06-05T21:50:33.5834215Z         sclf = StackingClassifier(classifiers=[clf1, clf2], meta_classifier=meta)
+2026-06-05T21:50:33.5834886Z         prob2 = sclf.fit(X, y, sample_weight=None).predict_proba(X)
+2026-06-05T21:50:33.5835348Z     
+2026-06-05T21:50:33.5835644Z         maxdiff = np.max(np.abs(prob1 - prob2))
+2026-06-05T21:50:33.5836122Z         assert maxdiff > 1e-3, "max diff is %.4f" % maxdiff
+2026-06-05T21:50:33.5836553Z     
+2026-06-05T21:50:33.5836807Z         np.random.seed(123)
+2026-06-05T21:50:33.5837172Z         meta = LogisticRegression(solver="lbfgs")
+2026-06-05T21:50:33.5837650Z         clf1 = RandomForestClassifier(n_estimators=10)
+2026-06-05T21:50:33.5838085Z         clf2 = GaussianNB()
+2026-06-05T21:50:33.5838600Z         sclf = StackingClassifier(classifiers=[clf1, clf2], meta_classifier=meta)
+2026-06-05T21:50:33.5839550Z         prob3 = sclf.fit(X, y, sample_weight=np.ones(len(y))).predict_proba(X)
+2026-06-05T21:50:33.5840062Z     
+2026-06-05T21:50:33.5840345Z         maxdiff = np.max(np.abs(prob2 - prob3))
+2026-06-05T21:50:33.5840807Z >       assert maxdiff < 1e-3, "max diff is %.4f" % maxdiff
+2026-06-05T21:50:33.5841453Z E       AssertionError: max diff is 0.7115
+2026-06-05T21:50:33.5841915Z E       assert np.float64(0.7114642106488971) < 0.001
+2026-06-05T21:50:33.5842210Z 
+2026-06-05T21:50:33.5842516Z mlxtend/classifier/tests/test_stacking_classifier.py:132: AssertionError
+2026-06-05T21:50:33.5843217Z ______________________________ test_sample_weight ______________________________
+2026-06-05T21:50:33.5843630Z 
+2026-06-05T21:50:33.5843765Z     def test_sample_weight():
+2026-06-05T21:50:33.5844127Z         # with no weight given
+2026-06-05T21:50:33.5844472Z         np.random.seed(123)
+2026-06-05T21:50:33.5844843Z         meta = LogisticRegression(solver="lbfgs")
+2026-06-05T21:50:33.5845337Z         clf1 = RandomForestClassifier(n_estimators=10)
+2026-06-05T21:50:33.5845767Z         clf2 = GaussianNB()
+2026-06-05T21:50:33.5846119Z         sclf = StackingCVClassifier(
+2026-06-05T21:50:33.5846633Z             classifiers=[clf1, clf2], meta_classifier=meta, shuffle=False
+2026-06-05T21:50:33.5847153Z         )
+2026-06-05T21:50:33.5847536Z         prob1 = sclf.fit(X_iris, y_iris).predict_proba(X_iris)
+2026-06-05T21:50:33.5847983Z     
+2026-06-05T21:50:33.5848233Z         # with weight = 1
+2026-06-05T21:50:33.5848944Z         np.random.seed(123)
+2026-06-05T21:50:33.5849328Z         meta = LogisticRegression(solver="lbfgs")
+2026-06-05T21:50:33.5849817Z         clf1 = RandomForestClassifier(n_estimators=10)
+2026-06-05T21:50:33.5850271Z         clf2 = GaussianNB()
+2026-06-05T21:50:33.5850610Z         sclf = StackingCVClassifier(
+2026-06-05T21:50:33.5851115Z             classifiers=[clf1, clf2], meta_classifier=meta, shuffle=False
+2026-06-05T21:50:33.5851827Z         )
+2026-06-05T21:50:33.5852113Z         w = np.ones(len(y_iris))
+2026-06-05T21:50:33.5852621Z         prob2 = sclf.fit(X_iris, y_iris, sample_weight=w).predict_proba(X_iris)
+2026-06-05T21:50:33.5853147Z     
+2026-06-05T21:50:33.5853416Z         # with random weight
+2026-06-05T21:50:33.5853760Z         random.seed(87)
+2026-06-05T21:50:33.5854181Z         w = np.array([random.random() for _ in range(len(y_iris))])
+2026-06-05T21:50:33.5854667Z         np.random.seed(123)
+2026-06-05T21:50:33.5855038Z         meta = LogisticRegression(solver="lbfgs")
+2026-06-05T21:50:33.5855533Z         clf1 = RandomForestClassifier(n_estimators=10)
+2026-06-05T21:50:33.5855982Z         clf2 = GaussianNB()
+2026-06-05T21:50:33.5856323Z         sclf = StackingCVClassifier(
+2026-06-05T21:50:33.5856832Z             classifiers=[clf1, clf2], meta_classifier=meta, shuffle=False
+2026-06-05T21:50:33.5857327Z         )
+2026-06-05T21:50:33.5857743Z         prob3 = sclf.fit(X_iris, y_iris, sample_weight=w).predict_proba(X_iris)
+2026-06-05T21:50:33.5858266Z     
+2026-06-05T21:50:33.5858566Z         diff12 = np.max(np.abs(prob1 - prob2))
+2026-06-05T21:50:33.5859010Z         diff23 = np.max(np.abs(prob2 - prob3))
+2026-06-05T21:50:33.5859463Z >       assert diff12 < 1e-3, "max diff is %.4f" % diff12
+2026-06-05T21:50:33.5859917Z E       AssertionError: max diff is 0.4160
+2026-06-05T21:50:33.5860352Z E       assert np.float64(0.4160229243598369) < 0.001
+2026-06-05T21:50:33.5860648Z 
+2026-06-05T21:50:33.5860951Z mlxtend/classifier/tests/test_stacking_cv_classifier.py:128: AssertionError
+2026-06-05T21:50:33.5861821Z _______________________________ test_fit_params ________________________________
+2026-06-05T21:50:33.5862239Z 
+2026-06-05T21:50:33.5862378Z     def test_fit_params():
+2026-06-05T21:50:33.5862717Z         iris = load_iris()
+2026-06-05T21:50:33.5863032Z         X = iris.data
+2026-06-05T21:50:33.5863328Z         y = iris.target
+2026-06-05T21:50:33.5863664Z         sample_weight = np.ones(X.shape[0])
+2026-06-05T21:50:33.5864271Z         forest = RandomForestClassifier(n_estimators=100, random_state=123)
+2026-06-05T21:50:33.5865263Z         efs1 = EFS(
+2026-06-05T21:50:33.5865551Z             forest,
+2026-06-05T21:50:33.5865831Z             min_features=3,
+2026-06-05T21:50:33.5866147Z             max_features=3,
+2026-06-05T21:50:33.5866466Z             scoring="accuracy",
+2026-06-05T21:50:33.5866792Z             cv=4,
+2026-06-05T21:50:33.5867087Z             print_progress=False,
+2026-06-05T21:50:33.5867426Z         )
+2026-06-05T21:50:33.5867753Z         efs1 = efs1.fit(X, y, sample_weight=sample_weight)
+2026-06-05T21:50:33.5868186Z         expect = {
+2026-06-05T21:50:33.5868460Z             0: {
+2026-06-05T21:50:33.5868744Z                 "feature_idx": (0, 1, 2),
+2026-06-05T21:50:33.5869130Z                 "feature_names": ("0", "1", "2"),
+2026-06-05T21:50:33.5869585Z                 "cv_scores": np.array([0.947, 0.868, 0.919, 0.973]),
+2026-06-05T21:50:33.5870045Z                 "avg_score": 0.9269203413940257,
+2026-06-05T21:50:33.5870424Z             },
+2026-06-05T21:50:33.5870694Z             1: {
+2026-06-05T21:50:33.5870971Z                 "feature_idx": (0, 1, 3),
+2026-06-05T21:50:33.5871534Z                 "feature_names": ("0", "1", "3"),
+2026-06-05T21:50:33.5871990Z                 "cv_scores": np.array([0.921, 0.921, 0.892, 1.0]),
+2026-06-05T21:50:33.5872435Z                 "avg_score": 0.9337606837606838,
+2026-06-05T21:50:33.5872814Z             },
+2026-06-05T21:50:33.5873059Z             2: {
+2026-06-05T21:50:33.5873335Z                 "feature_idx": (0, 2, 3),
+2026-06-05T21:50:33.5873914Z                 "feature_names": ("0", "2", "3"),
+2026-06-05T21:50:33.5874372Z                 "cv_scores": np.array([0.974, 0.947, 0.919, 0.973]),
+2026-06-05T21:50:33.5874846Z                 "avg_score": 0.9532361308677098,
+2026-06-05T21:50:33.5875222Z             },
+2026-06-05T21:50:33.5875484Z             3: {
+2026-06-05T21:50:33.5875781Z                 "feature_idx": (1, 2, 3),
+2026-06-05T21:50:33.5876172Z                 "feature_names": ("1", "2", "3"),
+2026-06-05T21:50:33.5876650Z                 "cv_scores": np.array([0.974, 0.947, 0.892, 1.0]),
+2026-06-05T21:50:33.5877115Z                 "avg_score": 0.9532361308677098,
+2026-06-05T21:50:33.5877493Z             },
+2026-06-05T21:50:33.5877756Z         }
+2026-06-05T21:50:33.5878004Z     
+2026-06-05T21:50:33.5878315Z         if Version(sklearn_version) < Version("0.22"):
+2026-06-05T21:50:33.5878788Z             expect[0]["avg_score"] = 0.9401709401709402
+2026-06-05T21:50:33.5879231Z             expect[0]["cv_scores"] = np.array(
+2026-06-05T21:50:33.5879692Z                 [0.94871795, 0.92307692, 0.91666667, 0.97222222]
+2026-06-05T21:50:33.5880117Z             )
+2026-06-05T21:50:33.5880418Z             expect[1]["cv_scores"] = np.array(
+2026-06-05T21:50:33.5880857Z                 [0.94871795, 0.92307692, 0.91666667, 0.97222222]
+2026-06-05T21:50:33.5881435Z             )
+2026-06-05T21:50:33.5881733Z             expect[2]["cv_scores"] = np.array(
+2026-06-05T21:50:33.5882175Z                 [0.94871795, 0.92307692, 0.91666667, 0.97222222]
+2026-06-05T21:50:33.5882592Z             )
+2026-06-05T21:50:33.5882899Z             expect[2]["avg_score"] = 0.9599358974358974
+2026-06-05T21:50:33.5883352Z             expect[3]["avg_score"] = 0.9599358974358974
+2026-06-05T21:50:33.5883912Z             expect[3]["cv_scores"] = np.array([0.97435897, 0.94871795, 0.91666667, 1.0])
+2026-06-05T21:50:33.5884499Z             assert round(efs1.best_score_, 4) == 0.9599
+2026-06-05T21:50:33.5884899Z     
+2026-06-05T21:50:33.5885139Z         else:
+2026-06-05T21:50:33.5885451Z >           assert round(efs1.best_score_, 4) == 0.9532
+2026-06-05T21:50:33.5885893Z E           assert np.float64(0.96) == 0.9532
+2026-06-05T21:50:33.5886410Z E            +  where np.float64(0.96) = round(np.float64(0.9599928876244666), 4)
+2026-06-05T21:50:33.5888005Z E            +    where np.float64(0.9599928876244666) = ExhaustiveFeatureSelector(cv=4,\n                          estimator=RandomForestClassifier(random_state=123),\n        ...   feature_groups=[[0], [1], [2], [3]], max_features=3,\n                          min_features=3, print_progress=False).best_score_
+2026-06-05T21:50:33.5889566Z 
+2026-06-05T21:50:33.5889932Z mlxtend/feature_selection/tests/test_exhaustive_feature_selector.py:331: AssertionError
+2026-06-05T21:50:33.5890646Z =============================== warnings summary ===============================
+2026-06-05T21:50:33.5891177Z mlxtend/frequent_patterns/fpcommon.py:175: 2 warnings
+2026-06-05T21:50:33.5891950Z mlxtend/frequent_patterns/tests/test_apriori.py: 27 warnings
+2026-06-05T21:50:33.5892617Z mlxtend/frequent_patterns/tests/test_association_rules.py: 2 warnings
+2026-06-05T21:50:33.5893273Z mlxtend/frequent_patterns/tests/test_fpgrowth.py: 16 warnings
+2026-06-05T21:50:33.5893851Z mlxtend/frequent_patterns/tests/test_fpmax.py: 17 warnings
+2026-06-05T21:50:33.9407464Z mlxtend/frequent_patterns/tests/test_hmine.py: 16 warnings
+2026-06-05T21:50:33.9410467Z   /home/runner/work/mlxtend/mlxtend/mlxtend/frequent_patterns/fpcommon.py:175: DeprecationWarning: DataFrames with non-bool types result in worse computationalperformance and their support might be discontinued in the future.Please use a DataFrame with bool type
+2026-06-05T21:50:33.9413621Z     warnings.warn(
+2026-06-05T21:50:33.9413946Z 
+2026-06-05T21:50:33.9414668Z mlxtend/classifier/tests/test_ensemble_vote_classifier.py::test_fit_base_estimators_false
+2026-06-05T21:50:33.9416787Z   /home/runner/work/mlxtend/mlxtend/mlxtend/classifier/ensemble_vote.py:171: UserWarning: fit_base_estimators=False enforces use_clones to be `False`
+2026-06-05T21:50:33.9418377Z     warnings.warn(
+2026-06-05T21:50:33.9418599Z 
+2026-06-05T21:50:33.9419055Z mlxtend/classifier/tests/test_stacking_classifier.py::test_fit_base_estimators_false
+2026-06-05T21:50:33.9420542Z   /home/runner/work/mlxtend/mlxtend/mlxtend/classifier/stacking_classification.py:173: UserWarning: fit_base_estimators=False enforces use_clones to be `False`
+2026-06-05T21:50:33.9422013Z     warnings.warn(
+2026-06-05T21:50:33.9422228Z 
+2026-06-05T21:50:33.9422548Z mlxtend/classifier/tests/test_stacking_classifier.py: 1 warning
+2026-06-05T21:50:33.9423284Z mlxtend/evaluate/tests/test_bootstrap_point632.py: 70 warnings
+2026-06-05T21:50:33.9424017Z mlxtend/evaluate/tests/test_combined_ftest_5x2cv.py: 4 warnings
+2026-06-05T21:50:33.9424769Z mlxtend/evaluate/tests/test_paired_ttest_5x2cv.py: 4 warnings
+2026-06-05T21:50:33.9425489Z mlxtend/evaluate/tests/test_paired_ttest_kfold.py: 8 warnings
+2026-06-05T21:50:33.9426219Z mlxtend/evaluate/tests/test_paired_ttest_resampled.py: 4 warnings
+2026-06-05T21:50:33.9427630Z   /home/runner/work/mlxtend/mlxtend/.venv/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py:599: ConvergenceWarning: lbfgs failed to converge after 100 iteration(s) (status=1):
+2026-06-05T21:50:33.9428977Z   STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+2026-06-05T21:50:33.9429415Z   
+2026-06-05T21:50:33.9429884Z   Increase the number of iterations to improve the convergence (max_iter=100).
+2026-06-05T21:50:33.9430596Z   You might also want to scale the data as shown in:
+2026-06-05T21:50:33.9431453Z       https://scikit-learn.org/stable/modules/preprocessing.html
+2026-06-05T21:50:33.9432212Z   Please also refer to the documentation for alternative solver options:
+2026-06-05T21:50:33.9433063Z       https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+2026-06-05T21:50:33.9433759Z     n_iter_i = _check_optimize_result(
+2026-06-05T21:50:33.9434049Z 
+2026-06-05T21:50:33.9434346Z mlxtend/classifier/tests/test_stacking_classifier.py: 11 warnings
+2026-06-05T21:50:33.9435091Z mlxtend/classifier/tests/test_stacking_cv_classifier.py: 11 warnings
+2026-06-05T21:50:33.9437305Z   /home/runner/work/mlxtend/mlxtend/.venv/lib/python3.11/site-packages/sklearn/utils/deprecation.py:71: FutureWarning: Class PassiveAggressiveClassifier is deprecated; this is deprecated in version 1.8 and will be removed in 1.10. Use `SGDClassifier(loss='hinge', penalty=None, learning_rate='pa1', eta0=1.0)` instead.
+2026-06-05T21:50:33.9439420Z     warnings.warn(msg, category=FutureWarning)
+2026-06-05T21:50:33.9439982Z 
+2026-06-05T21:50:33.9440301Z mlxtend/evaluate/tests/test_counterfactual.py::test__medium_lambda
+2026-06-05T21:50:33.9441720Z   /home/runner/work/mlxtend/mlxtend/mlxtend/evaluate/counterfactual.py:116: UserWarning: Maximum number of function evaluations has been exceeded.
+2026-06-05T21:50:33.9442811Z     warnings.warn(res["message"])
+2026-06-05T21:50:33.9443079Z 
+2026-06-05T21:50:33.9443473Z mlxtend/evaluate/tests/test_holdout.py::test_randomholdoutsplit_in_sfs
+2026-06-05T21:50:33.9444314Z mlxtend/evaluate/tests/test_holdout.py::test_predefinedholdoutsplit_in_sfs
+2026-06-05T21:50:33.9446106Z   /home/runner/work/mlxtend/mlxtend/mlxtend/feature_selection/sequential_feature_selector.py:903: SmallSampleWarning: One or more sample arguments is too small; all returned values will be NaN. See documentation for sample size requirements.
+2026-06-05T21:50:33.9447692Z     std_err = scipy.stats.sem(ary)
+2026-06-05T21:50:33.9447971Z 
+2026-06-05T21:50:33.9448287Z mlxtend/frequent_patterns/tests/test_association_rules.py: 10 warnings
+2026-06-05T21:50:33.9449495Z   /home/runner/work/mlxtend/mlxtend/mlxtend/frequent_patterns/association_rules.py:184: RuntimeWarning: invalid value encountered in divide
+2026-06-05T21:50:33.9450734Z     cert_metric = np.where(certainty_denom == 0, 0, certainty_num / certainty_denom)
+2026-06-05T21:50:33.9451405Z 
+2026-06-05T21:50:33.9451741Z mlxtend/frequent_patterns/tests/test_association_rules.py::test_certainty
+2026-06-05T21:50:33.9452956Z   /home/runner/work/mlxtend/mlxtend/mlxtend/frequent_patterns/association_rules.py:184: RuntimeWarning: invalid value encountered in scalar divide
+2026-06-05T21:50:33.9454449Z     cert_metric = np.where(certainty_denom == 0, 0, certainty_num / certainty_denom)
+2026-06-05T21:50:33.9454981Z 
+2026-06-05T21:50:33.9455297Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2026-06-05T21:50:33.9456027Z =========================== short test summary info ============================
+2026-06-05T21:50:33.9457068Z FAILED mlxtend/classifier/tests/test_ensemble_vote_classifier.py::test_sample_weight - AssertionError: max diff is 0.1333
+2026-06-05T21:50:33.9458029Z assert np.float64(0.13333333333333336) < 0.001
+2026-06-05T21:50:33.9458907Z FAILED mlxtend/classifier/tests/test_stacking_classifier.py::test_sample_weight - AssertionError: max diff is 0.7115
+2026-06-05T21:50:33.9459824Z assert np.float64(0.7114642106488971) < 0.001
+2026-06-05T21:50:33.9460729Z FAILED mlxtend/classifier/tests/test_stacking_cv_classifier.py::test_sample_weight - AssertionError: max diff is 0.4160
+2026-06-05T21:50:33.9461907Z assert np.float64(0.4160229243598369) < 0.001
+2026-06-05T21:50:33.9462872Z FAILED mlxtend/feature_selection/tests/test_exhaustive_feature_selector.py::test_fit_params - assert np.float64(0.96) == 0.9532
+2026-06-05T21:50:33.9463932Z  +  where np.float64(0.96) = round(np.float64(0.9599928876244666), 4)
+2026-06-05T21:50:33.9465697Z  +    where np.float64(0.9599928876244666) = ExhaustiveFeatureSelector(cv=4,\n                          estimator=RandomForestClassifier(random_state=123),\n        ...   feature_groups=[[0], [1], [2], [3]], max_features=3,\n                          min_features=3, print_progress=False).best_score_
+2026-06-05T21:50:33.9467552Z ====== 4 failed, 697 passed, 3 skipped, 209 warnings in 243.96s (0:04:03) ======
+2026-06-05T21:50:34.3157779Z ##[error]Process completed with exit code 1.

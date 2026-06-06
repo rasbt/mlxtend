@@ -843,3 +843,121 @@ def test_logistic_regression_compatibility():
 
     assert efs.best_idx_ == (3,)
     assert efs.best_score_ > 0.90
+
+
+def test_get_metric_dict_top_k_returns_top_subsets_issue_610():
+    # Regression test for #610: top_k must restrict the returned dict to
+    # the top-K subsets ranked by avg_score (descending).
+    knn = KNeighborsClassifier(n_neighbors=4)
+    iris = load_iris()
+    X, y = iris.data, iris.target
+    efs = EFS(
+        knn,
+        min_features=1,
+        max_features=3,
+        scoring="accuracy",
+        cv=3,
+        clone_estimator=False,
+        print_progress=False,
+        n_jobs=1,
+    )
+    efs.fit(X, y)
+
+    full = efs.get_metric_dict()
+    assert len(full) > 3, "test setup expects more than 3 subsets evaluated"
+
+    top3 = efs.get_metric_dict(top_k=3)
+    assert len(top3) == 3, "top_k=3 should return exactly 3 entries"
+
+    # The returned subsets are exactly the 3 highest-scoring ones from `full`.
+    expected_top = sorted(
+        full.keys(), key=lambda k: full[k]["avg_score"], reverse=True
+    )[:3]
+    assert set(top3.keys()) == set(
+        expected_top
+    ), "top_k did not return the highest-scoring subsets"
+
+    # All other metrics (avg_score, ci_bound, std_dev, std_err, feature_idx,
+    # feature_names if present) must match the corresponding entries in the
+    # full dict.
+    for k in top3:
+        assert top3[k]["feature_idx"] == full[k]["feature_idx"]
+        assert top3[k]["avg_score"] == full[k]["avg_score"]
+
+
+def test_get_metric_dict_top_k_none_preserves_default_behavior_issue_610():
+    knn = KNeighborsClassifier(n_neighbors=4)
+    iris = load_iris()
+    X, y = iris.data, iris.target
+    efs = EFS(
+        knn,
+        min_features=1,
+        max_features=2,
+        scoring="accuracy",
+        cv=2,
+        clone_estimator=False,
+        print_progress=False,
+        n_jobs=1,
+    )
+    efs.fit(X, y)
+
+    default = efs.get_metric_dict()
+    explicit_none = efs.get_metric_dict(top_k=None)
+    assert default.keys() == explicit_none.keys()
+
+
+def test_get_metric_dict_top_k_invalid_raises_issue_610():
+    knn = KNeighborsClassifier(n_neighbors=4)
+    iris = load_iris()
+    X, y = iris.data, iris.target
+    efs = EFS(
+        knn,
+        min_features=1,
+        max_features=2,
+        scoring="accuracy",
+        cv=2,
+        clone_estimator=False,
+        print_progress=False,
+        n_jobs=1,
+    )
+    efs.fit(X, y)
+    assert_raises(
+        ValueError,
+        "`top_k` must be a positive integer or None",
+        efs.get_metric_dict,
+        top_k=0,
+    )
+    assert_raises(
+        ValueError,
+        "`top_k` must be a positive integer or None",
+        efs.get_metric_dict,
+        top_k=-2,
+    )
+    assert_raises(
+        ValueError,
+        "`top_k` must be a positive integer or None",
+        efs.get_metric_dict,
+        top_k=1.5,
+    )
+
+
+def test_get_metric_dict_top_k_larger_than_total_returns_all_issue_610():
+    # Boundary: if top_k exceeds the number of evaluated subsets, all
+    # entries are returned (not an error).
+    knn = KNeighborsClassifier(n_neighbors=4)
+    iris = load_iris()
+    X, y = iris.data, iris.target
+    efs = EFS(
+        knn,
+        min_features=1,
+        max_features=2,
+        scoring="accuracy",
+        cv=2,
+        clone_estimator=False,
+        print_progress=False,
+        n_jobs=1,
+    )
+    efs.fit(X, y)
+    full = efs.get_metric_dict()
+    out = efs.get_metric_dict(top_k=10**6)
+    assert out.keys() == full.keys()

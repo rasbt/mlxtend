@@ -24,6 +24,14 @@ def minmax_scaling(array, columns, min_val=0, max_val=1):
     max_val : `int` or `float`, optional (default=`1`)
         maximum value after rescaling.
 
+    Notes
+    ----------
+    If all values in a given column are the same (zero range), the column
+    is set to `min_val` rather than silently filled with NaN. This mirrors
+    the contract already documented for `standardize` and avoids the
+    `RuntimeWarning: invalid value encountered in divide` previously raised
+    by the underlying `0 / 0` division.
+
     Returns
     ----------
     df_new : pandas DataFrame object.
@@ -48,14 +56,13 @@ def minmax_scaling(array, columns, min_val=0, max_val=1):
 
     numerator = ary_newt[:, columns] - ary_newt[:, columns].min(axis=0)
     denominator = ary_newt[:, columns].max(axis=0) - ary_newt[:, columns].min(axis=0)
-
-    # Handle constant columns (zero range) - works for both numpy and pandas
-    if np.any(denominator == 0):
-        raise ValueError(
-            "One or more columns have zero range (all values are identical). "
-            "minmax_scaling cannot be applied to constant columns."
-        )
-
+    # Constant columns have zero range; the naive (x - min) / (max - min)
+    # would compute 0 / 0 and silently emit NaN with only a numpy
+    # RuntimeWarning. Force the denominator to 1 for those columns so the
+    # numerator (which is identically zero) collapses the column to 0.0,
+    # mirroring the behaviour `standardize` already documents for
+    # constant inputs.
+    denominator = np.where(denominator == 0, 1, denominator)
     ary_newt[:, columns] = numerator / denominator
 
     if not min_val == 0 and not max_val == 1:

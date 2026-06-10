@@ -9,5 +9,6 @@ from .association_rules import association_rules
 from .fpgrowth import fpgrowth
 from .fpmax import fpmax
 from .hmine import hmine
+from .pipeline import RuleExtractor
 
 __all__ = ["apriori", "association_rules", "fpgrowth", "fpmax", "hmine"]

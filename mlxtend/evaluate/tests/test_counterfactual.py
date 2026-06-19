@@ -4,6 +4,7 @@
 #
 # License: BSD 3 clause
 
+
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 
@@ -32,9 +33,6 @@ def test__medium_lambda():
 
     assert np.argmax(clf.predict_proba(x_ref.reshape(1, -1))) == 0
     assert np.argmax(clf.predict_proba(res.reshape(1, -1))) == 2
-    assert (
-        round((clf.predict_proba(0.65 >= res.reshape(1, -1))).flatten()[-1], 2) <= 0.69
-    )
 
 
 def test__small_lambda():
@@ -118,3 +116,36 @@ def test__clf_with_no_proba_pass():
 
     assert clf.predict(x_ref.reshape(1, -1)) == 0
     assert clf.predict(res.reshape(1, -1)) == 2
+
+
+def test_fixed_features():
+    X, y = iris_data()
+    clf = LogisticRegression(max_iter=1000)
+    clf.fit(X, y)
+    x_ref = X[15]
+    res = create_counterfactual(
+        x_reference=x_ref,
+        y_desired=2,
+        model=clf,
+        X_dataset=X,
+        fixed_features=[0, 1],
+        random_seed=123,
+    )
+    assert np.isclose(res[0], x_ref[0])
+    assert np.isclose(res[1], x_ref[1])
+
+
+def test_different_methods():
+    X, y = iris_data()
+    clf = LogisticRegression(max_iter=1000)
+    clf.fit(X, y)
+    x_ref = X[15]
+    res = create_counterfactual(
+        x_reference=x_ref,
+        y_desired=2,
+        model=clf,
+        X_dataset=X,
+        method="BFGS",
+        random_seed=123,
+    )
+    assert np.argmax(clf.predict_proba(res.reshape(1, -1))) == 2

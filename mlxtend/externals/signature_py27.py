@@ -260,7 +260,7 @@ class Parameter(object):
         if name is None:
             if kind != _POSITIONAL_ONLY:
                 raise ValueError(
-                    "None is not a valid name for a " "non-positional-only parameter"
+                    "None is not a valid name for a non-positional-only parameter"
                 )
             self._name = name
         else:
@@ -761,8 +761,9 @@ class Signature(object):
 
                     if param.name in kwargs:
                         raise TypeError(
-                            "multiple values for argument "
-                            "{arg!r}".format(arg=param.name)
+                            "multiple values for argument {arg!r}".format(
+                                arg=param.name
+                            )
                         )
 
                     arguments[param.name] = arg_val

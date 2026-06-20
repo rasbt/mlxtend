@@ -4,8 +4,6 @@
 #
 # License: BSD 3 clause
 import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
 
 
 def scatter_hist(x, y, xlabel=None, ylabel=None, figsize=(5, 5)):

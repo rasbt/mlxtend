@@ -54,7 +54,7 @@ class Prog:
         if monitor:
             if not psutil_import:
                 raise ValueError(
-                    "psutil package is required when using" " the `monitor` option."
+                    "psutil package is required when using the `monitor` option."
                 )
             else:
                 self.process = psutil.Process()
@@ -186,10 +186,9 @@ class Prog:
         self._stream_flush()
 
         time_info = (
-            "Title: {}\n"
-            "  Started: {}\n"
-            "  Finished: {}\n"
-            "  Total time elapsed: ".format(self.title, str_start, str_end)
+            "Title: {}\n  Started: {}\n  Finished: {}\n  Total time elapsed: ".format(
+                self.title, str_start, str_end
+            )
             + self._get_time(self.total_time)
         )
         if self.monitor:
@@ -200,7 +199,7 @@ class Prog:
                 cpu_total = self.process.get_cpu_percent()
                 mem_total = self.process.get_memory_percent()
 
-            cpu_mem_info = "  CPU %: {:.2f}\n" "  Memory %: {:.2f}".format(
+            cpu_mem_info = "  CPU %: {:.2f}\n  Memory %: {:.2f}".format(
                 cpu_total, mem_total
             )
 

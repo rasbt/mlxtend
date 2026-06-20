@@ -5,7 +5,7 @@ from sklearn import __version__ as sklearn_version
 from mlxtend.data import iris_data
 from mlxtend.plotting import plot_pca_correlation_graph
 
-if Version(sklearn_version) < "0.22":
+if Version(sklearn_version) < Version("0.22"):
     from sklearn.decomposition.pca import PCA
 else:
     from sklearn.decomposition import PCA

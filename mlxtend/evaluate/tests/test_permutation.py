@@ -95,5 +95,5 @@ def test_paired_runs_exact():
 
 
 def test_paired_invalid_lengths():
-    msg = "x and y must have the same" " length if `paired=True`"
+    msg = "x and y must have the same length if `paired=True`"
     assert_raises(ValueError, msg, permutation_test, [1, 2, 3], [3, 4], paired=True)

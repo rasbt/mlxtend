@@ -27,7 +27,7 @@ def _check_arrays(X, y=None):
             raise ValueError("y must be a 1D array.")
 
     if not len(y) == X.shape[0]:
-        raise ValueError("X and y must contain the" "same number of samples")
+        raise ValueError("X and y must contain thesame number of samples")
 
 
 def no_information_rate(targets, predictions, loss_fn):
@@ -154,14 +154,12 @@ def bootstrap_point632_score(
 
     """
     if not isinstance(n_splits, int) or n_splits < 1:
-        raise ValueError(
-            "Number of splits must be" " greater than 1. Got %s." % n_splits
-        )
+        raise ValueError("Number of splits must be greater than 1. Got %s." % n_splits)
 
     allowed_methods = (".632", ".632+", "oob")
     if not isinstance(method, str) or method not in allowed_methods:
         raise ValueError(
-            "The `method` must " "be in %s. Got %s." % (allowed_methods, method)
+            "The `method` must be in %s. Got %s." % (allowed_methods, method)
         )
 
     # Pandas compatibility

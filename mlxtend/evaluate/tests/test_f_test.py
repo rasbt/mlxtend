@@ -22,7 +22,7 @@ def test_input_array_lengths_1():
     t2 = np.array([1, 2, 3])
     assert_raises(
         ValueError,
-        ("Each prediction array must have" " the same number of samples."),
+        ("Each prediction array must have the same number of samples."),
         ftest,
         t,
         t2,
@@ -38,7 +38,7 @@ def test_model_have_same_len():
 
     assert_raises(
         ValueError,
-        ("Each prediction array must have" " the same number of samples."),
+        ("Each prediction array must have the same number of samples."),
         ftest,
         y_true,
         y_1,

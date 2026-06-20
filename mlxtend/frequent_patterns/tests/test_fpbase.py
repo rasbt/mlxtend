@@ -10,7 +10,6 @@ from io import StringIO
 
 import numpy as np
 import pandas as pd
-from numpy.testing import assert_array_equal
 from packaging.version import Version
 from pandas import __version__ as pandas_version
 from scipy.sparse import csr_matrix

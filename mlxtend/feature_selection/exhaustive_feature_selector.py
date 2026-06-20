@@ -624,6 +624,4 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
 
     def _check_fitted(self):
         if not self.fitted:
-            raise AttributeError(
-                "ExhaustiveFeatureSelector has not been" " fitted, yet."
-            )
+            raise AttributeError("ExhaustiveFeatureSelector has not been fitted, yet.")

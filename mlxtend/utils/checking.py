@@ -63,7 +63,7 @@ def format_kwarg_dictionaries(
     for d in [default_kwargs, user_kwargs]:
         if not isinstance(d, (dict, type(None))):
             raise TypeError(
-                "d must be of type dict or None, but " "got {} instead".format(type(d))
+                "d must be of type dict or None, but got {} instead".format(type(d))
             )
         if d is not None:
             formatted_kwargs.update(d)

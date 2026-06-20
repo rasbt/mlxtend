@@ -38,7 +38,7 @@ def test_filler_feature_values_fail():
     sr.fit(X, y)
     assert_raises(
         ValueError,
-        "Filler values must be provided when " "X has more than 2 training features.",
+        "Filler values must be provided when X has more than 2 training features.",
         plot_decision_regions,
         X,
         y,
@@ -114,9 +114,7 @@ def test_y_ary_dim():
 def test_scatter_kwargs_type():
     kwargs = "not a dictionary"
     sr.fit(X[:, :2], y)
-    message = "d must be of type dict or None, but got " "{} instead".format(
-        type(kwargs)
-    )
+    message = "d must be of type dict or None, but got {} instead".format(type(kwargs))
     assert_raises(
         TypeError,
         message,
@@ -131,9 +129,7 @@ def test_scatter_kwargs_type():
 def test_contourf_kwargs_type():
     kwargs = "not a dictionary"
     sr.fit(X[:, :2], y)
-    message = "d must be of type dict or None, but got " "{} instead".format(
-        type(kwargs)
-    )
+    message = "d must be of type dict or None, but got {} instead".format(type(kwargs))
     assert_raises(
         TypeError,
         message,
@@ -148,9 +144,7 @@ def test_contourf_kwargs_type():
 def test_scatter_highlight_kwargs_type():
     kwargs = "not a dictionary"
     sr.fit(X[:, :2], y)
-    message = "d must be of type dict or None, but got " "{} instead".format(
-        type(kwargs)
-    )
+    message = "d must be of type dict or None, but got {} instead".format(type(kwargs))
     assert_raises(
         TypeError,
         message,

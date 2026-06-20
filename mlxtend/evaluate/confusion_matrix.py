@@ -49,7 +49,7 @@ def confusion_matrix(y_target, y_predicted, binary=False, positive_label=1):
 
     if len(y_target) != len(y_predicted):
         raise AttributeError(
-            "`y_target` and `y_predicted`" " don't have the same number of elements."
+            "`y_target` and `y_predicted` don't have the same number of elements."
         )
 
     if binary:

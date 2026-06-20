@@ -4,7 +4,6 @@
 #
 # License: BSD 3 clause
 
-import platform
 import random
 
 import numpy as np
@@ -549,9 +548,9 @@ def test_decision_function():
 
     min_allowed_score = 0.92
     max_allowed_score = 0.95
-    assert (
-        min_allowed_score <= scores_mean <= max_allowed_score
-    ), "Score is out of the allowed range."
+    assert min_allowed_score <= scores_mean <= max_allowed_score, (
+        "Score is out of the allowed range."
+    )
 
     # another test
     meta = SVC(decision_function_shape="ovo")
@@ -568,9 +567,9 @@ def test_decision_function():
     else:
         min_allowed_score = 0.92
         max_allowed_score = 0.95
-        assert (
-            min_allowed_score <= scores_mean <= max_allowed_score
-        ), "Score is out of the allowed range."
+        assert min_allowed_score <= scores_mean <= max_allowed_score, (
+            "Score is out of the allowed range."
+        )
 
 
 def test_drop_col_unsupported():

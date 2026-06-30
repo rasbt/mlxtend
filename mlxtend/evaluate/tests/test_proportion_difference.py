@@ -446,7 +446,6 @@ def test_on_dataset():
     assert round(p_value, 3) == 0.5
 
 
-    
 def test_proportion_difference_rejects_out_of_range():
     import pytest
     from mlxtend.evaluate import proportion_difference

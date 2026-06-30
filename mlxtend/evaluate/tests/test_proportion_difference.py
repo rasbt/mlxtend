@@ -444,3 +444,13 @@ def test_on_dataset():
     z, p_value = proportion_difference(acc_2, acc_3, n_1=y_true.shape[0])
     assert round(z, 3) == 0.0
     assert round(p_value, 3) == 0.5
+
+
+    
+def test_proportion_difference_rejects_out_of_range():
+    import pytest
+    from mlxtend.evaluate import proportion_difference
+    with pytest.raises(ValueError):
+        proportion_difference(1.5, 0.3, n_1=50)
+    with pytest.raises(ValueError):
+        proportion_difference(0.3, -0.2, n_1=50)

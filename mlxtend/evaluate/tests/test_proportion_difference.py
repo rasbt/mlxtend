@@ -450,6 +450,7 @@ def test_proportion_difference_rejects_out_of_range():
     import pytest
 
     from mlxtend.evaluate import proportion_difference
+
     with pytest.raises(ValueError):
         proportion_difference(1.5, 0.3, n_1=50)
     with pytest.raises(ValueError):

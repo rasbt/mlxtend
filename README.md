@@ -146,4 +146,8 @@ according to the terms and conditions of the Creative Commons Attribution 4.0 In
 
 ## Contact
 
-The best way to ask questions is via the [GitHub Discussions channel](https://github.com/rasbt/mlxtend/discussions). In case you encounter usage bugs, please don't hesitate to use the [GitHub's issue tracker](https://github.com/rasbt/mlxtend/issues) directly. 
+The best way to ask questions is via the [GitHub Discussions channel](https://github.com/rasbt/mlxtend/discussions). In case you encounter usage bugs, please don't hesitate to use the [GitHub's issue tracker](https://github.com/rasbt/mlxtend/issues) directly.
+
+---
+
+*[Mukller](https://github.com/Mukller)*

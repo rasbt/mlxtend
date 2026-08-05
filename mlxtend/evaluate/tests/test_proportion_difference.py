@@ -5,6 +5,7 @@
 # License: BSD 3 clause
 
 import numpy as np
+import pytest
 
 from mlxtend.evaluate import proportion_difference
 
@@ -444,3 +445,18 @@ def test_on_dataset():
     z, p_value = proportion_difference(acc_2, acc_3, n_1=y_true.shape[0])
     assert round(z, 3) == 0.0
     assert round(p_value, 3) == 0.5
+
+
+def test_proportion_difference_rejects_out_of_range():
+    invalid_cases = [
+        (-0.2, 0.3, "proportion_1"),
+        (1.5, 0.3, "proportion_1"),
+        (np.nan, 0.3, "proportion_1"),
+        (0.3, -0.2, "proportion_2"),
+        (0.3, 1.5, "proportion_2"),
+        (0.3, np.nan, "proportion_2"),
+    ]
+
+    for proportion_1, proportion_2, invalid_parameter in invalid_cases:
+        with pytest.raises(ValueError, match=invalid_parameter):
+            proportion_difference(proportion_1, proportion_2, n_1=50)

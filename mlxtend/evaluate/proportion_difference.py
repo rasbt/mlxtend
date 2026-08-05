@@ -39,6 +39,10 @@ def proportion_difference(proportion_1, proportion_2, n_1, n_2=None):
     https://rasbt.github.io/mlxtend/user_guide/evaluate/proportion_difference/
 
     """
+    if not 0 <= proportion_1 <= 1:
+        raise ValueError("proportion_1 must be in the interval [0, 1].")
+    if not 0 <= proportion_2 <= 1:
+        raise ValueError("proportion_2 must be in the interval [0, 1].")
     if n_2 is None:
         n_2 = n_1
 

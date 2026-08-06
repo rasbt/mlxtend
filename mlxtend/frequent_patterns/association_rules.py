@@ -29,6 +29,7 @@ _metrics = [
     "jaccard",
     "certainty",
     "kulczynski",
+    "mutual_information",
 ]
 
 
@@ -142,6 +143,19 @@ def association_rules(
         kulczynski = (conf_AC + conf_CA) / 2
         return kulczynski
 
+    def mutual_information_metric_helper(
+        sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
+    ):
+        with np.errstate(divide="ignore", invalid="ignore"):
+            numerator = sAC
+            denominator = sA * sC
+            mi = np.where(
+                (numerator > 0) & (denominator > 0),
+                np.log2(numerator / denominator),
+                -np.inf,
+            )
+        return mi
+
     def conviction_helper(conf, sC):
         conviction = np.empty(conf.shape, dtype=float)
         if not len(conviction.shape):
@@ -221,6 +235,9 @@ def association_rules(
             sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
         ),
         "kulczynski": lambda sAC, sA, sC, _, __, ____, _____, ______: kulczynski_helper(
+            sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
+        ),
+        "mutual_information": lambda sAC, sA, sC, _, __, ____, _____, ______: mutual_information_metric_helper(
             sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
         ),
     }

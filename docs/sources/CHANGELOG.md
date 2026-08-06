@@ -17,6 +17,8 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
+- Scoped frequent pattern deprecation warnings to mlxtend so host applications no longer receive unrelated warnings.
+
 
 ### Version 0.25.0  (6 Jun 2026)
 

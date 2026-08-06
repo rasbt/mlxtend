@@ -90,10 +90,14 @@ def test_use_clones():
 
 
 def test_sample_weight():
+    # bootstrap=False so that sample_weight=np.ones(...) is numerically
+    # identical to sample_weight=None. As of scikit-learn 1.9, sample_weight
+    # is incorporated into the bootstrap resampling of RandomForest, so the
+    # default (bootstrap=True) makes uniform weights diverge from no weights.
     # with no weight given
     np.random.seed(123)
     meta = LogisticRegression(solver="lbfgs")
-    clf1 = RandomForestClassifier(n_estimators=10)
+    clf1 = RandomForestClassifier(n_estimators=10, bootstrap=False)
     clf2 = GaussianNB()
     sclf = StackingCVClassifier(
         classifiers=[clf1, clf2], meta_classifier=meta, shuffle=False
@@ -103,7 +107,7 @@ def test_sample_weight():
     # with weight = 1
     np.random.seed(123)
     meta = LogisticRegression(solver="lbfgs")
-    clf1 = RandomForestClassifier(n_estimators=10)
+    clf1 = RandomForestClassifier(n_estimators=10, bootstrap=False)
     clf2 = GaussianNB()
     sclf = StackingCVClassifier(
         classifiers=[clf1, clf2], meta_classifier=meta, shuffle=False
@@ -116,7 +120,7 @@ def test_sample_weight():
     w = np.array([random.random() for _ in range(len(y_iris))])
     np.random.seed(123)
     meta = LogisticRegression(solver="lbfgs")
-    clf1 = RandomForestClassifier(n_estimators=10)
+    clf1 = RandomForestClassifier(n_estimators=10, bootstrap=False)
     clf2 = GaussianNB()
     sclf = StackingCVClassifier(
         classifiers=[clf1, clf2], meta_classifier=meta, shuffle=False

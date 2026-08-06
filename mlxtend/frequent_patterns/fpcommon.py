@@ -5,7 +5,9 @@ import numpy as np
 import pandas as pd
 from pandas import __version__ as pandas_version
 
-warnings.simplefilter("always", DeprecationWarning)
+warnings.filterwarnings(
+    "always", category=DeprecationWarning, module=r"^mlxtend(\.|$)", append=True
+)
 
 
 def setup_fptree(df, min_support, null_values=False):

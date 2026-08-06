@@ -78,10 +78,14 @@ def test_use_clones():
 
 
 def test_sample_weight():
+    # bootstrap=False so that sample_weight=np.ones(...) is numerically
+    # identical to sample_weight=None. As of scikit-learn 1.9, sample_weight
+    # is incorporated into the bootstrap resampling of RandomForest, so the
+    # default (bootstrap=True) makes uniform weights diverge from no weights.
     # with no weight
     np.random.seed(123)
     clf1 = LogisticRegression(solver="lbfgs", max_iter=500)
-    clf2 = RandomForestClassifier(n_estimators=10)
+    clf2 = RandomForestClassifier(n_estimators=10, bootstrap=False)
     clf3 = GaussianNB()
     eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting="hard")
     prob1 = eclf.fit(X, y).predict_proba(X)
@@ -90,7 +94,7 @@ def test_sample_weight():
     w = np.ones(len(y))
     np.random.seed(123)
     clf1 = LogisticRegression(solver="lbfgs", max_iter=500)
-    clf2 = RandomForestClassifier(n_estimators=10)
+    clf2 = RandomForestClassifier(n_estimators=10, bootstrap=False)
     clf3 = GaussianNB()
     eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting="hard")
     prob2 = eclf.fit(X, y, sample_weight=w).predict_proba(X)
@@ -100,7 +104,7 @@ def test_sample_weight():
     w = np.array([random.random() for _ in range(len(y))])
     np.random.seed(123)
     clf1 = LogisticRegression(solver="lbfgs", max_iter=500)
-    clf2 = RandomForestClassifier(n_estimators=10)
+    clf2 = RandomForestClassifier(n_estimators=10, bootstrap=False)
     clf3 = GaussianNB()
     eclf = EnsembleVoteClassifier(clfs=[clf1, clf2, clf3], voting="hard")
     prob3 = eclf.fit(X, y, sample_weight=w).predict_proba(X)

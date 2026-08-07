@@ -19,6 +19,7 @@ def create_counterfactual(
     y_desired_proba=None,
     lammbda=0.1,
     random_seed=None,
+    method="Nelder-Mead",
 ):
     """
     Implementation of the counterfactual method by Wachter et al. 2017
@@ -68,6 +69,13 @@ def create_counterfactual(
         the random number generator for selecting the inital counterfactual
         from `X_dataset`.
 
+    method : str (default: 'Nelder-Mead')
+        The optimization method to be used in `scipy.optimize.minimize`.
+        Examples include 'Nelder-Mead', 'BFGS', 'Powell', etc.
+        Refer to SciPy documentation for supported methods:
+        https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html
+
+
     """
     if y_desired_proba is not None:
         use_proba = True
@@ -110,7 +118,7 @@ def create_counterfactual(
 
         return diff + dist(x_reference, x_counterfact)
 
-    res = minimize(loss, x_counterfact, args=(lammbda), method="Nelder-Mead")
+    res = minimize(loss, x_counterfact, args=(lammbda), method=method)
 
     if not res["success"]:
         warnings.warn(res["message"])

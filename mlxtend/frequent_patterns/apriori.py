@@ -126,7 +126,6 @@ def generate_new_combinations_low_memory(old_combinations, X, min_support, is_sp
     """
 
     rows_count = X.shape[0]
-    threshold = min_support * rows_count
     for prefix, candidates in groupby(
         _apriori_gen(old_combinations), key=lambda x: x[:-1]
     ):
@@ -140,7 +139,11 @@ def generate_new_combinations_low_memory(old_combinations, X, min_support, is_sp
         else:
             mask_rows = X[:, prefix].all(axis=1)
             supports = X[mask_rows][:, valid_items].sum(axis=0)
-        valid_indices = (supports >= threshold).nonzero()[0]
+        # Compare the normalized support against min_support, exactly like the
+        # default path (support = count / rows_count). Scaling min_support up by
+        # rows_count instead can round past the true threshold and drop itemsets
+        # whose support lands exactly on min_support.
+        valid_indices = (supports / rows_count >= min_support).nonzero()[0]
         for index in valid_indices:
             yield supports[index]
             yield from prefix

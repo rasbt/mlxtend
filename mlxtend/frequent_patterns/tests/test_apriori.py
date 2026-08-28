@@ -143,6 +143,21 @@ class TestAprioriSpecific(unittest.TestCase):
 
         _assert_itemsets_equal(res_low_memory, res_default)
 
+    def test_low_memory_matches_default_at_exact_support_boundary(self):
+        # An itemset whose support lands exactly on min_support must be kept by
+        # both paths. Scaling min_support by the row count (0.28 * 25 rounds up
+        # to 7.000000000000001) used to drop {A, B} on the low_memory path.
+        df = pd.DataFrame(
+            [[1, 1, 0]] * 7 + [[0, 0, 1]] * 18,
+            columns=["A", "B", "C"],
+        )
+        res_default = apriori(df, min_support=0.28, use_colnames=True)
+        res_low_memory = apriori(
+            df, min_support=0.28, use_colnames=True, low_memory=True
+        )
+        _assert_itemsets_equal(res_low_memory, res_default)
+        assert frozenset(["A", "B"]) in set(res_low_memory["itemsets"])
+
     def test_max_len_one_returns_only_single_itemsets(self):
         result = apriori(self.df, min_support=0.6, use_colnames=True, max_len=1)
         expected = pd.DataFrame(

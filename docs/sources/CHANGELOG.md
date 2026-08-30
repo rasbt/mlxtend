@@ -17,6 +17,8 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
+- Fixed `apriori(..., low_memory=True)` so itemsets whose support equals `min_support` are retained consistently with the default mode, including floating-point boundary cases ([#1191](https://github.com/rasbt/mlxtend/pull/1191) via [AlejandroCoronadoN](https://github.com/AlejandroCoronadoN))
+
 
 ### Version 0.25.0  (6 Jun 2026)
 

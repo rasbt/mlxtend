@@ -19,6 +19,8 @@ The CHANGELOG for the current development version is available at
 
 - Fixed `apriori(..., low_memory=True)` so itemsets whose support equals `min_support` are retained consistently with the default mode, including floating-point boundary cases ([#1191](https://github.com/rasbt/mlxtend/pull/1191) via [AlejandroCoronadoN](https://github.com/AlejandroCoronadoN))
 
+- Corrected documented default values that disagreed with the function signatures in `lift_score`, `paired_ttest_kfold_cv`, `find_filegroups`, `fpmax`, `plot_confusion_matrix`, `heatmap` and `checkerboard_plot` ([#1193](https://github.com/rasbt/mlxtend/pull/1193) via [VenishPaneliya](https://github.com/VenishPaneliya))
+
 
 ### Version 0.25.0  (6 Jun 2026)
 

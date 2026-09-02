@@ -35,7 +35,7 @@ def checkerboard_plot(
         checkerboard pattern.
     font_colors : tuple or list (default: ('black', 'white'))
         Font colors corresponding to the cell colors.
-    figsize : tuple (default: (2.5, 2.5))
+    figsize : tuple (default: None)
         Height and width of the figure
     fmt : str (default: '%.1f')
         Python string formatter for cell values.

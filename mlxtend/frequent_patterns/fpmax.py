@@ -45,7 +45,7 @@ def fpmax(
       The support is computed as the fraction
       transactions_where_item(s)_occur / total_transactions.
 
-    null_values : bool (default: True)
+    null_values : bool (default: False)
       In case there are null values as NaNs in the original input data
 
     use_colnames : bool (default: False)

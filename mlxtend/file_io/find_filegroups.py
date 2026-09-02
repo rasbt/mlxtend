@@ -33,7 +33,7 @@ def find_filegroups(
     extensions : `list` (default: None)
         `None` or `list` of allowed file extensions for each path.
         If provided, the number of extensions must match the number of `paths`.
-    validity_check : `bool` (default: None)
+    validity_check : `bool` (default: True)
         If `True`, checks if all dictionary values
         have the same number of file paths. Prints
         a warning and returns an empty dictionary if the validity check failed.

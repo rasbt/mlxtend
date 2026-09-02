@@ -38,7 +38,7 @@ def heatmap(
     hide_ticks : bool (default: False)
         Hides axis ticks if True
 
-    figsize : tuple (default: (2.5, 2.5))
+    figsize : tuple (default: None)
         Height and width of the figure
 
     cmap : matplotlib colormap (default: `None`)

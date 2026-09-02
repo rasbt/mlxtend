@@ -30,7 +30,7 @@ def lift_score(y_target, y_predicted, binary=True, positive_label=1):
         binary, where
         the positive class is 1 and
         all other classes are 0.
-    positive_label : int (default: 0)
+    positive_label : int (default: 1)
         Class label of the positive class.
 
     Returns

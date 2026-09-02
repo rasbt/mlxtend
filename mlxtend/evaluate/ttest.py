@@ -173,7 +173,7 @@ def paired_ttest_kfold_cv(
         https://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
         for more information.
 
-    shuffle : bool (default: True)
+    shuffle : bool (default: False)
         Whether to shuffle the dataset for generating
         the k-fold splits.
 

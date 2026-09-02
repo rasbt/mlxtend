@@ -37,7 +37,7 @@ def plot_confusion_matrix(
     hide_ticks : bool (default: False)
         Hides axis ticks if True
 
-    figsize : tuple (default: (2.5, 2.5))
+    figsize : tuple (default: None)
         Height and width of the figure
 
     cmap : matplotlib colormap (default: `None`)
@@ -59,7 +59,7 @@ def plot_confusion_matrix(
         At least one of  `show_absolute` or `show_normed`
         must be True.
 
-    norm_colormap : bool (default: False)
+    norm_colormap : matplotlib.colors.Normalize (default: None)
         Matplotlib color normalization object to normalize the
         color scale, e.g., `matplotlib.colors.LogNorm()`.
 

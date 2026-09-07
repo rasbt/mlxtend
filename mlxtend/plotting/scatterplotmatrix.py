@@ -23,7 +23,7 @@ def scatterplotmatrix(
       Design matrix containing data instances (examples)
       with multiple exploratory variables (features).
 
-    fix_axes : tuple (default: None)
+    fig_axes : tuple (default: None)
       A `(fig, axes)` tuple, where fig is an figure object
       and axes is an axes object created via matplotlib,
       for example, by calling the pyplot `subplot` function
@@ -46,7 +46,7 @@ def scatterplotmatrix(
 
     Returns
     --------
-    fix_axes : tuple
+    fig_axes : tuple
       A `(fig, axes)` tuple, where fig is an figure object
       and axes is an axes object created via matplotlib,
       for example, by calling the pyplot `subplot` function

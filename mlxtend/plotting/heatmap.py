@@ -29,8 +29,8 @@ def heatmap(
 
     Parameters
     -----------
-    conf_mat : array-like, shape = [n_rows, n_columns]
-        And arbitrary 2D array.
+    matrix : array-like, shape = [n_rows, n_columns]
+        An arbitrary 2D array.
 
     hide_spines : bool (default: False)
         Hides axis spines if True.

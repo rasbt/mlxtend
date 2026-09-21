@@ -21,6 +21,8 @@ The CHANGELOG for the current development version is available at
 
 - Corrected documented default values that disagreed with the function signatures in `lift_score`, `paired_ttest_kfold_cv`, `find_filegroups`, `fpmax`, `plot_confusion_matrix`, `heatmap` and `checkerboard_plot` ([#1193](https://github.com/rasbt/mlxtend/pull/1193) via [VenishPaneliya](https://github.com/VenishPaneliya))
 
+- Documented the public parameters missing from the docstrings of `category_scatter` (`label_col`), `apriori` (`n_jobs`), `association_rules` (`return_metrics`) and `plot_learning_curves` (`suppress_plot`) ([#1197](https://github.com/rasbt/mlxtend/pull/1197) via [VenishPaneliya](https://github.com/VenishPaneliya))
+
 
 ### Version 0.25.0  (6 Jun 2026)
 

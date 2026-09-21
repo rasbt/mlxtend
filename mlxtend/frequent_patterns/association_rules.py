@@ -94,6 +94,12 @@ def association_rules(
       b) you simply want to speed up the computation because
       you don't need the other metrics.
 
+    return_metrics : list (default: all supported metrics)
+      The metric columns to compute and include in the returned DataFrame.
+      Defaults to 'antecedent support', 'consequent support', 'support',
+      'confidence', 'lift', 'representativity', 'leverage', 'conviction',
+      'zhangs_metric', 'jaccard', 'certainty' and 'kulczynski'.
+
     Returns
     ----------
     pandas DataFrame with columns "antecedents" and "consequents"

@@ -149,7 +149,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         """
         if isinstance(y, np.ndarray) and len(y.shape) > 1 and y.shape[1] > 1:
             raise NotImplementedError(
-                "Multilabel and multi-output" " classification is not supported."
+                "Multilabel and multi-output classification is not supported."
             )
 
         if self.voting not in ("soft", "hard"):
@@ -168,9 +168,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         self.classes_ = self.le_.classes_
 
         if not self.fit_base_estimators and self.use_clones:
-            warnings.warn(
-                "fit_base_estimators=False " "enforces use_clones to be `False`"
-            )
+            warnings.warn("fit_base_estimators=False enforces use_clones to be `False`")
             self.use_clones = False
 
         if self.use_clones:
@@ -220,7 +218,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         """
         if not hasattr(self, "clfs_"):
             raise NotFittedError(
-                "Estimator not fitted, " "call `fit` before exploiting the model."
+                "Estimator not fitted, call `fit` before exploiting the model."
             )
 
         if self.voting == "soft":
@@ -255,7 +253,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         """
         if not hasattr(self, "clfs_"):
             raise NotFittedError(
-                "Estimator not fitted, " "call `fit` before exploiting the model."
+                "Estimator not fitted, call `fit` before exploiting the model."
             )
 
         avg = np.average(self._predict_probas(X), axis=0, weights=self.weights)

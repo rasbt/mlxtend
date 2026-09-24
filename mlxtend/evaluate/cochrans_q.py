@@ -49,9 +49,7 @@ def cochrans_q(y_target, *y_model_predictions):
         model_lens.add(ary.shape[0])
 
     if len(model_lens) > 1:
-        raise ValueError(
-            "Each prediction array must have the " "same number of samples."
-        )
+        raise ValueError("Each prediction array must have the same number of samples.")
 
     if num_models < 2:
         raise ValueError("Provide at least 2 model prediction arrays.")

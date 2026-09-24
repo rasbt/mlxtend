@@ -3,7 +3,6 @@ import warnings
 
 import numpy as np
 import pandas as pd
-from pandas import __version__ as pandas_version
 
 warnings.simplefilter("always", DeprecationWarning)
 

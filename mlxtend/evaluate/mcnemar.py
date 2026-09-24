@@ -45,12 +45,12 @@ def mcnemar_table(y_target, y_model1, y_model2):
 
     if y_target.shape[0] != y_model1.shape[0]:
         raise ValueError(
-            "y_target and y_model1 contain a different number" " of elements."
+            "y_target and y_model1 contain a different number of elements."
         )
 
     if y_target.shape[0] != y_model2.shape[0]:
         raise ValueError(
-            "y_target and y_model2 contain a different number" " of elements."
+            "y_target and y_model2 contain a different number of elements."
         )
 
     m1_vs_true = (y_target == y_model1).astype(int)
@@ -132,9 +132,7 @@ def mcnemar_tables(y_target, *y_model_predictions):
         model_lens.add(ary.shape[0])
 
     if len(model_lens) > 1:
-        raise ValueError(
-            "Each prediction array must have the " "same number of samples."
-        )
+        raise ValueError("Each prediction array must have the same number of samples.")
 
     num_models = len(y_model_predictions)
 

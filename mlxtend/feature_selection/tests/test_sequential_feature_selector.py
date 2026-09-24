@@ -36,7 +36,7 @@ def nan_roc_auc_score(y_true, y_score, average="macro", sample_weight=None):
 def dict_compare_utility(d_actual, d_desired, decimal=2):
     assert d_actual.keys() == d_desired.keys(), "%s != %s" % (d_actual, d_desired)
     for i in d_actual:
-        err_msg = "d_actual[%s]['feature_idx']" " != d_desired[%s]['feature_idx']" % (
+        err_msg = "d_actual[%s]['feature_idx'] != d_desired[%s]['feature_idx']" % (
             i,
             i,
         )
@@ -46,7 +46,7 @@ def dict_compare_utility(d_actual, d_desired, decimal=2):
             desired=d_desired[i]["avg_score"],
             decimal=decimal,
             err_msg=(
-                "d_actual[%s]['avg_score']" " != d_desired[%s]['avg_score']" % (i, i)
+                "d_actual[%s]['avg_score'] != d_desired[%s]['avg_score']" % (i, i)
             ),
         )
         assert_almost_equal(
@@ -54,7 +54,7 @@ def dict_compare_utility(d_actual, d_desired, decimal=2):
             desired=d_desired[i]["cv_scores"],
             decimal=decimal,
             err_msg=(
-                "d_actual[%s]['cv_scores']" " != d_desired[%s]['cv_scores']" % (i, i)
+                "d_actual[%s]['cv_scores'] != d_desired[%s]['cv_scores']" % (i, i)
             ),
         )
 
@@ -126,9 +126,7 @@ def test_kfeatures_type_5():
     X = iris.data
     y = iris.target
     knn = KNeighborsClassifier()
-    expect = (
-        "The min k_features value must be smaller" " than the max k_features value."
-    )
+    expect = "The min k_features value must be smaller than the max k_features value."
     sfs = SFS(estimator=knn, verbose=0, k_features=(3, 1))
     assert_raises(AttributeError, expect, sfs.fit, X, y)
 

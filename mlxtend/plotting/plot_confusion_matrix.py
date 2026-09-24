@@ -95,7 +95,7 @@ def plot_confusion_matrix(
         raise AssertionError("Both show_absolute and show_normed are False")
     if class_names is not None and len(class_names) != len(conf_mat):
         raise AssertionError(
-            "len(class_names) should be equal to number of" "classes in the dataset"
+            "len(class_names) should be equal to number ofclasses in the dataset"
         )
 
     total_samples = conf_mat.sum(axis=1)[:, np.newaxis]

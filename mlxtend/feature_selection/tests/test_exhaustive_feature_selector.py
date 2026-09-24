@@ -24,21 +24,21 @@ from mlxtend.utils import assert_raises
 def dict_compare_utility(d1, d2, decimal=2):
     assert d1.keys() == d2.keys(), "%s != %s" % (d1, d2)
     for i in d1:
-        err_msg1 = "d1[%s]['feature_idx']" " != d2[%s]['feature_idx']" % (i, i)
-        err_msg2 = "d1[%s]['feature_names']" " != d2[%s]['feature_names']" % (i, i)
+        err_msg1 = "d1[%s]['feature_idx'] != d2[%s]['feature_idx']" % (i, i)
+        err_msg2 = "d1[%s]['feature_names'] != d2[%s]['feature_names']" % (i, i)
         assert d1[i]["feature_idx"] == d2[i]["feature_idx"], err_msg1
         assert d1[i]["feature_names"] == d2[i]["feature_names"], err_msg2
         assert_almost_equal(
             d1[i]["avg_score"],
             d2[i]["avg_score"],
             decimal=decimal,
-            err_msg=("d1[%s]['avg_score']" " != d2[%s]['avg_score']" % (i, i)),
+            err_msg=("d1[%s]['avg_score'] != d2[%s]['avg_score']" % (i, i)),
         )
         assert_almost_equal(
             d1[i]["cv_scores"],
             d2[i]["cv_scores"],
             decimal=decimal,
-            err_msg=("d1[%s]['cv_scores']" " != d2[%s]['cv_scores']" % (i, i)),
+            err_msg=("d1[%s]['cv_scores'] != d2[%s]['cv_scores']" % (i, i)),
         )
 
 

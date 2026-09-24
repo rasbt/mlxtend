@@ -23,7 +23,7 @@ def test_train_size():
     clf2 = DecisionTreeClassifier()
 
     expected_err_msg = (
-        "train_size must be of type int or float. " "Got <class 'NoneType'>."
+        "train_size must be of type int or float. Got <class 'NoneType'>."
     )
 
     if sys.version_info < (3, 0):

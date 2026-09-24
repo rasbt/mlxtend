@@ -94,7 +94,7 @@ def scoring(
 
     if len(y_target) != len(y_predicted):
         raise AttributeError(
-            "`y_target` and `y_predicted`" " don't have the same number of elements."
+            "`y_target` and `y_predicted` don't have the same number of elements."
         )
 
     if unique_labels == "auto":
@@ -125,9 +125,7 @@ def scoring(
     else:
         if len(unique_labels) > 2 or len(np.unique(pred_tmp)) > 2:
             raise AttributeError(
-                "Metrics precision, "
-                "recall, and f1 only support binary"
-                " class labels"
+                "Metrics precision, recall, and f1 only support binary class labels"
             )
 
         # `binary=True` makes sure

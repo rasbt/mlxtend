@@ -27,7 +27,7 @@ def test_input_array_lengths_1():
     t2 = np.array([1, 2, 3])
     assert_raises(
         ValueError,
-        ("y_target and y_model1 contain a different number" " of elements."),
+        ("y_target and y_model1 contain a different number of elements."),
         mcnemar_table,
         t,
         t2,
@@ -40,7 +40,7 @@ def test_input_array_lengths_2():
     t2 = np.array([1, 2, 3])
     assert_raises(
         ValueError,
-        ("y_target and y_model2 contain a different number" " of elements."),
+        ("y_target and y_model2 contain a different number of elements."),
         mcnemar_table,
         t,
         t,

@@ -8,7 +8,6 @@ from numpy.testing import assert_almost_equal
 from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import roc_auc_score
 from sklearn.neighbors import KNeighborsClassifier
 
 from mlxtend.data import boston_housing_data
@@ -19,7 +18,7 @@ from mlxtend.utils import assert_raises
 def dict_compare_utility(d_actual, d_desired, decimal=2):
     assert d_actual.keys() == d_desired.keys(), "%s != %s" % (d_actual, d_desired)
     for i in d_actual:
-        err_msg = "d_actual[%s]['feature_idx']" " != d_desired[%s]['feature_idx']" % (
+        err_msg = "d_actual[%s]['feature_idx'] != d_desired[%s]['feature_idx']" % (
             i,
             i,
         )
@@ -29,7 +28,7 @@ def dict_compare_utility(d_actual, d_desired, decimal=2):
             desired=d_desired[i]["avg_score"],
             decimal=decimal,
             err_msg=(
-                "d_actual[%s]['avg_score']" " != d_desired[%s]['avg_score']" % (i, i)
+                "d_actual[%s]['avg_score'] != d_desired[%s]['avg_score']" % (i, i)
             ),
         )
         assert_almost_equal(
@@ -37,7 +36,7 @@ def dict_compare_utility(d_actual, d_desired, decimal=2):
             desired=d_desired[i]["cv_scores"],
             decimal=decimal,
             err_msg=(
-                "d_actual[%s]['cv_scores']" " != d_desired[%s]['cv_scores']" % (i, i)
+                "d_actual[%s]['cv_scores'] != d_desired[%s]['cv_scores']" % (i, i)
             ),
         )
 

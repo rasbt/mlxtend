@@ -416,13 +416,13 @@ if __name__ == "__main__":
         "-o1",
         "--output_module_api",
         default="../docs/sources/api_modules",
-        help=("Target directory for the module-level" " API Markdown files"),
+        help=("Target directory for the module-level API Markdown files"),
     )
     parser.add_argument(
         "-o2",
         "--output_subpackage_api",
         default="../docs/sources/api_subpackages",
-        help=("Target directory for the" " subpackage-level API Markdown files"),
+        help=("Target directory for the subpackage-level API Markdown files"),
     )
     parser.add_argument(
         "-c", "--clean", action="store_true", help="Remove previous API files"
@@ -459,5 +459,5 @@ if __name__ == "__main__":
         out_dir=args.output_subpackage_api,
         printlog=not (args.silent),
         clean=args.clean,
-        str_above_header=("mlxtend" " version: %s \n" % (package.__version__)),
+        str_above_header=("mlxtend version: %s \n" % (package.__version__)),
     )

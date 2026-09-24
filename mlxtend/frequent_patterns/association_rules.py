@@ -8,6 +8,7 @@
 #
 # License: BSD 3 clause
 
+
 from itertools import combinations
 from typing import Optional
 
@@ -116,22 +117,23 @@ def association_rules(
 
     """
     # if null values exist, df_orig must be provided
+
     if null_values and df_orig is None:
         raise TypeError("If null values exist, df_orig must be provided.")
-
     # if null values exist, num_itemsets must be provided
+
     if null_values and num_itemsets == 1:
         raise TypeError("If null values exist, num_itemsets must be provided.")
-
     # check for valid input
+
     fpc.valid_input_check(df_orig, null_values)
 
     if not df.shape[0]:
         raise ValueError(
-            "The input DataFrame `df` containing " "the frequent itemsets is empty."
+            "The input DataFrame `df` containing the frequent itemsets is empty."
         )
-
     # check for mandatory columns
+
     if not all(col in df.columns for col in ["support", "itemsets"]):
         raise ValueError("Dataframe needs to contain the\
                          columns 'support' and 'itemsets'")
@@ -161,8 +163,8 @@ def association_rules(
 
         with np.errstate(divide="ignore", invalid="ignore"):
             # ignoring the divide by 0 warning since it is addressed in the below np.where
-            zhangs_metric = np.where(denominator == 0, 0, numerator / denominator)
 
+            zhangs_metric = np.where(denominator == 0, 0, numerator / denominator)
         return zhangs_metric
 
     def jaccard_metric_helper(sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_):
@@ -185,6 +187,7 @@ def association_rules(
         return cert_metric
 
     # metrics for association rules
+
     metric_dict = {
         "antecedent support": lambda _, sA, ___, ____, _____, ______, _______, ________: sA,
         "consequent support": lambda _, __, sC, ____, _____, ______, _______, ________: sC,
@@ -226,6 +229,7 @@ def association_rules(
     }
 
     # check for metric compliance
+
     if support_only:
         metric = "support"
     else:
@@ -233,8 +237,8 @@ def association_rules(
             raise ValueError(
                 "Metric must be 'confidence' or 'lift', got '{}'".format(metric)
             )
-
     # get dict of {frequent itemset} -> support
+
     keys = df["itemsets"].values
     values = df["support"].values
     frozenset_vect = np.vectorize(
@@ -245,11 +249,13 @@ def association_rules(
     frequent_items_dict = dict(zip(frozenset_vect(keys), values))
 
     # prepare buckets to collect frequent rules
+
     rule_antecedents = []
     rule_consequents = []
     rule_supports = []
 
     # Define the disabled df, assign columns from original df to be the same on the disabled.
+
     if null_values:
         first_itemset = next(iter(frequent_items_dict.keys()))
         df_orig = df_orig.copy()
@@ -260,18 +266,19 @@ def association_rules(
         disabled = pd.DataFrame(disabled)
         if all(isinstance(key, str) for key in first_itemset):
             disabled.columns = df_orig.columns
-
         if all(isinstance(key, (np.integer, int)) for key in first_itemset):
             cols = np.arange(0, len(df_orig.columns), 1)
             disabled.columns = cols
             df_orig = df_orig.rename(columns=dict(zip(df_orig.columns, cols)))
-
     # iterate over all frequent itemsets
+
     for k in frequent_items_dict.keys():
         sAC = frequent_items_dict[k]
         # to find all possible combinations
+
         for idx in range(len(k) - 1, 0, -1):
             # of antecedent and consequent
+
             for c in combinations(k, r=idx):
                 antecedent = frozenset(c)
                 consequent = k.difference(antecedent)
@@ -279,65 +286,70 @@ def association_rules(
                 if support_only:
                     # support doesn't need these,
                     # hence, placeholders should suffice
+
                     sA = None
                     sC = None
                     disAC, disA, disC, dis_int, dis_int_ = 0, 0, 0, 0, 0
-
                 else:
                     try:
                         sA = frequent_items_dict[antecedent]
                         sC = frequent_items_dict[consequent]
 
                         # if the input dataframe is complete
+
                         if not null_values:
                             disAC, disA, disC, dis_int, dis_int_ = 0, 0, 0, 0, 0
-
                         else:
                             an = list(antecedent)
                             con = list(consequent)
                             an.extend(con)
 
                             # select data of antecedent, consequent and combined from disabled
+
                             dec = disabled.loc[:, an]
                             _dec = disabled.loc[:, list(antecedent)]
                             __dec = disabled.loc[:, list(consequent)]
 
                             # select data of antecedent and consequent from original
+
                             dec_ = df_orig.loc[:, list(antecedent)]
                             dec__ = df_orig.loc[:, list(consequent)]
 
                             # disabled counts
+
                             disAC, disA, disC, dis_int, dis_int_ = 0, 0, 0, 0, 0
                             for i in range(len(dec.index)):
                                 # select the i-th iset from the disabled dataset
+
                                 item_comb = list(dec.iloc[i, :])
                                 item_dis_an = list(_dec.iloc[i, :])
                                 item_dis_con = list(__dec.iloc[i, :])
 
                                 # select the i-th iset from the original dataset
+
                                 item_or_an = list(dec_.iloc[i, :])
                                 item_or_con = list(dec__.iloc[i, :])
 
                                 # check and keep count if there is a null value in combined, antecedent, consequent
+
                                 if 1 in set(item_comb):
                                     disAC += 1
                                 if 1 in set(item_dis_an):
                                     disA += 1
                                 if 1 in item_dis_con:
                                     disC += 1
-
                                 # check and keep count if there is a null value in consequent AND all items are present in antecedent
+
                                 if (1 in item_dis_con) and all(
                                     j == 1 for j in item_or_an
                                 ):
                                     dis_int += 1
-
                                 # check and keep count if there is a null value in antecedent AND all items are present in consequent
+
                                 if (1 in item_dis_an) and all(
                                     j == 1 for j in item_or_con
                                 ):
                                     dis_int_ += 1
-
                     except KeyError as e:
                         s = (
                             str(e) + "You are likely getting this error"
@@ -349,7 +361,6 @@ def association_rules(
                         )
                         raise KeyError(s)
                     # check for the threshold
-
                 score = metric_dict[metric](
                     sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
                 )
@@ -359,13 +370,13 @@ def association_rules(
                     rule_supports.append(
                         [sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_]
                     )
-
     # check if frequent rule was generated
+
     if not rule_supports:
         return pd.DataFrame(columns=["antecedents", "consequents"] + return_metrics)
-
     else:
         # generate metrics
+
         rule_supports = np.array(rule_supports).T.astype(float)
         df_res = pd.DataFrame(
             data=list(zip(rule_antecedents, rule_consequents)),
@@ -377,7 +388,6 @@ def association_rules(
             for m in return_metrics:
                 df_res[m] = np.nan
             df_res["support"] = sAC
-
         else:
             sAC = rule_supports[0]
             sA = rule_supports[1]
@@ -392,5 +402,4 @@ def association_rules(
                 df_res[m] = metric_dict[m](
                     sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
                 )
-
         return df_res

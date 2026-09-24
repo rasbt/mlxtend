@@ -9,13 +9,10 @@
 
 import glob
 import os
-import shutil
 import subprocess
 
-import markdown
 from markdown.extensions import Extension
 from markdown.treeprocessors import Treeprocessor
-from nbconvert.exporters import MarkdownExporter
 
 
 class ImgExtractor(Treeprocessor):

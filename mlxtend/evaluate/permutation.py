@@ -86,9 +86,7 @@ def permutation_test(
     """
 
     if method not in ("approximate", "exact"):
-        raise AttributeError(
-            'method must be "approximate"' ' or "exact", got %s' % method
-        )
+        raise AttributeError('method must be "approximate" or "exact", got %s' % method)
 
     if isinstance(func, str):
         if func not in ("x_mean != y_mean", "x_mean > y_mean", "x_mean < y_mean"):
@@ -120,7 +118,7 @@ def permutation_test(
 
     if paired:
         if m != n:
-            raise ValueError("x and y must have the same" " length if `paired=True`")
+            raise ValueError("x and y must have the same length if `paired=True`")
         sample_x = np.empty(m)
         sample_y = np.empty(n)
 

@@ -58,7 +58,7 @@ def accuracy_score(
 
     if len(y_target) != len(y_predicted):
         raise AttributeError(
-            "`y_target` and `y_predicted`" " don't have the same number of elements."
+            "`y_target` and `y_predicted` don't have the same number of elements."
         )
     if method == "standard":
         return _compute_metric(target_temp, predicted_temp, normalize)

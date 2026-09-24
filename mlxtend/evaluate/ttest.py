@@ -92,7 +92,7 @@ def paired_ttest_resampled(
     """
     if not isinstance(test_size, int) and not isinstance(test_size, float):
         raise ValueError(
-            "train_size must be of " "type int or float. Got %s." % type(test_size)
+            "train_size must be of type int or float. Got %s." % type(test_size)
         )
 
     rng = np.random.RandomState(random_seed)
@@ -104,7 +104,7 @@ def paired_ttest_resampled(
         elif est_type == "regressor":
             scoring = "r2"
         else:
-            raise AttributeError("Estimator must " "be a Classifier or Regressor.")
+            raise AttributeError("Estimator must be a Classifier or Regressor.")
     if isinstance(scoring, str):
         scorer = get_scorer(scoring)
     else:

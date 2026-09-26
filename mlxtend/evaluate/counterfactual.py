@@ -5,6 +5,7 @@
 #
 # License: BSD 3 clause
 
+
 import warnings
 
 import numpy as np
@@ -19,6 +20,7 @@ def create_counterfactual(
     y_desired_proba=None,
     lammbda=0.1,
     random_seed=None,
+    feature_names_to_vary=None,
 ):
     """
     Implementation of the counterfactual method by Wachter et al. 2017
@@ -79,19 +81,21 @@ def create_counterfactual(
             )
     else:
         use_proba = False
-
     if y_desired_proba is None:
         # class label
+
         y_to_be_annealed_to = y_desired
     else:
         # class proba corresponding to class label y_desired
-        y_to_be_annealed_to = y_desired_proba
 
+        y_to_be_annealed_to = y_desired_proba
     # start with random counterfactual
+
     rng = np.random.RandomState(random_seed)
     x_counterfact = X_dataset[rng.randint(X_dataset.shape[0])]
 
     # compute median absolute deviation
+
     mad = np.abs(np.median(X_dataset, axis=0) - x_reference)
 
     def dist(x_reference, x_counterfact):
@@ -105,7 +109,6 @@ def create_counterfactual(
             ]
         else:
             y_predict = model.predict(x_counterfact.reshape(1, -1))
-
         diff = lammbda * (y_predict - y_to_be_annealed_to) ** 2
 
         return diff + dist(x_reference, x_counterfact)
@@ -114,7 +117,6 @@ def create_counterfactual(
 
     if not res["success"]:
         warnings.warn(res["message"])
-
     x_counterfact = res["x"]
 
     return x_counterfact

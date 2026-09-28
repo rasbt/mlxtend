@@ -25,6 +25,8 @@ The CHANGELOG for the current development version is available at
 
 - Corrected documented default values that disagreed with the function signatures in `lift_score`, `paired_ttest_kfold_cv`, `find_filegroups`, `fpmax`, `plot_confusion_matrix`, `heatmap` and `checkerboard_plot` ([#1193](https://github.com/rasbt/mlxtend/pull/1193) via [VenishPaneliya](https://github.com/VenishPaneliya))
 
+- `TransactionEncoder.transform(..., sparse=True)` now always returns a matrix with one column per fitted item (`len(columns_)`). Previously, the number of columns was inferred from the transformed transactions, so transforming transactions that did not contain the alphabetically last items returned too few columns, and transforming only empty transactions raised a `ValueError` (via [MohammadHijjawi97](https://github.com/MohammadHijjawi97))
+
 
 ### Version 0.25.0  (6 Jun 2026)
 

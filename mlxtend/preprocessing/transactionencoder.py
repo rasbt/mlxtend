@@ -121,7 +121,11 @@ class TransactionEncoder(BaseEstimator, TransformerMixin):
                     indices.append(col_idx)
                 indptr.append(len(indices))
             non_sparse_values = [True] * len(indices)
-            array = csr_matrix((non_sparse_values, indices, indptr), dtype=bool)
+            array = csr_matrix(
+                (non_sparse_values, indices, indptr),
+                shape=(len(indptr) - 1, len(self.columns_)),
+                dtype=bool,
+            )
         else:
             array = np.zeros((len(X), len(self.columns_)), dtype=bool)
             for row_idx, transaction in enumerate(X):

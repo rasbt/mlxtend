@@ -70,6 +70,21 @@ def test_transform_sparse():
     np.testing.assert_array_equal(expect, trans.todense())
 
 
+def test_transform_sparse_keeps_all_columns():
+    # the sparse output must have one column per fitted item even if the
+    # transformed transactions do not contain the last items (or any item)
+    oht = TransactionEncoder()
+    oht.fit(dataset)
+    subset = dataset[2:4]
+    trans = oht.transform(subset, sparse=True)
+    assert trans.shape == (2, len(oht.columns_))
+    np.testing.assert_array_equal(expect[2:4], trans.todense())
+
+    trans = oht.transform([[], []], sparse=True)
+    assert trans.shape == (2, len(oht.columns_))
+    assert trans.nnz == 0
+
+
 def test_fit_transform():
     oht = TransactionEncoder()
     trans = oht.fit_transform(dataset)

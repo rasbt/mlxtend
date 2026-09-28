@@ -17,6 +17,8 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
+- Documented the initial conversion of all User Guide notebooks before previewing the documentation with MkDocs ([#927](https://github.com/rasbt/mlxtend/issues/927)).
+
 - Corrected stored McNemar example outputs and the exact-test equation, and aligned scenario tables, code, and checkerboard labels with the model-1-row/model-2-column convention ([#987](https://github.com/rasbt/mlxtend/issues/987), [#988](https://github.com/rasbt/mlxtend/issues/988)).
 
 - Clarified why maximal itemsets from `fpmax` do not provide all subset supports required for confidence and lift in `association_rules`, and corrected the function name in the guide ([#1030](https://github.com/rasbt/mlxtend/issues/1030)).

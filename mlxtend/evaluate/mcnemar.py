@@ -188,6 +188,7 @@ def mcnemar(ary, corrected=True, exact=False):
     chi2, p : float or None, float
         Returns the chi-squared value and the p-value;
         if `exact=True` (default: `False`), `chi2` is `None`
+        If the models never disagree (b + c == 0), the p-value is 1.0.
 
     Examples
     -----------
@@ -203,6 +204,11 @@ def mcnemar(ary, corrected=True, exact=False):
     b = ary[0, 1]
     c = ary[1, 0]
     n = b + c
+
+    if n == 0:
+        # the models never disagree, so there is no evidence of a difference
+        # (the chi-squared statistic would otherwise divide by zero)
+        return (None if exact else 0.0), 1.0
 
     if not exact:
         if corrected:

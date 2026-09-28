@@ -55,3 +55,20 @@ def test_exact_corrected():
     assert chi2p is None
     assert_almost_equal(p, pp, decimal=7)
     assert p < 4.45e-06
+
+
+def test_no_discordant_pairs():
+    # b + c == 0: the models never disagree, so there is no evidence
+    # of a difference in any of the three modes
+    for tb in (np.array([[10, 0], [0, 0]]), np.array([[8, 0], [0, 2]])):
+        chi2, p = mcnemar(tb)
+        assert chi2 == 0.0
+        assert p == 1.0
+
+        chi2, p = mcnemar(tb, corrected=False)
+        assert chi2 == 0.0
+        assert p == 1.0
+
+        chi2, p = mcnemar(tb, exact=True)
+        assert chi2 is None
+        assert p == 1.0

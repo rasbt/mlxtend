@@ -97,6 +97,7 @@ def test_use_clones():
 
 
 def test_sample_weight():
+    # Disable bootstrap sampling to compare unit weights with no weights.
     # Make sure that:
     #    prediction with weight
     # != prediction with no weight
@@ -106,14 +107,14 @@ def test_sample_weight():
 
     np.random.seed(123)
     meta = LogisticRegression(solver="lbfgs")
-    clf1 = RandomForestClassifier(n_estimators=10)
+    clf1 = RandomForestClassifier(n_estimators=10, bootstrap=False, random_state=123)
     clf2 = GaussianNB()
     sclf = StackingClassifier(classifiers=[clf1, clf2], meta_classifier=meta)
     prob1 = sclf.fit(X, y, sample_weight=w).predict_proba(X)
 
     np.random.seed(123)
     meta = LogisticRegression(solver="lbfgs")
-    clf1 = RandomForestClassifier(n_estimators=10)
+    clf1 = RandomForestClassifier(n_estimators=10, bootstrap=False, random_state=123)
     clf2 = GaussianNB()
     sclf = StackingClassifier(classifiers=[clf1, clf2], meta_classifier=meta)
     prob2 = sclf.fit(X, y, sample_weight=None).predict_proba(X)
@@ -123,7 +124,7 @@ def test_sample_weight():
 
     np.random.seed(123)
     meta = LogisticRegression(solver="lbfgs")
-    clf1 = RandomForestClassifier(n_estimators=10)
+    clf1 = RandomForestClassifier(n_estimators=10, bootstrap=False, random_state=123)
     clf2 = GaussianNB()
     sclf = StackingClassifier(classifiers=[clf1, clf2], meta_classifier=meta)
     prob3 = sclf.fit(X, y, sample_weight=np.ones(len(y))).predict_proba(X)

@@ -4,15 +4,19 @@
 #
 # License: BSD 3 clause
 
+from itertools import combinations
+
 import numpy as np
 import pandas as pd
+import pytest
 from numpy.testing import assert_almost_equal
 from packaging.version import Version
 from sklearn import __version__ as sklearn_version
+from sklearn.base import clone
 from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LinearRegression, LogisticRegression
-from sklearn.model_selection import GroupKFold
+from sklearn.model_selection import GroupKFold, StratifiedKFold
 from sklearn.neighbors import KNeighborsClassifier
 
 from mlxtend.classifier import SoftmaxRegression
@@ -269,11 +273,16 @@ def test_knn_cv3_groups():
     dict_compare_utility(d1=expect, d2=efs1.subsets_)
 
 
-def test_fit_params():
+@pytest.mark.parametrize("uniform_weights", [True, False])
+def test_fit_params(uniform_weights):
     iris = load_iris()
     X = iris.data
     y = iris.target
-    sample_weight = np.ones(X.shape[0])
+    if uniform_weights:
+        sample_weight = np.ones(X.shape[0])
+    else:
+        sample_weight = np.random.RandomState(87).uniform(0.05, 2.0, size=X.shape[0])
+
     forest = RandomForestClassifier(n_estimators=100, random_state=123)
     efs1 = EFS(
         forest,
@@ -284,54 +293,30 @@ def test_fit_params():
         print_progress=False,
     )
     efs1 = efs1.fit(X, y, sample_weight=sample_weight)
-    expect = {
-        0: {
-            "feature_idx": (0, 1, 2),
-            "feature_names": ("0", "1", "2"),
-            "cv_scores": np.array([0.947, 0.868, 0.919, 0.973]),
-            "avg_score": 0.9269203413940257,
-        },
-        1: {
-            "feature_idx": (0, 1, 3),
-            "feature_names": ("0", "1", "3"),
-            "cv_scores": np.array([0.921, 0.921, 0.892, 1.0]),
-            "avg_score": 0.9337606837606838,
-        },
-        2: {
-            "feature_idx": (0, 2, 3),
-            "feature_names": ("0", "2", "3"),
-            "cv_scores": np.array([0.974, 0.947, 0.919, 0.973]),
-            "avg_score": 0.9532361308677098,
-        },
-        3: {
-            "feature_idx": (1, 2, 3),
-            "feature_names": ("1", "2", "3"),
-            "cv_scores": np.array([0.974, 0.947, 0.892, 1.0]),
-            "avg_score": 0.9532361308677098,
-        },
-    }
 
-    if Version(sklearn_version) < Version("0.22"):
-        expect[0]["avg_score"] = 0.9401709401709402
-        expect[0]["cv_scores"] = np.array(
-            [0.94871795, 0.92307692, 0.91666667, 0.97222222]
-        )
-        expect[1]["cv_scores"] = np.array(
-            [0.94871795, 0.92307692, 0.91666667, 0.97222222]
-        )
-        expect[2]["cv_scores"] = np.array(
-            [0.94871795, 0.92307692, 0.91666667, 0.97222222]
-        )
-        expect[2]["avg_score"] = 0.9599358974358974
-        expect[3]["avg_score"] = 0.9599358974358974
-        expect[3]["cv_scores"] = np.array([0.97435897, 0.94871795, 0.91666667, 1.0])
-        assert round(efs1.best_score_, 4) == 0.9599
+    # Explicit fold fits check that weights reach the correct training rows
+    # without depending on a particular version's bootstrap sampling results.
+    expect = {}
+    cv = StratifiedKFold(n_splits=4)
+    for i, feature_idx in enumerate(combinations(range(X.shape[1]), 3)):
+        X_subset = X[:, feature_idx]
+        cv_scores = []
+        for train, test in cv.split(X, y):
+            fitted = clone(forest).fit(
+                X_subset[train], y[train], sample_weight=sample_weight[train]
+            )
+            cv_scores.append(fitted.score(X_subset[test], y[test]))
+        expect[i] = {
+            "feature_idx": feature_idx,
+            "feature_names": tuple(str(idx) for idx in feature_idx),
+            "cv_scores": np.array(cv_scores),
+            "avg_score": np.mean(cv_scores),
+        }
 
-    else:
-        assert round(efs1.best_score_, 4) == 0.9532
-
-    dict_compare_utility(d1=expect, d2=efs1.subsets_)
-    assert efs1.best_idx_ == (0, 2, 3)
+    dict_compare_utility(d1=expect, d2=efs1.subsets_, decimal=7)
+    best_subset = max(expect.values(), key=lambda subset: subset["avg_score"])
+    assert_almost_equal(efs1.best_score_, best_subset["avg_score"])
+    assert efs1.best_idx_ == best_subset["feature_idx"]
 
 
 def test_regression():

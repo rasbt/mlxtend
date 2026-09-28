@@ -90,10 +90,11 @@ def test_use_clones():
 
 
 def test_sample_weight():
+    # Disable bootstrap sampling to compare unit weights with no weights.
     # with no weight given
     np.random.seed(123)
     meta = LogisticRegression(solver="lbfgs")
-    clf1 = RandomForestClassifier(n_estimators=10)
+    clf1 = RandomForestClassifier(n_estimators=10, bootstrap=False, random_state=123)
     clf2 = GaussianNB()
     sclf = StackingCVClassifier(
         classifiers=[clf1, clf2], meta_classifier=meta, shuffle=False
@@ -103,7 +104,7 @@ def test_sample_weight():
     # with weight = 1
     np.random.seed(123)
     meta = LogisticRegression(solver="lbfgs")
-    clf1 = RandomForestClassifier(n_estimators=10)
+    clf1 = RandomForestClassifier(n_estimators=10, bootstrap=False, random_state=123)
     clf2 = GaussianNB()
     sclf = StackingCVClassifier(
         classifiers=[clf1, clf2], meta_classifier=meta, shuffle=False
@@ -116,7 +117,7 @@ def test_sample_weight():
     w = np.array([random.random() for _ in range(len(y_iris))])
     np.random.seed(123)
     meta = LogisticRegression(solver="lbfgs")
-    clf1 = RandomForestClassifier(n_estimators=10)
+    clf1 = RandomForestClassifier(n_estimators=10, bootstrap=False, random_state=123)
     clf2 = GaussianNB()
     sclf = StackingCVClassifier(
         classifiers=[clf1, clf2], meta_classifier=meta, shuffle=False

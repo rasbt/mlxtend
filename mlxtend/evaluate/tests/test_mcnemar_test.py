@@ -55,3 +55,26 @@ def test_exact_corrected():
     assert chi2p is None
     assert_almost_equal(p, pp, decimal=7)
     assert p < 4.45e-06
+
+
+def test_no_discordant_pairs():
+    # With no discordant pairs, all modes should report no evidence of a
+    # difference without dividing by zero.
+    tables = (
+        np.array([[10, 0], [0, 0]]),
+        np.array([[8, 0], [0, 2]]),
+        np.array([[8, 0], [0, 2]], dtype=float),
+    )
+    with np.errstate(divide="raise", invalid="raise"):
+        for tb in tables:
+            chi2, p = mcnemar(tb)
+            assert chi2 == 0.0
+            assert p == 1.0
+
+            chi2, p = mcnemar(tb, corrected=False)
+            assert chi2 == 0.0
+            assert p == 1.0
+
+            chi2, p = mcnemar(tb, exact=True)
+            assert chi2 is None
+            assert p == 1.0

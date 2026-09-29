@@ -23,7 +23,7 @@ def tokenizer_words_and_emoticons(text):
     """
     text = re.sub(r"<[^>]*>", "", text)
     emoticons = re.findall(r"(?::|;|=)(?:-)?(?:\)|\(|D|P)", text)
-    text = re.sub(r"[\W]+", " ", text.lower()) + " ".join(emoticons)
+    text = re.sub(r"[\W]+", " ", text.lower()) + " " + " ".join(emoticons)
     return text.split()
 
 

@@ -41,3 +41,36 @@ jobs:
 
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v4
+
+  build-linux-latest-sklearn:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_ACTIONS_CI: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
+
+      - name: Install dependencies
+        run: uv sync --frozen --group dev --python 3.11
+
+      - name: Upgrade scikit-learn
+        run: >-
+          uv pip install --python .venv/bin/python
+          --upgrade-package scikit-learn --prerelease disallow scikit-learn
+
+      - name: Show dependency versions
+        run: |
+          uv run --no-sync python -c "import numpy; print('NumPy:', numpy.__version__)"
+          uv run --no-sync python -c "import scipy; print('SciPy:', scipy.__version__)"
+          uv run --no-sync python -c "import sklearn; print('Scikit-learn:', sklearn.__version__)"
+          uv run --no-sync python -c "import pandas; print('Pandas:', pandas.__version__)"
+
+      - name: Run tests
+        run: uv run --no-sync python -m pytest mlxtend

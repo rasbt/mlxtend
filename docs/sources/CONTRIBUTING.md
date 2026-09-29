@@ -321,13 +321,7 @@ Go to your GitHub repository online, select the new feature branch, and submit a
 
 ## Building the documentation
 
-The documentation is built via [MkDocs](https://www.mkdocs.org); to ensure that the documentation is rendered correctly, you can view the documentation locally by executing `mkdocs serve` from the `mlxtend/docs` directory.
-
-For example,
-
-```bash
-~/github/mlxtend/docs$ mkdocs serve
-```
+The documentation is built via [MkDocs](https://www.mkdocs.org). Before running `mkdocs serve` from the `mlxtend/docs` directory, generate the API documentation and convert **all** User Guide notebooks to Markdown as described below. A fresh checkout does not contain these generated Markdown pages, so converting only the notebook you edited leaves other pages missing from the local preview.
 
 ### 1. Building the API documentation
 
@@ -343,6 +337,14 @@ This should place the API documentation into the correct directories into the tw
 - `mlxtend/docs/sources/api_subpackes`
 
 ### 2. Editing the User Guide
+
+For the first local preview, convert all User Guide notebooks from the `mlxtend/docs` directory:
+
+```bash
+python ipynb2markdown.py --all ./sources/user_guide
+```
+
+This includes notebooks in subdirectories and uses their saved outputs; it does not execute the notebook cells. Run this again after pulling changes to other notebooks. For subsequent edits to one notebook, use the single-notebook workflow below.
 
 The documents containing code examples for the "User Guide" are generated from IPython Notebook files. In order to convert a IPython notebook file to markdown after editing, please follow the following steps:
 

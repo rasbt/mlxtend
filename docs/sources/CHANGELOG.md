@@ -23,7 +23,7 @@ The CHANGELOG for the current development version is available at
 
 - Documented the initial conversion of all User Guide notebooks before previewing the documentation with MkDocs ([#927](https://github.com/rasbt/mlxtend/issues/927)).
 
-- `bootstrap_point632_score(..., method='.632+')` now restricts the relative overfitting rate R to [0, 1] and caps the out-of-bag error at the no-information error rate, as in Efron and Tibshirani (1997). Previously, R was used unclipped, so the .632+ weight could become negative or larger than 1 and, e.g., a decision tree fit to random labels could get negative accuracy scores (via [MohammadHijjawi97](https://github.com/MohammadHijjawi97))
+- `bootstrap_point632_score(..., method='.632+')` now restricts the relative overfitting rate R to [0, 1] and caps the out-of-bag error at the no-information error rate, as in Efron and Tibshirani (1997). Previously, R was used unclipped, so the .632+ weight could become negative or larger than 1 and, e.g., a decision tree fit to random labels could get negative accuracy scores ([#1213](https://github.com/rasbt/mlxtend/pull/1213) via [MohammadHijjawi97](https://github.com/MohammadHijjawi97))
 
 - Corrected stored McNemar example outputs and the exact-test equation, and aligned scenario tables, code, and checkerboard labels with the model-1-row/model-2-column convention ([#987](https://github.com/rasbt/mlxtend/issues/987), [#988](https://github.com/rasbt/mlxtend/issues/988)).
 

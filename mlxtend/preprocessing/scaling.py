@@ -98,9 +98,9 @@ def standardize(array, columns=None, ddof=0, return_params=False, params=None):
 
     Notes
     ----------
-    If all values in a given column are the same, these values are all
-    set to `0.0`. The standard deviation in the `parameters` dictionary
-    is consequently set to `1.0` to avoid dividing by zero.
+    When fitting parameters, constant columns are mapped to `0.0` and their
+    standard deviations are set to `1.0` to avoid dividing by zero. Supplied
+    `params` are used unchanged, even when the current batch is constant.
 
     Returns
     ----------
@@ -137,19 +137,20 @@ def standardize(array, columns=None, ddof=0, return_params=False, params=None):
             "avgs": ary_newt[:, columns].mean(axis=0),
             "stds": ary_newt[:, columns].std(axis=0, ddof=ddof),
         }
-    are_constant = np.all(ary_newt[:, columns] == ary_newt[0, columns], axis=0)
+    if params is None:
+        are_constant = np.all(ary_newt[:, columns] == ary_newt[0, columns], axis=0)
 
-    # For constant columns the standard deviation is 0 (or NaN with some ddof
-    # values), so dividing by it would propagate NaNs / Infs. Forcing std to
-    # 1.0 means the subtraction (col - mean) below collapses the column to
-    # exactly 0.0, matching the contract documented in the "Notes" section
-    # ("If all values in a given column are the same, these values are all
-    # set to 0.0"). The previous version also pre-zeroed the column before
-    # the divide, but that turned (0 - mean) / 1 into -mean instead of 0
-    # -- see issue #1058.
-    for c, b in zip(columns, are_constant):
-        if b:
-            parameters["stds"][c] = 1.0
+        # For constant columns the standard deviation is 0 (or NaN with some ddof
+        # values), so dividing by it would propagate NaNs / Infs. Forcing std to
+        # 1.0 means the subtraction (col - mean) below collapses the column to
+        # exactly 0.0, matching the contract documented in the "Notes" section
+        # ("If all values in a given column are the same, these values are all
+        # set to 0.0"). The previous version also pre-zeroed the column before
+        # the divide, but that turned (0 - mean) / 1 into -mean instead of 0
+        # -- see issue #1058.
+        for c, b in zip(columns, are_constant):
+            if b:
+                parameters["stds"][c] = 1.0
 
     ary_newt[:, columns] = (ary_newt[:, columns] - parameters["avgs"]) / parameters[
         "stds"

@@ -65,7 +65,7 @@ def minmax_scaling(array, columns, min_val=0, max_val=1):
     denominator = np.where(denominator == 0, 1, denominator)
     ary_newt[:, columns] = numerator / denominator
 
-    if not min_val == 0 and not max_val == 1:
+    if min_val != 0 or max_val != 1:
         ary_newt[:, columns] = ary_newt[:, columns] * (max_val - min_val) + min_val
 
     return ary_newt[:, columns]

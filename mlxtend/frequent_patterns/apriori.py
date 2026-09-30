@@ -216,6 +216,12 @@ def apriori(
       if memory resources are limited, because this implementation is approx.
       3-6x slower than the default.
 
+    n_jobs : int (default: 1)
+      Number of parallel jobs used to evaluate the candidate itemsets, via
+      `joblib.Parallel`. Only affects the default code path; the
+      `low_memory=True` path and the sparse-input path are not parallelized
+      and ignore this parameter.
+
 
     Returns
     -----------

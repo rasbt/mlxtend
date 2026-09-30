@@ -50,7 +50,7 @@ def plot_learning_curves(
         'precision', 'recall', 'roc_auc',
         'adjusted_rand_score', 'mean_absolute_error', 'mean_squared_error',
         'median_absolute_error', 'r2'}
-    suppress_plot=False : bool (default: False)
+    suppress_plot : bool (default: False)
         Suppress matplotlib plots if True. Recommended
         for testing purposes.
     print_model : bool (default: True)

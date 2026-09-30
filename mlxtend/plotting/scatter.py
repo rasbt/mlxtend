@@ -35,6 +35,10 @@ def category_scatter(
     y : str
         DataFrame column name of the y-axis values or
         integer for the numpy ndarray column index
+    label_col : str or int
+        DataFrame column name of the category labels or
+        integer for the numpy ndarray column index. One scatter series is
+        drawn per unique value in this column.
     data : Pandas DataFrame object or NumPy ndarray.
     markers : str
         Markers that are cycled through the label category.

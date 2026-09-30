@@ -255,17 +255,27 @@ def bootstrap_point632_score(
             # previous comment above
             train_err = 1 - scoring_func(y, predicted_train_val)
 
+            err = 0.632 * test_err + 0.368 * train_err
+
             if method == ".632+":
                 gamma = 1 - (
                     no_information_rate(y, cloned_est.predict(X), scoring_func)
                 )
-                R = (test_err - train_err) / (gamma - train_err)
+                # As in Eq. (32) of the .632+ paper, the relative overfitting
+                # rate R is restricted to [0, 1] and the out-of-bag error is
+                # capped at the no-information error rate gamma, so that
+                # (test_err - train_err) becomes R * (gamma - train_err).
+                # Without this, the weight 0.632 / (1 - 0.368 * R) can be
+                # negative or larger than 1, e.g., for a model that fits noise.
+                if gamma != train_err:
+                    R = (test_err - train_err) / (gamma - train_err)
+                else:
+                    R = 0.0
+                R = min(max(R, 0.0), 1.0)
                 weight = 0.632 / (1 - 0.368 * R)
+                err += (weight - 0.632) * R * (gamma - train_err)
 
-            else:
-                weight = 0.632
-
-            acc = 1 - (weight * test_err + (1.0 - weight) * train_err)
+            acc = 1 - err
 
         scores[cnt] = acc
         cnt += 1

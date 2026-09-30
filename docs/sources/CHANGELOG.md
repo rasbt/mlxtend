@@ -17,6 +17,8 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
+- Fixed `standardize` mutating fitted standard deviations when transforming singleton or constant batches. ([#1208](https://github.com/rasbt/mlxtend/issues/1208) via [Afloat16](https://github.com/Afloat16)).
+
 - Fixed `tokenizer_words_and_emoticons` joining the first emoticon to the final word when the input ends in a word ([#1206](https://github.com/rasbt/mlxtend/issues/1206) via [Afloat16](https://github.com/Afloat16)).
 
 - `mcnemar` now returns a p-value of 1.0 when the two models have no discordant pairs (b + c == 0). Previously, the default chi-squared test divided by zero and reported `p = 0.0` (or `nan` with `corrected=False`) in this case ([#1202](https://github.com/rasbt/mlxtend/issues/1202) via [MohammadHijjawi97](https://github.com/MohammadHijjawi97))

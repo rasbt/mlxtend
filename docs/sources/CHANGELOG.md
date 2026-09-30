@@ -17,6 +17,8 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
+- `proportion_difference` now returns a two-sided p-value. Previously, it returned the lower-tail probability `norm.cdf(z)`, so the p-value depended on the order of the two proportions (e.g., 0.04 for `(0.84, 0.92)` but 0.96 for `(0.92, 0.84)`) and was 0.5 for two equal proportions ([#1212](https://github.com/rasbt/mlxtend/pull/1212) via [MohammadHijjawi97](https://github.com/MohammadHijjawi97))
+
 - Fixed `tokenizer_words_and_emoticons` joining the first emoticon to the final word when the input ends in a word ([#1206](https://github.com/rasbt/mlxtend/issues/1206) via [Afloat16](https://github.com/Afloat16)).
 
 - `mcnemar` now returns a p-value of 1.0 when the two models have no discordant pairs (b + c == 0). Previously, the default chi-squared test divided by zero and reported `p = 0.0` (or `nan` with `corrected=False`) in this case ([#1202](https://github.com/rasbt/mlxtend/issues/1202) via [MohammadHijjawi97](https://github.com/MohammadHijjawi97))

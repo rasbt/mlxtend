@@ -30,7 +30,7 @@ def proportion_difference(proportion_1, proportion_2, n_1, n_2=None):
     -----------
 
     z, p : float or None, float
-        Returns the z-score and the p-value
+        Returns the z-score and the two-sided p-value
 
 
     Examples
@@ -50,6 +50,6 @@ def proportion_difference(proportion_1, proportion_2, n_1, n_2=None):
     var_2 = proportion_2 * (1.0 - proportion_2) / n_2
 
     z = (proportion_1 - proportion_2) / np.sqrt(var_1 + var_2)
-    p = scipy.stats.norm.cdf(z)
+    p = 2.0 * scipy.stats.norm.sf(np.abs(z))
 
     return z, p

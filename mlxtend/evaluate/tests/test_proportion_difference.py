@@ -440,11 +440,19 @@ def test_on_dataset():
 
     z, p_value = proportion_difference(acc_1, acc_2, n_1=y_true.shape[0])
     assert round(z, 3) == -1.754
-    assert round(p_value, 3) == 0.040
+    assert round(p_value, 3) == 0.079
 
     z, p_value = proportion_difference(acc_2, acc_3, n_1=y_true.shape[0])
     assert round(z, 3) == 0.0
-    assert round(p_value, 3) == 0.5
+    assert round(p_value, 3) == 1.0
+
+
+def test_p_value_does_not_depend_on_argument_order():
+    z_12, p_12 = proportion_difference(0.84, 0.92, n_1=100)
+    z_21, p_21 = proportion_difference(0.92, 0.84, n_1=100)
+    assert z_12 == pytest.approx(-z_21)
+    assert p_12 == pytest.approx(p_21)
+    assert p_12 == pytest.approx(0.0794, abs=1e-4)
 
 
 def test_proportion_difference_rejects_out_of_range():

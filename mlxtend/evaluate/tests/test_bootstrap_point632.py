@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 import pytest
 from sklearn.base import BaseEstimator
+from sklearn.dummy import DummyClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 
@@ -75,7 +76,34 @@ def test_632plus():
     scores = bootstrap_point632_score(tree2, X, y, random_seed=123, method=".632+")
     acc = np.mean(scores)
     assert len(scores == 200)
-    assert np.round(acc, 5) == 0.64078, np.round(acc, 5)
+    assert np.round(acc, 5) == 0.6409, np.round(acc, 5)
+
+
+def test_632plus_overfitting_rate_is_clipped():
+    # a fully grown tree memorizes random labels (training error 0), so the
+    # out-of-bag error can be larger than the no-information error rate
+    rng = np.random.RandomState(0)
+    X_noise = rng.randn(40, 2)
+    y_noise = rng.randint(0, 2, 40)
+    tree = DecisionTreeClassifier(random_state=0)
+    scores = bootstrap_point632_score(
+        tree, X_noise, y_noise, n_splits=200, method=".632+", random_seed=1
+    )
+    assert scores.min() >= 0.0, scores.min()
+    assert scores.max() <= 1.0, scores.max()
+
+
+def test_632plus_no_overfitting_equals_632():
+    # a constant model has a training error equal to the no-information
+    # error rate, so R is 0 and .632+ reduces to .632
+    dummy = DummyClassifier(strategy="most_frequent")
+    scores_632 = bootstrap_point632_score(
+        dummy, X, y, n_splits=20, method=".632", random_seed=1
+    )
+    scores_632plus = bootstrap_point632_score(
+        dummy, X, y, n_splits=20, method=".632+", random_seed=1
+    )
+    np.testing.assert_allclose(scores_632plus, scores_632)
 
 
 def test_custom_accuracy():

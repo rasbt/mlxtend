@@ -34,6 +34,17 @@ class FixedPredictionRegressor:
         return pred
 
 
+@pytest.mark.parametrize("offset", [-1, 0, 1000])
+def test_integer_label_majority_vote(offset):
+    X = np.arange(4).reshape(-1, 1)
+    y = np.array([offset, offset + 2, offset + 2, offset])
+    predictions = np.array([y[[0, 1, 0, 1]], y])
+    estimator = FixedPredictionRegressor(predictions)
+    result = bias_variance_decomp(estimator, X, y, X, y, num_rounds=2, random_seed=0)
+    # The two tied votes use the smaller label; loss, bias and variance are each 1/4.
+    np.testing.assert_allclose(result, (0.25, 0.25, 0.25))
+
+
 def test_pandas_input():
     X, y = iris_data()
     X_train, X_test, y_train, y_test = train_test_split(

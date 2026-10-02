@@ -51,6 +51,8 @@ def bias_variance_decomp(
     loss : str (default='0-1_loss')
         Loss function for performing the bias-variance decomposition.
         Currently allowed values are '0-1_loss' and 'mse'.
+        Classification majority votes count observed integer labels, including
+        negative labels. Ties choose the smallest label.
 
     num_rounds : int (default=200)
         Number of bootstrap rounds (sampling from the training set)
@@ -138,9 +140,12 @@ def bias_variance_decomp(
         all_pred[i] = pred
 
     if loss == "0-1_loss":
-        main_predictions = np.apply_along_axis(
-            lambda x: np.argmax(np.bincount(x)), axis=0, arr=all_pred
-        )
+
+        def majority_vote(predictions):
+            labels, counts = np.unique(predictions, return_counts=True)
+            return labels[np.argmax(counts)]
+
+        main_predictions = np.apply_along_axis(majority_vote, axis=0, arr=all_pred)
 
         avg_expected_loss = np.apply_along_axis(
             lambda x: (x != y_test).mean(), axis=1, arr=all_pred

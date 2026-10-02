@@ -5,10 +5,36 @@
 # License: BSD 3 clause
 
 import numpy as np
+import pytest
 from numpy.testing import assert_almost_equal
+from scipy.stats import binomtest, chi2
 
 from mlxtend.evaluate import mcnemar
 from mlxtend.utils import assert_raises
+
+
+@pytest.mark.parametrize(
+    "b,c,dtype",
+    [
+        (200, 56, np.uint8),
+        (56, 150, np.uint8),
+        (100, 40, np.int8),
+        (5_000_000_000, 1_000_000_000, np.int64),
+    ],
+)
+@pytest.mark.parametrize("mode", ["corrected", "uncorrected", "exact"])
+def test_integer_count_arithmetic(b, c, dtype, mode):
+    table = np.array([[0, b], [c, 0]], dtype=dtype)
+    statistic, p = mcnemar(
+        table, corrected=mode != "uncorrected", exact=mode == "exact"
+    )
+    if mode == "exact":
+        assert statistic is None
+        np.testing.assert_allclose(p, binomtest(b, b + c, 0.5).pvalue, atol=0)
+    else:
+        expected = (abs(b - c) - (mode == "corrected")) ** 2 / (b + c)
+        np.testing.assert_allclose(statistic, expected, rtol=1e-12, atol=0)
+        np.testing.assert_allclose(p, chi2.sf(expected, 1), atol=0)
 
 
 def test_input_dimensions():

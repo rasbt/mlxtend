@@ -202,8 +202,9 @@ def mcnemar(ary, corrected=True, exact=False):
     if not ary.shape == (2, 2):
         raise ValueError("Input array must be a 2x2 array.")
 
-    b = ary[0, 1]
-    c = ary[1, 0]
+    # Avoid NumPy integer overflow before the final floating-point division.
+    b = np.asarray(ary[0, 1]).item()
+    c = np.asarray(ary[1, 0]).item()
     n = b + c
 
     if n == 0:
@@ -213,9 +214,9 @@ def mcnemar(ary, corrected=True, exact=False):
 
     if not exact:
         if corrected:
-            chi2 = (abs(ary[0, 1] - ary[1, 0]) - 1.0) ** 2 / float(n)
+            chi2 = (abs(b - c) - 1.0) ** 2 / float(n)
         else:
-            chi2 = (ary[0, 1] - ary[1, 0]) ** 2 / float(n)
+            chi2 = (b - c) ** 2 / float(n)
         p = scipy.stats.distributions.chi2.sf(chi2, 1)
 
     else:

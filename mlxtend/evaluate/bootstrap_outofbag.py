@@ -23,14 +23,6 @@ class BootstrapOutOfBag(object):
         the random number generator.
 
 
-    Returns
-    -------
-    train_idx : ndarray
-        The training set indices for that split.
-
-    test_idx : ndarray
-        The testing set indices for that split.
-
     Examples
     -----------
     For usage examples, please see
@@ -46,7 +38,12 @@ class BootstrapOutOfBag(object):
         self.n_splits = n_splits
 
     def split(self, X, y=None, groups=None):
-        """
+        """Generate bootstrap training and out-of-bag test indices.
+
+        Parameters
+        ----------
+        X : array-like, shape (n_samples, ...)
+            Data to split. Only the number of samples in ``X.shape[0]`` is used.
 
         y : array-like or None (default: None)
             Argument is not used and only included as parameter
@@ -56,6 +53,13 @@ class BootstrapOutOfBag(object):
             Argument is not used and only included as parameter
             for compatibility, similar to `KFold` in scikit-learn.
 
+        Yields
+        ------
+        train_idx : ndarray
+            Training indices sampled with replacement. Indices may repeat.
+
+        test_idx : ndarray
+            Indices not selected in the training sample.
 
         """
         rng = np.random.RandomState(self.random_seed)

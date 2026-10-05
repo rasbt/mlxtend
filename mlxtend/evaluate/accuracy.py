@@ -84,9 +84,9 @@ def accuracy_score(
 
     elif method == "balanced":
         all_class_acc = []
-        for c in np.unique(y_target):
-            positive_labels = y_target == c
-            class_acc = np.mean((y_predicted == c)[positive_labels])
+        for c in unique_labels:
+            positive_labels = target_temp == c
+            class_acc = np.mean((predicted_temp == c)[positive_labels])
             all_class_acc.append(class_acc)
 
         return np.mean(all_class_acc)

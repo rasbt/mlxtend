@@ -31,6 +31,31 @@ def _check_arrays(X, y=None):
 
 
 def no_information_rate(targets, predictions, loss_fn):
+    if (
+        loss_fn is accuracy
+        and np.ndim(targets) == np.ndim(predictions) == 1
+        and len(targets)
+        and len(predictions)
+    ):
+        # For independent labels, accuracy is the sum of the products of their
+        # marginal frequencies. Inferring a shared dtype preserves the label
+        # coercion of the Cartesian-product array without creating sample pairs.
+        values = np.array([*targets, *predictions])
+        # Object comparisons may support equality but raise during sorting,
+        # for example Decimal NaNs. Preserve the original path for these labels.
+        if not values.dtype.hasobject:
+            labels, inverse = np.unique(values, return_inverse=True)
+            target_freq = np.bincount(
+                inverse[: len(targets)], minlength=len(labels)
+            ) / len(targets)
+            prediction_freq = np.bincount(
+                inverse[len(targets) :], minlength=len(labels)
+            ) / len(predictions)
+            # NaN labels never compare equal in the original accuracy function.
+            comparable = labels == labels
+            return np.dot(target_freq[comparable], prediction_freq[comparable])
+
+    # Arbitrary scoring functions may depend on the complete paired arrays.
     combinations = np.array(list(product(targets, predictions)))
     return loss_fn(combinations[:, 0], combinations[:, 1])
 

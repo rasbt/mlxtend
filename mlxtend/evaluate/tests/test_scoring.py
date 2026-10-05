@@ -5,6 +5,8 @@
 # License: BSD 3 clause
 
 import numpy as np
+import pandas as pd
+import pytest
 
 from mlxtend.evaluate import scoring
 
@@ -115,6 +117,17 @@ def test_balanced_accuracy():
     y_pred = np.array([0, 1, 1, 0, 1, 1, 2, 2, 2, 2])
     res = scoring(y_target=y_targ, y_predicted=y_pred, metric="balanced accuracy")
     assert round(res, 3) == 0.578, res
+
+
+@pytest.mark.parametrize("as_series", [False, True])
+def test_balanced_accuracy_array_like(as_series):
+    y_targ = ["cat", "cat", "dog"]
+    y_pred = ["cat", "dog", "dog"]
+    if as_series:
+        y_targ = pd.Series(y_targ, index=[10, 20, 30])
+        y_pred = pd.Series(y_pred, index=[30, 20, 10])
+
+    assert scoring(y_targ, y_pred, metric="balanced accuracy") == 0.75
 
 
 def test_avg_perclass_accuracy():

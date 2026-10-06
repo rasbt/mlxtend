@@ -46,3 +46,9 @@ def test_vectorspace_dimensionality():
 
     b = np.array([[1, 2, 3], [15, 1, 3]])
     assert vectorspace_dimensionality(b) == 2
+
+
+def test_vectorspace_dimensionality_rounding():
+    # the column norms after orthonormalization can sum to 0.9999999999999999
+    assert vectorspace_dimensionality(np.array([[1, 0], [2, 0]])) == 1
+    assert vectorspace_dimensionality(np.array([[1, 2], [2, 4]])) == 1

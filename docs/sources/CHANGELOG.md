@@ -17,6 +17,8 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
+- `num_combinations`, `num_permutations` and `factorial` in `mlxtend.math` no longer raise `RecursionError` for large `n` or when `k > n` (which now returns 0). They now use `math.comb`, `math.perm` and `math.factorial` from the standard library ([#1224](https://github.com/rasbt/mlxtend/issues/1224) via [raashish1601](https://github.com/raashish1601))
+
 - Fixed `tokenizer_words_and_emoticons` joining the first emoticon to the final word when the input ends in a word ([#1206](https://github.com/rasbt/mlxtend/issues/1206) via [Afloat16](https://github.com/Afloat16)).
 
 - `mcnemar` now returns a p-value of 1.0 when the two models have no discordant pairs (b + c == 0). Previously, the default chi-squared test divided by zero and reported `p = 0.0` (or `nan` with `corrected=False`) in this case ([#1202](https://github.com/rasbt/mlxtend/issues/1202) via [MohammadHijjawi97](https://github.com/MohammadHijjawi97))

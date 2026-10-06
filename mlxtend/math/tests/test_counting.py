@@ -5,6 +5,10 @@
 # License: BSD 3 clause
 
 
+import math
+
+import pytest
+
 from mlxtend.math import factorial, num_combinations, num_permutations
 
 
@@ -23,3 +27,23 @@ def test_num_combinations():
 def test_num_permutations():
     assert num_permutations(n=20, k=8, with_replacement=False) == 5079110400
     assert num_permutations(n=20, k=8, with_replacement=True) == 25600000000
+
+
+def test_factorial_large_and_negative():
+    assert factorial(0) == 1
+    assert factorial(1200) == math.factorial(1200)
+    with pytest.raises(ValueError):
+        factorial(-1)
+
+
+def test_counting_k_greater_than_n():
+    assert num_combinations(n=3, k=5) == 0
+    assert num_permutations(n=3, k=5) == 0
+    assert num_combinations(n=3, k=5, with_replacement=True) == 21
+    assert num_permutations(n=3, k=5, with_replacement=True) == 243
+
+
+def test_counting_large_n():
+    assert num_combinations(n=1200, k=2) == 719400
+    assert num_combinations(n=1200, k=2, with_replacement=True) == 720600
+    assert num_permutations(n=1200, k=2) == 1438800

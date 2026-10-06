@@ -7,11 +7,11 @@
 # License: BSD 3 clause
 
 
+import math
+
+
 def factorial(n):
-    if n == 0:
-        return 1
-    else:
-        return n * factorial(n - 1)
+    return math.factorial(n)
 
 
 def num_combinations(n, k, with_replacement=False):
@@ -39,12 +39,9 @@ def num_combinations(n, k, with_replacement=False):
 
     """
     if with_replacement:
-        numerator = factorial(n + k - 1)
-        denominator = factorial(k) * factorial(n - 1)
+        comb = math.comb(n + k - 1, k)
     else:
-        numerator = factorial(n)
-        denominator = factorial(k) * factorial(n - k)
-    comb = numerator // denominator
+        comb = math.comb(n, k)
     return comb
 
 
@@ -75,7 +72,5 @@ def num_permutations(n, k, with_replacement=False):
     if with_replacement:
         permut = n**k
     else:
-        numerator = factorial(n)
-        denominator = factorial(n - k)
-        permut = numerator // denominator
+        permut = math.perm(n, k)
     return permut

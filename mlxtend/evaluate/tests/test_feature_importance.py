@@ -279,3 +279,50 @@ def test_feature_groups():
     )
 
     assert len(imp_vals) == 4
+
+
+def test_feature_groups_permute_group_columns():
+    # https://github.com/rasbt/mlxtend/issues/1228
+    rng = np.random.RandomState(0)
+    X = rng.normal(size=(200, 4))
+    X_orig = X.copy()
+    y = (X[:, 2] > 0).astype(int)
+
+    def predict(X):
+        return (X[:, 2] > 0).astype(int)
+
+    imp_vals, _ = feature_importance_permutation(
+        X=X,
+        y=y,
+        predict_method=predict,
+        metric="accuracy",
+        num_rounds=5,
+        feature_groups=[0, [1], range(2, 4)],
+        seed=1,
+    )
+
+    # only the group containing column 2 affects the predictions
+    assert imp_vals[0] == 0.0
+    assert imp_vals[1] == 0.0
+    assert imp_vals[2] > 0.3
+    np.testing.assert_array_equal(X, X_orig)
+
+    # single-column groups give the same result as no groups
+    imp_vals_single, _ = feature_importance_permutation(
+        X=X,
+        y=y,
+        predict_method=predict,
+        metric="accuracy",
+        num_rounds=5,
+        feature_groups=[[0], [1], [2], [3]],
+        seed=1,
+    )
+    imp_vals_none, _ = feature_importance_permutation(
+        X=X,
+        y=y,
+        predict_method=predict,
+        metric="accuracy",
+        num_rounds=5,
+        seed=1,
+    )
+    np.testing.assert_array_equal(imp_vals_single, imp_vals_none)

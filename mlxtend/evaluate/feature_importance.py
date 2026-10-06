@@ -119,13 +119,8 @@ def feature_importance_permutation(
         for round_idx in range(num_rounds):
             for col_idx, feat in enumerate(feature_groups):
                 save_col = X[:, feat].copy()
-
-                if save_col.ndim > 1:
-                    columns = save_col.shape[1]
-                    for i in range(columns):
-                        rng.shuffle(X[:, i])
-                else:
-                    rng.shuffle(X[:, feat])
+                # permute the rows of all columns in the group together
+                X[:, feat] = save_col[rng.permutation(X.shape[0])]
 
                 new_score = score_func(y, predict_method(X))
                 X[:, feat] = save_col

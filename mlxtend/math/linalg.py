@@ -97,4 +97,7 @@ def vectorspace_dimensionality(ary):
     # an orthonormal vectoset have unit length or are zero,
     # the sum of the individual
     # norms equals the dimensionality of that vector space
-    return int(np.sum(np.linalg.norm(vectorspace_orthonormalization(ary), axis=0)))
+    # (rounded, since the unit norms are only exact up to floating-point error)
+    return int(
+        np.round(np.sum(np.linalg.norm(vectorspace_orthonormalization(ary), axis=0)))
+    )

@@ -157,7 +157,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
                 "Voting must be 'soft' or 'hard'; got (voting=%r)" % self.voting
             )
 
-        if self.weights and len(self.weights) != len(self.clfs):
+        if self.weights is not None and len(self.weights) != len(self.clfs):
             raise ValueError(
                 "Number of classifiers and weights must be equal"
                 "; got %d weights, %d clfs" % (len(self.weights), len(self.clfs))

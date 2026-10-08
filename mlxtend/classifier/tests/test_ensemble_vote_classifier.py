@@ -12,6 +12,7 @@ from packaging.version import Version
 from sklearn import __version__ as sklearn_version
 from sklearn import exceptions
 from sklearn.base import clone
+from sklearn.dummy import DummyClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV, cross_val_score
@@ -24,6 +25,22 @@ from mlxtend.utils import assert_raises
 
 X, y = iris_data()
 X = X[:, 1:3]
+
+
+@pytest.mark.parametrize("voting", ["hard", "soft"])
+def test_numpy_array_weights(voting):
+    data = np.array([[0], [1]])
+    labels = np.array([0, 1])
+    ensemble = EnsembleVoteClassifier(
+        clfs=[
+            DummyClassifier(strategy="constant", constant=0),
+            DummyClassifier(strategy="constant", constant=1),
+        ],
+        voting=voting,
+        weights=np.array([1.0, 2.0]),
+    ).fit(data, labels)
+    np.testing.assert_array_equal(ensemble.predict(data), [1, 1])
+    np.testing.assert_allclose(ensemble.predict_proba(data), [[1 / 3, 2 / 3]] * 2)
 
 
 def test_EnsembleVoteClassifier():

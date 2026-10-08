@@ -156,6 +156,7 @@ def scoring(
             rec = float(tp) / (fn + tp)
             res = 2.0 * (pre * rec) / (pre + rec)
         elif metric == "matthews_corr_coef":
+            tp, fp, tn, fn = map(float, (tp, fp, tn, fn))
             res = float(tp * tn - fp * fn)
             res = res / np.sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))
 

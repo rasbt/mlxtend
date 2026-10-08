@@ -5,6 +5,8 @@
 # License: BSD 3 clause
 
 import numpy as np
+import pytest
+from sklearn.metrics import matthews_corrcoef
 
 from mlxtend.evaluate import scoring
 
@@ -108,6 +110,26 @@ def test_matthews_corr_coef():
     y_pred = [1, 0, 1, 0, 0, 0, 1, 1]
     res = scoring(y_target=y_targ, y_predicted=y_pred, metric="matthews_corr_coef")
     assert round(res, 3) == 0.258, res
+
+
+@pytest.mark.parametrize("repeats", [1, 16384, 20000])
+@pytest.mark.parametrize(
+    "predicted, expected",
+    [
+        ([1, 1, 1, 1, 0, 0, 0, 0], 1.0),
+        ([0, 0, 0, 0, 1, 1, 1, 1], -1.0),
+        ([1, 1, 1, 0, 1, 0, 0, 0], 0.5),
+        ([0, 0, 0, 1, 0, 1, 1, 1], -0.5),
+        ([1, 1, 0, 0, 1, 1, 0, 0], 0.0),
+    ],
+)
+def test_matthews_corr_coef_repeated_observations(predicted, expected, repeats):
+    y_target = np.repeat([1, 1, 1, 1, 0, 0, 0, 0], repeats)
+    y_predicted = np.repeat(predicted, repeats)
+    with np.errstate(over="raise", invalid="raise", divide="raise"):
+        result = scoring(y_target, y_predicted, metric="matthews_corr_coef")
+    assert result == pytest.approx(expected)
+    assert result == pytest.approx(matthews_corrcoef(y_target, y_predicted))
 
 
 def test_balanced_accuracy():

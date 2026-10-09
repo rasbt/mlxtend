@@ -10,6 +10,7 @@ from sklearn.linear_model import LogisticRegression
 from mlxtend.classifier import OneRClassifier
 from mlxtend.data import iris_data
 from mlxtend.evaluate import create_counterfactual
+from mlxtend.evaluate.counterfactual import _calculate_feature_scales
 from mlxtend.utils import assert_raises
 
 
@@ -26,7 +27,7 @@ def test__medium_lambda():
         model=clf,
         X_dataset=X,
         y_desired_proba=1.0,
-        lammbda=1,
+        lammbda=10,
         random_seed=123,
     )
 
@@ -118,3 +119,85 @@ def test__clf_with_no_proba_pass():
 
     assert clf.predict(x_ref.reshape(1, -1)) == 0
     assert clf.predict(res.reshape(1, -1)) == 2
+
+
+def test__zero_distance_scale_produces_finite_counterfactual():
+    X = np.array(
+        [
+            [0.0, 5.0],
+            [1.0, 5.0],
+            [2.0, 5.0],
+            [3.0, 5.0],
+        ]
+    )
+    y = np.array([0, 0, 1, 1])
+    clf = LogisticRegression().fit(X, y)
+
+    with np.errstate(divide="raise", invalid="raise"):
+        res = create_counterfactual(
+            x_reference=np.array([1.5, 5.0]),
+            y_desired=1,
+            model=clf,
+            X_dataset=X,
+            y_desired_proba=0.75,
+            lammbda=1,
+            random_seed=0,
+        )
+
+    assert res.shape == (2,)
+    assert np.all(np.isfinite(res))
+
+
+def test__feature_scales_are_median_absolute_deviations():
+    X = np.array(
+        [
+            [0.0, 10.0],
+            [2.0, 20.0],
+            [4.0, 100.0],
+        ]
+    )
+
+    scales = _calculate_feature_scales(X)
+
+    np.testing.assert_allclose(scales, np.array([2.0, 10.0]))
+
+
+def test__constant_feature_uses_unit_scale():
+    X = np.array(
+        [
+            [0.0, 5.0],
+            [1.0, 5.0],
+            [2.0, 5.0],
+        ]
+    )
+
+    scales = _calculate_feature_scales(X)
+
+    np.testing.assert_allclose(scales, np.array([1.0, 1.0]))
+
+
+def test__zero_mad_nonconstant_feature_uses_unit_scale():
+    X = np.array([[0.0], [0.0], [0.0], [10.0]])
+
+    scales = _calculate_feature_scales(X)
+
+    np.testing.assert_allclose(scales, np.array([1.0]))
+
+
+def test__random_seed_is_reproducible():
+    X, y = iris_data()
+    clf = LogisticRegression().fit(X, y)
+    kwargs = {
+        "x_reference": X[15],
+        "y_desired": 2,
+        "model": clf,
+        "X_dataset": X,
+        "y_desired_proba": 1.0,
+        "lammbda": 10,
+        "random_seed": 123,
+    }
+
+    first = create_counterfactual(**kwargs)
+    second = create_counterfactual(**kwargs)
+
+    np.testing.assert_allclose(first, second)

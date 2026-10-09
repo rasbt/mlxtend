@@ -11,6 +11,16 @@ import numpy as np
 from scipy.optimize import minimize
 
 
+def _calculate_feature_scales(X_dataset):
+    """Return per-feature median absolute deviations for distance scaling."""
+    feature_medians = np.median(X_dataset, axis=0)
+    scales = np.median(np.abs(X_dataset - feature_medians), axis=0)
+
+    # A zero MAD cannot be used as a divisor. A unit scale keeps the distance
+    # finite and still penalizes movement in constant or low-dispersion features.
+    return np.where(scales == 0, 1.0, scales)
+
+
 def create_counterfactual(
     x_reference,
     y_desired,
@@ -68,6 +78,12 @@ def create_counterfactual(
         the random number generator for selecting the inital counterfactual
         from `X_dataset`.
 
+    Notes
+    -----
+    Feature differences are scaled by the median absolute deviation (MAD)
+    computed from `X_dataset`, as defined by Wachter et al. A unit scale is
+    used for features with zero MAD so that the objective remains finite.
+
     """
     if y_desired_proba is not None:
         use_proba = True
@@ -91,12 +107,12 @@ def create_counterfactual(
     rng = np.random.RandomState(random_seed)
     x_counterfact = X_dataset[rng.randint(X_dataset.shape[0])]
 
-    # compute median absolute deviation
-    mad = np.abs(np.median(X_dataset, axis=0) - x_reference)
+    # Compute per-feature median absolute deviations for the weighted L1 distance.
+    feature_scales = _calculate_feature_scales(X_dataset)
 
     def dist(x_reference, x_counterfact):
         numerator = np.abs(x_reference - x_counterfact)
-        return np.sum(numerator / mad)
+        return np.sum(numerator / feature_scales)
 
     def loss(x_counterfact, lammbda):
         if use_proba:

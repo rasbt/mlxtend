@@ -38,7 +38,7 @@ def shuffle_arrays_unison(arrays, random_seed=None):
     For more usage examples, please see
     https://rasbt.github.io/mlxtend/user_guide/preprocessing/shuffle_arrays_unison/
     """
-    if random_seed:
+    if random_seed is not None:
         np.random.seed(random_seed)
     n = len(arrays[0])
     for a in arrays:

@@ -10,6 +10,7 @@ from .bias_variance_decomp import bias_variance_decomp
 from .bootstrap import bootstrap
 from .bootstrap_outofbag import BootstrapOutOfBag
 from .bootstrap_point632 import bootstrap_point632_score
+from .calibration import expected_calibration_error
 from .cochrans_q import cochrans_q
 from .confusion_matrix import confusion_matrix
 from .counterfactual import create_counterfactual
@@ -47,6 +48,7 @@ __all__ = [
     "proportion_difference",
     "bias_variance_decomp",
     "accuracy_score",
+    "expected_calibration_error",
     "create_counterfactual",
     "GroupTimeSeriesSplit",
 ]

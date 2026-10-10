@@ -15,6 +15,10 @@ The CHANGELOG for the current development version is available at
 
 - [Source code (tar.gz)](https://github.com/rasbt/mlxtend/archive/v0.26.0.tar.gz)
 
+##### New Features and Enhancements
+
+- Added `mlxtend.evaluate.paired_ttest_corrected_resampled`, the corrected resampled paired *t* test by Nadeau and Bengio (2003), for comparing two models over many random train/test splits or any scikit-learn cross-validation splitter (e.g., the corrected repeated *k*-fold cross-validation test with `RepeatedStratifiedKFold`). Unlike `paired_ttest_resampled`, it accounts for the overlap between splits, so its false positive rate stays much closer to the chosen significance level ([#376](https://github.com/rasbt/mlxtend/issues/376) via [rachandeepkaur](https://github.com/rachandeepkaur)).
+
 ##### Changes
 
 - Fixed `tokenizer_words_and_emoticons` joining the first emoticon to the final word when the input ends in a word ([#1206](https://github.com/rasbt/mlxtend/issues/1206) via [Afloat16](https://github.com/Afloat16)).

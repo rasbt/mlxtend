@@ -17,7 +17,7 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- Fixed `shuffle_arrays_unison` ignoring `random_seed=0`, so a seed of zero now produces reproducible shuffles like any other integer seed ([#1239](https://github.com/rasbt/mlxtend/issues/1239) via [rachandeepkaur](https://github.com/rachandeepkaur)).
+- Fixed `shuffle_arrays_unison` ignoring `random_seed=0`, so a seed of zero now produces reproducible shuffles like any other integer seed. This also fixes `shuffled_split`, which uses it internally ([#1239](https://github.com/rasbt/mlxtend/issues/1239) via [rachandeepkaur](https://github.com/rachandeepkaur)).
 
 - Fixed `tokenizer_words_and_emoticons` joining the first emoticon to the final word when the input ends in a word ([#1206](https://github.com/rasbt/mlxtend/issues/1206) via [Afloat16](https://github.com/Afloat16)).
 

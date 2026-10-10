@@ -22,6 +22,7 @@ from .mcnemar import mcnemar, mcnemar_table, mcnemar_tables
 from .permutation import permutation_test
 from .proportion_difference import proportion_difference
 from .scoring import scoring
+from .temperature_scaling import TemperatureScaling
 from .time_series import GroupTimeSeriesSplit
 from .ttest import paired_ttest_5x2cv, paired_ttest_kfold_cv, paired_ttest_resampled
 
@@ -49,6 +50,7 @@ __all__ = [
     "bias_variance_decomp",
     "accuracy_score",
     "expected_calibration_error",
+    "TemperatureScaling",
     "create_counterfactual",
     "GroupTimeSeriesSplit",
 ]

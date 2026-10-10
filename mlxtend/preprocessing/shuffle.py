@@ -16,8 +16,10 @@ def shuffle_arrays_unison(arrays, random_seed=None):
     ----------
     arrays : array-like, shape = [n_arrays]
         A list of NumPy arrays.
-    random_seed : int (default: None)
-        Sets the random state.
+    random_seed : int or None (default: None)
+        Seed for NumPy's global random number generator. Any integer,
+        including 0, makes the shuffle reproducible. If None, the current
+        global random state is used.
 
     Returns
     ----------
@@ -38,7 +40,7 @@ def shuffle_arrays_unison(arrays, random_seed=None):
     For more usage examples, please see
     https://rasbt.github.io/mlxtend/user_guide/preprocessing/shuffle_arrays_unison/
     """
-    if random_seed:
+    if random_seed is not None:
         np.random.seed(random_seed)
     n = len(arrays[0])
     for a in arrays:
@@ -63,8 +65,10 @@ def shuffled_split(X, y, shuffle=True, train_size=0.75, random_seed=None):
         Proportion of data in the training arrays. For example, 0.75 will
         put 75% of the data into the training array, and 25% of the data
         into the test array.
-    random_seed : int (default: None)
-        Sets the random state.
+    random_seed : int or None (default: None)
+        Seed for NumPy's global random number generator. Any integer,
+        including 0, makes the shuffle reproducible. If None, the current
+        global random state is used.
 
     Returns
     ----------

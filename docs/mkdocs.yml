@@ -136,6 +136,7 @@ nav:
     - user_guide/text/generalize_names.md
     - user_guide/text/generalize_names_duplcheck.md
     - user_guide/text/tokenizer.md
+    - user_guide/text/sentiment_svm.md
   - utils:
     - user_guide/utils/Counter.md
 - API:

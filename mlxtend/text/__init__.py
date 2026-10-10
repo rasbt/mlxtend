@@ -11,10 +11,12 @@ if sys.version_info >= (3, 0):
     from .names import generalize_names_duplcheck
 
 from .tokenizer import tokenizer_emoticons, tokenizer_words_and_emoticons
+from .sentiment_svm import SentimentSVM
 
 __all__ = [
     "generalize_names",
     "generalize_names_duplcheck",
     "tokenizer_words_and_emoticons",
     "tokenizer_emoticons",
+    "SentimentSVM",
 ]

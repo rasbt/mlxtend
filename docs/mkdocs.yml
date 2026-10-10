@@ -72,6 +72,7 @@ nav:
     - user_guide/evaluate/feature_importance_permutation.md
     - user_guide/evaluate/ftest.md
     - user_guide/evaluate/GroupTimeSeriesSplit.md
+    - user_guide/evaluate/expected_calibration_error.md
     - user_guide/evaluate/lift_score.md
     - user_guide/evaluate/mcnemar_table.md
     - user_guide/evaluate/mcnemar_tables.md
@@ -83,6 +84,7 @@ nav:
     - user_guide/evaluate/PredefinedHoldoutSplit.md
     - user_guide/evaluate/RandomHoldoutSplit.md
     - user_guide/evaluate/scoring.md
+    - user_guide/evaluate/TemperatureScaling.md
   - feature_extraction:
     - user_guide/feature_extraction/LinearDiscriminantAnalysis.md
     - user_guide/feature_extraction/PrincipalComponentAnalysis.md
@@ -115,6 +117,7 @@ nav:
     - user_guide/plotting/plot_decision_regions.md
     - user_guide/plotting/plot_learning_curves.md
     - user_guide/plotting/plot_linear_regression.md
+    - user_guide/plotting/plot_reliability_diagram.md
     - user_guide/plotting/plot_sequential_feature_selection.md
     - user_guide/plotting/scatterplotmatrix.md
     - user_guide/plotting/scatter_hist.md

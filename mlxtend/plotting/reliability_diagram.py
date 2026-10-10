@@ -1,8 +1,9 @@
 # Sebastian Raschka 2014-2026
 # mlxtend Machine Learning Library Extensions
-# Author: Supriya Selvan Ganesan
 #
 # A function for plotting a reliability diagram (calibration curve).
+# Author: Supriya Selvan Ganesan
+#
 # License: BSD 3 clause
 
 import matplotlib.pyplot as plt
@@ -27,40 +28,42 @@ def plot_reliability_diagram(
     figsize=None,
     ax=None,
 ):
-    """Plot a reliability diagram (calibration curve) for a binary classifier.
+    """Plot a reliability diagram (also called a calibration curve).
 
-    Predictions are grouped into equal-width probability bins. For each
-    non-empty bin, the mean predicted probability (x-axis) is plotted
-    against the observed fraction of positives (y-axis). A perfectly
-    calibrated classifier lies on the diagonal; points below the diagonal
-    indicate over-confidence and points above it indicate under-confidence.
+    The predictions are sorted into equal-width probability bins. For every
+    bin that has data, the average predicted probability (x axis) is plotted
+    against the fraction of samples that are really positive (y axis). A
+    perfectly calibrated model follows the diagonal. Points below the
+    diagonal mean the model is overconfident, and points above it mean the
+    model is underconfident.
 
     Parameters
     -----------
     y_target : array-like, shape=[n_samples]
-        True binary class labels (0 or 1).
+        True labels, either 0 or 1.
     y_prob : array-like, shape=[n_samples]
-        Predicted probabilities of the positive class, in the range [0, 1].
+        Predicted probability of the positive class, between 0 and 1.
     n_bins : int (default: 10)
         Number of equal-width probability bins.
     label : str or None (default: None)
-        Legend label of the curve, e.g., the model name.
+        Name of the curve in the legend, for example the model name.
     show_ece : bool (default: True)
-        Appends the expected calibration error to the legend label.
+        Adds the expected calibration error to the legend entry.
     show_histogram : bool (default: True)
-        Adds a small histogram of the predicted probabilities below the
-        diagram. Ignored if an existing axis is passed via `ax`.
+        Adds a small histogram under the diagram that shows how many
+        predictions fall into each bin. It is skipped if you pass your own
+        `ax`.
     figsize : tuple (default: None)
-        Height and width of the figure. Ignored if `ax` is passed.
+        Width and height of the figure. Not used if `ax` is given.
     ax : matplotlib axis (default: None)
-        Existing axis to draw on. Calling the function several times with
-        the same axis overlays several models (the diagonal is drawn only
+        An existing axis to draw on. Call the function again with the same
+        axis to put several models in one plot (the diagonal is only drawn
         once). If None, a new figure is created.
 
     Returns
     -----------
     fig, ax : matplotlib.pyplot subplot objects
-        Figure and the main (diagram) axis.
+        The figure and the main axis, the one with the curve.
 
     Examples
     -----------
@@ -74,6 +77,7 @@ def plot_reliability_diagram(
     ax_hist = None
     if ax is None:
         if show_histogram:
+            # curve on top, a smaller histogram below it
             fig, (ax, ax_hist) = plt.subplots(
                 2,
                 1,
@@ -86,15 +90,18 @@ def plot_reliability_diagram(
     else:
         fig = ax.figure
 
+    # draw the diagonal only once, in case this is a second model on the same ax
     if not any(line.get_label() == _DIAGONAL_LABEL for line in ax.lines):
         ax.plot([0, 1], [0, 1], linestyle="--", color="gray", label=_DIAGONAL_LABEL)
 
+    # put the ECE in the legend text so it is visible without extra code
     curve_label = label
     if show_ece:
         ece = expected_calibration_error(y_target, y_prob, n_bins=n_bins)
         ece_text = "ECE = %.3f" % ece
         curve_label = ece_text if label is None else "%s (%s)" % (label, ece_text)
 
+    # empty bins have NaN values, leave them out so the line is not broken
     nonempty = counts > 0
     ax.plot(mean_prob[nonempty], frac_pos[nonempty], marker="o", label=curve_label)
 
@@ -105,6 +112,7 @@ def plot_reliability_diagram(
     ax.legend(loc="lower right")
 
     if ax_hist is not None:
+        # one bar per bin, centered on the bin
         ax_hist.bar(
             (np.arange(n_bins) + 0.5) / n_bins,
             counts,

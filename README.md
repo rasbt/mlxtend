@@ -111,6 +111,39 @@ plt.show()
 
 ![](./docs/sources/img/ensemble_decision_regions_2d.png)
 
+### Checking and fixing the calibration of predicted probabilities
+
+Measure how trustworthy a binary classifier's probabilities are, plot a reliability diagram, and correct over- or under-confidence with temperature scaling:
+
+```python
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from mlxtend.evaluate import TemperatureScaling, expected_calibration_error
+from mlxtend.plotting import plot_reliability_diagram
+
+X, y = make_classification(n_samples=8000, n_features=20, n_informative=5,
+                           n_redundant=10, random_state=123)
+X_train, X_rest, y_train, y_rest = train_test_split(X, y, test_size=0.5, random_state=123)
+X_cal, X_test, y_cal, y_test = train_test_split(X_rest, y_rest, test_size=0.5, random_state=123)
+
+clf = GaussianNB().fit(X_train, y_train)
+p_cal = clf.predict_proba(X_cal)[:, 1]    # probabilities of the positive class
+p_test = clf.predict_proba(X_test)[:, 1]
+
+# Learn the temperature on held-out data, then rescale the test probabilities
+scaler = TemperatureScaling().fit(p_cal, y_cal)
+p_scaled = scaler.transform(p_test)
+
+print(expected_calibration_error(y_test, p_test))    # 0.072 (before)
+print(expected_calibration_error(y_test, p_scaled))  # 0.012 (after)
+
+fig, ax = plot_reliability_diagram(y_test, p_test, label="Raw")
+plot_reliability_diagram(y_test, p_scaled, label="Temperature scaled", ax=ax)
+plt.show()
+```
+
 ---
 
 If you use mlxtend as part of your workflow in a scientific publication, please consider citing the mlxtend repository with the following DOI:

@@ -14,18 +14,20 @@ import pytest  # noqa: E402
 
 from mlxtend.plotting import plot_reliability_diagram  # noqa: E402
 
+# same small example as in the ECE tests, ECE with 2 bins is 0.225
 Y = [0, 1, 1, 1]
 P = [0.1, 0.9, 0.8, 0.3]
 
 
 @pytest.fixture(autouse=True)
 def _close_figures():
+    # close every figure after each test so they do not pile up in memory
     yield
     plt.close("all")
 
 
 def _curve(ax):
-    """Return the (x, y) data of the first non-diagonal line."""
+    """Return the x and y data of the model curve (not the diagonal)."""
     line = [ln for ln in ax.lines if ln.get_label() != "Perfectly calibrated"][0]
     return np.asarray(line.get_xdata()), np.asarray(line.get_ydata())
 

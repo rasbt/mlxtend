@@ -17,6 +17,12 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
+- Added `mlxtend.evaluate.expected_calibration_error`, a function for measuring how well the predicted probabilities of a binary classifier are calibrated.
+
+- Added `mlxtend.evaluate.TemperatureScaling`, a post-hoc calibrator that learns a single temperature to correct over- or under-confident predicted probabilities of a binary classifier without changing its predicted class labels.
+
+- Added `mlxtend.plotting.plot_reliability_diagram`, which draws a reliability diagram (calibration curve) with the expected calibration error and a histogram of the predicted probabilities, and can overlay several classifiers on one axis.
+
 - Fixed `tokenizer_words_and_emoticons` joining the first emoticon to the final word when the input ends in a word ([#1206](https://github.com/rasbt/mlxtend/issues/1206) via [Afloat16](https://github.com/Afloat16)).
 
 - `mcnemar` now returns a p-value of 1.0 when the two models have no discordant pairs (b + c == 0). Previously, the default chi-squared test divided by zero and reported `p = 0.0` (or `nan` with `corrected=False`) in this case ([#1202](https://github.com/rasbt/mlxtend/issues/1202) via [MohammadHijjawi97](https://github.com/MohammadHijjawi97))

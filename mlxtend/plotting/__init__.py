@@ -14,6 +14,7 @@ from .pca_correlation_graph import plot_pca_correlation_graph
 from .plot_confusion_matrix import plot_confusion_matrix
 from .plot_linear_regression import plot_linear_regression
 from .plot_sequential_feature_selection import plot_sequential_feature_selection
+from .reliability_diagram import plot_reliability_diagram
 from .remove_chartjunk import remove_borders
 from .scatter import category_scatter
 from .scatter_hist import scatter_hist
@@ -24,6 +25,7 @@ __all__ = [
     "plot_learning_curves",
     "plot_decision_regions",
     "plot_confusion_matrix",
+    "plot_reliability_diagram",
     "plot_sequential_feature_selection",
     "plot_linear_regression",
     "remove_borders",

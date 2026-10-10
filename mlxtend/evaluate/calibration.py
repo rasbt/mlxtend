@@ -2,7 +2,7 @@
 # mlxtend Machine Learning Library Extensions
 #
 # A function for computing the expected calibration error.
-# Author: Sebastian Raschka <sebastianraschka.com>
+# Author: Supriya Selvan Ganesan
 #
 # License: BSD 3 clause
 

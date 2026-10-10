@@ -2,7 +2,7 @@
 # mlxtend Machine Learning Library Extensions
 #
 # A post-hoc probability calibrator for binary classifiers.
-# Author: Sebastian Raschka <sebastianraschka.com>
+# Author: Supriya Selvan Ganesan
 #
 # License: BSD 3 clause
 

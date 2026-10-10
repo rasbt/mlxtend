@@ -1,6 +1,6 @@
 # Sebastian Raschka 2014-2026
 # mlxtend Machine Learning Library Extensions
-# Author: Sebastian Raschka <sebastianraschka.com>
+# Author: Supriya Selvan Ganesan
 #
 # A function for plotting a reliability diagram (calibration curve).
 # License: BSD 3 clause

@@ -1,6 +1,6 @@
 # Sebastian Raschka 2014-2026
 # mlxtend Machine Learning Library Extensions
-# Author: Sebastian Raschka <sebastianraschka.com>
+# Author: Supriya Selvan Ganesan
 #
 # License: BSD 3 clause
 

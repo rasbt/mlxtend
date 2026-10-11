@@ -22,7 +22,12 @@ from .permutation import permutation_test
 from .proportion_difference import proportion_difference
 from .scoring import scoring
 from .time_series import GroupTimeSeriesSplit
-from .ttest import paired_ttest_5x2cv, paired_ttest_kfold_cv, paired_ttest_resampled
+from .ttest import (
+    paired_ttest_5x2cv,
+    paired_ttest_corrected_resampled,
+    paired_ttest_kfold_cv,
+    paired_ttest_resampled,
+)
 
 __all__ = [
     "scoring",
@@ -37,6 +42,7 @@ __all__ = [
     "bootstrap_point632_score",
     "cochrans_q",
     "paired_ttest_resampled",
+    "paired_ttest_corrected_resampled",
     "paired_ttest_kfold_cv",
     "paired_ttest_5x2cv",
     "feature_importance_permutation",

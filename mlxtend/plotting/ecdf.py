@@ -70,7 +70,7 @@ def ecdf(
     y = np.arange(1, x.shape[0] + 1) / float(x.shape[0])
 
     ax.plot(x, y, marker=ecdf_marker, linestyle="", color=ecdf_color)
-    ax.set_ylabel("ECDF")
+    ax.set_ylabel(y_label)
     if x_label is not None:
         ax.set_xlabel(x_label)
     if percentile:

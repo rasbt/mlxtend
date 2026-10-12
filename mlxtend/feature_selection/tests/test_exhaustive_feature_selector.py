@@ -9,6 +9,7 @@ from itertools import combinations
 import numpy as np
 import pandas as pd
 import pytest
+from joblib import parallel_backend
 from numpy.testing import assert_almost_equal
 from packaging.version import Version
 from sklearn import __version__ as sklearn_version
@@ -480,6 +481,109 @@ def test_get_metric_dict_not_fitted():
     expect = "ExhaustiveFeatureSelector has not been fitted, yet."
 
     assert_raises(AttributeError, expect, efs1.get_metric_dict)
+
+
+@pytest.mark.parametrize("cv", [0, 3])
+@pytest.mark.parametrize("print_progress", [True, False])
+def test_serial_results_are_recorded_incrementally(cv, print_progress, capsys):
+    X, y = load_iris(return_X_y=True)
+    observed = []
+
+    def score(estimator, X, y):
+        observed.append((len(efs.subsets_), capsys.readouterr().err))
+        return estimator.score(X, y)
+
+    efs = EFS(
+        LinearRegression(),
+        scoring=score,
+        cv=cv,
+        n_jobs=1,
+        print_progress=print_progress,
+    )
+    efs.fit(X, y)
+
+    expected = []
+    for subset in range(X.shape[1]):
+        for fold in range(cv or 1):
+            progress = ""
+            if print_progress and subset and fold == 0:
+                progress = "\rFeatures: %d/4" % subset
+            expected.append((subset, progress))
+
+    assert observed == expected
+    assert capsys.readouterr().err == ("\rFeatures: 4/4" if print_progress else "")
+    assert len(efs.subsets_) == 4
+    assert efs.fitted
+
+
+@pytest.mark.parametrize("cv", [0, 3])
+def test_serial_interrupt_retains_completed_subsets(cv, capsys):
+    X, y = load_iris(return_X_y=True)
+    scores = []
+
+    def score(estimator, X, y):
+        if len(scores) == 2 * (cv or 1):
+            raise KeyboardInterrupt
+        result = estimator.score(X, y)
+        scores.append(result)
+        return result
+
+    efs = EFS(
+        LinearRegression(),
+        scoring=score,
+        cv=cv,
+        n_jobs=1,
+        print_progress=False,
+    )
+    try:
+        result = efs.fit(X, y)
+    except KeyboardInterrupt:
+        pytest.fail("Serial scoring interrupted outside the partial-result handler")
+
+    assert result is efs
+    assert efs.interrupted_
+    assert not efs.fitted
+    assert list(efs.subsets_) == [0, 1]
+    assert efs.subsets_[0]["feature_idx"] == (0,)
+    assert efs.subsets_[1]["feature_idx"] == (1,)
+    assert capsys.readouterr().err == ("\nSTOPPING EARLY DUE TO KEYBOARD INTERRUPT...")
+
+    efs.finalize_fit()
+    best = max(efs.subsets_.values(), key=lambda subset: subset["avg_score"])
+    assert efs.best_idx_ == best["feature_idx"]
+    assert efs.best_score_ == best["avg_score"]
+    assert efs.best_feature_names_ == tuple(str(i) for i in efs.best_idx_)
+
+
+@pytest.mark.parametrize("feature_groups", [None, [[0, 1], [2], [3]]])
+def test_serial_and_parallel_results_match(feature_groups):
+    X, y = load_iris(return_X_y=True)
+    kwargs = dict(
+        max_features=2,
+        scoring="r2",
+        cv=3,
+        feature_groups=feature_groups,
+        print_progress=False,
+    )
+    serial = EFS(LinearRegression(), n_jobs=1, **kwargs).fit(X, y)
+    with parallel_backend("threading"):
+        parallel = EFS(LinearRegression(), n_jobs=2, **kwargs).fit(X, y)
+
+    dict_compare_utility(serial.subsets_, parallel.subsets_, decimal=12)
+    assert serial.best_idx_ == parallel.best_idx_
+    assert_almost_equal(serial.best_score_, parallel.best_score_, decimal=12)
+    assert serial.best_feature_names_ == parallel.best_feature_names_
+
+
+def test_serial_scoring_error_propagates():
+    X, y = load_iris(return_X_y=True)
+
+    def score(estimator, X, y):
+        raise ValueError("scoring failed")
+
+    efs = EFS(LinearRegression(), scoring=score, cv=0, n_jobs=1, print_progress=False)
+    with pytest.raises(ValueError, match="scoring failed"):
+        efs.fit(X, y)
 
 
 def test_check_pandas_dataframe_fit():

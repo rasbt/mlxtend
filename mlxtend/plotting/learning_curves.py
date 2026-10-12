@@ -37,7 +37,9 @@ def plot_learning_curves(
         Feature matrix of the test dataset.
     y_test : array-like, shape = [n_samples]
         True class labels of the test dataset.
-    clf : Classifier object. Must have a .predict .fit method.
+    clf : Classifier object
+        Must have .fit and .predict methods. For scoring='log_loss',
+        .predict_proba is required and used instead of .predict.
     train_marker : str (default: 'o')
         Marker for the training set line plot.
     test_marker : str (default: '^')
@@ -50,6 +52,8 @@ def plot_learning_curves(
         'precision', 'recall', 'roc_auc',
         'adjusted_rand_score', 'mean_absolute_error', 'mean_squared_error',
         'median_absolute_error', 'r2'}
+        'log_loss' uses predicted class probabilities and returns the
+        positive loss, not a negated score.
     suppress_plot=False : bool (default: False)
         Suppress matplotlib plots if True. Recommended
         for testing purposes.
@@ -113,8 +117,9 @@ def plot_learning_curves(
     for r in rng:
         model = clf.fit(X_train[:r], y_train[:r])
 
-        y_train_predict = clf.predict(X_train[:r])
-        y_test_predict = clf.predict(X_test)
+        predict = clf.predict_proba if scoring == "log_loss" else clf.predict
+        y_train_predict = predict(X_train[:r])
+        y_test_predict = predict(X_test)
 
         train_misclf = scoring_func[scoring](y_train[:r], y_train_predict)
         training_errors.append(train_misclf)

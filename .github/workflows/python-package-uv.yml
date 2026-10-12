@@ -37,6 +37,8 @@ jobs:
       - name: Run tests
         run: |
           uv run --group dev python -m coverage run --source=mlxtend --branch -m pytest mlxtend
+          # Plotting tests are excluded from recursive collection by pyproject.toml.
+          uv run --group dev python -m coverage run --append --source=mlxtend --branch -m pytest mlxtend/plotting/tests/test_learning_curves.py
           uv run --group dev python -m coverage xml
 
       - name: Upload Coverage to Codecov
@@ -73,4 +75,6 @@ jobs:
           uv run --no-sync python -c "import pandas; print('Pandas:', pandas.__version__)"
 
       - name: Run tests
-        run: uv run --no-sync python -m pytest mlxtend
+        run: |
+          uv run --no-sync python -m pytest mlxtend
+          uv run --no-sync python -m pytest mlxtend/plotting/tests/test_learning_curves.py

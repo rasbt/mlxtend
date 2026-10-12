@@ -44,8 +44,8 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
         [4]]`, then the `max_features` value cannot exceed 4.
 
     print_progress : bool (default: True)
-        Prints progress as the number of epochs
-        to stderr.
+        Prints the number of evaluated feature subsets to stderr.
+        With `n_jobs=1`, progress is updated after each subset.
 
     scoring : str, (default='accuracy')
         Scoring metric in {accuracy, f1, precision, recall, roc_auc}
@@ -446,22 +446,24 @@ class ExhaustiveFeatureSelector(BaseEstimator, MetaEstimatorMixin):
             ]
         )
 
-        n_jobs = min(self.n_jobs, all_comb)
-        parallel = Parallel(n_jobs=n_jobs, pre_dispatch=self.pre_dispatch)
-        work = enumerate(
-            parallel(
-                delayed(_calc_score)(
-                    self,
-                    X_,
-                    y,
-                    list(set(c).union(self.fixed_features_group_set)),
-                    groups=groups,
-                    feature_groups=self.feature_groups,
-                    **fit_params,
-                )
-                for c in candidates
+        score_func = _calc_score if self.n_jobs == 1 else delayed(_calc_score)
+        work = (
+            score_func(
+                self,
+                X_,
+                y,
+                list(set(c).union(self.fixed_features_group_set)),
+                groups=groups,
+                feature_groups=self.feature_groups,
+                **fit_params,
             )
+            for c in candidates
         )
+        if self.n_jobs != 1:
+            n_jobs = min(self.n_jobs, all_comb)
+            parallel = Parallel(n_jobs=n_jobs, pre_dispatch=self.pre_dispatch)
+            work = parallel(work)
+        work = enumerate(work)
 
         try:
             for iteration, (indices, cv_scores) in work:

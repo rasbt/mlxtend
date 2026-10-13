@@ -16,6 +16,11 @@ from .counterfactual import create_counterfactual
 from .f_test import combined_ftest_5x2cv, ftest
 from .feature_importance import feature_importance_permutation
 from .holdout import PredefinedHoldoutSplit, RandomHoldoutSplit
+from .calibration import (
+    expected_calibration_error,
+    maximum_calibration_error,
+    reliability_table,
+)
 from .lift_score import lift_score
 from .mcnemar import mcnemar, mcnemar_table, mcnemar_tables
 from .permutation import permutation_test
@@ -31,6 +36,9 @@ __all__ = [
     "mcnemar_tables",
     "mcnemar",
     "lift_score",
+    "expected_calibration_error",
+    "maximum_calibration_error",
+    "reliability_table",
     "bootstrap",
     "permutation_test",
     "BootstrapOutOfBag",

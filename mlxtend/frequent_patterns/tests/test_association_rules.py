@@ -1,4 +1,5 @@
 import numpy as np
+import warnings
 import pandas as pd
 import pytest
 from numpy.testing import assert_raises as numpy_assert_raises
@@ -415,15 +416,23 @@ def test_jaccard():
 
 
 def test_certainty():
-    res_df = association_rules(
-        df_freq_items, len(df), metric="certainty", min_threshold=0.6
-    )
-    assert res_df.values.shape[0] == 3
+    import warnings
 
-    res_df = association_rules(
-        df_freq_items_with_colnames, len(df), metric="certainty", min_threshold=0.6
-    )
-    assert res_df.values.shape[0] == 3
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", RuntimeWarning)
+
+        res_df = association_rules(
+            df_freq_items, len(df), metric="certainty", min_threshold=0.6
+        )
+        assert res_df.values.shape[0] == 3
+
+        res_df = association_rules(
+            df_freq_items_with_colnames,
+            len(df),
+            metric="certainty",
+            min_threshold=0.6,
+        )
+        assert res_df.values.shape[0] == 3
 
 
 def test_kulczynski():

@@ -52,9 +52,9 @@ def test_hand_computed_two_bins():
 
 def test_multiclass_2d_proba():
     y = np.array([0, 1, 2])
-    proba = np.array([[0.7, 0.2, 0.1],
-                      [0.1, 0.7, 0.2],
-                      [0.7, 0.2, 0.1]])  # last one is wrong
+    proba = np.array(
+        [[0.7, 0.2, 0.1], [0.1, 0.7, 0.2], [0.7, 0.2, 0.1]]
+    )  # last one is wrong
     # All confidences 0.7, accuracy 2/3 -> ECE = |2/3 - 0.7|.
     assert expected_calibration_error(y, proba) == pytest.approx(0.7 - 2 / 3)
 
@@ -65,7 +65,8 @@ def test_binary_1d_and_2d_agree():
     y = rng.randint(0, 2, 200)
     p2 = np.column_stack([1 - p1, p1])
     assert expected_calibration_error(y, p1) == pytest.approx(
-        expected_calibration_error(y, p2))
+        expected_calibration_error(y, p2)
+    )
 
 
 def test_mce_at_least_ece():
@@ -94,8 +95,9 @@ def test_quantile_bins_are_balanced():
 
 def test_real_models():
     # Logistic regression is usually better calibrated than Naive Bayes.
-    X, y = make_classification(n_samples=3000, n_features=20,
-                               n_informative=5, random_state=0)
+    X, y = make_classification(
+        n_samples=3000, n_features=20, n_informative=5, random_state=0
+    )
     Xtr, Xte, ytr, yte = X[:2000], X[2000:], y[:2000], y[2000:]
     lr = LogisticRegression(max_iter=1000).fit(Xtr, ytr)
     nb = GaussianNB().fit(Xtr, ytr)
@@ -105,15 +107,18 @@ def test_real_models():
     assert ece_lr < ece_nb
 
 
-@pytest.mark.parametrize("y, proba, msg", [
-    ([0, 1], [0.5], "same number of samples"),
-    ([0, 1], [0.5, 1.5], "range"),
-    ([0, 2], [0.5, 0.5], "only 0 and 1"),
-    ([0, 1], [[0.5, 0.6], [0.5, 0.5]], "sum to 1"),
-    ([0, 3], [[0.5, 0.5], [0.5, 0.5]], "n_classes"),
-    ([], [], "at least one"),
-    ([0, 1], [np.nan, 0.5], "NaN"),
-])
+@pytest.mark.parametrize(
+    "y, proba, msg",
+    [
+        ([0, 1], [0.5], "same number of samples"),
+        ([0, 1], [0.5, 1.5], "range"),
+        ([0, 2], [0.5, 0.5], "only 0 and 1"),
+        ([0, 1], [[0.5, 0.6], [0.5, 0.5]], "sum to 1"),
+        ([0, 3], [[0.5, 0.5], [0.5, 0.5]], "n_classes"),
+        ([], [], "at least one"),
+        ([0, 1], [np.nan, 0.5], "NaN"),
+    ],
+)
 def test_invalid_inputs(y, proba, msg):
     with pytest.raises(ValueError, match=msg):
         expected_calibration_error(y, proba)

@@ -42,18 +42,14 @@ def _validate_inputs(y_target, y_proba, n_bins, strategy):
     if proba.ndim == 1:
         # Binary case: proba is P(y == 1); labels must be 0/1.
         if not np.all(np.isin(y_true, [0, 1])):
-            raise ValueError(
-                "With 1D y_proba, y_target must contain only 0 and 1."
-            )
+            raise ValueError("With 1D y_proba, y_target must contain only 0 and 1.")
         predicted = (proba >= 0.5).astype(int)
         confidence = np.where(predicted == 1, proba, 1.0 - proba)
     elif proba.ndim == 2:
         if not np.allclose(proba.sum(axis=1), 1.0, atol=1e-6):
             raise ValueError("Each row of a 2D y_proba must sum to 1.")
         if np.any(y_true < 0) or np.any(y_true >= proba.shape[1]):
-            raise ValueError(
-                "y_target labels must be integers in [0, n_classes)."
-            )
+            raise ValueError("y_target labels must be integers in [0, n_classes).")
         predicted = np.argmax(proba, axis=1)
         confidence = proba[np.arange(proba.shape[0]), predicted]
     else:
@@ -107,18 +103,24 @@ def reliability_table(y_target, y_proba, n_bins=10, strategy="uniform"):
     >>> t['count'].tolist()
     [1, 2]
     """
-    _, confidence, correct = _validate_inputs(
-        y_target, y_proba, n_bins, strategy
-    )
+    _, confidence, correct = _validate_inputs(y_target, y_proba, n_bins, strategy)
     edges = _bin_edges(confidence, n_bins, strategy)
 
     # np.digitize with right=True puts a value equal to an edge in the
     # lower bin; clip so that confidence == 0 lands in the first bin.
-    idx = np.clip(np.digitize(confidence, edges[1:-1], right=True),
-                  0, len(edges) - 2)
+    idx = np.clip(np.digitize(confidence, edges[1:-1], right=True), 0, len(edges) - 2)
 
-    rows = {k: [] for k in ("bin_lower", "bin_upper", "count",
-                            "avg_confidence", "accuracy", "gap")}
+    rows = {
+        k: []
+        for k in (
+            "bin_lower",
+            "bin_upper",
+            "count",
+            "avg_confidence",
+            "accuracy",
+            "gap",
+        )
+    }
     for b in range(len(edges) - 1):
         mask = idx == b
         n = int(mask.sum())
@@ -138,8 +140,7 @@ def reliability_table(y_target, y_proba, n_bins=10, strategy="uniform"):
     return table
 
 
-def expected_calibration_error(y_target, y_proba, n_bins=10,
-                               strategy="uniform"):
+def expected_calibration_error(y_target, y_proba, n_bins=10, strategy="uniform"):
     """Expected Calibration Error (ECE) of a probabilistic classifier.
 
     A model is well calibrated when, among predictions made with
@@ -178,8 +179,7 @@ def expected_calibration_error(y_target, y_proba, n_bins=10,
     return float(np.sum(weights * table["gap"]))
 
 
-def maximum_calibration_error(y_target, y_proba, n_bins=10,
-                              strategy="uniform"):
+def maximum_calibration_error(y_target, y_proba, n_bins=10, strategy="uniform"):
     """Maximum Calibration Error (MCE): the worst gap over all bins.
 
     Useful in high-risk settings where the worst-case miscalibration

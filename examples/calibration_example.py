@@ -37,9 +37,7 @@ def main():
             StandardScaler(), LogisticRegression(max_iter=1000)
         ),
         "Gaussian Naive Bayes": GaussianNB(),
-        "Random Forest": RandomForestClassifier(
-            n_estimators=200, random_state=42
-        ),
+        "Random Forest": RandomForestClassifier(n_estimators=200, random_state=42),
     }
 
     print(f"{'Model':<22}{'Accuracy':>10}{'ECE':>8}{'MCE':>8}")
@@ -58,9 +56,13 @@ def main():
     table = reliability_table(y_test, results[worst][1], n_bins=10)
     print(f"\nReliability table for {worst}:")
     print(f"{'bin':<14}{'count':>6}{'confidence':>12}{'accuracy':>10}")
-    for lo, hi, n, conf, acc in zip(table["bin_lower"], table["bin_upper"],
-                                    table["count"], table["avg_confidence"],
-                                    table["accuracy"]):
+    for lo, hi, n, conf, acc in zip(
+        table["bin_lower"],
+        table["bin_upper"],
+        table["count"],
+        table["avg_confidence"],
+        table["accuracy"],
+    ):
         print(f"({lo:.1f}, {hi:.1f}]{n:>10}{conf:>12.3f}{acc:>10.3f}")
 
 

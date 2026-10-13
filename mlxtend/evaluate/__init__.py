@@ -10,17 +10,17 @@ from .bias_variance_decomp import bias_variance_decomp
 from .bootstrap import bootstrap
 from .bootstrap_outofbag import BootstrapOutOfBag
 from .bootstrap_point632 import bootstrap_point632_score
+from .calibration import (
+    expected_calibration_error,
+    maximum_calibration_error,
+    reliability_table,
+)
 from .cochrans_q import cochrans_q
 from .confusion_matrix import confusion_matrix
 from .counterfactual import create_counterfactual
 from .f_test import combined_ftest_5x2cv, ftest
 from .feature_importance import feature_importance_permutation
 from .holdout import PredefinedHoldoutSplit, RandomHoldoutSplit
-from .calibration import (
-    expected_calibration_error,
-    maximum_calibration_error,
-    reliability_table,
-)
 from .lift_score import lift_score
 from .mcnemar import mcnemar, mcnemar_table, mcnemar_tables
 from .permutation import permutation_test

@@ -11,6 +11,7 @@ from .onehot import one_hot
 from .scaling import minmax_scaling, standardize
 from .shuffle import shuffle_arrays_unison
 from .transactionencoder import TransactionEncoder
+from .outlier_filter import zscore_outlier_mask
 
 __all__ = [
     "MeanCenterer",

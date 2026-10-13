@@ -24,6 +24,7 @@ def category_scatter(
     alpha=0.7,
     markersize=20.0,
     legend_loc="best",
+    ax=None,
 ):
     """Scatter plot to plot categories in different colors/markerstyles.
 
@@ -48,10 +49,13 @@ def category_scatter(
         Location of the plot legend
         {best, upper left, upper right, lower left, lower right}
         No legend if legend_loc=False
+    ax : matplotlib.axes.Axes (default: None)
+        Axes on which to draw. If None, create a new figure and axes.
 
     Returns
     ---------
-    fig : matplotlig.pyplot figure object
+    fig : matplotlib.figure.Figure
+        Figure containing the scatter plot.
 
     Examples
     -----------
@@ -59,7 +63,9 @@ def category_scatter(
     https://rasbt.github.io/mlxtend/user_guide/plotting/category_scatter/
 
     """
-    fig = plt.figure()
+    if ax is None:
+        _, ax = plt.subplots()
+    fig = ax.figure
     color_gen = cycle(colors)
     marker_gen = cycle(markers)
 
@@ -86,7 +92,7 @@ def category_scatter(
             x_dat = data[data[:, label_col] == lab, x]
             y_dat = data[data[:, label_col] == lab, y]
 
-        plt.scatter(
+        ax.scatter(
             x_dat,
             y_dat,
             c=next(color_gen),
@@ -97,5 +103,5 @@ def category_scatter(
         )
 
     if legend_loc:
-        plt.legend(loc=legend_loc, scatterpoints=1)
+        ax.legend(loc=legend_loc, scatterpoints=1)
     return fig

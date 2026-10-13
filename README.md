@@ -147,3 +147,34 @@ according to the terms and conditions of the Creative Commons Attribution 4.0 In
 ## Contact
 
 The best way to ask questions is via the [GitHub Discussions channel](https://github.com/rasbt/mlxtend/discussions). In case you encounter usage bugs, please don't hesitate to use the [GitHub's issue tracker](https://github.com/rasbt/mlxtend/issues) directly. 
+
+
+## SVM Decision Threshold Evaluation
+
+This example demonstrates how changing the decision threshold of a Support Vector Machine (SVM) affects classification performance on an imbalanced dataset.
+
+The example uses a synthetic dataset and a linear SVM classifier. It evaluates different thresholds using precision, recall, and F1-score.
+
+### Run the Example
+
+From the repository root, run:
+
+    python -m uv run python mlxtend/evaluate/examples/svm_threshold_analysis.py
+
+### Run the Unit Tests
+
+    python -m uv run pytest mlxtend/evaluate/tests/test_svm_threshold_analysis.py -q
+
+### Results
+
+| Threshold | Precision | Recall | F1 |
+|---|---:|---:|---:|
+| -1.00 | 0.443 | 0.871 | 0.587 |
+| -0.50 | 0.574 | 0.871 | 0.692 |
+| 0.00 | 0.710 | 0.710 | 0.710 |
+| 0.50 | 0.762 | 0.516 | 0.615 |
+| 1.00 | 0.933 | 0.452 | 0.609 |
+
+The results demonstrate the trade-off between precision and recall. Increasing the threshold generally improves precision while reducing recall.
+
+Three unit tests verify perfect predictions, no positive predictions, and multiple thresholds.

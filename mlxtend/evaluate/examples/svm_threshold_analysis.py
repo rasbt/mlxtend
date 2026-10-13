@@ -1,9 +1,8 @@
-
 """Compare SVM decision thresholds on a binary classification task."""
 
 import numpy as np
 from sklearn.datasets import make_classification
-from sklearn.metrics import precision_score, recall_score, f1_score
+from sklearn.metrics import f1_score, precision_score, recall_score
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
@@ -18,12 +17,14 @@ def evaluate_thresholds(y_true, scores, thresholds=None):
     results = []
     for threshold in thresholds:
         predictions = (np.asarray(scores) >= threshold).astype(int)
-        results.append({
-            "threshold": threshold,
-            "precision": precision_score(y_true, predictions, zero_division=0),
-            "recall": recall_score(y_true, predictions, zero_division=0),
-            "f1": f1_score(y_true, predictions, zero_division=0),
-        })
+        results.append(
+            {
+                "threshold": threshold,
+                "precision": precision_score(y_true, predictions, zero_division=0),
+                "recall": recall_score(y_true, predictions, zero_division=0),
+                "f1": f1_score(y_true, predictions, zero_division=0),
+            }
+        )
     return results
 
 

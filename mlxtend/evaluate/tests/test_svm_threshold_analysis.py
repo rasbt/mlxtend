@@ -1,4 +1,3 @@
-
 """Tests for the SVM threshold analysis example."""
 
 import importlib.util
@@ -7,9 +6,7 @@ from pathlib import Path
 import pytest
 
 EXAMPLE_PATH = (
-    Path(__file__).resolve().parents[1]
-    / "examples"
-    / "svm_threshold_analysis.py"
+    Path(__file__).resolve().parents[1] / "examples" / "svm_threshold_analysis.py"
 )
 
 spec = importlib.util.spec_from_file_location("svm_threshold_analysis", EXAMPLE_PATH)

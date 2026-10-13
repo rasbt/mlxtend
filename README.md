@@ -138,6 +138,48 @@ J Open Source Softw 3(24).
 
 ---
 
+## Calibration Metrics (ECE / MCE)
+
+`mlxtend.evaluate` includes metrics that check whether a classifier's
+predicted probabilities can be trusted. A model is *well calibrated* when,
+among predictions made with 80% confidence, about 80% are correct.
+
+| Function | What it returns |
+|---|---|
+| `expected_calibration_error(y_true, y_proba, n_bins=10, strategy="uniform")` | Weighted average gap between confidence and accuracy (0 = perfect) |
+| `maximum_calibration_error(y_true, y_proba, n_bins=10, strategy="uniform")` | Worst gap in any single bin |
+| `reliability_table(y_true, y_proba, n_bins=10, strategy="uniform")` | Per-bin counts, mean confidence, accuracy and gap (for a reliability diagram) |
+
+`y_proba` can be the output of `predict_proba` (shape `[n_samples, n_classes]`,
+binary or multiclass) or a 1D array of P(class 1). `strategy` is `"uniform"`
+(equal-width bins) or `"quantile"` (equal-count bins).
+
+```python
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from mlxtend.evaluate import expected_calibration_error, reliability_table
+
+X, y = load_breast_cancer(return_X_y=True)
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, random_state=42)
+proba = GaussianNB().fit(X_tr, y_tr).predict_proba(X_te)
+
+print("ECE:", expected_calibration_error(y_te, proba, n_bins=10))
+print(reliability_table(y_te, proba, n_bins=10))
+```
+
+A full comparison of three models is in `examples/calibration_example.py`:
+
+```bash
+python examples/calibration_example.py
+```
+
+Run the tests with:
+
+```bash
+pytest mlxtend/evaluate/tests/test_calibration.py -v
+```
+
 ## License
 
 - This project is released under a permissive new BSD open source license ([LICENSE-BSD3.txt](https://github.com/rasbt/mlxtend/blob/master/LICENSE-BSD3.txt)) and commercially usable. There is no warranty; not even for merchantability or fitness for a particular purpose.

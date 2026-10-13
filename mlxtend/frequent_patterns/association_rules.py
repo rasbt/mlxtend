@@ -181,7 +181,10 @@ def association_rules(
         )
         certainty_denom = 1 - sC
 
-        cert_metric = np.where(certainty_denom == 0, 0, certainty_num / certainty_denom)
+        with np.errstate(divide="ignore", invalid="ignore"):
+            cert_metric = np.where(
+                certainty_denom == 0, 0, certainty_num / certainty_denom
+            )
         return cert_metric
 
     # metrics for association rules

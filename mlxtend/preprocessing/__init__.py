@@ -8,10 +8,10 @@ from .copy_transformer import CopyTransformer
 from .dense_transformer import DenseTransformer
 from .mean_centering import MeanCenterer
 from .onehot import one_hot
+from .outlier_filter import zscore_outlier_mask
 from .scaling import minmax_scaling, standardize
 from .shuffle import shuffle_arrays_unison
 from .transactionencoder import TransactionEncoder
-from .outlier_filter import zscore_outlier_mask
 
 __all__ = [
     "MeanCenterer",

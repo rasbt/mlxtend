@@ -72,10 +72,10 @@ def plot_decision_regions(
 ):
     """Plot decision regions of a classifier.
 
-    Please note that this functions assumes that class labels are
-    labeled consecutively, e.g,. 0, 1, 2, 3, 4, and 5. If you have class
-    labels with integer labels > 4, you may want to provide additional colors
-    and/or markers as `colors` and `markers` arguments.
+    Class labels must be integers, but need not be consecutive or nonnegative.
+    Colors and markers are assigned in sorted class-label order. If you have
+    more classes than colors or markers, you may want to provide additional
+    colors and/or markers as `colors` and `markers` arguments.
     See https://matplotlib.org/examples/color/named_colors.html for more
     information.
 
@@ -308,7 +308,7 @@ def plot_decision_regions(
         yy,
         Z_indexed,
         colors=colors,
-        levels=np.arange(Z.max() + 2) - 0.5,
+        levels=np.arange(n_classes + 1) - 0.5,
         **contourf_kwargs,
     )
 

@@ -4,8 +4,15 @@
 #
 # License: BSD 3 clause
 
+import multiprocessing as mp
+
 import matplotlib.pyplot as plt
 import numpy as np
+import pytest
+from matplotlib.collections import PathCollection
+from matplotlib.contour import QuadContourSet
+from sklearn.dummy import DummyClassifier
+from sklearn.tree import DecisionTreeClassifier
 
 from mlxtend.classifier import SoftmaxRegression
 from mlxtend.data import iris_data
@@ -20,6 +27,63 @@ sr = SoftmaxRegression(epochs=15, eta=0.01, random_seed=1)
 def test_pass():
     sr.fit(X[:, :2], y)
     plot_decision_regions(X=X[:, :2], y=y, clf=sr)
+
+
+@pytest.mark.parametrize(
+    "class_labels", [(0, 1), (-2, -1), (-3, -2), (-1, 0), (99, 100), (0, 3)]
+)
+@pytest.mark.parametrize("n_jobs", [1, 2])
+def test_contour_levels_use_class_indices(class_labels, n_jobs):
+    if n_jobs > mp.cpu_count():
+        pytest.skip("The parallel plotting check needs at least two CPU cores.")
+    features = np.array([[0.0, 0.0], [0.0, 1.0], [1.0, 0.0], [1.0, 1.0]])
+    labels = np.repeat(class_labels, 2)
+    classifier = DecisionTreeClassifier(random_state=0).fit(features, labels)
+    fig, ax = plt.subplots(figsize=(2, 2), dpi=40)
+    try:
+        plot_decision_regions(
+            features, labels, classifier, ax=ax, n_jobs=n_jobs, colors="red,blue"
+        )
+        regions = next(c for c in ax.collections if isinstance(c, QuadContourSet))
+        np.testing.assert_array_equal(regions.levels, [-0.5, 0.5, 1.5])
+        np.testing.assert_allclose(
+            regions.get_facecolors()[:, :3], [[1, 0, 0], [0, 0, 1]]
+        )
+        assert ax.get_legend_handles_labels()[1] == [str(c) for c in class_labels]
+        fig.canvas.draw()
+    finally:
+        plt.close(fig)
+
+
+@pytest.mark.parametrize(
+    "class_labels, predicted_index",
+    [((-3,), 0), ((-3, -2, -1), 0), ((-3, -2, -1), 1), ((0, 1, 2), 0), ((0, 1, 2), 1)],
+)
+def test_contour_levels_include_classes_missing_from_predictions(
+    class_labels, predicted_index
+):
+    features = np.arange(2 * len(class_labels), dtype=float).reshape(-1, 1)
+    labels = np.repeat(class_labels, 2)
+    classifier = DummyClassifier(
+        strategy="constant", constant=class_labels[predicted_index]
+    ).fit(features, labels)
+    fig, ax = plt.subplots(figsize=(2, 2), dpi=40)
+    try:
+        plot_decision_regions(features, labels, classifier, ax=ax)
+        regions = next(c for c in ax.collections if isinstance(c, QuadContourSet))
+        np.testing.assert_array_equal(
+            regions.levels, np.arange(len(class_labels) + 1) - 0.5
+        )
+        scatter_colors = [
+            c.get_facecolors()[0, :3]
+            for c in ax.collections
+            if isinstance(c, PathCollection)
+        ]
+        np.testing.assert_allclose(regions.get_facecolors()[:, :3], scatter_colors)
+        assert ax.get_legend_handles_labels()[1] == [str(c) for c in class_labels]
+        fig.canvas.draw()
+    finally:
+        plt.close(fig)
 
 
 def test_ylist():

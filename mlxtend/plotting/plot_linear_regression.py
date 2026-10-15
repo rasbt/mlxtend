@@ -80,8 +80,8 @@ def plot_linear_regression(
     else:
         x_min, x_max = xlim
 
-    y_min = model.predict(x_min)
-    y_max = model.predict(x_max)
+    y_min = model.predict([[x_min]])[0]
+    y_max = model.predict([[x_max]])[0]
 
     plt.plot([x_min, x_max], [y_min, y_max], fit_style, lw=1)
 

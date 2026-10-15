@@ -13,6 +13,7 @@ from copy import deepcopy
 from itertools import combinations
 
 import numpy as np
+import pandas as pd
 import scipy as sp
 import scipy.stats
 from joblib import Parallel, delayed
@@ -122,6 +123,14 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         encoded features.  (For  more details, please read the notes at the
         bottom of this docstring).  New in mlxtend v. 0.21.0.
 
+    preserve_dataframe : bool (default: False)
+        If True, pandas DataFrame inputs retain their column names, dtypes,
+        and row indexes when passed to the estimator and scorer. The
+        `transform` and `fit_transform` methods also return DataFrames for
+        DataFrame inputs. This supports pipelines that select columns by dtype
+        or name. If False, DataFrames are converted to NumPy arrays, as in
+        earlier versions. NumPy and sparse inputs are unaffected.
+
     Attributes
     ----------
     k_feature_idx_ : array-like, shape = [n_predictions]
@@ -198,6 +207,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         fixed_features=None,
         feature_groups=None,
         tol=None,
+        preserve_dataframe=False,
     ):
         self.estimator = estimator
         self.k_features = k_features
@@ -205,6 +215,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self.floating = floating
         self.pre_dispatch = pre_dispatch
         self.tol = tol
+        self.preserve_dataframe = preserve_dataframe
         # Want to raise meaningful error message if a
         # cross-validation generator is inputted
         if isinstance(cv, types.GeneratorType):
@@ -346,7 +357,7 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         self.k_feature_names_ = None
         self.k_score_ = None
 
-        X_, self.feature_names = _preprocess(X)
+        X_, self.feature_names = _preprocess(X, self.preserve_dataframe)
         self.n_features = X_.shape[1]
 
         self.feature_names_to_idx_mapper = None
@@ -752,8 +763,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         must_include_set : set
             a set of features that must be present in the selected subset of features
 
-        X : numpy.ndarray
-            a 2D numpy array. Each row corresponds to one observation and each
+        X : numpy.ndarray or pandas.DataFrame
+            A 2D feature matrix. Each row corresponds to one observation and each
             column corresponds to one feature.
 
         y : numpy.ndarray
@@ -838,10 +849,15 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         Returns
         -------
         Reduced feature subset of X, shape={n_samples, k_features}
+            Returns a DataFrame for DataFrame input when
+            `preserve_dataframe=True`; otherwise DataFrames are converted
+            to NumPy arrays. Columns are selected by position.
 
         """
         self._check_fitted()
-        X_, _ = _preprocess(X)
+        X_, _ = _preprocess(X, self.preserve_dataframe)
+        if isinstance(X_, pd.DataFrame):
+            return X_.iloc[:, list(self.k_feature_idx_)]
         return X_[:, self.k_feature_idx_]
 
     def fit_transform(self, X, y, groups=None, **fit_params):
@@ -868,6 +884,8 @@ class SequentialFeatureSelector(_BaseXComposition, MetaEstimatorMixin):
         Returns
         -------
         Reduced feature subset of X, shape={n_samples, k_features}
+            Returns a DataFrame for DataFrame input when
+            `preserve_dataframe=True`, as in `transform`.
 
         """
         self.fit(X, y, groups=groups, **fit_params)

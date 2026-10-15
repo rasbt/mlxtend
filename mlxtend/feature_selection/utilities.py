@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from sklearn import __version__ as sklearn_version
 from sklearn.model_selection import cross_val_score
 
@@ -52,7 +53,7 @@ def _calc_score(
     selector : objcet with attributes est_` (estimator), `cv` (number of folds
     in cross-validation), and `pre_dispatch`()
 
-    X : numpy.ndarray
+    X : numpy.ndarray or pandas.DataFrame
         A 2D array consisting of feature data, where each column corresponds to
         one feature, and each row corresponds to one instance (or observation)
 
@@ -93,13 +94,14 @@ def _calc_score(
         feature_groups = [[i] for i in range(X.shape[1])]
 
     IDX = _merge_lists(feature_groups, indices)
+    X_subset = X.iloc[:, list(IDX)] if isinstance(X, pd.DataFrame) else X[:, IDX]
 
     param_name = "fit_params" if sklearn_version < "1.4" else "params"
 
     if selector.cv:
         scores = cross_val_score(
             selector.est_,
-            X[:, IDX],
+            X_subset,
             y,
             groups=groups,
             cv=selector.cv,
@@ -109,24 +111,28 @@ def _calc_score(
             **{param_name: fit_params},
         )
     else:
-        selector.est_.fit(X[:, IDX], y, **fit_params)
-        scores = np.array([selector.scorer(selector.est_, X[:, IDX], y)])
+        selector.est_.fit(X_subset, y, **fit_params)
+        scores = np.array([selector.scorer(selector.est_, X_subset, y)])
     return indices, scores
 
 
-def _preprocess(X):
+def _preprocess(X, preserve_dataframe=False):
     """
-    Check if X is a DataFrame or not, and returns numpy ndarray and name of features.
+    Copy X and extract feature names, optionally preserving DataFrame metadata.
 
     Parameters
     ----------
     X : DataFrame or numpy.ndarray
         A DataFrame or a 2D numpy.ndarray
 
+    preserve_dataframe : bool (default: False)
+        Keep DataFrame inputs as DataFrames instead of converting to NumPy.
+
     Returns
     -------
-    X_ : numpy.ndarray
-        A 2D array that is equivalanet to X.to_numpy()
+    X_ : numpy.ndarray or pandas.DataFrame
+        A copy of X, with DataFrames converted to NumPy unless
+        preserve_dataframe is True.
 
     features_names : List
         A list consisting of name of features. When `X` is a DataFrame, it contains
@@ -135,9 +141,9 @@ def _preprocess(X):
     if X.ndim != 2:
         raise ValueError(f"The input X must be 2D array. Got {X.ndim}")
 
-    if type(X).__name__ == "DataFrame":
+    if isinstance(X, pd.DataFrame):
         features_names = list(X.columns)
-        X_ = X.to_numpy(copy=True)
+        X_ = X.copy() if preserve_dataframe else X.to_numpy(copy=True)
     else:
         # it is numpy array
         features_names = None

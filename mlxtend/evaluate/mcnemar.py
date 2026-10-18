@@ -227,6 +227,6 @@ def mcnemar(ary, corrected=True, exact=False):
         #    p = 0
         #    for i in range(max(b, c), b+c+1):
         #        p += scipy.special.binom(b+c, i) * 0.5**i * (1-0.5)**((b+c)-i)
-        #    p = 2*p
+        #    p = min(2*p, 1.0)
 
     return chi2, p

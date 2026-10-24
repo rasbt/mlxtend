@@ -80,7 +80,7 @@ def bootstrap_point632_score(
     X : array-like
         The data to fit. Can be, for example a list, or an array at least 2d.
 
-    y : array-like, optional, default: None
+    y : array-like
         The target variable to try to predict in the case of
         supervised learning.
 

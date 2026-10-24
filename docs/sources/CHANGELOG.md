@@ -31,6 +31,8 @@ The CHANGELOG for the current development version is available at
 
 - Corrected documented default values that disagreed with the function signatures in `lift_score`, `paired_ttest_kfold_cv`, `find_filegroups`, `fpmax`, `plot_confusion_matrix`, `heatmap` and `checkerboard_plot` ([#1193](https://github.com/rasbt/mlxtend/pull/1193) via [VenishPaneliya](https://github.com/VenishPaneliya))
 
+- Stopped documenting the required `y` argument of `bootstrap_point632_score` as `optional, default: None`; passing `None` raises `TypeError` because `y` is indexed directly ([#1261](https://github.com/rasbt/mlxtend/pull/1261) via [VenishPaneliya](https://github.com/VenishPaneliya))
+
 
 ### Version 0.25.0  (6 Jun 2026)
 

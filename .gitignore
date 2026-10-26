@@ -46,3 +46,5 @@ doc/_build
 *ENV
 .DS_store
 .idea
+config.bat
+node_modules

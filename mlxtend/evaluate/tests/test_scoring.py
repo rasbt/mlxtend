@@ -5,6 +5,7 @@
 # License: BSD 3 clause
 
 import numpy as np
+import pytest
 
 from mlxtend.evaluate import scoring
 
@@ -131,3 +132,33 @@ def test_avg_perclass_error():
     y_pred = np.array([0, 1, 1, 0, 1, 1, 2, 2, 2, 2])
     res = scoring(y_target=y_targ, y_predicted=y_pred, metric="average per-class error")
     assert round(res, 3) == 0.333, res
+
+
+@pytest.mark.parametrize("labels", [[0, 1, 2], [0, 1], ["auto", "other", "third"]])
+def test_explicit_numpy_class_vocabulary_matches_list(labels):
+    if isinstance(labels[0], str):
+        y = np.array(["auto", "auto", "other", "other", "third", "third"])
+        pred = np.array(["auto", "other", "other", "other", "third", "auto"])
+    else:
+        y = np.array([0, 0, 1, 1, 2, 2])
+        pred = np.array([0, 1, 1, 1, 2, 0])
+    expected = scoring(y, pred, metric="average per-class error", unique_labels=labels)
+    actual = scoring(
+        y, pred, metric="average per-class error", unique_labels=np.array(labels)
+    )
+    assert actual == pytest.approx(expected)
+
+
+def test_auto_and_list_controls():
+    y = [0, 0, 1, 1, 2, 2]
+    pred = [0, 1, 1, 1, 2, 0]
+    for labels in ("auto", [0, 1, 2], (0, 1, 2)):
+        assert scoring(
+            y, pred, metric="average per-class error", unique_labels=labels
+        ) == pytest.approx(2 / 9)
+
+
+def test_binary_scoring_with_numpy_class_vocabulary():
+    assert scoring(
+        [0, 0, 1, 1], [0, 1, 1, 1], metric="precision", unique_labels=np.array([0, 1])
+    ) == pytest.approx(2 / 3)

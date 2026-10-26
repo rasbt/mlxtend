@@ -7,6 +7,7 @@
 #
 # License: BSD 3 clause
 
+import utils.session
 import glob
 import os
 import shutil

@@ -47,13 +47,13 @@ def permutation_test(
     func : custom function or str (default: 'x_mean != y_mean')
         function to compute the statistic for the permutation test.
         - If 'x_mean != y_mean', uses
-          `func=lambda x, y: np.abs(np.mean(x) - np.mean(y)))`
+          `func=lambda x, y: np.abs(np.mean(x) - np.mean(y))`
            for a two-sided test.
         - If 'x_mean > y_mean', uses
-          `func=lambda x, y: np.mean(x) - np.mean(y))`
+          `func=lambda x, y: np.mean(x) - np.mean(y)`
            for a one-sided test.
         - If 'x_mean < y_mean', uses
-          `func=lambda x, y: np.mean(y) - np.mean(x))`
+          `func=lambda x, y: np.mean(y) - np.mean(x)`
            for a one-sided test.
 
     method : 'approximate' or 'exact' (default: 'exact')
@@ -63,10 +63,6 @@ def permutation_test(
         Note that 'exact' is typically not feasible unless the dataset
         size is relatively small.
 
-    paired : bool
-        If True, a paired test is performed by only exchanging each
-        datapoint with its associate.
-
     num_rounds : int (default: 1000)
         The number of permutation samples if `method='approximate'`.
 
@@ -74,14 +70,25 @@ def permutation_test(
         The random seed for generating permutation samples if
         `method='approximate'`.
 
+    paired : bool (default: False)
+        If True, a paired test is performed: `x[i]` and `y[i]` are
+        treated as a pair (e.g., the same subject before and after a
+        treatment), and a permutation only swaps the two values within
+        each pair instead of reassigning all values to the two groups.
+        `x` and `y` must then have the same length. With
+        `method='exact'`, all 2**len(x) combinations of swaps are
+        evaluated; with `method='approximate'`, each pair is swapped
+        with probability 0.5 in each of the `num_rounds` rounds.
+
     Returns
     ----------
     p-value under the null hypothesis
-    Examples
 
+    Examples
     -----------
     For usage examples, please see
     https://rasbt.github.io/mlxtend/user_guide/evaluate/permutation_test/
+    (Example 3 shows a paired test).
 
     """
 

@@ -31,6 +31,8 @@ The CHANGELOG for the current development version is available at
 
 - Corrected documented default values that disagreed with the function signatures in `lift_score`, `paired_ttest_kfold_cv`, `find_filegroups`, `fpmax`, `plot_confusion_matrix`, `heatmap` and `checkerboard_plot` ([#1193](https://github.com/rasbt/mlxtend/pull/1193) via [VenishPaneliya](https://github.com/VenishPaneliya))
 
+- Documented how `permutation_test(..., paired=True)` permutes the samples and its default value, pointed the docstring to the paired example in the User Guide, and fixed the parentheses of the built-in `func` lambdas in the docstring ([#846](https://github.com/rasbt/mlxtend/issues/846) via [gopain185](https://github.com/gopain185))
+
 
 ### Version 0.25.0  (6 Jun 2026)
 

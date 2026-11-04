@@ -59,6 +59,9 @@ class GroupTimeSeriesSplit:
         self.test_size = test_size
         self.train_size = train_size
         self.n_splits = n_splits
+        # Preserve the configuration separately from data-dependent values.
+        self._train_size_input = train_size
+        self._n_splits_input = n_splits
         self.gap_size = gap_size
         self.shift_size = shift_size
         self.window_type = window_type
@@ -166,9 +169,9 @@ class GroupTimeSeriesSplit:
         return self.n_splits
 
     def _calculate_split_params(self):
-        train_size = self.train_size
+        train_size = self._train_size_input
         test_size = self.test_size
-        n_splits = self.n_splits
+        n_splits = self._n_splits_input
         gap = self.gap_size
         shift_size = self.shift_size
         n_groups = self._n_groups

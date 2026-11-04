@@ -17,8 +17,6 @@ The CHANGELOG for the current development version is available at
 
 ##### Changes
 
-- Fixed `RandomHoldoutSplit` applying stratification when `stratify=False`, so continuous targets and classes with a single sample can use an unstratified holdout.
-
 - Fixed `tokenizer_words_and_emoticons` joining the first emoticon to the final word when the input ends in a word ([#1206](https://github.com/rasbt/mlxtend/issues/1206) via [Afloat16](https://github.com/Afloat16)).
 
 - `mcnemar` now returns a p-value of 1.0 when the two models have no discordant pairs (b + c == 0). Previously, the default chi-squared test divided by zero and reported `p = 0.0` (or `nan` with `corrected=False`) in this case ([#1202](https://github.com/rasbt/mlxtend/issues/1202) via [MohammadHijjawi97](https://github.com/MohammadHijjawi97))
@@ -30,6 +28,8 @@ The CHANGELOG for the current development version is available at
 - Clarified why maximal itemsets from `fpmax` do not provide all subset supports required for confidence and lift in `association_rules`, and corrected the function name in the guide ([#1030](https://github.com/rasbt/mlxtend/issues/1030)).
 
 - Fixed `apriori(..., low_memory=True)` so itemsets whose support equals `min_support` are retained consistently with the default mode, including floating-point boundary cases ([#1191](https://github.com/rasbt/mlxtend/pull/1191) via [AlejandroCoronadoN](https://github.com/AlejandroCoronadoN))
+
+- Fixed `RandomHoldoutSplit` applying stratification when `stratify=False`, so continuous targets and classes with a single sample can use an unstratified holdout.
 
 - Corrected documented default values that disagreed with the function signatures in `lift_score`, `paired_ttest_kfold_cv`, `find_filegroups`, `fpmax`, `plot_confusion_matrix`, `heatmap` and `checkerboard_plot` ([#1193](https://github.com/rasbt/mlxtend/pull/1193) via [VenishPaneliya](https://github.com/VenishPaneliya))
 

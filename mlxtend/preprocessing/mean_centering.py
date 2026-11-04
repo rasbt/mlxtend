@@ -85,8 +85,10 @@ class MeanCenterer(object):
         return self.transform(X)
 
     def _get_array(self, X):
-        if isinstance(X, list):
-            X_fl = np.asarray(X, dtype="float")[:, None]
+        if isinstance(X, (list, tuple)):
+            X_fl = np.asarray(X, dtype="float")
         else:
             X_fl = X.astype("float")
+        if X_fl.ndim == 1:
+            X_fl = X_fl[:, None]
         return X_fl

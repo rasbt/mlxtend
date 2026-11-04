@@ -83,7 +83,7 @@ class RandomHoldoutSplit(object):
                 y,
                 test_size=self.valid_size,
                 shuffle=True,
-                stratify=y,
+                stratify=None,
                 random_state=self.random_seed,
             )
 

@@ -21,6 +21,8 @@ The CHANGELOG for the current development version is available at
 
 - `mcnemar` now returns a p-value of 1.0 when the two models have no discordant pairs (b + c == 0). Previously, the default chi-squared test divided by zero and reported `p = 0.0` (or `nan` with `corrected=False`) in this case ([#1202](https://github.com/rasbt/mlxtend/issues/1202) via [MohammadHijjawi97](https://github.com/MohammadHijjawi97))
 
+- Fixed `OneRClassifier(resolve_ties="chi-squared")` to compare every tied feature's p-value and choose the lowest one, keeping `p_value_` consistent with the chosen feature.
+
 - Documented the initial conversion of all User Guide notebooks before previewing the documentation with MkDocs ([#927](https://github.com/rasbt/mlxtend/issues/927)).
 
 - Corrected stored McNemar example outputs and the exact-test equation, and aligned scenario tables, code, and checkerboard labels with the model-1-row/model-2-column convention ([#987](https://github.com/rasbt/mlxtend/issues/987), [#988](https://github.com/rasbt/mlxtend/issues/988)).

@@ -77,7 +77,9 @@ class ColumnSelector(BaseEstimator):
         """
 
         # We use the loc or iloc accessor if the input is a pandas dataframe
-        if hasattr(X, "loc") or hasattr(X, "iloc"):
+        if self.cols is None:
+            t = X.values if hasattr(X, "iloc") else X
+        elif hasattr(X, "loc") or hasattr(X, "iloc"):
             if isinstance(self.cols, tuple):
                 self.cols = list(self.cols)
             types = {type(i) for i in self.cols}

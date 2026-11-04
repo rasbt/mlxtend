@@ -17,8 +17,8 @@ from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 X, y = iris_data()
 
 
-def test_randomholdoutsplit_default_iter():
-    h_iter = RandomHoldoutSplit(valid_size=0.3, random_seed=123)
+def test_randomholdoutsplit_stratified_iter():
+    h_iter = RandomHoldoutSplit(valid_size=0.3, random_seed=123, stratify=True)
 
     cnt = 0
     for train_ind, valid_ind in h_iter.split(X, y):

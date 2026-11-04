@@ -169,8 +169,8 @@ class OneRClassifier(BaseEstimator, ClassifierMixin):
 
                     # returns "stat, p, dof, expected"
                     _, p, _, _ = chi2_contingency(ary)
-                p_values.append(p)
-                best_p_idx = np.argmax(p_values)
+                    p_values.append(p)
+                best_p_idx = np.argmin(p_values)
                 best_idx = best_idx[best_p_idx]
                 self.p_value_ = p_values[best_p_idx]
 

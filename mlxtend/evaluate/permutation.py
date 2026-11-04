@@ -121,8 +121,9 @@ def permutation_test(
     if paired:
         if m != n:
             raise ValueError("x and y must have the same" " length if `paired=True`")
-        sample_x = np.empty(m)
-        sample_y = np.empty(n)
+        sample_dtype = np.result_type(np.asarray(x).dtype, np.asarray(y).dtype)
+        sample_x = np.empty(m, dtype=sample_dtype)
+        sample_y = np.empty(n, dtype=sample_dtype)
 
     else:
         combined = np.hstack((x, y))

@@ -125,6 +125,48 @@ def check_splits(X, y, groups, cv_args, expected_results):
     return cv
 
 
+@pytest.mark.parametrize("group_counts", [(5, 10, 5), (10, 5, 10), (5, 5, 5)])
+@pytest.mark.parametrize(
+    "cv_args",
+    [
+        {"test_size": 1, "train_size": 2},
+        {"test_size": 1, "n_splits": 2},
+        {"test_size": 1, "n_splits": 2, "window_type": "expanding"},
+        {"test_size": 1, "train_size": 2, "gap_size": 1, "shift_size": 2},
+        {"test_size": 1, "n_splits": 2, "gap_size": 1, "shift_size": 2},
+        {"test_size": 1, "train_size": 2, "n_splits": 2},
+    ],
+)
+def test_reuse_splitter(cv_args, group_counts):
+    cv = GroupTimeSeriesSplit(**cv_args)
+    for n_groups in group_counts:
+        groups = np.repeat(np.arange(n_groups), 2)
+        X = np.arange(len(groups))
+        expected = list(GroupTimeSeriesSplit(**cv_args).split(X, groups=groups))
+        actual = list(cv.split(X, groups=groups))
+        assert cv.get_n_splits() == len(expected)
+        assert len(actual) == len(expected)
+        for (train, test), (expected_train, expected_test) in zip(actual, expected):
+            np.testing.assert_array_equal(train, expected_train)
+            np.testing.assert_array_equal(test, expected_test)
+
+
+@pytest.mark.parametrize(
+    "cv_args", [{"test_size": 1, "train_size": 2}, {"test_size": 1, "n_splits": 2}]
+)
+def test_reuse_splitter_after_insufficient_groups(cv_args):
+    cv = GroupTimeSeriesSplit(**cv_args)
+    with pytest.raises(ValueError, match="Not enough data"):
+        list(cv.split(np.arange(2), groups=np.arange(2)))
+    groups = np.arange(10)
+    expected = list(GroupTimeSeriesSplit(**cv_args).split(groups, groups=groups))
+    actual = list(cv.split(groups, groups=groups))
+    assert len(actual) == len(expected)
+    for (train, test), (expected_train, expected_test) in zip(actual, expected):
+        np.testing.assert_array_equal(train, expected_train)
+        np.testing.assert_array_equal(test, expected_test)
+
+
 def test_get_n_splits(X, y, group_numbers):
     cv_args = {"test_size": 1, "train_size": 3}
     expected_results = [

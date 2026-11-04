@@ -44,7 +44,7 @@ class Kmeans(_BaseModel, _Cluster, _IterativeModel):
     -----------
     centroids_ : 2d-array, shape={k, n_features}
         Feature values of the k cluster centroids.
-    custers_ : dictionary
+    clusters_ : dictionary
         The cluster assignments stored as a Python dictionary;
         the dictionary keys denote the cluster indeces and the items are
         Python lists of the sample indices that were assigned to each

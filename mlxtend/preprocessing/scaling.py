@@ -88,7 +88,7 @@ def standardize(array, columns=None, ddof=0, return_params=False, params=None):
         If set to True, a dictionary is returned in addition to the
         standardized array. The parameter dictionary contains the
         column means ('avgs') and standard deviations ('stds') of
-        the individual columns.
+        the individual columns, in the order of the selected columns.
     params : dict (default: None)
         A dictionary with column means and standard deviations as
         returned by the `standardize` function if `return_params`
@@ -147,9 +147,8 @@ def standardize(array, columns=None, ddof=0, return_params=False, params=None):
     # set to 0.0"). The previous version also pre-zeroed the column before
     # the divide, but that turned (0 - mean) / 1 into -mean instead of 0
     # -- see issue #1058.
-    for c, b in zip(columns, are_constant):
-        if b:
-            parameters["stds"][c] = 1.0
+    if np.any(are_constant):
+        parameters["stds"][are_constant] = 1.0
 
     ary_newt[:, columns] = (ary_newt[:, columns] - parameters["avgs"]) / parameters[
         "stds"

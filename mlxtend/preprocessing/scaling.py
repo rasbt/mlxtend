@@ -137,7 +137,16 @@ def standardize(array, columns=None, ddof=0, return_params=False, params=None):
             "avgs": ary_newt[:, columns].mean(axis=0),
             "stds": ary_newt[:, columns].std(axis=0, ddof=ddof),
         }
-    are_constant = np.all(ary_newt[:, columns] == ary_newt[0, columns], axis=0)
+    # The first row must be selected positionally: `ary_newt` is a
+    # `.loc` indexer for DataFrames, so `ary_newt[0, columns]` looks up
+    # the *label* 0 and raises KeyError for DataFrames whose index does
+    # not contain 0 (e.g. after iloc slicing or with a custom index).
+    selected = ary_newt[:, columns]
+    if isinstance(selected, pd.DataFrame):
+        first_row = selected.iloc[0]
+    else:
+        first_row = selected[0]
+    are_constant = np.all(selected == first_row, axis=0)
 
     # For constant columns the standard deviation is 0 (or NaN with some ddof
     # values), so dividing by it would propagate NaNs / Infs. Forcing std to

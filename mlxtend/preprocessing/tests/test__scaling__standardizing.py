@@ -260,9 +260,7 @@ def test_standardize_constant_column_pandas_non_default_index():
     # The constant-column path (which needs the first row) must also work
     # with a non-zero-based index, and the constant column must still map
     # to 0.0 with a returned std of 1.0.
-    df = pd.DataFrame(
-        {"x": [0.0, 1.0, 3.0], "k": [5.0, 5.0, 5.0]}, index=[7, 8, 9]
-    )
+    df = pd.DataFrame({"x": [0.0, 1.0, 3.0], "k": [5.0, 5.0, 5.0]}, index=[7, 8, 9])
     df_out, params = standardize(df, ["x", "k"], return_params=True)
     np.testing.assert_allclose(df_out["k"].values, np.zeros(3))
     assert params["stds"]["k"] == 1.0

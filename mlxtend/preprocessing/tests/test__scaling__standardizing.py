@@ -199,6 +199,7 @@ def test_standardize_constant_column_returns_unit_std_param_issue_1058():
     np.testing.assert_allclose(out[:, 0], np.zeros(3))
     assert params["stds"][0] == 1.0
 
+
 def test_standardize_pandas_non_default_index():
     # Regression test: standardize() used to select the first row by label
     # (`ary_newt[0, columns]` on a `.loc` indexer), so it raised
@@ -223,6 +224,7 @@ def test_standardize_pandas_non_default_index():
     np.testing.assert_allclose(df_out1.values, ary_out1, rtol=1e-03)
     assert df_out1.index.tolist() == [10, 11, 12, 13, 14, 15]
 
+
 def test_standardize_pandas_sliced_frame():
     # Same regression, with the index produced by iloc slicing -- the most
     # common way a non-zero-based index shows up in practice.
@@ -239,6 +241,7 @@ def test_standardize_pandas_sliced_frame():
     np.testing.assert_allclose(df_out.values, ary_out, rtol=1e-03)
     assert df_out.index.tolist() == [2, 3, 4, 5]
 
+
 def test_standardize_pandas_string_index_subset():
     # String index and a single-column subset: the first row must be found
     # positionally, and only the requested column is returned.
@@ -251,6 +254,7 @@ def test_standardize_pandas_string_index_subset():
         df_out["s1"].values, [-1.22474, 0.0, 1.22474], rtol=1e-03
     )
     assert df_out.index.tolist() == ["r1", "r2", "r3"]
+
 
 def test_standardize_constant_column_pandas_non_default_index():
     # The constant-column path (which needs the first row) must also work

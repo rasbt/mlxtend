@@ -149,7 +149,7 @@ def standardize(array, columns=None, ddof=0, return_params=False, params=None):
     are_constant = np.all(selected == first_row, axis=0)
     
 
-    # For constant columns the standard deviation is 0 (or NaN with some ddof
+# For constant columns the standard deviation is 0 (or NaN with some ddof
     # values), so dividing by it would propagate NaNs / Infs. Forcing std to
     # 1.0 means the subtraction (col - mean) below collapses the column to
     # exactly 0.0, matching the contract documented in the "Notes" section

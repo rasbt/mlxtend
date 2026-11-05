@@ -198,3 +198,67 @@ def test_standardize_constant_column_returns_unit_std_param_issue_1058():
     out, params = standardize(ary, return_params=True)
     np.testing.assert_allclose(out[:, 0], np.zeros(3))
     assert params["stds"][0] == 1.0
+
+def test_standardize_pandas_non_default_index():
+    # Regression test: standardize() used to select the first row by label
+    # (`ary_newt[0, columns]` on a `.loc` indexer), so it raised
+    # `KeyError: 0` for any DataFrame whose index does not contain 0.
+    # The values must match the zero-based-index case exactly.
+    s1 = pd.Series([1, 2, 3, 4, 5, 6], index=[10, 11, 12, 13, 14, 15])
+    s2 = pd.Series([10, 9, 8, 7, 6, 5], index=[10, 11, 12, 13, 14, 15])
+    df = pd.DataFrame(s1, columns=["s1"])
+    df["s2"] = s2
+
+    df_out1 = standardize(df, ["s1", "s2"])
+    ary_out1 = np.array(
+        [
+            [-1.46385, 1.46385],
+            [-0.87831, 0.87831],
+            [-0.29277, 0.29277],
+            [0.29277, -0.29277],
+            [0.87831, -0.87831],
+            [1.46385, -1.46385],
+        ]
+    )
+    np.testing.assert_allclose(df_out1.values, ary_out1, rtol=1e-03)
+    assert df_out1.index.tolist() == [10, 11, 12, 13, 14, 15]
+
+def test_standardize_pandas_sliced_frame():
+    # Same regression, with the index produced by iloc slicing -- the most
+    # common way a non-zero-based index shows up in practice.
+    df = pd.DataFrame({"s1": [1, 2, 3, 4, 5, 6], "s2": [10, 9, 8, 7, 6, 5]})
+    df_out = standardize(df.iloc[2:], ["s1", "s2"])
+    ary_out = np.array(
+        [
+            [-1.34164, 1.34164],
+            [-0.44721, 0.44721],
+            [0.44721, -0.44721],
+            [1.34164, -1.34164],
+        ]
+    )
+    np.testing.assert_allclose(df_out.values, ary_out, rtol=1e-03)
+    assert df_out.index.tolist() == [2, 3, 4, 5]
+
+def test_standardize_pandas_string_index_subset():
+    # String index and a single-column subset: the first row must be found
+    # positionally, and only the requested column is returned.
+    df = pd.DataFrame(
+        {"s1": [1.0, 2.0, 3.0], "s2": [10.0, 9.0, 8.0]},
+        index=["r1", "r2", "r3"],
+    )
+    df_out = standardize(df, ["s1"])
+    np.testing.assert_allclose(
+        df_out["s1"].values, [-1.22474, 0.0, 1.22474], rtol=1e-03
+    )
+    assert df_out.index.tolist() == ["r1", "r2", "r3"]
+
+def test_standardize_constant_column_pandas_non_default_index():
+    # The constant-column path (which needs the first row) must also work
+    # with a non-zero-based index, and the constant column must still map
+    # to 0.0 with a returned std of 1.0.
+    df = pd.DataFrame(
+        {"x": [0.0, 1.0, 3.0], "k": [5.0, 5.0, 5.0]}, index=[7, 8, 9]
+    )
+    df_out, params = standardize(df, ["x", "k"], return_params=True)
+    np.testing.assert_allclose(df_out["k"].values, np.zeros(3))
+    assert params["stds"]["k"] == 1.0

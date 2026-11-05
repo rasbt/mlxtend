@@ -19,7 +19,8 @@ The CHANGELOG for the current development version is available at
 
 - Fixed `standardize` indexing constant-column statistics by the original column
   numbers when fitting selected or reordered NumPy columns, avoiding errors,
-  NaNs, and incorrect standard deviations.
+  NaNs, and incorrect standard deviations ([#1279](https://github.com/rasbt/mlxtend/pull/1279)
+  via [Swapnil Dwivedi](https://github.com/Swapnil-byte-798)).
 
 - Fixed `tokenizer_words_and_emoticons` joining the first emoticon to the final word when the input ends in a word ([#1206](https://github.com/rasbt/mlxtend/issues/1206) via [Afloat16](https://github.com/Afloat16)).
 

@@ -112,4 +112,3 @@ def find_filegroups(
             )
 
     return groups
-

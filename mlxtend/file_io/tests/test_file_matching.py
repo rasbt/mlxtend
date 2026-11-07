@@ -22,8 +22,9 @@ def test_recursive_hidden_paths(tmp_path):
     (tmp_path / ".data.txt").touch()
     (tmp_path / "data.txt").touch()
     assert find_files("data", tmp_path, recursive=True) == [str(tmp_path / "data.txt")]
-    assert len(find_files("data", tmp_path, recursive=True, ignore_invisible=False)) == 3
-
+    assert (
+        len(find_files("data", tmp_path, recursive=True, ignore_invisible=False)) == 3
+    )
 
 
 def test_unrestricted_secondary_extension(tmp_path):

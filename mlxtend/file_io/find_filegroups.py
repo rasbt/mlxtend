@@ -8,7 +8,7 @@
 
 import os
 
-from . import find_files
+from .find_files import find_files
 
 
 def find_filegroups(

@@ -22,7 +22,7 @@ def one_hot(y, num_labels="auto", dtype="float"):
 
     Returns
     ----------
-    ary : numpy.ndarray, shape = [n_classlabels]
+    ary : numpy.ndarray, shape = [n_classlabels, num_labels]
         One-hot encoded array, where each sample is represented as
         a row vector in the returned array.
 
@@ -34,23 +34,19 @@ def one_hot(y, num_labels="auto", dtype="float"):
     """
     if not (num_labels == "auto" or isinstance(num_labels, int)):
         raise AttributeError('num_labels must be an integer or "auto"')
-    if isinstance(y, list):
-        yt = np.asarray(y)
-    else:
-        yt = y
-    if not len(yt.shape) == 1:
+    yt = np.asarray(y)
+    if yt.ndim != 1:
         raise AttributeError("y array must be 1-dimensional")
+    if yt.size and (yt.dtype.kind not in "iu" or np.min(yt) < 0):
+        raise ValueError("class labels must be non-negative integers")
     if num_labels == "auto":
-        # uniq = np.unique(yt).shape[0]
-        uniq = np.max(yt + 1)
-    else:
-        uniq = num_labels
-    if uniq == 1:
-        ary = np.array([[0.0]], dtype=dtype)
+        num_labels = int(np.max(yt)) + 1
 
-    else:
-        ary = np.zeros((len(y), uniq))
-        for i, val in enumerate(y):
-            ary[i, val] = 1
-
-    return ary.astype(dtype)
+    ary = np.zeros((len(yt), num_labels), dtype=dtype)
+    # Keep the historical zero encoding for a single class.
+    if yt.size:
+        if np.max(yt) >= num_labels:
+            raise ValueError("class label exceeds the requested number of labels")
+        if num_labels != 1:
+            ary[np.arange(len(yt)), yt] = 1
+    return ary

@@ -31,17 +31,17 @@ def find_filegroups(
         Substring that all files have to contain to be considered.
     extensions : `list` (default: None)
         `None` or `list` of allowed file extensions for each path.
+        Use None for an individual path to match all extensions.
         If provided, the number of extensions must match the number of `paths`.
     validity_check : `bool` (default: True)
         If `True`, checks if all dictionary values
-        have the same number of file paths. Prints
-        a warning and returns an empty dictionary if the validity check failed.
+        have the same number of file paths. Raises ValueError for unequal groups.
     ignore_invisible : `bool` (default: True)
         If `True`, ignores invisible files
         (i.e., files starting with a period).
     rstrip : `str` (default: '')
-        If provided, strips characters from right side of the file
-        base names after splitting the extension.
+        If provided, removes this literal suffix once from each file
+        base name after splitting the extension.
         Useful to trim different filenames to a common stem.
         E.g,. "abc_d.txt" and "abc_d_.csv" would share
         the stem "abc_d" if rstrip is set to "_".
@@ -64,9 +64,11 @@ def find_filegroups(
     n = len(paths)
 
     # must have same number of paths and extensions
-    assert len(paths) >= 2
+    if n < 2:
+        raise ValueError("At least two paths are required")
     if extensions:
-        assert len(extensions) == n
+        if len(extensions) != n:
+            raise ValueError("Expected one extension per path")
     else:
         extensions = ["" for i in range(n)]
 
@@ -94,18 +96,11 @@ def find_filegroups(
         basename = basename.removesuffix(rstrip)
         groups[basename] = [f]
 
-    # groups = {os.path.splitext(os.path.basename(f))[0].rstrip(rstrip):[f]
-    #           for f in base}
-
-    for idx, r in enumerate(rest):
-        for f in r:
-            basename, ext = os.path.splitext(os.path.basename(f))
-            basename = basename.removesuffix(rstrip)
-            try:
-                if extensions[idx + 1] == "" or ext == extensions[idx + 1]:
-                    groups[basename].append(f)
-            except KeyError:
-                pass
+    for files in rest:
+        for f in files:
+            basename = os.path.splitext(os.path.basename(f))[0].removesuffix(rstrip)
+            if basename in groups:
+                groups[basename].append(f)
 
     if validity_check:
         lens = [len(groups[k]) for k in groups.keys()]
@@ -117,3 +112,4 @@ def find_filegroups(
             )
 
     return groups
+

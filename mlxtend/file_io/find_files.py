@@ -49,6 +49,8 @@ def find_files(
     """
 
     def check_file(f, path):
+        if ignore_invisible and f.startswith("."):
+            return False
         if not (ignore_substring and ignore_substring in f):
             if substring in f:
                 compl_path = os.path.join(path, f)
@@ -60,6 +62,10 @@ def find_files(
 
     if recursive:
         for par, nxt, fnames in os.walk(path):
+            if ignore_invisible:
+                nxt[:] = [
+                    directory for directory in nxt if not directory.startswith(".")
+                ]
             for f in fnames:
                 fn = check_file(f, par)
                 if fn:
@@ -67,8 +73,6 @@ def find_files(
 
     else:
         for f in os.listdir(path):
-            if ignore_invisible and f.startswith("."):
-                continue
             fn = check_file(f, path)
             if fn:
                 results.append(fn)

@@ -28,8 +28,11 @@ def cochrans_q(y_target, *y_model_predictions):
     Returns
     -----------
 
-    q, p : float or None, float
-        Returns the Q (chi-squared) value and the p-value
+    q, p : float, float
+        Returns the Q (chi-squared) value and the p-value.
+        If all models have identical predictions on all samples
+        (no discordant predictions across models), `q` is 0.0
+        and `p` is 1.0.
 
     Examples
     -----------
@@ -87,6 +90,8 @@ def cochrans_q(y_target, *y_model_predictions):
     denominator = (
         num_models * correctly_classified_all_models - correctly_classified_objects
     )
+    if denominator == 0:
+        return 0.0, 1.0
 
     q = degrees_of_freedom * numerator / denominator
     p_value = scipy.stats.chi2.sf(q, degrees_of_freedom)

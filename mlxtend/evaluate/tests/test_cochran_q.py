@@ -816,3 +816,37 @@ def test_compare_to_mcnemar_on_2_models():
 
     assert q == mcn_q
     assert p == mcn_p
+
+
+def test_no_discordant_predictions():
+    # When all models have identical predictions, there are no discordant
+    # classifications across models (denominator is 0). cochrans_q should
+    # report q = 0.0 and p = 1.0 without dividing by zero or raising RuntimeWarning.
+    y_true = np.array([0, 1, 0, 1, 1, 0])
+    m1 = np.array([0, 1, 0, 1, 1, 0])
+    m2 = np.array([0, 1, 0, 1, 1, 0])
+    m3 = np.array([0, 1, 0, 1, 1, 0])
+
+    with np.errstate(divide="raise", invalid="raise"):
+        # 2 models with identical predictions (matches mcnemar)
+        q, p = cochrans_q(y_true, m1, m2)
+        assert q == 0.0
+        assert p == 1.0
+        mcn_q, mcn_p = mcnemar(
+            mcnemar_table(y_true, m1, m2), corrected=False, exact=False
+        )
+        assert q == mcn_q
+        assert p == mcn_p
+
+        # 3 models with identical predictions
+        q3, p3 = cochrans_q(y_true, m1, m2, m3)
+        assert q3 == 0.0
+        assert p3 == 1.0
+
+        # models where all models agree on every sample, but make some errors
+        err_m1 = np.array([1, 0, 0, 1, 0, 0])
+        err_m2 = np.array([1, 0, 0, 1, 0, 0])
+        err_m3 = np.array([1, 0, 0, 1, 0, 0])
+        q_err, p_err = cochrans_q(y_true, err_m1, err_m2, err_m3)
+        assert q_err == 0.0
+        assert p_err == 1.0

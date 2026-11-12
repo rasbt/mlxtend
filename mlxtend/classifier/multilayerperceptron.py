@@ -33,7 +33,8 @@ class MultiLayerPerceptron(
     n_classes : int (default: None)
         A positive integer to declare the number of class labels
         if not all class labels are present in a partial training set.
-        Gets the number of class labels automatically if None.
+        Gets the number of class labels automatically if None, on each fit
+        that initializes model parameters.
     l1 : float (default: 0.0)
         L1 regularization strength
     l2 : float (default: 0.0)
@@ -119,13 +120,14 @@ class MultiLayerPerceptron(
 
         if init_params:
             self._decr_eta = self.eta
-            if self.n_classes is None:
-                self.n_classes = np.max(y) + 1
+            n_classes = self.n_classes
+            if n_classes is None:
+                n_classes = np.max(y) + 1
 
             self._n_features = X.shape[1]
             self._weight_maps, self._bias_maps = self._layermapping(
                 n_features=self._n_features,
-                n_classes=self.n_classes,
+                n_classes=n_classes,
                 hidden_layers=self.hidden_layers,
             )
 
@@ -143,7 +145,7 @@ class MultiLayerPerceptron(
                 prev_grad_b_out = np.zeros(shape=self.b_["out"].shape)
                 prev_grad_w_out = np.zeros(shape=self.w_["out"].shape)
 
-        y_enc = self._one_hot(y=y, n_labels=self.n_classes, dtype=np.float64)
+        y_enc = self._one_hot(y=y, n_labels=self.w_["out"].shape[1], dtype=np.float64)
 
         self.init_time_ = time()
 

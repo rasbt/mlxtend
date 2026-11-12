@@ -41,7 +41,8 @@ class SoftmaxRegression(_BaseModel, _IterativeModel, _Classifier, _MultiClass):
     n_classes : int (default: None)
         A positive integer to declare the number of class labels
         if not all class labels are present in a partial training set.
-        Gets the number of class labels automatically if None.
+        Gets the number of class labels automatically if None, on each fit
+        that initializes model parameters.
 
     random_seed : int (default: None)
         Set random state for shuffling and initializing the weights.
@@ -130,18 +131,19 @@ class SoftmaxRegression(_BaseModel, _IterativeModel, _Classifier, _MultiClass):
     def _fit(self, X, y, init_params=True):
         self._check_target_array(y)
         if init_params:
-            if self.n_classes is None:
-                self.n_classes = np.max(y) + 1
+            n_classes = self.n_classes
+            if n_classes is None:
+                n_classes = np.max(y) + 1
             self._n_features = X.shape[1]
 
             self.b_, self.w_ = self._init_params(
-                weights_shape=(self._n_features, self.n_classes),
-                bias_shape=(self.n_classes,),
+                weights_shape=(self._n_features, n_classes),
+                bias_shape=(n_classes,),
                 random_seed=self.random_seed,
             )
             self.cost_ = []
 
-        y_enc = self._one_hot(y=y, n_labels=self.n_classes, dtype=np.float64)
+        y_enc = self._one_hot(y=y, n_labels=self.w_.shape[1], dtype=np.float64)
 
         self.init_time_ = time()
         rgen = np.random.RandomState(self.random_seed)

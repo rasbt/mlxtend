@@ -29,7 +29,8 @@ class Adaline(_BaseModel, _IterativeModel, _Classifier):
         if `minibatches > 1` to prevent cycles in stochastic gradient descent.
     minibatches : int (default: None)
         The number of minibatches for gradient-based optimization.
-        If None: Normal Equations (closed-form solution)
+        If None: Analytical least-squares solution. Rank-deficient inputs use
+        the minimum-norm solution, including the intercept.
         If 1: Gradient Descent learning
         If len(y): Stochastic Gradient Descent (SGD) online learning
         If 1 < minibatches < len(y): SGD Minibatch learning
@@ -116,9 +117,7 @@ class Adaline(_BaseModel, _IterativeModel, _Classifier):
     def _normal_equation(self, X, y):
         """Solve linear regression analytically."""
         Xb = np.hstack((np.ones((X.shape[0], 1)), X))
-        w = np.zeros(X.shape[1])
-        z = np.linalg.inv(np.dot(Xb.T, Xb))
-        params = np.dot(z, np.dot(Xb.T, y))
+        params = np.linalg.lstsq(Xb, y, rcond=None)[0]
         b, w = np.array([params[0]]), params[1:].reshape(X.shape[1], 1)
         return b, w
 

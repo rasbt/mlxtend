@@ -6,6 +6,7 @@
 #
 # License: BSD 3 clause
 import numpy as np
+from sklearn.utils.validation import _check_method_params
 
 
 def _draw_bootstrap_sample(rng, X, y):
@@ -13,7 +14,7 @@ def _draw_bootstrap_sample(rng, X, y):
     bootstrap_indices = rng.choice(
         sample_indices, size=sample_indices.shape[0], replace=True
     )
-    return X[bootstrap_indices], y[bootstrap_indices]
+    return X[bootstrap_indices], y[bootstrap_indices], bootstrap_indices
 
 
 def bias_variance_decomp(
@@ -63,7 +64,10 @@ def bias_variance_decomp(
 
     fit_params : additional parameters
         Additional parameters to be passed to the .fit() function of the
-        estimator when it is fit to the bootstrap samples.
+        estimator when it is fit to the bootstrap samples. Array-like values
+        with one entry per training sample, such as ``sample_weight``, are
+        resampled along with X_train and y_train. Other values are passed
+        through unchanged.
 
     Returns
     ----------
@@ -110,7 +114,8 @@ def bias_variance_decomp(
     all_pred = np.zeros((num_rounds, y_test.shape[0]), dtype=dtype)
 
     for i in range(num_rounds):
-        X_boot, y_boot = _draw_bootstrap_sample(rng, X_train, y_train)
+        X_boot, y_boot, indices = _draw_bootstrap_sample(rng, X_train, y_train)
+        fit_params_boot = _check_method_params(X_train, fit_params, indices=indices)
 
         # Keras support
         if estimator.__class__.__name__ in ["Sequential", "Functional"]:
@@ -131,10 +136,10 @@ def bias_variance_decomp(
                         ]
                     )
 
-            estimator.fit(X_boot, y_boot, **fit_params)
+            estimator.fit(X_boot, y_boot, **fit_params_boot)
             pred = estimator.predict(X_test).reshape(1, -1)
         else:
-            pred = estimator.fit(X_boot, y_boot, **fit_params).predict(X_test)
+            pred = estimator.fit(X_boot, y_boot, **fit_params_boot).predict(X_test)
         all_pred[i] = pred
 
     if loss == "0-1_loss":

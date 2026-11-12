@@ -10,6 +10,7 @@ from itertools import product
 
 import numpy as np
 from sklearn.base import clone
+from sklearn.utils.validation import _check_method_params
 
 from .bootstrap_outofbag import BootstrapOutOfBag
 
@@ -123,7 +124,9 @@ def bootstrap_point632_score(
 
     fit_params : additional parameters
         Additional parameters to be passed to the .fit() function of the
-        estimator when it is fit to the bootstrap samples.
+        estimator when it is fit to the bootstrap samples. Array-like values
+        with one entry per input sample, such as ``sample_weight``, are
+        resampled along with X and y. Other values are passed through unchanged.
 
 
     Returns
@@ -212,7 +215,8 @@ def bootstrap_point632_score(
     cnt = 0
 
     for train, test in oob.split(X):
-        cloned_est.fit(X[train], y[train], **fit_params)
+        fit_params_boot = _check_method_params(X, fit_params, indices=train)
+        cloned_est.fit(X[train], y[train], **fit_params_boot)
 
         # get the prediction probability
         # for binary class uses the last column

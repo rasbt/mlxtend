@@ -130,7 +130,7 @@ def test_decay_function():
     mlp.fit(X, y)
     assert mlp._decr_eta < mlp.eta
     acc = mlp.score(X, y)
-    assert round(acc, 2) == 0.98, acc
+    assert round(acc, 2) == 1.0, acc
 
 
 def test_momentum_1():

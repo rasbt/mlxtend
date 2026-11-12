@@ -240,7 +240,8 @@ def bootstrap_point632_score(
             len_uniq = np.unique(y)
 
             if len(len_uniq) == 2:
-                predicted_train_val = predicted_train_val[:, 1]
+                if method in (".632", ".632+"):
+                    predicted_train_val = predicted_train_val[:, 1]
                 predicted_test_val = predicted_test_val[:, 1]
 
         test_acc = scoring_func(y[test], predicted_test_val)

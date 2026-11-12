@@ -50,6 +50,7 @@ columns_ordered = [
     "jaccard",
     "certainty",
     "kulczynski",
+    "mutual_information",
 ]
 
 
@@ -65,15 +66,15 @@ def test_default():
 
     expect = pd.DataFrame(
         [
-            [(8,), (5,), 0.6, 1.0, 0.6, 1.0, 1.0, 1.0, 0.0, np.inf, 0, 0.6, 0.0, 0.8],
-            [(6,), (5,), 0.6, 1.0, 0.6, 1.0, 1.0, 1.0, 0.0, np.inf, 0, 0.6, 0.0, 0.8],
-            [(8, 3), (5,), 0.6, 1.0, 0.6, 1.0, 1.0, 1.0, 0.0, np.inf, 0, 0.6, 0.0, 0.8],
-            [(8, 5), (3,), 0.6, 0.8, 0.6, 1.0, 1.25, 1.0, 0.12, np.inf, 0.5, 0.75, 1.0, 0.875],
-            [(8,), (3, 5), 0.6, 0.8, 0.6, 1.0, 1.25, 1.0, 0.12, np.inf, 0.5, 0.75, 1.0, 0.875],
-            [(3,), (5,), 0.8, 1.0, 0.8, 1.0, 1.0, 1.0, 0.0, np.inf, 0, 0.8, 0.0, 0.9],
-            [(5,), (3,), 1.0, 0.8, 0.8, 0.8, 1.0, 1.0, 0.0, 1.0, 0.0, 0.8, 0.0, 0.9],
-            [(10,), (5,), 0.6, 1.0, 0.6, 1.0, 1.0, 1.0, 0.0, np.inf, 0, 0.6, 0.0, 0.8],
-            [(8,), (3,), 0.6, 0.8, 0.6, 1.0, 1.25, 1.0, 0.12, np.inf, 0.5, 0.75, 1.0, 0.875],
+            [(8,), (5,), 0.6, 1.0, 0.6, 1.0, 1.0, 1.0, 0.0, np.inf, 0, 0.6, 0.0, 0.8, 0.0],
+            [(6,), (5,), 0.6, 1.0, 0.6, 1.0, 1.0, 1.0, 0.0, np.inf, 0, 0.6, 0.0, 0.8, 0.0],
+            [(8, 3), (5,), 0.6, 1.0, 0.6, 1.0, 1.0, 1.0, 0.0, np.inf, 0, 0.6, 0.0, 0.8, 0.0],
+            [(8, 5), (3,), 0.6, 0.8, 0.6, 1.0, 1.25, 1.0, 0.12, np.inf, 0.5, 0.75, 1.0, 0.875, 0.322],
+            [(8,), (3, 5), 0.6, 0.8, 0.6, 1.0, 1.25, 1.0, 0.12, np.inf, 0.5, 0.75, 1.0, 0.875, 0.322],
+            [(3,), (5,), 0.8, 1.0, 0.8, 1.0, 1.0, 1.0, 0.0, np.inf, 0, 0.8, 0.0, 0.9, 0.0],
+            [(5,), (3,), 1.0, 0.8, 0.8, 0.8, 1.0, 1.0, 0.0, 1.0, 0.0, 0.8, 0.0, 0.9, 0.0],
+            [(10,), (5,), 0.6, 1.0, 0.6, 1.0, 1.0, 1.0, 0.0, np.inf, 0, 0.6, 0.0, 0.8, 0.0],
+            [(8,), (3,), 0.6, 0.8, 0.6, 1.0, 1.25, 1.0, 0.12, np.inf, 0.5, 0.75, 1.0, 0.875, 0.322],
         ],
 
         columns=columns_ordered,
@@ -120,6 +121,7 @@ def test_nullability():
                 0.667,
                 0,
                 0.833,
+                0.0,
             ],
             [
                 (10, 5),
@@ -136,6 +138,7 @@ def test_nullability():
                 0.667,
                 0.0,
                 0.833,
+                0.0,
             ],
             [
                 (10,),
@@ -152,6 +155,7 @@ def test_nullability():
                 0.615,
                 0.0,
                 0.833,
+                0.0,
             ],
             [
                 (10,),
@@ -168,6 +172,7 @@ def test_nullability():
                 0.615,
                 0.0,
                 0.833,
+                0.0,
             ],
             [
                 (10,),
@@ -184,6 +189,7 @@ def test_nullability():
                 0.615,
                 0,
                 0.833,
+                0.0,
             ],
             [
                 (3, 5),
@@ -200,6 +206,7 @@ def test_nullability():
                 0.615,
                 -0.333,
                 0.833,
+                -0.17,
             ],
             [
                 (3,),
@@ -216,6 +223,7 @@ def test_nullability():
                 0.667,
                 0.0,
                 0.833,
+                0.0,
             ],
             [
                 (3,),
@@ -232,8 +240,25 @@ def test_nullability():
                 0.615,
                 -0.333,
                 0.833,
+                -0.17,
             ],
-            [(3,), (5,), 1.0, 1.0, 1.0, 1.0, 1.0, 0.8, 0.0, np.inf, 0, 1.0, 0, 1.0],
+            [
+                (3,),
+                (5,),
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.8,
+                0.0,
+                np.inf,
+                0,
+                1.0,
+                0,
+                1.0,
+                0.0,
+            ],
             [
                 (5,),
                 (10, 3),
@@ -249,6 +274,7 @@ def test_nullability():
                 0.667,
                 0,
                 0.833,
+                0.0,
             ],
             [
                 (5,),
@@ -265,8 +291,25 @@ def test_nullability():
                 0.615,
                 -0.333,
                 0.833,
+                -0.17,
             ],
-            [(5,), (3,), 1.0, 1.0, 1.0, 1.0, 1.0, 0.8, 0.0, np.inf, 0, 1.0, 0.0, 1.0],
+            [
+                (5,),
+                (3,),
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.8,
+                0.0,
+                np.inf,
+                0,
+                1.0,
+                0.0,
+                1.0,
+                0.0,
+            ],
         ],
         columns=columns_ordered,
     )
@@ -335,6 +378,7 @@ def test_empty_result():
             "jaccard",
             "certainty",
             "kulczynski",
+            "mutual_information",
         ]
     )
     res_df = association_rules(df_freq_items, len(df), min_threshold=2)
@@ -436,6 +480,27 @@ def test_kulczynski():
         df_freq_items_with_colnames, len(df), metric="kulczynski", min_threshold=0.6
     )
     assert res_df.values.shape[0] == 16
+
+
+def test_mutual_information():
+    res_df = association_rules(
+        df_freq_items, len(df), metric="mutual_information", min_threshold=0.1
+    )
+    assert res_df.values.shape[0] == 6
+
+    res_df = association_rules(
+        df_freq_items_with_colnames,
+        len(df),
+        metric="mutual_information",
+        min_threshold=0.1,
+    )
+    assert res_df.values.shape[0] == 6
+
+    # mutual information is the log2 of the lift
+    res_df = association_rules(df_freq_items, len(df))
+    assert np.allclose(
+        res_df["mutual_information"], np.log2(res_df["lift"].astype(float))
+    )
 
 
 def test_frozenset_selection():

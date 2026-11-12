@@ -44,8 +44,9 @@ class MultiLayerPerceptron(
         learning speed
         w(t) := w(t) - (grad(t) + momentum * grad(t-1))
     decrease_const : float (default: 0.0)
-        Decrease constant. Shrinks the learning rate
-        after each epoch via eta / (1 + epoch*decrease_const)
+        Decrease constant. Uses ``eta / (1 + epoch * decrease_const)``
+        for every minibatch in an epoch, where epoch starts at zero.
+        Continued fitting with ``init_params=False`` retains the epoch count.
     minibatches : int (default: 1)
         Divide the training data into *k* minibatches
         for accelerated stochastic gradient descent learning.
@@ -149,6 +150,7 @@ class MultiLayerPerceptron(
 
         rgen = np.random.RandomState(self.random_seed)
         for i in range(self.epochs):
+            self._decr_eta = self.eta / (1.0 + self.decrease_const * len(self.cost_))
             for idx in self._yield_minibatches_idx(
                 rgen=rgen, n_batches=self.minibatches, data_ary=y, shuffle=True
             ):
@@ -177,9 +179,6 @@ class MultiLayerPerceptron(
                 grad_W_out = np.dot(act_1.T, sigma_out)
 
                 grad_B_out = np.sum(sigma_out, axis=0)
-
-                # LEARNING RATE ADJUSTEMENTS
-                self._decr_eta /= 1.0 + self.decrease_const * i
 
                 # REGULARIZATION AND WEIGHT UPDATES
 

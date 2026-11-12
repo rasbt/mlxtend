@@ -36,8 +36,11 @@ def create_counterfactual(
     x_reference : array-like, shape=[m_features]
         The data instance (training example) to be explained.
 
-    y_desired : int
+    y_desired : int or str
         The desired class label for `x_reference`.
+        In probability mode, resolves the label through ``model.classes_``
+        when available; otherwise, uses it as a probability-column index.
+        In prediction mode, the desired label must be numeric.
 
     model : estimator
         A (scikit-learn) estimator implementing `.predict()` and/or
@@ -77,6 +80,12 @@ def create_counterfactual(
                 "`predict_proba`. Set `y_desired_proba` "
                 " to `None` to use `predict`instead."
             )
+        probability_column = y_desired
+        if hasattr(model, "classes_"):
+            matches = np.flatnonzero(np.asarray(model.classes_) == y_desired)
+            if len(matches) != 1:
+                raise ValueError("y_desired must be a class in model.classes_.")
+            probability_column = matches[0]
     else:
         use_proba = False
 
@@ -101,7 +110,7 @@ def create_counterfactual(
     def loss(x_counterfact, lammbda):
         if use_proba:
             y_predict = model.predict_proba(x_counterfact.reshape(1, -1)).flatten()[
-                y_desired
+                probability_column
             ]
         else:
             y_predict = model.predict(x_counterfact.reshape(1, -1))

@@ -35,7 +35,8 @@ class MultiLayerPerceptron(
         if not all class labels are present in a partial training set.
         Gets the number of class labels automatically if None.
     l1 : float (default: 0.0)
-        L1 regularization strength
+        L1 regularization strength. The weight penalty is
+        ``0.5 * l1 * sum(abs(weights))``; biases are not penalized.
     l2 : float (default: 0.0)
         L2 regularization strength
     momentum : float (default: 0.0)
@@ -191,6 +192,10 @@ class MultiLayerPerceptron(
                     self._decr_eta * grad_W_out
                     + self._decr_eta * self.l2 * self.w_["out"]
                 )
+
+                if self.l1:
+                    dW_1 += 0.5 * self._decr_eta * self.l1 * np.sign(self.w_["1"])
+                    dW_out += 0.5 * self._decr_eta * self.l1 * np.sign(self.w_["out"])
 
                 dB_1 = self._decr_eta * grad_B_1
                 dB_out = self._decr_eta * grad_B_out

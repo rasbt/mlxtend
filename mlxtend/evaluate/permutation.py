@@ -77,6 +77,15 @@ def permutation_test(
     Returns
     ----------
     p-value under the null hypothesis
+
+    Notes
+    -----
+    Floating-point statistics are compared using a relative tolerance of
+    100 times the machine epsilon of the observed statistic's dtype, with
+    no absolute tolerance. This accounts for roundoff without treating
+    all sufficiently small statistics as ties. Integer statistics are
+    compared exactly.
+
     Examples
 
     -----------
@@ -129,6 +138,17 @@ def permutation_test(
 
     at_least_as_extreme = 0.0
     reference_stat = func(x, y)
+    reference_dtype = np.asarray(reference_stat).dtype
+    rtol = (
+        100 * np.finfo(reference_dtype).eps
+        if np.issubdtype(reference_dtype, np.floating)
+        else 0
+    )
+
+    def is_extreme(diff):
+        return diff >= reference_stat or (
+            rtol > 0 and np.isclose(diff, reference_stat, rtol=rtol, atol=0)
+        )
 
     # Note that whether we compute the combinations or permutations
     # does not affect the results, since the number of permutations
@@ -154,7 +174,7 @@ def permutation_test(
                         sample_x[i], sample_y[i] = x[i], y[i]
 
                 diff = func(sample_x, sample_y)
-                if diff > reference_stat or np.isclose(diff, reference_stat):
+                if is_extreme(diff):
                     at_least_as_extreme += 1.0
 
             num_rounds = 2**n
@@ -164,7 +184,7 @@ def permutation_test(
                 indices_y = [i for i in range(m + n) if i not in indices_x]
                 diff = func(combined[list(indices_x)], combined[indices_y])
 
-                if diff > reference_stat or np.isclose(diff, reference_stat):
+                if is_extreme(diff):
                     at_least_as_extreme += 1.0
             num_rounds = factorial(m + n) / (factorial(m) * factorial(n))
 
@@ -180,7 +200,7 @@ def permutation_test(
                         sample_x[i], sample_y[i] = x[i], y[i]
 
                 diff = func(sample_x, sample_y)
-                if diff > reference_stat or np.isclose(diff, reference_stat):
+                if is_extreme(diff):
                     at_least_as_extreme += 1.0
 
             # To cover the actual experiment results
@@ -192,7 +212,7 @@ def permutation_test(
                 rng.shuffle(combined)
                 diff = func(combined[:m], combined[m:])
 
-                if diff > reference_stat or np.isclose(diff, reference_stat):
+                if is_extreme(diff):
                     at_least_as_extreme += 1.0
 
             # To cover the actual experiment results

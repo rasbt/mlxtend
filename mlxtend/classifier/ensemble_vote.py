@@ -59,6 +59,9 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     fit_base_estimators : bool (default: True)
         Refits classifiers in `clfs` if True; uses references to the `clfs`,
         otherwise (assumes that the classifiers were already fit).
+        For prefit classifiers, probability columns are aligned using each
+        classifier's `classes_`; classes absent from a classifier receive
+        zero probability.
         Note: fit_base_estimators=False will enforce use_clones to be False,
         and is incompatible to most scikit-learn wrappers!
         For instance, if any form of cross-validation is performed
@@ -311,4 +314,15 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
 
     def _predict_probas(self, X):
         """Collect results from clf.predict_proba calls."""
-        return np.asarray([clf.predict_proba(X) for clf in self.clfs_])
+        probabilities = []
+        for clf in self.clfs_:
+            proba = clf.predict_proba(X)
+            if not self.fit_base_estimators:
+                columns = self.le_.transform(clf.classes_)
+                aligned = np.zeros(
+                    (proba.shape[0], len(self.classes_)), dtype=proba.dtype
+                )
+                aligned[:, columns] = proba
+                proba = aligned
+            probabilities.append(proba)
+        return np.asarray(probabilities)

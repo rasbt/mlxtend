@@ -43,6 +43,8 @@ class MultiLayerPerceptron(
         gradient of the previous epoch t-1 to improve
         learning speed
         w(t) := w(t) - (grad(t) + momentum * grad(t-1))
+        Gradient history is retained when continuing training with
+        ``init_params=False`` and reset when parameters are reinitialized.
     decrease_const : float (default: 0.0)
         Decrease constant. Shrinks the learning rate
         after each epoch via eta / (1 + epoch*decrease_const)
@@ -138,10 +140,10 @@ class MultiLayerPerceptron(
             self.cost_ = []
 
             if self.momentum != 0.0:
-                prev_grad_b_1 = np.zeros(shape=self.b_["1"].shape)
-                prev_grad_w_1 = np.zeros(shape=self.w_["1"].shape)
-                prev_grad_b_out = np.zeros(shape=self.b_["out"].shape)
-                prev_grad_w_out = np.zeros(shape=self.w_["out"].shape)
+                self._prev_grad_b_1 = np.zeros(shape=self.b_["1"].shape)
+                self._prev_grad_w_1 = np.zeros(shape=self.w_["1"].shape)
+                self._prev_grad_b_out = np.zeros(shape=self.b_["out"].shape)
+                self._prev_grad_w_out = np.zeros(shape=self.w_["out"].shape)
 
         y_enc = self._one_hot(y=y, n_labels=self.n_classes, dtype=np.float64)
 
@@ -201,14 +203,14 @@ class MultiLayerPerceptron(
                 self.b_["out"] -= dB_out
 
                 if self.momentum != 0.0:
-                    self.w_["1"] -= self.momentum * prev_grad_w_1
-                    self.b_["1"] -= self.momentum * prev_grad_b_1
-                    self.w_["out"] -= self.momentum * prev_grad_w_out
-                    self.b_["out"] -= self.momentum * prev_grad_b_out
-                    prev_grad_b_1 = grad_B_1
-                    prev_grad_w_1 = grad_W_1
-                    prev_grad_b_out = grad_B_out
-                    prev_grad_w_out = grad_W_out
+                    self.w_["1"] -= self.momentum * self._prev_grad_w_1
+                    self.b_["1"] -= self.momentum * self._prev_grad_b_1
+                    self.w_["out"] -= self.momentum * self._prev_grad_w_out
+                    self.b_["out"] -= self.momentum * self._prev_grad_b_out
+                    self._prev_grad_b_1 = grad_B_1
+                    self._prev_grad_w_1 = grad_W_1
+                    self._prev_grad_b_out = grad_B_out
+                    self._prev_grad_w_out = grad_W_out
 
             net_1, act_1, net_out, act_out = self._feedforward(X)
             cross_ent = self._cross_entropy(output=act_out, y_target=y_enc)

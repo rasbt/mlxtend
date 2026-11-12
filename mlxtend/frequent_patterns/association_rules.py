@@ -29,6 +29,7 @@ _metrics = [
     "jaccard",
     "certainty",
     "kulczynski",
+    "mutual_information",
 ]
 
 
@@ -77,6 +78,8 @@ def association_rules(
       - zhangs_metric(A->C) =
         leverage(A->C) / max(support(A->C)*(1-support(A)), support(A)*(support(C)-support(A->C)))
         range: [-1,1]\n
+      - mutual_information(A->C) =
+        log2(lift(A->C)), range: [-inf, inf]\n
 
     min_threshold : float (default: 0.8)
       Minimal threshold for the evaluation metric,
@@ -141,6 +144,16 @@ def association_rules(
         conf_CA = sAC * (num_itemsets - disAC) / (sC * (num_itemsets - disC) - dis_int_)
         kulczynski = (conf_AC + conf_CA) / 2
         return kulczynski
+
+    def mutual_information_helper(sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_):
+        # Pointwise mutual information between antecedent and consequent,
+        # I(A; C) = log2( p(A, C) / (p(A) * p(C)) ),
+        # i.e., the log2 of the lift.
+        lift = metric_dict["lift"](sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_)
+
+        with np.errstate(divide="ignore", invalid="ignore"):
+            mi = np.where(lift > 0, np.log2(lift), -np.inf)
+        return mi
 
     def conviction_helper(conf, sC):
         conviction = np.empty(conf.shape, dtype=float)
@@ -221,6 +234,9 @@ def association_rules(
             sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
         ),
         "kulczynski": lambda sAC, sA, sC, _, __, ____, _____, ______: kulczynski_helper(
+            sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
+        ),
+        "mutual_information": lambda sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_: mutual_information_helper(
             sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
         ),
     }

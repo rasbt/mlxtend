@@ -60,6 +60,9 @@ def find_files(
 
     if recursive:
         for par, nxt, fnames in os.walk(path):
+            if ignore_invisible:
+                nxt[:] = [d for d in nxt if not d.startswith(".")]
+                fnames = [f for f in fnames if not f.startswith(".")]
             for f in fnames:
                 fn = check_file(f, par)
                 if fn:

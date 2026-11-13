@@ -9,7 +9,7 @@
 import os
 import re
 
-from . import find_files
+from .find_files import find_files
 
 
 def find_filegroups(
@@ -33,6 +33,7 @@ def find_filegroups(
     extensions : `list` (default: None)
         `None` or `list` of allowed file extensions for each path.
         If provided, the number of extensions must match the number of `paths`.
+        Use `None` (or `""`) for a path to accept all extensions.
     validity_check : `bool` (default: True)
         If `True`, checks if all dictionary values
         have the same number of file paths. Prints
@@ -92,7 +93,7 @@ def find_filegroups(
     groups = {}
     for f in base:
         basename = os.path.splitext(os.path.basename(f))[0]
-        basename = re.sub(r"\%s$" % rstrip, "", basename)
+        basename = re.sub(re.escape(rstrip) + r"$", "", basename)
         groups[basename] = [f]
 
     # groups = {os.path.splitext(os.path.basename(f))[0].rstrip(rstrip):[f]
@@ -101,9 +102,9 @@ def find_filegroups(
     for idx, r in enumerate(rest):
         for f in r:
             basename, ext = os.path.splitext(os.path.basename(f))
-            basename = re.sub(r"\%s$" % rstrip, "", basename)
+            basename = re.sub(re.escape(rstrip) + r"$", "", basename)
             try:
-                if extensions[idx + 1] == "" or ext == extensions[idx + 1]:
+                if extensions[idx + 1] in ("", None) or ext == extensions[idx + 1]:
                     groups[basename].append(f)
             except KeyError:
                 pass

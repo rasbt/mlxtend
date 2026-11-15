@@ -135,7 +135,7 @@ class LinearDiscriminantAnalysis(_BaseModel):
         overall_mean = np.mean(X, axis=0)
         S_B = np.zeros((X.shape[1], X.shape[1]))
         for i, mean_vec in enumerate(mean_vectors):
-            n = X[y == i + 1, :].shape[0]
+            n = X[y == i, :].shape[0]
             mean_vec = mean_vec.reshape(X.shape[1], 1)
             overall_mean = overall_mean.reshape(X.shape[1], 1)
             S_B += n * (mean_vec - overall_mean).dot((mean_vec - overall_mean).T)

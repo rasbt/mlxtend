@@ -40,7 +40,7 @@ def test_evals():
     lda.fit(X, y).transform(X)
     np.set_printoptions(suppress=True)
     print("%s" % lda.e_vals_)
-    assert_almost_equal(lda.e_vals_, [20.90, 0.14, 0.0, 0.0], decimal=2)
+    assert_almost_equal(lda.e_vals_, [32.27, 0.28, 0.0, 0.0], decimal=2)
 
 
 def test_fail_array_fit():

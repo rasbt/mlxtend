@@ -37,9 +37,7 @@ def test_lda_uses_matching_class_counts_in_scatter(counts):
 
     assert_allclose(model.e_vals_, values, rtol=1e-12, atol=1e-12)
     assert_allclose(model.e_vecs_, vectors * signs, rtol=1e-12, atol=1e-12)
-    assert_allclose(
-        model.transform(X), X @ (vectors * signs), rtol=1e-12, atol=1e-12
-    )
+    assert_allclose(model.transform(X), X @ (vectors * signs), rtol=1e-12, atol=1e-12)
 
 
 @pytest.mark.parametrize("label_order", list(permutations(range(3))))

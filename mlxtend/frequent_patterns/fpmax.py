@@ -6,6 +6,9 @@
 import collections
 import math
 
+import numpy as np
+import pandas as pd
+
 from ..frequent_patterns import fpcommon as fpc
 
 
@@ -47,6 +50,10 @@ def fpmax(
 
     null_values : bool (default: False)
       In case there are null values as NaNs in the original input data
+      Support uses only transactions observing every item in an itemset.
+      Maximality is checked against itemsets meeting that observed-row
+      support, before applying `max_len`. Missing values can require
+      exploring more candidates because support is not downward closed.
 
     use_colnames : bool (default: False)
       If true, uses the DataFrames' column names in the returned DataFrame
@@ -90,6 +97,35 @@ def fpmax(
     if use_colnames:
         colname_map = {idx: item for idx, item in enumerate(df.columns)}
 
+    if null_values and pd.isna(df).to_numpy().any():
+        present = df.to_numpy() == 1
+        observed = ~pd.isna(df).to_numpy()
+        # Every itemset observes all globally complete rows. Their count
+        # supplies a conservative lower bound on the required occurrences;
+        # at least one fully positive row is always required. Round down
+        # because the final support comparison decides boundary cases.
+        minsup = max(1, math.floor(min_support * observed.all(axis=1).sum()))
+        tree, _, rank = fpc.setup_fptree(pd.DataFrame(present), minsup / len(df))
+
+        def observed_support(items):
+            denominator = np.count_nonzero(observed[:, items].all(axis=1))
+            if denominator:
+                support = np.count_nonzero(present[:, items].all(axis=1)) / denominator
+                if support >= min_support:
+                    return support
+            return None
+
+        generator = _fpmax_observed_step(
+            tree, minsup, MFITree(rank), observed_support, colname_map, max_len, verbose
+        )
+        supports, itemsets = [], []
+        for support, items in generator:
+            supports.append(support)
+            if colname_map is not None:
+                items = [colname_map[item] for item in items]
+            itemsets.append(frozenset(items))
+        return pd.DataFrame({"support": supports, "itemsets": itemsets})
+
     tree, disabled, rank = fpc.setup_fptree(df, min_support, null_values=null_values)
 
     minsup = math.ceil(min_support * len(df))  # min support as count
@@ -104,6 +140,51 @@ def fpmax(
         colname_map,
         null_values=null_values,
     )
+
+
+def _fpmax_observed_step(tree, minsup, mfit, support_func, colnames, max_len, verbose):
+    """Prune only with maximal sets whose observed support is confirmed."""
+    items = sorted(tree.nodes, key=tree.rank.get)
+    largest_set = sorted(tree.cond_items + items, key=mfit.rank.get)
+    if not largest_set or mfit.contains(largest_set):
+        return
+
+    support = support_func(largest_set)
+    if support is not None:
+        largest_set.reverse()
+        mfit.cache = largest_set
+        mfit.insert_itemset(largest_set)
+        if max_len is None or len(largest_set) <= max_len:
+            yield support, largest_set
+        if verbose:
+            tree.print_status(1, colnames)
+        return
+
+    # A rejected largest set cannot suppress its smaller candidates, even
+    # for a single-path tree. Search all lengths before filtering outputs.
+    for item in items:
+        if mfit.contains(largest_set):
+            break
+        largest_set.remove(item)
+        cond_tree = tree.conditional_tree(item, minsup)
+        yield from _fpmax_observed_step(
+            cond_tree, minsup, mfit, support_func, colnames, max_len, verbose
+        )
+
+    # The prefix can be frequent even when all its extensions were rejected.
+    prefix = sorted(tree.cond_items, key=mfit.rank.get)
+    count = 0
+    if prefix and not mfit.contains(prefix):
+        support = support_func(prefix)
+        if support is not None:
+            prefix.reverse()
+            mfit.cache = prefix
+            mfit.insert_itemset(prefix)
+            if max_len is None or len(prefix) <= max_len:
+                yield support, prefix
+            count = 1
+    if verbose:
+        tree.print_status(count, colnames)
 
 
 def fpmax_step(tree, minsup, mfit, colnames, max_len, verbose):

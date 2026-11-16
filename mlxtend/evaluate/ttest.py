@@ -7,6 +7,7 @@
 
 import numpy as np
 from scipy import stats
+from sklearn.base import clone
 from sklearn.metrics import get_scorer
 from sklearn.model_selection import KFold, train_test_split
 from sklearn.utils._tags import get_tags
@@ -37,8 +38,12 @@ def paired_ttest_resampled(
     Parameters
     ----------
     estimator1 : scikit-learn classifier or regressor
+        An unfitted clone is fitted for each training split. The supplied
+        estimator is not modified.
 
     estimator2 : scikit-learn classifier or regressor
+        An unfitted clone is fitted for each training split. The supplied
+        estimator is not modified.
 
     X : {array-like, sparse matrix}, shape = [n_samples, n_features]
         Training vectors, where n_samples is the number of samples and
@@ -118,11 +123,11 @@ def paired_ttest_resampled(
             X, y, test_size=test_size, random_state=randint
         )
 
-        estimator1.fit(X_train, y_train)
-        estimator2.fit(X_train, y_train)
+        fitted1 = clone(estimator1).fit(X_train, y_train)
+        fitted2 = clone(estimator2).fit(X_train, y_train)
 
-        est1_score = scorer(estimator1, X_test, y_test)
-        est2_score = scorer(estimator2, X_test, y_test)
+        est1_score = scorer(fitted1, X_test, y_test)
+        est2_score = scorer(fitted2, X_test, y_test)
         score_diff.append(est1_score - est2_score)
 
     avg_diff = np.mean(score_diff)
@@ -147,8 +152,12 @@ def paired_ttest_kfold_cv(
     Parameters
     ----------
     estimator1 : scikit-learn classifier or regressor
+        An unfitted clone is fitted for each training split. The supplied
+        estimator is not modified.
 
     estimator2 : scikit-learn classifier or regressor
+        An unfitted clone is fitted for each training split. The supplied
+        estimator is not modified.
 
     X : {array-like, sparse matrix}, shape = [n_samples, n_features]
         Training vectors, where n_samples is the number of samples and
@@ -225,11 +234,11 @@ def paired_ttest_kfold_cv(
         X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y[train_index], y[test_index]
 
-        estimator1.fit(X_train, y_train)
-        estimator2.fit(X_train, y_train)
+        fitted1 = clone(estimator1).fit(X_train, y_train)
+        fitted2 = clone(estimator2).fit(X_train, y_train)
 
-        est1_score = scorer(estimator1, X_test, y_test)
-        est2_score = scorer(estimator2, X_test, y_test)
+        est1_score = scorer(fitted1, X_test, y_test)
+        est2_score = scorer(fitted2, X_test, y_test)
         score_diff.append(est1_score - est2_score)
 
     avg_diff = np.mean(score_diff)
@@ -253,8 +262,12 @@ def paired_ttest_5x2cv(estimator1, estimator2, X, y, scoring=None, random_seed=N
     Parameters
     ----------
     estimator1 : scikit-learn classifier or regressor
+        An unfitted clone is fitted for each training split. The supplied
+        estimator is not modified.
 
     estimator2 : scikit-learn classifier or regressor
+        An unfitted clone is fitted for each training split. The supplied
+        estimator is not modified.
 
     X : {array-like, sparse matrix}, shape = [n_samples, n_features]
         Training vectors, where n_samples is the number of samples and
@@ -315,10 +328,10 @@ def paired_ttest_5x2cv(estimator1, estimator2, X, y, scoring=None, random_seed=N
     first_diff = None
 
     def score_diff(X_1, X_2, y_1, y_2):
-        estimator1.fit(X_1, y_1)
-        estimator2.fit(X_1, y_1)
-        est1_score = scorer(estimator1, X_2, y_2)
-        est2_score = scorer(estimator2, X_2, y_2)
+        fitted1 = clone(estimator1).fit(X_1, y_1)
+        fitted2 = clone(estimator2).fit(X_1, y_1)
+        est1_score = scorer(fitted1, X_2, y_2)
+        est2_score = scorer(fitted2, X_2, y_2)
         score_diff = est1_score - est2_score
         return score_diff
 

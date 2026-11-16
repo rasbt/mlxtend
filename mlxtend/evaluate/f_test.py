@@ -9,6 +9,7 @@ import itertools
 
 import numpy as np
 import scipy.stats
+from sklearn.base import clone
 from sklearn.metrics import get_scorer
 from sklearn.model_selection import train_test_split
 from sklearn.utils._tags import get_tags
@@ -131,8 +132,12 @@ def combined_ftest_5x2cv(estimator1, estimator2, X, y, scoring=None, random_seed
     Parameters
     ----------
     estimator1 : scikit-learn classifier or regressor
+        An unfitted clone is fitted for each training split. The supplied
+        estimator is not modified.
 
     estimator2 : scikit-learn classifier or regressor
+        An unfitted clone is fitted for each training split. The supplied
+        estimator is not modified.
 
     X : {array-like, sparse matrix}, shape = [n_samples, n_features]
         Training vectors, where n_samples is the number of samples and
@@ -193,10 +198,10 @@ def combined_ftest_5x2cv(estimator1, estimator2, X, y, scoring=None, random_seed
     differences = []
 
     def score_diff(X_1, X_2, y_1, y_2):
-        estimator1.fit(X_1, y_1)
-        estimator2.fit(X_1, y_1)
-        est1_score = scorer(estimator1, X_2, y_2)
-        est2_score = scorer(estimator2, X_2, y_2)
+        fitted1 = clone(estimator1).fit(X_1, y_1)
+        fitted2 = clone(estimator2).fit(X_1, y_1)
+        est1_score = scorer(fitted1, X_2, y_2)
+        est2_score = scorer(fitted2, X_2, y_2)
         score_diff = est1_score - est2_score
         return score_diff
 

@@ -28,6 +28,13 @@ def loadlocal_mnist(images_path, labels_path):
     labels : [n_samples] numpy array
         Target class labels
 
+    Raises
+    --------
+    ValueError
+        If an IDX header is incomplete or invalid, image and label counts
+        differ, or a payload does not match its declared size. Image
+        dimensions are read from the header rather than assumed to be 28x28.
+
     Examples
     -----------
     For usage examples, please see
@@ -35,10 +42,35 @@ def loadlocal_mnist(images_path, labels_path):
 
     """
     with open(labels_path, "rb") as lbpath:
-        magic, n = struct.unpack(">II", lbpath.read(8))
+        header = lbpath.read(8)
+        if len(header) != 8:
+            raise ValueError("Incomplete MNIST label header: expected 8 bytes.")
+        magic, n = struct.unpack(">II", header)
+        if magic != 2049:
+            raise ValueError("Invalid MNIST label magic number: expected 2049.")
         labels = np.fromfile(lbpath, dtype=np.uint8)
+        if labels.size != n:
+            raise ValueError(
+                f"MNIST label payload has {labels.size} records; header declares {n}."
+            )
     with open(images_path, "rb") as imgpath:
-        magic, num, rows, cols = struct.unpack(">IIII", imgpath.read(16))
-        images = np.fromfile(imgpath, dtype=np.uint8).reshape(len(labels), 784)
+        header = imgpath.read(16)
+        if len(header) != 16:
+            raise ValueError("Incomplete MNIST image header: expected 16 bytes.")
+        magic, num, rows, cols = struct.unpack(">IIII", header)
+        if magic != 2051:
+            raise ValueError("Invalid MNIST image magic number: expected 2051.")
+        if num != n:
+            raise ValueError(f"MNIST image count {num} does not match label count {n}.")
+        if rows == 0 or cols == 0:
+            raise ValueError("MNIST image dimensions must be positive.")
+        images = np.fromfile(imgpath, dtype=np.uint8)
+        expected_size = num * rows * cols
+        if images.size != expected_size:
+            raise ValueError(
+                f"MNIST image payload has {images.size} bytes; "
+                f"header declares {expected_size}."
+            )
+        images = images.reshape(num, rows * cols)
 
     return images, labels

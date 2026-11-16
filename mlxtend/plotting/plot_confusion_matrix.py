@@ -68,10 +68,12 @@ def plot_confusion_matrix(
         If not `None`, ticks will be set to these values.
 
     figure : None or Matplotlib figure  (default: None)
-        If None will create a new figure.
+        If None, uses the supplied axis's figure, or creates a new figure
+        when axis is also None. Must own axis when both are supplied.
 
     axis : None or Matplotlib figure axis (default: None)
-        If None will create a new axis.
+        If None will create a new axis. Otherwise all labels, ticks, and
+        the optional colorbar are applied to this axis and its figure.
 
     fontcolor_threshold : Float (default: 0.5)
         Sets a threshold for choosing black and white font colors
@@ -107,7 +109,9 @@ def plot_confusion_matrix(
         fig = figure
         ax = fig.add_subplot(1, 1, 1)
     else:
-        fig, ax = figure, axis
+        if figure is not None and figure is not axis.figure:
+            raise ValueError("The supplied axis must belong to the supplied figure.")
+        fig, ax = axis.figure, axis
 
     ax.grid(False)
     if cmap is None:
@@ -122,7 +126,7 @@ def plot_confusion_matrix(
         matshow = ax.matshow(conf_mat, cmap=cmap, norm=norm_colormap)
 
     if colorbar:
-        fig.colorbar(matshow)
+        fig.colorbar(matshow, ax=ax)
 
     for i in range(conf_mat.shape[0]):
         for j in range(conf_mat.shape[1]):
@@ -164,10 +168,10 @@ def plot_confusion_matrix(
                 )
     if class_names is not None:
         tick_marks = np.arange(len(class_names))
-        plt.xticks(
+        ax.set_xticks(
             tick_marks, class_names, rotation=45, ha="right", rotation_mode="anchor"
         )
-        plt.yticks(tick_marks, class_names)
+        ax.set_yticks(tick_marks, class_names)
 
     if hide_spines:
         ax.spines["right"].set_visible(False)
@@ -180,6 +184,6 @@ def plot_confusion_matrix(
         ax.axes.get_yaxis().set_ticks([])
         ax.axes.get_xaxis().set_ticks([])
 
-    plt.xlabel("predicted label")
-    plt.ylabel("true label")
+    ax.set_xlabel("predicted label")
+    ax.set_ylabel("true label")
     return fig, ax

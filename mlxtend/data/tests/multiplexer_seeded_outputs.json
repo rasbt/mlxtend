@@ -1,0 +1,266 @@
+[
+  {
+    "parameters": {
+      "address_bits": 1,
+      "sample_size": 17,
+      "positive_class_ratio": 0.35,
+      "shuffle": false,
+      "random_seed": 0
+    },
+    "sha256": "9243a6d965a148e9770c4b868457512a44d2b5130bdab54df124b7e3a7044273",
+    "positives": 6
+  },
+  {
+    "parameters": {
+      "address_bits": 1,
+      "sample_size": 17,
+      "positive_class_ratio": 0.35,
+      "shuffle": false,
+      "random_seed": 7
+    },
+    "sha256": "4d67279115085e0d65067b19019d0b5d697bf7978bee8599ce2a97d485a8e91e",
+    "positives": 6
+  },
+  {
+    "parameters": {
+      "address_bits": 1,
+      "sample_size": 17,
+      "positive_class_ratio": 0.35,
+      "shuffle": true,
+      "random_seed": 0
+    },
+    "sha256": "af080bfad48a61f6455fa195c6d4a260d0b8a2ca78567fc58d55aef80dd2443b",
+    "positives": 6
+  },
+  {
+    "parameters": {
+      "address_bits": 1,
+      "sample_size": 17,
+      "positive_class_ratio": 0.35,
+      "shuffle": true,
+      "random_seed": 7
+    },
+    "sha256": "23c92442e9596547936f2f87b3c680465ffdb7e62fe55570be14133593b77653",
+    "positives": 6
+  },
+  {
+    "parameters": {
+      "address_bits": 2,
+      "sample_size": 17,
+      "positive_class_ratio": 0.35,
+      "shuffle": false,
+      "random_seed": 0
+    },
+    "sha256": "484c98c11e6fdf2a4180d2f21a4ba52b30c01d75055629d6fb49969f9d705ce0",
+    "positives": 6
+  },
+  {
+    "parameters": {
+      "address_bits": 2,
+      "sample_size": 17,
+      "positive_class_ratio": 0.35,
+      "shuffle": false,
+      "random_seed": 7
+    },
+    "sha256": "234a02c023221622f52228c029dc61ed2e018e2f3d4cb54cc5dfb1c179c810b8",
+    "positives": 6
+  },
+  {
+    "parameters": {
+      "address_bits": 2,
+      "sample_size": 17,
+      "positive_class_ratio": 0.35,
+      "shuffle": true,
+      "random_seed": 0
+    },
+    "sha256": "b269cd0f0bc2cb1a60a8d45d7d21e9e6fb45918e0f5c93e86515b10461d1359a",
+    "positives": 6
+  },
+  {
+    "parameters": {
+      "address_bits": 2,
+      "sample_size": 17,
+      "positive_class_ratio": 0.35,
+      "shuffle": true,
+      "random_seed": 7
+    },
+    "sha256": "f234d1567217d2a9777bae83f2e5b7ab3d09cc46a2407c16aeb1ad337f9d693b",
+    "positives": 6
+  },
+  {
+    "parameters": {
+      "address_bits": 5,
+      "sample_size": 17,
+      "positive_class_ratio": 0.35,
+      "shuffle": false,
+      "random_seed": 0
+    },
+    "sha256": "8d6fefc2145bb2228ca68753f34a8aec2f8574d5bfa72b4931c2b9d13a340451",
+    "positives": 6
+  },
+  {
+    "parameters": {
+      "address_bits": 5,
+      "sample_size": 17,
+      "positive_class_ratio": 0.35,
+      "shuffle": false,
+      "random_seed": 7
+    },
+    "sha256": "1b5031fff04c5f6f1aa152cc552a24c1d5708ee53b33c51a4d7015bec65331b9",
+    "positives": 6
+  },
+  {
+    "parameters": {
+      "address_bits": 5,
+      "sample_size": 17,
+      "positive_class_ratio": 0.35,
+      "shuffle": true,
+      "random_seed": 0
+    },
+    "sha256": "4891e469f28c3bf2398c3dc1263dd140ad9f7f14e3943406caeb4bd3a598fd4e",
+    "positives": 6
+  },
+  {
+    "parameters": {
+      "address_bits": 5,
+      "sample_size": 17,
+      "positive_class_ratio": 0.35,
+      "shuffle": true,
+      "random_seed": 7
+    },
+    "sha256": "2e0c1886c44a06f237ea17c513c52e3317587ed0ed0f80c787fc026727941bb8",
+    "positives": 6
+  },
+  {
+    "parameters": {
+      "address_bits": 8,
+      "sample_size": 17,
+      "positive_class_ratio": 0.35,
+      "shuffle": false,
+      "random_seed": 0
+    },
+    "sha256": "0ecc72ee1053c3693dff6cd5df09378f48669e71f7d9e39bd3c3ea61b9d4cd7e",
+    "positives": 6
+  },
+  {
+    "parameters": {
+      "address_bits": 8,
+      "sample_size": 17,
+      "positive_class_ratio": 0.35,
+      "shuffle": false,
+      "random_seed": 7
+    },
+    "sha256": "d00a088a61320c9329038c37c1557234955dbb06b66f3f434f4113093cd5b17a",
+    "positives": 6
+  },
+  {
+    "parameters": {
+      "address_bits": 8,
+      "sample_size": 17,
+      "positive_class_ratio": 0.35,
+      "shuffle": true,
+      "random_seed": 0
+    },
+    "sha256": "36063db062d2d28425adacc79c59d1742afbc72b15ca4ce697ca680f5d1c8515",
+    "positives": 6
+  },
+  {
+    "parameters": {
+      "address_bits": 8,
+      "sample_size": 17,
+      "positive_class_ratio": 0.35,
+      "shuffle": true,
+      "random_seed": 7
+    },
+    "sha256": "ffc385624c37e579482e88d1b9376bca9e609f4f85cbf86cacfa9424c23bba21",
+    "positives": 6
+  },
+  {
+    "parameters": {
+      "address_bits": 3,
+      "sample_size": 6,
+      "positive_class_ratio": 0,
+      "shuffle": false,
+      "random_seed": 11
+    },
+    "sha256": "a0509b4018d0f60d65c28582965b45f0a22d0c57fbffc95ecf478fbfeea2306e",
+    "positives": 0
+  },
+  {
+    "parameters": {
+      "address_bits": 3,
+      "sample_size": 6,
+      "positive_class_ratio": 0,
+      "shuffle": true,
+      "random_seed": 11
+    },
+    "sha256": "271f4c3d25bc3af5817d81502eac13b8b631f7d3f62890561a36523823d97b4c",
+    "positives": 0
+  },
+  {
+    "parameters": {
+      "address_bits": 3,
+      "sample_size": 6,
+      "positive_class_ratio": 0.25,
+      "shuffle": false,
+      "random_seed": 11
+    },
+    "sha256": "c60783b55390b8c321c658d2e8676e47310c6385fc00232fdec1f542c225dfe0",
+    "positives": 2
+  },
+  {
+    "parameters": {
+      "address_bits": 3,
+      "sample_size": 6,
+      "positive_class_ratio": 0.25,
+      "shuffle": true,
+      "random_seed": 11
+    },
+    "sha256": "5573138fa23d4734b3ff3f9e69fb50734fa5f435b86517aafc448bd404ff062a",
+    "positives": 2
+  },
+  {
+    "parameters": {
+      "address_bits": 3,
+      "sample_size": 6,
+      "positive_class_ratio": 0.75,
+      "shuffle": false,
+      "random_seed": 11
+    },
+    "sha256": "1f60f441fa413bbace0cf8322099e9279978af1178749e9a4765f1a89e5ec2cb",
+    "positives": 4
+  },
+  {
+    "parameters": {
+      "address_bits": 3,
+      "sample_size": 6,
+      "positive_class_ratio": 0.75,
+      "shuffle": true,
+      "random_seed": 11
+    },
+    "sha256": "50b3a01d1fbd9e4737ca68cbd2470908fd4faed560fffba96d5d3c64ac97288c",
+    "positives": 4
+  },
+  {
+    "parameters": {
+      "address_bits": 3,
+      "sample_size": 6,
+      "positive_class_ratio": 1,
+      "shuffle": false,
+      "random_seed": 11
+    },
+    "sha256": "b6c29275c02106ef4602798b17abf810dc1fb1f56332fdb9db21022446a6e304",
+    "positives": 6
+  },
+  {
+    "parameters": {
+      "address_bits": 3,
+      "sample_size": 6,
+      "positive_class_ratio": 1,
+      "shuffle": true,
+      "random_seed": 11
+    },
+    "sha256": "e494ca87f74de40532f764f18b803d4524bbf6d80d1d9927f3a6c6eb0207da23",
+    "positives": 6
+  }
+]

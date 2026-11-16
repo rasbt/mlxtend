@@ -90,7 +90,7 @@ def make_multiplexer_dataset(
     rng = np.random.RandomState(random_seed)
 
     def gen_randsample():
-        all_bits = [rng.randint(0, 2) for i in range(total_bits)]
+        all_bits = rng.randint(0, 2, size=total_bits)
         address_str = "".join(str(c) for c in all_bits[:address_bits])
         register_pos = int(address_str, base=2)
         class_label = all_bits[address_bits:][register_pos]

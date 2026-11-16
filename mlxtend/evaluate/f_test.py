@@ -13,6 +13,8 @@ from sklearn.metrics import get_scorer
 from sklearn.model_selection import train_test_split
 from sklearn.utils._tags import get_tags
 
+from .ttest import _scale_score_differences
+
 
 def _infer_estimator_type(estimator):
     try:
@@ -152,6 +154,8 @@ def combined_ftest_5x2cv(estimator1, estimator2, X, y, scoring=None, random_seed
         sklearn's signature ``scorer(estimator, X, y)``; see
         https://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
         for more information.
+        Finite score differences are rescaled before computing the statistic,
+        preserving invariance to a common positive change of score units.
 
     random_seed : int or None (default: None)
         Random seed for creating the test/train splits.
@@ -189,7 +193,6 @@ def combined_ftest_5x2cv(estimator1, estimator2, X, y, scoring=None, random_seed
     else:
         scorer = scoring
 
-    variances = []
     differences = []
 
     def score_diff(X_1, X_2, y_1, y_2):
@@ -206,13 +209,18 @@ def combined_ftest_5x2cv(estimator1, estimator2, X, y, scoring=None, random_seed
 
         score_diff_1 = score_diff(X_1, X_2, y_1, y_2)
         score_diff_2 = score_diff(X_2, X_1, y_2, y_1)
+        differences.append([score_diff_1, score_diff_2])
+
+    variances = []
+    squared_differences = []
+    for score_diff_1, score_diff_2 in _scale_score_differences(differences):
         score_mean = (score_diff_1 + score_diff_2) / 2.0
         score_var = (score_diff_1 - score_mean) ** 2 + (score_diff_2 - score_mean) ** 2
 
-        differences.extend([score_diff_1**2, score_diff_2**2])
+        squared_differences.extend([score_diff_1**2, score_diff_2**2])
         variances.append(score_var)
 
-    numerator = sum(differences)
+    numerator = sum(squared_differences)
     denominator = 2 * (sum(variances))
     f_stat = numerator / denominator
 

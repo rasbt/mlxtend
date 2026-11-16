@@ -187,7 +187,8 @@ def hmine_driver(
 
     Args:
         item (list): list of items
-        itemsets (np.array): matrix of bools or binary
+        itemsets (np.array): matrix of bools or binary, already projected onto
+            all but the final item in the current prefix
         minsup (int): minimum absolute support
         itemsets_shape (int): number of transactions
         single_items (np.array): array of single items
@@ -201,7 +202,10 @@ def hmine_driver(
     # Early stopping if the length of the item is greater than max_len
     if max_len and len(item) >= max_len:
         return frequent_itemsets
-    projected_itemsets = create_projected_itemsets(item, itemsets)
+    # The parent has already projected onto item[:-1], so only the newly
+    # appended item needs to be checked at this depth.
+    indices = np.nonzero(itemsets[:, item[-1]])[0]
+    projected_itemsets = itemsets[indices, :]
     initial_supports = np.array(np.sum(projected_itemsets, axis=0)).reshape(-1)
     suffixes = np.nonzero(initial_supports >= minsup)[0]
     suffixes = suffixes[np.nonzero(suffixes > item[-1])[0]]

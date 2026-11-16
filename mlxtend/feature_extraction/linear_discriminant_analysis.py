@@ -7,6 +7,7 @@
 # License: BSD 3 clause
 
 import numpy as np
+from scipy.linalg import eigh
 
 from .._base import _BaseModel
 
@@ -27,8 +28,9 @@ class LinearDiscriminantAnalysis(_BaseModel):
         Projection matrix
     e_vals_ : array-like, shape=[n_features]
         Eigenvalues in sorted order.
-    e_vecs_ : array-like, shape=[n_features]
-       Eigenvectors in sorted order.
+    e_vecs_ : array-like, shape=[n_features, n_features]
+        Real eigenvectors in sorted order, normalized to unit Euclidean length.
+        Computed from the symmetric generalized scatter eigenproblem.
 
     Examples
     -----------
@@ -142,11 +144,10 @@ class LinearDiscriminantAnalysis(_BaseModel):
         return S_B
 
     def _eigendecom(self, within_scatter, between_scatter):
-        e_vals, e_vecs = np.linalg.eig(
-            np.linalg.inv(within_scatter).dot(between_scatter)
-        )
+        e_vals, e_vecs = eigh(between_scatter, within_scatter)
         sort_idx = np.argsort(e_vals)[::-1]
         e_vals, e_vecs = e_vals[sort_idx], e_vecs[:, sort_idx]
+        e_vecs /= np.linalg.norm(e_vecs, axis=0)
         return e_vals, e_vecs
 
     def _projection_matrix(self, eig_vals, eig_vecs, n_discriminants):

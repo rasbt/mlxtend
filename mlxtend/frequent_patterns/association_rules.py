@@ -58,7 +58,8 @@ def association_rules(
       Number of transactions in original input data (df_orig)
 
     null_values : bool (default: False)
-      In case there are null values as NaNs in the original input data
+      Whether missing values are present in the original input data.
+      Supports numeric NaNs and pandas nullable values such as pd.NA.
 
     metric : string (default: 'confidence')
       Metric to evaluate if a rule is of interest.
@@ -125,6 +126,8 @@ def association_rules(
 
     # check for valid input
     fpc.valid_input_check(df_orig, null_values)
+    if null_values:
+        df_orig = fpc._normalize_missing_values(df_orig)
 
     if not df.shape[0]:
         raise ValueError(

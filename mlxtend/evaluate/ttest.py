@@ -19,6 +19,16 @@ def _infer_estimator_type(estimator):
         return getattr(estimator, "_estimator_type", None)
 
 
+def _scale_score_differences(differences):
+    """Rescale finite differences exactly before forming squared statistics."""
+    differences = np.asarray(differences, dtype=float)
+    largest = np.max(np.abs(differences), initial=0.0)
+    if largest > 0 and np.isfinite(largest):
+        _, exponent = np.frexp(largest)
+        return np.ldexp(differences, -exponent)
+    return differences
+
+
 def paired_ttest_resampled(
     estimator1,
     estimator2,
@@ -68,6 +78,8 @@ def paired_ttest_resampled(
         sklearn's signature ``scorer(estimator, X, y)``; see
         https://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
         for more information.
+        Finite score differences are rescaled before computing the statistic,
+        preserving invariance to a common positive change of score units.
 
     random_seed : int or None (default: None)
         Random seed for creating the test/train splits.
@@ -125,6 +137,7 @@ def paired_ttest_resampled(
         est2_score = scorer(estimator2, X_test, y_test)
         score_diff.append(est1_score - est2_score)
 
+    score_diff = _scale_score_differences(score_diff)
     avg_diff = np.mean(score_diff)
 
     numerator = avg_diff * np.sqrt(num_rounds)
@@ -172,6 +185,8 @@ def paired_ttest_kfold_cv(
         sklearn's signature ``scorer(estimator, X, y)``; see
         https://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
         for more information.
+        Finite score differences are rescaled before computing the statistic,
+        preserving invariance to a common positive change of score units.
 
     shuffle : bool (default: False)
         Whether to shuffle the dataset for generating
@@ -232,6 +247,7 @@ def paired_ttest_kfold_cv(
         est2_score = scorer(estimator2, X_test, y_test)
         score_diff.append(est1_score - est2_score)
 
+    score_diff = _scale_score_differences(score_diff)
     avg_diff = np.mean(score_diff)
 
     numerator = avg_diff * np.sqrt(cv)
@@ -274,6 +290,8 @@ def paired_ttest_5x2cv(estimator1, estimator2, X, y, scoring=None, random_seed=N
         sklearn's signature ``scorer(estimator, X, y)``; see
         https://scikit-learn.org/stable/modules/generated/sklearn.metrics.make_scorer.html
         for more information.
+        Finite score differences are rescaled before computing the statistic,
+        preserving invariance to a common positive change of score units.
 
     random_seed : int or None (default: None)
         Random seed for creating the test/train splits.
@@ -311,8 +329,7 @@ def paired_ttest_5x2cv(estimator1, estimator2, X, y, scoring=None, random_seed=N
     else:
         scorer = scoring
 
-    variance_sum = 0.0
-    first_diff = None
+    differences = []
 
     def score_diff(X_1, X_2, y_1, y_2):
         estimator1.fit(X_1, y_1)
@@ -328,6 +345,11 @@ def paired_ttest_5x2cv(estimator1, estimator2, X, y, scoring=None, random_seed=N
 
         score_diff_1 = score_diff(X_1, X_2, y_1, y_2)
         score_diff_2 = score_diff(X_2, X_1, y_2, y_1)
+        differences.append([score_diff_1, score_diff_2])
+
+    variance_sum = 0.0
+    first_diff = None
+    for score_diff_1, score_diff_2 in _scale_score_differences(differences):
         score_mean = (score_diff_1 + score_diff_2) / 2.0
         score_var = (score_diff_1 - score_mean) ** 2 + (score_diff_2 - score_mean) ** 2
         variance_sum += score_var

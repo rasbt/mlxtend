@@ -18,6 +18,54 @@ from sklearn.preprocessing import LabelEncoder
 from ..externals.name_estimators import _name_estimators
 
 
+def _hard_vote(predictions, weights, n_classes):
+    """Aggregate ordinary hard votes in blocks with bounded intermediates."""
+    weight_array = None if weights is None else np.asarray(weights)
+    ordinary_weights = weight_array is None or (
+        weight_array.ndim == 1
+        and np.can_cast(weight_array.dtype, np.float64, casting="safe")
+        and np.all(np.isfinite(weight_array))
+        and np.all(weight_array >= 0)
+    )
+    ordinary_predictions = (
+        predictions.ndim == 2
+        and predictions.size > 0
+        and np.can_cast(predictions.dtype, np.intp, casting="safe")
+        and np.all(predictions >= 0)
+        and np.all(predictions < n_classes)
+    )
+    if not ordinary_weights or not ordinary_predictions:
+        return np.apply_along_axis(
+            lambda x: np.argmax(np.bincount(x, weights=weights)),
+            axis=1,
+            arr=predictions,
+        )
+
+    n_samples, n_estimators = predictions.shape
+    if weight_array is not None and weight_array.size != n_estimators:
+        # Retain NumPy's existing error for incompatible vote weights.
+        return np.apply_along_axis(
+            lambda x: np.argmax(np.bincount(x, weights=weights)),
+            axis=1,
+            arr=predictions,
+        )
+
+    result = np.empty(n_samples, dtype=np.intp)
+    block_size = max(1, 65536 // (n_classes + n_estimators))
+    for start in range(0, n_samples, block_size):
+        block = predictions[start : start + block_size]
+        offsets = np.arange(len(block), dtype=np.intp)[:, None] * n_classes
+        indices = (block + offsets).ravel()
+        block_weights = (
+            None if weight_array is None else np.tile(weight_array, len(block))
+        )
+        counts = np.bincount(
+            indices, weights=block_weights, minlength=len(block) * n_classes
+        ).reshape(len(block), n_classes)
+        result[start : start + len(block)] = counts.argmax(axis=1)
+    return result
+
+
 class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
     """Soft Voting/Majority Rule classifier for scikit-learn estimators.
 
@@ -229,11 +277,7 @@ class EnsembleVoteClassifier(BaseEstimator, ClassifierMixin, TransformerMixin):
         else:  # 'hard' voting
             predictions = self._predict(X)
 
-            maj = np.apply_along_axis(
-                lambda x: np.argmax(np.bincount(x, weights=self.weights)),
-                axis=1,
-                arr=predictions,
-            )
+            maj = _hard_vote(predictions, self.weights, len(self.le_.classes_))
 
         maj = self.le_.inverse_transform(maj)
         return maj

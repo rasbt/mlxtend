@@ -90,6 +90,9 @@ class RBFKernelPCA(_BaseModel):
     def transform(self, X):
         """Apply the non-linear transformation on X.
 
+        Cross-kernels are computed in bounded query blocks to limit
+        intermediate memory use for large prediction batches.
+
         Parameters
         ----------
         X : {array-like, sparse matrix}, shape = [n_samples, n_features]
@@ -105,16 +108,23 @@ class RBFKernelPCA(_BaseModel):
         if not hasattr(self, "X_"):
             raise AttributeError("Object as not been fitted, yet.")
         self._check_arrays(X=X)
-        # pair_dist = np.array([np.sum((X - row)**2) for row in self.X_])
-        pair_dist = np.ones((self.X_.shape[0], X.shape[0]))
-        for idx in range(X.shape[0]):
-            pair_dist[:, idx] = ((self.X_ - X[idx]) ** 2).sum(axis=1)
-
-        K = np.exp((-1) * self.gamma * pair_dist)
         e_vecs = self._projection_matrix(
             eig_vecs=self.e_vecs_, n_components=self.n_components
         )
-        return K.T.dot(e_vecs / self.e_vals_[: e_vecs.shape[1]])
+        weights = e_vecs / self.e_vals_[: e_vecs.shape[1]]
+        projected = np.empty((X.shape[0], e_vecs.shape[1]))
+        # A single reusable cross-kernel buffer, at most 4 MiB unless a
+        # single query row already requires more than that.
+        block_size = max(1, (4 * 1024 * 1024) // (8 * self.X_.shape[0]))
+        kernel = np.empty((min(block_size, X.shape[0]), self.X_.shape[0]))
+        for start in range(0, X.shape[0], block_size):
+            stop = min(start + block_size, X.shape[0])
+            block = kernel[: stop - start]
+            distance.cdist(X[start:stop], self.X_, "sqeuclidean", out=block)
+            block *= -self.gamma
+            np.exp(block, out=block)
+            projected[start:stop] = block.dot(weights)
+        return projected
 
     def _kernel_matrix(self, X, gamma):
         # Calculating the squared Euclidean distances for every pair of points

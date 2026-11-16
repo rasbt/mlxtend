@@ -46,7 +46,8 @@ def fpmax(
       transactions_where_item(s)_occur / total_transactions.
 
     null_values : bool (default: False)
-      In case there are null values as NaNs in the original input data
+      Whether missing values are present in the original input data.
+      Supports numeric NaNs and pandas nullable values such as pd.NA.
 
     use_colnames : bool (default: False)
       If true, uses the DataFrames' column names in the returned DataFrame
@@ -78,6 +79,8 @@ def fpmax(
 
     """
     fpc.valid_input_check(df, null_values)
+    if null_values:
+        df = fpc._normalize_missing_values(df)
 
     if min_support <= 0.0 or min_support > 1.0:
         raise ValueError(

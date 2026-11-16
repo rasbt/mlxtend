@@ -170,6 +170,15 @@ def valid_input_check(df, null_values=False):
         )
     else:
         all_bools = df.dtypes.apply(pd.api.types.is_bool_dtype).all()
+        # Nullable Boolean columns can contain pd.NA despite having a bool
+        # dtype. Ordinary NumPy bool columns cannot, so keep their fast path.
+        if all_bools and any(
+            pd.api.types.is_extension_array_dtype(dtype) for dtype in df.dtypes
+        ):
+            if pd.isna(df).any().any():
+                raise ValueError(
+                    "NaN values are not permitted in the DataFrame when null_values=False."
+                )
 
     if not all_bools:
         warnings.warn(
@@ -201,11 +210,11 @@ def valid_input_check(df, null_values=False):
         else:
             values = df.values
 
-        # Ignore NaNs if null_values is True
+        # Remove missing sentinels before comparisons: pd.NA cannot be
+        # converted to bool and np.isnan does not accept object arrays.
         if null_values:
-            idxs = np.where((values != 1) & (values != 0) & (~np.isnan(values)))
-        else:
-            idxs = np.where((values != 1) & (values != 0))
+            values = values[~pd.isna(values)]
+        idxs = np.where((values != 1) & (values != 0))
 
         if len(idxs[0]) > 0:
             # idxs has 1 dimension with sparse data and 2 with dense data
@@ -221,6 +230,25 @@ def valid_input_check(df, null_values=False):
                     " are True, False, 0, 1, NaN. Found value %s" % (val)
                 )
             raise ValueError(s)
+
+
+def _normalize_missing_values(df):
+    """Convert validated nullable/object transactions to numeric NaNs.
+
+    Preserve ordinary numeric and sparse frames without a copy. For frames
+    with extension or object columns, copy before replacing sentinels so the
+    caller's values, index, column labels, and dtypes are not modified.
+    """
+    if hasattr(df, "sparse") or not any(
+        pd.api.types.is_extension_array_dtype(dtype)
+        or pd.api.types.is_object_dtype(dtype)
+        for dtype in df.dtypes
+    ):
+        return df
+
+    values = df.to_numpy(dtype=object, copy=True)
+    values[pd.isna(values)] = np.nan
+    return pd.DataFrame(values.astype(float), index=df.index, columns=df.columns)
 
 
 class FPTree(object):

@@ -174,10 +174,7 @@ class TransactionEncoder(BaseEstimator, TransformerMixin):
           ```
 
         """
-        return [
-            [self.columns_[idx] for idx, cell in enumerate(row) if cell]
-            for row in array
-        ]
+        return [[self.columns_[idx] for idx in np.flatnonzero(row)] for row in array]
 
     def fit_transform(self, X, sparse=False):
         """Fit a TransactionEncoder encoder and transform a dataset."""

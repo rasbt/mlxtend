@@ -51,7 +51,9 @@ def bootstrap(x, func, num_rounds=1000, ci=0.95, ddof=1, seed=None):
     original, standard_error, (lower_ci, upper_ci) : tuple
         Returns the statistic of the original sample (`original`),
         the standard error of the estimate, and the
-        respective confidence interval bounds.
+        respective confidence interval bounds. Finite replicate statistics
+        are scaled before computing the standard error to avoid overflow
+        or underflow from squaring their deviations.
 
     Examples
     --------
@@ -109,7 +111,16 @@ def bootstrap(x, func, num_rounds=1000, ci=0.95, ddof=1, seed=None):
         bootstrap_replicates[i] = func(x[bootstrap_idx])
 
     original = check_output
-    standard_error = np.std(bootstrap_replicates, ddof=ddof)
+    max_abs = np.max(np.abs(bootstrap_replicates), initial=0.0)
+    if np.isfinite(max_abs) and max_abs > 0.0:
+        _, exponent = np.frexp(max_abs)
+        scaled = np.ldexp(bootstrap_replicates, -exponent)
+        # Center the bounded values first to retain small differences between
+        # statistics with a large common offset.
+        scaled -= scaled[0]
+        standard_error = np.ldexp(np.std(scaled, ddof=ddof), exponent)
+    else:
+        standard_error = np.std(bootstrap_replicates, ddof=ddof)
 
     t = np.sort(bootstrap_replicates)
     bound = (1 - ci) / 2.0

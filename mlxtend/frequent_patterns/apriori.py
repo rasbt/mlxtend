@@ -108,6 +108,7 @@ def generate_new_combinations_low_memory(old_combinations, X, min_support, is_sp
       `transactions_where_item(s)_occur / total_transactions`.
 
     is_sparse : bool True if X is sparse
+      Sparse candidate blocks remain sparse during support counting.
 
     Returns
     -----------
@@ -133,9 +134,12 @@ def generate_new_combinations_low_memory(old_combinations, X, min_support, is_sp
             (candidate[-1] for candidate in candidates), dtype=int
         )
         if is_sparse:
-            mask_rows = X[:, prefix].toarray().all(axis=1)
-            X_cols = X[:, valid_items].toarray()
-            supports = X_cols[mask_rows].sum(axis=0)
+            prefix_values = X[:, prefix]
+            prefix_values.sum_duplicates()
+            mask_rows = np.asarray(prefix_values.sum(axis=1)).ravel() == len(prefix)
+            candidate_values = X[mask_rows][:, valid_items]
+            candidate_values.sum_duplicates()
+            supports = np.asarray(candidate_values.sum(axis=0)).ravel()
         else:
             mask_rows = X[:, prefix].all(axis=1)
             supports = X[mask_rows][:, valid_items].sum(axis=0)

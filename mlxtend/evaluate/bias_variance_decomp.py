@@ -51,6 +51,8 @@ def bias_variance_decomp(
     loss : str (default='0-1_loss')
         Loss function for performing the bias-variance decomposition.
         Currently allowed values are '0-1_loss' and 'mse'.
+        The MSE statistics are accumulated incrementally, using memory
+        proportional to the test-set size rather than the number of rounds.
 
     num_rounds : int (default=200)
         Number of bootstrap rounds (sampling from the training set)
@@ -103,11 +105,15 @@ def bias_variance_decomp(
     rng = np.random.RandomState(random_seed)
 
     if loss == "0-1_loss":
-        dtype = np.int64
-    elif loss == "mse":
-        dtype = np.float64
-
-    all_pred = np.zeros((num_rounds, y_test.shape[0]), dtype=dtype)
+        all_pred = np.zeros((num_rounds, y_test.shape[0]), dtype=np.int64)
+    else:
+        if num_rounds < 1:
+            raise ValueError("num_rounds must be positive")
+        prediction = np.empty(y_test.shape[0], dtype=np.float64)
+        prediction_sum = np.zeros_like(prediction)
+        centered_mean = np.zeros_like(prediction)
+        centered_m2 = np.zeros_like(prediction)
+        expected_loss_sum = np.float64(0.0)
 
     for i in range(num_rounds):
         X_boot, y_boot = _draw_bootstrap_sample(rng, X_train, y_train)
@@ -135,7 +141,21 @@ def bias_variance_decomp(
             pred = estimator.predict(X_test).reshape(1, -1)
         else:
             pred = estimator.fit(X_boot, y_boot, **fit_params).predict(X_test)
-        all_pred[i] = pred
+        if loss == "0-1_loss":
+            all_pred[i] = pred
+        else:
+            # Keep the original float64 assignment and broadcasting behavior.
+            prediction[:] = pred
+            prediction_sum += prediction
+            if i == 0:
+                origin = prediction.copy()
+            # Center about the first prediction before Welford's update so
+            # large common offsets do not erase the variation across rounds.
+            centered = prediction - origin
+            delta = centered - centered_mean
+            centered_mean += delta / (i + 1)
+            centered_m2 += delta * (centered - centered_mean)
+            expected_loss_sum += np.mean((prediction - y_test) ** 2)
 
     if loss == "0-1_loss":
         main_predictions = np.apply_along_axis(
@@ -157,17 +177,14 @@ def bias_variance_decomp(
         avg_var = var.sum() / y_test.shape[0]
 
     else:
-        avg_expected_loss = np.apply_along_axis(
-            lambda x: ((x - y_test) ** 2).mean(), axis=1, arr=all_pred
-        ).mean()
-
-        main_predictions = np.mean(all_pred, axis=0)
+        avg_expected_loss = expected_loss_sum / num_rounds
+        main_predictions = prediction_sum / num_rounds
 
         # `avg_bias` here is the average *squared* bias — the Bias^2
         # term in the standard decomposition Loss = Bias^2 + Variance.
         # See the Returns section of the docstring; the variable is
         # kept named `avg_bias` for backwards compatibility.
         avg_bias = np.sum((main_predictions - y_test) ** 2) / y_test.size
-        avg_var = np.sum((main_predictions - all_pred) ** 2) / all_pred.size
+        avg_var = np.mean(centered_m2) / num_rounds
 
     return avg_expected_loss, avg_bias, avg_var

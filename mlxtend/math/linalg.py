@@ -23,7 +23,8 @@ def vectorspace_orthonormalization(ary, eps=1e-13):  # method='gram-schmidt',
 
     eps : float (default: 1e-13)
         A small tolerance value to determine whether
-        the vector norm is zero or not.
+        the residual vector norm is zero or not. This is an absolute
+        threshold, including when columns are rescaled internally.
 
     Returns
     ----------
@@ -47,13 +48,23 @@ def vectorspace_orthonormalization(ary, eps=1e-13):  # method='gram-schmidt',
 
     arr = ary.astype(np.float64).copy()
 
+    norm_limit = np.sqrt(np.finfo(arr.dtype).max / max(1, arr.shape[0]))
+    norm_floor = np.sqrt(np.finfo(arr.dtype).tiny)
     for i in range(arr.shape[1]):
+        scale = np.max(np.abs(arr[:, i]), initial=0.0)
+        norm_eps = eps
+        if scale > norm_limit or 0 < scale < norm_floor:
+            if scale < 1 and eps >= scale * np.sqrt(arr.shape[0]):
+                arr[:, i] = 0.0
+                continue
+            arr[:, i] /= scale
+            norm_eps = eps / scale
         for j in range(i):
             # 2a) & 2b)
             arr[:, i] -= np.dot(arr[:, i], arr[:, j]) * arr[:, j]
         # 2c
         tmp = np.linalg.norm(arr[:, i])
-        is_linearly_indepedent = tmp > eps
+        is_linearly_indepedent = tmp > norm_eps
         if is_linearly_indepedent:
             arr[:, i] /= tmp
         else:

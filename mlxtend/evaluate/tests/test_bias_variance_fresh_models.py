@@ -39,13 +39,15 @@ def _estimator(kind, warm_start, pipeline):
     return make_pipeline(StandardScaler(), estimator) if pipeline else estimator
 
 
-def _independent_decomposition(kind, warm_start, pipeline, data):
+def _independent_decomposition(kind, warm_start, pipeline, data, **fit_params):
     X, y, X_test, y_test = data
     rng = np.random.RandomState(42)
     predictions = []
     for _ in range(10):
         indices = rng.choice(len(X), size=len(X), replace=True)
-        fitted = _estimator(kind, warm_start, pipeline).fit(X[indices], y[indices])
+        fitted = _estimator(kind, warm_start, pipeline).fit(
+            X[indices], y[indices], **fit_params
+        )
         predictions.append(fitted.predict(X_test))
     predictions = np.asarray(predictions)
     if kind == "classifier":
@@ -126,5 +128,11 @@ def test_fit_parameters_reach_each_fresh_estimator():
         random_seed=42,
         randomforestregressor__sample_weight=np.ones(len(X)),
     )
-    expected = _independent_decomposition("forest", True, True, data)
+    expected = _independent_decomposition(
+        "forest",
+        True,
+        True,
+        data,
+        randomforestregressor__sample_weight=np.ones(len(X)),
+    )
     assert_allclose(result, expected, rtol=1e-12, atol=1e-12)

@@ -8,7 +8,7 @@
 
 import os
 
-import numpy as np
+from ._utils import _load_numeric_csv
 
 this_dir, this_filename = os.path.split(__file__)
 DATA_PATH = os.path.join(this_dir, "data", "boston_housing.csv")
@@ -54,6 +54,6 @@ def boston_housing_data():
     https://rasbt.github.io/mlxtend/user_guide/data/boston_housing_data/
 
     """
-    tmp = np.genfromtxt(fname=DATA_PATH, delimiter=",", dtype=float)
+    tmp = _load_numeric_csv(DATA_PATH)
     X, y = tmp[:, :-1], tmp[:, -1]
     return X, y

@@ -8,7 +8,7 @@
 
 import os
 
-import numpy as np
+from ._utils import _load_numeric_csv
 
 this_dir, this_filename = os.path.split(__file__)
 DATA_PATH = os.path.join(this_dir, "data", "iris.csv.gz")
@@ -69,11 +69,11 @@ def iris_data(version="uci"):
 
     """
     if version == "uci":
-        tmp = np.genfromtxt(fname=DATA_PATH, delimiter=",")
+        tmp = _load_numeric_csv(DATA_PATH)
         X, y = tmp[:, :-1], tmp[:, -1]
         y = y.astype(int)
     elif version == "corrected":
-        tmp = np.genfromtxt(fname=DATA_PATH, delimiter=",")
+        tmp = _load_numeric_csv(DATA_PATH)
         X, y = tmp[:, :-1], tmp[:, -1]
         X[34] = [4.9, 3.1, 1.5, 0.2]
         X[37] = [4.9, 3.6, 1.4, 0.1]

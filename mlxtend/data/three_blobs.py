@@ -8,7 +8,7 @@
 
 import os
 
-import numpy as np
+from ._utils import _load_numeric_csv
 
 this_dir, this_filename = os.path.split(__file__)
 DATA_PATH = os.path.join(this_dir, "data", "three_blobs.csv.gz")
@@ -33,7 +33,7 @@ def three_blobs_data():
     https://rasbt.github.io/mlxtend/user_guide/data/three_blobs_data
 
     """
-    tmp = np.genfromtxt(fname=DATA_PATH, delimiter=",")
+    tmp = _load_numeric_csv(DATA_PATH)
     X, y = tmp[:, :-1], tmp[:, -1]
     y = y.astype(int)
     return X, y

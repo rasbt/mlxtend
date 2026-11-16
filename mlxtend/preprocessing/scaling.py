@@ -32,6 +32,9 @@ def minmax_scaling(array, columns, min_val=0, max_val=1):
     `RuntimeWarning: invalid value encountered in divide` previously raised
     by the underlying `0 / 0` division.
 
+    Finite input and output ranges are rescaled internally when their
+    unscaled differences would overflow.
+
     Returns
     ----------
     df_new : pandas DataFrame object.
@@ -54,8 +57,12 @@ def minmax_scaling(array, columns, min_val=0, max_val=1):
     else:
         raise AttributeError("Input array must be a pandas" "DataFrame or NumPy array")
 
-    numerator = ary_newt[:, columns] - ary_newt[:, columns].min(axis=0)
-    denominator = ary_newt[:, columns].max(axis=0) - ary_newt[:, columns].min(axis=0)
+    values = ary_newt[:, columns]
+    half_max = np.finfo(float).max / 2
+    scale = np.where(np.abs(values).max(axis=0) > half_max, 0.5, 1.0)
+    values = values * scale
+    numerator = values - values.min(axis=0)
+    denominator = values.max(axis=0) - values.min(axis=0)
     # Constant columns have zero range; the naive (x - min) / (max - min)
     # would compute 0 / 0 and silently emit NaN with only a numpy
     # RuntimeWarning. Force the denominator to 1 for those columns so the
@@ -66,7 +73,11 @@ def minmax_scaling(array, columns, min_val=0, max_val=1):
     ary_newt[:, columns] = numerator / denominator
 
     if not min_val == 0 and not max_val == 1:
-        ary_newt[:, columns] = ary_newt[:, columns] * (max_val - min_val) + min_val
+        values = ary_newt[:, columns]
+        if abs(max_val / 2 - min_val / 2) > half_max:
+            ary_newt[:, columns] = (1 - values) * min_val + values * max_val
+        else:
+            ary_newt[:, columns] = values * (max_val - min_val) + min_val
 
     return ary_newt[:, columns]
 

@@ -6,6 +6,7 @@
 #
 # License: BSD 3 clause
 import numpy as np
+from sklearn.base import clone
 
 
 def _draw_bootstrap_sample(rng, X, y):
@@ -31,6 +32,10 @@ def bias_variance_decomp(
     estimator : object
         A classifier or regressor object or class implementing both a
         `fit` and `predict` method similar to the scikit-learn API.
+        Scikit-learn-compatible estimators are cloned for each bootstrap
+        fit, leaving the supplied model unchanged. The existing Keras
+        reset and custom-estimator fitting behavior is retained for models
+        without the scikit-learn parameter protocol.
 
     X_train : array-like or pandas DataFrame, shape=(num_examples, num_features)
     A training dataset for drawing the bootstrap samples to carry
@@ -134,7 +139,8 @@ def bias_variance_decomp(
             estimator.fit(X_boot, y_boot, **fit_params)
             pred = estimator.predict(X_test).reshape(1, -1)
         else:
-            pred = estimator.fit(X_boot, y_boot, **fit_params).predict(X_test)
+            model = clone(estimator) if hasattr(estimator, "get_params") else estimator
+            pred = model.fit(X_boot, y_boot, **fit_params).predict(X_test)
         all_pred[i] = pred
 
     if loss == "0-1_loss":

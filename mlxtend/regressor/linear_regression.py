@@ -9,6 +9,7 @@
 from time import time
 
 import numpy as np
+from scipy.linalg import lstsq
 
 from .._base import _BaseModel, _IterativeModel, _Regressor
 
@@ -23,7 +24,9 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
         parameter for further options). Otherwise, if `direct` (default),
         the analytical method is used. For alternative, numerically more
         stable solutions, use either `qr` (QR decomopisition) or `svd`
-        (Singular Value Decomposition).
+        (Singular Value Decomposition). The QR solver uses rank-revealing
+        pivoting and returns the minimum-norm solution, including the
+        intercept, for underdetermined or rank-deficient designs.
     eta : float (default: 0.01)
         solver learning rate (between 0.0 and 1.0). Used with `method =`
         `'sgd'`. (See `methods` parameter for details)
@@ -135,8 +138,12 @@ class LinearRegression(_BaseModel, _IterativeModel, _Regressor):
         # Solve using QR decomposition
         elif self.method == "qr":
             Xb = np.hstack((np.ones((X.shape[0], 1)), X))
-            Q, R = np.linalg.qr(Xb)
-            beta = np.dot(np.linalg.inv(R), np.dot(Q.T, y))
+            beta = lstsq(
+                Xb,
+                y,
+                cond=np.finfo(Xb.dtype).eps * max(Xb.shape),
+                lapack_driver="gelsy",
+            )[0]
             self.b_ = np.array([beta[0]])
             self.w_ = beta[1:].reshape(X.shape[1], 1)
         # Solve using SVD

@@ -22,18 +22,22 @@ class RBFKernelPCA(_BaseModel):
         Free parameter (coefficient) of the RBF kernel.
     n_components : int (default: None)
         The number of principal components for transformation.
-        Keeps the original dimensions of the dataset if `None`.
+        Keeps the original dimensions of the dataset if `None`. The fitted
+        value is capped at the number of input features.
     copy_X : bool (default: True)
         Copies training data, which is required to compute the projection
         of new data via the transform method. Uses a reference to X if False.
 
     Attributes
     ----------
-    e_vals_ : array-like, shape=[n_features]
+    n_components_ : int
+        Number of components used for the projection. This is the requested
+        `n_components`, capped at the number of input features.
+    e_vals_ : array-like, shape=[n_samples]
         Eigenvalues in sorted order.
-    e_vecs_ : array-like, shape=[n_features]
+    e_vecs_ : array-like, shape=[n_samples, n_samples]
        Eigenvectors in sorted order.
-    X_projected_ : array-like, shape=[n_samples, n_components]
+    X_projected_ : array-like, shape=[n_samples, n_components_]
        Training samples projected along the component axes.
 
     Examples
@@ -76,8 +80,18 @@ class RBFKernelPCA(_BaseModel):
             n_components = X.shape[1]
         else:
             n_components = self.n_components
-        kernel_mat = self._kernel_matrix(X=X, gamma=self.gamma)
-        self.e_vals_, self.e_vecs_ = self._eigendecom(kernel_mat)
+        self.n_components_ = n_components
+
+        kernel_mat = self._kernel_matrix(X)
+        self._K_fit_col_means_ = kernel_mat.mean(axis=0)
+        self._K_fit_all_mean_ = kernel_mat.mean()
+        kernel_mat_centered = self._center_kernel(
+            kernel_mat,
+            row_means=self._K_fit_col_means_[:, np.newaxis],
+            col_means=self._K_fit_col_means_[np.newaxis, :],
+            all_mean=self._K_fit_all_mean_,
+        )
+        self.e_vals_, self.e_vecs_ = self._eigendecom(kernel_mat_centered)
         self.X_projected_ = self._projection_matrix(
             eig_vecs=self.e_vecs_, n_components=n_components
         )
@@ -103,35 +117,32 @@ class RBFKernelPCA(_BaseModel):
 
         """
         if not hasattr(self, "X_"):
-            raise AttributeError("Object as not been fitted, yet.")
+            raise AttributeError("Object has not been fitted, yet.")
         self._check_arrays(X=X)
-        # pair_dist = np.array([np.sum((X - row)**2) for row in self.X_])
-        pair_dist = np.ones((self.X_.shape[0], X.shape[0]))
-        for idx in range(X.shape[0]):
-            pair_dist[:, idx] = ((self.X_ - X[idx]) ** 2).sum(axis=1)
 
-        K = np.exp((-1) * self.gamma * pair_dist)
-        e_vecs = self._projection_matrix(
-            eig_vecs=self.e_vecs_, n_components=self.n_components
+        kernel_mat = self._kernel_matrix(X, self.X_)
+        kernel_mat_centered = self._center_kernel(
+            kernel_mat,
+            row_means=kernel_mat.mean(axis=1, keepdims=True),
+            col_means=self._K_fit_col_means_[np.newaxis, :],
+            all_mean=self._K_fit_all_mean_,
         )
-        return K.T.dot(e_vecs / self.e_vals_[: e_vecs.shape[1]])
 
-    def _kernel_matrix(self, X, gamma):
-        # Calculating the squared Euclidean distances for every pair of points
-        # in the MxN dimensional dataset.
-        sq_dists = distance.pdist(X, "sqeuclidean")
+        e_vecs = self._projection_matrix(
+            eig_vecs=self.e_vecs_, n_components=self.n_components_
+        )
+        return kernel_mat_centered.dot(e_vecs / self.e_vals_[: e_vecs.shape[1]])
 
-        # Converting the pairwise distances into a symmetric MxM matrix.
-        mat_sq_dists = distance.squareform(sq_dists)
+    @staticmethod
+    def _center_kernel(kernel_mat, row_means, col_means, all_mean):
+        return kernel_mat - row_means - col_means + all_mean
 
-        # Computing the MxM kernel matrix.
-        K = np.exp((-1) * gamma * mat_sq_dists)
-
-        # Centering the symmetric NxN kernel matrix.
-        N = K.shape[0]
-        one_n = np.ones((N, N)) / N
-        K = K - one_n.dot(K) - K.dot(one_n) + one_n.dot(K).dot(one_n)
-        return K
+    def _kernel_matrix(self, X, Y=None):
+        if Y is None:
+            sq_dists = distance.squareform(distance.pdist(X, "sqeuclidean"))
+        else:
+            sq_dists = distance.cdist(X, Y, "sqeuclidean")
+        return np.exp((-1) * self.gamma * sq_dists)
 
     def _eigendecom(self, kernel_mat):
         e_vals, e_vecs = np.linalg.eigh(kernel_mat)

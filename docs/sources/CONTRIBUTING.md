@@ -217,7 +217,7 @@ Now it's time to modify existing code or to contribute new code to the project.
 Add the respective unit tests and check if they pass:
 
 ```bash
-$ PYTHONPATH='.' pytest ./mlxtend ---with-coverage
+uv run --group dev python -m coverage run --source=mlxtend --branch -m pytest ./mlxtend
 ```
 
 

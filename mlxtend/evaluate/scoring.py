@@ -97,7 +97,7 @@ def scoring(
             "`y_target` and `y_predicted`" " don't have the same number of elements."
         )
 
-    if unique_labels == "auto":
+    if isinstance(unique_labels, str) and unique_labels == "auto":
         unique_labels = np.unique(y_target)
 
     if not isinstance(y_target, np.ndarray):

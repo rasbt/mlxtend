@@ -5,6 +5,8 @@
 # License: BSD 3 clause
 
 import numpy as np
+import pandas as pd
+import pytest
 
 from mlxtend.evaluate import scoring
 
@@ -131,3 +133,22 @@ def test_avg_perclass_error():
     y_pred = np.array([0, 1, 1, 0, 1, 1, 2, 2, 2, 2])
     res = scoring(y_target=y_targ, y_predicted=y_pred, metric="average per-class error")
     assert round(res, 3) == 0.333, res
+
+
+@pytest.mark.parametrize("label_container", [list, np.asarray, pd.Index])
+def test_avg_perclass_error_explicit_labels(label_container):
+    y_targ = [0, 0, 1, 1, 2, 2]
+    y_pred = [0, 1, 1, 1, 2, 0]
+    labels = label_container(np.unique(y_targ))
+
+    score = scoring(y_targ, y_pred, "average per-class error", unique_labels=labels)
+    assert score == pytest.approx(2 / 9)
+
+
+def test_array_with_auto_as_a_class_label():
+    y_targ = ["auto", "x", "y", "x"]
+    y_pred = ["x", "x", "y", "x"]
+    metric = "average per-class error"
+
+    assert scoring(y_targ, y_pred, metric) == pytest.approx(1 / 6)
+    assert scoring(y_targ, y_pred, metric, unique_labels=np.array(["auto"])) == 0.25

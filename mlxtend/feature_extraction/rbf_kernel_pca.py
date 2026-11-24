@@ -76,7 +76,11 @@ class RBFKernelPCA(_BaseModel):
             n_components = X.shape[1]
         else:
             n_components = self.n_components
-        kernel_mat = self._kernel_matrix(X=X, gamma=self.gamma)
+        K = self._kernel_matrix(X=X, gamma=self.gamma)
+        self._kernel_row_means = K.mean(axis=1)
+        N = K.shape[0]
+        one_n = np.ones((N, N)) / N
+        kernel_mat = K - one_n.dot(K) - K.dot(one_n) + one_n.dot(K).dot(one_n)
         self.e_vals_, self.e_vecs_ = self._eigendecom(kernel_mat)
         self.X_projected_ = self._projection_matrix(
             eig_vecs=self.e_vecs_, n_components=n_components
@@ -111,9 +115,15 @@ class RBFKernelPCA(_BaseModel):
             pair_dist[:, idx] = ((self.X_ - X[idx]) ** 2).sum(axis=1)
 
         K = np.exp((-1) * self.gamma * pair_dist)
-        e_vecs = self._projection_matrix(
-            eig_vecs=self.e_vecs_, n_components=self.n_components
-        )
+        if not hasattr(self, "_kernel_row_means"):
+            # Models fitted before the training means were stored still retain X_.
+            self._kernel_row_means = self._kernel_matrix(self.X_, self.gamma).mean(
+                axis=1
+            )
+        # Rows index training samples. Center each query against the training mean.
+        K -= self._kernel_row_means[:, None]
+        K -= K.mean(axis=0)
+        e_vecs = self.e_vecs_[:, : self.X_projected_.shape[1]]
         return K.T.dot(e_vecs / self.e_vals_[: e_vecs.shape[1]])
 
     def _kernel_matrix(self, X, gamma):
@@ -125,13 +135,7 @@ class RBFKernelPCA(_BaseModel):
         mat_sq_dists = distance.squareform(sq_dists)
 
         # Computing the MxM kernel matrix.
-        K = np.exp((-1) * gamma * mat_sq_dists)
-
-        # Centering the symmetric NxN kernel matrix.
-        N = K.shape[0]
-        one_n = np.ones((N, N)) / N
-        K = K - one_n.dot(K) - K.dot(one_n) + one_n.dot(K).dot(one_n)
-        return K
+        return np.exp((-1) * gamma * mat_sq_dists)
 
     def _eigendecom(self, kernel_mat):
         e_vals, e_vecs = np.linalg.eigh(kernel_mat)

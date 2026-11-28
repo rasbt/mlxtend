@@ -382,6 +382,10 @@ To deploy the documentation, execute
 ~/github/mlxtend/docs$ mkdocs gh-deploy --clean
 ```
 
+The `edit_links.py` hook points generated pages at their notebook or Python sources.
+To test these links, run `python -m pytest docs/tests/test_edit_links.py` from the
+repository root with the documentation dependencies installed.
+
 ### 4. Generate a PDF of the documentation
 
 To generate a PDF version of the documentation, simply `cd` into the `mlxtend/docs` directory and execute:

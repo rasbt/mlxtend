@@ -10,6 +10,9 @@ edit_uri: https://github.com/rasbt/mlxtend/tree/master/docs/sources
 #include_search: true # not necessary for this theme
 docs_dir: sources
 
+hooks:
+  - edit_links.py
+
 #theme:
 #    name: null
 #    custom_dir: 'custom_theme/'
